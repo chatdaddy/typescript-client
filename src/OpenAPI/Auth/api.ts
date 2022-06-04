@@ -1,3 +1,5 @@
+const BASE_PATH = "https://api-teams.chatdaddy.tech".replace(/\/+$/, "");
+
 /* tslint:disable */
 /* eslint-disable */
 /**
@@ -13,13 +15,13 @@
  */
 
 
-import { Configuration } from './configuration';
+import { Configuration } from '../configuration';
 import globalAxios, { AxiosPromise, AxiosInstance, AxiosRequestConfig } from 'axios';
 // Some imports not used depending on template conditions
 // @ts-ignore
-import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObject, setBearerAuthToObject, setOAuthToObject, setSearchParams, serializeDataIfNeeded, toPathString, createRequestFunction } from './common';
+import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObject, setBearerAuthToObject, setOAuthToObject, setSearchParams, serializeDataIfNeeded, toPathString, createRequestFunction } from '../common';
 // @ts-ignore
-import { BASE_PATH, COLLECTION_FORMATS, RequestArgs, BaseAPI, RequiredError } from './base';
+import { COLLECTION_FORMATS, RequestArgs, BaseAPI, RequiredError } from '../base';
 
 /**
  * @type AuthRequest
@@ -38,7 +40,7 @@ export interface BoutirTokenRequest {
      * @type {string}
      * @memberof BoutirTokenRequest
      */
-    'type': TypeEnum;
+    'type': BoutirTokenRequestTypeEnum;
     /**
      * 
      * @type {string}
@@ -53,11 +55,11 @@ export interface BoutirTokenRequest {
     'password': string;
 }
 
-export const TypeEnum = {
+export const BoutirTokenRequestTypeEnum = {
     Boutir: 'boutir'
 } as const;
 
-export type TypeEnum = typeof TypeEnum[keyof typeof TypeEnum];
+export type BoutirTokenRequestTypeEnum = typeof BoutirTokenRequestTypeEnum[keyof typeof BoutirTokenRequestTypeEnum];
 
 /**
  * 
@@ -120,7 +122,7 @@ export interface FirebaseTokenRequest {
      * @type {string}
      * @memberof FirebaseTokenRequest
      */
-    'type': TypeEnum;
+    'type': FirebaseTokenRequestTypeEnum;
     /**
      * 
      * @type {string}
@@ -129,11 +131,11 @@ export interface FirebaseTokenRequest {
     'idToken': string;
 }
 
-export const TypeEnum = {
+export const FirebaseTokenRequestTypeEnum = {
     Firebase: 'firebase'
 } as const;
 
-export type TypeEnum = typeof TypeEnum[keyof typeof TypeEnum];
+export type FirebaseTokenRequestTypeEnum = typeof FirebaseTokenRequestTypeEnum[keyof typeof FirebaseTokenRequestTypeEnum];
 
 /**
  * 
@@ -363,7 +365,7 @@ export interface OAuthRequest {
      * @type {string}
      * @memberof OAuthRequest
      */
-    'grant_type'?: GrantTypeEnum;
+    'grant_type'?: OAuthRequestGrantTypeEnum;
     /**
      * Space separated scopes
      * @type {string}
@@ -372,11 +374,11 @@ export interface OAuthRequest {
     'scope'?: string;
 }
 
-export const GrantTypeEnum = {
+export const OAuthRequestGrantTypeEnum = {
     Password: 'password'
 } as const;
 
-export type GrantTypeEnum = typeof GrantTypeEnum[keyof typeof GrantTypeEnum];
+export type OAuthRequestGrantTypeEnum = typeof OAuthRequestGrantTypeEnum[keyof typeof OAuthRequestGrantTypeEnum];
 
 /**
  * 

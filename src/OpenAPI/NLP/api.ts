@@ -1,3 +1,5 @@
+const BASE_PATH = "https://api-keywordreply.chatdaddy.tech".replace(/\/+$/, "");
+
 /* tslint:disable */
 /* eslint-disable */
 /**
@@ -13,13 +15,13 @@
  */
 
 
-import { Configuration } from './configuration';
+import { Configuration } from '../configuration';
 import globalAxios, { AxiosPromise, AxiosInstance, AxiosRequestConfig } from 'axios';
 // Some imports not used depending on template conditions
 // @ts-ignore
-import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObject, setBearerAuthToObject, setOAuthToObject, setSearchParams, serializeDataIfNeeded, toPathString, createRequestFunction } from './common';
+import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObject, setBearerAuthToObject, setOAuthToObject, setSearchParams, serializeDataIfNeeded, toPathString, createRequestFunction } from '../common';
 // @ts-ignore
-import { BASE_PATH, COLLECTION_FORMATS, RequestArgs, BaseAPI, RequiredError } from './base';
+import { COLLECTION_FORMATS, RequestArgs, BaseAPI, RequiredError } from '../base';
 
 /**
  * 
@@ -51,7 +53,7 @@ export interface ExecutionFrame {
      * @type {string}
      * @memberof ExecutionFrame
      */
-    'day'?: DayEnum;
+    'day'?: ExecutionFrameDayEnum;
     /**
      * 
      * @type {string}
@@ -66,7 +68,7 @@ export interface ExecutionFrame {
     'endTime': string;
 }
 
-export const DayEnum = {
+export const ExecutionFrameDayEnum = {
     Monday: 'Monday',
     Tuesday: 'Tuesday',
     Wednesday: 'Wednesday',
@@ -76,7 +78,7 @@ export const DayEnum = {
     Sunday: 'Sunday'
 } as const;
 
-export type DayEnum = typeof DayEnum[keyof typeof DayEnum];
+export type ExecutionFrameDayEnum = typeof ExecutionFrameDayEnum[keyof typeof ExecutionFrameDayEnum];
 
 /**
  * 

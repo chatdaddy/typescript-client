@@ -1,3 +1,5 @@
+const BASE_PATH = "https://api-payments.chatdaddy.tech".replace(/\/+$/, "");
+
 /* tslint:disable */
 /* eslint-disable */
 /**
@@ -13,13 +15,13 @@
  */
 
 
-import { Configuration } from './configuration';
+import { Configuration } from '../configuration';
 import globalAxios, { AxiosPromise, AxiosInstance, AxiosRequestConfig } from 'axios';
 // Some imports not used depending on template conditions
 // @ts-ignore
-import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObject, setBearerAuthToObject, setOAuthToObject, setSearchParams, serializeDataIfNeeded, toPathString, createRequestFunction } from './common';
+import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObject, setBearerAuthToObject, setOAuthToObject, setSearchParams, serializeDataIfNeeded, toPathString, createRequestFunction } from '../common';
 // @ts-ignore
-import { BASE_PATH, COLLECTION_FORMATS, RequestArgs, BaseAPI, RequiredError } from './base';
+import { COLLECTION_FORMATS, RequestArgs, BaseAPI, RequiredError } from '../base';
 
 /**
  * 
@@ -138,7 +140,7 @@ export interface AutoChargeAccountRequest {
      * @type {string}
      * @memberof AutoChargeAccountRequest
      */
-    'type': TypeEnum;
+    'type': AutoChargeAccountRequestTypeEnum;
     /**
      * 
      * @type {string}
@@ -153,11 +155,11 @@ export interface AutoChargeAccountRequest {
     'tier': IMAccountTier;
 }
 
-export const TypeEnum = {
+export const AutoChargeAccountRequestTypeEnum = {
     Account: 'account'
 } as const;
 
-export type TypeEnum = typeof TypeEnum[keyof typeof TypeEnum];
+export type AutoChargeAccountRequestTypeEnum = typeof AutoChargeAccountRequestTypeEnum[keyof typeof AutoChargeAccountRequestTypeEnum];
 
 /**
  * 
@@ -170,14 +172,14 @@ export interface AutoChargeMessagesRequest {
      * @type {string}
      * @memberof AutoChargeMessagesRequest
      */
-    'type': TypeEnum;
+    'type': AutoChargeMessagesRequestTypeEnum;
 }
 
-export const TypeEnum = {
+export const AutoChargeMessagesRequestTypeEnum = {
     Messages: 'messages'
 } as const;
 
-export type TypeEnum = typeof TypeEnum[keyof typeof TypeEnum];
+export type AutoChargeMessagesRequestTypeEnum = typeof AutoChargeMessagesRequestTypeEnum[keyof typeof AutoChargeMessagesRequestTypeEnum];
 
 /**
  * @type AutoChargeRequest
@@ -353,7 +355,7 @@ export interface LimitsModelMessages {
      * @type {string}
      * @memberof LimitsModelMessages
      */
-    'type': TypeEnum;
+    'type': LimitsModelMessagesTypeEnum;
     /**
      * is message history sync allowed
      * @type {boolean}
@@ -362,12 +364,12 @@ export interface LimitsModelMessages {
     'historySyncAllowed'?: boolean;
 }
 
-export const TypeEnum = {
+export const LimitsModelMessagesTypeEnum = {
     OneTime: 'one-time',
     Monthly: 'monthly'
 } as const;
 
-export type TypeEnum = typeof TypeEnum[keyof typeof TypeEnum];
+export type LimitsModelMessagesTypeEnum = typeof LimitsModelMessagesTypeEnum[keyof typeof LimitsModelMessagesTypeEnum];
 
 /**
  * 
@@ -386,15 +388,15 @@ export interface LimitsModelSeats {
      * @type {string}
      * @memberof LimitsModelSeats
      */
-    'type': TypeEnum;
+    'type': LimitsModelSeatsTypeEnum;
 }
 
-export const TypeEnum = {
+export const LimitsModelSeatsTypeEnum = {
     Total: 'total',
     Additional: 'additional'
 } as const;
 
-export type TypeEnum = typeof TypeEnum[keyof typeof TypeEnum];
+export type LimitsModelSeatsTypeEnum = typeof LimitsModelSeatsTypeEnum[keyof typeof LimitsModelSeatsTypeEnum];
 
 /**
  * 
@@ -463,7 +465,7 @@ export interface MainPostRequest {
      * @type {string}
      * @memberof MainPostRequest
      */
-    'status'?: StatusEnum;
+    'status'?: MainPostRequestStatusEnum;
     /**
      * 
      * @type {boolean}
@@ -472,12 +474,12 @@ export interface MainPostRequest {
     'consistent'?: boolean;
 }
 
-export const StatusEnum = {
+export const MainPostRequestStatusEnum = {
     Paid: 'paid',
     PendingPayment: 'pending-payment'
 } as const;
 
-export type StatusEnum = typeof StatusEnum[keyof typeof StatusEnum];
+export type MainPostRequestStatusEnum = typeof MainPostRequestStatusEnum[keyof typeof MainPostRequestStatusEnum];
 
 /**
  * 
@@ -577,7 +579,7 @@ export interface Product {
      * @type {string}
      * @memberof Product
      */
-    'priceType': PriceTypeEnum;
+    'priceType': ProductPriceTypeEnum;
     /**
      * 
      * @type {EligibleModel}
@@ -628,13 +630,13 @@ export interface Product {
     'maxActivePurchases'?: number | null;
 }
 
-export const PriceTypeEnum = {
+export const ProductPriceTypeEnum = {
     Yearly: 'yearly',
     Monthly: 'monthly',
     OneTime: 'one-time'
 } as const;
 
-export type PriceTypeEnum = typeof PriceTypeEnum[keyof typeof PriceTypeEnum];
+export type ProductPriceTypeEnum = typeof ProductPriceTypeEnum[keyof typeof ProductPriceTypeEnum];
 
 /**
  * @type ProductFeatures

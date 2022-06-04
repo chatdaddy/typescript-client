@@ -1,3 +1,5 @@
+const BASE_PATH = "https://api-bots.chatdaddy.tech".replace(/\/+$/, "");
+
 /* tslint:disable */
 /* eslint-disable */
 /**
@@ -13,13 +15,13 @@
  */
 
 
-import { Configuration } from './configuration';
+import { Configuration } from '../configuration';
 import globalAxios, { AxiosPromise, AxiosInstance, AxiosRequestConfig } from 'axios';
 // Some imports not used depending on template conditions
 // @ts-ignore
-import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObject, setBearerAuthToObject, setOAuthToObject, setSearchParams, serializeDataIfNeeded, toPathString, createRequestFunction } from './common';
+import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObject, setBearerAuthToObject, setOAuthToObject, setSearchParams, serializeDataIfNeeded, toPathString, createRequestFunction } from '../common';
 // @ts-ignore
-import { BASE_PATH, COLLECTION_FORMATS, RequestArgs, BaseAPI, RequiredError } from './base';
+import { COLLECTION_FORMATS, RequestArgs, BaseAPI, RequiredError } from '../base';
 
 /**
  * 

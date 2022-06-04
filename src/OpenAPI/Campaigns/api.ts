@@ -1,3 +1,5 @@
+const BASE_PATH = "https://api-campaigns.chatdaddy.tech".replace(/\/+$/, "");
+
 /* tslint:disable */
 /* eslint-disable */
 /**
@@ -13,13 +15,13 @@
  */
 
 
-import { Configuration } from './configuration';
+import { Configuration } from '../configuration';
 import globalAxios, { AxiosPromise, AxiosInstance, AxiosRequestConfig } from 'axios';
 // Some imports not used depending on template conditions
 // @ts-ignore
-import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObject, setBearerAuthToObject, setOAuthToObject, setSearchParams, serializeDataIfNeeded, toPathString, createRequestFunction } from './common';
+import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObject, setBearerAuthToObject, setOAuthToObject, setSearchParams, serializeDataIfNeeded, toPathString, createRequestFunction } from '../common';
 // @ts-ignore
-import { BASE_PATH, COLLECTION_FORMATS, RequestArgs, BaseAPI, RequiredError } from './base';
+import { COLLECTION_FORMATS, RequestArgs, BaseAPI, RequiredError } from '../base';
 
 /**
  * 
@@ -118,7 +120,7 @@ export interface CampaignAsyncGet200Response {
      * @type {string}
      * @memberof CampaignAsyncGet200Response
      */
-    'status': StatusEnum;
+    'status': CampaignAsyncGet200ResponseStatusEnum;
     /**
      * 
      * @type {{ [key: string]: any; }}
@@ -133,13 +135,13 @@ export interface CampaignAsyncGet200Response {
     'campaign'?: CampaignMetadata;
 }
 
-export const StatusEnum = {
+export const CampaignAsyncGet200ResponseStatusEnum = {
     Executing: 'executing',
     Success: 'success',
     Error: 'error'
 } as const;
 
-export type StatusEnum = typeof StatusEnum[keyof typeof StatusEnum];
+export type CampaignAsyncGet200ResponseStatusEnum = typeof CampaignAsyncGet200ResponseStatusEnum[keyof typeof CampaignAsyncGet200ResponseStatusEnum];
 
 /**
  * 

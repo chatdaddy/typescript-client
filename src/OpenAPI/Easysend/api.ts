@@ -1,3 +1,5 @@
+const BASE_PATH = "https://api-notifications.chatdaddy.tech".replace(/\/+$/, "");
+
 /* tslint:disable */
 /* eslint-disable */
 /**
@@ -13,13 +15,13 @@
  */
 
 
-import { Configuration } from './configuration';
+import { Configuration } from '../configuration';
 import globalAxios, { AxiosPromise, AxiosInstance, AxiosRequestConfig } from 'axios';
 // Some imports not used depending on template conditions
 // @ts-ignore
-import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObject, setBearerAuthToObject, setOAuthToObject, setSearchParams, serializeDataIfNeeded, toPathString, createRequestFunction } from './common';
+import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObject, setBearerAuthToObject, setOAuthToObject, setSearchParams, serializeDataIfNeeded, toPathString, createRequestFunction } from '../common';
 // @ts-ignore
-import { BASE_PATH, COLLECTION_FORMATS, RequestArgs, BaseAPI, RequiredError } from './base';
+import { COLLECTION_FORMATS, RequestArgs, BaseAPI, RequiredError } from '../base';
 
 /**
  * 
@@ -112,13 +114,13 @@ export interface AddServiceModelParametersValueOneOf {
      * @type {string}
      * @memberof AddServiceModelParametersValueOneOf
      */
-    'type'?: TypeEnum;
+    'type'?: AddServiceModelParametersValueOneOfTypeEnum;
     /**
      * 
      * @type {string}
      * @memberof AddServiceModelParametersValueOneOf
      */
-    'format'?: FormatEnum;
+    'format'?: AddServiceModelParametersValueOneOfFormatEnum;
     /**
      * Inclusive array of possible values this property can take
      * @type {Array<string>}
@@ -133,17 +135,17 @@ export interface AddServiceModelParametersValueOneOf {
     'examples'?: Array<string>;
 }
 
-export const TypeEnum = {
+export const AddServiceModelParametersValueOneOfTypeEnum = {
     String: 'string'
 } as const;
 
-export type TypeEnum = typeof TypeEnum[keyof typeof TypeEnum];
-export const FormatEnum = {
+export type AddServiceModelParametersValueOneOfTypeEnum = typeof AddServiceModelParametersValueOneOfTypeEnum[keyof typeof AddServiceModelParametersValueOneOfTypeEnum];
+export const AddServiceModelParametersValueOneOfFormatEnum = {
     DateTime: 'date-time',
     Date: 'date'
 } as const;
 
-export type FormatEnum = typeof FormatEnum[keyof typeof FormatEnum];
+export type AddServiceModelParametersValueOneOfFormatEnum = typeof AddServiceModelParametersValueOneOfFormatEnum[keyof typeof AddServiceModelParametersValueOneOfFormatEnum];
 
 /**
  * 
@@ -162,7 +164,7 @@ export interface AddServiceModelParametersValueOneOf1 {
      * @type {string}
      * @memberof AddServiceModelParametersValueOneOf1
      */
-    'type': TypeEnum;
+    'type': AddServiceModelParametersValueOneOf1TypeEnum;
     /**
      * Inclusive array of possible values this property can take
      * @type {Array<number>}
@@ -177,11 +179,11 @@ export interface AddServiceModelParametersValueOneOf1 {
     'examples'?: Array<number>;
 }
 
-export const TypeEnum = {
+export const AddServiceModelParametersValueOneOf1TypeEnum = {
     Number: 'number'
 } as const;
 
-export type TypeEnum = typeof TypeEnum[keyof typeof TypeEnum];
+export type AddServiceModelParametersValueOneOf1TypeEnum = typeof AddServiceModelParametersValueOneOf1TypeEnum[keyof typeof AddServiceModelParametersValueOneOf1TypeEnum];
 
 /**
  * 
@@ -194,7 +196,7 @@ export interface AddServiceModelParametersValueOneOf2 {
      * @type {string}
      * @memberof AddServiceModelParametersValueOneOf2
      */
-    'type': TypeEnum;
+    'type': AddServiceModelParametersValueOneOf2TypeEnum;
     /**
      * 
      * @type {AddServiceModelParametersValueOneOf2Items}
@@ -209,11 +211,11 @@ export interface AddServiceModelParametersValueOneOf2 {
     'examples'?: Array<Array<any>>;
 }
 
-export const TypeEnum = {
+export const AddServiceModelParametersValueOneOf2TypeEnum = {
     Array: 'array'
 } as const;
 
-export type TypeEnum = typeof TypeEnum[keyof typeof TypeEnum];
+export type AddServiceModelParametersValueOneOf2TypeEnum = typeof AddServiceModelParametersValueOneOf2TypeEnum[keyof typeof AddServiceModelParametersValueOneOf2TypeEnum];
 
 /**
  * 
@@ -239,7 +241,7 @@ export interface AddServiceModelParametersValueOneOf3 {
      * @type {string}
      * @memberof AddServiceModelParametersValueOneOf3
      */
-    'type': TypeEnum;
+    'type': AddServiceModelParametersValueOneOf3TypeEnum;
     /**
      * 
      * @type {{ [key: string]: any; }}
@@ -254,11 +256,11 @@ export interface AddServiceModelParametersValueOneOf3 {
     'examples'?: Array<{ [key: string]: any; }>;
 }
 
-export const TypeEnum = {
+export const AddServiceModelParametersValueOneOf3TypeEnum = {
     Object: 'object'
 } as const;
 
-export type TypeEnum = typeof TypeEnum[keyof typeof TypeEnum];
+export type AddServiceModelParametersValueOneOf3TypeEnum = typeof AddServiceModelParametersValueOneOf3TypeEnum[keyof typeof AddServiceModelParametersValueOneOf3TypeEnum];
 
 /**
  * 
@@ -289,7 +291,7 @@ export interface AddServiceModelSetupValue {
      * @type {string}
      * @memberof AddServiceModelSetupValue
      */
-    'type': TypeEnum;
+    'type': AddServiceModelSetupValueTypeEnum;
     /**
      * 
      * @type {Array<string>}
@@ -304,13 +306,13 @@ export interface AddServiceModelSetupValue {
     'url'?: string;
 }
 
-export const TypeEnum = {
+export const AddServiceModelSetupValueTypeEnum = {
     String: 'string',
     Oauth: 'oauth',
     Password: 'password'
 } as const;
 
-export type TypeEnum = typeof TypeEnum[keyof typeof TypeEnum];
+export type AddServiceModelSetupValueTypeEnum = typeof AddServiceModelSetupValueTypeEnum[keyof typeof AddServiceModelSetupValueTypeEnum];
 
 /**
  * 
@@ -385,7 +387,7 @@ export interface DataModel {
      * @type {string}
      * @memberof DataModel
      */
-    'status': StatusEnum;
+    'status': DataModelStatusEnum;
     /**
      * 
      * @type {boolean}
@@ -406,13 +408,13 @@ export interface DataModel {
     'params': { [key: string]: any; };
 }
 
-export const StatusEnum = {
+export const DataModelStatusEnum = {
     Sent: 'sent',
     Pending: 'pending',
     Cancelled: 'cancelled'
 } as const;
 
-export type StatusEnum = typeof StatusEnum[keyof typeof StatusEnum];
+export type DataModelStatusEnum = typeof DataModelStatusEnum[keyof typeof DataModelStatusEnum];
 
 /**
  * the response received from the WA service
@@ -589,17 +591,17 @@ export interface EventTriggerCondition {
      * @type {string}
      * @memberof EventTriggerCondition
      */
-    'test'?: TestEnum;
+    'test'?: EventTriggerConditionTestEnum;
 }
 
-export const TestEnum = {
+export const EventTriggerConditionTestEnum = {
     Include: 'include',
     Exclude: 'exclude',
     GreaterThan: 'greater-than',
     LessThan: 'less-than'
 } as const;
 
-export type TestEnum = typeof TestEnum[keyof typeof TestEnum];
+export type EventTriggerConditionTestEnum = typeof EventTriggerConditionTestEnum[keyof typeof EventTriggerConditionTestEnum];
 
 /**
  * @type EventTriggerConditionValues

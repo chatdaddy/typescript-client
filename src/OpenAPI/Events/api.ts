@@ -1,3 +1,5 @@
+const BASE_PATH = "https://api-events.chatdaddy.tech".replace(/\/+$/, "");
+
 /* tslint:disable */
 /* eslint-disable */
 /**
@@ -13,13 +15,13 @@
  */
 
 
-import { Configuration } from './configuration';
+import { Configuration } from '../configuration';
 import globalAxios, { AxiosPromise, AxiosInstance, AxiosRequestConfig } from 'axios';
 // Some imports not used depending on template conditions
 // @ts-ignore
-import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObject, setBearerAuthToObject, setOAuthToObject, setSearchParams, serializeDataIfNeeded, toPathString, createRequestFunction } from './common';
+import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObject, setBearerAuthToObject, setOAuthToObject, setSearchParams, serializeDataIfNeeded, toPathString, createRequestFunction } from '../common';
 // @ts-ignore
-import { BASE_PATH, COLLECTION_FORMATS, RequestArgs, BaseAPI, RequiredError } from './base';
+import { COLLECTION_FORMATS, RequestArgs, BaseAPI, RequiredError } from '../base';
 
 /**
  * 
@@ -156,7 +158,7 @@ export interface Subscription {
      * @type {string}
      * @memberof Subscription
      */
-    'type': TypeEnum;
+    'type': SubscriptionTypeEnum;
     /**
      * Web hook url to fire to
      * @type {string}
@@ -165,12 +167,12 @@ export interface Subscription {
     'url'?: string;
 }
 
-export const TypeEnum = {
+export const SubscriptionTypeEnum = {
     Webhook: 'webhook',
     Websocket: 'websocket'
 } as const;
 
-export type TypeEnum = typeof TypeEnum[keyof typeof TypeEnum];
+export type SubscriptionTypeEnum = typeof SubscriptionTypeEnum[keyof typeof SubscriptionTypeEnum];
 
 /**
  * 

@@ -1,3 +1,5 @@
+const BASE_PATH = "https://api-im.chatdaddy.tech".replace(/\/+$/, "");
+
 /* tslint:disable */
 /* eslint-disable */
 /**
@@ -13,13 +15,13 @@
  */
 
 
-import { Configuration } from './configuration';
+import { Configuration } from '../configuration';
 import globalAxios, { AxiosPromise, AxiosInstance, AxiosRequestConfig } from 'axios';
 // Some imports not used depending on template conditions
 // @ts-ignore
-import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObject, setBearerAuthToObject, setOAuthToObject, setSearchParams, serializeDataIfNeeded, toPathString, createRequestFunction } from './common';
+import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObject, setBearerAuthToObject, setOAuthToObject, setSearchParams, serializeDataIfNeeded, toPathString, createRequestFunction } from '../common';
 // @ts-ignore
-import { BASE_PATH, COLLECTION_FORMATS, RequestArgs, BaseAPI, RequiredError } from './base';
+import { COLLECTION_FORMATS, RequestArgs, BaseAPI, RequiredError } from '../base';
 
 /**
  * 
@@ -425,7 +427,7 @@ export interface ChatAction {
      * @type {string}
      * @memberof ChatAction
      */
-    'action': ActionEnum;
+    'action': ChatActionActionEnum;
     /**
      * 
      * @type {boolean}
@@ -434,7 +436,7 @@ export interface ChatAction {
     'value': boolean;
 }
 
-export const ActionEnum = {
+export const ChatActionActionEnum = {
     Archive: 'archive',
     Pin: 'pin',
     Mute: 'mute',
@@ -442,7 +444,7 @@ export const ActionEnum = {
     Delete: 'delete'
 } as const;
 
-export type ActionEnum = typeof ActionEnum[keyof typeof ActionEnum];
+export type ChatActionActionEnum = typeof ChatActionActionEnum[keyof typeof ChatActionActionEnum];
 
 /**
  * 
@@ -1082,15 +1084,15 @@ export interface GroupParticipant {
      * @type {string}
      * @memberof GroupParticipant
      */
-    'admin'?: AdminEnum;
+    'admin'?: GroupParticipantAdminEnum;
 }
 
-export const AdminEnum = {
+export const GroupParticipantAdminEnum = {
     Admin: 'admin',
     SuperAdmin: 'super-admin'
 } as const;
 
-export type AdminEnum = typeof AdminEnum[keyof typeof AdminEnum];
+export type GroupParticipantAdminEnum = typeof GroupParticipantAdminEnum[keyof typeof GroupParticipantAdminEnum];
 
 /**
  * 
@@ -1451,14 +1453,14 @@ export interface MessageAttachmentDecryption {
      * @type {string}
      * @memberof MessageAttachmentDecryption
      */
-    'algorithm': AlgorithmEnum;
+    'algorithm': MessageAttachmentDecryptionAlgorithmEnum;
 }
 
-export const AlgorithmEnum = {
+export const MessageAttachmentDecryptionAlgorithmEnum = {
     Aes256Cbc: 'aes-256-cbc'
 } as const;
 
-export type AlgorithmEnum = typeof AlgorithmEnum[keyof typeof AlgorithmEnum];
+export type MessageAttachmentDecryptionAlgorithmEnum = typeof MessageAttachmentDecryptionAlgorithmEnum[keyof typeof MessageAttachmentDecryptionAlgorithmEnum];
 
 /**
  * 
@@ -1496,7 +1498,7 @@ export interface MessageCompose {
      * @type {string}
      * @memberof MessageCompose
      */
-    'status'?: StatusEnum;
+    'status'?: MessageComposeStatusEnum;
     /**
      * An ISO formatted timestamp
      * @type {string}
@@ -1583,12 +1585,12 @@ export interface MessageCompose {
     'reactions'?: Array<MessageReaction> | null;
 }
 
-export const StatusEnum = {
+export const MessageComposeStatusEnum = {
     Note: 'note',
     Pending: 'pending'
 } as const;
 
-export type StatusEnum = typeof StatusEnum[keyof typeof StatusEnum];
+export type MessageComposeStatusEnum = typeof MessageComposeStatusEnum[keyof typeof MessageComposeStatusEnum];
 
 /**
  * 
@@ -1607,7 +1609,7 @@ export interface MessageComposeAllOf {
      * @type {string}
      * @memberof MessageComposeAllOf
      */
-    'status'?: StatusEnum;
+    'status'?: MessageComposeAllOfStatusEnum;
     /**
      * An ISO formatted timestamp
      * @type {string}
@@ -1628,12 +1630,12 @@ export interface MessageComposeAllOf {
     'parameters'?: { [key: string]: any; };
 }
 
-export const StatusEnum = {
+export const MessageComposeAllOfStatusEnum = {
     Note: 'note',
     Pending: 'pending'
 } as const;
 
-export type StatusEnum = typeof StatusEnum[keyof typeof StatusEnum];
+export type MessageComposeAllOfStatusEnum = typeof MessageComposeAllOfStatusEnum[keyof typeof MessageComposeAllOfStatusEnum];
 
 /**
  * 
@@ -2282,13 +2284,13 @@ export interface TagFieldValidationOneOf {
      * @type {string}
      * @memberof TagFieldValidationOneOf
      */
-    'type'?: TypeEnum;
+    'type'?: TagFieldValidationOneOfTypeEnum;
     /**
      * 
      * @type {string}
      * @memberof TagFieldValidationOneOf
      */
-    'format'?: FormatEnum;
+    'format'?: TagFieldValidationOneOfFormatEnum;
     /**
      * 
      * @type {Array<string>}
@@ -2297,18 +2299,18 @@ export interface TagFieldValidationOneOf {
     'enum'?: Array<string>;
 }
 
-export const TypeEnum = {
+export const TagFieldValidationOneOfTypeEnum = {
     String: 'string'
 } as const;
 
-export type TypeEnum = typeof TypeEnum[keyof typeof TypeEnum];
-export const FormatEnum = {
+export type TagFieldValidationOneOfTypeEnum = typeof TagFieldValidationOneOfTypeEnum[keyof typeof TagFieldValidationOneOfTypeEnum];
+export const TagFieldValidationOneOfFormatEnum = {
     Email: 'email',
     Phone: 'phone',
     Uri: 'uri'
 } as const;
 
-export type FormatEnum = typeof FormatEnum[keyof typeof FormatEnum];
+export type TagFieldValidationOneOfFormatEnum = typeof TagFieldValidationOneOfFormatEnum[keyof typeof TagFieldValidationOneOfFormatEnum];
 
 /**
  * 
@@ -2321,16 +2323,16 @@ export interface TagFieldValidationOneOf1 {
      * @type {string}
      * @memberof TagFieldValidationOneOf1
      */
-    'type'?: TypeEnum;
+    'type'?: TagFieldValidationOneOf1TypeEnum;
 }
 
-export const TypeEnum = {
+export const TagFieldValidationOneOf1TypeEnum = {
     Number: 'number',
     Integer: 'integer',
     Boolean: 'boolean'
 } as const;
 
-export type TypeEnum = typeof TypeEnum[keyof typeof TypeEnum];
+export type TagFieldValidationOneOf1TypeEnum = typeof TagFieldValidationOneOf1TypeEnum[keyof typeof TagFieldValidationOneOf1TypeEnum];
 
 /**
  * 
