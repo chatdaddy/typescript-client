@@ -1,3 +1,4 @@
+export * from './configuration'
 export * from './NLP/api'
 export * from './Events/api'
 export * from './Campaigns/api'
