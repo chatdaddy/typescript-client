@@ -502,43 +502,43 @@ export interface BotsGets200Response {
 /**
  * 
  * @export
- * @interface MessageAttachment
+ * @interface IMMessageAttachment
  */
-export interface MessageAttachment {
+export interface IMMessageAttachment {
     /**
      * 
-     * @type {MessageAttachmentType}
-     * @memberof MessageAttachment
+     * @type {IMMessageAttachmentType}
+     * @memberof IMMessageAttachment
      */
-    'type': MessageAttachmentType;
+    'type': IMMessageAttachmentType;
     /**
      * 
      * @type {string}
-     * @memberof MessageAttachment
+     * @memberof IMMessageAttachment
      */
     'mimetype': string;
     /**
      * 1. can be publicly hosted url,  2. or can be base64 encoded buffer. But make sure it starts with `data:;base64,` Note: the `contact` type only supports base64 encoded data 
      * @type {string}
-     * @memberof MessageAttachment
+     * @memberof IMMessageAttachment
      */
     'url': string;
     /**
      * thumbnail of sticker/video/image
      * @type {any}
-     * @memberof MessageAttachment
+     * @memberof IMMessageAttachment
      */
     'jpegThumbnail'?: any | null;
     /**
      * duration of audio/video message
      * @type {number}
-     * @memberof MessageAttachment
+     * @memberof IMMessageAttachment
      */
     'seconds'?: number;
     /**
      * name of the doc message
      * @type {string}
-     * @memberof MessageAttachment
+     * @memberof IMMessageAttachment
      */
     'filename'?: string;
 }
@@ -548,7 +548,7 @@ export interface MessageAttachment {
  * @enum {string}
  */
 
-export const MessageAttachmentType = {
+export const IMMessageAttachmentType = {
     Image: 'image',
     Video: 'video',
     Contact: 'contact',
@@ -558,7 +558,7 @@ export const MessageAttachmentType = {
     Location: 'location'
 } as const;
 
-export type MessageAttachmentType = typeof MessageAttachmentType[keyof typeof MessageAttachmentType];
+export type IMMessageAttachmentType = typeof IMMessageAttachmentType[keyof typeof IMMessageAttachmentType];
 
 
 /**
@@ -606,10 +606,10 @@ export interface MessageObj {
     'text': string;
     /**
      * array of attachments for the template
-     * @type {Array<MessageAttachment>}
+     * @type {Array<IMMessageAttachment>}
      * @memberof MessageObj
      */
-    'attachments'?: Array<MessageAttachment>;
+    'attachments'?: Array<IMMessageAttachment>;
     /**
      * 
      * @type {Array<MessageButton>}

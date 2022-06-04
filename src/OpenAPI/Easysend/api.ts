@@ -341,99 +341,10 @@ export interface AdminDataGet200ResponseInner {
 export interface DataGet200Response {
     /**
      * 
-     * @type {Array<DataModel>}
+     * @type {Array<EasysendDataModel>}
      * @memberof DataGet200Response
      */
-    'data': Array<DataModel>;
-}
-/**
- * 
- * @export
- * @interface DataModel
- */
-export interface DataModel {
-    /**
-     * 
-     * @type {number}
-     * @memberof DataModel
-     */
-    'id': number;
-    /**
-     * 
-     * @type {string}
-     * @memberof DataModel
-     */
-    'orderId': string;
-    /**
-     * 
-     * @type {NullablePhoneNumber}
-     * @memberof DataModel
-     */
-    'phoneNumber': NullablePhoneNumber;
-    /**
-     * 
-     * @type {DataModelWaResponse}
-     * @memberof DataModel
-     */
-    'waResponse': DataModelWaResponse;
-    /**
-     * 
-     * @type {number}
-     * @memberof DataModel
-     */
-    'triggerId': number | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof DataModel
-     */
-    'status': DataModelStatusEnum;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof DataModel
-     */
-    'isTest': boolean;
-    /**
-     * An ISO formatted timestamp
-     * @type {string}
-     * @memberof DataModel
-     */
-    'datetime': string;
-    /**
-     * 
-     * @type {{ [key: string]: any; }}
-     * @memberof DataModel
-     */
-    'params': { [key: string]: any; };
-}
-
-export const DataModelStatusEnum = {
-    Sent: 'sent',
-    Pending: 'pending',
-    Cancelled: 'cancelled'
-} as const;
-
-export type DataModelStatusEnum = typeof DataModelStatusEnum[keyof typeof DataModelStatusEnum];
-
-/**
- * the response received from the WA service
- * @export
- * @interface DataModelWaResponse
- */
-export interface DataModelWaResponse {
-    /**
-     * the response code
-     * @type {number}
-     * @memberof DataModelWaResponse
-     */
-    'code'?: number;
-    /**
-     * the body received
-     * @type {object}
-     * @memberof DataModelWaResponse
-     */
-    'body'?: object;
+    'data': Array<EasysendDataModel>;
 }
 /**
  * @type DataPatchRequest
@@ -462,10 +373,10 @@ export interface DataPatchRequestOneOf {
 export interface DataResend200Response {
     /**
      * 
-     * @type {DataModel}
+     * @type {EasysendDataModel}
      * @memberof DataResend200Response
      */
-    'data': DataModel;
+    'data': EasysendDataModel;
 }
 /**
  * The type of delay \"stale\" means that the message is sent out with the aforementioned delay (delayS) if the order is not updated. If the order is updated before the delay is over, then the message is cancelled \"simple\" means that the message is sent out regardless of the order update. 
@@ -481,6 +392,95 @@ export const DelayTypeModel = {
 export type DelayTypeModel = typeof DelayTypeModel[keyof typeof DelayTypeModel];
 
 
+/**
+ * 
+ * @export
+ * @interface EasysendDataModel
+ */
+export interface EasysendDataModel {
+    /**
+     * 
+     * @type {number}
+     * @memberof EasysendDataModel
+     */
+    'id': number;
+    /**
+     * 
+     * @type {string}
+     * @memberof EasysendDataModel
+     */
+    'orderId': string;
+    /**
+     * 
+     * @type {NullablePhoneNumber}
+     * @memberof EasysendDataModel
+     */
+    'phoneNumber': NullablePhoneNumber;
+    /**
+     * 
+     * @type {EasysendDataModelWaResponse}
+     * @memberof EasysendDataModel
+     */
+    'waResponse': EasysendDataModelWaResponse;
+    /**
+     * 
+     * @type {number}
+     * @memberof EasysendDataModel
+     */
+    'triggerId': number | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof EasysendDataModel
+     */
+    'status': EasysendDataModelStatusEnum;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof EasysendDataModel
+     */
+    'isTest': boolean;
+    /**
+     * An ISO formatted timestamp
+     * @type {string}
+     * @memberof EasysendDataModel
+     */
+    'datetime': string;
+    /**
+     * 
+     * @type {{ [key: string]: any; }}
+     * @memberof EasysendDataModel
+     */
+    'params': { [key: string]: any; };
+}
+
+export const EasysendDataModelStatusEnum = {
+    Sent: 'sent',
+    Pending: 'pending',
+    Cancelled: 'cancelled'
+} as const;
+
+export type EasysendDataModelStatusEnum = typeof EasysendDataModelStatusEnum[keyof typeof EasysendDataModelStatusEnum];
+
+/**
+ * the response received from the WA service
+ * @export
+ * @interface EasysendDataModelWaResponse
+ */
+export interface EasysendDataModelWaResponse {
+    /**
+     * the response code
+     * @type {number}
+     * @memberof EasysendDataModelWaResponse
+     */
+    'code'?: number;
+    /**
+     * the body received
+     * @type {object}
+     * @memberof EasysendDataModelWaResponse
+     */
+    'body'?: object;
+}
 /**
  * 
  * @export
@@ -1247,129 +1247,6 @@ export class AdminApi extends BaseAPI {
 
 
 /**
- * DataApi - axios parameter creator
- * @export
- */
-export const DataApiAxiosParamCreator = function (configuration?: Configuration) {
-    return {
-        /**
-         * 
-         * @summary Resend the WA message associated with this data point
-         * @param {string} dataId The secret sent to the parsing service
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        dataResend: async (dataId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'dataId' is not null or undefined
-            assertParamExists('dataResend', 'dataId', dataId)
-            const localVarPath = `/data/{dataId}/resend-wa`
-                .replace(`{${"dataId"}}`, encodeURIComponent(String(dataId)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication chatdaddy required
-            // oauth required
-            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["NOTIFICATION_UPDATE"], configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-    }
-};
-
-/**
- * DataApi - functional programming interface
- * @export
- */
-export const DataApiFp = function(configuration?: Configuration) {
-    const localVarAxiosParamCreator = DataApiAxiosParamCreator(configuration)
-    return {
-        /**
-         * 
-         * @summary Resend the WA message associated with this data point
-         * @param {string} dataId The secret sent to the parsing service
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async dataResend(dataId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DataResend200Response>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.dataResend(dataId, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-    }
-};
-
-/**
- * DataApi - factory interface
- * @export
- */
-export const DataApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
-    const localVarFp = DataApiFp(configuration)
-    return {
-        /**
-         * 
-         * @summary Resend the WA message associated with this data point
-         * @param {string} dataId The secret sent to the parsing service
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        dataResend(dataId: string, options?: any): AxiosPromise<DataResend200Response> {
-            return localVarFp.dataResend(dataId, options).then((request) => request(axios, basePath));
-        },
-    };
-};
-
-/**
- * Request parameters for dataResend operation in DataApi.
- * @export
- * @interface DataApiDataResendRequest
- */
-export interface DataApiDataResendRequest {
-    /**
-     * The secret sent to the parsing service
-     * @type {string}
-     * @memberof DataApiDataResend
-     */
-    readonly dataId: string
-}
-
-/**
- * DataApi - object-oriented interface
- * @export
- * @class DataApi
- * @extends {BaseAPI}
- */
-export class DataApi extends BaseAPI {
-    /**
-     * 
-     * @summary Resend the WA message associated with this data point
-     * @param {DataApiDataResendRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof DataApi
-     */
-    public dataResend(requestParameters: DataApiDataResendRequest, options?: AxiosRequestConfig) {
-        return DataApiFp(this.configuration).dataResend(requestParameters.dataId, options).then((request) => request(this.axios, this.basePath));
-    }
-}
-
-
-/**
  * EventsApi - axios parameter creator
  * @export
  */
@@ -1413,6 +1290,44 @@ export const EventsApiAxiosParamCreator = function (configuration?: Configuratio
                 options: localVarRequestOptions,
             };
         },
+        /**
+         * 
+         * @summary Resend the WA message associated with this data point
+         * @param {string} dataId The secret sent to the parsing service
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        dataResend: async (dataId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'dataId' is not null or undefined
+            assertParamExists('dataResend', 'dataId', dataId)
+            const localVarPath = `/data/{dataId}/resend-wa`
+                .replace(`{${"dataId"}}`, encodeURIComponent(String(dataId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["NOTIFICATION_UPDATE"], configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
     }
 };
 
@@ -1435,6 +1350,17 @@ export const EventsApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.dataPatch(secretId, dataPatchRequest, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
+        /**
+         * 
+         * @summary Resend the WA message associated with this data point
+         * @param {string} dataId The secret sent to the parsing service
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async dataResend(dataId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DataResend200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.dataResend(dataId, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
     }
 };
 
@@ -1455,6 +1381,16 @@ export const EventsApiFactory = function (configuration?: Configuration, basePat
          */
         dataPatch(secretId: string, dataPatchRequest?: DataPatchRequest, options?: any): AxiosPromise<void> {
             return localVarFp.dataPatch(secretId, dataPatchRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Resend the WA message associated with this data point
+         * @param {string} dataId The secret sent to the parsing service
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        dataResend(dataId: string, options?: any): AxiosPromise<DataResend200Response> {
+            return localVarFp.dataResend(dataId, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -1481,6 +1417,20 @@ export interface EventsApiDataPatchRequest {
 }
 
 /**
+ * Request parameters for dataResend operation in EventsApi.
+ * @export
+ * @interface EventsApiDataResendRequest
+ */
+export interface EventsApiDataResendRequest {
+    /**
+     * The secret sent to the parsing service
+     * @type {string}
+     * @memberof EventsApiDataResend
+     */
+    readonly dataId: string
+}
+
+/**
  * EventsApi - object-oriented interface
  * @export
  * @class EventsApi
@@ -1497,6 +1447,18 @@ export class EventsApi extends BaseAPI {
      */
     public dataPatch(requestParameters: EventsApiDataPatchRequest, options?: AxiosRequestConfig) {
         return EventsApiFp(this.configuration).dataPatch(requestParameters.secretId, requestParameters.dataPatchRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Resend the WA message associated with this data point
+     * @param {EventsApiDataResendRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof EventsApi
+     */
+    public dataResend(requestParameters: EventsApiDataResendRequest, options?: AxiosRequestConfig) {
+        return EventsApiFp(this.configuration).dataResend(requestParameters.dataId, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
