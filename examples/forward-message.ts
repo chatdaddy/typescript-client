@@ -1,9 +1,7 @@
 import dotenv from 'dotenv'
 dotenv.config()
 
-import { makeAccessTokenFactory, Scope } from '@chatdaddy/service-auth-client'
-
-import { ChatsApi, Configuration, MessagesApi } from '../src'
+import { makeAccessTokenFactory, Scope, ChatsApi, Configuration, MessagesApi } from '../src'
 
 /**
  * Example
@@ -31,7 +29,7 @@ const run = async() => {
 	const chatsApi = new ChatsApi(new Configuration({ accessToken }))
     
 	// find the 2 most recent chats in the account
-	const { data } = await chatsApi.chatsGet(2)
+	const { data } = await chatsApi.chatsGet({ count: 2 })
     
 	const firstChat = data.chats[0]
 	const secondChat = data.chats[1]
@@ -45,11 +43,11 @@ const run = async() => {
     
     
 	// send a text message to the first chat
-	const { data: { messages } } = await messagesApi.messagesGet(firstChat.accountId, firstChat.id)
+	const { data: { messages } } = await messagesApi.messagesGet({ accountId: firstChat.accountId, chatId: firstChat.id })
 	const message = messages[0]
     
 	// forward the message to the second chat
-	const { data: forwardedMessages } = await messagesApi.messagesForward(firstChat!.accountId!, firstChat!.id!, message.id, [secondChat.id])
+	const { data: forwardedMessages } = await messagesApi.messagesForward({ accountId: firstChat!.accountId!, chatId: firstChat!.id!, id: message.id, toChatId: [secondChat.id] })
 
 	console.log(`forwarded message with ID: "${forwardedMessages[0].id}" to "${forwardedMessages[0].chatId}" on ${forwardedMessages[0].timestamp}`)
 }

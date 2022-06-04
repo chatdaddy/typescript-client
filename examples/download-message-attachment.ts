@@ -1,8 +1,7 @@
 import dotenv from 'dotenv'
 dotenv.config()
 
-import { makeAccessTokenFactory, Scope } from '@chatdaddy/service-auth-client'
-import { ChatsApi, Configuration, MessagesApi } from '../src'
+import { makeAccessTokenFactory, Scope, ChatsApi, Configuration, MessagesApi } from '../src'
 import { downloadMessageAttachment } from './utils'
 
 /**
@@ -30,12 +29,12 @@ const run = async() => {
 	const chatsApi = new ChatsApi(new Configuration({ accessToken }))
 	const messagesApi = new MessagesApi(new Configuration({ accessToken }))
 	// fetch one chat
-	const { data: { chats } } = await chatsApi.chatsGet(1)
+	const { data: { chats } } = await chatsApi.chatsGet({ count: 1 })
 	if(!chats.length) {
 		throw new Error('No chats found, cannot run the example')
 	}
 	// fetch messages in that chat
-	const { data: { messages } } = await messagesApi.messagesGet(chats[0].accountId, chats[0].id)
+	const { data: { messages } } = await messagesApi.messagesGet({ accountId: chats[0].accountId, chatId: chats[0].id })
 	for(const msg of messages) {
 		// if the message has some attachment, download it
 		if(msg.attachments?.length) {

@@ -1,9 +1,7 @@
 import dotenv from 'dotenv'
 dotenv.config()
 
-import { makeAccessTokenFactory, Scope } from '@chatdaddy/service-auth-client'
-
-import { ContactsApi, Configuration } from '../src'
+import { ContactsApi, Configuration,  makeAccessTokenFactory, Scope } from '../src'
 
 /**
  * Example
@@ -34,12 +32,12 @@ const run = async() => {
         name: 'Jimminy Crocket',
         email: 'jcrockers@gmail.com',
     }    
-    await contactsApi.contactsPost({ contacts: [contactData] })
+    await contactsApi.contactsPost({ contactsPost: { contacts: [contactData] } })
 	console.log(`Successfully Created Contact Jimminy Crocket."`)
     
 	// throw error if no chat available
 	
-    const { data: { contacts } } = await contactsApi.contactsGet(undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,'Jimminy Crocket')
+    const { data: { contacts } } = await contactsApi.contactsGet({ q: 'Jimminy Crocket' })
     
     const contact = contacts[0]
 	console.log(`Successfully Fetched Contact ${contact.name}`)

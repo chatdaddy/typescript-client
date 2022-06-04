@@ -1,8 +1,7 @@
 import dotenv from 'dotenv'
 dotenv.config()
 
-import { makeAccessTokenFactory, Scope } from '@chatdaddy/service-auth-client'
-import { ChatsApi, Configuration } from '../src'
+import { makeAccessTokenFactory, Scope, ChatsApi, Configuration } from '../src'
 
 /**
  * Example
@@ -28,52 +27,15 @@ const run = async() => {
 	
 	const chatsApi = new ChatsApi(new Configuration({ accessToken }))
 
-	const { data: { chats: unreadChats } } = await chatsApi.chatsGet(
-		undefined, // Count, Limit of chats to get eg. 10
-		undefined, // Page count eg. 2,
-		undefined, // Filter archieved or unarchived chats eg. false
-		true, //Filter only unread messages eg. true
-	)
+	const { data: { chats: unreadChats } } = await chatsApi.chatsGet({ unread: true })
 
 	console.log(`got ${unreadChats.length} unread chats`)
 
-	const { data: { chats: groupChats } } = await chatsApi.chatsGet(
-		undefined, // Count, Limit of chats to get eg. 10
-		undefined, // Page count eg. 2,
-		undefined, // Filter archieved or unarchived chats eg. false
-		undefined, //Filter only unread messages eg. true
-		undefined, // Filter Chats that have pending messages eg. true
-		undefined, // Search for user Id mentioned in chat
-		undefined, // Filter chats that have any unsolved notes
-		undefined, // Filter chats where last message was from me
-		undefined, // Filter contacts who fall in either of these tags
-		undefined, // Filter these specific contact ids
-		undefined, // Search string for contact name/phone number/email
-		undefined, // Filter contacts assigned to the specified users
-		undefined, // Filter contacts only belonging to this account,
-		undefined,
-		'group'
-	)
+	const { data: { chats: groupChats } } = await chatsApi.chatsGet({ type: 'group' })
 
 	console.log(`got ${groupChats.length} group chats`)
 
-	const { data: { chats: individualChats } } = await chatsApi.chatsGet(
-		undefined, // Count, Limit of chats to get eg. 10
-		undefined, // Page count eg. 2,
-		undefined, // Filter archieved or unarchived chats eg. false
-		undefined, //Filter only unread messages eg. true
-		undefined, // Filter Chats that have pending messages eg. true
-		undefined, // Search for user Id mentioned in chat
-		undefined, // Filter chats that have any unsolved notes
-		undefined, // Filter chats where last message was from me
-		undefined, // Filter contacts who fall in either of these tags
-		undefined, // Filter these specific contact ids
-		undefined, // Search string for contact name/phone number/email
-		undefined, // Filter contacts assigned to the specified users
-		undefined, // Filter contacts only belonging to this account,
-		undefined, // only chats with the given account ID
-		'individual'
-	)
+	const { data: { chats: individualChats } } = await chatsApi.chatsGet({ type: 'individual' })
 
 	console.log(`got ${individualChats.length} individual chats`)
 
