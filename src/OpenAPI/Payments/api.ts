@@ -866,6 +866,12 @@ export type PurchaseStatus = typeof PurchaseStatus[keyof typeof PurchaseStatus];
 export interface PurchasedAccountsGet200Response {
     /**
      * 
+     * @type {boolean}
+     * @memberof PurchasedAccountsGet200Response
+     */
+    'allowCustomMarketingMessage': boolean;
+    /**
+     * 
      * @type {Array<AccountPurchase>}
      * @memberof PurchasedAccountsGet200Response
      */
