@@ -54,6 +54,12 @@ export interface Account {
      */
     'credentials'?: { [key: string]: any; } | null;
     /**
+     * Prefix for the webhook URL
+     * @type {string}
+     * @memberof Account
+     */
+    'webhookUrlPrefix'?: string;
+    /**
      * 
      * @type {AccountType}
      * @memberof Account
@@ -201,6 +207,7 @@ export type AccountTier = typeof AccountTier[keyof typeof AccountTier];
 
 export const AccountType = {
     Wa: 'wa',
+    WaBusinessApi: 'wa-business-api',
     Mock: 'mock'
 } as const;
 
@@ -289,6 +296,94 @@ export interface AccountsPostRequest {
      */
     'nickname'?: string;
 }
+/**
+ * 
+ * @export
+ * @interface AlibabaCAMSWebhookItem
+ */
+export interface AlibabaCAMSWebhookItem {
+    /**
+     * 
+     * @type {string}
+     * @memberof AlibabaCAMSWebhookItem
+     */
+    'Type': AlibabaCAMSWebhookItemTypeEnum;
+    /**
+     * 
+     * @type {string}
+     * @memberof AlibabaCAMSWebhookItem
+     */
+    'Status'?: AlibabaCAMSWebhookItemStatusEnum;
+    /**
+     * 
+     * @type {string}
+     * @memberof AlibabaCAMSWebhookItem
+     */
+    'ConversationId'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof AlibabaCAMSWebhookItem
+     */
+    'Message'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof AlibabaCAMSWebhookItem
+     */
+    'From': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof AlibabaCAMSWebhookItem
+     */
+    'To': string;
+    /**
+     * Unix timestamp in MS
+     * @type {number}
+     * @memberof AlibabaCAMSWebhookItem
+     */
+    'Timestamp': number;
+    /**
+     * 
+     * @type {string}
+     * @memberof AlibabaCAMSWebhookItem
+     */
+    'MessageId': string;
+    /**
+     * Name of the user that sent the message
+     * @type {string}
+     * @memberof AlibabaCAMSWebhookItem
+     */
+    'Name'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof AlibabaCAMSWebhookItem
+     */
+    'ConversationType'?: AlibabaCAMSWebhookItemConversationTypeEnum;
+}
+
+export const AlibabaCAMSWebhookItemTypeEnum = {
+    Text: 'TEXT',
+    Template: 'TEMPLATE'
+} as const;
+
+export type AlibabaCAMSWebhookItemTypeEnum = typeof AlibabaCAMSWebhookItemTypeEnum[keyof typeof AlibabaCAMSWebhookItemTypeEnum];
+export const AlibabaCAMSWebhookItemStatusEnum = {
+    Sent: 'Sent',
+    Delivered: 'Delivered',
+    Read: 'Read'
+} as const;
+
+export type AlibabaCAMSWebhookItemStatusEnum = typeof AlibabaCAMSWebhookItemStatusEnum[keyof typeof AlibabaCAMSWebhookItemStatusEnum];
+export const AlibabaCAMSWebhookItemConversationTypeEnum = {
+    BusinessInitiated: 'business_initiated',
+    UserInitiated: 'user_initiated'
+} as const;
+
+export type AlibabaCAMSWebhookItemConversationTypeEnum = typeof AlibabaCAMSWebhookItemConversationTypeEnum[keyof typeof AlibabaCAMSWebhookItemConversationTypeEnum];
+
 /**
  * 
  * @export
@@ -7651,6 +7746,151 @@ export class TagsApi extends BaseAPI {
      */
     public tagsPost(requestParameters: TagsApiTagsPostRequest, options?: AxiosRequestConfig) {
         return TagsApiFp(this.configuration).tagsPost(requestParameters.name, requestParameters.tags, requestParameters.notTags, requestParameters.contacts, requestParameters.notContacts, requestParameters.minMessagesSent, requestParameters.minMessagesRecv, requestParameters.maxMessagesSent, requestParameters.maxMessagesRecv, requestParameters.q, requestParameters.assignee, requestParameters.accountId, requestParameters.type, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+/**
+ * WebhookApi - axios parameter creator
+ * @export
+ */
+export const WebhookApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @summary Receive a message from Alibaba CAMS API
+         * @param {string} accountId 
+         * @param {string} secret 
+         * @param {Array<AlibabaCAMSWebhookItem>} [alibabaCAMSWebhookItem] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        webhookAlibabaCamsPost: async (accountId: string, secret: string, alibabaCAMSWebhookItem?: Array<AlibabaCAMSWebhookItem>, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'accountId' is not null or undefined
+            assertParamExists('webhookAlibabaCamsPost', 'accountId', accountId)
+            // verify required parameter 'secret' is not null or undefined
+            assertParamExists('webhookAlibabaCamsPost', 'secret', secret)
+            const localVarPath = `/webhook/{accountId}/{secret}/alibaba-cams`
+                .replace(`{${"accountId"}}`, encodeURIComponent(String(accountId)))
+                .replace(`{${"secret"}}`, encodeURIComponent(String(secret)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(alibabaCAMSWebhookItem, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * WebhookApi - functional programming interface
+ * @export
+ */
+export const WebhookApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = WebhookApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * 
+         * @summary Receive a message from Alibaba CAMS API
+         * @param {string} accountId 
+         * @param {string} secret 
+         * @param {Array<AlibabaCAMSWebhookItem>} [alibabaCAMSWebhookItem] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async webhookAlibabaCamsPost(accountId: string, secret: string, alibabaCAMSWebhookItem?: Array<AlibabaCAMSWebhookItem>, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AccountsLogout200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.webhookAlibabaCamsPost(accountId, secret, alibabaCAMSWebhookItem, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+    }
+};
+
+/**
+ * WebhookApi - factory interface
+ * @export
+ */
+export const WebhookApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = WebhookApiFp(configuration)
+    return {
+        /**
+         * 
+         * @summary Receive a message from Alibaba CAMS API
+         * @param {string} accountId 
+         * @param {string} secret 
+         * @param {Array<AlibabaCAMSWebhookItem>} [alibabaCAMSWebhookItem] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        webhookAlibabaCamsPost(accountId: string, secret: string, alibabaCAMSWebhookItem?: Array<AlibabaCAMSWebhookItem>, options?: any): AxiosPromise<AccountsLogout200Response> {
+            return localVarFp.webhookAlibabaCamsPost(accountId, secret, alibabaCAMSWebhookItem, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * Request parameters for webhookAlibabaCamsPost operation in WebhookApi.
+ * @export
+ * @interface WebhookApiWebhookAlibabaCamsPostRequest
+ */
+export interface WebhookApiWebhookAlibabaCamsPostRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof WebhookApiWebhookAlibabaCamsPost
+     */
+    readonly accountId: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof WebhookApiWebhookAlibabaCamsPost
+     */
+    readonly secret: string
+
+    /**
+     * 
+     * @type {Array<AlibabaCAMSWebhookItem>}
+     * @memberof WebhookApiWebhookAlibabaCamsPost
+     */
+    readonly alibabaCAMSWebhookItem?: Array<AlibabaCAMSWebhookItem>
+}
+
+/**
+ * WebhookApi - object-oriented interface
+ * @export
+ * @class WebhookApi
+ * @extends {BaseAPI}
+ */
+export class WebhookApi extends BaseAPI {
+    /**
+     * 
+     * @summary Receive a message from Alibaba CAMS API
+     * @param {WebhookApiWebhookAlibabaCamsPostRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof WebhookApi
+     */
+    public webhookAlibabaCamsPost(requestParameters: WebhookApiWebhookAlibabaCamsPostRequest, options?: AxiosRequestConfig) {
+        return WebhookApiFp(this.configuration).webhookAlibabaCamsPost(requestParameters.accountId, requestParameters.secret, requestParameters.alibabaCAMSWebhookItem, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
