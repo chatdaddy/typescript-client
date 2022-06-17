@@ -115,6 +115,12 @@ export interface Account {
     'canLogin': boolean;
     /**
      * 
+     * @type {string}
+     * @memberof Account
+     */
+    'userId'?: string | null;
+    /**
+     * 
      * @type {Contact}
      * @memberof Account
      */
