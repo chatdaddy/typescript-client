@@ -2128,6 +2128,12 @@ export interface MessagesSearch200Response {
  */
 export interface MiscOptions {
     /**
+     * Original ID from the provider
+     * @type {string}
+     * @memberof MiscOptions
+     */
+    'originalId'?: string;
+    /**
      * Emulate typing behaviour before send
      * @type {boolean}
      * @memberof MiscOptions
