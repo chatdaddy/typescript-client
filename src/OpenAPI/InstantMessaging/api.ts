@@ -327,7 +327,7 @@ export interface AlibabaCAMSWebhookItem {
      */
     'ConversationId'?: string;
     /**
-     * 
+     * Raw text if type=TEXT, otherwise JSON stringified content
      * @type {string}
      * @memberof AlibabaCAMSWebhookItem
      */
@@ -372,7 +372,13 @@ export interface AlibabaCAMSWebhookItem {
 
 export const AlibabaCAMSWebhookItemTypeEnum = {
     Text: 'TEXT',
-    Template: 'TEMPLATE'
+    Template: 'TEMPLATE',
+    Image: 'IMAGE',
+    Video: 'VIDEO',
+    Audio: 'AUDIO',
+    Document: 'DOCUMENT',
+    Unknown: 'UNKNOWN',
+    Location: 'LOCATION'
 } as const;
 
 export type AlibabaCAMSWebhookItemTypeEnum = typeof AlibabaCAMSWebhookItemTypeEnum[keyof typeof AlibabaCAMSWebhookItemTypeEnum];
@@ -1064,13 +1070,13 @@ export interface GroupAction {
      * @type {GroupActionType}
      * @memberof GroupAction
      */
-    'action'?: GroupActionType;
+    'action': GroupActionType;
     /**
      * 
      * @type {Array<string>}
      * @memberof GroupAction
      */
-    'participants'?: Array<string>;
+    'participants': Array<string>;
 }
 /**
  * 
