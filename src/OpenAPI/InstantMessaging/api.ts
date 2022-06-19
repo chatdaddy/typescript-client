@@ -2140,6 +2140,12 @@ export interface MiscOptions {
      */
     'originalId'?: string;
     /**
+     * WA Business template
+     * @type {string}
+     * @memberof MiscOptions
+     */
+    'templateId'?: string;
+    /**
      * Emulate typing behaviour before send
      * @type {boolean}
      * @memberof MiscOptions
