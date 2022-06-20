@@ -378,7 +378,8 @@ export const AlibabaCAMSWebhookItemTypeEnum = {
     Audio: 'AUDIO',
     Document: 'DOCUMENT',
     Unknown: 'UNKNOWN',
-    Location: 'LOCATION'
+    Location: 'LOCATION',
+    Interactive: 'INTERACTIVE'
 } as const;
 
 export type AlibabaCAMSWebhookItemTypeEnum = typeof AlibabaCAMSWebhookItemTypeEnum[keyof typeof AlibabaCAMSWebhookItemTypeEnum];
@@ -2145,6 +2146,12 @@ export interface MiscOptions {
      * @memberof MiscOptions
      */
     'templateId'?: string;
+    /**
+     * WA Business template params -- do not need to populate
+     * @type {{ [key: string]: string; }}
+     * @memberof MiscOptions
+     */
+    'templateParams'?: { [key: string]: string; };
     /**
      * Emulate typing behaviour before send
      * @type {boolean}
