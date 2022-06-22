@@ -345,6 +345,12 @@ export interface DataGet200Response {
      * @memberof DataGet200Response
      */
     'data': Array<EasysendDataModel>;
+    /**
+     * 
+     * @type {number}
+     * @memberof DataGet200Response
+     */
+    'total'?: number;
 }
 /**
  * @type DataPatchRequest
@@ -1816,10 +1822,11 @@ export const TrackingsApiAxiosParamCreator = function (configuration?: Configura
          * @param {string} [q] Query to retrieve select orders
          * @param {boolean} [excludeTests] Should tests be excluded
          * @param {boolean} [includeNullTriggers] Should events which did not trigger an EventTrigger be included?
+         * @param {boolean} [returnTotal] Should a total of the number of orders returned by the given query be included
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        dataGet: async (trackingId?: number, phoneNumber?: number, triggerId?: number, pageSize?: number, cursor?: number, q?: string, excludeTests?: boolean, includeNullTriggers?: boolean, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        dataGet: async (trackingId?: number, phoneNumber?: number, triggerId?: number, pageSize?: number, cursor?: number, q?: string, excludeTests?: boolean, includeNullTriggers?: boolean, returnTotal?: boolean, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/tracking/data`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -1866,6 +1873,10 @@ export const TrackingsApiAxiosParamCreator = function (configuration?: Configura
 
             if (includeNullTriggers !== undefined) {
                 localVarQueryParameter['includeNullTriggers'] = includeNullTriggers;
+            }
+
+            if (returnTotal !== undefined) {
+                localVarQueryParameter['returnTotal'] = returnTotal;
             }
 
 
@@ -2136,11 +2147,12 @@ export const TrackingsApiFp = function(configuration?: Configuration) {
          * @param {string} [q] Query to retrieve select orders
          * @param {boolean} [excludeTests] Should tests be excluded
          * @param {boolean} [includeNullTriggers] Should events which did not trigger an EventTrigger be included?
+         * @param {boolean} [returnTotal] Should a total of the number of orders returned by the given query be included
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async dataGet(trackingId?: number, phoneNumber?: number, triggerId?: number, pageSize?: number, cursor?: number, q?: string, excludeTests?: boolean, includeNullTriggers?: boolean, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DataGet200Response>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.dataGet(trackingId, phoneNumber, triggerId, pageSize, cursor, q, excludeTests, includeNullTriggers, options);
+        async dataGet(trackingId?: number, phoneNumber?: number, triggerId?: number, pageSize?: number, cursor?: number, q?: string, excludeTests?: boolean, includeNullTriggers?: boolean, returnTotal?: boolean, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DataGet200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.dataGet(trackingId, phoneNumber, triggerId, pageSize, cursor, q, excludeTests, includeNullTriggers, returnTotal, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -2232,11 +2244,12 @@ export const TrackingsApiFactory = function (configuration?: Configuration, base
          * @param {string} [q] Query to retrieve select orders
          * @param {boolean} [excludeTests] Should tests be excluded
          * @param {boolean} [includeNullTriggers] Should events which did not trigger an EventTrigger be included?
+         * @param {boolean} [returnTotal] Should a total of the number of orders returned by the given query be included
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        dataGet(trackingId?: number, phoneNumber?: number, triggerId?: number, pageSize?: number, cursor?: number, q?: string, excludeTests?: boolean, includeNullTriggers?: boolean, options?: any): AxiosPromise<DataGet200Response> {
-            return localVarFp.dataGet(trackingId, phoneNumber, triggerId, pageSize, cursor, q, excludeTests, includeNullTriggers, options).then((request) => request(axios, basePath));
+        dataGet(trackingId?: number, phoneNumber?: number, triggerId?: number, pageSize?: number, cursor?: number, q?: string, excludeTests?: boolean, includeNullTriggers?: boolean, returnTotal?: boolean, options?: any): AxiosPromise<DataGet200Response> {
+            return localVarFp.dataGet(trackingId, phoneNumber, triggerId, pageSize, cursor, q, excludeTests, includeNullTriggers, returnTotal, options).then((request) => request(axios, basePath));
         },
         /**
          * This deletes the tracking and its associated flowIds from the Database permanently.
@@ -2364,6 +2377,13 @@ export interface TrackingsApiDataGetRequest {
      * @memberof TrackingsApiDataGet
      */
     readonly includeNullTriggers?: boolean
+
+    /**
+     * Should a total of the number of orders returned by the given query be included
+     * @type {boolean}
+     * @memberof TrackingsApiDataGet
+     */
+    readonly returnTotal?: boolean
 }
 
 /**
@@ -2480,7 +2500,7 @@ export class TrackingsApi extends BaseAPI {
      * @memberof TrackingsApi
      */
     public dataGet(requestParameters: TrackingsApiDataGetRequest = {}, options?: AxiosRequestConfig) {
-        return TrackingsApiFp(this.configuration).dataGet(requestParameters.trackingId, requestParameters.phoneNumber, requestParameters.triggerId, requestParameters.pageSize, requestParameters.cursor, requestParameters.q, requestParameters.excludeTests, requestParameters.includeNullTriggers, options).then((request) => request(this.axios, this.basePath));
+        return TrackingsApiFp(this.configuration).dataGet(requestParameters.trackingId, requestParameters.phoneNumber, requestParameters.triggerId, requestParameters.pageSize, requestParameters.cursor, requestParameters.q, requestParameters.excludeTests, requestParameters.includeNullTriggers, requestParameters.returnTotal, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
