@@ -327,6 +327,37 @@ export interface Bot {
 /**
  * 
  * @export
+ * @interface BotMessageButton
+ */
+export interface BotMessageButton {
+    /**
+     * 
+     * @type {string}
+     * @memberof BotMessageButton
+     */
+    'text': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof BotMessageButton
+     */
+    'triggerActionId'?: string | null;
+    /**
+     * Make a button with a link
+     * @type {string}
+     * @memberof BotMessageButton
+     */
+    'url'?: string;
+    /**
+     * Make a button with a phone number
+     * @type {string}
+     * @memberof BotMessageButton
+     */
+    'phoneNumber'?: string;
+}
+/**
+ * 
+ * @export
  * @interface BotPatch
  */
 export interface BotPatch {
@@ -564,37 +595,6 @@ export type IMMessageAttachmentType = typeof IMMessageAttachmentType[keyof typeo
 /**
  * 
  * @export
- * @interface MessageButton
- */
-export interface MessageButton {
-    /**
-     * 
-     * @type {string}
-     * @memberof MessageButton
-     */
-    'text': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof MessageButton
-     */
-    'triggerActionId'?: string | null;
-    /**
-     * Make a button with a link
-     * @type {string}
-     * @memberof MessageButton
-     */
-    'url'?: string;
-    /**
-     * Make a button with a phone number
-     * @type {string}
-     * @memberof MessageButton
-     */
-    'phoneNumber'?: string;
-}
-/**
- * 
- * @export
  * @interface MessageObj
  */
 export interface MessageObj {
@@ -612,10 +612,10 @@ export interface MessageObj {
     'attachments'?: Array<IMMessageAttachment>;
     /**
      * 
-     * @type {Array<MessageButton>}
+     * @type {Array<BotMessageButton>}
      * @memberof MessageObj
      */
-    'buttons'?: Array<MessageButton>;
+    'buttons'?: Array<BotMessageButton>;
     /**
      * 
      * @type {string}
