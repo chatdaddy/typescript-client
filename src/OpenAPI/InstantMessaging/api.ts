@@ -1337,10 +1337,10 @@ export interface Message {
     'attachments'?: Array<MessageAttachment>;
     /**
      * 
-     * @type {Array<MessageContentButtonsInner>}
+     * @type {Array<MessageButton>}
      * @memberof Message
      */
-    'buttons'?: Array<MessageContentButtonsInner> | null;
+    'buttons'?: Array<MessageButton> | null;
     /**
      * 
      * @type {Array<MessageProduct>}
@@ -1592,6 +1592,37 @@ export type MessageAttachmentType = typeof MessageAttachmentType[keyof typeof Me
 /**
  * 
  * @export
+ * @interface MessageButton
+ */
+export interface MessageButton {
+    /**
+     * 
+     * @type {string}
+     * @memberof MessageButton
+     */
+    'id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof MessageButton
+     */
+    'text': string;
+    /**
+     * Make a button with a link
+     * @type {string}
+     * @memberof MessageButton
+     */
+    'url'?: string;
+    /**
+     * Make a button with a phone number
+     * @type {string}
+     * @memberof MessageButton
+     */
+    'phoneNumber'?: string;
+}
+/**
+ * 
+ * @export
  * @interface MessageCompose
  */
 export interface MessageCompose {
@@ -1663,10 +1694,10 @@ export interface MessageCompose {
     'attachments'?: Array<MessageAttachment>;
     /**
      * 
-     * @type {Array<MessageContentButtonsInner>}
+     * @type {Array<MessageButton>}
      * @memberof MessageCompose
      */
-    'buttons'?: Array<MessageContentButtonsInner> | null;
+    'buttons'?: Array<MessageButton> | null;
     /**
      * 
      * @type {Array<MessageProduct>}
@@ -1789,10 +1820,10 @@ export interface MessageContent {
     'attachments'?: Array<MessageAttachment>;
     /**
      * 
-     * @type {Array<MessageContentButtonsInner>}
+     * @type {Array<MessageButton>}
      * @memberof MessageContent
      */
-    'buttons'?: Array<MessageContentButtonsInner> | null;
+    'buttons'?: Array<MessageButton> | null;
     /**
      * 
      * @type {Array<MessageProduct>}
@@ -1836,37 +1867,6 @@ export interface MessageContentAction {
      * @memberof MessageContentAction
      */
     'parameters'?: Array<string>;
-}
-/**
- * 
- * @export
- * @interface MessageContentButtonsInner
- */
-export interface MessageContentButtonsInner {
-    /**
-     * 
-     * @type {string}
-     * @memberof MessageContentButtonsInner
-     */
-    'id': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof MessageContentButtonsInner
-     */
-    'text': string;
-    /**
-     * Make a button with a link
-     * @type {string}
-     * @memberof MessageContentButtonsInner
-     */
-    'url'?: string;
-    /**
-     * Make a button with a phone number
-     * @type {string}
-     * @memberof MessageContentButtonsInner
-     */
-    'phoneNumber'?: string;
 }
 /**
  * 
@@ -2485,6 +2485,137 @@ export interface TagsPatchRequest {
      * @memberof TagsPatchRequest
      */
     'validation'?: TagFieldValidation;
+}
+/**
+ * Description of the category of the template
+ * @export
+ * @enum {string}
+ */
+
+export const TemplateCategory = {
+    AccountUpdate: 'account-update',
+    PaymentUpdate: 'payment-update',
+    PersonalFinanceUpdate: 'personal-finance-update',
+    TransportationUpdate: 'transportation-update',
+    ReservationUpdate: 'reservation-update',
+    IssueResolution: 'issue-resolution',
+    AppointmentUpdate: 'appointment-update',
+    ShippingUpdate: 'shipping-update',
+    TicketUpdate: 'ticket-update',
+    AlertUpdate: 'alert-update',
+    AutoReply: 'auto-reply',
+    Otp: 'otp'
+} as const;
+
+export type TemplateCategory = typeof TemplateCategory[keyof typeof TemplateCategory];
+
+
+/**
+ * 
+ * @export
+ * @interface TemplateCreate
+ */
+export interface TemplateCreate {
+    /**
+     * 
+     * @type {string}
+     * @memberof TemplateCreate
+     */
+    'text': string;
+    /**
+     * 
+     * @type {Array<MessageButton>}
+     * @memberof TemplateCreate
+     */
+    'buttons'?: Array<MessageButton>;
+    /**
+     * 
+     * @type {Array<TemplateCreateAttachmentsInner>}
+     * @memberof TemplateCreate
+     */
+    'attachments'?: Array<TemplateCreateAttachmentsInner>;
+}
+/**
+ * 
+ * @export
+ * @interface TemplateCreateAttachmentsInner
+ */
+export interface TemplateCreateAttachmentsInner {
+    /**
+     * 
+     * @type {MessageAttachmentType}
+     * @memberof TemplateCreateAttachmentsInner
+     */
+    'type': MessageAttachmentType;
+    /**
+     * 
+     * @type {string}
+     * @memberof TemplateCreateAttachmentsInner
+     */
+    'url': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof TemplateCreateAttachmentsInner
+     */
+    'filename'?: string;
+}
+/**
+ * 
+ * @export
+ * @interface TemplateParams
+ */
+export interface TemplateParams {
+    /**
+     * 
+     * @type {string}
+     * @memberof TemplateParams
+     */
+    'name': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof TemplateParams
+     */
+    'language': string;
+    /**
+     * 
+     * @type {TemplateCategory}
+     * @memberof TemplateParams
+     */
+    'category': TemplateCategory;
+}
+/**
+ * 
+ * @export
+ * @interface TemplatesSubmitForReview200Response
+ */
+export interface TemplatesSubmitForReview200Response {
+    /**
+     * ID of the template submitted for review
+     * @type {string}
+     * @memberof TemplatesSubmitForReview200Response
+     */
+    'id': string;
+}
+/**
+ * 
+ * @export
+ * @interface TemplatesSubmitForReviewRequest
+ */
+export interface TemplatesSubmitForReviewRequest {
+    /**
+     * 
+     * @type {TemplateParams}
+     * @memberof TemplatesSubmitForReviewRequest
+     */
+    'params': TemplateParams;
+    /**
+     * 
+     * @type {TemplateCreate}
+     * @memberof TemplatesSubmitForReviewRequest
+     */
+    'message': TemplateCreate;
 }
 
 /**
@@ -7777,6 +7908,142 @@ export class TagsApi extends BaseAPI {
      */
     public tagsPost(requestParameters: TagsApiTagsPostRequest, options?: AxiosRequestConfig) {
         return TagsApiFp(this.configuration).tagsPost(requestParameters.name, requestParameters.tags, requestParameters.notTags, requestParameters.contacts, requestParameters.notContacts, requestParameters.minMessagesSent, requestParameters.minMessagesRecv, requestParameters.maxMessagesSent, requestParameters.maxMessagesRecv, requestParameters.q, requestParameters.assignee, requestParameters.accountId, requestParameters.type, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+/**
+ * TemplatesApi - axios parameter creator
+ * @export
+ */
+export const TemplatesApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @summary Submit a template for review
+         * @param {AccountType} accountType 
+         * @param {TemplatesSubmitForReviewRequest} [templatesSubmitForReviewRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        templatesSubmitForReview: async (accountType: AccountType, templatesSubmitForReviewRequest?: TemplatesSubmitForReviewRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'accountType' is not null or undefined
+            assertParamExists('templatesSubmitForReview', 'accountType', accountType)
+            const localVarPath = `/templates/{accountType}/submit-for-review`
+                .replace(`{${"accountType"}}`, encodeURIComponent(String(accountType)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["TEMPLATES_CREATE"], configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(templatesSubmitForReviewRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * TemplatesApi - functional programming interface
+ * @export
+ */
+export const TemplatesApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = TemplatesApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * 
+         * @summary Submit a template for review
+         * @param {AccountType} accountType 
+         * @param {TemplatesSubmitForReviewRequest} [templatesSubmitForReviewRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async templatesSubmitForReview(accountType: AccountType, templatesSubmitForReviewRequest?: TemplatesSubmitForReviewRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TemplatesSubmitForReview200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.templatesSubmitForReview(accountType, templatesSubmitForReviewRequest, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+    }
+};
+
+/**
+ * TemplatesApi - factory interface
+ * @export
+ */
+export const TemplatesApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = TemplatesApiFp(configuration)
+    return {
+        /**
+         * 
+         * @summary Submit a template for review
+         * @param {AccountType} accountType 
+         * @param {TemplatesSubmitForReviewRequest} [templatesSubmitForReviewRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        templatesSubmitForReview(accountType: AccountType, templatesSubmitForReviewRequest?: TemplatesSubmitForReviewRequest, options?: any): AxiosPromise<TemplatesSubmitForReview200Response> {
+            return localVarFp.templatesSubmitForReview(accountType, templatesSubmitForReviewRequest, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * Request parameters for templatesSubmitForReview operation in TemplatesApi.
+ * @export
+ * @interface TemplatesApiTemplatesSubmitForReviewRequest
+ */
+export interface TemplatesApiTemplatesSubmitForReviewRequest {
+    /**
+     * 
+     * @type {AccountType}
+     * @memberof TemplatesApiTemplatesSubmitForReview
+     */
+    readonly accountType: AccountType
+
+    /**
+     * 
+     * @type {TemplatesSubmitForReviewRequest}
+     * @memberof TemplatesApiTemplatesSubmitForReview
+     */
+    readonly templatesSubmitForReviewRequest?: TemplatesSubmitForReviewRequest
+}
+
+/**
+ * TemplatesApi - object-oriented interface
+ * @export
+ * @class TemplatesApi
+ * @extends {BaseAPI}
+ */
+export class TemplatesApi extends BaseAPI {
+    /**
+     * 
+     * @summary Submit a template for review
+     * @param {TemplatesApiTemplatesSubmitForReviewRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof TemplatesApi
+     */
+    public templatesSubmitForReview(requestParameters: TemplatesApiTemplatesSubmitForReviewRequest, options?: AxiosRequestConfig) {
+        return TemplatesApiFp(this.configuration).templatesSubmitForReview(requestParameters.accountType, requestParameters.templatesSubmitForReviewRequest, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
