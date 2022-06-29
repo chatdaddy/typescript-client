@@ -7936,16 +7936,16 @@ export const TemplatesApiAxiosParamCreator = function (configuration?: Configura
         /**
          * 
          * @summary Submit a template for review
-         * @param {AccountType} accountType 
+         * @param {string} accountId 
          * @param {TemplatesSubmitForReviewRequest} [templatesSubmitForReviewRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        templatesSubmitForReview: async (accountType: AccountType, templatesSubmitForReviewRequest?: TemplatesSubmitForReviewRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'accountType' is not null or undefined
-            assertParamExists('templatesSubmitForReview', 'accountType', accountType)
-            const localVarPath = `/templates/{accountType}/submit-for-review`
-                .replace(`{${"accountType"}}`, encodeURIComponent(String(accountType)));
+        templatesSubmitForReview: async (accountId: string, templatesSubmitForReviewRequest?: TemplatesSubmitForReviewRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'accountId' is not null or undefined
+            assertParamExists('templatesSubmitForReview', 'accountId', accountId)
+            const localVarPath = `/templates/{accountId}/submit-for-review`
+                .replace(`{${"accountId"}}`, encodeURIComponent(String(accountId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -7988,13 +7988,13 @@ export const TemplatesApiFp = function(configuration?: Configuration) {
         /**
          * 
          * @summary Submit a template for review
-         * @param {AccountType} accountType 
+         * @param {string} accountId 
          * @param {TemplatesSubmitForReviewRequest} [templatesSubmitForReviewRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async templatesSubmitForReview(accountType: AccountType, templatesSubmitForReviewRequest?: TemplatesSubmitForReviewRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TemplatesSubmitForReview200Response>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.templatesSubmitForReview(accountType, templatesSubmitForReviewRequest, options);
+        async templatesSubmitForReview(accountId: string, templatesSubmitForReviewRequest?: TemplatesSubmitForReviewRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TemplatesSubmitForReview200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.templatesSubmitForReview(accountId, templatesSubmitForReviewRequest, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
     }
@@ -8010,13 +8010,13 @@ export const TemplatesApiFactory = function (configuration?: Configuration, base
         /**
          * 
          * @summary Submit a template for review
-         * @param {AccountType} accountType 
+         * @param {string} accountId 
          * @param {TemplatesSubmitForReviewRequest} [templatesSubmitForReviewRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        templatesSubmitForReview(accountType: AccountType, templatesSubmitForReviewRequest?: TemplatesSubmitForReviewRequest, options?: any): AxiosPromise<TemplatesSubmitForReview200Response> {
-            return localVarFp.templatesSubmitForReview(accountType, templatesSubmitForReviewRequest, options).then((request) => request(axios, basePath));
+        templatesSubmitForReview(accountId: string, templatesSubmitForReviewRequest?: TemplatesSubmitForReviewRequest, options?: any): AxiosPromise<TemplatesSubmitForReview200Response> {
+            return localVarFp.templatesSubmitForReview(accountId, templatesSubmitForReviewRequest, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -8029,10 +8029,10 @@ export const TemplatesApiFactory = function (configuration?: Configuration, base
 export interface TemplatesApiTemplatesSubmitForReviewRequest {
     /**
      * 
-     * @type {AccountType}
+     * @type {string}
      * @memberof TemplatesApiTemplatesSubmitForReview
      */
-    readonly accountType: AccountType
+    readonly accountId: string
 
     /**
      * 
@@ -8058,7 +8058,7 @@ export class TemplatesApi extends BaseAPI {
      * @memberof TemplatesApi
      */
     public templatesSubmitForReview(requestParameters: TemplatesApiTemplatesSubmitForReviewRequest, options?: AxiosRequestConfig) {
-        return TemplatesApiFp(this.configuration).templatesSubmitForReview(requestParameters.accountType, requestParameters.templatesSubmitForReviewRequest, options).then((request) => request(this.axios, this.basePath));
+        return TemplatesApiFp(this.configuration).templatesSubmitForReview(requestParameters.accountId, requestParameters.templatesSubmitForReviewRequest, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
