@@ -1156,6 +1156,67 @@ export const BotsApiAxiosParamCreator = function (configuration?: Configuration)
             };
         },
         /**
+         * Either submit for review, unlink from the external template provider or link with an existing template ID
+         * @summary Execute a command to update the status for the external template
+         * @param {string} id 
+         * @param {string} accountId 
+         * @param {TemplateCommand} command 
+         * @param {string} [language] ISO code of the language, required for WA business templates
+         * @param {string} [category] 
+         * @param {string} [templateId] The external ID of the template to link with, only valid for the \&quot;link\&quot; command
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        botsExternalTemplateCommand: async (id: string, accountId: string, command: TemplateCommand, language?: string, category?: string, templateId?: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('botsExternalTemplateCommand', 'id', id)
+            // verify required parameter 'accountId' is not null or undefined
+            assertParamExists('botsExternalTemplateCommand', 'accountId', accountId)
+            // verify required parameter 'command' is not null or undefined
+            assertParamExists('botsExternalTemplateCommand', 'command', command)
+            const localVarPath = `/bots/{id}/external-template/{accountId}/{command}`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)))
+                .replace(`{${"accountId"}}`, encodeURIComponent(String(accountId)))
+                .replace(`{${"command"}}`, encodeURIComponent(String(command)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["TEMPLATES_UPDATE"], configuration)
+
+            if (language !== undefined) {
+                localVarQueryParameter['language'] = language;
+            }
+
+            if (category !== undefined) {
+                localVarQueryParameter['category'] = category;
+            }
+
+            if (templateId !== undefined) {
+                localVarQueryParameter['templateId'] = templateId;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * Will throw a 400 if there is no starting action ID
          * @summary Initiates a bot sequence. Fires the starting action ID
          * @param {string} id 
@@ -1385,6 +1446,22 @@ export const BotsApiFp = function(configuration?: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
+         * Either submit for review, unlink from the external template provider or link with an existing template ID
+         * @summary Execute a command to update the status for the external template
+         * @param {string} id 
+         * @param {string} accountId 
+         * @param {TemplateCommand} command 
+         * @param {string} [language] ISO code of the language, required for WA business templates
+         * @param {string} [category] 
+         * @param {string} [templateId] The external ID of the template to link with, only valid for the \&quot;link\&quot; command
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async botsExternalTemplateCommand(id: string, accountId: string, command: TemplateCommand, language?: string, category?: string, templateId?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BotsExternalTemplateCommand200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.botsExternalTemplateCommand(id, accountId, command, language, category, templateId, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
          * Will throw a 400 if there is no starting action ID
          * @summary Initiates a bot sequence. Fires the starting action ID
          * @param {string} id 
@@ -1468,6 +1545,21 @@ export const BotsApiFactory = function (configuration?: Configuration, basePath?
             return localVarFp.botsDeletes(bots, options).then((request) => request(axios, basePath));
         },
         /**
+         * Either submit for review, unlink from the external template provider or link with an existing template ID
+         * @summary Execute a command to update the status for the external template
+         * @param {string} id 
+         * @param {string} accountId 
+         * @param {TemplateCommand} command 
+         * @param {string} [language] ISO code of the language, required for WA business templates
+         * @param {string} [category] 
+         * @param {string} [templateId] The external ID of the template to link with, only valid for the \&quot;link\&quot; command
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        botsExternalTemplateCommand(id: string, accountId: string, command: TemplateCommand, language?: string, category?: string, templateId?: string, options?: any): AxiosPromise<BotsExternalTemplateCommand200Response> {
+            return localVarFp.botsExternalTemplateCommand(id, accountId, command, language, category, templateId, options).then((request) => request(axios, basePath));
+        },
+        /**
          * Will throw a 400 if there is no starting action ID
          * @summary Initiates a bot sequence. Fires the starting action ID
          * @param {string} id 
@@ -1545,6 +1637,55 @@ export interface BotsApiBotsDeletesRequest {
      * @memberof BotsApiBotsDeletes
      */
     readonly bots: Array<string>
+}
+
+/**
+ * Request parameters for botsExternalTemplateCommand operation in BotsApi.
+ * @export
+ * @interface BotsApiBotsExternalTemplateCommandRequest
+ */
+export interface BotsApiBotsExternalTemplateCommandRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof BotsApiBotsExternalTemplateCommand
+     */
+    readonly id: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof BotsApiBotsExternalTemplateCommand
+     */
+    readonly accountId: string
+
+    /**
+     * 
+     * @type {TemplateCommand}
+     * @memberof BotsApiBotsExternalTemplateCommand
+     */
+    readonly command: TemplateCommand
+
+    /**
+     * ISO code of the language, required for WA business templates
+     * @type {string}
+     * @memberof BotsApiBotsExternalTemplateCommand
+     */
+    readonly language?: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof BotsApiBotsExternalTemplateCommand
+     */
+    readonly category?: string
+
+    /**
+     * The external ID of the template to link with, only valid for the \&quot;link\&quot; command
+     * @type {string}
+     * @memberof BotsApiBotsExternalTemplateCommand
+     */
+    readonly templateId?: string
 }
 
 /**
@@ -1698,6 +1839,18 @@ export class BotsApi extends BaseAPI {
     }
 
     /**
+     * Either submit for review, unlink from the external template provider or link with an existing template ID
+     * @summary Execute a command to update the status for the external template
+     * @param {BotsApiBotsExternalTemplateCommandRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof BotsApi
+     */
+    public botsExternalTemplateCommand(requestParameters: BotsApiBotsExternalTemplateCommandRequest, options?: AxiosRequestConfig) {
+        return BotsApiFp(this.configuration).botsExternalTemplateCommand(requestParameters.id, requestParameters.accountId, requestParameters.command, requestParameters.language, requestParameters.category, requestParameters.templateId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
      * Will throw a 400 if there is no starting action ID
      * @summary Initiates a bot sequence. Fires the starting action ID
      * @param {BotsApiBotsFireRequest} requestParameters Request parameters.
@@ -1743,197 +1896,6 @@ export class BotsApi extends BaseAPI {
      */
     public botsPatch(requestParameters: BotsApiBotsPatchRequest, options?: AxiosRequestConfig) {
         return BotsApiFp(this.configuration).botsPatch(requestParameters.id, requestParameters.botPatch, options).then((request) => request(this.axios, this.basePath));
-    }
-}
-
-
-/**
- * DefaultApi - axios parameter creator
- * @export
- */
-export const DefaultApiAxiosParamCreator = function (configuration?: Configuration) {
-    return {
-        /**
-         * Either submit for review, unlink from the external template provider or link with an existing template ID
-         * @summary Execute a command to update the status for the external template
-         * @param {string} id 
-         * @param {string} accountId 
-         * @param {TemplateCommand} command 
-         * @param {string} [language] ISO code of the language, required for WA business templates
-         * @param {string} [category] 
-         * @param {string} [templateId] The external ID of the template to link with, only valid for the \&quot;link\&quot; command
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        botsExternalTemplateCommand: async (id: string, accountId: string, command: TemplateCommand, language?: string, category?: string, templateId?: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'id' is not null or undefined
-            assertParamExists('botsExternalTemplateCommand', 'id', id)
-            // verify required parameter 'accountId' is not null or undefined
-            assertParamExists('botsExternalTemplateCommand', 'accountId', accountId)
-            // verify required parameter 'command' is not null or undefined
-            assertParamExists('botsExternalTemplateCommand', 'command', command)
-            const localVarPath = `/bots/{id}/external-template/{accountId}/{command}`
-                .replace(`{${"id"}}`, encodeURIComponent(String(id)))
-                .replace(`{${"accountId"}}`, encodeURIComponent(String(accountId)))
-                .replace(`{${"command"}}`, encodeURIComponent(String(command)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication chatdaddy required
-            // oauth required
-            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["TEMPLATES_UPDATE"], configuration)
-
-            if (language !== undefined) {
-                localVarQueryParameter['language'] = language;
-            }
-
-            if (category !== undefined) {
-                localVarQueryParameter['category'] = category;
-            }
-
-            if (templateId !== undefined) {
-                localVarQueryParameter['templateId'] = templateId;
-            }
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-    }
-};
-
-/**
- * DefaultApi - functional programming interface
- * @export
- */
-export const DefaultApiFp = function(configuration?: Configuration) {
-    const localVarAxiosParamCreator = DefaultApiAxiosParamCreator(configuration)
-    return {
-        /**
-         * Either submit for review, unlink from the external template provider or link with an existing template ID
-         * @summary Execute a command to update the status for the external template
-         * @param {string} id 
-         * @param {string} accountId 
-         * @param {TemplateCommand} command 
-         * @param {string} [language] ISO code of the language, required for WA business templates
-         * @param {string} [category] 
-         * @param {string} [templateId] The external ID of the template to link with, only valid for the \&quot;link\&quot; command
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async botsExternalTemplateCommand(id: string, accountId: string, command: TemplateCommand, language?: string, category?: string, templateId?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BotsExternalTemplateCommand200Response>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.botsExternalTemplateCommand(id, accountId, command, language, category, templateId, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-    }
-};
-
-/**
- * DefaultApi - factory interface
- * @export
- */
-export const DefaultApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
-    const localVarFp = DefaultApiFp(configuration)
-    return {
-        /**
-         * Either submit for review, unlink from the external template provider or link with an existing template ID
-         * @summary Execute a command to update the status for the external template
-         * @param {string} id 
-         * @param {string} accountId 
-         * @param {TemplateCommand} command 
-         * @param {string} [language] ISO code of the language, required for WA business templates
-         * @param {string} [category] 
-         * @param {string} [templateId] The external ID of the template to link with, only valid for the \&quot;link\&quot; command
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        botsExternalTemplateCommand(id: string, accountId: string, command: TemplateCommand, language?: string, category?: string, templateId?: string, options?: any): AxiosPromise<BotsExternalTemplateCommand200Response> {
-            return localVarFp.botsExternalTemplateCommand(id, accountId, command, language, category, templateId, options).then((request) => request(axios, basePath));
-        },
-    };
-};
-
-/**
- * Request parameters for botsExternalTemplateCommand operation in DefaultApi.
- * @export
- * @interface DefaultApiBotsExternalTemplateCommandRequest
- */
-export interface DefaultApiBotsExternalTemplateCommandRequest {
-    /**
-     * 
-     * @type {string}
-     * @memberof DefaultApiBotsExternalTemplateCommand
-     */
-    readonly id: string
-
-    /**
-     * 
-     * @type {string}
-     * @memberof DefaultApiBotsExternalTemplateCommand
-     */
-    readonly accountId: string
-
-    /**
-     * 
-     * @type {TemplateCommand}
-     * @memberof DefaultApiBotsExternalTemplateCommand
-     */
-    readonly command: TemplateCommand
-
-    /**
-     * ISO code of the language, required for WA business templates
-     * @type {string}
-     * @memberof DefaultApiBotsExternalTemplateCommand
-     */
-    readonly language?: string
-
-    /**
-     * 
-     * @type {string}
-     * @memberof DefaultApiBotsExternalTemplateCommand
-     */
-    readonly category?: string
-
-    /**
-     * The external ID of the template to link with, only valid for the \&quot;link\&quot; command
-     * @type {string}
-     * @memberof DefaultApiBotsExternalTemplateCommand
-     */
-    readonly templateId?: string
-}
-
-/**
- * DefaultApi - object-oriented interface
- * @export
- * @class DefaultApi
- * @extends {BaseAPI}
- */
-export class DefaultApi extends BaseAPI {
-    /**
-     * Either submit for review, unlink from the external template provider or link with an existing template ID
-     * @summary Execute a command to update the status for the external template
-     * @param {DefaultApiBotsExternalTemplateCommandRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof DefaultApi
-     */
-    public botsExternalTemplateCommand(requestParameters: DefaultApiBotsExternalTemplateCommandRequest, options?: AxiosRequestConfig) {
-        return DefaultApiFp(this.configuration).botsExternalTemplateCommand(requestParameters.id, requestParameters.accountId, requestParameters.command, requestParameters.language, requestParameters.category, requestParameters.templateId, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
