@@ -312,6 +312,12 @@ export interface Bot {
      */
     'startingActionId'?: string | null;
     /**
+     * 
+     * @type {{ [key: string]: ExternalTemplateProvider; }}
+     * @memberof Bot
+     */
+    'externalTemplate'?: { [key: string]: ExternalTemplateProvider; };
+    /**
      * An ISO formatted timestamp
      * @type {string}
      * @memberof Bot
@@ -398,6 +404,19 @@ export interface BotsCreateRequest {
      * @memberof BotsCreateRequest
      */
     'name': string;
+}
+/**
+ * 
+ * @export
+ * @interface BotsExternalTemplateCommand200Response
+ */
+export interface BotsExternalTemplateCommand200Response {
+    /**
+     * 
+     * @type {ExternalTemplateProvider}
+     * @memberof BotsExternalTemplateCommand200Response
+     */
+    'config'?: ExternalTemplateProvider;
 }
 /**
  * 
@@ -530,6 +549,58 @@ export interface BotsGets200Response {
      */
     'cursor'?: string;
 }
+/**
+ * 
+ * @export
+ * @interface ExternalTemplateProvider
+ */
+export interface ExternalTemplateProvider {
+    /**
+     * ID of the template on the provider
+     * @type {string}
+     * @memberof ExternalTemplateProvider
+     */
+    'id'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ExternalTemplateProvider
+     */
+    'category': string;
+    /**
+     * Language of the template
+     * @type {string}
+     * @memberof ExternalTemplateProvider
+     */
+    'language'?: string;
+    /**
+     * Status of the template on the provider
+     * @type {string}
+     * @memberof ExternalTemplateProvider
+     */
+    'status': ExternalTemplateProviderStatusEnum;
+    /**
+     * Details of the rejection, if rejected
+     * @type {string}
+     * @memberof ExternalTemplateProvider
+     */
+    'rejectionDetails'?: string;
+    /**
+     * ID of the user who submitted the template
+     * @type {string}
+     * @memberof ExternalTemplateProvider
+     */
+    'submittedBy': string;
+}
+
+export const ExternalTemplateProviderStatusEnum = {
+    Pending: 'pending',
+    Approved: 'approved',
+    Rejected: 'rejected'
+} as const;
+
+export type ExternalTemplateProviderStatusEnum = typeof ExternalTemplateProviderStatusEnum[keyof typeof ExternalTemplateProviderStatusEnum];
+
 /**
  * 
  * @export
@@ -738,6 +809,21 @@ export interface StoreGet200Response {
 /**
  * 
  * @export
+ * @enum {string}
+ */
+
+export const TemplateCommand = {
+    SubmitForReview: 'submit-for-review',
+    Link: 'link',
+    Unlink: 'unlink'
+} as const;
+
+export type TemplateCommand = typeof TemplateCommand[keyof typeof TemplateCommand];
+
+
+/**
+ * 
+ * @export
  * @interface TemplateItem
  */
 export interface TemplateItem {
@@ -772,6 +858,51 @@ export interface TemplateItem {
      */
     'yamlFileUrl': string;
 }
+/**
+ * 
+ * @export
+ * @interface TemplateStatusUpdateRequestInner
+ */
+export interface TemplateStatusUpdateRequestInner {
+    /**
+     * Code of the template
+     * @type {string}
+     * @memberof TemplateStatusUpdateRequestInner
+     */
+    'TemplateCode': string;
+    /**
+     * Status of the template
+     * @type {string}
+     * @memberof TemplateStatusUpdateRequestInner
+     */
+    'AuditStatus': TemplateStatusUpdateRequestInnerAuditStatusEnum;
+    /**
+     * Language of the template
+     * @type {string}
+     * @memberof TemplateStatusUpdateRequestInner
+     */
+    'Language': string;
+    /**
+     * Waba ID of the template
+     * @type {string}
+     * @memberof TemplateStatusUpdateRequestInner
+     */
+    'WabaId': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof TemplateStatusUpdateRequestInner
+     */
+    'Reason'?: string;
+}
+
+export const TemplateStatusUpdateRequestInnerAuditStatusEnum = {
+    Fail: 'fail',
+    Pass: 'pass'
+} as const;
+
+export type TemplateStatusUpdateRequestInnerAuditStatusEnum = typeof TemplateStatusUpdateRequestInnerAuditStatusEnum[keyof typeof TemplateStatusUpdateRequestInnerAuditStatusEnum];
+
 
 /**
  * ActionsApi - axios parameter creator
@@ -1617,6 +1748,197 @@ export class BotsApi extends BaseAPI {
 
 
 /**
+ * DefaultApi - axios parameter creator
+ * @export
+ */
+export const DefaultApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * Either submit for review, unlink from the external template provider or link with an existing template ID
+         * @summary Execute a command to update the status for the external template
+         * @param {string} id 
+         * @param {string} accountId 
+         * @param {TemplateCommand} command 
+         * @param {string} [language] ISO code of the language, required for WA business templates
+         * @param {string} [category] 
+         * @param {string} [templateId] The external ID of the template to link with, only valid for the \&quot;link\&quot; command
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        botsExternalTemplateCommand: async (id: string, accountId: string, command: TemplateCommand, language?: string, category?: string, templateId?: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('botsExternalTemplateCommand', 'id', id)
+            // verify required parameter 'accountId' is not null or undefined
+            assertParamExists('botsExternalTemplateCommand', 'accountId', accountId)
+            // verify required parameter 'command' is not null or undefined
+            assertParamExists('botsExternalTemplateCommand', 'command', command)
+            const localVarPath = `/bots/{id}/external-template/{accountId}/{command}`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)))
+                .replace(`{${"accountId"}}`, encodeURIComponent(String(accountId)))
+                .replace(`{${"command"}}`, encodeURIComponent(String(command)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["TEMPLATES_UPDATE"], configuration)
+
+            if (language !== undefined) {
+                localVarQueryParameter['language'] = language;
+            }
+
+            if (category !== undefined) {
+                localVarQueryParameter['category'] = category;
+            }
+
+            if (templateId !== undefined) {
+                localVarQueryParameter['templateId'] = templateId;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * DefaultApi - functional programming interface
+ * @export
+ */
+export const DefaultApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = DefaultApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * Either submit for review, unlink from the external template provider or link with an existing template ID
+         * @summary Execute a command to update the status for the external template
+         * @param {string} id 
+         * @param {string} accountId 
+         * @param {TemplateCommand} command 
+         * @param {string} [language] ISO code of the language, required for WA business templates
+         * @param {string} [category] 
+         * @param {string} [templateId] The external ID of the template to link with, only valid for the \&quot;link\&quot; command
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async botsExternalTemplateCommand(id: string, accountId: string, command: TemplateCommand, language?: string, category?: string, templateId?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BotsExternalTemplateCommand200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.botsExternalTemplateCommand(id, accountId, command, language, category, templateId, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+    }
+};
+
+/**
+ * DefaultApi - factory interface
+ * @export
+ */
+export const DefaultApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = DefaultApiFp(configuration)
+    return {
+        /**
+         * Either submit for review, unlink from the external template provider or link with an existing template ID
+         * @summary Execute a command to update the status for the external template
+         * @param {string} id 
+         * @param {string} accountId 
+         * @param {TemplateCommand} command 
+         * @param {string} [language] ISO code of the language, required for WA business templates
+         * @param {string} [category] 
+         * @param {string} [templateId] The external ID of the template to link with, only valid for the \&quot;link\&quot; command
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        botsExternalTemplateCommand(id: string, accountId: string, command: TemplateCommand, language?: string, category?: string, templateId?: string, options?: any): AxiosPromise<BotsExternalTemplateCommand200Response> {
+            return localVarFp.botsExternalTemplateCommand(id, accountId, command, language, category, templateId, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * Request parameters for botsExternalTemplateCommand operation in DefaultApi.
+ * @export
+ * @interface DefaultApiBotsExternalTemplateCommandRequest
+ */
+export interface DefaultApiBotsExternalTemplateCommandRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof DefaultApiBotsExternalTemplateCommand
+     */
+    readonly id: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof DefaultApiBotsExternalTemplateCommand
+     */
+    readonly accountId: string
+
+    /**
+     * 
+     * @type {TemplateCommand}
+     * @memberof DefaultApiBotsExternalTemplateCommand
+     */
+    readonly command: TemplateCommand
+
+    /**
+     * ISO code of the language, required for WA business templates
+     * @type {string}
+     * @memberof DefaultApiBotsExternalTemplateCommand
+     */
+    readonly language?: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof DefaultApiBotsExternalTemplateCommand
+     */
+    readonly category?: string
+
+    /**
+     * The external ID of the template to link with, only valid for the \&quot;link\&quot; command
+     * @type {string}
+     * @memberof DefaultApiBotsExternalTemplateCommand
+     */
+    readonly templateId?: string
+}
+
+/**
+ * DefaultApi - object-oriented interface
+ * @export
+ * @class DefaultApi
+ * @extends {BaseAPI}
+ */
+export class DefaultApi extends BaseAPI {
+    /**
+     * Either submit for review, unlink from the external template provider or link with an existing template ID
+     * @summary Execute a command to update the status for the external template
+     * @param {DefaultApiBotsExternalTemplateCommandRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApi
+     */
+    public botsExternalTemplateCommand(requestParameters: DefaultApiBotsExternalTemplateCommandRequest, options?: AxiosRequestConfig) {
+        return DefaultApiFp(this.configuration).botsExternalTemplateCommand(requestParameters.id, requestParameters.accountId, requestParameters.command, requestParameters.language, requestParameters.category, requestParameters.templateId, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+/**
  * StoreApi - axios parameter creator
  * @export
  */
@@ -1873,6 +2195,138 @@ export class StoreApi extends BaseAPI {
      */
     public storeGet(requestParameters: StoreApiStoreGetRequest = {}, options?: AxiosRequestConfig) {
         return StoreApiFp(this.configuration).storeGet(requestParameters.count, requestParameters.before, requestParameters.q, requestParameters.language, requestParameters.categoryKeyValue, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+/**
+ * TemplateWebhookApi - axios parameter creator
+ * @export
+ */
+export const TemplateWebhookApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @summary Webhook for template status
+         * @param {string} secret 
+         * @param {Array<TemplateStatusUpdateRequestInner>} [templateStatusUpdateRequestInner] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        webhookTemplateStatus: async (secret: string, templateStatusUpdateRequestInner?: Array<TemplateStatusUpdateRequestInner>, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'secret' is not null or undefined
+            assertParamExists('webhookTemplateStatus', 'secret', secret)
+            const localVarPath = `/webhook/template-status/alibaba-cams/{secret}`
+                .replace(`{${"secret"}}`, encodeURIComponent(String(secret)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(templateStatusUpdateRequestInner, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * TemplateWebhookApi - functional programming interface
+ * @export
+ */
+export const TemplateWebhookApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = TemplateWebhookApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * 
+         * @summary Webhook for template status
+         * @param {string} secret 
+         * @param {Array<TemplateStatusUpdateRequestInner>} [templateStatusUpdateRequestInner] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async webhookTemplateStatus(secret: string, templateStatusUpdateRequestInner?: Array<TemplateStatusUpdateRequestInner>, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.webhookTemplateStatus(secret, templateStatusUpdateRequestInner, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+    }
+};
+
+/**
+ * TemplateWebhookApi - factory interface
+ * @export
+ */
+export const TemplateWebhookApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = TemplateWebhookApiFp(configuration)
+    return {
+        /**
+         * 
+         * @summary Webhook for template status
+         * @param {string} secret 
+         * @param {Array<TemplateStatusUpdateRequestInner>} [templateStatusUpdateRequestInner] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        webhookTemplateStatus(secret: string, templateStatusUpdateRequestInner?: Array<TemplateStatusUpdateRequestInner>, options?: any): AxiosPromise<void> {
+            return localVarFp.webhookTemplateStatus(secret, templateStatusUpdateRequestInner, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * Request parameters for webhookTemplateStatus operation in TemplateWebhookApi.
+ * @export
+ * @interface TemplateWebhookApiWebhookTemplateStatusRequest
+ */
+export interface TemplateWebhookApiWebhookTemplateStatusRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof TemplateWebhookApiWebhookTemplateStatus
+     */
+    readonly secret: string
+
+    /**
+     * 
+     * @type {Array<TemplateStatusUpdateRequestInner>}
+     * @memberof TemplateWebhookApiWebhookTemplateStatus
+     */
+    readonly templateStatusUpdateRequestInner?: Array<TemplateStatusUpdateRequestInner>
+}
+
+/**
+ * TemplateWebhookApi - object-oriented interface
+ * @export
+ * @class TemplateWebhookApi
+ * @extends {BaseAPI}
+ */
+export class TemplateWebhookApi extends BaseAPI {
+    /**
+     * 
+     * @summary Webhook for template status
+     * @param {TemplateWebhookApiWebhookTemplateStatusRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof TemplateWebhookApi
+     */
+    public webhookTemplateStatus(requestParameters: TemplateWebhookApiWebhookTemplateStatusRequest, options?: AxiosRequestConfig) {
+        return TemplateWebhookApiFp(this.configuration).webhookTemplateStatus(requestParameters.secret, requestParameters.templateStatusUpdateRequestInner, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
