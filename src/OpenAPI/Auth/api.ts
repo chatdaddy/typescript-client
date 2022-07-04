@@ -1080,6 +1080,12 @@ export interface UserCreate {
     'emailAddress'?: string | null;
     /**
      * 
+     * @type {TeamMetadata}
+     * @memberof UserCreate
+     */
+    'metadata'?: TeamMetadata;
+    /**
+     * 
      * @type {NotifyModel}
      * @memberof UserCreate
      */
