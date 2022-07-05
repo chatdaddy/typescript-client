@@ -943,6 +943,30 @@ export interface ContactsPatchPatch {
      * @memberof ContactsPatchPatch
      */
     'tags'?: Array<ContactTag>;
+    /**
+     * 
+     * @type {string}
+     * @memberof ContactsPatchPatch
+     */
+    'messageContainsText'?: string;
+    /**
+     * An ISO formatted timestamp
+     * @type {string}
+     * @memberof ContactsPatchPatch
+     */
+    'messageFrom'?: string;
+    /**
+     * An ISO formatted timestamp
+     * @type {string}
+     * @memberof ContactsPatchPatch
+     */
+    'messageTo'?: string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof ContactsPatchPatch
+     */
+    'messageFromMe'?: boolean;
 }
 /**
  * 
