@@ -403,7 +403,7 @@ export interface BotsCreateRequest {
      * @type {string}
      * @memberof BotsCreateRequest
      */
-    'name': string;
+    'name'?: string;
 }
 /**
  * 
