@@ -910,6 +910,19 @@ export interface ContactsPatch {
 /**
  * 
  * @export
+ * @interface ContactsPatch200Response
+ */
+export interface ContactsPatch200Response {
+    /**
+     * 
+     * @type {number}
+     * @memberof ContactsPatch200Response
+     */
+    'updated': number;
+}
+/**
+ * 
+ * @export
  * @interface ContactsPatchPatch
  */
 export interface ContactsPatchPatch {
@@ -4567,7 +4580,7 @@ export const ContactsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async contactsPatch(tags?: Array<string>, notTags?: Array<string>, contacts?: Array<string>, notContacts?: Array<string>, minMessagesSent?: number, minMessagesRecv?: number, maxMessagesSent?: number, maxMessagesRecv?: number, q?: string, assignee?: Array<string>, accountId?: Array<string>, type?: 'group' | 'individual', messageContainsText?: string, messageFrom?: string, messageTo?: string, messageFromMe?: boolean, contactsPatch?: ContactsPatch, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AccountsLogout200Response>> {
+        async contactsPatch(tags?: Array<string>, notTags?: Array<string>, contacts?: Array<string>, notContacts?: Array<string>, minMessagesSent?: number, minMessagesRecv?: number, maxMessagesSent?: number, maxMessagesRecv?: number, q?: string, assignee?: Array<string>, accountId?: Array<string>, type?: 'group' | 'individual', messageContainsText?: string, messageFrom?: string, messageTo?: string, messageFromMe?: boolean, contactsPatch?: ContactsPatch, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ContactsPatch200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.contactsPatch(tags, notTags, contacts, notContacts, minMessagesSent, minMessagesRecv, maxMessagesSent, maxMessagesRecv, q, assignee, accountId, type, messageContainsText, messageFrom, messageTo, messageFromMe, contactsPatch, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -4684,7 +4697,7 @@ export const ContactsApiFactory = function (configuration?: Configuration, baseP
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        contactsPatch(tags?: Array<string>, notTags?: Array<string>, contacts?: Array<string>, notContacts?: Array<string>, minMessagesSent?: number, minMessagesRecv?: number, maxMessagesSent?: number, maxMessagesRecv?: number, q?: string, assignee?: Array<string>, accountId?: Array<string>, type?: 'group' | 'individual', messageContainsText?: string, messageFrom?: string, messageTo?: string, messageFromMe?: boolean, contactsPatch?: ContactsPatch, options?: any): AxiosPromise<AccountsLogout200Response> {
+        contactsPatch(tags?: Array<string>, notTags?: Array<string>, contacts?: Array<string>, notContacts?: Array<string>, minMessagesSent?: number, minMessagesRecv?: number, maxMessagesSent?: number, maxMessagesRecv?: number, q?: string, assignee?: Array<string>, accountId?: Array<string>, type?: 'group' | 'individual', messageContainsText?: string, messageFrom?: string, messageTo?: string, messageFromMe?: boolean, contactsPatch?: ContactsPatch, options?: any): AxiosPromise<ContactsPatch200Response> {
             return localVarFp.contactsPatch(tags, notTags, contacts, notContacts, minMessagesSent, minMessagesRecv, maxMessagesSent, maxMessagesRecv, q, assignee, accountId, type, messageContainsText, messageFrom, messageTo, messageFromMe, contactsPatch, options).then((request) => request(axios, basePath));
         },
         /**
