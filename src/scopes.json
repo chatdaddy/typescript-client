@@ -621,7 +621,7 @@
     "description": "Access admin level functionality",
     "features": [],
     "roles": [],
-    "grouo": null
+    "group": null
   },
   "PAYMENTS_READ": {
     "number": 78,
@@ -663,5 +663,12 @@
       "admin"
     ],
     "group": "API"
+  },
+  "PARTNER_ADMIN_PANEL_ACCESS": {
+    "number": 81,
+    "description": "Admin access to all users/teams created using a referral code",
+    "features": [],
+    "roles": [],
+    "group": null
   }
 }

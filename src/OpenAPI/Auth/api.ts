@@ -427,6 +427,19 @@ export interface OtpPostRequest {
 /**
  * 
  * @export
+ * @interface PartnerTeamPatchRequest
+ */
+export interface PartnerTeamPatchRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof PartnerTeamPatchRequest
+     */
+    'partner': string | null;
+}
+/**
+ * 
+ * @export
  * @interface PasswordAuthRequest
  */
 export interface PasswordAuthRequest {
@@ -616,7 +629,8 @@ export const Scope = {
     PaymentsRead: 'PAYMENTS_READ',
     PaymentsUpdate: 'PAYMENTS_UPDATE',
     WaLiveEvents: 'WA_LIVE_EVENTS',
-    ChatdaddyHook: 'CHATDADDY_HOOK'
+    ChatdaddyHook: 'CHATDADDY_HOOK',
+    PartnerAdminPanelAccess: 'PARTNER_ADMIN_PANEL_ACCESS'
 } as const;
 
 export type Scope = typeof Scope[keyof typeof Scope];
@@ -2082,6 +2096,48 @@ export const TeamsApiAxiosParamCreator = function (configuration?: Configuration
     return {
         /**
          * 
+         * @summary Upgrade the team to \'partner\' if partner is specified, else, downgrade partner status
+         * @param {string} teamId the teamId of the team to be upgraded/downgraded
+         * @param {PartnerTeamPatchRequest} [partnerTeamPatchRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        partnerTeamPatch: async (teamId: string, partnerTeamPatchRequest?: PartnerTeamPatchRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'teamId' is not null or undefined
+            assertParamExists('partnerTeamPatch', 'teamId', teamId)
+            const localVarPath = `/teams/partner-team-status/{teamId}`
+                .replace(`{${"teamId"}}`, encodeURIComponent(String(teamId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PATCH', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["ADMIN_PANEL_ACCESS"], configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(partnerTeamPatchRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
          * @summary Fetch teams you have access to
          * @param {string} [q] Search by name, ID, invite code, etc.
          * @param {Array<string>} [id] Fetch specific teams by ID
@@ -2092,10 +2148,11 @@ export const TeamsApiAxiosParamCreator = function (configuration?: Configuration
          * @param {boolean} [includeInviteLinks] Should include the invite links.  Will only return invite links for which you have the &#x60;TEAMLINKS_READ&#x60; scope
          * @param {boolean} [includeTotal] include the count of the total teams
          * @param {boolean} [includeCreator] include the creator\&#39;s data in the API result
+         * @param {string} [partner] string to identify user with a partner
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        teamsGet: async (q?: string, id?: Array<string>, userId?: string, count?: number, page?: number, includeTeamMembers?: boolean, includeInviteLinks?: boolean, includeTotal?: boolean, includeCreator?: boolean, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        teamsGet: async (q?: string, id?: Array<string>, userId?: string, count?: number, page?: number, includeTeamMembers?: boolean, includeInviteLinks?: boolean, includeTotal?: boolean, includeCreator?: boolean, partner?: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/teams`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -2146,6 +2203,10 @@ export const TeamsApiAxiosParamCreator = function (configuration?: Configuration
 
             if (includeCreator !== undefined) {
                 localVarQueryParameter['includeCreator'] = includeCreator;
+            }
+
+            if (partner !== undefined) {
+                localVarQueryParameter['partner'] = partner;
             }
 
 
@@ -2250,6 +2311,18 @@ export const TeamsApiFp = function(configuration?: Configuration) {
     return {
         /**
          * 
+         * @summary Upgrade the team to \'partner\' if partner is specified, else, downgrade partner status
+         * @param {string} teamId the teamId of the team to be upgraded/downgraded
+         * @param {PartnerTeamPatchRequest} [partnerTeamPatchRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async partnerTeamPatch(teamId: string, partnerTeamPatchRequest?: PartnerTeamPatchRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TeamsPatch200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.partnerTeamPatch(teamId, partnerTeamPatchRequest, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
          * @summary Fetch teams you have access to
          * @param {string} [q] Search by name, ID, invite code, etc.
          * @param {Array<string>} [id] Fetch specific teams by ID
@@ -2260,11 +2333,12 @@ export const TeamsApiFp = function(configuration?: Configuration) {
          * @param {boolean} [includeInviteLinks] Should include the invite links.  Will only return invite links for which you have the &#x60;TEAMLINKS_READ&#x60; scope
          * @param {boolean} [includeTotal] include the count of the total teams
          * @param {boolean} [includeCreator] include the creator\&#39;s data in the API result
+         * @param {string} [partner] string to identify user with a partner
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async teamsGet(q?: string, id?: Array<string>, userId?: string, count?: number, page?: number, includeTeamMembers?: boolean, includeInviteLinks?: boolean, includeTotal?: boolean, includeCreator?: boolean, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TeamsGet200Response>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.teamsGet(q, id, userId, count, page, includeTeamMembers, includeInviteLinks, includeTotal, includeCreator, options);
+        async teamsGet(q?: string, id?: Array<string>, userId?: string, count?: number, page?: number, includeTeamMembers?: boolean, includeInviteLinks?: boolean, includeTotal?: boolean, includeCreator?: boolean, partner?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TeamsGet200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.teamsGet(q, id, userId, count, page, includeTeamMembers, includeInviteLinks, includeTotal, includeCreator, partner, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -2301,6 +2375,17 @@ export const TeamsApiFactory = function (configuration?: Configuration, basePath
     return {
         /**
          * 
+         * @summary Upgrade the team to \'partner\' if partner is specified, else, downgrade partner status
+         * @param {string} teamId the teamId of the team to be upgraded/downgraded
+         * @param {PartnerTeamPatchRequest} [partnerTeamPatchRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        partnerTeamPatch(teamId: string, partnerTeamPatchRequest?: PartnerTeamPatchRequest, options?: any): AxiosPromise<TeamsPatch200Response> {
+            return localVarFp.partnerTeamPatch(teamId, partnerTeamPatchRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
          * @summary Fetch teams you have access to
          * @param {string} [q] Search by name, ID, invite code, etc.
          * @param {Array<string>} [id] Fetch specific teams by ID
@@ -2311,11 +2396,12 @@ export const TeamsApiFactory = function (configuration?: Configuration, basePath
          * @param {boolean} [includeInviteLinks] Should include the invite links.  Will only return invite links for which you have the &#x60;TEAMLINKS_READ&#x60; scope
          * @param {boolean} [includeTotal] include the count of the total teams
          * @param {boolean} [includeCreator] include the creator\&#39;s data in the API result
+         * @param {string} [partner] string to identify user with a partner
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        teamsGet(q?: string, id?: Array<string>, userId?: string, count?: number, page?: number, includeTeamMembers?: boolean, includeInviteLinks?: boolean, includeTotal?: boolean, includeCreator?: boolean, options?: any): AxiosPromise<TeamsGet200Response> {
-            return localVarFp.teamsGet(q, id, userId, count, page, includeTeamMembers, includeInviteLinks, includeTotal, includeCreator, options).then((request) => request(axios, basePath));
+        teamsGet(q?: string, id?: Array<string>, userId?: string, count?: number, page?: number, includeTeamMembers?: boolean, includeInviteLinks?: boolean, includeTotal?: boolean, includeCreator?: boolean, partner?: string, options?: any): AxiosPromise<TeamsGet200Response> {
+            return localVarFp.teamsGet(q, id, userId, count, page, includeTeamMembers, includeInviteLinks, includeTotal, includeCreator, partner, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -2339,6 +2425,27 @@ export const TeamsApiFactory = function (configuration?: Configuration, basePath
         },
     };
 };
+
+/**
+ * Request parameters for partnerTeamPatch operation in TeamsApi.
+ * @export
+ * @interface TeamsApiPartnerTeamPatchRequest
+ */
+export interface TeamsApiPartnerTeamPatchRequest {
+    /**
+     * the teamId of the team to be upgraded/downgraded
+     * @type {string}
+     * @memberof TeamsApiPartnerTeamPatch
+     */
+    readonly teamId: string
+
+    /**
+     * 
+     * @type {PartnerTeamPatchRequest}
+     * @memberof TeamsApiPartnerTeamPatch
+     */
+    readonly partnerTeamPatchRequest?: PartnerTeamPatchRequest
+}
 
 /**
  * Request parameters for teamsGet operation in TeamsApi.
@@ -2408,6 +2515,13 @@ export interface TeamsApiTeamsGetRequest {
      * @memberof TeamsApiTeamsGet
      */
     readonly includeCreator?: boolean
+
+    /**
+     * string to identify user with a partner
+     * @type {string}
+     * @memberof TeamsApiTeamsGet
+     */
+    readonly partner?: string
 }
 
 /**
@@ -2447,6 +2561,18 @@ export interface TeamsApiTeamsPatchRequest {
 export class TeamsApi extends BaseAPI {
     /**
      * 
+     * @summary Upgrade the team to \'partner\' if partner is specified, else, downgrade partner status
+     * @param {TeamsApiPartnerTeamPatchRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof TeamsApi
+     */
+    public partnerTeamPatch(requestParameters: TeamsApiPartnerTeamPatchRequest, options?: AxiosRequestConfig) {
+        return TeamsApiFp(this.configuration).partnerTeamPatch(requestParameters.teamId, requestParameters.partnerTeamPatchRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
      * @summary Fetch teams you have access to
      * @param {TeamsApiTeamsGetRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -2454,7 +2580,7 @@ export class TeamsApi extends BaseAPI {
      * @memberof TeamsApi
      */
     public teamsGet(requestParameters: TeamsApiTeamsGetRequest = {}, options?: AxiosRequestConfig) {
-        return TeamsApiFp(this.configuration).teamsGet(requestParameters.q, requestParameters.id, requestParameters.userId, requestParameters.count, requestParameters.page, requestParameters.includeTeamMembers, requestParameters.includeInviteLinks, requestParameters.includeTotal, requestParameters.includeCreator, options).then((request) => request(this.axios, this.basePath));
+        return TeamsApiFp(this.configuration).teamsGet(requestParameters.q, requestParameters.id, requestParameters.userId, requestParameters.count, requestParameters.page, requestParameters.includeTeamMembers, requestParameters.includeInviteLinks, requestParameters.includeTotal, requestParameters.includeCreator, requestParameters.partner, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
