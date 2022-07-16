@@ -708,6 +708,12 @@ export interface Team {
      * @memberof Team
      */
     'inviteLinks'?: Array<InviteLink>;
+    /**
+     * 
+     * @type {string}
+     * @memberof Team
+     */
+    'partnerAdmin'?: string;
 }
 /**
  * 

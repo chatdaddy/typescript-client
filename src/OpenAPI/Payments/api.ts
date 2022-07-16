@@ -964,13 +964,13 @@ export interface ReferralCodeDetails {
      * @type {string}
      * @memberof ReferralCodeDetails
      */
-    'referralCode'?: string;
+    'referralCode': string;
     /**
      * ID of the product purchased
      * @type {string}
      * @memberof ReferralCodeDetails
      */
-    'productId'?: string;
+    'productId': string;
     /**
      * time the product can be used for in days
      * @type {number}
@@ -988,13 +988,13 @@ export interface ReferralCodeDetails {
      * @type {string}
      * @memberof ReferralCodeDetails
      */
-    'createdBy'?: string;
+    'createdBy': string;
     /**
      * An ISO formatted timestamp
      * @type {string}
      * @memberof ReferralCodeDetails
      */
-    'createdAt'?: string;
+    'createdAt': string;
 }
 /**
  * 
