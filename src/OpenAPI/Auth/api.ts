@@ -788,6 +788,12 @@ export interface TeamMetadata {
      * @memberof TeamMetadata
      */
     'companyWebsite'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof TeamMetadata
+     */
+    'industry'?: string;
 }
 /**
  * 
