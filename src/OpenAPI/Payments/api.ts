@@ -551,11 +551,11 @@ export interface PartnerReferralCreateOptions {
      */
     'productId': string;
     /**
-     * time the product can be used for in seconds
+     * time the product can be used for in days
      * @type {number}
      * @memberof PartnerReferralCreateOptions
      */
-    'usagePeriod'?: number;
+    'usagePeriodDays'?: number;
     /**
      * An ISO formatted timestamp
      * @type {string}
@@ -580,7 +580,20 @@ export interface PartnerReferralsGet200Response {
      * @type {Array<ReferralCodeDetails>}
      * @memberof PartnerReferralsGet200Response
      */
-    'referalCodes'?: Array<ReferralCodeDetails>;
+    'referralCodes': Array<ReferralCodeDetails>;
+}
+/**
+ * 
+ * @export
+ * @interface PartnerReferralsPost200Response
+ */
+export interface PartnerReferralsPost200Response {
+    /**
+     * 
+     * @type {string}
+     * @memberof PartnerReferralsPost200Response
+     */
+    'referralCode': string;
 }
 /**
  * 
@@ -2257,12 +2270,15 @@ export const ReferralsApiAxiosParamCreator = function (configuration?: Configura
         /**
          * 
          * @param {string} referralCode 
+         * @param {string} partnerAdmin 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        partnerReferralsDelete: async (referralCode: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        partnerReferralsDelete: async (referralCode: string, partnerAdmin: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'referralCode' is not null or undefined
             assertParamExists('partnerReferralsDelete', 'referralCode', referralCode)
+            // verify required parameter 'partnerAdmin' is not null or undefined
+            assertParamExists('partnerReferralsDelete', 'partnerAdmin', partnerAdmin)
             const localVarPath = `/partner-referral`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -2283,6 +2299,10 @@ export const ReferralsApiAxiosParamCreator = function (configuration?: Configura
                 localVarQueryParameter['referralCode'] = referralCode;
             }
 
+            if (partnerAdmin !== undefined) {
+                localVarQueryParameter['partnerAdmin'] = partnerAdmin;
+            }
+
 
     
             setSearchParams(localVarUrlObj, localVarQueryParameter);
@@ -2296,10 +2316,13 @@ export const ReferralsApiAxiosParamCreator = function (configuration?: Configura
         },
         /**
          * 
+         * @param {string} partnerAdmin 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        partnerReferralsGet: async (options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        partnerReferralsGet: async (partnerAdmin: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'partnerAdmin' is not null or undefined
+            assertParamExists('partnerReferralsGet', 'partnerAdmin', partnerAdmin)
             const localVarPath = `/partner-referral`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -2315,6 +2338,10 @@ export const ReferralsApiAxiosParamCreator = function (configuration?: Configura
             // authentication chatdaddy required
             // oauth required
             await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["PARTNER_ADMIN_PANEL_ACCESS"], configuration)
+
+            if (partnerAdmin !== undefined) {
+                localVarQueryParameter['partnerAdmin'] = partnerAdmin;
+            }
 
 
     
@@ -2453,20 +2480,22 @@ export const ReferralsApiFp = function(configuration?: Configuration) {
         /**
          * 
          * @param {string} referralCode 
+         * @param {string} partnerAdmin 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async partnerReferralsDelete(referralCode: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.partnerReferralsDelete(referralCode, options);
+        async partnerReferralsDelete(referralCode: string, partnerAdmin: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.partnerReferralsDelete(referralCode, partnerAdmin, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
          * 
+         * @param {string} partnerAdmin 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async partnerReferralsGet(options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PartnerReferralsGet200Response>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.partnerReferralsGet(options);
+        async partnerReferralsGet(partnerAdmin: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PartnerReferralsGet200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.partnerReferralsGet(partnerAdmin, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -2475,7 +2504,7 @@ export const ReferralsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async partnerReferralsPost(partnerReferralCreateOptions?: PartnerReferralCreateOptions, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ReferralsPost200Response>> {
+        async partnerReferralsPost(partnerReferralCreateOptions?: PartnerReferralCreateOptions, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PartnerReferralsPost200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.partnerReferralsPost(partnerReferralCreateOptions, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -2519,19 +2548,21 @@ export const ReferralsApiFactory = function (configuration?: Configuration, base
         /**
          * 
          * @param {string} referralCode 
+         * @param {string} partnerAdmin 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        partnerReferralsDelete(referralCode: string, options?: any): AxiosPromise<void> {
-            return localVarFp.partnerReferralsDelete(referralCode, options).then((request) => request(axios, basePath));
+        partnerReferralsDelete(referralCode: string, partnerAdmin: string, options?: any): AxiosPromise<void> {
+            return localVarFp.partnerReferralsDelete(referralCode, partnerAdmin, options).then((request) => request(axios, basePath));
         },
         /**
          * 
+         * @param {string} partnerAdmin 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        partnerReferralsGet(options?: any): AxiosPromise<PartnerReferralsGet200Response> {
-            return localVarFp.partnerReferralsGet(options).then((request) => request(axios, basePath));
+        partnerReferralsGet(partnerAdmin: string, options?: any): AxiosPromise<PartnerReferralsGet200Response> {
+            return localVarFp.partnerReferralsGet(partnerAdmin, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -2539,7 +2570,7 @@ export const ReferralsApiFactory = function (configuration?: Configuration, base
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        partnerReferralsPost(partnerReferralCreateOptions?: PartnerReferralCreateOptions, options?: any): AxiosPromise<ReferralsPost200Response> {
+        partnerReferralsPost(partnerReferralCreateOptions?: PartnerReferralCreateOptions, options?: any): AxiosPromise<PartnerReferralsPost200Response> {
             return localVarFp.partnerReferralsPost(partnerReferralCreateOptions, options).then((request) => request(axios, basePath));
         },
         /**
@@ -2587,6 +2618,27 @@ export interface ReferralsApiPartnerReferralsDeleteRequest {
      * @memberof ReferralsApiPartnerReferralsDelete
      */
     readonly referralCode: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof ReferralsApiPartnerReferralsDelete
+     */
+    readonly partnerAdmin: string
+}
+
+/**
+ * Request parameters for partnerReferralsGet operation in ReferralsApi.
+ * @export
+ * @interface ReferralsApiPartnerReferralsGetRequest
+ */
+export interface ReferralsApiPartnerReferralsGetRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof ReferralsApiPartnerReferralsGet
+     */
+    readonly partnerAdmin: string
 }
 
 /**
@@ -2629,17 +2681,18 @@ export class ReferralsApi extends BaseAPI {
      * @memberof ReferralsApi
      */
     public partnerReferralsDelete(requestParameters: ReferralsApiPartnerReferralsDeleteRequest, options?: AxiosRequestConfig) {
-        return ReferralsApiFp(this.configuration).partnerReferralsDelete(requestParameters.referralCode, options).then((request) => request(this.axios, this.basePath));
+        return ReferralsApiFp(this.configuration).partnerReferralsDelete(requestParameters.referralCode, requestParameters.partnerAdmin, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * 
+     * @param {ReferralsApiPartnerReferralsGetRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof ReferralsApi
      */
-    public partnerReferralsGet(options?: AxiosRequestConfig) {
-        return ReferralsApiFp(this.configuration).partnerReferralsGet(options).then((request) => request(this.axios, this.basePath));
+    public partnerReferralsGet(requestParameters: ReferralsApiPartnerReferralsGetRequest, options?: AxiosRequestConfig) {
+        return ReferralsApiFp(this.configuration).partnerReferralsGet(requestParameters.partnerAdmin, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

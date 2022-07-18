@@ -435,7 +435,7 @@ export interface PartnerTeamPatchRequest {
      * @type {string}
      * @memberof PartnerTeamPatchRequest
      */
-    'partner': string | null;
+    'partnerAdmin'?: string | null;
 }
 /**
  * 
@@ -709,11 +709,11 @@ export interface Team {
      */
     'inviteLinks'?: Array<InviteLink>;
     /**
-     * 
+     * The team will be the admin team of a Chatdaddy partner if this property is not null.
      * @type {string}
      * @memberof Team
      */
-    'partnerAdmin'?: string;
+    'partnerAdmin'?: string | null;
 }
 /**
  * 
