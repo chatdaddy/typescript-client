@@ -291,7 +291,7 @@ export interface GetPartner200Response {
      * @type {string}
      * @memberof GetPartner200Response
      */
-    'partner': string;
+    'partnerAdmin': string;
 }
 /**
  * Describes the tier of the account, and which features it\'ll have
@@ -550,6 +550,12 @@ export interface PartnerReferralCreateOptions {
      * @memberof PartnerReferralCreateOptions
      */
     'productId': string;
+    /**
+     * partnerAdmin for the referralCode to be created
+     * @type {any}
+     * @memberof PartnerReferralCreateOptions
+     */
+    'partnerAdmin': any;
     /**
      * time the product can be used for in days
      * @type {number}
@@ -985,6 +991,12 @@ export interface ReferralCodeDetails {
      */
     'productId': string;
     /**
+     * ID of partnerAdmin associated with the referralCode
+     * @type {string}
+     * @memberof ReferralCodeDetails
+     */
+    'partnerAdmin': string;
+    /**
      * time the product can be used for in days
      * @type {number}
      * @memberof ReferralCodeDetails
@@ -1290,7 +1302,7 @@ export const ProductsApiAxiosParamCreator = function (configuration?: Configurat
             };
         },
         /**
-         * Most properties can be updated from here.  However, some properties require the Stripe dashboard, these properties are: - id - price - categoryId - active (if stripe produce is inactive, then the DB will reflect the same) 
+         * Most properties can be updated from here. However, some properties require the Stripe dashboard, these properties are: - id - price - categoryId - active (if stripe produce is inactive, then the DB will reflect the same) 
          * @summary Update a product\'s properties
          * @param {string} id 
          * @param {ProductUpdate} [productUpdate] 
@@ -1386,7 +1398,7 @@ export const ProductsApiFp = function(configuration?: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
-         * Most properties can be updated from here.  However, some properties require the Stripe dashboard, these properties are: - id - price - categoryId - active (if stripe produce is inactive, then the DB will reflect the same) 
+         * Most properties can be updated from here. However, some properties require the Stripe dashboard, these properties are: - id - price - categoryId - active (if stripe produce is inactive, then the DB will reflect the same) 
          * @summary Update a product\'s properties
          * @param {string} id 
          * @param {ProductUpdate} [productUpdate] 
@@ -1427,7 +1439,7 @@ export const ProductsApiFactory = function (configuration?: Configuration, baseP
             return localVarFp.productsGet(options).then((request) => request(axios, basePath));
         },
         /**
-         * Most properties can be updated from here.  However, some properties require the Stripe dashboard, these properties are: - id - price - categoryId - active (if stripe produce is inactive, then the DB will reflect the same) 
+         * Most properties can be updated from here. However, some properties require the Stripe dashboard, these properties are: - id - price - categoryId - active (if stripe produce is inactive, then the DB will reflect the same) 
          * @summary Update a product\'s properties
          * @param {string} id 
          * @param {ProductUpdate} [productUpdate] 
@@ -1489,7 +1501,7 @@ export class ProductsApi extends BaseAPI {
     }
 
     /**
-     * Most properties can be updated from here.  However, some properties require the Stripe dashboard, these properties are: - id - price - categoryId - active (if stripe produce is inactive, then the DB will reflect the same) 
+     * Most properties can be updated from here. However, some properties require the Stripe dashboard, these properties are: - id - price - categoryId - active (if stripe produce is inactive, then the DB will reflect the same) 
      * @summary Update a product\'s properties
      * @param {ProductsApiProductsPatchRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -1711,7 +1723,7 @@ export const PurchasesApiAxiosParamCreator = function (configuration?: Configura
             };
         },
         /**
-         * Fetches the list of active subscriptions/purchases from stripe  and calculates what the current subscriptions should be. This route can be called to refresh the subscription after checkout to ensure the subscription is retreived. 
+         * Fetches the list of active subscriptions/purchases from stripe and calculates what the current subscriptions should be. This route can be called to refresh the subscription after checkout to ensure the subscription is retreived. 
          * @summary Refreshes the subscriptions
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1898,7 +1910,7 @@ export const PurchasesApiFp = function(configuration?: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
-         * Fetches the list of active subscriptions/purchases from stripe  and calculates what the current subscriptions should be. This route can be called to refresh the subscription after checkout to ensure the subscription is retreived. 
+         * Fetches the list of active subscriptions/purchases from stripe and calculates what the current subscriptions should be. This route can be called to refresh the subscription after checkout to ensure the subscription is retreived. 
          * @summary Refreshes the subscriptions
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1992,7 +2004,7 @@ export const PurchasesApiFactory = function (configuration?: Configuration, base
             return localVarFp.mainPost(mainPostRequest, options).then((request) => request(axios, basePath));
         },
         /**
-         * Fetches the list of active subscriptions/purchases from stripe  and calculates what the current subscriptions should be. This route can be called to refresh the subscription after checkout to ensure the subscription is retreived. 
+         * Fetches the list of active subscriptions/purchases from stripe and calculates what the current subscriptions should be. This route can be called to refresh the subscription after checkout to ensure the subscription is retreived. 
          * @summary Refreshes the subscriptions
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -2189,7 +2201,7 @@ export class PurchasesApi extends BaseAPI {
     }
 
     /**
-     * Fetches the list of active subscriptions/purchases from stripe  and calculates what the current subscriptions should be. This route can be called to refresh the subscription after checkout to ensure the subscription is retreived. 
+     * Fetches the list of active subscriptions/purchases from stripe and calculates what the current subscriptions should be. This route can be called to refresh the subscription after checkout to ensure the subscription is retreived. 
      * @summary Refreshes the subscriptions
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
