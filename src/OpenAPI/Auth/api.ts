@@ -2802,7 +2802,10 @@ export const UsersApiAxiosParamCreator = function (configuration?: Configuration
 
             // authentication chatdaddy required
             // oauth required
-            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["USERS_PATCH"], configuration)
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", [], configuration)
+
+            // authentication otp required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
 
             if (userId !== undefined) {
                 localVarQueryParameter['userId'] = userId;
