@@ -1165,11 +1165,17 @@ export interface UserPatch {
      */
     'notify'?: NotifyModel;
     /**
-     * Phone number. Only admin access can modify
+     * Phone number. Only admin access can modify or specify OTP
      * @type {number}
      * @memberof UserPatch
      */
     'phoneNumber'?: number;
+    /**
+     * OTP to change password/phone number
+     * @type {number}
+     * @memberof UserPatch
+     */
+    'otp'?: number;
     /**
      * new password. Only admin access can modify
      * @type {string}
@@ -2802,10 +2808,7 @@ export const UsersApiAxiosParamCreator = function (configuration?: Configuration
 
             // authentication chatdaddy required
             // oauth required
-            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", [], configuration)
-
-            // authentication otp required
-            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["USERS_PATCH"], configuration)
 
             if (userId !== undefined) {
                 localVarQueryParameter['userId'] = userId;
