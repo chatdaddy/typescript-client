@@ -552,10 +552,10 @@ export interface PartnerReferralCreateOptions {
     'productId': string;
     /**
      * partnerAdmin for the referralCode to be created
-     * @type {any}
+     * @type {string}
      * @memberof PartnerReferralCreateOptions
      */
-    'partnerAdmin': any;
+    'partnerAdmin': string;
     /**
      * time the product can be used for in days
      * @type {number}
