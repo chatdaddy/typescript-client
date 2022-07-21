@@ -581,6 +581,12 @@ export interface PartnerReferralsGet200Response {
      * @memberof PartnerReferralsGet200Response
      */
     'referralCodes': Array<ReferralCodeDetails>;
+    /**
+     * 
+     * @type {string}
+     * @memberof PartnerReferralsGet200Response
+     */
+    'nextPage'?: string;
 }
 /**
  * 
@@ -2325,10 +2331,12 @@ export const ReferralsApiAxiosParamCreator = function (configuration?: Configura
         },
         /**
          * 
+         * @param {string} [page] The page for the cursor
+         * @param {number} [count] The numbers of items to return
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        partnerReferralsGet: async (options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        partnerReferralsGet: async (page?: string, count?: number, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/partner-referral`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -2344,6 +2352,14 @@ export const ReferralsApiAxiosParamCreator = function (configuration?: Configura
             // authentication chatdaddy required
             // oauth required
             await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["PARTNER_ADMIN_PANEL_ACCESS"], configuration)
+
+            if (page !== undefined) {
+                localVarQueryParameter['page'] = page;
+            }
+
+            if (count !== undefined) {
+                localVarQueryParameter['count'] = count;
+            }
 
 
     
@@ -2491,11 +2507,13 @@ export const ReferralsApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
+         * @param {string} [page] The page for the cursor
+         * @param {number} [count] The numbers of items to return
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async partnerReferralsGet(options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PartnerReferralsGet200Response>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.partnerReferralsGet(options);
+        async partnerReferralsGet(page?: string, count?: number, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PartnerReferralsGet200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.partnerReferralsGet(page, count, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -2556,11 +2574,13 @@ export const ReferralsApiFactory = function (configuration?: Configuration, base
         },
         /**
          * 
+         * @param {string} [page] The page for the cursor
+         * @param {number} [count] The numbers of items to return
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        partnerReferralsGet(options?: any): AxiosPromise<PartnerReferralsGet200Response> {
-            return localVarFp.partnerReferralsGet(options).then((request) => request(axios, basePath));
+        partnerReferralsGet(page?: string, count?: number, options?: any): AxiosPromise<PartnerReferralsGet200Response> {
+            return localVarFp.partnerReferralsGet(page, count, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -2619,6 +2639,27 @@ export interface ReferralsApiPartnerReferralsDeleteRequest {
 }
 
 /**
+ * Request parameters for partnerReferralsGet operation in ReferralsApi.
+ * @export
+ * @interface ReferralsApiPartnerReferralsGetRequest
+ */
+export interface ReferralsApiPartnerReferralsGetRequest {
+    /**
+     * The page for the cursor
+     * @type {string}
+     * @memberof ReferralsApiPartnerReferralsGet
+     */
+    readonly page?: string
+
+    /**
+     * The numbers of items to return
+     * @type {number}
+     * @memberof ReferralsApiPartnerReferralsGet
+     */
+    readonly count?: number
+}
+
+/**
  * Request parameters for partnerReferralsPost operation in ReferralsApi.
  * @export
  * @interface ReferralsApiPartnerReferralsPostRequest
@@ -2663,12 +2704,13 @@ export class ReferralsApi extends BaseAPI {
 
     /**
      * 
+     * @param {ReferralsApiPartnerReferralsGetRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof ReferralsApi
      */
-    public partnerReferralsGet(options?: AxiosRequestConfig) {
-        return ReferralsApiFp(this.configuration).partnerReferralsGet(options).then((request) => request(this.axios, this.basePath));
+    public partnerReferralsGet(requestParameters: ReferralsApiPartnerReferralsGetRequest = {}, options?: AxiosRequestConfig) {
+        return ReferralsApiFp(this.configuration).partnerReferralsGet(requestParameters.page, requestParameters.count, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
