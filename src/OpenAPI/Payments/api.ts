@@ -2264,6 +2264,10 @@ export const ReferralsApiAxiosParamCreator = function (configuration?: Configura
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["PARTNER_ADMIN_PANEL_ACCESS"], configuration)
+
             if (referralCode !== undefined) {
                 localVarQueryParameter['referralCode'] = referralCode;
             }

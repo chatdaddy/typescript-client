@@ -435,7 +435,7 @@ export interface PartnerTeamPatchRequest {
      * @type {string}
      * @memberof PartnerTeamPatchRequest
      */
-    'partnerAdmin'?: string | null;
+    'partnerAdmin': string | null;
 }
 /**
  * 
@@ -1279,7 +1279,7 @@ export const InviteLinksApiAxiosParamCreator = function (configuration?: Configu
             };
         },
         /**
-         * To generate an invite link for a specific set of scopes, you must also have the same set of scopes.  Eg. you cannot generate a link which gives access to `MESSAGE_SEND` when you don\'t have access to `MESSAGE_SEND` yourself.  This is done for obvious security concerns. 
+         * To generate an invite link for a specific set of scopes, you must also have the same set of scopes. Eg. you cannot generate a link which gives access to `MESSAGE_SEND` when you don\'t have access to `MESSAGE_SEND` yourself. This is done for obvious security concerns. 
          * @summary Create an invite link for the team
          * @param {InviteLinksPostRequest} [inviteLinksPostRequest] 
          * @param {*} [options] Override http request option.
@@ -1338,7 +1338,7 @@ export const InviteLinksApiFp = function(configuration?: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
-         * To generate an invite link for a specific set of scopes, you must also have the same set of scopes.  Eg. you cannot generate a link which gives access to `MESSAGE_SEND` when you don\'t have access to `MESSAGE_SEND` yourself.  This is done for obvious security concerns. 
+         * To generate an invite link for a specific set of scopes, you must also have the same set of scopes. Eg. you cannot generate a link which gives access to `MESSAGE_SEND` when you don\'t have access to `MESSAGE_SEND` yourself. This is done for obvious security concerns. 
          * @summary Create an invite link for the team
          * @param {InviteLinksPostRequest} [inviteLinksPostRequest] 
          * @param {*} [options] Override http request option.
@@ -1369,7 +1369,7 @@ export const InviteLinksApiFactory = function (configuration?: Configuration, ba
             return localVarFp.inviteLinksGet(id, options).then((request) => request(axios, basePath));
         },
         /**
-         * To generate an invite link for a specific set of scopes, you must also have the same set of scopes.  Eg. you cannot generate a link which gives access to `MESSAGE_SEND` when you don\'t have access to `MESSAGE_SEND` yourself.  This is done for obvious security concerns. 
+         * To generate an invite link for a specific set of scopes, you must also have the same set of scopes. Eg. you cannot generate a link which gives access to `MESSAGE_SEND` when you don\'t have access to `MESSAGE_SEND` yourself. This is done for obvious security concerns. 
          * @summary Create an invite link for the team
          * @param {InviteLinksPostRequest} [inviteLinksPostRequest] 
          * @param {*} [options] Override http request option.
@@ -1429,7 +1429,7 @@ export class InviteLinksApi extends BaseAPI {
     }
 
     /**
-     * To generate an invite link for a specific set of scopes, you must also have the same set of scopes.  Eg. you cannot generate a link which gives access to `MESSAGE_SEND` when you don\'t have access to `MESSAGE_SEND` yourself.  This is done for obvious security concerns. 
+     * To generate an invite link for a specific set of scopes, you must also have the same set of scopes. Eg. you cannot generate a link which gives access to `MESSAGE_SEND` when you don\'t have access to `MESSAGE_SEND` yourself. This is done for obvious security concerns. 
      * @summary Create an invite link for the team
      * @param {InviteLinksApiInviteLinksPostRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
