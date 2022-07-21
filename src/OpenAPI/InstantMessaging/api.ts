@@ -1536,11 +1536,17 @@ export interface MessageAttachment {
      */
     'mimetype': string;
     /**
-     * 1. can be publicly hosted url,  2. or can be base64 encoded buffer. But make sure it starts with `data:;base64,` Note: the `contact` type only supports base64 encoded data 
+     * 1. can be publicly hosted url,  2. or can be base64 encoded buffer. But make sure it starts with `data:;base64,` -- can be at most 1KB in size Note: the `contact` type only supports base64 encoded data. Must be a serialised vcard 
      * @type {string}
      * @memberof MessageAttachment
      */
     'url': string;
+    /**
+     * 
+     * @type {MessageLocation}
+     * @memberof MessageAttachment
+     */
+    'location'?: MessageLocation;
     /**
      * thumbnail of sticker/video/image
      * @type {any}
@@ -1554,13 +1560,19 @@ export interface MessageAttachment {
      */
     'seconds'?: number;
     /**
+     * Show as PTT (voice note) -- only for audio messages
+     * @type {boolean}
+     * @memberof MessageAttachment
+     */
+    'pttAudio'?: boolean;
+    /**
      * name of the doc message
      * @type {string}
      * @memberof MessageAttachment
      */
     'filename'?: string;
     /**
-     * is this a gif
+     * is this a gif -- only for video messages
      * @type {boolean}
      * @memberof MessageAttachment
      */
@@ -1975,6 +1987,25 @@ export interface MessageLinkPreview {
      * @memberof MessageLinkPreview
      */
     'matchedText'?: string;
+}
+/**
+ * 
+ * @export
+ * @interface MessageLocation
+ */
+export interface MessageLocation {
+    /**
+     * 
+     * @type {number}
+     * @memberof MessageLocation
+     */
+    'latitude': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof MessageLocation
+     */
+    'longitude': number;
 }
 /**
  * 
