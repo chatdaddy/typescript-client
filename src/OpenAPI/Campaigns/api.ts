@@ -95,6 +95,12 @@ export interface Campaign {
      * @memberof Campaign
      */
     'recipients': Array<CampaignRecipients>;
+    /**
+     * if want to send a broadcast fast, and don\'t want to wait long for the broadcast to complete.
+     * @type {boolean}
+     * @memberof Campaign
+     */
+    'turboMode'?: boolean;
 }
 /**
  * 
@@ -197,6 +203,12 @@ export interface CampaignCreateAsync {
      * @memberof CampaignCreateAsync
      */
     'recipientDataUrl': string;
+    /**
+     * if want to send a broadcast fast, and don\'t want to wait long for the broadcast to complete.
+     * @type {boolean}
+     * @memberof CampaignCreateAsync
+     */
+    'turboMode'?: boolean;
 }
 /**
  * 
@@ -283,6 +295,12 @@ export interface CampaignEdit {
      * @memberof CampaignEdit
      */
     'removeJids'?: Array<string>;
+    /**
+     * if want to send a broadcast fast, and don\'t want to wait long for the broadcast to complete.
+     * @type {boolean}
+     * @memberof CampaignEdit
+     */
+    'turboMode'?: boolean;
 }
 /**
  * 
