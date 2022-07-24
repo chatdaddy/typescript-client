@@ -630,7 +630,11 @@ export const Scope = {
     PaymentsUpdate: 'PAYMENTS_UPDATE',
     WaLiveEvents: 'WA_LIVE_EVENTS',
     ChatdaddyHook: 'CHATDADDY_HOOK',
-    PartnerAdminPanelAccess: 'PARTNER_ADMIN_PANEL_ACCESS'
+    PartnerAdminPanelAccess: 'PARTNER_ADMIN_PANEL_ACCESS',
+    ProductsGet: 'PRODUCTS_GET',
+    ProductsCreate: 'PRODUCTS_CREATE',
+    ProductsUpdate: 'PRODUCTS_UPDATE',
+    ProductsDelete: 'PRODUCTS_DELETE'
 } as const;
 
 export type Scope = typeof Scope[keyof typeof Scope];

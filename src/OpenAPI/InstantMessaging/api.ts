@@ -2356,6 +2356,239 @@ export interface OrderProduct {
     'quantity': number;
 }
 /**
+ * Model for a product on an external platform (eg. WhatsApp)
+ * @export
+ * @interface PlatformProduct
+ */
+export interface PlatformProduct {
+    /**
+     * 
+     * @type {string}
+     * @memberof PlatformProduct
+     */
+    'name': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof PlatformProduct
+     */
+    'retailerId'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof PlatformProduct
+     */
+    'url'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof PlatformProduct
+     */
+    'description': string;
+    /**
+     * 
+     * @type {number}
+     * @memberof PlatformProduct
+     */
+    'price': number;
+    /**
+     * 
+     * @type {string}
+     * @memberof PlatformProduct
+     */
+    'currency': string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof PlatformProduct
+     */
+    'isHidden': boolean;
+    /**
+     * 
+     * @type {Array<ProductCategory>}
+     * @memberof PlatformProduct
+     */
+    'categories'?: Array<ProductCategory> | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof PlatformProduct
+     */
+    'id': string;
+    /**
+     * 
+     * @type {{ [key: string]: string; }}
+     * @memberof PlatformProduct
+     */
+    'imageUrls': { [key: string]: string; };
+    /**
+     * 
+     * @type {{ [key: string]: string; }}
+     * @memberof PlatformProduct
+     */
+    'reviewStatus': { [key: string]: string; };
+    /**
+     * 
+     * @type {ProductAvailability}
+     * @memberof PlatformProduct
+     */
+    'availability': ProductAvailability;
+    /**
+     * 
+     * @type {ProductSyncStatus}
+     * @memberof PlatformProduct
+     */
+    'syncStatus': ProductSyncStatus;
+}
+/**
+ * 
+ * @export
+ * @interface PlatformProductCategoriesGet200Response
+ */
+export interface PlatformProductCategoriesGet200Response {
+    /**
+     * 
+     * @type {Array<ProductCategory>}
+     * @memberof PlatformProductCategoriesGet200Response
+     */
+    'categories': Array<ProductCategory>;
+}
+/**
+ * 
+ * @export
+ * @interface PlatformProductCreate
+ */
+export interface PlatformProductCreate {
+    /**
+     * 
+     * @type {string}
+     * @memberof PlatformProductCreate
+     */
+    'name': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof PlatformProductCreate
+     */
+    'retailerId'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof PlatformProductCreate
+     */
+    'url'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof PlatformProductCreate
+     */
+    'description': string;
+    /**
+     * 
+     * @type {number}
+     * @memberof PlatformProductCreate
+     */
+    'price': number;
+    /**
+     * 
+     * @type {string}
+     * @memberof PlatformProductCreate
+     */
+    'currency': string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof PlatformProductCreate
+     */
+    'isHidden': boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof PlatformProductCreate
+     */
+    'category'?: string | null;
+}
+/**
+ * 
+ * @export
+ * @interface PlatformProductUpdate
+ */
+export interface PlatformProductUpdate {
+    /**
+     * 
+     * @type {string}
+     * @memberof PlatformProductUpdate
+     */
+    'name'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof PlatformProductUpdate
+     */
+    'retailerId'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof PlatformProductUpdate
+     */
+    'url'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof PlatformProductUpdate
+     */
+    'description'?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof PlatformProductUpdate
+     */
+    'price'?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof PlatformProductUpdate
+     */
+    'currency'?: string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof PlatformProductUpdate
+     */
+    'isHidden'?: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof PlatformProductUpdate
+     */
+    'category'?: string | null;
+}
+/**
+ * 
+ * @export
+ * @interface PlatformProductsGet200Response
+ */
+export interface PlatformProductsGet200Response {
+    /**
+     * total products present with these filters. Only returned if returnTotalCount is true
+     * @type {number}
+     * @memberof PlatformProductsGet200Response
+     */
+    'totalCount'?: number;
+    /**
+     * 
+     * @type {Array<PlatformProduct>}
+     * @memberof PlatformProductsGet200Response
+     */
+    'products': Array<PlatformProduct>;
+    /**
+     * 
+     * @type {string}
+     * @memberof PlatformProductsGet200Response
+     */
+    'nextPage'?: string | null;
+}
+/**
  * 
  * @export
  * @enum {string}
@@ -2390,6 +2623,55 @@ export interface Price {
      */
     'currency': string;
 }
+/**
+ * 
+ * @export
+ * @enum {string}
+ */
+
+export const ProductAvailability = {
+    InStock: 'in-stock'
+} as const;
+
+export type ProductAvailability = typeof ProductAvailability[keyof typeof ProductAvailability];
+
+
+/**
+ * 
+ * @export
+ * @interface ProductCategory
+ */
+export interface ProductCategory {
+    /**
+     * 
+     * @type {string}
+     * @memberof ProductCategory
+     */
+    'name': string;
+    /**
+     * 
+     * @type {number}
+     * @memberof ProductCategory
+     */
+    'productCount': number;
+}
+/**
+ * 
+ * @export
+ * @enum {string}
+ */
+
+export const ProductSyncStatus = {
+    Synced: 'synced',
+    PendingCreate: 'pendingCreate',
+    PendingUpdate: 'pendingUpdate',
+    PendingDelete: 'pendingDelete',
+    SyncFailed: 'syncFailed'
+} as const;
+
+export type ProductSyncStatus = typeof ProductSyncStatus[keyof typeof ProductSyncStatus];
+
+
 /**
  * 
  * @export
@@ -7391,6 +7673,271 @@ export const ProductApiAxiosParamCreator = function (configuration?: Configurati
                 options: localVarRequestOptions,
             };
         },
+        /**
+         * 
+         * @summary Get the categories (collections) from WA catalog.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        platformProductCategoriesGet: async (options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/product-categories`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", [], configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Delete a product from the WA catalog
+         * @param {string} accountId 
+         * @param {Array<string>} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        platformProductsDelete: async (accountId: string, id: Array<string>, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'accountId' is not null or undefined
+            assertParamExists('platformProductsDelete', 'accountId', accountId)
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('platformProductsDelete', 'id', id)
+            const localVarPath = `/products/{accountId}`
+                .replace(`{${"accountId"}}`, encodeURIComponent(String(accountId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["PRODUCTS_DELETE"], configuration)
+
+            if (id) {
+                localVarQueryParameter['id'] = id;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Returns the WA catalog. Only available on WA Business apps. 
+         * @summary Get the products from WA catalog.
+         * @param {Array<string>} [accountId] 
+         * @param {string} [q] Filter if product title/description contains this
+         * @param {string} [category] Filter based on collection/category
+         * @param {Array<string>} [id] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        platformProductsGet: async (accountId?: Array<string>, q?: string, category?: string, id?: Array<string>, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/products`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["PRODUCTS_GET"], configuration)
+
+            if (accountId) {
+                localVarQueryParameter['accountId'] = accountId;
+            }
+
+            if (q !== undefined) {
+                localVarQueryParameter['q'] = q;
+            }
+
+            if (category !== undefined) {
+                localVarQueryParameter['category'] = category;
+            }
+
+            if (id) {
+                localVarQueryParameter['id'] = id;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Update a product in the WA catalog
+         * @param {string} accountId 
+         * @param {string} id 
+         * @param {PlatformProductUpdate} [platformProductUpdate] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        platformProductsPatch: async (accountId: string, id: string, platformProductUpdate?: PlatformProductUpdate, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'accountId' is not null or undefined
+            assertParamExists('platformProductsPatch', 'accountId', accountId)
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('platformProductsPatch', 'id', id)
+            const localVarPath = `/products/{accountId}/{id}`
+                .replace(`{${"accountId"}}`, encodeURIComponent(String(accountId)))
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PATCH', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["PRODUCTS_UPDATE"], configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(platformProductUpdate, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Add a product to the WA catalog
+         * @param {string} accountId 
+         * @param {PlatformProductCreate} [platformProductCreate] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        platformProductsPost: async (accountId: string, platformProductCreate?: PlatformProductCreate, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'accountId' is not null or undefined
+            assertParamExists('platformProductsPost', 'accountId', accountId)
+            const localVarPath = `/products/{accountId}`
+                .replace(`{${"accountId"}}`, encodeURIComponent(String(accountId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["PRODUCTS_CREATE"], configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(platformProductCreate, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Trigger sync of the specified products on ChatDaddy with WhatsApp
+         * @param {Array<string>} [id] Products to sync with WhatsApp. Leave unspecified to trigger all
+         * @param {boolean} [syncForward] Sync products from ChatDaddy to WhatsApp
+         * @param {boolean} [syncBackward] Sync missing products from WhatsApp to ChatDaddy
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        platformProductsSync: async (id?: Array<string>, syncForward?: boolean, syncBackward?: boolean, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/products/sync`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (id) {
+                localVarQueryParameter['id'] = id;
+            }
+
+            if (syncForward !== undefined) {
+                localVarQueryParameter['syncForward'] = syncForward;
+            }
+
+            if (syncBackward !== undefined) {
+                localVarQueryParameter['syncBackward'] = syncBackward;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
     }
 };
 
@@ -7414,6 +7961,79 @@ export const ProductApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.orderDetailsGet(accountId, orderId, token, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
+        /**
+         * 
+         * @summary Get the categories (collections) from WA catalog.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async platformProductCategoriesGet(options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PlatformProductCategoriesGet200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.platformProductCategoriesGet(options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary Delete a product from the WA catalog
+         * @param {string} accountId 
+         * @param {Array<string>} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async platformProductsDelete(accountId: string, id: Array<string>, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AccountsLogout200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.platformProductsDelete(accountId, id, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * Returns the WA catalog. Only available on WA Business apps. 
+         * @summary Get the products from WA catalog.
+         * @param {Array<string>} [accountId] 
+         * @param {string} [q] Filter if product title/description contains this
+         * @param {string} [category] Filter based on collection/category
+         * @param {Array<string>} [id] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async platformProductsGet(accountId?: Array<string>, q?: string, category?: string, id?: Array<string>, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PlatformProductsGet200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.platformProductsGet(accountId, q, category, id, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary Update a product in the WA catalog
+         * @param {string} accountId 
+         * @param {string} id 
+         * @param {PlatformProductUpdate} [platformProductUpdate] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async platformProductsPatch(accountId: string, id: string, platformProductUpdate?: PlatformProductUpdate, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PlatformProduct>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.platformProductsPatch(accountId, id, platformProductUpdate, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary Add a product to the WA catalog
+         * @param {string} accountId 
+         * @param {PlatformProductCreate} [platformProductCreate] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async platformProductsPost(accountId: string, platformProductCreate?: PlatformProductCreate, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PlatformProduct>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.platformProductsPost(accountId, platformProductCreate, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * Trigger sync of the specified products on ChatDaddy with WhatsApp
+         * @param {Array<string>} [id] Products to sync with WhatsApp. Leave unspecified to trigger all
+         * @param {boolean} [syncForward] Sync products from ChatDaddy to WhatsApp
+         * @param {boolean} [syncBackward] Sync missing products from WhatsApp to ChatDaddy
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async platformProductsSync(id?: Array<string>, syncForward?: boolean, syncBackward?: boolean, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AccountsLogout200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.platformProductsSync(id, syncForward, syncBackward, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
     }
 };
 
@@ -7435,6 +8055,73 @@ export const ProductApiFactory = function (configuration?: Configuration, basePa
          */
         orderDetailsGet(accountId: string, orderId: string, token?: string, options?: any): AxiosPromise<OrderDetails> {
             return localVarFp.orderDetailsGet(accountId, orderId, token, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Get the categories (collections) from WA catalog.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        platformProductCategoriesGet(options?: any): AxiosPromise<PlatformProductCategoriesGet200Response> {
+            return localVarFp.platformProductCategoriesGet(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Delete a product from the WA catalog
+         * @param {string} accountId 
+         * @param {Array<string>} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        platformProductsDelete(accountId: string, id: Array<string>, options?: any): AxiosPromise<AccountsLogout200Response> {
+            return localVarFp.platformProductsDelete(accountId, id, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Returns the WA catalog. Only available on WA Business apps. 
+         * @summary Get the products from WA catalog.
+         * @param {Array<string>} [accountId] 
+         * @param {string} [q] Filter if product title/description contains this
+         * @param {string} [category] Filter based on collection/category
+         * @param {Array<string>} [id] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        platformProductsGet(accountId?: Array<string>, q?: string, category?: string, id?: Array<string>, options?: any): AxiosPromise<PlatformProductsGet200Response> {
+            return localVarFp.platformProductsGet(accountId, q, category, id, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Update a product in the WA catalog
+         * @param {string} accountId 
+         * @param {string} id 
+         * @param {PlatformProductUpdate} [platformProductUpdate] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        platformProductsPatch(accountId: string, id: string, platformProductUpdate?: PlatformProductUpdate, options?: any): AxiosPromise<PlatformProduct> {
+            return localVarFp.platformProductsPatch(accountId, id, platformProductUpdate, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Add a product to the WA catalog
+         * @param {string} accountId 
+         * @param {PlatformProductCreate} [platformProductCreate] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        platformProductsPost(accountId: string, platformProductCreate?: PlatformProductCreate, options?: any): AxiosPromise<PlatformProduct> {
+            return localVarFp.platformProductsPost(accountId, platformProductCreate, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Trigger sync of the specified products on ChatDaddy with WhatsApp
+         * @param {Array<string>} [id] Products to sync with WhatsApp. Leave unspecified to trigger all
+         * @param {boolean} [syncForward] Sync products from ChatDaddy to WhatsApp
+         * @param {boolean} [syncBackward] Sync missing products from WhatsApp to ChatDaddy
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        platformProductsSync(id?: Array<string>, syncForward?: boolean, syncBackward?: boolean, options?: any): AxiosPromise<AccountsLogout200Response> {
+            return localVarFp.platformProductsSync(id, syncForward, syncBackward, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -7468,6 +8155,139 @@ export interface ProductApiOrderDetailsGetRequest {
 }
 
 /**
+ * Request parameters for platformProductsDelete operation in ProductApi.
+ * @export
+ * @interface ProductApiPlatformProductsDeleteRequest
+ */
+export interface ProductApiPlatformProductsDeleteRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof ProductApiPlatformProductsDelete
+     */
+    readonly accountId: string
+
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof ProductApiPlatformProductsDelete
+     */
+    readonly id: Array<string>
+}
+
+/**
+ * Request parameters for platformProductsGet operation in ProductApi.
+ * @export
+ * @interface ProductApiPlatformProductsGetRequest
+ */
+export interface ProductApiPlatformProductsGetRequest {
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof ProductApiPlatformProductsGet
+     */
+    readonly accountId?: Array<string>
+
+    /**
+     * Filter if product title/description contains this
+     * @type {string}
+     * @memberof ProductApiPlatformProductsGet
+     */
+    readonly q?: string
+
+    /**
+     * Filter based on collection/category
+     * @type {string}
+     * @memberof ProductApiPlatformProductsGet
+     */
+    readonly category?: string
+
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof ProductApiPlatformProductsGet
+     */
+    readonly id?: Array<string>
+}
+
+/**
+ * Request parameters for platformProductsPatch operation in ProductApi.
+ * @export
+ * @interface ProductApiPlatformProductsPatchRequest
+ */
+export interface ProductApiPlatformProductsPatchRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof ProductApiPlatformProductsPatch
+     */
+    readonly accountId: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof ProductApiPlatformProductsPatch
+     */
+    readonly id: string
+
+    /**
+     * 
+     * @type {PlatformProductUpdate}
+     * @memberof ProductApiPlatformProductsPatch
+     */
+    readonly platformProductUpdate?: PlatformProductUpdate
+}
+
+/**
+ * Request parameters for platformProductsPost operation in ProductApi.
+ * @export
+ * @interface ProductApiPlatformProductsPostRequest
+ */
+export interface ProductApiPlatformProductsPostRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof ProductApiPlatformProductsPost
+     */
+    readonly accountId: string
+
+    /**
+     * 
+     * @type {PlatformProductCreate}
+     * @memberof ProductApiPlatformProductsPost
+     */
+    readonly platformProductCreate?: PlatformProductCreate
+}
+
+/**
+ * Request parameters for platformProductsSync operation in ProductApi.
+ * @export
+ * @interface ProductApiPlatformProductsSyncRequest
+ */
+export interface ProductApiPlatformProductsSyncRequest {
+    /**
+     * Products to sync with WhatsApp. Leave unspecified to trigger all
+     * @type {Array<string>}
+     * @memberof ProductApiPlatformProductsSync
+     */
+    readonly id?: Array<string>
+
+    /**
+     * Sync products from ChatDaddy to WhatsApp
+     * @type {boolean}
+     * @memberof ProductApiPlatformProductsSync
+     */
+    readonly syncForward?: boolean
+
+    /**
+     * Sync missing products from WhatsApp to ChatDaddy
+     * @type {boolean}
+     * @memberof ProductApiPlatformProductsSync
+     */
+    readonly syncBackward?: boolean
+}
+
+/**
  * ProductApi - object-oriented interface
  * @export
  * @class ProductApi
@@ -7484,6 +8304,76 @@ export class ProductApi extends BaseAPI {
      */
     public orderDetailsGet(requestParameters: ProductApiOrderDetailsGetRequest, options?: AxiosRequestConfig) {
         return ProductApiFp(this.configuration).orderDetailsGet(requestParameters.accountId, requestParameters.orderId, requestParameters.token, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Get the categories (collections) from WA catalog.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ProductApi
+     */
+    public platformProductCategoriesGet(options?: AxiosRequestConfig) {
+        return ProductApiFp(this.configuration).platformProductCategoriesGet(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Delete a product from the WA catalog
+     * @param {ProductApiPlatformProductsDeleteRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ProductApi
+     */
+    public platformProductsDelete(requestParameters: ProductApiPlatformProductsDeleteRequest, options?: AxiosRequestConfig) {
+        return ProductApiFp(this.configuration).platformProductsDelete(requestParameters.accountId, requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Returns the WA catalog. Only available on WA Business apps. 
+     * @summary Get the products from WA catalog.
+     * @param {ProductApiPlatformProductsGetRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ProductApi
+     */
+    public platformProductsGet(requestParameters: ProductApiPlatformProductsGetRequest = {}, options?: AxiosRequestConfig) {
+        return ProductApiFp(this.configuration).platformProductsGet(requestParameters.accountId, requestParameters.q, requestParameters.category, requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Update a product in the WA catalog
+     * @param {ProductApiPlatformProductsPatchRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ProductApi
+     */
+    public platformProductsPatch(requestParameters: ProductApiPlatformProductsPatchRequest, options?: AxiosRequestConfig) {
+        return ProductApiFp(this.configuration).platformProductsPatch(requestParameters.accountId, requestParameters.id, requestParameters.platformProductUpdate, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Add a product to the WA catalog
+     * @param {ProductApiPlatformProductsPostRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ProductApi
+     */
+    public platformProductsPost(requestParameters: ProductApiPlatformProductsPostRequest, options?: AxiosRequestConfig) {
+        return ProductApiFp(this.configuration).platformProductsPost(requestParameters.accountId, requestParameters.platformProductCreate, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Trigger sync of the specified products on ChatDaddy with WhatsApp
+     * @param {ProductApiPlatformProductsSyncRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ProductApi
+     */
+    public platformProductsSync(requestParameters: ProductApiPlatformProductsSyncRequest = {}, options?: AxiosRequestConfig) {
+        return ProductApiFp(this.configuration).platformProductsSync(requestParameters.id, requestParameters.syncForward, requestParameters.syncBackward, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

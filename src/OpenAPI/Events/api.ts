@@ -56,7 +56,10 @@ export const EventName = {
     TeammemberDelete: 'teammember-delete',
     PurchasedetailInsert: 'purchasedetail-insert',
     PurchasedetailUpdate: 'purchasedetail-update',
-    PurchasedetailDelete: 'purchasedetail-delete'
+    PurchasedetailDelete: 'purchasedetail-delete',
+    PlatformproductInsert: 'platformproduct-insert',
+    PlatformproductUpdate: 'platformproduct-update',
+    PlatformproductDelete: 'platformproduct-delete'
 } as const;
 
 export type EventName = typeof EventName[keyof typeof EventName];

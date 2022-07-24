@@ -670,5 +670,33 @@
     "features": [],
     "roles": [],
     "group": null
+  },
+  "PRODUCTS_GET": {
+    "number": 82,
+    "description": "Fetch all platform products",
+    "features": [],
+    "roles": [],
+    "group": "Shop & Product"
+  },
+  "PRODUCTS_CREATE": {
+    "number": 83,
+    "description": "Create a platform product",
+    "features": [],
+    "roles": [],
+    "group": "Shop & Product"
+  },
+  "PRODUCTS_UPDATE": {
+    "number": 84,
+    "description": "Update a platform product",
+    "features": [],
+    "roles": [],
+    "group": "Shop & Product"
+  },
+  "PRODUCTS_DELETE": {
+    "number": 85,
+    "description": "Delete a platform product",
+    "features": [],
+    "roles": [],
+    "group": "Shop & Product"
   }
 }
