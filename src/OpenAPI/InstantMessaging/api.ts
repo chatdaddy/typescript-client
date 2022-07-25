@@ -2416,6 +2416,12 @@ export interface PlatformProduct {
      */
     'id': string;
     /**
+     * Unique identifier for an account.  The account ID is constructed from the first 21 characters of the team ID, prefixed by \"acc\" and suffixed by 4 random hex characters. This helps uniquely identify each account as well as establish a connection between the account\'s team by embedding the partial team ID in it. 
+     * @type {string}
+     * @memberof PlatformProduct
+     */
+    'accountId': string;
+    /**
      * 
      * @type {{ [key: string]: string; }}
      * @memberof PlatformProduct
@@ -2439,6 +2445,12 @@ export interface PlatformProduct {
      * @memberof PlatformProduct
      */
     'syncStatus': ProductSyncStatus;
+    /**
+     * 
+     * @type {Error}
+     * @memberof PlatformProduct
+     */
+    'error'?: Error;
     /**
      * An ISO formatted timestamp
      * @type {string}
@@ -2677,8 +2689,7 @@ export const ProductSyncStatus = {
     Synced: 'synced',
     PendingCreate: 'pendingCreate',
     PendingUpdate: 'pendingUpdate',
-    PendingDelete: 'pendingDelete',
-    SyncFailed: 'syncFailed'
+    PendingDelete: 'pendingDelete'
 } as const;
 
 export type ProductSyncStatus = typeof ProductSyncStatus[keyof typeof ProductSyncStatus];
