@@ -2439,6 +2439,18 @@ export interface PlatformProduct {
      * @memberof PlatformProduct
      */
     'syncStatus': ProductSyncStatus;
+    /**
+     * An ISO formatted timestamp
+     * @type {string}
+     * @memberof PlatformProduct
+     */
+    'createdAt': string;
+    /**
+     * An ISO formatted timestamp
+     * @type {string}
+     * @memberof PlatformProduct
+     */
+    'updatedAt': string;
 }
 /**
  * 
@@ -2586,7 +2598,7 @@ export interface PlatformProductsGet200Response {
      * @type {string}
      * @memberof PlatformProductsGet200Response
      */
-    'nextPage'?: string | null;
+    'nextPage'?: string;
 }
 /**
  * 
@@ -7759,10 +7771,12 @@ export const ProductApiAxiosParamCreator = function (configuration?: Configurati
          * @param {string} [q] Filter if product title/description contains this
          * @param {string} [category] Filter based on collection/category
          * @param {Array<string>} [id] 
+         * @param {string} [cursor] 
+         * @param {boolean} [returnTotalCount] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        platformProductsGet: async (accountId?: Array<string>, q?: string, category?: string, id?: Array<string>, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        platformProductsGet: async (accountId?: Array<string>, q?: string, category?: string, id?: Array<string>, cursor?: string, returnTotalCount?: boolean, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/products`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -7793,6 +7807,14 @@ export const ProductApiAxiosParamCreator = function (configuration?: Configurati
 
             if (id) {
                 localVarQueryParameter['id'] = id;
+            }
+
+            if (cursor !== undefined) {
+                localVarQueryParameter['cursor'] = cursor;
+            }
+
+            if (returnTotalCount !== undefined) {
+                localVarQueryParameter['returnTotalCount'] = returnTotalCount;
             }
 
 
@@ -7990,11 +8012,13 @@ export const ProductApiFp = function(configuration?: Configuration) {
          * @param {string} [q] Filter if product title/description contains this
          * @param {string} [category] Filter based on collection/category
          * @param {Array<string>} [id] 
+         * @param {string} [cursor] 
+         * @param {boolean} [returnTotalCount] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async platformProductsGet(accountId?: Array<string>, q?: string, category?: string, id?: Array<string>, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PlatformProductsGet200Response>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.platformProductsGet(accountId, q, category, id, options);
+        async platformProductsGet(accountId?: Array<string>, q?: string, category?: string, id?: Array<string>, cursor?: string, returnTotalCount?: boolean, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PlatformProductsGet200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.platformProductsGet(accountId, q, category, id, cursor, returnTotalCount, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -8083,11 +8107,13 @@ export const ProductApiFactory = function (configuration?: Configuration, basePa
          * @param {string} [q] Filter if product title/description contains this
          * @param {string} [category] Filter based on collection/category
          * @param {Array<string>} [id] 
+         * @param {string} [cursor] 
+         * @param {boolean} [returnTotalCount] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        platformProductsGet(accountId?: Array<string>, q?: string, category?: string, id?: Array<string>, options?: any): AxiosPromise<PlatformProductsGet200Response> {
-            return localVarFp.platformProductsGet(accountId, q, category, id, options).then((request) => request(axios, basePath));
+        platformProductsGet(accountId?: Array<string>, q?: string, category?: string, id?: Array<string>, cursor?: string, returnTotalCount?: boolean, options?: any): AxiosPromise<PlatformProductsGet200Response> {
+            return localVarFp.platformProductsGet(accountId, q, category, id, cursor, returnTotalCount, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -8208,6 +8234,20 @@ export interface ProductApiPlatformProductsGetRequest {
      * @memberof ProductApiPlatformProductsGet
      */
     readonly id?: Array<string>
+
+    /**
+     * 
+     * @type {string}
+     * @memberof ProductApiPlatformProductsGet
+     */
+    readonly cursor?: string
+
+    /**
+     * 
+     * @type {boolean}
+     * @memberof ProductApiPlatformProductsGet
+     */
+    readonly returnTotalCount?: boolean
 }
 
 /**
@@ -8338,7 +8378,7 @@ export class ProductApi extends BaseAPI {
      * @memberof ProductApi
      */
     public platformProductsGet(requestParameters: ProductApiPlatformProductsGetRequest = {}, options?: AxiosRequestConfig) {
-        return ProductApiFp(this.configuration).platformProductsGet(requestParameters.accountId, requestParameters.q, requestParameters.category, requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+        return ProductApiFp(this.configuration).platformProductsGet(requestParameters.accountId, requestParameters.q, requestParameters.category, requestParameters.id, requestParameters.cursor, requestParameters.returnTotalCount, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
