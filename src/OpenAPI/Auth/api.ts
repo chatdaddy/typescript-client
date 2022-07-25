@@ -1077,6 +1077,12 @@ export interface User {
      * @memberof User
      */
     'webPushSubscriptions'?: Array<WebPushSubscription>;
+    /**
+     * The partnership the user has signed in with
+     * @type {string}
+     * @memberof User
+     */
+    'partnership'?: string | null;
 }
 /**
  * 

@@ -291,7 +291,7 @@ export interface GetPartner200Response {
      * @type {string}
      * @memberof GetPartner200Response
      */
-    'partnerAdmin': string;
+    'partnerAdmin'?: string;
 }
 /**
  * Describes the tier of the account, and which features it\'ll have
