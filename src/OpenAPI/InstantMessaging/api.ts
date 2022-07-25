@@ -2531,6 +2531,12 @@ export interface PlatformProductCreate {
      * @memberof PlatformProductCreate
      */
     'category'?: string | null;
+    /**
+     * List of URLs for images of the product
+     * @type {Array<string>}
+     * @memberof PlatformProductCreate
+     */
+    'imageUrls'?: Array<string>;
 }
 /**
  * 
@@ -2586,6 +2592,12 @@ export interface PlatformProductUpdate {
      * @memberof PlatformProductUpdate
      */
     'category'?: string | null;
+    /**
+     * List of URLs for images of the product
+     * @type {Array<string>}
+     * @memberof PlatformProductUpdate
+     */
+    'imageUrls'?: Array<string>;
 }
 /**
  * 
