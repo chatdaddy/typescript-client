@@ -7946,13 +7946,16 @@ export const ProductApiAxiosParamCreator = function (configuration?: Configurati
         },
         /**
          * Trigger sync of the specified products on ChatDaddy with WhatsApp
+         * @param {string} accountId Account ID to sync products from/to
          * @param {Array<string>} [id] Products to sync with WhatsApp. Leave unspecified to trigger all
          * @param {boolean} [syncForward] Sync products from ChatDaddy to WhatsApp
          * @param {boolean} [syncBackward] Sync missing products from WhatsApp to ChatDaddy
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        platformProductsSync: async (id?: Array<string>, syncForward?: boolean, syncBackward?: boolean, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        platformProductsSync: async (accountId: string, id?: Array<string>, syncForward?: boolean, syncBackward?: boolean, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'accountId' is not null or undefined
+            assertParamExists('platformProductsSync', 'accountId', accountId)
             const localVarPath = `/products/sync`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -7964,6 +7967,10 @@ export const ProductApiAxiosParamCreator = function (configuration?: Configurati
             const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
+
+            if (accountId !== undefined) {
+                localVarQueryParameter['accountId'] = accountId;
+            }
 
             if (id) {
                 localVarQueryParameter['id'] = id;
@@ -8077,14 +8084,15 @@ export const ProductApiFp = function(configuration?: Configuration) {
         },
         /**
          * Trigger sync of the specified products on ChatDaddy with WhatsApp
+         * @param {string} accountId Account ID to sync products from/to
          * @param {Array<string>} [id] Products to sync with WhatsApp. Leave unspecified to trigger all
          * @param {boolean} [syncForward] Sync products from ChatDaddy to WhatsApp
          * @param {boolean} [syncBackward] Sync missing products from WhatsApp to ChatDaddy
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async platformProductsSync(id?: Array<string>, syncForward?: boolean, syncBackward?: boolean, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AccountsLogout200Response>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.platformProductsSync(id, syncForward, syncBackward, options);
+        async platformProductsSync(accountId: string, id?: Array<string>, syncForward?: boolean, syncBackward?: boolean, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AccountsLogout200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.platformProductsSync(accountId, id, syncForward, syncBackward, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
     }
@@ -8170,14 +8178,15 @@ export const ProductApiFactory = function (configuration?: Configuration, basePa
         },
         /**
          * Trigger sync of the specified products on ChatDaddy with WhatsApp
+         * @param {string} accountId Account ID to sync products from/to
          * @param {Array<string>} [id] Products to sync with WhatsApp. Leave unspecified to trigger all
          * @param {boolean} [syncForward] Sync products from ChatDaddy to WhatsApp
          * @param {boolean} [syncBackward] Sync missing products from WhatsApp to ChatDaddy
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        platformProductsSync(id?: Array<string>, syncForward?: boolean, syncBackward?: boolean, options?: any): AxiosPromise<AccountsLogout200Response> {
-            return localVarFp.platformProductsSync(id, syncForward, syncBackward, options).then((request) => request(axios, basePath));
+        platformProductsSync(accountId: string, id?: Array<string>, syncForward?: boolean, syncBackward?: boolean, options?: any): AxiosPromise<AccountsLogout200Response> {
+            return localVarFp.platformProductsSync(accountId, id, syncForward, syncBackward, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -8343,6 +8352,13 @@ export interface ProductApiPlatformProductsPostRequest {
  */
 export interface ProductApiPlatformProductsSyncRequest {
     /**
+     * Account ID to sync products from/to
+     * @type {string}
+     * @memberof ProductApiPlatformProductsSync
+     */
+    readonly accountId: string
+
+    /**
      * Products to sync with WhatsApp. Leave unspecified to trigger all
      * @type {Array<string>}
      * @memberof ProductApiPlatformProductsSync
@@ -8449,8 +8465,8 @@ export class ProductApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof ProductApi
      */
-    public platformProductsSync(requestParameters: ProductApiPlatformProductsSyncRequest = {}, options?: AxiosRequestConfig) {
-        return ProductApiFp(this.configuration).platformProductsSync(requestParameters.id, requestParameters.syncForward, requestParameters.syncBackward, options).then((request) => request(this.axios, this.basePath));
+    public platformProductsSync(requestParameters: ProductApiPlatformProductsSyncRequest, options?: AxiosRequestConfig) {
+        return ProductApiFp(this.configuration).platformProductsSync(requestParameters.accountId, requestParameters.id, requestParameters.syncForward, requestParameters.syncBackward, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
