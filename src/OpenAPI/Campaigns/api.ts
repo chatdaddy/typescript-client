@@ -380,6 +380,12 @@ export interface CampaignMetadata {
      * @memberof CampaignMetadata
      */
     'counts': CampaignMetadataCounts;
+    /**
+     * if want to send a broadcast fast, and don\'t want to wait long for the broadcast to complete.
+     * @type {boolean}
+     * @memberof CampaignMetadata
+     */
+    'turboMode'?: boolean;
 }
 /**
  * 
