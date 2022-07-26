@@ -7904,13 +7904,13 @@ export const ProductApiAxiosParamCreator = function (configuration?: Configurati
         },
         /**
          * 
-         * @summary Add a product to the WA catalog
+         * @summary Upsert products to the WA catalog
          * @param {string} accountId 
-         * @param {PlatformProductCreate} [platformProductCreate] 
+         * @param {Array<PlatformProductCreate>} [platformProductCreate] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        platformProductsPost: async (accountId: string, platformProductCreate?: PlatformProductCreate, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        platformProductsPost: async (accountId: string, platformProductCreate?: Array<PlatformProductCreate>, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'accountId' is not null or undefined
             assertParamExists('platformProductsPost', 'accountId', accountId)
             const localVarPath = `/products/{accountId}`
@@ -8072,13 +8072,13 @@ export const ProductApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
-         * @summary Add a product to the WA catalog
+         * @summary Upsert products to the WA catalog
          * @param {string} accountId 
-         * @param {PlatformProductCreate} [platformProductCreate] 
+         * @param {Array<PlatformProductCreate>} [platformProductCreate] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async platformProductsPost(accountId: string, platformProductCreate?: PlatformProductCreate, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PlatformProduct>> {
+        async platformProductsPost(accountId: string, platformProductCreate?: Array<PlatformProductCreate>, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PlatformProduct>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.platformProductsPost(accountId, platformProductCreate, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -8167,13 +8167,13 @@ export const ProductApiFactory = function (configuration?: Configuration, basePa
         },
         /**
          * 
-         * @summary Add a product to the WA catalog
+         * @summary Upsert products to the WA catalog
          * @param {string} accountId 
-         * @param {PlatformProductCreate} [platformProductCreate] 
+         * @param {Array<PlatformProductCreate>} [platformProductCreate] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        platformProductsPost(accountId: string, platformProductCreate?: PlatformProductCreate, options?: any): AxiosPromise<PlatformProduct> {
+        platformProductsPost(accountId: string, platformProductCreate?: Array<PlatformProductCreate>, options?: any): AxiosPromise<PlatformProduct> {
             return localVarFp.platformProductsPost(accountId, platformProductCreate, options).then((request) => request(axios, basePath));
         },
         /**
@@ -8339,10 +8339,10 @@ export interface ProductApiPlatformProductsPostRequest {
 
     /**
      * 
-     * @type {PlatformProductCreate}
+     * @type {Array<PlatformProductCreate>}
      * @memberof ProductApiPlatformProductsPost
      */
-    readonly platformProductCreate?: PlatformProductCreate
+    readonly platformProductCreate?: Array<PlatformProductCreate>
 }
 
 /**
@@ -8448,7 +8448,7 @@ export class ProductApi extends BaseAPI {
 
     /**
      * 
-     * @summary Add a product to the WA catalog
+     * @summary Upsert products to the WA catalog
      * @param {ProductApiPlatformProductsPostRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
