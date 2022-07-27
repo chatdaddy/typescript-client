@@ -7994,6 +7994,10 @@ export const ProductApiAxiosParamCreator = function (configuration?: Configurati
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["PRODUCTS_UPDATE"], configuration)
+
             if (accountId !== undefined) {
                 localVarQueryParameter['accountId'] = accountId;
             }
