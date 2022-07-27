@@ -2627,6 +2627,32 @@ export interface PlatformProductsGet200Response {
 /**
  * 
  * @export
+ * @interface PlatformProductsPost200Response
+ */
+export interface PlatformProductsPost200Response {
+    /**
+     * 
+     * @type {Array<PlatformProduct>}
+     * @memberof PlatformProductsPost200Response
+     */
+    'products': Array<PlatformProduct>;
+}
+/**
+ * 
+ * @export
+ * @interface PlatformProductsPostRequest
+ */
+export interface PlatformProductsPostRequest {
+    /**
+     * 
+     * @type {Array<PlatformProductCreate>}
+     * @memberof PlatformProductsPostRequest
+     */
+    'products': Array<PlatformProductCreate>;
+}
+/**
+ * 
+ * @export
  * @enum {string}
  */
 
@@ -7906,11 +7932,11 @@ export const ProductApiAxiosParamCreator = function (configuration?: Configurati
          * 
          * @summary Upsert products to the WA catalog
          * @param {string} accountId 
-         * @param {Array<PlatformProductCreate>} [platformProductCreate] 
+         * @param {PlatformProductsPostRequest} [platformProductsPostRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        platformProductsPost: async (accountId: string, platformProductCreate?: Array<PlatformProductCreate>, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        platformProductsPost: async (accountId: string, platformProductsPostRequest?: PlatformProductsPostRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'accountId' is not null or undefined
             assertParamExists('platformProductsPost', 'accountId', accountId)
             const localVarPath = `/products/{accountId}`
@@ -7937,7 +7963,7 @@ export const ProductApiAxiosParamCreator = function (configuration?: Configurati
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(platformProductCreate, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(platformProductsPostRequest, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -8074,12 +8100,12 @@ export const ProductApiFp = function(configuration?: Configuration) {
          * 
          * @summary Upsert products to the WA catalog
          * @param {string} accountId 
-         * @param {Array<PlatformProductCreate>} [platformProductCreate] 
+         * @param {PlatformProductsPostRequest} [platformProductsPostRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async platformProductsPost(accountId: string, platformProductCreate?: Array<PlatformProductCreate>, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PlatformProduct>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.platformProductsPost(accountId, platformProductCreate, options);
+        async platformProductsPost(accountId: string, platformProductsPostRequest?: PlatformProductsPostRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PlatformProductsPost200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.platformProductsPost(accountId, platformProductsPostRequest, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -8169,12 +8195,12 @@ export const ProductApiFactory = function (configuration?: Configuration, basePa
          * 
          * @summary Upsert products to the WA catalog
          * @param {string} accountId 
-         * @param {Array<PlatformProductCreate>} [platformProductCreate] 
+         * @param {PlatformProductsPostRequest} [platformProductsPostRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        platformProductsPost(accountId: string, platformProductCreate?: Array<PlatformProductCreate>, options?: any): AxiosPromise<PlatformProduct> {
-            return localVarFp.platformProductsPost(accountId, platformProductCreate, options).then((request) => request(axios, basePath));
+        platformProductsPost(accountId: string, platformProductsPostRequest?: PlatformProductsPostRequest, options?: any): AxiosPromise<PlatformProductsPost200Response> {
+            return localVarFp.platformProductsPost(accountId, platformProductsPostRequest, options).then((request) => request(axios, basePath));
         },
         /**
          * Trigger sync of the specified products on ChatDaddy with WhatsApp
@@ -8339,10 +8365,10 @@ export interface ProductApiPlatformProductsPostRequest {
 
     /**
      * 
-     * @type {Array<PlatformProductCreate>}
+     * @type {PlatformProductsPostRequest}
      * @memberof ProductApiPlatformProductsPost
      */
-    readonly platformProductCreate?: Array<PlatformProductCreate>
+    readonly platformProductsPostRequest?: PlatformProductsPostRequest
 }
 
 /**
@@ -8455,7 +8481,7 @@ export class ProductApi extends BaseAPI {
      * @memberof ProductApi
      */
     public platformProductsPost(requestParameters: ProductApiPlatformProductsPostRequest, options?: AxiosRequestConfig) {
-        return ProductApiFp(this.configuration).platformProductsPost(requestParameters.accountId, requestParameters.platformProductCreate, options).then((request) => request(this.axios, this.basePath));
+        return ProductApiFp(this.configuration).platformProductsPost(requestParameters.accountId, requestParameters.platformProductsPostRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
