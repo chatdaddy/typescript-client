@@ -2148,7 +2148,7 @@ export const TeamsApiAxiosParamCreator = function (configuration?: Configuration
 
             // authentication chatdaddy required
             // oauth required
-            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["ADMIN_PANEL_ACCESS"], configuration)
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["ADMIN_PANEL_ACCESS", "PARTNER_ADMIN_PANEL_ACCESS"], configuration)
 
 
     
@@ -2667,7 +2667,7 @@ export const UsersApiAxiosParamCreator = function (configuration?: Configuration
 
             // authentication chatdaddy required
             // oauth required
-            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["ADMIN_PANEL_ACCESS"], configuration)
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["ADMIN_PANEL_ACCESS", "PARTNER_ADMIN_PANEL_ACCESS"], configuration)
 
             if (id !== undefined) {
                 localVarQueryParameter['id'] = id;
@@ -2860,7 +2860,7 @@ export const UsersApiAxiosParamCreator = function (configuration?: Configuration
 
             // authentication chatdaddy required
             // oauth required
-            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["ADMIN_PANEL_ACCESS"], configuration)
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["ADMIN_PANEL_ACCESS", "PARTNER_ADMIN_PANEL_ACCESS"], configuration)
 
             // authentication otp required
             await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
