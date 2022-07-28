@@ -26,6 +26,25 @@ import { COLLECTION_FORMATS, RequestArgs, BaseAPI, RequiredError } from '../base
 /**
  * 
  * @export
+ * @interface ActivationTimeRange
+ */
+export interface ActivationTimeRange {
+    /**
+     * 
+     * @type {string}
+     * @memberof ActivationTimeRange
+     */
+    'startTime': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ActivationTimeRange
+     */
+    'endTime': string;
+}
+/**
+ * 
+ * @export
  * @interface Campaign
  */
 export interface Campaign {
@@ -101,6 +120,12 @@ export interface Campaign {
      * @memberof Campaign
      */
     'turboMode'?: boolean;
+    /**
+     * 
+     * @type {ActivationTimeRange}
+     * @memberof Campaign
+     */
+    'activationTimeRange'?: ActivationTimeRange;
 }
 /**
  * 
@@ -209,6 +234,12 @@ export interface CampaignCreateAsync {
      * @memberof CampaignCreateAsync
      */
     'turboMode'?: boolean;
+    /**
+     * 
+     * @type {ActivationTimeRange}
+     * @memberof CampaignCreateAsync
+     */
+    'activationTimeRange'?: ActivationTimeRange;
 }
 /**
  * 
@@ -301,6 +332,12 @@ export interface CampaignEdit {
      * @memberof CampaignEdit
      */
     'turboMode'?: boolean;
+    /**
+     * 
+     * @type {ActivationTimeRange}
+     * @memberof CampaignEdit
+     */
+    'activationTimeRange'?: ActivationTimeRange;
 }
 /**
  * 
@@ -386,6 +423,12 @@ export interface CampaignMetadata {
      * @memberof CampaignMetadata
      */
     'turboMode'?: boolean;
+    /**
+     * 
+     * @type {ActivationTimeRange}
+     * @memberof CampaignMetadata
+     */
+    'activationTimeRange'?: ActivationTimeRange;
 }
 /**
  * 
