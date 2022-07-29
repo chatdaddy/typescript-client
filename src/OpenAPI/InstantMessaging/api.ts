@@ -7958,8 +7958,7 @@ export const ProductApiAxiosParamCreator = function (configuration?: Configurati
         platformProductsPost: async (accountId: string, platformProductsPostRequest?: PlatformProductsPostRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'accountId' is not null or undefined
             assertParamExists('platformProductsPost', 'accountId', accountId)
-            const localVarPath = `/products`
-                .replace(`{${"accountId"}}`, encodeURIComponent(String(accountId)));
+            const localVarPath = `/products`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -7974,6 +7973,10 @@ export const ProductApiAxiosParamCreator = function (configuration?: Configurati
             // authentication chatdaddy required
             // oauth required
             await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["PRODUCTS_CREATE"], configuration)
+
+            if (accountId !== undefined) {
+                localVarQueryParameter['accountId'] = accountId;
+            }
 
 
     
