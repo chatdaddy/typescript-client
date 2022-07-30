@@ -2446,6 +2446,12 @@ export interface PlatformProduct {
      */
     'syncStatus': ProductSyncStatus;
     /**
+     * True if sync is underway right now
+     * @type {boolean}
+     * @memberof PlatformProduct
+     */
+    'isSyncing'?: boolean;
+    /**
      * 
      * @type {Error}
      * @memberof PlatformProduct
