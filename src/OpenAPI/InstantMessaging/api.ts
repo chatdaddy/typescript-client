@@ -8122,7 +8122,7 @@ export const ProductApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async platformProductsPatch(accountId: string, id?: Array<string>, notId?: Array<string>, q?: string, platformProductUpdate?: PlatformProductUpdate, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PlatformProduct>> {
+        async platformProductsPatch(accountId: string, id?: Array<string>, notId?: Array<string>, q?: string, platformProductUpdate?: PlatformProductUpdate, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PlatformProductsPost200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.platformProductsPatch(accountId, id, notId, q, platformProductUpdate, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -8222,7 +8222,7 @@ export const ProductApiFactory = function (configuration?: Configuration, basePa
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        platformProductsPatch(accountId: string, id?: Array<string>, notId?: Array<string>, q?: string, platformProductUpdate?: PlatformProductUpdate, options?: any): AxiosPromise<PlatformProduct> {
+        platformProductsPatch(accountId: string, id?: Array<string>, notId?: Array<string>, q?: string, platformProductUpdate?: PlatformProductUpdate, options?: any): AxiosPromise<PlatformProductsPost200Response> {
             return localVarFp.platformProductsPatch(accountId, id, notId, q, platformProductUpdate, options).then((request) => request(axios, basePath));
         },
         /**
