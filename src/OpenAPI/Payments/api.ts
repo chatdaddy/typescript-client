@@ -2312,7 +2312,7 @@ export const ReferralsApiAxiosParamCreator = function (configuration?: Configura
 
             // authentication chatdaddy required
             // oauth required
-            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["PARTNER_ADMIN_PANEL_ACCESS"], configuration)
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["PARTNER_ADMIN_PANEL_ACCESS", "ADMIN_PANEL_ACCESS"], configuration)
 
             if (referralCode !== undefined) {
                 localVarQueryParameter['referralCode'] = referralCode;
@@ -2351,7 +2351,7 @@ export const ReferralsApiAxiosParamCreator = function (configuration?: Configura
 
             // authentication chatdaddy required
             // oauth required
-            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["PARTNER_ADMIN_PANEL_ACCESS"], configuration)
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["PARTNER_ADMIN_PANEL_ACCESS", "ADMIN_PANEL_ACCESS"], configuration)
 
             if (page !== undefined) {
                 localVarQueryParameter['page'] = page;
@@ -2393,7 +2393,7 @@ export const ReferralsApiAxiosParamCreator = function (configuration?: Configura
 
             // authentication chatdaddy required
             // oauth required
-            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["PARTNER_ADMIN_PANEL_ACCESS"], configuration)
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["PARTNER_ADMIN_PANEL_ACCESS", "ADMIN_PANEL_ACCESS"], configuration)
 
 
     
