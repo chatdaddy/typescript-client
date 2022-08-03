@@ -414,6 +414,63 @@ export interface OTP {
 /**
  * 
  * @export
+ * @interface OnboardingStep
+ */
+export interface OnboardingStep {
+    /**
+     * 
+     * @type {OnboardingStepID}
+     * @memberof OnboardingStep
+     */
+    'id': OnboardingStepID;
+    /**
+     * 
+     * @type {string}
+     * @memberof OnboardingStep
+     */
+    'doneAt': string;
+    /**
+     * ID of the user that completed the step
+     * @type {string}
+     * @memberof OnboardingStep
+     */
+    'doneBy': string;
+}
+/**
+ * 
+ * @export
+ * @enum {string}
+ */
+
+export const OnboardingStepID = {
+    ConnectedWa: 'connectedWa',
+    SentMessage: 'sentMessage',
+    UsedMobileVersion: 'usedMobileVersion',
+    InvitedTeamMember: 'invitedTeamMember',
+    CreatedNote: 'createdNote',
+    CreatedTag: 'createdTag',
+    CreatedMessageFlow: 'createdMessageFlow',
+    SentMessageFlowByShortcut: 'sentMessageFlowByShortcut',
+    AssignedChatToTeamMember: 'assignedChatToTeamMember',
+    ScheduledAMessage: 'scheduledAMessage',
+    CreatedMessageFlowWithButtons: 'createdMessageFlowWithButtons',
+    SentMessageFlowWithButtons: 'sentMessageFlowWithButtons',
+    AutoTagOrAssignWithMessageFlow: 'autoTagOrAssignWithMessageFlow',
+    CreatedFirstBroadcast: 'createdFirstBroadcast',
+    ScheduledFirstBroadcast: 'scheduledFirstBroadcast',
+    ToggleOfflineBotOn: 'toggleOfflineBotOn',
+    CreatedFirstKeywordBot: 'createdFirstKeywordBot',
+    ConnectFirstIntegration: 'connectFirstIntegration',
+    ImportedContacts: 'importedContacts',
+    AdddedACustomFieldToContact: 'adddedACustomFieldToContact'
+} as const;
+
+export type OnboardingStepID = typeof OnboardingStepID[keyof typeof OnboardingStepID];
+
+
+/**
+ * 
+ * @export
  * @interface OtpPostRequest
  */
 export interface OtpPostRequest {
@@ -718,6 +775,18 @@ export interface Team {
      * @memberof Team
      */
     'partnerAdmin'?: string | null;
+    /**
+     * 
+     * @type {Array<OnboardingStep>}
+     * @memberof Team
+     */
+    'onboardingStepsDone'?: Array<OnboardingStep>;
+    /**
+     * The onboarding score of the team.
+     * @type {number}
+     * @memberof Team
+     */
+    'onboardingScore'?: number;
 }
 /**
  * 
@@ -2166,6 +2235,44 @@ export const TeamsApiAxiosParamCreator = function (configuration?: Configuration
         },
         /**
          * 
+         * @summary Mark a team as having completed an onboarding step
+         * @param {OnboardingStep} step the onboarding step to mark as completed
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        teamsCompletedOnboardingStepPost: async (step: OnboardingStep, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'step' is not null or undefined
+            assertParamExists('teamsCompletedOnboardingStepPost', 'step', step)
+            const localVarPath = `/teams/completed-onboarding-step/{step}`
+                .replace(`{${"step"}}`, encodeURIComponent(String(step)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", [], configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
          * @summary Fetch teams you have access to
          * @param {string} [q] Search by name, ID, invite code, etc.
          * @param {Array<string>} [id] Fetch specific teams by ID
@@ -2177,10 +2284,11 @@ export const TeamsApiAxiosParamCreator = function (configuration?: Configuration
          * @param {boolean} [includeTotal] include the count of the total teams
          * @param {boolean} [includeCreator] include the creator\&#39;s data in the API result
          * @param {string} [partner] string to identify user with a partner
+         * @param {boolean} [returnOnboardingScore] return the onboarding score for the team
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        teamsGet: async (q?: string, id?: Array<string>, userId?: string, count?: number, page?: number, includeTeamMembers?: boolean, includeInviteLinks?: boolean, includeTotal?: boolean, includeCreator?: boolean, partner?: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        teamsGet: async (q?: string, id?: Array<string>, userId?: string, count?: number, page?: number, includeTeamMembers?: boolean, includeInviteLinks?: boolean, includeTotal?: boolean, includeCreator?: boolean, partner?: string, returnOnboardingScore?: boolean, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/teams`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -2237,6 +2345,10 @@ export const TeamsApiAxiosParamCreator = function (configuration?: Configuration
                 localVarQueryParameter['partner'] = partner;
             }
 
+            if (returnOnboardingScore !== undefined) {
+                localVarQueryParameter['returnOnboardingScore'] = returnOnboardingScore;
+            }
+
 
     
             setSearchParams(localVarUrlObj, localVarQueryParameter);
@@ -2251,7 +2363,7 @@ export const TeamsApiAxiosParamCreator = function (configuration?: Configuration
         /**
          * 
          * @summary Join a team
-         * @param {string} id inviteLink id
+         * @param {string} id inviteLink ID
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -2351,6 +2463,17 @@ export const TeamsApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
+         * @summary Mark a team as having completed an onboarding step
+         * @param {OnboardingStep} step the onboarding step to mark as completed
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async teamsCompletedOnboardingStepPost(step: OnboardingStep, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TeamsPatch200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.teamsCompletedOnboardingStepPost(step, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
          * @summary Fetch teams you have access to
          * @param {string} [q] Search by name, ID, invite code, etc.
          * @param {Array<string>} [id] Fetch specific teams by ID
@@ -2362,17 +2485,18 @@ export const TeamsApiFp = function(configuration?: Configuration) {
          * @param {boolean} [includeTotal] include the count of the total teams
          * @param {boolean} [includeCreator] include the creator\&#39;s data in the API result
          * @param {string} [partner] string to identify user with a partner
+         * @param {boolean} [returnOnboardingScore] return the onboarding score for the team
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async teamsGet(q?: string, id?: Array<string>, userId?: string, count?: number, page?: number, includeTeamMembers?: boolean, includeInviteLinks?: boolean, includeTotal?: boolean, includeCreator?: boolean, partner?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TeamsGet200Response>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.teamsGet(q, id, userId, count, page, includeTeamMembers, includeInviteLinks, includeTotal, includeCreator, partner, options);
+        async teamsGet(q?: string, id?: Array<string>, userId?: string, count?: number, page?: number, includeTeamMembers?: boolean, includeInviteLinks?: boolean, includeTotal?: boolean, includeCreator?: boolean, partner?: string, returnOnboardingScore?: boolean, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TeamsGet200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.teamsGet(q, id, userId, count, page, includeTeamMembers, includeInviteLinks, includeTotal, includeCreator, partner, returnOnboardingScore, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
          * 
          * @summary Join a team
-         * @param {string} id inviteLink id
+         * @param {string} id inviteLink ID
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -2414,6 +2538,16 @@ export const TeamsApiFactory = function (configuration?: Configuration, basePath
         },
         /**
          * 
+         * @summary Mark a team as having completed an onboarding step
+         * @param {OnboardingStep} step the onboarding step to mark as completed
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        teamsCompletedOnboardingStepPost(step: OnboardingStep, options?: any): AxiosPromise<TeamsPatch200Response> {
+            return localVarFp.teamsCompletedOnboardingStepPost(step, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
          * @summary Fetch teams you have access to
          * @param {string} [q] Search by name, ID, invite code, etc.
          * @param {Array<string>} [id] Fetch specific teams by ID
@@ -2425,16 +2559,17 @@ export const TeamsApiFactory = function (configuration?: Configuration, basePath
          * @param {boolean} [includeTotal] include the count of the total teams
          * @param {boolean} [includeCreator] include the creator\&#39;s data in the API result
          * @param {string} [partner] string to identify user with a partner
+         * @param {boolean} [returnOnboardingScore] return the onboarding score for the team
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        teamsGet(q?: string, id?: Array<string>, userId?: string, count?: number, page?: number, includeTeamMembers?: boolean, includeInviteLinks?: boolean, includeTotal?: boolean, includeCreator?: boolean, partner?: string, options?: any): AxiosPromise<TeamsGet200Response> {
-            return localVarFp.teamsGet(q, id, userId, count, page, includeTeamMembers, includeInviteLinks, includeTotal, includeCreator, partner, options).then((request) => request(axios, basePath));
+        teamsGet(q?: string, id?: Array<string>, userId?: string, count?: number, page?: number, includeTeamMembers?: boolean, includeInviteLinks?: boolean, includeTotal?: boolean, includeCreator?: boolean, partner?: string, returnOnboardingScore?: boolean, options?: any): AxiosPromise<TeamsGet200Response> {
+            return localVarFp.teamsGet(q, id, userId, count, page, includeTeamMembers, includeInviteLinks, includeTotal, includeCreator, partner, returnOnboardingScore, options).then((request) => request(axios, basePath));
         },
         /**
          * 
          * @summary Join a team
-         * @param {string} id inviteLink id
+         * @param {string} id inviteLink ID
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -2473,6 +2608,20 @@ export interface TeamsApiPartnerTeamPatchRequest {
      * @memberof TeamsApiPartnerTeamPatch
      */
     readonly partnerTeamPatchRequest?: PartnerTeamPatchRequest
+}
+
+/**
+ * Request parameters for teamsCompletedOnboardingStepPost operation in TeamsApi.
+ * @export
+ * @interface TeamsApiTeamsCompletedOnboardingStepPostRequest
+ */
+export interface TeamsApiTeamsCompletedOnboardingStepPostRequest {
+    /**
+     * the onboarding step to mark as completed
+     * @type {OnboardingStep}
+     * @memberof TeamsApiTeamsCompletedOnboardingStepPost
+     */
+    readonly step: OnboardingStep
 }
 
 /**
@@ -2550,6 +2699,13 @@ export interface TeamsApiTeamsGetRequest {
      * @memberof TeamsApiTeamsGet
      */
     readonly partner?: string
+
+    /**
+     * return the onboarding score for the team
+     * @type {boolean}
+     * @memberof TeamsApiTeamsGet
+     */
+    readonly returnOnboardingScore?: boolean
 }
 
 /**
@@ -2559,7 +2715,7 @@ export interface TeamsApiTeamsGetRequest {
  */
 export interface TeamsApiTeamsJoinInviteRequest {
     /**
-     * inviteLink id
+     * inviteLink ID
      * @type {string}
      * @memberof TeamsApiTeamsJoinInvite
      */
@@ -2601,6 +2757,18 @@ export class TeamsApi extends BaseAPI {
 
     /**
      * 
+     * @summary Mark a team as having completed an onboarding step
+     * @param {TeamsApiTeamsCompletedOnboardingStepPostRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof TeamsApi
+     */
+    public teamsCompletedOnboardingStepPost(requestParameters: TeamsApiTeamsCompletedOnboardingStepPostRequest, options?: AxiosRequestConfig) {
+        return TeamsApiFp(this.configuration).teamsCompletedOnboardingStepPost(requestParameters.step, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
      * @summary Fetch teams you have access to
      * @param {TeamsApiTeamsGetRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -2608,7 +2776,7 @@ export class TeamsApi extends BaseAPI {
      * @memberof TeamsApi
      */
     public teamsGet(requestParameters: TeamsApiTeamsGetRequest = {}, options?: AxiosRequestConfig) {
-        return TeamsApiFp(this.configuration).teamsGet(requestParameters.q, requestParameters.id, requestParameters.userId, requestParameters.count, requestParameters.page, requestParameters.includeTeamMembers, requestParameters.includeInviteLinks, requestParameters.includeTotal, requestParameters.includeCreator, requestParameters.partner, options).then((request) => request(this.axios, this.basePath));
+        return TeamsApiFp(this.configuration).teamsGet(requestParameters.q, requestParameters.id, requestParameters.userId, requestParameters.count, requestParameters.page, requestParameters.includeTeamMembers, requestParameters.includeInviteLinks, requestParameters.includeTotal, requestParameters.includeCreator, requestParameters.partner, requestParameters.returnOnboardingScore, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
