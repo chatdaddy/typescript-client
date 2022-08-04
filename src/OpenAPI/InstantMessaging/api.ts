@@ -4,7 +4,7 @@ const BASE_PATH = "https://api-im.chatdaddy.tech".replace(/\/+$/, "");
 /* eslint-disable */
 /**
  * ChatDaddy Instant Messaging Service
- * Complete instant messaging API for WhatsApp Web & Multi-Device. 
+ * Complete instant messaging API for WhatsApp Multi-Device & Business API. 
  *
  * The version of the OpenAPI document: 2.0.0
  * 
@@ -2020,29 +2020,66 @@ export interface MessageProduct {
      */
     'id': string;
     /**
-     * 3-letter ISO currency code
+     * 
      * @type {string}
      * @memberof MessageProduct
+     */
+    'accountId'?: string;
+    /**
+     * 
+     * @type {PlatformProduct}
+     * @memberof MessageProduct
+     */
+    'details'?: PlatformProduct;
+}
+/**
+ * 
+ * @export
+ * @interface MessageProductDetails
+ */
+export interface MessageProductDetails {
+    /**
+     * 3-letter ISO currency code
+     * @type {string}
+     * @memberof MessageProductDetails
      */
     'currencyCode': string;
     /**
      * the actual price * 1000
      * @type {number}
-     * @memberof MessageProduct
+     * @memberof MessageProductDetails
      */
     'price1000': number;
     /**
      * 
      * @type {string}
-     * @memberof MessageProduct
+     * @memberof MessageProductDetails
      */
-    'title'?: string;
+    'title': string;
     /**
      * 
      * @type {string}
-     * @memberof MessageProduct
+     * @memberof MessageProductDetails
      */
-    'image'?: string;
+    'description'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof MessageProductDetails
+     */
+    'url'?: string;
+    /**
+     * 
+     * @type {MessageAttachment}
+     * @memberof MessageProductDetails
+     */
+    'image': MessageAttachment;
+    /**
+     * The user ID of the business that owns this product
+     * @type {string}
+     * @memberof MessageProductDetails
+     */
+    'businessOwnerId'?: string;
 }
 /**
  * 

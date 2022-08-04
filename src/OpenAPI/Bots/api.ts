@@ -666,6 +666,25 @@ export type IMMessageAttachmentType = typeof IMMessageAttachmentType[keyof typeo
 /**
  * 
  * @export
+ * @interface IMMessageProduct
+ */
+export interface IMMessageProduct {
+    /**
+     * 
+     * @type {string}
+     * @memberof IMMessageProduct
+     */
+    'id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof IMMessageProduct
+     */
+    'accountId': string;
+}
+/**
+ * 
+ * @export
  * @interface MessageObj
  */
 export interface MessageObj {
@@ -693,6 +712,12 @@ export interface MessageObj {
      * @memberof MessageObj
      */
     'quoted'?: string;
+    /**
+     * 
+     * @type {Array<IMMessageProduct>}
+     * @memberof MessageObj
+     */
+    'products'?: Array<IMMessageProduct>;
 }
 /**
  * 
