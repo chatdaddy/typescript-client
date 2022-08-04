@@ -4,7 +4,7 @@ const BASE_PATH = "https://api-notifications.chatdaddy.tech".replace(/\/+$/, "")
 /* eslint-disable */
 /**
  * ChatDaddy Easysend (Notifications) Service
- * Data Processing service to standardize & process data from individual parsers & services. ## Writing a service for ChatDaddy Easysend The job of a service is to parse and clean data from a given data source. If you are writing a parser for an e-commerce website -- your job is to simply extract the required parameters and send them to the EasySend service in the required format (more on the format later).  ## Incorporating the routes Easysend requires just the base url for each service. This can be  - http://abcd.com/api - http://xyz.com/ - etc. Appending to this base url, each service must incorporate the following routes in their app --  ### GET /easysend/schema \'This route is used by easysend to determine all the specifications of the service including:\'\' - the parameters the service can send - credentials required - an image - a description & name View the `ServiceModel` schema to know the exact specifications ### POST /easysend/{id} - This route is for registering a new tracking for a user.  - The `id` parameter is the ID of this tracking. - Service should keep the `id` parameter secret. - Body will be `application/json` encoded and have the following type: ``` ts     type Body = {         // the credentials the service required, specified by the aforementioned schema         credentials: { [_: string]: string }      } ``` - Service must check credentials & return a 400+ code if invalid - If the service returns a 200 code, it will be assumed that the tracking has been saved & validated successfully ### DELETE /easysend/{id} - This route is for deregistering the tracking specified by the `id` parameter in the path. ### GET /easysend/{id}/products - This route is optional - This route is for the service to return a list of products for the tracking ## Sending Events to Easysend - Easysend expects a JSON encoded body at `PATCH /event/{id}` where ID is the secret identifier of the tracking registered previously - This route is covered in this document along with the required schema [here](/#Events) 
+ * Data Processing service to standardize & process data from individual parsers & services. ## Writing a service for ChatDaddy Easysend The job of a service is to parse and clean data from a given data source. If you are writing a parser for an e-commerce website -- your job is to simply extract the required parameters and send them to the EasySend service in the required format (more on the format later).  ## Incorporating the routes Easysend requires just the base url for each service. This can be  - http://abcd.com/api - http://xyz.com/ - etc. Appending to this base url, each service must incorporate the following routes in their app --  ### GET /easysend/schema \'This route is used by easysend to determine all the specifications of the service including:\'\' - the parameters the service can send - credentials required - an image - a description & name View the `ServiceModel` schema to know the exact specifications ### POST /easysend/{id} - This route is for registering a new tracking for a user.  - The `id` parameter is the ID of this tracking. - Service should keep the `id` parameter secret. - Body will be `application/json` encoded and have the following type: ``` ts     type Body = {         // the credentials the service required, specified by the aforementioned schema         credentials: { [_: string]: string }      } ``` - Service must check credentials & return a 400+ code if invalid - If the service returns a 200 code, it will be assumed that the tracking has been saved & validated successfully ### DELETE /easysend/{id} - This route is for deregistering the tracking specified by the `id` parameter in the path. ### GET /easysend/{id}/products - This route is optional - This route is for the service to return a list of products for the tracking - Returned schema should look like `{ products: PlatformProduct[] }` ## Sending Events to Easysend - Easysend expects a JSON encoded body at `PATCH /event/{id}` where ID is the secret identifier of the tracking registered previously - This route is covered in this document along with the required schema [here](/#Events) 
  *
  * The version of the OpenAPI document: 2.1.1
  * 
@@ -783,6 +783,19 @@ export interface PostTracking {
      * @memberof PostTracking
      */
     'accountId'?: string | null;
+}
+/**
+ * 
+ * @export
+ * @interface ProductsGet200Response
+ */
+export interface ProductsGet200Response {
+    /**
+     * 
+     * @type {Array<{ [key: string]: any; }>}
+     * @memberof ProductsGet200Response
+     */
+    'products': Array<{ [key: string]: any; }>;
 }
 /**
  * 
@@ -1878,7 +1891,7 @@ export const TrackingProductsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async productsGet(trackingId: number, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<{ [key: string]: any; }>>> {
+        async productsGet(trackingId: number, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ProductsGet200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.productsGet(trackingId, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -1899,7 +1912,7 @@ export const TrackingProductsApiFactory = function (configuration?: Configuratio
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        productsGet(trackingId: number, options?: any): AxiosPromise<Array<{ [key: string]: any; }>> {
+        productsGet(trackingId: number, options?: any): AxiosPromise<ProductsGet200Response> {
             return localVarFp.productsGet(trackingId, options).then((request) => request(axios, basePath));
         },
     };
