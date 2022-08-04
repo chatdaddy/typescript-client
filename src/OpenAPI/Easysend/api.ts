@@ -4,7 +4,7 @@ const BASE_PATH = "https://api-notifications.chatdaddy.tech".replace(/\/+$/, "")
 /* eslint-disable */
 /**
  * ChatDaddy Easysend (Notifications) Service
- * Data Processing service to standardize & process data from individual parsers & services. ## Writing a service for ChatDaddy Easysend The job of a service is to parse and clean data from a given data source. If you are writing a parser for an e-commerce website -- your job is to simply extract the required parameters and send them to the EasySend service in the required format (more on the format later).  ## Incorporating the routes Easysend requires just the base url for each service. This can be  - http://abcd.com/api - http://xyz.com/ - etc. Appending to this base url, each service must incorporate the following routes in their app --  ### GET /easysend/schema \'This route is used by easysend to determine all the specifications of the service including:\'\' - the parameters the service can send - credentials required - an image - a description & name View the `ServiceModel` schema to know the exact specifications ### POST /easysend/{id} - This route is for registering a new tracking for a user.  - The `id` parameter is the ID of this tracking. - Service should keep the `id` parameter secret. - Body will be `application/json` encoded and have the following type: ``` ts     type Body = {         // the credentials the service required, specified by the aforementioned schema         credentials: { [_: string]: string }      } ``` - Service must check credentials & return a 400+ code if invalid - If the service returns a 200 code, it will be assumed that the tracking has been saved & validated successfully ### DELETE /easysend/{id} - This route is for deregistering the tracking specified by the `id` parameter in the path. ## Sending Events to Easysend - Easysend expects a JSON encoded body at `PATCH /event/{id}` where ID is the secret identifier of the tracking registered previously - This route is covered in this document along with the required schema [here](/#Events) 
+ * Data Processing service to standardize & process data from individual parsers & services. ## Writing a service for ChatDaddy Easysend The job of a service is to parse and clean data from a given data source. If you are writing a parser for an e-commerce website -- your job is to simply extract the required parameters and send them to the EasySend service in the required format (more on the format later).  ## Incorporating the routes Easysend requires just the base url for each service. This can be  - http://abcd.com/api - http://xyz.com/ - etc. Appending to this base url, each service must incorporate the following routes in their app --  ### GET /easysend/schema \'This route is used by easysend to determine all the specifications of the service including:\'\' - the parameters the service can send - credentials required - an image - a description & name View the `ServiceModel` schema to know the exact specifications ### POST /easysend/{id} - This route is for registering a new tracking for a user.  - The `id` parameter is the ID of this tracking. - Service should keep the `id` parameter secret. - Body will be `application/json` encoded and have the following type: ``` ts     type Body = {         // the credentials the service required, specified by the aforementioned schema         credentials: { [_: string]: string }      } ``` - Service must check credentials & return a 400+ code if invalid - If the service returns a 200 code, it will be assumed that the tracking has been saved & validated successfully ### DELETE /easysend/{id} - This route is for deregistering the tracking specified by the `id` parameter in the path. ### GET /easysend/{id}/products - This route is optional - This route is for the service to return a list of products for the tracking ## Sending Events to Easysend - Easysend expects a JSON encoded body at `PATCH /event/{id}` where ID is the secret identifier of the tracking registered previously - This route is covered in this document along with the required schema [here](/#Events) 
  *
  * The version of the OpenAPI document: 2.1.1
  * 
@@ -54,11 +54,17 @@ export interface AddServiceModel {
      */
     'imgUrl': string;
     /**
-     * Paperform integration for Easysend.
+     * Description of the service/scrapper
      * @type {string}
      * @memberof AddServiceModel
      */
     'description': string;
+    /**
+     * Whether the service supports the products API
+     * @type {boolean}
+     * @memberof AddServiceModel
+     */
+    'supportsProducts'?: boolean;
     /**
      * 
      * @type {{ [key: string]: AddServiceModelParametersValue; }}
@@ -821,11 +827,17 @@ export interface ServiceModel {
      */
     'imgUrl': string;
     /**
-     * Paperform integration for Easysend.
+     * Description of the service/scrapper
      * @type {string}
      * @memberof ServiceModel
      */
     'description': string;
+    /**
+     * Whether the service supports the products API
+     * @type {boolean}
+     * @memberof ServiceModel
+     */
+    'supportsProducts'?: boolean;
     /**
      * 
      * @type {{ [key: string]: AddServiceModelParametersValue; }}
@@ -1801,6 +1813,129 @@ export class ServicesApi extends BaseAPI {
      */
     public servicesReload(options?: AxiosRequestConfig) {
         return ServicesApiFp(this.configuration).servicesReload(options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+/**
+ * TrackingProductsApi - axios parameter creator
+ * @export
+ */
+export const TrackingProductsApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @summary Get products of the tracking
+         * @param {number} trackingId Fetch products of the specified trackingId
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        productsGet: async (trackingId: number, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'trackingId' is not null or undefined
+            assertParamExists('productsGet', 'trackingId', trackingId)
+            const localVarPath = `/products/{trackingId}`
+                .replace(`{${"trackingId"}}`, encodeURIComponent(String(trackingId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["PRODUCTS_GET"], configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * TrackingProductsApi - functional programming interface
+ * @export
+ */
+export const TrackingProductsApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = TrackingProductsApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * 
+         * @summary Get products of the tracking
+         * @param {number} trackingId Fetch products of the specified trackingId
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async productsGet(trackingId: number, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<{ [key: string]: any; }>>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.productsGet(trackingId, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+    }
+};
+
+/**
+ * TrackingProductsApi - factory interface
+ * @export
+ */
+export const TrackingProductsApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = TrackingProductsApiFp(configuration)
+    return {
+        /**
+         * 
+         * @summary Get products of the tracking
+         * @param {number} trackingId Fetch products of the specified trackingId
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        productsGet(trackingId: number, options?: any): AxiosPromise<Array<{ [key: string]: any; }>> {
+            return localVarFp.productsGet(trackingId, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * Request parameters for productsGet operation in TrackingProductsApi.
+ * @export
+ * @interface TrackingProductsApiProductsGetRequest
+ */
+export interface TrackingProductsApiProductsGetRequest {
+    /**
+     * Fetch products of the specified trackingId
+     * @type {number}
+     * @memberof TrackingProductsApiProductsGet
+     */
+    readonly trackingId: number
+}
+
+/**
+ * TrackingProductsApi - object-oriented interface
+ * @export
+ * @class TrackingProductsApi
+ * @extends {BaseAPI}
+ */
+export class TrackingProductsApi extends BaseAPI {
+    /**
+     * 
+     * @summary Get products of the tracking
+     * @param {TrackingProductsApiProductsGetRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof TrackingProductsApi
+     */
+    public productsGet(requestParameters: TrackingProductsApiProductsGetRequest, options?: AxiosRequestConfig) {
+        return TrackingProductsApiFp(this.configuration).productsGet(requestParameters.trackingId, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
