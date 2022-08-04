@@ -2236,11 +2236,11 @@ export const TeamsApiAxiosParamCreator = function (configuration?: Configuration
         /**
          * 
          * @summary Mark a team as having completed an onboarding step
-         * @param {OnboardingStep} step the onboarding step to mark as completed
+         * @param {OnboardingStepID} step the onboarding step to mark as completed
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        teamsCompletedOnboardingStepPost: async (step: OnboardingStep, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        teamsCompletedOnboardingStepPost: async (step: OnboardingStepID, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'step' is not null or undefined
             assertParamExists('teamsCompletedOnboardingStepPost', 'step', step)
             const localVarPath = `/teams/completed-onboarding-step/{step}`
@@ -2464,11 +2464,11 @@ export const TeamsApiFp = function(configuration?: Configuration) {
         /**
          * 
          * @summary Mark a team as having completed an onboarding step
-         * @param {OnboardingStep} step the onboarding step to mark as completed
+         * @param {OnboardingStepID} step the onboarding step to mark as completed
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async teamsCompletedOnboardingStepPost(step: OnboardingStep, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TeamsPatch200Response>> {
+        async teamsCompletedOnboardingStepPost(step: OnboardingStepID, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TeamsPatch200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.teamsCompletedOnboardingStepPost(step, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -2539,11 +2539,11 @@ export const TeamsApiFactory = function (configuration?: Configuration, basePath
         /**
          * 
          * @summary Mark a team as having completed an onboarding step
-         * @param {OnboardingStep} step the onboarding step to mark as completed
+         * @param {OnboardingStepID} step the onboarding step to mark as completed
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        teamsCompletedOnboardingStepPost(step: OnboardingStep, options?: any): AxiosPromise<TeamsPatch200Response> {
+        teamsCompletedOnboardingStepPost(step: OnboardingStepID, options?: any): AxiosPromise<TeamsPatch200Response> {
             return localVarFp.teamsCompletedOnboardingStepPost(step, options).then((request) => request(axios, basePath));
         },
         /**
@@ -2618,10 +2618,10 @@ export interface TeamsApiPartnerTeamPatchRequest {
 export interface TeamsApiTeamsCompletedOnboardingStepPostRequest {
     /**
      * the onboarding step to mark as completed
-     * @type {OnboardingStep}
+     * @type {OnboardingStepID}
      * @memberof TeamsApiTeamsCompletedOnboardingStepPost
      */
-    readonly step: OnboardingStep
+    readonly step: OnboardingStepID
 }
 
 /**
