@@ -2027,10 +2027,10 @@ export interface MessageProduct {
     'accountId'?: string;
     /**
      * 
-     * @type {PlatformProduct}
+     * @type {MessageProductDetails}
      * @memberof MessageProduct
      */
-    'details'?: PlatformProduct;
+    'details'?: MessageProductDetails;
 }
 /**
  * 
