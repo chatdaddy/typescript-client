@@ -787,19 +787,6 @@ export interface PostTracking {
 /**
  * 
  * @export
- * @interface ProductsGet200Response
- */
-export interface ProductsGet200Response {
-    /**
-     * 
-     * @type {Array<{ [key: string]: any; }>}
-     * @memberof ProductsGet200Response
-     */
-    'products': Array<{ [key: string]: any; }>;
-}
-/**
- * 
- * @export
  * @interface ServiceModel
  */
 export interface ServiceModel {
@@ -888,6 +875,19 @@ export interface ServiceModelAllOf {
      * @memberof ServiceModelAllOf
      */
     'url'?: string;
+}
+/**
+ * 
+ * @export
+ * @interface ServiceProductsData
+ */
+export interface ServiceProductsData {
+    /**
+     * 
+     * @type {Array<{ [key: string]: any; }>}
+     * @memberof ServiceProductsData
+     */
+    'products': Array<{ [key: string]: any; }>;
 }
 /**
  * 
@@ -1891,7 +1891,7 @@ export const TrackingProductsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async productsGet(trackingId: number, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ProductsGet200Response>> {
+        async productsGet(trackingId: number, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ServiceProductsData>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.productsGet(trackingId, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -1912,7 +1912,7 @@ export const TrackingProductsApiFactory = function (configuration?: Configuratio
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        productsGet(trackingId: number, options?: any): AxiosPromise<ProductsGet200Response> {
+        productsGet(trackingId: number, options?: any): AxiosPromise<ServiceProductsData> {
             return localVarFp.productsGet(trackingId, options).then((request) => request(axios, basePath));
         },
     };
