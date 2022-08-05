@@ -2275,6 +2275,8 @@ export const TeamsApiAxiosParamCreator = function (configuration?: Configuration
          * 
          * @summary Fetch teams you have access to
          * @param {string} [q] Search by name, ID, invite code, etc.
+         * @param {number} [onboardingScoreMin] The minimum onboarding score of the teams to return
+         * @param {number} [onboardingScoreMax] The maximum onboarding score of the teams to return
          * @param {Array<string>} [id] Fetch specific teams by ID
          * @param {string} [userId] teams that contain this user ID
          * @param {number} [count] The numbers of items to return
@@ -2288,7 +2290,7 @@ export const TeamsApiAxiosParamCreator = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        teamsGet: async (q?: string, id?: Array<string>, userId?: string, count?: number, page?: number, includeTeamMembers?: boolean, includeInviteLinks?: boolean, includeTotal?: boolean, includeCreator?: boolean, partner?: string, returnOnboardingScore?: boolean, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        teamsGet: async (q?: string, onboardingScoreMin?: number, onboardingScoreMax?: number, id?: Array<string>, userId?: string, count?: number, page?: number, includeTeamMembers?: boolean, includeInviteLinks?: boolean, includeTotal?: boolean, includeCreator?: boolean, partner?: string, returnOnboardingScore?: boolean, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/teams`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -2307,6 +2309,14 @@ export const TeamsApiAxiosParamCreator = function (configuration?: Configuration
 
             if (q !== undefined) {
                 localVarQueryParameter['q'] = q;
+            }
+
+            if (onboardingScoreMin !== undefined) {
+                localVarQueryParameter['onboardingScoreMin'] = onboardingScoreMin;
+            }
+
+            if (onboardingScoreMax !== undefined) {
+                localVarQueryParameter['onboardingScoreMax'] = onboardingScoreMax;
             }
 
             if (id) {
@@ -2476,6 +2486,8 @@ export const TeamsApiFp = function(configuration?: Configuration) {
          * 
          * @summary Fetch teams you have access to
          * @param {string} [q] Search by name, ID, invite code, etc.
+         * @param {number} [onboardingScoreMin] The minimum onboarding score of the teams to return
+         * @param {number} [onboardingScoreMax] The maximum onboarding score of the teams to return
          * @param {Array<string>} [id] Fetch specific teams by ID
          * @param {string} [userId] teams that contain this user ID
          * @param {number} [count] The numbers of items to return
@@ -2489,8 +2501,8 @@ export const TeamsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async teamsGet(q?: string, id?: Array<string>, userId?: string, count?: number, page?: number, includeTeamMembers?: boolean, includeInviteLinks?: boolean, includeTotal?: boolean, includeCreator?: boolean, partner?: string, returnOnboardingScore?: boolean, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TeamsGet200Response>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.teamsGet(q, id, userId, count, page, includeTeamMembers, includeInviteLinks, includeTotal, includeCreator, partner, returnOnboardingScore, options);
+        async teamsGet(q?: string, onboardingScoreMin?: number, onboardingScoreMax?: number, id?: Array<string>, userId?: string, count?: number, page?: number, includeTeamMembers?: boolean, includeInviteLinks?: boolean, includeTotal?: boolean, includeCreator?: boolean, partner?: string, returnOnboardingScore?: boolean, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TeamsGet200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.teamsGet(q, onboardingScoreMin, onboardingScoreMax, id, userId, count, page, includeTeamMembers, includeInviteLinks, includeTotal, includeCreator, partner, returnOnboardingScore, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -2550,6 +2562,8 @@ export const TeamsApiFactory = function (configuration?: Configuration, basePath
          * 
          * @summary Fetch teams you have access to
          * @param {string} [q] Search by name, ID, invite code, etc.
+         * @param {number} [onboardingScoreMin] The minimum onboarding score of the teams to return
+         * @param {number} [onboardingScoreMax] The maximum onboarding score of the teams to return
          * @param {Array<string>} [id] Fetch specific teams by ID
          * @param {string} [userId] teams that contain this user ID
          * @param {number} [count] The numbers of items to return
@@ -2563,8 +2577,8 @@ export const TeamsApiFactory = function (configuration?: Configuration, basePath
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        teamsGet(q?: string, id?: Array<string>, userId?: string, count?: number, page?: number, includeTeamMembers?: boolean, includeInviteLinks?: boolean, includeTotal?: boolean, includeCreator?: boolean, partner?: string, returnOnboardingScore?: boolean, options?: any): AxiosPromise<TeamsGet200Response> {
-            return localVarFp.teamsGet(q, id, userId, count, page, includeTeamMembers, includeInviteLinks, includeTotal, includeCreator, partner, returnOnboardingScore, options).then((request) => request(axios, basePath));
+        teamsGet(q?: string, onboardingScoreMin?: number, onboardingScoreMax?: number, id?: Array<string>, userId?: string, count?: number, page?: number, includeTeamMembers?: boolean, includeInviteLinks?: boolean, includeTotal?: boolean, includeCreator?: boolean, partner?: string, returnOnboardingScore?: boolean, options?: any): AxiosPromise<TeamsGet200Response> {
+            return localVarFp.teamsGet(q, onboardingScoreMin, onboardingScoreMax, id, userId, count, page, includeTeamMembers, includeInviteLinks, includeTotal, includeCreator, partner, returnOnboardingScore, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -2636,6 +2650,20 @@ export interface TeamsApiTeamsGetRequest {
      * @memberof TeamsApiTeamsGet
      */
     readonly q?: string
+
+    /**
+     * The minimum onboarding score of the teams to return
+     * @type {number}
+     * @memberof TeamsApiTeamsGet
+     */
+    readonly onboardingScoreMin?: number
+
+    /**
+     * The maximum onboarding score of the teams to return
+     * @type {number}
+     * @memberof TeamsApiTeamsGet
+     */
+    readonly onboardingScoreMax?: number
 
     /**
      * Fetch specific teams by ID
@@ -2776,7 +2804,7 @@ export class TeamsApi extends BaseAPI {
      * @memberof TeamsApi
      */
     public teamsGet(requestParameters: TeamsApiTeamsGetRequest = {}, options?: AxiosRequestConfig) {
-        return TeamsApiFp(this.configuration).teamsGet(requestParameters.q, requestParameters.id, requestParameters.userId, requestParameters.count, requestParameters.page, requestParameters.includeTeamMembers, requestParameters.includeInviteLinks, requestParameters.includeTotal, requestParameters.includeCreator, requestParameters.partner, requestParameters.returnOnboardingScore, options).then((request) => request(this.axios, this.basePath));
+        return TeamsApiFp(this.configuration).teamsGet(requestParameters.q, requestParameters.onboardingScoreMin, requestParameters.onboardingScoreMax, requestParameters.id, requestParameters.userId, requestParameters.count, requestParameters.page, requestParameters.includeTeamMembers, requestParameters.includeInviteLinks, requestParameters.includeTotal, requestParameters.includeCreator, requestParameters.partner, requestParameters.returnOnboardingScore, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
