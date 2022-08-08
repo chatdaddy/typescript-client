@@ -320,27 +320,59 @@ export interface NotifyModel {
 /**
  * 
  * @export
- * @interface NotifyRequest
+ * @interface NotifyRequestWithContent
  */
-export interface NotifyRequest {
+export interface NotifyRequestWithContent {
     /**
      * 
      * @type {string}
-     * @memberof NotifyRequest
+     * @memberof NotifyRequestWithContent
      */
     'title': string;
     /**
      * 
      * @type {string}
-     * @memberof NotifyRequest
+     * @memberof NotifyRequestWithContent
      */
     'content': string;
     /**
      * 
+     * @type {NotifyRequestWithContentOverrides}
+     * @memberof NotifyRequestWithContent
+     */
+    'overrides'?: NotifyRequestWithContentOverrides;
+    /**
+     * 
      * @type {{ [key: string]: any; }}
-     * @memberof NotifyRequest
+     * @memberof NotifyRequestWithContent
      */
     'parameters'?: { [key: string]: any; };
+}
+/**
+ * 
+ * @export
+ * @interface NotifyRequestWithContentOverrides
+ */
+export interface NotifyRequestWithContentOverrides {
+    /**
+     * 
+     * @type {NotifyRequestWithContentOverridesWhatsapp}
+     * @memberof NotifyRequestWithContentOverrides
+     */
+    'whatsapp'?: NotifyRequestWithContentOverridesWhatsapp;
+}
+/**
+ * 
+ * @export
+ * @interface NotifyRequestWithContentOverridesWhatsapp
+ */
+export interface NotifyRequestWithContentOverridesWhatsapp {
+    /**
+     * 
+     * @type {string}
+     * @memberof NotifyRequestWithContentOverridesWhatsapp
+     */
+    'botId': string;
 }
 /**
  * 
@@ -1530,18 +1562,16 @@ export const NotificationsApiAxiosParamCreator = function (configuration?: Confi
         /**
          * 
          * @summary Notify a team member
-         * @param {string} userId 
+         * @param {string} [userId] The user to notify, leave undefined to send to team owner
          * @param {string} [teamId] 
          * @param {boolean} [notifyWhatsApp] Override notify on WhatsApp
          * @param {boolean} [notifyEmail] Override notify on Email
          * @param {boolean} [notifyDesktop] Override notify on Desktop
-         * @param {NotifyRequest} [notifyRequest] 
+         * @param {NotifyRequestWithContent} [notifyRequestWithContent] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        notify: async (userId: string, teamId?: string, notifyWhatsApp?: boolean, notifyEmail?: boolean, notifyDesktop?: boolean, notifyRequest?: NotifyRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'userId' is not null or undefined
-            assertParamExists('notify', 'userId', userId)
+        notify: async (userId?: string, teamId?: string, notifyWhatsApp?: boolean, notifyEmail?: boolean, notifyDesktop?: boolean, notifyRequestWithContent?: NotifyRequestWithContent, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/notify`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -1585,7 +1615,7 @@ export const NotificationsApiAxiosParamCreator = function (configuration?: Confi
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(notifyRequest, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(notifyRequestWithContent, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -1605,17 +1635,17 @@ export const NotificationsApiFp = function(configuration?: Configuration) {
         /**
          * 
          * @summary Notify a team member
-         * @param {string} userId 
+         * @param {string} [userId] The user to notify, leave undefined to send to team owner
          * @param {string} [teamId] 
          * @param {boolean} [notifyWhatsApp] Override notify on WhatsApp
          * @param {boolean} [notifyEmail] Override notify on Email
          * @param {boolean} [notifyDesktop] Override notify on Desktop
-         * @param {NotifyRequest} [notifyRequest] 
+         * @param {NotifyRequestWithContent} [notifyRequestWithContent] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async notify(userId: string, teamId?: string, notifyWhatsApp?: boolean, notifyEmail?: boolean, notifyDesktop?: boolean, notifyRequest?: NotifyRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Notify200Response>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.notify(userId, teamId, notifyWhatsApp, notifyEmail, notifyDesktop, notifyRequest, options);
+        async notify(userId?: string, teamId?: string, notifyWhatsApp?: boolean, notifyEmail?: boolean, notifyDesktop?: boolean, notifyRequestWithContent?: NotifyRequestWithContent, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Notify200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.notify(userId, teamId, notifyWhatsApp, notifyEmail, notifyDesktop, notifyRequestWithContent, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
     }
@@ -1631,17 +1661,17 @@ export const NotificationsApiFactory = function (configuration?: Configuration, 
         /**
          * 
          * @summary Notify a team member
-         * @param {string} userId 
+         * @param {string} [userId] The user to notify, leave undefined to send to team owner
          * @param {string} [teamId] 
          * @param {boolean} [notifyWhatsApp] Override notify on WhatsApp
          * @param {boolean} [notifyEmail] Override notify on Email
          * @param {boolean} [notifyDesktop] Override notify on Desktop
-         * @param {NotifyRequest} [notifyRequest] 
+         * @param {NotifyRequestWithContent} [notifyRequestWithContent] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        notify(userId: string, teamId?: string, notifyWhatsApp?: boolean, notifyEmail?: boolean, notifyDesktop?: boolean, notifyRequest?: NotifyRequest, options?: any): AxiosPromise<Notify200Response> {
-            return localVarFp.notify(userId, teamId, notifyWhatsApp, notifyEmail, notifyDesktop, notifyRequest, options).then((request) => request(axios, basePath));
+        notify(userId?: string, teamId?: string, notifyWhatsApp?: boolean, notifyEmail?: boolean, notifyDesktop?: boolean, notifyRequestWithContent?: NotifyRequestWithContent, options?: any): AxiosPromise<Notify200Response> {
+            return localVarFp.notify(userId, teamId, notifyWhatsApp, notifyEmail, notifyDesktop, notifyRequestWithContent, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -1653,11 +1683,11 @@ export const NotificationsApiFactory = function (configuration?: Configuration, 
  */
 export interface NotificationsApiNotifyRequest {
     /**
-     * 
+     * The user to notify, leave undefined to send to team owner
      * @type {string}
      * @memberof NotificationsApiNotify
      */
-    readonly userId: string
+    readonly userId?: string
 
     /**
      * 
@@ -1689,10 +1719,10 @@ export interface NotificationsApiNotifyRequest {
 
     /**
      * 
-     * @type {NotifyRequest}
+     * @type {NotifyRequestWithContent}
      * @memberof NotificationsApiNotify
      */
-    readonly notifyRequest?: NotifyRequest
+    readonly notifyRequestWithContent?: NotifyRequestWithContent
 }
 
 /**
@@ -1710,8 +1740,8 @@ export class NotificationsApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof NotificationsApi
      */
-    public notify(requestParameters: NotificationsApiNotifyRequest, options?: AxiosRequestConfig) {
-        return NotificationsApiFp(this.configuration).notify(requestParameters.userId, requestParameters.teamId, requestParameters.notifyWhatsApp, requestParameters.notifyEmail, requestParameters.notifyDesktop, requestParameters.notifyRequest, options).then((request) => request(this.axios, this.basePath));
+    public notify(requestParameters: NotificationsApiNotifyRequest = {}, options?: AxiosRequestConfig) {
+        return NotificationsApiFp(this.configuration).notify(requestParameters.userId, requestParameters.teamId, requestParameters.notifyWhatsApp, requestParameters.notifyEmail, requestParameters.notifyDesktop, requestParameters.notifyRequestWithContent, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
