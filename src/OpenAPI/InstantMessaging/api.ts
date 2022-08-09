@@ -394,7 +394,8 @@ export const AlibabaCAMSWebhookItemTypeEnum = {
     Document: 'DOCUMENT',
     Unknown: 'UNKNOWN',
     Location: 'LOCATION',
-    Interactive: 'INTERACTIVE'
+    Interactive: 'INTERACTIVE',
+    Reply: 'REPLY'
 } as const;
 
 export type AlibabaCAMSWebhookItemTypeEnum = typeof AlibabaCAMSWebhookItemTypeEnum[keyof typeof AlibabaCAMSWebhookItemTypeEnum];
