@@ -53,6 +53,12 @@ export interface BoutirTokenRequest {
      * @memberof BoutirTokenRequest
      */
     'password': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof BoutirTokenRequest
+     */
+    'referralCode'?: string;
 }
 
 export const BoutirTokenRequestTypeEnum = {
@@ -129,6 +135,12 @@ export interface FirebaseTokenRequest {
      * @memberof FirebaseTokenRequest
      */
     'idToken': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof FirebaseTokenRequest
+     */
+    'referralCode'?: string;
 }
 
 export const FirebaseTokenRequestTypeEnum = {

@@ -587,6 +587,12 @@ export interface PartnerReferralsGet200Response {
      * @memberof PartnerReferralsGet200Response
      */
     'nextPage'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof PartnerReferralsGet200Response
+     */
+    'total'?: number;
 }
 /**
  * 
@@ -2335,10 +2341,11 @@ export const ReferralsApiAxiosParamCreator = function (configuration?: Configura
          * @param {number} [count] The numbers of items to return
          * @param {Array<string>} [id] The array of referralCodes to be fetched
          * @param {string} [q] Search by id, productId, etc
+         * @param {boolean} [returnTotal] Include the total number of referralCodes
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        partnerReferralsGet: async (page?: number, count?: number, id?: Array<string>, q?: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        partnerReferralsGet: async (page?: number, count?: number, id?: Array<string>, q?: string, returnTotal?: boolean, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/partner-referral`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -2369,6 +2376,10 @@ export const ReferralsApiAxiosParamCreator = function (configuration?: Configura
 
             if (q !== undefined) {
                 localVarQueryParameter['q'] = q;
+            }
+
+            if (returnTotal !== undefined) {
+                localVarQueryParameter['returnTotal'] = returnTotal;
             }
 
 
@@ -2521,11 +2532,12 @@ export const ReferralsApiFp = function(configuration?: Configuration) {
          * @param {number} [count] The numbers of items to return
          * @param {Array<string>} [id] The array of referralCodes to be fetched
          * @param {string} [q] Search by id, productId, etc
+         * @param {boolean} [returnTotal] Include the total number of referralCodes
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async partnerReferralsGet(page?: number, count?: number, id?: Array<string>, q?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PartnerReferralsGet200Response>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.partnerReferralsGet(page, count, id, q, options);
+        async partnerReferralsGet(page?: number, count?: number, id?: Array<string>, q?: string, returnTotal?: boolean, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PartnerReferralsGet200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.partnerReferralsGet(page, count, id, q, returnTotal, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -2590,11 +2602,12 @@ export const ReferralsApiFactory = function (configuration?: Configuration, base
          * @param {number} [count] The numbers of items to return
          * @param {Array<string>} [id] The array of referralCodes to be fetched
          * @param {string} [q] Search by id, productId, etc
+         * @param {boolean} [returnTotal] Include the total number of referralCodes
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        partnerReferralsGet(page?: number, count?: number, id?: Array<string>, q?: string, options?: any): AxiosPromise<PartnerReferralsGet200Response> {
-            return localVarFp.partnerReferralsGet(page, count, id, q, options).then((request) => request(axios, basePath));
+        partnerReferralsGet(page?: number, count?: number, id?: Array<string>, q?: string, returnTotal?: boolean, options?: any): AxiosPromise<PartnerReferralsGet200Response> {
+            return localVarFp.partnerReferralsGet(page, count, id, q, returnTotal, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -2685,6 +2698,13 @@ export interface ReferralsApiPartnerReferralsGetRequest {
      * @memberof ReferralsApiPartnerReferralsGet
      */
     readonly q?: string
+
+    /**
+     * Include the total number of referralCodes
+     * @type {boolean}
+     * @memberof ReferralsApiPartnerReferralsGet
+     */
+    readonly returnTotal?: boolean
 }
 
 /**
@@ -2738,7 +2758,7 @@ export class ReferralsApi extends BaseAPI {
      * @memberof ReferralsApi
      */
     public partnerReferralsGet(requestParameters: ReferralsApiPartnerReferralsGetRequest = {}, options?: AxiosRequestConfig) {
-        return ReferralsApiFp(this.configuration).partnerReferralsGet(requestParameters.page, requestParameters.count, requestParameters.id, requestParameters.q, options).then((request) => request(this.axios, this.basePath));
+        return ReferralsApiFp(this.configuration).partnerReferralsGet(requestParameters.page, requestParameters.count, requestParameters.id, requestParameters.q, requestParameters.returnTotal, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
