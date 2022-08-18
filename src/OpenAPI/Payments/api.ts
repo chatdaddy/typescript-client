@@ -549,7 +549,7 @@ export interface PartnerReferralCreateOptions {
      * @type {string}
      * @memberof PartnerReferralCreateOptions
      */
-    'productId': string;
+    'productId': string | null;
     /**
      * time the product can be used for in days
      * @type {number}

@@ -1311,6 +1311,12 @@ export interface UserPatch {
      * @memberof UserPatch
      */
     'webPushSubscriptions'?: Array<WebPushSubscription>;
+    /**
+     * add a user to a partnership manually
+     * @type {string}
+     * @memberof UserPatch
+     */
+    'partnership'?: string | null;
 }
 /**
  * 
