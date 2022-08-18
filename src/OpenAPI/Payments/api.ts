@@ -995,7 +995,7 @@ export interface ReferralCodeDetails {
      * @type {string}
      * @memberof ReferralCodeDetails
      */
-    'productId': string;
+    'productId': string | null;
     /**
      * teamId of partnerAdmin associated with the referralCode
      * @type {string}
