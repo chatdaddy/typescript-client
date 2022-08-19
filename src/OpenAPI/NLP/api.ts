@@ -150,6 +150,12 @@ export interface KeywordActionCreateRequestObj {
      */
     'enabled'?: boolean;
     /**
+     * Should typing indicator & read receipt be sent
+     * @type {boolean}
+     * @memberof KeywordActionCreateRequestObj
+     */
+    'sendTyping'?: boolean;
+    /**
      * 
      * @type {TriggerType}
      * @memberof KeywordActionCreateRequestObj
@@ -198,6 +204,12 @@ export interface KeywordActionEditRequestObj {
      * @memberof KeywordActionEditRequestObj
      */
     'enabled'?: boolean;
+    /**
+     * Should typing indicator & read receipt be sent
+     * @type {boolean}
+     * @memberof KeywordActionEditRequestObj
+     */
+    'sendTyping'?: boolean;
     /**
      * 
      * @type {TriggerType}
@@ -290,6 +302,12 @@ export interface KeywordBasedAction {
      * @memberof KeywordBasedAction
      */
     'enabled': boolean;
+    /**
+     * Should typing indicator & read receipt be sent
+     * @type {boolean}
+     * @memberof KeywordBasedAction
+     */
+    'sendTyping'?: boolean;
     /**
      * 
      * @type {TriggerType}
