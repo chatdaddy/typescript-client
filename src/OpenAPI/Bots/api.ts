@@ -627,6 +627,12 @@ export interface Folder {
     'name'?: string;
     /**
      * 
+     * @type {string}
+     * @memberof Folder
+     */
+    'teamId'?: string;
+    /**
+     * 
      * @type {Array<string>}
      * @memberof Folder
      */
@@ -2092,6 +2098,47 @@ export const FoldersApiAxiosParamCreator = function (configuration?: Configurati
         },
         /**
          * 
+         * @summary Deletes list of folders
+         * @param {Array<string>} folders 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        folderDelete: async (folders: Array<string>, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'folders' is not null or undefined
+            assertParamExists('folderDelete', 'folders', folders)
+            const localVarPath = `/folder`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["TEMPLATES_DELETE"], configuration)
+
+            if (folders) {
+                localVarQueryParameter['folders'] = folders;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
          * @summary Gets all folders related to account/team
          * @param {number} [count] 
          * @param {string} [before] 
@@ -2204,6 +2251,17 @@ export const FoldersApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
+         * @summary Deletes list of folders
+         * @param {Array<string>} folders 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async folderDelete(folders: Array<string>, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.folderDelete(folders, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
          * @summary Gets all folders related to account/team
          * @param {number} [count] 
          * @param {string} [before] 
@@ -2249,6 +2307,16 @@ export const FoldersApiFactory = function (configuration?: Configuration, basePa
         },
         /**
          * 
+         * @summary Deletes list of folders
+         * @param {Array<string>} folders 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        folderDelete(folders: Array<string>, options?: any): AxiosPromise<void> {
+            return localVarFp.folderDelete(folders, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
          * @summary Gets all folders related to account/team
          * @param {number} [count] 
          * @param {string} [before] 
@@ -2285,6 +2353,20 @@ export interface FoldersApiFolderCreateRequest {
      * @memberof FoldersApiFolderCreate
      */
     readonly folderCreateRequest?: FolderCreateRequest
+}
+
+/**
+ * Request parameters for folderDelete operation in FoldersApi.
+ * @export
+ * @interface FoldersApiFolderDeleteRequest
+ */
+export interface FoldersApiFolderDeleteRequest {
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof FoldersApiFolderDelete
+     */
+    readonly folders: Array<string>
 }
 
 /**
@@ -2353,6 +2435,18 @@ export class FoldersApi extends BaseAPI {
      */
     public folderCreate(requestParameters: FoldersApiFolderCreateRequest = {}, options?: AxiosRequestConfig) {
         return FoldersApiFp(this.configuration).folderCreate(requestParameters.folderCreateRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Deletes list of folders
+     * @param {FoldersApiFolderDeleteRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof FoldersApi
+     */
+    public folderDelete(requestParameters: FoldersApiFolderDeleteRequest, options?: AxiosRequestConfig) {
+        return FoldersApiFp(this.configuration).folderDelete(requestParameters.folders, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
