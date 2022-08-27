@@ -313,6 +313,12 @@ export interface Bot {
     'startingActionId'?: string | null;
     /**
      * 
+     * @type {string}
+     * @memberof Bot
+     */
+    'folderId'?: string | null;
+    /**
+     * 
      * @type {{ [key: string]: ExternalTemplateProvider; }}
      * @memberof Bot
      */
@@ -601,6 +607,107 @@ export const ExternalTemplateProviderStatusEnum = {
 
 export type ExternalTemplateProviderStatusEnum = typeof ExternalTemplateProviderStatusEnum[keyof typeof ExternalTemplateProviderStatusEnum];
 
+/**
+ * 
+ * @export
+ * @interface Folder
+ */
+export interface Folder {
+    /**
+     * 
+     * @type {string}
+     * @memberof Folder
+     */
+    'id'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Folder
+     */
+    'name'?: string;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof Folder
+     */
+    'botIds'?: Array<string>;
+    /**
+     * An ISO formatted timestamp
+     * @type {string}
+     * @memberof Folder
+     */
+    'createdAt'?: string;
+    /**
+     * An ISO formatted timestamp
+     * @type {string}
+     * @memberof Folder
+     */
+    'updatedAt'?: string;
+}
+/**
+ * 
+ * @export
+ * @interface FolderCreate200Response
+ */
+export interface FolderCreate200Response {
+    /**
+     * 
+     * @type {Folder}
+     * @memberof FolderCreate200Response
+     */
+    'folder': Folder;
+}
+/**
+ * 
+ * @export
+ * @interface FolderCreateRequest
+ */
+export interface FolderCreateRequest {
+    /**
+     * Folder name
+     * @type {string}
+     * @memberof FolderCreateRequest
+     */
+    'name'?: string;
+}
+/**
+ * 
+ * @export
+ * @interface FolderUpdateRequest
+ */
+export interface FolderUpdateRequest {
+    /**
+     * Folder name
+     * @type {string}
+     * @memberof FolderUpdateRequest
+     */
+    'name'?: string;
+    /**
+     * Bot IDs to add to the folder
+     * @type {Array<FolderUpdateRequestBotIdsInner>}
+     * @memberof FolderUpdateRequest
+     */
+    'botIds'?: Array<FolderUpdateRequestBotIdsInner>;
+}
+/**
+ * 
+ * @export
+ * @interface FolderUpdateRequestBotIdsInner
+ */
+export interface FolderUpdateRequestBotIdsInner {
+    /**
+     * ID of the bot sequence
+     * @type {string}
+     * @memberof FolderUpdateRequestBotIdsInner
+     */
+    'botId': string;
+    /**
+     * If true, remove the bot from the folder
+     * @type {boolean}
+     * @memberof FolderUpdateRequestBotIdsInner
+     */
+    'remove'?: boolean;
+}
 /**
  * 
  * @export
@@ -1341,10 +1448,11 @@ export const BotsApiAxiosParamCreator = function (configuration?: Configuration)
          * @param {Array<string>} [id] 
          * @param {'name' | 'updatedAt'} [sortBy] 
          * @param {'ASC' | 'DESC'} [order] 
+         * @param {string} [folderId] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        botsGets: async (q?: string, before?: string, count?: number, id?: Array<string>, sortBy?: 'name' | 'updatedAt', order?: 'ASC' | 'DESC', options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        botsGets: async (q?: string, before?: string, count?: number, id?: Array<string>, sortBy?: 'name' | 'updatedAt', order?: 'ASC' | 'DESC', folderId?: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/bots`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -1383,6 +1491,10 @@ export const BotsApiAxiosParamCreator = function (configuration?: Configuration)
 
             if (order !== undefined) {
                 localVarQueryParameter['order'] = order;
+            }
+
+            if (folderId !== undefined) {
+                localVarQueryParameter['folderId'] = folderId;
             }
 
 
@@ -1520,11 +1632,12 @@ export const BotsApiFp = function(configuration?: Configuration) {
          * @param {Array<string>} [id] 
          * @param {'name' | 'updatedAt'} [sortBy] 
          * @param {'ASC' | 'DESC'} [order] 
+         * @param {string} [folderId] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async botsGets(q?: string, before?: string, count?: number, id?: Array<string>, sortBy?: 'name' | 'updatedAt', order?: 'ASC' | 'DESC', options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BotsGets200Response>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.botsGets(q, before, count, id, sortBy, order, options);
+        async botsGets(q?: string, before?: string, count?: number, id?: Array<string>, sortBy?: 'name' | 'updatedAt', order?: 'ASC' | 'DESC', folderId?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BotsGets200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.botsGets(q, before, count, id, sortBy, order, folderId, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -1616,11 +1729,12 @@ export const BotsApiFactory = function (configuration?: Configuration, basePath?
          * @param {Array<string>} [id] 
          * @param {'name' | 'updatedAt'} [sortBy] 
          * @param {'ASC' | 'DESC'} [order] 
+         * @param {string} [folderId] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        botsGets(q?: string, before?: string, count?: number, id?: Array<string>, sortBy?: 'name' | 'updatedAt', order?: 'ASC' | 'DESC', options?: any): AxiosPromise<BotsGets200Response> {
-            return localVarFp.botsGets(q, before, count, id, sortBy, order, options).then((request) => request(axios, basePath));
+        botsGets(q?: string, before?: string, count?: number, id?: Array<string>, sortBy?: 'name' | 'updatedAt', order?: 'ASC' | 'DESC', folderId?: string, options?: any): AxiosPromise<BotsGets200Response> {
+            return localVarFp.botsGets(q, before, count, id, sortBy, order, folderId, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -1809,6 +1923,13 @@ export interface BotsApiBotsGetsRequest {
      * @memberof BotsApiBotsGets
      */
     readonly order?: 'ASC' | 'DESC'
+
+    /**
+     * 
+     * @type {string}
+     * @memberof BotsApiBotsGets
+     */
+    readonly folderId?: string
 }
 
 /**
@@ -1908,7 +2029,7 @@ export class BotsApi extends BaseAPI {
      * @memberof BotsApi
      */
     public botsGets(requestParameters: BotsApiBotsGetsRequest = {}, options?: AxiosRequestConfig) {
-        return BotsApiFp(this.configuration).botsGets(requestParameters.q, requestParameters.before, requestParameters.count, requestParameters.id, requestParameters.sortBy, requestParameters.order, options).then((request) => request(this.axios, this.basePath));
+        return BotsApiFp(this.configuration).botsGets(requestParameters.q, requestParameters.before, requestParameters.count, requestParameters.id, requestParameters.sortBy, requestParameters.order, requestParameters.folderId, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -1921,6 +2042,341 @@ export class BotsApi extends BaseAPI {
      */
     public botsPatch(requestParameters: BotsApiBotsPatchRequest, options?: AxiosRequestConfig) {
         return BotsApiFp(this.configuration).botsPatch(requestParameters.id, requestParameters.botPatch, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+/**
+ * FoldersApi - axios parameter creator
+ * @export
+ */
+export const FoldersApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @summary Create folder
+         * @param {FolderCreateRequest} [folderCreateRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        folderCreate: async (folderCreateRequest?: FolderCreateRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/folder`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["TEMPLATES_CREATE"], configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(folderCreateRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Gets all folders related to account/team
+         * @param {number} [count] 
+         * @param {string} [before] 
+         * @param {string} [q] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        folderGet: async (count?: number, before?: string, q?: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/folder`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["TEMPLATES_READ"], configuration)
+
+            if (count !== undefined) {
+                localVarQueryParameter['count'] = count;
+            }
+
+            if (before !== undefined) {
+                localVarQueryParameter['before'] = before;
+            }
+
+            if (q !== undefined) {
+                localVarQueryParameter['q'] = q;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Update folder
+         * @param {string} folderId 
+         * @param {FolderUpdateRequest} [folderUpdateRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        folderUpdate: async (folderId: string, folderUpdateRequest?: FolderUpdateRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'folderId' is not null or undefined
+            assertParamExists('folderUpdate', 'folderId', folderId)
+            const localVarPath = `/folder/{folderId}`
+                .replace(`{${"folderId"}}`, encodeURIComponent(String(folderId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PATCH', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["TEMPLATES_UPDATE"], configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(folderUpdateRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * FoldersApi - functional programming interface
+ * @export
+ */
+export const FoldersApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = FoldersApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * 
+         * @summary Create folder
+         * @param {FolderCreateRequest} [folderCreateRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async folderCreate(folderCreateRequest?: FolderCreateRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<FolderCreate200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.folderCreate(folderCreateRequest, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary Gets all folders related to account/team
+         * @param {number} [count] 
+         * @param {string} [before] 
+         * @param {string} [q] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async folderGet(count?: number, before?: string, q?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.folderGet(count, before, q, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary Update folder
+         * @param {string} folderId 
+         * @param {FolderUpdateRequest} [folderUpdateRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async folderUpdate(folderId: string, folderUpdateRequest?: FolderUpdateRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.folderUpdate(folderId, folderUpdateRequest, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+    }
+};
+
+/**
+ * FoldersApi - factory interface
+ * @export
+ */
+export const FoldersApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = FoldersApiFp(configuration)
+    return {
+        /**
+         * 
+         * @summary Create folder
+         * @param {FolderCreateRequest} [folderCreateRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        folderCreate(folderCreateRequest?: FolderCreateRequest, options?: any): AxiosPromise<FolderCreate200Response> {
+            return localVarFp.folderCreate(folderCreateRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Gets all folders related to account/team
+         * @param {number} [count] 
+         * @param {string} [before] 
+         * @param {string} [q] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        folderGet(count?: number, before?: string, q?: string, options?: any): AxiosPromise<void> {
+            return localVarFp.folderGet(count, before, q, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Update folder
+         * @param {string} folderId 
+         * @param {FolderUpdateRequest} [folderUpdateRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        folderUpdate(folderId: string, folderUpdateRequest?: FolderUpdateRequest, options?: any): AxiosPromise<void> {
+            return localVarFp.folderUpdate(folderId, folderUpdateRequest, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * Request parameters for folderCreate operation in FoldersApi.
+ * @export
+ * @interface FoldersApiFolderCreateRequest
+ */
+export interface FoldersApiFolderCreateRequest {
+    /**
+     * 
+     * @type {FolderCreateRequest}
+     * @memberof FoldersApiFolderCreate
+     */
+    readonly folderCreateRequest?: FolderCreateRequest
+}
+
+/**
+ * Request parameters for folderGet operation in FoldersApi.
+ * @export
+ * @interface FoldersApiFolderGetRequest
+ */
+export interface FoldersApiFolderGetRequest {
+    /**
+     * 
+     * @type {number}
+     * @memberof FoldersApiFolderGet
+     */
+    readonly count?: number
+
+    /**
+     * 
+     * @type {string}
+     * @memberof FoldersApiFolderGet
+     */
+    readonly before?: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof FoldersApiFolderGet
+     */
+    readonly q?: string
+}
+
+/**
+ * Request parameters for folderUpdate operation in FoldersApi.
+ * @export
+ * @interface FoldersApiFolderUpdateRequest
+ */
+export interface FoldersApiFolderUpdateRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof FoldersApiFolderUpdate
+     */
+    readonly folderId: string
+
+    /**
+     * 
+     * @type {FolderUpdateRequest}
+     * @memberof FoldersApiFolderUpdate
+     */
+    readonly folderUpdateRequest?: FolderUpdateRequest
+}
+
+/**
+ * FoldersApi - object-oriented interface
+ * @export
+ * @class FoldersApi
+ * @extends {BaseAPI}
+ */
+export class FoldersApi extends BaseAPI {
+    /**
+     * 
+     * @summary Create folder
+     * @param {FoldersApiFolderCreateRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof FoldersApi
+     */
+    public folderCreate(requestParameters: FoldersApiFolderCreateRequest = {}, options?: AxiosRequestConfig) {
+        return FoldersApiFp(this.configuration).folderCreate(requestParameters.folderCreateRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Gets all folders related to account/team
+     * @param {FoldersApiFolderGetRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof FoldersApi
+     */
+    public folderGet(requestParameters: FoldersApiFolderGetRequest = {}, options?: AxiosRequestConfig) {
+        return FoldersApiFp(this.configuration).folderGet(requestParameters.count, requestParameters.before, requestParameters.q, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Update folder
+     * @param {FoldersApiFolderUpdateRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof FoldersApi
+     */
+    public folderUpdate(requestParameters: FoldersApiFolderUpdateRequest, options?: AxiosRequestConfig) {
+        return FoldersApiFp(this.configuration).folderUpdate(requestParameters.folderId, requestParameters.folderUpdateRequest, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
