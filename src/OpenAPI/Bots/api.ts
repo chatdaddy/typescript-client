@@ -633,10 +633,10 @@ export interface Folder {
     'teamId'?: string;
     /**
      * 
-     * @type {Array<string>}
+     * @type {number}
      * @memberof Folder
      */
-    'botIds'?: Array<string>;
+    'botCount'?: number;
     /**
      * An ISO formatted timestamp
      * @type {string}
