@@ -666,6 +666,25 @@ export interface FolderCreateRequest {
 /**
  * 
  * @export
+ * @interface FolderGet200Response
+ */
+export interface FolderGet200Response {
+    /**
+     * 
+     * @type {Array<Folder>}
+     * @memberof FolderGet200Response
+     */
+    'folders'?: Array<Folder>;
+    /**
+     * Cursor to use to fetch next page of results
+     * @type {string}
+     * @memberof FolderGet200Response
+     */
+    'cursor'?: string;
+}
+/**
+ * 
+ * @export
  * @interface FolderUpdateRequest
  */
 export interface FolderUpdateRequest {
@@ -2256,7 +2275,7 @@ export const FoldersApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async folderGet(count?: number, before?: string, q?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async folderGet(count?: number, before?: string, q?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<FolderGet200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.folderGet(count, before, q, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -2311,7 +2330,7 @@ export const FoldersApiFactory = function (configuration?: Configuration, basePa
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        folderGet(count?: number, before?: string, q?: string, options?: any): AxiosPromise<void> {
+        folderGet(count?: number, before?: string, q?: string, options?: any): AxiosPromise<FolderGet200Response> {
             return localVarFp.folderGet(count, before, q, options).then((request) => request(axios, basePath));
         },
         /**
