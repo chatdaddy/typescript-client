@@ -653,19 +653,6 @@ export interface Folder {
 /**
  * 
  * @export
- * @interface FolderCreate200Response
- */
-export interface FolderCreate200Response {
-    /**
-     * 
-     * @type {Folder}
-     * @memberof FolderCreate200Response
-     */
-    'folder': Folder;
-}
-/**
- * 
- * @export
  * @interface FolderCreateRequest
  */
 export interface FolderCreateRequest {
@@ -2245,7 +2232,7 @@ export const FoldersApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async folderCreate(folderCreateRequest?: FolderCreateRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<FolderCreate200Response>> {
+        async folderCreate(folderCreateRequest?: FolderCreateRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Folder>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.folderCreate(folderCreateRequest, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -2281,7 +2268,7 @@ export const FoldersApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async folderUpdate(folderId: string, folderUpdateRequest?: FolderUpdateRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async folderUpdate(folderId: string, folderUpdateRequest?: FolderUpdateRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Folder>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.folderUpdate(folderId, folderUpdateRequest, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -2302,7 +2289,7 @@ export const FoldersApiFactory = function (configuration?: Configuration, basePa
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        folderCreate(folderCreateRequest?: FolderCreateRequest, options?: any): AxiosPromise<FolderCreate200Response> {
+        folderCreate(folderCreateRequest?: FolderCreateRequest, options?: any): AxiosPromise<Folder> {
             return localVarFp.folderCreate(folderCreateRequest, options).then((request) => request(axios, basePath));
         },
         /**
@@ -2335,7 +2322,7 @@ export const FoldersApiFactory = function (configuration?: Configuration, basePa
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        folderUpdate(folderId: string, folderUpdateRequest?: FolderUpdateRequest, options?: any): AxiosPromise<void> {
+        folderUpdate(folderId: string, folderUpdateRequest?: FolderUpdateRequest, options?: any): AxiosPromise<Folder> {
             return localVarFp.folderUpdate(folderId, folderUpdateRequest, options).then((request) => request(axios, basePath));
         },
     };
