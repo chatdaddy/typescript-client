@@ -2268,7 +2268,7 @@ export const FoldersApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async folderUpdate(folderId: string, folderUpdateRequest?: FolderUpdateRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Folder>> {
+        async folderUpdate(folderId: string, folderUpdateRequest?: FolderUpdateRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.folderUpdate(folderId, folderUpdateRequest, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -2322,7 +2322,7 @@ export const FoldersApiFactory = function (configuration?: Configuration, basePa
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        folderUpdate(folderId: string, folderUpdateRequest?: FolderUpdateRequest, options?: any): AxiosPromise<Folder> {
+        folderUpdate(folderId: string, folderUpdateRequest?: FolderUpdateRequest, options?: any): AxiosPromise<void> {
             return localVarFp.folderUpdate(folderId, folderUpdateRequest, options).then((request) => request(axios, basePath));
         },
     };
