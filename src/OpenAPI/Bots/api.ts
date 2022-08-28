@@ -674,7 +674,7 @@ export interface FolderGet200Response {
      * @type {Array<Folder>}
      * @memberof FolderGet200Response
      */
-    'folders'?: Array<Folder>;
+    'folders': Array<Folder>;
     /**
      * Cursor to use to fetch next page of results
      * @type {string}
