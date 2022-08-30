@@ -618,25 +618,25 @@ export interface Folder {
      * @type {string}
      * @memberof Folder
      */
-    'id'?: string;
+    'id': string;
     /**
      * 
      * @type {string}
      * @memberof Folder
      */
-    'name'?: string;
+    'name': string;
     /**
      * 
      * @type {string}
      * @memberof Folder
      */
-    'teamId'?: string;
+    'teamId': string;
     /**
      * 
      * @type {number}
      * @memberof Folder
      */
-    'botCount'?: number;
+    'botCount': number;
     /**
      * An ISO formatted timestamp
      * @type {string}
