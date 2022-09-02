@@ -389,44 +389,6 @@ export interface NotifyRequestWithContentOverridesWhatsapp {
 /**
  * 
  * @export
- * @interface OAuthRequest
- */
-export interface OAuthRequest {
-    /**
-     * The phone number
-     * @type {string}
-     * @memberof OAuthRequest
-     */
-    'username': string;
-    /**
-     * Plaintext password
-     * @type {string}
-     * @memberof OAuthRequest
-     */
-    'password': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof OAuthRequest
-     */
-    'grant_type'?: OAuthRequestGrantTypeEnum;
-    /**
-     * Space separated scopes
-     * @type {string}
-     * @memberof OAuthRequest
-     */
-    'scope'?: string;
-}
-
-export const OAuthRequestGrantTypeEnum = {
-    Password: 'password'
-} as const;
-
-export type OAuthRequestGrantTypeEnum = typeof OAuthRequestGrantTypeEnum[keyof typeof OAuthRequestGrantTypeEnum];
-
-/**
- * 
- * @export
  * @interface OTP
  */
 export interface OTP {
@@ -557,11 +519,17 @@ export interface PasswordAuthRequest {
      */
     'returnRefreshToken'?: boolean;
     /**
-     * This will be the base64 encoded SHA256 of the plaintext password
+     * Base64 encoded SHA256 of the plaintext password, or the plaintext itself. See \"passwordEncoding\" below
      * @type {string}
      * @memberof PasswordAuthRequest
      */
     'password': string;
+    /**
+     * describe how the password is encoded
+     * @type {string}
+     * @memberof PasswordAuthRequest
+     */
+    'passwordEncoding'?: PasswordAuthRequestPasswordEncodingEnum;
     /**
      * The team ID to generate the token for, lastUsedTeam will be used otherwise
      * @type {string}
@@ -587,6 +555,14 @@ export interface PasswordAuthRequest {
      */
     'force'?: boolean;
 }
+
+export const PasswordAuthRequestPasswordEncodingEnum = {
+    ShaBase64: 'shaBase64',
+    Plaintext: 'plaintext'
+} as const;
+
+export type PasswordAuthRequestPasswordEncodingEnum = typeof PasswordAuthRequestPasswordEncodingEnum[keyof typeof PasswordAuthRequestPasswordEncodingEnum];
+
 /**
  * A refresh token allows you to generate access tokens to access & update things on ChatDaddy services. A refresh token will expire and become invalidated after 14 days of no activity. 
  * @export
