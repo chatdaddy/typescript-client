@@ -370,6 +370,31 @@ export interface BotMessageButton {
 /**
  * 
  * @export
+ * @interface BotMessageDelay
+ */
+export interface BotMessageDelay {
+    /**
+     * Time delays on second
+     * @type {number}
+     * @memberof BotMessageDelay
+     */
+    'timeDelaySec': number;
+    /**
+     * 
+     * @type {string}
+     * @memberof BotMessageDelay
+     */
+    'triggerActionId': string;
+    /**
+     * Simulate typing
+     * @type {boolean}
+     * @memberof BotMessageDelay
+     */
+    'simulateTyping'?: boolean;
+}
+/**
+ * 
+ * @export
  * @interface BotPatch
  */
 export interface BotPatch {
@@ -825,6 +850,12 @@ export interface MessageObj {
      * @memberof MessageObj
      */
     'buttons'?: Array<BotMessageButton>;
+    /**
+     * 
+     * @type {Array<BotMessageDelay>}
+     * @memberof MessageObj
+     */
+    'delays'?: Array<BotMessageDelay>;
     /**
      * 
      * @type {string}
