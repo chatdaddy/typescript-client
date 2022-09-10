@@ -33,6 +33,7 @@ export const EventName = {
     GroupParticipantsUpdate: 'group-participants-update',
     GroupUpdate: 'group-update',
     PresenceUpdate: 'presence-update',
+    OrderInsert: 'order-insert',
     ContactInsert: 'contact-insert',
     ContactUpdate: 'contact-update',
     ContactDelete: 'contact-delete',
