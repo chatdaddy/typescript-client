@@ -827,7 +827,7 @@ export interface PaymentIntegration {
      * @type {string}
      * @memberof PaymentIntegration
      */
-    'qrCode': string;
+    'qrCodeUrl'?: string;
 }
 /**
  * 
@@ -847,12 +847,6 @@ export interface PaymentRecord {
      * @memberof PaymentRecord
      */
     'createdAt': string;
-    /**
-     * An ISO formatted timestamp
-     * @type {string}
-     * @memberof PaymentRecord
-     */
-    'updatedAt': string;
     /**
      * 
      * @type {number}
@@ -993,25 +987,25 @@ export interface PaymentSystem {
      * @type {string}
      * @memberof PaymentSystem
      */
-    'id'?: string;
+    'id': string;
     /**
      * 
      * @type {string}
      * @memberof PaymentSystem
      */
-    'name'?: string;
+    'name': string;
     /**
      * 
      * @type {string}
      * @memberof PaymentSystem
      */
-    'type'?: PaymentSystemTypeEnum;
+    'type': PaymentSystemTypeEnum;
     /**
      * 
      * @type {DataType}
      * @memberof PaymentSystem
      */
-    'dataType'?: DataType;
+    'dataType': DataType;
     /**
      * 
      * @type {PaymentIntegration}
@@ -1023,7 +1017,7 @@ export interface PaymentSystem {
      * @type {string}
      * @memberof PaymentSystem
      */
-    'country'?: string;
+    'country': string;
 }
 
 export const PaymentSystemTypeEnum = {
