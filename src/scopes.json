@@ -698,5 +698,33 @@
     "features": [],
     "roles": [],
     "group": "Shop & Product"
+  },
+  "PAYMENT_INTEGRATION_READ": {
+    "number": 86,
+    "description": "Read payment integrations",
+    "features": [],
+    "roles": [],
+    "group": "Payment Integrations"
+  },
+  "PAYMENT_INTEGRATION_WRITE": {
+    "number": 87,
+    "description": "Write payment integrations",
+    "features": [],
+    "roles": [],
+    "group": "Payment Integrations"
+  },
+  "PAYMENT_RECORDS_READ": {
+    "number": 88,
+    "description": "Read payments records",
+    "features": [],
+    "roles": [],
+    "group": "Payment Records"
+  },
+  "PAYMENT_RECORDS_WRITE": { 
+    "number": 89,
+    "description": "Write payments records",
+    "features": [],
+    "roles": [],
+    "group": "Payment Records"
   }
 }

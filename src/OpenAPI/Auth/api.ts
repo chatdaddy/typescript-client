@@ -711,7 +711,11 @@ export const Scope = {
     ProductsGet: 'PRODUCTS_GET',
     ProductsCreate: 'PRODUCTS_CREATE',
     ProductsUpdate: 'PRODUCTS_UPDATE',
-    ProductsDelete: 'PRODUCTS_DELETE'
+    ProductsDelete: 'PRODUCTS_DELETE',
+    PaymentIntegrationRead: 'PAYMENT_INTEGRATION_READ',
+    PaymentIntegrationWrite: 'PAYMENT_INTEGRATION_WRITE',
+    PaymentRecordsRead: 'PAYMENT_RECORDS_READ',
+    PaymentRecordsWrite: 'PAYMENT_RECORDS_WRITE'
 } as const;
 
 export type Scope = typeof Scope[keyof typeof Scope];
