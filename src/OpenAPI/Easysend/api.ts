@@ -723,10 +723,10 @@ export interface EventTriggerCreateDelay {
 export interface GetPaymentIntegrations200Response {
     /**
      * 
-     * @type {PaymentIntegration}
+     * @type {Array<PaymentIntegration>}
      * @memberof GetPaymentIntegrations200Response
      */
-    'integrations'?: PaymentIntegration;
+    'integrations': Array<PaymentIntegration>;
 }
 /**
  * @type NullablePhoneNumber
@@ -1038,7 +1038,7 @@ export interface PaymentSystemsGet200Response {
      * @type {Array<PaymentSystem>}
      * @memberof PaymentSystemsGet200Response
      */
-    'data': Array<PaymentSystem>;
+    'paymentSystems': Array<PaymentSystem>;
 }
 /**
  * 
