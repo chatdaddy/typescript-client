@@ -1841,7 +1841,7 @@ export const PaymentIntegrationApiAxiosParamCreator = function (configuration?: 
         deletePaymentIntegration: async (id: Array<string>, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
             assertParamExists('deletePaymentIntegration', 'id', id)
-            const localVarPath = `/payments/{id}`
+            const localVarPath = `/payment-integrations/{id}`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -1880,7 +1880,7 @@ export const PaymentIntegrationApiAxiosParamCreator = function (configuration?: 
         patchPaymentIntegration: async (id: string, patchPaymentIntegrationRequest?: PatchPaymentIntegrationRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
             assertParamExists('patchPaymentIntegration', 'id', id)
-            const localVarPath = `/payments/{id}`
+            const localVarPath = `/payment-integrations/{id}`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
