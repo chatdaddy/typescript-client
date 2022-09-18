@@ -1869,48 +1869,6 @@ export const PaymentIntegrationApiAxiosParamCreator = function (configuration?: 
                 options: localVarRequestOptions,
             };
         },
-        /**
-         * 
-         * @summary update the user\'s payment integration
-         * @param {string} id the id of the payment integration to patch
-         * @param {PatchPaymentIntegrationRequest} [patchPaymentIntegrationRequest] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        patchPaymentIntegration: async (id: string, patchPaymentIntegrationRequest?: PatchPaymentIntegrationRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'id' is not null or undefined
-            assertParamExists('patchPaymentIntegration', 'id', id)
-            const localVarPath = `/payment-integrations/{id}`
-                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'PATCH', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication chatdaddy required
-            // oauth required
-            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["PAYMENT_INTEGRATION_WRITE"], configuration)
-
-
-    
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(patchPaymentIntegrationRequest, localVarRequestOptions, configuration)
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
     }
 };
 
@@ -1930,18 +1888,6 @@ export const PaymentIntegrationApiFp = function(configuration?: Configuration) {
          */
         async deletePaymentIntegration(id: Array<string>, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SuccessResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.deletePaymentIntegration(id, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-        /**
-         * 
-         * @summary update the user\'s payment integration
-         * @param {string} id the id of the payment integration to patch
-         * @param {PatchPaymentIntegrationRequest} [patchPaymentIntegrationRequest] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async patchPaymentIntegration(id: string, patchPaymentIntegrationRequest?: PatchPaymentIntegrationRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SuccessResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.patchPaymentIntegration(id, patchPaymentIntegrationRequest, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
     }
@@ -1964,17 +1910,6 @@ export const PaymentIntegrationApiFactory = function (configuration?: Configurat
         deletePaymentIntegration(id: Array<string>, options?: any): AxiosPromise<SuccessResponse> {
             return localVarFp.deletePaymentIntegration(id, options).then((request) => request(axios, basePath));
         },
-        /**
-         * 
-         * @summary update the user\'s payment integration
-         * @param {string} id the id of the payment integration to patch
-         * @param {PatchPaymentIntegrationRequest} [patchPaymentIntegrationRequest] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        patchPaymentIntegration(id: string, patchPaymentIntegrationRequest?: PatchPaymentIntegrationRequest, options?: any): AxiosPromise<SuccessResponse> {
-            return localVarFp.patchPaymentIntegration(id, patchPaymentIntegrationRequest, options).then((request) => request(axios, basePath));
-        },
     };
 };
 
@@ -1990,27 +1925,6 @@ export interface PaymentIntegrationApiDeletePaymentIntegrationRequest {
      * @memberof PaymentIntegrationApiDeletePaymentIntegration
      */
     readonly id: Array<string>
-}
-
-/**
- * Request parameters for patchPaymentIntegration operation in PaymentIntegrationApi.
- * @export
- * @interface PaymentIntegrationApiPatchPaymentIntegrationRequest
- */
-export interface PaymentIntegrationApiPatchPaymentIntegrationRequest {
-    /**
-     * the id of the payment integration to patch
-     * @type {string}
-     * @memberof PaymentIntegrationApiPatchPaymentIntegration
-     */
-    readonly id: string
-
-    /**
-     * 
-     * @type {PatchPaymentIntegrationRequest}
-     * @memberof PaymentIntegrationApiPatchPaymentIntegration
-     */
-    readonly patchPaymentIntegrationRequest?: PatchPaymentIntegrationRequest
 }
 
 /**
@@ -2030,18 +1944,6 @@ export class PaymentIntegrationApi extends BaseAPI {
      */
     public deletePaymentIntegration(requestParameters: PaymentIntegrationApiDeletePaymentIntegrationRequest, options?: AxiosRequestConfig) {
         return PaymentIntegrationApiFp(this.configuration).deletePaymentIntegration(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
-     * @summary update the user\'s payment integration
-     * @param {PaymentIntegrationApiPatchPaymentIntegrationRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof PaymentIntegrationApi
-     */
-    public patchPaymentIntegration(requestParameters: PaymentIntegrationApiPatchPaymentIntegrationRequest, options?: AxiosRequestConfig) {
-        return PaymentIntegrationApiFp(this.configuration).patchPaymentIntegration(requestParameters.id, requestParameters.patchPaymentIntegrationRequest, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
@@ -2139,6 +2041,48 @@ export const PaymentIntegrationsApiAxiosParamCreator = function (configuration?:
                 options: localVarRequestOptions,
             };
         },
+        /**
+         * 
+         * @summary update the user\'s payment integration
+         * @param {string} id the id of the payment integration to patch
+         * @param {PatchPaymentIntegrationRequest} [patchPaymentIntegrationRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        patchPaymentIntegration: async (id: string, patchPaymentIntegrationRequest?: PatchPaymentIntegrationRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('patchPaymentIntegration', 'id', id)
+            const localVarPath = `/payment-integrations/{id}`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PATCH', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["PAYMENT_INTEGRATION_WRITE"], configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(patchPaymentIntegrationRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
     }
 };
 
@@ -2173,6 +2117,18 @@ export const PaymentIntegrationsApiFp = function(configuration?: Configuration) 
             const localVarAxiosArgs = await localVarAxiosParamCreator.getPaymentIntegrations(id, isInstalled, isEnabled, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
+        /**
+         * 
+         * @summary update the user\'s payment integration
+         * @param {string} id the id of the payment integration to patch
+         * @param {PatchPaymentIntegrationRequest} [patchPaymentIntegrationRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async patchPaymentIntegration(id: string, patchPaymentIntegrationRequest?: PatchPaymentIntegrationRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SuccessResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.patchPaymentIntegration(id, patchPaymentIntegrationRequest, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
     }
 };
 
@@ -2204,6 +2160,17 @@ export const PaymentIntegrationsApiFactory = function (configuration?: Configura
          */
         getPaymentIntegrations(id?: string, isInstalled?: boolean, isEnabled?: boolean, options?: any): AxiosPromise<GetPaymentIntegrations200Response> {
             return localVarFp.getPaymentIntegrations(id, isInstalled, isEnabled, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary update the user\'s payment integration
+         * @param {string} id the id of the payment integration to patch
+         * @param {PatchPaymentIntegrationRequest} [patchPaymentIntegrationRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        patchPaymentIntegration(id: string, patchPaymentIntegrationRequest?: PatchPaymentIntegrationRequest, options?: any): AxiosPromise<SuccessResponse> {
+            return localVarFp.patchPaymentIntegration(id, patchPaymentIntegrationRequest, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -2251,6 +2218,27 @@ export interface PaymentIntegrationsApiGetPaymentIntegrationsRequest {
 }
 
 /**
+ * Request parameters for patchPaymentIntegration operation in PaymentIntegrationsApi.
+ * @export
+ * @interface PaymentIntegrationsApiPatchPaymentIntegrationRequest
+ */
+export interface PaymentIntegrationsApiPatchPaymentIntegrationRequest {
+    /**
+     * the id of the payment integration to patch
+     * @type {string}
+     * @memberof PaymentIntegrationsApiPatchPaymentIntegration
+     */
+    readonly id: string
+
+    /**
+     * 
+     * @type {PatchPaymentIntegrationRequest}
+     * @memberof PaymentIntegrationsApiPatchPaymentIntegration
+     */
+    readonly patchPaymentIntegrationRequest?: PatchPaymentIntegrationRequest
+}
+
+/**
  * PaymentIntegrationsApi - object-oriented interface
  * @export
  * @class PaymentIntegrationsApi
@@ -2279,6 +2267,18 @@ export class PaymentIntegrationsApi extends BaseAPI {
      */
     public getPaymentIntegrations(requestParameters: PaymentIntegrationsApiGetPaymentIntegrationsRequest = {}, options?: AxiosRequestConfig) {
         return PaymentIntegrationsApiFp(this.configuration).getPaymentIntegrations(requestParameters.id, requestParameters.isInstalled, requestParameters.isEnabled, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary update the user\'s payment integration
+     * @param {PaymentIntegrationsApiPatchPaymentIntegrationRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof PaymentIntegrationsApi
+     */
+    public patchPaymentIntegration(requestParameters: PaymentIntegrationsApiPatchPaymentIntegrationRequest, options?: AxiosRequestConfig) {
+        return PaymentIntegrationsApiFp(this.configuration).patchPaymentIntegration(requestParameters.id, requestParameters.patchPaymentIntegrationRequest, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
