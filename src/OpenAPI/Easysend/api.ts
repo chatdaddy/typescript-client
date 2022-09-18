@@ -1826,129 +1826,6 @@ export class EventsApi extends BaseAPI {
 
 
 /**
- * PaymentIntegrationApi - axios parameter creator
- * @export
- */
-export const PaymentIntegrationApiAxiosParamCreator = function (configuration?: Configuration) {
-    return {
-        /**
-         * 
-         * @summary delete the user\'s payment integration
-         * @param {Array<string>} id the ids of the payment integration to delete
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        deletePaymentIntegration: async (id: Array<string>, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'id' is not null or undefined
-            assertParamExists('deletePaymentIntegration', 'id', id)
-            const localVarPath = `/payment-integrations/{id}`
-                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication chatdaddy required
-            // oauth required
-            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["PAYMENT_INTEGRATION_WRITE"], configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-    }
-};
-
-/**
- * PaymentIntegrationApi - functional programming interface
- * @export
- */
-export const PaymentIntegrationApiFp = function(configuration?: Configuration) {
-    const localVarAxiosParamCreator = PaymentIntegrationApiAxiosParamCreator(configuration)
-    return {
-        /**
-         * 
-         * @summary delete the user\'s payment integration
-         * @param {Array<string>} id the ids of the payment integration to delete
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async deletePaymentIntegration(id: Array<string>, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SuccessResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.deletePaymentIntegration(id, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-    }
-};
-
-/**
- * PaymentIntegrationApi - factory interface
- * @export
- */
-export const PaymentIntegrationApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
-    const localVarFp = PaymentIntegrationApiFp(configuration)
-    return {
-        /**
-         * 
-         * @summary delete the user\'s payment integration
-         * @param {Array<string>} id the ids of the payment integration to delete
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        deletePaymentIntegration(id: Array<string>, options?: any): AxiosPromise<SuccessResponse> {
-            return localVarFp.deletePaymentIntegration(id, options).then((request) => request(axios, basePath));
-        },
-    };
-};
-
-/**
- * Request parameters for deletePaymentIntegration operation in PaymentIntegrationApi.
- * @export
- * @interface PaymentIntegrationApiDeletePaymentIntegrationRequest
- */
-export interface PaymentIntegrationApiDeletePaymentIntegrationRequest {
-    /**
-     * the ids of the payment integration to delete
-     * @type {Array<string>}
-     * @memberof PaymentIntegrationApiDeletePaymentIntegration
-     */
-    readonly id: Array<string>
-}
-
-/**
- * PaymentIntegrationApi - object-oriented interface
- * @export
- * @class PaymentIntegrationApi
- * @extends {BaseAPI}
- */
-export class PaymentIntegrationApi extends BaseAPI {
-    /**
-     * 
-     * @summary delete the user\'s payment integration
-     * @param {PaymentIntegrationApiDeletePaymentIntegrationRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof PaymentIntegrationApi
-     */
-    public deletePaymentIntegration(requestParameters: PaymentIntegrationApiDeletePaymentIntegrationRequest, options?: AxiosRequestConfig) {
-        return PaymentIntegrationApiFp(this.configuration).deletePaymentIntegration(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
-    }
-}
-
-
-/**
  * PaymentIntegrationsApi - axios parameter creator
  * @export
  */
@@ -1986,6 +1863,44 @@ export const PaymentIntegrationsApiAxiosParamCreator = function (configuration?:
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
             localVarRequestOptions.data = serializeDataIfNeeded(createPaymentIntegrationRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary delete the user\'s payment integration
+         * @param {Array<string>} id the ids of the payment integration to delete
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deletePaymentIntegration: async (id: Array<string>, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('deletePaymentIntegration', 'id', id)
+            const localVarPath = `/payment-integrations/{id}`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["PAYMENT_INTEGRATION_WRITE"], configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -2106,6 +2021,17 @@ export const PaymentIntegrationsApiFp = function(configuration?: Configuration) 
         },
         /**
          * 
+         * @summary delete the user\'s payment integration
+         * @param {Array<string>} id the ids of the payment integration to delete
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async deletePaymentIntegration(id: Array<string>, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SuccessResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deletePaymentIntegration(id, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
          * @summary Get all payment integrations available to a user
          * @param {string} [id] Fetch the payment integrations with the id specified
          * @param {boolean} [isInstalled] Fetch only installed integration if true
@@ -2151,6 +2077,16 @@ export const PaymentIntegrationsApiFactory = function (configuration?: Configura
         },
         /**
          * 
+         * @summary delete the user\'s payment integration
+         * @param {Array<string>} id the ids of the payment integration to delete
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deletePaymentIntegration(id: Array<string>, options?: any): AxiosPromise<SuccessResponse> {
+            return localVarFp.deletePaymentIntegration(id, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
          * @summary Get all payment integrations available to a user
          * @param {string} [id] Fetch the payment integrations with the id specified
          * @param {boolean} [isInstalled] Fetch only installed integration if true
@@ -2187,6 +2123,20 @@ export interface PaymentIntegrationsApiCreatePaymentIntegrationRequest {
      * @memberof PaymentIntegrationsApiCreatePaymentIntegration
      */
     readonly createPaymentIntegrationRequest?: CreatePaymentIntegrationRequest
+}
+
+/**
+ * Request parameters for deletePaymentIntegration operation in PaymentIntegrationsApi.
+ * @export
+ * @interface PaymentIntegrationsApiDeletePaymentIntegrationRequest
+ */
+export interface PaymentIntegrationsApiDeletePaymentIntegrationRequest {
+    /**
+     * the ids of the payment integration to delete
+     * @type {Array<string>}
+     * @memberof PaymentIntegrationsApiDeletePaymentIntegration
+     */
+    readonly id: Array<string>
 }
 
 /**
@@ -2255,6 +2205,18 @@ export class PaymentIntegrationsApi extends BaseAPI {
      */
     public createPaymentIntegration(requestParameters: PaymentIntegrationsApiCreatePaymentIntegrationRequest = {}, options?: AxiosRequestConfig) {
         return PaymentIntegrationsApiFp(this.configuration).createPaymentIntegration(requestParameters.createPaymentIntegrationRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary delete the user\'s payment integration
+     * @param {PaymentIntegrationsApiDeletePaymentIntegrationRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof PaymentIntegrationsApi
+     */
+    public deletePaymentIntegration(requestParameters: PaymentIntegrationsApiDeletePaymentIntegrationRequest, options?: AxiosRequestConfig) {
+        return PaymentIntegrationsApiFp(this.configuration).deletePaymentIntegration(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
