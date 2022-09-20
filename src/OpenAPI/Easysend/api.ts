@@ -1891,8 +1891,7 @@ export const PaymentIntegrationsApiAxiosParamCreator = function (configuration?:
         deletePaymentIntegration: async (id: Array<string>, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
             assertParamExists('deletePaymentIntegration', 'id', id)
-            const localVarPath = `/payment-integrations/{id}`
-                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            const localVarPath = `/payment-integrations`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -1907,6 +1906,10 @@ export const PaymentIntegrationsApiAxiosParamCreator = function (configuration?:
             // authentication chatdaddy required
             // oauth required
             await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["PAYMENT_INTEGRATION_WRITE"], configuration)
+
+            if (id) {
+                localVarQueryParameter['id'] = id;
+            }
 
 
     
