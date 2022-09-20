@@ -779,6 +779,18 @@ export interface PatchPaymentIntegrationRequest {
      * @memberof PatchPaymentIntegrationRequest
      */
     'dataType'?: DataType;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof PatchPaymentIntegrationRequest
+     */
+    'enabled'?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof PatchPaymentIntegrationRequest
+     */
+    'installed'?: boolean;
 }
 /**
  * 
