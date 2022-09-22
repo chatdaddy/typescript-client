@@ -309,6 +309,12 @@ export interface KeywordBasedAction {
      */
     'sendTyping'?: boolean;
     /**
+     * Toggles whether the keyword reply will trigger for group chats
+     * @type {boolean}
+     * @memberof KeywordBasedAction
+     */
+    'enableOnGroupChats'?: boolean;
+    /**
      * 
      * @type {TriggerType}
      * @memberof KeywordBasedAction
