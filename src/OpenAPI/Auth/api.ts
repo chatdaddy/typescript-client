@@ -486,6 +486,12 @@ export interface OtpPostRequest {
      * @memberof OtpPostRequest
      */
     'phoneNumber': string;
+    /**
+     * Optionally specify the OTP template type
+     * @type {string}
+     * @memberof OtpPostRequest
+     */
+    'template'?: string;
 }
 /**
  * 
