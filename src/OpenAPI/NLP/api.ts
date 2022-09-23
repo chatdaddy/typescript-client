@@ -156,6 +156,12 @@ export interface KeywordActionCreateRequestObj {
      */
     'sendTyping'?: boolean;
     /**
+     * Toggles whether the keyword reply will trigger for group chats
+     * @type {boolean}
+     * @memberof KeywordActionCreateRequestObj
+     */
+    'enableOnGroupChats'?: boolean;
+    /**
      * 
      * @type {TriggerType}
      * @memberof KeywordActionCreateRequestObj
@@ -210,6 +216,12 @@ export interface KeywordActionEditRequestObj {
      * @memberof KeywordActionEditRequestObj
      */
     'sendTyping'?: boolean;
+    /**
+     * Toggles whether the keyword reply will trigger for group chats
+     * @type {boolean}
+     * @memberof KeywordActionEditRequestObj
+     */
+    'enableOnGroupChats'?: boolean;
     /**
      * 
      * @type {TriggerType}
