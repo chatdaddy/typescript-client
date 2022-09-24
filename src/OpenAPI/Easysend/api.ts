@@ -809,7 +809,7 @@ export interface PaymentIntegration {
      * @type {boolean}
      * @memberof PaymentIntegration
      */
-    'enabled'?: boolean;
+    'enabled': boolean;
     /**
      * 
      * @type {string}
@@ -876,7 +876,7 @@ export interface PaymentRecord {
      * @type {string}
      * @memberof PaymentRecord
      */
-    'paymentSystemId': string;
+    'paymentIntegrationId': string;
     /**
      * 
      * @type {string}
@@ -901,6 +901,12 @@ export interface PaymentRecord {
      * @memberof PaymentRecord
      */
     'status': PaymentRecordStatusEnum;
+    /**
+     * 
+     * @type {string}
+     * @memberof PaymentRecord
+     */
+    'messageId': string;
 }
 
 export const PaymentRecordStatusEnum = {
@@ -922,7 +928,7 @@ export interface PaymentRecordPostRequest {
      * @type {string}
      * @memberof PaymentRecordPostRequest
      */
-    'integrationId'?: string;
+    'paymentIntegrationId': string;
     /**
      * 
      * @type {string}
@@ -959,6 +965,12 @@ export interface PaymentRecordPostRequest {
      * @memberof PaymentRecordPostRequest
      */
     'messageId'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof PaymentRecordPostRequest
+     */
+    'orderId'?: string;
 }
 
 export const PaymentRecordPostRequestStatusEnum = {
@@ -1926,12 +1938,11 @@ export const PaymentIntegrationsApiAxiosParamCreator = function (configuration?:
          * 
          * @summary Get all payment integrations available to a user
          * @param {string} [id] Fetch the payment integrations with the id specified
-         * @param {boolean} [isInstalled] Fetch only installed integration if true
          * @param {boolean} [isEnabled] Fetch only enabled integrations if true
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getPaymentIntegrations: async (id?: string, isInstalled?: boolean, isEnabled?: boolean, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getPaymentIntegrations: async (id?: string, isEnabled?: boolean, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/payment-integrations`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -1950,10 +1961,6 @@ export const PaymentIntegrationsApiAxiosParamCreator = function (configuration?:
 
             if (id !== undefined) {
                 localVarQueryParameter['id'] = id;
-            }
-
-            if (isInstalled !== undefined) {
-                localVarQueryParameter['isInstalled'] = isInstalled;
             }
 
             if (isEnabled !== undefined) {
@@ -2049,13 +2056,12 @@ export const PaymentIntegrationsApiFp = function(configuration?: Configuration) 
          * 
          * @summary Get all payment integrations available to a user
          * @param {string} [id] Fetch the payment integrations with the id specified
-         * @param {boolean} [isInstalled] Fetch only installed integration if true
          * @param {boolean} [isEnabled] Fetch only enabled integrations if true
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getPaymentIntegrations(id?: string, isInstalled?: boolean, isEnabled?: boolean, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetPaymentIntegrations200Response>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getPaymentIntegrations(id, isInstalled, isEnabled, options);
+        async getPaymentIntegrations(id?: string, isEnabled?: boolean, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetPaymentIntegrations200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getPaymentIntegrations(id, isEnabled, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -2104,13 +2110,12 @@ export const PaymentIntegrationsApiFactory = function (configuration?: Configura
          * 
          * @summary Get all payment integrations available to a user
          * @param {string} [id] Fetch the payment integrations with the id specified
-         * @param {boolean} [isInstalled] Fetch only installed integration if true
          * @param {boolean} [isEnabled] Fetch only enabled integrations if true
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getPaymentIntegrations(id?: string, isInstalled?: boolean, isEnabled?: boolean, options?: any): AxiosPromise<GetPaymentIntegrations200Response> {
-            return localVarFp.getPaymentIntegrations(id, isInstalled, isEnabled, options).then((request) => request(axios, basePath));
+        getPaymentIntegrations(id?: string, isEnabled?: boolean, options?: any): AxiosPromise<GetPaymentIntegrations200Response> {
+            return localVarFp.getPaymentIntegrations(id, isEnabled, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -2166,13 +2171,6 @@ export interface PaymentIntegrationsApiGetPaymentIntegrationsRequest {
      * @memberof PaymentIntegrationsApiGetPaymentIntegrations
      */
     readonly id?: string
-
-    /**
-     * Fetch only installed integration if true
-     * @type {boolean}
-     * @memberof PaymentIntegrationsApiGetPaymentIntegrations
-     */
-    readonly isInstalled?: boolean
 
     /**
      * Fetch only enabled integrations if true
@@ -2243,7 +2241,7 @@ export class PaymentIntegrationsApi extends BaseAPI {
      * @memberof PaymentIntegrationsApi
      */
     public getPaymentIntegrations(requestParameters: PaymentIntegrationsApiGetPaymentIntegrationsRequest = {}, options?: AxiosRequestConfig) {
-        return PaymentIntegrationsApiFp(this.configuration).getPaymentIntegrations(requestParameters.id, requestParameters.isInstalled, requestParameters.isEnabled, options).then((request) => request(this.axios, this.basePath));
+        return PaymentIntegrationsApiFp(this.configuration).getPaymentIntegrations(requestParameters.id, requestParameters.isEnabled, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -2308,16 +2306,13 @@ export const PaymentRecordsApiAxiosParamCreator = function (configuration?: Conf
          * @param {number} [pageSize] Number of items to retreive
          * @param {string} [cursor] Cursor to retreive items. It is the ID before which you want to retrieve the orders
          * @param {Array<string>} [ids] Fetch payment records of specified transaction ids
-         * @param {Array<string>} [integrationId] Fetch payment records of specified integration ids
-         * @param {string} [paymentSystemId] Fetch payment records of specified category
-         * @param {string} [beforeDate] Fetch payment records before this data
-         * @param {string} [afterDate] Fetch payment records after this data
+         * @param {Array<string>} [paymentIntegrationId] Fetch payment records of specified integration ids
          * @param {string} [orderId] Fetch payment records by orderId
          * @param {'completed' | 'pending' | 'cancelled'} [status] Fetch payment records with status
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        paymentRecordsGet: async (pageSize?: number, cursor?: string, ids?: Array<string>, integrationId?: Array<string>, paymentSystemId?: string, beforeDate?: string, afterDate?: string, orderId?: string, status?: 'completed' | 'pending' | 'cancelled', options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        paymentRecordsGet: async (pageSize?: number, cursor?: string, ids?: Array<string>, paymentIntegrationId?: Array<string>, orderId?: string, status?: 'completed' | 'pending' | 'cancelled', options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/payment-records`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -2346,24 +2341,8 @@ export const PaymentRecordsApiAxiosParamCreator = function (configuration?: Conf
                 localVarQueryParameter['ids'] = ids;
             }
 
-            if (integrationId) {
-                localVarQueryParameter['integrationId'] = integrationId;
-            }
-
-            if (paymentSystemId !== undefined) {
-                localVarQueryParameter['paymentSystemId'] = paymentSystemId;
-            }
-
-            if (beforeDate !== undefined) {
-                localVarQueryParameter['beforeDate'] = (beforeDate as any instanceof Date) ?
-                    (beforeDate as any).toISOString() :
-                    beforeDate;
-            }
-
-            if (afterDate !== undefined) {
-                localVarQueryParameter['afterDate'] = (afterDate as any instanceof Date) ?
-                    (afterDate as any).toISOString() :
-                    afterDate;
+            if (paymentIntegrationId) {
+                localVarQueryParameter['paymentIntegrationId'] = paymentIntegrationId;
             }
 
             if (orderId !== undefined) {
@@ -2410,17 +2389,14 @@ export const PaymentRecordsApiFp = function(configuration?: Configuration) {
          * @param {number} [pageSize] Number of items to retreive
          * @param {string} [cursor] Cursor to retreive items. It is the ID before which you want to retrieve the orders
          * @param {Array<string>} [ids] Fetch payment records of specified transaction ids
-         * @param {Array<string>} [integrationId] Fetch payment records of specified integration ids
-         * @param {string} [paymentSystemId] Fetch payment records of specified category
-         * @param {string} [beforeDate] Fetch payment records before this data
-         * @param {string} [afterDate] Fetch payment records after this data
+         * @param {Array<string>} [paymentIntegrationId] Fetch payment records of specified integration ids
          * @param {string} [orderId] Fetch payment records by orderId
          * @param {'completed' | 'pending' | 'cancelled'} [status] Fetch payment records with status
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async paymentRecordsGet(pageSize?: number, cursor?: string, ids?: Array<string>, integrationId?: Array<string>, paymentSystemId?: string, beforeDate?: string, afterDate?: string, orderId?: string, status?: 'completed' | 'pending' | 'cancelled', options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PaymentRecordsGet200Response>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.paymentRecordsGet(pageSize, cursor, ids, integrationId, paymentSystemId, beforeDate, afterDate, orderId, status, options);
+        async paymentRecordsGet(pageSize?: number, cursor?: string, ids?: Array<string>, paymentIntegrationId?: Array<string>, orderId?: string, status?: 'completed' | 'pending' | 'cancelled', options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PaymentRecordsGet200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.paymentRecordsGet(pageSize, cursor, ids, paymentIntegrationId, orderId, status, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
     }
@@ -2447,17 +2423,14 @@ export const PaymentRecordsApiFactory = function (configuration?: Configuration,
          * @param {number} [pageSize] Number of items to retreive
          * @param {string} [cursor] Cursor to retreive items. It is the ID before which you want to retrieve the orders
          * @param {Array<string>} [ids] Fetch payment records of specified transaction ids
-         * @param {Array<string>} [integrationId] Fetch payment records of specified integration ids
-         * @param {string} [paymentSystemId] Fetch payment records of specified category
-         * @param {string} [beforeDate] Fetch payment records before this data
-         * @param {string} [afterDate] Fetch payment records after this data
+         * @param {Array<string>} [paymentIntegrationId] Fetch payment records of specified integration ids
          * @param {string} [orderId] Fetch payment records by orderId
          * @param {'completed' | 'pending' | 'cancelled'} [status] Fetch payment records with status
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        paymentRecordsGet(pageSize?: number, cursor?: string, ids?: Array<string>, integrationId?: Array<string>, paymentSystemId?: string, beforeDate?: string, afterDate?: string, orderId?: string, status?: 'completed' | 'pending' | 'cancelled', options?: any): AxiosPromise<PaymentRecordsGet200Response> {
-            return localVarFp.paymentRecordsGet(pageSize, cursor, ids, integrationId, paymentSystemId, beforeDate, afterDate, orderId, status, options).then((request) => request(axios, basePath));
+        paymentRecordsGet(pageSize?: number, cursor?: string, ids?: Array<string>, paymentIntegrationId?: Array<string>, orderId?: string, status?: 'completed' | 'pending' | 'cancelled', options?: any): AxiosPromise<PaymentRecordsGet200Response> {
+            return localVarFp.paymentRecordsGet(pageSize, cursor, ids, paymentIntegrationId, orderId, status, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -2508,28 +2481,7 @@ export interface PaymentRecordsApiPaymentRecordsGetRequest {
      * @type {Array<string>}
      * @memberof PaymentRecordsApiPaymentRecordsGet
      */
-    readonly integrationId?: Array<string>
-
-    /**
-     * Fetch payment records of specified category
-     * @type {string}
-     * @memberof PaymentRecordsApiPaymentRecordsGet
-     */
-    readonly paymentSystemId?: string
-
-    /**
-     * Fetch payment records before this data
-     * @type {string}
-     * @memberof PaymentRecordsApiPaymentRecordsGet
-     */
-    readonly beforeDate?: string
-
-    /**
-     * Fetch payment records after this data
-     * @type {string}
-     * @memberof PaymentRecordsApiPaymentRecordsGet
-     */
-    readonly afterDate?: string
+    readonly paymentIntegrationId?: Array<string>
 
     /**
      * Fetch payment records by orderId
@@ -2572,7 +2524,7 @@ export class PaymentRecordsApi extends BaseAPI {
      * @memberof PaymentRecordsApi
      */
     public paymentRecordsGet(requestParameters: PaymentRecordsApiPaymentRecordsGetRequest = {}, options?: AxiosRequestConfig) {
-        return PaymentRecordsApiFp(this.configuration).paymentRecordsGet(requestParameters.pageSize, requestParameters.cursor, requestParameters.ids, requestParameters.integrationId, requestParameters.paymentSystemId, requestParameters.beforeDate, requestParameters.afterDate, requestParameters.orderId, requestParameters.status, options).then((request) => request(this.axios, this.basePath));
+        return PaymentRecordsApiFp(this.configuration).paymentRecordsGet(requestParameters.pageSize, requestParameters.cursor, requestParameters.ids, requestParameters.paymentIntegrationId, requestParameters.orderId, requestParameters.status, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
@@ -2587,13 +2539,10 @@ export const PaymentSystemsApiAxiosParamCreator = function (configuration?: Conf
          * 
          * @summary Get available payment systems
          * @param {string} [country] Fetch Payment Systems from a particular country
-         * @param {string} [q] Fetch the payment integrations matching string
-         * @param {boolean} [isInstalled] Fetch only installed integration if true
-         * @param {boolean} [isEnabled] Fetch only enabled integrations if true
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        paymentSystemsGet: async (country?: string, q?: string, isInstalled?: boolean, isEnabled?: boolean, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        paymentSystemsGet: async (country?: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/payment-systems`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -2612,18 +2561,6 @@ export const PaymentSystemsApiAxiosParamCreator = function (configuration?: Conf
 
             if (country !== undefined) {
                 localVarQueryParameter['country'] = country;
-            }
-
-            if (q !== undefined) {
-                localVarQueryParameter['q'] = q;
-            }
-
-            if (isInstalled !== undefined) {
-                localVarQueryParameter['isInstalled'] = isInstalled;
-            }
-
-            if (isEnabled !== undefined) {
-                localVarQueryParameter['isEnabled'] = isEnabled;
             }
 
 
@@ -2651,14 +2588,11 @@ export const PaymentSystemsApiFp = function(configuration?: Configuration) {
          * 
          * @summary Get available payment systems
          * @param {string} [country] Fetch Payment Systems from a particular country
-         * @param {string} [q] Fetch the payment integrations matching string
-         * @param {boolean} [isInstalled] Fetch only installed integration if true
-         * @param {boolean} [isEnabled] Fetch only enabled integrations if true
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async paymentSystemsGet(country?: string, q?: string, isInstalled?: boolean, isEnabled?: boolean, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PaymentSystemsGet200Response>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.paymentSystemsGet(country, q, isInstalled, isEnabled, options);
+        async paymentSystemsGet(country?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PaymentSystemsGet200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.paymentSystemsGet(country, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
     }
@@ -2675,14 +2609,11 @@ export const PaymentSystemsApiFactory = function (configuration?: Configuration,
          * 
          * @summary Get available payment systems
          * @param {string} [country] Fetch Payment Systems from a particular country
-         * @param {string} [q] Fetch the payment integrations matching string
-         * @param {boolean} [isInstalled] Fetch only installed integration if true
-         * @param {boolean} [isEnabled] Fetch only enabled integrations if true
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        paymentSystemsGet(country?: string, q?: string, isInstalled?: boolean, isEnabled?: boolean, options?: any): AxiosPromise<PaymentSystemsGet200Response> {
-            return localVarFp.paymentSystemsGet(country, q, isInstalled, isEnabled, options).then((request) => request(axios, basePath));
+        paymentSystemsGet(country?: string, options?: any): AxiosPromise<PaymentSystemsGet200Response> {
+            return localVarFp.paymentSystemsGet(country, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -2699,27 +2630,6 @@ export interface PaymentSystemsApiPaymentSystemsGetRequest {
      * @memberof PaymentSystemsApiPaymentSystemsGet
      */
     readonly country?: string
-
-    /**
-     * Fetch the payment integrations matching string
-     * @type {string}
-     * @memberof PaymentSystemsApiPaymentSystemsGet
-     */
-    readonly q?: string
-
-    /**
-     * Fetch only installed integration if true
-     * @type {boolean}
-     * @memberof PaymentSystemsApiPaymentSystemsGet
-     */
-    readonly isInstalled?: boolean
-
-    /**
-     * Fetch only enabled integrations if true
-     * @type {boolean}
-     * @memberof PaymentSystemsApiPaymentSystemsGet
-     */
-    readonly isEnabled?: boolean
 }
 
 /**
@@ -2738,7 +2648,7 @@ export class PaymentSystemsApi extends BaseAPI {
      * @memberof PaymentSystemsApi
      */
     public paymentSystemsGet(requestParameters: PaymentSystemsApiPaymentSystemsGetRequest = {}, options?: AxiosRequestConfig) {
-        return PaymentSystemsApiFp(this.configuration).paymentSystemsGet(requestParameters.country, requestParameters.q, requestParameters.isInstalled, requestParameters.isEnabled, options).then((request) => request(this.axios, this.basePath));
+        return PaymentSystemsApiFp(this.configuration).paymentSystemsGet(requestParameters.country, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
