@@ -726,5 +726,12 @@
     "features": [],
     "roles": [],
     "group": "Payment Records"
+  },
+  "METRICS_GET": {
+    "number": 90,
+    "description": "View aggregate metrics about your team",
+    "features": [],
+    "roles": [],
+    "group": "Dashboard & Metrics"
   }
 }

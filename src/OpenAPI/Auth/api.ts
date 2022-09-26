@@ -721,7 +721,8 @@ export const Scope = {
     PaymentIntegrationRead: 'PAYMENT_INTEGRATION_READ',
     PaymentIntegrationWrite: 'PAYMENT_INTEGRATION_WRITE',
     PaymentRecordsRead: 'PAYMENT_RECORDS_READ',
-    PaymentRecordsWrite: 'PAYMENT_RECORDS_WRITE'
+    PaymentRecordsWrite: 'PAYMENT_RECORDS_WRITE',
+    MetricsGet: 'METRICS_GET'
 } as const;
 
 export type Scope = typeof Scope[keyof typeof Scope];
