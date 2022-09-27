@@ -849,10 +849,10 @@ export interface PaymentIntegration {
 export interface PaymentRecord {
     /**
      * 
-     * @type {string}
+     * @type {number}
      * @memberof PaymentRecord
      */
-    'id': string;
+    'id': number;
     /**
      * An ISO formatted timestamp
      * @type {string}
@@ -989,10 +989,10 @@ export type PaymentRecordPostRequestStatusEnum = typeof PaymentRecordPostRequest
 export interface PaymentRecordsGet200Response {
     /**
      * 
-     * @type {string}
+     * @type {number}
      * @memberof PaymentRecordsGet200Response
      */
-    'nextPageCursor'?: string;
+    'nextPageCursor'?: number;
     /**
      * 
      * @type {Array<PaymentRecord>}
@@ -2305,14 +2305,14 @@ export const PaymentRecordsApiAxiosParamCreator = function (configuration?: Conf
          * 
          * @param {number} [pageSize] Number of items to retreive
          * @param {string} [cursor] Cursor to retreive items. It is the ID before which you want to retrieve the orders
-         * @param {Array<string>} [ids] Fetch payment records of specified transaction ids
+         * @param {Array<number>} [ids] Fetch payment records of specified transaction ids
          * @param {Array<string>} [paymentIntegrationId] Fetch payment records of specified integration ids
          * @param {string} [orderId] Fetch payment records by orderId
          * @param {'completed' | 'pending' | 'cancelled'} [status] Fetch payment records with status
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        paymentRecordsGet: async (pageSize?: number, cursor?: string, ids?: Array<string>, paymentIntegrationId?: Array<string>, orderId?: string, status?: 'completed' | 'pending' | 'cancelled', options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        paymentRecordsGet: async (pageSize?: number, cursor?: string, ids?: Array<number>, paymentIntegrationId?: Array<string>, orderId?: string, status?: 'completed' | 'pending' | 'cancelled', options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/payment-records`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -2388,14 +2388,14 @@ export const PaymentRecordsApiFp = function(configuration?: Configuration) {
          * 
          * @param {number} [pageSize] Number of items to retreive
          * @param {string} [cursor] Cursor to retreive items. It is the ID before which you want to retrieve the orders
-         * @param {Array<string>} [ids] Fetch payment records of specified transaction ids
+         * @param {Array<number>} [ids] Fetch payment records of specified transaction ids
          * @param {Array<string>} [paymentIntegrationId] Fetch payment records of specified integration ids
          * @param {string} [orderId] Fetch payment records by orderId
          * @param {'completed' | 'pending' | 'cancelled'} [status] Fetch payment records with status
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async paymentRecordsGet(pageSize?: number, cursor?: string, ids?: Array<string>, paymentIntegrationId?: Array<string>, orderId?: string, status?: 'completed' | 'pending' | 'cancelled', options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PaymentRecordsGet200Response>> {
+        async paymentRecordsGet(pageSize?: number, cursor?: string, ids?: Array<number>, paymentIntegrationId?: Array<string>, orderId?: string, status?: 'completed' | 'pending' | 'cancelled', options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PaymentRecordsGet200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.paymentRecordsGet(pageSize, cursor, ids, paymentIntegrationId, orderId, status, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -2422,14 +2422,14 @@ export const PaymentRecordsApiFactory = function (configuration?: Configuration,
          * 
          * @param {number} [pageSize] Number of items to retreive
          * @param {string} [cursor] Cursor to retreive items. It is the ID before which you want to retrieve the orders
-         * @param {Array<string>} [ids] Fetch payment records of specified transaction ids
+         * @param {Array<number>} [ids] Fetch payment records of specified transaction ids
          * @param {Array<string>} [paymentIntegrationId] Fetch payment records of specified integration ids
          * @param {string} [orderId] Fetch payment records by orderId
          * @param {'completed' | 'pending' | 'cancelled'} [status] Fetch payment records with status
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        paymentRecordsGet(pageSize?: number, cursor?: string, ids?: Array<string>, paymentIntegrationId?: Array<string>, orderId?: string, status?: 'completed' | 'pending' | 'cancelled', options?: any): AxiosPromise<PaymentRecordsGet200Response> {
+        paymentRecordsGet(pageSize?: number, cursor?: string, ids?: Array<number>, paymentIntegrationId?: Array<string>, orderId?: string, status?: 'completed' | 'pending' | 'cancelled', options?: any): AxiosPromise<PaymentRecordsGet200Response> {
             return localVarFp.paymentRecordsGet(pageSize, cursor, ids, paymentIntegrationId, orderId, status, options).then((request) => request(axios, basePath));
         },
     };
@@ -2471,10 +2471,10 @@ export interface PaymentRecordsApiPaymentRecordsGetRequest {
 
     /**
      * Fetch payment records of specified transaction ids
-     * @type {Array<string>}
+     * @type {Array<number>}
      * @memberof PaymentRecordsApiPaymentRecordsGet
      */
-    readonly ids?: Array<string>
+    readonly ids?: Array<number>
 
     /**
      * Fetch payment records of specified integration ids
