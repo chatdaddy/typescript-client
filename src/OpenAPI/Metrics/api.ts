@@ -30,7 +30,6 @@ import { COLLECTION_FORMATS, RequestArgs, BaseAPI, RequiredError } from '../base
  */
 
 export const Aggregate = {
-    Hour: 'hour',
     Day: 'day',
     Week: 'week',
     Month: 'month'
@@ -39,6 +38,19 @@ export const Aggregate = {
 export type Aggregate = typeof Aggregate[keyof typeof Aggregate];
 
 
+/**
+ * 
+ * @export
+ * @interface GetHomeMetrics200Response
+ */
+export interface GetHomeMetrics200Response {
+    /**
+     * 
+     * @type {Array<MetricsResult>}
+     * @memberof GetHomeMetrics200Response
+     */
+    'metrics': Array<MetricsResult>;
+}
 /**
  * 
  * @export
@@ -113,11 +125,15 @@ export interface Metric {
 
 export const MetricType = {
     MessagesSentByUser: 'messages-sent-by-user',
-    AvgResponseTimeByUser: 'avg-response-time-by-user',
-    TasksSolvedByUser: 'tasks-solved-by-user',
-    TasksAddedByUser: 'tasks-added-by-user',
-    TasksAddedByChat: 'tasks-added-by-chat',
     MessagesRecvByChat: 'messages-recv-by-chat',
+    AvgResponseTimeByUser: 'avg-response-time-by-user',
+    MessageReplyRateByUser: 'message-reply-rate-by-user',
+    TasksAddedByUser: 'tasks-added-by-user',
+    TasksSolvedByUser: 'tasks-solved-by-user',
+    TasksAddedByChat: 'tasks-added-by-chat',
+    ContactsTaggedByTag: 'contacts-tagged-by-tag',
+    MessageFlowsSentByFlowId: 'message-flows-sent-by-flow-id',
+    MessageFlowClickRateByFlowId: 'message-flow-click-rate-by-flow-id',
     PaymentRecvByPhone: 'payment-recv-by-phone',
     OrdersRecvByPhone: 'orders-recv-by-phone',
     NewChats: 'new-chats'
@@ -126,6 +142,25 @@ export const MetricType = {
 export type MetricType = typeof MetricType[keyof typeof MetricType];
 
 
+/**
+ * 
+ * @export
+ * @interface MetricsResult
+ */
+export interface MetricsResult {
+    /**
+     * 
+     * @type {Array<Metric>}
+     * @memberof MetricsResult
+     */
+    'metrics': Array<Metric>;
+    /**
+     * 
+     * @type {MetricType}
+     * @memberof MetricsResult
+     */
+    'type': MetricType;
+}
 /**
  * 
  * @export
@@ -152,6 +187,49 @@ export interface TopMetricKey {
  */
 export const MetricsApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
+        /**
+         * Will return: - 30 results for the \"day\" aggregate - 12 results for the \"week\" aggregate - 6 results for the \"month\" aggregate 
+         * @summary Get all metrics for the home page
+         * @param {Aggregate} aggregate Aggregate function to use
+         * @param {string} [timezoneOffset] Timezone offset to query the data in
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getHomeMetrics: async (aggregate: Aggregate, timezoneOffset?: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'aggregate' is not null or undefined
+            assertParamExists('getHomeMetrics', 'aggregate', aggregate)
+            const localVarPath = `/metrics/home/{aggregate}`
+                .replace(`{${"aggregate"}}`, encodeURIComponent(String(aggregate)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["METRICS_GET"], configuration)
+
+            if (timezoneOffset !== undefined) {
+                localVarQueryParameter['timezoneOffset'] = timezoneOffset;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
         /**
          * 
          * @summary Query a given metric
@@ -299,6 +377,18 @@ export const MetricsApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = MetricsApiAxiosParamCreator(configuration)
     return {
         /**
+         * Will return: - 30 results for the \"day\" aggregate - 12 results for the \"week\" aggregate - 6 results for the \"month\" aggregate 
+         * @summary Get all metrics for the home page
+         * @param {Aggregate} aggregate Aggregate function to use
+         * @param {string} [timezoneOffset] Timezone offset to query the data in
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getHomeMetrics(aggregate: Aggregate, timezoneOffset?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetHomeMetrics200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getHomeMetrics(aggregate, timezoneOffset, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
          * 
          * @summary Query a given metric
          * @param {MetricType} metric 
@@ -343,6 +433,17 @@ export const MetricsApiFactory = function (configuration?: Configuration, basePa
     const localVarFp = MetricsApiFp(configuration)
     return {
         /**
+         * Will return: - 30 results for the \"day\" aggregate - 12 results for the \"week\" aggregate - 6 results for the \"month\" aggregate 
+         * @summary Get all metrics for the home page
+         * @param {Aggregate} aggregate Aggregate function to use
+         * @param {string} [timezoneOffset] Timezone offset to query the data in
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getHomeMetrics(aggregate: Aggregate, timezoneOffset?: string, options?: any): AxiosPromise<GetHomeMetrics200Response> {
+            return localVarFp.getHomeMetrics(aggregate, timezoneOffset, options).then((request) => request(axios, basePath));
+        },
+        /**
          * 
          * @summary Query a given metric
          * @param {MetricType} metric 
@@ -376,6 +477,27 @@ export const MetricsApiFactory = function (configuration?: Configuration, basePa
         },
     };
 };
+
+/**
+ * Request parameters for getHomeMetrics operation in MetricsApi.
+ * @export
+ * @interface MetricsApiGetHomeMetricsRequest
+ */
+export interface MetricsApiGetHomeMetricsRequest {
+    /**
+     * Aggregate function to use
+     * @type {Aggregate}
+     * @memberof MetricsApiGetHomeMetrics
+     */
+    readonly aggregate: Aggregate
+
+    /**
+     * Timezone offset to query the data in
+     * @type {string}
+     * @memberof MetricsApiGetHomeMetrics
+     */
+    readonly timezoneOffset?: string
+}
 
 /**
  * Request parameters for getMetrics operation in MetricsApi.
@@ -496,6 +618,18 @@ export interface MetricsApiGetTopMetricKeysRequest {
  * @extends {BaseAPI}
  */
 export class MetricsApi extends BaseAPI {
+    /**
+     * Will return: - 30 results for the \"day\" aggregate - 12 results for the \"week\" aggregate - 6 results for the \"month\" aggregate 
+     * @summary Get all metrics for the home page
+     * @param {MetricsApiGetHomeMetricsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof MetricsApi
+     */
+    public getHomeMetrics(requestParameters: MetricsApiGetHomeMetricsRequest, options?: AxiosRequestConfig) {
+        return MetricsApiFp(this.configuration).getHomeMetrics(requestParameters.aggregate, requestParameters.timezoneOffset, options).then((request) => request(this.axios, this.basePath));
+    }
+
     /**
      * 
      * @summary Query a given metric
