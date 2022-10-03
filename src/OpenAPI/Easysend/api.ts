@@ -1032,10 +1032,10 @@ export interface PaymentSystem {
     'dataType': DataType;
     /**
      * 
-     * @type {PaymentIntegration}
+     * @type {Array<PaymentIntegration>}
      * @memberof PaymentSystem
      */
-    'currentIntegration'?: PaymentIntegration;
+    'currentIntegrations'?: Array<PaymentIntegration> | null;
     /**
      * 
      * @type {string}
@@ -2539,10 +2539,11 @@ export const PaymentSystemsApiAxiosParamCreator = function (configuration?: Conf
          * 
          * @summary Get available payment systems
          * @param {string} [country] Fetch Payment Systems from a particular country
+         * @param {string} [q] Fetch Payment Systems by query
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        paymentSystemsGet: async (country?: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        paymentSystemsGet: async (country?: string, q?: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/payment-systems`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -2561,6 +2562,10 @@ export const PaymentSystemsApiAxiosParamCreator = function (configuration?: Conf
 
             if (country !== undefined) {
                 localVarQueryParameter['country'] = country;
+            }
+
+            if (q !== undefined) {
+                localVarQueryParameter['q'] = q;
             }
 
 
@@ -2588,11 +2593,12 @@ export const PaymentSystemsApiFp = function(configuration?: Configuration) {
          * 
          * @summary Get available payment systems
          * @param {string} [country] Fetch Payment Systems from a particular country
+         * @param {string} [q] Fetch Payment Systems by query
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async paymentSystemsGet(country?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PaymentSystemsGet200Response>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.paymentSystemsGet(country, options);
+        async paymentSystemsGet(country?: string, q?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PaymentSystemsGet200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.paymentSystemsGet(country, q, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
     }
@@ -2609,11 +2615,12 @@ export const PaymentSystemsApiFactory = function (configuration?: Configuration,
          * 
          * @summary Get available payment systems
          * @param {string} [country] Fetch Payment Systems from a particular country
+         * @param {string} [q] Fetch Payment Systems by query
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        paymentSystemsGet(country?: string, options?: any): AxiosPromise<PaymentSystemsGet200Response> {
-            return localVarFp.paymentSystemsGet(country, options).then((request) => request(axios, basePath));
+        paymentSystemsGet(country?: string, q?: string, options?: any): AxiosPromise<PaymentSystemsGet200Response> {
+            return localVarFp.paymentSystemsGet(country, q, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -2630,6 +2637,13 @@ export interface PaymentSystemsApiPaymentSystemsGetRequest {
      * @memberof PaymentSystemsApiPaymentSystemsGet
      */
     readonly country?: string
+
+    /**
+     * Fetch Payment Systems by query
+     * @type {string}
+     * @memberof PaymentSystemsApiPaymentSystemsGet
+     */
+    readonly q?: string
 }
 
 /**
@@ -2648,7 +2662,7 @@ export class PaymentSystemsApi extends BaseAPI {
      * @memberof PaymentSystemsApi
      */
     public paymentSystemsGet(requestParameters: PaymentSystemsApiPaymentSystemsGetRequest = {}, options?: AxiosRequestConfig) {
-        return PaymentSystemsApiFp(this.configuration).paymentSystemsGet(requestParameters.country, options).then((request) => request(this.axios, this.basePath));
+        return PaymentSystemsApiFp(this.configuration).paymentSystemsGet(requestParameters.country, requestParameters.q, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
