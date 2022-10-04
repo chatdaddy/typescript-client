@@ -156,6 +156,12 @@ export interface MetricsResult {
     'metrics': Array<Metric>;
     /**
      * 
+     * @type {Array<Metric>}
+     * @memberof MetricsResult
+     */
+    'previousMetrics'?: Array<Metric>;
+    /**
+     * 
      * @type {MetricType}
      * @memberof MetricsResult
      */
@@ -191,11 +197,13 @@ export const MetricsApiAxiosParamCreator = function (configuration?: Configurati
          * Will return: - 30 results for the \"day\" aggregate - 12 results for the \"week\" aggregate - 6 results for the \"month\" aggregate 
          * @summary Get all metrics for the home page
          * @param {Aggregate} aggregate Aggregate function to use
+         * @param {number} [page] 
+         * @param {boolean} [includePreviousPeriod] 
          * @param {string} [timezoneOffset] Timezone offset to query the data in
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getHomeMetrics: async (aggregate: Aggregate, timezoneOffset?: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getHomeMetrics: async (aggregate: Aggregate, page?: number, includePreviousPeriod?: boolean, timezoneOffset?: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'aggregate' is not null or undefined
             assertParamExists('getHomeMetrics', 'aggregate', aggregate)
             const localVarPath = `/metrics/home/{aggregate}`
@@ -214,6 +222,14 @@ export const MetricsApiAxiosParamCreator = function (configuration?: Configurati
             // authentication chatdaddy required
             // oauth required
             await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["METRICS_GET"], configuration)
+
+            if (page !== undefined) {
+                localVarQueryParameter['page'] = page;
+            }
+
+            if (includePreviousPeriod !== undefined) {
+                localVarQueryParameter['includePreviousPeriod'] = includePreviousPeriod;
+            }
 
             if (timezoneOffset !== undefined) {
                 localVarQueryParameter['timezoneOffset'] = timezoneOffset;
@@ -380,12 +396,14 @@ export const MetricsApiFp = function(configuration?: Configuration) {
          * Will return: - 30 results for the \"day\" aggregate - 12 results for the \"week\" aggregate - 6 results for the \"month\" aggregate 
          * @summary Get all metrics for the home page
          * @param {Aggregate} aggregate Aggregate function to use
+         * @param {number} [page] 
+         * @param {boolean} [includePreviousPeriod] 
          * @param {string} [timezoneOffset] Timezone offset to query the data in
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getHomeMetrics(aggregate: Aggregate, timezoneOffset?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetHomeMetrics200Response>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getHomeMetrics(aggregate, timezoneOffset, options);
+        async getHomeMetrics(aggregate: Aggregate, page?: number, includePreviousPeriod?: boolean, timezoneOffset?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetHomeMetrics200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getHomeMetrics(aggregate, page, includePreviousPeriod, timezoneOffset, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -436,12 +454,14 @@ export const MetricsApiFactory = function (configuration?: Configuration, basePa
          * Will return: - 30 results for the \"day\" aggregate - 12 results for the \"week\" aggregate - 6 results for the \"month\" aggregate 
          * @summary Get all metrics for the home page
          * @param {Aggregate} aggregate Aggregate function to use
+         * @param {number} [page] 
+         * @param {boolean} [includePreviousPeriod] 
          * @param {string} [timezoneOffset] Timezone offset to query the data in
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getHomeMetrics(aggregate: Aggregate, timezoneOffset?: string, options?: any): AxiosPromise<GetHomeMetrics200Response> {
-            return localVarFp.getHomeMetrics(aggregate, timezoneOffset, options).then((request) => request(axios, basePath));
+        getHomeMetrics(aggregate: Aggregate, page?: number, includePreviousPeriod?: boolean, timezoneOffset?: string, options?: any): AxiosPromise<GetHomeMetrics200Response> {
+            return localVarFp.getHomeMetrics(aggregate, page, includePreviousPeriod, timezoneOffset, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -490,6 +510,20 @@ export interface MetricsApiGetHomeMetricsRequest {
      * @memberof MetricsApiGetHomeMetrics
      */
     readonly aggregate: Aggregate
+
+    /**
+     * 
+     * @type {number}
+     * @memberof MetricsApiGetHomeMetrics
+     */
+    readonly page?: number
+
+    /**
+     * 
+     * @type {boolean}
+     * @memberof MetricsApiGetHomeMetrics
+     */
+    readonly includePreviousPeriod?: boolean
 
     /**
      * Timezone offset to query the data in
@@ -627,7 +661,7 @@ export class MetricsApi extends BaseAPI {
      * @memberof MetricsApi
      */
     public getHomeMetrics(requestParameters: MetricsApiGetHomeMetricsRequest, options?: AxiosRequestConfig) {
-        return MetricsApiFp(this.configuration).getHomeMetrics(requestParameters.aggregate, requestParameters.timezoneOffset, options).then((request) => request(this.axios, this.basePath));
+        return MetricsApiFp(this.configuration).getHomeMetrics(requestParameters.aggregate, requestParameters.page, requestParameters.includePreviousPeriod, requestParameters.timezoneOffset, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
