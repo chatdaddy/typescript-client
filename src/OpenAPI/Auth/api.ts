@@ -191,6 +191,12 @@ export interface InviteLink {
      * @memberof InviteLink
      */
     'scopes': Array<Scope>;
+    /**
+     * 
+     * @type {Team}
+     * @memberof InviteLink
+     */
+    'team'?: Team;
 }
 /**
  * 
