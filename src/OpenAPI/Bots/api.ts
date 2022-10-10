@@ -771,10 +771,10 @@ export interface IMMessageAttachment {
     'url': string;
     /**
      * thumbnail of sticker/video/image
-     * @type {any}
+     * @type {File}
      * @memberof IMMessageAttachment
      */
-    'jpegThumbnail'?: any | null;
+    'jpegThumbnail'?: File | null;
     /**
      * duration of audio/video message
      * @type {number}
