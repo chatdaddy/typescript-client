@@ -3140,7 +3140,7 @@ export const TrackingsApiAxiosParamCreator = function (configuration?: Configura
          * @param {number} [triggerId] Fetch orders of the specified triggerId
          * @param {number} [pageSize] Number of items to retreive
          * @param {string} [cursor] Cursor to retreive items. It can be anyone of orderBy by which you want to retrieve the orders
-         * @param {'orderCustomer' | 'orderId' | 'orderTime' | 'deliveryDate'} [orderBy] Order by which value
+         * @param {'orderCustomer' | 'orderId' | 'orderDate' | 'deliveryDate'} [orderBy] Order by which value
          * @param {'ASC' | 'DESC'} [direction] Sorting order of the response
          * @param {string} [startTime] 
          * @param {string} [endTime] 
@@ -3154,7 +3154,7 @@ export const TrackingsApiAxiosParamCreator = function (configuration?: Configura
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        dataGet: async (trackingId?: number, phoneNumber?: number, triggerId?: number, pageSize?: number, cursor?: string, orderBy?: 'orderCustomer' | 'orderId' | 'orderTime' | 'deliveryDate', direction?: 'ASC' | 'DESC', startTime?: string, endTime?: string, orderStatus?: Array<string>, paymentStatus?: Array<string>, messageStatus?: Array<string>, q?: string, excludeTests?: boolean, includeNullTriggers?: boolean, returnTotal?: boolean, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        dataGet: async (trackingId?: number, phoneNumber?: number, triggerId?: number, pageSize?: number, cursor?: string, orderBy?: 'orderCustomer' | 'orderId' | 'orderDate' | 'deliveryDate', direction?: 'ASC' | 'DESC', startTime?: string, endTime?: string, orderStatus?: Array<string>, paymentStatus?: Array<string>, messageStatus?: Array<string>, q?: string, excludeTests?: boolean, includeNullTriggers?: boolean, returnTotal?: boolean, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/tracking/data`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -3504,7 +3504,7 @@ export const TrackingsApiFp = function(configuration?: Configuration) {
          * @param {number} [triggerId] Fetch orders of the specified triggerId
          * @param {number} [pageSize] Number of items to retreive
          * @param {string} [cursor] Cursor to retreive items. It can be anyone of orderBy by which you want to retrieve the orders
-         * @param {'orderCustomer' | 'orderId' | 'orderTime' | 'deliveryDate'} [orderBy] Order by which value
+         * @param {'orderCustomer' | 'orderId' | 'orderDate' | 'deliveryDate'} [orderBy] Order by which value
          * @param {'ASC' | 'DESC'} [direction] Sorting order of the response
          * @param {string} [startTime] 
          * @param {string} [endTime] 
@@ -3518,7 +3518,7 @@ export const TrackingsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async dataGet(trackingId?: number, phoneNumber?: number, triggerId?: number, pageSize?: number, cursor?: string, orderBy?: 'orderCustomer' | 'orderId' | 'orderTime' | 'deliveryDate', direction?: 'ASC' | 'DESC', startTime?: string, endTime?: string, orderStatus?: Array<string>, paymentStatus?: Array<string>, messageStatus?: Array<string>, q?: string, excludeTests?: boolean, includeNullTriggers?: boolean, returnTotal?: boolean, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DataGet200Response>> {
+        async dataGet(trackingId?: number, phoneNumber?: number, triggerId?: number, pageSize?: number, cursor?: string, orderBy?: 'orderCustomer' | 'orderId' | 'orderDate' | 'deliveryDate', direction?: 'ASC' | 'DESC', startTime?: string, endTime?: string, orderStatus?: Array<string>, paymentStatus?: Array<string>, messageStatus?: Array<string>, q?: string, excludeTests?: boolean, includeNullTriggers?: boolean, returnTotal?: boolean, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DataGet200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.dataGet(trackingId, phoneNumber, triggerId, pageSize, cursor, orderBy, direction, startTime, endTime, orderStatus, paymentStatus, messageStatus, q, excludeTests, includeNullTriggers, returnTotal, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -3608,7 +3608,7 @@ export const TrackingsApiFactory = function (configuration?: Configuration, base
          * @param {number} [triggerId] Fetch orders of the specified triggerId
          * @param {number} [pageSize] Number of items to retreive
          * @param {string} [cursor] Cursor to retreive items. It can be anyone of orderBy by which you want to retrieve the orders
-         * @param {'orderCustomer' | 'orderId' | 'orderTime' | 'deliveryDate'} [orderBy] Order by which value
+         * @param {'orderCustomer' | 'orderId' | 'orderDate' | 'deliveryDate'} [orderBy] Order by which value
          * @param {'ASC' | 'DESC'} [direction] Sorting order of the response
          * @param {string} [startTime] 
          * @param {string} [endTime] 
@@ -3622,7 +3622,7 @@ export const TrackingsApiFactory = function (configuration?: Configuration, base
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        dataGet(trackingId?: number, phoneNumber?: number, triggerId?: number, pageSize?: number, cursor?: string, orderBy?: 'orderCustomer' | 'orderId' | 'orderTime' | 'deliveryDate', direction?: 'ASC' | 'DESC', startTime?: string, endTime?: string, orderStatus?: Array<string>, paymentStatus?: Array<string>, messageStatus?: Array<string>, q?: string, excludeTests?: boolean, includeNullTriggers?: boolean, returnTotal?: boolean, options?: any): AxiosPromise<DataGet200Response> {
+        dataGet(trackingId?: number, phoneNumber?: number, triggerId?: number, pageSize?: number, cursor?: string, orderBy?: 'orderCustomer' | 'orderId' | 'orderDate' | 'deliveryDate', direction?: 'ASC' | 'DESC', startTime?: string, endTime?: string, orderStatus?: Array<string>, paymentStatus?: Array<string>, messageStatus?: Array<string>, q?: string, excludeTests?: boolean, includeNullTriggers?: boolean, returnTotal?: boolean, options?: any): AxiosPromise<DataGet200Response> {
             return localVarFp.dataGet(trackingId, phoneNumber, triggerId, pageSize, cursor, orderBy, direction, startTime, endTime, orderStatus, paymentStatus, messageStatus, q, excludeTests, includeNullTriggers, returnTotal, options).then((request) => request(axios, basePath));
         },
         /**
@@ -3733,10 +3733,10 @@ export interface TrackingsApiDataGetRequest {
 
     /**
      * Order by which value
-     * @type {'orderCustomer' | 'orderId' | 'orderTime' | 'deliveryDate'}
+     * @type {'orderCustomer' | 'orderId' | 'orderDate' | 'deliveryDate'}
      * @memberof TrackingsApiDataGet
      */
-    readonly orderBy?: 'orderCustomer' | 'orderId' | 'orderTime' | 'deliveryDate'
+    readonly orderBy?: 'orderCustomer' | 'orderId' | 'orderDate' | 'deliveryDate'
 
     /**
      * Sorting order of the response
