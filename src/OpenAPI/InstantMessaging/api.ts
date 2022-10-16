@@ -1488,10 +1488,10 @@ export interface MessageAttachment {
     'location'?: MessageLocation;
     /**
      * thumbnail of sticker/video/image
-     * @type {File}
+     * @type {string}
      * @memberof MessageAttachment
      */
-    'jpegThumbnail'?: File | null;
+    'jpegThumbnail'?: string | null;
     /**
      * duration of audio/video message
      * @type {number}
