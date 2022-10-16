@@ -376,6 +376,12 @@ export interface DataGet200Response {
      * @memberof DataGet200Response
      */
     'total'?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof DataGet200Response
+     */
+    'nextPageCursor'?: string | null;
 }
 /**
  * @type DataPatchRequest
