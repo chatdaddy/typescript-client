@@ -1017,6 +1017,19 @@ export interface ContactsPostContactsInner {
 /**
  * 
  * @export
+ * @interface GetChatHistory200Response
+ */
+export interface GetChatHistory200Response {
+    /**
+     * 
+     * @type {string}
+     * @memberof GetChatHistory200Response
+     */
+    'requestId': string;
+}
+/**
+ * 
+ * @export
  * @interface GroupAction
  */
 export interface GroupAction {
@@ -1475,10 +1488,10 @@ export interface MessageAttachment {
     'location'?: MessageLocation;
     /**
      * thumbnail of sticker/video/image
-     * @type {string}
+     * @type {File}
      * @memberof MessageAttachment
      */
-    'jpegThumbnail'?: string | null;
+    'jpegThumbnail'?: File | null;
     /**
      * duration of audio/video message
      * @type {number}
@@ -2618,6 +2631,19 @@ export interface PlatformProductsPostRequest {
      * @memberof PlatformProductsPostRequest
      */
     'products': Array<PlatformProductCreate>;
+}
+/**
+ * 
+ * @export
+ * @interface PollChatHistory200Response
+ */
+export interface PollChatHistory200Response {
+    /**
+     * 
+     * @type {string}
+     * @memberof PollChatHistory200Response
+     */
+    'url': string;
 }
 /**
  * 
@@ -3787,6 +3813,229 @@ export class AccountApi extends BaseAPI {
      */
     public accountsPost(requestParameters: AccountApiAccountsPostRequest = {}, options?: AxiosRequestConfig) {
         return AccountApiFp(this.configuration).accountsPost(requestParameters.accountsPostRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+/**
+ * ChatHistoryApi - axios parameter creator
+ * @export
+ */
+export const ChatHistoryApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @summary Fetch chat history as a file
+         * @param {string} [timeZone] 
+         * @param {Array<string>} [chatId] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getChatHistory: async (timeZone?: string, chatId?: Array<string>, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/chat-history`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["CHATS_ACCESS_ALL"], configuration)
+
+            if (timeZone !== undefined) {
+                localVarQueryParameter['timeZone'] = timeZone;
+            }
+
+            if (chatId) {
+                localVarQueryParameter['chatId'] = chatId;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Poll route to see if file is done
+         * @param {string} requestId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        pollChatHistory: async (requestId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'requestId' is not null or undefined
+            assertParamExists('pollChatHistory', 'requestId', requestId)
+            const localVarPath = `/chat-history/{requestId}`
+                .replace(`{${"requestId"}}`, encodeURIComponent(String(requestId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["CHATS_ACCESS_ALL"], configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * ChatHistoryApi - functional programming interface
+ * @export
+ */
+export const ChatHistoryApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = ChatHistoryApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * 
+         * @summary Fetch chat history as a file
+         * @param {string} [timeZone] 
+         * @param {Array<string>} [chatId] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getChatHistory(timeZone?: string, chatId?: Array<string>, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetChatHistory200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getChatHistory(timeZone, chatId, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary Poll route to see if file is done
+         * @param {string} requestId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async pollChatHistory(requestId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PollChatHistory200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.pollChatHistory(requestId, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+    }
+};
+
+/**
+ * ChatHistoryApi - factory interface
+ * @export
+ */
+export const ChatHistoryApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = ChatHistoryApiFp(configuration)
+    return {
+        /**
+         * 
+         * @summary Fetch chat history as a file
+         * @param {string} [timeZone] 
+         * @param {Array<string>} [chatId] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getChatHistory(timeZone?: string, chatId?: Array<string>, options?: any): AxiosPromise<GetChatHistory200Response> {
+            return localVarFp.getChatHistory(timeZone, chatId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Poll route to see if file is done
+         * @param {string} requestId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        pollChatHistory(requestId: string, options?: any): AxiosPromise<PollChatHistory200Response> {
+            return localVarFp.pollChatHistory(requestId, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * Request parameters for getChatHistory operation in ChatHistoryApi.
+ * @export
+ * @interface ChatHistoryApiGetChatHistoryRequest
+ */
+export interface ChatHistoryApiGetChatHistoryRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof ChatHistoryApiGetChatHistory
+     */
+    readonly timeZone?: string
+
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof ChatHistoryApiGetChatHistory
+     */
+    readonly chatId?: Array<string>
+}
+
+/**
+ * Request parameters for pollChatHistory operation in ChatHistoryApi.
+ * @export
+ * @interface ChatHistoryApiPollChatHistoryRequest
+ */
+export interface ChatHistoryApiPollChatHistoryRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof ChatHistoryApiPollChatHistory
+     */
+    readonly requestId: string
+}
+
+/**
+ * ChatHistoryApi - object-oriented interface
+ * @export
+ * @class ChatHistoryApi
+ * @extends {BaseAPI}
+ */
+export class ChatHistoryApi extends BaseAPI {
+    /**
+     * 
+     * @summary Fetch chat history as a file
+     * @param {ChatHistoryApiGetChatHistoryRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ChatHistoryApi
+     */
+    public getChatHistory(requestParameters: ChatHistoryApiGetChatHistoryRequest = {}, options?: AxiosRequestConfig) {
+        return ChatHistoryApiFp(this.configuration).getChatHistory(requestParameters.timeZone, requestParameters.chatId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Poll route to see if file is done
+     * @param {ChatHistoryApiPollChatHistoryRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ChatHistoryApi
+     */
+    public pollChatHistory(requestParameters: ChatHistoryApiPollChatHistoryRequest, options?: AxiosRequestConfig) {
+        return ChatHistoryApiFp(this.configuration).pollChatHistory(requestParameters.requestId, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
