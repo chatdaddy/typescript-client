@@ -879,6 +879,12 @@ export interface PurchaseDetails {
      * @memberof PurchaseDetails
      */
     'stripe'?: PurchaseDetailsStripe | null;
+    /**
+     * 
+     * @type {Product}
+     * @memberof PurchaseDetails
+     */
+    'product'?: Product;
 }
 /**
  * 
