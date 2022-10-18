@@ -41,6 +41,20 @@ export type Aggregate = typeof Aggregate[keyof typeof Aggregate];
 /**
  * 
  * @export
+ * @enum {string}
+ */
+
+export const DataAggregateType = {
+    Avg: 'avg',
+    Sum: 'sum'
+} as const;
+
+export type DataAggregateType = typeof DataAggregateType[keyof typeof DataAggregateType];
+
+
+/**
+ * 
+ * @export
  * @interface GetHomeMetrics200Response
  */
 export interface GetHomeMetrics200Response {
@@ -52,38 +66,17 @@ export interface GetHomeMetrics200Response {
     'metrics': Array<MetricsResult>;
 }
 /**
- * 
+ * All the metrics you\'d like to see on the home page
  * @export
  * @interface GetMetrics200Response
  */
 export interface GetMetrics200Response {
     /**
      * 
-     * @type {GetMetrics200ResponseMetrics}
+     * @type {Array<HomeMetricUpdateRequest>}
      * @memberof GetMetrics200Response
      */
-    'metrics': GetMetrics200ResponseMetrics;
-    /**
-     * 
-     * @type {number}
-     * @memberof GetMetrics200Response
-     */
-    'nextPage'?: number;
-}
-/**
- * 
- * @export
- * @interface GetMetrics200ResponseMetrics
- */
-export interface GetMetrics200ResponseMetrics {
-    [key: string]: Array<Metric> | any;
-
-    /**
-     * 
-     * @type {Array<Metric>}
-     * @memberof GetMetrics200ResponseMetrics
-     */
-    'total'?: Array<Metric>;
+    'metrics': Array<HomeMetricUpdateRequest>;
 }
 /**
  * 
@@ -97,6 +90,25 @@ export interface GetTopMetricKeys200Response {
      * @memberof GetTopMetricKeys200Response
      */
     'keys': Array<TopMetricKey>;
+}
+/**
+ * 
+ * @export
+ * @interface HomeMetricUpdateRequest
+ */
+export interface HomeMetricUpdateRequest {
+    /**
+     * 
+     * @type {MetricType}
+     * @memberof HomeMetricUpdateRequest
+     */
+    'metric': MetricType;
+    /**
+     * 
+     * @type {DataAggregateType}
+     * @memberof HomeMetricUpdateRequest
+     */
+    'aggregate': DataAggregateType;
 }
 /**
  * 
@@ -186,6 +198,19 @@ export interface TopMetricKey {
      */
     'value': number;
 }
+/**
+ * 
+ * @export
+ * @interface UpdateHomeMetricsRequest
+ */
+export interface UpdateHomeMetricsRequest {
+    /**
+     * 
+     * @type {Array<HomeMetricUpdateRequest>}
+     * @memberof UpdateHomeMetricsRequest
+     */
+    'metrics': Array<HomeMetricUpdateRequest>;
+}
 
 /**
  * MetricsApi - axios parameter creator
@@ -255,11 +280,11 @@ export const MetricsApiAxiosParamCreator = function (configuration?: Configurati
          * @param {number} [page] 
          * @param {Array<string>} [key] fetch data for only these specific keys
          * @param {string} [timezoneOffset] Timezone offset to query the data in
-         * @param {'sum' | 'avg'} [dataAggregation] How to aggregate the data
+         * @param {DataAggregateType} [dataAggregation] How to aggregate the data
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getMetrics: async (metric: MetricType, aggregate: Aggregate, count?: number, page?: number, key?: Array<string>, timezoneOffset?: string, dataAggregation?: 'sum' | 'avg', options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getMetrics: async (metric: MetricType, aggregate: Aggregate, count?: number, page?: number, key?: Array<string>, timezoneOffset?: string, dataAggregation?: DataAggregateType, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'metric' is not null or undefined
             assertParamExists('getMetrics', 'metric', metric)
             // verify required parameter 'aggregate' is not null or undefined
@@ -382,6 +407,44 @@ export const MetricsApiAxiosParamCreator = function (configuration?: Configurati
                 options: localVarRequestOptions,
             };
         },
+        /**
+         * 
+         * @summary Change the default metrics seen on the home page
+         * @param {UpdateHomeMetricsRequest} [updateHomeMetricsRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        updateHomeMetrics: async (updateHomeMetricsRequest?: UpdateHomeMetricsRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/metrics/home`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PATCH', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["METRICS_GET"], configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(updateHomeMetricsRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
     }
 };
 
@@ -415,11 +478,11 @@ export const MetricsApiFp = function(configuration?: Configuration) {
          * @param {number} [page] 
          * @param {Array<string>} [key] fetch data for only these specific keys
          * @param {string} [timezoneOffset] Timezone offset to query the data in
-         * @param {'sum' | 'avg'} [dataAggregation] How to aggregate the data
+         * @param {DataAggregateType} [dataAggregation] How to aggregate the data
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getMetrics(metric: MetricType, aggregate: Aggregate, count?: number, page?: number, key?: Array<string>, timezoneOffset?: string, dataAggregation?: 'sum' | 'avg', options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetMetrics200Response>> {
+        async getMetrics(metric: MetricType, aggregate: Aggregate, count?: number, page?: number, key?: Array<string>, timezoneOffset?: string, dataAggregation?: DataAggregateType, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetMetrics200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getMetrics(metric, aggregate, count, page, key, timezoneOffset, dataAggregation, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -438,6 +501,17 @@ export const MetricsApiFp = function(configuration?: Configuration) {
          */
         async getTopMetricKeys(metric: MetricType, aggregate: Aggregate, count?: number, timezoneOffset?: string, dataAggregation?: 'sum' | 'avg', timestamp?: string, orderDirection?: 'asc' | 'desc', options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetTopMetricKeys200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getTopMetricKeys(metric, aggregate, count, timezoneOffset, dataAggregation, timestamp, orderDirection, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary Change the default metrics seen on the home page
+         * @param {UpdateHomeMetricsRequest} [updateHomeMetricsRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async updateHomeMetrics(updateHomeMetricsRequest?: UpdateHomeMetricsRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.updateHomeMetrics(updateHomeMetricsRequest, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
     }
@@ -472,11 +546,11 @@ export const MetricsApiFactory = function (configuration?: Configuration, basePa
          * @param {number} [page] 
          * @param {Array<string>} [key] fetch data for only these specific keys
          * @param {string} [timezoneOffset] Timezone offset to query the data in
-         * @param {'sum' | 'avg'} [dataAggregation] How to aggregate the data
+         * @param {DataAggregateType} [dataAggregation] How to aggregate the data
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getMetrics(metric: MetricType, aggregate: Aggregate, count?: number, page?: number, key?: Array<string>, timezoneOffset?: string, dataAggregation?: 'sum' | 'avg', options?: any): AxiosPromise<GetMetrics200Response> {
+        getMetrics(metric: MetricType, aggregate: Aggregate, count?: number, page?: number, key?: Array<string>, timezoneOffset?: string, dataAggregation?: DataAggregateType, options?: any): AxiosPromise<GetMetrics200Response> {
             return localVarFp.getMetrics(metric, aggregate, count, page, key, timezoneOffset, dataAggregation, options).then((request) => request(axios, basePath));
         },
         /**
@@ -494,6 +568,16 @@ export const MetricsApiFactory = function (configuration?: Configuration, basePa
          */
         getTopMetricKeys(metric: MetricType, aggregate: Aggregate, count?: number, timezoneOffset?: string, dataAggregation?: 'sum' | 'avg', timestamp?: string, orderDirection?: 'asc' | 'desc', options?: any): AxiosPromise<GetTopMetricKeys200Response> {
             return localVarFp.getTopMetricKeys(metric, aggregate, count, timezoneOffset, dataAggregation, timestamp, orderDirection, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Change the default metrics seen on the home page
+         * @param {UpdateHomeMetricsRequest} [updateHomeMetricsRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        updateHomeMetrics(updateHomeMetricsRequest?: UpdateHomeMetricsRequest, options?: any): AxiosPromise<void> {
+            return localVarFp.updateHomeMetrics(updateHomeMetricsRequest, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -583,10 +667,10 @@ export interface MetricsApiGetMetricsRequest {
 
     /**
      * How to aggregate the data
-     * @type {'sum' | 'avg'}
+     * @type {DataAggregateType}
      * @memberof MetricsApiGetMetrics
      */
-    readonly dataAggregation?: 'sum' | 'avg'
+    readonly dataAggregation?: DataAggregateType
 }
 
 /**
@@ -646,6 +730,20 @@ export interface MetricsApiGetTopMetricKeysRequest {
 }
 
 /**
+ * Request parameters for updateHomeMetrics operation in MetricsApi.
+ * @export
+ * @interface MetricsApiUpdateHomeMetricsRequest
+ */
+export interface MetricsApiUpdateHomeMetricsRequest {
+    /**
+     * 
+     * @type {UpdateHomeMetricsRequest}
+     * @memberof MetricsApiUpdateHomeMetrics
+     */
+    readonly updateHomeMetricsRequest?: UpdateHomeMetricsRequest
+}
+
+/**
  * MetricsApi - object-oriented interface
  * @export
  * @class MetricsApi
@@ -686,6 +784,18 @@ export class MetricsApi extends BaseAPI {
      */
     public getTopMetricKeys(requestParameters: MetricsApiGetTopMetricKeysRequest, options?: AxiosRequestConfig) {
         return MetricsApiFp(this.configuration).getTopMetricKeys(requestParameters.metric, requestParameters.aggregate, requestParameters.count, requestParameters.timezoneOffset, requestParameters.dataAggregation, requestParameters.timestamp, requestParameters.orderDirection, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Change the default metrics seen on the home page
+     * @param {MetricsApiUpdateHomeMetricsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof MetricsApi
+     */
+    public updateHomeMetrics(requestParameters: MetricsApiUpdateHomeMetricsRequest = {}, options?: AxiosRequestConfig) {
+        return MetricsApiFp(this.configuration).updateHomeMetrics(requestParameters.updateHomeMetricsRequest, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
