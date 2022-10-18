@@ -73,10 +73,31 @@ export interface GetHomeMetrics200Response {
 export interface GetMetrics200Response {
     /**
      * 
-     * @type {Array<HomeMetricUpdateRequest>}
+     * @type {GetMetrics200ResponseMetrics}
      * @memberof GetMetrics200Response
      */
-    'metrics': Array<HomeMetricUpdateRequest>;
+    'metrics': GetMetrics200ResponseMetrics;
+    /**
+     * 
+     * @type {number}
+     * @memberof GetMetrics200Response
+     */
+    'nextPage'?: number;
+}
+/**
+ * 
+ * @export
+ * @interface GetMetrics200ResponseMetrics
+ */
+export interface GetMetrics200ResponseMetrics {
+    [key: string]: Array<Metric> | any;
+
+    /**
+     * 
+     * @type {Array<Metric>}
+     * @memberof GetMetrics200ResponseMetrics
+     */
+    'total'?: Array<Metric>;
 }
 /**
  * 
