@@ -13,7 +13,7 @@
   },
   "CONTACTS_READ_ASSIGNED": {
     "number": 2,
-    "description": "Read profile contacts",
+    "description": "Read Assigned contacts",
     "features": [
       "audience"
     ],
@@ -26,7 +26,7 @@
   },
   "CONTACTS_READ_ALL": {
     "number": 3,
-    "description": "Read Audience contacts",
+    "description": "Read All contacts",
     "features": [
       "audience"
     ],
