@@ -199,6 +199,12 @@ export interface MetricsResult {
      * @memberof MetricsResult
      */
     'type': MetricType;
+    /**
+     * 
+     * @type {DataAggregateType}
+     * @memberof MetricsResult
+     */
+    'dataAggregate': DataAggregateType;
 }
 /**
  * 
