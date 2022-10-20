@@ -135,6 +135,44 @@ export interface Account {
 /**
  * 
  * @export
+ * @interface AccountCredentialsAlibaba
+ */
+export interface AccountCredentialsAlibaba {
+    /**
+     * 
+     * @type {string}
+     * @memberof AccountCredentialsAlibaba
+     */
+    'type': AccountCredentialsAlibabaTypeEnum;
+    /**
+     * 
+     * @type {string}
+     * @memberof AccountCredentialsAlibaba
+     */
+    'accessKeyId': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof AccountCredentialsAlibaba
+     */
+    'accessKeySecret': string;
+    /**
+     * Secret for WebHook
+     * @type {string}
+     * @memberof AccountCredentialsAlibaba
+     */
+    'secret': string;
+}
+
+export const AccountCredentialsAlibabaTypeEnum = {
+    AlibabaCams: 'alibaba-cams'
+} as const;
+
+export type AccountCredentialsAlibabaTypeEnum = typeof AccountCredentialsAlibabaTypeEnum[keyof typeof AccountCredentialsAlibabaTypeEnum];
+
+/**
+ * 
+ * @export
  * @interface AccountError
  */
 export interface AccountError {
@@ -291,6 +329,12 @@ export interface AccountsPatchRequest {
      * @memberof AccountsPatchRequest
      */
     'settings'?: AccountSettings;
+    /**
+     * 
+     * @type {AccountCredentialsAlibaba}
+     * @memberof AccountsPatchRequest
+     */
+    'credentials'?: AccountCredentialsAlibaba;
 }
 /**
  * 
