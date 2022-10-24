@@ -2687,8 +2687,23 @@ export interface PollChatHistory200Response {
      * @type {string}
      * @memberof PollChatHistory200Response
      */
-    'url': string;
+    'url'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof PollChatHistory200Response
+     */
+    'status'?: PollChatHistory200ResponseStatusEnum;
 }
+
+export const PollChatHistory200ResponseStatusEnum = {
+    Success: 'success',
+    Executing: 'executing',
+    Error: 'error'
+} as const;
+
+export type PollChatHistory200ResponseStatusEnum = typeof PollChatHistory200ResponseStatusEnum[keyof typeof PollChatHistory200ResponseStatusEnum];
+
 /**
  * 
  * @export
