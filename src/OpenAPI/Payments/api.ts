@@ -1827,10 +1827,17 @@ export const PurchasesApiAxiosParamCreator = function (configuration?: Configura
          * 
          * @summary Get the list of all purchases
          * @param {boolean} [onlyValid] If true, only unexpired &amp; active purchases will be sent
+         * @param {boolean} [global] If true, returns purchases across all teams only if user is an admin
+         * @param {number} [page] The page for the cursor
+         * @param {number} [count] The numbers of items to return
+         * @param {string} [productName] The product name to filter by
+         * @param {string} [startDate] The start date of the subscription
+         * @param {string} [endDate] The end date of the subscription
+         * @param {number} [secondsUntilExpiry] The number of seconds left until expiry
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        purchasesGet: async (onlyValid?: boolean, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        purchasesGet: async (onlyValid?: boolean, global?: boolean, page?: number, count?: number, productName?: string, startDate?: string, endDate?: string, secondsUntilExpiry?: number, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/purchases/all`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -1849,6 +1856,38 @@ export const PurchasesApiAxiosParamCreator = function (configuration?: Configura
 
             if (onlyValid !== undefined) {
                 localVarQueryParameter['onlyValid'] = onlyValid;
+            }
+
+            if (global !== undefined) {
+                localVarQueryParameter['global'] = global;
+            }
+
+            if (page !== undefined) {
+                localVarQueryParameter['page'] = page;
+            }
+
+            if (count !== undefined) {
+                localVarQueryParameter['count'] = count;
+            }
+
+            if (productName !== undefined) {
+                localVarQueryParameter['productName'] = productName;
+            }
+
+            if (startDate !== undefined) {
+                localVarQueryParameter['startDate'] = (startDate as any instanceof Date) ?
+                    (startDate as any).toISOString() :
+                    startDate;
+            }
+
+            if (endDate !== undefined) {
+                localVarQueryParameter['endDate'] = (endDate as any instanceof Date) ?
+                    (endDate as any).toISOString() :
+                    endDate;
+            }
+
+            if (secondsUntilExpiry !== undefined) {
+                localVarQueryParameter['secondsUntilExpiry'] = secondsUntilExpiry;
             }
 
 
@@ -1954,11 +1993,18 @@ export const PurchasesApiFp = function(configuration?: Configuration) {
          * 
          * @summary Get the list of all purchases
          * @param {boolean} [onlyValid] If true, only unexpired &amp; active purchases will be sent
+         * @param {boolean} [global] If true, returns purchases across all teams only if user is an admin
+         * @param {number} [page] The page for the cursor
+         * @param {number} [count] The numbers of items to return
+         * @param {string} [productName] The product name to filter by
+         * @param {string} [startDate] The start date of the subscription
+         * @param {string} [endDate] The end date of the subscription
+         * @param {number} [secondsUntilExpiry] The number of seconds left until expiry
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async purchasesGet(onlyValid?: boolean, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MainPost200Response>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.purchasesGet(onlyValid, options);
+        async purchasesGet(onlyValid?: boolean, global?: boolean, page?: number, count?: number, productName?: string, startDate?: string, endDate?: string, secondsUntilExpiry?: number, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MainPost200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.purchasesGet(onlyValid, global, page, count, productName, startDate, endDate, secondsUntilExpiry, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
     }
@@ -2046,11 +2092,18 @@ export const PurchasesApiFactory = function (configuration?: Configuration, base
          * 
          * @summary Get the list of all purchases
          * @param {boolean} [onlyValid] If true, only unexpired &amp; active purchases will be sent
+         * @param {boolean} [global] If true, returns purchases across all teams only if user is an admin
+         * @param {number} [page] The page for the cursor
+         * @param {number} [count] The numbers of items to return
+         * @param {string} [productName] The product name to filter by
+         * @param {string} [startDate] The start date of the subscription
+         * @param {string} [endDate] The end date of the subscription
+         * @param {number} [secondsUntilExpiry] The number of seconds left until expiry
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        purchasesGet(onlyValid?: boolean, options?: any): AxiosPromise<MainPost200Response> {
-            return localVarFp.purchasesGet(onlyValid, options).then((request) => request(axios, basePath));
+        purchasesGet(onlyValid?: boolean, global?: boolean, page?: number, count?: number, productName?: string, startDate?: string, endDate?: string, secondsUntilExpiry?: number, options?: any): AxiosPromise<MainPost200Response> {
+            return localVarFp.purchasesGet(onlyValid, global, page, count, productName, startDate, endDate, secondsUntilExpiry, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -2151,6 +2204,55 @@ export interface PurchasesApiPurchasesGetRequest {
      * @memberof PurchasesApiPurchasesGet
      */
     readonly onlyValid?: boolean
+
+    /**
+     * If true, returns purchases across all teams only if user is an admin
+     * @type {boolean}
+     * @memberof PurchasesApiPurchasesGet
+     */
+    readonly global?: boolean
+
+    /**
+     * The page for the cursor
+     * @type {number}
+     * @memberof PurchasesApiPurchasesGet
+     */
+    readonly page?: number
+
+    /**
+     * The numbers of items to return
+     * @type {number}
+     * @memberof PurchasesApiPurchasesGet
+     */
+    readonly count?: number
+
+    /**
+     * The product name to filter by
+     * @type {string}
+     * @memberof PurchasesApiPurchasesGet
+     */
+    readonly productName?: string
+
+    /**
+     * The start date of the subscription
+     * @type {string}
+     * @memberof PurchasesApiPurchasesGet
+     */
+    readonly startDate?: string
+
+    /**
+     * The end date of the subscription
+     * @type {string}
+     * @memberof PurchasesApiPurchasesGet
+     */
+    readonly endDate?: string
+
+    /**
+     * The number of seconds left until expiry
+     * @type {number}
+     * @memberof PurchasesApiPurchasesGet
+     */
+    readonly secondsUntilExpiry?: number
 }
 
 /**
@@ -2250,7 +2352,7 @@ export class PurchasesApi extends BaseAPI {
      * @memberof PurchasesApi
      */
     public purchasesGet(requestParameters: PurchasesApiPurchasesGetRequest = {}, options?: AxiosRequestConfig) {
-        return PurchasesApiFp(this.configuration).purchasesGet(requestParameters.onlyValid, options).then((request) => request(this.axios, this.basePath));
+        return PurchasesApiFp(this.configuration).purchasesGet(requestParameters.onlyValid, requestParameters.global, requestParameters.page, requestParameters.count, requestParameters.productName, requestParameters.startDate, requestParameters.endDate, requestParameters.secondsUntilExpiry, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
