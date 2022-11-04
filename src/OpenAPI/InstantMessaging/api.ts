@@ -6875,11 +6875,13 @@ export const MessagesApiAxiosParamCreator = function (configuration?: Configurat
          * @param {number} [count] Number of messages to fetch
          * @param {boolean} [forceReload] Deletes all cached messages for this chat &amp; fetches messages again from the original API source
          * @param {'note' | 'pending' | 'error'} [status] fetch only \&quot;notes\&quot;, \&quot;pending\&quot; or \&quot;error\&quot; messages
+         * @param {boolean} [fromMe] fetch only messages sent by me/or the other party
+         * @param {Array<MessageAttachmentType>} [attachmentType] Fetch only messages with attachments of this type
          * @param {boolean} [includeCursorMessage] should include cursor message in the response
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        messagesGet: async (accountId: string, chatId: string, beforeId?: string, count?: number, forceReload?: boolean, status?: 'note' | 'pending' | 'error', includeCursorMessage?: boolean, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        messagesGet: async (accountId: string, chatId: string, beforeId?: string, count?: number, forceReload?: boolean, status?: 'note' | 'pending' | 'error', fromMe?: boolean, attachmentType?: Array<MessageAttachmentType>, includeCursorMessage?: boolean, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'accountId' is not null or undefined
             assertParamExists('messagesGet', 'accountId', accountId)
             // verify required parameter 'chatId' is not null or undefined
@@ -6916,6 +6918,14 @@ export const MessagesApiAxiosParamCreator = function (configuration?: Configurat
 
             if (status !== undefined) {
                 localVarQueryParameter['status'] = status;
+            }
+
+            if (fromMe !== undefined) {
+                localVarQueryParameter['fromMe'] = fromMe;
+            }
+
+            if (attachmentType) {
+                localVarQueryParameter['attachmentType'] = attachmentType;
             }
 
             if (includeCursorMessage !== undefined) {
@@ -7255,12 +7265,14 @@ export const MessagesApiFp = function(configuration?: Configuration) {
          * @param {number} [count] Number of messages to fetch
          * @param {boolean} [forceReload] Deletes all cached messages for this chat &amp; fetches messages again from the original API source
          * @param {'note' | 'pending' | 'error'} [status] fetch only \&quot;notes\&quot;, \&quot;pending\&quot; or \&quot;error\&quot; messages
+         * @param {boolean} [fromMe] fetch only messages sent by me/or the other party
+         * @param {Array<MessageAttachmentType>} [attachmentType] Fetch only messages with attachments of this type
          * @param {boolean} [includeCursorMessage] should include cursor message in the response
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async messagesGet(accountId: string, chatId: string, beforeId?: string, count?: number, forceReload?: boolean, status?: 'note' | 'pending' | 'error', includeCursorMessage?: boolean, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MessagesGet200Response>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.messagesGet(accountId, chatId, beforeId, count, forceReload, status, includeCursorMessage, options);
+        async messagesGet(accountId: string, chatId: string, beforeId?: string, count?: number, forceReload?: boolean, status?: 'note' | 'pending' | 'error', fromMe?: boolean, attachmentType?: Array<MessageAttachmentType>, includeCursorMessage?: boolean, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MessagesGet200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.messagesGet(accountId, chatId, beforeId, count, forceReload, status, fromMe, attachmentType, includeCursorMessage, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -7388,12 +7400,14 @@ export const MessagesApiFactory = function (configuration?: Configuration, baseP
          * @param {number} [count] Number of messages to fetch
          * @param {boolean} [forceReload] Deletes all cached messages for this chat &amp; fetches messages again from the original API source
          * @param {'note' | 'pending' | 'error'} [status] fetch only \&quot;notes\&quot;, \&quot;pending\&quot; or \&quot;error\&quot; messages
+         * @param {boolean} [fromMe] fetch only messages sent by me/or the other party
+         * @param {Array<MessageAttachmentType>} [attachmentType] Fetch only messages with attachments of this type
          * @param {boolean} [includeCursorMessage] should include cursor message in the response
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        messagesGet(accountId: string, chatId: string, beforeId?: string, count?: number, forceReload?: boolean, status?: 'note' | 'pending' | 'error', includeCursorMessage?: boolean, options?: any): AxiosPromise<MessagesGet200Response> {
-            return localVarFp.messagesGet(accountId, chatId, beforeId, count, forceReload, status, includeCursorMessage, options).then((request) => request(axios, basePath));
+        messagesGet(accountId: string, chatId: string, beforeId?: string, count?: number, forceReload?: boolean, status?: 'note' | 'pending' | 'error', fromMe?: boolean, attachmentType?: Array<MessageAttachmentType>, includeCursorMessage?: boolean, options?: any): AxiosPromise<MessagesGet200Response> {
+            return localVarFp.messagesGet(accountId, chatId, beforeId, count, forceReload, status, fromMe, attachmentType, includeCursorMessage, options).then((request) => request(axios, basePath));
         },
         /**
          * Can reschedule a message, update the content of a note or mark it as resolved 
@@ -7601,6 +7615,20 @@ export interface MessagesApiMessagesGetRequest {
      * @memberof MessagesApiMessagesGet
      */
     readonly status?: 'note' | 'pending' | 'error'
+
+    /**
+     * fetch only messages sent by me/or the other party
+     * @type {boolean}
+     * @memberof MessagesApiMessagesGet
+     */
+    readonly fromMe?: boolean
+
+    /**
+     * Fetch only messages with attachments of this type
+     * @type {Array<MessageAttachmentType>}
+     * @memberof MessagesApiMessagesGet
+     */
+    readonly attachmentType?: Array<MessageAttachmentType>
 
     /**
      * should include cursor message in the response
@@ -7843,7 +7871,7 @@ export class MessagesApi extends BaseAPI {
      * @memberof MessagesApi
      */
     public messagesGet(requestParameters: MessagesApiMessagesGetRequest, options?: AxiosRequestConfig) {
-        return MessagesApiFp(this.configuration).messagesGet(requestParameters.accountId, requestParameters.chatId, requestParameters.beforeId, requestParameters.count, requestParameters.forceReload, requestParameters.status, requestParameters.includeCursorMessage, options).then((request) => request(this.axios, this.basePath));
+        return MessagesApiFp(this.configuration).messagesGet(requestParameters.accountId, requestParameters.chatId, requestParameters.beforeId, requestParameters.count, requestParameters.forceReload, requestParameters.status, requestParameters.fromMe, requestParameters.attachmentType, requestParameters.includeCursorMessage, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
