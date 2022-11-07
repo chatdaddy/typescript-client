@@ -791,12 +791,6 @@ export interface PatchPaymentIntegrationRequest {
      * @memberof PatchPaymentIntegrationRequest
      */
     'enabled'?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof PatchPaymentIntegrationRequest
-     */
-    'installed'?: boolean;
 }
 /**
  * 
