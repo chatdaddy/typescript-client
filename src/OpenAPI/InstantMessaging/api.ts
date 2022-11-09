@@ -8896,10 +8896,11 @@ export const ProductCategoriesApiAxiosParamCreator = function (configuration?: C
         /**
          * 
          * @summary Get the categories (collections) from WA catalog.
+         * @param {string} [accountId] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        platformProductCategoriesGet: async (options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        platformProductCategoriesGet: async (accountId?: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/product-categories`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -8915,6 +8916,10 @@ export const ProductCategoriesApiAxiosParamCreator = function (configuration?: C
             // authentication chatdaddy required
             // oauth required
             await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["PRODUCTS_GET"], configuration)
+
+            if (accountId !== undefined) {
+                localVarQueryParameter['accountId'] = accountId;
+            }
 
 
     
@@ -9031,11 +9036,12 @@ export const ProductCategoriesApiFp = function(configuration?: Configuration) {
         /**
          * 
          * @summary Get the categories (collections) from WA catalog.
+         * @param {string} [accountId] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async platformProductCategoriesGet(options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PlatformProductCategoriesGet200Response>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.platformProductCategoriesGet(options);
+        async platformProductCategoriesGet(accountId?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PlatformProductCategoriesGet200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.platformProductCategoriesGet(accountId, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -9084,11 +9090,12 @@ export const ProductCategoriesApiFactory = function (configuration?: Configurati
         /**
          * 
          * @summary Get the categories (collections) from WA catalog.
+         * @param {string} [accountId] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        platformProductCategoriesGet(options?: any): AxiosPromise<PlatformProductCategoriesGet200Response> {
-            return localVarFp.platformProductCategoriesGet(options).then((request) => request(axios, basePath));
+        platformProductCategoriesGet(accountId?: string, options?: any): AxiosPromise<PlatformProductCategoriesGet200Response> {
+            return localVarFp.platformProductCategoriesGet(accountId, options).then((request) => request(axios, basePath));
         },
         /**
          * Update name of the category or add/remove a product
@@ -9126,6 +9133,20 @@ export interface ProductCategoriesApiPlatformProductCategoriesDeleteRequest {
      * @memberof ProductCategoriesApiPlatformProductCategoriesDelete
      */
     readonly categoryId: string
+}
+
+/**
+ * Request parameters for platformProductCategoriesGet operation in ProductCategoriesApi.
+ * @export
+ * @interface ProductCategoriesApiPlatformProductCategoriesGetRequest
+ */
+export interface ProductCategoriesApiPlatformProductCategoriesGetRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof ProductCategoriesApiPlatformProductCategoriesGet
+     */
+    readonly accountId?: string
 }
 
 /**
@@ -9185,12 +9206,13 @@ export class ProductCategoriesApi extends BaseAPI {
     /**
      * 
      * @summary Get the categories (collections) from WA catalog.
+     * @param {ProductCategoriesApiPlatformProductCategoriesGetRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof ProductCategoriesApi
      */
-    public platformProductCategoriesGet(options?: AxiosRequestConfig) {
-        return ProductCategoriesApiFp(this.configuration).platformProductCategoriesGet(options).then((request) => request(this.axios, this.basePath));
+    public platformProductCategoriesGet(requestParameters: ProductCategoriesApiPlatformProductCategoriesGetRequest = {}, options?: AxiosRequestConfig) {
+        return ProductCategoriesApiFp(this.configuration).platformProductCategoriesGet(requestParameters.accountId, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
