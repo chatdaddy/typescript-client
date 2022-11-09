@@ -3186,13 +3186,13 @@ export interface WASyncDataOneOf {
      * @type {number}
      * @memberof WASyncDataOneOf
      */
-    'total'?: number;
+    'total': number;
     /**
      * An ISO formatted timestamp
      * @type {string}
      * @memberof WASyncDataOneOf
      */
-    'lastRecvAt'?: string;
+    'lastRecvAt': string;
 }
 /**
  * 
@@ -3205,7 +3205,7 @@ export interface WASyncDataOneOf1 {
      * @type {string}
      * @memberof WASyncDataOneOf1
      */
-    'error'?: string;
+    'error': string;
 }
 /**
  * State of how many chats, messages, contacts are synced, and if there was an error
