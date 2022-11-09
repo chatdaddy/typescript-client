@@ -3132,6 +3132,106 @@ export interface TemplatesSubmitForReviewRequest {
      */
     'message': TemplateCreate;
 }
+/**
+ * 
+ * @export
+ * @interface WAStateInfo
+ */
+export interface WAStateInfo {
+    /**
+     * The QR to scan to log into the account
+     * @type {string}
+     * @memberof WAStateInfo
+     */
+    'qr'?: string;
+    /**
+     * Whether the client has received all pending/offline notifications
+     * @type {boolean}
+     * @memberof WAStateInfo
+     */
+    'receivedPendingNotifications'?: boolean;
+    /**
+     * If the user logged in with a WA business account. Product APIs would be available now
+     * @type {boolean}
+     * @memberof WAStateInfo
+     */
+    'isBusiness'?: boolean;
+    /**
+     * If syncing history right now. If such is the case, regular event processing will be queued till the sync is complete
+     * @type {boolean}
+     * @memberof WAStateInfo
+     */
+    'isSyncingHistory'?: boolean;
+    /**
+     * 
+     * @type {WASyncStateInfo}
+     * @memberof WAStateInfo
+     */
+    'sync'?: WASyncStateInfo;
+}
+/**
+ * @type WASyncData
+ * @export
+ */
+export type WASyncData = WASyncDataOneOf | WASyncDataOneOf1;
+
+/**
+ * 
+ * @export
+ * @interface WASyncDataOneOf
+ */
+export interface WASyncDataOneOf {
+    /**
+     * Total number of objects received
+     * @type {number}
+     * @memberof WASyncDataOneOf
+     */
+    'total'?: number;
+    /**
+     * An ISO formatted timestamp
+     * @type {string}
+     * @memberof WASyncDataOneOf
+     */
+    'lastRecvAt'?: string;
+}
+/**
+ * 
+ * @export
+ * @interface WASyncDataOneOf1
+ */
+export interface WASyncDataOneOf1 {
+    /**
+     * 
+     * @type {string}
+     * @memberof WASyncDataOneOf1
+     */
+    'error'?: string;
+}
+/**
+ * State of how many chats, messages, contacts are synced, and if there was an error
+ * @export
+ * @interface WASyncStateInfo
+ */
+export interface WASyncStateInfo {
+    /**
+     * 
+     * @type {WASyncData}
+     * @memberof WASyncStateInfo
+     */
+    'chats'?: WASyncData;
+    /**
+     * 
+     * @type {WASyncData}
+     * @memberof WASyncStateInfo
+     */
+    'contacts'?: WASyncData;
+    /**
+     * 
+     * @type {WASyncData}
+     * @memberof WASyncStateInfo
+     */
+    'messages'?: WASyncData;
+}
 
 /**
  * AccountApi - axios parameter creator
