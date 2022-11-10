@@ -8858,14 +8858,18 @@ export const ProductCategoriesApiAxiosParamCreator = function (configuration?: C
         /**
          * 
          * @summary Delete a category
+         * @param {string} accountId 
          * @param {string} categoryId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        platformProductCategoriesDelete: async (categoryId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        platformProductCategoriesDelete: async (accountId: string, categoryId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'accountId' is not null or undefined
+            assertParamExists('platformProductCategoriesDelete', 'accountId', accountId)
             // verify required parameter 'categoryId' is not null or undefined
             assertParamExists('platformProductCategoriesDelete', 'categoryId', categoryId)
-            const localVarPath = `/product-categories`
+            const localVarPath = `/product-categories/{accountId}`
+                .replace(`{${"accountId"}}`, encodeURIComponent(String(accountId)))
                 .replace(`{${"categoryId"}}`, encodeURIComponent(String(categoryId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -8935,15 +8939,19 @@ export const ProductCategoriesApiAxiosParamCreator = function (configuration?: C
         /**
          * Update name of the category or add/remove a product
          * @summary Update a category
+         * @param {string} accountId 
          * @param {string} categoryId 
          * @param {ProductCategoryPatchRequest} [productCategoryPatchRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        platformProductCategoriesPatch: async (categoryId: string, productCategoryPatchRequest?: ProductCategoryPatchRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        platformProductCategoriesPatch: async (accountId: string, categoryId: string, productCategoryPatchRequest?: ProductCategoryPatchRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'accountId' is not null or undefined
+            assertParamExists('platformProductCategoriesPatch', 'accountId', accountId)
             // verify required parameter 'categoryId' is not null or undefined
             assertParamExists('platformProductCategoriesPatch', 'categoryId', categoryId)
-            const localVarPath = `/product-categories`
+            const localVarPath = `/product-categories/{accountId}`
+                .replace(`{${"accountId"}}`, encodeURIComponent(String(accountId)))
                 .replace(`{${"categoryId"}}`, encodeURIComponent(String(categoryId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -8977,12 +8985,16 @@ export const ProductCategoriesApiAxiosParamCreator = function (configuration?: C
         /**
          * 
          * @summary Add a new product category
+         * @param {string} accountId 
          * @param {PlatformProductCategoriesPostRequest} [platformProductCategoriesPostRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        platformProductCategoriesPost: async (platformProductCategoriesPostRequest?: PlatformProductCategoriesPostRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/product-categories`;
+        platformProductCategoriesPost: async (accountId: string, platformProductCategoriesPostRequest?: PlatformProductCategoriesPostRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'accountId' is not null or undefined
+            assertParamExists('platformProductCategoriesPost', 'accountId', accountId)
+            const localVarPath = `/product-categories/{accountId}`
+                .replace(`{${"accountId"}}`, encodeURIComponent(String(accountId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -9025,12 +9037,13 @@ export const ProductCategoriesApiFp = function(configuration?: Configuration) {
         /**
          * 
          * @summary Delete a category
+         * @param {string} accountId 
          * @param {string} categoryId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async platformProductCategoriesDelete(categoryId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AccountsLogout200Response>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.platformProductCategoriesDelete(categoryId, options);
+        async platformProductCategoriesDelete(accountId: string, categoryId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AccountsLogout200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.platformProductCategoriesDelete(accountId, categoryId, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -9047,24 +9060,26 @@ export const ProductCategoriesApiFp = function(configuration?: Configuration) {
         /**
          * Update name of the category or add/remove a product
          * @summary Update a category
+         * @param {string} accountId 
          * @param {string} categoryId 
          * @param {ProductCategoryPatchRequest} [productCategoryPatchRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async platformProductCategoriesPatch(categoryId: string, productCategoryPatchRequest?: ProductCategoryPatchRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AccountsLogout200Response>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.platformProductCategoriesPatch(categoryId, productCategoryPatchRequest, options);
+        async platformProductCategoriesPatch(accountId: string, categoryId: string, productCategoryPatchRequest?: ProductCategoryPatchRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AccountsLogout200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.platformProductCategoriesPatch(accountId, categoryId, productCategoryPatchRequest, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
          * 
          * @summary Add a new product category
+         * @param {string} accountId 
          * @param {PlatformProductCategoriesPostRequest} [platformProductCategoriesPostRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async platformProductCategoriesPost(platformProductCategoriesPostRequest?: PlatformProductCategoriesPostRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ProductCategory>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.platformProductCategoriesPost(platformProductCategoriesPostRequest, options);
+        async platformProductCategoriesPost(accountId: string, platformProductCategoriesPostRequest?: PlatformProductCategoriesPostRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ProductCategory>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.platformProductCategoriesPost(accountId, platformProductCategoriesPostRequest, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
     }
@@ -9080,12 +9095,13 @@ export const ProductCategoriesApiFactory = function (configuration?: Configurati
         /**
          * 
          * @summary Delete a category
+         * @param {string} accountId 
          * @param {string} categoryId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        platformProductCategoriesDelete(categoryId: string, options?: any): AxiosPromise<AccountsLogout200Response> {
-            return localVarFp.platformProductCategoriesDelete(categoryId, options).then((request) => request(axios, basePath));
+        platformProductCategoriesDelete(accountId: string, categoryId: string, options?: any): AxiosPromise<AccountsLogout200Response> {
+            return localVarFp.platformProductCategoriesDelete(accountId, categoryId, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -9100,23 +9116,25 @@ export const ProductCategoriesApiFactory = function (configuration?: Configurati
         /**
          * Update name of the category or add/remove a product
          * @summary Update a category
+         * @param {string} accountId 
          * @param {string} categoryId 
          * @param {ProductCategoryPatchRequest} [productCategoryPatchRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        platformProductCategoriesPatch(categoryId: string, productCategoryPatchRequest?: ProductCategoryPatchRequest, options?: any): AxiosPromise<AccountsLogout200Response> {
-            return localVarFp.platformProductCategoriesPatch(categoryId, productCategoryPatchRequest, options).then((request) => request(axios, basePath));
+        platformProductCategoriesPatch(accountId: string, categoryId: string, productCategoryPatchRequest?: ProductCategoryPatchRequest, options?: any): AxiosPromise<AccountsLogout200Response> {
+            return localVarFp.platformProductCategoriesPatch(accountId, categoryId, productCategoryPatchRequest, options).then((request) => request(axios, basePath));
         },
         /**
          * 
          * @summary Add a new product category
+         * @param {string} accountId 
          * @param {PlatformProductCategoriesPostRequest} [platformProductCategoriesPostRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        platformProductCategoriesPost(platformProductCategoriesPostRequest?: PlatformProductCategoriesPostRequest, options?: any): AxiosPromise<ProductCategory> {
-            return localVarFp.platformProductCategoriesPost(platformProductCategoriesPostRequest, options).then((request) => request(axios, basePath));
+        platformProductCategoriesPost(accountId: string, platformProductCategoriesPostRequest?: PlatformProductCategoriesPostRequest, options?: any): AxiosPromise<ProductCategory> {
+            return localVarFp.platformProductCategoriesPost(accountId, platformProductCategoriesPostRequest, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -9127,6 +9145,13 @@ export const ProductCategoriesApiFactory = function (configuration?: Configurati
  * @interface ProductCategoriesApiPlatformProductCategoriesDeleteRequest
  */
 export interface ProductCategoriesApiPlatformProductCategoriesDeleteRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof ProductCategoriesApiPlatformProductCategoriesDelete
+     */
+    readonly accountId: string
+
     /**
      * 
      * @type {string}
@@ -9160,6 +9185,13 @@ export interface ProductCategoriesApiPlatformProductCategoriesPatchRequest {
      * @type {string}
      * @memberof ProductCategoriesApiPlatformProductCategoriesPatch
      */
+    readonly accountId: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof ProductCategoriesApiPlatformProductCategoriesPatch
+     */
     readonly categoryId: string
 
     /**
@@ -9176,6 +9208,13 @@ export interface ProductCategoriesApiPlatformProductCategoriesPatchRequest {
  * @interface ProductCategoriesApiPlatformProductCategoriesPostRequest
  */
 export interface ProductCategoriesApiPlatformProductCategoriesPostRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof ProductCategoriesApiPlatformProductCategoriesPost
+     */
+    readonly accountId: string
+
     /**
      * 
      * @type {PlatformProductCategoriesPostRequest}
@@ -9200,7 +9239,7 @@ export class ProductCategoriesApi extends BaseAPI {
      * @memberof ProductCategoriesApi
      */
     public platformProductCategoriesDelete(requestParameters: ProductCategoriesApiPlatformProductCategoriesDeleteRequest, options?: AxiosRequestConfig) {
-        return ProductCategoriesApiFp(this.configuration).platformProductCategoriesDelete(requestParameters.categoryId, options).then((request) => request(this.axios, this.basePath));
+        return ProductCategoriesApiFp(this.configuration).platformProductCategoriesDelete(requestParameters.accountId, requestParameters.categoryId, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -9224,7 +9263,7 @@ export class ProductCategoriesApi extends BaseAPI {
      * @memberof ProductCategoriesApi
      */
     public platformProductCategoriesPatch(requestParameters: ProductCategoriesApiPlatformProductCategoriesPatchRequest, options?: AxiosRequestConfig) {
-        return ProductCategoriesApiFp(this.configuration).platformProductCategoriesPatch(requestParameters.categoryId, requestParameters.productCategoryPatchRequest, options).then((request) => request(this.axios, this.basePath));
+        return ProductCategoriesApiFp(this.configuration).platformProductCategoriesPatch(requestParameters.accountId, requestParameters.categoryId, requestParameters.productCategoryPatchRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -9235,8 +9274,8 @@ export class ProductCategoriesApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof ProductCategoriesApi
      */
-    public platformProductCategoriesPost(requestParameters: ProductCategoriesApiPlatformProductCategoriesPostRequest = {}, options?: AxiosRequestConfig) {
-        return ProductCategoriesApiFp(this.configuration).platformProductCategoriesPost(requestParameters.platformProductCategoriesPostRequest, options).then((request) => request(this.axios, this.basePath));
+    public platformProductCategoriesPost(requestParameters: ProductCategoriesApiPlatformProductCategoriesPostRequest, options?: AxiosRequestConfig) {
+        return ProductCategoriesApiFp(this.configuration).platformProductCategoriesPost(requestParameters.accountId, requestParameters.platformProductCategoriesPostRequest, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
