@@ -8859,7 +8859,7 @@ export const ProductCategoriesApiAxiosParamCreator = function (configuration?: C
             assertParamExists('platformProductCategoriesDelete', 'accountId', accountId)
             // verify required parameter 'categoryId' is not null or undefined
             assertParamExists('platformProductCategoriesDelete', 'categoryId', categoryId)
-            const localVarPath = `/product-categories/{accountId}`
+            const localVarPath = `/product-categories/{accountId}/{categoryId}`
                 .replace(`{${"accountId"}}`, encodeURIComponent(String(accountId)))
                 .replace(`{${"categoryId"}}`, encodeURIComponent(String(categoryId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -8941,7 +8941,7 @@ export const ProductCategoriesApiAxiosParamCreator = function (configuration?: C
             assertParamExists('platformProductCategoriesPatch', 'accountId', accountId)
             // verify required parameter 'categoryId' is not null or undefined
             assertParamExists('platformProductCategoriesPatch', 'categoryId', categoryId)
-            const localVarPath = `/product-categories/{accountId}`
+            const localVarPath = `/product-categories/{accountId}/{categoryId}`
                 .replace(`{${"accountId"}}`, encodeURIComponent(String(accountId)))
                 .replace(`{${"categoryId"}}`, encodeURIComponent(String(categoryId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
