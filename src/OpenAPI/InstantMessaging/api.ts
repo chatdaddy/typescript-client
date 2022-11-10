@@ -3008,17 +3008,8 @@ export interface TagsPatchRequest {
  */
 
 export const TemplateCategory = {
-    AccountUpdate: 'account-update',
-    PaymentUpdate: 'payment-update',
-    PersonalFinanceUpdate: 'personal-finance-update',
-    TransportationUpdate: 'transportation-update',
-    ReservationUpdate: 'reservation-update',
-    IssueResolution: 'issue-resolution',
-    AppointmentUpdate: 'appointment-update',
-    ShippingUpdate: 'shipping-update',
-    TicketUpdate: 'ticket-update',
-    AlertUpdate: 'alert-update',
-    AutoReply: 'auto-reply',
+    Transactional: 'transactional',
+    Marketing: 'marketing',
     Otp: 'otp'
 } as const;
 
