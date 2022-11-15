@@ -1102,6 +1102,12 @@ export interface PostTracking {
      */
     'name': string;
     /**
+     * default country code of phone number if that doesn\'t exists on target phone.
+     * @type {number}
+     * @memberof PostTracking
+     */
+    'defaultCountryCode'?: number;
+    /**
      * The triggers
      * @type {Array<EventTriggerCreate>}
      * @memberof PostTracking
