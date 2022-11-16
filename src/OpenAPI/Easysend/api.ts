@@ -1300,6 +1300,12 @@ export interface TrackServiceModel {
      */
     'teamId': string;
     /**
+     * default country code of phone number if that doesn\'t exists on target phone.
+     * @type {number}
+     * @memberof TrackServiceModel
+     */
+    'defaultCountryCode'?: number;
+    /**
      * The triggers setup for this service
      * @type {Array<EventTrigger>}
      * @memberof TrackServiceModel
@@ -1467,6 +1473,12 @@ export interface UpdateTracking {
      * @memberof UpdateTracking
      */
     'credentials'?: { [key: string]: any; };
+    /**
+     * default country code of phone number if that doesn\'t exists on target phone.
+     * @type {number}
+     * @memberof UpdateTracking
+     */
+    'defaultCountryCode'?: number;
     /**
      * 
      * @type {Array<EventTrigger>}
