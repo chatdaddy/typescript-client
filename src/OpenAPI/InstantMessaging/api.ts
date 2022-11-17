@@ -2778,6 +2778,12 @@ export interface ProductCategory {
      */
     'name': string;
     /**
+     * Unique identifier for an account.  The account ID is constructed from the first 21 characters of the team ID, prefixed by \"acc\" and suffixed by 4 random hex characters. This helps uniquely identify each account as well as establish a connection between the account\'s team by embedding the partial team ID in it. 
+     * @type {string}
+     * @memberof ProductCategory
+     */
+    'accountId': string;
+    /**
      * 
      * @type {number}
      * @memberof ProductCategory
