@@ -30,7 +30,7 @@ import { COLLECTION_FORMATS, RequestArgs, BaseAPI, RequiredError } from '../base
  */
 export interface Account {
     /**
-     * Unique identifier for an account.  The account ID is constructed from the first 21 characters of the team ID, prefixed by \"acc\" and suffixed by 4 random hex characters. This helps uniquely identify each account as well as establish a connection between the account\'s team by embedding the partial team ID in it. 
+     * Unique identifier for an account.  The account ID is constructed from the first 21 characters of the team ID, prefixed by \"acc\" and suffixed by 4 random hex characters. This helps uniquely identify each account as well as establish a connection between the account\'s team by embedding the partial team ID in it.
      * @type {string}
      * @memberof Account
      */
@@ -464,7 +464,7 @@ export type AlibabaCAMSWebhookItemConversationTypeEnum = typeof AlibabaCAMSWebho
  */
 export interface Chat {
     /**
-     * Unique identifier for an account.  The account ID is constructed from the first 21 characters of the team ID, prefixed by \"acc\" and suffixed by 4 random hex characters. This helps uniquely identify each account as well as establish a connection between the account\'s team by embedding the partial team ID in it. 
+     * Unique identifier for an account.  The account ID is constructed from the first 21 characters of the team ID, prefixed by \"acc\" and suffixed by 4 random hex characters. This helps uniquely identify each account as well as establish a connection between the account\'s team by embedding the partial team ID in it.
      * @type {string}
      * @memberof Chat
      */
@@ -621,7 +621,7 @@ export type ChatActionActionEnum = typeof ChatActionActionEnum[keyof typeof Chat
  */
 export interface ChatPresence {
     /**
-     * Unique identifier for an account.  The account ID is constructed from the first 21 characters of the team ID, prefixed by \"acc\" and suffixed by 4 random hex characters. This helps uniquely identify each account as well as establish a connection between the account\'s team by embedding the partial team ID in it. 
+     * Unique identifier for an account.  The account ID is constructed from the first 21 characters of the team ID, prefixed by \"acc\" and suffixed by 4 random hex characters. This helps uniquely identify each account as well as establish a connection between the account\'s team by embedding the partial team ID in it.
      * @type {string}
      * @memberof ChatPresence
      */
@@ -695,7 +695,7 @@ export interface Contact {
      */
     'id': string;
     /**
-     * Unique identifier for an account.  The account ID is constructed from the first 21 characters of the team ID, prefixed by \"acc\" and suffixed by 4 random hex characters. This helps uniquely identify each account as well as establish a connection between the account\'s team by embedding the partial team ID in it. 
+     * Unique identifier for an account.  The account ID is constructed from the first 21 characters of the team ID, prefixed by \"acc\" and suffixed by 4 random hex characters. This helps uniquely identify each account as well as establish a connection between the account\'s team by embedding the partial team ID in it.
      * @type {string}
      * @memberof Contact
      */
@@ -1009,7 +1009,7 @@ export interface ContactsPatchPatch {
  */
 export interface ContactsPost {
     /**
-     * Unique identifier for an account.  The account ID is constructed from the first 21 characters of the team ID, prefixed by \"acc\" and suffixed by 4 random hex characters. This helps uniquely identify each account as well as establish a connection between the account\'s team by embedding the partial team ID in it. 
+     * Unique identifier for an account.  The account ID is constructed from the first 21 characters of the team ID, prefixed by \"acc\" and suffixed by 4 random hex characters. This helps uniquely identify each account as well as establish a connection between the account\'s team by embedding the partial team ID in it.
      * @type {string}
      * @memberof ContactsPost
      */
@@ -1138,7 +1138,7 @@ export interface GroupMetadata {
      */
     'id': string;
     /**
-     * Unique identifier for an account.  The account ID is constructed from the first 21 characters of the team ID, prefixed by \"acc\" and suffixed by 4 random hex characters. This helps uniquely identify each account as well as establish a connection between the account\'s team by embedding the partial team ID in it. 
+     * Unique identifier for an account.  The account ID is constructed from the first 21 characters of the team ID, prefixed by \"acc\" and suffixed by 4 random hex characters. This helps uniquely identify each account as well as establish a connection between the account\'s team by embedding the partial team ID in it.
      * @type {string}
      * @memberof GroupMetadata
      */
@@ -1239,7 +1239,7 @@ export interface Message {
      */
     'chatId': string;
     /**
-     * Unique identifier for an account.  The account ID is constructed from the first 21 characters of the team ID, prefixed by \"acc\" and suffixed by 4 random hex characters. This helps uniquely identify each account as well as establish a connection between the account\'s team by embedding the partial team ID in it. 
+     * Unique identifier for an account.  The account ID is constructed from the first 21 characters of the team ID, prefixed by \"acc\" and suffixed by 4 random hex characters. This helps uniquely identify each account as well as establish a connection between the account\'s team by embedding the partial team ID in it.
      * @type {string}
      * @memberof Message
      */
@@ -1390,7 +1390,7 @@ export interface MessageAllOf {
      */
     'chatId': string;
     /**
-     * Unique identifier for an account.  The account ID is constructed from the first 21 characters of the team ID, prefixed by \"acc\" and suffixed by 4 random hex characters. This helps uniquely identify each account as well as establish a connection between the account\'s team by embedding the partial team ID in it. 
+     * Unique identifier for an account.  The account ID is constructed from the first 21 characters of the team ID, prefixed by \"acc\" and suffixed by 4 random hex characters. This helps uniquely identify each account as well as establish a connection between the account\'s team by embedding the partial team ID in it.
      * @type {string}
      * @memberof MessageAllOf
      */
@@ -2430,7 +2430,7 @@ export interface PlatformProduct {
      */
     'id': string;
     /**
-     * Unique identifier for an account.  The account ID is constructed from the first 21 characters of the team ID, prefixed by \"acc\" and suffixed by 4 random hex characters. This helps uniquely identify each account as well as establish a connection between the account\'s team by embedding the partial team ID in it. 
+     * Unique identifier for an account.  The account ID is constructed from the first 21 characters of the team ID, prefixed by \"acc\" and suffixed by 4 random hex characters. This helps uniquely identify each account as well as establish a connection between the account\'s team by embedding the partial team ID in it.
      * @type {string}
      * @memberof PlatformProduct
      */
@@ -2778,7 +2778,7 @@ export interface ProductCategory {
      */
     'name': string;
     /**
-     * Unique identifier for an account.  The account ID is constructed from the first 21 characters of the team ID, prefixed by \"acc\" and suffixed by 4 random hex characters. This helps uniquely identify each account as well as establish a connection between the account\'s team by embedding the partial team ID in it. 
+     * Unique identifier for an account.  The account ID is constructed from the first 21 characters of the team ID, prefixed by \"acc\" and suffixed by 4 random hex characters. This helps uniquely identify each account as well as establish a connection between the account\'s team by embedding the partial team ID in it.
      * @type {string}
      * @memberof ProductCategory
      */
@@ -8144,6 +8144,7 @@ export const ProductApiAxiosParamCreator = function (configuration?: Configurati
          * @param {Array<string>} [accountId] 
          * @param {string} [q] Filter if product title/description contains this
          * @param {string} [category] Filter based on collection/category
+         * @param {string} [notCategory] Returns products not belonging to the specified category
          * @param {Array<string>} [id] 
          * @param {string} [cursor] 
          * @param {number} [count] 
@@ -8151,7 +8152,7 @@ export const ProductApiAxiosParamCreator = function (configuration?: Configurati
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        platformProductsGet: async (accountId?: Array<string>, q?: string, category?: string, id?: Array<string>, cursor?: string, count?: number, returnTotalCount?: boolean, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        platformProductsGet: async (accountId?: Array<string>, q?: string, category?: string, notCategory?: string, id?: Array<string>, cursor?: string, count?: number, returnTotalCount?: boolean, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/products`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -8178,6 +8179,10 @@ export const ProductApiAxiosParamCreator = function (configuration?: Configurati
 
             if (category !== undefined) {
                 localVarQueryParameter['category'] = category;
+            }
+
+            if (notCategory !== undefined) {
+                localVarQueryParameter['notCategory'] = notCategory;
             }
 
             if (id) {
@@ -8407,6 +8412,7 @@ export const ProductApiFp = function(configuration?: Configuration) {
          * @param {Array<string>} [accountId] 
          * @param {string} [q] Filter if product title/description contains this
          * @param {string} [category] Filter based on collection/category
+         * @param {string} [notCategory] Returns products not belonging to the specified category
          * @param {Array<string>} [id] 
          * @param {string} [cursor] 
          * @param {number} [count] 
@@ -8414,8 +8420,8 @@ export const ProductApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async platformProductsGet(accountId?: Array<string>, q?: string, category?: string, id?: Array<string>, cursor?: string, count?: number, returnTotalCount?: boolean, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PlatformProductsGet200Response>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.platformProductsGet(accountId, q, category, id, cursor, count, returnTotalCount, options);
+        async platformProductsGet(accountId?: Array<string>, q?: string, category?: string, notCategory?: string, id?: Array<string>, cursor?: string, count?: number, returnTotalCount?: boolean, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PlatformProductsGet200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.platformProductsGet(accountId, q, category, notCategory, id, cursor, count, returnTotalCount, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -8499,6 +8505,7 @@ export const ProductApiFactory = function (configuration?: Configuration, basePa
          * @param {Array<string>} [accountId] 
          * @param {string} [q] Filter if product title/description contains this
          * @param {string} [category] Filter based on collection/category
+         * @param {string} [notCategory] Returns products not belonging to the specified category
          * @param {Array<string>} [id] 
          * @param {string} [cursor] 
          * @param {number} [count] 
@@ -8506,8 +8513,8 @@ export const ProductApiFactory = function (configuration?: Configuration, basePa
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        platformProductsGet(accountId?: Array<string>, q?: string, category?: string, id?: Array<string>, cursor?: string, count?: number, returnTotalCount?: boolean, options?: any): AxiosPromise<PlatformProductsGet200Response> {
-            return localVarFp.platformProductsGet(accountId, q, category, id, cursor, count, returnTotalCount, options).then((request) => request(axios, basePath));
+        platformProductsGet(accountId?: Array<string>, q?: string, category?: string, notCategory?: string, id?: Array<string>, cursor?: string, count?: number, returnTotalCount?: boolean, options?: any): AxiosPromise<PlatformProductsGet200Response> {
+            return localVarFp.platformProductsGet(accountId, q, category, notCategory, id, cursor, count, returnTotalCount, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -8638,6 +8645,13 @@ export interface ProductApiPlatformProductsGetRequest {
      * @memberof ProductApiPlatformProductsGet
      */
     readonly category?: string
+
+    /**
+     * Returns products not belonging to the specified category
+     * @type {string}
+     * @memberof ProductApiPlatformProductsGet
+     */
+    readonly notCategory?: string
 
     /**
      * 
@@ -8806,7 +8820,7 @@ export class ProductApi extends BaseAPI {
      * @memberof ProductApi
      */
     public platformProductsGet(requestParameters: ProductApiPlatformProductsGetRequest = {}, options?: AxiosRequestConfig) {
-        return ProductApiFp(this.configuration).platformProductsGet(requestParameters.accountId, requestParameters.q, requestParameters.category, requestParameters.id, requestParameters.cursor, requestParameters.count, requestParameters.returnTotalCount, options).then((request) => request(this.axios, this.basePath));
+        return ProductApiFp(this.configuration).platformProductsGet(requestParameters.accountId, requestParameters.q, requestParameters.category, requestParameters.notCategory, requestParameters.id, requestParameters.cursor, requestParameters.count, requestParameters.returnTotalCount, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
