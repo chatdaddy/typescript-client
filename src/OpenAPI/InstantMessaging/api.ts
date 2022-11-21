@@ -219,6 +219,12 @@ export interface AccountSettings {
      * @memberof AccountSettings
      */
     'autoAssignNewChats'?: AccountSettingsAutoAssignNewChatsEnum;
+    /**
+     * All new chats will be auto assigned to the selected teammate
+     * @type {Array<string>}
+     * @memberof AccountSettings
+     */
+    'newChatsAssignee'?: Array<string>;
 }
 
 export const AccountSettingsAutoAssignNewChatsEnum = {
