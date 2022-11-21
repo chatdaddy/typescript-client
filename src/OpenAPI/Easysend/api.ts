@@ -1042,6 +1042,12 @@ export interface PaymentSystem {
      * @memberof PaymentSystem
      */
     'country': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof PaymentSystem
+     */
+    'logoImageUrl'?: string;
 }
 
 export const PaymentSystemTypeEnum = {
