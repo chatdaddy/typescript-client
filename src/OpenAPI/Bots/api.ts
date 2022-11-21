@@ -355,6 +355,12 @@ export interface BotMessageButton {
      */
     'triggerActionId'?: string | null;
     /**
+     * 
+     * @type {string}
+     * @memberof BotMessageButton
+     */
+    'triggerBotId'?: string | null;
+    /**
      * Make a button with a link
      * @type {string}
      * @memberof BotMessageButton
@@ -385,6 +391,12 @@ export interface BotMessageDelay {
      * @memberof BotMessageDelay
      */
     'triggerActionId': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof BotMessageDelay
+     */
+    'triggerBotId'?: string | null;
     /**
      * Simulate typing
      * @type {boolean}
