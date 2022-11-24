@@ -34,6 +34,7 @@ export const EventName = {
     GroupUpdate: 'group-update',
     PresenceUpdate: 'presence-update',
     OrderInsert: 'order-insert',
+    BotsFire: 'bots-fire',
     ContactInsert: 'contact-insert',
     ContactUpdate: 'contact-update',
     ContactDelete: 'contact-delete',
