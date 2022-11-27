@@ -261,6 +261,12 @@ export interface ActionFireRecord {
      * @memberof ActionFireRecord
      */
     'contact'?: ServiceResponse;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof ActionFireRecord
+     */
+    'isStart'?: boolean;
 }
 /**
  * 
