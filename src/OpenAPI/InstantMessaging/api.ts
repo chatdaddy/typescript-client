@@ -2407,6 +2407,12 @@ export interface PlatformProduct {
     'url'?: string;
     /**
      * 
+     * @type {Array<ProductCategory>}
+     * @memberof PlatformProduct
+     */
+    'categories'?: Array<ProductCategory>;
+    /**
+     * 
      * @type {string}
      * @memberof PlatformProduct
      */
