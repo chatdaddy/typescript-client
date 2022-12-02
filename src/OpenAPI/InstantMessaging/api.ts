@@ -214,27 +214,31 @@ export interface AccountSettings {
      */
     'nativeChatActionSync'?: boolean;
     /**
-     * Based on this flag smart assignee will work. 1. fromMe => only trigger for chats that were created by me. 2. fromOther => only trigger for chats that were created by the other person initiating the conversation. 3. all => trigger for all new chats. 4. disabled => this should be enabled by the flag being null or undefined.
-     * @type {string}
+     * 
+     * @type {AccountSettingsNewChatsAssignee}
      * @memberof AccountSettings
      */
-    'autoAssignNewChats'?: AccountSettingsAutoAssignNewChatsEnum;
-    /**
-     * All new chats will be auto assigned to the selected teammate
-     * @type {Array<string>}
-     * @memberof AccountSettings
-     */
-    'newChatsAssignee'?: Array<string>;
+    'newChatsAssignee'?: AccountSettingsNewChatsAssignee;
 }
-
-export const AccountSettingsAutoAssignNewChatsEnum = {
-    FromMe: 'fromMe',
-    FromOther: 'fromOther',
-    All: 'all'
-} as const;
-
-export type AccountSettingsAutoAssignNewChatsEnum = typeof AccountSettingsAutoAssignNewChatsEnum[keyof typeof AccountSettingsAutoAssignNewChatsEnum];
-
+/**
+ * All new chats will be auto asssigned if one of the option is enabled and select any Assignee
+ * @export
+ * @interface AccountSettingsNewChatsAssignee
+ */
+export interface AccountSettingsNewChatsAssignee {
+    /**
+     * 
+     * @type {ChatAssignment}
+     * @memberof AccountSettingsNewChatsAssignee
+     */
+    'incoming'?: ChatAssignment;
+    /**
+     * 
+     * @type {ChatAssignment}
+     * @memberof AccountSettingsNewChatsAssignee
+     */
+    'outgoing'?: ChatAssignment;
+}
 /**
  * Describes the current state of an account. 1. open => logged in & connected to WhatsApp. Can send & receive messages now 2. connecting => establishing connection to WhatsApp. QR code is available during this state 3. close => connection to WhatsApp is closed, account is inactive at the moment
  * @export
@@ -620,6 +624,25 @@ export const ChatActionActionEnum = {
 
 export type ChatActionActionEnum = typeof ChatActionActionEnum[keyof typeof ChatActionActionEnum];
 
+/**
+ * 
+ * @export
+ * @interface ChatAssignment
+ */
+export interface ChatAssignment {
+    /**
+     * This flag will define if option should enabled/disabled
+     * @type {boolean}
+     * @memberof ChatAssignment
+     */
+    'enabled': boolean;
+    /**
+     * Auto assigned will work for the selected teammates
+     * @type {Array<string>}
+     * @memberof ChatAssignment
+     */
+    'assignees'?: Array<string>;
+}
 /**
  * 
  * @export
