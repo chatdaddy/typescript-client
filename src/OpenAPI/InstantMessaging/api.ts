@@ -2445,7 +2445,7 @@ export interface PlatformProduct {
      * @type {number}
      * @memberof PlatformProduct
      */
-    'price': number;
+    'price': number | null;
     /**
      * 
      * @type {string}
