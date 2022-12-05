@@ -2451,7 +2451,7 @@ export interface PlatformProduct {
      * @type {string}
      * @memberof PlatformProduct
      */
-    'currency': string;
+    'currency': string | null;
     /**
      * 
      * @type {boolean}
