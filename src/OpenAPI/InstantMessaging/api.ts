@@ -42,6 +42,12 @@ export interface Account {
      */
     'ownerId': string;
     /**
+     * Assignees who can access this account.
+     * @type {Array<string>}
+     * @memberof Account
+     */
+    'assignees'?: Array<string>;
+    /**
      * User facing nickname of the account
      * @type {string}
      * @memberof Account
@@ -345,6 +351,12 @@ export interface AccountsPatchRequest {
      * @memberof AccountsPatchRequest
      */
     'credentials'?: AccountCredentialsAlibaba;
+    /**
+     * Assignees who can access this account.
+     * @type {Array<string>}
+     * @memberof AccountsPatchRequest
+     */
+    'assignees'?: Array<string>;
 }
 /**
  * 
@@ -3416,7 +3428,7 @@ export const AccountApiAxiosParamCreator = function (configuration?: Configurati
 
             // authentication chatdaddy required
             // oauth required
-            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["ACCOUNT_READ"], configuration)
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["ACCOUNT_READ", "ACCOUNTS_READ_ASSIGNED"], configuration)
 
             if (q !== undefined) {
                 localVarQueryParameter['q'] = q;
