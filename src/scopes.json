@@ -626,7 +626,9 @@
   "PAYMENTS_READ": {
     "number": 78,
     "description": "Read payments",
-    "features": [],
+    "features": [
+      "shop"
+    ],
     "roles": [
       "admin"
     ],
@@ -635,7 +637,9 @@
   "PAYMENTS_UPDATE": {
     "number": 79,
     "description": "Update/make new payments",
-    "features": [],
+    "features": [
+      "shop"
+    ],
     "roles": [
       "admin"
     ],
@@ -674,64 +678,96 @@
   "PRODUCTS_GET": {
     "number": 82,
     "description": "Fetch all platform products",
-    "features": [],
-    "roles": [],
+    "features": [
+      "shop"
+    ],
+    "roles": [
+      "viewer"
+    ],
     "group": "Shop & Product"
   },
   "PRODUCTS_CREATE": {
     "number": 83,
     "description": "Create a platform product",
-    "features": [],
-    "roles": [],
+    "features": [
+      "shop"
+    ],
+    "roles": [
+      "editor"
+    ],
     "group": "Shop & Product"
   },
   "PRODUCTS_UPDATE": {
     "number": 84,
     "description": "Update a platform product",
-    "features": [],
-    "roles": [],
+    "features": [
+      "shop"
+    ],
+    "roles": [
+      "editor"
+    ],
     "group": "Shop & Product"
   },
   "PRODUCTS_DELETE": {
     "number": 85,
     "description": "Delete a platform product",
-    "features": [],
-    "roles": [],
+    "features": [
+      "shop"
+    ],
+    "roles": [
+      "admin"
+    ],
     "group": "Shop & Product"
   },
   "PAYMENT_INTEGRATION_READ": {
     "number": 86,
     "description": "Read payment integrations",
-    "features": [],
+    "features": [
+      "shop"
+    ],
     "roles": [],
     "group": "Payment Integrations"
   },
   "PAYMENT_INTEGRATION_WRITE": {
     "number": 87,
     "description": "Write payment integrations",
-    "features": [],
+    "features": [
+      "shop"
+    ],
     "roles": [],
     "group": "Payment Integrations"
   },
   "PAYMENT_RECORDS_READ": {
     "number": 88,
     "description": "Read payments records",
-    "features": [],
-    "roles": [],
+    "features": [
+      "shop"
+    ],
+    "roles": [
+      "viewer"
+    ],
     "group": "Payment Records"
   },
   "PAYMENT_RECORDS_WRITE": { 
     "number": 89,
     "description": "Write payments records",
-    "features": [],
-    "roles": [],
+    "features": [
+      "shop"
+    ],
+    "roles": [
+      "agent"
+    ],
     "group": "Payment Records"
   },
   "METRICS_GET": {
     "number": 90,
     "description": "View aggregate metrics about your team",
-    "features": [],
-    "roles": [],
+    "features": [
+      "audience"
+    ],
+    "roles": [
+      "viewer"
+    ],
     "group": "Dashboard & Metrics"
   },
   "ACCOUNTS_READ_ASSIGNED": {
