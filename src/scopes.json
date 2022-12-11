@@ -626,9 +626,7 @@
   "PAYMENTS_READ": {
     "number": 78,
     "description": "Read payments",
-    "features": [
-      "shop"
-    ],
+    "features": [],
     "roles": [
       "admin"
     ],
@@ -637,9 +635,7 @@
   "PAYMENTS_UPDATE": {
     "number": 79,
     "description": "Update/make new payments",
-    "features": [
-      "shop"
-    ],
+    "features": [],
     "roles": [
       "admin"
     ],
