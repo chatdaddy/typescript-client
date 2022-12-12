@@ -589,6 +589,12 @@ export interface CampaignRetreivalResponse {
      * @memberof CampaignRetreivalResponse
      */
     'cursor'?: string;
+    /**
+     * total campaigns present with these filters. Only returned if returnTotalCount is true
+     * @type {number}
+     * @memberof CampaignRetreivalResponse
+     */
+    'totalCount'?: number;
 }
 /**
  * Current state of the campaign
@@ -813,10 +819,11 @@ export const CampaignsApiAxiosParamCreator = function (configuration?: Configura
          * @param {boolean} [onlyActive] Show only active campaigns
          * @param {CampaignState} [status] Query campaigns with the specified status
          * @param {string} [id] Get metadata of this campaign
+         * @param {boolean} [returnTotalCount] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        campaignGets: async (count?: number, before?: string, searchString?: string, onlyActive?: boolean, status?: CampaignState, id?: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        campaignGets: async (count?: number, before?: string, searchString?: string, onlyActive?: boolean, status?: CampaignState, id?: string, returnTotalCount?: boolean, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -855,6 +862,10 @@ export const CampaignsApiAxiosParamCreator = function (configuration?: Configura
 
             if (id !== undefined) {
                 localVarQueryParameter['id'] = id;
+            }
+
+            if (returnTotalCount !== undefined) {
+                localVarQueryParameter['returnTotalCount'] = returnTotalCount;
             }
 
 
@@ -1051,11 +1062,12 @@ export const CampaignsApiFp = function(configuration?: Configuration) {
          * @param {boolean} [onlyActive] Show only active campaigns
          * @param {CampaignState} [status] Query campaigns with the specified status
          * @param {string} [id] Get metadata of this campaign
+         * @param {boolean} [returnTotalCount] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async campaignGets(count?: number, before?: string, searchString?: string, onlyActive?: boolean, status?: CampaignState, id?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CampaignRetreivalResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.campaignGets(count, before, searchString, onlyActive, status, id, options);
+        async campaignGets(count?: number, before?: string, searchString?: string, onlyActive?: boolean, status?: CampaignState, id?: string, returnTotalCount?: boolean, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CampaignRetreivalResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.campaignGets(count, before, searchString, onlyActive, status, id, returnTotalCount, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -1153,11 +1165,12 @@ export const CampaignsApiFactory = function (configuration?: Configuration, base
          * @param {boolean} [onlyActive] Show only active campaigns
          * @param {CampaignState} [status] Query campaigns with the specified status
          * @param {string} [id] Get metadata of this campaign
+         * @param {boolean} [returnTotalCount] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        campaignGets(count?: number, before?: string, searchString?: string, onlyActive?: boolean, status?: CampaignState, id?: string, options?: any): AxiosPromise<CampaignRetreivalResponse> {
-            return localVarFp.campaignGets(count, before, searchString, onlyActive, status, id, options).then((request) => request(axios, basePath));
+        campaignGets(count?: number, before?: string, searchString?: string, onlyActive?: boolean, status?: CampaignState, id?: string, returnTotalCount?: boolean, options?: any): AxiosPromise<CampaignRetreivalResponse> {
+            return localVarFp.campaignGets(count, before, searchString, onlyActive, status, id, returnTotalCount, options).then((request) => request(axios, basePath));
         },
         /**
          * Returns the updated campaign
@@ -1322,6 +1335,13 @@ export interface CampaignsApiCampaignGetsRequest {
      * @memberof CampaignsApiCampaignGets
      */
     readonly id?: string
+
+    /**
+     * 
+     * @type {boolean}
+     * @memberof CampaignsApiCampaignGets
+     */
+    readonly returnTotalCount?: boolean
 }
 
 /**
@@ -1437,7 +1457,7 @@ export class CampaignsApi extends BaseAPI {
      * @memberof CampaignsApi
      */
     public campaignGets(requestParameters: CampaignsApiCampaignGetsRequest = {}, options?: AxiosRequestConfig) {
-        return CampaignsApiFp(this.configuration).campaignGets(requestParameters.count, requestParameters.before, requestParameters.searchString, requestParameters.onlyActive, requestParameters.status, requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+        return CampaignsApiFp(this.configuration).campaignGets(requestParameters.count, requestParameters.before, requestParameters.searchString, requestParameters.onlyActive, requestParameters.status, requestParameters.id, requestParameters.returnTotalCount, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
