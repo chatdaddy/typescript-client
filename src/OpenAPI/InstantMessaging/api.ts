@@ -283,7 +283,8 @@ export type AccountTier = typeof AccountTier[keyof typeof AccountTier];
 export const AccountType = {
     Wa: 'wa',
     WaBusinessApi: 'wa-business-api',
-    Mock: 'mock'
+    Mock: 'mock',
+    Tiktok: 'tiktok'
 } as const;
 
 export type AccountType = typeof AccountType[keyof typeof AccountType];
@@ -347,16 +348,35 @@ export interface AccountsPatchRequest {
     'settings'?: AccountSettings;
     /**
      * 
-     * @type {AccountCredentialsAlibaba}
+     * @type {AccountsPatchRequestCredentials}
      * @memberof AccountsPatchRequest
      */
-    'credentials'?: AccountCredentialsAlibaba;
+    'credentials'?: AccountsPatchRequestCredentials;
     /**
      * Assignees who can access this account.
      * @type {Array<string>}
      * @memberof AccountsPatchRequest
      */
     'assignees'?: Array<string>;
+}
+/**
+ * @type AccountsPatchRequestCredentials
+ * @export
+ */
+export type AccountsPatchRequestCredentials = AccountCredentialsAlibaba | AccountsPatchRequestCredentialsOneOf;
+
+/**
+ * 
+ * @export
+ * @interface AccountsPatchRequestCredentialsOneOf
+ */
+export interface AccountsPatchRequestCredentialsOneOf {
+    /**
+     * 
+     * @type {{ [key: string]: any; }}
+     * @memberof AccountsPatchRequestCredentialsOneOf
+     */
+    'cookies'?: { [key: string]: any; };
 }
 /**
  * 
@@ -898,7 +918,8 @@ export interface ContactTag {
 export const ContactType = {
     Individual: 'individual',
     Group: 'group',
-    Broadcast: 'broadcast'
+    Broadcast: 'broadcast',
+    Post: 'post'
 } as const;
 
 export type ContactType = typeof ContactType[keyof typeof ContactType];
@@ -3175,6 +3196,37 @@ export interface TemplatesSubmitForReviewRequest {
      * @memberof TemplatesSubmitForReviewRequest
      */
     'message': TemplateCreate;
+}
+/**
+ * 
+ * @export
+ * @interface TikTokStateInfo
+ */
+export interface TikTokStateInfo {
+    /**
+     * 
+     * @type {boolean}
+     * @memberof TikTokStateInfo
+     */
+    'isSyncing'?: boolean;
+    /**
+     * 
+     * @type {number}
+     * @memberof TikTokStateInfo
+     */
+    'chatsSynced'?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof TikTokStateInfo
+     */
+    'lastSyncCursor'?: string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof TikTokStateInfo
+     */
+    'isSyncComplete'?: boolean;
 }
 /**
  * 
