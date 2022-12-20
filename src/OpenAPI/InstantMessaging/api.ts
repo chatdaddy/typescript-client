@@ -3222,11 +3222,11 @@ export interface TikTokStateInfo {
      */
     'lastSyncCursor'?: string;
     /**
-     * 
-     * @type {boolean}
+     * An ISO formatted timestamp
+     * @type {string}
      * @memberof TikTokStateInfo
      */
-    'isSyncComplete'?: boolean;
+    'syncCompletedAt'?: string;
 }
 /**
  * 
