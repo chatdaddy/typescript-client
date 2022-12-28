@@ -26,22 +26,49 @@ import { COLLECTION_FORMATS, RequestArgs, BaseAPI, RequiredError } from '../base
 /**
  * 
  * @export
- * @interface FAQContent
+ * @interface Content
  */
-export interface FAQContent {
+export interface Content {
     /**
      * 
      * @type {string}
-     * @memberof FAQContent
+     * @memberof Content
      */
-    'question': string;
+    'label': string;
     /**
      * 
      * @type {string}
-     * @memberof FAQContent
+     * @memberof Content
      */
-    'answer': string;
+    'language': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Content
+     */
+    'notionLink': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Content
+     */
+    'type': ContentTypeEnum;
+    /**
+     * 
+     * @type {{ [key: string]: any; }}
+     * @memberof Content
+     */
+    'notionPageRecord': { [key: string]: any; };
 }
+
+export const ContentTypeEnum = {
+    Faq: 'faq',
+    CaseStudy: 'case-study',
+    Video: 'video'
+} as const;
+
+export type ContentTypeEnum = typeof ContentTypeEnum[keyof typeof ContentTypeEnum];
+
 /**
  * 
  * @export
@@ -50,10 +77,10 @@ export interface FAQContent {
 export interface HelpContent200Response {
     /**
      * 
-     * @type {Array<FAQContent>}
+     * @type {Array<Content>}
      * @memberof HelpContent200Response
      */
-    'faqContent': Array<FAQContent>;
+    'content': Array<Content>;
 }
 
 /**
