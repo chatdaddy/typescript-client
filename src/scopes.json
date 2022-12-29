@@ -678,7 +678,8 @@
       "shop"
     ],
     "roles": [
-      "viewer"
+      "viewer",
+      "admin"
     ],
     "group": "Shop & Product"
   },
@@ -689,6 +690,7 @@
       "shop"
     ],
     "roles": [
+      "admin",
       "editor"
     ],
     "group": "Shop & Product"
@@ -700,6 +702,7 @@
       "shop"
     ],
     "roles": [
+      "admin",
       "editor"
     ],
     "group": "Shop & Product"
@@ -711,7 +714,8 @@
       "shop"
     ],
     "roles": [
-      "admin"
+      "admin",
+      "editor"
     ],
     "group": "Shop & Product"
   },
