@@ -46,6 +46,12 @@ export interface Content {
      * @type {string}
      * @memberof Content
      */
+    'previewImage'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Content
+     */
     'notionLink': string;
     /**
      * 
