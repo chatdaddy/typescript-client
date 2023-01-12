@@ -117,6 +117,12 @@ export interface GetTriggers200Response {
      * @memberof GetTriggers200Response
      */
     'nextPageCursor'?: number;
+    /**
+     * total keywords present with these filters. Only returned if returnTotalCount is true
+     * @type {number}
+     * @memberof GetTriggers200Response
+     */
+    'totalCount'?: number;
 }
 /**
  * 
@@ -570,10 +576,11 @@ export const KeywordsApiAxiosParamCreator = function (configuration?: Configurat
          * @param {Array<string>} [id] 
          * @param {TriggerType} [triggerType] Query keywords with the specific trigger type
          * @param {string} [cursor] 
+         * @param {boolean} [returnTotalCount] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getTriggers: async (q?: string, count?: number, id?: Array<string>, triggerType?: TriggerType, cursor?: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getTriggers: async (q?: string, count?: number, id?: Array<string>, triggerType?: TriggerType, cursor?: string, returnTotalCount?: boolean, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -608,6 +615,10 @@ export const KeywordsApiAxiosParamCreator = function (configuration?: Configurat
 
             if (cursor !== undefined) {
                 localVarQueryParameter['cursor'] = cursor;
+            }
+
+            if (returnTotalCount !== undefined) {
+                localVarQueryParameter['returnTotalCount'] = returnTotalCount;
             }
 
 
@@ -685,11 +696,12 @@ export const KeywordsApiFp = function(configuration?: Configuration) {
          * @param {Array<string>} [id] 
          * @param {TriggerType} [triggerType] Query keywords with the specific trigger type
          * @param {string} [cursor] 
+         * @param {boolean} [returnTotalCount] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getTriggers(q?: string, count?: number, id?: Array<string>, triggerType?: TriggerType, cursor?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetTriggers200Response>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getTriggers(q, count, id, triggerType, cursor, options);
+        async getTriggers(q?: string, count?: number, id?: Array<string>, triggerType?: TriggerType, cursor?: string, returnTotalCount?: boolean, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetTriggers200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getTriggers(q, count, id, triggerType, cursor, returnTotalCount, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
     }
@@ -752,11 +764,12 @@ export const KeywordsApiFactory = function (configuration?: Configuration, baseP
          * @param {Array<string>} [id] 
          * @param {TriggerType} [triggerType] Query keywords with the specific trigger type
          * @param {string} [cursor] 
+         * @param {boolean} [returnTotalCount] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getTriggers(q?: string, count?: number, id?: Array<string>, triggerType?: TriggerType, cursor?: string, options?: any): AxiosPromise<GetTriggers200Response> {
-            return localVarFp.getTriggers(q, count, id, triggerType, cursor, options).then((request) => request(axios, basePath));
+        getTriggers(q?: string, count?: number, id?: Array<string>, triggerType?: TriggerType, cursor?: string, returnTotalCount?: boolean, options?: any): AxiosPromise<GetTriggers200Response> {
+            return localVarFp.getTriggers(q, count, id, triggerType, cursor, returnTotalCount, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -871,6 +884,13 @@ export interface KeywordsApiGetTriggersRequest {
      * @memberof KeywordsApiGetTriggers
      */
     readonly cursor?: string
+
+    /**
+     * 
+     * @type {boolean}
+     * @memberof KeywordsApiGetTriggers
+     */
+    readonly returnTotalCount?: boolean
 }
 
 /**
@@ -937,7 +957,7 @@ export class KeywordsApi extends BaseAPI {
      * @memberof KeywordsApi
      */
     public getTriggers(requestParameters: KeywordsApiGetTriggersRequest = {}, options?: AxiosRequestConfig) {
-        return KeywordsApiFp(this.configuration).getTriggers(requestParameters.q, requestParameters.count, requestParameters.id, requestParameters.triggerType, requestParameters.cursor, options).then((request) => request(this.axios, this.basePath));
+        return KeywordsApiFp(this.configuration).getTriggers(requestParameters.q, requestParameters.count, requestParameters.id, requestParameters.triggerType, requestParameters.cursor, requestParameters.returnTotalCount, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
