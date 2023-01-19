@@ -156,6 +156,12 @@ export interface KeywordActionCreateRequestObj {
      */
     'enabled'?: boolean;
     /**
+     * Accounts the keywords will trigger for
+     * @type {Array<string>}
+     * @memberof KeywordActionCreateRequestObj
+     */
+    'accountIds'?: Array<string>;
+    /**
      * Should typing indicator & read receipt be sent
      * @type {boolean}
      * @memberof KeywordActionCreateRequestObj
@@ -210,6 +216,12 @@ export interface KeywordActionEditRequestObj {
      * @memberof KeywordActionEditRequestObj
      */
     'id': number;
+    /**
+     * Accounts the keywords will trigger for
+     * @type {Array<string>}
+     * @memberof KeywordActionEditRequestObj
+     */
+    'accountIds'?: Array<string>;
     /**
      * Status of reply service
      * @type {boolean}
@@ -314,6 +326,12 @@ export interface KeywordBasedAction {
      * @memberof KeywordBasedAction
      */
     'teamId': string;
+    /**
+     * Accounts the keywords will trigger for
+     * @type {Array<string>}
+     * @memberof KeywordBasedAction
+     */
+    'accountIds'?: Array<string>;
     /**
      * Status of reply service
      * @type {boolean}
