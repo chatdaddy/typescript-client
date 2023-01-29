@@ -1367,6 +1367,12 @@ export interface TrackServices {
      */
     'trackings': Array<TrackServiceModel>;
     /**
+     * 
+     * @type {number}
+     * @memberof TrackServices
+     */
+    'nextPageCursor'?: number;
+    /**
      * total trackings present. Only returned if returnTotalCount is true
      * @type {number}
      * @memberof TrackServices
@@ -3363,11 +3369,13 @@ export const TrackingsApiAxiosParamCreator = function (configuration?: Configura
         /**
          * 
          * @summary Get the list of all services currently tracked by a team
+         * @param {number} [count] 
+         * @param {string} [cursor] 
          * @param {boolean} [returnTotalCount] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        trackingGet: async (returnTotalCount?: boolean, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        trackingGet: async (count?: number, cursor?: string, returnTotalCount?: boolean, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/tracking`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -3383,6 +3391,14 @@ export const TrackingsApiAxiosParamCreator = function (configuration?: Configura
             // authentication chatdaddy required
             // oauth required
             await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["NOTIFICATION_READ"], configuration)
+
+            if (count !== undefined) {
+                localVarQueryParameter['count'] = count;
+            }
+
+            if (cursor !== undefined) {
+                localVarQueryParameter['cursor'] = cursor;
+            }
 
             if (returnTotalCount !== undefined) {
                 localVarQueryParameter['returnTotalCount'] = returnTotalCount;
@@ -3613,12 +3629,14 @@ export const TrackingsApiFp = function(configuration?: Configuration) {
         /**
          * 
          * @summary Get the list of all services currently tracked by a team
+         * @param {number} [count] 
+         * @param {string} [cursor] 
          * @param {boolean} [returnTotalCount] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async trackingGet(returnTotalCount?: boolean, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TrackServices>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.trackingGet(returnTotalCount, options);
+        async trackingGet(count?: number, cursor?: string, returnTotalCount?: boolean, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TrackServices>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.trackingGet(count, cursor, returnTotalCount, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -3716,12 +3734,14 @@ export const TrackingsApiFactory = function (configuration?: Configuration, base
         /**
          * 
          * @summary Get the list of all services currently tracked by a team
+         * @param {number} [count] 
+         * @param {string} [cursor] 
          * @param {boolean} [returnTotalCount] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        trackingGet(returnTotalCount?: boolean, options?: any): AxiosPromise<TrackServices> {
-            return localVarFp.trackingGet(returnTotalCount, options).then((request) => request(axios, basePath));
+        trackingGet(count?: number, cursor?: string, returnTotalCount?: boolean, options?: any): AxiosPromise<TrackServices> {
+            return localVarFp.trackingGet(count, cursor, returnTotalCount, options).then((request) => request(axios, basePath));
         },
         /**
          * Edit existing events\' flowIds or create new events. Credentials array is forwarded to scrapper for updation.
@@ -3910,6 +3930,20 @@ export interface TrackingsApiTrackingDeleteRequest {
 export interface TrackingsApiTrackingGetRequest {
     /**
      * 
+     * @type {number}
+     * @memberof TrackingsApiTrackingGet
+     */
+    readonly count?: number
+
+    /**
+     * 
+     * @type {string}
+     * @memberof TrackingsApiTrackingGet
+     */
+    readonly cursor?: string
+
+    /**
+     * 
      * @type {boolean}
      * @memberof TrackingsApiTrackingGet
      */
@@ -4040,7 +4074,7 @@ export class TrackingsApi extends BaseAPI {
      * @memberof TrackingsApi
      */
     public trackingGet(requestParameters: TrackingsApiTrackingGetRequest = {}, options?: AxiosRequestConfig) {
-        return TrackingsApiFp(this.configuration).trackingGet(requestParameters.returnTotalCount, options).then((request) => request(this.axios, this.basePath));
+        return TrackingsApiFp(this.configuration).trackingGet(requestParameters.count, requestParameters.cursor, requestParameters.returnTotalCount, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
