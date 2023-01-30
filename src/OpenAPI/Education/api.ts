@@ -97,11 +97,11 @@ export const HelpContentApiAxiosParamCreator = function (configuration?: Configu
     return {
         /**
          * 
-         * @param {'broadcast' | 'keywordReply' | 'messageFlow' | 'inbox' | 'easysend' | 'products' | 'payments'} section which section faq content to retrieve
+         * @param {'broadcast' | 'keywordReply' | 'messageFlow' | 'inbox' | 'easysend' | 'products' | 'payments' | 'offlineBot'} section which section faq content to retrieve
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        helpContent: async (section: 'broadcast' | 'keywordReply' | 'messageFlow' | 'inbox' | 'easysend' | 'products' | 'payments', options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        helpContent: async (section: 'broadcast' | 'keywordReply' | 'messageFlow' | 'inbox' | 'easysend' | 'products' | 'payments' | 'offlineBot', options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'section' is not null or undefined
             assertParamExists('helpContent', 'section', section)
             const localVarPath = `/help-content/{section}`
@@ -144,11 +144,11 @@ export const HelpContentApiFp = function(configuration?: Configuration) {
     return {
         /**
          * 
-         * @param {'broadcast' | 'keywordReply' | 'messageFlow' | 'inbox' | 'easysend' | 'products' | 'payments'} section which section faq content to retrieve
+         * @param {'broadcast' | 'keywordReply' | 'messageFlow' | 'inbox' | 'easysend' | 'products' | 'payments' | 'offlineBot'} section which section faq content to retrieve
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async helpContent(section: 'broadcast' | 'keywordReply' | 'messageFlow' | 'inbox' | 'easysend' | 'products' | 'payments', options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<HelpContent200Response>> {
+        async helpContent(section: 'broadcast' | 'keywordReply' | 'messageFlow' | 'inbox' | 'easysend' | 'products' | 'payments' | 'offlineBot', options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<HelpContent200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.helpContent(section, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -164,11 +164,11 @@ export const HelpContentApiFactory = function (configuration?: Configuration, ba
     return {
         /**
          * 
-         * @param {'broadcast' | 'keywordReply' | 'messageFlow' | 'inbox' | 'easysend' | 'products' | 'payments'} section which section faq content to retrieve
+         * @param {'broadcast' | 'keywordReply' | 'messageFlow' | 'inbox' | 'easysend' | 'products' | 'payments' | 'offlineBot'} section which section faq content to retrieve
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        helpContent(section: 'broadcast' | 'keywordReply' | 'messageFlow' | 'inbox' | 'easysend' | 'products' | 'payments', options?: any): AxiosPromise<HelpContent200Response> {
+        helpContent(section: 'broadcast' | 'keywordReply' | 'messageFlow' | 'inbox' | 'easysend' | 'products' | 'payments' | 'offlineBot', options?: any): AxiosPromise<HelpContent200Response> {
             return localVarFp.helpContent(section, options).then((request) => request(axios, basePath));
         },
     };
@@ -182,10 +182,10 @@ export const HelpContentApiFactory = function (configuration?: Configuration, ba
 export interface HelpContentApiHelpContentRequest {
     /**
      * which section faq content to retrieve
-     * @type {'broadcast' | 'keywordReply' | 'messageFlow' | 'inbox' | 'easysend' | 'products' | 'payments'}
+     * @type {'broadcast' | 'keywordReply' | 'messageFlow' | 'inbox' | 'easysend' | 'products' | 'payments' | 'offlineBot'}
      * @memberof HelpContentApiHelpContent
      */
-    readonly section: 'broadcast' | 'keywordReply' | 'messageFlow' | 'inbox' | 'easysend' | 'products' | 'payments'
+    readonly section: 'broadcast' | 'keywordReply' | 'messageFlow' | 'inbox' | 'easysend' | 'products' | 'payments' | 'offlineBot'
 }
 
 /**
