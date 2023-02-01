@@ -35,6 +35,7 @@ export const EventName = {
     PresenceUpdate: 'presence-update',
     OrderInsert: 'order-insert',
     BotsFire: 'bots-fire',
+    ActionExecute: 'action-execute',
     ContactInsert: 'contact-insert',
     ContactUpdate: 'contact-update',
     ContactDelete: 'contact-delete',
