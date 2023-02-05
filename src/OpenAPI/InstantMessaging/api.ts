@@ -96,6 +96,12 @@ export interface Account {
      */
     'lastLogoutAt'?: string | null;
     /**
+     * An ISO formatted timestamp
+     * @type {string}
+     * @memberof Account
+     */
+    'lastClosedAt'?: string | null;
+    /**
      * 
      * @type {AccountState}
      * @memberof Account
