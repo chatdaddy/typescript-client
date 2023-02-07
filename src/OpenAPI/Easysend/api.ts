@@ -1961,13 +1961,16 @@ export const PaymentIntegrationsApiAxiosParamCreator = function (configuration?:
         /**
          * 
          * @summary Get all payment integrations available to a user
+         * @param {string} teamId 
          * @param {string} [id] Fetch the payment integrations with the id specified
          * @param {boolean} [isEnabled] Fetch only enabled integrations if true
          * @param {boolean} [fetchAll] Fetch all integrations if you have admin Access
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getPaymentIntegrations: async (id?: string, isEnabled?: boolean, fetchAll?: boolean, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getPaymentIntegrations: async (teamId: string, id?: string, isEnabled?: boolean, fetchAll?: boolean, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'teamId' is not null or undefined
+            assertParamExists('getPaymentIntegrations', 'teamId', teamId)
             const localVarPath = `/payment-integrations`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -1980,12 +1983,12 @@ export const PaymentIntegrationsApiAxiosParamCreator = function (configuration?:
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
-            // authentication chatdaddy required
-            // oauth required
-            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["PAYMENT_INTEGRATION_READ"], configuration)
-
             if (id !== undefined) {
                 localVarQueryParameter['id'] = id;
+            }
+
+            if (teamId !== undefined) {
+                localVarQueryParameter['teamId'] = teamId;
             }
 
             if (isEnabled !== undefined) {
@@ -2084,14 +2087,15 @@ export const PaymentIntegrationsApiFp = function(configuration?: Configuration) 
         /**
          * 
          * @summary Get all payment integrations available to a user
+         * @param {string} teamId 
          * @param {string} [id] Fetch the payment integrations with the id specified
          * @param {boolean} [isEnabled] Fetch only enabled integrations if true
          * @param {boolean} [fetchAll] Fetch all integrations if you have admin Access
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getPaymentIntegrations(id?: string, isEnabled?: boolean, fetchAll?: boolean, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetPaymentIntegrations200Response>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getPaymentIntegrations(id, isEnabled, fetchAll, options);
+        async getPaymentIntegrations(teamId: string, id?: string, isEnabled?: boolean, fetchAll?: boolean, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetPaymentIntegrations200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getPaymentIntegrations(teamId, id, isEnabled, fetchAll, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -2139,14 +2143,15 @@ export const PaymentIntegrationsApiFactory = function (configuration?: Configura
         /**
          * 
          * @summary Get all payment integrations available to a user
+         * @param {string} teamId 
          * @param {string} [id] Fetch the payment integrations with the id specified
          * @param {boolean} [isEnabled] Fetch only enabled integrations if true
          * @param {boolean} [fetchAll] Fetch all integrations if you have admin Access
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getPaymentIntegrations(id?: string, isEnabled?: boolean, fetchAll?: boolean, options?: any): AxiosPromise<GetPaymentIntegrations200Response> {
-            return localVarFp.getPaymentIntegrations(id, isEnabled, fetchAll, options).then((request) => request(axios, basePath));
+        getPaymentIntegrations(teamId: string, id?: string, isEnabled?: boolean, fetchAll?: boolean, options?: any): AxiosPromise<GetPaymentIntegrations200Response> {
+            return localVarFp.getPaymentIntegrations(teamId, id, isEnabled, fetchAll, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -2196,6 +2201,13 @@ export interface PaymentIntegrationsApiDeletePaymentIntegrationRequest {
  * @interface PaymentIntegrationsApiGetPaymentIntegrationsRequest
  */
 export interface PaymentIntegrationsApiGetPaymentIntegrationsRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof PaymentIntegrationsApiGetPaymentIntegrations
+     */
+    readonly teamId: string
+
     /**
      * Fetch the payment integrations with the id specified
      * @type {string}
@@ -2278,8 +2290,8 @@ export class PaymentIntegrationsApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof PaymentIntegrationsApi
      */
-    public getPaymentIntegrations(requestParameters: PaymentIntegrationsApiGetPaymentIntegrationsRequest = {}, options?: AxiosRequestConfig) {
-        return PaymentIntegrationsApiFp(this.configuration).getPaymentIntegrations(requestParameters.id, requestParameters.isEnabled, requestParameters.fetchAll, options).then((request) => request(this.axios, this.basePath));
+    public getPaymentIntegrations(requestParameters: PaymentIntegrationsApiGetPaymentIntegrationsRequest, options?: AxiosRequestConfig) {
+        return PaymentIntegrationsApiFp(this.configuration).getPaymentIntegrations(requestParameters.teamId, requestParameters.id, requestParameters.isEnabled, requestParameters.fetchAll, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
