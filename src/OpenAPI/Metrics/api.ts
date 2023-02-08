@@ -166,6 +166,7 @@ export const MetricType = {
     TasksAddedByChat: 'tasks-added-by-chat',
     ContactsTaggedByTag: 'contacts-tagged-by-tag',
     MessageFlowsSentByFlowId: 'message-flows-sent-by-flow-id',
+    MessageFlowsCompletedByFlowId: 'message-flows-completed-by-flow-id',
     MessageFlowClickRateByFlowId: 'message-flow-click-rate-by-flow-id',
     PaymentRecvByPhone: 'payment-recv-by-phone',
     OrdersRecvByPhone: 'orders-recv-by-phone',
