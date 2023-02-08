@@ -267,6 +267,12 @@ export interface ActionFireRecord {
      * @memberof ActionFireRecord
      */
     'isStart'?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof ActionFireRecord
+     */
+    'isFinal'?: boolean;
 }
 /**
  * 
