@@ -756,6 +756,12 @@ export interface ChatsGet200Response {
      */
     'unreadChatCount'?: number;
     /**
+     * the API counts at most N unread chats, if there are more unread chats that were not fetched, this flag is true
+     * @type {boolean}
+     * @memberof ChatsGet200Response
+     */
+    'hasMoreUnread'?: boolean;
+    /**
      * 
      * @type {Array<Chat>}
      * @memberof ChatsGet200Response
