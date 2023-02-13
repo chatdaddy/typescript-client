@@ -2602,13 +2602,16 @@ export const PaymentSystemsApiAxiosParamCreator = function (configuration?: Conf
         /**
          * 
          * @summary Get available payment systems
+         * @param {string} teamId 
          * @param {string} [country] Fetch Payment Systems from a particular country
          * @param {string} [q] Fetch Payment Systems by query
          * @param {boolean} [fetchAll] Fetch all systems if you have admin Access
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        paymentSystemsGet: async (country?: string, q?: string, fetchAll?: boolean, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        paymentSystemsGet: async (teamId: string, country?: string, q?: string, fetchAll?: boolean, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'teamId' is not null or undefined
+            assertParamExists('paymentSystemsGet', 'teamId', teamId)
             const localVarPath = `/payment-systems`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -2621,12 +2624,12 @@ export const PaymentSystemsApiAxiosParamCreator = function (configuration?: Conf
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
-            // authentication chatdaddy required
-            // oauth required
-            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["PRODUCTS_GET"], configuration)
-
             if (country !== undefined) {
                 localVarQueryParameter['country'] = country;
+            }
+
+            if (teamId !== undefined) {
+                localVarQueryParameter['teamId'] = teamId;
             }
 
             if (q !== undefined) {
@@ -2661,14 +2664,15 @@ export const PaymentSystemsApiFp = function(configuration?: Configuration) {
         /**
          * 
          * @summary Get available payment systems
+         * @param {string} teamId 
          * @param {string} [country] Fetch Payment Systems from a particular country
          * @param {string} [q] Fetch Payment Systems by query
          * @param {boolean} [fetchAll] Fetch all systems if you have admin Access
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async paymentSystemsGet(country?: string, q?: string, fetchAll?: boolean, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PaymentSystemsGet200Response>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.paymentSystemsGet(country, q, fetchAll, options);
+        async paymentSystemsGet(teamId: string, country?: string, q?: string, fetchAll?: boolean, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PaymentSystemsGet200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.paymentSystemsGet(teamId, country, q, fetchAll, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
     }
@@ -2684,14 +2688,15 @@ export const PaymentSystemsApiFactory = function (configuration?: Configuration,
         /**
          * 
          * @summary Get available payment systems
+         * @param {string} teamId 
          * @param {string} [country] Fetch Payment Systems from a particular country
          * @param {string} [q] Fetch Payment Systems by query
          * @param {boolean} [fetchAll] Fetch all systems if you have admin Access
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        paymentSystemsGet(country?: string, q?: string, fetchAll?: boolean, options?: any): AxiosPromise<PaymentSystemsGet200Response> {
-            return localVarFp.paymentSystemsGet(country, q, fetchAll, options).then((request) => request(axios, basePath));
+        paymentSystemsGet(teamId: string, country?: string, q?: string, fetchAll?: boolean, options?: any): AxiosPromise<PaymentSystemsGet200Response> {
+            return localVarFp.paymentSystemsGet(teamId, country, q, fetchAll, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -2702,6 +2707,13 @@ export const PaymentSystemsApiFactory = function (configuration?: Configuration,
  * @interface PaymentSystemsApiPaymentSystemsGetRequest
  */
 export interface PaymentSystemsApiPaymentSystemsGetRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof PaymentSystemsApiPaymentSystemsGet
+     */
+    readonly teamId: string
+
     /**
      * Fetch Payment Systems from a particular country
      * @type {string}
@@ -2739,8 +2751,8 @@ export class PaymentSystemsApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof PaymentSystemsApi
      */
-    public paymentSystemsGet(requestParameters: PaymentSystemsApiPaymentSystemsGetRequest = {}, options?: AxiosRequestConfig) {
-        return PaymentSystemsApiFp(this.configuration).paymentSystemsGet(requestParameters.country, requestParameters.q, requestParameters.fetchAll, options).then((request) => request(this.axios, this.basePath));
+    public paymentSystemsGet(requestParameters: PaymentSystemsApiPaymentSystemsGetRequest, options?: AxiosRequestConfig) {
+        return PaymentSystemsApiFp(this.configuration).paymentSystemsGet(requestParameters.teamId, requestParameters.country, requestParameters.q, requestParameters.fetchAll, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
