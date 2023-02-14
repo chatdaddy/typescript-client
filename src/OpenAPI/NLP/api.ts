@@ -98,6 +98,12 @@ export interface GetExecutionRecord200Response {
      * @memberof GetExecutionRecord200Response
      */
     'nextPageCursor'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof GetExecutionRecord200Response
+     */
+    'totalTriggered'?: number;
 }
 /**
  * 
@@ -544,10 +550,11 @@ export const KeywordsApiAxiosParamCreator = function (configuration?: Configurat
          * @param {string} id 
          * @param {number} [count] 
          * @param {string} [cursor] 
+         * @param {boolean} [returnTotalTriggered] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getExecutionRecord: async (id: string, count?: number, cursor?: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getExecutionRecord: async (id: string, count?: number, cursor?: string, returnTotalTriggered?: boolean, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
             assertParamExists('getExecutionRecord', 'id', id)
             const localVarPath = `/log/{id}`
@@ -573,6 +580,10 @@ export const KeywordsApiAxiosParamCreator = function (configuration?: Configurat
 
             if (cursor !== undefined) {
                 localVarQueryParameter['cursor'] = cursor;
+            }
+
+            if (returnTotalTriggered !== undefined) {
+                localVarQueryParameter['returnTotalTriggered'] = returnTotalTriggered;
             }
 
 
@@ -699,11 +710,12 @@ export const KeywordsApiFp = function(configuration?: Configuration) {
          * @param {string} id 
          * @param {number} [count] 
          * @param {string} [cursor] 
+         * @param {boolean} [returnTotalTriggered] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getExecutionRecord(id: string, count?: number, cursor?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetExecutionRecord200Response>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getExecutionRecord(id, count, cursor, options);
+        async getExecutionRecord(id: string, count?: number, cursor?: string, returnTotalTriggered?: boolean, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetExecutionRecord200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getExecutionRecord(id, count, cursor, returnTotalTriggered, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -768,11 +780,12 @@ export const KeywordsApiFactory = function (configuration?: Configuration, baseP
          * @param {string} id 
          * @param {number} [count] 
          * @param {string} [cursor] 
+         * @param {boolean} [returnTotalTriggered] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getExecutionRecord(id: string, count?: number, cursor?: string, options?: any): AxiosPromise<GetExecutionRecord200Response> {
-            return localVarFp.getExecutionRecord(id, count, cursor, options).then((request) => request(axios, basePath));
+        getExecutionRecord(id: string, count?: number, cursor?: string, returnTotalTriggered?: boolean, options?: any): AxiosPromise<GetExecutionRecord200Response> {
+            return localVarFp.getExecutionRecord(id, count, cursor, returnTotalTriggered, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -860,6 +873,13 @@ export interface KeywordsApiGetExecutionRecordRequest {
      * @memberof KeywordsApiGetExecutionRecord
      */
     readonly cursor?: string
+
+    /**
+     * 
+     * @type {boolean}
+     * @memberof KeywordsApiGetExecutionRecord
+     */
+    readonly returnTotalTriggered?: boolean
 }
 
 /**
@@ -963,7 +983,7 @@ export class KeywordsApi extends BaseAPI {
      * @memberof KeywordsApi
      */
     public getExecutionRecord(requestParameters: KeywordsApiGetExecutionRecordRequest, options?: AxiosRequestConfig) {
-        return KeywordsApiFp(this.configuration).getExecutionRecord(requestParameters.id, requestParameters.count, requestParameters.cursor, options).then((request) => request(this.axios, this.basePath));
+        return KeywordsApiFp(this.configuration).getExecutionRecord(requestParameters.id, requestParameters.count, requestParameters.cursor, requestParameters.returnTotalTriggered, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
