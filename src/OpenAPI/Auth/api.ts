@@ -70,6 +70,19 @@ export type BoutirTokenRequestTypeEnum = typeof BoutirTokenRequestTypeEnum[keyof
 /**
  * 
  * @export
+ * @interface ConfirmOtp200Response
+ */
+export interface ConfirmOtp200Response {
+    /**
+     * 
+     * @type {boolean}
+     * @memberof ConfirmOtp200Response
+     */
+    'success'?: boolean;
+}
+/**
+ * 
+ * @export
  * @interface ExternalTokenPostResponse
  */
 export interface ExternalTokenPostResponse {
@@ -2116,6 +2129,39 @@ export const OTPApiAxiosParamCreator = function (configuration?: Configuration) 
     return {
         /**
          * 
+         * @summary Confirm OTP while checkout products.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        confirmOtp: async (options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/verify-otp`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication otp required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
          * @summary Generate an OTP
          * @param {OtpPostRequest} [otpPostRequest] 
          * @param {*} [options] Override http request option.
@@ -2160,6 +2206,16 @@ export const OTPApiFp = function(configuration?: Configuration) {
     return {
         /**
          * 
+         * @summary Confirm OTP while checkout products.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async confirmOtp(options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ConfirmOtp200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.confirmOtp(options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
          * @summary Generate an OTP
          * @param {OtpPostRequest} [otpPostRequest] 
          * @param {*} [options] Override http request option.
@@ -2179,6 +2235,15 @@ export const OTPApiFp = function(configuration?: Configuration) {
 export const OTPApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
     const localVarFp = OTPApiFp(configuration)
     return {
+        /**
+         * 
+         * @summary Confirm OTP while checkout products.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        confirmOtp(options?: any): AxiosPromise<ConfirmOtp200Response> {
+            return localVarFp.confirmOtp(options).then((request) => request(axios, basePath));
+        },
         /**
          * 
          * @summary Generate an OTP
@@ -2213,6 +2278,17 @@ export interface OTPApiOtpPostRequest {
  * @extends {BaseAPI}
  */
 export class OTPApi extends BaseAPI {
+    /**
+     * 
+     * @summary Confirm OTP while checkout products.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof OTPApi
+     */
+    public confirmOtp(options?: AxiosRequestConfig) {
+        return OTPApiFp(this.configuration).confirmOtp(options).then((request) => request(this.axios, this.basePath));
+    }
+
     /**
      * 
      * @summary Generate an OTP

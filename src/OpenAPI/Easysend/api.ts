@@ -742,6 +742,50 @@ export interface GetPaymentIntegrations200Response {
 export type NullablePhoneNumber = number | object | string;
 
 /**
+ * 
+ * @export
+ * @interface OrderPost200Response
+ */
+export interface OrderPost200Response {
+    /**
+     * 
+     * @type {boolean}
+     * @memberof OrderPost200Response
+     */
+    'success'?: boolean;
+}
+/**
+ * 
+ * @export
+ * @interface OrderPostRequest
+ */
+export interface OrderPostRequest {
+    /**
+     * 
+     * @type {UpdateOrderModel}
+     * @memberof OrderPostRequest
+     */
+    'order'?: UpdateOrderModel;
+    /**
+     * Team Id of the team the order belongs to
+     * @type {string}
+     * @memberof OrderPostRequest
+     */
+    'teamId'?: string;
+    /**
+     * The tracking order will be created
+     * @type {string}
+     * @memberof OrderPostRequest
+     */
+    'trackingId'?: string;
+    /**
+     * OTP sent to user order number
+     * @type {string}
+     * @memberof OrderPostRequest
+     */
+    'otp'?: string;
+}
+/**
  * @type OverridePhoneModel
  * @export
  */
@@ -1738,6 +1782,40 @@ export const EventsApiAxiosParamCreator = function (configuration?: Configuratio
                 options: localVarRequestOptions,
             };
         },
+        /**
+         * 
+         * @summary Post the order data on easysend.
+         * @param {OrderPostRequest} [orderPostRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        orderPost: async (orderPostRequest?: OrderPostRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/checkout-product`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(orderPostRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
     }
 };
 
@@ -1771,6 +1849,17 @@ export const EventsApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.dataResend(dataId, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
+        /**
+         * 
+         * @summary Post the order data on easysend.
+         * @param {OrderPostRequest} [orderPostRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async orderPost(orderPostRequest?: OrderPostRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<OrderPost200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.orderPost(orderPostRequest, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
     }
 };
 
@@ -1801,6 +1890,16 @@ export const EventsApiFactory = function (configuration?: Configuration, basePat
          */
         dataResend(dataId: string, options?: any): AxiosPromise<DataResend200Response> {
             return localVarFp.dataResend(dataId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Post the order data on easysend.
+         * @param {OrderPostRequest} [orderPostRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        orderPost(orderPostRequest?: OrderPostRequest, options?: any): AxiosPromise<OrderPost200Response> {
+            return localVarFp.orderPost(orderPostRequest, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -1841,6 +1940,20 @@ export interface EventsApiDataResendRequest {
 }
 
 /**
+ * Request parameters for orderPost operation in EventsApi.
+ * @export
+ * @interface EventsApiOrderPostRequest
+ */
+export interface EventsApiOrderPostRequest {
+    /**
+     * 
+     * @type {OrderPostRequest}
+     * @memberof EventsApiOrderPost
+     */
+    readonly orderPostRequest?: OrderPostRequest
+}
+
+/**
  * EventsApi - object-oriented interface
  * @export
  * @class EventsApi
@@ -1869,6 +1982,18 @@ export class EventsApi extends BaseAPI {
      */
     public dataResend(requestParameters: EventsApiDataResendRequest, options?: AxiosRequestConfig) {
         return EventsApiFp(this.configuration).dataResend(requestParameters.dataId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Post the order data on easysend.
+     * @param {EventsApiOrderPostRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof EventsApi
+     */
+    public orderPost(requestParameters: EventsApiOrderPostRequest = {}, options?: AxiosRequestConfig) {
+        return EventsApiFp(this.configuration).orderPost(requestParameters.orderPostRequest, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
