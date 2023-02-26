@@ -38,14 +38,14 @@ export type TranscodeMethod = typeof TranscodeMethod[keyof typeof TranscodeMetho
 
 
 /**
- * DecryptApi - axios parameter creator
+ * TranscodeApi - axios parameter creator
  * @export
  */
-export const DecryptApiAxiosParamCreator = function (configuration?: Configuration) {
+export const TranscodeApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
          * 
-         * @summary Decrypt a message
+         * @summary Stream content from an encrypted message attachment
          * @param {string} accountId Account ID
          * @param {string} chatId Chat ID
          * @param {string} id Message ID
@@ -54,15 +54,15 @@ export const DecryptApiAxiosParamCreator = function (configuration?: Configurati
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        decryptMessage: async (accountId: string, chatId: string, id: string, index: number, token?: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        streamMessageAttachment: async (accountId: string, chatId: string, id: string, index: number, token?: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'accountId' is not null or undefined
-            assertParamExists('decryptMessage', 'accountId', accountId)
+            assertParamExists('streamMessageAttachment', 'accountId', accountId)
             // verify required parameter 'chatId' is not null or undefined
-            assertParamExists('decryptMessage', 'chatId', chatId)
+            assertParamExists('streamMessageAttachment', 'chatId', chatId)
             // verify required parameter 'id' is not null or undefined
-            assertParamExists('decryptMessage', 'id', id)
+            assertParamExists('streamMessageAttachment', 'id', id)
             // verify required parameter 'index' is not null or undefined
-            assertParamExists('decryptMessage', 'index', index)
+            assertParamExists('streamMessageAttachment', 'index', index)
             const localVarPath = `/stream-message-attachment/{accountId}/{chatId}/{id}/{index}`
                 .replace(`{${"accountId"}}`, encodeURIComponent(String(accountId)))
                 .replace(`{${"chatId"}}`, encodeURIComponent(String(chatId)))
@@ -98,127 +98,6 @@ export const DecryptApiAxiosParamCreator = function (configuration?: Configurati
                 options: localVarRequestOptions,
             };
         },
-    }
-};
-
-/**
- * DecryptApi - functional programming interface
- * @export
- */
-export const DecryptApiFp = function(configuration?: Configuration) {
-    const localVarAxiosParamCreator = DecryptApiAxiosParamCreator(configuration)
-    return {
-        /**
-         * 
-         * @summary Decrypt a message
-         * @param {string} accountId Account ID
-         * @param {string} chatId Chat ID
-         * @param {string} id Message ID
-         * @param {number} index Attachment index
-         * @param {string} [token] ChatDaddy auth token, optionally provide in query
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async decryptMessage(accountId: string, chatId: string, id: string, index: number, token?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.decryptMessage(accountId, chatId, id, index, token, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-    }
-};
-
-/**
- * DecryptApi - factory interface
- * @export
- */
-export const DecryptApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
-    const localVarFp = DecryptApiFp(configuration)
-    return {
-        /**
-         * 
-         * @summary Decrypt a message
-         * @param {string} accountId Account ID
-         * @param {string} chatId Chat ID
-         * @param {string} id Message ID
-         * @param {number} index Attachment index
-         * @param {string} [token] ChatDaddy auth token, optionally provide in query
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        decryptMessage(accountId: string, chatId: string, id: string, index: number, token?: string, options?: any): AxiosPromise<void> {
-            return localVarFp.decryptMessage(accountId, chatId, id, index, token, options).then((request) => request(axios, basePath));
-        },
-    };
-};
-
-/**
- * Request parameters for decryptMessage operation in DecryptApi.
- * @export
- * @interface DecryptApiDecryptMessageRequest
- */
-export interface DecryptApiDecryptMessageRequest {
-    /**
-     * Account ID
-     * @type {string}
-     * @memberof DecryptApiDecryptMessage
-     */
-    readonly accountId: string
-
-    /**
-     * Chat ID
-     * @type {string}
-     * @memberof DecryptApiDecryptMessage
-     */
-    readonly chatId: string
-
-    /**
-     * Message ID
-     * @type {string}
-     * @memberof DecryptApiDecryptMessage
-     */
-    readonly id: string
-
-    /**
-     * Attachment index
-     * @type {number}
-     * @memberof DecryptApiDecryptMessage
-     */
-    readonly index: number
-
-    /**
-     * ChatDaddy auth token, optionally provide in query
-     * @type {string}
-     * @memberof DecryptApiDecryptMessage
-     */
-    readonly token?: string
-}
-
-/**
- * DecryptApi - object-oriented interface
- * @export
- * @class DecryptApi
- * @extends {BaseAPI}
- */
-export class DecryptApi extends BaseAPI {
-    /**
-     * 
-     * @summary Decrypt a message
-     * @param {DecryptApiDecryptMessageRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof DecryptApi
-     */
-    public decryptMessage(requestParameters: DecryptApiDecryptMessageRequest, options?: AxiosRequestConfig) {
-        return DecryptApiFp(this.configuration).decryptMessage(requestParameters.accountId, requestParameters.chatId, requestParameters.id, requestParameters.index, requestParameters.token, options).then((request) => request(this.axios, this.basePath));
-    }
-}
-
-
-/**
- * TranscodeApi - axios parameter creator
- * @export
- */
-export const TranscodeApiAxiosParamCreator = function (configuration?: Configuration) {
-    return {
         /**
          * 
          * @summary Transcode hosted media
@@ -296,6 +175,21 @@ export const TranscodeApiFp = function(configuration?: Configuration) {
     return {
         /**
          * 
+         * @summary Stream content from an encrypted message attachment
+         * @param {string} accountId Account ID
+         * @param {string} chatId Chat ID
+         * @param {string} id Message ID
+         * @param {number} index Attachment index
+         * @param {string} [token] ChatDaddy auth token, optionally provide in query
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async streamMessageAttachment(accountId: string, chatId: string, id: string, index: number, token?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.streamMessageAttachment(accountId, chatId, id, index, token, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
          * @summary Transcode hosted media
          * @param {TranscodeMethod} method What to do with the transcoded media
          * @param {string} url The URL to transcode
@@ -322,6 +216,20 @@ export const TranscodeApiFactory = function (configuration?: Configuration, base
     return {
         /**
          * 
+         * @summary Stream content from an encrypted message attachment
+         * @param {string} accountId Account ID
+         * @param {string} chatId Chat ID
+         * @param {string} id Message ID
+         * @param {number} index Attachment index
+         * @param {string} [token] ChatDaddy auth token, optionally provide in query
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        streamMessageAttachment(accountId: string, chatId: string, id: string, index: number, token?: string, options?: any): AxiosPromise<void> {
+            return localVarFp.streamMessageAttachment(accountId, chatId, id, index, token, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
          * @summary Transcode hosted media
          * @param {TranscodeMethod} method What to do with the transcoded media
          * @param {string} url The URL to transcode
@@ -337,6 +245,48 @@ export const TranscodeApiFactory = function (configuration?: Configuration, base
         },
     };
 };
+
+/**
+ * Request parameters for streamMessageAttachment operation in TranscodeApi.
+ * @export
+ * @interface TranscodeApiStreamMessageAttachmentRequest
+ */
+export interface TranscodeApiStreamMessageAttachmentRequest {
+    /**
+     * Account ID
+     * @type {string}
+     * @memberof TranscodeApiStreamMessageAttachment
+     */
+    readonly accountId: string
+
+    /**
+     * Chat ID
+     * @type {string}
+     * @memberof TranscodeApiStreamMessageAttachment
+     */
+    readonly chatId: string
+
+    /**
+     * Message ID
+     * @type {string}
+     * @memberof TranscodeApiStreamMessageAttachment
+     */
+    readonly id: string
+
+    /**
+     * Attachment index
+     * @type {number}
+     * @memberof TranscodeApiStreamMessageAttachment
+     */
+    readonly index: number
+
+    /**
+     * ChatDaddy auth token, optionally provide in query
+     * @type {string}
+     * @memberof TranscodeApiStreamMessageAttachment
+     */
+    readonly token?: string
+}
 
 /**
  * Request parameters for transcode operation in TranscodeApi.
@@ -394,6 +344,18 @@ export interface TranscodeApiTranscodeRequest {
  * @extends {BaseAPI}
  */
 export class TranscodeApi extends BaseAPI {
+    /**
+     * 
+     * @summary Stream content from an encrypted message attachment
+     * @param {TranscodeApiStreamMessageAttachmentRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof TranscodeApi
+     */
+    public streamMessageAttachment(requestParameters: TranscodeApiStreamMessageAttachmentRequest, options?: AxiosRequestConfig) {
+        return TranscodeApiFp(this.configuration).streamMessageAttachment(requestParameters.accountId, requestParameters.chatId, requestParameters.id, requestParameters.index, requestParameters.token, options).then((request) => request(this.axios, this.basePath));
+    }
+
     /**
      * 
      * @summary Transcode hosted media
