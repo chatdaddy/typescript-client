@@ -1,8 +1,8 @@
 /* tslint:disable */
 /* eslint-disable */
 /**
- * ChatDaddy Education Service
- * Access Notion Chatdaddy Education Content
+ * Transcoding Service
+ * Transcode media 
  *
  * The version of the OpenAPI document: 1.0.0
  * 
