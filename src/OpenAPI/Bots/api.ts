@@ -90,6 +90,12 @@ export interface Action {
      */
     'webhooks'?: Array<string>;
     /**
+     * 
+     * @type {Position}
+     * @memberof Action
+     */
+    'position'?: Position;
+    /**
      * send in to remove the action
      * @type {boolean}
      * @memberof Action
@@ -169,6 +175,12 @@ export interface ActionContent {
      * @memberof ActionContent
      */
     'webhooks'?: Array<string>;
+    /**
+     * 
+     * @type {Position}
+     * @memberof ActionContent
+     */
+    'position'?: Position;
     /**
      * send in to remove the action
      * @type {boolean}
@@ -440,6 +452,12 @@ export interface BotMessageDelay {
      * @memberof BotMessageDelay
      */
     'simulateTyping'?: boolean;
+    /**
+     * 
+     * @type {Position}
+     * @memberof BotMessageDelay
+     */
+    'position'?: Position;
 }
 /**
  * 
@@ -923,6 +941,25 @@ export interface MessageObj {
      * @memberof MessageObj
      */
     'products'?: Array<IMMessageProduct>;
+}
+/**
+ * position in x-y coordinate space
+ * @export
+ * @interface Position
+ */
+export interface Position {
+    /**
+     * 
+     * @type {number}
+     * @memberof Position
+     */
+    'x': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof Position
+     */
+    'y': number;
 }
 /**
  * 
