@@ -384,6 +384,31 @@ export interface BotMessageButton {
      * @memberof BotMessageButton
      */
     'phoneNumber'?: string;
+    /**
+     * 
+     * @type {BotMessageButtonPosition}
+     * @memberof BotMessageButton
+     */
+    'position'?: BotMessageButtonPosition | null;
+}
+/**
+ * 
+ * @export
+ * @interface BotMessageButtonPosition
+ */
+export interface BotMessageButtonPosition {
+    /**
+     * 
+     * @type {number}
+     * @memberof BotMessageButtonPosition
+     */
+    'x'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof BotMessageButtonPosition
+     */
+    'y'?: number;
 }
 /**
  * 
