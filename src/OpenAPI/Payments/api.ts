@@ -1855,10 +1855,11 @@ export const PurchasesApiAxiosParamCreator = function (configuration?: Configura
          * @param {string} [startDate] The start date of the subscription
          * @param {string} [endDate] The end date of the subscription
          * @param {number} [secondsUntilExpiry] The number of seconds left until expiry
+         * @param {Array<string>} [excludeProductIds] Purchase records of Products that should not be fetched
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        purchasesGet: async (onlyValid?: boolean, global?: boolean, includeTotal?: boolean, page?: number, count?: number, productName?: string, startDate?: string, endDate?: string, secondsUntilExpiry?: number, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        purchasesGet: async (onlyValid?: boolean, global?: boolean, includeTotal?: boolean, page?: number, count?: number, productName?: string, startDate?: string, endDate?: string, secondsUntilExpiry?: number, excludeProductIds?: Array<string>, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/purchases/all`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -1913,6 +1914,10 @@ export const PurchasesApiAxiosParamCreator = function (configuration?: Configura
 
             if (secondsUntilExpiry !== undefined) {
                 localVarQueryParameter['secondsUntilExpiry'] = secondsUntilExpiry;
+            }
+
+            if (excludeProductIds) {
+                localVarQueryParameter['excludeProductIds'] = excludeProductIds;
             }
 
 
@@ -2026,11 +2031,12 @@ export const PurchasesApiFp = function(configuration?: Configuration) {
          * @param {string} [startDate] The start date of the subscription
          * @param {string} [endDate] The end date of the subscription
          * @param {number} [secondsUntilExpiry] The number of seconds left until expiry
+         * @param {Array<string>} [excludeProductIds] Purchase records of Products that should not be fetched
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async purchasesGet(onlyValid?: boolean, global?: boolean, includeTotal?: boolean, page?: number, count?: number, productName?: string, startDate?: string, endDate?: string, secondsUntilExpiry?: number, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PurchasesGet200Response>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.purchasesGet(onlyValid, global, includeTotal, page, count, productName, startDate, endDate, secondsUntilExpiry, options);
+        async purchasesGet(onlyValid?: boolean, global?: boolean, includeTotal?: boolean, page?: number, count?: number, productName?: string, startDate?: string, endDate?: string, secondsUntilExpiry?: number, excludeProductIds?: Array<string>, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PurchasesGet200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.purchasesGet(onlyValid, global, includeTotal, page, count, productName, startDate, endDate, secondsUntilExpiry, excludeProductIds, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
     }
@@ -2126,11 +2132,12 @@ export const PurchasesApiFactory = function (configuration?: Configuration, base
          * @param {string} [startDate] The start date of the subscription
          * @param {string} [endDate] The end date of the subscription
          * @param {number} [secondsUntilExpiry] The number of seconds left until expiry
+         * @param {Array<string>} [excludeProductIds] Purchase records of Products that should not be fetched
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        purchasesGet(onlyValid?: boolean, global?: boolean, includeTotal?: boolean, page?: number, count?: number, productName?: string, startDate?: string, endDate?: string, secondsUntilExpiry?: number, options?: any): AxiosPromise<PurchasesGet200Response> {
-            return localVarFp.purchasesGet(onlyValid, global, includeTotal, page, count, productName, startDate, endDate, secondsUntilExpiry, options).then((request) => request(axios, basePath));
+        purchasesGet(onlyValid?: boolean, global?: boolean, includeTotal?: boolean, page?: number, count?: number, productName?: string, startDate?: string, endDate?: string, secondsUntilExpiry?: number, excludeProductIds?: Array<string>, options?: any): AxiosPromise<PurchasesGet200Response> {
+            return localVarFp.purchasesGet(onlyValid, global, includeTotal, page, count, productName, startDate, endDate, secondsUntilExpiry, excludeProductIds, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -2287,6 +2294,13 @@ export interface PurchasesApiPurchasesGetRequest {
      * @memberof PurchasesApiPurchasesGet
      */
     readonly secondsUntilExpiry?: number
+
+    /**
+     * Purchase records of Products that should not be fetched
+     * @type {Array<string>}
+     * @memberof PurchasesApiPurchasesGet
+     */
+    readonly excludeProductIds?: Array<string>
 }
 
 /**
@@ -2386,7 +2400,7 @@ export class PurchasesApi extends BaseAPI {
      * @memberof PurchasesApi
      */
     public purchasesGet(requestParameters: PurchasesApiPurchasesGetRequest = {}, options?: AxiosRequestConfig) {
-        return PurchasesApiFp(this.configuration).purchasesGet(requestParameters.onlyValid, requestParameters.global, requestParameters.includeTotal, requestParameters.page, requestParameters.count, requestParameters.productName, requestParameters.startDate, requestParameters.endDate, requestParameters.secondsUntilExpiry, options).then((request) => request(this.axios, this.basePath));
+        return PurchasesApiFp(this.configuration).purchasesGet(requestParameters.onlyValid, requestParameters.global, requestParameters.includeTotal, requestParameters.page, requestParameters.count, requestParameters.productName, requestParameters.startDate, requestParameters.endDate, requestParameters.secondsUntilExpiry, requestParameters.excludeProductIds, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
