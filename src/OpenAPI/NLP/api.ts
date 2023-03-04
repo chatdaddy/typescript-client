@@ -26,6 +26,32 @@ import { COLLECTION_FORMATS, RequestArgs, BaseAPI, RequiredError } from '../base
 /**
  * 
  * @export
+ * @interface AutocompleteInbox200Response
+ */
+export interface AutocompleteInbox200Response {
+    /**
+     * 
+     * @type {Array<AutocompleteSuggestion>}
+     * @memberof AutocompleteInbox200Response
+     */
+    'suggestions'?: Array<AutocompleteSuggestion>;
+}
+/**
+ * 
+ * @export
+ * @interface AutocompleteSuggestion
+ */
+export interface AutocompleteSuggestion {
+    /**
+     * 
+     * @type {string}
+     * @memberof AutocompleteSuggestion
+     */
+    'text'?: string;
+}
+/**
+ * 
+ * @export
  * @interface DeleteTriggers200Response
  */
 export interface DeleteTriggers200Response {
@@ -415,6 +441,142 @@ export const TriggerType = {
 
 export type TriggerType = typeof TriggerType[keyof typeof TriggerType];
 
+
+
+/**
+ * AutocompleteApi - axios parameter creator
+ * @export
+ */
+export const AutocompleteApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @summary Returns autocomplete suggestions for a chat
+         * @param {string} accountId 
+         * @param {string} chatId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        autocompleteInbox: async (accountId: string, chatId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'accountId' is not null or undefined
+            assertParamExists('autocompleteInbox', 'accountId', accountId)
+            // verify required parameter 'chatId' is not null or undefined
+            assertParamExists('autocompleteInbox', 'chatId', chatId)
+            const localVarPath = `/autocomplete/inbox/{accountId}/{chatId}`
+                .replace(`{${"accountId"}}`, encodeURIComponent(String(accountId)))
+                .replace(`{${"chatId"}}`, encodeURIComponent(String(chatId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["AUTOCOMPLETE_GET"], configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * AutocompleteApi - functional programming interface
+ * @export
+ */
+export const AutocompleteApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = AutocompleteApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * 
+         * @summary Returns autocomplete suggestions for a chat
+         * @param {string} accountId 
+         * @param {string} chatId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async autocompleteInbox(accountId: string, chatId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AutocompleteInbox200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.autocompleteInbox(accountId, chatId, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+    }
+};
+
+/**
+ * AutocompleteApi - factory interface
+ * @export
+ */
+export const AutocompleteApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = AutocompleteApiFp(configuration)
+    return {
+        /**
+         * 
+         * @summary Returns autocomplete suggestions for a chat
+         * @param {string} accountId 
+         * @param {string} chatId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        autocompleteInbox(accountId: string, chatId: string, options?: any): AxiosPromise<AutocompleteInbox200Response> {
+            return localVarFp.autocompleteInbox(accountId, chatId, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * Request parameters for autocompleteInbox operation in AutocompleteApi.
+ * @export
+ * @interface AutocompleteApiAutocompleteInboxRequest
+ */
+export interface AutocompleteApiAutocompleteInboxRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof AutocompleteApiAutocompleteInbox
+     */
+    readonly accountId: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof AutocompleteApiAutocompleteInbox
+     */
+    readonly chatId: string
+}
+
+/**
+ * AutocompleteApi - object-oriented interface
+ * @export
+ * @class AutocompleteApi
+ * @extends {BaseAPI}
+ */
+export class AutocompleteApi extends BaseAPI {
+    /**
+     * 
+     * @summary Returns autocomplete suggestions for a chat
+     * @param {AutocompleteApiAutocompleteInboxRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AutocompleteApi
+     */
+    public autocompleteInbox(requestParameters: AutocompleteApiAutocompleteInboxRequest, options?: AxiosRequestConfig) {
+        return AutocompleteApiFp(this.configuration).autocompleteInbox(requestParameters.accountId, requestParameters.chatId, options).then((request) => request(this.axios, this.basePath));
+    }
+}
 
 
 /**
