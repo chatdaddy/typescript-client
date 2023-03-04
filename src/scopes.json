@@ -781,5 +781,18 @@
       "editor"
     ],
     "group": "Channel Access"
+  },
+  "AUTOCOMPLETE_GET": {
+    "number": 92,
+    "description": "Access to AI autocomplete",
+    "features": [
+      "autocomplete"
+    ],
+    "roles": [
+      "admin",
+      "agent",
+      "editor"
+    ],
+    "group": "Chat Access"
   }
 }
