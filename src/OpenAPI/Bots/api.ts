@@ -398,29 +398,10 @@ export interface BotMessageButton {
     'phoneNumber'?: string;
     /**
      * 
-     * @type {BotMessageButtonPosition}
+     * @type {Position}
      * @memberof BotMessageButton
      */
-    'position'?: BotMessageButtonPosition | null;
-}
-/**
- * 
- * @export
- * @interface BotMessageButtonPosition
- */
-export interface BotMessageButtonPosition {
-    /**
-     * 
-     * @type {number}
-     * @memberof BotMessageButtonPosition
-     */
-    'x'?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof BotMessageButtonPosition
-     */
-    'y'?: number;
+    'position'?: Position;
 }
 /**
  * 
