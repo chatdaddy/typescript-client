@@ -39,6 +39,50 @@ export interface AutocompleteInbox200Response {
 /**
  * 
  * @export
+ * @enum {string}
+ */
+
+export const AutocompleteModifier = {
+    Longer: 'longer',
+    Shorter: 'shorter',
+    Formal: 'formal',
+    Friendlier: 'friendlier',
+    Apologetic: 'apologetic',
+    Assertive: 'assertive'
+} as const;
+
+export type AutocompleteModifier = typeof AutocompleteModifier[keyof typeof AutocompleteModifier];
+
+
+/**
+ * 
+ * @export
+ * @interface AutocompleteModify200Response
+ */
+export interface AutocompleteModify200Response {
+    /**
+     * Modified text
+     * @type {string}
+     * @memberof AutocompleteModify200Response
+     */
+    'text': string;
+}
+/**
+ * 
+ * @export
+ * @interface AutocompleteModifyRequest
+ */
+export interface AutocompleteModifyRequest {
+    /**
+     * Text to be modified
+     * @type {string}
+     * @memberof AutocompleteModifyRequest
+     */
+    'text': string;
+}
+/**
+ * 
+ * @export
  * @interface AutocompleteSuggestion
  */
 export interface AutocompleteSuggestion {
@@ -491,6 +535,50 @@ export const AutocompleteApiAxiosParamCreator = function (configuration?: Config
                 options: localVarRequestOptions,
             };
         },
+        /**
+         * 
+         * @summary Apply some modification to the given text
+         * @param {AutocompleteModifier} modifier 
+         * @param {AutocompleteModifyRequest} autocompleteModifyRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        autocompleteModify: async (modifier: AutocompleteModifier, autocompleteModifyRequest: AutocompleteModifyRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'modifier' is not null or undefined
+            assertParamExists('autocompleteModify', 'modifier', modifier)
+            // verify required parameter 'autocompleteModifyRequest' is not null or undefined
+            assertParamExists('autocompleteModify', 'autocompleteModifyRequest', autocompleteModifyRequest)
+            const localVarPath = `/autocomplete/modify/{modifier}`
+                .replace(`{${"modifier"}}`, encodeURIComponent(String(modifier)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["AUTOCOMPLETE_GET"], configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(autocompleteModifyRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
     }
 };
 
@@ -513,6 +601,18 @@ export const AutocompleteApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.autocompleteInbox(accountId, chatId, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
+        /**
+         * 
+         * @summary Apply some modification to the given text
+         * @param {AutocompleteModifier} modifier 
+         * @param {AutocompleteModifyRequest} autocompleteModifyRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async autocompleteModify(modifier: AutocompleteModifier, autocompleteModifyRequest: AutocompleteModifyRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AutocompleteModify200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.autocompleteModify(modifier, autocompleteModifyRequest, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
     }
 };
 
@@ -533,6 +633,17 @@ export const AutocompleteApiFactory = function (configuration?: Configuration, b
          */
         autocompleteInbox(accountId: string, chatId: string, options?: any): AxiosPromise<AutocompleteInbox200Response> {
             return localVarFp.autocompleteInbox(accountId, chatId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Apply some modification to the given text
+         * @param {AutocompleteModifier} modifier 
+         * @param {AutocompleteModifyRequest} autocompleteModifyRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        autocompleteModify(modifier: AutocompleteModifier, autocompleteModifyRequest: AutocompleteModifyRequest, options?: any): AxiosPromise<AutocompleteModify200Response> {
+            return localVarFp.autocompleteModify(modifier, autocompleteModifyRequest, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -559,6 +670,27 @@ export interface AutocompleteApiAutocompleteInboxRequest {
 }
 
 /**
+ * Request parameters for autocompleteModify operation in AutocompleteApi.
+ * @export
+ * @interface AutocompleteApiAutocompleteModifyRequest
+ */
+export interface AutocompleteApiAutocompleteModifyRequest {
+    /**
+     * 
+     * @type {AutocompleteModifier}
+     * @memberof AutocompleteApiAutocompleteModify
+     */
+    readonly modifier: AutocompleteModifier
+
+    /**
+     * 
+     * @type {AutocompleteModifyRequest}
+     * @memberof AutocompleteApiAutocompleteModify
+     */
+    readonly autocompleteModifyRequest: AutocompleteModifyRequest
+}
+
+/**
  * AutocompleteApi - object-oriented interface
  * @export
  * @class AutocompleteApi
@@ -575,6 +707,18 @@ export class AutocompleteApi extends BaseAPI {
      */
     public autocompleteInbox(requestParameters: AutocompleteApiAutocompleteInboxRequest, options?: AxiosRequestConfig) {
         return AutocompleteApiFp(this.configuration).autocompleteInbox(requestParameters.accountId, requestParameters.chatId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Apply some modification to the given text
+     * @param {AutocompleteApiAutocompleteModifyRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AutocompleteApi
+     */
+    public autocompleteModify(requestParameters: AutocompleteApiAutocompleteModifyRequest, options?: AxiosRequestConfig) {
+        return AutocompleteApiFp(this.configuration).autocompleteModify(requestParameters.modifier, requestParameters.autocompleteModifyRequest, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
