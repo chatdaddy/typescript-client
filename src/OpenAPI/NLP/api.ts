@@ -48,7 +48,8 @@ export const AutocompleteModifier = {
     Formal: 'formal',
     Friendlier: 'friendlier',
     Apologetic: 'apologetic',
-    Assertive: 'assertive'
+    Assertive: 'assertive',
+    Clearer: 'clearer'
 } as const;
 
 export type AutocompleteModifier = typeof AutocompleteModifier[keyof typeof AutocompleteModifier];
