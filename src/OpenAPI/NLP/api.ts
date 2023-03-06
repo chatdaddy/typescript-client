@@ -34,7 +34,7 @@ export interface AutocompleteInbox200Response {
      * @type {Array<AutocompleteSuggestion>}
      * @memberof AutocompleteInbox200Response
      */
-    'suggestions'?: Array<AutocompleteSuggestion>;
+    'suggestions': Array<AutocompleteSuggestion>;
 }
 /**
  * 
@@ -76,11 +76,36 @@ export interface AutocompleteModify200Response {
  */
 export interface AutocompleteModifyRequest {
     /**
+     * 
+     * @type {AutocompleteModifyRequestChat}
+     * @memberof AutocompleteModifyRequest
+     */
+    'chat'?: AutocompleteModifyRequestChat;
+    /**
      * Text to be modified
      * @type {string}
      * @memberof AutocompleteModifyRequest
      */
     'text': string;
+}
+/**
+ * Provide chat as context for the modifier
+ * @export
+ * @interface AutocompleteModifyRequestChat
+ */
+export interface AutocompleteModifyRequestChat {
+    /**
+     * 
+     * @type {string}
+     * @memberof AutocompleteModifyRequestChat
+     */
+    'accountId': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof AutocompleteModifyRequestChat
+     */
+    'id': string;
 }
 /**
  * 
@@ -93,7 +118,7 @@ export interface AutocompleteSuggestion {
      * @type {string}
      * @memberof AutocompleteSuggestion
      */
-    'text'?: string;
+    'text': string;
 }
 /**
  * 
