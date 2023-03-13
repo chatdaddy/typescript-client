@@ -891,7 +891,7 @@ export interface MessageObj {
      * @type {string}
      * @memberof MessageObj
      */
-    'text': string;
+    'text': string | null;
     /**
      * array of attachments for the template
      * @type {Array<IMMessageAttachment>}
