@@ -60,12 +60,6 @@ export interface Account {
      */
     'credentials'?: { [key: string]: any; } | null;
     /**
-     * Prefix for the webhook URL
-     * @type {string}
-     * @memberof Account
-     */
-    'webhookUrlPrefix'?: string;
-    /**
      * 
      * @type {AccountType}
      * @memberof Account
@@ -538,6 +532,12 @@ export interface AlibabaCAMSStateInfo {
      * @memberof AlibabaCAMSStateInfo
      */
     'isvTerms'?: AlibabaCAMSISVTerms;
+    /**
+     * Description of the business account visible to others on WA
+     * @type {string}
+     * @memberof AlibabaCAMSStateInfo
+     */
+    'profileDescription'?: string;
 }
 
 export const AlibabaCAMSStateInfoStatusEnum = {
@@ -688,6 +688,12 @@ export interface AlibabaCamsProfileUpdateRequest {
      * @memberof AlibabaCamsProfileUpdateRequest
      */
     'profilePictureUrl': string;
+    /**
+     * Business description
+     * @type {string}
+     * @memberof AlibabaCamsProfileUpdateRequest
+     */
+    'description': string;
 }
 /**
  * 
