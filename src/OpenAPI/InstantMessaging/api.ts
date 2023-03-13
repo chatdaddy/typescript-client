@@ -521,6 +521,12 @@ export interface AlibabaCAMSStateInfo {
      */
     'status'?: AlibabaCAMSStateInfoStatusEnum;
     /**
+     * Status of the company name approval from WABA
+     * @type {string}
+     * @memberof AlibabaCAMSStateInfo
+     */
+    'nameStatus'?: string;
+    /**
      * Whether the business account is blocked from using Alibaba CAMS by WhatsApp
      * @type {boolean}
      * @memberof AlibabaCAMSStateInfo
@@ -669,6 +675,19 @@ export interface AlibabaCamsMetadata200Response {
      * @memberof AlibabaCamsMetadata200Response
      */
     'isvTermsTemplate': string;
+}
+/**
+ * 
+ * @export
+ * @interface AlibabaCamsProfileUpdateRequest
+ */
+export interface AlibabaCamsProfileUpdateRequest {
+    /**
+     * Business profile picture URL
+     * @type {string}
+     * @memberof AlibabaCamsProfileUpdateRequest
+     */
+    'profilePictureUrl': string;
 }
 /**
  * 
@@ -4432,6 +4451,48 @@ export const AlibabaCamsApiAxiosParamCreator = function (configuration?: Configu
         },
         /**
          * 
+         * @summary Update business info for Alibaba CAMS API
+         * @param {string} accountId 
+         * @param {AlibabaCamsProfileUpdateRequest} [alibabaCamsProfileUpdateRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        alibabaCamsProfileUpdate: async (accountId: string, alibabaCamsProfileUpdateRequest?: AlibabaCamsProfileUpdateRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'accountId' is not null or undefined
+            assertParamExists('alibabaCamsProfileUpdate', 'accountId', accountId)
+            const localVarPath = `/alibaba-cams/profile/{accountId}`
+                .replace(`{${"accountId"}}`, encodeURIComponent(String(accountId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PATCH', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["ACCOUNT_PATCH"], configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(alibabaCamsProfileUpdateRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
          * @summary Register an account with a token from embedded sign up
          * @param {string} accountId 
          * @param {AlibabaCamsRegisterRequest} [alibabaCamsRegisterRequest] 
@@ -4548,6 +4609,18 @@ export const AlibabaCamsApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
+         * @summary Update business info for Alibaba CAMS API
+         * @param {string} accountId 
+         * @param {AlibabaCamsProfileUpdateRequest} [alibabaCamsProfileUpdateRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async alibabaCamsProfileUpdate(accountId: string, alibabaCamsProfileUpdateRequest?: AlibabaCamsProfileUpdateRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.alibabaCamsProfileUpdate(accountId, alibabaCamsProfileUpdateRequest, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
          * @summary Register an account with a token from embedded sign up
          * @param {string} accountId 
          * @param {AlibabaCamsRegisterRequest} [alibabaCamsRegisterRequest] 
@@ -4603,6 +4676,17 @@ export const AlibabaCamsApiFactory = function (configuration?: Configuration, ba
         },
         /**
          * 
+         * @summary Update business info for Alibaba CAMS API
+         * @param {string} accountId 
+         * @param {AlibabaCamsProfileUpdateRequest} [alibabaCamsProfileUpdateRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        alibabaCamsProfileUpdate(accountId: string, alibabaCamsProfileUpdateRequest?: AlibabaCamsProfileUpdateRequest, options?: any): AxiosPromise<void> {
+            return localVarFp.alibabaCamsProfileUpdate(accountId, alibabaCamsProfileUpdateRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
          * @summary Register an account with a token from embedded sign up
          * @param {string} accountId 
          * @param {AlibabaCamsRegisterRequest} [alibabaCamsRegisterRequest] 
@@ -4646,6 +4730,27 @@ export interface AlibabaCamsApiAlibabaCamsIsvTermsRequest {
      * @memberof AlibabaCamsApiAlibabaCamsIsvTerms
      */
     readonly alibabaCAMSISVTerms?: AlibabaCAMSISVTerms
+}
+
+/**
+ * Request parameters for alibabaCamsProfileUpdate operation in AlibabaCamsApi.
+ * @export
+ * @interface AlibabaCamsApiAlibabaCamsProfileUpdateRequest
+ */
+export interface AlibabaCamsApiAlibabaCamsProfileUpdateRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof AlibabaCamsApiAlibabaCamsProfileUpdate
+     */
+    readonly accountId: string
+
+    /**
+     * 
+     * @type {AlibabaCamsProfileUpdateRequest}
+     * @memberof AlibabaCamsApiAlibabaCamsProfileUpdate
+     */
+    readonly alibabaCamsProfileUpdateRequest?: AlibabaCamsProfileUpdateRequest
 }
 
 /**
@@ -4725,6 +4830,18 @@ export class AlibabaCamsApi extends BaseAPI {
      */
     public alibabaCamsMetadata(options?: AxiosRequestConfig) {
         return AlibabaCamsApiFp(this.configuration).alibabaCamsMetadata(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Update business info for Alibaba CAMS API
+     * @param {AlibabaCamsApiAlibabaCamsProfileUpdateRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AlibabaCamsApi
+     */
+    public alibabaCamsProfileUpdate(requestParameters: AlibabaCamsApiAlibabaCamsProfileUpdateRequest, options?: AxiosRequestConfig) {
+        return AlibabaCamsApiFp(this.configuration).alibabaCamsProfileUpdate(requestParameters.accountId, requestParameters.alibabaCamsProfileUpdateRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
