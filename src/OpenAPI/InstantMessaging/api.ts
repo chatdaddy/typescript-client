@@ -687,13 +687,13 @@ export interface AlibabaCamsProfileUpdateRequest {
      * @type {string}
      * @memberof AlibabaCamsProfileUpdateRequest
      */
-    'profilePictureUrl': string;
+    'profilePictureUrl'?: string;
     /**
      * Business description
      * @type {string}
      * @memberof AlibabaCamsProfileUpdateRequest
      */
-    'description': string;
+    'description'?: string;
 }
 /**
  * 
