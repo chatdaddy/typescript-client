@@ -561,6 +561,24 @@ export interface AlibabaCAMSWebhookItem {
      */
     'Type': AlibabaCAMSWebhookItemTypeEnum;
     /**
+     * Reason for rejection of template
+     * @type {string}
+     * @memberof AlibabaCAMSWebhookItem
+     */
+    'Reason'?: string;
+    /**
+     * Status of the template
+     * @type {string}
+     * @memberof AlibabaCAMSWebhookItem
+     */
+    'AuditStatus'?: AlibabaCAMSWebhookItemAuditStatusEnum;
+    /**
+     * Code of the template
+     * @type {string}
+     * @memberof AlibabaCAMSWebhookItem
+     */
+    'TemplateCode'?: string;
+    /**
      * 
      * @type {string}
      * @memberof AlibabaCAMSWebhookItem
@@ -638,10 +656,17 @@ export const AlibabaCAMSWebhookItemTypeEnum = {
     Unknown: 'UNKNOWN',
     Location: 'LOCATION',
     Interactive: 'INTERACTIVE',
-    Reply: 'REPLY'
+    Reply: 'REPLY',
+    Template: 'template'
 } as const;
 
 export type AlibabaCAMSWebhookItemTypeEnum = typeof AlibabaCAMSWebhookItemTypeEnum[keyof typeof AlibabaCAMSWebhookItemTypeEnum];
+export const AlibabaCAMSWebhookItemAuditStatusEnum = {
+    Fail: 'fail',
+    Pass: 'pass'
+} as const;
+
+export type AlibabaCAMSWebhookItemAuditStatusEnum = typeof AlibabaCAMSWebhookItemAuditStatusEnum[keyof typeof AlibabaCAMSWebhookItemAuditStatusEnum];
 export const AlibabaCAMSWebhookItemStatusEnum = {
     Sent: 'Sent',
     Delivered: 'Delivered',

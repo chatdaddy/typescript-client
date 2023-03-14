@@ -1109,47 +1109,48 @@ export interface TemplateItem {
 /**
  * 
  * @export
- * @interface TemplateStatusUpdateRequestInner
+ * @interface TemplateStatusUpdateRequest
  */
-export interface TemplateStatusUpdateRequestInner {
+export interface TemplateStatusUpdateRequest {
     /**
-     * Code of the template
-     * @type {string}
-     * @memberof TemplateStatusUpdateRequestInner
+     * 
+     * @type {Array<TemplateStatusUpdateRequestTemplatesInner>}
+     * @memberof TemplateStatusUpdateRequest
      */
-    'TemplateCode': string;
+    'templates': Array<TemplateStatusUpdateRequestTemplatesInner>;
+}
+/**
+ * 
+ * @export
+ * @interface TemplateStatusUpdateRequestTemplatesInner
+ */
+export interface TemplateStatusUpdateRequestTemplatesInner {
+    /**
+     * ID of the template
+     * @type {string}
+     * @memberof TemplateStatusUpdateRequestTemplatesInner
+     */
+    'id': string;
     /**
      * Status of the template
      * @type {string}
-     * @memberof TemplateStatusUpdateRequestInner
+     * @memberof TemplateStatusUpdateRequestTemplatesInner
      */
-    'AuditStatus': TemplateStatusUpdateRequestInnerAuditStatusEnum;
+    'status': TemplateStatusUpdateRequestTemplatesInnerStatusEnum;
     /**
-     * Language of the template
+     * Reason for rejection of the template
      * @type {string}
-     * @memberof TemplateStatusUpdateRequestInner
+     * @memberof TemplateStatusUpdateRequestTemplatesInner
      */
-    'Language': string;
-    /**
-     * Waba ID of the template
-     * @type {string}
-     * @memberof TemplateStatusUpdateRequestInner
-     */
-    'WabaId': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof TemplateStatusUpdateRequestInner
-     */
-    'Reason'?: string;
+    'rejectionReason': string;
 }
 
-export const TemplateStatusUpdateRequestInnerAuditStatusEnum = {
+export const TemplateStatusUpdateRequestTemplatesInnerStatusEnum = {
     Fail: 'fail',
     Pass: 'pass'
 } as const;
 
-export type TemplateStatusUpdateRequestInnerAuditStatusEnum = typeof TemplateStatusUpdateRequestInnerAuditStatusEnum[keyof typeof TemplateStatusUpdateRequestInnerAuditStatusEnum];
+export type TemplateStatusUpdateRequestTemplatesInnerStatusEnum = typeof TemplateStatusUpdateRequestTemplatesInnerStatusEnum[keyof typeof TemplateStatusUpdateRequestTemplatesInnerStatusEnum];
 
 
 /**
@@ -1671,6 +1672,44 @@ export const BotsApiAxiosParamCreator = function (configuration?: Configuration)
                 options: localVarRequestOptions,
             };
         },
+        /**
+         * 
+         * @summary Update status of some templates
+         * @param {TemplateStatusUpdateRequest} [templateStatusUpdateRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        externalTemplateStatusUpdate: async (templateStatusUpdateRequest?: TemplateStatusUpdateRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/external-template-status`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["ADMIN_PANEL_ACCESS"], configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(templateStatusUpdateRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
     }
 };
 
@@ -1774,6 +1813,17 @@ export const BotsApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.botsPatch(id, botPatch, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
+        /**
+         * 
+         * @summary Update status of some templates
+         * @param {TemplateStatusUpdateRequest} [templateStatusUpdateRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async externalTemplateStatusUpdate(templateStatusUpdateRequest?: TemplateStatusUpdateRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.externalTemplateStatusUpdate(templateStatusUpdateRequest, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
     }
 };
 
@@ -1869,6 +1919,16 @@ export const BotsApiFactory = function (configuration?: Configuration, basePath?
          */
         botsPatch(id: string, botPatch?: BotPatch, options?: any): AxiosPromise<void> {
             return localVarFp.botsPatch(id, botPatch, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Update status of some templates
+         * @param {TemplateStatusUpdateRequest} [templateStatusUpdateRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        externalTemplateStatusUpdate(templateStatusUpdateRequest?: TemplateStatusUpdateRequest, options?: any): AxiosPromise<void> {
+            return localVarFp.externalTemplateStatusUpdate(templateStatusUpdateRequest, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -2084,6 +2144,20 @@ export interface BotsApiBotsPatchRequest {
 }
 
 /**
+ * Request parameters for externalTemplateStatusUpdate operation in BotsApi.
+ * @export
+ * @interface BotsApiExternalTemplateStatusUpdateRequest
+ */
+export interface BotsApiExternalTemplateStatusUpdateRequest {
+    /**
+     * 
+     * @type {TemplateStatusUpdateRequest}
+     * @memberof BotsApiExternalTemplateStatusUpdate
+     */
+    readonly templateStatusUpdateRequest?: TemplateStatusUpdateRequest
+}
+
+/**
  * BotsApi - object-oriented interface
  * @export
  * @class BotsApi
@@ -2172,6 +2246,18 @@ export class BotsApi extends BaseAPI {
      */
     public botsPatch(requestParameters: BotsApiBotsPatchRequest, options?: AxiosRequestConfig) {
         return BotsApiFp(this.configuration).botsPatch(requestParameters.id, requestParameters.botPatch, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Update status of some templates
+     * @param {BotsApiExternalTemplateStatusUpdateRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof BotsApi
+     */
+    public externalTemplateStatusUpdate(requestParameters: BotsApiExternalTemplateStatusUpdateRequest = {}, options?: AxiosRequestConfig) {
+        return BotsApiFp(this.configuration).externalTemplateStatusUpdate(requestParameters.templateStatusUpdateRequest, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
@@ -2856,138 +2942,6 @@ export class StoreApi extends BaseAPI {
      */
     public storeGet(requestParameters: StoreApiStoreGetRequest = {}, options?: AxiosRequestConfig) {
         return StoreApiFp(this.configuration).storeGet(requestParameters.count, requestParameters.before, requestParameters.q, requestParameters.language, requestParameters.categoryKeyValue, options).then((request) => request(this.axios, this.basePath));
-    }
-}
-
-
-/**
- * TemplateWebhookApi - axios parameter creator
- * @export
- */
-export const TemplateWebhookApiAxiosParamCreator = function (configuration?: Configuration) {
-    return {
-        /**
-         * 
-         * @summary Webhook for template status
-         * @param {string} secret 
-         * @param {Array<TemplateStatusUpdateRequestInner>} [templateStatusUpdateRequestInner] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        webhookTemplateStatus: async (secret: string, templateStatusUpdateRequestInner?: Array<TemplateStatusUpdateRequestInner>, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'secret' is not null or undefined
-            assertParamExists('webhookTemplateStatus', 'secret', secret)
-            const localVarPath = `/webhook/template-status/alibaba-cams/{secret}`
-                .replace(`{${"secret"}}`, encodeURIComponent(String(secret)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-
-    
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(templateStatusUpdateRequestInner, localVarRequestOptions, configuration)
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-    }
-};
-
-/**
- * TemplateWebhookApi - functional programming interface
- * @export
- */
-export const TemplateWebhookApiFp = function(configuration?: Configuration) {
-    const localVarAxiosParamCreator = TemplateWebhookApiAxiosParamCreator(configuration)
-    return {
-        /**
-         * 
-         * @summary Webhook for template status
-         * @param {string} secret 
-         * @param {Array<TemplateStatusUpdateRequestInner>} [templateStatusUpdateRequestInner] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async webhookTemplateStatus(secret: string, templateStatusUpdateRequestInner?: Array<TemplateStatusUpdateRequestInner>, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.webhookTemplateStatus(secret, templateStatusUpdateRequestInner, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-    }
-};
-
-/**
- * TemplateWebhookApi - factory interface
- * @export
- */
-export const TemplateWebhookApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
-    const localVarFp = TemplateWebhookApiFp(configuration)
-    return {
-        /**
-         * 
-         * @summary Webhook for template status
-         * @param {string} secret 
-         * @param {Array<TemplateStatusUpdateRequestInner>} [templateStatusUpdateRequestInner] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        webhookTemplateStatus(secret: string, templateStatusUpdateRequestInner?: Array<TemplateStatusUpdateRequestInner>, options?: any): AxiosPromise<void> {
-            return localVarFp.webhookTemplateStatus(secret, templateStatusUpdateRequestInner, options).then((request) => request(axios, basePath));
-        },
-    };
-};
-
-/**
- * Request parameters for webhookTemplateStatus operation in TemplateWebhookApi.
- * @export
- * @interface TemplateWebhookApiWebhookTemplateStatusRequest
- */
-export interface TemplateWebhookApiWebhookTemplateStatusRequest {
-    /**
-     * 
-     * @type {string}
-     * @memberof TemplateWebhookApiWebhookTemplateStatus
-     */
-    readonly secret: string
-
-    /**
-     * 
-     * @type {Array<TemplateStatusUpdateRequestInner>}
-     * @memberof TemplateWebhookApiWebhookTemplateStatus
-     */
-    readonly templateStatusUpdateRequestInner?: Array<TemplateStatusUpdateRequestInner>
-}
-
-/**
- * TemplateWebhookApi - object-oriented interface
- * @export
- * @class TemplateWebhookApi
- * @extends {BaseAPI}
- */
-export class TemplateWebhookApi extends BaseAPI {
-    /**
-     * 
-     * @summary Webhook for template status
-     * @param {TemplateWebhookApiWebhookTemplateStatusRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof TemplateWebhookApi
-     */
-    public webhookTemplateStatus(requestParameters: TemplateWebhookApiWebhookTemplateStatusRequest, options?: AxiosRequestConfig) {
-        return TemplateWebhookApiFp(this.configuration).webhookTemplateStatus(requestParameters.secret, requestParameters.templateStatusUpdateRequestInner, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
