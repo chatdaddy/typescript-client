@@ -549,104 +549,110 @@ export const AlibabaCAMSStateInfoStatusEnum = {
 export type AlibabaCAMSStateInfoStatusEnum = typeof AlibabaCAMSStateInfoStatusEnum[keyof typeof AlibabaCAMSStateInfoStatusEnum];
 
 /**
+ * @type AlibabaCAMSWebhookItem
+ * @export
+ */
+export type AlibabaCAMSWebhookItem = AlibabaCAMSWebhookMessageItem | AlibabaCAMSWebhookTemplateItem;
+
+/**
  * 
  * @export
- * @interface AlibabaCAMSWebhookItem
+ * @interface AlibabaCAMSWebhookMessageItem
  */
-export interface AlibabaCAMSWebhookItem {
+export interface AlibabaCAMSWebhookMessageItem {
     /**
      * 
      * @type {string}
-     * @memberof AlibabaCAMSWebhookItem
+     * @memberof AlibabaCAMSWebhookMessageItem
      */
-    'Type': AlibabaCAMSWebhookItemTypeEnum;
+    'Type': AlibabaCAMSWebhookMessageItemTypeEnum;
     /**
      * Reason for rejection of template
      * @type {string}
-     * @memberof AlibabaCAMSWebhookItem
+     * @memberof AlibabaCAMSWebhookMessageItem
      */
     'Reason'?: string;
     /**
      * Status of the template
      * @type {string}
-     * @memberof AlibabaCAMSWebhookItem
+     * @memberof AlibabaCAMSWebhookMessageItem
      */
-    'AuditStatus'?: AlibabaCAMSWebhookItemAuditStatusEnum;
+    'AuditStatus'?: AlibabaCAMSWebhookMessageItemAuditStatusEnum;
     /**
      * Code of the template
      * @type {string}
-     * @memberof AlibabaCAMSWebhookItem
+     * @memberof AlibabaCAMSWebhookMessageItem
      */
     'TemplateCode'?: string;
     /**
      * 
      * @type {string}
-     * @memberof AlibabaCAMSWebhookItem
+     * @memberof AlibabaCAMSWebhookMessageItem
      */
-    'Status'?: AlibabaCAMSWebhookItemStatusEnum;
+    'Status'?: AlibabaCAMSWebhookMessageItemStatusEnum;
     /**
      * 
      * @type {string}
-     * @memberof AlibabaCAMSWebhookItem
+     * @memberof AlibabaCAMSWebhookMessageItem
      */
     'ConversationId'?: string;
     /**
      * Raw text if type=TEXT, otherwise JSON stringified content
      * @type {string}
-     * @memberof AlibabaCAMSWebhookItem
+     * @memberof AlibabaCAMSWebhookMessageItem
      */
     'Message'?: string;
     /**
      * 
      * @type {string}
-     * @memberof AlibabaCAMSWebhookItem
+     * @memberof AlibabaCAMSWebhookMessageItem
      */
     'From': string;
     /**
      * 
      * @type {string}
-     * @memberof AlibabaCAMSWebhookItem
+     * @memberof AlibabaCAMSWebhookMessageItem
      */
     'To': string;
     /**
      * Unix timestamp in MS
      * @type {number}
-     * @memberof AlibabaCAMSWebhookItem
+     * @memberof AlibabaCAMSWebhookMessageItem
      */
     'Timestamp': number;
     /**
      * 
      * @type {string}
-     * @memberof AlibabaCAMSWebhookItem
+     * @memberof AlibabaCAMSWebhookMessageItem
      */
     'MessageId': string;
     /**
      * Name of the user that sent the message
      * @type {string}
-     * @memberof AlibabaCAMSWebhookItem
+     * @memberof AlibabaCAMSWebhookMessageItem
      */
     'Name'?: string;
     /**
      * 
      * @type {string}
-     * @memberof AlibabaCAMSWebhookItem
+     * @memberof AlibabaCAMSWebhookMessageItem
      */
-    'ConversationType'?: AlibabaCAMSWebhookItemConversationTypeEnum;
+    'ConversationType'?: AlibabaCAMSWebhookMessageItemConversationTypeEnum;
     /**
      * 
      * @type {string}
-     * @memberof AlibabaCAMSWebhookItem
+     * @memberof AlibabaCAMSWebhookMessageItem
      */
     'ErrorDescription'?: string;
     /**
      * 
      * @type {number}
-     * @memberof AlibabaCAMSWebhookItem
+     * @memberof AlibabaCAMSWebhookMessageItem
      */
     'ErrorCode'?: number;
 }
 
-export const AlibabaCAMSWebhookItemTypeEnum = {
+export const AlibabaCAMSWebhookMessageItemTypeEnum = {
     Text: 'TEXT',
     Template: 'TEMPLATE',
     Image: 'IMAGE',
@@ -656,31 +662,86 @@ export const AlibabaCAMSWebhookItemTypeEnum = {
     Unknown: 'UNKNOWN',
     Location: 'LOCATION',
     Interactive: 'INTERACTIVE',
-    Reply: 'REPLY',
-    Template: 'template'
+    Reply: 'REPLY'
 } as const;
 
-export type AlibabaCAMSWebhookItemTypeEnum = typeof AlibabaCAMSWebhookItemTypeEnum[keyof typeof AlibabaCAMSWebhookItemTypeEnum];
-export const AlibabaCAMSWebhookItemAuditStatusEnum = {
+export type AlibabaCAMSWebhookMessageItemTypeEnum = typeof AlibabaCAMSWebhookMessageItemTypeEnum[keyof typeof AlibabaCAMSWebhookMessageItemTypeEnum];
+export const AlibabaCAMSWebhookMessageItemAuditStatusEnum = {
     Fail: 'fail',
     Pass: 'pass'
 } as const;
 
-export type AlibabaCAMSWebhookItemAuditStatusEnum = typeof AlibabaCAMSWebhookItemAuditStatusEnum[keyof typeof AlibabaCAMSWebhookItemAuditStatusEnum];
-export const AlibabaCAMSWebhookItemStatusEnum = {
+export type AlibabaCAMSWebhookMessageItemAuditStatusEnum = typeof AlibabaCAMSWebhookMessageItemAuditStatusEnum[keyof typeof AlibabaCAMSWebhookMessageItemAuditStatusEnum];
+export const AlibabaCAMSWebhookMessageItemStatusEnum = {
     Sent: 'Sent',
     Delivered: 'Delivered',
     Read: 'Read',
     Failed: 'Failed'
 } as const;
 
-export type AlibabaCAMSWebhookItemStatusEnum = typeof AlibabaCAMSWebhookItemStatusEnum[keyof typeof AlibabaCAMSWebhookItemStatusEnum];
-export const AlibabaCAMSWebhookItemConversationTypeEnum = {
+export type AlibabaCAMSWebhookMessageItemStatusEnum = typeof AlibabaCAMSWebhookMessageItemStatusEnum[keyof typeof AlibabaCAMSWebhookMessageItemStatusEnum];
+export const AlibabaCAMSWebhookMessageItemConversationTypeEnum = {
     BusinessInitiated: 'business_initiated',
     UserInitiated: 'user_initiated'
 } as const;
 
-export type AlibabaCAMSWebhookItemConversationTypeEnum = typeof AlibabaCAMSWebhookItemConversationTypeEnum[keyof typeof AlibabaCAMSWebhookItemConversationTypeEnum];
+export type AlibabaCAMSWebhookMessageItemConversationTypeEnum = typeof AlibabaCAMSWebhookMessageItemConversationTypeEnum[keyof typeof AlibabaCAMSWebhookMessageItemConversationTypeEnum];
+
+/**
+ * 
+ * @export
+ * @interface AlibabaCAMSWebhookTemplateItem
+ */
+export interface AlibabaCAMSWebhookTemplateItem {
+    /**
+     * 
+     * @type {string}
+     * @memberof AlibabaCAMSWebhookTemplateItem
+     */
+    'Type': AlibabaCAMSWebhookTemplateItemTypeEnum;
+    /**
+     * Code of the template
+     * @type {string}
+     * @memberof AlibabaCAMSWebhookTemplateItem
+     */
+    'TemplateCode': string;
+    /**
+     * Status of the template
+     * @type {string}
+     * @memberof AlibabaCAMSWebhookTemplateItem
+     */
+    'AuditStatus': AlibabaCAMSWebhookTemplateItemAuditStatusEnum;
+    /**
+     * Language of the template
+     * @type {string}
+     * @memberof AlibabaCAMSWebhookTemplateItem
+     */
+    'Language': string;
+    /**
+     * Waba ID of the template
+     * @type {string}
+     * @memberof AlibabaCAMSWebhookTemplateItem
+     */
+    'WabaId': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof AlibabaCAMSWebhookTemplateItem
+     */
+    'Reason'?: string;
+}
+
+export const AlibabaCAMSWebhookTemplateItemTypeEnum = {
+    Template: 'template'
+} as const;
+
+export type AlibabaCAMSWebhookTemplateItemTypeEnum = typeof AlibabaCAMSWebhookTemplateItemTypeEnum[keyof typeof AlibabaCAMSWebhookTemplateItemTypeEnum];
+export const AlibabaCAMSWebhookTemplateItemAuditStatusEnum = {
+    Fail: 'fail',
+    Pass: 'pass'
+} as const;
+
+export type AlibabaCAMSWebhookTemplateItemAuditStatusEnum = typeof AlibabaCAMSWebhookTemplateItemAuditStatusEnum[keyof typeof AlibabaCAMSWebhookTemplateItemAuditStatusEnum];
 
 /**
  * 
