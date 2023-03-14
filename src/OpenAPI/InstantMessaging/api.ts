@@ -3329,7 +3329,7 @@ export interface TemplateCreate {
      * @type {string}
      * @memberof TemplateCreate
      */
-    'text': string;
+    'text': string | null;
     /**
      * 
      * @type {Array<MessageButton>}
@@ -3381,7 +3381,7 @@ export interface TemplateParams {
      */
     'name': string;
     /**
-     * 
+     * ISO language code
      * @type {string}
      * @memberof TemplateParams
      */
@@ -10698,6 +10698,48 @@ export const TemplatesApiAxiosParamCreator = function (configuration?: Configura
     return {
         /**
          * 
+         * @summary Delete a template on the platform
+         * @param {string} accountId 
+         * @param {string} templateId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        templatesDelete: async (accountId: string, templateId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'accountId' is not null or undefined
+            assertParamExists('templatesDelete', 'accountId', accountId)
+            // verify required parameter 'templateId' is not null or undefined
+            assertParamExists('templatesDelete', 'templateId', templateId)
+            const localVarPath = `/templates/{accountId}/{templateId}`
+                .replace(`{${"accountId"}}`, encodeURIComponent(String(accountId)))
+                .replace(`{${"templateId"}}`, encodeURIComponent(String(templateId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["TEMPLATES_CREATE"], configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
          * @summary Submit a template for review
          * @param {string} accountId 
          * @param {TemplatesSubmitForReviewRequest} [templatesSubmitForReviewRequest] 
@@ -10750,6 +10792,18 @@ export const TemplatesApiFp = function(configuration?: Configuration) {
     return {
         /**
          * 
+         * @summary Delete a template on the platform
+         * @param {string} accountId 
+         * @param {string} templateId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async templatesDelete(accountId: string, templateId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.templatesDelete(accountId, templateId, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
          * @summary Submit a template for review
          * @param {string} accountId 
          * @param {TemplatesSubmitForReviewRequest} [templatesSubmitForReviewRequest] 
@@ -10772,6 +10826,17 @@ export const TemplatesApiFactory = function (configuration?: Configuration, base
     return {
         /**
          * 
+         * @summary Delete a template on the platform
+         * @param {string} accountId 
+         * @param {string} templateId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        templatesDelete(accountId: string, templateId: string, options?: any): AxiosPromise<void> {
+            return localVarFp.templatesDelete(accountId, templateId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
          * @summary Submit a template for review
          * @param {string} accountId 
          * @param {TemplatesSubmitForReviewRequest} [templatesSubmitForReviewRequest] 
@@ -10783,6 +10848,27 @@ export const TemplatesApiFactory = function (configuration?: Configuration, base
         },
     };
 };
+
+/**
+ * Request parameters for templatesDelete operation in TemplatesApi.
+ * @export
+ * @interface TemplatesApiTemplatesDeleteRequest
+ */
+export interface TemplatesApiTemplatesDeleteRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof TemplatesApiTemplatesDelete
+     */
+    readonly accountId: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof TemplatesApiTemplatesDelete
+     */
+    readonly templateId: string
+}
 
 /**
  * Request parameters for templatesSubmitForReview operation in TemplatesApi.
@@ -10812,6 +10898,18 @@ export interface TemplatesApiTemplatesSubmitForReviewRequest {
  * @extends {BaseAPI}
  */
 export class TemplatesApi extends BaseAPI {
+    /**
+     * 
+     * @summary Delete a template on the platform
+     * @param {TemplatesApiTemplatesDeleteRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof TemplatesApi
+     */
+    public templatesDelete(requestParameters: TemplatesApiTemplatesDeleteRequest, options?: AxiosRequestConfig) {
+        return TemplatesApiFp(this.configuration).templatesDelete(requestParameters.accountId, requestParameters.templateId, options).then((request) => request(this.axios, this.basePath));
+    }
+
     /**
      * 
      * @summary Submit a template for review
