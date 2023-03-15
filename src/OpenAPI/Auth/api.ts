@@ -511,6 +511,12 @@ export interface OtpPostRequest {
      * @memberof OtpPostRequest
      */
     'template'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof OtpPostRequest
+     */
+    'captchaToken'?: string;
 }
 /**
  * 
