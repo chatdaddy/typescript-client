@@ -2483,7 +2483,8 @@ export const MessageStatus = {
     Note: 'note',
     Sent: 'sent',
     Delivered: 'delivered',
-    Read: 'read'
+    Read: 'read',
+    Cancelled: 'cancelled'
 } as const;
 
 export type MessageStatus = typeof MessageStatus[keyof typeof MessageStatus];
@@ -2637,6 +2638,12 @@ export interface MiscOptions {
      * @memberof MiscOptions
      */
     'buttonReplyId'?: string;
+    /**
+     * If true, the message will be cancelled if a reply is received
+     * @type {boolean}
+     * @memberof MiscOptions
+     */
+    'cancelIfReplyReceived'?: boolean;
 }
 /**
  * the message being forwarded
