@@ -277,6 +277,12 @@ export interface KeywordActionCreateRequestObj {
      */
     'enableOnGroupChats'?: boolean;
     /**
+     * Only on the first message in a chat
+     * @type {boolean}
+     * @memberof KeywordActionCreateRequestObj
+     */
+    'onlyOnFirstMessage'?: boolean;
+    /**
      * 
      * @type {TriggerType}
      * @memberof KeywordActionCreateRequestObj
@@ -337,6 +343,12 @@ export interface KeywordActionEditRequestObj {
      * @memberof KeywordActionEditRequestObj
      */
     'sendTyping'?: boolean;
+    /**
+     * Only on the first message in a chat
+     * @type {boolean}
+     * @memberof KeywordActionEditRequestObj
+     */
+    'onlyOnFirstMessage'?: boolean;
     /**
      * Toggles whether the keyword reply will trigger for group chats
      * @type {boolean}
@@ -453,6 +465,12 @@ export interface KeywordBasedAction {
      * @memberof KeywordBasedAction
      */
     'enableOnGroupChats'?: boolean;
+    /**
+     * Only on the first message in a chat
+     * @type {boolean}
+     * @memberof KeywordBasedAction
+     */
+    'onlyOnFirstMessage'?: boolean;
     /**
      * 
      * @type {TriggerType}
