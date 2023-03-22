@@ -5816,12 +5816,13 @@ export const ContactsApiAxiosParamCreator = function (configuration?: Configurat
          * @param {number} [maxMessagesRecv] Maximum messages received
          * @param {string} [q] Search string for contact name/phone number/email
          * @param {Array<string>} [assignee] Get contacts assigned to the specified users
+         * @param {Array<string>} [notAssignee] Exclude contacts assigned to the specified users
          * @param {Array<string>} [accountId] Get contacts only belonging to this account
          * @param {'group' | 'individual'} [type] only get contacts of type
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        contactsDelete: async (tags?: Array<string>, notTags?: Array<string>, contacts?: Array<string>, notContacts?: Array<string>, minMessagesSent?: number, minMessagesRecv?: number, maxMessagesSent?: number, maxMessagesRecv?: number, q?: string, assignee?: Array<string>, accountId?: Array<string>, type?: 'group' | 'individual', options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        contactsDelete: async (tags?: Array<string>, notTags?: Array<string>, contacts?: Array<string>, notContacts?: Array<string>, minMessagesSent?: number, minMessagesRecv?: number, maxMessagesSent?: number, maxMessagesRecv?: number, q?: string, assignee?: Array<string>, notAssignee?: Array<string>, accountId?: Array<string>, type?: 'group' | 'individual', options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/contacts`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -5878,6 +5879,10 @@ export const ContactsApiAxiosParamCreator = function (configuration?: Configurat
                 localVarQueryParameter['assignee'] = assignee;
             }
 
+            if (notAssignee) {
+                localVarQueryParameter['notAssignee'] = notAssignee;
+            }
+
             if (accountId) {
                 localVarQueryParameter['accountId'] = accountId;
             }
@@ -5910,6 +5915,7 @@ export const ContactsApiAxiosParamCreator = function (configuration?: Configurat
          * @param {number} [maxMessagesRecv] Maximum messages received
          * @param {string} [q] Search string for contact name/phone number/email
          * @param {Array<string>} [assignee] Get contacts assigned to the specified users
+         * @param {Array<string>} [notAssignee] Exclude contacts assigned to the specified users
          * @param {Array<string>} [accountId] Get contacts only belonging to this account
          * @param {'group' | 'individual'} [type] only get contacts of type
          * @param {boolean} [returnTotalCount] 
@@ -5919,7 +5925,7 @@ export const ContactsApiAxiosParamCreator = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        contactsGet: async (tags?: Array<string>, notTags?: Array<string>, contacts?: Array<string>, notContacts?: Array<string>, minMessagesSent?: number, minMessagesRecv?: number, maxMessagesSent?: number, maxMessagesRecv?: number, q?: string, assignee?: Array<string>, accountId?: Array<string>, type?: 'group' | 'individual', returnTotalCount?: boolean, returnLastMessage?: boolean, page?: string, count?: ContactsGetCountParameter, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        contactsGet: async (tags?: Array<string>, notTags?: Array<string>, contacts?: Array<string>, notContacts?: Array<string>, minMessagesSent?: number, minMessagesRecv?: number, maxMessagesSent?: number, maxMessagesRecv?: number, q?: string, assignee?: Array<string>, notAssignee?: Array<string>, accountId?: Array<string>, type?: 'group' | 'individual', returnTotalCount?: boolean, returnLastMessage?: boolean, page?: string, count?: ContactsGetCountParameter, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/contacts`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -5974,6 +5980,10 @@ export const ContactsApiAxiosParamCreator = function (configuration?: Configurat
 
             if (assignee) {
                 localVarQueryParameter['assignee'] = assignee;
+            }
+
+            if (notAssignee) {
+                localVarQueryParameter['notAssignee'] = notAssignee;
             }
 
             if (accountId) {
@@ -6071,6 +6081,7 @@ export const ContactsApiAxiosParamCreator = function (configuration?: Configurat
          * @param {number} [maxMessagesRecv] Maximum messages received
          * @param {string} [q] Search string for contact name/phone number/email
          * @param {Array<string>} [assignee] Get contacts assigned to the specified users
+         * @param {Array<string>} [notAssignee] Exclude contacts assigned to the specified users
          * @param {Array<string>} [accountId] Get contacts only belonging to this account
          * @param {'group' | 'individual'} [type] only get contacts of type
          * @param {string} [messageContainsText] 
@@ -6081,7 +6092,7 @@ export const ContactsApiAxiosParamCreator = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        contactsPatch: async (tags?: Array<string>, notTags?: Array<string>, contacts?: Array<string>, notContacts?: Array<string>, minMessagesSent?: number, minMessagesRecv?: number, maxMessagesSent?: number, maxMessagesRecv?: number, q?: string, assignee?: Array<string>, accountId?: Array<string>, type?: 'group' | 'individual', messageContainsText?: string, messageFrom?: string, messageTo?: string, messageFromMe?: boolean, contactsPatch?: ContactsPatch, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        contactsPatch: async (tags?: Array<string>, notTags?: Array<string>, contacts?: Array<string>, notContacts?: Array<string>, minMessagesSent?: number, minMessagesRecv?: number, maxMessagesSent?: number, maxMessagesRecv?: number, q?: string, assignee?: Array<string>, notAssignee?: Array<string>, accountId?: Array<string>, type?: 'group' | 'individual', messageContainsText?: string, messageFrom?: string, messageTo?: string, messageFromMe?: boolean, contactsPatch?: ContactsPatch, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/contacts`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -6136,6 +6147,10 @@ export const ContactsApiAxiosParamCreator = function (configuration?: Configurat
 
             if (assignee) {
                 localVarQueryParameter['assignee'] = assignee;
+            }
+
+            if (notAssignee) {
+                localVarQueryParameter['notAssignee'] = notAssignee;
             }
 
             if (accountId) {
@@ -6253,13 +6268,14 @@ export const ContactsApiFp = function(configuration?: Configuration) {
          * @param {number} [maxMessagesRecv] Maximum messages received
          * @param {string} [q] Search string for contact name/phone number/email
          * @param {Array<string>} [assignee] Get contacts assigned to the specified users
+         * @param {Array<string>} [notAssignee] Exclude contacts assigned to the specified users
          * @param {Array<string>} [accountId] Get contacts only belonging to this account
          * @param {'group' | 'individual'} [type] only get contacts of type
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async contactsDelete(tags?: Array<string>, notTags?: Array<string>, contacts?: Array<string>, notContacts?: Array<string>, minMessagesSent?: number, minMessagesRecv?: number, maxMessagesSent?: number, maxMessagesRecv?: number, q?: string, assignee?: Array<string>, accountId?: Array<string>, type?: 'group' | 'individual', options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AccountsLogout200Response>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.contactsDelete(tags, notTags, contacts, notContacts, minMessagesSent, minMessagesRecv, maxMessagesSent, maxMessagesRecv, q, assignee, accountId, type, options);
+        async contactsDelete(tags?: Array<string>, notTags?: Array<string>, contacts?: Array<string>, notContacts?: Array<string>, minMessagesSent?: number, minMessagesRecv?: number, maxMessagesSent?: number, maxMessagesRecv?: number, q?: string, assignee?: Array<string>, notAssignee?: Array<string>, accountId?: Array<string>, type?: 'group' | 'individual', options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AccountsLogout200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.contactsDelete(tags, notTags, contacts, notContacts, minMessagesSent, minMessagesRecv, maxMessagesSent, maxMessagesRecv, q, assignee, notAssignee, accountId, type, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -6275,6 +6291,7 @@ export const ContactsApiFp = function(configuration?: Configuration) {
          * @param {number} [maxMessagesRecv] Maximum messages received
          * @param {string} [q] Search string for contact name/phone number/email
          * @param {Array<string>} [assignee] Get contacts assigned to the specified users
+         * @param {Array<string>} [notAssignee] Exclude contacts assigned to the specified users
          * @param {Array<string>} [accountId] Get contacts only belonging to this account
          * @param {'group' | 'individual'} [type] only get contacts of type
          * @param {boolean} [returnTotalCount] 
@@ -6284,8 +6301,8 @@ export const ContactsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async contactsGet(tags?: Array<string>, notTags?: Array<string>, contacts?: Array<string>, notContacts?: Array<string>, minMessagesSent?: number, minMessagesRecv?: number, maxMessagesSent?: number, maxMessagesRecv?: number, q?: string, assignee?: Array<string>, accountId?: Array<string>, type?: 'group' | 'individual', returnTotalCount?: boolean, returnLastMessage?: boolean, page?: string, count?: ContactsGetCountParameter, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ContactsGet200Response>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.contactsGet(tags, notTags, contacts, notContacts, minMessagesSent, minMessagesRecv, maxMessagesSent, maxMessagesRecv, q, assignee, accountId, type, returnTotalCount, returnLastMessage, page, count, options);
+        async contactsGet(tags?: Array<string>, notTags?: Array<string>, contacts?: Array<string>, notContacts?: Array<string>, minMessagesSent?: number, minMessagesRecv?: number, maxMessagesSent?: number, maxMessagesRecv?: number, q?: string, assignee?: Array<string>, notAssignee?: Array<string>, accountId?: Array<string>, type?: 'group' | 'individual', returnTotalCount?: boolean, returnLastMessage?: boolean, page?: string, count?: ContactsGetCountParameter, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ContactsGet200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.contactsGet(tags, notTags, contacts, notContacts, minMessagesSent, minMessagesRecv, maxMessagesSent, maxMessagesRecv, q, assignee, notAssignee, accountId, type, returnTotalCount, returnLastMessage, page, count, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -6314,6 +6331,7 @@ export const ContactsApiFp = function(configuration?: Configuration) {
          * @param {number} [maxMessagesRecv] Maximum messages received
          * @param {string} [q] Search string for contact name/phone number/email
          * @param {Array<string>} [assignee] Get contacts assigned to the specified users
+         * @param {Array<string>} [notAssignee] Exclude contacts assigned to the specified users
          * @param {Array<string>} [accountId] Get contacts only belonging to this account
          * @param {'group' | 'individual'} [type] only get contacts of type
          * @param {string} [messageContainsText] 
@@ -6324,8 +6342,8 @@ export const ContactsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async contactsPatch(tags?: Array<string>, notTags?: Array<string>, contacts?: Array<string>, notContacts?: Array<string>, minMessagesSent?: number, minMessagesRecv?: number, maxMessagesSent?: number, maxMessagesRecv?: number, q?: string, assignee?: Array<string>, accountId?: Array<string>, type?: 'group' | 'individual', messageContainsText?: string, messageFrom?: string, messageTo?: string, messageFromMe?: boolean, contactsPatch?: ContactsPatch, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ContactsPatch200Response>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.contactsPatch(tags, notTags, contacts, notContacts, minMessagesSent, minMessagesRecv, maxMessagesSent, maxMessagesRecv, q, assignee, accountId, type, messageContainsText, messageFrom, messageTo, messageFromMe, contactsPatch, options);
+        async contactsPatch(tags?: Array<string>, notTags?: Array<string>, contacts?: Array<string>, notContacts?: Array<string>, minMessagesSent?: number, minMessagesRecv?: number, maxMessagesSent?: number, maxMessagesRecv?: number, q?: string, assignee?: Array<string>, notAssignee?: Array<string>, accountId?: Array<string>, type?: 'group' | 'individual', messageContainsText?: string, messageFrom?: string, messageTo?: string, messageFromMe?: boolean, contactsPatch?: ContactsPatch, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ContactsPatch200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.contactsPatch(tags, notTags, contacts, notContacts, minMessagesSent, minMessagesRecv, maxMessagesSent, maxMessagesRecv, q, assignee, notAssignee, accountId, type, messageContainsText, messageFrom, messageTo, messageFromMe, contactsPatch, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -6373,13 +6391,14 @@ export const ContactsApiFactory = function (configuration?: Configuration, baseP
          * @param {number} [maxMessagesRecv] Maximum messages received
          * @param {string} [q] Search string for contact name/phone number/email
          * @param {Array<string>} [assignee] Get contacts assigned to the specified users
+         * @param {Array<string>} [notAssignee] Exclude contacts assigned to the specified users
          * @param {Array<string>} [accountId] Get contacts only belonging to this account
          * @param {'group' | 'individual'} [type] only get contacts of type
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        contactsDelete(tags?: Array<string>, notTags?: Array<string>, contacts?: Array<string>, notContacts?: Array<string>, minMessagesSent?: number, minMessagesRecv?: number, maxMessagesSent?: number, maxMessagesRecv?: number, q?: string, assignee?: Array<string>, accountId?: Array<string>, type?: 'group' | 'individual', options?: any): AxiosPromise<AccountsLogout200Response> {
-            return localVarFp.contactsDelete(tags, notTags, contacts, notContacts, minMessagesSent, minMessagesRecv, maxMessagesSent, maxMessagesRecv, q, assignee, accountId, type, options).then((request) => request(axios, basePath));
+        contactsDelete(tags?: Array<string>, notTags?: Array<string>, contacts?: Array<string>, notContacts?: Array<string>, minMessagesSent?: number, minMessagesRecv?: number, maxMessagesSent?: number, maxMessagesRecv?: number, q?: string, assignee?: Array<string>, notAssignee?: Array<string>, accountId?: Array<string>, type?: 'group' | 'individual', options?: any): AxiosPromise<AccountsLogout200Response> {
+            return localVarFp.contactsDelete(tags, notTags, contacts, notContacts, minMessagesSent, minMessagesRecv, maxMessagesSent, maxMessagesRecv, q, assignee, notAssignee, accountId, type, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -6394,6 +6413,7 @@ export const ContactsApiFactory = function (configuration?: Configuration, baseP
          * @param {number} [maxMessagesRecv] Maximum messages received
          * @param {string} [q] Search string for contact name/phone number/email
          * @param {Array<string>} [assignee] Get contacts assigned to the specified users
+         * @param {Array<string>} [notAssignee] Exclude contacts assigned to the specified users
          * @param {Array<string>} [accountId] Get contacts only belonging to this account
          * @param {'group' | 'individual'} [type] only get contacts of type
          * @param {boolean} [returnTotalCount] 
@@ -6403,8 +6423,8 @@ export const ContactsApiFactory = function (configuration?: Configuration, baseP
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        contactsGet(tags?: Array<string>, notTags?: Array<string>, contacts?: Array<string>, notContacts?: Array<string>, minMessagesSent?: number, minMessagesRecv?: number, maxMessagesSent?: number, maxMessagesRecv?: number, q?: string, assignee?: Array<string>, accountId?: Array<string>, type?: 'group' | 'individual', returnTotalCount?: boolean, returnLastMessage?: boolean, page?: string, count?: ContactsGetCountParameter, options?: any): AxiosPromise<ContactsGet200Response> {
-            return localVarFp.contactsGet(tags, notTags, contacts, notContacts, minMessagesSent, minMessagesRecv, maxMessagesSent, maxMessagesRecv, q, assignee, accountId, type, returnTotalCount, returnLastMessage, page, count, options).then((request) => request(axios, basePath));
+        contactsGet(tags?: Array<string>, notTags?: Array<string>, contacts?: Array<string>, notContacts?: Array<string>, minMessagesSent?: number, minMessagesRecv?: number, maxMessagesSent?: number, maxMessagesRecv?: number, q?: string, assignee?: Array<string>, notAssignee?: Array<string>, accountId?: Array<string>, type?: 'group' | 'individual', returnTotalCount?: boolean, returnLastMessage?: boolean, page?: string, count?: ContactsGetCountParameter, options?: any): AxiosPromise<ContactsGet200Response> {
+            return localVarFp.contactsGet(tags, notTags, contacts, notContacts, minMessagesSent, minMessagesRecv, maxMessagesSent, maxMessagesRecv, q, assignee, notAssignee, accountId, type, returnTotalCount, returnLastMessage, page, count, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -6431,6 +6451,7 @@ export const ContactsApiFactory = function (configuration?: Configuration, baseP
          * @param {number} [maxMessagesRecv] Maximum messages received
          * @param {string} [q] Search string for contact name/phone number/email
          * @param {Array<string>} [assignee] Get contacts assigned to the specified users
+         * @param {Array<string>} [notAssignee] Exclude contacts assigned to the specified users
          * @param {Array<string>} [accountId] Get contacts only belonging to this account
          * @param {'group' | 'individual'} [type] only get contacts of type
          * @param {string} [messageContainsText] 
@@ -6441,8 +6462,8 @@ export const ContactsApiFactory = function (configuration?: Configuration, baseP
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        contactsPatch(tags?: Array<string>, notTags?: Array<string>, contacts?: Array<string>, notContacts?: Array<string>, minMessagesSent?: number, minMessagesRecv?: number, maxMessagesSent?: number, maxMessagesRecv?: number, q?: string, assignee?: Array<string>, accountId?: Array<string>, type?: 'group' | 'individual', messageContainsText?: string, messageFrom?: string, messageTo?: string, messageFromMe?: boolean, contactsPatch?: ContactsPatch, options?: any): AxiosPromise<ContactsPatch200Response> {
-            return localVarFp.contactsPatch(tags, notTags, contacts, notContacts, minMessagesSent, minMessagesRecv, maxMessagesSent, maxMessagesRecv, q, assignee, accountId, type, messageContainsText, messageFrom, messageTo, messageFromMe, contactsPatch, options).then((request) => request(axios, basePath));
+        contactsPatch(tags?: Array<string>, notTags?: Array<string>, contacts?: Array<string>, notContacts?: Array<string>, minMessagesSent?: number, minMessagesRecv?: number, maxMessagesSent?: number, maxMessagesRecv?: number, q?: string, assignee?: Array<string>, notAssignee?: Array<string>, accountId?: Array<string>, type?: 'group' | 'individual', messageContainsText?: string, messageFrom?: string, messageTo?: string, messageFromMe?: boolean, contactsPatch?: ContactsPatch, options?: any): AxiosPromise<ContactsPatch200Response> {
+            return localVarFp.contactsPatch(tags, notTags, contacts, notContacts, minMessagesSent, minMessagesRecv, maxMessagesSent, maxMessagesRecv, q, assignee, notAssignee, accountId, type, messageContainsText, messageFrom, messageTo, messageFromMe, contactsPatch, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -6555,6 +6576,13 @@ export interface ContactsApiContactsDeleteRequest {
     readonly assignee?: Array<string>
 
     /**
+     * Exclude contacts assigned to the specified users
+     * @type {Array<string>}
+     * @memberof ContactsApiContactsDelete
+     */
+    readonly notAssignee?: Array<string>
+
+    /**
      * Get contacts only belonging to this account
      * @type {Array<string>}
      * @memberof ContactsApiContactsDelete
@@ -6644,6 +6672,13 @@ export interface ContactsApiContactsGetRequest {
      * @memberof ContactsApiContactsGet
      */
     readonly assignee?: Array<string>
+
+    /**
+     * Exclude contacts assigned to the specified users
+     * @type {Array<string>}
+     * @memberof ContactsApiContactsGet
+     */
+    readonly notAssignee?: Array<string>
 
     /**
      * Get contacts only belonging to this account
@@ -6793,6 +6828,13 @@ export interface ContactsApiContactsPatchRequest {
     readonly assignee?: Array<string>
 
     /**
+     * Exclude contacts assigned to the specified users
+     * @type {Array<string>}
+     * @memberof ContactsApiContactsPatch
+     */
+    readonly notAssignee?: Array<string>
+
+    /**
      * Get contacts only belonging to this account
      * @type {Array<string>}
      * @memberof ContactsApiContactsPatch
@@ -6884,7 +6926,7 @@ export class ContactsApi extends BaseAPI {
      * @memberof ContactsApi
      */
     public contactsDelete(requestParameters: ContactsApiContactsDeleteRequest = {}, options?: AxiosRequestConfig) {
-        return ContactsApiFp(this.configuration).contactsDelete(requestParameters.tags, requestParameters.notTags, requestParameters.contacts, requestParameters.notContacts, requestParameters.minMessagesSent, requestParameters.minMessagesRecv, requestParameters.maxMessagesSent, requestParameters.maxMessagesRecv, requestParameters.q, requestParameters.assignee, requestParameters.accountId, requestParameters.type, options).then((request) => request(this.axios, this.basePath));
+        return ContactsApiFp(this.configuration).contactsDelete(requestParameters.tags, requestParameters.notTags, requestParameters.contacts, requestParameters.notContacts, requestParameters.minMessagesSent, requestParameters.minMessagesRecv, requestParameters.maxMessagesSent, requestParameters.maxMessagesRecv, requestParameters.q, requestParameters.assignee, requestParameters.notAssignee, requestParameters.accountId, requestParameters.type, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -6896,7 +6938,7 @@ export class ContactsApi extends BaseAPI {
      * @memberof ContactsApi
      */
     public contactsGet(requestParameters: ContactsApiContactsGetRequest = {}, options?: AxiosRequestConfig) {
-        return ContactsApiFp(this.configuration).contactsGet(requestParameters.tags, requestParameters.notTags, requestParameters.contacts, requestParameters.notContacts, requestParameters.minMessagesSent, requestParameters.minMessagesRecv, requestParameters.maxMessagesSent, requestParameters.maxMessagesRecv, requestParameters.q, requestParameters.assignee, requestParameters.accountId, requestParameters.type, requestParameters.returnTotalCount, requestParameters.returnLastMessage, requestParameters.page, requestParameters.count, options).then((request) => request(this.axios, this.basePath));
+        return ContactsApiFp(this.configuration).contactsGet(requestParameters.tags, requestParameters.notTags, requestParameters.contacts, requestParameters.notContacts, requestParameters.minMessagesSent, requestParameters.minMessagesRecv, requestParameters.maxMessagesSent, requestParameters.maxMessagesRecv, requestParameters.q, requestParameters.assignee, requestParameters.notAssignee, requestParameters.accountId, requestParameters.type, requestParameters.returnTotalCount, requestParameters.returnLastMessage, requestParameters.page, requestParameters.count, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -6920,7 +6962,7 @@ export class ContactsApi extends BaseAPI {
      * @memberof ContactsApi
      */
     public contactsPatch(requestParameters: ContactsApiContactsPatchRequest = {}, options?: AxiosRequestConfig) {
-        return ContactsApiFp(this.configuration).contactsPatch(requestParameters.tags, requestParameters.notTags, requestParameters.contacts, requestParameters.notContacts, requestParameters.minMessagesSent, requestParameters.minMessagesRecv, requestParameters.maxMessagesSent, requestParameters.maxMessagesRecv, requestParameters.q, requestParameters.assignee, requestParameters.accountId, requestParameters.type, requestParameters.messageContainsText, requestParameters.messageFrom, requestParameters.messageTo, requestParameters.messageFromMe, requestParameters.contactsPatch, options).then((request) => request(this.axios, this.basePath));
+        return ContactsApiFp(this.configuration).contactsPatch(requestParameters.tags, requestParameters.notTags, requestParameters.contacts, requestParameters.notContacts, requestParameters.minMessagesSent, requestParameters.minMessagesRecv, requestParameters.maxMessagesSent, requestParameters.maxMessagesRecv, requestParameters.q, requestParameters.assignee, requestParameters.notAssignee, requestParameters.accountId, requestParameters.type, requestParameters.messageContainsText, requestParameters.messageFrom, requestParameters.messageTo, requestParameters.messageFromMe, requestParameters.contactsPatch, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
