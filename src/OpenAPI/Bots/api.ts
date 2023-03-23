@@ -434,6 +434,12 @@ export interface BotMessageDelay {
      */
     'simulateTyping'?: boolean;
     /**
+     * If true, the message will be cancelled if a reply is received
+     * @type {boolean}
+     * @memberof BotMessageDelay
+     */
+    'cancelIfReplyReceived'?: boolean;
+    /**
      * 
      * @type {Position}
      * @memberof BotMessageDelay
@@ -552,6 +558,12 @@ export interface BotsFireRequestMessageSendOptions {
      * @memberof BotsFireRequestMessageSendOptions
      */
     'requireOpenAccount'?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof BotsFireRequestMessageSendOptions
+     */
+    'cancelIfReplyReceived'?: boolean;
     /**
      * An ISO formatted timestamp
      * @type {string}
