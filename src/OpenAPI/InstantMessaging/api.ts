@@ -806,6 +806,12 @@ export interface AlibabaCamsRegisterRequest {
      * @memberof AlibabaCamsRegisterRequest
      */
     'token': string;
+    /**
+     * Phone number to connect to the account. No formatting, just digits with country code. If not provided, the first phone number will be used.
+     * @type {string}
+     * @memberof AlibabaCamsRegisterRequest
+     */
+    'selectedPhoneNumber'?: string;
 }
 /**
  * 
