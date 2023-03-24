@@ -1083,6 +1083,12 @@ export interface Contact {
     'accountId': string;
     /**
      * 
+     * @type {string}
+     * @memberof Contact
+     */
+    'cursor': string;
+    /**
+     * 
      * @type {ContactType}
      * @memberof Contact
      */
@@ -2878,6 +2884,12 @@ export interface PlatformProduct {
      * @memberof PlatformProduct
      */
     'updatedAt': string;
+    /**
+     * Cursor to sort products by
+     * @type {string}
+     * @memberof PlatformProduct
+     */
+    'cursor'?: string;
 }
 /**
  * 
