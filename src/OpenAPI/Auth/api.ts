@@ -1193,6 +1193,12 @@ export interface User {
      */
     'referralCode'?: string | null;
     /**
+     * The signature of the user
+     * @type {string}
+     * @memberof User
+     */
+    'signature'?: string | null;
+    /**
      * 
      * @type {Array<TeamMember>}
      * @memberof User
@@ -1319,6 +1325,12 @@ export interface UserPatch {
      * @memberof UserPatch
      */
     'password'?: string;
+    /**
+     * A signature of the user to be used at the end of the message
+     * @type {string}
+     * @memberof UserPatch
+     */
+    'signature'?: string;
     /**
      * 
      * @type {Array<WebPushSubscription>}
