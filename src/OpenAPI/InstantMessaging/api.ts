@@ -1742,6 +1742,12 @@ export interface Message {
     'buttons'?: Array<MessageButton> | null;
     /**
      * 
+     * @type {Poll}
+     * @memberof Message
+     */
+    'poll'?: Poll;
+    /**
+     * 
      * @type {Array<MessageProduct>}
      * @memberof Message
      */
@@ -2111,6 +2117,12 @@ export interface MessageCompose {
     'buttons'?: Array<MessageButton> | null;
     /**
      * 
+     * @type {Poll}
+     * @memberof MessageCompose
+     */
+    'poll'?: Poll;
+    /**
+     * 
      * @type {Array<MessageProduct>}
      * @memberof MessageCompose
      */
@@ -2235,6 +2247,12 @@ export interface MessageContent {
      * @memberof MessageContent
      */
     'buttons'?: Array<MessageButton> | null;
+    /**
+     * 
+     * @type {Poll}
+     * @memberof MessageContent
+     */
+    'poll'?: Poll;
     /**
      * 
      * @type {Array<MessageProduct>}
@@ -2650,6 +2668,12 @@ export interface MiscOptions {
      * @memberof MiscOptions
      */
     'buttonReplyId'?: string;
+    /**
+     * the option of the poll that was clicked
+     * @type {Array<string>}
+     * @memberof MiscOptions
+     */
+    'pollReplyOptions'?: Array<string>;
     /**
      * If true, the message will be cancelled if a reply is received
      * @type {boolean}
@@ -3093,6 +3117,25 @@ export interface PlatformProductsPostRequest {
 /**
  * 
  * @export
+ * @interface Poll
+ */
+export interface Poll {
+    /**
+     * 
+     * @type {Array<PollOption>}
+     * @memberof Poll
+     */
+    'options': Array<PollOption>;
+    /**
+     * The maximum number of options that can be selected
+     * @type {number}
+     * @memberof Poll
+     */
+    'maxSelections'?: number;
+}
+/**
+ * 
+ * @export
  * @interface PollChatHistory200Response
  */
 export interface PollChatHistory200Response {
@@ -3118,6 +3161,25 @@ export const PollChatHistory200ResponseStatusEnum = {
 
 export type PollChatHistory200ResponseStatusEnum = typeof PollChatHistory200ResponseStatusEnum[keyof typeof PollChatHistory200ResponseStatusEnum];
 
+/**
+ * 
+ * @export
+ * @interface PollOption
+ */
+export interface PollOption {
+    /**
+     * The text of the option
+     * @type {string}
+     * @memberof PollOption
+     */
+    'text': string;
+    /**
+     * The IDs of the contacts that selected this option
+     * @type {Array<string>}
+     * @memberof PollOption
+     */
+    'voters'?: Array<string>;
+}
 /**
  * 
  * @export
