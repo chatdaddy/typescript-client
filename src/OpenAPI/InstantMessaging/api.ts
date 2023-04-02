@@ -281,6 +281,12 @@ export interface AccountSettings {
      * @memberof AccountSettings
      */
     'newChatsAssignee'?: AccountSettingsNewChatsAssignee;
+    /**
+     * Should polls be sent as buttons instead of a message. This is useful for the regular WhatsApp API
+     * @type {boolean}
+     * @memberof AccountSettings
+     */
+    'sendButtonsAsPoll'?: boolean;
 }
 /**
  * All new chats will be auto asssigned if one of the option is enabled and select any Assignee
