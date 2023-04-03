@@ -987,7 +987,7 @@ export interface ChatAssignment {
      * @type {boolean}
      * @memberof ChatAssignment
      */
-    'enabled': boolean;
+    'enabled'?: boolean;
     /**
      * Auto assigned will work for the selected teammates
      * @type {Array<string>}
