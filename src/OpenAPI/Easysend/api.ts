@@ -480,6 +480,12 @@ export interface EasysendDataModel {
     'triggerId': number | null;
     /**
      * 
+     * @type {number}
+     * @memberof EasysendDataModel
+     */
+    'trackingId'?: number;
+    /**
+     * 
      * @type {string}
      * @memberof EasysendDataModel
      */
