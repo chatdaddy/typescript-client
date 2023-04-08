@@ -353,10 +353,16 @@ export interface CreatePaymentIntegrationRequest {
     'paymentSystemId': string;
     /**
      * 
+     * @type {PaymentIntegrationAuthRequest}
+     * @memberof CreatePaymentIntegrationRequest
+     */
+    'auth'?: PaymentIntegrationAuthRequest;
+    /**
+     * 
      * @type {DataType}
      * @memberof CreatePaymentIntegrationRequest
      */
-    'dataType': DataType;
+    'dataType'?: DataType;
 }
 /**
  * 
@@ -885,11 +891,143 @@ export interface PaymentIntegration {
      */
     'paymentSystemId': string;
     /**
-     * 
+     * URL of the QR code image
      * @type {string}
      * @memberof PaymentIntegration
      */
     'qrCodeUrl'?: string;
+    /**
+     * Secret key for the payment system
+     * @type {string}
+     * @memberof PaymentIntegration
+     */
+    'secret'?: string;
+}
+/**
+ * Authentication details for the payment system to create a payment integration
+ * @export
+ * @interface PaymentIntegrationAuthRequest
+ */
+export interface PaymentIntegrationAuthRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof PaymentIntegrationAuthRequest
+     */
+    'type': PaymentIntegrationAuthRequestTypeEnum;
+    /**
+     * OAuth2 authorization code
+     * @type {string}
+     * @memberof PaymentIntegrationAuthRequest
+     */
+    'authorizationCode': string;
+}
+
+export const PaymentIntegrationAuthRequestTypeEnum = {
+    Oauth: 'oauth'
+} as const;
+
+export type PaymentIntegrationAuthRequestTypeEnum = typeof PaymentIntegrationAuthRequestTypeEnum[keyof typeof PaymentIntegrationAuthRequestTypeEnum];
+
+/**
+ * 
+ * @export
+ * @interface PaymentLink
+ */
+export interface PaymentLink {
+    /**
+     * The URL to the payment page
+     * @type {string}
+     * @memberof PaymentLink
+     */
+    'url': string;
+}
+/**
+ * 
+ * @export
+ * @interface PaymentLinkPostRequest
+ */
+export interface PaymentLinkPostRequest {
+    /**
+     * 
+     * @type {Array<PaymentLinkProduct>}
+     * @memberof PaymentLinkPostRequest
+     */
+    'products': Array<PaymentLinkProduct>;
+    /**
+     * 
+     * @type {PaymentLinkPostRequestToContact}
+     * @memberof PaymentLinkPostRequest
+     */
+    'toContact': PaymentLinkPostRequestToContact;
+    /**
+     * 
+     * @type {string}
+     * @memberof PaymentLinkPostRequest
+     */
+    'orderId'?: string;
+    /**
+     * Additional parameters to be passed to the payment system
+     * @type {{ [key: string]: any; }}
+     * @memberof PaymentLinkPostRequest
+     */
+    'params'?: { [key: string]: any; };
+}
+/**
+ * 
+ * @export
+ * @interface PaymentLinkPostRequestToContact
+ */
+export interface PaymentLinkPostRequestToContact {
+    /**
+     * 
+     * @type {string}
+     * @memberof PaymentLinkPostRequestToContact
+     */
+    'id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof PaymentLinkPostRequestToContact
+     */
+    'accountId': string;
+}
+/**
+ * 
+ * @export
+ * @interface PaymentLinkProduct
+ */
+export interface PaymentLinkProduct {
+    /**
+     * ID of the product to add to the payment link
+     * @type {string}
+     * @memberof PaymentLinkProduct
+     */
+    'productId': string;
+    /**
+     * Name of the product to add to the payment link
+     * @type {string}
+     * @memberof PaymentLinkProduct
+     */
+    'name': string;
+    /**
+     * The quantity of the product
+     * @type {number}
+     * @memberof PaymentLinkProduct
+     */
+    'quantity': number;
+    /**
+     * The price of the product
+     * @type {number}
+     * @memberof PaymentLinkProduct
+     */
+    'price': number;
+    /**
+     * ISO currency code
+     * @type {string}
+     * @memberof PaymentLinkProduct
+     */
+    'currency': string;
 }
 /**
  * 
@@ -1069,7 +1207,7 @@ export interface PaymentSystem {
      */
     'name': string;
     /**
-     * 
+     * - qr - QR code payment system - url - payment link generation system
      * @type {string}
      * @memberof PaymentSystem
      */
@@ -1082,12 +1220,18 @@ export interface PaymentSystem {
     'dataType': DataType;
     /**
      * 
+     * @type {PaymentSystemAuth}
+     * @memberof PaymentSystem
+     */
+    'auth'?: PaymentSystemAuth;
+    /**
+     * User\'s integrations of this payment system
      * @type {Array<PaymentIntegration>}
      * @memberof PaymentSystem
      */
     'currentIntegrations'?: Array<PaymentIntegration> | null;
     /**
-     * 
+     * ISO 3166-1 alpha-2 country code.
      * @type {string}
      * @memberof PaymentSystem
      */
@@ -1107,6 +1251,19 @@ export const PaymentSystemTypeEnum = {
 
 export type PaymentSystemTypeEnum = typeof PaymentSystemTypeEnum[keyof typeof PaymentSystemTypeEnum];
 
+/**
+ * 
+ * @export
+ * @interface PaymentSystemAuth
+ */
+export interface PaymentSystemAuth {
+    /**
+     * URL to redirect user to in order to authorize the payment system integration
+     * @type {string}
+     * @memberof PaymentSystemAuth
+     */
+    'oauthUrl'?: string;
+}
 /**
  * 
  * @export
@@ -2183,6 +2340,90 @@ export const PaymentIntegrationsApiAxiosParamCreator = function (configuration?:
                 options: localVarRequestOptions,
             };
         },
+        /**
+         * This endpoint is used by payment integrations to notify the server of payment events
+         * @summary Webhook for payment integrations
+         * @param {string} id ID of the payment integration
+         * @param {string} secret Secret of the payment integration
+         * @param {{ [key: string]: any; }} [requestBody] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        paymentIntegrationWebhook: async (id: string, secret: string, requestBody?: { [key: string]: any; }, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('paymentIntegrationWebhook', 'id', id)
+            // verify required parameter 'secret' is not null or undefined
+            assertParamExists('paymentIntegrationWebhook', 'secret', secret)
+            const localVarPath = `/payment-integrations/{id}/webhook/{secret}`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)))
+                .replace(`{${"secret"}}`, encodeURIComponent(String(secret)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(requestBody, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Generate a payment link
+         * @param {string} id the id of the payment integration to generate a payment link for
+         * @param {PaymentLinkPostRequest} [paymentLinkPostRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        paymentLinkPost: async (id: string, paymentLinkPostRequest?: PaymentLinkPostRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('paymentLinkPost', 'id', id)
+            const localVarPath = `/payment-integrations/{id}/payment-link`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["PAYMENT_INTEGRATION_WRITE"], configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(paymentLinkPostRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
     }
 };
 
@@ -2241,6 +2482,31 @@ export const PaymentIntegrationsApiFp = function(configuration?: Configuration) 
             const localVarAxiosArgs = await localVarAxiosParamCreator.patchPaymentIntegration(id, patchPaymentIntegrationRequest, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
+        /**
+         * This endpoint is used by payment integrations to notify the server of payment events
+         * @summary Webhook for payment integrations
+         * @param {string} id ID of the payment integration
+         * @param {string} secret Secret of the payment integration
+         * @param {{ [key: string]: any; }} [requestBody] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async paymentIntegrationWebhook(id: string, secret: string, requestBody?: { [key: string]: any; }, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SuccessResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.paymentIntegrationWebhook(id, secret, requestBody, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary Generate a payment link
+         * @param {string} id the id of the payment integration to generate a payment link for
+         * @param {PaymentLinkPostRequest} [paymentLinkPostRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async paymentLinkPost(id: string, paymentLinkPostRequest?: PaymentLinkPostRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PaymentLink>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.paymentLinkPost(id, paymentLinkPostRequest, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
     }
 };
 
@@ -2294,6 +2560,29 @@ export const PaymentIntegrationsApiFactory = function (configuration?: Configura
          */
         patchPaymentIntegration(id: string, patchPaymentIntegrationRequest?: PatchPaymentIntegrationRequest, options?: any): AxiosPromise<SuccessResponse> {
             return localVarFp.patchPaymentIntegration(id, patchPaymentIntegrationRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * This endpoint is used by payment integrations to notify the server of payment events
+         * @summary Webhook for payment integrations
+         * @param {string} id ID of the payment integration
+         * @param {string} secret Secret of the payment integration
+         * @param {{ [key: string]: any; }} [requestBody] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        paymentIntegrationWebhook(id: string, secret: string, requestBody?: { [key: string]: any; }, options?: any): AxiosPromise<SuccessResponse> {
+            return localVarFp.paymentIntegrationWebhook(id, secret, requestBody, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Generate a payment link
+         * @param {string} id the id of the payment integration to generate a payment link for
+         * @param {PaymentLinkPostRequest} [paymentLinkPostRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        paymentLinkPost(id: string, paymentLinkPostRequest?: PaymentLinkPostRequest, options?: any): AxiosPromise<PaymentLink> {
+            return localVarFp.paymentLinkPost(id, paymentLinkPostRequest, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -2383,6 +2672,55 @@ export interface PaymentIntegrationsApiPatchPaymentIntegrationRequest {
 }
 
 /**
+ * Request parameters for paymentIntegrationWebhook operation in PaymentIntegrationsApi.
+ * @export
+ * @interface PaymentIntegrationsApiPaymentIntegrationWebhookRequest
+ */
+export interface PaymentIntegrationsApiPaymentIntegrationWebhookRequest {
+    /**
+     * ID of the payment integration
+     * @type {string}
+     * @memberof PaymentIntegrationsApiPaymentIntegrationWebhook
+     */
+    readonly id: string
+
+    /**
+     * Secret of the payment integration
+     * @type {string}
+     * @memberof PaymentIntegrationsApiPaymentIntegrationWebhook
+     */
+    readonly secret: string
+
+    /**
+     * 
+     * @type {{ [key: string]: any; }}
+     * @memberof PaymentIntegrationsApiPaymentIntegrationWebhook
+     */
+    readonly requestBody?: { [key: string]: any; }
+}
+
+/**
+ * Request parameters for paymentLinkPost operation in PaymentIntegrationsApi.
+ * @export
+ * @interface PaymentIntegrationsApiPaymentLinkPostRequest
+ */
+export interface PaymentIntegrationsApiPaymentLinkPostRequest {
+    /**
+     * the id of the payment integration to generate a payment link for
+     * @type {string}
+     * @memberof PaymentIntegrationsApiPaymentLinkPost
+     */
+    readonly id: string
+
+    /**
+     * 
+     * @type {PaymentLinkPostRequest}
+     * @memberof PaymentIntegrationsApiPaymentLinkPost
+     */
+    readonly paymentLinkPostRequest?: PaymentLinkPostRequest
+}
+
+/**
  * PaymentIntegrationsApi - object-oriented interface
  * @export
  * @class PaymentIntegrationsApi
@@ -2435,6 +2773,30 @@ export class PaymentIntegrationsApi extends BaseAPI {
      */
     public patchPaymentIntegration(requestParameters: PaymentIntegrationsApiPatchPaymentIntegrationRequest, options?: AxiosRequestConfig) {
         return PaymentIntegrationsApiFp(this.configuration).patchPaymentIntegration(requestParameters.id, requestParameters.patchPaymentIntegrationRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * This endpoint is used by payment integrations to notify the server of payment events
+     * @summary Webhook for payment integrations
+     * @param {PaymentIntegrationsApiPaymentIntegrationWebhookRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof PaymentIntegrationsApi
+     */
+    public paymentIntegrationWebhook(requestParameters: PaymentIntegrationsApiPaymentIntegrationWebhookRequest, options?: AxiosRequestConfig) {
+        return PaymentIntegrationsApiFp(this.configuration).paymentIntegrationWebhook(requestParameters.id, requestParameters.secret, requestParameters.requestBody, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Generate a payment link
+     * @param {PaymentIntegrationsApiPaymentLinkPostRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof PaymentIntegrationsApi
+     */
+    public paymentLinkPost(requestParameters: PaymentIntegrationsApiPaymentLinkPostRequest, options?: AxiosRequestConfig) {
+        return PaymentIntegrationsApiFp(this.configuration).paymentLinkPost(requestParameters.id, requestParameters.paymentLinkPostRequest, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
