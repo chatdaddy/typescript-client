@@ -1003,7 +1003,7 @@ export interface PaymentLinkProduct {
      * @type {string}
      * @memberof PaymentLinkProduct
      */
-    'productId': string;
+    'id': string;
     /**
      * Name of the product to add to the payment link
      * @type {string}
@@ -1657,10 +1657,10 @@ export interface UpdateOrderModel {
     'isTest'?: boolean;
     /**
      * 
-     * @type {{ [key: string]: any; }}
+     * @type {{ [key: string]: string; }}
      * @memberof UpdateOrderModel
      */
-    'params': { [key: string]: any; };
+    'params': { [key: string]: string; };
 }
 /**
  * 
