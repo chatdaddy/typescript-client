@@ -968,10 +968,10 @@ export interface PaymentLinkPostRequest {
     'orderId'?: string;
     /**
      * Additional parameters to be passed to the payment system
-     * @type {{ [key: string]: any; }}
+     * @type {{ [key: string]: string; }}
      * @memberof PaymentLinkPostRequest
      */
-    'params'?: { [key: string]: any; };
+    'params'?: { [key: string]: string; };
 }
 /**
  * 
@@ -1657,10 +1657,10 @@ export interface UpdateOrderModel {
     'isTest'?: boolean;
     /**
      * 
-     * @type {{ [key: string]: string; }}
+     * @type {{ [key: string]: any; }}
      * @memberof UpdateOrderModel
      */
-    'params': { [key: string]: string; };
+    'params': { [key: string]: any; };
 }
 /**
  * 
