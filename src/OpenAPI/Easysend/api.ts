@@ -761,10 +761,10 @@ export type NullablePhoneNumber = number | object | string;
 export interface OrderPost200Response {
     /**
      * 
-     * @type {boolean}
+     * @type {string}
      * @memberof OrderPost200Response
      */
-    'success'?: boolean;
+    'waUrl'?: string;
 }
 /**
  * 
