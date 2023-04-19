@@ -756,6 +756,143 @@ export type NullablePhoneNumber = number | object | string;
 /**
  * 
  * @export
+ * @interface OrderDataGet200Response
+ */
+export interface OrderDataGet200Response {
+    /**
+     * 
+     * @type {Array<OrderDataModel>}
+     * @memberof OrderDataGet200Response
+     */
+    'data': Array<OrderDataModel>;
+    /**
+     * 
+     * @type {number}
+     * @memberof OrderDataGet200Response
+     */
+    'total'?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof OrderDataGet200Response
+     */
+    'nextPageCursor'?: string | null;
+}
+/**
+ * 
+ * @export
+ * @interface OrderDataModel
+ */
+export interface OrderDataModel {
+    /**
+     * 
+     * @type {number}
+     * @memberof OrderDataModel
+     */
+    'id': number;
+    /**
+     * An ISO formatted timestamp
+     * @type {string}
+     * @memberof OrderDataModel
+     */
+    'createdAt': string;
+    /**
+     * An ISO formatted timestamp
+     * @type {string}
+     * @memberof OrderDataModel
+     */
+    'updatedAt': string;
+    /**
+     * An ISO formatted timestamp
+     * @type {string}
+     * @memberof OrderDataModel
+     */
+    'orderDate': string;
+    /**
+     * An ISO formatted timestamp
+     * @type {string}
+     * @memberof OrderDataModel
+     */
+    'deliveryDate'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof OrderDataModel
+     */
+    'orderId': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof OrderDataModel
+     */
+    'teamId': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof OrderDataModel
+     */
+    'customerName': string;
+    /**
+     * 
+     * @type {NullablePhoneNumber}
+     * @memberof OrderDataModel
+     */
+    'phoneNumber': NullablePhoneNumber;
+    /**
+     * 
+     * @type {string}
+     * @memberof OrderDataModel
+     */
+    'status': OrderDataModelStatusEnum;
+    /**
+     * 
+     * @type {string}
+     * @memberof OrderDataModel
+     */
+    'orderStatus'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof OrderDataModel
+     */
+    'paymentStatus'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof OrderDataModel
+     */
+    'deliveryStatus'?: string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof OrderDataModel
+     */
+    'isTest': boolean;
+    /**
+     * 
+     * @type {{ [key: string]: any; }}
+     * @memberof OrderDataModel
+     */
+    'data': { [key: string]: any; };
+    /**
+     * 
+     * @type {Array<EasysendDataModel>}
+     * @memberof OrderDataModel
+     */
+    'updates'?: Array<EasysendDataModel>;
+}
+
+export const OrderDataModelStatusEnum = {
+    Sent: 'sent',
+    Pending: 'pending',
+    Cancelled: 'cancelled'
+} as const;
+
+export type OrderDataModelStatusEnum = typeof OrderDataModelStatusEnum[keyof typeof OrderDataModelStatusEnum];
+
+/**
+ * 
+ * @export
  * @interface OrderPost200Response
  */
 export interface OrderPost200Response {
@@ -3834,6 +3971,109 @@ export const TrackingsApiAxiosParamCreator = function (configuration?: Configura
             };
         },
         /**
+         * 
+         * @summary Get the updated order data
+         * @param {number} [phoneNumber] Fetch orders sent to the specified phone number
+         * @param {number} [pageSize] Number of items to retreive
+         * @param {string} [cursor] Cursor to retreive items. It can be anyone of orderBy by which you want to retrieve the orders
+         * @param {'orderCustomer' | 'orderId' | 'orderDate' | 'deliveryDate'} [orderBy] Order by which value
+         * @param {'ASC' | 'DESC'} [direction] Sorting order of the response
+         * @param {string} [startTime] 
+         * @param {string} [endTime] 
+         * @param {Array<string>} [orderStatus] 
+         * @param {Array<string>} [paymentStatus] 
+         * @param {Array<string>} [messageStatus] 
+         * @param {string} [q] Query to retrieve select orders
+         * @param {boolean} [excludeTests] Should tests be excluded
+         * @param {boolean} [returnTotal] Should a total of the number of orders returned by the given query be included
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        orderDataGet: async (phoneNumber?: number, pageSize?: number, cursor?: string, orderBy?: 'orderCustomer' | 'orderId' | 'orderDate' | 'deliveryDate', direction?: 'ASC' | 'DESC', startTime?: string, endTime?: string, orderStatus?: Array<string>, paymentStatus?: Array<string>, messageStatus?: Array<string>, q?: string, excludeTests?: boolean, returnTotal?: boolean, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/orders`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["NOTIFICATION_READ"], configuration)
+
+            if (phoneNumber !== undefined) {
+                localVarQueryParameter['phoneNumber'] = phoneNumber;
+            }
+
+            if (pageSize !== undefined) {
+                localVarQueryParameter['pageSize'] = pageSize;
+            }
+
+            if (cursor !== undefined) {
+                localVarQueryParameter['cursor'] = cursor;
+            }
+
+            if (orderBy !== undefined) {
+                localVarQueryParameter['orderBy'] = orderBy;
+            }
+
+            if (direction !== undefined) {
+                localVarQueryParameter['direction'] = direction;
+            }
+
+            if (startTime !== undefined) {
+                localVarQueryParameter['startTime'] = (startTime as any instanceof Date) ?
+                    (startTime as any).toISOString() :
+                    startTime;
+            }
+
+            if (endTime !== undefined) {
+                localVarQueryParameter['endTime'] = (endTime as any instanceof Date) ?
+                    (endTime as any).toISOString() :
+                    endTime;
+            }
+
+            if (orderStatus) {
+                localVarQueryParameter['orderStatus'] = orderStatus;
+            }
+
+            if (paymentStatus) {
+                localVarQueryParameter['paymentStatus'] = paymentStatus;
+            }
+
+            if (messageStatus) {
+                localVarQueryParameter['messageStatus'] = messageStatus;
+            }
+
+            if (q !== undefined) {
+                localVarQueryParameter['q'] = q;
+            }
+
+            if (excludeTests !== undefined) {
+                localVarQueryParameter['excludeTests'] = excludeTests;
+            }
+
+            if (returnTotal !== undefined) {
+                localVarQueryParameter['returnTotal'] = returnTotal;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * This deletes the tracking and its associated flowIds from the Database permanently.
          * @summary Stop tracking
          * @param {number} trackingId The Tracking
@@ -4106,6 +4346,29 @@ export const TrackingsApiFp = function(configuration?: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
+         * 
+         * @summary Get the updated order data
+         * @param {number} [phoneNumber] Fetch orders sent to the specified phone number
+         * @param {number} [pageSize] Number of items to retreive
+         * @param {string} [cursor] Cursor to retreive items. It can be anyone of orderBy by which you want to retrieve the orders
+         * @param {'orderCustomer' | 'orderId' | 'orderDate' | 'deliveryDate'} [orderBy] Order by which value
+         * @param {'ASC' | 'DESC'} [direction] Sorting order of the response
+         * @param {string} [startTime] 
+         * @param {string} [endTime] 
+         * @param {Array<string>} [orderStatus] 
+         * @param {Array<string>} [paymentStatus] 
+         * @param {Array<string>} [messageStatus] 
+         * @param {string} [q] Query to retrieve select orders
+         * @param {boolean} [excludeTests] Should tests be excluded
+         * @param {boolean} [returnTotal] Should a total of the number of orders returned by the given query be included
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async orderDataGet(phoneNumber?: number, pageSize?: number, cursor?: string, orderBy?: 'orderCustomer' | 'orderId' | 'orderDate' | 'deliveryDate', direction?: 'ASC' | 'DESC', startTime?: string, endTime?: string, orderStatus?: Array<string>, paymentStatus?: Array<string>, messageStatus?: Array<string>, q?: string, excludeTests?: boolean, returnTotal?: boolean, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<OrderDataGet200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.orderDataGet(phoneNumber, pageSize, cursor, orderBy, direction, startTime, endTime, orderStatus, paymentStatus, messageStatus, q, excludeTests, returnTotal, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
          * This deletes the tracking and its associated flowIds from the Database permanently.
          * @summary Stop tracking
          * @param {number} trackingId The Tracking
@@ -4207,6 +4470,28 @@ export const TrackingsApiFactory = function (configuration?: Configuration, base
          */
         dataGet(trackingId?: number, phoneNumber?: number, triggerId?: number, pageSize?: number, cursor?: string, orderBy?: 'orderCustomer' | 'orderId' | 'orderDate' | 'deliveryDate', direction?: 'ASC' | 'DESC', startTime?: string, endTime?: string, orderStatus?: Array<string>, paymentStatus?: Array<string>, messageStatus?: Array<string>, q?: string, excludeTests?: boolean, includeNullTriggers?: boolean, returnTotal?: boolean, options?: any): AxiosPromise<DataGet200Response> {
             return localVarFp.dataGet(trackingId, phoneNumber, triggerId, pageSize, cursor, orderBy, direction, startTime, endTime, orderStatus, paymentStatus, messageStatus, q, excludeTests, includeNullTriggers, returnTotal, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Get the updated order data
+         * @param {number} [phoneNumber] Fetch orders sent to the specified phone number
+         * @param {number} [pageSize] Number of items to retreive
+         * @param {string} [cursor] Cursor to retreive items. It can be anyone of orderBy by which you want to retrieve the orders
+         * @param {'orderCustomer' | 'orderId' | 'orderDate' | 'deliveryDate'} [orderBy] Order by which value
+         * @param {'ASC' | 'DESC'} [direction] Sorting order of the response
+         * @param {string} [startTime] 
+         * @param {string} [endTime] 
+         * @param {Array<string>} [orderStatus] 
+         * @param {Array<string>} [paymentStatus] 
+         * @param {Array<string>} [messageStatus] 
+         * @param {string} [q] Query to retrieve select orders
+         * @param {boolean} [excludeTests] Should tests be excluded
+         * @param {boolean} [returnTotal] Should a total of the number of orders returned by the given query be included
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        orderDataGet(phoneNumber?: number, pageSize?: number, cursor?: string, orderBy?: 'orderCustomer' | 'orderId' | 'orderDate' | 'deliveryDate', direction?: 'ASC' | 'DESC', startTime?: string, endTime?: string, orderStatus?: Array<string>, paymentStatus?: Array<string>, messageStatus?: Array<string>, q?: string, excludeTests?: boolean, returnTotal?: boolean, options?: any): AxiosPromise<OrderDataGet200Response> {
+            return localVarFp.orderDataGet(phoneNumber, pageSize, cursor, orderBy, direction, startTime, endTime, orderStatus, paymentStatus, messageStatus, q, excludeTests, returnTotal, options).then((request) => request(axios, basePath));
         },
         /**
          * This deletes the tracking and its associated flowIds from the Database permanently.
@@ -4393,6 +4678,104 @@ export interface TrackingsApiDataGetRequest {
 }
 
 /**
+ * Request parameters for orderDataGet operation in TrackingsApi.
+ * @export
+ * @interface TrackingsApiOrderDataGetRequest
+ */
+export interface TrackingsApiOrderDataGetRequest {
+    /**
+     * Fetch orders sent to the specified phone number
+     * @type {number}
+     * @memberof TrackingsApiOrderDataGet
+     */
+    readonly phoneNumber?: number
+
+    /**
+     * Number of items to retreive
+     * @type {number}
+     * @memberof TrackingsApiOrderDataGet
+     */
+    readonly pageSize?: number
+
+    /**
+     * Cursor to retreive items. It can be anyone of orderBy by which you want to retrieve the orders
+     * @type {string}
+     * @memberof TrackingsApiOrderDataGet
+     */
+    readonly cursor?: string
+
+    /**
+     * Order by which value
+     * @type {'orderCustomer' | 'orderId' | 'orderDate' | 'deliveryDate'}
+     * @memberof TrackingsApiOrderDataGet
+     */
+    readonly orderBy?: 'orderCustomer' | 'orderId' | 'orderDate' | 'deliveryDate'
+
+    /**
+     * Sorting order of the response
+     * @type {'ASC' | 'DESC'}
+     * @memberof TrackingsApiOrderDataGet
+     */
+    readonly direction?: 'ASC' | 'DESC'
+
+    /**
+     * 
+     * @type {string}
+     * @memberof TrackingsApiOrderDataGet
+     */
+    readonly startTime?: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof TrackingsApiOrderDataGet
+     */
+    readonly endTime?: string
+
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof TrackingsApiOrderDataGet
+     */
+    readonly orderStatus?: Array<string>
+
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof TrackingsApiOrderDataGet
+     */
+    readonly paymentStatus?: Array<string>
+
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof TrackingsApiOrderDataGet
+     */
+    readonly messageStatus?: Array<string>
+
+    /**
+     * Query to retrieve select orders
+     * @type {string}
+     * @memberof TrackingsApiOrderDataGet
+     */
+    readonly q?: string
+
+    /**
+     * Should tests be excluded
+     * @type {boolean}
+     * @memberof TrackingsApiOrderDataGet
+     */
+    readonly excludeTests?: boolean
+
+    /**
+     * Should a total of the number of orders returned by the given query be included
+     * @type {boolean}
+     * @memberof TrackingsApiOrderDataGet
+     */
+    readonly returnTotal?: boolean
+}
+
+/**
  * Request parameters for trackingDelete operation in TrackingsApi.
  * @export
  * @interface TrackingsApiTrackingDeleteRequest
@@ -4507,6 +4890,18 @@ export class TrackingsApi extends BaseAPI {
      */
     public dataGet(requestParameters: TrackingsApiDataGetRequest = {}, options?: AxiosRequestConfig) {
         return TrackingsApiFp(this.configuration).dataGet(requestParameters.trackingId, requestParameters.phoneNumber, requestParameters.triggerId, requestParameters.pageSize, requestParameters.cursor, requestParameters.orderBy, requestParameters.direction, requestParameters.startTime, requestParameters.endTime, requestParameters.orderStatus, requestParameters.paymentStatus, requestParameters.messageStatus, requestParameters.q, requestParameters.excludeTests, requestParameters.includeNullTriggers, requestParameters.returnTotal, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Get the updated order data
+     * @param {TrackingsApiOrderDataGetRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof TrackingsApi
+     */
+    public orderDataGet(requestParameters: TrackingsApiOrderDataGetRequest = {}, options?: AxiosRequestConfig) {
+        return TrackingsApiFp(this.configuration).orderDataGet(requestParameters.phoneNumber, requestParameters.pageSize, requestParameters.cursor, requestParameters.orderBy, requestParameters.direction, requestParameters.startTime, requestParameters.endTime, requestParameters.orderStatus, requestParameters.paymentStatus, requestParameters.messageStatus, requestParameters.q, requestParameters.excludeTests, requestParameters.returnTotal, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
