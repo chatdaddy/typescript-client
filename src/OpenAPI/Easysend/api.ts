@@ -2343,19 +2343,19 @@ export const PaymentIntegrationsApiAxiosParamCreator = function (configuration?:
         /**
          * This endpoint is used by payment integrations to notify the server of payment events
          * @summary Webhook for payment integrations
-         * @param {string} id ID of the payment integration
+         * @param {string} name Name of the payment integration
          * @param {string} secret Secret of the payment integration
          * @param {{ [key: string]: any; }} [requestBody] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        paymentIntegrationWebhook: async (id: string, secret: string, requestBody?: { [key: string]: any; }, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'id' is not null or undefined
-            assertParamExists('paymentIntegrationWebhook', 'id', id)
+        paymentIntegrationWebhook: async (name: string, secret: string, requestBody?: { [key: string]: any; }, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'name' is not null or undefined
+            assertParamExists('paymentIntegrationWebhook', 'name', name)
             // verify required parameter 'secret' is not null or undefined
             assertParamExists('paymentIntegrationWebhook', 'secret', secret)
-            const localVarPath = `/payment-integrations/{id}/webhook/{secret}`
-                .replace(`{${"id"}}`, encodeURIComponent(String(id)))
+            const localVarPath = `/payment-integrations/{name}/webhook/{secret}`
+                .replace(`{${"name"}}`, encodeURIComponent(String(name)))
                 .replace(`{${"secret"}}`, encodeURIComponent(String(secret)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -2485,14 +2485,14 @@ export const PaymentIntegrationsApiFp = function(configuration?: Configuration) 
         /**
          * This endpoint is used by payment integrations to notify the server of payment events
          * @summary Webhook for payment integrations
-         * @param {string} id ID of the payment integration
+         * @param {string} name Name of the payment integration
          * @param {string} secret Secret of the payment integration
          * @param {{ [key: string]: any; }} [requestBody] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async paymentIntegrationWebhook(id: string, secret: string, requestBody?: { [key: string]: any; }, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SuccessResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.paymentIntegrationWebhook(id, secret, requestBody, options);
+        async paymentIntegrationWebhook(name: string, secret: string, requestBody?: { [key: string]: any; }, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SuccessResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.paymentIntegrationWebhook(name, secret, requestBody, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -2564,14 +2564,14 @@ export const PaymentIntegrationsApiFactory = function (configuration?: Configura
         /**
          * This endpoint is used by payment integrations to notify the server of payment events
          * @summary Webhook for payment integrations
-         * @param {string} id ID of the payment integration
+         * @param {string} name Name of the payment integration
          * @param {string} secret Secret of the payment integration
          * @param {{ [key: string]: any; }} [requestBody] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        paymentIntegrationWebhook(id: string, secret: string, requestBody?: { [key: string]: any; }, options?: any): AxiosPromise<SuccessResponse> {
-            return localVarFp.paymentIntegrationWebhook(id, secret, requestBody, options).then((request) => request(axios, basePath));
+        paymentIntegrationWebhook(name: string, secret: string, requestBody?: { [key: string]: any; }, options?: any): AxiosPromise<SuccessResponse> {
+            return localVarFp.paymentIntegrationWebhook(name, secret, requestBody, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -2678,11 +2678,11 @@ export interface PaymentIntegrationsApiPatchPaymentIntegrationRequest {
  */
 export interface PaymentIntegrationsApiPaymentIntegrationWebhookRequest {
     /**
-     * ID of the payment integration
+     * Name of the payment integration
      * @type {string}
      * @memberof PaymentIntegrationsApiPaymentIntegrationWebhook
      */
-    readonly id: string
+    readonly name: string
 
     /**
      * Secret of the payment integration
@@ -2784,7 +2784,7 @@ export class PaymentIntegrationsApi extends BaseAPI {
      * @memberof PaymentIntegrationsApi
      */
     public paymentIntegrationWebhook(requestParameters: PaymentIntegrationsApiPaymentIntegrationWebhookRequest, options?: AxiosRequestConfig) {
-        return PaymentIntegrationsApiFp(this.configuration).paymentIntegrationWebhook(requestParameters.id, requestParameters.secret, requestParameters.requestBody, options).then((request) => request(this.axios, this.basePath));
+        return PaymentIntegrationsApiFp(this.configuration).paymentIntegrationWebhook(requestParameters.name, requestParameters.secret, requestParameters.requestBody, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
