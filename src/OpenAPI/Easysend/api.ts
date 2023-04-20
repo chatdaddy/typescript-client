@@ -828,6 +828,12 @@ export interface OrderDataModel {
     'teamId': string;
     /**
      * 
+     * @type {number}
+     * @memberof OrderDataModel
+     */
+    'trackingId'?: number;
+    /**
+     * 
      * @type {string}
      * @memberof OrderDataModel
      */
@@ -3973,6 +3979,7 @@ export const TrackingsApiAxiosParamCreator = function (configuration?: Configura
         /**
          * 
          * @summary Get the updated order data
+         * @param {number} [trackingId] Fetch orders of the specified trackingId
          * @param {number} [phoneNumber] Fetch orders sent to the specified phone number
          * @param {number} [pageSize] Number of items to retreive
          * @param {string} [cursor] Cursor to retreive items. It can be anyone of orderBy by which you want to retrieve the orders
@@ -3989,7 +3996,7 @@ export const TrackingsApiAxiosParamCreator = function (configuration?: Configura
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        orderDataGet: async (phoneNumber?: number, pageSize?: number, cursor?: string, orderBy?: 'orderCustomer' | 'orderId' | 'orderDate' | 'deliveryDate', direction?: 'ASC' | 'DESC', startTime?: string, endTime?: string, orderStatus?: Array<string>, paymentStatus?: Array<string>, messageStatus?: Array<string>, q?: string, excludeTests?: boolean, returnTotal?: boolean, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        orderDataGet: async (trackingId?: number, phoneNumber?: number, pageSize?: number, cursor?: string, orderBy?: 'orderCustomer' | 'orderId' | 'orderDate' | 'deliveryDate', direction?: 'ASC' | 'DESC', startTime?: string, endTime?: string, orderStatus?: Array<string>, paymentStatus?: Array<string>, messageStatus?: Array<string>, q?: string, excludeTests?: boolean, returnTotal?: boolean, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/orders`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -4005,6 +4012,10 @@ export const TrackingsApiAxiosParamCreator = function (configuration?: Configura
             // authentication chatdaddy required
             // oauth required
             await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["NOTIFICATION_READ"], configuration)
+
+            if (trackingId !== undefined) {
+                localVarQueryParameter['trackingId'] = trackingId;
+            }
 
             if (phoneNumber !== undefined) {
                 localVarQueryParameter['phoneNumber'] = phoneNumber;
@@ -4348,6 +4359,7 @@ export const TrackingsApiFp = function(configuration?: Configuration) {
         /**
          * 
          * @summary Get the updated order data
+         * @param {number} [trackingId] Fetch orders of the specified trackingId
          * @param {number} [phoneNumber] Fetch orders sent to the specified phone number
          * @param {number} [pageSize] Number of items to retreive
          * @param {string} [cursor] Cursor to retreive items. It can be anyone of orderBy by which you want to retrieve the orders
@@ -4364,8 +4376,8 @@ export const TrackingsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async orderDataGet(phoneNumber?: number, pageSize?: number, cursor?: string, orderBy?: 'orderCustomer' | 'orderId' | 'orderDate' | 'deliveryDate', direction?: 'ASC' | 'DESC', startTime?: string, endTime?: string, orderStatus?: Array<string>, paymentStatus?: Array<string>, messageStatus?: Array<string>, q?: string, excludeTests?: boolean, returnTotal?: boolean, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<OrderDataGet200Response>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.orderDataGet(phoneNumber, pageSize, cursor, orderBy, direction, startTime, endTime, orderStatus, paymentStatus, messageStatus, q, excludeTests, returnTotal, options);
+        async orderDataGet(trackingId?: number, phoneNumber?: number, pageSize?: number, cursor?: string, orderBy?: 'orderCustomer' | 'orderId' | 'orderDate' | 'deliveryDate', direction?: 'ASC' | 'DESC', startTime?: string, endTime?: string, orderStatus?: Array<string>, paymentStatus?: Array<string>, messageStatus?: Array<string>, q?: string, excludeTests?: boolean, returnTotal?: boolean, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<OrderDataGet200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.orderDataGet(trackingId, phoneNumber, pageSize, cursor, orderBy, direction, startTime, endTime, orderStatus, paymentStatus, messageStatus, q, excludeTests, returnTotal, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -4474,6 +4486,7 @@ export const TrackingsApiFactory = function (configuration?: Configuration, base
         /**
          * 
          * @summary Get the updated order data
+         * @param {number} [trackingId] Fetch orders of the specified trackingId
          * @param {number} [phoneNumber] Fetch orders sent to the specified phone number
          * @param {number} [pageSize] Number of items to retreive
          * @param {string} [cursor] Cursor to retreive items. It can be anyone of orderBy by which you want to retrieve the orders
@@ -4490,8 +4503,8 @@ export const TrackingsApiFactory = function (configuration?: Configuration, base
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        orderDataGet(phoneNumber?: number, pageSize?: number, cursor?: string, orderBy?: 'orderCustomer' | 'orderId' | 'orderDate' | 'deliveryDate', direction?: 'ASC' | 'DESC', startTime?: string, endTime?: string, orderStatus?: Array<string>, paymentStatus?: Array<string>, messageStatus?: Array<string>, q?: string, excludeTests?: boolean, returnTotal?: boolean, options?: any): AxiosPromise<OrderDataGet200Response> {
-            return localVarFp.orderDataGet(phoneNumber, pageSize, cursor, orderBy, direction, startTime, endTime, orderStatus, paymentStatus, messageStatus, q, excludeTests, returnTotal, options).then((request) => request(axios, basePath));
+        orderDataGet(trackingId?: number, phoneNumber?: number, pageSize?: number, cursor?: string, orderBy?: 'orderCustomer' | 'orderId' | 'orderDate' | 'deliveryDate', direction?: 'ASC' | 'DESC', startTime?: string, endTime?: string, orderStatus?: Array<string>, paymentStatus?: Array<string>, messageStatus?: Array<string>, q?: string, excludeTests?: boolean, returnTotal?: boolean, options?: any): AxiosPromise<OrderDataGet200Response> {
+            return localVarFp.orderDataGet(trackingId, phoneNumber, pageSize, cursor, orderBy, direction, startTime, endTime, orderStatus, paymentStatus, messageStatus, q, excludeTests, returnTotal, options).then((request) => request(axios, basePath));
         },
         /**
          * This deletes the tracking and its associated flowIds from the Database permanently.
@@ -4683,6 +4696,13 @@ export interface TrackingsApiDataGetRequest {
  * @interface TrackingsApiOrderDataGetRequest
  */
 export interface TrackingsApiOrderDataGetRequest {
+    /**
+     * Fetch orders of the specified trackingId
+     * @type {number}
+     * @memberof TrackingsApiOrderDataGet
+     */
+    readonly trackingId?: number
+
     /**
      * Fetch orders sent to the specified phone number
      * @type {number}
@@ -4901,7 +4921,7 @@ export class TrackingsApi extends BaseAPI {
      * @memberof TrackingsApi
      */
     public orderDataGet(requestParameters: TrackingsApiOrderDataGetRequest = {}, options?: AxiosRequestConfig) {
-        return TrackingsApiFp(this.configuration).orderDataGet(requestParameters.phoneNumber, requestParameters.pageSize, requestParameters.cursor, requestParameters.orderBy, requestParameters.direction, requestParameters.startTime, requestParameters.endTime, requestParameters.orderStatus, requestParameters.paymentStatus, requestParameters.messageStatus, requestParameters.q, requestParameters.excludeTests, requestParameters.returnTotal, options).then((request) => request(this.axios, this.basePath));
+        return TrackingsApiFp(this.configuration).orderDataGet(requestParameters.trackingId, requestParameters.phoneNumber, requestParameters.pageSize, requestParameters.cursor, requestParameters.orderBy, requestParameters.direction, requestParameters.startTime, requestParameters.endTime, requestParameters.orderStatus, requestParameters.paymentStatus, requestParameters.messageStatus, requestParameters.q, requestParameters.excludeTests, requestParameters.returnTotal, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
