@@ -785,12 +785,6 @@ export interface OrderDataGet200Response {
  */
 export interface OrderDataModel {
     /**
-     * 
-     * @type {number}
-     * @memberof OrderDataModel
-     */
-    'id'?: number;
-    /**
      * An ISO formatted timestamp
      * @type {string}
      * @memberof OrderDataModel
