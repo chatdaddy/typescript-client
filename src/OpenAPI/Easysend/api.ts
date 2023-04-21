@@ -807,7 +807,7 @@ export interface OrderDataModel {
      * @type {string}
      * @memberof OrderDataModel
      */
-    'orderDate': string;
+    'orderDate'?: string;
     /**
      * An ISO formatted timestamp
      * @type {string}
@@ -837,13 +837,13 @@ export interface OrderDataModel {
      * @type {string}
      * @memberof OrderDataModel
      */
-    'customerName': string;
+    'customerName'?: string;
     /**
      * 
      * @type {NullablePhoneNumber}
      * @memberof OrderDataModel
      */
-    'phoneNumber': NullablePhoneNumber;
+    'phoneNumber'?: NullablePhoneNumber;
     /**
      * 
      * @type {string}
