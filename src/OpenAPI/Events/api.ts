@@ -37,10 +37,10 @@ export interface AccountDelete {
     'event': AccountDeleteEventEnum;
     /**
      * 
-     * @type {Array<object>}
+     * @type {Array<AccountDeleteData>}
      * @memberof AccountDelete
      */
-    'data': Array<object>;
+    'data': Array<AccountDeleteData>;
 }
 
 export const AccountDeleteEventEnum = {
@@ -49,6 +49,19 @@ export const AccountDeleteEventEnum = {
 
 export type AccountDeleteEventEnum = typeof AccountDeleteEventEnum[keyof typeof AccountDeleteEventEnum];
 
+/**
+ * 
+ * @export
+ * @interface AccountDeleteData
+ */
+export interface AccountDeleteData {
+    /**
+     * Unique identifier for an account.  The account ID is constructed from the first 21 characters of the team ID, prefixed by \"acc\" and suffixed by 4 random hex characters. This helps uniquely identify each account as well as establish a connection between the account\'s team by embedding the partial team ID in it.
+     * @type {string}
+     * @memberof AccountDeleteData
+     */
+    'accountId': string;
+}
 /**
  * 
  * @export
@@ -63,10 +76,10 @@ export interface AccountInsert {
     'event': AccountInsertEventEnum;
     /**
      * 
-     * @type {Array<object>}
+     * @type {Array<AccountInsertData>}
      * @memberof AccountInsert
      */
-    'data': Array<object>;
+    'data': Array<AccountInsertData>;
 }
 
 export const AccountInsertEventEnum = {
@@ -75,6 +88,226 @@ export const AccountInsertEventEnum = {
 
 export type AccountInsertEventEnum = typeof AccountInsertEventEnum[keyof typeof AccountInsertEventEnum];
 
+/**
+ * 
+ * @export
+ * @interface AccountInsertData
+ */
+export interface AccountInsertData {
+    /**
+     * Unique identifier for an account.  The account ID is constructed from the first 21 characters of the team ID, prefixed by \"acc\" and suffixed by 4 random hex characters. This helps uniquely identify each account as well as establish a connection between the account\'s team by embedding the partial team ID in it.
+     * @type {string}
+     * @memberof AccountInsertData
+     */
+    'accountId': string;
+    /**
+     * Owner of thr account
+     * @type {string}
+     * @memberof AccountInsertData
+     */
+    'ownerId': string;
+    /**
+     * Assignees who can access this account.
+     * @type {Array<string>}
+     * @memberof AccountInsertData
+     */
+    'assignees'?: Array<string>;
+    /**
+     * User facing nickname of the account
+     * @type {string}
+     * @memberof AccountInsertData
+     */
+    'nickname': string;
+    /**
+     * 
+     * @type {{ [key: string]: any; }}
+     * @memberof AccountInsertData
+     */
+    'credentials'?: { [key: string]: any; } | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof AccountInsertData
+     */
+    'type': AccountInsertDataTypeEnum;
+    /**
+     * An ISO formatted timestamp
+     * @type {string}
+     * @memberof AccountInsertData
+     */
+    'createdAt': string;
+    /**
+     * An ISO formatted timestamp
+     * @type {string}
+     * @memberof AccountInsertData
+     */
+    'updatedAt': string;
+    /**
+     * An ISO formatted timestamp
+     * @type {string}
+     * @memberof AccountInsertData
+     */
+    'lastLoginAt'?: string | null;
+    /**
+     * An ISO formatted timestamp
+     * @type {string}
+     * @memberof AccountInsertData
+     */
+    'lastLogoutAt'?: string | null;
+    /**
+     * An ISO formatted timestamp
+     * @type {string}
+     * @memberof AccountInsertData
+     */
+    'lastClosedAt'?: string | null;
+    /**
+     * Describes the current state of an account. 1. open => logged in & connected to WhatsApp. Can send & receive messages now 2. connecting => establishing connection to WhatsApp. QR code is available during this state 3. close => connection to WhatsApp is closed, account is inactive at the moment
+     * @type {string}
+     * @memberof AccountInsertData
+     */
+    'state': AccountInsertDataStateEnum;
+    /**
+     * 
+     * @type {AccountInsertDataError}
+     * @memberof AccountInsertData
+     */
+    'error'?: AccountInsertDataError | null;
+    /**
+     * 
+     * @type {{ [key: string]: any; }}
+     * @memberof AccountInsertData
+     */
+    'stateInfo': { [key: string]: any; };
+    /**
+     * 
+     * @type {boolean}
+     * @memberof AccountInsertData
+     */
+    'canLogin': boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof AccountInsertData
+     */
+    'userId'?: string | null;
+    /**
+     * 
+     * @type {AccountInsertDataSettings}
+     * @memberof AccountInsertData
+     */
+    'settings': AccountInsertDataSettings;
+}
+
+export const AccountInsertDataTypeEnum = {
+    Wa: 'wa',
+    WaBusinessApi: 'wa-business-api',
+    Mock: 'mock',
+    Tiktok: 'tiktok'
+} as const;
+
+export type AccountInsertDataTypeEnum = typeof AccountInsertDataTypeEnum[keyof typeof AccountInsertDataTypeEnum];
+export const AccountInsertDataStateEnum = {
+    Open: 'open',
+    Connecting: 'connecting',
+    Close: 'close'
+} as const;
+
+export type AccountInsertDataStateEnum = typeof AccountInsertDataStateEnum[keyof typeof AccountInsertDataStateEnum];
+
+/**
+ * 
+ * @export
+ * @interface AccountInsertDataError
+ */
+export interface AccountInsertDataError {
+    /**
+     * 
+     * @type {string}
+     * @memberof AccountInsertDataError
+     */
+    'message'?: string;
+}
+/**
+ * 
+ * @export
+ * @interface AccountInsertDataSettings
+ */
+export interface AccountInsertDataSettings {
+    /**
+     * Supply a list of user IDs to notify when a new message arrives
+     * @type {Array<string>}
+     * @memberof AccountInsertDataSettings
+     */
+    'notifyUsers'?: Array<string>;
+    /**
+     * Should chat history be synced with the database
+     * @type {boolean}
+     * @memberof AccountInsertDataSettings
+     */
+    'enableHistorySync'?: boolean;
+    /**
+     * Maximum number of messages that would be synced to the database
+     * @type {number}
+     * @memberof AccountInsertDataSettings
+     */
+    'maxMessageSync'?: number;
+    /**
+     * Will doing a chat action (like archive, mark unread) actually sync it back with the primary device
+     * @type {boolean}
+     * @memberof AccountInsertDataSettings
+     */
+    'nativeChatActionSync'?: boolean;
+    /**
+     * 
+     * @type {AccountInsertDataSettingsNewChatsAssignee}
+     * @memberof AccountInsertDataSettings
+     */
+    'newChatsAssignee'?: AccountInsertDataSettingsNewChatsAssignee;
+    /**
+     * Should polls be sent as buttons instead of a message. This is useful for the regular WhatsApp API
+     * @type {boolean}
+     * @memberof AccountInsertDataSettings
+     */
+    'sendButtonsAsPoll'?: boolean;
+}
+/**
+ * All new chats will be auto asssigned if one of the option is enabled and select any Assignee
+ * @export
+ * @interface AccountInsertDataSettingsNewChatsAssignee
+ */
+export interface AccountInsertDataSettingsNewChatsAssignee {
+    /**
+     * 
+     * @type {AccountInsertDataSettingsNewChatsAssigneeIncoming}
+     * @memberof AccountInsertDataSettingsNewChatsAssignee
+     */
+    'incoming'?: AccountInsertDataSettingsNewChatsAssigneeIncoming;
+    /**
+     * 
+     * @type {AccountInsertDataSettingsNewChatsAssigneeIncoming}
+     * @memberof AccountInsertDataSettingsNewChatsAssignee
+     */
+    'outgoing'?: AccountInsertDataSettingsNewChatsAssigneeIncoming;
+}
+/**
+ * 
+ * @export
+ * @interface AccountInsertDataSettingsNewChatsAssigneeIncoming
+ */
+export interface AccountInsertDataSettingsNewChatsAssigneeIncoming {
+    /**
+     * This flag will define if option should enabled/disabled
+     * @type {boolean}
+     * @memberof AccountInsertDataSettingsNewChatsAssigneeIncoming
+     */
+    'enabled'?: boolean;
+    /**
+     * Auto assigned will work for the selected teammates
+     * @type {Array<string>}
+     * @memberof AccountInsertDataSettingsNewChatsAssigneeIncoming
+     */
+    'assignees'?: Array<string>;
+}
 /**
  * 
  * @export
@@ -89,10 +322,10 @@ export interface AccountUpdate {
     'event': AccountUpdateEventEnum;
     /**
      * 
-     * @type {Array<object>}
+     * @type {Array<AccountUpdateData>}
      * @memberof AccountUpdate
      */
-    'data': Array<object>;
+    'data': Array<AccountUpdateData>;
 }
 
 export const AccountUpdateEventEnum = {
@@ -100,6 +333,132 @@ export const AccountUpdateEventEnum = {
 } as const;
 
 export type AccountUpdateEventEnum = typeof AccountUpdateEventEnum[keyof typeof AccountUpdateEventEnum];
+
+/**
+ * 
+ * @export
+ * @interface AccountUpdateData
+ */
+export interface AccountUpdateData {
+    /**
+     * Unique identifier for an account.  The account ID is constructed from the first 21 characters of the team ID, prefixed by \"acc\" and suffixed by 4 random hex characters. This helps uniquely identify each account as well as establish a connection between the account\'s team by embedding the partial team ID in it.
+     * @type {string}
+     * @memberof AccountUpdateData
+     */
+    'accountId': string;
+    /**
+     * Owner of thr account
+     * @type {string}
+     * @memberof AccountUpdateData
+     */
+    'ownerId'?: string;
+    /**
+     * Assignees who can access this account.
+     * @type {Array<string>}
+     * @memberof AccountUpdateData
+     */
+    'assignees'?: Array<string>;
+    /**
+     * User facing nickname of the account
+     * @type {string}
+     * @memberof AccountUpdateData
+     */
+    'nickname'?: string;
+    /**
+     * 
+     * @type {{ [key: string]: any; }}
+     * @memberof AccountUpdateData
+     */
+    'credentials'?: { [key: string]: any; } | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof AccountUpdateData
+     */
+    'type'?: AccountUpdateDataTypeEnum;
+    /**
+     * An ISO formatted timestamp
+     * @type {string}
+     * @memberof AccountUpdateData
+     */
+    'createdAt'?: string;
+    /**
+     * An ISO formatted timestamp
+     * @type {string}
+     * @memberof AccountUpdateData
+     */
+    'updatedAt'?: string;
+    /**
+     * An ISO formatted timestamp
+     * @type {string}
+     * @memberof AccountUpdateData
+     */
+    'lastLoginAt'?: string | null;
+    /**
+     * An ISO formatted timestamp
+     * @type {string}
+     * @memberof AccountUpdateData
+     */
+    'lastLogoutAt'?: string | null;
+    /**
+     * An ISO formatted timestamp
+     * @type {string}
+     * @memberof AccountUpdateData
+     */
+    'lastClosedAt'?: string | null;
+    /**
+     * Describes the current state of an account. 1. open => logged in & connected to WhatsApp. Can send & receive messages now 2. connecting => establishing connection to WhatsApp. QR code is available during this state 3. close => connection to WhatsApp is closed, account is inactive at the moment
+     * @type {string}
+     * @memberof AccountUpdateData
+     */
+    'state'?: AccountUpdateDataStateEnum;
+    /**
+     * 
+     * @type {AccountInsertDataError}
+     * @memberof AccountUpdateData
+     */
+    'error'?: AccountInsertDataError | null;
+    /**
+     * 
+     * @type {{ [key: string]: any; }}
+     * @memberof AccountUpdateData
+     */
+    'stateInfo'?: { [key: string]: any; };
+    /**
+     * 
+     * @type {boolean}
+     * @memberof AccountUpdateData
+     */
+    'canLogin'?: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof AccountUpdateData
+     */
+    'userId'?: string | null;
+    /**
+     * 
+     * @type {AccountInsertDataSettings}
+     * @memberof AccountUpdateData
+     */
+    'settings'?: AccountInsertDataSettings;
+}
+
+export const AccountUpdateDataTypeEnum = {
+    Wa: 'wa',
+    WaBusinessApi: 'wa-business-api',
+    Mock: 'mock',
+    Tiktok: 'tiktok'
+} as const;
+
+export type AccountUpdateDataTypeEnum = typeof AccountUpdateDataTypeEnum[keyof typeof AccountUpdateDataTypeEnum];
+export const AccountUpdateDataStateEnum = {
+    Open: 'open',
+    Connecting: 'connecting',
+    Close: 'close'
+} as const;
+
+export type AccountUpdateDataStateEnum = typeof AccountUpdateDataStateEnum[keyof typeof AccountUpdateDataStateEnum];
 
 /**
  * 
@@ -623,6 +982,96 @@ export interface ChatInsertData {
      * @memberof ChatInsertData
      */
     'id': string;
+    /**
+     * An ISO formatted timestamp
+     * @type {string}
+     * @memberof ChatInsertData
+     */
+    'lastMessage': string;
+    /**
+     * Number of unread messages
+     * @type {number}
+     * @memberof ChatInsertData
+     */
+    'unread': number;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof ChatInsertData
+     */
+    'spam'?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof ChatInsertData
+     */
+    'archive': boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof ChatInsertData
+     */
+    'readOnly': boolean;
+    /**
+     * Timestamp of when the chat was muted
+     * @type {number}
+     * @memberof ChatInsertData
+     */
+    'mute'?: number | null;
+    /**
+     * Timestamp of when the chat was pinned
+     * @type {number}
+     * @memberof ChatInsertData
+     */
+    'pin'?: number | null;
+    /**
+     * did the user create this contact
+     * @type {boolean}
+     * @memberof ChatInsertData
+     */
+    'isUserGenerated': boolean;
+    /**
+     * does this chat have any pending messages
+     * @type {boolean}
+     * @memberof ChatInsertData
+     */
+    'hasPendingMessage'?: boolean;
+    /**
+     * does this chat have any unsolved notes
+     * @type {boolean}
+     * @memberof ChatInsertData
+     */
+    'hasUnsolvedNote'?: boolean;
+    /**
+     * does this chat have any failed messages
+     * @type {boolean}
+     * @memberof ChatInsertData
+     */
+    'hasFailedMessage'?: boolean;
+    /**
+     * the user IDs mentioned in the chat
+     * @type {Array<string>}
+     * @memberof ChatInsertData
+     */
+    'mentions'?: Array<string>;
+    /**
+     * if disappearing messages is on, and for how long
+     * @type {number}
+     * @memberof ChatInsertData
+     */
+    'disappearingMessages'?: number | null;
+    /**
+     * If the chat has all the message history from the primary source
+     * @type {boolean}
+     * @memberof ChatInsertData
+     */
+    'hasEntireMessageHistory': boolean;
+    /**
+     * cursor to sort chats by
+     * @type {string}
+     * @memberof ChatInsertData
+     */
+    'cursor': string;
 }
 /**
  * 
@@ -668,6 +1117,96 @@ export interface ChatUpdateData {
      * @memberof ChatUpdateData
      */
     'id': string;
+    /**
+     * An ISO formatted timestamp
+     * @type {string}
+     * @memberof ChatUpdateData
+     */
+    'lastMessage'?: string;
+    /**
+     * Number of unread messages
+     * @type {number}
+     * @memberof ChatUpdateData
+     */
+    'unread'?: number;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof ChatUpdateData
+     */
+    'spam'?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof ChatUpdateData
+     */
+    'archive'?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof ChatUpdateData
+     */
+    'readOnly'?: boolean;
+    /**
+     * Timestamp of when the chat was muted
+     * @type {number}
+     * @memberof ChatUpdateData
+     */
+    'mute'?: number | null;
+    /**
+     * Timestamp of when the chat was pinned
+     * @type {number}
+     * @memberof ChatUpdateData
+     */
+    'pin'?: number | null;
+    /**
+     * did the user create this contact
+     * @type {boolean}
+     * @memberof ChatUpdateData
+     */
+    'isUserGenerated'?: boolean;
+    /**
+     * does this chat have any pending messages
+     * @type {boolean}
+     * @memberof ChatUpdateData
+     */
+    'hasPendingMessage'?: boolean;
+    /**
+     * does this chat have any unsolved notes
+     * @type {boolean}
+     * @memberof ChatUpdateData
+     */
+    'hasUnsolvedNote'?: boolean;
+    /**
+     * does this chat have any failed messages
+     * @type {boolean}
+     * @memberof ChatUpdateData
+     */
+    'hasFailedMessage'?: boolean;
+    /**
+     * the user IDs mentioned in the chat
+     * @type {Array<string>}
+     * @memberof ChatUpdateData
+     */
+    'mentions'?: Array<string>;
+    /**
+     * if disappearing messages is on, and for how long
+     * @type {number}
+     * @memberof ChatUpdateData
+     */
+    'disappearingMessages'?: number | null;
+    /**
+     * If the chat has all the message history from the primary source
+     * @type {boolean}
+     * @memberof ChatUpdateData
+     */
+    'hasEntireMessageHistory'?: boolean;
+    /**
+     * cursor to sort chats by
+     * @type {string}
+     * @memberof ChatUpdateData
+     */
+    'cursor'?: string;
 }
 /**
  * 
@@ -758,7 +1297,101 @@ export interface ContactInsertData {
      * @memberof ContactInsertData
      */
     'accountId': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ContactInsertData
+     */
+    'cursor': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ContactInsertData
+     */
+    'type': ContactInsertDataTypeEnum;
+    /**
+     * name of the contact as set on ChatDaddy
+     * @type {string}
+     * @memberof ContactInsertData
+     */
+    'name': string | null;
+    /**
+     * name of the contact, as set on the platform
+     * @type {Array<string>}
+     * @memberof ContactInsertData
+     */
+    'platformNames': Array<string>;
+    /**
+     * An ISO formatted timestamp
+     * @type {string}
+     * @memberof ContactInsertData
+     */
+    'createdAt'?: string;
+    /**
+     * An ISO formatted timestamp
+     * @type {string}
+     * @memberof ContactInsertData
+     */
+    'updatedAt'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ContactInsertData
+     */
+    'phoneNumber': string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof ContactInsertData
+     */
+    'email'?: string | null;
+    /**
+     * 
+     * @type {GroupUpdateDataOwnerImg}
+     * @memberof ContactInsertData
+     */
+    'img'?: GroupUpdateDataOwnerImg | null;
+    /**
+     * Tags associated with this contact
+     * @type {Array<GroupUpdateDataOwnerTagsInner>}
+     * @memberof ContactInsertData
+     */
+    'tags': Array<GroupUpdateDataOwnerTagsInner>;
+    /**
+     * The assignee of the contact
+     * @type {string}
+     * @memberof ContactInsertData
+     */
+    'assignee'?: string | null;
+    /**
+     * The person who assigned this contact
+     * @type {string}
+     * @memberof ContactInsertData
+     */
+    'assigner'?: string | null;
+    /**
+     * 
+     * @type {number}
+     * @memberof ContactInsertData
+     */
+    'messagesSent': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof ContactInsertData
+     */
+    'messagesReceived': number;
 }
+
+export const ContactInsertDataTypeEnum = {
+    Individual: 'individual',
+    Group: 'group',
+    Broadcast: 'broadcast',
+    Post: 'post'
+} as const;
+
+export type ContactInsertDataTypeEnum = typeof ContactInsertDataTypeEnum[keyof typeof ContactInsertDataTypeEnum];
+
 /**
  * 
  * @export
@@ -803,7 +1436,101 @@ export interface ContactUpdateData {
      * @memberof ContactUpdateData
      */
     'accountId': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ContactUpdateData
+     */
+    'cursor'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ContactUpdateData
+     */
+    'type'?: ContactUpdateDataTypeEnum;
+    /**
+     * name of the contact as set on ChatDaddy
+     * @type {string}
+     * @memberof ContactUpdateData
+     */
+    'name'?: string | null;
+    /**
+     * name of the contact, as set on the platform
+     * @type {Array<string>}
+     * @memberof ContactUpdateData
+     */
+    'platformNames'?: Array<string>;
+    /**
+     * An ISO formatted timestamp
+     * @type {string}
+     * @memberof ContactUpdateData
+     */
+    'createdAt'?: string;
+    /**
+     * An ISO formatted timestamp
+     * @type {string}
+     * @memberof ContactUpdateData
+     */
+    'updatedAt'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ContactUpdateData
+     */
+    'phoneNumber'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof ContactUpdateData
+     */
+    'email'?: string | null;
+    /**
+     * 
+     * @type {GroupUpdateDataOwnerImg}
+     * @memberof ContactUpdateData
+     */
+    'img'?: GroupUpdateDataOwnerImg | null;
+    /**
+     * Tags associated with this contact
+     * @type {Array<GroupUpdateDataOwnerTagsInner>}
+     * @memberof ContactUpdateData
+     */
+    'tags'?: Array<GroupUpdateDataOwnerTagsInner>;
+    /**
+     * The assignee of the contact
+     * @type {string}
+     * @memberof ContactUpdateData
+     */
+    'assignee'?: string | null;
+    /**
+     * The person who assigned this contact
+     * @type {string}
+     * @memberof ContactUpdateData
+     */
+    'assigner'?: string | null;
+    /**
+     * 
+     * @type {number}
+     * @memberof ContactUpdateData
+     */
+    'messagesSent'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof ContactUpdateData
+     */
+    'messagesReceived'?: number;
 }
+
+export const ContactUpdateDataTypeEnum = {
+    Individual: 'individual',
+    Group: 'group',
+    Broadcast: 'broadcast',
+    Post: 'post'
+} as const;
+
+export type ContactUpdateDataTypeEnum = typeof ContactUpdateDataTypeEnum[keyof typeof ContactUpdateDataTypeEnum];
+
 /**
  * 
  * @export
@@ -959,6 +1686,150 @@ export interface GroupUpdateDataOwner {
      * @memberof GroupUpdateDataOwner
      */
     'accountId': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof GroupUpdateDataOwner
+     */
+    'cursor': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof GroupUpdateDataOwner
+     */
+    'type': GroupUpdateDataOwnerTypeEnum;
+    /**
+     * name of the contact as set on ChatDaddy
+     * @type {string}
+     * @memberof GroupUpdateDataOwner
+     */
+    'name': string | null;
+    /**
+     * name of the contact, as set on the platform
+     * @type {Array<string>}
+     * @memberof GroupUpdateDataOwner
+     */
+    'platformNames': Array<string>;
+    /**
+     * An ISO formatted timestamp
+     * @type {string}
+     * @memberof GroupUpdateDataOwner
+     */
+    'createdAt'?: string;
+    /**
+     * An ISO formatted timestamp
+     * @type {string}
+     * @memberof GroupUpdateDataOwner
+     */
+    'updatedAt'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof GroupUpdateDataOwner
+     */
+    'phoneNumber': string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof GroupUpdateDataOwner
+     */
+    'email'?: string | null;
+    /**
+     * 
+     * @type {GroupUpdateDataOwnerImg}
+     * @memberof GroupUpdateDataOwner
+     */
+    'img'?: GroupUpdateDataOwnerImg | null;
+    /**
+     * Tags associated with this contact
+     * @type {Array<GroupUpdateDataOwnerTagsInner>}
+     * @memberof GroupUpdateDataOwner
+     */
+    'tags': Array<GroupUpdateDataOwnerTagsInner>;
+    /**
+     * The assignee of the contact
+     * @type {string}
+     * @memberof GroupUpdateDataOwner
+     */
+    'assignee'?: string | null;
+    /**
+     * The person who assigned this contact
+     * @type {string}
+     * @memberof GroupUpdateDataOwner
+     */
+    'assigner'?: string | null;
+    /**
+     * 
+     * @type {number}
+     * @memberof GroupUpdateDataOwner
+     */
+    'messagesSent': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof GroupUpdateDataOwner
+     */
+    'messagesReceived': number;
+}
+
+export const GroupUpdateDataOwnerTypeEnum = {
+    Individual: 'individual',
+    Group: 'group',
+    Broadcast: 'broadcast',
+    Post: 'post'
+} as const;
+
+export type GroupUpdateDataOwnerTypeEnum = typeof GroupUpdateDataOwnerTypeEnum[keyof typeof GroupUpdateDataOwnerTypeEnum];
+
+/**
+ * 
+ * @export
+ * @interface GroupUpdateDataOwnerImg
+ */
+export interface GroupUpdateDataOwnerImg {
+    /**
+     * 
+     * @type {string}
+     * @memberof GroupUpdateDataOwnerImg
+     */
+    'url'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof GroupUpdateDataOwnerImg
+     */
+    'fullUrl'?: string;
+    /**
+     * An ISO formatted timestamp
+     * @type {string}
+     * @memberof GroupUpdateDataOwnerImg
+     */
+    'fetchedAt'?: string;
+}
+/**
+ * 
+ * @export
+ * @interface GroupUpdateDataOwnerTagsInner
+ */
+export interface GroupUpdateDataOwnerTagsInner {
+    /**
+     * 
+     * @type {string}
+     * @memberof GroupUpdateDataOwnerTagsInner
+     */
+    'name': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof GroupUpdateDataOwnerTagsInner
+     */
+    'value'?: string | null;
+    /**
+     * used in events to denote that the tag has been removed
+     * @type {boolean}
+     * @memberof GroupUpdateDataOwnerTagsInner
+     */
+    'remove'?: boolean;
 }
 /**
  * 
@@ -1001,10 +1872,10 @@ export interface MessageDelete {
     'event': MessageDeleteEventEnum;
     /**
      * 
-     * @type {Array<MessageDeleteData>}
+     * @type {Array<object>}
      * @memberof MessageDelete
      */
-    'data': Array<MessageDeleteData>;
+    'data': Array<object>;
 }
 
 export const MessageDeleteEventEnum = {
@@ -1012,176 +1883,6 @@ export const MessageDeleteEventEnum = {
 } as const;
 
 export type MessageDeleteEventEnum = typeof MessageDeleteEventEnum[keyof typeof MessageDeleteEventEnum];
-
-/**
- * 
- * @export
- * @interface MessageDeleteData
- */
-export interface MessageDeleteData {
-    /**
-     * ID for the contact/chat on the platform
-     * @type {string}
-     * @memberof MessageDeleteData
-     */
-    'chatId': string;
-    /**
-     * Unique identifier for an account.  The account ID is constructed from the first 21 characters of the team ID, prefixed by \"acc\" and suffixed by 4 random hex characters. This helps uniquely identify each account as well as establish a connection between the account\'s team by embedding the partial team ID in it.
-     * @type {string}
-     * @memberof MessageDeleteData
-     */
-    'accountId': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof MessageDeleteData
-     */
-    'id': string;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof MessageDeleteData
-     */
-    'fromMe': boolean;
-    /**
-     * The contact that sent the message (applicable for groups)
-     * @type {string}
-     * @memberof MessageDeleteData
-     */
-    'senderContactId'?: string | null;
-    /**
-     * 
-     * @type {MessageInsertDataAllOfSender}
-     * @memberof MessageDeleteData
-     */
-    'sender'?: MessageInsertDataAllOfSender | null;
-    /**
-     * An ISO formatted timestamp
-     * @type {string}
-     * @memberof MessageDeleteData
-     */
-    'timestamp': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof MessageDeleteData
-     */
-    'status'?: MessageDeleteDataStatusEnum;
-    /**
-     * 
-     * @type {MessageInsertDataAllOfError}
-     * @memberof MessageDeleteData
-     */
-    'error'?: MessageInsertDataAllOfError | null;
-    /**
-     * Only for notes, user ID of the person who resolved the note
-     * @type {string}
-     * @memberof MessageDeleteData
-     */
-    'resolvedBy'?: string | null;
-    /**
-     * An ISO formatted timestamp
-     * @type {string}
-     * @memberof MessageDeleteData
-     */
-    'resolvedAt'?: string | null;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof MessageDeleteData
-     */
-    'hidden'?: boolean;
-    /**
-     * 
-     * @type {MessageInsertDataAllOfMiscOptions}
-     * @memberof MessageDeleteData
-     */
-    'miscOptions'?: MessageInsertDataAllOfMiscOptions;
-    /**
-     * 
-     * @type {Array<string>}
-     * @memberof MessageDeleteData
-     */
-    'mentions'?: Array<string>;
-    /**
-     * 
-     * @type {string}
-     * @memberof MessageDeleteData
-     */
-    'text': string | null;
-    /**
-     * 
-     * @type {MessageInsertDataAllOf1Quoted}
-     * @memberof MessageDeleteData
-     */
-    'quoted'?: MessageInsertDataAllOf1Quoted | null;
-    /**
-     * True, if the message was deleted
-     * @type {boolean}
-     * @memberof MessageDeleteData
-     */
-    'deleted'?: boolean;
-    /**
-     * 
-     * @type {MessageInsertDataAllOf1Action}
-     * @memberof MessageDeleteData
-     */
-    'action'?: MessageInsertDataAllOf1Action | null;
-    /**
-     * 
-     * @type {Array<MessageInsertDataAllOf1Attachments>}
-     * @memberof MessageDeleteData
-     */
-    'attachments'?: Array<MessageInsertDataAllOf1Attachments>;
-    /**
-     * 
-     * @type {Array<MessageInsertDataAllOf1Buttons>}
-     * @memberof MessageDeleteData
-     */
-    'buttons'?: Array<MessageInsertDataAllOf1Buttons> | null;
-    /**
-     * 
-     * @type {MessageInsertDataAllOf1Poll}
-     * @memberof MessageDeleteData
-     */
-    'poll'?: MessageInsertDataAllOf1Poll;
-    /**
-     * 
-     * @type {Array<MessageInsertDataAllOf1Products>}
-     * @memberof MessageDeleteData
-     */
-    'products'?: Array<MessageInsertDataAllOf1Products> | null;
-    /**
-     * 
-     * @type {MessageInsertDataAllOf1Order}
-     * @memberof MessageDeleteData
-     */
-    'order'?: MessageInsertDataAllOf1Order | null;
-    /**
-     * 
-     * @type {MessageInsertDataAllOf1LinkPreview}
-     * @memberof MessageDeleteData
-     */
-    'linkPreview'?: MessageInsertDataAllOf1LinkPreview;
-    /**
-     * 
-     * @type {Array<MessageInsertDataAllOf1Reactions>}
-     * @memberof MessageDeleteData
-     */
-    'reactions'?: Array<MessageInsertDataAllOf1Reactions> | null;
-}
-
-export const MessageDeleteDataStatusEnum = {
-    Error: 'error',
-    Pending: 'pending',
-    Note: 'note',
-    Sent: 'sent',
-    Delivered: 'delivered',
-    Read: 'read',
-    Cancelled: 'cancelled'
-} as const;
-
-export type MessageDeleteDataStatusEnum = typeof MessageDeleteDataStatusEnum[keyof typeof MessageDeleteDataStatusEnum];
 
 /**
  * 
@@ -2485,7 +3186,7 @@ export const PlatformproductDeleteEventEnum = {
 export type PlatformproductDeleteEventEnum = typeof PlatformproductDeleteEventEnum[keyof typeof PlatformproductDeleteEventEnum];
 
 /**
- * Model for a product on an external platform (eg. WhatsApp)
+ * 
  * @export
  * @interface PlatformproductDeleteData
  */
@@ -2540,6 +3241,48 @@ export interface PlatformproductInsertData {
      * @type {string}
      * @memberof PlatformproductInsertData
      */
+    'name': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof PlatformproductInsertData
+     */
+    'retailerId'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof PlatformproductInsertData
+     */
+    'url'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof PlatformproductInsertData
+     */
+    'description': string;
+    /**
+     * 
+     * @type {number}
+     * @memberof PlatformproductInsertData
+     */
+    'price': number | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof PlatformproductInsertData
+     */
+    'currency': string | null;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof PlatformproductInsertData
+     */
+    'isHidden': boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof PlatformproductInsertData
+     */
     'id': string;
     /**
      * Unique identifier for an account.  The account ID is constructed from the first 21 characters of the team ID, prefixed by \"acc\" and suffixed by 4 random hex characters. This helps uniquely identify each account as well as establish a connection between the account\'s team by embedding the partial team ID in it.
@@ -2547,6 +3290,106 @@ export interface PlatformproductInsertData {
      * @memberof PlatformproductInsertData
      */
     'accountId': string;
+    /**
+     * 
+     * @type {{ [key: string]: string; }}
+     * @memberof PlatformproductInsertData
+     */
+    'imageUrls': { [key: string]: string; };
+    /**
+     * 
+     * @type {{ [key: string]: string; }}
+     * @memberof PlatformproductInsertData
+     */
+    'reviewStatus': { [key: string]: string; };
+    /**
+     * 
+     * @type {string}
+     * @memberof PlatformproductInsertData
+     */
+    'availability': PlatformproductInsertDataAvailabilityEnum;
+    /**
+     * 
+     * @type {string}
+     * @memberof PlatformproductInsertData
+     */
+    'syncStatus': PlatformproductInsertDataSyncStatusEnum;
+    /**
+     * True if sync is underway right now
+     * @type {boolean}
+     * @memberof PlatformproductInsertData
+     */
+    'isSyncing'?: boolean;
+    /**
+     * 
+     * @type {PlatformproductInsertDataError}
+     * @memberof PlatformproductInsertData
+     */
+    'error'?: PlatformproductInsertDataError;
+    /**
+     * An ISO formatted timestamp
+     * @type {string}
+     * @memberof PlatformproductInsertData
+     */
+    'createdAt': string;
+    /**
+     * An ISO formatted timestamp
+     * @type {string}
+     * @memberof PlatformproductInsertData
+     */
+    'updatedAt': string;
+    /**
+     * Cursor to sort products by
+     * @type {string}
+     * @memberof PlatformproductInsertData
+     */
+    'cursor'?: string;
+}
+
+export const PlatformproductInsertDataAvailabilityEnum = {
+    InStock: 'in-stock'
+} as const;
+
+export type PlatformproductInsertDataAvailabilityEnum = typeof PlatformproductInsertDataAvailabilityEnum[keyof typeof PlatformproductInsertDataAvailabilityEnum];
+export const PlatformproductInsertDataSyncStatusEnum = {
+    Synced: 'synced',
+    PendingCreate: 'pendingCreate',
+    PendingUpdate: 'pendingUpdate',
+    PendingDelete: 'pendingDelete'
+} as const;
+
+export type PlatformproductInsertDataSyncStatusEnum = typeof PlatformproductInsertDataSyncStatusEnum[keyof typeof PlatformproductInsertDataSyncStatusEnum];
+
+/**
+ * 
+ * @export
+ * @interface PlatformproductInsertDataError
+ */
+export interface PlatformproductInsertDataError {
+    /**
+     * 
+     * @type {number}
+     * @memberof PlatformproductInsertDataError
+     */
+    'statusCode': number;
+    /**
+     * Specific description of the error
+     * @type {string}
+     * @memberof PlatformproductInsertDataError
+     */
+    'error': string;
+    /**
+     * What the error was
+     * @type {string}
+     * @memberof PlatformproductInsertDataError
+     */
+    'message': string;
+    /**
+     * Some extra information about the error
+     * @type {object}
+     * @memberof PlatformproductInsertDataError
+     */
+    'data'?: object;
 }
 /**
  * 
@@ -2585,6 +3428,48 @@ export interface PlatformproductUpdateData {
      * @type {string}
      * @memberof PlatformproductUpdateData
      */
+    'name'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof PlatformproductUpdateData
+     */
+    'retailerId'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof PlatformproductUpdateData
+     */
+    'url'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof PlatformproductUpdateData
+     */
+    'description'?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof PlatformproductUpdateData
+     */
+    'price'?: number | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof PlatformproductUpdateData
+     */
+    'currency'?: string | null;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof PlatformproductUpdateData
+     */
+    'isHidden'?: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof PlatformproductUpdateData
+     */
     'id': string;
     /**
      * Unique identifier for an account.  The account ID is constructed from the first 21 characters of the team ID, prefixed by \"acc\" and suffixed by 4 random hex characters. This helps uniquely identify each account as well as establish a connection between the account\'s team by embedding the partial team ID in it.
@@ -2592,7 +3477,76 @@ export interface PlatformproductUpdateData {
      * @memberof PlatformproductUpdateData
      */
     'accountId': string;
+    /**
+     * 
+     * @type {{ [key: string]: string; }}
+     * @memberof PlatformproductUpdateData
+     */
+    'imageUrls'?: { [key: string]: string; };
+    /**
+     * 
+     * @type {{ [key: string]: string; }}
+     * @memberof PlatformproductUpdateData
+     */
+    'reviewStatus'?: { [key: string]: string; };
+    /**
+     * 
+     * @type {string}
+     * @memberof PlatformproductUpdateData
+     */
+    'availability'?: PlatformproductUpdateDataAvailabilityEnum;
+    /**
+     * 
+     * @type {string}
+     * @memberof PlatformproductUpdateData
+     */
+    'syncStatus'?: PlatformproductUpdateDataSyncStatusEnum;
+    /**
+     * True if sync is underway right now
+     * @type {boolean}
+     * @memberof PlatformproductUpdateData
+     */
+    'isSyncing'?: boolean;
+    /**
+     * 
+     * @type {PlatformproductInsertDataError}
+     * @memberof PlatformproductUpdateData
+     */
+    'error'?: PlatformproductInsertDataError;
+    /**
+     * An ISO formatted timestamp
+     * @type {string}
+     * @memberof PlatformproductUpdateData
+     */
+    'createdAt'?: string;
+    /**
+     * An ISO formatted timestamp
+     * @type {string}
+     * @memberof PlatformproductUpdateData
+     */
+    'updatedAt'?: string;
+    /**
+     * Cursor to sort products by
+     * @type {string}
+     * @memberof PlatformproductUpdateData
+     */
+    'cursor'?: string;
 }
+
+export const PlatformproductUpdateDataAvailabilityEnum = {
+    InStock: 'in-stock'
+} as const;
+
+export type PlatformproductUpdateDataAvailabilityEnum = typeof PlatformproductUpdateDataAvailabilityEnum[keyof typeof PlatformproductUpdateDataAvailabilityEnum];
+export const PlatformproductUpdateDataSyncStatusEnum = {
+    Synced: 'synced',
+    PendingCreate: 'pendingCreate',
+    PendingUpdate: 'pendingUpdate',
+    PendingDelete: 'pendingDelete'
+} as const;
+
+export type PlatformproductUpdateDataSyncStatusEnum = typeof PlatformproductUpdateDataSyncStatusEnum[keyof typeof PlatformproductUpdateDataSyncStatusEnum];
+
 /**
  * 
  * @export
@@ -2736,7 +3690,7 @@ export const PurchasedetailDeleteEventEnum = {
 export type PurchasedetailDeleteEventEnum = typeof PurchasedetailDeleteEventEnum[keyof typeof PurchasedetailDeleteEventEnum];
 
 /**
- * Info about the purchase if applicable
+ * 
  * @export
  * @interface PurchasedetailDeleteData
  */
@@ -2793,11 +3747,132 @@ export interface PurchasedetailInsertData {
      */
     'id': string;
     /**
+     * ID of the product purchased
+     * @type {string}
+     * @memberof PurchasedetailInsertData
+     */
+    'productId': string;
+    /**
      * The team who purchased it
      * @type {string}
      * @memberof PurchasedetailInsertData
      */
     'teamId': string;
+    /**
+     * ID of the user who purchased it
+     * @type {string}
+     * @memberof PurchasedetailInsertData
+     */
+    'userId': string;
+    /**
+     * An ISO formatted timestamp
+     * @type {string}
+     * @memberof PurchasedetailInsertData
+     */
+    'date': string;
+    /**
+     * An ISO formatted timestamp
+     * @type {string}
+     * @memberof PurchasedetailInsertData
+     */
+    'expiry'?: string;
+    /**
+     * 
+     * @type {PurchasedetailInsertDataPrice}
+     * @memberof PurchasedetailInsertData
+     */
+    'price': PurchasedetailInsertDataPrice;
+    /**
+     * 
+     * @type {PurchasedetailInsertDataTrial}
+     * @memberof PurchasedetailInsertData
+     */
+    'trial'?: PurchasedetailInsertDataTrial | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof PurchasedetailInsertData
+     */
+    'status'?: PurchasedetailInsertDataStatusEnum;
+    /**
+     * 
+     * @type {PurchasedetailInsertDataStripe}
+     * @memberof PurchasedetailInsertData
+     */
+    'stripe'?: PurchasedetailInsertDataStripe | null;
+}
+
+export const PurchasedetailInsertDataStatusEnum = {
+    Paid: 'paid',
+    Cancelled: 'cancelled',
+    PendingPayment: 'pending-payment',
+    Voided: 'voided'
+} as const;
+
+export type PurchasedetailInsertDataStatusEnum = typeof PurchasedetailInsertDataStatusEnum[keyof typeof PurchasedetailInsertDataStatusEnum];
+
+/**
+ * 
+ * @export
+ * @interface PurchasedetailInsertDataPrice
+ */
+export interface PurchasedetailInsertDataPrice {
+    /**
+     * 
+     * @type {number}
+     * @memberof PurchasedetailInsertDataPrice
+     */
+    'value': number;
+    /**
+     * ISO code of currency
+     * @type {string}
+     * @memberof PurchasedetailInsertDataPrice
+     */
+    'currency': string;
+}
+/**
+ * 
+ * @export
+ * @interface PurchasedetailInsertDataStripe
+ */
+export interface PurchasedetailInsertDataStripe {
+    /**
+     * 
+     * @type {string}
+     * @memberof PurchasedetailInsertDataStripe
+     */
+    'invoiceId'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof PurchasedetailInsertDataStripe
+     */
+    'status'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof PurchasedetailInsertDataStripe
+     */
+    'subscriptionId'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof PurchasedetailInsertDataStripe
+     */
+    'subscriptionItemId'?: string;
+}
+/**
+ * 
+ * @export
+ * @interface PurchasedetailInsertDataTrial
+ */
+export interface PurchasedetailInsertDataTrial {
+    /**
+     * An ISO formatted timestamp
+     * @type {string}
+     * @memberof PurchasedetailInsertDataTrial
+     */
+    'expiry'?: string;
 }
 /**
  * 
@@ -2838,12 +3913,70 @@ export interface PurchasedetailUpdateData {
      */
     'id': string;
     /**
+     * ID of the product purchased
+     * @type {string}
+     * @memberof PurchasedetailUpdateData
+     */
+    'productId'?: string;
+    /**
      * The team who purchased it
      * @type {string}
      * @memberof PurchasedetailUpdateData
      */
     'teamId': string;
+    /**
+     * ID of the user who purchased it
+     * @type {string}
+     * @memberof PurchasedetailUpdateData
+     */
+    'userId'?: string;
+    /**
+     * An ISO formatted timestamp
+     * @type {string}
+     * @memberof PurchasedetailUpdateData
+     */
+    'date'?: string;
+    /**
+     * An ISO formatted timestamp
+     * @type {string}
+     * @memberof PurchasedetailUpdateData
+     */
+    'expiry'?: string;
+    /**
+     * 
+     * @type {PurchasedetailInsertDataPrice}
+     * @memberof PurchasedetailUpdateData
+     */
+    'price'?: PurchasedetailInsertDataPrice;
+    /**
+     * 
+     * @type {PurchasedetailInsertDataTrial}
+     * @memberof PurchasedetailUpdateData
+     */
+    'trial'?: PurchasedetailInsertDataTrial | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof PurchasedetailUpdateData
+     */
+    'status'?: PurchasedetailUpdateDataStatusEnum;
+    /**
+     * 
+     * @type {PurchasedetailInsertDataStripe}
+     * @memberof PurchasedetailUpdateData
+     */
+    'stripe'?: PurchasedetailInsertDataStripe | null;
 }
+
+export const PurchasedetailUpdateDataStatusEnum = {
+    Paid: 'paid',
+    Cancelled: 'cancelled',
+    PendingPayment: 'pending-payment',
+    Voided: 'voided'
+} as const;
+
+export type PurchasedetailUpdateDataStatusEnum = typeof PurchasedetailUpdateDataStatusEnum[keyof typeof PurchasedetailUpdateDataStatusEnum];
+
 /**
  * 
  * @export
@@ -3022,7 +4155,331 @@ export interface TeamInsertData {
      * @memberof TeamInsertData
      */
     'id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof TeamInsertData
+     */
+    'createdAt': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof TeamInsertData
+     */
+    'updatedAt': string;
+    /**
+     * Who created the team
+     * @type {string}
+     * @memberof TeamInsertData
+     */
+    'createdBy'?: string;
+    /**
+     * 
+     * @type {TeamInsertDataCreator}
+     * @memberof TeamInsertData
+     */
+    'creator'?: TeamInsertDataCreator;
+    /**
+     * 
+     * @type {string}
+     * @memberof TeamInsertData
+     */
+    'name': string;
+    /**
+     * Is an admin team
+     * @type {boolean}
+     * @memberof TeamInsertData
+     */
+    'isAdmin'?: boolean;
+    /**
+     * The max scopes allowed
+     * @type {Array<string>}
+     * @memberof TeamInsertData
+     */
+    'scopes': Array<TeamInsertDataScopesEnum>;
+    /**
+     * 
+     * @type {TeamInsertDataMetadata}
+     * @memberof TeamInsertData
+     */
+    'metadata': TeamInsertDataMetadata;
+    /**
+     * The team will be the admin team of a Chatdaddy partner if this property is not null.
+     * @type {string}
+     * @memberof TeamInsertData
+     */
+    'partnerAdmin'?: string | null;
+    /**
+     * 
+     * @type {Array<TeamInsertDataOnboardingStepsDoneInner>}
+     * @memberof TeamInsertData
+     */
+    'onboardingStepsDone'?: Array<TeamInsertDataOnboardingStepsDoneInner>;
+    /**
+     * The onboarding score of the team.
+     * @type {number}
+     * @memberof TeamInsertData
+     */
+    'onboardingScore'?: number;
 }
+
+export const TeamInsertDataScopesEnum = {
+    WaState: 'WA_STATE',
+    ContactsReadAssigned: 'CONTACTS_READ_ASSIGNED',
+    ContactsReadAll: 'CONTACTS_READ_ALL',
+    ContactsExportButton: 'CONTACTS_EXPORT_BUTTON',
+    ContactsCreate: 'CONTACTS_CREATE',
+    ContactsDelete: 'CONTACTS_DELETE',
+    ContactsUpdate: 'CONTACTS_UPDATE',
+    CampaignsRead: 'CAMPAIGNS_READ',
+    CampaignsCreate: 'CAMPAIGNS_CREATE',
+    CampaignsDelete: 'CAMPAIGNS_DELETE',
+    CampaignsUpdate: 'CAMPAIGNS_UPDATE',
+    KeywordRead: 'KEYWORD_READ',
+    KeywordCreate: 'KEYWORD_CREATE',
+    KeywordDelete: 'KEYWORD_DELETE',
+    KeywordUpdate: 'KEYWORD_UPDATE',
+    TemplatesRead: 'TEMPLATES_READ',
+    TemplatesCreate: 'TEMPLATES_CREATE',
+    TemplatesDelete: 'TEMPLATES_DELETE',
+    TemplatesUpdate: 'TEMPLATES_UPDATE',
+    TagsRead: 'TAGS_READ',
+    TagsCreate: 'TAGS_CREATE',
+    TagsDelete: 'TAGS_DELETE',
+    TokensRead: 'TOKENS_READ',
+    TokensDelete: 'TOKENS_DELETE',
+    UsersPatch: 'USERS_PATCH',
+    ReferralApplyCredit: 'REFERRAL_APPLY_CREDIT',
+    TeamUpdate: 'TEAM_UPDATE',
+    AccountCreate: 'ACCOUNT_CREATE',
+    AccountRead: 'ACCOUNT_READ',
+    AccountDelete: 'ACCOUNT_DELETE',
+    AccountPatch: 'ACCOUNT_PATCH',
+    TeamlinkCreate: 'TEAMLINK_CREATE',
+    TeamlinkRead: 'TEAMLINK_READ',
+    TeammembersUpdate: 'TEAMMEMBERS_UPDATE',
+    TeammembersRead: 'TEAMMEMBERS_READ',
+    TeamNotify: 'TEAM_NOTIFY',
+    ChatsAccessAll: 'CHATS_ACCESS_ALL',
+    ChatsAccessAssigned: 'CHATS_ACCESS_ASSIGNED',
+    ChatsDelete: 'CHATS_DELETE',
+    MessagesSendToAssigned: 'MESSAGES_SEND_TO_ASSIGNED',
+    MessagesSendToAll: 'MESSAGES_SEND_TO_ALL',
+    MessagesSchedule: 'MESSAGES_SCHEDULE',
+    MessagesDelete: 'MESSAGES_DELETE',
+    GroupsCreate: 'GROUPS_CREATE',
+    GroupsUpdate: 'GROUPS_UPDATE',
+    Notes: 'NOTES',
+    NotificationRead: 'NOTIFICATION_READ',
+    NotificationCreate: 'NOTIFICATION_CREATE',
+    NotificationUpdate: 'NOTIFICATION_UPDATE',
+    NotificationDelete: 'NOTIFICATION_DELETE',
+    IntegrationsUpdate: 'INTEGRATIONS_UPDATE',
+    AdminPanelAccess: 'ADMIN_PANEL_ACCESS',
+    PaymentsRead: 'PAYMENTS_READ',
+    PaymentsUpdate: 'PAYMENTS_UPDATE',
+    WaLiveEvents: 'WA_LIVE_EVENTS',
+    ChatdaddyHook: 'CHATDADDY_HOOK',
+    PartnerAdminPanelAccess: 'PARTNER_ADMIN_PANEL_ACCESS',
+    ProductsGet: 'PRODUCTS_GET',
+    ProductsCreate: 'PRODUCTS_CREATE',
+    ProductsUpdate: 'PRODUCTS_UPDATE',
+    ProductsDelete: 'PRODUCTS_DELETE',
+    PaymentIntegrationRead: 'PAYMENT_INTEGRATION_READ',
+    PaymentIntegrationWrite: 'PAYMENT_INTEGRATION_WRITE',
+    PaymentRecordsRead: 'PAYMENT_RECORDS_READ',
+    PaymentRecordsWrite: 'PAYMENT_RECORDS_WRITE',
+    MetricsGet: 'METRICS_GET',
+    AccountsReadAssigned: 'ACCOUNTS_READ_ASSIGNED',
+    AutocompleteGet: 'AUTOCOMPLETE_GET'
+} as const;
+
+export type TeamInsertDataScopesEnum = typeof TeamInsertDataScopesEnum[keyof typeof TeamInsertDataScopesEnum];
+
+/**
+ * 
+ * @export
+ * @interface TeamInsertDataCreator
+ */
+export interface TeamInsertDataCreator {
+    /**
+     * 
+     * @type {string}
+     * @memberof TeamInsertDataCreator
+     */
+    'id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof TeamInsertDataCreator
+     */
+    'createdAt': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof TeamInsertDataCreator
+     */
+    'updatedAt': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof TeamInsertDataCreator
+     */
+    'disabledAt'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof TeamInsertDataCreator
+     */
+    'fullName': string;
+    /**
+     * The last used team ID, your refresh token when logging in is generated for this team
+     * @type {string}
+     * @memberof TeamInsertDataCreator
+     */
+    'lastUsedTeamId'?: string;
+    /**
+     * Will only contain numbers, no + sign, brackets etc.
+     * @type {number}
+     * @memberof TeamInsertDataCreator
+     */
+    'phoneNumber': number | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof TeamInsertDataCreator
+     */
+    'emailAddress'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof TeamInsertDataCreator
+     */
+    'createdByMethod'?: TeamInsertDataCreatorCreatedByMethodEnum;
+    /**
+     * 
+     * @type {UserInsertDataNotify}
+     * @memberof TeamInsertDataCreator
+     */
+    'notify': UserInsertDataNotify;
+    /**
+     * The referral code used for sign-up
+     * @type {string}
+     * @memberof TeamInsertDataCreator
+     */
+    'referralCode'?: string | null;
+    /**
+     * The signature of the user
+     * @type {string}
+     * @memberof TeamInsertDataCreator
+     */
+    'signature'?: string | null;
+    /**
+     * 
+     * @type {Array<UserInsertDataWebPushSubscriptionsInner>}
+     * @memberof TeamInsertDataCreator
+     */
+    'webPushSubscriptions'?: Array<UserInsertDataWebPushSubscriptionsInner>;
+    /**
+     * The partnership the user has signed in with
+     * @type {string}
+     * @memberof TeamInsertDataCreator
+     */
+    'partnership'?: string | null;
+}
+
+export const TeamInsertDataCreatorCreatedByMethodEnum = {
+    AdminPanel: 'admin-panel',
+    Otp: 'otp',
+    Boutir: 'boutir',
+    InstantReg: 'instant-reg',
+    Firebase: 'firebase'
+} as const;
+
+export type TeamInsertDataCreatorCreatedByMethodEnum = typeof TeamInsertDataCreatorCreatedByMethodEnum[keyof typeof TeamInsertDataCreatorCreatedByMethodEnum];
+
+/**
+ * 
+ * @export
+ * @interface TeamInsertDataMetadata
+ */
+export interface TeamInsertDataMetadata {
+    /**
+     * 
+     * @type {string}
+     * @memberof TeamInsertDataMetadata
+     */
+    'companyName'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof TeamInsertDataMetadata
+     */
+    'companyEmailAddress'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof TeamInsertDataMetadata
+     */
+    'companyWebsite'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof TeamInsertDataMetadata
+     */
+    'industry'?: string;
+}
+/**
+ * 
+ * @export
+ * @interface TeamInsertDataOnboardingStepsDoneInner
+ */
+export interface TeamInsertDataOnboardingStepsDoneInner {
+    /**
+     * 
+     * @type {string}
+     * @memberof TeamInsertDataOnboardingStepsDoneInner
+     */
+    'id': TeamInsertDataOnboardingStepsDoneInnerIdEnum;
+    /**
+     * 
+     * @type {string}
+     * @memberof TeamInsertDataOnboardingStepsDoneInner
+     */
+    'doneAt': string;
+    /**
+     * ID of the user that completed the step
+     * @type {string}
+     * @memberof TeamInsertDataOnboardingStepsDoneInner
+     */
+    'doneBy': string;
+}
+
+export const TeamInsertDataOnboardingStepsDoneInnerIdEnum = {
+    ConnectedWa: 'connectedWa',
+    SentMessage: 'sentMessage',
+    UsedMobileVersion: 'usedMobileVersion',
+    InvitedTeamMember: 'invitedTeamMember',
+    CreatedNote: 'createdNote',
+    CreatedTag: 'createdTag',
+    CreatedMessageFlow: 'createdMessageFlow',
+    SentMessageFlowByShortcut: 'sentMessageFlowByShortcut',
+    AssignedChatToTeamMember: 'assignedChatToTeamMember',
+    ScheduledAMessage: 'scheduledAMessage',
+    CreatedMessageFlowWithButtons: 'createdMessageFlowWithButtons',
+    SentMessageFlowWithButtons: 'sentMessageFlowWithButtons',
+    AutoTagOrAssignWithMessageFlow: 'autoTagOrAssignWithMessageFlow',
+    CreatedFirstBroadcast: 'createdFirstBroadcast',
+    ScheduledFirstBroadcast: 'scheduledFirstBroadcast',
+    ToggleOfflineBotOn: 'toggleOfflineBotOn',
+    CreatedFirstKeywordBot: 'createdFirstKeywordBot',
+    ConnectFirstIntegration: 'connectFirstIntegration',
+    ImportedContacts: 'importedContacts',
+    AdddedACustomFieldToContact: 'adddedACustomFieldToContact'
+} as const;
+
+export type TeamInsertDataOnboardingStepsDoneInnerIdEnum = typeof TeamInsertDataOnboardingStepsDoneInnerIdEnum[keyof typeof TeamInsertDataOnboardingStepsDoneInnerIdEnum];
+
 /**
  * 
  * @export
@@ -3061,7 +4518,147 @@ export interface TeamUpdateData {
      * @memberof TeamUpdateData
      */
     'id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof TeamUpdateData
+     */
+    'createdAt'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof TeamUpdateData
+     */
+    'updatedAt'?: string;
+    /**
+     * Who created the team
+     * @type {string}
+     * @memberof TeamUpdateData
+     */
+    'createdBy'?: string;
+    /**
+     * 
+     * @type {TeamInsertDataCreator}
+     * @memberof TeamUpdateData
+     */
+    'creator'?: TeamInsertDataCreator;
+    /**
+     * 
+     * @type {string}
+     * @memberof TeamUpdateData
+     */
+    'name'?: string;
+    /**
+     * Is an admin team
+     * @type {boolean}
+     * @memberof TeamUpdateData
+     */
+    'isAdmin'?: boolean;
+    /**
+     * The max scopes allowed
+     * @type {Array<string>}
+     * @memberof TeamUpdateData
+     */
+    'scopes'?: Array<TeamUpdateDataScopesEnum>;
+    /**
+     * 
+     * @type {TeamInsertDataMetadata}
+     * @memberof TeamUpdateData
+     */
+    'metadata'?: TeamInsertDataMetadata;
+    /**
+     * The team will be the admin team of a Chatdaddy partner if this property is not null.
+     * @type {string}
+     * @memberof TeamUpdateData
+     */
+    'partnerAdmin'?: string | null;
+    /**
+     * 
+     * @type {Array<TeamInsertDataOnboardingStepsDoneInner>}
+     * @memberof TeamUpdateData
+     */
+    'onboardingStepsDone'?: Array<TeamInsertDataOnboardingStepsDoneInner>;
+    /**
+     * The onboarding score of the team.
+     * @type {number}
+     * @memberof TeamUpdateData
+     */
+    'onboardingScore'?: number;
 }
+
+export const TeamUpdateDataScopesEnum = {
+    WaState: 'WA_STATE',
+    ContactsReadAssigned: 'CONTACTS_READ_ASSIGNED',
+    ContactsReadAll: 'CONTACTS_READ_ALL',
+    ContactsExportButton: 'CONTACTS_EXPORT_BUTTON',
+    ContactsCreate: 'CONTACTS_CREATE',
+    ContactsDelete: 'CONTACTS_DELETE',
+    ContactsUpdate: 'CONTACTS_UPDATE',
+    CampaignsRead: 'CAMPAIGNS_READ',
+    CampaignsCreate: 'CAMPAIGNS_CREATE',
+    CampaignsDelete: 'CAMPAIGNS_DELETE',
+    CampaignsUpdate: 'CAMPAIGNS_UPDATE',
+    KeywordRead: 'KEYWORD_READ',
+    KeywordCreate: 'KEYWORD_CREATE',
+    KeywordDelete: 'KEYWORD_DELETE',
+    KeywordUpdate: 'KEYWORD_UPDATE',
+    TemplatesRead: 'TEMPLATES_READ',
+    TemplatesCreate: 'TEMPLATES_CREATE',
+    TemplatesDelete: 'TEMPLATES_DELETE',
+    TemplatesUpdate: 'TEMPLATES_UPDATE',
+    TagsRead: 'TAGS_READ',
+    TagsCreate: 'TAGS_CREATE',
+    TagsDelete: 'TAGS_DELETE',
+    TokensRead: 'TOKENS_READ',
+    TokensDelete: 'TOKENS_DELETE',
+    UsersPatch: 'USERS_PATCH',
+    ReferralApplyCredit: 'REFERRAL_APPLY_CREDIT',
+    TeamUpdate: 'TEAM_UPDATE',
+    AccountCreate: 'ACCOUNT_CREATE',
+    AccountRead: 'ACCOUNT_READ',
+    AccountDelete: 'ACCOUNT_DELETE',
+    AccountPatch: 'ACCOUNT_PATCH',
+    TeamlinkCreate: 'TEAMLINK_CREATE',
+    TeamlinkRead: 'TEAMLINK_READ',
+    TeammembersUpdate: 'TEAMMEMBERS_UPDATE',
+    TeammembersRead: 'TEAMMEMBERS_READ',
+    TeamNotify: 'TEAM_NOTIFY',
+    ChatsAccessAll: 'CHATS_ACCESS_ALL',
+    ChatsAccessAssigned: 'CHATS_ACCESS_ASSIGNED',
+    ChatsDelete: 'CHATS_DELETE',
+    MessagesSendToAssigned: 'MESSAGES_SEND_TO_ASSIGNED',
+    MessagesSendToAll: 'MESSAGES_SEND_TO_ALL',
+    MessagesSchedule: 'MESSAGES_SCHEDULE',
+    MessagesDelete: 'MESSAGES_DELETE',
+    GroupsCreate: 'GROUPS_CREATE',
+    GroupsUpdate: 'GROUPS_UPDATE',
+    Notes: 'NOTES',
+    NotificationRead: 'NOTIFICATION_READ',
+    NotificationCreate: 'NOTIFICATION_CREATE',
+    NotificationUpdate: 'NOTIFICATION_UPDATE',
+    NotificationDelete: 'NOTIFICATION_DELETE',
+    IntegrationsUpdate: 'INTEGRATIONS_UPDATE',
+    AdminPanelAccess: 'ADMIN_PANEL_ACCESS',
+    PaymentsRead: 'PAYMENTS_READ',
+    PaymentsUpdate: 'PAYMENTS_UPDATE',
+    WaLiveEvents: 'WA_LIVE_EVENTS',
+    ChatdaddyHook: 'CHATDADDY_HOOK',
+    PartnerAdminPanelAccess: 'PARTNER_ADMIN_PANEL_ACCESS',
+    ProductsGet: 'PRODUCTS_GET',
+    ProductsCreate: 'PRODUCTS_CREATE',
+    ProductsUpdate: 'PRODUCTS_UPDATE',
+    ProductsDelete: 'PRODUCTS_DELETE',
+    PaymentIntegrationRead: 'PAYMENT_INTEGRATION_READ',
+    PaymentIntegrationWrite: 'PAYMENT_INTEGRATION_WRITE',
+    PaymentRecordsRead: 'PAYMENT_RECORDS_READ',
+    PaymentRecordsWrite: 'PAYMENT_RECORDS_WRITE',
+    MetricsGet: 'METRICS_GET',
+    AccountsReadAssigned: 'ACCOUNTS_READ_ASSIGNED',
+    AutocompleteGet: 'AUTOCOMPLETE_GET'
+} as const;
+
+export type TeamUpdateDataScopesEnum = typeof TeamUpdateDataScopesEnum[keyof typeof TeamUpdateDataScopesEnum];
+
 /**
  * 
  * @export
@@ -3151,7 +4748,99 @@ export interface TeammemberInsertData {
      * @memberof TeammemberInsertData
      */
     'teamId': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof TeammemberInsertData
+     */
+    'addedAt': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof TeammemberInsertData
+     */
+    'addedBy'?: string | null;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof TeammemberInsertData
+     */
+    'scopes': Array<TeammemberInsertDataScopesEnum>;
 }
+
+export const TeammemberInsertDataScopesEnum = {
+    WaState: 'WA_STATE',
+    ContactsReadAssigned: 'CONTACTS_READ_ASSIGNED',
+    ContactsReadAll: 'CONTACTS_READ_ALL',
+    ContactsExportButton: 'CONTACTS_EXPORT_BUTTON',
+    ContactsCreate: 'CONTACTS_CREATE',
+    ContactsDelete: 'CONTACTS_DELETE',
+    ContactsUpdate: 'CONTACTS_UPDATE',
+    CampaignsRead: 'CAMPAIGNS_READ',
+    CampaignsCreate: 'CAMPAIGNS_CREATE',
+    CampaignsDelete: 'CAMPAIGNS_DELETE',
+    CampaignsUpdate: 'CAMPAIGNS_UPDATE',
+    KeywordRead: 'KEYWORD_READ',
+    KeywordCreate: 'KEYWORD_CREATE',
+    KeywordDelete: 'KEYWORD_DELETE',
+    KeywordUpdate: 'KEYWORD_UPDATE',
+    TemplatesRead: 'TEMPLATES_READ',
+    TemplatesCreate: 'TEMPLATES_CREATE',
+    TemplatesDelete: 'TEMPLATES_DELETE',
+    TemplatesUpdate: 'TEMPLATES_UPDATE',
+    TagsRead: 'TAGS_READ',
+    TagsCreate: 'TAGS_CREATE',
+    TagsDelete: 'TAGS_DELETE',
+    TokensRead: 'TOKENS_READ',
+    TokensDelete: 'TOKENS_DELETE',
+    UsersPatch: 'USERS_PATCH',
+    ReferralApplyCredit: 'REFERRAL_APPLY_CREDIT',
+    TeamUpdate: 'TEAM_UPDATE',
+    AccountCreate: 'ACCOUNT_CREATE',
+    AccountRead: 'ACCOUNT_READ',
+    AccountDelete: 'ACCOUNT_DELETE',
+    AccountPatch: 'ACCOUNT_PATCH',
+    TeamlinkCreate: 'TEAMLINK_CREATE',
+    TeamlinkRead: 'TEAMLINK_READ',
+    TeammembersUpdate: 'TEAMMEMBERS_UPDATE',
+    TeammembersRead: 'TEAMMEMBERS_READ',
+    TeamNotify: 'TEAM_NOTIFY',
+    ChatsAccessAll: 'CHATS_ACCESS_ALL',
+    ChatsAccessAssigned: 'CHATS_ACCESS_ASSIGNED',
+    ChatsDelete: 'CHATS_DELETE',
+    MessagesSendToAssigned: 'MESSAGES_SEND_TO_ASSIGNED',
+    MessagesSendToAll: 'MESSAGES_SEND_TO_ALL',
+    MessagesSchedule: 'MESSAGES_SCHEDULE',
+    MessagesDelete: 'MESSAGES_DELETE',
+    GroupsCreate: 'GROUPS_CREATE',
+    GroupsUpdate: 'GROUPS_UPDATE',
+    Notes: 'NOTES',
+    NotificationRead: 'NOTIFICATION_READ',
+    NotificationCreate: 'NOTIFICATION_CREATE',
+    NotificationUpdate: 'NOTIFICATION_UPDATE',
+    NotificationDelete: 'NOTIFICATION_DELETE',
+    IntegrationsUpdate: 'INTEGRATIONS_UPDATE',
+    AdminPanelAccess: 'ADMIN_PANEL_ACCESS',
+    PaymentsRead: 'PAYMENTS_READ',
+    PaymentsUpdate: 'PAYMENTS_UPDATE',
+    WaLiveEvents: 'WA_LIVE_EVENTS',
+    ChatdaddyHook: 'CHATDADDY_HOOK',
+    PartnerAdminPanelAccess: 'PARTNER_ADMIN_PANEL_ACCESS',
+    ProductsGet: 'PRODUCTS_GET',
+    ProductsCreate: 'PRODUCTS_CREATE',
+    ProductsUpdate: 'PRODUCTS_UPDATE',
+    ProductsDelete: 'PRODUCTS_DELETE',
+    PaymentIntegrationRead: 'PAYMENT_INTEGRATION_READ',
+    PaymentIntegrationWrite: 'PAYMENT_INTEGRATION_WRITE',
+    PaymentRecordsRead: 'PAYMENT_RECORDS_READ',
+    PaymentRecordsWrite: 'PAYMENT_RECORDS_WRITE',
+    MetricsGet: 'METRICS_GET',
+    AccountsReadAssigned: 'ACCOUNTS_READ_ASSIGNED',
+    AutocompleteGet: 'AUTOCOMPLETE_GET'
+} as const;
+
+export type TeammemberInsertDataScopesEnum = typeof TeammemberInsertDataScopesEnum[keyof typeof TeammemberInsertDataScopesEnum];
+
 /**
  * 
  * @export
@@ -3196,7 +4885,99 @@ export interface TeammemberUpdateData {
      * @memberof TeammemberUpdateData
      */
     'teamId': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof TeammemberUpdateData
+     */
+    'addedAt'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof TeammemberUpdateData
+     */
+    'addedBy'?: string | null;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof TeammemberUpdateData
+     */
+    'scopes'?: Array<TeammemberUpdateDataScopesEnum>;
 }
+
+export const TeammemberUpdateDataScopesEnum = {
+    WaState: 'WA_STATE',
+    ContactsReadAssigned: 'CONTACTS_READ_ASSIGNED',
+    ContactsReadAll: 'CONTACTS_READ_ALL',
+    ContactsExportButton: 'CONTACTS_EXPORT_BUTTON',
+    ContactsCreate: 'CONTACTS_CREATE',
+    ContactsDelete: 'CONTACTS_DELETE',
+    ContactsUpdate: 'CONTACTS_UPDATE',
+    CampaignsRead: 'CAMPAIGNS_READ',
+    CampaignsCreate: 'CAMPAIGNS_CREATE',
+    CampaignsDelete: 'CAMPAIGNS_DELETE',
+    CampaignsUpdate: 'CAMPAIGNS_UPDATE',
+    KeywordRead: 'KEYWORD_READ',
+    KeywordCreate: 'KEYWORD_CREATE',
+    KeywordDelete: 'KEYWORD_DELETE',
+    KeywordUpdate: 'KEYWORD_UPDATE',
+    TemplatesRead: 'TEMPLATES_READ',
+    TemplatesCreate: 'TEMPLATES_CREATE',
+    TemplatesDelete: 'TEMPLATES_DELETE',
+    TemplatesUpdate: 'TEMPLATES_UPDATE',
+    TagsRead: 'TAGS_READ',
+    TagsCreate: 'TAGS_CREATE',
+    TagsDelete: 'TAGS_DELETE',
+    TokensRead: 'TOKENS_READ',
+    TokensDelete: 'TOKENS_DELETE',
+    UsersPatch: 'USERS_PATCH',
+    ReferralApplyCredit: 'REFERRAL_APPLY_CREDIT',
+    TeamUpdate: 'TEAM_UPDATE',
+    AccountCreate: 'ACCOUNT_CREATE',
+    AccountRead: 'ACCOUNT_READ',
+    AccountDelete: 'ACCOUNT_DELETE',
+    AccountPatch: 'ACCOUNT_PATCH',
+    TeamlinkCreate: 'TEAMLINK_CREATE',
+    TeamlinkRead: 'TEAMLINK_READ',
+    TeammembersUpdate: 'TEAMMEMBERS_UPDATE',
+    TeammembersRead: 'TEAMMEMBERS_READ',
+    TeamNotify: 'TEAM_NOTIFY',
+    ChatsAccessAll: 'CHATS_ACCESS_ALL',
+    ChatsAccessAssigned: 'CHATS_ACCESS_ASSIGNED',
+    ChatsDelete: 'CHATS_DELETE',
+    MessagesSendToAssigned: 'MESSAGES_SEND_TO_ASSIGNED',
+    MessagesSendToAll: 'MESSAGES_SEND_TO_ALL',
+    MessagesSchedule: 'MESSAGES_SCHEDULE',
+    MessagesDelete: 'MESSAGES_DELETE',
+    GroupsCreate: 'GROUPS_CREATE',
+    GroupsUpdate: 'GROUPS_UPDATE',
+    Notes: 'NOTES',
+    NotificationRead: 'NOTIFICATION_READ',
+    NotificationCreate: 'NOTIFICATION_CREATE',
+    NotificationUpdate: 'NOTIFICATION_UPDATE',
+    NotificationDelete: 'NOTIFICATION_DELETE',
+    IntegrationsUpdate: 'INTEGRATIONS_UPDATE',
+    AdminPanelAccess: 'ADMIN_PANEL_ACCESS',
+    PaymentsRead: 'PAYMENTS_READ',
+    PaymentsUpdate: 'PAYMENTS_UPDATE',
+    WaLiveEvents: 'WA_LIVE_EVENTS',
+    ChatdaddyHook: 'CHATDADDY_HOOK',
+    PartnerAdminPanelAccess: 'PARTNER_ADMIN_PANEL_ACCESS',
+    ProductsGet: 'PRODUCTS_GET',
+    ProductsCreate: 'PRODUCTS_CREATE',
+    ProductsUpdate: 'PRODUCTS_UPDATE',
+    ProductsDelete: 'PRODUCTS_DELETE',
+    PaymentIntegrationRead: 'PAYMENT_INTEGRATION_READ',
+    PaymentIntegrationWrite: 'PAYMENT_INTEGRATION_WRITE',
+    PaymentRecordsRead: 'PAYMENT_RECORDS_READ',
+    PaymentRecordsWrite: 'PAYMENT_RECORDS_WRITE',
+    MetricsGet: 'METRICS_GET',
+    AccountsReadAssigned: 'ACCOUNTS_READ_ASSIGNED',
+    AutocompleteGet: 'AUTOCOMPLETE_GET'
+} as const;
+
+export type TeammemberUpdateDataScopesEnum = typeof TeammemberUpdateDataScopesEnum[keyof typeof TeammemberUpdateDataScopesEnum];
+
 /**
  * 
  * @export
@@ -3311,6 +5092,145 @@ export interface UserInsertData {
      * @memberof UserInsertData
      */
     'id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof UserInsertData
+     */
+    'createdAt': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof UserInsertData
+     */
+    'updatedAt': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof UserInsertData
+     */
+    'disabledAt'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof UserInsertData
+     */
+    'fullName': string;
+    /**
+     * The last used team ID, your refresh token when logging in is generated for this team
+     * @type {string}
+     * @memberof UserInsertData
+     */
+    'lastUsedTeamId'?: string;
+    /**
+     * Will only contain numbers, no + sign, brackets etc.
+     * @type {number}
+     * @memberof UserInsertData
+     */
+    'phoneNumber': number | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof UserInsertData
+     */
+    'emailAddress'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof UserInsertData
+     */
+    'createdByMethod'?: UserInsertDataCreatedByMethodEnum;
+    /**
+     * 
+     * @type {UserInsertDataNotify}
+     * @memberof UserInsertData
+     */
+    'notify': UserInsertDataNotify;
+    /**
+     * The referral code used for sign-up
+     * @type {string}
+     * @memberof UserInsertData
+     */
+    'referralCode'?: string | null;
+    /**
+     * The signature of the user
+     * @type {string}
+     * @memberof UserInsertData
+     */
+    'signature'?: string | null;
+    /**
+     * 
+     * @type {Array<UserInsertDataWebPushSubscriptionsInner>}
+     * @memberof UserInsertData
+     */
+    'webPushSubscriptions'?: Array<UserInsertDataWebPushSubscriptionsInner>;
+    /**
+     * The partnership the user has signed in with
+     * @type {string}
+     * @memberof UserInsertData
+     */
+    'partnership'?: string | null;
+}
+
+export const UserInsertDataCreatedByMethodEnum = {
+    AdminPanel: 'admin-panel',
+    Otp: 'otp',
+    Boutir: 'boutir',
+    InstantReg: 'instant-reg',
+    Firebase: 'firebase'
+} as const;
+
+export type UserInsertDataCreatedByMethodEnum = typeof UserInsertDataCreatedByMethodEnum[keyof typeof UserInsertDataCreatedByMethodEnum];
+
+/**
+ * 
+ * @export
+ * @interface UserInsertDataNotify
+ */
+export interface UserInsertDataNotify {
+    /**
+     * 
+     * @type {boolean}
+     * @memberof UserInsertDataNotify
+     */
+    'whatsapp'?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof UserInsertDataNotify
+     */
+    'email'?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof UserInsertDataNotify
+     */
+    'desktop'?: boolean;
+}
+/**
+ * 
+ * @export
+ * @interface UserInsertDataWebPushSubscriptionsInner
+ */
+export interface UserInsertDataWebPushSubscriptionsInner {
+    /**
+     * 
+     * @type {string}
+     * @memberof UserInsertDataWebPushSubscriptionsInner
+     */
+    'endpoint': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof UserInsertDataWebPushSubscriptionsInner
+     */
+    'authKey': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof UserInsertDataWebPushSubscriptionsInner
+     */
+    'p256dhKey': string;
 }
 /**
  * 
@@ -3350,7 +5270,96 @@ export interface UserUpdateData {
      * @memberof UserUpdateData
      */
     'id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof UserUpdateData
+     */
+    'createdAt'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof UserUpdateData
+     */
+    'updatedAt'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof UserUpdateData
+     */
+    'disabledAt'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof UserUpdateData
+     */
+    'fullName'?: string;
+    /**
+     * The last used team ID, your refresh token when logging in is generated for this team
+     * @type {string}
+     * @memberof UserUpdateData
+     */
+    'lastUsedTeamId'?: string;
+    /**
+     * Will only contain numbers, no + sign, brackets etc.
+     * @type {number}
+     * @memberof UserUpdateData
+     */
+    'phoneNumber'?: number | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof UserUpdateData
+     */
+    'emailAddress'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof UserUpdateData
+     */
+    'createdByMethod'?: UserUpdateDataCreatedByMethodEnum;
+    /**
+     * 
+     * @type {UserInsertDataNotify}
+     * @memberof UserUpdateData
+     */
+    'notify'?: UserInsertDataNotify;
+    /**
+     * The referral code used for sign-up
+     * @type {string}
+     * @memberof UserUpdateData
+     */
+    'referralCode'?: string | null;
+    /**
+     * The signature of the user
+     * @type {string}
+     * @memberof UserUpdateData
+     */
+    'signature'?: string | null;
+    /**
+     * 
+     * @type {Array<UserInsertDataWebPushSubscriptionsInner>}
+     * @memberof UserUpdateData
+     */
+    'webPushSubscriptions'?: Array<UserInsertDataWebPushSubscriptionsInner>;
+    /**
+     * The partnership the user has signed in with
+     * @type {string}
+     * @memberof UserUpdateData
+     */
+    'partnership'?: string | null;
 }
+
+export const UserUpdateDataCreatedByMethodEnum = {
+    AdminPanel: 'admin-panel',
+    Otp: 'otp',
+    Boutir: 'boutir',
+    InstantReg: 'instant-reg',
+    Firebase: 'firebase'
+} as const;
+
+export type UserUpdateDataCreatedByMethodEnum = typeof UserUpdateDataCreatedByMethodEnum[keyof typeof UserUpdateDataCreatedByMethodEnum];
+
 
 /**
  * DefaultApi - axios parameter creator
