@@ -56,7 +56,7 @@ export type AccountDeleteEventEnum = typeof AccountDeleteEventEnum[keyof typeof 
  */
 export interface AccountDeleteData {
     /**
-     * Unique identifier for an account.  The account ID is constructed from the first 21 characters of the team ID, prefixed by \"acc\" and suffixed by 4 random hex characters. This helps uniquely identify each account as well as establish a connection between the account\'s team by embedding the partial team ID in it.
+     * 
      * @type {string}
      * @memberof AccountDeleteData
      */
@@ -95,25 +95,25 @@ export type AccountInsertEventEnum = typeof AccountInsertEventEnum[keyof typeof 
  */
 export interface AccountInsertData {
     /**
-     * Unique identifier for an account.  The account ID is constructed from the first 21 characters of the team ID, prefixed by \"acc\" and suffixed by 4 random hex characters. This helps uniquely identify each account as well as establish a connection between the account\'s team by embedding the partial team ID in it.
+     * 
      * @type {string}
      * @memberof AccountInsertData
      */
     'accountId': string;
     /**
-     * Owner of thr account
+     * 
      * @type {string}
      * @memberof AccountInsertData
      */
     'ownerId': string;
     /**
-     * Assignees who can access this account.
+     * 
      * @type {Array<string>}
      * @memberof AccountInsertData
      */
     'assignees'?: Array<string>;
     /**
-     * User facing nickname of the account
+     * 
      * @type {string}
      * @memberof AccountInsertData
      */
@@ -131,37 +131,37 @@ export interface AccountInsertData {
      */
     'type': AccountInsertDataTypeEnum;
     /**
-     * An ISO formatted timestamp
+     * 
      * @type {string}
      * @memberof AccountInsertData
      */
     'createdAt': string;
     /**
-     * An ISO formatted timestamp
+     * 
      * @type {string}
      * @memberof AccountInsertData
      */
     'updatedAt': string;
     /**
-     * An ISO formatted timestamp
+     * 
      * @type {string}
      * @memberof AccountInsertData
      */
     'lastLoginAt'?: string | null;
     /**
-     * An ISO formatted timestamp
+     * 
      * @type {string}
      * @memberof AccountInsertData
      */
     'lastLogoutAt'?: string | null;
     /**
-     * An ISO formatted timestamp
+     * 
      * @type {string}
      * @memberof AccountInsertData
      */
     'lastClosedAt'?: string | null;
     /**
-     * Describes the current state of an account. 1. open => logged in & connected to WhatsApp. Can send & receive messages now 2. connecting => establishing connection to WhatsApp. QR code is available during this state 3. close => connection to WhatsApp is closed, account is inactive at the moment
+     * 
      * @type {string}
      * @memberof AccountInsertData
      */
@@ -234,25 +234,25 @@ export interface AccountInsertDataError {
  */
 export interface AccountInsertDataSettings {
     /**
-     * Supply a list of user IDs to notify when a new message arrives
+     * 
      * @type {Array<string>}
      * @memberof AccountInsertDataSettings
      */
     'notifyUsers'?: Array<string>;
     /**
-     * Should chat history be synced with the database
+     * 
      * @type {boolean}
      * @memberof AccountInsertDataSettings
      */
     'enableHistorySync'?: boolean;
     /**
-     * Maximum number of messages that would be synced to the database
+     * 
      * @type {number}
      * @memberof AccountInsertDataSettings
      */
     'maxMessageSync'?: number;
     /**
-     * Will doing a chat action (like archive, mark unread) actually sync it back with the primary device
+     * 
      * @type {boolean}
      * @memberof AccountInsertDataSettings
      */
@@ -264,14 +264,14 @@ export interface AccountInsertDataSettings {
      */
     'newChatsAssignee'?: AccountInsertDataSettingsNewChatsAssignee;
     /**
-     * Should polls be sent as buttons instead of a message. This is useful for the regular WhatsApp API
+     * 
      * @type {boolean}
      * @memberof AccountInsertDataSettings
      */
     'sendButtonsAsPoll'?: boolean;
 }
 /**
- * All new chats will be auto asssigned if one of the option is enabled and select any Assignee
+ * 
  * @export
  * @interface AccountInsertDataSettingsNewChatsAssignee
  */
@@ -296,13 +296,13 @@ export interface AccountInsertDataSettingsNewChatsAssignee {
  */
 export interface AccountInsertDataSettingsNewChatsAssigneeIncoming {
     /**
-     * This flag will define if option should enabled/disabled
+     * 
      * @type {boolean}
      * @memberof AccountInsertDataSettingsNewChatsAssigneeIncoming
      */
     'enabled'?: boolean;
     /**
-     * Auto assigned will work for the selected teammates
+     * 
      * @type {Array<string>}
      * @memberof AccountInsertDataSettingsNewChatsAssigneeIncoming
      */
@@ -341,25 +341,25 @@ export type AccountUpdateEventEnum = typeof AccountUpdateEventEnum[keyof typeof 
  */
 export interface AccountUpdateData {
     /**
-     * Unique identifier for an account.  The account ID is constructed from the first 21 characters of the team ID, prefixed by \"acc\" and suffixed by 4 random hex characters. This helps uniquely identify each account as well as establish a connection between the account\'s team by embedding the partial team ID in it.
+     * 
      * @type {string}
      * @memberof AccountUpdateData
      */
     'accountId': string;
     /**
-     * Owner of thr account
+     * 
      * @type {string}
      * @memberof AccountUpdateData
      */
     'ownerId'?: string;
     /**
-     * Assignees who can access this account.
+     * 
      * @type {Array<string>}
      * @memberof AccountUpdateData
      */
     'assignees'?: Array<string>;
     /**
-     * User facing nickname of the account
+     * 
      * @type {string}
      * @memberof AccountUpdateData
      */
@@ -377,37 +377,37 @@ export interface AccountUpdateData {
      */
     'type'?: AccountUpdateDataTypeEnum;
     /**
-     * An ISO formatted timestamp
+     * 
      * @type {string}
      * @memberof AccountUpdateData
      */
     'createdAt'?: string;
     /**
-     * An ISO formatted timestamp
+     * 
      * @type {string}
      * @memberof AccountUpdateData
      */
     'updatedAt'?: string;
     /**
-     * An ISO formatted timestamp
+     * 
      * @type {string}
      * @memberof AccountUpdateData
      */
     'lastLoginAt'?: string | null;
     /**
-     * An ISO formatted timestamp
+     * 
      * @type {string}
      * @memberof AccountUpdateData
      */
     'lastLogoutAt'?: string | null;
     /**
-     * An ISO formatted timestamp
+     * 
      * @type {string}
      * @memberof AccountUpdateData
      */
     'lastClosedAt'?: string | null;
     /**
-     * Describes the current state of an account. 1. open => logged in & connected to WhatsApp. Can send & receive messages now 2. connecting => establishing connection to WhatsApp. QR code is available during this state 3. close => connection to WhatsApp is closed, account is inactive at the moment
+     * 
      * @type {string}
      * @memberof AccountUpdateData
      */
@@ -926,13 +926,13 @@ export type ChatDeleteEventEnum = typeof ChatDeleteEventEnum[keyof typeof ChatDe
  */
 export interface ChatDeleteData {
     /**
-     * Unique identifier for an account.  The account ID is constructed from the first 21 characters of the team ID, prefixed by \"acc\" and suffixed by 4 random hex characters. This helps uniquely identify each account as well as establish a connection between the account\'s team by embedding the partial team ID in it.
+     * 
      * @type {string}
      * @memberof ChatDeleteData
      */
     'accountId': string;
     /**
-     * ID for the contact/chat on the platform
+     * 
      * @type {string}
      * @memberof ChatDeleteData
      */
@@ -971,25 +971,25 @@ export type ChatInsertEventEnum = typeof ChatInsertEventEnum[keyof typeof ChatIn
  */
 export interface ChatInsertData {
     /**
-     * Unique identifier for an account.  The account ID is constructed from the first 21 characters of the team ID, prefixed by \"acc\" and suffixed by 4 random hex characters. This helps uniquely identify each account as well as establish a connection between the account\'s team by embedding the partial team ID in it.
+     * 
      * @type {string}
      * @memberof ChatInsertData
      */
     'accountId': string;
     /**
-     * ID for the contact/chat on the platform
+     * 
      * @type {string}
      * @memberof ChatInsertData
      */
     'id': string;
     /**
-     * An ISO formatted timestamp
+     * 
      * @type {string}
      * @memberof ChatInsertData
      */
     'lastMessage': string;
     /**
-     * Number of unread messages
+     * 
      * @type {number}
      * @memberof ChatInsertData
      */
@@ -1013,61 +1013,61 @@ export interface ChatInsertData {
      */
     'readOnly': boolean;
     /**
-     * Timestamp of when the chat was muted
+     * 
      * @type {number}
      * @memberof ChatInsertData
      */
     'mute'?: number | null;
     /**
-     * Timestamp of when the chat was pinned
+     * 
      * @type {number}
      * @memberof ChatInsertData
      */
     'pin'?: number | null;
     /**
-     * did the user create this contact
+     * 
      * @type {boolean}
      * @memberof ChatInsertData
      */
     'isUserGenerated': boolean;
     /**
-     * does this chat have any pending messages
+     * 
      * @type {boolean}
      * @memberof ChatInsertData
      */
     'hasPendingMessage'?: boolean;
     /**
-     * does this chat have any unsolved notes
+     * 
      * @type {boolean}
      * @memberof ChatInsertData
      */
     'hasUnsolvedNote'?: boolean;
     /**
-     * does this chat have any failed messages
+     * 
      * @type {boolean}
      * @memberof ChatInsertData
      */
     'hasFailedMessage'?: boolean;
     /**
-     * the user IDs mentioned in the chat
+     * 
      * @type {Array<string>}
      * @memberof ChatInsertData
      */
     'mentions'?: Array<string>;
     /**
-     * if disappearing messages is on, and for how long
+     * 
      * @type {number}
      * @memberof ChatInsertData
      */
     'disappearingMessages'?: number | null;
     /**
-     * If the chat has all the message history from the primary source
+     * 
      * @type {boolean}
      * @memberof ChatInsertData
      */
     'hasEntireMessageHistory': boolean;
     /**
-     * cursor to sort chats by
+     * 
      * @type {string}
      * @memberof ChatInsertData
      */
@@ -1106,25 +1106,25 @@ export type ChatUpdateEventEnum = typeof ChatUpdateEventEnum[keyof typeof ChatUp
  */
 export interface ChatUpdateData {
     /**
-     * Unique identifier for an account.  The account ID is constructed from the first 21 characters of the team ID, prefixed by \"acc\" and suffixed by 4 random hex characters. This helps uniquely identify each account as well as establish a connection between the account\'s team by embedding the partial team ID in it.
+     * 
      * @type {string}
      * @memberof ChatUpdateData
      */
     'accountId': string;
     /**
-     * ID for the contact/chat on the platform
+     * 
      * @type {string}
      * @memberof ChatUpdateData
      */
     'id': string;
     /**
-     * An ISO formatted timestamp
+     * 
      * @type {string}
      * @memberof ChatUpdateData
      */
     'lastMessage'?: string;
     /**
-     * Number of unread messages
+     * 
      * @type {number}
      * @memberof ChatUpdateData
      */
@@ -1148,61 +1148,61 @@ export interface ChatUpdateData {
      */
     'readOnly'?: boolean;
     /**
-     * Timestamp of when the chat was muted
+     * 
      * @type {number}
      * @memberof ChatUpdateData
      */
     'mute'?: number | null;
     /**
-     * Timestamp of when the chat was pinned
+     * 
      * @type {number}
      * @memberof ChatUpdateData
      */
     'pin'?: number | null;
     /**
-     * did the user create this contact
+     * 
      * @type {boolean}
      * @memberof ChatUpdateData
      */
     'isUserGenerated'?: boolean;
     /**
-     * does this chat have any pending messages
+     * 
      * @type {boolean}
      * @memberof ChatUpdateData
      */
     'hasPendingMessage'?: boolean;
     /**
-     * does this chat have any unsolved notes
+     * 
      * @type {boolean}
      * @memberof ChatUpdateData
      */
     'hasUnsolvedNote'?: boolean;
     /**
-     * does this chat have any failed messages
+     * 
      * @type {boolean}
      * @memberof ChatUpdateData
      */
     'hasFailedMessage'?: boolean;
     /**
-     * the user IDs mentioned in the chat
+     * 
      * @type {Array<string>}
      * @memberof ChatUpdateData
      */
     'mentions'?: Array<string>;
     /**
-     * if disappearing messages is on, and for how long
+     * 
      * @type {number}
      * @memberof ChatUpdateData
      */
     'disappearingMessages'?: number | null;
     /**
-     * If the chat has all the message history from the primary source
+     * 
      * @type {boolean}
      * @memberof ChatUpdateData
      */
     'hasEntireMessageHistory'?: boolean;
     /**
-     * cursor to sort chats by
+     * 
      * @type {string}
      * @memberof ChatUpdateData
      */
@@ -1241,13 +1241,13 @@ export type ContactDeleteEventEnum = typeof ContactDeleteEventEnum[keyof typeof 
  */
 export interface ContactDeleteData {
     /**
-     * ID for the contact/chat on the platform
+     * 
      * @type {string}
      * @memberof ContactDeleteData
      */
     'id': string;
     /**
-     * Unique identifier for an account.  The account ID is constructed from the first 21 characters of the team ID, prefixed by \"acc\" and suffixed by 4 random hex characters. This helps uniquely identify each account as well as establish a connection between the account\'s team by embedding the partial team ID in it.
+     * 
      * @type {string}
      * @memberof ContactDeleteData
      */
@@ -1286,13 +1286,13 @@ export type ContactInsertEventEnum = typeof ContactInsertEventEnum[keyof typeof 
  */
 export interface ContactInsertData {
     /**
-     * ID for the contact/chat on the platform
+     * 
      * @type {string}
      * @memberof ContactInsertData
      */
     'id': string;
     /**
-     * Unique identifier for an account.  The account ID is constructed from the first 21 characters of the team ID, prefixed by \"acc\" and suffixed by 4 random hex characters. This helps uniquely identify each account as well as establish a connection between the account\'s team by embedding the partial team ID in it.
+     * 
      * @type {string}
      * @memberof ContactInsertData
      */
@@ -1310,25 +1310,25 @@ export interface ContactInsertData {
      */
     'type': ContactInsertDataTypeEnum;
     /**
-     * name of the contact as set on ChatDaddy
+     * 
      * @type {string}
      * @memberof ContactInsertData
      */
     'name': string | null;
     /**
-     * name of the contact, as set on the platform
+     * 
      * @type {Array<string>}
      * @memberof ContactInsertData
      */
     'platformNames': Array<string>;
     /**
-     * An ISO formatted timestamp
+     * 
      * @type {string}
      * @memberof ContactInsertData
      */
     'createdAt'?: string;
     /**
-     * An ISO formatted timestamp
+     * 
      * @type {string}
      * @memberof ContactInsertData
      */
@@ -1352,19 +1352,19 @@ export interface ContactInsertData {
      */
     'img'?: GroupUpdateDataOwnerImg | null;
     /**
-     * Tags associated with this contact
+     * 
      * @type {Array<GroupUpdateDataOwnerTagsInner>}
      * @memberof ContactInsertData
      */
     'tags': Array<GroupUpdateDataOwnerTagsInner>;
     /**
-     * The assignee of the contact
+     * 
      * @type {string}
      * @memberof ContactInsertData
      */
     'assignee'?: string | null;
     /**
-     * The person who assigned this contact
+     * 
      * @type {string}
      * @memberof ContactInsertData
      */
@@ -1425,13 +1425,13 @@ export type ContactUpdateEventEnum = typeof ContactUpdateEventEnum[keyof typeof 
  */
 export interface ContactUpdateData {
     /**
-     * ID for the contact/chat on the platform
+     * 
      * @type {string}
      * @memberof ContactUpdateData
      */
     'id': string;
     /**
-     * Unique identifier for an account.  The account ID is constructed from the first 21 characters of the team ID, prefixed by \"acc\" and suffixed by 4 random hex characters. This helps uniquely identify each account as well as establish a connection between the account\'s team by embedding the partial team ID in it.
+     * 
      * @type {string}
      * @memberof ContactUpdateData
      */
@@ -1449,25 +1449,25 @@ export interface ContactUpdateData {
      */
     'type'?: ContactUpdateDataTypeEnum;
     /**
-     * name of the contact as set on ChatDaddy
+     * 
      * @type {string}
      * @memberof ContactUpdateData
      */
     'name'?: string | null;
     /**
-     * name of the contact, as set on the platform
+     * 
      * @type {Array<string>}
      * @memberof ContactUpdateData
      */
     'platformNames'?: Array<string>;
     /**
-     * An ISO formatted timestamp
+     * 
      * @type {string}
      * @memberof ContactUpdateData
      */
     'createdAt'?: string;
     /**
-     * An ISO formatted timestamp
+     * 
      * @type {string}
      * @memberof ContactUpdateData
      */
@@ -1491,19 +1491,19 @@ export interface ContactUpdateData {
      */
     'img'?: GroupUpdateDataOwnerImg | null;
     /**
-     * Tags associated with this contact
+     * 
      * @type {Array<GroupUpdateDataOwnerTagsInner>}
      * @memberof ContactUpdateData
      */
     'tags'?: Array<GroupUpdateDataOwnerTagsInner>;
     /**
-     * The assignee of the contact
+     * 
      * @type {string}
      * @memberof ContactUpdateData
      */
     'assignee'?: string | null;
     /**
-     * The person who assigned this contact
+     * 
      * @type {string}
      * @memberof ContactUpdateData
      */
@@ -1620,13 +1620,13 @@ export interface GroupUpdateData {
      */
     'id': string;
     /**
-     * Unique identifier for an account.  The account ID is constructed from the first 21 characters of the team ID, prefixed by \"acc\" and suffixed by 4 random hex characters. This helps uniquely identify each account as well as establish a connection between the account\'s team by embedding the partial team ID in it.
+     * 
      * @type {string}
      * @memberof GroupUpdateData
      */
     'accountId': string;
     /**
-     * An ISO formatted timestamp
+     * 
      * @type {string}
      * @memberof GroupUpdateData
      */
@@ -1675,13 +1675,13 @@ export interface GroupUpdateData {
  */
 export interface GroupUpdateDataOwner {
     /**
-     * ID for the contact/chat on the platform
+     * 
      * @type {string}
      * @memberof GroupUpdateDataOwner
      */
     'id': string;
     /**
-     * Unique identifier for an account.  The account ID is constructed from the first 21 characters of the team ID, prefixed by \"acc\" and suffixed by 4 random hex characters. This helps uniquely identify each account as well as establish a connection between the account\'s team by embedding the partial team ID in it.
+     * 
      * @type {string}
      * @memberof GroupUpdateDataOwner
      */
@@ -1699,25 +1699,25 @@ export interface GroupUpdateDataOwner {
      */
     'type': GroupUpdateDataOwnerTypeEnum;
     /**
-     * name of the contact as set on ChatDaddy
+     * 
      * @type {string}
      * @memberof GroupUpdateDataOwner
      */
     'name': string | null;
     /**
-     * name of the contact, as set on the platform
+     * 
      * @type {Array<string>}
      * @memberof GroupUpdateDataOwner
      */
     'platformNames': Array<string>;
     /**
-     * An ISO formatted timestamp
+     * 
      * @type {string}
      * @memberof GroupUpdateDataOwner
      */
     'createdAt'?: string;
     /**
-     * An ISO formatted timestamp
+     * 
      * @type {string}
      * @memberof GroupUpdateDataOwner
      */
@@ -1741,19 +1741,19 @@ export interface GroupUpdateDataOwner {
      */
     'img'?: GroupUpdateDataOwnerImg | null;
     /**
-     * Tags associated with this contact
+     * 
      * @type {Array<GroupUpdateDataOwnerTagsInner>}
      * @memberof GroupUpdateDataOwner
      */
     'tags': Array<GroupUpdateDataOwnerTagsInner>;
     /**
-     * The assignee of the contact
+     * 
      * @type {string}
      * @memberof GroupUpdateDataOwner
      */
     'assignee'?: string | null;
     /**
-     * The person who assigned this contact
+     * 
      * @type {string}
      * @memberof GroupUpdateDataOwner
      */
@@ -1800,7 +1800,7 @@ export interface GroupUpdateDataOwnerImg {
      */
     'fullUrl'?: string;
     /**
-     * An ISO formatted timestamp
+     * 
      * @type {string}
      * @memberof GroupUpdateDataOwnerImg
      */
@@ -1825,7 +1825,7 @@ export interface GroupUpdateDataOwnerTagsInner {
      */
     'value'?: string | null;
     /**
-     * used in events to denote that the tag has been removed
+     * 
      * @type {boolean}
      * @memberof GroupUpdateDataOwnerTagsInner
      */
@@ -1872,10 +1872,10 @@ export interface MessageDelete {
     'event': MessageDeleteEventEnum;
     /**
      * 
-     * @type {Array<object>}
+     * @type {Array<MessageDeleteData>}
      * @memberof MessageDelete
      */
-    'data': Array<object>;
+    'data': Array<MessageDeleteData>;
 }
 
 export const MessageDeleteEventEnum = {
@@ -1884,6 +1884,31 @@ export const MessageDeleteEventEnum = {
 
 export type MessageDeleteEventEnum = typeof MessageDeleteEventEnum[keyof typeof MessageDeleteEventEnum];
 
+/**
+ * 
+ * @export
+ * @interface MessageDeleteData
+ */
+export interface MessageDeleteData {
+    /**
+     * 
+     * @type {string}
+     * @memberof MessageDeleteData
+     */
+    'chatId': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof MessageDeleteData
+     */
+    'accountId': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof MessageDeleteData
+     */
+    'id': string;
+}
 /**
  * 
  * @export
@@ -1917,13 +1942,13 @@ export type MessageInsertEventEnum = typeof MessageInsertEventEnum[keyof typeof 
  */
 export interface MessageInsertData {
     /**
-     * ID for the contact/chat on the platform
+     * 
      * @type {string}
      * @memberof MessageInsertData
      */
     'chatId': string;
     /**
-     * Unique identifier for an account.  The account ID is constructed from the first 21 characters of the team ID, prefixed by \"acc\" and suffixed by 4 random hex characters. This helps uniquely identify each account as well as establish a connection between the account\'s team by embedding the partial team ID in it.
+     * 
      * @type {string}
      * @memberof MessageInsertData
      */
@@ -1941,19 +1966,13 @@ export interface MessageInsertData {
      */
     'fromMe': boolean;
     /**
-     * The contact that sent the message (applicable for groups)
+     * 
      * @type {string}
      * @memberof MessageInsertData
      */
     'senderContactId'?: string | null;
     /**
      * 
-     * @type {MessageInsertDataAllOfSender}
-     * @memberof MessageInsertData
-     */
-    'sender'?: MessageInsertDataAllOfSender | null;
-    /**
-     * An ISO formatted timestamp
      * @type {string}
      * @memberof MessageInsertData
      */
@@ -1966,18 +1985,18 @@ export interface MessageInsertData {
     'status'?: MessageInsertDataStatusEnum;
     /**
      * 
-     * @type {MessageInsertDataAllOfError}
+     * @type {MessageInsertDataError}
      * @memberof MessageInsertData
      */
-    'error'?: MessageInsertDataAllOfError | null;
+    'error'?: MessageInsertDataError | null;
     /**
-     * Only for notes, user ID of the person who resolved the note
+     * 
      * @type {string}
      * @memberof MessageInsertData
      */
     'resolvedBy'?: string | null;
     /**
-     * An ISO formatted timestamp
+     * 
      * @type {string}
      * @memberof MessageInsertData
      */
@@ -1990,10 +2009,10 @@ export interface MessageInsertData {
     'hidden'?: boolean;
     /**
      * 
-     * @type {MessageInsertDataAllOfMiscOptions}
+     * @type {MessageInsertDataMiscOptions}
      * @memberof MessageInsertData
      */
-    'miscOptions'?: MessageInsertDataAllOfMiscOptions;
+    'miscOptions'?: MessageInsertDataMiscOptions;
     /**
      * 
      * @type {Array<string>}
@@ -2008,64 +2027,64 @@ export interface MessageInsertData {
     'text': string | null;
     /**
      * 
-     * @type {MessageInsertDataAllOf1Quoted}
+     * @type {MessageInsertDataQuoted}
      * @memberof MessageInsertData
      */
-    'quoted'?: MessageInsertDataAllOf1Quoted | null;
+    'quoted'?: MessageInsertDataQuoted | null;
     /**
-     * True, if the message was deleted
+     * 
      * @type {boolean}
      * @memberof MessageInsertData
      */
     'deleted'?: boolean;
     /**
      * 
-     * @type {MessageInsertDataAllOf1Action}
+     * @type {MessageInsertDataAction}
      * @memberof MessageInsertData
      */
-    'action'?: MessageInsertDataAllOf1Action | null;
+    'action'?: MessageInsertDataAction | null;
     /**
      * 
-     * @type {Array<MessageInsertDataAllOf1Attachments>}
+     * @type {Array<MessageInsertDataAttachmentsInner>}
      * @memberof MessageInsertData
      */
-    'attachments'?: Array<MessageInsertDataAllOf1Attachments>;
+    'attachments'?: Array<MessageInsertDataAttachmentsInner>;
     /**
      * 
-     * @type {Array<MessageInsertDataAllOf1Buttons>}
+     * @type {Array<MessageInsertDataButtonsInner>}
      * @memberof MessageInsertData
      */
-    'buttons'?: Array<MessageInsertDataAllOf1Buttons> | null;
+    'buttons'?: Array<MessageInsertDataButtonsInner> | null;
     /**
      * 
-     * @type {MessageInsertDataAllOf1Poll}
+     * @type {MessageInsertDataPoll}
      * @memberof MessageInsertData
      */
-    'poll'?: MessageInsertDataAllOf1Poll;
+    'poll'?: MessageInsertDataPoll;
     /**
      * 
-     * @type {Array<MessageInsertDataAllOf1Products>}
+     * @type {Array<MessageInsertDataProductsInner>}
      * @memberof MessageInsertData
      */
-    'products'?: Array<MessageInsertDataAllOf1Products> | null;
+    'products'?: Array<MessageInsertDataProductsInner> | null;
     /**
      * 
-     * @type {MessageInsertDataAllOf1Order}
+     * @type {MessageInsertDataOrder}
      * @memberof MessageInsertData
      */
-    'order'?: MessageInsertDataAllOf1Order | null;
+    'order'?: MessageInsertDataOrder | null;
     /**
      * 
-     * @type {MessageInsertDataAllOf1LinkPreview}
+     * @type {MessageInsertDataLinkPreview}
      * @memberof MessageInsertData
      */
-    'linkPreview'?: MessageInsertDataAllOf1LinkPreview;
+    'linkPreview'?: MessageInsertDataLinkPreview;
     /**
      * 
-     * @type {Array<MessageInsertDataAllOf1Reactions>}
+     * @type {Array<MessageInsertDataReactionsInner>}
      * @memberof MessageInsertData
      */
-    'reactions'?: Array<MessageInsertDataAllOf1Reactions> | null;
+    'reactions'?: Array<MessageInsertDataReactionsInner> | null;
 }
 
 export const MessageInsertDataStatusEnum = {
@@ -2083,268 +2102,91 @@ export type MessageInsertDataStatusEnum = typeof MessageInsertDataStatusEnum[key
 /**
  * 
  * @export
- * @interface MessageInsertDataAllOf
+ * @interface MessageInsertDataAction
  */
-export interface MessageInsertDataAllOf {
-    /**
-     * ID for the contact/chat on the platform
-     * @type {string}
-     * @memberof MessageInsertDataAllOf
-     */
-    'chatId': string;
-    /**
-     * Unique identifier for an account.  The account ID is constructed from the first 21 characters of the team ID, prefixed by \"acc\" and suffixed by 4 random hex characters. This helps uniquely identify each account as well as establish a connection between the account\'s team by embedding the partial team ID in it.
-     * @type {string}
-     * @memberof MessageInsertDataAllOf
-     */
-    'accountId': string;
+export interface MessageInsertDataAction {
     /**
      * 
      * @type {string}
-     * @memberof MessageInsertDataAllOf
-     */
-    'id': string;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof MessageInsertDataAllOf
-     */
-    'fromMe': boolean;
-    /**
-     * The contact that sent the message (applicable for groups)
-     * @type {string}
-     * @memberof MessageInsertDataAllOf
-     */
-    'senderContactId'?: string | null;
-    /**
-     * 
-     * @type {MessageInsertDataAllOfSender}
-     * @memberof MessageInsertDataAllOf
-     */
-    'sender'?: MessageInsertDataAllOfSender | null;
-    /**
-     * An ISO formatted timestamp
-     * @type {string}
-     * @memberof MessageInsertDataAllOf
-     */
-    'timestamp': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof MessageInsertDataAllOf
-     */
-    'status'?: MessageInsertDataAllOfStatusEnum;
-    /**
-     * 
-     * @type {MessageInsertDataAllOfError}
-     * @memberof MessageInsertDataAllOf
-     */
-    'error'?: MessageInsertDataAllOfError | null;
-    /**
-     * Only for notes, user ID of the person who resolved the note
-     * @type {string}
-     * @memberof MessageInsertDataAllOf
-     */
-    'resolvedBy'?: string | null;
-    /**
-     * An ISO formatted timestamp
-     * @type {string}
-     * @memberof MessageInsertDataAllOf
-     */
-    'resolvedAt'?: string | null;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof MessageInsertDataAllOf
-     */
-    'hidden'?: boolean;
-    /**
-     * 
-     * @type {MessageInsertDataAllOfMiscOptions}
-     * @memberof MessageInsertDataAllOf
-     */
-    'miscOptions'?: MessageInsertDataAllOfMiscOptions;
-}
-
-export const MessageInsertDataAllOfStatusEnum = {
-    Error: 'error',
-    Pending: 'pending',
-    Note: 'note',
-    Sent: 'sent',
-    Delivered: 'delivered',
-    Read: 'read',
-    Cancelled: 'cancelled'
-} as const;
-
-export type MessageInsertDataAllOfStatusEnum = typeof MessageInsertDataAllOfStatusEnum[keyof typeof MessageInsertDataAllOfStatusEnum];
-
-/**
- * 
- * @export
- * @interface MessageInsertDataAllOf1
- */
-export interface MessageInsertDataAllOf1 {
-    /**
-     * 
-     * @type {Array<string>}
-     * @memberof MessageInsertDataAllOf1
-     */
-    'mentions'?: Array<string>;
-    /**
-     * 
-     * @type {string}
-     * @memberof MessageInsertDataAllOf1
-     */
-    'text': string | null;
-    /**
-     * 
-     * @type {MessageInsertDataAllOf1Quoted}
-     * @memberof MessageInsertDataAllOf1
-     */
-    'quoted'?: MessageInsertDataAllOf1Quoted | null;
-    /**
-     * True, if the message was deleted
-     * @type {boolean}
-     * @memberof MessageInsertDataAllOf1
-     */
-    'deleted'?: boolean;
-    /**
-     * 
-     * @type {MessageInsertDataAllOf1Action}
-     * @memberof MessageInsertDataAllOf1
-     */
-    'action'?: MessageInsertDataAllOf1Action | null;
-    /**
-     * 
-     * @type {Array<MessageInsertDataAllOf1Attachments>}
-     * @memberof MessageInsertDataAllOf1
-     */
-    'attachments'?: Array<MessageInsertDataAllOf1Attachments>;
-    /**
-     * 
-     * @type {Array<MessageInsertDataAllOf1Buttons>}
-     * @memberof MessageInsertDataAllOf1
-     */
-    'buttons'?: Array<MessageInsertDataAllOf1Buttons> | null;
-    /**
-     * 
-     * @type {MessageInsertDataAllOf1Poll}
-     * @memberof MessageInsertDataAllOf1
-     */
-    'poll'?: MessageInsertDataAllOf1Poll;
-    /**
-     * 
-     * @type {Array<MessageInsertDataAllOf1Products>}
-     * @memberof MessageInsertDataAllOf1
-     */
-    'products'?: Array<MessageInsertDataAllOf1Products> | null;
-    /**
-     * 
-     * @type {MessageInsertDataAllOf1Order}
-     * @memberof MessageInsertDataAllOf1
-     */
-    'order'?: MessageInsertDataAllOf1Order | null;
-    /**
-     * 
-     * @type {MessageInsertDataAllOf1LinkPreview}
-     * @memberof MessageInsertDataAllOf1
-     */
-    'linkPreview'?: MessageInsertDataAllOf1LinkPreview;
-    /**
-     * 
-     * @type {Array<MessageInsertDataAllOf1Reactions>}
-     * @memberof MessageInsertDataAllOf1
-     */
-    'reactions'?: Array<MessageInsertDataAllOf1Reactions> | null;
-}
-/**
- * 
- * @export
- * @interface MessageInsertDataAllOf1Action
- */
-export interface MessageInsertDataAllOf1Action {
-    /**
-     * 
-     * @type {string}
-     * @memberof MessageInsertDataAllOf1Action
+     * @memberof MessageInsertDataAction
      */
     'type': string;
     /**
      * 
      * @type {Array<string>}
-     * @memberof MessageInsertDataAllOf1Action
+     * @memberof MessageInsertDataAction
      */
     'parameters'?: Array<string>;
 }
 /**
  * 
  * @export
- * @interface MessageInsertDataAllOf1Attachments
+ * @interface MessageInsertDataAttachmentsInner
  */
-export interface MessageInsertDataAllOf1Attachments {
+export interface MessageInsertDataAttachmentsInner {
     /**
      * 
      * @type {string}
-     * @memberof MessageInsertDataAllOf1Attachments
+     * @memberof MessageInsertDataAttachmentsInner
      */
-    'type': MessageInsertDataAllOf1AttachmentsTypeEnum;
+    'type': MessageInsertDataAttachmentsInnerTypeEnum;
     /**
      * 
      * @type {string}
-     * @memberof MessageInsertDataAllOf1Attachments
+     * @memberof MessageInsertDataAttachmentsInner
      */
     'mimetype': string;
     /**
-     * 1. can be publicly hosted url,  2. or can be base64 encoded buffer. But make sure it starts with `data:;base64,` -- can be at most 1KB in size Note: the `contact` type only supports base64 encoded data. Must be a serialised vcard 
+     * 
      * @type {string}
-     * @memberof MessageInsertDataAllOf1Attachments
+     * @memberof MessageInsertDataAttachmentsInner
      */
     'url': string;
     /**
      * 
-     * @type {MessageInsertDataAllOf1Location}
-     * @memberof MessageInsertDataAllOf1Attachments
+     * @type {MessageInsertDataAttachmentsInnerLocation}
+     * @memberof MessageInsertDataAttachmentsInner
      */
-    'location'?: MessageInsertDataAllOf1Location;
+    'location'?: MessageInsertDataAttachmentsInnerLocation;
     /**
-     * thumbnail of sticker/video/image
+     * 
      * @type {string}
-     * @memberof MessageInsertDataAllOf1Attachments
+     * @memberof MessageInsertDataAttachmentsInner
      */
     'jpegThumbnail'?: string | null;
     /**
-     * duration of audio/video message
+     * 
      * @type {number}
-     * @memberof MessageInsertDataAllOf1Attachments
+     * @memberof MessageInsertDataAttachmentsInner
      */
     'seconds'?: number;
     /**
-     * Show as PTT (voice note) -- only for audio messages
+     * 
      * @type {boolean}
-     * @memberof MessageInsertDataAllOf1Attachments
+     * @memberof MessageInsertDataAttachmentsInner
      */
     'pttAudio'?: boolean;
     /**
-     * name of the doc message
+     * 
      * @type {string}
-     * @memberof MessageInsertDataAllOf1Attachments
+     * @memberof MessageInsertDataAttachmentsInner
      */
     'filename'?: string;
     /**
-     * is this a gif -- only for video messages
+     * 
      * @type {boolean}
-     * @memberof MessageInsertDataAllOf1Attachments
+     * @memberof MessageInsertDataAttachmentsInner
      */
     'isGif'?: boolean;
     /**
      * 
-     * @type {MessageInsertDataAllOf1Decryption}
-     * @memberof MessageInsertDataAllOf1Attachments
+     * @type {MessageInsertDataAttachmentsInnerDecryption}
+     * @memberof MessageInsertDataAttachmentsInner
      */
-    'decryption'?: MessageInsertDataAllOf1Decryption;
+    'decryption'?: MessageInsertDataAttachmentsInnerDecryption;
 }
 
-export const MessageInsertDataAllOf1AttachmentsTypeEnum = {
+export const MessageInsertDataAttachmentsInnerTypeEnum = {
     Image: 'image',
     Video: 'video',
     Contact: 'contact',
@@ -2354,486 +2196,473 @@ export const MessageInsertDataAllOf1AttachmentsTypeEnum = {
     Location: 'location'
 } as const;
 
-export type MessageInsertDataAllOf1AttachmentsTypeEnum = typeof MessageInsertDataAllOf1AttachmentsTypeEnum[keyof typeof MessageInsertDataAllOf1AttachmentsTypeEnum];
+export type MessageInsertDataAttachmentsInnerTypeEnum = typeof MessageInsertDataAttachmentsInnerTypeEnum[keyof typeof MessageInsertDataAttachmentsInnerTypeEnum];
 
 /**
  * 
  * @export
- * @interface MessageInsertDataAllOf1Buttons
+ * @interface MessageInsertDataAttachmentsInnerDecryption
  */
-export interface MessageInsertDataAllOf1Buttons {
-    /**
-     * 
-     * @type {string}
-     * @memberof MessageInsertDataAllOf1Buttons
-     */
-    'id': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof MessageInsertDataAllOf1Buttons
-     */
-    'text': string;
-    /**
-     * Make a button with a link
-     * @type {string}
-     * @memberof MessageInsertDataAllOf1Buttons
-     */
-    'url'?: string;
-    /**
-     * Make a button with a phone number
-     * @type {string}
-     * @memberof MessageInsertDataAllOf1Buttons
-     */
-    'phoneNumber'?: string;
-}
-/**
- * 
- * @export
- * @interface MessageInsertDataAllOf1Decryption
- */
-export interface MessageInsertDataAllOf1Decryption {
+export interface MessageInsertDataAttachmentsInnerDecryption {
     /**
      * 
      * @type {{ [key: string]: string; }}
-     * @memberof MessageInsertDataAllOf1Decryption
+     * @memberof MessageInsertDataAttachmentsInnerDecryption
      */
     'keys'?: { [key: string]: string; };
     /**
      * 
      * @type {string}
-     * @memberof MessageInsertDataAllOf1Decryption
+     * @memberof MessageInsertDataAttachmentsInnerDecryption
      */
-    'algorithm': MessageInsertDataAllOf1DecryptionAlgorithmEnum;
+    'algorithm': MessageInsertDataAttachmentsInnerDecryptionAlgorithmEnum;
 }
 
-export const MessageInsertDataAllOf1DecryptionAlgorithmEnum = {
+export const MessageInsertDataAttachmentsInnerDecryptionAlgorithmEnum = {
     Aes256Cbc: 'aes-256-cbc'
 } as const;
 
-export type MessageInsertDataAllOf1DecryptionAlgorithmEnum = typeof MessageInsertDataAllOf1DecryptionAlgorithmEnum[keyof typeof MessageInsertDataAllOf1DecryptionAlgorithmEnum];
+export type MessageInsertDataAttachmentsInnerDecryptionAlgorithmEnum = typeof MessageInsertDataAttachmentsInnerDecryptionAlgorithmEnum[keyof typeof MessageInsertDataAttachmentsInnerDecryptionAlgorithmEnum];
 
 /**
  * 
  * @export
- * @interface MessageInsertDataAllOf1Details
+ * @interface MessageInsertDataAttachmentsInnerLocation
  */
-export interface MessageInsertDataAllOf1Details {
-    /**
-     * 3-letter ISO currency code
-     * @type {string}
-     * @memberof MessageInsertDataAllOf1Details
-     */
-    'currencyCode': string;
-    /**
-     * the actual price * 1000
-     * @type {number}
-     * @memberof MessageInsertDataAllOf1Details
-     */
-    'price1000': number;
-    /**
-     * 
-     * @type {string}
-     * @memberof MessageInsertDataAllOf1Details
-     */
-    'title': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof MessageInsertDataAllOf1Details
-     */
-    'description'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof MessageInsertDataAllOf1Details
-     */
-    'url'?: string;
-    /**
-     * 
-     * @type {MessageInsertDataAllOf1Attachments}
-     * @memberof MessageInsertDataAllOf1Details
-     */
-    'image': MessageInsertDataAllOf1Attachments;
-    /**
-     * The user ID of the business that owns this product
-     * @type {string}
-     * @memberof MessageInsertDataAllOf1Details
-     */
-    'businessOwnerId'?: string;
-}
-/**
- * 
- * @export
- * @interface MessageInsertDataAllOf1LinkPreview
- */
-export interface MessageInsertDataAllOf1LinkPreview {
-    /**
-     * 
-     * @type {string}
-     * @memberof MessageInsertDataAllOf1LinkPreview
-     */
-    'jpegThumbnail'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof MessageInsertDataAllOf1LinkPreview
-     */
-    'title': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof MessageInsertDataAllOf1LinkPreview
-     */
-    'description': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof MessageInsertDataAllOf1LinkPreview
-     */
-    'url': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof MessageInsertDataAllOf1LinkPreview
-     */
-    'matchedText'?: string;
-}
-/**
- * 
- * @export
- * @interface MessageInsertDataAllOf1Location
- */
-export interface MessageInsertDataAllOf1Location {
+export interface MessageInsertDataAttachmentsInnerLocation {
     /**
      * 
      * @type {number}
-     * @memberof MessageInsertDataAllOf1Location
+     * @memberof MessageInsertDataAttachmentsInnerLocation
      */
     'latitude': number;
     /**
      * 
      * @type {number}
-     * @memberof MessageInsertDataAllOf1Location
+     * @memberof MessageInsertDataAttachmentsInnerLocation
      */
     'longitude': number;
 }
 /**
  * 
  * @export
- * @interface MessageInsertDataAllOf1Order
+ * @interface MessageInsertDataButtonsInner
  */
-export interface MessageInsertDataAllOf1Order {
+export interface MessageInsertDataButtonsInner {
     /**
      * 
      * @type {string}
-     * @memberof MessageInsertDataAllOf1Order
+     * @memberof MessageInsertDataButtonsInner
      */
-    'orderId': string;
+    'id': string;
     /**
      * 
      * @type {string}
-     * @memberof MessageInsertDataAllOf1Order
-     */
-    'jpegThumbnail'?: string;
-    /**
-     * 
-     * @type {number}
-     * @memberof MessageInsertDataAllOf1Order
-     */
-    'itemCount'?: number;
-    /**
-     * 
-     * @type {string}
-     * @memberof MessageInsertDataAllOf1Order
-     */
-    'sellerId': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof MessageInsertDataAllOf1Order
-     */
-    'token': string;
-    /**
-     * 
-     * @type {MessageInsertDataAllOf1OrderTotal}
-     * @memberof MessageInsertDataAllOf1Order
-     */
-    'total': MessageInsertDataAllOf1OrderTotal;
-}
-/**
- * 
- * @export
- * @interface MessageInsertDataAllOf1OrderTotal
- */
-export interface MessageInsertDataAllOf1OrderTotal {
-    /**
-     * 
-     * @type {number}
-     * @memberof MessageInsertDataAllOf1OrderTotal
-     */
-    'amount': number;
-    /**
-     * 
-     * @type {string}
-     * @memberof MessageInsertDataAllOf1OrderTotal
-     */
-    'currency': string;
-}
-/**
- * 
- * @export
- * @interface MessageInsertDataAllOf1Poll
- */
-export interface MessageInsertDataAllOf1Poll {
-    /**
-     * 
-     * @type {Array<MessageInsertDataAllOf1PollOptions>}
-     * @memberof MessageInsertDataAllOf1Poll
-     */
-    'options': Array<MessageInsertDataAllOf1PollOptions>;
-    /**
-     * The maximum number of options that can be selected
-     * @type {number}
-     * @memberof MessageInsertDataAllOf1Poll
-     */
-    'maxSelections'?: number;
-}
-/**
- * 
- * @export
- * @interface MessageInsertDataAllOf1PollOptions
- */
-export interface MessageInsertDataAllOf1PollOptions {
-    /**
-     * The text of the option
-     * @type {string}
-     * @memberof MessageInsertDataAllOf1PollOptions
+     * @memberof MessageInsertDataButtonsInner
      */
     'text': string;
     /**
-     * The IDs of the contacts that selected this option
-     * @type {Array<string>}
-     * @memberof MessageInsertDataAllOf1PollOptions
+     * 
+     * @type {string}
+     * @memberof MessageInsertDataButtonsInner
      */
-    'voters'?: Array<string>;
+    'url'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof MessageInsertDataButtonsInner
+     */
+    'phoneNumber'?: string;
 }
 /**
  * 
  * @export
- * @interface MessageInsertDataAllOf1Products
+ * @interface MessageInsertDataError
  */
-export interface MessageInsertDataAllOf1Products {
+export interface MessageInsertDataError {
     /**
      * 
      * @type {string}
-     * @memberof MessageInsertDataAllOf1Products
-     */
-    'id': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof MessageInsertDataAllOf1Products
-     */
-    'accountId'?: string;
-    /**
-     * 
-     * @type {MessageInsertDataAllOf1Details}
-     * @memberof MessageInsertDataAllOf1Products
-     */
-    'details'?: MessageInsertDataAllOf1Details;
-}
-/**
- * 
- * @export
- * @interface MessageInsertDataAllOf1Quoted
- */
-export interface MessageInsertDataAllOf1Quoted {
-    /**
-     * ID for the contact/chat on the platform
-     * @type {string}
-     * @memberof MessageInsertDataAllOf1Quoted
-     */
-    'chatId': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof MessageInsertDataAllOf1Quoted
-     */
-    'id': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof MessageInsertDataAllOf1Quoted
-     */
-    'senderContactId'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof MessageInsertDataAllOf1Quoted
-     */
-    'text'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof MessageInsertDataAllOf1Quoted
-     */
-    'jpegThumbnail'?: string | null;
-}
-/**
- * 
- * @export
- * @interface MessageInsertDataAllOf1Reactions
- */
-export interface MessageInsertDataAllOf1Reactions {
-    /**
-     * Describes a reaction on a message
-     * @type {string}
-     * @memberof MessageInsertDataAllOf1Reactions
-     */
-    'reaction': string;
-    /**
-     * ID for the contact/chat on the platform
-     * @type {string}
-     * @memberof MessageInsertDataAllOf1Reactions
-     */
-    'fromId': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof MessageInsertDataAllOf1Reactions
-     */
-    'id': string;
-    /**
-     * An ISO formatted timestamp
-     * @type {string}
-     * @memberof MessageInsertDataAllOf1Reactions
-     */
-    'timestamp'?: string;
-}
-/**
- * 
- * @export
- * @interface MessageInsertDataAllOfError
- */
-export interface MessageInsertDataAllOfError {
-    /**
-     * 
-     * @type {string}
-     * @memberof MessageInsertDataAllOfError
+     * @memberof MessageInsertDataError
      */
     'message': string;
     /**
      * 
      * @type {number}
-     * @memberof MessageInsertDataAllOfError
+     * @memberof MessageInsertDataError
      */
     'statusCode': number;
     /**
      * 
      * @type {number}
-     * @memberof MessageInsertDataAllOfError
+     * @memberof MessageInsertDataError
      */
     'retries'?: number;
 }
 /**
  * 
  * @export
- * @interface MessageInsertDataAllOfMiscOptions
+ * @interface MessageInsertDataLinkPreview
  */
-export interface MessageInsertDataAllOfMiscOptions {
+export interface MessageInsertDataLinkPreview {
     /**
-     * Original ID from the provider
+     * 
      * @type {string}
-     * @memberof MessageInsertDataAllOfMiscOptions
+     * @memberof MessageInsertDataLinkPreview
+     */
+    'jpegThumbnail'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof MessageInsertDataLinkPreview
+     */
+    'title': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof MessageInsertDataLinkPreview
+     */
+    'description': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof MessageInsertDataLinkPreview
+     */
+    'url': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof MessageInsertDataLinkPreview
+     */
+    'matchedText'?: string;
+}
+/**
+ * 
+ * @export
+ * @interface MessageInsertDataMiscOptions
+ */
+export interface MessageInsertDataMiscOptions {
+    /**
+     * 
+     * @type {string}
+     * @memberof MessageInsertDataMiscOptions
      */
     'originalId'?: string;
     /**
-     * WA Business template
+     * 
      * @type {string}
-     * @memberof MessageInsertDataAllOfMiscOptions
+     * @memberof MessageInsertDataMiscOptions
      */
     'templateId'?: string;
     /**
-     * WA Business template params -- do not need to populate
+     * 
      * @type {{ [key: string]: string; }}
-     * @memberof MessageInsertDataAllOfMiscOptions
+     * @memberof MessageInsertDataMiscOptions
      */
     'templateParams'?: { [key: string]: string; };
     /**
-     * Emulate typing behaviour before send
+     * 
      * @type {boolean}
-     * @memberof MessageInsertDataAllOfMiscOptions
+     * @memberof MessageInsertDataMiscOptions
      */
     'withTyping'?: boolean;
     /**
      * 
      * @type {number}
-     * @memberof MessageInsertDataAllOfMiscOptions
+     * @memberof MessageInsertDataMiscOptions
      */
     'forwardCount'?: number;
     /**
      * 
-     * @type {MessageInsertDataAllOfMiscOptionsForwarded}
-     * @memberof MessageInsertDataAllOfMiscOptions
+     * @type {MessageInsertDataMiscOptionsForwarded}
+     * @memberof MessageInsertDataMiscOptions
      */
-    'forwarded'?: MessageInsertDataAllOfMiscOptionsForwarded;
+    'forwarded'?: MessageInsertDataMiscOptionsForwarded;
     /**
-     * Adds random whitespace to produce a distinct message
+     * 
      * @type {boolean}
-     * @memberof MessageInsertDataAllOfMiscOptions
+     * @memberof MessageInsertDataMiscOptions
      */
     'randomizeMessage'?: boolean;
     /**
-     * the ID of the button clicked
+     * 
      * @type {string}
-     * @memberof MessageInsertDataAllOfMiscOptions
+     * @memberof MessageInsertDataMiscOptions
      */
     'buttonReplyId'?: string;
     /**
-     * the option of the poll that was clicked
+     * 
      * @type {Array<string>}
-     * @memberof MessageInsertDataAllOfMiscOptions
+     * @memberof MessageInsertDataMiscOptions
      */
     'pollReplyOptions'?: Array<string>;
     /**
-     * If true, the message will be cancelled if a reply is received
+     * 
      * @type {boolean}
-     * @memberof MessageInsertDataAllOfMiscOptions
+     * @memberof MessageInsertDataMiscOptions
      */
     'cancelIfReplyReceived'?: boolean;
 }
 /**
- * the message being forwarded
+ * 
  * @export
- * @interface MessageInsertDataAllOfMiscOptionsForwarded
+ * @interface MessageInsertDataMiscOptionsForwarded
  */
-export interface MessageInsertDataAllOfMiscOptionsForwarded {
+export interface MessageInsertDataMiscOptionsForwarded {
     /**
-     * ID for the contact/chat on the platform
+     * 
      * @type {string}
-     * @memberof MessageInsertDataAllOfMiscOptionsForwarded
+     * @memberof MessageInsertDataMiscOptionsForwarded
      */
     'chatId': string;
     /**
      * 
      * @type {string}
-     * @memberof MessageInsertDataAllOfMiscOptionsForwarded
+     * @memberof MessageInsertDataMiscOptionsForwarded
      */
     'id': string;
 }
 /**
- * The user ID of the person that sent it
+ * 
  * @export
- * @interface MessageInsertDataAllOfSender
+ * @interface MessageInsertDataOrder
  */
-export interface MessageInsertDataAllOfSender {
+export interface MessageInsertDataOrder {
     /**
      * 
      * @type {string}
-     * @memberof MessageInsertDataAllOfSender
+     * @memberof MessageInsertDataOrder
      */
-    'userId': string;
+    'orderId': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof MessageInsertDataOrder
+     */
+    'jpegThumbnail'?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof MessageInsertDataOrder
+     */
+    'itemCount'?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof MessageInsertDataOrder
+     */
+    'sellerId': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof MessageInsertDataOrder
+     */
+    'token': string;
+    /**
+     * 
+     * @type {MessageInsertDataOrderTotal}
+     * @memberof MessageInsertDataOrder
+     */
+    'total': MessageInsertDataOrderTotal;
+}
+/**
+ * 
+ * @export
+ * @interface MessageInsertDataOrderTotal
+ */
+export interface MessageInsertDataOrderTotal {
+    /**
+     * 
+     * @type {number}
+     * @memberof MessageInsertDataOrderTotal
+     */
+    'amount': number;
+    /**
+     * 
+     * @type {string}
+     * @memberof MessageInsertDataOrderTotal
+     */
+    'currency': string;
+}
+/**
+ * 
+ * @export
+ * @interface MessageInsertDataPoll
+ */
+export interface MessageInsertDataPoll {
+    /**
+     * 
+     * @type {Array<MessageInsertDataPollOptionsInner>}
+     * @memberof MessageInsertDataPoll
+     */
+    'options': Array<MessageInsertDataPollOptionsInner>;
+    /**
+     * 
+     * @type {number}
+     * @memberof MessageInsertDataPoll
+     */
+    'maxSelections'?: number;
+}
+/**
+ * 
+ * @export
+ * @interface MessageInsertDataPollOptionsInner
+ */
+export interface MessageInsertDataPollOptionsInner {
+    /**
+     * 
+     * @type {string}
+     * @memberof MessageInsertDataPollOptionsInner
+     */
+    'text': string;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof MessageInsertDataPollOptionsInner
+     */
+    'voters'?: Array<string>;
+}
+/**
+ * 
+ * @export
+ * @interface MessageInsertDataProductsInner
+ */
+export interface MessageInsertDataProductsInner {
+    /**
+     * 
+     * @type {string}
+     * @memberof MessageInsertDataProductsInner
+     */
+    'id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof MessageInsertDataProductsInner
+     */
+    'accountId'?: string;
+    /**
+     * 
+     * @type {MessageInsertDataProductsInnerDetails}
+     * @memberof MessageInsertDataProductsInner
+     */
+    'details'?: MessageInsertDataProductsInnerDetails;
+}
+/**
+ * 
+ * @export
+ * @interface MessageInsertDataProductsInnerDetails
+ */
+export interface MessageInsertDataProductsInnerDetails {
+    /**
+     * 
+     * @type {string}
+     * @memberof MessageInsertDataProductsInnerDetails
+     */
+    'currencyCode': string;
+    /**
+     * 
+     * @type {number}
+     * @memberof MessageInsertDataProductsInnerDetails
+     */
+    'price1000': number;
+    /**
+     * 
+     * @type {string}
+     * @memberof MessageInsertDataProductsInnerDetails
+     */
+    'title': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof MessageInsertDataProductsInnerDetails
+     */
+    'description'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof MessageInsertDataProductsInnerDetails
+     */
+    'url'?: string;
+    /**
+     * 
+     * @type {MessageInsertDataAttachmentsInner}
+     * @memberof MessageInsertDataProductsInnerDetails
+     */
+    'image': MessageInsertDataAttachmentsInner;
+    /**
+     * 
+     * @type {string}
+     * @memberof MessageInsertDataProductsInnerDetails
+     */
+    'businessOwnerId'?: string;
+}
+/**
+ * 
+ * @export
+ * @interface MessageInsertDataQuoted
+ */
+export interface MessageInsertDataQuoted {
+    /**
+     * 
+     * @type {string}
+     * @memberof MessageInsertDataQuoted
+     */
+    'chatId': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof MessageInsertDataQuoted
+     */
+    'id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof MessageInsertDataQuoted
+     */
+    'senderContactId'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof MessageInsertDataQuoted
+     */
+    'text'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof MessageInsertDataQuoted
+     */
+    'jpegThumbnail'?: string | null;
+}
+/**
+ * 
+ * @export
+ * @interface MessageInsertDataReactionsInner
+ */
+export interface MessageInsertDataReactionsInner {
+    /**
+     * 
+     * @type {string}
+     * @memberof MessageInsertDataReactionsInner
+     */
+    'reaction': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof MessageInsertDataReactionsInner
+     */
+    'fromId': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof MessageInsertDataReactionsInner
+     */
+    'id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof MessageInsertDataReactionsInner
+     */
+    'timestamp'?: string;
 }
 /**
  * 
@@ -2868,13 +2697,13 @@ export type MessageUpdateEventEnum = typeof MessageUpdateEventEnum[keyof typeof 
  */
 export interface MessageUpdateData {
     /**
-     * ID for the contact/chat on the platform
+     * 
      * @type {string}
      * @memberof MessageUpdateData
      */
     'chatId': string;
     /**
-     * Unique identifier for an account.  The account ID is constructed from the first 21 characters of the team ID, prefixed by \"acc\" and suffixed by 4 random hex characters. This helps uniquely identify each account as well as establish a connection between the account\'s team by embedding the partial team ID in it.
+     * 
      * @type {string}
      * @memberof MessageUpdateData
      */
@@ -2890,25 +2719,19 @@ export interface MessageUpdateData {
      * @type {boolean}
      * @memberof MessageUpdateData
      */
-    'fromMe': boolean;
+    'fromMe'?: boolean;
     /**
-     * The contact that sent the message (applicable for groups)
+     * 
      * @type {string}
      * @memberof MessageUpdateData
      */
     'senderContactId'?: string | null;
     /**
      * 
-     * @type {MessageInsertDataAllOfSender}
-     * @memberof MessageUpdateData
-     */
-    'sender'?: MessageInsertDataAllOfSender | null;
-    /**
-     * An ISO formatted timestamp
      * @type {string}
      * @memberof MessageUpdateData
      */
-    'timestamp': string;
+    'timestamp'?: string;
     /**
      * 
      * @type {string}
@@ -2917,18 +2740,18 @@ export interface MessageUpdateData {
     'status'?: MessageUpdateDataStatusEnum;
     /**
      * 
-     * @type {MessageInsertDataAllOfError}
+     * @type {MessageInsertDataError}
      * @memberof MessageUpdateData
      */
-    'error'?: MessageInsertDataAllOfError | null;
+    'error'?: MessageInsertDataError | null;
     /**
-     * Only for notes, user ID of the person who resolved the note
+     * 
      * @type {string}
      * @memberof MessageUpdateData
      */
     'resolvedBy'?: string | null;
     /**
-     * An ISO formatted timestamp
+     * 
      * @type {string}
      * @memberof MessageUpdateData
      */
@@ -2941,10 +2764,10 @@ export interface MessageUpdateData {
     'hidden'?: boolean;
     /**
      * 
-     * @type {MessageInsertDataAllOfMiscOptions}
+     * @type {MessageInsertDataMiscOptions}
      * @memberof MessageUpdateData
      */
-    'miscOptions'?: MessageInsertDataAllOfMiscOptions;
+    'miscOptions'?: MessageInsertDataMiscOptions;
     /**
      * 
      * @type {Array<string>}
@@ -2956,67 +2779,67 @@ export interface MessageUpdateData {
      * @type {string}
      * @memberof MessageUpdateData
      */
-    'text': string | null;
+    'text'?: string | null;
     /**
      * 
-     * @type {MessageInsertDataAllOf1Quoted}
+     * @type {MessageInsertDataQuoted}
      * @memberof MessageUpdateData
      */
-    'quoted'?: MessageInsertDataAllOf1Quoted | null;
+    'quoted'?: MessageInsertDataQuoted | null;
     /**
-     * True, if the message was deleted
+     * 
      * @type {boolean}
      * @memberof MessageUpdateData
      */
     'deleted'?: boolean;
     /**
      * 
-     * @type {MessageInsertDataAllOf1Action}
+     * @type {MessageInsertDataAction}
      * @memberof MessageUpdateData
      */
-    'action'?: MessageInsertDataAllOf1Action | null;
+    'action'?: MessageInsertDataAction | null;
     /**
      * 
-     * @type {Array<MessageInsertDataAllOf1Attachments>}
+     * @type {Array<MessageInsertDataAttachmentsInner>}
      * @memberof MessageUpdateData
      */
-    'attachments'?: Array<MessageInsertDataAllOf1Attachments>;
+    'attachments'?: Array<MessageInsertDataAttachmentsInner>;
     /**
      * 
-     * @type {Array<MessageInsertDataAllOf1Buttons>}
+     * @type {Array<MessageInsertDataButtonsInner>}
      * @memberof MessageUpdateData
      */
-    'buttons'?: Array<MessageInsertDataAllOf1Buttons> | null;
+    'buttons'?: Array<MessageInsertDataButtonsInner> | null;
     /**
      * 
-     * @type {MessageInsertDataAllOf1Poll}
+     * @type {MessageInsertDataPoll}
      * @memberof MessageUpdateData
      */
-    'poll'?: MessageInsertDataAllOf1Poll;
+    'poll'?: MessageInsertDataPoll;
     /**
      * 
-     * @type {Array<MessageInsertDataAllOf1Products>}
+     * @type {Array<MessageInsertDataProductsInner>}
      * @memberof MessageUpdateData
      */
-    'products'?: Array<MessageInsertDataAllOf1Products> | null;
+    'products'?: Array<MessageInsertDataProductsInner> | null;
     /**
      * 
-     * @type {MessageInsertDataAllOf1Order}
+     * @type {MessageInsertDataOrder}
      * @memberof MessageUpdateData
      */
-    'order'?: MessageInsertDataAllOf1Order | null;
+    'order'?: MessageInsertDataOrder | null;
     /**
      * 
-     * @type {MessageInsertDataAllOf1LinkPreview}
+     * @type {MessageInsertDataLinkPreview}
      * @memberof MessageUpdateData
      */
-    'linkPreview'?: MessageInsertDataAllOf1LinkPreview;
+    'linkPreview'?: MessageInsertDataLinkPreview;
     /**
      * 
-     * @type {Array<MessageInsertDataAllOf1Reactions>}
+     * @type {Array<MessageInsertDataReactionsInner>}
      * @memberof MessageUpdateData
      */
-    'reactions'?: Array<MessageInsertDataAllOf1Reactions> | null;
+    'reactions'?: Array<MessageInsertDataReactionsInner> | null;
 }
 
 export const MessageUpdateDataStatusEnum = {
@@ -3198,7 +3021,7 @@ export interface PlatformproductDeleteData {
      */
     'id': string;
     /**
-     * Unique identifier for an account.  The account ID is constructed from the first 21 characters of the team ID, prefixed by \"acc\" and suffixed by 4 random hex characters. This helps uniquely identify each account as well as establish a connection between the account\'s team by embedding the partial team ID in it.
+     * 
      * @type {string}
      * @memberof PlatformproductDeleteData
      */
@@ -3231,7 +3054,7 @@ export const PlatformproductInsertEventEnum = {
 export type PlatformproductInsertEventEnum = typeof PlatformproductInsertEventEnum[keyof typeof PlatformproductInsertEventEnum];
 
 /**
- * Model for a product on an external platform (eg. WhatsApp)
+ * 
  * @export
  * @interface PlatformproductInsertData
  */
@@ -3285,7 +3108,7 @@ export interface PlatformproductInsertData {
      */
     'id': string;
     /**
-     * Unique identifier for an account.  The account ID is constructed from the first 21 characters of the team ID, prefixed by \"acc\" and suffixed by 4 random hex characters. This helps uniquely identify each account as well as establish a connection between the account\'s team by embedding the partial team ID in it.
+     * 
      * @type {string}
      * @memberof PlatformproductInsertData
      */
@@ -3315,7 +3138,7 @@ export interface PlatformproductInsertData {
      */
     'syncStatus': PlatformproductInsertDataSyncStatusEnum;
     /**
-     * True if sync is underway right now
+     * 
      * @type {boolean}
      * @memberof PlatformproductInsertData
      */
@@ -3327,19 +3150,19 @@ export interface PlatformproductInsertData {
      */
     'error'?: PlatformproductInsertDataError;
     /**
-     * An ISO formatted timestamp
+     * 
      * @type {string}
      * @memberof PlatformproductInsertData
      */
     'createdAt': string;
     /**
-     * An ISO formatted timestamp
+     * 
      * @type {string}
      * @memberof PlatformproductInsertData
      */
     'updatedAt': string;
     /**
-     * Cursor to sort products by
+     * 
      * @type {string}
      * @memberof PlatformproductInsertData
      */
@@ -3373,19 +3196,19 @@ export interface PlatformproductInsertDataError {
      */
     'statusCode': number;
     /**
-     * Specific description of the error
+     * 
      * @type {string}
      * @memberof PlatformproductInsertDataError
      */
     'error': string;
     /**
-     * What the error was
+     * 
      * @type {string}
      * @memberof PlatformproductInsertDataError
      */
     'message': string;
     /**
-     * Some extra information about the error
+     * 
      * @type {object}
      * @memberof PlatformproductInsertDataError
      */
@@ -3418,7 +3241,7 @@ export const PlatformproductUpdateEventEnum = {
 export type PlatformproductUpdateEventEnum = typeof PlatformproductUpdateEventEnum[keyof typeof PlatformproductUpdateEventEnum];
 
 /**
- * Model for a product on an external platform (eg. WhatsApp)
+ * 
  * @export
  * @interface PlatformproductUpdateData
  */
@@ -3472,7 +3295,7 @@ export interface PlatformproductUpdateData {
      */
     'id': string;
     /**
-     * Unique identifier for an account.  The account ID is constructed from the first 21 characters of the team ID, prefixed by \"acc\" and suffixed by 4 random hex characters. This helps uniquely identify each account as well as establish a connection between the account\'s team by embedding the partial team ID in it.
+     * 
      * @type {string}
      * @memberof PlatformproductUpdateData
      */
@@ -3502,7 +3325,7 @@ export interface PlatformproductUpdateData {
      */
     'syncStatus'?: PlatformproductUpdateDataSyncStatusEnum;
     /**
-     * True if sync is underway right now
+     * 
      * @type {boolean}
      * @memberof PlatformproductUpdateData
      */
@@ -3514,19 +3337,19 @@ export interface PlatformproductUpdateData {
      */
     'error'?: PlatformproductInsertDataError;
     /**
-     * An ISO formatted timestamp
+     * 
      * @type {string}
      * @memberof PlatformproductUpdateData
      */
     'createdAt'?: string;
     /**
-     * An ISO formatted timestamp
+     * 
      * @type {string}
      * @memberof PlatformproductUpdateData
      */
     'updatedAt'?: string;
     /**
-     * Cursor to sort products by
+     * 
      * @type {string}
      * @memberof PlatformproductUpdateData
      */
@@ -3617,13 +3440,13 @@ export type PresenceUpdateEventEnum = typeof PresenceUpdateEventEnum[keyof typeo
  */
 export interface PresenceUpdateData {
     /**
-     * Unique identifier for an account.  The account ID is constructed from the first 21 characters of the team ID, prefixed by \"acc\" and suffixed by 4 random hex characters. This helps uniquely identify each account as well as establish a connection between the account\'s team by embedding the partial team ID in it.
+     * 
      * @type {string}
      * @memberof PresenceUpdateData
      */
     'accountId': string;
     /**
-     * ID for the contact/chat on the platform
+     * 
      * @type {string}
      * @memberof PresenceUpdateData
      */
@@ -3641,7 +3464,7 @@ export interface PresenceUpdateData {
      */
     'userId'?: string;
     /**
-     * An ISO formatted timestamp
+     * 
      * @type {string}
      * @memberof PresenceUpdateData
      */
@@ -3696,13 +3519,13 @@ export type PurchasedetailDeleteEventEnum = typeof PurchasedetailDeleteEventEnum
  */
 export interface PurchasedetailDeleteData {
     /**
-     * ID of the purchase
+     * 
      * @type {string}
      * @memberof PurchasedetailDeleteData
      */
     'id': string;
     /**
-     * The team who purchased it
+     * 
      * @type {string}
      * @memberof PurchasedetailDeleteData
      */
@@ -3735,43 +3558,43 @@ export const PurchasedetailInsertEventEnum = {
 export type PurchasedetailInsertEventEnum = typeof PurchasedetailInsertEventEnum[keyof typeof PurchasedetailInsertEventEnum];
 
 /**
- * Info about the purchase if applicable
+ * 
  * @export
  * @interface PurchasedetailInsertData
  */
 export interface PurchasedetailInsertData {
     /**
-     * ID of the purchase
+     * 
      * @type {string}
      * @memberof PurchasedetailInsertData
      */
     'id': string;
     /**
-     * ID of the product purchased
+     * 
      * @type {string}
      * @memberof PurchasedetailInsertData
      */
     'productId': string;
     /**
-     * The team who purchased it
+     * 
      * @type {string}
      * @memberof PurchasedetailInsertData
      */
     'teamId': string;
     /**
-     * ID of the user who purchased it
+     * 
      * @type {string}
      * @memberof PurchasedetailInsertData
      */
     'userId': string;
     /**
-     * An ISO formatted timestamp
+     * 
      * @type {string}
      * @memberof PurchasedetailInsertData
      */
     'date': string;
     /**
-     * An ISO formatted timestamp
+     * 
      * @type {string}
      * @memberof PurchasedetailInsertData
      */
@@ -3824,7 +3647,7 @@ export interface PurchasedetailInsertDataPrice {
      */
     'value': number;
     /**
-     * ISO code of currency
+     * 
      * @type {string}
      * @memberof PurchasedetailInsertDataPrice
      */
@@ -3868,7 +3691,7 @@ export interface PurchasedetailInsertDataStripe {
  */
 export interface PurchasedetailInsertDataTrial {
     /**
-     * An ISO formatted timestamp
+     * 
      * @type {string}
      * @memberof PurchasedetailInsertDataTrial
      */
@@ -3901,43 +3724,43 @@ export const PurchasedetailUpdateEventEnum = {
 export type PurchasedetailUpdateEventEnum = typeof PurchasedetailUpdateEventEnum[keyof typeof PurchasedetailUpdateEventEnum];
 
 /**
- * Info about the purchase if applicable
+ * 
  * @export
  * @interface PurchasedetailUpdateData
  */
 export interface PurchasedetailUpdateData {
     /**
-     * ID of the purchase
+     * 
      * @type {string}
      * @memberof PurchasedetailUpdateData
      */
     'id': string;
     /**
-     * ID of the product purchased
+     * 
      * @type {string}
      * @memberof PurchasedetailUpdateData
      */
     'productId'?: string;
     /**
-     * The team who purchased it
+     * 
      * @type {string}
      * @memberof PurchasedetailUpdateData
      */
     'teamId': string;
     /**
-     * ID of the user who purchased it
+     * 
      * @type {string}
      * @memberof PurchasedetailUpdateData
      */
     'userId'?: string;
     /**
-     * An ISO formatted timestamp
+     * 
      * @type {string}
      * @memberof PurchasedetailUpdateData
      */
     'date'?: string;
     /**
-     * An ISO formatted timestamp
+     * 
      * @type {string}
      * @memberof PurchasedetailUpdateData
      */
@@ -4168,7 +3991,7 @@ export interface TeamInsertData {
      */
     'updatedAt': string;
     /**
-     * Who created the team
+     * 
      * @type {string}
      * @memberof TeamInsertData
      */
@@ -4186,13 +4009,13 @@ export interface TeamInsertData {
      */
     'name': string;
     /**
-     * Is an admin team
+     * 
      * @type {boolean}
      * @memberof TeamInsertData
      */
     'isAdmin'?: boolean;
     /**
-     * The max scopes allowed
+     * 
      * @type {Array<string>}
      * @memberof TeamInsertData
      */
@@ -4204,7 +4027,7 @@ export interface TeamInsertData {
      */
     'metadata': TeamInsertDataMetadata;
     /**
-     * The team will be the admin team of a Chatdaddy partner if this property is not null.
+     * 
      * @type {string}
      * @memberof TeamInsertData
      */
@@ -4216,7 +4039,7 @@ export interface TeamInsertData {
      */
     'onboardingStepsDone'?: Array<TeamInsertDataOnboardingStepsDoneInner>;
     /**
-     * The onboarding score of the team.
+     * 
      * @type {number}
      * @memberof TeamInsertData
      */
@@ -4333,13 +4156,13 @@ export interface TeamInsertDataCreator {
      */
     'fullName': string;
     /**
-     * The last used team ID, your refresh token when logging in is generated for this team
+     * 
      * @type {string}
      * @memberof TeamInsertDataCreator
      */
     'lastUsedTeamId'?: string;
     /**
-     * Will only contain numbers, no + sign, brackets etc.
+     * 
      * @type {number}
      * @memberof TeamInsertDataCreator
      */
@@ -4363,13 +4186,13 @@ export interface TeamInsertDataCreator {
      */
     'notify': UserInsertDataNotify;
     /**
-     * The referral code used for sign-up
+     * 
      * @type {string}
      * @memberof TeamInsertDataCreator
      */
     'referralCode'?: string | null;
     /**
-     * The signature of the user
+     * 
      * @type {string}
      * @memberof TeamInsertDataCreator
      */
@@ -4381,7 +4204,7 @@ export interface TeamInsertDataCreator {
      */
     'webPushSubscriptions'?: Array<UserInsertDataWebPushSubscriptionsInner>;
     /**
-     * The partnership the user has signed in with
+     * 
      * @type {string}
      * @memberof TeamInsertDataCreator
      */
@@ -4448,7 +4271,7 @@ export interface TeamInsertDataOnboardingStepsDoneInner {
      */
     'doneAt': string;
     /**
-     * ID of the user that completed the step
+     * 
      * @type {string}
      * @memberof TeamInsertDataOnboardingStepsDoneInner
      */
@@ -4531,7 +4354,7 @@ export interface TeamUpdateData {
      */
     'updatedAt'?: string;
     /**
-     * Who created the team
+     * 
      * @type {string}
      * @memberof TeamUpdateData
      */
@@ -4549,13 +4372,13 @@ export interface TeamUpdateData {
      */
     'name'?: string;
     /**
-     * Is an admin team
+     * 
      * @type {boolean}
      * @memberof TeamUpdateData
      */
     'isAdmin'?: boolean;
     /**
-     * The max scopes allowed
+     * 
      * @type {Array<string>}
      * @memberof TeamUpdateData
      */
@@ -4567,7 +4390,7 @@ export interface TeamUpdateData {
      */
     'metadata'?: TeamInsertDataMetadata;
     /**
-     * The team will be the admin team of a Chatdaddy partner if this property is not null.
+     * 
      * @type {string}
      * @memberof TeamUpdateData
      */
@@ -4579,7 +4402,7 @@ export interface TeamUpdateData {
      */
     'onboardingStepsDone'?: Array<TeamInsertDataOnboardingStepsDoneInner>;
     /**
-     * The onboarding score of the team.
+     * 
      * @type {number}
      * @memberof TeamUpdateData
      */
@@ -4692,13 +4515,13 @@ export type TeammemberDeleteEventEnum = typeof TeammemberDeleteEventEnum[keyof t
  */
 export interface TeammemberDeleteData {
     /**
-     * Unique identifier for a user
+     * 
      * @type {string}
      * @memberof TeammemberDeleteData
      */
     'userId': string;
     /**
-     * Unique identifier for a team
+     * 
      * @type {string}
      * @memberof TeammemberDeleteData
      */
@@ -4737,13 +4560,13 @@ export type TeammemberInsertEventEnum = typeof TeammemberInsertEventEnum[keyof t
  */
 export interface TeammemberInsertData {
     /**
-     * Unique identifier for a user
+     * 
      * @type {string}
      * @memberof TeammemberInsertData
      */
     'userId': string;
     /**
-     * Unique identifier for a team
+     * 
      * @type {string}
      * @memberof TeammemberInsertData
      */
@@ -4874,13 +4697,13 @@ export type TeammemberUpdateEventEnum = typeof TeammemberUpdateEventEnum[keyof t
  */
 export interface TeammemberUpdateData {
     /**
-     * Unique identifier for a user
+     * 
      * @type {string}
      * @memberof TeammemberUpdateData
      */
     'userId': string;
     /**
-     * Unique identifier for a team
+     * 
      * @type {string}
      * @memberof TeammemberUpdateData
      */
@@ -5117,13 +4940,13 @@ export interface UserInsertData {
      */
     'fullName': string;
     /**
-     * The last used team ID, your refresh token when logging in is generated for this team
+     * 
      * @type {string}
      * @memberof UserInsertData
      */
     'lastUsedTeamId'?: string;
     /**
-     * Will only contain numbers, no + sign, brackets etc.
+     * 
      * @type {number}
      * @memberof UserInsertData
      */
@@ -5147,13 +4970,13 @@ export interface UserInsertData {
      */
     'notify': UserInsertDataNotify;
     /**
-     * The referral code used for sign-up
+     * 
      * @type {string}
      * @memberof UserInsertData
      */
     'referralCode'?: string | null;
     /**
-     * The signature of the user
+     * 
      * @type {string}
      * @memberof UserInsertData
      */
@@ -5165,7 +4988,7 @@ export interface UserInsertData {
      */
     'webPushSubscriptions'?: Array<UserInsertDataWebPushSubscriptionsInner>;
     /**
-     * The partnership the user has signed in with
+     * 
      * @type {string}
      * @memberof UserInsertData
      */
@@ -5295,13 +5118,13 @@ export interface UserUpdateData {
      */
     'fullName'?: string;
     /**
-     * The last used team ID, your refresh token when logging in is generated for this team
+     * 
      * @type {string}
      * @memberof UserUpdateData
      */
     'lastUsedTeamId'?: string;
     /**
-     * Will only contain numbers, no + sign, brackets etc.
+     * 
      * @type {number}
      * @memberof UserUpdateData
      */
@@ -5325,13 +5148,13 @@ export interface UserUpdateData {
      */
     'notify'?: UserInsertDataNotify;
     /**
-     * The referral code used for sign-up
+     * 
      * @type {string}
      * @memberof UserUpdateData
      */
     'referralCode'?: string | null;
     /**
-     * The signature of the user
+     * 
      * @type {string}
      * @memberof UserUpdateData
      */
@@ -5343,7 +5166,7 @@ export interface UserUpdateData {
      */
     'webPushSubscriptions'?: Array<UserInsertDataWebPushSubscriptionsInner>;
     /**
-     * The partnership the user has signed in with
+     * 
      * @type {string}
      * @memberof UserUpdateData
      */
