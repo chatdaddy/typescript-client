@@ -26,11 +26,791 @@ import { COLLECTION_FORMATS, RequestArgs, BaseAPI, RequiredError } from '../base
 /**
  * 
  * @export
+ * @interface AccountDelete
+ */
+export interface AccountDelete {
+    /**
+     * 
+     * @type {string}
+     * @memberof AccountDelete
+     */
+    'event': AccountDeleteEventEnum;
+    /**
+     * 
+     * @type {Array<object>}
+     * @memberof AccountDelete
+     */
+    'data': Array<object>;
+}
+
+export const AccountDeleteEventEnum = {
+    AccountDelete: 'account-delete'
+} as const;
+
+export type AccountDeleteEventEnum = typeof AccountDeleteEventEnum[keyof typeof AccountDeleteEventEnum];
+
+/**
+ * 
+ * @export
+ * @interface AccountInsert
+ */
+export interface AccountInsert {
+    /**
+     * 
+     * @type {string}
+     * @memberof AccountInsert
+     */
+    'event': AccountInsertEventEnum;
+    /**
+     * 
+     * @type {Array<object>}
+     * @memberof AccountInsert
+     */
+    'data': Array<object>;
+}
+
+export const AccountInsertEventEnum = {
+    AccountInsert: 'account-insert'
+} as const;
+
+export type AccountInsertEventEnum = typeof AccountInsertEventEnum[keyof typeof AccountInsertEventEnum];
+
+/**
+ * 
+ * @export
+ * @interface AccountUpdate
+ */
+export interface AccountUpdate {
+    /**
+     * 
+     * @type {string}
+     * @memberof AccountUpdate
+     */
+    'event': AccountUpdateEventEnum;
+    /**
+     * 
+     * @type {Array<object>}
+     * @memberof AccountUpdate
+     */
+    'data': Array<object>;
+}
+
+export const AccountUpdateEventEnum = {
+    AccountUpdate: 'account-update'
+} as const;
+
+export type AccountUpdateEventEnum = typeof AccountUpdateEventEnum[keyof typeof AccountUpdateEventEnum];
+
+/**
+ * 
+ * @export
+ * @interface ActionExecute
+ */
+export interface ActionExecute {
+    /**
+     * 
+     * @type {string}
+     * @memberof ActionExecute
+     */
+    'event': ActionExecuteEventEnum;
+    /**
+     * 
+     * @type {Array<ActionExecuteData>}
+     * @memberof ActionExecute
+     */
+    'data': Array<ActionExecuteData>;
+}
+
+export const ActionExecuteEventEnum = {
+    ActionExecute: 'action-execute'
+} as const;
+
+export type ActionExecuteEventEnum = typeof ActionExecuteEventEnum[keyof typeof ActionExecuteEventEnum];
+
+/**
+ * 
+ * @export
+ * @interface ActionExecuteData
+ */
+export interface ActionExecuteData {
+    /**
+     * An ISO formatted timestamp
+     * @type {string}
+     * @memberof ActionExecuteData
+     */
+    'createdAt': string;
+    /**
+     * An ISO formatted timestamp
+     * @type {string}
+     * @memberof ActionExecuteData
+     */
+    'updatedAt': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ActionExecuteData
+     */
+    'id': string;
+    /**
+     * ID of the bot sequence
+     * @type {string}
+     * @memberof ActionExecuteData
+     */
+    'botId'?: string;
+    /**
+     * Name of the template
+     * @type {string}
+     * @memberof ActionExecuteData
+     */
+    'name': string;
+    /**
+     * 
+     * @type {ActionExecuteDataAllOf1Message}
+     * @memberof ActionExecuteData
+     */
+    'message'?: ActionExecuteDataAllOf1Message | null;
+    /**
+     * set the assignee on the contact
+     * @type {string}
+     * @memberof ActionExecuteData
+     */
+    'assignee'?: string | null;
+    /**
+     * Tags to set on this contact.
+     * @type {Array<ActionExecuteDataAllOf1Tags>}
+     * @memberof ActionExecuteData
+     */
+    'tags'?: Array<ActionExecuteDataAllOf1Tags> | null;
+    /**
+     * Array of UserId
+     * @type {Array<string>}
+     * @memberof ActionExecuteData
+     */
+    'notifyUsers'?: Array<string>;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof ActionExecuteData
+     */
+    'webhooks'?: Array<string>;
+    /**
+     * 
+     * @type {ActionExecuteDataAllOf1MessagePosition}
+     * @memberof ActionExecuteData
+     */
+    'position'?: ActionExecuteDataAllOf1MessagePosition;
+    /**
+     * send in to remove the action
+     * @type {boolean}
+     * @memberof ActionExecuteData
+     */
+    'remove'?: boolean;
+}
+/**
+ * 
+ * @export
+ * @interface ActionExecuteDataAllOf
+ */
+export interface ActionExecuteDataAllOf {
+    /**
+     * An ISO formatted timestamp
+     * @type {string}
+     * @memberof ActionExecuteDataAllOf
+     */
+    'createdAt': string;
+    /**
+     * An ISO formatted timestamp
+     * @type {string}
+     * @memberof ActionExecuteDataAllOf
+     */
+    'updatedAt': string;
+}
+/**
+ * 
+ * @export
+ * @interface ActionExecuteDataAllOf1
+ */
+export interface ActionExecuteDataAllOf1 {
+    /**
+     * 
+     * @type {string}
+     * @memberof ActionExecuteDataAllOf1
+     */
+    'id'?: string;
+    /**
+     * ID of the bot sequence
+     * @type {string}
+     * @memberof ActionExecuteDataAllOf1
+     */
+    'botId'?: string;
+    /**
+     * Name of the template
+     * @type {string}
+     * @memberof ActionExecuteDataAllOf1
+     */
+    'name'?: string;
+    /**
+     * 
+     * @type {ActionExecuteDataAllOf1Message}
+     * @memberof ActionExecuteDataAllOf1
+     */
+    'message'?: ActionExecuteDataAllOf1Message | null;
+    /**
+     * set the assignee on the contact
+     * @type {string}
+     * @memberof ActionExecuteDataAllOf1
+     */
+    'assignee'?: string | null;
+    /**
+     * Tags to set on this contact.
+     * @type {Array<ActionExecuteDataAllOf1Tags>}
+     * @memberof ActionExecuteDataAllOf1
+     */
+    'tags'?: Array<ActionExecuteDataAllOf1Tags> | null;
+    /**
+     * Array of UserId
+     * @type {Array<string>}
+     * @memberof ActionExecuteDataAllOf1
+     */
+    'notifyUsers'?: Array<string>;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof ActionExecuteDataAllOf1
+     */
+    'webhooks'?: Array<string>;
+    /**
+     * 
+     * @type {ActionExecuteDataAllOf1MessagePosition}
+     * @memberof ActionExecuteDataAllOf1
+     */
+    'position'?: ActionExecuteDataAllOf1MessagePosition;
+    /**
+     * send in to remove the action
+     * @type {boolean}
+     * @memberof ActionExecuteDataAllOf1
+     */
+    'remove'?: boolean;
+}
+/**
+ * 
+ * @export
+ * @interface ActionExecuteDataAllOf1Message
+ */
+export interface ActionExecuteDataAllOf1Message {
+    /**
+     * the template message itself
+     * @type {string}
+     * @memberof ActionExecuteDataAllOf1Message
+     */
+    'text': string | null;
+    /**
+     * array of attachments for the template
+     * @type {Array<ActionExecuteDataAllOf1MessageAttachments>}
+     * @memberof ActionExecuteDataAllOf1Message
+     */
+    'attachments'?: Array<ActionExecuteDataAllOf1MessageAttachments>;
+    /**
+     * 
+     * @type {Array<ActionExecuteDataAllOf1MessageButtons>}
+     * @memberof ActionExecuteDataAllOf1Message
+     */
+    'buttons'?: Array<ActionExecuteDataAllOf1MessageButtons>;
+    /**
+     * 
+     * @type {Array<ActionExecuteDataAllOf1MessageDelays>}
+     * @memberof ActionExecuteDataAllOf1Message
+     */
+    'delays'?: Array<ActionExecuteDataAllOf1MessageDelays>;
+    /**
+     * 
+     * @type {string}
+     * @memberof ActionExecuteDataAllOf1Message
+     */
+    'quoted'?: string;
+    /**
+     * 
+     * @type {Array<ActionExecuteDataAllOf1MessageProducts>}
+     * @memberof ActionExecuteDataAllOf1Message
+     */
+    'products'?: Array<ActionExecuteDataAllOf1MessageProducts>;
+}
+/**
+ * 
+ * @export
+ * @interface ActionExecuteDataAllOf1MessageAttachments
+ */
+export interface ActionExecuteDataAllOf1MessageAttachments {
+    /**
+     * 
+     * @type {string}
+     * @memberof ActionExecuteDataAllOf1MessageAttachments
+     */
+    'type': ActionExecuteDataAllOf1MessageAttachmentsTypeEnum;
+    /**
+     * 
+     * @type {string}
+     * @memberof ActionExecuteDataAllOf1MessageAttachments
+     */
+    'mimetype': string;
+    /**
+     * 1. can be publicly hosted url,  2. or can be base64 encoded buffer. But make sure it starts with `data:;base64,` Note: the `contact` type only supports base64 encoded data 
+     * @type {string}
+     * @memberof ActionExecuteDataAllOf1MessageAttachments
+     */
+    'url': string;
+    /**
+     * thumbnail of sticker/video/image
+     * @type {string}
+     * @memberof ActionExecuteDataAllOf1MessageAttachments
+     */
+    'jpegThumbnail'?: string | null;
+    /**
+     * duration of audio/video message
+     * @type {number}
+     * @memberof ActionExecuteDataAllOf1MessageAttachments
+     */
+    'seconds'?: number;
+    /**
+     * name of the doc message
+     * @type {string}
+     * @memberof ActionExecuteDataAllOf1MessageAttachments
+     */
+    'filename'?: string;
+}
+
+export const ActionExecuteDataAllOf1MessageAttachmentsTypeEnum = {
+    Image: 'image',
+    Video: 'video',
+    Contact: 'contact',
+    Sticker: 'sticker',
+    Audio: 'audio',
+    Document: 'document',
+    Location: 'location'
+} as const;
+
+export type ActionExecuteDataAllOf1MessageAttachmentsTypeEnum = typeof ActionExecuteDataAllOf1MessageAttachmentsTypeEnum[keyof typeof ActionExecuteDataAllOf1MessageAttachmentsTypeEnum];
+
+/**
+ * 
+ * @export
+ * @interface ActionExecuteDataAllOf1MessageButtons
+ */
+export interface ActionExecuteDataAllOf1MessageButtons {
+    /**
+     * 
+     * @type {string}
+     * @memberof ActionExecuteDataAllOf1MessageButtons
+     */
+    'text': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ActionExecuteDataAllOf1MessageButtons
+     */
+    'triggerActionId'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof ActionExecuteDataAllOf1MessageButtons
+     */
+    'triggerBotId'?: string | null;
+    /**
+     * Make a button with a link
+     * @type {string}
+     * @memberof ActionExecuteDataAllOf1MessageButtons
+     */
+    'url'?: string;
+    /**
+     * Make a button with a phone number
+     * @type {string}
+     * @memberof ActionExecuteDataAllOf1MessageButtons
+     */
+    'phoneNumber'?: string;
+    /**
+     * 
+     * @type {ActionExecuteDataAllOf1MessagePosition}
+     * @memberof ActionExecuteDataAllOf1MessageButtons
+     */
+    'position'?: ActionExecuteDataAllOf1MessagePosition;
+}
+/**
+ * 
+ * @export
+ * @interface ActionExecuteDataAllOf1MessageDelays
+ */
+export interface ActionExecuteDataAllOf1MessageDelays {
+    /**
+     * Time delays on second
+     * @type {number}
+     * @memberof ActionExecuteDataAllOf1MessageDelays
+     */
+    'timeDelaySec': number;
+    /**
+     * 
+     * @type {string}
+     * @memberof ActionExecuteDataAllOf1MessageDelays
+     */
+    'triggerActionId': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ActionExecuteDataAllOf1MessageDelays
+     */
+    'triggerBotId'?: string | null;
+    /**
+     * Simulate typing
+     * @type {boolean}
+     * @memberof ActionExecuteDataAllOf1MessageDelays
+     */
+    'simulateTyping'?: boolean;
+    /**
+     * If true, the message will be cancelled if a reply is received
+     * @type {boolean}
+     * @memberof ActionExecuteDataAllOf1MessageDelays
+     */
+    'cancelIfReplyReceived'?: boolean;
+    /**
+     * 
+     * @type {ActionExecuteDataAllOf1MessagePosition}
+     * @memberof ActionExecuteDataAllOf1MessageDelays
+     */
+    'position'?: ActionExecuteDataAllOf1MessagePosition;
+}
+/**
+ * position in x-y coordinate space
+ * @export
+ * @interface ActionExecuteDataAllOf1MessagePosition
+ */
+export interface ActionExecuteDataAllOf1MessagePosition {
+    /**
+     * 
+     * @type {number}
+     * @memberof ActionExecuteDataAllOf1MessagePosition
+     */
+    'x': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof ActionExecuteDataAllOf1MessagePosition
+     */
+    'y': number;
+}
+/**
+ * 
+ * @export
+ * @interface ActionExecuteDataAllOf1MessageProducts
+ */
+export interface ActionExecuteDataAllOf1MessageProducts {
+    /**
+     * 
+     * @type {string}
+     * @memberof ActionExecuteDataAllOf1MessageProducts
+     */
+    'id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ActionExecuteDataAllOf1MessageProducts
+     */
+    'accountId': string;
+}
+/**
+ * 
+ * @export
+ * @interface ActionExecuteDataAllOf1Tags
+ */
+export interface ActionExecuteDataAllOf1Tags {
+    /**
+     * 
+     * @type {string}
+     * @memberof ActionExecuteDataAllOf1Tags
+     */
+    'name': string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof ActionExecuteDataAllOf1Tags
+     */
+    'remove'?: boolean;
+}
+/**
+ * 
+ * @export
+ * @interface ChatDelete
+ */
+export interface ChatDelete {
+    /**
+     * 
+     * @type {string}
+     * @memberof ChatDelete
+     */
+    'event': ChatDeleteEventEnum;
+    /**
+     * 
+     * @type {Array<ChatDeleteData>}
+     * @memberof ChatDelete
+     */
+    'data': Array<ChatDeleteData>;
+}
+
+export const ChatDeleteEventEnum = {
+    ChatDelete: 'chat-delete'
+} as const;
+
+export type ChatDeleteEventEnum = typeof ChatDeleteEventEnum[keyof typeof ChatDeleteEventEnum];
+
+/**
+ * 
+ * @export
+ * @interface ChatDeleteData
+ */
+export interface ChatDeleteData {
+    /**
+     * Unique identifier for an account.  The account ID is constructed from the first 21 characters of the team ID, prefixed by \"acc\" and suffixed by 4 random hex characters. This helps uniquely identify each account as well as establish a connection between the account\'s team by embedding the partial team ID in it.
+     * @type {string}
+     * @memberof ChatDeleteData
+     */
+    'accountId': string;
+    /**
+     * ID for the contact/chat on the platform
+     * @type {string}
+     * @memberof ChatDeleteData
+     */
+    'id': string;
+}
+/**
+ * 
+ * @export
+ * @interface ChatInsert
+ */
+export interface ChatInsert {
+    /**
+     * 
+     * @type {string}
+     * @memberof ChatInsert
+     */
+    'event': ChatInsertEventEnum;
+    /**
+     * 
+     * @type {Array<ChatInsertData>}
+     * @memberof ChatInsert
+     */
+    'data': Array<ChatInsertData>;
+}
+
+export const ChatInsertEventEnum = {
+    ChatInsert: 'chat-insert'
+} as const;
+
+export type ChatInsertEventEnum = typeof ChatInsertEventEnum[keyof typeof ChatInsertEventEnum];
+
+/**
+ * 
+ * @export
+ * @interface ChatInsertData
+ */
+export interface ChatInsertData {
+    /**
+     * Unique identifier for an account.  The account ID is constructed from the first 21 characters of the team ID, prefixed by \"acc\" and suffixed by 4 random hex characters. This helps uniquely identify each account as well as establish a connection between the account\'s team by embedding the partial team ID in it.
+     * @type {string}
+     * @memberof ChatInsertData
+     */
+    'accountId': string;
+    /**
+     * ID for the contact/chat on the platform
+     * @type {string}
+     * @memberof ChatInsertData
+     */
+    'id': string;
+}
+/**
+ * 
+ * @export
+ * @interface ChatUpdate
+ */
+export interface ChatUpdate {
+    /**
+     * 
+     * @type {string}
+     * @memberof ChatUpdate
+     */
+    'event': ChatUpdateEventEnum;
+    /**
+     * 
+     * @type {Array<ChatUpdateData>}
+     * @memberof ChatUpdate
+     */
+    'data': Array<ChatUpdateData>;
+}
+
+export const ChatUpdateEventEnum = {
+    ChatUpdate: 'chat-update'
+} as const;
+
+export type ChatUpdateEventEnum = typeof ChatUpdateEventEnum[keyof typeof ChatUpdateEventEnum];
+
+/**
+ * 
+ * @export
+ * @interface ChatUpdateData
+ */
+export interface ChatUpdateData {
+    /**
+     * Unique identifier for an account.  The account ID is constructed from the first 21 characters of the team ID, prefixed by \"acc\" and suffixed by 4 random hex characters. This helps uniquely identify each account as well as establish a connection between the account\'s team by embedding the partial team ID in it.
+     * @type {string}
+     * @memberof ChatUpdateData
+     */
+    'accountId': string;
+    /**
+     * ID for the contact/chat on the platform
+     * @type {string}
+     * @memberof ChatUpdateData
+     */
+    'id': string;
+}
+/**
+ * 
+ * @export
+ * @interface ContactDelete
+ */
+export interface ContactDelete {
+    /**
+     * 
+     * @type {string}
+     * @memberof ContactDelete
+     */
+    'event': ContactDeleteEventEnum;
+    /**
+     * 
+     * @type {Array<ContactDeleteData>}
+     * @memberof ContactDelete
+     */
+    'data': Array<ContactDeleteData>;
+}
+
+export const ContactDeleteEventEnum = {
+    ContactDelete: 'contact-delete'
+} as const;
+
+export type ContactDeleteEventEnum = typeof ContactDeleteEventEnum[keyof typeof ContactDeleteEventEnum];
+
+/**
+ * 
+ * @export
+ * @interface ContactDeleteData
+ */
+export interface ContactDeleteData {
+    /**
+     * ID for the contact/chat on the platform
+     * @type {string}
+     * @memberof ContactDeleteData
+     */
+    'id': string;
+    /**
+     * Unique identifier for an account.  The account ID is constructed from the first 21 characters of the team ID, prefixed by \"acc\" and suffixed by 4 random hex characters. This helps uniquely identify each account as well as establish a connection between the account\'s team by embedding the partial team ID in it.
+     * @type {string}
+     * @memberof ContactDeleteData
+     */
+    'accountId': string;
+}
+/**
+ * 
+ * @export
+ * @interface ContactInsert
+ */
+export interface ContactInsert {
+    /**
+     * 
+     * @type {string}
+     * @memberof ContactInsert
+     */
+    'event': ContactInsertEventEnum;
+    /**
+     * 
+     * @type {Array<ContactInsertData>}
+     * @memberof ContactInsert
+     */
+    'data': Array<ContactInsertData>;
+}
+
+export const ContactInsertEventEnum = {
+    ContactInsert: 'contact-insert'
+} as const;
+
+export type ContactInsertEventEnum = typeof ContactInsertEventEnum[keyof typeof ContactInsertEventEnum];
+
+/**
+ * 
+ * @export
+ * @interface ContactInsertData
+ */
+export interface ContactInsertData {
+    /**
+     * ID for the contact/chat on the platform
+     * @type {string}
+     * @memberof ContactInsertData
+     */
+    'id': string;
+    /**
+     * Unique identifier for an account.  The account ID is constructed from the first 21 characters of the team ID, prefixed by \"acc\" and suffixed by 4 random hex characters. This helps uniquely identify each account as well as establish a connection between the account\'s team by embedding the partial team ID in it.
+     * @type {string}
+     * @memberof ContactInsertData
+     */
+    'accountId': string;
+}
+/**
+ * 
+ * @export
+ * @interface ContactUpdate
+ */
+export interface ContactUpdate {
+    /**
+     * 
+     * @type {string}
+     * @memberof ContactUpdate
+     */
+    'event': ContactUpdateEventEnum;
+    /**
+     * 
+     * @type {Array<ContactUpdateData>}
+     * @memberof ContactUpdate
+     */
+    'data': Array<ContactUpdateData>;
+}
+
+export const ContactUpdateEventEnum = {
+    ContactUpdate: 'contact-update'
+} as const;
+
+export type ContactUpdateEventEnum = typeof ContactUpdateEventEnum[keyof typeof ContactUpdateEventEnum];
+
+/**
+ * 
+ * @export
+ * @interface ContactUpdateData
+ */
+export interface ContactUpdateData {
+    /**
+     * ID for the contact/chat on the platform
+     * @type {string}
+     * @memberof ContactUpdateData
+     */
+    'id': string;
+    /**
+     * Unique identifier for an account.  The account ID is constructed from the first 21 characters of the team ID, prefixed by \"acc\" and suffixed by 4 random hex characters. This helps uniquely identify each account as well as establish a connection between the account\'s team by embedding the partial team ID in it.
+     * @type {string}
+     * @memberof ContactUpdateData
+     */
+    'accountId': string;
+}
+/**
+ * 
+ * @export
  * @enum {string}
  */
 
 export const EventName = {
-    GroupParticipantsUpdate: 'group-participants-update',
     GroupUpdate: 'group-update',
     PresenceUpdate: 'presence-update',
     OrderInsert: 'order-insert',
@@ -68,6 +848,1752 @@ export type EventName = typeof EventName[keyof typeof EventName];
 
 
 /**
+ * @type EventWebhookData
+ * The request body you\'ll receive in a webhook
+ * @export
+ */
+export type EventWebhookData = AccountDelete | AccountInsert | AccountUpdate | ActionExecute | ChatDelete | ChatInsert | ChatUpdate | ContactDelete | ContactInsert | ContactUpdate | GroupUpdate | MessageDelete | MessageInsert | MessageUpdate | OrderInsert | PlatformproductDelete | PlatformproductInsert | PlatformproductUpdate | PresenceUpdate | PurchasedetailDelete | PurchasedetailInsert | PurchasedetailUpdate | TeamDelete | TeamInsert | TeamUpdate | TeammemberDelete | TeammemberInsert | TeammemberUpdate | UserDelete | UserInsert | UserUpdate;
+
+/**
+ * 
+ * @export
+ * @interface GroupUpdate
+ */
+export interface GroupUpdate {
+    /**
+     * 
+     * @type {string}
+     * @memberof GroupUpdate
+     */
+    'event': GroupUpdateEventEnum;
+    /**
+     * 
+     * @type {Array<GroupUpdateData>}
+     * @memberof GroupUpdate
+     */
+    'data': Array<GroupUpdateData>;
+}
+
+export const GroupUpdateEventEnum = {
+    GroupUpdate: 'group-update'
+} as const;
+
+export type GroupUpdateEventEnum = typeof GroupUpdateEventEnum[keyof typeof GroupUpdateEventEnum];
+
+/**
+ * 
+ * @export
+ * @interface GroupUpdateData
+ */
+export interface GroupUpdateData {
+    /**
+     * 
+     * @type {string}
+     * @memberof GroupUpdateData
+     */
+    'id': string;
+    /**
+     * Unique identifier for an account.  The account ID is constructed from the first 21 characters of the team ID, prefixed by \"acc\" and suffixed by 4 random hex characters. This helps uniquely identify each account as well as establish a connection between the account\'s team by embedding the partial team ID in it.
+     * @type {string}
+     * @memberof GroupUpdateData
+     */
+    'accountId': string;
+    /**
+     * An ISO formatted timestamp
+     * @type {string}
+     * @memberof GroupUpdateData
+     */
+    'createdAt'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof GroupUpdateData
+     */
+    'ownerId'?: string | null;
+    /**
+     * 
+     * @type {GroupUpdateDataOwner}
+     * @memberof GroupUpdateData
+     */
+    'owner'?: GroupUpdateDataOwner;
+    /**
+     * 
+     * @type {string}
+     * @memberof GroupUpdateData
+     */
+    'description'?: string | null;
+    /**
+     * is set when the group only allows admins to change group settings
+     * @type {boolean}
+     * @memberof GroupUpdateData
+     */
+    'restrict'?: boolean;
+    /**
+     * is set when the group only allows admins to write messages
+     * @type {boolean}
+     * @memberof GroupUpdateData
+     */
+    'announce'?: boolean;
+    /**
+     * 
+     * @type {Array<GroupUpdateDataParticipantsInner>}
+     * @memberof GroupUpdateData
+     */
+    'participants'?: Array<GroupUpdateDataParticipantsInner>;
+}
+/**
+ * 
+ * @export
+ * @interface GroupUpdateDataOwner
+ */
+export interface GroupUpdateDataOwner {
+    /**
+     * ID for the contact/chat on the platform
+     * @type {string}
+     * @memberof GroupUpdateDataOwner
+     */
+    'id': string;
+    /**
+     * Unique identifier for an account.  The account ID is constructed from the first 21 characters of the team ID, prefixed by \"acc\" and suffixed by 4 random hex characters. This helps uniquely identify each account as well as establish a connection between the account\'s team by embedding the partial team ID in it.
+     * @type {string}
+     * @memberof GroupUpdateDataOwner
+     */
+    'accountId': string;
+}
+/**
+ * 
+ * @export
+ * @interface GroupUpdateDataParticipantsInner
+ */
+export interface GroupUpdateDataParticipantsInner {
+    /**
+     * 
+     * @type {GroupUpdateDataOwner}
+     * @memberof GroupUpdateDataParticipantsInner
+     */
+    'contact': GroupUpdateDataOwner;
+    /**
+     * 
+     * @type {string}
+     * @memberof GroupUpdateDataParticipantsInner
+     */
+    'admin'?: GroupUpdateDataParticipantsInnerAdminEnum;
+}
+
+export const GroupUpdateDataParticipantsInnerAdminEnum = {
+    Admin: 'admin',
+    SuperAdmin: 'super-admin'
+} as const;
+
+export type GroupUpdateDataParticipantsInnerAdminEnum = typeof GroupUpdateDataParticipantsInnerAdminEnum[keyof typeof GroupUpdateDataParticipantsInnerAdminEnum];
+
+/**
+ * 
+ * @export
+ * @interface MessageDelete
+ */
+export interface MessageDelete {
+    /**
+     * 
+     * @type {string}
+     * @memberof MessageDelete
+     */
+    'event': MessageDeleteEventEnum;
+    /**
+     * 
+     * @type {Array<MessageDeleteData>}
+     * @memberof MessageDelete
+     */
+    'data': Array<MessageDeleteData>;
+}
+
+export const MessageDeleteEventEnum = {
+    MessageDelete: 'message-delete'
+} as const;
+
+export type MessageDeleteEventEnum = typeof MessageDeleteEventEnum[keyof typeof MessageDeleteEventEnum];
+
+/**
+ * 
+ * @export
+ * @interface MessageDeleteData
+ */
+export interface MessageDeleteData {
+    /**
+     * ID for the contact/chat on the platform
+     * @type {string}
+     * @memberof MessageDeleteData
+     */
+    'chatId': string;
+    /**
+     * Unique identifier for an account.  The account ID is constructed from the first 21 characters of the team ID, prefixed by \"acc\" and suffixed by 4 random hex characters. This helps uniquely identify each account as well as establish a connection between the account\'s team by embedding the partial team ID in it.
+     * @type {string}
+     * @memberof MessageDeleteData
+     */
+    'accountId': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof MessageDeleteData
+     */
+    'id': string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof MessageDeleteData
+     */
+    'fromMe': boolean;
+    /**
+     * The contact that sent the message (applicable for groups)
+     * @type {string}
+     * @memberof MessageDeleteData
+     */
+    'senderContactId'?: string | null;
+    /**
+     * 
+     * @type {MessageInsertDataAllOfSender}
+     * @memberof MessageDeleteData
+     */
+    'sender'?: MessageInsertDataAllOfSender | null;
+    /**
+     * An ISO formatted timestamp
+     * @type {string}
+     * @memberof MessageDeleteData
+     */
+    'timestamp': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof MessageDeleteData
+     */
+    'status'?: MessageDeleteDataStatusEnum;
+    /**
+     * 
+     * @type {MessageInsertDataAllOfError}
+     * @memberof MessageDeleteData
+     */
+    'error'?: MessageInsertDataAllOfError | null;
+    /**
+     * Only for notes, user ID of the person who resolved the note
+     * @type {string}
+     * @memberof MessageDeleteData
+     */
+    'resolvedBy'?: string | null;
+    /**
+     * An ISO formatted timestamp
+     * @type {string}
+     * @memberof MessageDeleteData
+     */
+    'resolvedAt'?: string | null;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof MessageDeleteData
+     */
+    'hidden'?: boolean;
+    /**
+     * 
+     * @type {MessageInsertDataAllOfMiscOptions}
+     * @memberof MessageDeleteData
+     */
+    'miscOptions'?: MessageInsertDataAllOfMiscOptions;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof MessageDeleteData
+     */
+    'mentions'?: Array<string>;
+    /**
+     * 
+     * @type {string}
+     * @memberof MessageDeleteData
+     */
+    'text': string | null;
+    /**
+     * 
+     * @type {MessageInsertDataAllOf1Quoted}
+     * @memberof MessageDeleteData
+     */
+    'quoted'?: MessageInsertDataAllOf1Quoted | null;
+    /**
+     * True, if the message was deleted
+     * @type {boolean}
+     * @memberof MessageDeleteData
+     */
+    'deleted'?: boolean;
+    /**
+     * 
+     * @type {MessageInsertDataAllOf1Action}
+     * @memberof MessageDeleteData
+     */
+    'action'?: MessageInsertDataAllOf1Action | null;
+    /**
+     * 
+     * @type {Array<MessageInsertDataAllOf1Attachments>}
+     * @memberof MessageDeleteData
+     */
+    'attachments'?: Array<MessageInsertDataAllOf1Attachments>;
+    /**
+     * 
+     * @type {Array<MessageInsertDataAllOf1Buttons>}
+     * @memberof MessageDeleteData
+     */
+    'buttons'?: Array<MessageInsertDataAllOf1Buttons> | null;
+    /**
+     * 
+     * @type {MessageInsertDataAllOf1Poll}
+     * @memberof MessageDeleteData
+     */
+    'poll'?: MessageInsertDataAllOf1Poll;
+    /**
+     * 
+     * @type {Array<MessageInsertDataAllOf1Products>}
+     * @memberof MessageDeleteData
+     */
+    'products'?: Array<MessageInsertDataAllOf1Products> | null;
+    /**
+     * 
+     * @type {MessageInsertDataAllOf1Order}
+     * @memberof MessageDeleteData
+     */
+    'order'?: MessageInsertDataAllOf1Order | null;
+    /**
+     * 
+     * @type {MessageInsertDataAllOf1LinkPreview}
+     * @memberof MessageDeleteData
+     */
+    'linkPreview'?: MessageInsertDataAllOf1LinkPreview;
+    /**
+     * 
+     * @type {Array<MessageInsertDataAllOf1Reactions>}
+     * @memberof MessageDeleteData
+     */
+    'reactions'?: Array<MessageInsertDataAllOf1Reactions> | null;
+}
+
+export const MessageDeleteDataStatusEnum = {
+    Error: 'error',
+    Pending: 'pending',
+    Note: 'note',
+    Sent: 'sent',
+    Delivered: 'delivered',
+    Read: 'read',
+    Cancelled: 'cancelled'
+} as const;
+
+export type MessageDeleteDataStatusEnum = typeof MessageDeleteDataStatusEnum[keyof typeof MessageDeleteDataStatusEnum];
+
+/**
+ * 
+ * @export
+ * @interface MessageInsert
+ */
+export interface MessageInsert {
+    /**
+     * 
+     * @type {string}
+     * @memberof MessageInsert
+     */
+    'event': MessageInsertEventEnum;
+    /**
+     * 
+     * @type {Array<MessageInsertData>}
+     * @memberof MessageInsert
+     */
+    'data': Array<MessageInsertData>;
+}
+
+export const MessageInsertEventEnum = {
+    MessageInsert: 'message-insert'
+} as const;
+
+export type MessageInsertEventEnum = typeof MessageInsertEventEnum[keyof typeof MessageInsertEventEnum];
+
+/**
+ * 
+ * @export
+ * @interface MessageInsertData
+ */
+export interface MessageInsertData {
+    /**
+     * ID for the contact/chat on the platform
+     * @type {string}
+     * @memberof MessageInsertData
+     */
+    'chatId': string;
+    /**
+     * Unique identifier for an account.  The account ID is constructed from the first 21 characters of the team ID, prefixed by \"acc\" and suffixed by 4 random hex characters. This helps uniquely identify each account as well as establish a connection between the account\'s team by embedding the partial team ID in it.
+     * @type {string}
+     * @memberof MessageInsertData
+     */
+    'accountId': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof MessageInsertData
+     */
+    'id': string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof MessageInsertData
+     */
+    'fromMe': boolean;
+    /**
+     * The contact that sent the message (applicable for groups)
+     * @type {string}
+     * @memberof MessageInsertData
+     */
+    'senderContactId'?: string | null;
+    /**
+     * 
+     * @type {MessageInsertDataAllOfSender}
+     * @memberof MessageInsertData
+     */
+    'sender'?: MessageInsertDataAllOfSender | null;
+    /**
+     * An ISO formatted timestamp
+     * @type {string}
+     * @memberof MessageInsertData
+     */
+    'timestamp': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof MessageInsertData
+     */
+    'status'?: MessageInsertDataStatusEnum;
+    /**
+     * 
+     * @type {MessageInsertDataAllOfError}
+     * @memberof MessageInsertData
+     */
+    'error'?: MessageInsertDataAllOfError | null;
+    /**
+     * Only for notes, user ID of the person who resolved the note
+     * @type {string}
+     * @memberof MessageInsertData
+     */
+    'resolvedBy'?: string | null;
+    /**
+     * An ISO formatted timestamp
+     * @type {string}
+     * @memberof MessageInsertData
+     */
+    'resolvedAt'?: string | null;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof MessageInsertData
+     */
+    'hidden'?: boolean;
+    /**
+     * 
+     * @type {MessageInsertDataAllOfMiscOptions}
+     * @memberof MessageInsertData
+     */
+    'miscOptions'?: MessageInsertDataAllOfMiscOptions;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof MessageInsertData
+     */
+    'mentions'?: Array<string>;
+    /**
+     * 
+     * @type {string}
+     * @memberof MessageInsertData
+     */
+    'text': string | null;
+    /**
+     * 
+     * @type {MessageInsertDataAllOf1Quoted}
+     * @memberof MessageInsertData
+     */
+    'quoted'?: MessageInsertDataAllOf1Quoted | null;
+    /**
+     * True, if the message was deleted
+     * @type {boolean}
+     * @memberof MessageInsertData
+     */
+    'deleted'?: boolean;
+    /**
+     * 
+     * @type {MessageInsertDataAllOf1Action}
+     * @memberof MessageInsertData
+     */
+    'action'?: MessageInsertDataAllOf1Action | null;
+    /**
+     * 
+     * @type {Array<MessageInsertDataAllOf1Attachments>}
+     * @memberof MessageInsertData
+     */
+    'attachments'?: Array<MessageInsertDataAllOf1Attachments>;
+    /**
+     * 
+     * @type {Array<MessageInsertDataAllOf1Buttons>}
+     * @memberof MessageInsertData
+     */
+    'buttons'?: Array<MessageInsertDataAllOf1Buttons> | null;
+    /**
+     * 
+     * @type {MessageInsertDataAllOf1Poll}
+     * @memberof MessageInsertData
+     */
+    'poll'?: MessageInsertDataAllOf1Poll;
+    /**
+     * 
+     * @type {Array<MessageInsertDataAllOf1Products>}
+     * @memberof MessageInsertData
+     */
+    'products'?: Array<MessageInsertDataAllOf1Products> | null;
+    /**
+     * 
+     * @type {MessageInsertDataAllOf1Order}
+     * @memberof MessageInsertData
+     */
+    'order'?: MessageInsertDataAllOf1Order | null;
+    /**
+     * 
+     * @type {MessageInsertDataAllOf1LinkPreview}
+     * @memberof MessageInsertData
+     */
+    'linkPreview'?: MessageInsertDataAllOf1LinkPreview;
+    /**
+     * 
+     * @type {Array<MessageInsertDataAllOf1Reactions>}
+     * @memberof MessageInsertData
+     */
+    'reactions'?: Array<MessageInsertDataAllOf1Reactions> | null;
+}
+
+export const MessageInsertDataStatusEnum = {
+    Error: 'error',
+    Pending: 'pending',
+    Note: 'note',
+    Sent: 'sent',
+    Delivered: 'delivered',
+    Read: 'read',
+    Cancelled: 'cancelled'
+} as const;
+
+export type MessageInsertDataStatusEnum = typeof MessageInsertDataStatusEnum[keyof typeof MessageInsertDataStatusEnum];
+
+/**
+ * 
+ * @export
+ * @interface MessageInsertDataAllOf
+ */
+export interface MessageInsertDataAllOf {
+    /**
+     * ID for the contact/chat on the platform
+     * @type {string}
+     * @memberof MessageInsertDataAllOf
+     */
+    'chatId': string;
+    /**
+     * Unique identifier for an account.  The account ID is constructed from the first 21 characters of the team ID, prefixed by \"acc\" and suffixed by 4 random hex characters. This helps uniquely identify each account as well as establish a connection between the account\'s team by embedding the partial team ID in it.
+     * @type {string}
+     * @memberof MessageInsertDataAllOf
+     */
+    'accountId': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof MessageInsertDataAllOf
+     */
+    'id': string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof MessageInsertDataAllOf
+     */
+    'fromMe': boolean;
+    /**
+     * The contact that sent the message (applicable for groups)
+     * @type {string}
+     * @memberof MessageInsertDataAllOf
+     */
+    'senderContactId'?: string | null;
+    /**
+     * 
+     * @type {MessageInsertDataAllOfSender}
+     * @memberof MessageInsertDataAllOf
+     */
+    'sender'?: MessageInsertDataAllOfSender | null;
+    /**
+     * An ISO formatted timestamp
+     * @type {string}
+     * @memberof MessageInsertDataAllOf
+     */
+    'timestamp': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof MessageInsertDataAllOf
+     */
+    'status'?: MessageInsertDataAllOfStatusEnum;
+    /**
+     * 
+     * @type {MessageInsertDataAllOfError}
+     * @memberof MessageInsertDataAllOf
+     */
+    'error'?: MessageInsertDataAllOfError | null;
+    /**
+     * Only for notes, user ID of the person who resolved the note
+     * @type {string}
+     * @memberof MessageInsertDataAllOf
+     */
+    'resolvedBy'?: string | null;
+    /**
+     * An ISO formatted timestamp
+     * @type {string}
+     * @memberof MessageInsertDataAllOf
+     */
+    'resolvedAt'?: string | null;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof MessageInsertDataAllOf
+     */
+    'hidden'?: boolean;
+    /**
+     * 
+     * @type {MessageInsertDataAllOfMiscOptions}
+     * @memberof MessageInsertDataAllOf
+     */
+    'miscOptions'?: MessageInsertDataAllOfMiscOptions;
+}
+
+export const MessageInsertDataAllOfStatusEnum = {
+    Error: 'error',
+    Pending: 'pending',
+    Note: 'note',
+    Sent: 'sent',
+    Delivered: 'delivered',
+    Read: 'read',
+    Cancelled: 'cancelled'
+} as const;
+
+export type MessageInsertDataAllOfStatusEnum = typeof MessageInsertDataAllOfStatusEnum[keyof typeof MessageInsertDataAllOfStatusEnum];
+
+/**
+ * 
+ * @export
+ * @interface MessageInsertDataAllOf1
+ */
+export interface MessageInsertDataAllOf1 {
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof MessageInsertDataAllOf1
+     */
+    'mentions'?: Array<string>;
+    /**
+     * 
+     * @type {string}
+     * @memberof MessageInsertDataAllOf1
+     */
+    'text': string | null;
+    /**
+     * 
+     * @type {MessageInsertDataAllOf1Quoted}
+     * @memberof MessageInsertDataAllOf1
+     */
+    'quoted'?: MessageInsertDataAllOf1Quoted | null;
+    /**
+     * True, if the message was deleted
+     * @type {boolean}
+     * @memberof MessageInsertDataAllOf1
+     */
+    'deleted'?: boolean;
+    /**
+     * 
+     * @type {MessageInsertDataAllOf1Action}
+     * @memberof MessageInsertDataAllOf1
+     */
+    'action'?: MessageInsertDataAllOf1Action | null;
+    /**
+     * 
+     * @type {Array<MessageInsertDataAllOf1Attachments>}
+     * @memberof MessageInsertDataAllOf1
+     */
+    'attachments'?: Array<MessageInsertDataAllOf1Attachments>;
+    /**
+     * 
+     * @type {Array<MessageInsertDataAllOf1Buttons>}
+     * @memberof MessageInsertDataAllOf1
+     */
+    'buttons'?: Array<MessageInsertDataAllOf1Buttons> | null;
+    /**
+     * 
+     * @type {MessageInsertDataAllOf1Poll}
+     * @memberof MessageInsertDataAllOf1
+     */
+    'poll'?: MessageInsertDataAllOf1Poll;
+    /**
+     * 
+     * @type {Array<MessageInsertDataAllOf1Products>}
+     * @memberof MessageInsertDataAllOf1
+     */
+    'products'?: Array<MessageInsertDataAllOf1Products> | null;
+    /**
+     * 
+     * @type {MessageInsertDataAllOf1Order}
+     * @memberof MessageInsertDataAllOf1
+     */
+    'order'?: MessageInsertDataAllOf1Order | null;
+    /**
+     * 
+     * @type {MessageInsertDataAllOf1LinkPreview}
+     * @memberof MessageInsertDataAllOf1
+     */
+    'linkPreview'?: MessageInsertDataAllOf1LinkPreview;
+    /**
+     * 
+     * @type {Array<MessageInsertDataAllOf1Reactions>}
+     * @memberof MessageInsertDataAllOf1
+     */
+    'reactions'?: Array<MessageInsertDataAllOf1Reactions> | null;
+}
+/**
+ * 
+ * @export
+ * @interface MessageInsertDataAllOf1Action
+ */
+export interface MessageInsertDataAllOf1Action {
+    /**
+     * 
+     * @type {string}
+     * @memberof MessageInsertDataAllOf1Action
+     */
+    'type': string;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof MessageInsertDataAllOf1Action
+     */
+    'parameters'?: Array<string>;
+}
+/**
+ * 
+ * @export
+ * @interface MessageInsertDataAllOf1Attachments
+ */
+export interface MessageInsertDataAllOf1Attachments {
+    /**
+     * 
+     * @type {string}
+     * @memberof MessageInsertDataAllOf1Attachments
+     */
+    'type': MessageInsertDataAllOf1AttachmentsTypeEnum;
+    /**
+     * 
+     * @type {string}
+     * @memberof MessageInsertDataAllOf1Attachments
+     */
+    'mimetype': string;
+    /**
+     * 1. can be publicly hosted url,  2. or can be base64 encoded buffer. But make sure it starts with `data:;base64,` -- can be at most 1KB in size Note: the `contact` type only supports base64 encoded data. Must be a serialised vcard 
+     * @type {string}
+     * @memberof MessageInsertDataAllOf1Attachments
+     */
+    'url': string;
+    /**
+     * 
+     * @type {MessageInsertDataAllOf1Location}
+     * @memberof MessageInsertDataAllOf1Attachments
+     */
+    'location'?: MessageInsertDataAllOf1Location;
+    /**
+     * thumbnail of sticker/video/image
+     * @type {string}
+     * @memberof MessageInsertDataAllOf1Attachments
+     */
+    'jpegThumbnail'?: string | null;
+    /**
+     * duration of audio/video message
+     * @type {number}
+     * @memberof MessageInsertDataAllOf1Attachments
+     */
+    'seconds'?: number;
+    /**
+     * Show as PTT (voice note) -- only for audio messages
+     * @type {boolean}
+     * @memberof MessageInsertDataAllOf1Attachments
+     */
+    'pttAudio'?: boolean;
+    /**
+     * name of the doc message
+     * @type {string}
+     * @memberof MessageInsertDataAllOf1Attachments
+     */
+    'filename'?: string;
+    /**
+     * is this a gif -- only for video messages
+     * @type {boolean}
+     * @memberof MessageInsertDataAllOf1Attachments
+     */
+    'isGif'?: boolean;
+    /**
+     * 
+     * @type {MessageInsertDataAllOf1Decryption}
+     * @memberof MessageInsertDataAllOf1Attachments
+     */
+    'decryption'?: MessageInsertDataAllOf1Decryption;
+}
+
+export const MessageInsertDataAllOf1AttachmentsTypeEnum = {
+    Image: 'image',
+    Video: 'video',
+    Contact: 'contact',
+    Sticker: 'sticker',
+    Audio: 'audio',
+    Document: 'document',
+    Location: 'location'
+} as const;
+
+export type MessageInsertDataAllOf1AttachmentsTypeEnum = typeof MessageInsertDataAllOf1AttachmentsTypeEnum[keyof typeof MessageInsertDataAllOf1AttachmentsTypeEnum];
+
+/**
+ * 
+ * @export
+ * @interface MessageInsertDataAllOf1Buttons
+ */
+export interface MessageInsertDataAllOf1Buttons {
+    /**
+     * 
+     * @type {string}
+     * @memberof MessageInsertDataAllOf1Buttons
+     */
+    'id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof MessageInsertDataAllOf1Buttons
+     */
+    'text': string;
+    /**
+     * Make a button with a link
+     * @type {string}
+     * @memberof MessageInsertDataAllOf1Buttons
+     */
+    'url'?: string;
+    /**
+     * Make a button with a phone number
+     * @type {string}
+     * @memberof MessageInsertDataAllOf1Buttons
+     */
+    'phoneNumber'?: string;
+}
+/**
+ * 
+ * @export
+ * @interface MessageInsertDataAllOf1Decryption
+ */
+export interface MessageInsertDataAllOf1Decryption {
+    /**
+     * 
+     * @type {{ [key: string]: string; }}
+     * @memberof MessageInsertDataAllOf1Decryption
+     */
+    'keys'?: { [key: string]: string; };
+    /**
+     * 
+     * @type {string}
+     * @memberof MessageInsertDataAllOf1Decryption
+     */
+    'algorithm': MessageInsertDataAllOf1DecryptionAlgorithmEnum;
+}
+
+export const MessageInsertDataAllOf1DecryptionAlgorithmEnum = {
+    Aes256Cbc: 'aes-256-cbc'
+} as const;
+
+export type MessageInsertDataAllOf1DecryptionAlgorithmEnum = typeof MessageInsertDataAllOf1DecryptionAlgorithmEnum[keyof typeof MessageInsertDataAllOf1DecryptionAlgorithmEnum];
+
+/**
+ * 
+ * @export
+ * @interface MessageInsertDataAllOf1Details
+ */
+export interface MessageInsertDataAllOf1Details {
+    /**
+     * 3-letter ISO currency code
+     * @type {string}
+     * @memberof MessageInsertDataAllOf1Details
+     */
+    'currencyCode': string;
+    /**
+     * the actual price * 1000
+     * @type {number}
+     * @memberof MessageInsertDataAllOf1Details
+     */
+    'price1000': number;
+    /**
+     * 
+     * @type {string}
+     * @memberof MessageInsertDataAllOf1Details
+     */
+    'title': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof MessageInsertDataAllOf1Details
+     */
+    'description'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof MessageInsertDataAllOf1Details
+     */
+    'url'?: string;
+    /**
+     * 
+     * @type {MessageInsertDataAllOf1Attachments}
+     * @memberof MessageInsertDataAllOf1Details
+     */
+    'image': MessageInsertDataAllOf1Attachments;
+    /**
+     * The user ID of the business that owns this product
+     * @type {string}
+     * @memberof MessageInsertDataAllOf1Details
+     */
+    'businessOwnerId'?: string;
+}
+/**
+ * 
+ * @export
+ * @interface MessageInsertDataAllOf1LinkPreview
+ */
+export interface MessageInsertDataAllOf1LinkPreview {
+    /**
+     * 
+     * @type {string}
+     * @memberof MessageInsertDataAllOf1LinkPreview
+     */
+    'jpegThumbnail'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof MessageInsertDataAllOf1LinkPreview
+     */
+    'title': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof MessageInsertDataAllOf1LinkPreview
+     */
+    'description': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof MessageInsertDataAllOf1LinkPreview
+     */
+    'url': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof MessageInsertDataAllOf1LinkPreview
+     */
+    'matchedText'?: string;
+}
+/**
+ * 
+ * @export
+ * @interface MessageInsertDataAllOf1Location
+ */
+export interface MessageInsertDataAllOf1Location {
+    /**
+     * 
+     * @type {number}
+     * @memberof MessageInsertDataAllOf1Location
+     */
+    'latitude': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof MessageInsertDataAllOf1Location
+     */
+    'longitude': number;
+}
+/**
+ * 
+ * @export
+ * @interface MessageInsertDataAllOf1Order
+ */
+export interface MessageInsertDataAllOf1Order {
+    /**
+     * 
+     * @type {string}
+     * @memberof MessageInsertDataAllOf1Order
+     */
+    'orderId': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof MessageInsertDataAllOf1Order
+     */
+    'jpegThumbnail'?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof MessageInsertDataAllOf1Order
+     */
+    'itemCount'?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof MessageInsertDataAllOf1Order
+     */
+    'sellerId': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof MessageInsertDataAllOf1Order
+     */
+    'token': string;
+    /**
+     * 
+     * @type {MessageInsertDataAllOf1OrderTotal}
+     * @memberof MessageInsertDataAllOf1Order
+     */
+    'total': MessageInsertDataAllOf1OrderTotal;
+}
+/**
+ * 
+ * @export
+ * @interface MessageInsertDataAllOf1OrderTotal
+ */
+export interface MessageInsertDataAllOf1OrderTotal {
+    /**
+     * 
+     * @type {number}
+     * @memberof MessageInsertDataAllOf1OrderTotal
+     */
+    'amount': number;
+    /**
+     * 
+     * @type {string}
+     * @memberof MessageInsertDataAllOf1OrderTotal
+     */
+    'currency': string;
+}
+/**
+ * 
+ * @export
+ * @interface MessageInsertDataAllOf1Poll
+ */
+export interface MessageInsertDataAllOf1Poll {
+    /**
+     * 
+     * @type {Array<MessageInsertDataAllOf1PollOptions>}
+     * @memberof MessageInsertDataAllOf1Poll
+     */
+    'options': Array<MessageInsertDataAllOf1PollOptions>;
+    /**
+     * The maximum number of options that can be selected
+     * @type {number}
+     * @memberof MessageInsertDataAllOf1Poll
+     */
+    'maxSelections'?: number;
+}
+/**
+ * 
+ * @export
+ * @interface MessageInsertDataAllOf1PollOptions
+ */
+export interface MessageInsertDataAllOf1PollOptions {
+    /**
+     * The text of the option
+     * @type {string}
+     * @memberof MessageInsertDataAllOf1PollOptions
+     */
+    'text': string;
+    /**
+     * The IDs of the contacts that selected this option
+     * @type {Array<string>}
+     * @memberof MessageInsertDataAllOf1PollOptions
+     */
+    'voters'?: Array<string>;
+}
+/**
+ * 
+ * @export
+ * @interface MessageInsertDataAllOf1Products
+ */
+export interface MessageInsertDataAllOf1Products {
+    /**
+     * 
+     * @type {string}
+     * @memberof MessageInsertDataAllOf1Products
+     */
+    'id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof MessageInsertDataAllOf1Products
+     */
+    'accountId'?: string;
+    /**
+     * 
+     * @type {MessageInsertDataAllOf1Details}
+     * @memberof MessageInsertDataAllOf1Products
+     */
+    'details'?: MessageInsertDataAllOf1Details;
+}
+/**
+ * 
+ * @export
+ * @interface MessageInsertDataAllOf1Quoted
+ */
+export interface MessageInsertDataAllOf1Quoted {
+    /**
+     * ID for the contact/chat on the platform
+     * @type {string}
+     * @memberof MessageInsertDataAllOf1Quoted
+     */
+    'chatId': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof MessageInsertDataAllOf1Quoted
+     */
+    'id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof MessageInsertDataAllOf1Quoted
+     */
+    'senderContactId'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof MessageInsertDataAllOf1Quoted
+     */
+    'text'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof MessageInsertDataAllOf1Quoted
+     */
+    'jpegThumbnail'?: string | null;
+}
+/**
+ * 
+ * @export
+ * @interface MessageInsertDataAllOf1Reactions
+ */
+export interface MessageInsertDataAllOf1Reactions {
+    /**
+     * Describes a reaction on a message
+     * @type {string}
+     * @memberof MessageInsertDataAllOf1Reactions
+     */
+    'reaction': string;
+    /**
+     * ID for the contact/chat on the platform
+     * @type {string}
+     * @memberof MessageInsertDataAllOf1Reactions
+     */
+    'fromId': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof MessageInsertDataAllOf1Reactions
+     */
+    'id': string;
+    /**
+     * An ISO formatted timestamp
+     * @type {string}
+     * @memberof MessageInsertDataAllOf1Reactions
+     */
+    'timestamp'?: string;
+}
+/**
+ * 
+ * @export
+ * @interface MessageInsertDataAllOfError
+ */
+export interface MessageInsertDataAllOfError {
+    /**
+     * 
+     * @type {string}
+     * @memberof MessageInsertDataAllOfError
+     */
+    'message': string;
+    /**
+     * 
+     * @type {number}
+     * @memberof MessageInsertDataAllOfError
+     */
+    'statusCode': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof MessageInsertDataAllOfError
+     */
+    'retries'?: number;
+}
+/**
+ * 
+ * @export
+ * @interface MessageInsertDataAllOfMiscOptions
+ */
+export interface MessageInsertDataAllOfMiscOptions {
+    /**
+     * Original ID from the provider
+     * @type {string}
+     * @memberof MessageInsertDataAllOfMiscOptions
+     */
+    'originalId'?: string;
+    /**
+     * WA Business template
+     * @type {string}
+     * @memberof MessageInsertDataAllOfMiscOptions
+     */
+    'templateId'?: string;
+    /**
+     * WA Business template params -- do not need to populate
+     * @type {{ [key: string]: string; }}
+     * @memberof MessageInsertDataAllOfMiscOptions
+     */
+    'templateParams'?: { [key: string]: string; };
+    /**
+     * Emulate typing behaviour before send
+     * @type {boolean}
+     * @memberof MessageInsertDataAllOfMiscOptions
+     */
+    'withTyping'?: boolean;
+    /**
+     * 
+     * @type {number}
+     * @memberof MessageInsertDataAllOfMiscOptions
+     */
+    'forwardCount'?: number;
+    /**
+     * 
+     * @type {MessageInsertDataAllOfMiscOptionsForwarded}
+     * @memberof MessageInsertDataAllOfMiscOptions
+     */
+    'forwarded'?: MessageInsertDataAllOfMiscOptionsForwarded;
+    /**
+     * Adds random whitespace to produce a distinct message
+     * @type {boolean}
+     * @memberof MessageInsertDataAllOfMiscOptions
+     */
+    'randomizeMessage'?: boolean;
+    /**
+     * the ID of the button clicked
+     * @type {string}
+     * @memberof MessageInsertDataAllOfMiscOptions
+     */
+    'buttonReplyId'?: string;
+    /**
+     * the option of the poll that was clicked
+     * @type {Array<string>}
+     * @memberof MessageInsertDataAllOfMiscOptions
+     */
+    'pollReplyOptions'?: Array<string>;
+    /**
+     * If true, the message will be cancelled if a reply is received
+     * @type {boolean}
+     * @memberof MessageInsertDataAllOfMiscOptions
+     */
+    'cancelIfReplyReceived'?: boolean;
+}
+/**
+ * the message being forwarded
+ * @export
+ * @interface MessageInsertDataAllOfMiscOptionsForwarded
+ */
+export interface MessageInsertDataAllOfMiscOptionsForwarded {
+    /**
+     * ID for the contact/chat on the platform
+     * @type {string}
+     * @memberof MessageInsertDataAllOfMiscOptionsForwarded
+     */
+    'chatId': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof MessageInsertDataAllOfMiscOptionsForwarded
+     */
+    'id': string;
+}
+/**
+ * The user ID of the person that sent it
+ * @export
+ * @interface MessageInsertDataAllOfSender
+ */
+export interface MessageInsertDataAllOfSender {
+    /**
+     * 
+     * @type {string}
+     * @memberof MessageInsertDataAllOfSender
+     */
+    'userId': string;
+}
+/**
+ * 
+ * @export
+ * @interface MessageUpdate
+ */
+export interface MessageUpdate {
+    /**
+     * 
+     * @type {string}
+     * @memberof MessageUpdate
+     */
+    'event': MessageUpdateEventEnum;
+    /**
+     * 
+     * @type {Array<MessageUpdateData>}
+     * @memberof MessageUpdate
+     */
+    'data': Array<MessageUpdateData>;
+}
+
+export const MessageUpdateEventEnum = {
+    MessageUpdate: 'message-update'
+} as const;
+
+export type MessageUpdateEventEnum = typeof MessageUpdateEventEnum[keyof typeof MessageUpdateEventEnum];
+
+/**
+ * 
+ * @export
+ * @interface MessageUpdateData
+ */
+export interface MessageUpdateData {
+    /**
+     * ID for the contact/chat on the platform
+     * @type {string}
+     * @memberof MessageUpdateData
+     */
+    'chatId': string;
+    /**
+     * Unique identifier for an account.  The account ID is constructed from the first 21 characters of the team ID, prefixed by \"acc\" and suffixed by 4 random hex characters. This helps uniquely identify each account as well as establish a connection between the account\'s team by embedding the partial team ID in it.
+     * @type {string}
+     * @memberof MessageUpdateData
+     */
+    'accountId': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof MessageUpdateData
+     */
+    'id': string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof MessageUpdateData
+     */
+    'fromMe': boolean;
+    /**
+     * The contact that sent the message (applicable for groups)
+     * @type {string}
+     * @memberof MessageUpdateData
+     */
+    'senderContactId'?: string | null;
+    /**
+     * 
+     * @type {MessageInsertDataAllOfSender}
+     * @memberof MessageUpdateData
+     */
+    'sender'?: MessageInsertDataAllOfSender | null;
+    /**
+     * An ISO formatted timestamp
+     * @type {string}
+     * @memberof MessageUpdateData
+     */
+    'timestamp': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof MessageUpdateData
+     */
+    'status'?: MessageUpdateDataStatusEnum;
+    /**
+     * 
+     * @type {MessageInsertDataAllOfError}
+     * @memberof MessageUpdateData
+     */
+    'error'?: MessageInsertDataAllOfError | null;
+    /**
+     * Only for notes, user ID of the person who resolved the note
+     * @type {string}
+     * @memberof MessageUpdateData
+     */
+    'resolvedBy'?: string | null;
+    /**
+     * An ISO formatted timestamp
+     * @type {string}
+     * @memberof MessageUpdateData
+     */
+    'resolvedAt'?: string | null;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof MessageUpdateData
+     */
+    'hidden'?: boolean;
+    /**
+     * 
+     * @type {MessageInsertDataAllOfMiscOptions}
+     * @memberof MessageUpdateData
+     */
+    'miscOptions'?: MessageInsertDataAllOfMiscOptions;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof MessageUpdateData
+     */
+    'mentions'?: Array<string>;
+    /**
+     * 
+     * @type {string}
+     * @memberof MessageUpdateData
+     */
+    'text': string | null;
+    /**
+     * 
+     * @type {MessageInsertDataAllOf1Quoted}
+     * @memberof MessageUpdateData
+     */
+    'quoted'?: MessageInsertDataAllOf1Quoted | null;
+    /**
+     * True, if the message was deleted
+     * @type {boolean}
+     * @memberof MessageUpdateData
+     */
+    'deleted'?: boolean;
+    /**
+     * 
+     * @type {MessageInsertDataAllOf1Action}
+     * @memberof MessageUpdateData
+     */
+    'action'?: MessageInsertDataAllOf1Action | null;
+    /**
+     * 
+     * @type {Array<MessageInsertDataAllOf1Attachments>}
+     * @memberof MessageUpdateData
+     */
+    'attachments'?: Array<MessageInsertDataAllOf1Attachments>;
+    /**
+     * 
+     * @type {Array<MessageInsertDataAllOf1Buttons>}
+     * @memberof MessageUpdateData
+     */
+    'buttons'?: Array<MessageInsertDataAllOf1Buttons> | null;
+    /**
+     * 
+     * @type {MessageInsertDataAllOf1Poll}
+     * @memberof MessageUpdateData
+     */
+    'poll'?: MessageInsertDataAllOf1Poll;
+    /**
+     * 
+     * @type {Array<MessageInsertDataAllOf1Products>}
+     * @memberof MessageUpdateData
+     */
+    'products'?: Array<MessageInsertDataAllOf1Products> | null;
+    /**
+     * 
+     * @type {MessageInsertDataAllOf1Order}
+     * @memberof MessageUpdateData
+     */
+    'order'?: MessageInsertDataAllOf1Order | null;
+    /**
+     * 
+     * @type {MessageInsertDataAllOf1LinkPreview}
+     * @memberof MessageUpdateData
+     */
+    'linkPreview'?: MessageInsertDataAllOf1LinkPreview;
+    /**
+     * 
+     * @type {Array<MessageInsertDataAllOf1Reactions>}
+     * @memberof MessageUpdateData
+     */
+    'reactions'?: Array<MessageInsertDataAllOf1Reactions> | null;
+}
+
+export const MessageUpdateDataStatusEnum = {
+    Error: 'error',
+    Pending: 'pending',
+    Note: 'note',
+    Sent: 'sent',
+    Delivered: 'delivered',
+    Read: 'read',
+    Cancelled: 'cancelled'
+} as const;
+
+export type MessageUpdateDataStatusEnum = typeof MessageUpdateDataStatusEnum[keyof typeof MessageUpdateDataStatusEnum];
+
+/**
+ * 
+ * @export
+ * @interface OrderInsert
+ */
+export interface OrderInsert {
+    /**
+     * 
+     * @type {string}
+     * @memberof OrderInsert
+     */
+    'event': OrderInsertEventEnum;
+    /**
+     * 
+     * @type {Array<OrderInsertData>}
+     * @memberof OrderInsert
+     */
+    'data': Array<OrderInsertData>;
+}
+
+export const OrderInsertEventEnum = {
+    OrderInsert: 'order-insert'
+} as const;
+
+export type OrderInsertEventEnum = typeof OrderInsertEventEnum[keyof typeof OrderInsertEventEnum];
+
+/**
+ * 
+ * @export
+ * @interface OrderInsertData
+ */
+export interface OrderInsertData {
+    /**
+     * 
+     * @type {number}
+     * @memberof OrderInsertData
+     */
+    'id': number;
+    /**
+     * 
+     * @type {string}
+     * @memberof OrderInsertData
+     */
+    'orderId': string;
+    /**
+     * 
+     * @type {OrderInsertDataPhoneNumber}
+     * @memberof OrderInsertData
+     */
+    'phoneNumber': OrderInsertDataPhoneNumber;
+    /**
+     * 
+     * @type {OrderInsertDataWaResponse}
+     * @memberof OrderInsertData
+     */
+    'waResponse': OrderInsertDataWaResponse;
+    /**
+     * 
+     * @type {number}
+     * @memberof OrderInsertData
+     */
+    'triggerId': number | null;
+    /**
+     * 
+     * @type {number}
+     * @memberof OrderInsertData
+     */
+    'trackingId'?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof OrderInsertData
+     */
+    'status': OrderInsertDataStatusEnum;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof OrderInsertData
+     */
+    'isTest': boolean;
+    /**
+     * An ISO formatted timestamp
+     * @type {string}
+     * @memberof OrderInsertData
+     */
+    'datetime': string;
+    /**
+     * 
+     * @type {{ [key: string]: any; }}
+     * @memberof OrderInsertData
+     */
+    'params': { [key: string]: any; };
+}
+
+export const OrderInsertDataStatusEnum = {
+    Sent: 'sent',
+    Pending: 'pending',
+    Cancelled: 'cancelled'
+} as const;
+
+export type OrderInsertDataStatusEnum = typeof OrderInsertDataStatusEnum[keyof typeof OrderInsertDataStatusEnum];
+
+/**
+ * @type OrderInsertDataPhoneNumber
+ * Phone number to be sent to
+ * @export
+ */
+export type OrderInsertDataPhoneNumber = number | object | string;
+
+/**
+ * the response received from the WA service
+ * @export
+ * @interface OrderInsertDataWaResponse
+ */
+export interface OrderInsertDataWaResponse {
+    /**
+     * the response code
+     * @type {number}
+     * @memberof OrderInsertDataWaResponse
+     */
+    'code'?: number;
+    /**
+     * the body received
+     * @type {object}
+     * @memberof OrderInsertDataWaResponse
+     */
+    'body'?: object;
+}
+/**
+ * 
+ * @export
+ * @interface PlatformproductDelete
+ */
+export interface PlatformproductDelete {
+    /**
+     * 
+     * @type {string}
+     * @memberof PlatformproductDelete
+     */
+    'event': PlatformproductDeleteEventEnum;
+    /**
+     * 
+     * @type {Array<PlatformproductDeleteData>}
+     * @memberof PlatformproductDelete
+     */
+    'data': Array<PlatformproductDeleteData>;
+}
+
+export const PlatformproductDeleteEventEnum = {
+    PlatformproductDelete: 'platformproduct-delete'
+} as const;
+
+export type PlatformproductDeleteEventEnum = typeof PlatformproductDeleteEventEnum[keyof typeof PlatformproductDeleteEventEnum];
+
+/**
+ * Model for a product on an external platform (eg. WhatsApp)
+ * @export
+ * @interface PlatformproductDeleteData
+ */
+export interface PlatformproductDeleteData {
+    /**
+     * 
+     * @type {string}
+     * @memberof PlatformproductDeleteData
+     */
+    'id': string;
+    /**
+     * Unique identifier for an account.  The account ID is constructed from the first 21 characters of the team ID, prefixed by \"acc\" and suffixed by 4 random hex characters. This helps uniquely identify each account as well as establish a connection between the account\'s team by embedding the partial team ID in it.
+     * @type {string}
+     * @memberof PlatformproductDeleteData
+     */
+    'accountId': string;
+}
+/**
+ * 
+ * @export
+ * @interface PlatformproductInsert
+ */
+export interface PlatformproductInsert {
+    /**
+     * 
+     * @type {string}
+     * @memberof PlatformproductInsert
+     */
+    'event': PlatformproductInsertEventEnum;
+    /**
+     * 
+     * @type {Array<PlatformproductInsertData>}
+     * @memberof PlatformproductInsert
+     */
+    'data': Array<PlatformproductInsertData>;
+}
+
+export const PlatformproductInsertEventEnum = {
+    PlatformproductInsert: 'platformproduct-insert'
+} as const;
+
+export type PlatformproductInsertEventEnum = typeof PlatformproductInsertEventEnum[keyof typeof PlatformproductInsertEventEnum];
+
+/**
+ * Model for a product on an external platform (eg. WhatsApp)
+ * @export
+ * @interface PlatformproductInsertData
+ */
+export interface PlatformproductInsertData {
+    /**
+     * 
+     * @type {string}
+     * @memberof PlatformproductInsertData
+     */
+    'id': string;
+    /**
+     * Unique identifier for an account.  The account ID is constructed from the first 21 characters of the team ID, prefixed by \"acc\" and suffixed by 4 random hex characters. This helps uniquely identify each account as well as establish a connection between the account\'s team by embedding the partial team ID in it.
+     * @type {string}
+     * @memberof PlatformproductInsertData
+     */
+    'accountId': string;
+}
+/**
+ * 
+ * @export
+ * @interface PlatformproductUpdate
+ */
+export interface PlatformproductUpdate {
+    /**
+     * 
+     * @type {string}
+     * @memberof PlatformproductUpdate
+     */
+    'event': PlatformproductUpdateEventEnum;
+    /**
+     * 
+     * @type {Array<PlatformproductUpdateData>}
+     * @memberof PlatformproductUpdate
+     */
+    'data': Array<PlatformproductUpdateData>;
+}
+
+export const PlatformproductUpdateEventEnum = {
+    PlatformproductUpdate: 'platformproduct-update'
+} as const;
+
+export type PlatformproductUpdateEventEnum = typeof PlatformproductUpdateEventEnum[keyof typeof PlatformproductUpdateEventEnum];
+
+/**
+ * Model for a product on an external platform (eg. WhatsApp)
+ * @export
+ * @interface PlatformproductUpdateData
+ */
+export interface PlatformproductUpdateData {
+    /**
+     * 
+     * @type {string}
+     * @memberof PlatformproductUpdateData
+     */
+    'id': string;
+    /**
+     * Unique identifier for an account.  The account ID is constructed from the first 21 characters of the team ID, prefixed by \"acc\" and suffixed by 4 random hex characters. This helps uniquely identify each account as well as establish a connection between the account\'s team by embedding the partial team ID in it.
+     * @type {string}
+     * @memberof PlatformproductUpdateData
+     */
+    'accountId': string;
+}
+/**
  * 
  * @export
  * @interface PostSubscription
@@ -103,6 +2629,220 @@ export interface PostSubscription {
      * @memberof PostSubscription
      */
     'url': string;
+}
+/**
+ * 
+ * @export
+ * @interface PresenceUpdate
+ */
+export interface PresenceUpdate {
+    /**
+     * 
+     * @type {string}
+     * @memberof PresenceUpdate
+     */
+    'event': PresenceUpdateEventEnum;
+    /**
+     * 
+     * @type {Array<PresenceUpdateData>}
+     * @memberof PresenceUpdate
+     */
+    'data': Array<PresenceUpdateData>;
+}
+
+export const PresenceUpdateEventEnum = {
+    PresenceUpdate: 'presence-update'
+} as const;
+
+export type PresenceUpdateEventEnum = typeof PresenceUpdateEventEnum[keyof typeof PresenceUpdateEventEnum];
+
+/**
+ * 
+ * @export
+ * @interface PresenceUpdateData
+ */
+export interface PresenceUpdateData {
+    /**
+     * Unique identifier for an account.  The account ID is constructed from the first 21 characters of the team ID, prefixed by \"acc\" and suffixed by 4 random hex characters. This helps uniquely identify each account as well as establish a connection between the account\'s team by embedding the partial team ID in it.
+     * @type {string}
+     * @memberof PresenceUpdateData
+     */
+    'accountId': string;
+    /**
+     * ID for the contact/chat on the platform
+     * @type {string}
+     * @memberof PresenceUpdateData
+     */
+    'id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof PresenceUpdateData
+     */
+    'contactId'?: string;
+    /**
+     * if a known team member has this presence
+     * @type {string}
+     * @memberof PresenceUpdateData
+     */
+    'userId'?: string;
+    /**
+     * An ISO formatted timestamp
+     * @type {string}
+     * @memberof PresenceUpdateData
+     */
+    'updatedAt'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof PresenceUpdateData
+     */
+    'type'?: PresenceUpdateDataTypeEnum;
+}
+
+export const PresenceUpdateDataTypeEnum = {
+    Available: 'available',
+    Unavailable: 'unavailable',
+    Typing: 'typing',
+    StoppedTyping: 'stoppedTyping'
+} as const;
+
+export type PresenceUpdateDataTypeEnum = typeof PresenceUpdateDataTypeEnum[keyof typeof PresenceUpdateDataTypeEnum];
+
+/**
+ * 
+ * @export
+ * @interface PurchasedetailDelete
+ */
+export interface PurchasedetailDelete {
+    /**
+     * 
+     * @type {string}
+     * @memberof PurchasedetailDelete
+     */
+    'event': PurchasedetailDeleteEventEnum;
+    /**
+     * 
+     * @type {Array<PurchasedetailDeleteData>}
+     * @memberof PurchasedetailDelete
+     */
+    'data': Array<PurchasedetailDeleteData>;
+}
+
+export const PurchasedetailDeleteEventEnum = {
+    PurchasedetailDelete: 'purchasedetail-delete'
+} as const;
+
+export type PurchasedetailDeleteEventEnum = typeof PurchasedetailDeleteEventEnum[keyof typeof PurchasedetailDeleteEventEnum];
+
+/**
+ * Info about the purchase if applicable
+ * @export
+ * @interface PurchasedetailDeleteData
+ */
+export interface PurchasedetailDeleteData {
+    /**
+     * ID of the purchase
+     * @type {string}
+     * @memberof PurchasedetailDeleteData
+     */
+    'id': string;
+    /**
+     * The team who purchased it
+     * @type {string}
+     * @memberof PurchasedetailDeleteData
+     */
+    'teamId': string;
+}
+/**
+ * 
+ * @export
+ * @interface PurchasedetailInsert
+ */
+export interface PurchasedetailInsert {
+    /**
+     * 
+     * @type {string}
+     * @memberof PurchasedetailInsert
+     */
+    'event': PurchasedetailInsertEventEnum;
+    /**
+     * 
+     * @type {Array<PurchasedetailInsertData>}
+     * @memberof PurchasedetailInsert
+     */
+    'data': Array<PurchasedetailInsertData>;
+}
+
+export const PurchasedetailInsertEventEnum = {
+    PurchasedetailInsert: 'purchasedetail-insert'
+} as const;
+
+export type PurchasedetailInsertEventEnum = typeof PurchasedetailInsertEventEnum[keyof typeof PurchasedetailInsertEventEnum];
+
+/**
+ * Info about the purchase if applicable
+ * @export
+ * @interface PurchasedetailInsertData
+ */
+export interface PurchasedetailInsertData {
+    /**
+     * ID of the purchase
+     * @type {string}
+     * @memberof PurchasedetailInsertData
+     */
+    'id': string;
+    /**
+     * The team who purchased it
+     * @type {string}
+     * @memberof PurchasedetailInsertData
+     */
+    'teamId': string;
+}
+/**
+ * 
+ * @export
+ * @interface PurchasedetailUpdate
+ */
+export interface PurchasedetailUpdate {
+    /**
+     * 
+     * @type {string}
+     * @memberof PurchasedetailUpdate
+     */
+    'event': PurchasedetailUpdateEventEnum;
+    /**
+     * 
+     * @type {Array<PurchasedetailUpdateData>}
+     * @memberof PurchasedetailUpdate
+     */
+    'data': Array<PurchasedetailUpdateData>;
+}
+
+export const PurchasedetailUpdateEventEnum = {
+    PurchasedetailUpdate: 'purchasedetail-update'
+} as const;
+
+export type PurchasedetailUpdateEventEnum = typeof PurchasedetailUpdateEventEnum[keyof typeof PurchasedetailUpdateEventEnum];
+
+/**
+ * Info about the purchase if applicable
+ * @export
+ * @interface PurchasedetailUpdateData
+ */
+export interface PurchasedetailUpdateData {
+    /**
+     * ID of the purchase
+     * @type {string}
+     * @memberof PurchasedetailUpdateData
+     */
+    'id': string;
+    /**
+     * The team who purchased it
+     * @type {string}
+     * @memberof PurchasedetailUpdateData
+     */
+    'teamId': string;
 }
 /**
  * 
@@ -208,6 +2948,258 @@ export interface SubscriptionsGet200Response {
 /**
  * 
  * @export
+ * @interface TeamDelete
+ */
+export interface TeamDelete {
+    /**
+     * 
+     * @type {string}
+     * @memberof TeamDelete
+     */
+    'event': TeamDeleteEventEnum;
+    /**
+     * 
+     * @type {Array<TeamDeleteData>}
+     * @memberof TeamDelete
+     */
+    'data': Array<TeamDeleteData>;
+}
+
+export const TeamDeleteEventEnum = {
+    TeamDelete: 'team-delete'
+} as const;
+
+export type TeamDeleteEventEnum = typeof TeamDeleteEventEnum[keyof typeof TeamDeleteEventEnum];
+
+/**
+ * 
+ * @export
+ * @interface TeamDeleteData
+ */
+export interface TeamDeleteData {
+    /**
+     * 
+     * @type {string}
+     * @memberof TeamDeleteData
+     */
+    'id': string;
+}
+/**
+ * 
+ * @export
+ * @interface TeamInsert
+ */
+export interface TeamInsert {
+    /**
+     * 
+     * @type {string}
+     * @memberof TeamInsert
+     */
+    'event': TeamInsertEventEnum;
+    /**
+     * 
+     * @type {Array<TeamInsertData>}
+     * @memberof TeamInsert
+     */
+    'data': Array<TeamInsertData>;
+}
+
+export const TeamInsertEventEnum = {
+    TeamInsert: 'team-insert'
+} as const;
+
+export type TeamInsertEventEnum = typeof TeamInsertEventEnum[keyof typeof TeamInsertEventEnum];
+
+/**
+ * 
+ * @export
+ * @interface TeamInsertData
+ */
+export interface TeamInsertData {
+    /**
+     * 
+     * @type {string}
+     * @memberof TeamInsertData
+     */
+    'id': string;
+}
+/**
+ * 
+ * @export
+ * @interface TeamUpdate
+ */
+export interface TeamUpdate {
+    /**
+     * 
+     * @type {string}
+     * @memberof TeamUpdate
+     */
+    'event': TeamUpdateEventEnum;
+    /**
+     * 
+     * @type {Array<TeamUpdateData>}
+     * @memberof TeamUpdate
+     */
+    'data': Array<TeamUpdateData>;
+}
+
+export const TeamUpdateEventEnum = {
+    TeamUpdate: 'team-update'
+} as const;
+
+export type TeamUpdateEventEnum = typeof TeamUpdateEventEnum[keyof typeof TeamUpdateEventEnum];
+
+/**
+ * 
+ * @export
+ * @interface TeamUpdateData
+ */
+export interface TeamUpdateData {
+    /**
+     * 
+     * @type {string}
+     * @memberof TeamUpdateData
+     */
+    'id': string;
+}
+/**
+ * 
+ * @export
+ * @interface TeammemberDelete
+ */
+export interface TeammemberDelete {
+    /**
+     * 
+     * @type {string}
+     * @memberof TeammemberDelete
+     */
+    'event': TeammemberDeleteEventEnum;
+    /**
+     * 
+     * @type {Array<TeammemberDeleteData>}
+     * @memberof TeammemberDelete
+     */
+    'data': Array<TeammemberDeleteData>;
+}
+
+export const TeammemberDeleteEventEnum = {
+    TeammemberDelete: 'teammember-delete'
+} as const;
+
+export type TeammemberDeleteEventEnum = typeof TeammemberDeleteEventEnum[keyof typeof TeammemberDeleteEventEnum];
+
+/**
+ * 
+ * @export
+ * @interface TeammemberDeleteData
+ */
+export interface TeammemberDeleteData {
+    /**
+     * Unique identifier for a user
+     * @type {string}
+     * @memberof TeammemberDeleteData
+     */
+    'userId': string;
+    /**
+     * Unique identifier for a team
+     * @type {string}
+     * @memberof TeammemberDeleteData
+     */
+    'teamId': string;
+}
+/**
+ * 
+ * @export
+ * @interface TeammemberInsert
+ */
+export interface TeammemberInsert {
+    /**
+     * 
+     * @type {string}
+     * @memberof TeammemberInsert
+     */
+    'event': TeammemberInsertEventEnum;
+    /**
+     * 
+     * @type {Array<TeammemberInsertData>}
+     * @memberof TeammemberInsert
+     */
+    'data': Array<TeammemberInsertData>;
+}
+
+export const TeammemberInsertEventEnum = {
+    TeammemberInsert: 'teammember-insert'
+} as const;
+
+export type TeammemberInsertEventEnum = typeof TeammemberInsertEventEnum[keyof typeof TeammemberInsertEventEnum];
+
+/**
+ * 
+ * @export
+ * @interface TeammemberInsertData
+ */
+export interface TeammemberInsertData {
+    /**
+     * Unique identifier for a user
+     * @type {string}
+     * @memberof TeammemberInsertData
+     */
+    'userId': string;
+    /**
+     * Unique identifier for a team
+     * @type {string}
+     * @memberof TeammemberInsertData
+     */
+    'teamId': string;
+}
+/**
+ * 
+ * @export
+ * @interface TeammemberUpdate
+ */
+export interface TeammemberUpdate {
+    /**
+     * 
+     * @type {string}
+     * @memberof TeammemberUpdate
+     */
+    'event': TeammemberUpdateEventEnum;
+    /**
+     * 
+     * @type {Array<TeammemberUpdateData>}
+     * @memberof TeammemberUpdate
+     */
+    'data': Array<TeammemberUpdateData>;
+}
+
+export const TeammemberUpdateEventEnum = {
+    TeammemberUpdate: 'teammember-update'
+} as const;
+
+export type TeammemberUpdateEventEnum = typeof TeammemberUpdateEventEnum[keyof typeof TeammemberUpdateEventEnum];
+
+/**
+ * 
+ * @export
+ * @interface TeammemberUpdateData
+ */
+export interface TeammemberUpdateData {
+    /**
+     * Unique identifier for a user
+     * @type {string}
+     * @memberof TeammemberUpdateData
+     */
+    'userId': string;
+    /**
+     * Unique identifier for a team
+     * @type {string}
+     * @memberof TeammemberUpdateData
+     */
+    'teamId': string;
+}
+/**
+ * 
+ * @export
  * @interface UpdateSubscription
  */
 export interface UpdateSubscription {
@@ -241,6 +3233,123 @@ export interface UpdateSubscription {
      * @memberof UpdateSubscription
      */
     'url'?: string;
+}
+/**
+ * 
+ * @export
+ * @interface UserDelete
+ */
+export interface UserDelete {
+    /**
+     * 
+     * @type {string}
+     * @memberof UserDelete
+     */
+    'event': UserDeleteEventEnum;
+    /**
+     * 
+     * @type {Array<UserDeleteData>}
+     * @memberof UserDelete
+     */
+    'data': Array<UserDeleteData>;
+}
+
+export const UserDeleteEventEnum = {
+    UserDelete: 'user-delete'
+} as const;
+
+export type UserDeleteEventEnum = typeof UserDeleteEventEnum[keyof typeof UserDeleteEventEnum];
+
+/**
+ * 
+ * @export
+ * @interface UserDeleteData
+ */
+export interface UserDeleteData {
+    /**
+     * 
+     * @type {string}
+     * @memberof UserDeleteData
+     */
+    'id': string;
+}
+/**
+ * 
+ * @export
+ * @interface UserInsert
+ */
+export interface UserInsert {
+    /**
+     * 
+     * @type {string}
+     * @memberof UserInsert
+     */
+    'event': UserInsertEventEnum;
+    /**
+     * 
+     * @type {Array<UserInsertData>}
+     * @memberof UserInsert
+     */
+    'data': Array<UserInsertData>;
+}
+
+export const UserInsertEventEnum = {
+    UserInsert: 'user-insert'
+} as const;
+
+export type UserInsertEventEnum = typeof UserInsertEventEnum[keyof typeof UserInsertEventEnum];
+
+/**
+ * 
+ * @export
+ * @interface UserInsertData
+ */
+export interface UserInsertData {
+    /**
+     * 
+     * @type {string}
+     * @memberof UserInsertData
+     */
+    'id': string;
+}
+/**
+ * 
+ * @export
+ * @interface UserUpdate
+ */
+export interface UserUpdate {
+    /**
+     * 
+     * @type {string}
+     * @memberof UserUpdate
+     */
+    'event': UserUpdateEventEnum;
+    /**
+     * 
+     * @type {Array<UserUpdateData>}
+     * @memberof UserUpdate
+     */
+    'data': Array<UserUpdateData>;
+}
+
+export const UserUpdateEventEnum = {
+    UserUpdate: 'user-update'
+} as const;
+
+export type UserUpdateEventEnum = typeof UserUpdateEventEnum[keyof typeof UserUpdateEventEnum];
+
+/**
+ * 
+ * @export
+ * @interface UserUpdateData
+ */
+export interface UserUpdateData {
+    /**
+     * 
+     * @type {string}
+     * @memberof UserUpdateData
+     */
+    'id': string;
 }
 
 /**
@@ -765,6 +3874,121 @@ export class WebSocketApi extends BaseAPI {
      */
     public rootGet(requestParameters: WebSocketApiRootGetRequest, options?: AxiosRequestConfig) {
         return WebSocketApiFp(this.configuration).rootGet(requestParameters.accessToken, requestParameters.events, requestParameters.accounts, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+/**
+ * WebhookExampleApi - axios parameter creator
+ * @export
+ */
+export const WebhookExampleApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * Example of what to expect from a ChatDaddy Webhook, this is not a real route. Points to keep in mind: - the request body you\'ll receive in the webhook will   match the request body shown in this route - there will be a chatdaddy token in the headers with no scopes - a POST request will be made to the url - ChatDaddy expects a 200 response to mark a successful delivery 
+         * @param {EventWebhookData} [eventWebhookData] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        webhookExamplePost: async (eventWebhookData?: EventWebhookData, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/webhook/example`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(eventWebhookData, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * WebhookExampleApi - functional programming interface
+ * @export
+ */
+export const WebhookExampleApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = WebhookExampleApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * Example of what to expect from a ChatDaddy Webhook, this is not a real route. Points to keep in mind: - the request body you\'ll receive in the webhook will   match the request body shown in this route - there will be a chatdaddy token in the headers with no scopes - a POST request will be made to the url - ChatDaddy expects a 200 response to mark a successful delivery 
+         * @param {EventWebhookData} [eventWebhookData] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async webhookExamplePost(eventWebhookData?: EventWebhookData, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.webhookExamplePost(eventWebhookData, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+    }
+};
+
+/**
+ * WebhookExampleApi - factory interface
+ * @export
+ */
+export const WebhookExampleApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = WebhookExampleApiFp(configuration)
+    return {
+        /**
+         * Example of what to expect from a ChatDaddy Webhook, this is not a real route. Points to keep in mind: - the request body you\'ll receive in the webhook will   match the request body shown in this route - there will be a chatdaddy token in the headers with no scopes - a POST request will be made to the url - ChatDaddy expects a 200 response to mark a successful delivery 
+         * @param {EventWebhookData} [eventWebhookData] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        webhookExamplePost(eventWebhookData?: EventWebhookData, options?: any): AxiosPromise<void> {
+            return localVarFp.webhookExamplePost(eventWebhookData, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * Request parameters for webhookExamplePost operation in WebhookExampleApi.
+ * @export
+ * @interface WebhookExampleApiWebhookExamplePostRequest
+ */
+export interface WebhookExampleApiWebhookExamplePostRequest {
+    /**
+     * 
+     * @type {EventWebhookData}
+     * @memberof WebhookExampleApiWebhookExamplePost
+     */
+    readonly eventWebhookData?: EventWebhookData
+}
+
+/**
+ * WebhookExampleApi - object-oriented interface
+ * @export
+ * @class WebhookExampleApi
+ * @extends {BaseAPI}
+ */
+export class WebhookExampleApi extends BaseAPI {
+    /**
+     * Example of what to expect from a ChatDaddy Webhook, this is not a real route. Points to keep in mind: - the request body you\'ll receive in the webhook will   match the request body shown in this route - there will be a chatdaddy token in the headers with no scopes - a POST request will be made to the url - ChatDaddy expects a 200 response to mark a successful delivery 
+     * @param {WebhookExampleApiWebhookExamplePostRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof WebhookExampleApi
+     */
+    public webhookExamplePost(requestParameters: WebhookExampleApiWebhookExamplePostRequest = {}, options?: AxiosRequestConfig) {
+        return WebhookExampleApiFp(this.configuration).webhookExamplePost(requestParameters.eventWebhookData, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
