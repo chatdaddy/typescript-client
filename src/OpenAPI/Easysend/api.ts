@@ -2039,229 +2039,6 @@ export class AdminApi extends BaseAPI {
 
 
 /**
- * DefaultApi - axios parameter creator
- * @export
- */
-export const DefaultApiAxiosParamCreator = function (configuration?: Configuration) {
-    return {
-        /**
-         * 
-         * @summary Get the shop metadata
-         * @param {string} teamId Fetch a particular team\&#39;s metadata
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        shopMetadataGet: async (teamId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'teamId' is not null or undefined
-            assertParamExists('shopMetadataGet', 'teamId', teamId)
-            const localVarPath = `/shop-metadata`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            if (teamId !== undefined) {
-                localVarQueryParameter['teamId'] = teamId;
-            }
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @summary Update the shop metadata
-         * @param {string} teamId Patch a  particular team\&#39;s metadata
-         * @param {ShopMetadataGet200Response} [shopMetadataGet200Response] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        shopMetadataPatch: async (teamId: string, shopMetadataGet200Response?: ShopMetadataGet200Response, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'teamId' is not null or undefined
-            assertParamExists('shopMetadataPatch', 'teamId', teamId)
-            const localVarPath = `/shop-metadata`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'PATCH', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication chatdaddy required
-            // oauth required
-            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["INTEGRATIONS_UPDATE"], configuration)
-
-            if (teamId !== undefined) {
-                localVarQueryParameter['teamId'] = teamId;
-            }
-
-
-    
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(shopMetadataGet200Response, localVarRequestOptions, configuration)
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-    }
-};
-
-/**
- * DefaultApi - functional programming interface
- * @export
- */
-export const DefaultApiFp = function(configuration?: Configuration) {
-    const localVarAxiosParamCreator = DefaultApiAxiosParamCreator(configuration)
-    return {
-        /**
-         * 
-         * @summary Get the shop metadata
-         * @param {string} teamId Fetch a particular team\&#39;s metadata
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async shopMetadataGet(teamId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ShopMetadataGet200Response>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.shopMetadataGet(teamId, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-        /**
-         * 
-         * @summary Update the shop metadata
-         * @param {string} teamId Patch a  particular team\&#39;s metadata
-         * @param {ShopMetadataGet200Response} [shopMetadataGet200Response] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async shopMetadataPatch(teamId: string, shopMetadataGet200Response?: ShopMetadataGet200Response, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ShopMetadataGet200Response>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.shopMetadataPatch(teamId, shopMetadataGet200Response, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-    }
-};
-
-/**
- * DefaultApi - factory interface
- * @export
- */
-export const DefaultApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
-    const localVarFp = DefaultApiFp(configuration)
-    return {
-        /**
-         * 
-         * @summary Get the shop metadata
-         * @param {string} teamId Fetch a particular team\&#39;s metadata
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        shopMetadataGet(teamId: string, options?: any): AxiosPromise<ShopMetadataGet200Response> {
-            return localVarFp.shopMetadataGet(teamId, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
-         * @summary Update the shop metadata
-         * @param {string} teamId Patch a  particular team\&#39;s metadata
-         * @param {ShopMetadataGet200Response} [shopMetadataGet200Response] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        shopMetadataPatch(teamId: string, shopMetadataGet200Response?: ShopMetadataGet200Response, options?: any): AxiosPromise<ShopMetadataGet200Response> {
-            return localVarFp.shopMetadataPatch(teamId, shopMetadataGet200Response, options).then((request) => request(axios, basePath));
-        },
-    };
-};
-
-/**
- * Request parameters for shopMetadataGet operation in DefaultApi.
- * @export
- * @interface DefaultApiShopMetadataGetRequest
- */
-export interface DefaultApiShopMetadataGetRequest {
-    /**
-     * Fetch a particular team\&#39;s metadata
-     * @type {string}
-     * @memberof DefaultApiShopMetadataGet
-     */
-    readonly teamId: string
-}
-
-/**
- * Request parameters for shopMetadataPatch operation in DefaultApi.
- * @export
- * @interface DefaultApiShopMetadataPatchRequest
- */
-export interface DefaultApiShopMetadataPatchRequest {
-    /**
-     * Patch a  particular team\&#39;s metadata
-     * @type {string}
-     * @memberof DefaultApiShopMetadataPatch
-     */
-    readonly teamId: string
-
-    /**
-     * 
-     * @type {ShopMetadataGet200Response}
-     * @memberof DefaultApiShopMetadataPatch
-     */
-    readonly shopMetadataGet200Response?: ShopMetadataGet200Response
-}
-
-/**
- * DefaultApi - object-oriented interface
- * @export
- * @class DefaultApi
- * @extends {BaseAPI}
- */
-export class DefaultApi extends BaseAPI {
-    /**
-     * 
-     * @summary Get the shop metadata
-     * @param {DefaultApiShopMetadataGetRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof DefaultApi
-     */
-    public shopMetadataGet(requestParameters: DefaultApiShopMetadataGetRequest, options?: AxiosRequestConfig) {
-        return DefaultApiFp(this.configuration).shopMetadataGet(requestParameters.teamId, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
-     * @summary Update the shop metadata
-     * @param {DefaultApiShopMetadataPatchRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof DefaultApi
-     */
-    public shopMetadataPatch(requestParameters: DefaultApiShopMetadataPatchRequest, options?: AxiosRequestConfig) {
-        return DefaultApiFp(this.configuration).shopMetadataPatch(requestParameters.teamId, requestParameters.shopMetadataGet200Response, options).then((request) => request(this.axios, this.basePath));
-    }
-}
-
-
-/**
  * EventsApi - axios parameter creator
  * @export
  */
@@ -3980,6 +3757,229 @@ export class ServicesApi extends BaseAPI {
      */
     public servicesReload(options?: AxiosRequestConfig) {
         return ServicesApiFp(this.configuration).servicesReload(options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+/**
+ * ShopMetadataApi - axios parameter creator
+ * @export
+ */
+export const ShopMetadataApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @summary Get the shop metadata
+         * @param {string} teamId Fetch a particular team\&#39;s metadata
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        shopMetadataGet: async (teamId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'teamId' is not null or undefined
+            assertParamExists('shopMetadataGet', 'teamId', teamId)
+            const localVarPath = `/shop-metadata`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (teamId !== undefined) {
+                localVarQueryParameter['teamId'] = teamId;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Update the shop metadata
+         * @param {string} teamId Patch a  particular team\&#39;s metadata
+         * @param {ShopMetadataGet200Response} [shopMetadataGet200Response] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        shopMetadataPatch: async (teamId: string, shopMetadataGet200Response?: ShopMetadataGet200Response, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'teamId' is not null or undefined
+            assertParamExists('shopMetadataPatch', 'teamId', teamId)
+            const localVarPath = `/shop-metadata`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PATCH', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["INTEGRATIONS_UPDATE"], configuration)
+
+            if (teamId !== undefined) {
+                localVarQueryParameter['teamId'] = teamId;
+            }
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(shopMetadataGet200Response, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * ShopMetadataApi - functional programming interface
+ * @export
+ */
+export const ShopMetadataApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = ShopMetadataApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * 
+         * @summary Get the shop metadata
+         * @param {string} teamId Fetch a particular team\&#39;s metadata
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async shopMetadataGet(teamId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ShopMetadataGet200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.shopMetadataGet(teamId, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary Update the shop metadata
+         * @param {string} teamId Patch a  particular team\&#39;s metadata
+         * @param {ShopMetadataGet200Response} [shopMetadataGet200Response] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async shopMetadataPatch(teamId: string, shopMetadataGet200Response?: ShopMetadataGet200Response, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ShopMetadataGet200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.shopMetadataPatch(teamId, shopMetadataGet200Response, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+    }
+};
+
+/**
+ * ShopMetadataApi - factory interface
+ * @export
+ */
+export const ShopMetadataApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = ShopMetadataApiFp(configuration)
+    return {
+        /**
+         * 
+         * @summary Get the shop metadata
+         * @param {string} teamId Fetch a particular team\&#39;s metadata
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        shopMetadataGet(teamId: string, options?: any): AxiosPromise<ShopMetadataGet200Response> {
+            return localVarFp.shopMetadataGet(teamId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Update the shop metadata
+         * @param {string} teamId Patch a  particular team\&#39;s metadata
+         * @param {ShopMetadataGet200Response} [shopMetadataGet200Response] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        shopMetadataPatch(teamId: string, shopMetadataGet200Response?: ShopMetadataGet200Response, options?: any): AxiosPromise<ShopMetadataGet200Response> {
+            return localVarFp.shopMetadataPatch(teamId, shopMetadataGet200Response, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * Request parameters for shopMetadataGet operation in ShopMetadataApi.
+ * @export
+ * @interface ShopMetadataApiShopMetadataGetRequest
+ */
+export interface ShopMetadataApiShopMetadataGetRequest {
+    /**
+     * Fetch a particular team\&#39;s metadata
+     * @type {string}
+     * @memberof ShopMetadataApiShopMetadataGet
+     */
+    readonly teamId: string
+}
+
+/**
+ * Request parameters for shopMetadataPatch operation in ShopMetadataApi.
+ * @export
+ * @interface ShopMetadataApiShopMetadataPatchRequest
+ */
+export interface ShopMetadataApiShopMetadataPatchRequest {
+    /**
+     * Patch a  particular team\&#39;s metadata
+     * @type {string}
+     * @memberof ShopMetadataApiShopMetadataPatch
+     */
+    readonly teamId: string
+
+    /**
+     * 
+     * @type {ShopMetadataGet200Response}
+     * @memberof ShopMetadataApiShopMetadataPatch
+     */
+    readonly shopMetadataGet200Response?: ShopMetadataGet200Response
+}
+
+/**
+ * ShopMetadataApi - object-oriented interface
+ * @export
+ * @class ShopMetadataApi
+ * @extends {BaseAPI}
+ */
+export class ShopMetadataApi extends BaseAPI {
+    /**
+     * 
+     * @summary Get the shop metadata
+     * @param {ShopMetadataApiShopMetadataGetRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ShopMetadataApi
+     */
+    public shopMetadataGet(requestParameters: ShopMetadataApiShopMetadataGetRequest, options?: AxiosRequestConfig) {
+        return ShopMetadataApiFp(this.configuration).shopMetadataGet(requestParameters.teamId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Update the shop metadata
+     * @param {ShopMetadataApiShopMetadataPatchRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ShopMetadataApi
+     */
+    public shopMetadataPatch(requestParameters: ShopMetadataApiShopMetadataPatchRequest, options?: AxiosRequestConfig) {
+        return ShopMetadataApiFp(this.configuration).shopMetadataPatch(requestParameters.teamId, requestParameters.shopMetadataGet200Response, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
