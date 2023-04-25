@@ -1006,13 +1006,13 @@ export interface ChatPresence {
      * @type {string}
      * @memberof ChatPresence
      */
-    'accountId'?: string;
+    'accountId': string;
     /**
      * ID for the contact/chat on the platform
      * @type {string}
      * @memberof ChatPresence
      */
-    'id'?: string;
+    'id': string;
     /**
      * 
      * @type {string}
