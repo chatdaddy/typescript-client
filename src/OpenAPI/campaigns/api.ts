@@ -217,6 +217,12 @@ export interface CampaignCreateAsync {
      */
     'sendTyping'?: boolean;
     /**
+     * 
+     * @type {boolean}
+     * @memberof CampaignCreateAsync
+     */
+    'cancelIfReplyReceived'?: boolean;
+    /**
      * Specify IM account to use
      * @type {string}
      * @memberof CampaignCreateAsync
@@ -296,6 +302,12 @@ export interface CampaignEdit {
      * @memberof CampaignEdit
      */
     'sendTyping'?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof CampaignEdit
+     */
+    'cancelIfReplyReceived'?: boolean;
     /**
      * Specify IM account to use
      * @type {string}
@@ -381,6 +393,12 @@ export interface CampaignMetadata {
      * @memberof CampaignMetadata
      */
     'sendTyping'?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof CampaignMetadata
+     */
+    'cancelIfReplyReceived'?: boolean;
     /**
      * ID of the campaign
      * @type {string}

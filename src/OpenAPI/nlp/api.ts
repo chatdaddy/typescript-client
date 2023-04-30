@@ -271,6 +271,12 @@ export interface KeywordActionCreateRequestObj {
      */
     'sendTyping'?: boolean;
     /**
+     * 
+     * @type {boolean}
+     * @memberof KeywordActionCreateRequestObj
+     */
+    'cancelIfReplyReceived'?: boolean;
+    /**
      * Toggles whether the keyword reply will trigger for group chats
      * @type {boolean}
      * @memberof KeywordActionCreateRequestObj
@@ -343,6 +349,12 @@ export interface KeywordActionEditRequestObj {
      * @memberof KeywordActionEditRequestObj
      */
     'sendTyping'?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof KeywordActionEditRequestObj
+     */
+    'cancelIfReplyReceived'?: boolean;
     /**
      * Only on the first message in a chat
      * @type {boolean}
@@ -459,6 +471,12 @@ export interface KeywordBasedAction {
      * @memberof KeywordBasedAction
      */
     'sendTyping'?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof KeywordBasedAction
+     */
+    'cancelIfReplyReceived'?: boolean;
     /**
      * Toggles whether the keyword reply will trigger for group chats
      * @type {boolean}
