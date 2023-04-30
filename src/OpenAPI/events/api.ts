@@ -5192,7 +5192,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
     return {
         /**
          * 
-         * @summary Delete a subscription
+         * @summary Delete a webhook subscription
          * @param {string} id 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -5230,7 +5230,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
         },
         /**
          * 
-         * @summary Get all current subscriptions
+         * @summary Get all current webhook & websocket subscriptions
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -5264,7 +5264,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
         },
         /**
          * 
-         * @summary Update a subscription
+         * @summary Update a webhook subscription
          * @param {string} id 
          * @param {UpdateSubscription} [updateSubscription] 
          * @param {*} [options] Override http request option.
@@ -5306,7 +5306,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
         },
         /**
          * 
-         * @summary Create a subscription
+         * @summary Create a webhook subscription
          * @param {PostSubscription} [postSubscription] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -5354,7 +5354,7 @@ export const DefaultApiFp = function(configuration?: Configuration) {
     return {
         /**
          * 
-         * @summary Delete a subscription
+         * @summary Delete a webhook subscription
          * @param {string} id 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -5365,7 +5365,7 @@ export const DefaultApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
-         * @summary Get all current subscriptions
+         * @summary Get all current webhook & websocket subscriptions
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -5375,7 +5375,7 @@ export const DefaultApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
-         * @summary Update a subscription
+         * @summary Update a webhook subscription
          * @param {string} id 
          * @param {UpdateSubscription} [updateSubscription] 
          * @param {*} [options] Override http request option.
@@ -5387,7 +5387,7 @@ export const DefaultApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
-         * @summary Create a subscription
+         * @summary Create a webhook subscription
          * @param {PostSubscription} [postSubscription] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -5408,7 +5408,7 @@ export const DefaultApiFactory = function (configuration?: Configuration, basePa
     return {
         /**
          * 
-         * @summary Delete a subscription
+         * @summary Delete a webhook subscription
          * @param {string} id 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -5418,7 +5418,7 @@ export const DefaultApiFactory = function (configuration?: Configuration, basePa
         },
         /**
          * 
-         * @summary Get all current subscriptions
+         * @summary Get all current webhook & websocket subscriptions
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -5427,7 +5427,7 @@ export const DefaultApiFactory = function (configuration?: Configuration, basePa
         },
         /**
          * 
-         * @summary Update a subscription
+         * @summary Update a webhook subscription
          * @param {string} id 
          * @param {UpdateSubscription} [updateSubscription] 
          * @param {*} [options] Override http request option.
@@ -5438,7 +5438,7 @@ export const DefaultApiFactory = function (configuration?: Configuration, basePa
         },
         /**
          * 
-         * @summary Create a subscription
+         * @summary Create a webhook subscription
          * @param {PostSubscription} [postSubscription] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -5507,7 +5507,7 @@ export interface DefaultApiSubscriptionsPostRequest {
 export class DefaultApi extends BaseAPI {
     /**
      * 
-     * @summary Delete a subscription
+     * @summary Delete a webhook subscription
      * @param {DefaultApiSubscriptionsDeleteRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -5519,7 +5519,7 @@ export class DefaultApi extends BaseAPI {
 
     /**
      * 
-     * @summary Get all current subscriptions
+     * @summary Get all current webhook & websocket subscriptions
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof DefaultApi
@@ -5530,7 +5530,7 @@ export class DefaultApi extends BaseAPI {
 
     /**
      * 
-     * @summary Update a subscription
+     * @summary Update a webhook subscription
      * @param {DefaultApiSubscriptionsPatchRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -5542,7 +5542,7 @@ export class DefaultApi extends BaseAPI {
 
     /**
      * 
-     * @summary Create a subscription
+     * @summary Create a webhook subscription
      * @param {DefaultApiSubscriptionsPostRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -5561,7 +5561,7 @@ export class DefaultApi extends BaseAPI {
 export const WebSocketApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
-         * Note: you need to fetch the WS from wss://live.chatdaddy.tech
+         * Note: you need to fetch the WS from wss://live.chatdaddy.tech Not from the base url mentioned in the API doc 
          * @summary The WebSocket Route
          * @param {string} accessToken the JWT authorization token
          * @param {Array<EventName>} events Events to subscribe to
@@ -5624,7 +5624,7 @@ export const WebSocketApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = WebSocketApiAxiosParamCreator(configuration)
     return {
         /**
-         * Note: you need to fetch the WS from wss://live.chatdaddy.tech
+         * Note: you need to fetch the WS from wss://live.chatdaddy.tech Not from the base url mentioned in the API doc 
          * @summary The WebSocket Route
          * @param {string} accessToken the JWT authorization token
          * @param {Array<EventName>} events Events to subscribe to
@@ -5647,7 +5647,7 @@ export const WebSocketApiFactory = function (configuration?: Configuration, base
     const localVarFp = WebSocketApiFp(configuration)
     return {
         /**
-         * Note: you need to fetch the WS from wss://live.chatdaddy.tech
+         * Note: you need to fetch the WS from wss://live.chatdaddy.tech Not from the base url mentioned in the API doc 
          * @summary The WebSocket Route
          * @param {string} accessToken the JWT authorization token
          * @param {Array<EventName>} events Events to subscribe to
@@ -5697,7 +5697,7 @@ export interface WebSocketApiRootGetRequest {
  */
 export class WebSocketApi extends BaseAPI {
     /**
-     * Note: you need to fetch the WS from wss://live.chatdaddy.tech
+     * Note: you need to fetch the WS from wss://live.chatdaddy.tech Not from the base url mentioned in the API doc 
      * @summary The WebSocket Route
      * @param {WebSocketApiRootGetRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
