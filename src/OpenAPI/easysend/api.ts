@@ -3433,7 +3433,7 @@ export const ServicesApiAxiosParamCreator = function (configuration?: Configurat
     return {
         /**
          * 
-         * @summary Removes the specified service from the list
+         * @summary Removes the specified service
          * @param {string} id ID of service to remove
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -3470,8 +3470,8 @@ export const ServicesApiAxiosParamCreator = function (configuration?: Configurat
             };
         },
         /**
-         * 
-         * @summary Get the list of all supported scraper services
+         * This contains all the metadata required to display & create a \"tracking\" for said service. 
+         * @summary Get the list of all supported integrations or services
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -3542,7 +3542,7 @@ export const ServicesApiAxiosParamCreator = function (configuration?: Configurat
             };
         },
         /**
-         * 
+         * Call this endpoint to reload all service schemas by fetching them from the their respective hosted URLs 
          * @summary Reload all service schemas
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -3587,7 +3587,7 @@ export const ServicesApiFp = function(configuration?: Configuration) {
     return {
         /**
          * 
-         * @summary Removes the specified service from the list
+         * @summary Removes the specified service
          * @param {string} id ID of service to remove
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -3597,8 +3597,8 @@ export const ServicesApiFp = function(configuration?: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
-         * 
-         * @summary Get the list of all supported scraper services
+         * This contains all the metadata required to display & create a \"tracking\" for said service. 
+         * @summary Get the list of all supported integrations or services
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -3618,7 +3618,7 @@ export const ServicesApiFp = function(configuration?: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
-         * 
+         * Call this endpoint to reload all service schemas by fetching them from the their respective hosted URLs 
          * @summary Reload all service schemas
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -3639,7 +3639,7 @@ export const ServicesApiFactory = function (configuration?: Configuration, baseP
     return {
         /**
          * 
-         * @summary Removes the specified service from the list
+         * @summary Removes the specified service
          * @param {string} id ID of service to remove
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -3648,8 +3648,8 @@ export const ServicesApiFactory = function (configuration?: Configuration, baseP
             return localVarFp.servicesDelete(id, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
-         * @summary Get the list of all supported scraper services
+         * This contains all the metadata required to display & create a \"tracking\" for said service. 
+         * @summary Get the list of all supported integrations or services
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -3667,7 +3667,7 @@ export const ServicesApiFactory = function (configuration?: Configuration, baseP
             return localVarFp.servicesPost(postServiceModel, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Call this endpoint to reload all service schemas by fetching them from the their respective hosted URLs 
          * @summary Reload all service schemas
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -3715,7 +3715,7 @@ export interface ServicesApiServicesPostRequest {
 export class ServicesApi extends BaseAPI {
     /**
      * 
-     * @summary Removes the specified service from the list
+     * @summary Removes the specified service
      * @param {ServicesApiServicesDeleteRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -3726,8 +3726,8 @@ export class ServicesApi extends BaseAPI {
     }
 
     /**
-     * 
-     * @summary Get the list of all supported scraper services
+     * This contains all the metadata required to display & create a \"tracking\" for said service. 
+     * @summary Get the list of all supported integrations or services
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof ServicesApi
@@ -3749,7 +3749,7 @@ export class ServicesApi extends BaseAPI {
     }
 
     /**
-     * 
+     * Call this endpoint to reload all service schemas by fetching them from the their respective hosted URLs 
      * @summary Reload all service schemas
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -4379,7 +4379,7 @@ export const TrackingsApiAxiosParamCreator = function (configuration?: Configura
         },
         /**
          * 
-         * @summary Get the list of all services currently tracked by a team
+         * @summary Get the list of all trackings for your team 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -4648,7 +4648,7 @@ export const TrackingsApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
-         * @summary Get the list of all services currently tracked by a team
+         * @summary Get the list of all trackings for your team 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -4773,7 +4773,7 @@ export const TrackingsApiFactory = function (configuration?: Configuration, base
         },
         /**
          * 
-         * @summary Get the list of all services currently tracked by a team
+         * @summary Get the list of all trackings for your team 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -5193,7 +5193,7 @@ export class TrackingsApi extends BaseAPI {
 
     /**
      * 
-     * @summary Get the list of all services currently tracked by a team
+     * @summary Get the list of all trackings for your team 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof TrackingsApi
