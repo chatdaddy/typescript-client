@@ -1757,16 +1757,10 @@ export interface TrackServices {
 export interface TrackingPatch200Response {
     /**
      * 
-     * @type {string}
-     * @memberof TrackingPatch200Response
-     */
-    'message'?: string;
-    /**
-     * 
      * @type {TrackServiceModel}
      * @memberof TrackingPatch200Response
      */
-    'tracking'?: TrackServiceModel;
+    'tracking': TrackServiceModel;
 }
 /**
  * 
@@ -1774,12 +1768,6 @@ export interface TrackingPatch200Response {
  * @interface TrackingPost200Response
  */
 export interface TrackingPost200Response {
-    /**
-     * 
-     * @type {string}
-     * @memberof TrackingPost200Response
-     */
-    'message': string;
     /**
      * 
      * @type {TrackServiceModel}
@@ -1798,13 +1786,13 @@ export interface TriggerTest200Response {
      * @type {object}
      * @memberof TriggerTest200Response
      */
-    'params'?: object;
+    'params': object;
     /**
      * mock order ID
      * @type {string}
      * @memberof TriggerTest200Response
      */
-    'orderId'?: string;
+    'orderId': string;
 }
 /**
  * 
