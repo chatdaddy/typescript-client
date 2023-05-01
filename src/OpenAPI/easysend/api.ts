@@ -573,9 +573,9 @@ export interface EventTrigger {
      * @type {number}
      * @memberof EventTrigger
      */
-    'id'?: number;
+    'id': number;
     /**
-     * 
+     * Passed in the body to mark for deletion
      * @type {boolean}
      * @memberof EventTrigger
      */
@@ -628,9 +628,9 @@ export interface EventTriggerAllOf {
      * @type {number}
      * @memberof EventTriggerAllOf
      */
-    'id'?: number;
+    'id': number;
     /**
-     * 
+     * Passed in the body to mark for deletion
      * @type {boolean}
      * @memberof EventTriggerAllOf
      */
