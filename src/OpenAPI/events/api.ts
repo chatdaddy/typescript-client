@@ -269,6 +269,12 @@ export interface AccountInsertDataSettings {
      * @memberof AccountInsertDataSettings
      */
     'sendButtonsAsPoll'?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof AccountInsertDataSettings
+     */
+    'autoSyncProductsToPlatform'?: boolean;
 }
 /**
  * 

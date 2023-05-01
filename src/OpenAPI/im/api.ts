@@ -287,6 +287,12 @@ export interface AccountSettings {
      * @memberof AccountSettings
      */
     'sendButtonsAsPoll'?: boolean;
+    /**
+     * Should products be synced to WhatsApp automatically.
+     * @type {boolean}
+     * @memberof AccountSettings
+     */
+    'autoSyncProductsToPlatform'?: boolean;
 }
 /**
  * All new chats will be auto asssigned if one of the option is enabled and select any Assignee
