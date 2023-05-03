@@ -449,19 +449,19 @@ export type DelayTypeModel = typeof DelayTypeModel[keyof typeof DelayTypeModel];
 
 
 /**
- * 
+ * - A data point created via the \"dataPatch\" operation - this signifies a change in an order, or the creation of a new order 
  * @export
  * @interface EasysendDataModel
  */
 export interface EasysendDataModel {
     /**
-     * 
+     * Unique identifier for the data point
      * @type {number}
      * @memberof EasysendDataModel
      */
     'id': number;
     /**
-     * 
+     * Unique identifier for the order, provided by the \"tracking\" its from
      * @type {string}
      * @memberof EasysendDataModel
      */
@@ -479,25 +479,25 @@ export interface EasysendDataModel {
      */
     'waResponse': EasysendDataModelWaResponse;
     /**
-     * 
+     * The trigger that captured this data point for message sending. If null, it means that no trigger captured this data point
      * @type {number}
      * @memberof EasysendDataModel
      */
     'triggerId': number | null;
     /**
-     * 
+     * The tracking that captured this data point for message sending
      * @type {number}
      * @memberof EasysendDataModel
      */
     'trackingId'?: number;
     /**
-     * 
+     * The status of the data point. - \"sent\" => data point has been sent to the bot service, either successfully or not - \"pending\" => data point is waiting to be sent to the bot service. If - \"cancelled\" => data point has been cancelled, and will not be sent to the bot service. this could be because no trigger was found, or the trigger was disabled
      * @type {string}
      * @memberof EasysendDataModel
      */
     'status': EasysendDataModelStatusEnum;
     /**
-     * 
+     * Whether this data point is a test data point or not. Test data points are created by the \"triggerTest\" operation
      * @type {boolean}
      * @memberof EasysendDataModel
      */
@@ -509,7 +509,7 @@ export interface EasysendDataModel {
      */
     'datetime': string;
     /**
-     * 
+     * The params that were sent by the integration when the data point was created
      * @type {{ [key: string]: any; }}
      * @memberof EasysendDataModel
      */
@@ -525,7 +525,7 @@ export const EasysendDataModelStatusEnum = {
 export type EasysendDataModelStatusEnum = typeof EasysendDataModelStatusEnum[keyof typeof EasysendDataModelStatusEnum];
 
 /**
- * the response received from the WA service
+ * the response received from the bots service. \"waResponse\" is a bit of a misnomer now, but it\'s a legacy name as we used to only support data from WhatsApp 
  * @export
  * @interface EasysendDataModelWaResponse
  */
@@ -587,7 +587,7 @@ export interface EventTrigger {
      */
     'templateId'?: string;
     /**
-     * Whether the condition is enabled
+     * Whether the condition is enabled. If false, the trigger will be ignored whenever a data point is ingested
      * @type {boolean}
      * @memberof EventTrigger
      */
@@ -684,7 +684,7 @@ export interface EventTriggerCreate {
      */
     'templateId'?: string;
     /**
-     * Whether the condition is enabled
+     * Whether the condition is enabled. If false, the trigger will be ignored whenever a data point is ingested
      * @type {boolean}
      * @memberof EventTriggerCreate
      */
@@ -1664,7 +1664,7 @@ export interface TrackServiceModel {
      */
     'id': number;
     /**
-     * 
+     * secret ID used to communicate with shop integrations. Shop integrations never see the actual ID of a tracking, they only see the secret ID. They identify a tracking by the secret ID itself
      * @type {string}
      * @memberof TrackServiceModel
      */
@@ -3420,7 +3420,7 @@ export class PaymentSystemsApi extends BaseAPI {
 export const ServicesApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
-         * 
+         * This deletes the service and any trackings associated with it
          * @summary Removes the specified service
          * @param {string} id ID of service to remove
          * @param {*} [options] Override http request option.
@@ -3574,7 +3574,7 @@ export const ServicesApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = ServicesApiAxiosParamCreator(configuration)
     return {
         /**
-         * 
+         * This deletes the service and any trackings associated with it
          * @summary Removes the specified service
          * @param {string} id ID of service to remove
          * @param {*} [options] Override http request option.
@@ -3626,7 +3626,7 @@ export const ServicesApiFactory = function (configuration?: Configuration, baseP
     const localVarFp = ServicesApiFp(configuration)
     return {
         /**
-         * 
+         * This deletes the service and any trackings associated with it
          * @summary Removes the specified service
          * @param {string} id ID of service to remove
          * @param {*} [options] Override http request option.
@@ -3702,7 +3702,7 @@ export interface ServicesApiServicesPostRequest {
  */
 export class ServicesApi extends BaseAPI {
     /**
-     * 
+     * This deletes the service and any trackings associated with it
      * @summary Removes the specified service
      * @param {ServicesApiServicesDeleteRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -4103,7 +4103,7 @@ export const TrackingsApiAxiosParamCreator = function (configuration?: Configura
     return {
         /**
          * 
-         * @summary Get the data/order history
+         * @summary Get the event histor
          * @param {number} [trackingId] Fetch orders of the specified trackingId
          * @param {number} [phoneNumber] Fetch orders sent to the specified phone number
          * @param {number} [triggerId] Fetch orders of the specified triggerId
@@ -4480,7 +4480,8 @@ export const TrackingsApiAxiosParamCreator = function (configuration?: Configura
             };
         },
         /**
-         * 
+         * This endpoint is used by the external tracking integration to update the error state of a tracking. The scrapper will call this endpoint when it encounters an irrecoverable error while scraping. 
+         * @summary Update the error state of a tracking
          * @param {string} secretId The secret ID of the tracking made available to the service
          * @param {UpdateTrackingErrorState} [updateTrackingErrorState] 
          * @param {*} [options] Override http request option.
@@ -4575,7 +4576,7 @@ export const TrackingsApiFp = function(configuration?: Configuration) {
     return {
         /**
          * 
-         * @summary Get the data/order history
+         * @summary Get the event histor
          * @param {number} [trackingId] Fetch orders of the specified trackingId
          * @param {number} [phoneNumber] Fetch orders sent to the specified phone number
          * @param {number} [triggerId] Fetch orders of the specified triggerId
@@ -4668,7 +4669,8 @@ export const TrackingsApiFp = function(configuration?: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
-         * 
+         * This endpoint is used by the external tracking integration to update the error state of a tracking. The scrapper will call this endpoint when it encounters an irrecoverable error while scraping. 
+         * @summary Update the error state of a tracking
          * @param {string} secretId The secret ID of the tracking made available to the service
          * @param {UpdateTrackingErrorState} [updateTrackingErrorState] 
          * @param {*} [options] Override http request option.
@@ -4703,7 +4705,7 @@ export const TrackingsApiFactory = function (configuration?: Configuration, base
     return {
         /**
          * 
-         * @summary Get the data/order history
+         * @summary Get the event histor
          * @param {number} [trackingId] Fetch orders of the specified trackingId
          * @param {number} [phoneNumber] Fetch orders sent to the specified phone number
          * @param {number} [triggerId] Fetch orders of the specified triggerId
@@ -4790,7 +4792,8 @@ export const TrackingsApiFactory = function (configuration?: Configuration, base
             return localVarFp.trackingPost(postTracking, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * This endpoint is used by the external tracking integration to update the error state of a tracking. The scrapper will call this endpoint when it encounters an irrecoverable error while scraping. 
+         * @summary Update the error state of a tracking
          * @param {string} secretId The secret ID of the tracking made available to the service
          * @param {UpdateTrackingErrorState} [updateTrackingErrorState] 
          * @param {*} [options] Override http request option.
@@ -5145,7 +5148,7 @@ export interface TrackingsApiTriggerTestRequest {
 export class TrackingsApi extends BaseAPI {
     /**
      * 
-     * @summary Get the data/order history
+     * @summary Get the event histor
      * @param {TrackingsApiDataGetRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -5215,7 +5218,8 @@ export class TrackingsApi extends BaseAPI {
     }
 
     /**
-     * 
+     * This endpoint is used by the external tracking integration to update the error state of a tracking. The scrapper will call this endpoint when it encounters an irrecoverable error while scraping. 
+     * @summary Update the error state of a tracking
      * @param {TrackingsApiTrackingUpdateErrorStateRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}

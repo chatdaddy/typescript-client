@@ -2887,19 +2887,19 @@ export const OrderInsertEventEnum = {
 export type OrderInsertEventEnum = typeof OrderInsertEventEnum[keyof typeof OrderInsertEventEnum];
 
 /**
- * 
+ * - A data point created via the \"dataPatch\" operation - this signifies a change in an order, or the creation of a new order 
  * @export
  * @interface OrderInsertData
  */
 export interface OrderInsertData {
     /**
-     * 
+     * Unique identifier for the data point
      * @type {number}
      * @memberof OrderInsertData
      */
     'id': number;
     /**
-     * 
+     * Unique identifier for the order, provided by the \"tracking\" its from
      * @type {string}
      * @memberof OrderInsertData
      */
@@ -2917,25 +2917,25 @@ export interface OrderInsertData {
      */
     'waResponse': OrderInsertDataWaResponse;
     /**
-     * 
+     * The trigger that captured this data point for message sending. If null, it means that no trigger captured this data point
      * @type {number}
      * @memberof OrderInsertData
      */
     'triggerId': number | null;
     /**
-     * 
+     * The tracking that captured this data point for message sending
      * @type {number}
      * @memberof OrderInsertData
      */
     'trackingId'?: number;
     /**
-     * 
+     * The status of the data point. - \"sent\" => data point has been sent to the bot service, either successfully or not - \"pending\" => data point is waiting to be sent to the bot service. If - \"cancelled\" => data point has been cancelled, and will not be sent to the bot service. this could be because no trigger was found, or the trigger was disabled
      * @type {string}
      * @memberof OrderInsertData
      */
     'status': OrderInsertDataStatusEnum;
     /**
-     * 
+     * Whether this data point is a test data point or not. Test data points are created by the \"triggerTest\" operation
      * @type {boolean}
      * @memberof OrderInsertData
      */
@@ -2947,7 +2947,7 @@ export interface OrderInsertData {
      */
     'datetime': string;
     /**
-     * 
+     * The params that were sent by the integration when the data point was created
      * @type {{ [key: string]: any; }}
      * @memberof OrderInsertData
      */
@@ -2970,7 +2970,7 @@ export type OrderInsertDataStatusEnum = typeof OrderInsertDataStatusEnum[keyof t
 export type OrderInsertDataPhoneNumber = number | object | string;
 
 /**
- * the response received from the WA service
+ * the response received from the bots service. \"waResponse\" is a bit of a misnomer now, but it\'s a legacy name as we used to only support data from WhatsApp 
  * @export
  * @interface OrderInsertDataWaResponse
  */
