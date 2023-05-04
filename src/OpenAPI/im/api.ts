@@ -734,7 +734,7 @@ export interface AlibabaCAMSWebhookTemplateItem {
      * @type {string}
      * @memberof AlibabaCAMSWebhookTemplateItem
      */
-    'WabaId': string;
+    'WabaId'?: string;
     /**
      * 
      * @type {string}
