@@ -2905,6 +2905,12 @@ export interface OrderInsertData {
      */
     'orderId': string;
     /**
+     * Specify IM account to use
+     * @type {string}
+     * @memberof OrderInsertData
+     */
+    'accountId'?: string | null;
+    /**
      * 
      * @type {OrderInsertDataPhoneNumber}
      * @memberof OrderInsertData

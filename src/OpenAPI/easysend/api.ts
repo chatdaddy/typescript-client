@@ -467,6 +467,12 @@ export interface EasysendDataModel {
      */
     'orderId': string;
     /**
+     * Specify IM account to use
+     * @type {string}
+     * @memberof EasysendDataModel
+     */
+    'accountId'?: string | null;
+    /**
      * 
      * @type {NullablePhoneNumber}
      * @memberof EasysendDataModel
@@ -2105,11 +2111,12 @@ export const EventsApiAxiosParamCreator = function (configuration?: Configuratio
          * To be called by a scraping service whenever something happens. Examples include -- an email is received, an order is placed or updated, an order is cancelled, etc.
          * @summary Update data/order details of a tracking
          * @param {string} secretId The secret ID of the tracking made available to the service
+         * @param {string} [accountId] The account ID to use when sending the flow
          * @param {DataPatchRequest} [dataPatchRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        dataPatch: async (secretId: string, dataPatchRequest?: DataPatchRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        dataPatch: async (secretId: string, accountId?: string, dataPatchRequest?: DataPatchRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'secretId' is not null or undefined
             assertParamExists('dataPatch', 'secretId', secretId)
             const localVarPath = `/event/{secretId}`
@@ -2124,6 +2131,10 @@ export const EventsApiAxiosParamCreator = function (configuration?: Configuratio
             const localVarRequestOptions = { method: 'PATCH', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
+
+            if (accountId !== undefined) {
+                localVarQueryParameter['accountId'] = accountId;
+            }
 
 
     
@@ -2225,12 +2236,13 @@ export const EventsApiFp = function(configuration?: Configuration) {
          * To be called by a scraping service whenever something happens. Examples include -- an email is received, an order is placed or updated, an order is cancelled, etc.
          * @summary Update data/order details of a tracking
          * @param {string} secretId The secret ID of the tracking made available to the service
+         * @param {string} [accountId] The account ID to use when sending the flow
          * @param {DataPatchRequest} [dataPatchRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async dataPatch(secretId: string, dataPatchRequest?: DataPatchRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.dataPatch(secretId, dataPatchRequest, options);
+        async dataPatch(secretId: string, accountId?: string, dataPatchRequest?: DataPatchRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.dataPatch(secretId, accountId, dataPatchRequest, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -2269,12 +2281,13 @@ export const EventsApiFactory = function (configuration?: Configuration, basePat
          * To be called by a scraping service whenever something happens. Examples include -- an email is received, an order is placed or updated, an order is cancelled, etc.
          * @summary Update data/order details of a tracking
          * @param {string} secretId The secret ID of the tracking made available to the service
+         * @param {string} [accountId] The account ID to use when sending the flow
          * @param {DataPatchRequest} [dataPatchRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        dataPatch(secretId: string, dataPatchRequest?: DataPatchRequest, options?: any): AxiosPromise<void> {
-            return localVarFp.dataPatch(secretId, dataPatchRequest, options).then((request) => request(axios, basePath));
+        dataPatch(secretId: string, accountId?: string, dataPatchRequest?: DataPatchRequest, options?: any): AxiosPromise<void> {
+            return localVarFp.dataPatch(secretId, accountId, dataPatchRequest, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -2311,6 +2324,13 @@ export interface EventsApiDataPatchRequest {
      * @memberof EventsApiDataPatch
      */
     readonly secretId: string
+
+    /**
+     * The account ID to use when sending the flow
+     * @type {string}
+     * @memberof EventsApiDataPatch
+     */
+    readonly accountId?: string
 
     /**
      * 
@@ -2364,7 +2384,7 @@ export class EventsApi extends BaseAPI {
      * @memberof EventsApi
      */
     public dataPatch(requestParameters: EventsApiDataPatchRequest, options?: AxiosRequestConfig) {
-        return EventsApiFp(this.configuration).dataPatch(requestParameters.secretId, requestParameters.dataPatchRequest, options).then((request) => request(this.axios, this.basePath));
+        return EventsApiFp(this.configuration).dataPatch(requestParameters.secretId, requestParameters.accountId, requestParameters.dataPatchRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
