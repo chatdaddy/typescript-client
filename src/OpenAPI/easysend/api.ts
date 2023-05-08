@@ -1481,6 +1481,12 @@ export interface PostTracking {
      * @memberof PostTracking
      */
     'accountId'?: string | null;
+    /**
+     * 
+     * @type {TrackingAutoPaymentConfig}
+     * @memberof PostTracking
+     */
+    'autoPayment'?: TrackingAutoPaymentConfig | null;
 }
 /**
  * 
@@ -1735,6 +1741,12 @@ export interface TrackServiceModel {
      * @memberof TrackServiceModel
      */
     'error': ErrorState | null;
+    /**
+     * 
+     * @type {TrackingAutoPaymentConfig}
+     * @memberof TrackServiceModel
+     */
+    'autoPayment'?: TrackingAutoPaymentConfig | null;
 }
 /**
  * 
@@ -1748,6 +1760,19 @@ export interface TrackServices {
      * @memberof TrackServices
      */
     'trackings': Array<TrackServiceModel>;
+}
+/**
+ * 
+ * @export
+ * @interface TrackingAutoPaymentConfig
+ */
+export interface TrackingAutoPaymentConfig {
+    /**
+     * 
+     * @type {string}
+     * @memberof TrackingAutoPaymentConfig
+     */
+    'paymentIntegrationId': string;
 }
 /**
  * 
@@ -1873,6 +1898,12 @@ export interface UpdateTracking {
      * @memberof UpdateTracking
      */
     'accountId'?: string | null;
+    /**
+     * 
+     * @type {TrackingAutoPaymentConfig}
+     * @memberof UpdateTracking
+     */
+    'autoPayment'?: TrackingAutoPaymentConfig | null;
 }
 /**
  * 
