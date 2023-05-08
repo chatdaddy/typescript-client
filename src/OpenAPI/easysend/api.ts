@@ -754,6 +754,32 @@ export interface GetPaymentIntegrations200Response {
 export type NullablePhoneNumber = number | object | string;
 
 /**
+ * Authentication details for the payment system to create a payment integration
+ * @export
+ * @interface OAuth2AuthRequest
+ */
+export interface OAuth2AuthRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof OAuth2AuthRequest
+     */
+    'type': OAuth2AuthRequestTypeEnum;
+    /**
+     * OAuth2 authorization code
+     * @type {string}
+     * @memberof OAuth2AuthRequest
+     */
+    'authorizationCode': string;
+}
+
+export const OAuth2AuthRequestTypeEnum = {
+    Oauth: 'oauth'
+} as const;
+
+export type OAuth2AuthRequestTypeEnum = typeof OAuth2AuthRequestTypeEnum[keyof typeof OAuth2AuthRequestTypeEnum];
+
+/**
  * 
  * @export
  * @interface OrderDataGet200Response
@@ -1041,30 +1067,10 @@ export interface PaymentIntegration {
     'secret'?: string;
 }
 /**
- * Authentication details for the payment system to create a payment integration
+ * @type PaymentIntegrationAuthRequest
  * @export
- * @interface PaymentIntegrationAuthRequest
  */
-export interface PaymentIntegrationAuthRequest {
-    /**
-     * 
-     * @type {string}
-     * @memberof PaymentIntegrationAuthRequest
-     */
-    'type': PaymentIntegrationAuthRequestTypeEnum;
-    /**
-     * OAuth2 authorization code
-     * @type {string}
-     * @memberof PaymentIntegrationAuthRequest
-     */
-    'authorizationCode': string;
-}
-
-export const PaymentIntegrationAuthRequestTypeEnum = {
-    Oauth: 'oauth'
-} as const;
-
-export type PaymentIntegrationAuthRequestTypeEnum = typeof PaymentIntegrationAuthRequestTypeEnum[keyof typeof PaymentIntegrationAuthRequestTypeEnum];
+export type PaymentIntegrationAuthRequest = OAuth2AuthRequest | SecretAuthRequest;
 
 /**
  * 
@@ -1488,6 +1494,38 @@ export interface PostTracking {
      */
     'autoPayment'?: TrackingAutoPaymentConfig | null;
 }
+/**
+ * Authentication details for the payment system to create a payment integration
+ * @export
+ * @interface SecretAuthRequest
+ */
+export interface SecretAuthRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof SecretAuthRequest
+     */
+    'type': SecretAuthRequestTypeEnum;
+    /**
+     * Authorization secret
+     * @type {string}
+     * @memberof SecretAuthRequest
+     */
+    'secret': string;
+    /**
+     * Username
+     * @type {string}
+     * @memberof SecretAuthRequest
+     */
+    'username': string;
+}
+
+export const SecretAuthRequestTypeEnum = {
+    Secret: 'secret'
+} as const;
+
+export type SecretAuthRequestTypeEnum = typeof SecretAuthRequestTypeEnum[keyof typeof SecretAuthRequestTypeEnum];
+
 /**
  * 
  * @export
