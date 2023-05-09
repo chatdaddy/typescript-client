@@ -64,7 +64,7 @@ export function serialiseOrderMessage({ items, remarks }: SimpleOrder) {
 	]
 
 	if(remarks) {
-		lines.push(`remarks: ${remarks}`)
+		lines.push(`remarks: ${remarks.replace(/\n/g, ' ')}`)
 	}
 
 	return lines.join('\n')
