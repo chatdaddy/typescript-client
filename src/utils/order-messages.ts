@@ -1,4 +1,4 @@
-import { SimpleOrderItem } from './types'
+import { SimpleOrder, SimpleOrderItem } from './types'
 
 const DETECTION_TXT = 'Hi, I would like to place a ShopDaddy order'
 const MAX_UQ_PRODUCTS_IN_ORDER = 20
@@ -9,14 +9,16 @@ const MAX_UQ_PRODUCTS_IN_ORDER = 20
  *
  * {{DETECTION_TXT}}
  * - QUANTITYx ITEM_NAME (ITEM_ID)
+ * remarks: REMARKS
  *
  * @param txt Eg. of an order message:
  * Hi, I would like to place a ShopDaddy order
  * - 2x hamburger (ham_123)
  * - 1x cheeseburger (cheese_123)
  * - 1x fries (fries_123)
+ * remarks: no pickles
  */
-export function checkAndParseOrderMessage(txt: string) {
+export function checkAndParseOrderMessage(txt: string): SimpleOrder {
 	const lines = txt.trim().split('\n')
 	if(lines[0] !== DETECTION_TXT) {
 		return
@@ -27,12 +29,19 @@ export function checkAndParseOrderMessage(txt: string) {
 	}
 
 	const orderItems: SimpleOrderItem[] = []
-	for(const line of lines.slice(1)) {
-		const match = line
+	let remarks: string | undefined
+	for(let i = 1; i < lines.length; i++) {
+		if(i === lines.length - 1 && lines[i].startsWith('remarks:')) {
+			// trim out the "remarks: " part
+			remarks = lines[i].substring(8).trim()
+			continue
+		}
+
+		const match = lines[i]
 			.trim()
 			.match(/- (\d+)x (.+) \((.+)\)/i)
 		if(!match) {
-			throw new Error(`Invalid order item: ${line}`)
+			throw new Error(`Invalid order item: ${lines[i]}`)
 		}
 
 		orderItems.push({
@@ -42,17 +51,21 @@ export function checkAndParseOrderMessage(txt: string) {
 		})
 	}
 
-	return orderItems
+	return { items: orderItems, remarks }
 }
 
 /**
  * Serialises an order message from an array of order items.
  */
-export function serialiseOrderMessage(items: SimpleOrderItem[]) {
+export function serialiseOrderMessage({ items, remarks }: SimpleOrder) {
 	const lines = [
 		DETECTION_TXT,
 		...items.map(item => `- ${item.quantity}x ${item.name} (${item.id})`)
 	]
+
+	if(remarks) {
+		lines.push(`remarks: ${remarks}`)
+	}
 
 	return lines.join('\n')
 }
