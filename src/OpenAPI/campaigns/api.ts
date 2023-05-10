@@ -250,13 +250,13 @@ export interface CampaignCreateAsync {
 /**
  * 
  * @export
- * @interface CampaignDeleteDefaultResponse
+ * @interface CampaignDelete200Response
  */
-export interface CampaignDeleteDefaultResponse {
+export interface CampaignDelete200Response {
     /**
      * 
      * @type {boolean}
-     * @memberof CampaignDeleteDefaultResponse
+     * @memberof CampaignDelete200Response
      */
     'success': boolean;
 }
@@ -1052,7 +1052,7 @@ export const CampaignsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async campaignDelete(id: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CampaignDeleteDefaultResponse>> {
+        async campaignDelete(id: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CampaignDelete200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.campaignDelete(id, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -1106,7 +1106,7 @@ export const CampaignsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async campaignStart(id: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CampaignDeleteDefaultResponse>> {
+        async campaignStart(id: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CampaignDelete200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.campaignStart(id, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -1116,7 +1116,7 @@ export const CampaignsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async campaignStop(id: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CampaignDeleteDefaultResponse>> {
+        async campaignStop(id: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CampaignDelete200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.campaignStop(id, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -1157,7 +1157,7 @@ export const CampaignsApiFactory = function (configuration?: Configuration, base
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        campaignDelete(id: string, options?: any): AxiosPromise<CampaignDeleteDefaultResponse> {
+        campaignDelete(id: string, options?: any): AxiosPromise<CampaignDelete200Response> {
             return localVarFp.campaignDelete(id, options).then((request) => request(axios, basePath));
         },
         /**
@@ -1207,7 +1207,7 @@ export const CampaignsApiFactory = function (configuration?: Configuration, base
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        campaignStart(id: string, options?: any): AxiosPromise<CampaignDeleteDefaultResponse> {
+        campaignStart(id: string, options?: any): AxiosPromise<CampaignDelete200Response> {
             return localVarFp.campaignStart(id, options).then((request) => request(axios, basePath));
         },
         /**
@@ -1216,7 +1216,7 @@ export const CampaignsApiFactory = function (configuration?: Configuration, base
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        campaignStop(id: string, options?: any): AxiosPromise<CampaignDeleteDefaultResponse> {
+        campaignStop(id: string, options?: any): AxiosPromise<CampaignDelete200Response> {
             return localVarFp.campaignStop(id, options).then((request) => request(axios, basePath));
         },
     };
