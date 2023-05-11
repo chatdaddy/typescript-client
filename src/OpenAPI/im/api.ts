@@ -235,6 +235,32 @@ export type AccountCredentialsAlibabaV2TypeEnum = typeof AccountCredentialsAliba
 /**
  * 
  * @export
+ * @interface AccountCredentialsTikTok
+ */
+export interface AccountCredentialsTikTok {
+    /**
+     * 
+     * @type {string}
+     * @memberof AccountCredentialsTikTok
+     */
+    'type': AccountCredentialsTikTokTypeEnum;
+    /**
+     * Cookies for TikTok. This must be a serialised `tough-cookie` cookiejar
+     * @type {{ [key: string]: any; }}
+     * @memberof AccountCredentialsTikTok
+     */
+    'cookies': { [key: string]: any; };
+}
+
+export const AccountCredentialsTikTokTypeEnum = {
+    Tiktok: 'tiktok'
+} as const;
+
+export type AccountCredentialsTikTokTypeEnum = typeof AccountCredentialsTikTokTypeEnum[keyof typeof AccountCredentialsTikTokTypeEnum];
+
+/**
+ * 
+ * @export
  * @interface AccountError
  */
 export interface AccountError {
@@ -431,21 +457,8 @@ export interface AccountsPatchRequest {
  * @type AccountsPatchRequestCredentials
  * @export
  */
-export type AccountsPatchRequestCredentials = AccountCredentialsAlibaba | AccountsPatchRequestCredentialsOneOf;
+export type AccountsPatchRequestCredentials = AccountCredentialsAlibaba | AccountCredentialsAlibabaV2 | AccountCredentialsTikTok;
 
-/**
- * 
- * @export
- * @interface AccountsPatchRequestCredentialsOneOf
- */
-export interface AccountsPatchRequestCredentialsOneOf {
-    /**
-     * 
-     * @type {{ [key: string]: any; }}
-     * @memberof AccountsPatchRequestCredentialsOneOf
-     */
-    'cookies'?: { [key: string]: any; };
-}
 /**
  * 
  * @export
