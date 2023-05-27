@@ -1979,6 +1979,12 @@ export interface MessageInsertData {
     'senderContactId'?: string | null;
     /**
      * 
+     * @type {MessageInsertDataSender}
+     * @memberof MessageInsertData
+     */
+    'sender'?: MessageInsertDataSender | null;
+    /**
+     * 
      * @type {string}
      * @memberof MessageInsertData
      */
@@ -2673,6 +2679,19 @@ export interface MessageInsertDataReactionsInner {
 /**
  * 
  * @export
+ * @interface MessageInsertDataSender
+ */
+export interface MessageInsertDataSender {
+    /**
+     * 
+     * @type {string}
+     * @memberof MessageInsertDataSender
+     */
+    'userId': string;
+}
+/**
+ * 
+ * @export
  * @interface MessageUpdate
  */
 export interface MessageUpdate {
@@ -2732,6 +2751,12 @@ export interface MessageUpdateData {
      * @memberof MessageUpdateData
      */
     'senderContactId'?: string | null;
+    /**
+     * 
+     * @type {MessageInsertDataSender}
+     * @memberof MessageUpdateData
+     */
+    'sender'?: MessageInsertDataSender | null;
     /**
      * 
      * @type {string}
