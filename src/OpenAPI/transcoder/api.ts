@@ -51,10 +51,11 @@ export const TranscodeApiAxiosParamCreator = function (configuration?: Configura
          * @param {string} id Message ID
          * @param {number} index Attachment index
          * @param {string} [token] ChatDaddy auth token, optionally provide in query
+         * @param {string} [mimetype] override the mimetype of the media post transcoding
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        streamMessageAttachment: async (accountId: string, chatId: string, id: string, index: number, token?: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        streamMessageAttachment: async (accountId: string, chatId: string, id: string, index: number, token?: string, mimetype?: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'accountId' is not null or undefined
             assertParamExists('streamMessageAttachment', 'accountId', accountId)
             // verify required parameter 'chatId' is not null or undefined
@@ -85,6 +86,10 @@ export const TranscodeApiAxiosParamCreator = function (configuration?: Configura
 
             if (token !== undefined) {
                 localVarQueryParameter['token'] = token;
+            }
+
+            if (mimetype !== undefined) {
+                localVarQueryParameter['mimetype'] = mimetype;
             }
 
 
@@ -181,11 +186,12 @@ export const TranscodeApiFp = function(configuration?: Configuration) {
          * @param {string} id Message ID
          * @param {number} index Attachment index
          * @param {string} [token] ChatDaddy auth token, optionally provide in query
+         * @param {string} [mimetype] override the mimetype of the media post transcoding
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async streamMessageAttachment(accountId: string, chatId: string, id: string, index: number, token?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.streamMessageAttachment(accountId, chatId, id, index, token, options);
+        async streamMessageAttachment(accountId: string, chatId: string, id: string, index: number, token?: string, mimetype?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.streamMessageAttachment(accountId, chatId, id, index, token, mimetype, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -222,11 +228,12 @@ export const TranscodeApiFactory = function (configuration?: Configuration, base
          * @param {string} id Message ID
          * @param {number} index Attachment index
          * @param {string} [token] ChatDaddy auth token, optionally provide in query
+         * @param {string} [mimetype] override the mimetype of the media post transcoding
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        streamMessageAttachment(accountId: string, chatId: string, id: string, index: number, token?: string, options?: any): AxiosPromise<void> {
-            return localVarFp.streamMessageAttachment(accountId, chatId, id, index, token, options).then((request) => request(axios, basePath));
+        streamMessageAttachment(accountId: string, chatId: string, id: string, index: number, token?: string, mimetype?: string, options?: any): AxiosPromise<void> {
+            return localVarFp.streamMessageAttachment(accountId, chatId, id, index, token, mimetype, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -286,6 +293,13 @@ export interface TranscodeApiStreamMessageAttachmentRequest {
      * @memberof TranscodeApiStreamMessageAttachment
      */
     readonly token?: string
+
+    /**
+     * override the mimetype of the media post transcoding
+     * @type {string}
+     * @memberof TranscodeApiStreamMessageAttachment
+     */
+    readonly mimetype?: string
 }
 
 /**
@@ -353,7 +367,7 @@ export class TranscodeApi extends BaseAPI {
      * @memberof TranscodeApi
      */
     public streamMessageAttachment(requestParameters: TranscodeApiStreamMessageAttachmentRequest, options?: AxiosRequestConfig) {
-        return TranscodeApiFp(this.configuration).streamMessageAttachment(requestParameters.accountId, requestParameters.chatId, requestParameters.id, requestParameters.index, requestParameters.token, options).then((request) => request(this.axios, this.basePath));
+        return TranscodeApiFp(this.configuration).streamMessageAttachment(requestParameters.accountId, requestParameters.chatId, requestParameters.id, requestParameters.index, requestParameters.token, requestParameters.mimetype, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
