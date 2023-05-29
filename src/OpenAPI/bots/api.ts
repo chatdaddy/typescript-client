@@ -337,6 +337,12 @@ export interface Bot {
     'startingActionId'?: string | null;
     /**
      * 
+     * @type {Array<BotTrigger>}
+     * @memberof Bot
+     */
+    'startTriggers'?: Array<BotTrigger>;
+    /**
+     * 
      * @type {string}
      * @memberof Bot
      */
@@ -360,6 +366,54 @@ export interface Bot {
      */
     'updatedAt'?: string;
 }
+/**
+ * 
+ * @export
+ * @interface BotCondition
+ */
+export interface BotCondition {
+    /**
+     * 
+     * @type {string}
+     * @memberof BotCondition
+     */
+    'propertyName': string;
+    /**
+     * 
+     * @type {BotConditionValue}
+     * @memberof BotCondition
+     */
+    'value'?: BotConditionValue;
+    /**
+     * 
+     * @type {string}
+     * @memberof BotCondition
+     */
+    'operator'?: BotConditionOperatorEnum;
+}
+
+export const BotConditionOperatorEnum = {
+    Equals: 'equals',
+    NorEquals: 'norEquals',
+    GreaterThan: 'greaterThan',
+    LessThan: 'lessThan',
+    GreaterThanOrEquals: 'greaterThanOrEquals',
+    LessThanOrEquals: 'lessThanOrEquals',
+    Contains: 'contains',
+    NotContains: 'notContains',
+    StartsWith: 'startsWith',
+    EndsWith: 'endsWith',
+    ContainsWord: 'containsWord'
+} as const;
+
+export type BotConditionOperatorEnum = typeof BotConditionOperatorEnum[keyof typeof BotConditionOperatorEnum];
+
+/**
+ * @type BotConditionValue
+ * @export
+ */
+export type BotConditionValue = boolean | number | string;
+
 /**
  * 
  * @export
@@ -465,11 +519,334 @@ export interface BotPatch {
      */
     'startingActionId'?: string;
     /**
+     * 
+     * @type {Array<BotTrigger>}
+     * @memberof BotPatch
+     */
+    'startTriggers'?: Array<BotTrigger>;
+    /**
      * List of actions to edit/add. Do not specify the ID to add a new action
      * @type {Array<ActionContent>}
      * @memberof BotPatch
      */
     'actions'?: Array<ActionContent>;
+}
+/**
+ * 
+ * @export
+ * @interface BotTrigger
+ */
+export interface BotTrigger {
+    /**
+     * 
+     * @type {string}
+     * @memberof BotTrigger
+     */
+    'id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof BotTrigger
+     */
+    'name': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof BotTrigger
+     */
+    'accountId': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof BotTrigger
+     */
+    'botId': string;
+    /**
+     * 
+     * @type {Array<BotCondition>}
+     * @memberof BotTrigger
+     */
+    'conditions'?: Array<BotCondition>;
+    /**
+     * 
+     * @type {BotTriggerMethod}
+     * @memberof BotTrigger
+     */
+    'method': BotTriggerMethod;
+    /**
+     * 
+     * @type {BotTriggerTarget}
+     * @memberof BotTrigger
+     */
+    'target': BotTriggerTarget;
+    /**
+     * 
+     * @type {BotTriggerSendOptions}
+     * @memberof BotTrigger
+     */
+    'options'?: BotTriggerSendOptions;
+}
+/**
+ * 
+ * @export
+ * @interface BotTriggerMethod
+ */
+export interface BotTriggerMethod {
+    /**
+     * 
+     * @type {string}
+     * @memberof BotTriggerMethod
+     */
+    'type': BotTriggerMethodTypeEnum;
+    /**
+     * 
+     * @type {string}
+     * @memberof BotTriggerMethod
+     */
+    'value': string;
+}
+
+export const BotTriggerMethodTypeEnum = {
+    Webhook: 'webhook',
+    Timestamp: 'timestamp',
+    Event: 'event'
+} as const;
+
+export type BotTriggerMethodTypeEnum = typeof BotTriggerMethodTypeEnum[keyof typeof BotTriggerMethodTypeEnum];
+
+/**
+ * 
+ * @export
+ * @interface BotTriggerSendOptions
+ */
+export interface BotTriggerSendOptions {
+    /**
+     * 
+     * @type {MessageSendOptions}
+     * @memberof BotTriggerSendOptions
+     */
+    'miscOptions'?: MessageSendOptions;
+    /**
+     * parameters to replace in text
+     * @type {{ [key: string]: any; }}
+     * @memberof BotTriggerSendOptions
+     */
+    'parameters'?: { [key: string]: any; };
+}
+/**
+ * @type BotTriggerTarget
+ * @export
+ */
+export type BotTriggerTarget = BotTriggerTargetOneOf | BotTriggerTargetOneOf1;
+
+/**
+ * 
+ * @export
+ * @interface BotTriggerTargetOneOf
+ */
+export interface BotTriggerTargetOneOf {
+    /**
+     * 
+     * @type {string}
+     * @memberof BotTriggerTargetOneOf
+     */
+    'type': BotTriggerTargetOneOfTypeEnum;
+    /**
+     * 
+     * @type {string}
+     * @memberof BotTriggerTargetOneOf
+     */
+    'propertyName': string;
+    /**
+     * 
+     * @type {BotTriggerTargetOneOfAccountId}
+     * @memberof BotTriggerTargetOneOf
+     */
+    'accountId': BotTriggerTargetOneOfAccountId;
+    /**
+     * the property name to extract `accountId` from, or the exact ID of the account
+     * @type {string}
+     * @memberof BotTriggerTargetOneOf
+     */
+    'value'?: string;
+}
+
+export const BotTriggerTargetOneOfTypeEnum = {
+    PropertyName: 'propertyName'
+} as const;
+
+export type BotTriggerTargetOneOfTypeEnum = typeof BotTriggerTargetOneOfTypeEnum[keyof typeof BotTriggerTargetOneOfTypeEnum];
+
+/**
+ * 
+ * @export
+ * @interface BotTriggerTargetOneOf1
+ */
+export interface BotTriggerTargetOneOf1 {
+    /**
+     * 
+     * @type {string}
+     * @memberof BotTriggerTargetOneOf1
+     */
+    'type': BotTriggerTargetOneOf1TypeEnum;
+    /**
+     * 
+     * @type {BotTriggerTargetQuery}
+     * @memberof BotTriggerTargetOneOf1
+     */
+    'query'?: BotTriggerTargetQuery;
+    /**
+     * 
+     * @type {BotTriggerTargetOneOfAccountId}
+     * @memberof BotTriggerTargetOneOf1
+     */
+    'accountId'?: BotTriggerTargetOneOfAccountId;
+    /**
+     * the property name to extract `accountId` from, or the exact ID of the account
+     * @type {string}
+     * @memberof BotTriggerTargetOneOf1
+     */
+    'value'?: string;
+}
+
+export const BotTriggerTargetOneOf1TypeEnum = {
+    Fetch: 'fetch'
+} as const;
+
+export type BotTriggerTargetOneOf1TypeEnum = typeof BotTriggerTargetOneOf1TypeEnum[keyof typeof BotTriggerTargetOneOf1TypeEnum];
+
+/**
+ * 
+ * @export
+ * @interface BotTriggerTargetOneOfAccountId
+ */
+export interface BotTriggerTargetOneOfAccountId {
+    /**
+     * 
+     * @type {string}
+     * @memberof BotTriggerTargetOneOfAccountId
+     */
+    'type'?: BotTriggerTargetOneOfAccountIdTypeEnum;
+}
+
+export const BotTriggerTargetOneOfAccountIdTypeEnum = {
+    PropertyName: 'propertyName',
+    Exact: 'exact'
+} as const;
+
+export type BotTriggerTargetOneOfAccountIdTypeEnum = typeof BotTriggerTargetOneOfAccountIdTypeEnum[keyof typeof BotTriggerTargetOneOfAccountIdTypeEnum];
+
+/**
+ * 
+ * @export
+ * @interface BotTriggerTargetQuery
+ */
+export interface BotTriggerTargetQuery {
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof BotTriggerTargetQuery
+     */
+    'tags'?: Array<string>;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof BotTriggerTargetQuery
+     */
+    'notTags'?: Array<string>;
+    /**
+     * 
+     * @type {string}
+     * @memberof BotTriggerTargetQuery
+     */
+    'q'?: string | null;
+    /**
+     * 
+     * @type {number}
+     * @memberof BotTriggerTargetQuery
+     */
+    'minMessagesSent'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof BotTriggerTargetQuery
+     */
+    'maxMessagesSent'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof BotTriggerTargetQuery
+     */
+    'minMessagesRecv'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof BotTriggerTargetQuery
+     */
+    'maxMessagesRecv'?: number;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof BotTriggerTargetQuery
+     */
+    'assignee'?: Array<string>;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof BotTriggerTargetQuery
+     */
+    'notAssignee'?: Array<string>;
+    /**
+     * 
+     * @type {string}
+     * @memberof BotTriggerTargetQuery
+     */
+    'contactType'?: BotTriggerTargetQueryContactTypeEnum;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof BotTriggerTargetQuery
+     */
+    'contacts'?: Array<string>;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof BotTriggerTargetQuery
+     */
+    'notContacts'?: Array<string>;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof BotTriggerTargetQuery
+     */
+    'accountId'?: Array<string>;
+}
+
+export const BotTriggerTargetQueryContactTypeEnum = {
+    Individual: 'individual',
+    Group: 'group'
+} as const;
+
+export type BotTriggerTargetQueryContactTypeEnum = typeof BotTriggerTargetQueryContactTypeEnum[keyof typeof BotTriggerTargetQueryContactTypeEnum];
+
+/**
+ * 
+ * @export
+ * @interface BotTriggersGets200Response
+ */
+export interface BotTriggersGets200Response {
+    /**
+     * 
+     * @type {Array<BotTrigger>}
+     * @memberof BotTriggersGets200Response
+     */
+    'botTriggers': Array<BotTrigger>;
+    /**
+     * Cursor to use to fetch next page of results
+     * @type {string}
+     * @memberof BotTriggersGets200Response
+     */
+    'cursor'?: string;
 }
 /**
  * 
@@ -523,84 +900,16 @@ export interface BotsFireRequest {
     'toContact': string;
     /**
      * 
-     * @type {BotsFireRequestMessageSendOptions}
+     * @type {MessageSendOptions}
      * @memberof BotsFireRequest
      */
-    'messageSendOptions'?: BotsFireRequestMessageSendOptions;
+    'messageSendOptions'?: MessageSendOptions;
     /**
      * 
      * @type {{ [key: string]: any; }}
      * @memberof BotsFireRequest
      */
     'parameters'?: { [key: string]: any; };
-}
-/**
- * Optional parameters to send a message
- * @export
- * @interface BotsFireRequestMessageSendOptions
- */
-export interface BotsFireRequestMessageSendOptions {
-    /**
-     * 
-     * @type {string}
-     * @memberof BotsFireRequestMessageSendOptions
-     */
-    'messageId'?: string;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof BotsFireRequestMessageSendOptions
-     */
-    'simulateTyping'?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof BotsFireRequestMessageSendOptions
-     */
-    'requireOpenAccount'?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof BotsFireRequestMessageSendOptions
-     */
-    'cancelIfReplyReceived'?: boolean;
-    /**
-     * An ISO formatted timestamp
-     * @type {string}
-     * @memberof BotsFireRequestMessageSendOptions
-     */
-    'scheduleAt'?: string;
-    /**
-     * Forwards option to IM service
-     * @type {boolean}
-     * @memberof BotsFireRequestMessageSendOptions
-     */
-    'includeMarketingMessage'?: boolean;
-    /**
-     * 
-     * @type {BotsFireRequestMessageSendOptionsQuoted}
-     * @memberof BotsFireRequestMessageSendOptions
-     */
-    'quoted'?: BotsFireRequestMessageSendOptionsQuoted;
-}
-/**
- * 
- * @export
- * @interface BotsFireRequestMessageSendOptionsQuoted
- */
-export interface BotsFireRequestMessageSendOptionsQuoted {
-    /**
-     * 
-     * @type {string}
-     * @memberof BotsFireRequestMessageSendOptionsQuoted
-     */
-    'chatId': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof BotsFireRequestMessageSendOptionsQuoted
-     */
-    'id': string;
 }
 /**
  * 
@@ -934,6 +1243,74 @@ export interface MessageObj {
      * @memberof MessageObj
      */
     'products'?: Array<IMMessageProduct>;
+}
+/**
+ * Optional parameters to send a message
+ * @export
+ * @interface MessageSendOptions
+ */
+export interface MessageSendOptions {
+    /**
+     * 
+     * @type {string}
+     * @memberof MessageSendOptions
+     */
+    'messageId'?: string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof MessageSendOptions
+     */
+    'simulateTyping'?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof MessageSendOptions
+     */
+    'requireOpenAccount'?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof MessageSendOptions
+     */
+    'cancelIfReplyReceived'?: boolean;
+    /**
+     * An ISO formatted timestamp
+     * @type {string}
+     * @memberof MessageSendOptions
+     */
+    'scheduleAt'?: string;
+    /**
+     * Forwards option to IM service
+     * @type {boolean}
+     * @memberof MessageSendOptions
+     */
+    'includeMarketingMessage'?: boolean;
+    /**
+     * 
+     * @type {MessageSendOptionsQuoted}
+     * @memberof MessageSendOptions
+     */
+    'quoted'?: MessageSendOptionsQuoted;
+}
+/**
+ * 
+ * @export
+ * @interface MessageSendOptionsQuoted
+ */
+export interface MessageSendOptionsQuoted {
+    /**
+     * 
+     * @type {string}
+     * @memberof MessageSendOptionsQuoted
+     */
+    'chatId': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof MessageSendOptionsQuoted
+     */
+    'id': string;
 }
 /**
  * position in x-y coordinate space
@@ -1327,6 +1704,158 @@ export class ActionsApi extends BaseAPI {
      */
     public actionsGet(requestParameters: ActionsApiActionsGetRequest = {}, options?: AxiosRequestConfig) {
         return ActionsApiFp(this.configuration).actionsGet(requestParameters.count, requestParameters.before, requestParameters.q, requestParameters.botId, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+/**
+ * BotTriggersApi - axios parameter creator
+ * @export
+ */
+export const BotTriggersApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @summary Get list of bot triggers
+         * @param {number} [count] 
+         * @param {Array<string>} [id] 
+         * @param {string} [cursor] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        botTriggersGets: async (count?: number, id?: Array<string>, cursor?: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/bot-triggers`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["TEMPLATES_READ"], configuration)
+
+            if (count !== undefined) {
+                localVarQueryParameter['count'] = count;
+            }
+
+            if (id) {
+                localVarQueryParameter['id'] = id;
+            }
+
+            if (cursor !== undefined) {
+                localVarQueryParameter['cursor'] = cursor;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * BotTriggersApi - functional programming interface
+ * @export
+ */
+export const BotTriggersApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = BotTriggersApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * 
+         * @summary Get list of bot triggers
+         * @param {number} [count] 
+         * @param {Array<string>} [id] 
+         * @param {string} [cursor] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async botTriggersGets(count?: number, id?: Array<string>, cursor?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BotTriggersGets200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.botTriggersGets(count, id, cursor, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+    }
+};
+
+/**
+ * BotTriggersApi - factory interface
+ * @export
+ */
+export const BotTriggersApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = BotTriggersApiFp(configuration)
+    return {
+        /**
+         * 
+         * @summary Get list of bot triggers
+         * @param {number} [count] 
+         * @param {Array<string>} [id] 
+         * @param {string} [cursor] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        botTriggersGets(count?: number, id?: Array<string>, cursor?: string, options?: any): AxiosPromise<BotTriggersGets200Response> {
+            return localVarFp.botTriggersGets(count, id, cursor, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * Request parameters for botTriggersGets operation in BotTriggersApi.
+ * @export
+ * @interface BotTriggersApiBotTriggersGetsRequest
+ */
+export interface BotTriggersApiBotTriggersGetsRequest {
+    /**
+     * 
+     * @type {number}
+     * @memberof BotTriggersApiBotTriggersGets
+     */
+    readonly count?: number
+
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof BotTriggersApiBotTriggersGets
+     */
+    readonly id?: Array<string>
+
+    /**
+     * 
+     * @type {string}
+     * @memberof BotTriggersApiBotTriggersGets
+     */
+    readonly cursor?: string
+}
+
+/**
+ * BotTriggersApi - object-oriented interface
+ * @export
+ * @class BotTriggersApi
+ * @extends {BaseAPI}
+ */
+export class BotTriggersApi extends BaseAPI {
+    /**
+     * 
+     * @summary Get list of bot triggers
+     * @param {BotTriggersApiBotTriggersGetsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof BotTriggersApi
+     */
+    public botTriggersGets(requestParameters: BotTriggersApiBotTriggersGetsRequest = {}, options?: AxiosRequestConfig) {
+        return BotTriggersApiFp(this.configuration).botTriggersGets(requestParameters.count, requestParameters.id, requestParameters.cursor, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
