@@ -533,6 +533,32 @@ export interface KeywordBasedAction {
     'updatedAt'?: string;
 }
 /**
+ * 
+ * @export
+ * @interface TranscribePost200Response
+ */
+export interface TranscribePost200Response {
+    /**
+     * The transcription of the audio
+     * @type {string}
+     * @memberof TranscribePost200Response
+     */
+    'transcription': string;
+}
+/**
+ * 
+ * @export
+ * @interface TranscribePostRequest
+ */
+export interface TranscribePostRequest {
+    /**
+     * The URL of the audio to transcribe
+     * @type {string}
+     * @memberof TranscribePostRequest
+     */
+    'audioUrl': string;
+}
+/**
  * Type of trigger
  * @export
  * @enum {string}
@@ -782,6 +808,131 @@ export class AutocompleteApi extends BaseAPI {
      */
     public autocompleteModify(requestParameters: AutocompleteApiAutocompleteModifyRequest, options?: AxiosRequestConfig) {
         return AutocompleteApiFp(this.configuration).autocompleteModify(requestParameters.modifier, requestParameters.autocompleteModifyRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+/**
+ * DefaultApi - axios parameter creator
+ * @export
+ */
+const DefaultApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * Accepts an audio URL and converts it to text using AWS Transcribe. Supports both streaming and batch processing.
+         * @summary Convert audio URL to text
+         * @param {TranscribePostRequest} transcribePostRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        transcribePost: async (transcribePostRequest: TranscribePostRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'transcribePostRequest' is not null or undefined
+            assertParamExists('transcribePost', 'transcribePostRequest', transcribePostRequest)
+            const localVarPath = `/transcribe`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["AUTOCOMPLETE_GET"], configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(transcribePostRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * DefaultApi - functional programming interface
+ * @export
+ */
+const DefaultApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = DefaultApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * Accepts an audio URL and converts it to text using AWS Transcribe. Supports both streaming and batch processing.
+         * @summary Convert audio URL to text
+         * @param {TranscribePostRequest} transcribePostRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async transcribePost(transcribePostRequest: TranscribePostRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TranscribePost200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.transcribePost(transcribePostRequest, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+    }
+};
+
+/**
+ * DefaultApi - factory interface
+ * @export
+ */
+const DefaultApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = DefaultApiFp(configuration)
+    return {
+        /**
+         * Accepts an audio URL and converts it to text using AWS Transcribe. Supports both streaming and batch processing.
+         * @summary Convert audio URL to text
+         * @param {TranscribePostRequest} transcribePostRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        transcribePost(transcribePostRequest: TranscribePostRequest, options?: any): AxiosPromise<TranscribePost200Response> {
+            return localVarFp.transcribePost(transcribePostRequest, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * Request parameters for transcribePost operation in DefaultApi.
+ * @export
+ * @interface DefaultApiTranscribePostRequest
+ */
+export interface DefaultApiTranscribePostRequest {
+    /**
+     * 
+     * @type {TranscribePostRequest}
+     * @memberof DefaultApiTranscribePost
+     */
+    readonly transcribePostRequest: TranscribePostRequest
+}
+
+/**
+ * DefaultApi - object-oriented interface
+ * @export
+ * @class DefaultApi
+ * @extends {BaseAPI}
+ */
+export class DefaultApi extends BaseAPI {
+    /**
+     * Accepts an audio URL and converts it to text using AWS Transcribe. Supports both streaming and batch processing.
+     * @summary Convert audio URL to text
+     * @param {DefaultApiTranscribePostRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApi
+     */
+    public transcribePost(requestParameters: DefaultApiTranscribePostRequest, options?: AxiosRequestConfig) {
+        return DefaultApiFp(this.configuration).transcribePost(requestParameters.transcribePostRequest, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
