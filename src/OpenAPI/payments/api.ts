@@ -1161,25 +1161,6 @@ export interface SessionPost200Response {
      */
     'sessionId': string;
 }
-/**
- * 
- * @export
- * @interface StripeHook200Response
- */
-export interface StripeHook200Response {
-    /**
-     * 
-     * @type {string}
-     * @memberof StripeHook200Response
-     */
-    'status': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof StripeHook200Response
-     */
-    'description': string;
-}
 
 /**
  * CouponCodesApi - axios parameter creator
@@ -3147,9 +3128,6 @@ export const StripeApiAxiosParamCreator = function (configuration?: Configuratio
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
-            // authentication stripe required
-            await setApiKeyToObject(localVarHeaderParameter, "stripe-signature", configuration)
-
 
     
             localVarHeaderParameter['Content-Type'] = 'application/json';
@@ -3227,7 +3205,7 @@ export const StripeApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async stripeHook(requestBody?: { [key: string]: any; }, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<StripeHook200Response>> {
+        async stripeHook(requestBody?: { [key: string]: any; }, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.stripeHook(requestBody, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -3290,7 +3268,7 @@ export const StripeApiFactory = function (configuration?: Configuration, basePat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        stripeHook(requestBody?: { [key: string]: any; }, options?: any): AxiosPromise<StripeHook200Response> {
+        stripeHook(requestBody?: { [key: string]: any; }, options?: any): AxiosPromise<void> {
             return localVarFp.stripeHook(requestBody, options).then((request) => request(axios, basePath));
         },
     };
