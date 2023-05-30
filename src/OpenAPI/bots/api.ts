@@ -1719,11 +1719,12 @@ export const BotTriggersApiAxiosParamCreator = function (configuration?: Configu
          * @summary Get list of bot triggers
          * @param {number} [count] 
          * @param {Array<string>} [id] 
+         * @param {'webhook' | 'timestamp' | 'event'} [method] 
          * @param {string} [cursor] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        botTriggersGets: async (count?: number, id?: Array<string>, cursor?: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        botTriggersGets: async (count?: number, id?: Array<string>, method?: 'webhook' | 'timestamp' | 'event', cursor?: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/bot-triggers`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -1746,6 +1747,10 @@ export const BotTriggersApiAxiosParamCreator = function (configuration?: Configu
 
             if (id) {
                 localVarQueryParameter['id'] = id;
+            }
+
+            if (method !== undefined) {
+                localVarQueryParameter['method'] = method;
             }
 
             if (cursor !== undefined) {
@@ -1778,12 +1783,13 @@ export const BotTriggersApiFp = function(configuration?: Configuration) {
          * @summary Get list of bot triggers
          * @param {number} [count] 
          * @param {Array<string>} [id] 
+         * @param {'webhook' | 'timestamp' | 'event'} [method] 
          * @param {string} [cursor] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async botTriggersGets(count?: number, id?: Array<string>, cursor?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BotTriggersGets200Response>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.botTriggersGets(count, id, cursor, options);
+        async botTriggersGets(count?: number, id?: Array<string>, method?: 'webhook' | 'timestamp' | 'event', cursor?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BotTriggersGets200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.botTriggersGets(count, id, method, cursor, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
     }
@@ -1801,12 +1807,13 @@ export const BotTriggersApiFactory = function (configuration?: Configuration, ba
          * @summary Get list of bot triggers
          * @param {number} [count] 
          * @param {Array<string>} [id] 
+         * @param {'webhook' | 'timestamp' | 'event'} [method] 
          * @param {string} [cursor] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        botTriggersGets(count?: number, id?: Array<string>, cursor?: string, options?: any): AxiosPromise<BotTriggersGets200Response> {
-            return localVarFp.botTriggersGets(count, id, cursor, options).then((request) => request(axios, basePath));
+        botTriggersGets(count?: number, id?: Array<string>, method?: 'webhook' | 'timestamp' | 'event', cursor?: string, options?: any): AxiosPromise<BotTriggersGets200Response> {
+            return localVarFp.botTriggersGets(count, id, method, cursor, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -1833,6 +1840,13 @@ export interface BotTriggersApiBotTriggersGetsRequest {
 
     /**
      * 
+     * @type {'webhook' | 'timestamp' | 'event'}
+     * @memberof BotTriggersApiBotTriggersGets
+     */
+    readonly method?: 'webhook' | 'timestamp' | 'event'
+
+    /**
+     * 
      * @type {string}
      * @memberof BotTriggersApiBotTriggersGets
      */
@@ -1855,7 +1869,7 @@ export class BotTriggersApi extends BaseAPI {
      * @memberof BotTriggersApi
      */
     public botTriggersGets(requestParameters: BotTriggersApiBotTriggersGetsRequest = {}, options?: AxiosRequestConfig) {
-        return BotTriggersApiFp(this.configuration).botTriggersGets(requestParameters.count, requestParameters.id, requestParameters.cursor, options).then((request) => request(this.axios, this.basePath));
+        return BotTriggersApiFp(this.configuration).botTriggersGets(requestParameters.count, requestParameters.id, requestParameters.method, requestParameters.cursor, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
