@@ -837,6 +837,19 @@ export type BotTriggerTargetQueryContactTypeEnum = typeof BotTriggerTargetQueryC
 /**
  * 
  * @export
+ * @interface BotTriggerWebhookRequest
+ */
+export interface BotTriggerWebhookRequest {
+    /**
+     * Payload to be sent to the webhook
+     * @type {{ [key: string]: any; }}
+     * @memberof BotTriggerWebhookRequest
+     */
+    'payload'?: { [key: string]: any; };
+}
+/**
+ * 
+ * @export
  * @interface BotTriggersGets200Response
  */
 export interface BotTriggersGets200Response {
@@ -1723,11 +1736,11 @@ export const BotTriggersApiAxiosParamCreator = function (configuration?: Configu
          * 
          * @summary Fire a bot trigger via webhook
          * @param {string} triggerId 
-         * @param {{ [key: string]: any; }} [requestBody] 
+         * @param {BotTriggerWebhookRequest} [botTriggerWebhookRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        botTriggerWebhook: async (triggerId: string, requestBody?: { [key: string]: any; }, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        botTriggerWebhook: async (triggerId: string, botTriggerWebhookRequest?: BotTriggerWebhookRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'triggerId' is not null or undefined
             assertParamExists('botTriggerWebhook', 'triggerId', triggerId)
             const localVarPath = `/bot-triggers/webhook/{triggerId}`
@@ -1754,7 +1767,7 @@ export const BotTriggersApiAxiosParamCreator = function (configuration?: Configu
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(requestBody, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(botTriggerWebhookRequest, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -1829,12 +1842,12 @@ export const BotTriggersApiFp = function(configuration?: Configuration) {
          * 
          * @summary Fire a bot trigger via webhook
          * @param {string} triggerId 
-         * @param {{ [key: string]: any; }} [requestBody] 
+         * @param {BotTriggerWebhookRequest} [botTriggerWebhookRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async botTriggerWebhook(triggerId: string, requestBody?: { [key: string]: any; }, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.botTriggerWebhook(triggerId, requestBody, options);
+        async botTriggerWebhook(triggerId: string, botTriggerWebhookRequest?: BotTriggerWebhookRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.botTriggerWebhook(triggerId, botTriggerWebhookRequest, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -1865,12 +1878,12 @@ export const BotTriggersApiFactory = function (configuration?: Configuration, ba
          * 
          * @summary Fire a bot trigger via webhook
          * @param {string} triggerId 
-         * @param {{ [key: string]: any; }} [requestBody] 
+         * @param {BotTriggerWebhookRequest} [botTriggerWebhookRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        botTriggerWebhook(triggerId: string, requestBody?: { [key: string]: any; }, options?: any): AxiosPromise<void> {
-            return localVarFp.botTriggerWebhook(triggerId, requestBody, options).then((request) => request(axios, basePath));
+        botTriggerWebhook(triggerId: string, botTriggerWebhookRequest?: BotTriggerWebhookRequest, options?: any): AxiosPromise<void> {
+            return localVarFp.botTriggerWebhook(triggerId, botTriggerWebhookRequest, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -1903,10 +1916,10 @@ export interface BotTriggersApiBotTriggerWebhookRequest {
 
     /**
      * 
-     * @type {{ [key: string]: any; }}
+     * @type {BotTriggerWebhookRequest}
      * @memberof BotTriggersApiBotTriggerWebhook
      */
-    readonly requestBody?: { [key: string]: any; }
+    readonly botTriggerWebhookRequest?: BotTriggerWebhookRequest
 }
 
 /**
@@ -1960,7 +1973,7 @@ export class BotTriggersApi extends BaseAPI {
      * @memberof BotTriggersApi
      */
     public botTriggerWebhook(requestParameters: BotTriggersApiBotTriggerWebhookRequest, options?: AxiosRequestConfig) {
-        return BotTriggersApiFp(this.configuration).botTriggerWebhook(requestParameters.triggerId, requestParameters.requestBody, options).then((request) => request(this.axios, this.basePath));
+        return BotTriggersApiFp(this.configuration).botTriggerWebhook(requestParameters.triggerId, requestParameters.botTriggerWebhookRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
