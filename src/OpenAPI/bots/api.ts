@@ -602,7 +602,7 @@ export interface BotTriggerMethod {
      * @type {string}
      * @memberof BotTriggerMethod
      */
-    'value': string;
+    'value'?: string;
     /**
      * An ISO formatted timestamp
      * @type {string}
