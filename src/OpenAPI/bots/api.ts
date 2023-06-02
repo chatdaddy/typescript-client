@@ -674,12 +674,6 @@ export interface BotTriggerTargetOneOf {
      * @memberof BotTriggerTargetOneOf
      */
     'value'?: string;
-    /**
-     * 
-     * @type {Array<string>}
-     * @memberof BotTriggerTargetOneOf
-     */
-    'additionalContacts'?: Array<string>;
 }
 
 export const BotTriggerTargetOneOfTypeEnum = {
@@ -718,12 +712,6 @@ export interface BotTriggerTargetOneOf1 {
      * @memberof BotTriggerTargetOneOf1
      */
     'value'?: string;
-    /**
-     * 
-     * @type {Array<string>}
-     * @memberof BotTriggerTargetOneOf1
-     */
-    'additionalContacts'?: Array<string>;
 }
 
 export const BotTriggerTargetOneOf1TypeEnum = {
