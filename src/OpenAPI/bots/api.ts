@@ -655,7 +655,7 @@ export interface BotTriggerTargetOneOf {
      * @type {string}
      * @memberof BotTriggerTargetOneOf
      */
-    'type': BotTriggerTargetOneOfTypeEnum;
+    'type'?: BotTriggerTargetOneOfTypeEnum;
     /**
      * 
      * @type {string}
@@ -668,12 +668,6 @@ export interface BotTriggerTargetOneOf {
      * @memberof BotTriggerTargetOneOf
      */
     'accountId': BotTriggerTargetOneOfAccountId;
-    /**
-     * the property name to extract `accountId` from, or the exact ID of the account
-     * @type {string}
-     * @memberof BotTriggerTargetOneOf
-     */
-    'value'?: string;
 }
 
 export const BotTriggerTargetOneOfTypeEnum = {
@@ -693,25 +687,19 @@ export interface BotTriggerTargetOneOf1 {
      * @type {string}
      * @memberof BotTriggerTargetOneOf1
      */
-    'type': BotTriggerTargetOneOf1TypeEnum;
+    'type'?: BotTriggerTargetOneOf1TypeEnum;
     /**
      * 
      * @type {BotTriggerTargetQuery}
      * @memberof BotTriggerTargetOneOf1
      */
-    'query'?: BotTriggerTargetQuery;
+    'query': BotTriggerTargetQuery;
     /**
      * 
-     * @type {BotTriggerTargetOneOfAccountId}
+     * @type {BotTriggerTargetOneOf1AccountId}
      * @memberof BotTriggerTargetOneOf1
      */
-    'accountId'?: BotTriggerTargetOneOfAccountId;
-    /**
-     * the property name to extract `accountId` from, or the exact ID of the account
-     * @type {string}
-     * @memberof BotTriggerTargetOneOf1
-     */
-    'value'?: string;
+    'accountId'?: BotTriggerTargetOneOf1AccountId;
 }
 
 export const BotTriggerTargetOneOf1TypeEnum = {
@@ -719,6 +707,33 @@ export const BotTriggerTargetOneOf1TypeEnum = {
 } as const;
 
 export type BotTriggerTargetOneOf1TypeEnum = typeof BotTriggerTargetOneOf1TypeEnum[keyof typeof BotTriggerTargetOneOf1TypeEnum];
+
+/**
+ * 
+ * @export
+ * @interface BotTriggerTargetOneOf1AccountId
+ */
+export interface BotTriggerTargetOneOf1AccountId {
+    /**
+     * 
+     * @type {string}
+     * @memberof BotTriggerTargetOneOf1AccountId
+     */
+    'type'?: BotTriggerTargetOneOf1AccountIdTypeEnum;
+    /**
+     * the property name to extract `accountId` from of the contact, or the exact ID of the account
+     * @type {string}
+     * @memberof BotTriggerTargetOneOf1AccountId
+     */
+    'value'?: string;
+}
+
+export const BotTriggerTargetOneOf1AccountIdTypeEnum = {
+    PropertyName: 'propertyName',
+    Exact: 'exact'
+} as const;
+
+export type BotTriggerTargetOneOf1AccountIdTypeEnum = typeof BotTriggerTargetOneOf1AccountIdTypeEnum[keyof typeof BotTriggerTargetOneOf1AccountIdTypeEnum];
 
 /**
  * 
@@ -732,6 +747,12 @@ export interface BotTriggerTargetOneOfAccountId {
      * @memberof BotTriggerTargetOneOfAccountId
      */
     'type'?: BotTriggerTargetOneOfAccountIdTypeEnum;
+    /**
+     * the property name to extract `accountId` from, or the exact ID of the account
+     * @type {string}
+     * @memberof BotTriggerTargetOneOfAccountId
+     */
+    'value'?: string;
 }
 
 export const BotTriggerTargetOneOfAccountIdTypeEnum = {
