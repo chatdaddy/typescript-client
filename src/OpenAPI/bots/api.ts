@@ -635,6 +635,78 @@ export type BotTriggerMethodTypeEnum = typeof BotTriggerMethodTypeEnum[keyof typ
 /**
  * 
  * @export
+ * @interface BotTriggerPayload
+ */
+export interface BotTriggerPayload {
+    /**
+     * 
+     * @type {BotTriggerPayloadContact}
+     * @memberof BotTriggerPayload
+     */
+    'contact': BotTriggerPayloadContact;
+    /**
+     * The data that is being sent to the bot. The data has the following properties
+     * @type {{ [key: string]: any; }}
+     * @memberof BotTriggerPayload
+     */
+    'data': { [key: string]: any; };
+    /**
+     * 
+     * @type {BotTriggerContext}
+     * @memberof BotTriggerPayload
+     */
+    'context': BotTriggerContext;
+}
+/**
+ * The contact that the message is being sent to. The contact properties such as the following and more. check IM service for full contact object
+ * @export
+ * @interface BotTriggerPayloadContact
+ */
+export interface BotTriggerPayloadContact {
+    [key: string]: any;
+
+    /**
+     * ID of the contact
+     * @type {string}
+     * @memberof BotTriggerPayloadContact
+     */
+    'id': string;
+    /**
+     * ID of the account
+     * @type {string}
+     * @memberof BotTriggerPayloadContact
+     */
+    'accountId': string;
+    /**
+     * Name of the contact
+     * @type {string}
+     * @memberof BotTriggerPayloadContact
+     */
+    'name'?: string;
+    /**
+     * Type of the contact
+     * @type {string}
+     * @memberof BotTriggerPayloadContact
+     */
+    'type'?: BotTriggerPayloadContactTypeEnum;
+    /**
+     * Tags on the contact
+     * @type {Array<string>}
+     * @memberof BotTriggerPayloadContact
+     */
+    'tags'?: Array<string>;
+}
+
+export const BotTriggerPayloadContactTypeEnum = {
+    Individual: 'individual',
+    Group: 'group'
+} as const;
+
+export type BotTriggerPayloadContactTypeEnum = typeof BotTriggerPayloadContactTypeEnum[keyof typeof BotTriggerPayloadContactTypeEnum];
+
+/**
+ * 
+ * @export
  * @interface BotTriggerSendOptions
  */
 export interface BotTriggerSendOptions {
