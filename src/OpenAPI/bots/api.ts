@@ -377,7 +377,7 @@ export interface BotCondition {
      * @type {string}
      * @memberof BotCondition
      */
-    'propertyName': string;
+    'propertyPath': string;
     /**
      * 
      * @type {BotConditionValue}
@@ -588,6 +588,19 @@ export interface BotTrigger {
 /**
  * 
  * @export
+ * @interface BotTriggerContext
+ */
+export interface BotTriggerContext {
+    /**
+     * An ISO formatted timestamp
+     * @type {string}
+     * @memberof BotTriggerContext
+     */
+    'timestamp': string;
+}
+/**
+ * 
+ * @export
  * @interface BotTriggerMethod
  */
 export interface BotTriggerMethod {
@@ -655,23 +668,29 @@ export interface BotTriggerTargetOneOf {
      * @type {string}
      * @memberof BotTriggerTargetOneOf
      */
-    'type'?: BotTriggerTargetOneOfTypeEnum;
+    'type': BotTriggerTargetOneOfTypeEnum;
     /**
-     * 
+     * Path of the property to access in the payload. Payload has the following properties 1. \'contact.*\' to access a property of the contact being sent to. Find structure of contact here 2. \'data.*\' to access a property of the event data 3. \'context.*\' to access a property of the context (note: probably add context schema to openapi spec?)
      * @type {string}
      * @memberof BotTriggerTargetOneOf
      */
-    'propertyName': string;
+    'propertyPath': string;
     /**
      * 
      * @type {BotTriggerTargetOneOfAccountId}
      * @memberof BotTriggerTargetOneOf
      */
     'accountId': BotTriggerTargetOneOfAccountId;
+    /**
+     * the property name to extract `accountId` from, or the exact ID of the account
+     * @type {string}
+     * @memberof BotTriggerTargetOneOf
+     */
+    'value'?: string;
 }
 
 export const BotTriggerTargetOneOfTypeEnum = {
-    PropertyName: 'propertyName'
+    PropertyPath: 'propertyPath'
 } as const;
 
 export type BotTriggerTargetOneOfTypeEnum = typeof BotTriggerTargetOneOfTypeEnum[keyof typeof BotTriggerTargetOneOfTypeEnum];
@@ -729,7 +748,7 @@ export interface BotTriggerTargetOneOf1AccountId {
 }
 
 export const BotTriggerTargetOneOf1AccountIdTypeEnum = {
-    PropertyName: 'propertyName',
+    PropertyPath: 'propertyPath',
     Exact: 'exact'
 } as const;
 
@@ -747,16 +766,10 @@ export interface BotTriggerTargetOneOfAccountId {
      * @memberof BotTriggerTargetOneOfAccountId
      */
     'type'?: BotTriggerTargetOneOfAccountIdTypeEnum;
-    /**
-     * the property name to extract `accountId` from, or the exact ID of the account
-     * @type {string}
-     * @memberof BotTriggerTargetOneOfAccountId
-     */
-    'value'?: string;
 }
 
 export const BotTriggerTargetOneOfAccountIdTypeEnum = {
-    PropertyName: 'propertyName',
+    PropertyPath: 'propertyPath',
     Exact: 'exact'
 } as const;
 
