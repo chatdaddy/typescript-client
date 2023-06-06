@@ -804,13 +804,13 @@ export interface BotTriggerTargetOneOf1AccountId {
      * @type {string}
      * @memberof BotTriggerTargetOneOf1AccountId
      */
-    'type'?: BotTriggerTargetOneOf1AccountIdTypeEnum;
+    'type': BotTriggerTargetOneOf1AccountIdTypeEnum;
     /**
      * the property name to extract `accountId` from of the contact, or the exact ID of the account
      * @type {string}
      * @memberof BotTriggerTargetOneOf1AccountId
      */
-    'value'?: string;
+    'value': string;
 }
 
 export const BotTriggerTargetOneOf1AccountIdTypeEnum = {
@@ -831,13 +831,13 @@ export interface BotTriggerTargetOneOfAccountId {
      * @type {string}
      * @memberof BotTriggerTargetOneOfAccountId
      */
-    'type'?: BotTriggerTargetOneOfAccountIdTypeEnum;
+    'type': BotTriggerTargetOneOfAccountIdTypeEnum;
     /**
      * the property name to extract `accountId` from, or the exact ID of the account
      * @type {string}
      * @memberof BotTriggerTargetOneOfAccountId
      */
-    'value'?: string;
+    'value': string;
 }
 
 export const BotTriggerTargetOneOfAccountIdTypeEnum = {

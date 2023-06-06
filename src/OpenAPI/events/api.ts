@@ -1381,13 +1381,13 @@ export interface BotInsertDataStartTriggersInnerTargetOneOf1AccountId {
      * @type {string}
      * @memberof BotInsertDataStartTriggersInnerTargetOneOf1AccountId
      */
-    'type'?: BotInsertDataStartTriggersInnerTargetOneOf1AccountIdTypeEnum;
+    'type': BotInsertDataStartTriggersInnerTargetOneOf1AccountIdTypeEnum;
     /**
      * the property name to extract `accountId` from of the contact, or the exact ID of the account
      * @type {string}
      * @memberof BotInsertDataStartTriggersInnerTargetOneOf1AccountId
      */
-    'value'?: string;
+    'value': string;
 }
 
 export const BotInsertDataStartTriggersInnerTargetOneOf1AccountIdTypeEnum = {
@@ -1501,13 +1501,13 @@ export interface BotInsertDataStartTriggersInnerTargetOneOfAccountId {
      * @type {string}
      * @memberof BotInsertDataStartTriggersInnerTargetOneOfAccountId
      */
-    'type'?: BotInsertDataStartTriggersInnerTargetOneOfAccountIdTypeEnum;
+    'type': BotInsertDataStartTriggersInnerTargetOneOfAccountIdTypeEnum;
     /**
      * the property name to extract `accountId` from, or the exact ID of the account
      * @type {string}
      * @memberof BotInsertDataStartTriggersInnerTargetOneOfAccountId
      */
-    'value'?: string;
+    'value': string;
 }
 
 export const BotInsertDataStartTriggersInnerTargetOneOfAccountIdTypeEnum = {
