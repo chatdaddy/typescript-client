@@ -499,13 +499,13 @@ export type ActionExecuteEventEnum = typeof ActionExecuteEventEnum[keyof typeof 
  */
 export interface ActionExecuteData {
     /**
-     * An ISO formatted timestamp
+     * 
      * @type {string}
      * @memberof ActionExecuteData
      */
     'createdAt': string;
     /**
-     * An ISO formatted timestamp
+     * 
      * @type {string}
      * @memberof ActionExecuteData
      */
@@ -517,7 +517,7 @@ export interface ActionExecuteData {
      */
     'id': string;
     /**
-     * ID of the bot sequence
+     * 
      * @type {string}
      * @memberof ActionExecuteData
      */
@@ -578,13 +578,13 @@ export interface ActionExecuteData {
  */
 export interface ActionExecuteDataAllOf {
     /**
-     * An ISO formatted timestamp
+     * 
      * @type {string}
      * @memberof ActionExecuteDataAllOf
      */
     'createdAt': string;
     /**
-     * An ISO formatted timestamp
+     * 
      * @type {string}
      * @memberof ActionExecuteDataAllOf
      */
@@ -603,7 +603,7 @@ export interface ActionExecuteDataAllOf1 {
      */
     'id'?: string;
     /**
-     * ID of the bot sequence
+     * 
      * @type {string}
      * @memberof ActionExecuteDataAllOf1
      */
@@ -898,6 +898,711 @@ export interface ActionExecuteDataAllOf1Tags {
      * @memberof ActionExecuteDataAllOf1Tags
      */
     'remove'?: boolean;
+}
+/**
+ * 
+ * @export
+ * @interface BotDelete
+ */
+export interface BotDelete {
+    /**
+     * 
+     * @type {string}
+     * @memberof BotDelete
+     */
+    'event': BotDeleteEventEnum;
+    /**
+     * 
+     * @type {Array<BotDeleteData>}
+     * @memberof BotDelete
+     */
+    'data': Array<BotDeleteData>;
+}
+
+export const BotDeleteEventEnum = {
+    BotDelete: 'bot-delete'
+} as const;
+
+export type BotDeleteEventEnum = typeof BotDeleteEventEnum[keyof typeof BotDeleteEventEnum];
+
+/**
+ * 
+ * @export
+ * @interface BotDeleteData
+ */
+export interface BotDeleteData {
+    /**
+     * 
+     * @type {string}
+     * @memberof BotDeleteData
+     */
+    'id': string;
+}
+/**
+ * 
+ * @export
+ * @interface BotInsert
+ */
+export interface BotInsert {
+    /**
+     * 
+     * @type {string}
+     * @memberof BotInsert
+     */
+    'event': BotInsertEventEnum;
+    /**
+     * 
+     * @type {Array<BotInsertData>}
+     * @memberof BotInsert
+     */
+    'data': Array<BotInsertData>;
+}
+
+export const BotInsertEventEnum = {
+    BotInsert: 'bot-insert'
+} as const;
+
+export type BotInsertEventEnum = typeof BotInsertEventEnum[keyof typeof BotInsertEventEnum];
+
+/**
+ * 
+ * @export
+ * @interface BotInsertData
+ */
+export interface BotInsertData {
+    /**
+     * 
+     * @type {string}
+     * @memberof BotInsertData
+     */
+    'name': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof BotInsertData
+     */
+    'id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof BotInsertData
+     */
+    'teamId': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof BotInsertData
+     */
+    'startingActionId'?: string | null;
+    /**
+     * 
+     * @type {Array<BotInsertDataStartTriggersInner>}
+     * @memberof BotInsertData
+     */
+    'startTriggers'?: Array<BotInsertDataStartTriggersInner>;
+    /**
+     * 
+     * @type {string}
+     * @memberof BotInsertData
+     */
+    'folderId'?: string | null;
+    /**
+     * 
+     * @type {{ [key: string]: BotInsertDataExternalTemplateValue; }}
+     * @memberof BotInsertData
+     */
+    'externalTemplate'?: { [key: string]: BotInsertDataExternalTemplateValue; };
+    /**
+     * 
+     * @type {string}
+     * @memberof BotInsertData
+     */
+    'createdAt'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof BotInsertData
+     */
+    'updatedAt'?: string;
+}
+/**
+ * 
+ * @export
+ * @interface BotInsertDataExternalTemplateValue
+ */
+export interface BotInsertDataExternalTemplateValue {
+    /**
+     * ID of the template on the provider
+     * @type {string}
+     * @memberof BotInsertDataExternalTemplateValue
+     */
+    'id'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof BotInsertDataExternalTemplateValue
+     */
+    'category': string;
+    /**
+     * Language of the template
+     * @type {string}
+     * @memberof BotInsertDataExternalTemplateValue
+     */
+    'language'?: string;
+    /**
+     * Status of the template on the provider
+     * @type {string}
+     * @memberof BotInsertDataExternalTemplateValue
+     */
+    'status': BotInsertDataExternalTemplateValueStatusEnum;
+    /**
+     * Details of the rejection, if rejected
+     * @type {string}
+     * @memberof BotInsertDataExternalTemplateValue
+     */
+    'rejectionDetails'?: string;
+    /**
+     * ID of the user who submitted the template
+     * @type {string}
+     * @memberof BotInsertDataExternalTemplateValue
+     */
+    'submittedBy': string;
+}
+
+export const BotInsertDataExternalTemplateValueStatusEnum = {
+    Pending: 'pending',
+    Approved: 'approved',
+    Rejected: 'rejected'
+} as const;
+
+export type BotInsertDataExternalTemplateValueStatusEnum = typeof BotInsertDataExternalTemplateValueStatusEnum[keyof typeof BotInsertDataExternalTemplateValueStatusEnum];
+
+/**
+ * 
+ * @export
+ * @interface BotInsertDataStartTriggersInner
+ */
+export interface BotInsertDataStartTriggersInner {
+    /**
+     * 
+     * @type {string}
+     * @memberof BotInsertDataStartTriggersInner
+     */
+    'id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof BotInsertDataStartTriggersInner
+     */
+    'name': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof BotInsertDataStartTriggersInner
+     */
+    'accountId': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof BotInsertDataStartTriggersInner
+     */
+    'botId': string;
+    /**
+     * 
+     * @type {Array<BotInsertDataStartTriggersInnerConditionsInner>}
+     * @memberof BotInsertDataStartTriggersInner
+     */
+    'conditions'?: Array<BotInsertDataStartTriggersInnerConditionsInner>;
+    /**
+     * 
+     * @type {BotInsertDataStartTriggersInnerMethod}
+     * @memberof BotInsertDataStartTriggersInner
+     */
+    'method': BotInsertDataStartTriggersInnerMethod;
+    /**
+     * 
+     * @type {BotInsertDataStartTriggersInnerTarget}
+     * @memberof BotInsertDataStartTriggersInner
+     */
+    'target': BotInsertDataStartTriggersInnerTarget;
+    /**
+     * 
+     * @type {BotInsertDataStartTriggersInnerOptions}
+     * @memberof BotInsertDataStartTriggersInner
+     */
+    'options'?: BotInsertDataStartTriggersInnerOptions;
+}
+/**
+ * 
+ * @export
+ * @interface BotInsertDataStartTriggersInnerConditionsInner
+ */
+export interface BotInsertDataStartTriggersInnerConditionsInner {
+    /**
+     * 
+     * @type {string}
+     * @memberof BotInsertDataStartTriggersInnerConditionsInner
+     */
+    'propertyPath': string;
+    /**
+     * 
+     * @type {BotInsertDataStartTriggersInnerConditionsInnerValue}
+     * @memberof BotInsertDataStartTriggersInnerConditionsInner
+     */
+    'value'?: BotInsertDataStartTriggersInnerConditionsInnerValue;
+    /**
+     * 
+     * @type {string}
+     * @memberof BotInsertDataStartTriggersInnerConditionsInner
+     */
+    'operator'?: BotInsertDataStartTriggersInnerConditionsInnerOperatorEnum;
+}
+
+export const BotInsertDataStartTriggersInnerConditionsInnerOperatorEnum = {
+    Equals: 'equals',
+    NotEquals: 'notEquals',
+    GreaterThan: 'greaterThan',
+    LessThan: 'lessThan',
+    GreaterThanOrEquals: 'greaterThanOrEquals',
+    LessThanOrEquals: 'lessThanOrEquals',
+    Contains: 'contains',
+    NotContains: 'notContains',
+    StartsWith: 'startsWith',
+    EndsWith: 'endsWith'
+} as const;
+
+export type BotInsertDataStartTriggersInnerConditionsInnerOperatorEnum = typeof BotInsertDataStartTriggersInnerConditionsInnerOperatorEnum[keyof typeof BotInsertDataStartTriggersInnerConditionsInnerOperatorEnum];
+
+/**
+ * @type BotInsertDataStartTriggersInnerConditionsInnerValue
+ * @export
+ */
+export type BotInsertDataStartTriggersInnerConditionsInnerValue = boolean | number | string;
+
+/**
+ * 
+ * @export
+ * @interface BotInsertDataStartTriggersInnerMethod
+ */
+export interface BotInsertDataStartTriggersInnerMethod {
+    /**
+     * 
+     * @type {string}
+     * @memberof BotInsertDataStartTriggersInnerMethod
+     */
+    'type': BotInsertDataStartTriggersInnerMethodTypeEnum;
+    /**
+     * 
+     * @type {string}
+     * @memberof BotInsertDataStartTriggersInnerMethod
+     */
+    'value'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof BotInsertDataStartTriggersInnerMethod
+     */
+    'nextExecutionDate'?: string;
+}
+
+export const BotInsertDataStartTriggersInnerMethodTypeEnum = {
+    Webhook: 'webhook',
+    Timestamp: 'timestamp',
+    Event: 'event'
+} as const;
+
+export type BotInsertDataStartTriggersInnerMethodTypeEnum = typeof BotInsertDataStartTriggersInnerMethodTypeEnum[keyof typeof BotInsertDataStartTriggersInnerMethodTypeEnum];
+
+/**
+ * 
+ * @export
+ * @interface BotInsertDataStartTriggersInnerOptions
+ */
+export interface BotInsertDataStartTriggersInnerOptions {
+    /**
+     * 
+     * @type {BotInsertDataStartTriggersInnerOptionsMiscOptions}
+     * @memberof BotInsertDataStartTriggersInnerOptions
+     */
+    'miscOptions'?: BotInsertDataStartTriggersInnerOptionsMiscOptions;
+    /**
+     * 
+     * @type {{ [key: string]: any; }}
+     * @memberof BotInsertDataStartTriggersInnerOptions
+     */
+    'parameters'?: { [key: string]: any; };
+}
+/**
+ * 
+ * @export
+ * @interface BotInsertDataStartTriggersInnerOptionsMiscOptions
+ */
+export interface BotInsertDataStartTriggersInnerOptionsMiscOptions {
+    /**
+     * 
+     * @type {string}
+     * @memberof BotInsertDataStartTriggersInnerOptionsMiscOptions
+     */
+    'messageId'?: string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof BotInsertDataStartTriggersInnerOptionsMiscOptions
+     */
+    'simulateTyping'?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof BotInsertDataStartTriggersInnerOptionsMiscOptions
+     */
+    'requireOpenAccount'?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof BotInsertDataStartTriggersInnerOptionsMiscOptions
+     */
+    'cancelIfReplyReceived'?: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof BotInsertDataStartTriggersInnerOptionsMiscOptions
+     */
+    'scheduleAt'?: string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof BotInsertDataStartTriggersInnerOptionsMiscOptions
+     */
+    'includeMarketingMessage'?: boolean;
+    /**
+     * 
+     * @type {BotInsertDataStartTriggersInnerOptionsMiscOptionsQuoted}
+     * @memberof BotInsertDataStartTriggersInnerOptionsMiscOptions
+     */
+    'quoted'?: BotInsertDataStartTriggersInnerOptionsMiscOptionsQuoted;
+}
+/**
+ * 
+ * @export
+ * @interface BotInsertDataStartTriggersInnerOptionsMiscOptionsQuoted
+ */
+export interface BotInsertDataStartTriggersInnerOptionsMiscOptionsQuoted {
+    /**
+     * 
+     * @type {string}
+     * @memberof BotInsertDataStartTriggersInnerOptionsMiscOptionsQuoted
+     */
+    'chatId': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof BotInsertDataStartTriggersInnerOptionsMiscOptionsQuoted
+     */
+    'id': string;
+}
+/**
+ * @type BotInsertDataStartTriggersInnerTarget
+ * @export
+ */
+export type BotInsertDataStartTriggersInnerTarget = BotInsertDataStartTriggersInnerTargetOneOf | BotInsertDataStartTriggersInnerTargetOneOf1;
+
+/**
+ * 
+ * @export
+ * @interface BotInsertDataStartTriggersInnerTargetOneOf
+ */
+export interface BotInsertDataStartTriggersInnerTargetOneOf {
+    /**
+     * 
+     * @type {string}
+     * @memberof BotInsertDataStartTriggersInnerTargetOneOf
+     */
+    'type': BotInsertDataStartTriggersInnerTargetOneOfTypeEnum;
+    /**
+     * Path of the property to access in the payload. Payload has the following properties 1. \'contact.*\' to access a property of the contact being sent to. Find structure of contact here 2. \'data.*\' to access a property of the event data 3. \'context.*\' to access a property of the context (note: probably add context schema to openapi spec?)
+     * @type {string}
+     * @memberof BotInsertDataStartTriggersInnerTargetOneOf
+     */
+    'propertyPath': string;
+    /**
+     * 
+     * @type {BotInsertDataStartTriggersInnerTargetOneOfAccountId}
+     * @memberof BotInsertDataStartTriggersInnerTargetOneOf
+     */
+    'accountId': BotInsertDataStartTriggersInnerTargetOneOfAccountId;
+    /**
+     * the property name to extract `accountId` from, or the exact ID of the account
+     * @type {string}
+     * @memberof BotInsertDataStartTriggersInnerTargetOneOf
+     */
+    'value'?: string;
+}
+
+export const BotInsertDataStartTriggersInnerTargetOneOfTypeEnum = {
+    PropertyPath: 'propertyPath'
+} as const;
+
+export type BotInsertDataStartTriggersInnerTargetOneOfTypeEnum = typeof BotInsertDataStartTriggersInnerTargetOneOfTypeEnum[keyof typeof BotInsertDataStartTriggersInnerTargetOneOfTypeEnum];
+
+/**
+ * 
+ * @export
+ * @interface BotInsertDataStartTriggersInnerTargetOneOf1
+ */
+export interface BotInsertDataStartTriggersInnerTargetOneOf1 {
+    /**
+     * 
+     * @type {string}
+     * @memberof BotInsertDataStartTriggersInnerTargetOneOf1
+     */
+    'type': BotInsertDataStartTriggersInnerTargetOneOf1TypeEnum;
+    /**
+     * 
+     * @type {BotInsertDataStartTriggersInnerTargetOneOf1Query}
+     * @memberof BotInsertDataStartTriggersInnerTargetOneOf1
+     */
+    'query': BotInsertDataStartTriggersInnerTargetOneOf1Query;
+    /**
+     * 
+     * @type {BotInsertDataStartTriggersInnerTargetOneOf1AccountId}
+     * @memberof BotInsertDataStartTriggersInnerTargetOneOf1
+     */
+    'accountId': BotInsertDataStartTriggersInnerTargetOneOf1AccountId;
+}
+
+export const BotInsertDataStartTriggersInnerTargetOneOf1TypeEnum = {
+    Fetch: 'fetch'
+} as const;
+
+export type BotInsertDataStartTriggersInnerTargetOneOf1TypeEnum = typeof BotInsertDataStartTriggersInnerTargetOneOf1TypeEnum[keyof typeof BotInsertDataStartTriggersInnerTargetOneOf1TypeEnum];
+
+/**
+ * 
+ * @export
+ * @interface BotInsertDataStartTriggersInnerTargetOneOf1AccountId
+ */
+export interface BotInsertDataStartTriggersInnerTargetOneOf1AccountId {
+    /**
+     * 
+     * @type {string}
+     * @memberof BotInsertDataStartTriggersInnerTargetOneOf1AccountId
+     */
+    'type'?: BotInsertDataStartTriggersInnerTargetOneOf1AccountIdTypeEnum;
+    /**
+     * the property name to extract `accountId` from of the contact, or the exact ID of the account
+     * @type {string}
+     * @memberof BotInsertDataStartTriggersInnerTargetOneOf1AccountId
+     */
+    'value'?: string;
+}
+
+export const BotInsertDataStartTriggersInnerTargetOneOf1AccountIdTypeEnum = {
+    PropertyPath: 'propertyPath',
+    Exact: 'exact'
+} as const;
+
+export type BotInsertDataStartTriggersInnerTargetOneOf1AccountIdTypeEnum = typeof BotInsertDataStartTriggersInnerTargetOneOf1AccountIdTypeEnum[keyof typeof BotInsertDataStartTriggersInnerTargetOneOf1AccountIdTypeEnum];
+
+/**
+ * 
+ * @export
+ * @interface BotInsertDataStartTriggersInnerTargetOneOf1Query
+ */
+export interface BotInsertDataStartTriggersInnerTargetOneOf1Query {
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof BotInsertDataStartTriggersInnerTargetOneOf1Query
+     */
+    'tags'?: Array<string>;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof BotInsertDataStartTriggersInnerTargetOneOf1Query
+     */
+    'notTags'?: Array<string>;
+    /**
+     * 
+     * @type {string}
+     * @memberof BotInsertDataStartTriggersInnerTargetOneOf1Query
+     */
+    'q'?: string | null;
+    /**
+     * 
+     * @type {number}
+     * @memberof BotInsertDataStartTriggersInnerTargetOneOf1Query
+     */
+    'minMessagesSent'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof BotInsertDataStartTriggersInnerTargetOneOf1Query
+     */
+    'maxMessagesSent'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof BotInsertDataStartTriggersInnerTargetOneOf1Query
+     */
+    'minMessagesRecv'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof BotInsertDataStartTriggersInnerTargetOneOf1Query
+     */
+    'maxMessagesRecv'?: number;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof BotInsertDataStartTriggersInnerTargetOneOf1Query
+     */
+    'assignee'?: Array<string>;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof BotInsertDataStartTriggersInnerTargetOneOf1Query
+     */
+    'notAssignee'?: Array<string>;
+    /**
+     * 
+     * @type {string}
+     * @memberof BotInsertDataStartTriggersInnerTargetOneOf1Query
+     */
+    'contactType'?: BotInsertDataStartTriggersInnerTargetOneOf1QueryContactTypeEnum;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof BotInsertDataStartTriggersInnerTargetOneOf1Query
+     */
+    'contacts'?: Array<string>;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof BotInsertDataStartTriggersInnerTargetOneOf1Query
+     */
+    'notContacts'?: Array<string>;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof BotInsertDataStartTriggersInnerTargetOneOf1Query
+     */
+    'accountId'?: Array<string>;
+}
+
+export const BotInsertDataStartTriggersInnerTargetOneOf1QueryContactTypeEnum = {
+    Individual: 'individual',
+    Group: 'group'
+} as const;
+
+export type BotInsertDataStartTriggersInnerTargetOneOf1QueryContactTypeEnum = typeof BotInsertDataStartTriggersInnerTargetOneOf1QueryContactTypeEnum[keyof typeof BotInsertDataStartTriggersInnerTargetOneOf1QueryContactTypeEnum];
+
+/**
+ * 
+ * @export
+ * @interface BotInsertDataStartTriggersInnerTargetOneOfAccountId
+ */
+export interface BotInsertDataStartTriggersInnerTargetOneOfAccountId {
+    /**
+     * 
+     * @type {string}
+     * @memberof BotInsertDataStartTriggersInnerTargetOneOfAccountId
+     */
+    'type'?: BotInsertDataStartTriggersInnerTargetOneOfAccountIdTypeEnum;
+}
+
+export const BotInsertDataStartTriggersInnerTargetOneOfAccountIdTypeEnum = {
+    PropertyPath: 'propertyPath',
+    Exact: 'exact'
+} as const;
+
+export type BotInsertDataStartTriggersInnerTargetOneOfAccountIdTypeEnum = typeof BotInsertDataStartTriggersInnerTargetOneOfAccountIdTypeEnum[keyof typeof BotInsertDataStartTriggersInnerTargetOneOfAccountIdTypeEnum];
+
+/**
+ * 
+ * @export
+ * @interface BotUpdate
+ */
+export interface BotUpdate {
+    /**
+     * 
+     * @type {string}
+     * @memberof BotUpdate
+     */
+    'event': BotUpdateEventEnum;
+    /**
+     * 
+     * @type {Array<BotUpdateData>}
+     * @memberof BotUpdate
+     */
+    'data': Array<BotUpdateData>;
+}
+
+export const BotUpdateEventEnum = {
+    BotUpdate: 'bot-update'
+} as const;
+
+export type BotUpdateEventEnum = typeof BotUpdateEventEnum[keyof typeof BotUpdateEventEnum];
+
+/**
+ * 
+ * @export
+ * @interface BotUpdateData
+ */
+export interface BotUpdateData {
+    /**
+     * 
+     * @type {string}
+     * @memberof BotUpdateData
+     */
+    'name'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof BotUpdateData
+     */
+    'id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof BotUpdateData
+     */
+    'teamId'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof BotUpdateData
+     */
+    'startingActionId'?: string | null;
+    /**
+     * 
+     * @type {Array<BotInsertDataStartTriggersInner>}
+     * @memberof BotUpdateData
+     */
+    'startTriggers'?: Array<BotInsertDataStartTriggersInner>;
+    /**
+     * 
+     * @type {string}
+     * @memberof BotUpdateData
+     */
+    'folderId'?: string | null;
+    /**
+     * 
+     * @type {{ [key: string]: BotInsertDataExternalTemplateValue; }}
+     * @memberof BotUpdateData
+     */
+    'externalTemplate'?: { [key: string]: BotInsertDataExternalTemplateValue; };
+    /**
+     * 
+     * @type {string}
+     * @memberof BotUpdateData
+     */
+    'createdAt'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof BotUpdateData
+     */
+    'updatedAt'?: string;
 }
 /**
  * 
@@ -1548,6 +2253,8 @@ export const EventName = {
     PresenceUpdate: 'presence-update',
     OrderInsert: 'order-insert',
     ActionExecute: 'action-execute',
+    FewMessagesLeft: 'few-messages-left',
+    UnreadChatsNotification: 'unread-chats-notification',
     ContactInsert: 'contact-insert',
     ContactUpdate: 'contact-update',
     ContactDelete: 'contact-delete',
@@ -1574,7 +2281,13 @@ export const EventName = {
     PurchasedetailDelete: 'purchasedetail-delete',
     PlatformproductInsert: 'platformproduct-insert',
     PlatformproductUpdate: 'platformproduct-update',
-    PlatformproductDelete: 'platformproduct-delete'
+    PlatformproductDelete: 'platformproduct-delete',
+    TrackingInsert: 'tracking-insert',
+    TrackingUpdate: 'tracking-update',
+    TrackingDelete: 'tracking-delete',
+    BotInsert: 'bot-insert',
+    BotUpdate: 'bot-update',
+    BotDelete: 'bot-delete'
 } as const;
 
 export type EventName = typeof EventName[keyof typeof EventName];
@@ -1585,8 +2298,47 @@ export type EventName = typeof EventName[keyof typeof EventName];
  * The request body you\'ll receive in a webhook
  * @export
  */
-export type EventWebhookData = AccountDelete | AccountInsert | AccountUpdate | ActionExecute | ChatDelete | ChatInsert | ChatUpdate | ContactDelete | ContactInsert | ContactUpdate | GroupUpdate | MessageDelete | MessageInsert | MessageUpdate | OrderInsert | PlatformproductDelete | PlatformproductInsert | PlatformproductUpdate | PresenceUpdate | PurchasedetailDelete | PurchasedetailInsert | PurchasedetailUpdate | TeamDelete | TeamInsert | TeamUpdate | TeammemberDelete | TeammemberInsert | TeammemberUpdate | UserDelete | UserInsert | UserUpdate;
+export type EventWebhookData = AccountDelete | AccountInsert | AccountUpdate | ActionExecute | BotDelete | BotInsert | BotUpdate | ChatDelete | ChatInsert | ChatUpdate | ContactDelete | ContactInsert | ContactUpdate | FewMessagesLeft | GroupUpdate | MessageDelete | MessageInsert | MessageUpdate | OrderInsert | PlatformproductDelete | PlatformproductInsert | PlatformproductUpdate | PresenceUpdate | PurchasedetailDelete | PurchasedetailInsert | PurchasedetailUpdate | TeamDelete | TeamInsert | TeamUpdate | TeammemberDelete | TeammemberInsert | TeammemberUpdate | TrackingDelete | TrackingInsert | TrackingUpdate | UnreadChatsNotification | UserDelete | UserInsert | UserUpdate;
 
+/**
+ * 
+ * @export
+ * @interface FewMessagesLeft
+ */
+export interface FewMessagesLeft {
+    /**
+     * 
+     * @type {string}
+     * @memberof FewMessagesLeft
+     */
+    'event': FewMessagesLeftEventEnum;
+    /**
+     * 
+     * @type {Array<FewMessagesLeftData>}
+     * @memberof FewMessagesLeft
+     */
+    'data': Array<FewMessagesLeftData>;
+}
+
+export const FewMessagesLeftEventEnum = {
+    FewMessagesLeft: 'few-messages-left'
+} as const;
+
+export type FewMessagesLeftEventEnum = typeof FewMessagesLeftEventEnum[keyof typeof FewMessagesLeftEventEnum];
+
+/**
+ * 
+ * @export
+ * @interface FewMessagesLeftData
+ */
+export interface FewMessagesLeftData {
+    /**
+     * 
+     * @type {number}
+     * @memberof FewMessagesLeftData
+     */
+    'messagesLeft': number;
+}
 /**
  * 
  * @export
@@ -2930,7 +3682,7 @@ export interface OrderInsertData {
      */
     'orderId': string;
     /**
-     * Specify IM account to use
+     * 
      * @type {string}
      * @memberof OrderInsertData
      */
@@ -2972,7 +3724,7 @@ export interface OrderInsertData {
      */
     'isTest': boolean;
     /**
-     * An ISO formatted timestamp
+     * 
      * @type {string}
      * @memberof OrderInsertData
      */
@@ -4838,6 +5590,554 @@ export const TeammemberUpdateDataScopesEnum = {
 
 export type TeammemberUpdateDataScopesEnum = typeof TeammemberUpdateDataScopesEnum[keyof typeof TeammemberUpdateDataScopesEnum];
 
+/**
+ * 
+ * @export
+ * @interface TrackingDelete
+ */
+export interface TrackingDelete {
+    /**
+     * 
+     * @type {string}
+     * @memberof TrackingDelete
+     */
+    'event': TrackingDeleteEventEnum;
+    /**
+     * 
+     * @type {Array<object>}
+     * @memberof TrackingDelete
+     */
+    'data': Array<object>;
+}
+
+export const TrackingDeleteEventEnum = {
+    TrackingDelete: 'tracking-delete'
+} as const;
+
+export type TrackingDeleteEventEnum = typeof TrackingDeleteEventEnum[keyof typeof TrackingDeleteEventEnum];
+
+/**
+ * 
+ * @export
+ * @interface TrackingInsert
+ */
+export interface TrackingInsert {
+    /**
+     * 
+     * @type {string}
+     * @memberof TrackingInsert
+     */
+    'event': TrackingInsertEventEnum;
+    /**
+     * 
+     * @type {Array<TrackingInsertData>}
+     * @memberof TrackingInsert
+     */
+    'data': Array<TrackingInsertData>;
+}
+
+export const TrackingInsertEventEnum = {
+    TrackingInsert: 'tracking-insert'
+} as const;
+
+export type TrackingInsertEventEnum = typeof TrackingInsertEventEnum[keyof typeof TrackingInsertEventEnum];
+
+/**
+ * 
+ * @export
+ * @interface TrackingInsertData
+ */
+export interface TrackingInsertData {
+    /**
+     * 
+     * @type {number}
+     * @memberof TrackingInsertData
+     */
+    'id': number;
+    /**
+     * 
+     * @type {string}
+     * @memberof TrackingInsertData
+     */
+    'secretId': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof TrackingInsertData
+     */
+    'name': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof TrackingInsertData
+     */
+    'serviceId'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof TrackingInsertData
+     */
+    'teamId': string;
+    /**
+     * 
+     * @type {number}
+     * @memberof TrackingInsertData
+     */
+    'defaultCountryCode'?: number;
+    /**
+     * 
+     * @type {Array<TrackingInsertDataEventsInner>}
+     * @memberof TrackingInsertData
+     */
+    'events': Array<TrackingInsertDataEventsInner>;
+    /**
+     * 
+     * @type {string}
+     * @memberof TrackingInsertData
+     */
+    'lastActivity': string;
+    /**
+     * 
+     * @type {number}
+     * @memberof TrackingInsertData
+     */
+    'triggered': number;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof TrackingInsertData
+     */
+    'isActive': boolean;
+    /**
+     * 
+     * @type {TrackingInsertDataOverridePhoneNumber}
+     * @memberof TrackingInsertData
+     */
+    'overridePhoneNumber'?: TrackingInsertDataOverridePhoneNumber;
+    /**
+     * 
+     * @type {string}
+     * @memberof TrackingInsertData
+     */
+    'accountId': string | null;
+    /**
+     * 
+     * @type {TrackingInsertDataError}
+     * @memberof TrackingInsertData
+     */
+    'error': TrackingInsertDataError | null;
+    /**
+     * 
+     * @type {TrackingInsertDataAutoPayment}
+     * @memberof TrackingInsertData
+     */
+    'autoPayment'?: TrackingInsertDataAutoPayment | null;
+}
+/**
+ * 
+ * @export
+ * @interface TrackingInsertDataAutoPayment
+ */
+export interface TrackingInsertDataAutoPayment {
+    /**
+     * 
+     * @type {string}
+     * @memberof TrackingInsertDataAutoPayment
+     */
+    'paymentIntegrationId': string;
+}
+/**
+ * 
+ * @export
+ * @interface TrackingInsertDataError
+ */
+export interface TrackingInsertDataError {
+    /**
+     * 
+     * @type {number}
+     * @memberof TrackingInsertDataError
+     */
+    'statusCode': number;
+    /**
+     * 
+     * @type {string}
+     * @memberof TrackingInsertDataError
+     */
+    'message': string;
+}
+/**
+ * 
+ * @export
+ * @interface TrackingInsertDataEventsInner
+ */
+export interface TrackingInsertDataEventsInner {
+    /**
+     * 
+     * @type {number}
+     * @memberof TrackingInsertDataEventsInner
+     */
+    'id'?: number;
+    /**
+     * Passed in the body to mark for deletion
+     * @type {boolean}
+     * @memberof TrackingInsertDataEventsInner
+     */
+    'delete'?: boolean;
+    /**
+     * the message template to send when this trigger is activated
+     * @type {string}
+     * @memberof TrackingInsertDataEventsInner
+     */
+    'templateId'?: string;
+    /**
+     * Whether the condition is enabled. If false, the trigger will be ignored whenever a data point is ingested
+     * @type {boolean}
+     * @memberof TrackingInsertDataEventsInner
+     */
+    'enabled'?: boolean;
+    /**
+     * Maximum notifications to be sent per order on this trigger. Default null -- unlimited
+     * @type {number}
+     * @memberof TrackingInsertDataEventsInner
+     */
+    'limit'?: number | null;
+    /**
+     * 
+     * @type {TrackingInsertDataEventsInnerAllOf1Delay}
+     * @memberof TrackingInsertDataEventsInner
+     */
+    'delay'?: TrackingInsertDataEventsInnerAllOf1Delay;
+    /**
+     * an array of usersIds to notify users when an event is created
+     * @type {Array<string>}
+     * @memberof TrackingInsertDataEventsInner
+     */
+    'notifyUsers'?: Array<string> | null;
+    /**
+     * 
+     * @type {{ [key: string]: TrackingInsertDataEventsInnerAllOf1ConditionsValue; }}
+     * @memberof TrackingInsertDataEventsInner
+     */
+    'conditions'?: { [key: string]: TrackingInsertDataEventsInnerAllOf1ConditionsValue; };
+}
+/**
+ * 
+ * @export
+ * @interface TrackingInsertDataEventsInnerAllOf
+ */
+export interface TrackingInsertDataEventsInnerAllOf {
+    /**
+     * 
+     * @type {number}
+     * @memberof TrackingInsertDataEventsInnerAllOf
+     */
+    'id'?: number;
+    /**
+     * Passed in the body to mark for deletion
+     * @type {boolean}
+     * @memberof TrackingInsertDataEventsInnerAllOf
+     */
+    'delete'?: boolean;
+}
+/**
+ * 
+ * @export
+ * @interface TrackingInsertDataEventsInnerAllOf1
+ */
+export interface TrackingInsertDataEventsInnerAllOf1 {
+    /**
+     * the message template to send when this trigger is activated
+     * @type {string}
+     * @memberof TrackingInsertDataEventsInnerAllOf1
+     */
+    'templateId'?: string;
+    /**
+     * Whether the condition is enabled. If false, the trigger will be ignored whenever a data point is ingested
+     * @type {boolean}
+     * @memberof TrackingInsertDataEventsInnerAllOf1
+     */
+    'enabled'?: boolean;
+    /**
+     * Maximum notifications to be sent per order on this trigger. Default null -- unlimited
+     * @type {number}
+     * @memberof TrackingInsertDataEventsInnerAllOf1
+     */
+    'limit'?: number | null;
+    /**
+     * 
+     * @type {TrackingInsertDataEventsInnerAllOf1Delay}
+     * @memberof TrackingInsertDataEventsInnerAllOf1
+     */
+    'delay'?: TrackingInsertDataEventsInnerAllOf1Delay;
+    /**
+     * an array of usersIds to notify users when an event is created
+     * @type {Array<string>}
+     * @memberof TrackingInsertDataEventsInnerAllOf1
+     */
+    'notifyUsers'?: Array<string> | null;
+    /**
+     * 
+     * @type {{ [key: string]: TrackingInsertDataEventsInnerAllOf1ConditionsValue; }}
+     * @memberof TrackingInsertDataEventsInnerAllOf1
+     */
+    'conditions'?: { [key: string]: TrackingInsertDataEventsInnerAllOf1ConditionsValue; };
+}
+/**
+ * 
+ * @export
+ * @interface TrackingInsertDataEventsInnerAllOf1ConditionsValue
+ */
+export interface TrackingInsertDataEventsInnerAllOf1ConditionsValue {
+    /**
+     * 
+     * @type {TrackingInsertDataEventsInnerAllOf1ConditionsValueValues}
+     * @memberof TrackingInsertDataEventsInnerAllOf1ConditionsValue
+     */
+    'values': TrackingInsertDataEventsInnerAllOf1ConditionsValueValues;
+    /**
+     * the test for the condition. Default is `include`
+     * @type {string}
+     * @memberof TrackingInsertDataEventsInnerAllOf1ConditionsValue
+     */
+    'test'?: TrackingInsertDataEventsInnerAllOf1ConditionsValueTestEnum;
+}
+
+export const TrackingInsertDataEventsInnerAllOf1ConditionsValueTestEnum = {
+    Include: 'include',
+    Exclude: 'exclude',
+    GreaterThan: 'greater-than',
+    LessThan: 'less-than'
+} as const;
+
+export type TrackingInsertDataEventsInnerAllOf1ConditionsValueTestEnum = typeof TrackingInsertDataEventsInnerAllOf1ConditionsValueTestEnum[keyof typeof TrackingInsertDataEventsInnerAllOf1ConditionsValueTestEnum];
+
+/**
+ * @type TrackingInsertDataEventsInnerAllOf1ConditionsValueValues
+ * @export
+ */
+export type TrackingInsertDataEventsInnerAllOf1ConditionsValueValues = Array<number> | Array<string>;
+
+/**
+ * the optional delay to attach to this service
+ * @export
+ * @interface TrackingInsertDataEventsInnerAllOf1Delay
+ */
+export interface TrackingInsertDataEventsInnerAllOf1Delay {
+    /**
+     * the delay in sending the message
+     * @type {number}
+     * @memberof TrackingInsertDataEventsInnerAllOf1Delay
+     */
+    'seconds'?: number;
+    /**
+     * The type of delay \"stale\" means that the message is sent out with the aforementioned delay (delayS) if the order is not updated. If the order is updated before the delay is over, then the message is cancelled \"simple\" means that the message is sent out regardless of the order update. 
+     * @type {string}
+     * @memberof TrackingInsertDataEventsInnerAllOf1Delay
+     */
+    'type'?: TrackingInsertDataEventsInnerAllOf1DelayTypeEnum;
+}
+
+export const TrackingInsertDataEventsInnerAllOf1DelayTypeEnum = {
+    Simple: 'simple',
+    Stale: 'stale'
+} as const;
+
+export type TrackingInsertDataEventsInnerAllOf1DelayTypeEnum = typeof TrackingInsertDataEventsInnerAllOf1DelayTypeEnum[keyof typeof TrackingInsertDataEventsInnerAllOf1DelayTypeEnum];
+
+/**
+ * @type TrackingInsertDataOverridePhoneNumber
+ * @export
+ */
+export type TrackingInsertDataOverridePhoneNumber = TrackingInsertDataOverridePhoneNumberOneOf | TrackingInsertDataOverridePhoneNumberOneOf1;
+
+/**
+ * Override with exact phone number
+ * @export
+ * @interface TrackingInsertDataOverridePhoneNumberOneOf
+ */
+export interface TrackingInsertDataOverridePhoneNumberOneOf {
+    /**
+     * 
+     * @type {number}
+     * @memberof TrackingInsertDataOverridePhoneNumberOneOf
+     */
+    'exact': number;
+}
+/**
+ * Override with a field from the data
+ * @export
+ * @interface TrackingInsertDataOverridePhoneNumberOneOf1
+ */
+export interface TrackingInsertDataOverridePhoneNumberOneOf1 {
+    /**
+     * 
+     * @type {string}
+     * @memberof TrackingInsertDataOverridePhoneNumberOneOf1
+     */
+    'field': string;
+}
+/**
+ * 
+ * @export
+ * @interface TrackingUpdate
+ */
+export interface TrackingUpdate {
+    /**
+     * 
+     * @type {string}
+     * @memberof TrackingUpdate
+     */
+    'event': TrackingUpdateEventEnum;
+    /**
+     * 
+     * @type {Array<TrackingUpdateData>}
+     * @memberof TrackingUpdate
+     */
+    'data': Array<TrackingUpdateData>;
+}
+
+export const TrackingUpdateEventEnum = {
+    TrackingUpdate: 'tracking-update'
+} as const;
+
+export type TrackingUpdateEventEnum = typeof TrackingUpdateEventEnum[keyof typeof TrackingUpdateEventEnum];
+
+/**
+ * 
+ * @export
+ * @interface TrackingUpdateData
+ */
+export interface TrackingUpdateData {
+    /**
+     * 
+     * @type {number}
+     * @memberof TrackingUpdateData
+     */
+    'id'?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof TrackingUpdateData
+     */
+    'secretId'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof TrackingUpdateData
+     */
+    'name'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof TrackingUpdateData
+     */
+    'serviceId'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof TrackingUpdateData
+     */
+    'teamId'?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof TrackingUpdateData
+     */
+    'defaultCountryCode'?: number;
+    /**
+     * 
+     * @type {Array<TrackingInsertDataEventsInner>}
+     * @memberof TrackingUpdateData
+     */
+    'events'?: Array<TrackingInsertDataEventsInner>;
+    /**
+     * 
+     * @type {string}
+     * @memberof TrackingUpdateData
+     */
+    'lastActivity'?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof TrackingUpdateData
+     */
+    'triggered'?: number;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof TrackingUpdateData
+     */
+    'isActive'?: boolean;
+    /**
+     * 
+     * @type {TrackingInsertDataOverridePhoneNumber}
+     * @memberof TrackingUpdateData
+     */
+    'overridePhoneNumber'?: TrackingInsertDataOverridePhoneNumber;
+    /**
+     * 
+     * @type {string}
+     * @memberof TrackingUpdateData
+     */
+    'accountId'?: string | null;
+    /**
+     * 
+     * @type {TrackingInsertDataError}
+     * @memberof TrackingUpdateData
+     */
+    'error'?: TrackingInsertDataError | null;
+    /**
+     * 
+     * @type {TrackingInsertDataAutoPayment}
+     * @memberof TrackingUpdateData
+     */
+    'autoPayment'?: TrackingInsertDataAutoPayment | null;
+}
+/**
+ * 
+ * @export
+ * @interface UnreadChatsNotification
+ */
+export interface UnreadChatsNotification {
+    /**
+     * 
+     * @type {string}
+     * @memberof UnreadChatsNotification
+     */
+    'event': UnreadChatsNotificationEventEnum;
+    /**
+     * 
+     * @type {Array<UnreadChatsNotificationData>}
+     * @memberof UnreadChatsNotification
+     */
+    'data': Array<UnreadChatsNotificationData>;
+}
+
+export const UnreadChatsNotificationEventEnum = {
+    UnreadChatsNotification: 'unread-chats-notification'
+} as const;
+
+export type UnreadChatsNotificationEventEnum = typeof UnreadChatsNotificationEventEnum[keyof typeof UnreadChatsNotificationEventEnum];
+
+/**
+ * 
+ * @export
+ * @interface UnreadChatsNotificationData
+ */
+export interface UnreadChatsNotificationData {
+    /**
+     * 
+     * @type {string}
+     * @memberof UnreadChatsNotificationData
+     */
+    'userId': string;
+    /**
+     * 
+     * @type {number}
+     * @memberof UnreadChatsNotificationData
+     */
+    'unreadChatsCount'?: number;
+}
 /**
  * 
  * @export
