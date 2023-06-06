@@ -778,7 +778,7 @@ export interface BotTriggerTargetOneOf1 {
      * @type {string}
      * @memberof BotTriggerTargetOneOf1
      */
-    'type'?: BotTriggerTargetOneOf1TypeEnum;
+    'type': BotTriggerTargetOneOf1TypeEnum;
     /**
      * 
      * @type {BotTriggerTargetQuery}
@@ -790,7 +790,7 @@ export interface BotTriggerTargetOneOf1 {
      * @type {BotTriggerTargetOneOf1AccountId}
      * @memberof BotTriggerTargetOneOf1
      */
-    'accountId'?: BotTriggerTargetOneOf1AccountId;
+    'accountId': BotTriggerTargetOneOf1AccountId;
 }
 
 export const BotTriggerTargetOneOf1TypeEnum = {
