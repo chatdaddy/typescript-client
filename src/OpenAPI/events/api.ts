@@ -2254,6 +2254,7 @@ export const EventName = {
     OrderInsert: 'order-insert',
     ActionExecute: 'action-execute',
     FewMessagesLeft: 'few-messages-left',
+    StaleAccountNotification: 'stale-account-notification',
     UnreadChatsNotification: 'unread-chats-notification',
     ContactInsert: 'contact-insert',
     ContactUpdate: 'contact-update',
@@ -2298,7 +2299,7 @@ export type EventName = typeof EventName[keyof typeof EventName];
  * The request body you\'ll receive in a webhook
  * @export
  */
-export type EventWebhookData = AccountDelete | AccountInsert | AccountUpdate | ActionExecute | BotDelete | BotInsert | BotUpdate | ChatDelete | ChatInsert | ChatUpdate | ContactDelete | ContactInsert | ContactUpdate | FewMessagesLeft | GroupUpdate | MessageDelete | MessageInsert | MessageUpdate | OrderInsert | PlatformproductDelete | PlatformproductInsert | PlatformproductUpdate | PresenceUpdate | PurchasedetailDelete | PurchasedetailInsert | PurchasedetailUpdate | TeamDelete | TeamInsert | TeamUpdate | TeammemberDelete | TeammemberInsert | TeammemberUpdate | TrackingDelete | TrackingInsert | TrackingUpdate | UnreadChatsNotification | UserDelete | UserInsert | UserUpdate;
+export type EventWebhookData = AccountDelete | AccountInsert | AccountUpdate | ActionExecute | BotDelete | BotInsert | BotUpdate | ChatDelete | ChatInsert | ChatUpdate | ContactDelete | ContactInsert | ContactUpdate | FewMessagesLeft | GroupUpdate | MessageDelete | MessageInsert | MessageUpdate | OrderInsert | PlatformproductDelete | PlatformproductInsert | PlatformproductUpdate | PresenceUpdate | PurchasedetailDelete | PurchasedetailInsert | PurchasedetailUpdate | StaleAccountNotification | TeamDelete | TeamInsert | TeamUpdate | TeammemberDelete | TeammemberInsert | TeammemberUpdate | TrackingDelete | TrackingInsert | TrackingUpdate | UnreadChatsNotification | UserDelete | UserInsert | UserUpdate;
 
 /**
  * 
@@ -4592,6 +4593,45 @@ export type PurchasedetailUpdateDataStatusEnum = typeof PurchasedetailUpdateData
 /**
  * 
  * @export
+ * @interface StaleAccountNotification
+ */
+export interface StaleAccountNotification {
+    /**
+     * 
+     * @type {string}
+     * @memberof StaleAccountNotification
+     */
+    'event': StaleAccountNotificationEventEnum;
+    /**
+     * 
+     * @type {Array<StaleAccountNotificationData>}
+     * @memberof StaleAccountNotification
+     */
+    'data': Array<StaleAccountNotificationData>;
+}
+
+export const StaleAccountNotificationEventEnum = {
+    StaleAccountNotification: 'stale-account-notification'
+} as const;
+
+export type StaleAccountNotificationEventEnum = typeof StaleAccountNotificationEventEnum[keyof typeof StaleAccountNotificationEventEnum];
+
+/**
+ * 
+ * @export
+ * @interface StaleAccountNotificationData
+ */
+export interface StaleAccountNotificationData {
+    /**
+     * 
+     * @type {string}
+     * @memberof StaleAccountNotificationData
+     */
+    'accountId': string;
+}
+/**
+ * 
+ * @export
  * @interface Subscription
  */
 export interface Subscription {
@@ -5604,10 +5644,10 @@ export interface TrackingDelete {
     'event': TrackingDeleteEventEnum;
     /**
      * 
-     * @type {Array<object>}
+     * @type {Array<TrackingDeleteData>}
      * @memberof TrackingDelete
      */
-    'data': Array<object>;
+    'data': Array<TrackingDeleteData>;
 }
 
 export const TrackingDeleteEventEnum = {
@@ -5616,6 +5656,19 @@ export const TrackingDeleteEventEnum = {
 
 export type TrackingDeleteEventEnum = typeof TrackingDeleteEventEnum[keyof typeof TrackingDeleteEventEnum];
 
+/**
+ * 
+ * @export
+ * @interface TrackingDeleteData
+ */
+export interface TrackingDeleteData {
+    /**
+     * 
+     * @type {number}
+     * @memberof TrackingDeleteData
+     */
+    'id': number;
+}
 /**
  * 
  * @export
@@ -6013,7 +6066,7 @@ export interface TrackingUpdateData {
      * @type {number}
      * @memberof TrackingUpdateData
      */
-    'id'?: number;
+    'id': number;
     /**
      * 
      * @type {string}
