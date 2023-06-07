@@ -947,11 +947,11 @@ export type BotTriggerTargetQueryContactTypeEnum = typeof BotTriggerTargetQueryC
  */
 export interface BotTriggerWebhookRequest {
     /**
-     * Payload to be sent to the webhook
+     * Data to be sent to the webhook
      * @type {{ [key: string]: any; }}
      * @memberof BotTriggerWebhookRequest
      */
-    'payload'?: { [key: string]: any; };
+    'data'?: { [key: string]: any; };
 }
 /**
  * 
