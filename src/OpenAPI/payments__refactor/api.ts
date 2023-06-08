@@ -915,7 +915,7 @@ export interface SubscriptionCreate {
  */
 export interface SubscriptionStripeData {
     /**
-     * 
+     * The ID of a subscription
      * @type {string}
      * @memberof SubscriptionStripeData
      */
