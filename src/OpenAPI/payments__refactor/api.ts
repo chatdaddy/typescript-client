@@ -3077,10 +3077,11 @@ export const TeamDetailApiAxiosParamCreator = function (configuration?: Configur
         /**
          * Fetches the list of active subscriptions/purchases from stripe and calculates what the current subscriptions should be. This route can be called to refresh the subscription after checkout to ensure the subscription is retreived. 
          * @summary Refreshes the access given by subscriptions
+         * @param {boolean} [refreshUsage] Refreshes usage statistics as well
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        teamDetailRefreshAccess: async (options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        teamDetailRefreshAccess: async (refreshUsage?: boolean, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/team-detail/refresh-access`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -3096,6 +3097,10 @@ export const TeamDetailApiAxiosParamCreator = function (configuration?: Configur
             // authentication chatdaddy required
             // oauth required
             await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["PAYMENTS_UPDATE"], configuration)
+
+            if (refreshUsage !== undefined) {
+                localVarQueryParameter['refreshUsage'] = refreshUsage;
+            }
 
 
     
@@ -3153,11 +3158,12 @@ export const TeamDetailApiFp = function(configuration?: Configuration) {
         /**
          * Fetches the list of active subscriptions/purchases from stripe and calculates what the current subscriptions should be. This route can be called to refresh the subscription after checkout to ensure the subscription is retreived. 
          * @summary Refreshes the access given by subscriptions
+         * @param {boolean} [refreshUsage] Refreshes usage statistics as well
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async teamDetailRefreshAccess(options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.teamDetailRefreshAccess(options);
+        async teamDetailRefreshAccess(refreshUsage?: boolean, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.teamDetailRefreshAccess(refreshUsage, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
     }
@@ -3202,11 +3208,12 @@ export const TeamDetailApiFactory = function (configuration?: Configuration, bas
         /**
          * Fetches the list of active subscriptions/purchases from stripe and calculates what the current subscriptions should be. This route can be called to refresh the subscription after checkout to ensure the subscription is retreived. 
          * @summary Refreshes the access given by subscriptions
+         * @param {boolean} [refreshUsage] Refreshes usage statistics as well
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        teamDetailRefreshAccess(options?: any): AxiosPromise<void> {
-            return localVarFp.teamDetailRefreshAccess(options).then((request) => request(axios, basePath));
+        teamDetailRefreshAccess(refreshUsage?: boolean, options?: any): AxiosPromise<void> {
+            return localVarFp.teamDetailRefreshAccess(refreshUsage, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -3237,6 +3244,20 @@ export interface TeamDetailApiTeamDetailPostRequest {
      * @memberof TeamDetailApiTeamDetailPost
      */
     readonly teamDetailCreate?: TeamDetailCreate
+}
+
+/**
+ * Request parameters for teamDetailRefreshAccess operation in TeamDetailApi.
+ * @export
+ * @interface TeamDetailApiTeamDetailRefreshAccessRequest
+ */
+export interface TeamDetailApiTeamDetailRefreshAccessRequest {
+    /**
+     * Refreshes usage statistics as well
+     * @type {boolean}
+     * @memberof TeamDetailApiTeamDetailRefreshAccess
+     */
+    readonly refreshUsage?: boolean
 }
 
 /**
@@ -3284,12 +3305,13 @@ export class TeamDetailApi extends BaseAPI {
     /**
      * Fetches the list of active subscriptions/purchases from stripe and calculates what the current subscriptions should be. This route can be called to refresh the subscription after checkout to ensure the subscription is retreived. 
      * @summary Refreshes the access given by subscriptions
+     * @param {TeamDetailApiTeamDetailRefreshAccessRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof TeamDetailApi
      */
-    public teamDetailRefreshAccess(options?: AxiosRequestConfig) {
-        return TeamDetailApiFp(this.configuration).teamDetailRefreshAccess(options).then((request) => request(this.axios, this.basePath));
+    public teamDetailRefreshAccess(requestParameters: TeamDetailApiTeamDetailRefreshAccessRequest = {}, options?: AxiosRequestConfig) {
+        return TeamDetailApiFp(this.configuration).teamDetailRefreshAccess(requestParameters.refreshUsage, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
