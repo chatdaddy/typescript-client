@@ -1037,6 +1037,12 @@ export interface TeamDetail {
      * @memberof TeamDetail
      */
     'subscriptions'?: Array<Subscription>;
+    /**
+     * 
+     * @type {string}
+     * @memberof TeamDetail
+     */
+    'partnership'?: string;
 }
 /**
  * 
@@ -1062,6 +1068,12 @@ export interface TeamDetailCreate {
      * @memberof TeamDetailCreate
      */
     'stripeCustomer': StripeCustomerCreate;
+    /**
+     * 
+     * @type {string}
+     * @memberof TeamDetailCreate
+     */
+    'partnership'?: string;
 }
 /**
  * 
@@ -2638,7 +2650,7 @@ export const SubscriptionsApiAxiosParamCreator = function (configuration?: Confi
 
             // authentication chatdaddy required
             // oauth required
-            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["PAYMENTS_UPDATE"], configuration)
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["PAYMENTS_UPDATE", "PARTNER_ADMIN_PANEL_ACCESS"], configuration)
 
 
     
