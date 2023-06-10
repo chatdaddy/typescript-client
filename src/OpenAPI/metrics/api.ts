@@ -41,6 +41,66 @@ export type Aggregate = typeof Aggregate[keyof typeof Aggregate];
 /**
  * 
  * @export
+ * @interface Assigned
+ */
+export interface Assigned {
+    /**
+     * 
+     * @type {string}
+     * @memberof Assigned
+     */
+    'id'?: string;
+}
+/**
+ * 
+ * @export
+ * @interface BroadCastNotification
+ */
+export interface BroadCastNotification {
+    /**
+     * 
+     * @type {string}
+     * @memberof BroadCastNotification
+     */
+    'message'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof BroadCastNotification
+     */
+    'customerName'?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof BroadCastNotification
+     */
+    'progress'?: number;
+    /**
+     * 
+     * @type {PaymentStatus}
+     * @memberof BroadCastNotification
+     */
+    'broadCastStatus'?: PaymentStatus;
+}
+/**
+ * 
+ * @export
+ * @enum {string}
+ */
+
+export const BroadCastStatus = {
+    Inactive: 'inactive',
+    Scheduled: 'scheduled',
+    Progress: 'progress',
+    Completed: 'completed'
+} as const;
+
+export type BroadCastStatus = typeof BroadCastStatus[keyof typeof BroadCastStatus];
+
+
+/**
+ * 
+ * @export
  * @enum {string}
  */
 
@@ -134,6 +194,117 @@ export interface HomeMetricUpdateRequest {
 /**
  * 
  * @export
+ * @interface InboxNotification
+ */
+export interface InboxNotification {
+    /**
+     * 
+     * @type {number}
+     * @memberof InboxNotification
+     */
+    'phoneNumber'?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof InboxNotification
+     */
+    'message'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof InboxNotification
+     */
+    'customerName'?: string;
+    /**
+     * 
+     * @type {Assigned}
+     * @memberof InboxNotification
+     */
+    'assignedBy'?: Assigned;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof InboxNotification
+     */
+    'tag'?: Array<string>;
+    /**
+     * 
+     * @type {OrderStatus}
+     * @memberof InboxNotification
+     */
+    'orderStatus'?: OrderStatus;
+    /**
+     * 
+     * @type {PaymentStatus}
+     * @memberof InboxNotification
+     */
+    'paymentStatus'?: PaymentStatus;
+}
+/**
+ * 
+ * @export
+ * @interface KeywordReplyNotification
+ */
+export interface KeywordReplyNotification {
+    /**
+     * 
+     * @type {string}
+     * @memberof KeywordReplyNotification
+     */
+    'message'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof KeywordReplyNotification
+     */
+    'triggerTimes'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof KeywordReplyNotification
+     */
+    'timeSync'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof KeywordReplyNotification
+     */
+    'messageReply'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof KeywordReplyNotification
+     */
+    'channel'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof KeywordReplyNotification
+     */
+    'status'?: string;
+}
+/**
+ * 
+ * @export
+ * @interface MessageFlowNotification
+ */
+export interface MessageFlowNotification {
+    /**
+     * 
+     * @type {string}
+     * @memberof MessageFlowNotification
+     */
+    'message'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof MessageFlowNotification
+     */
+    'folder'?: string;
+}
+/**
+ * 
+ * @export
  * @interface Metric
  */
 export interface Metric {
@@ -206,6 +377,394 @@ export interface MetricsResult {
      * @memberof MetricsResult
      */
     'dataAggregate': DataAggregateType;
+}
+/**
+ * 
+ * @export
+ * @interface Notification
+ */
+export interface Notification {
+    /**
+     * 
+     * @type {string}
+     * @memberof Notification
+     */
+    'id'?: string;
+    /**
+     * An ISO formatted timestamp
+     * @type {string}
+     * @memberof Notification
+     */
+    'timestamp'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Notification
+     */
+    'actionBy'?: string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof Notification
+     */
+    'hasRead'?: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof Notification
+     */
+    'category'?: NotificationCategoryEnum;
+    /**
+     * 
+     * @type {MessageFlowNotification}
+     * @memberof Notification
+     */
+    'data'?: MessageFlowNotification;
+}
+
+export const NotificationCategoryEnum = {
+    MessageFlow: 'message_flow'
+} as const;
+
+export type NotificationCategoryEnum = typeof NotificationCategoryEnum[keyof typeof NotificationCategoryEnum];
+
+/**
+ * 
+ * @export
+ * @interface NotificationAllOf
+ */
+export interface NotificationAllOf {
+    /**
+     * 
+     * @type {string}
+     * @memberof NotificationAllOf
+     */
+    'id'?: string;
+    /**
+     * An ISO formatted timestamp
+     * @type {string}
+     * @memberof NotificationAllOf
+     */
+    'timestamp'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof NotificationAllOf
+     */
+    'actionBy'?: string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof NotificationAllOf
+     */
+    'hasRead'?: boolean;
+}
+/**
+ * 
+ * @export
+ * @enum {string}
+ */
+
+export const NotificationCategory = {
+    Inbox: 'inbox',
+    Shop: 'shop',
+    Broadcast: 'broadcast',
+    OfflineBot: 'offline_bot',
+    KeywordReply: 'keyword_reply',
+    MessageFlow: 'message_flow'
+} as const;
+
+export type NotificationCategory = typeof NotificationCategory[keyof typeof NotificationCategory];
+
+
+/**
+ * @type NotificationData
+ * @export
+ */
+export type NotificationData = NotificationDataOneOf | NotificationDataOneOf1 | NotificationDataOneOf2 | NotificationDataOneOf3 | NotificationDataOneOf4 | NotificationDataOneOf5;
+
+/**
+ * 
+ * @export
+ * @interface NotificationDataOneOf
+ */
+export interface NotificationDataOneOf {
+    /**
+     * 
+     * @type {string}
+     * @memberof NotificationDataOneOf
+     */
+    'category'?: NotificationDataOneOfCategoryEnum;
+    /**
+     * 
+     * @type {InboxNotification}
+     * @memberof NotificationDataOneOf
+     */
+    'data'?: InboxNotification;
+}
+
+export const NotificationDataOneOfCategoryEnum = {
+    Inbox: 'inbox'
+} as const;
+
+export type NotificationDataOneOfCategoryEnum = typeof NotificationDataOneOfCategoryEnum[keyof typeof NotificationDataOneOfCategoryEnum];
+
+/**
+ * 
+ * @export
+ * @interface NotificationDataOneOf1
+ */
+export interface NotificationDataOneOf1 {
+    /**
+     * 
+     * @type {string}
+     * @memberof NotificationDataOneOf1
+     */
+    'category'?: NotificationDataOneOf1CategoryEnum;
+    /**
+     * 
+     * @type {ShopNotification}
+     * @memberof NotificationDataOneOf1
+     */
+    'data'?: ShopNotification;
+}
+
+export const NotificationDataOneOf1CategoryEnum = {
+    Shop: 'shop'
+} as const;
+
+export type NotificationDataOneOf1CategoryEnum = typeof NotificationDataOneOf1CategoryEnum[keyof typeof NotificationDataOneOf1CategoryEnum];
+
+/**
+ * 
+ * @export
+ * @interface NotificationDataOneOf2
+ */
+export interface NotificationDataOneOf2 {
+    /**
+     * 
+     * @type {string}
+     * @memberof NotificationDataOneOf2
+     */
+    'category'?: NotificationDataOneOf2CategoryEnum;
+    /**
+     * 
+     * @type {BroadCastNotification}
+     * @memberof NotificationDataOneOf2
+     */
+    'data'?: BroadCastNotification;
+}
+
+export const NotificationDataOneOf2CategoryEnum = {
+    Broadcast: 'broadcast'
+} as const;
+
+export type NotificationDataOneOf2CategoryEnum = typeof NotificationDataOneOf2CategoryEnum[keyof typeof NotificationDataOneOf2CategoryEnum];
+
+/**
+ * 
+ * @export
+ * @interface NotificationDataOneOf3
+ */
+export interface NotificationDataOneOf3 {
+    /**
+     * 
+     * @type {string}
+     * @memberof NotificationDataOneOf3
+     */
+    'category'?: NotificationDataOneOf3CategoryEnum;
+    /**
+     * 
+     * @type {OfflineBottNotification}
+     * @memberof NotificationDataOneOf3
+     */
+    'data'?: OfflineBottNotification;
+}
+
+export const NotificationDataOneOf3CategoryEnum = {
+    OfflineBot: 'offline_bot'
+} as const;
+
+export type NotificationDataOneOf3CategoryEnum = typeof NotificationDataOneOf3CategoryEnum[keyof typeof NotificationDataOneOf3CategoryEnum];
+
+/**
+ * 
+ * @export
+ * @interface NotificationDataOneOf4
+ */
+export interface NotificationDataOneOf4 {
+    /**
+     * 
+     * @type {string}
+     * @memberof NotificationDataOneOf4
+     */
+    'category'?: NotificationDataOneOf4CategoryEnum;
+    /**
+     * 
+     * @type {KeywordReplyNotification}
+     * @memberof NotificationDataOneOf4
+     */
+    'data'?: KeywordReplyNotification;
+}
+
+export const NotificationDataOneOf4CategoryEnum = {
+    KeywordReply: 'keyword_reply'
+} as const;
+
+export type NotificationDataOneOf4CategoryEnum = typeof NotificationDataOneOf4CategoryEnum[keyof typeof NotificationDataOneOf4CategoryEnum];
+
+/**
+ * 
+ * @export
+ * @interface NotificationDataOneOf5
+ */
+export interface NotificationDataOneOf5 {
+    /**
+     * 
+     * @type {string}
+     * @memberof NotificationDataOneOf5
+     */
+    'category'?: NotificationDataOneOf5CategoryEnum;
+    /**
+     * 
+     * @type {MessageFlowNotification}
+     * @memberof NotificationDataOneOf5
+     */
+    'data'?: MessageFlowNotification;
+}
+
+export const NotificationDataOneOf5CategoryEnum = {
+    MessageFlow: 'message_flow'
+} as const;
+
+export type NotificationDataOneOf5CategoryEnum = typeof NotificationDataOneOf5CategoryEnum[keyof typeof NotificationDataOneOf5CategoryEnum];
+
+/**
+ * 
+ * @export
+ * @interface OfflineBottNotification
+ */
+export interface OfflineBottNotification {
+    /**
+     * 
+     * @type {string}
+     * @memberof OfflineBottNotification
+     */
+    'message'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof OfflineBottNotification
+     */
+    'customerName'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof OfflineBottNotification
+     */
+    'specificTime'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof OfflineBottNotification
+     */
+    'triggerTimes'?: string;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof OfflineBottNotification
+     */
+    'channels'?: Array<string>;
+}
+/**
+ * 
+ * @export
+ * @enum {string}
+ */
+
+export const OrderStatus = {
+    Confirmed: 'confirmed',
+    Pending: 'pending',
+    Cancelled: 'cancelled',
+    Completed: 'completed'
+} as const;
+
+export type OrderStatus = typeof OrderStatus[keyof typeof OrderStatus];
+
+
+/**
+ * 
+ * @export
+ * @enum {string}
+ */
+
+export const PaymentStatus = {
+    Unpaid: 'unpaid',
+    Paid: 'paid',
+    Refund: 'refund',
+    Pending: 'pending',
+    Authorized: 'authorized',
+    Completed: 'completed',
+    Expired: 'expired'
+} as const;
+
+export type PaymentStatus = typeof PaymentStatus[keyof typeof PaymentStatus];
+
+
+/**
+ * 
+ * @export
+ * @interface ShopNotification
+ */
+export interface ShopNotification {
+    /**
+     * 
+     * @type {string}
+     * @memberof ShopNotification
+     */
+    'message'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ShopNotification
+     */
+    'customerName'?: string;
+    /**
+     * 
+     * @type {Assigned}
+     * @memberof ShopNotification
+     */
+    'assignedBy'?: Assigned;
+    /**
+     * 
+     * @type {OrderStatus}
+     * @memberof ShopNotification
+     */
+    'orderStatus'?: OrderStatus;
+    /**
+     * 
+     * @type {PaymentStatus}
+     * @memberof ShopNotification
+     */
+    'paymentStatus'?: PaymentStatus;
+    /**
+     * 
+     * @type {number}
+     * @memberof ShopNotification
+     */
+    'productCount'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof ShopNotification
+     */
+    'total'?: number;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof ShopNotification
+     */
+    'channel'?: Array<string>;
 }
 /**
  * 
@@ -824,6 +1383,186 @@ export class MetricsApi extends BaseAPI {
      */
     public updateHomeMetrics(requestParameters: MetricsApiUpdateHomeMetricsRequest = {}, options?: AxiosRequestConfig) {
         return MetricsApiFp(this.configuration).updateHomeMetrics(requestParameters.updateHomeMetricsRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+/**
+ * NotificationApi - axios parameter creator
+ * @export
+ */
+export const NotificationApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @summary Get notifications data
+         * @param {string} [id] 
+         * @param {NotificationCategory} [category] 
+         * @param {number} [count] Number of results to return
+         * @param {string} [q] 
+         * @param {string} [cursor] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getNotifications: async (id?: string, category?: NotificationCategory, count?: number, q?: string, cursor?: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/notifications`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["METRICS_GET"], configuration)
+
+            if (id !== undefined) {
+                localVarQueryParameter['id'] = id;
+            }
+
+            if (category !== undefined) {
+                localVarQueryParameter['category'] = category;
+            }
+
+            if (count !== undefined) {
+                localVarQueryParameter['count'] = count;
+            }
+
+            if (q !== undefined) {
+                localVarQueryParameter['q'] = q;
+            }
+
+            if (cursor !== undefined) {
+                localVarQueryParameter['cursor'] = cursor;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * NotificationApi - functional programming interface
+ * @export
+ */
+export const NotificationApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = NotificationApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * 
+         * @summary Get notifications data
+         * @param {string} [id] 
+         * @param {NotificationCategory} [category] 
+         * @param {number} [count] Number of results to return
+         * @param {string} [q] 
+         * @param {string} [cursor] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getNotifications(id?: string, category?: NotificationCategory, count?: number, q?: string, cursor?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<Notification>>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getNotifications(id, category, count, q, cursor, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+    }
+};
+
+/**
+ * NotificationApi - factory interface
+ * @export
+ */
+export const NotificationApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = NotificationApiFp(configuration)
+    return {
+        /**
+         * 
+         * @summary Get notifications data
+         * @param {string} [id] 
+         * @param {NotificationCategory} [category] 
+         * @param {number} [count] Number of results to return
+         * @param {string} [q] 
+         * @param {string} [cursor] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getNotifications(id?: string, category?: NotificationCategory, count?: number, q?: string, cursor?: string, options?: any): AxiosPromise<Array<Notification>> {
+            return localVarFp.getNotifications(id, category, count, q, cursor, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * Request parameters for getNotifications operation in NotificationApi.
+ * @export
+ * @interface NotificationApiGetNotificationsRequest
+ */
+export interface NotificationApiGetNotificationsRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof NotificationApiGetNotifications
+     */
+    readonly id?: string
+
+    /**
+     * 
+     * @type {NotificationCategory}
+     * @memberof NotificationApiGetNotifications
+     */
+    readonly category?: NotificationCategory
+
+    /**
+     * Number of results to return
+     * @type {number}
+     * @memberof NotificationApiGetNotifications
+     */
+    readonly count?: number
+
+    /**
+     * 
+     * @type {string}
+     * @memberof NotificationApiGetNotifications
+     */
+    readonly q?: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof NotificationApiGetNotifications
+     */
+    readonly cursor?: string
+}
+
+/**
+ * NotificationApi - object-oriented interface
+ * @export
+ * @class NotificationApi
+ * @extends {BaseAPI}
+ */
+export class NotificationApi extends BaseAPI {
+    /**
+     * 
+     * @summary Get notifications data
+     * @param {NotificationApiGetNotificationsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof NotificationApi
+     */
+    public getNotifications(requestParameters: NotificationApiGetNotificationsRequest = {}, options?: AxiosRequestConfig) {
+        return NotificationApiFp(this.configuration).getNotifications(requestParameters.id, requestParameters.category, requestParameters.count, requestParameters.q, requestParameters.cursor, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
