@@ -1137,6 +1137,24 @@ export interface BotInsertDataStartTriggersInner {
      * @memberof BotInsertDataStartTriggersInner
      */
     'options'?: BotInsertDataStartTriggersInnerOptions;
+    /**
+     * 
+     * @type {string}
+     * @memberof BotInsertDataStartTriggersInner
+     */
+    'lastTriggered'?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof BotInsertDataStartTriggersInner
+     */
+    'triggered'?: number;
+    /**
+     * 
+     * @type {Array<BotInsertDataStartTriggersInnerInstancesInner>}
+     * @memberof BotInsertDataStartTriggersInner
+     */
+    'instances'?: Array<BotInsertDataStartTriggersInnerInstancesInner>;
 }
 /**
  * 
@@ -1185,6 +1203,80 @@ export type BotInsertDataStartTriggersInnerConditionsInnerOperatorEnum = typeof 
  */
 export type BotInsertDataStartTriggersInnerConditionsInnerValue = boolean | number | string;
 
+/**
+ * 
+ * @export
+ * @interface BotInsertDataStartTriggersInnerInstancesInner
+ */
+export interface BotInsertDataStartTriggersInnerInstancesInner {
+    /**
+     * 
+     * @type {string}
+     * @memberof BotInsertDataStartTriggersInnerInstancesInner
+     */
+    'id'?: string;
+    /**
+     * 
+     * @type {{ [key: string]: any; }}
+     * @memberof BotInsertDataStartTriggersInnerInstancesInner
+     */
+    'payload'?: { [key: string]: any; };
+    /**
+     * 
+     * @type {string}
+     * @memberof BotInsertDataStartTriggersInnerInstancesInner
+     */
+    'startedAt'?: string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof BotInsertDataStartTriggersInnerInstancesInner
+     */
+    'inProgress'?: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof BotInsertDataStartTriggersInnerInstancesInner
+     */
+    'triggerId'?: string;
+    /**
+     * 
+     * @type {Array<BotInsertDataStartTriggersInnerInstancesInnerRecipientsInner>}
+     * @memberof BotInsertDataStartTriggersInnerInstancesInner
+     */
+    'recipients'?: Array<BotInsertDataStartTriggersInnerInstancesInnerRecipientsInner>;
+}
+/**
+ * 
+ * @export
+ * @interface BotInsertDataStartTriggersInnerInstancesInnerRecipientsInner
+ */
+export interface BotInsertDataStartTriggersInnerInstancesInnerRecipientsInner {
+    /**
+     * 
+     * @type {string}
+     * @memberof BotInsertDataStartTriggersInnerInstancesInnerRecipientsInner
+     */
+    'id'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof BotInsertDataStartTriggersInnerInstancesInnerRecipientsInner
+     */
+    'name'?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof BotInsertDataStartTriggersInnerInstancesInnerRecipientsInner
+     */
+    'phoneNumber'?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof BotInsertDataStartTriggersInnerInstancesInnerRecipientsInner
+     */
+    'instanceId'?: string;
+}
 /**
  * 
  * @export

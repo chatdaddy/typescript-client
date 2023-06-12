@@ -590,6 +590,24 @@ export interface BotTrigger {
      * @memberof BotTrigger
      */
     'options'?: BotTriggerSendOptions;
+    /**
+     * An ISO formatted timestamp
+     * @type {string}
+     * @memberof BotTrigger
+     */
+    'lastTriggered'?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof BotTrigger
+     */
+    'triggered'?: number;
+    /**
+     * 
+     * @type {Array<BotTriggerInstance>}
+     * @memberof BotTrigger
+     */
+    'instances'?: Array<BotTriggerInstance>;
 }
 /**
  * 
@@ -603,6 +621,49 @@ export interface BotTriggerContext {
      * @memberof BotTriggerContext
      */
     'timestamp': string;
+}
+/**
+ * 
+ * @export
+ * @interface BotTriggerInstance
+ */
+export interface BotTriggerInstance {
+    /**
+     * 
+     * @type {string}
+     * @memberof BotTriggerInstance
+     */
+    'id'?: string;
+    /**
+     * 
+     * @type {{ [key: string]: any; }}
+     * @memberof BotTriggerInstance
+     */
+    'payload'?: { [key: string]: any; };
+    /**
+     * An ISO formatted timestamp
+     * @type {string}
+     * @memberof BotTriggerInstance
+     */
+    'startedAt'?: string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof BotTriggerInstance
+     */
+    'inProgress'?: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof BotTriggerInstance
+     */
+    'triggerId'?: string;
+    /**
+     * 
+     * @type {Array<BotTriggerRecipient>}
+     * @memberof BotTriggerInstance
+     */
+    'recipients'?: Array<BotTriggerRecipient>;
 }
 /**
  * 
@@ -710,6 +771,37 @@ export const BotTriggerPayloadContactTypeEnum = {
 
 export type BotTriggerPayloadContactTypeEnum = typeof BotTriggerPayloadContactTypeEnum[keyof typeof BotTriggerPayloadContactTypeEnum];
 
+/**
+ * 
+ * @export
+ * @interface BotTriggerRecipient
+ */
+export interface BotTriggerRecipient {
+    /**
+     * 
+     * @type {string}
+     * @memberof BotTriggerRecipient
+     */
+    'id'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof BotTriggerRecipient
+     */
+    'name'?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof BotTriggerRecipient
+     */
+    'phoneNumber'?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof BotTriggerRecipient
+     */
+    'instanceId'?: string;
+}
 /**
  * 
  * @export
