@@ -1109,6 +1109,12 @@ export interface BotInsertDataStartTriggersInner {
     'botId': string;
     /**
      * 
+     * @type {boolean}
+     * @memberof BotInsertDataStartTriggersInner
+     */
+    'enabled': boolean;
+    /**
+     * 
      * @type {Array<BotInsertDataStartTriggersInnerConditionsInner>}
      * @memberof BotInsertDataStartTriggersInner
      */

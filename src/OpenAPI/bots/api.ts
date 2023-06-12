@@ -562,6 +562,12 @@ export interface BotTrigger {
     'botId': string;
     /**
      * 
+     * @type {boolean}
+     * @memberof BotTrigger
+     */
+    'enabled': boolean;
+    /**
+     * 
      * @type {Array<BotCondition>}
      * @memberof BotTrigger
      */
