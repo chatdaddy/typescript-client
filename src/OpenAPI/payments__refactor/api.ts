@@ -51,6 +51,72 @@ export interface Access {
 /**
  * 
  * @export
+ * @interface AccountAccess
+ */
+export interface AccountAccess {
+    /**
+     * 
+     * @type {Array<AccountFeature>}
+     * @memberof AccountAccess
+     */
+    'features': Array<AccountFeature>;
+    /**
+     * 
+     * @type {AccountLimitationMap}
+     * @memberof AccountAccess
+     */
+    'limits': AccountLimitationMap;
+}
+/**
+ * 
+ * @export
+ * @interface AccountAccessDetail
+ */
+export interface AccountAccessDetail {
+    /**
+     * 
+     * @type {AccountAccess}
+     * @memberof AccountAccessDetail
+     */
+    'access': AccountAccess;
+    /**
+     * 
+     * @type {LimitationMap}
+     * @memberof AccountAccessDetail
+     */
+    'usage': LimitationMap;
+}
+/**
+ * 
+ * @export
+ * @enum {string}
+ */
+
+export const AccountFeature = {
+    TeamInbox: 'team-inbox',
+    CustomMarketingMessage: 'custom-marketing-message',
+    ChatHistorySync: 'chat-history-sync'
+} as const;
+
+export type AccountFeature = typeof AccountFeature[keyof typeof AccountFeature];
+
+
+/**
+ * 
+ * @export
+ * @interface AccountLimitationMap
+ */
+export interface AccountLimitationMap {
+    /**
+     * The number of messages that can be sent per month.
+     * @type {number}
+     * @memberof AccountLimitationMap
+     */
+    'messages'?: number;
+}
+/**
+ * 
+ * @export
  * @interface AmountWithCurrency
  */
 export interface AmountWithCurrency {
@@ -1139,10 +1205,11 @@ export const AutoChargeProductsApiAxiosParamCreator = function (configuration?: 
          * - If usage < limit, then no action is taken - If usage >= limit, then:   - a metered subscription is created, if it doesn\'t exist   - fails if cannot be auto-charged
          * @summary Prepares the team for auto charge
          * @param {LimitedItem} item 
+         * @param {string} [accountId] The account ID to prepare usage for. Relevant for messages only.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        autoChargeProductsPrepare: async (item: LimitedItem, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        autoChargeProductsPrepare: async (item: LimitedItem, accountId?: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'item' is not null or undefined
             assertParamExists('autoChargeProductsPrepare', 'item', item)
             const localVarPath = `/auto-charge-products/prepare/{item}`
@@ -1161,6 +1228,10 @@ export const AutoChargeProductsApiAxiosParamCreator = function (configuration?: 
             // authentication chatdaddy required
             // oauth required
             await setOAuthToObject(localVarHeaderParameter, "chatdaddy", [], configuration)
+
+            if (accountId !== undefined) {
+                localVarQueryParameter['accountId'] = accountId;
+            }
 
 
     
@@ -1235,11 +1306,12 @@ export const AutoChargeProductsApiFp = function(configuration?: Configuration) {
          * - If usage < limit, then no action is taken - If usage >= limit, then:   - a metered subscription is created, if it doesn\'t exist   - fails if cannot be auto-charged
          * @summary Prepares the team for auto charge
          * @param {LimitedItem} item 
+         * @param {string} [accountId] The account ID to prepare usage for. Relevant for messages only.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async autoChargeProductsPrepare(item: LimitedItem, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.autoChargeProductsPrepare(item, options);
+        async autoChargeProductsPrepare(item: LimitedItem, accountId?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.autoChargeProductsPrepare(item, accountId, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -1276,11 +1348,12 @@ export const AutoChargeProductsApiFactory = function (configuration?: Configurat
          * - If usage < limit, then no action is taken - If usage >= limit, then:   - a metered subscription is created, if it doesn\'t exist   - fails if cannot be auto-charged
          * @summary Prepares the team for auto charge
          * @param {LimitedItem} item 
+         * @param {string} [accountId] The account ID to prepare usage for. Relevant for messages only.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        autoChargeProductsPrepare(item: LimitedItem, options?: any): AxiosPromise<void> {
-            return localVarFp.autoChargeProductsPrepare(item, options).then((request) => request(axios, basePath));
+        autoChargeProductsPrepare(item: LimitedItem, accountId?: string, options?: any): AxiosPromise<void> {
+            return localVarFp.autoChargeProductsPrepare(item, accountId, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -1307,6 +1380,13 @@ export interface AutoChargeProductsApiAutoChargeProductsPrepareRequest {
      * @memberof AutoChargeProductsApiAutoChargeProductsPrepare
      */
     readonly item: LimitedItem
+
+    /**
+     * The account ID to prepare usage for. Relevant for messages only.
+     * @type {string}
+     * @memberof AutoChargeProductsApiAutoChargeProductsPrepare
+     */
+    readonly accountId?: string
 }
 
 /**
@@ -1350,7 +1430,7 @@ export class AutoChargeProductsApi extends BaseAPI {
      * @memberof AutoChargeProductsApi
      */
     public autoChargeProductsPrepare(requestParameters: AutoChargeProductsApiAutoChargeProductsPrepareRequest, options?: AxiosRequestConfig) {
-        return AutoChargeProductsApiFp(this.configuration).autoChargeProductsPrepare(requestParameters.item, options).then((request) => request(this.axios, this.basePath));
+        return AutoChargeProductsApiFp(this.configuration).autoChargeProductsPrepare(requestParameters.item, requestParameters.accountId, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -2965,6 +3045,44 @@ export class SubscriptionsApi extends BaseAPI {
 export const TeamDetailApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
+         * If the account is an independent account, the access details for the account are returned. Otherwise, the team\'s access details are returned.
+         * @summary Get the access details for the given account
+         * @param {string} accountId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        teamDetailAccountAccessGet: async (accountId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'accountId' is not null or undefined
+            assertParamExists('teamDetailAccountAccessGet', 'accountId', accountId)
+            const localVarPath = `/team-detail/account-access/{accountId}`
+                .replace(`{${"accountId"}}`, encodeURIComponent(String(accountId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", [], configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * 
          * @summary Get the team\'s subscription and payment details
          * @param {*} [options] Override http request option.
@@ -3124,6 +3242,17 @@ export const TeamDetailApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = TeamDetailApiAxiosParamCreator(configuration)
     return {
         /**
+         * If the account is an independent account, the access details for the account are returned. Otherwise, the team\'s access details are returned.
+         * @summary Get the access details for the given account
+         * @param {string} accountId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async teamDetailAccountAccessGet(accountId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AccountAccessDetail>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.teamDetailAccountAccessGet(accountId, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
          * 
          * @summary Get the team\'s subscription and payment details
          * @param {*} [options] Override http request option.
@@ -3177,6 +3306,16 @@ export const TeamDetailApiFactory = function (configuration?: Configuration, bas
     const localVarFp = TeamDetailApiFp(configuration)
     return {
         /**
+         * If the account is an independent account, the access details for the account are returned. Otherwise, the team\'s access details are returned.
+         * @summary Get the access details for the given account
+         * @param {string} accountId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        teamDetailAccountAccessGet(accountId: string, options?: any): AxiosPromise<AccountAccessDetail> {
+            return localVarFp.teamDetailAccountAccessGet(accountId, options).then((request) => request(axios, basePath));
+        },
+        /**
          * 
          * @summary Get the team\'s subscription and payment details
          * @param {*} [options] Override http request option.
@@ -3217,6 +3356,20 @@ export const TeamDetailApiFactory = function (configuration?: Configuration, bas
         },
     };
 };
+
+/**
+ * Request parameters for teamDetailAccountAccessGet operation in TeamDetailApi.
+ * @export
+ * @interface TeamDetailApiTeamDetailAccountAccessGetRequest
+ */
+export interface TeamDetailApiTeamDetailAccountAccessGetRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof TeamDetailApiTeamDetailAccountAccessGet
+     */
+    readonly accountId: string
+}
 
 /**
  * Request parameters for teamDetailPatch operation in TeamDetailApi.
@@ -3267,6 +3420,18 @@ export interface TeamDetailApiTeamDetailRefreshAccessRequest {
  * @extends {BaseAPI}
  */
 export class TeamDetailApi extends BaseAPI {
+    /**
+     * If the account is an independent account, the access details for the account are returned. Otherwise, the team\'s access details are returned.
+     * @summary Get the access details for the given account
+     * @param {TeamDetailApiTeamDetailAccountAccessGetRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof TeamDetailApi
+     */
+    public teamDetailAccountAccessGet(requestParameters: TeamDetailApiTeamDetailAccountAccessGetRequest, options?: AxiosRequestConfig) {
+        return TeamDetailApiFp(this.configuration).teamDetailAccountAccessGet(requestParameters.accountId, options).then((request) => request(this.axios, this.basePath));
+    }
+
     /**
      * 
      * @summary Get the team\'s subscription and payment details
