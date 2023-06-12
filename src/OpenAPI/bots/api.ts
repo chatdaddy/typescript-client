@@ -975,6 +975,19 @@ export interface BotTriggersGets200Response {
 /**
  * 
  * @export
+ * @interface BotTriggersPatchRequest
+ */
+export interface BotTriggersPatchRequest {
+    /**
+     * 
+     * @type {Array<BotTrigger>}
+     * @memberof BotTriggersPatchRequest
+     */
+    'botTriggers': Array<BotTrigger>;
+}
+/**
+ * 
+ * @export
  * @interface BotsCreateRequest
  */
 export interface BotsCreateRequest {
@@ -1934,6 +1947,44 @@ export const BotTriggersApiAxiosParamCreator = function (configuration?: Configu
                 options: localVarRequestOptions,
             };
         },
+        /**
+         * 
+         * @summary Update a bot trigger
+         * @param {BotTriggersPatchRequest} [botTriggersPatchRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        botTriggersPatch: async (botTriggersPatchRequest?: BotTriggersPatchRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/bot-triggers`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PATCH', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["TEMPLATES_UPDATE"], configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(botTriggersPatchRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
     }
 };
 
@@ -1970,6 +2021,17 @@ export const BotTriggersApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.botTriggersGets(count, id, method, cursor, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
+        /**
+         * 
+         * @summary Update a bot trigger
+         * @param {BotTriggersPatchRequest} [botTriggersPatchRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async botTriggersPatch(botTriggersPatchRequest?: BotTriggersPatchRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.botTriggersPatch(botTriggersPatchRequest, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
     }
 };
 
@@ -2003,6 +2065,16 @@ export const BotTriggersApiFactory = function (configuration?: Configuration, ba
          */
         botTriggersGets(count?: number, id?: Array<string>, method?: 'webhook' | 'timestamp' | 'event', cursor?: string, options?: any): AxiosPromise<BotTriggersGets200Response> {
             return localVarFp.botTriggersGets(count, id, method, cursor, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Update a bot trigger
+         * @param {BotTriggersPatchRequest} [botTriggersPatchRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        botTriggersPatch(botTriggersPatchRequest?: BotTriggersPatchRequest, options?: any): AxiosPromise<void> {
+            return localVarFp.botTriggersPatch(botTriggersPatchRequest, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -2064,6 +2136,20 @@ export interface BotTriggersApiBotTriggersGetsRequest {
 }
 
 /**
+ * Request parameters for botTriggersPatch operation in BotTriggersApi.
+ * @export
+ * @interface BotTriggersApiBotTriggersPatchRequest
+ */
+export interface BotTriggersApiBotTriggersPatchRequest {
+    /**
+     * 
+     * @type {BotTriggersPatchRequest}
+     * @memberof BotTriggersApiBotTriggersPatch
+     */
+    readonly botTriggersPatchRequest?: BotTriggersPatchRequest
+}
+
+/**
  * BotTriggersApi - object-oriented interface
  * @export
  * @class BotTriggersApi
@@ -2092,6 +2178,18 @@ export class BotTriggersApi extends BaseAPI {
      */
     public botTriggersGets(requestParameters: BotTriggersApiBotTriggersGetsRequest = {}, options?: AxiosRequestConfig) {
         return BotTriggersApiFp(this.configuration).botTriggersGets(requestParameters.count, requestParameters.id, requestParameters.method, requestParameters.cursor, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Update a bot trigger
+     * @param {BotTriggersApiBotTriggersPatchRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof BotTriggersApi
+     */
+    public botTriggersPatch(requestParameters: BotTriggersApiBotTriggersPatchRequest = {}, options?: AxiosRequestConfig) {
+        return BotTriggersApiFp(this.configuration).botTriggersPatch(requestParameters.botTriggersPatchRequest, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
