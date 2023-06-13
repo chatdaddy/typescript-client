@@ -827,7 +827,8 @@ export interface BotTriggerRecipient {
 
 export const BotTriggerRecipientStatusEnum = {
     Pending: 'pending',
-    Sent: 'sent'
+    Sent: 'sent',
+    Failed: 'failed'
 } as const;
 
 export type BotTriggerRecipientStatusEnum = typeof BotTriggerRecipientStatusEnum[keyof typeof BotTriggerRecipientStatusEnum];

@@ -1302,7 +1302,8 @@ export interface BotInsertDataStartTriggersInnerInstancesInnerRecipientsInner {
 
 export const BotInsertDataStartTriggersInnerInstancesInnerRecipientsInnerStatusEnum = {
     Pending: 'pending',
-    Sent: 'sent'
+    Sent: 'sent',
+    Failed: 'failed'
 } as const;
 
 export type BotInsertDataStartTriggersInnerInstancesInnerRecipientsInnerStatusEnum = typeof BotInsertDataStartTriggersInnerInstancesInnerRecipientsInnerStatusEnum[keyof typeof BotInsertDataStartTriggersInnerInstancesInnerRecipientsInnerStatusEnum];
