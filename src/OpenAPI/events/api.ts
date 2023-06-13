@@ -1298,12 +1298,17 @@ export interface BotInsertDataStartTriggersInnerInstancesInnerRecipientsInner {
      * @memberof BotInsertDataStartTriggersInnerInstancesInnerRecipientsInner
      */
     'status'?: BotInsertDataStartTriggersInnerInstancesInnerRecipientsInnerStatusEnum;
+    /**
+     * 
+     * @type {string}
+     * @memberof BotInsertDataStartTriggersInnerInstancesInnerRecipientsInner
+     */
+    'messageId'?: string;
 }
 
 export const BotInsertDataStartTriggersInnerInstancesInnerRecipientsInnerStatusEnum = {
     Pending: 'pending',
-    Sent: 'sent',
-    Failed: 'failed'
+    Sent: 'sent'
 } as const;
 
 export type BotInsertDataStartTriggersInnerInstancesInnerRecipientsInnerStatusEnum = typeof BotInsertDataStartTriggersInnerInstancesInnerRecipientsInnerStatusEnum[keyof typeof BotInsertDataStartTriggersInnerInstancesInnerRecipientsInnerStatusEnum];
