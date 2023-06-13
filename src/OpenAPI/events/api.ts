@@ -1115,6 +1115,12 @@ export interface BotInsertDataStartTriggersInner {
     'enabled': boolean;
     /**
      * 
+     * @type {number}
+     * @memberof BotInsertDataStartTriggersInner
+     */
+    'sendInterval'?: number;
+    /**
+     * 
      * @type {Array<BotInsertDataStartTriggersInnerConditionsInner>}
      * @memberof BotInsertDataStartTriggersInner
      */
@@ -1229,10 +1235,10 @@ export interface BotInsertDataStartTriggersInnerInstancesInner {
     'startedAt'?: string;
     /**
      * 
-     * @type {boolean}
+     * @type {string}
      * @memberof BotInsertDataStartTriggersInnerInstancesInner
      */
-    'inProgress'?: boolean;
+    'status'?: BotInsertDataStartTriggersInnerInstancesInnerStatusEnum;
     /**
      * 
      * @type {string}
@@ -1246,6 +1252,16 @@ export interface BotInsertDataStartTriggersInnerInstancesInner {
      */
     'recipients'?: Array<BotInsertDataStartTriggersInnerInstancesInnerRecipientsInner>;
 }
+
+export const BotInsertDataStartTriggersInnerInstancesInnerStatusEnum = {
+    Pending: 'pending',
+    Running: 'running',
+    Completed: 'completed',
+    Cancelled: 'cancelled'
+} as const;
+
+export type BotInsertDataStartTriggersInnerInstancesInnerStatusEnum = typeof BotInsertDataStartTriggersInnerInstancesInnerStatusEnum[keyof typeof BotInsertDataStartTriggersInnerInstancesInnerStatusEnum];
+
 /**
  * 
  * @export
@@ -1276,7 +1292,21 @@ export interface BotInsertDataStartTriggersInnerInstancesInnerRecipientsInner {
      * @memberof BotInsertDataStartTriggersInnerInstancesInnerRecipientsInner
      */
     'instanceId'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof BotInsertDataStartTriggersInnerInstancesInnerRecipientsInner
+     */
+    'status'?: BotInsertDataStartTriggersInnerInstancesInnerRecipientsInnerStatusEnum;
 }
+
+export const BotInsertDataStartTriggersInnerInstancesInnerRecipientsInnerStatusEnum = {
+    Pending: 'pending',
+    Sent: 'sent'
+} as const;
+
+export type BotInsertDataStartTriggersInnerInstancesInnerRecipientsInnerStatusEnum = typeof BotInsertDataStartTriggersInnerInstancesInnerRecipientsInnerStatusEnum[keyof typeof BotInsertDataStartTriggersInnerInstancesInnerRecipientsInnerStatusEnum];
+
 /**
  * 
  * @export

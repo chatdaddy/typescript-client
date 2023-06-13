@@ -567,6 +567,12 @@ export interface BotTrigger {
      */
     'enabled': boolean;
     /**
+     * Time interval between each message sent in seconds
+     * @type {number}
+     * @memberof BotTrigger
+     */
+    'sendInterval'?: number;
+    /**
      * 
      * @type {Array<BotCondition>}
      * @memberof BotTrigger
@@ -648,10 +654,10 @@ export interface BotTriggerInstance {
     'startedAt'?: string;
     /**
      * 
-     * @type {boolean}
+     * @type {string}
      * @memberof BotTriggerInstance
      */
-    'inProgress'?: boolean;
+    'status'?: BotTriggerInstanceStatusEnum;
     /**
      * 
      * @type {string}
@@ -665,6 +671,16 @@ export interface BotTriggerInstance {
      */
     'recipients'?: Array<BotTriggerRecipient>;
 }
+
+export const BotTriggerInstanceStatusEnum = {
+    Pending: 'pending',
+    Running: 'running',
+    Completed: 'completed',
+    Cancelled: 'cancelled'
+} as const;
+
+export type BotTriggerInstanceStatusEnum = typeof BotTriggerInstanceStatusEnum[keyof typeof BotTriggerInstanceStatusEnum];
+
 /**
  * 
  * @export
@@ -801,7 +817,21 @@ export interface BotTriggerRecipient {
      * @memberof BotTriggerRecipient
      */
     'instanceId'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof BotTriggerRecipient
+     */
+    'status'?: BotTriggerRecipientStatusEnum;
 }
+
+export const BotTriggerRecipientStatusEnum = {
+    Pending: 'pending',
+    Sent: 'sent'
+} as const;
+
+export type BotTriggerRecipientStatusEnum = typeof BotTriggerRecipientStatusEnum[keyof typeof BotTriggerRecipientStatusEnum];
+
 /**
  * 
  * @export
@@ -1951,6 +1981,98 @@ export const BotTriggersApiAxiosParamCreator = function (configuration?: Configu
     return {
         /**
          * 
+         * @summary Cancel a bot trigger instance
+         * @param {string} triggerId 
+         * @param {string} botId 
+         * @param {string} instanceId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        botTriggerCancelInstance: async (triggerId: string, botId: string, instanceId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'triggerId' is not null or undefined
+            assertParamExists('botTriggerCancelInstance', 'triggerId', triggerId)
+            // verify required parameter 'botId' is not null or undefined
+            assertParamExists('botTriggerCancelInstance', 'botId', botId)
+            // verify required parameter 'instanceId' is not null or undefined
+            assertParamExists('botTriggerCancelInstance', 'instanceId', instanceId)
+            const localVarPath = `/bot-triggers/cancelInstance/{botId}/{triggerId}/{instanceId}`
+                .replace(`{${"triggerId"}}`, encodeURIComponent(String(triggerId)))
+                .replace(`{${"botId"}}`, encodeURIComponent(String(botId)))
+                .replace(`{${"instanceId"}}`, encodeURIComponent(String(instanceId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["TEMPLATES_UPDATE"], configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Start a bot trigger instance
+         * @param {string} triggerId 
+         * @param {string} botId 
+         * @param {string} instanceId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        botTriggerStart: async (triggerId: string, botId: string, instanceId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'triggerId' is not null or undefined
+            assertParamExists('botTriggerStart', 'triggerId', triggerId)
+            // verify required parameter 'botId' is not null or undefined
+            assertParamExists('botTriggerStart', 'botId', botId)
+            // verify required parameter 'instanceId' is not null or undefined
+            assertParamExists('botTriggerStart', 'instanceId', instanceId)
+            const localVarPath = `/bot-triggers/startInstance/{botId}/{triggerId}/{instanceId}`
+                .replace(`{${"triggerId"}}`, encodeURIComponent(String(triggerId)))
+                .replace(`{${"botId"}}`, encodeURIComponent(String(botId)))
+                .replace(`{${"instanceId"}}`, encodeURIComponent(String(instanceId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["TEMPLATES_UPDATE"], configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
          * @summary Fire a bot trigger via webhook
          * @param {string} triggerId 
          * @param {string} botId 
@@ -2099,6 +2221,32 @@ export const BotTriggersApiFp = function(configuration?: Configuration) {
     return {
         /**
          * 
+         * @summary Cancel a bot trigger instance
+         * @param {string} triggerId 
+         * @param {string} botId 
+         * @param {string} instanceId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async botTriggerCancelInstance(triggerId: string, botId: string, instanceId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.botTriggerCancelInstance(triggerId, botId, instanceId, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary Start a bot trigger instance
+         * @param {string} triggerId 
+         * @param {string} botId 
+         * @param {string} instanceId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async botTriggerStart(triggerId: string, botId: string, instanceId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.botTriggerStart(triggerId, botId, instanceId, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
          * @summary Fire a bot trigger via webhook
          * @param {string} triggerId 
          * @param {string} botId 
@@ -2147,6 +2295,30 @@ export const BotTriggersApiFactory = function (configuration?: Configuration, ba
     return {
         /**
          * 
+         * @summary Cancel a bot trigger instance
+         * @param {string} triggerId 
+         * @param {string} botId 
+         * @param {string} instanceId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        botTriggerCancelInstance(triggerId: string, botId: string, instanceId: string, options?: any): AxiosPromise<void> {
+            return localVarFp.botTriggerCancelInstance(triggerId, botId, instanceId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Start a bot trigger instance
+         * @param {string} triggerId 
+         * @param {string} botId 
+         * @param {string} instanceId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        botTriggerStart(triggerId: string, botId: string, instanceId: string, options?: any): AxiosPromise<void> {
+            return localVarFp.botTriggerStart(triggerId, botId, instanceId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
          * @summary Fire a bot trigger via webhook
          * @param {string} triggerId 
          * @param {string} botId 
@@ -2182,6 +2354,62 @@ export const BotTriggersApiFactory = function (configuration?: Configuration, ba
         },
     };
 };
+
+/**
+ * Request parameters for botTriggerCancelInstance operation in BotTriggersApi.
+ * @export
+ * @interface BotTriggersApiBotTriggerCancelInstanceRequest
+ */
+export interface BotTriggersApiBotTriggerCancelInstanceRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof BotTriggersApiBotTriggerCancelInstance
+     */
+    readonly triggerId: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof BotTriggersApiBotTriggerCancelInstance
+     */
+    readonly botId: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof BotTriggersApiBotTriggerCancelInstance
+     */
+    readonly instanceId: string
+}
+
+/**
+ * Request parameters for botTriggerStart operation in BotTriggersApi.
+ * @export
+ * @interface BotTriggersApiBotTriggerStartRequest
+ */
+export interface BotTriggersApiBotTriggerStartRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof BotTriggersApiBotTriggerStart
+     */
+    readonly triggerId: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof BotTriggersApiBotTriggerStart
+     */
+    readonly botId: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof BotTriggersApiBotTriggerStart
+     */
+    readonly instanceId: string
+}
 
 /**
  * Request parameters for botTriggerWebhook operation in BotTriggersApi.
@@ -2267,6 +2495,30 @@ export interface BotTriggersApiBotTriggersPatchRequest {
  * @extends {BaseAPI}
  */
 export class BotTriggersApi extends BaseAPI {
+    /**
+     * 
+     * @summary Cancel a bot trigger instance
+     * @param {BotTriggersApiBotTriggerCancelInstanceRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof BotTriggersApi
+     */
+    public botTriggerCancelInstance(requestParameters: BotTriggersApiBotTriggerCancelInstanceRequest, options?: AxiosRequestConfig) {
+        return BotTriggersApiFp(this.configuration).botTriggerCancelInstance(requestParameters.triggerId, requestParameters.botId, requestParameters.instanceId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Start a bot trigger instance
+     * @param {BotTriggersApiBotTriggerStartRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof BotTriggersApi
+     */
+    public botTriggerStart(requestParameters: BotTriggersApiBotTriggerStartRequest, options?: AxiosRequestConfig) {
+        return BotTriggersApiFp(this.configuration).botTriggerStart(requestParameters.triggerId, requestParameters.botId, requestParameters.instanceId, options).then((request) => request(this.axios, this.basePath));
+    }
+
     /**
      * 
      * @summary Fire a bot trigger via webhook
