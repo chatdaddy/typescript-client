@@ -162,6 +162,25 @@ export interface GetMetrics200ResponseMetrics {
 /**
  * 
  * @export
+ * @interface GetNotifications200Response
+ */
+export interface GetNotifications200Response {
+    /**
+     * 
+     * @type {Array<Notification>}
+     * @memberof GetNotifications200Response
+     */
+    'notifications': Array<Notification>;
+    /**
+     * 
+     * @type {string}
+     * @memberof GetNotifications200Response
+     */
+    'cursor'?: string;
+}
+/**
+ * 
+ * @export
  * @interface GetTopMetricKeys200Response
  */
 export interface GetTopMetricKeys200Response {
@@ -386,10 +405,10 @@ export interface MetricsResult {
 export interface Notification {
     /**
      * 
-     * @type {string}
+     * @type {number}
      * @memberof Notification
      */
-    'id'?: string;
+    'id'?: number;
     /**
      * An ISO formatted timestamp
      * @type {string}
@@ -436,10 +455,10 @@ export type NotificationCategoryEnum = typeof NotificationCategoryEnum[keyof typ
 export interface NotificationAllOf {
     /**
      * 
-     * @type {string}
+     * @type {number}
      * @memberof NotificationAllOf
      */
-    'id'?: string;
+    'id'?: number;
     /**
      * An ISO formatted timestamp
      * @type {string}
@@ -1473,7 +1492,7 @@ export const NotificationApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getNotifications(id?: string, category?: NotificationCategory, count?: number, q?: string, cursor?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<Notification>>> {
+        async getNotifications(id?: string, category?: NotificationCategory, count?: number, q?: string, cursor?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetNotifications200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getNotifications(id, category, count, q, cursor, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -1498,7 +1517,7 @@ export const NotificationApiFactory = function (configuration?: Configuration, b
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getNotifications(id?: string, category?: NotificationCategory, count?: number, q?: string, cursor?: string, options?: any): AxiosPromise<Array<Notification>> {
+        getNotifications(id?: string, category?: NotificationCategory, count?: number, q?: string, cursor?: string, options?: any): AxiosPromise<GetNotifications200Response> {
             return localVarFp.getNotifications(id, category, count, q, cursor, options).then((request) => request(axios, basePath));
         },
     };
