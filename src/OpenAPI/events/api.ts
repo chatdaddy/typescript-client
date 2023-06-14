@@ -1247,10 +1247,10 @@ export interface BotInsertDataStartTriggersInnerInstancesInner {
     'triggerId'?: string;
     /**
      * 
-     * @type {Array<BotInsertDataStartTriggersInnerInstancesInnerRecipientsInner>}
+     * @type {Array<BotInsertDataStartTriggersInnerInstancesInnerRecordsInner>}
      * @memberof BotInsertDataStartTriggersInnerInstancesInner
      */
-    'recipients'?: Array<BotInsertDataStartTriggersInnerInstancesInnerRecipientsInner>;
+    'records'?: Array<BotInsertDataStartTriggersInnerInstancesInnerRecordsInner>;
 }
 
 export const BotInsertDataStartTriggersInnerInstancesInnerStatusEnum = {
@@ -1265,54 +1265,107 @@ export type BotInsertDataStartTriggersInnerInstancesInnerStatusEnum = typeof Bot
 /**
  * 
  * @export
- * @interface BotInsertDataStartTriggersInnerInstancesInnerRecipientsInner
+ * @interface BotInsertDataStartTriggersInnerInstancesInnerRecordsInner
  */
-export interface BotInsertDataStartTriggersInnerInstancesInnerRecipientsInner {
-    /**
-     * 
-     * @type {string}
-     * @memberof BotInsertDataStartTriggersInnerInstancesInnerRecipientsInner
-     */
-    'id'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof BotInsertDataStartTriggersInnerInstancesInnerRecipientsInner
-     */
-    'name'?: string;
+export interface BotInsertDataStartTriggersInnerInstancesInnerRecordsInner {
     /**
      * 
      * @type {number}
-     * @memberof BotInsertDataStartTriggersInnerInstancesInnerRecipientsInner
+     * @memberof BotInsertDataStartTriggersInnerInstancesInnerRecordsInner
      */
-    'phoneNumber'?: number;
+    'id': number;
     /**
      * 
      * @type {string}
-     * @memberof BotInsertDataStartTriggersInnerInstancesInnerRecipientsInner
+     * @memberof BotInsertDataStartTriggersInnerInstancesInnerRecordsInner
+     */
+    'actionId': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof BotInsertDataStartTriggersInnerInstancesInnerRecordsInner
+     */
+    'botId': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof BotInsertDataStartTriggersInnerInstancesInnerRecordsInner
      */
     'instanceId'?: string;
     /**
      * 
      * @type {string}
-     * @memberof BotInsertDataStartTriggersInnerInstancesInnerRecipientsInner
+     * @memberof BotInsertDataStartTriggersInnerInstancesInnerRecordsInner
      */
-    'status'?: BotInsertDataStartTriggersInnerInstancesInnerRecipientsInnerStatusEnum;
+    'contactId'?: string;
     /**
      * 
      * @type {string}
-     * @memberof BotInsertDataStartTriggersInnerInstancesInnerRecipientsInner
+     * @memberof BotInsertDataStartTriggersInnerInstancesInnerRecordsInner
      */
-    'messageId'?: string;
+    'accountId'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof BotInsertDataStartTriggersInnerInstancesInnerRecordsInner
+     */
+    'createdAt'?: string;
+    /**
+     * 
+     * @type {Array<BotInsertDataStartTriggersInnerInstancesInnerRecordsInnerMessagesInner>}
+     * @memberof BotInsertDataStartTriggersInnerInstancesInnerRecordsInner
+     */
+    'messages'?: Array<BotInsertDataStartTriggersInnerInstancesInnerRecordsInnerMessagesInner>;
+    /**
+     * 
+     * @type {Array<BotInsertDataStartTriggersInnerInstancesInnerRecordsInnerMessagesInner>}
+     * @memberof BotInsertDataStartTriggersInnerInstancesInnerRecordsInner
+     */
+    'webhooks'?: Array<BotInsertDataStartTriggersInnerInstancesInnerRecordsInnerMessagesInner>;
+    /**
+     * 
+     * @type {Array<BotInsertDataStartTriggersInnerInstancesInnerRecordsInnerMessagesInner>}
+     * @memberof BotInsertDataStartTriggersInnerInstancesInnerRecordsInner
+     */
+    'notifyUsers'?: Array<BotInsertDataStartTriggersInnerInstancesInnerRecordsInnerMessagesInner>;
+    /**
+     * 
+     * @type {BotInsertDataStartTriggersInnerInstancesInnerRecordsInnerMessagesInner}
+     * @memberof BotInsertDataStartTriggersInnerInstancesInnerRecordsInner
+     */
+    'contact'?: BotInsertDataStartTriggersInnerInstancesInnerRecordsInnerMessagesInner;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof BotInsertDataStartTriggersInnerInstancesInnerRecordsInner
+     */
+    'isStart'?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof BotInsertDataStartTriggersInnerInstancesInnerRecordsInner
+     */
+    'isFinal'?: boolean;
 }
-
-export const BotInsertDataStartTriggersInnerInstancesInnerRecipientsInnerStatusEnum = {
-    Pending: 'pending',
-    Sent: 'sent'
-} as const;
-
-export type BotInsertDataStartTriggersInnerInstancesInnerRecipientsInnerStatusEnum = typeof BotInsertDataStartTriggersInnerInstancesInnerRecipientsInnerStatusEnum[keyof typeof BotInsertDataStartTriggersInnerInstancesInnerRecipientsInnerStatusEnum];
-
+/**
+ * 
+ * @export
+ * @interface BotInsertDataStartTriggersInnerInstancesInnerRecordsInnerMessagesInner
+ */
+export interface BotInsertDataStartTriggersInnerInstancesInnerRecordsInnerMessagesInner {
+    /**
+     * 
+     * @type {number}
+     * @memberof BotInsertDataStartTriggersInnerInstancesInnerRecordsInnerMessagesInner
+     */
+    'statusCode': number;
+    /**
+     * 
+     * @type {{ [key: string]: any; }}
+     * @memberof BotInsertDataStartTriggersInnerInstancesInnerRecordsInnerMessagesInner
+     */
+    'body'?: { [key: string]: any; };
+}
 /**
  * 
  * @export

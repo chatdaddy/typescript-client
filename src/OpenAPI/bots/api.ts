@@ -236,6 +236,12 @@ export interface ActionFireRecord {
      * @type {string}
      * @memberof ActionFireRecord
      */
+    'instanceId'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ActionFireRecord
+     */
     'contactId'?: string;
     /**
      * 
@@ -666,10 +672,10 @@ export interface BotTriggerInstance {
     'triggerId'?: string;
     /**
      * 
-     * @type {Array<BotTriggerRecipient>}
+     * @type {Array<ActionFireRecord>}
      * @memberof BotTriggerInstance
      */
-    'recipients'?: Array<BotTriggerRecipient>;
+    'records'?: Array<ActionFireRecord>;
 }
 
 export const BotTriggerInstanceStatusEnum = {
@@ -681,25 +687,6 @@ export const BotTriggerInstanceStatusEnum = {
 
 export type BotTriggerInstanceStatusEnum = typeof BotTriggerInstanceStatusEnum[keyof typeof BotTriggerInstanceStatusEnum];
 
-/**
- * 
- * @export
- * @interface BotTriggerInstanceRecordsGets200Response
- */
-export interface BotTriggerInstanceRecordsGets200Response {
-    /**
-     * 
-     * @type {Array<BotTriggerInstance>}
-     * @memberof BotTriggerInstanceRecordsGets200Response
-     */
-    'botTriggerInstanceRecords': Array<BotTriggerInstance>;
-    /**
-     * Cursor to use to fetch next page of results
-     * @type {string}
-     * @memberof BotTriggerInstanceRecordsGets200Response
-     */
-    'cursor'?: string;
-}
 /**
  * 
  * @export
@@ -805,57 +792,6 @@ export const BotTriggerPayloadContactTypeEnum = {
 } as const;
 
 export type BotTriggerPayloadContactTypeEnum = typeof BotTriggerPayloadContactTypeEnum[keyof typeof BotTriggerPayloadContactTypeEnum];
-
-/**
- * 
- * @export
- * @interface BotTriggerRecipient
- */
-export interface BotTriggerRecipient {
-    /**
-     * 
-     * @type {string}
-     * @memberof BotTriggerRecipient
-     */
-    'id'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof BotTriggerRecipient
-     */
-    'name'?: string;
-    /**
-     * 
-     * @type {number}
-     * @memberof BotTriggerRecipient
-     */
-    'phoneNumber'?: number;
-    /**
-     * 
-     * @type {string}
-     * @memberof BotTriggerRecipient
-     */
-    'instanceId'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof BotTriggerRecipient
-     */
-    'status'?: BotTriggerRecipientStatusEnum;
-    /**
-     * 
-     * @type {string}
-     * @memberof BotTriggerRecipient
-     */
-    'messageId'?: string;
-}
-
-export const BotTriggerRecipientStatusEnum = {
-    Pending: 'pending',
-    Sent: 'sent'
-} as const;
-
-export type BotTriggerRecipientStatusEnum = typeof BotTriggerRecipientStatusEnum[keyof typeof BotTriggerRecipientStatusEnum];
 
 /**
  * 
@@ -2052,59 +1988,6 @@ export const BotTriggersApiAxiosParamCreator = function (configuration?: Configu
         },
         /**
          * 
-         * @summary Get list of bot trigger instance records
-         * @param {string} triggerId 
-         * @param {number} [count] 
-         * @param {Array<string>} [id] 
-         * @param {string} [cursor] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        botTriggerInstanceRecordsGets: async (triggerId: string, count?: number, id?: Array<string>, cursor?: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'triggerId' is not null or undefined
-            assertParamExists('botTriggerInstanceRecordsGets', 'triggerId', triggerId)
-            const localVarPath = `/bot-triggers/{triggerId}/instance-records`
-                .replace(`{${"triggerId"}}`, encodeURIComponent(String(triggerId)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication chatdaddy required
-            // oauth required
-            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["TEMPLATES_READ"], configuration)
-
-            if (count !== undefined) {
-                localVarQueryParameter['count'] = count;
-            }
-
-            if (id) {
-                localVarQueryParameter['id'] = id;
-            }
-
-            if (cursor !== undefined) {
-                localVarQueryParameter['cursor'] = cursor;
-            }
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
          * @summary Start a bot trigger instance
          * @param {string} triggerId 
          * @param {string} botId 
@@ -2312,20 +2195,6 @@ export const BotTriggersApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
-         * @summary Get list of bot trigger instance records
-         * @param {string} triggerId 
-         * @param {number} [count] 
-         * @param {Array<string>} [id] 
-         * @param {string} [cursor] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async botTriggerInstanceRecordsGets(triggerId: string, count?: number, id?: Array<string>, cursor?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BotTriggerInstanceRecordsGets200Response>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.botTriggerInstanceRecordsGets(triggerId, count, id, cursor, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-        /**
-         * 
          * @summary Start a bot trigger instance
          * @param {string} triggerId 
          * @param {string} botId 
@@ -2396,19 +2265,6 @@ export const BotTriggersApiFactory = function (configuration?: Configuration, ba
          */
         botTriggerCancelInstance(triggerId: string, botId: string, instanceId: string, options?: any): AxiosPromise<void> {
             return localVarFp.botTriggerCancelInstance(triggerId, botId, instanceId, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
-         * @summary Get list of bot trigger instance records
-         * @param {string} triggerId 
-         * @param {number} [count] 
-         * @param {Array<string>} [id] 
-         * @param {string} [cursor] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        botTriggerInstanceRecordsGets(triggerId: string, count?: number, id?: Array<string>, cursor?: string, options?: any): AxiosPromise<BotTriggerInstanceRecordsGets200Response> {
-            return localVarFp.botTriggerInstanceRecordsGets(triggerId, count, id, cursor, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -2486,41 +2342,6 @@ export interface BotTriggersApiBotTriggerCancelInstanceRequest {
      * @memberof BotTriggersApiBotTriggerCancelInstance
      */
     readonly instanceId: string
-}
-
-/**
- * Request parameters for botTriggerInstanceRecordsGets operation in BotTriggersApi.
- * @export
- * @interface BotTriggersApiBotTriggerInstanceRecordsGetsRequest
- */
-export interface BotTriggersApiBotTriggerInstanceRecordsGetsRequest {
-    /**
-     * 
-     * @type {string}
-     * @memberof BotTriggersApiBotTriggerInstanceRecordsGets
-     */
-    readonly triggerId: string
-
-    /**
-     * 
-     * @type {number}
-     * @memberof BotTriggersApiBotTriggerInstanceRecordsGets
-     */
-    readonly count?: number
-
-    /**
-     * 
-     * @type {Array<string>}
-     * @memberof BotTriggersApiBotTriggerInstanceRecordsGets
-     */
-    readonly id?: Array<string>
-
-    /**
-     * 
-     * @type {string}
-     * @memberof BotTriggersApiBotTriggerInstanceRecordsGets
-     */
-    readonly cursor?: string
 }
 
 /**
@@ -2645,18 +2466,6 @@ export class BotTriggersApi extends BaseAPI {
      */
     public botTriggerCancelInstance(requestParameters: BotTriggersApiBotTriggerCancelInstanceRequest, options?: AxiosRequestConfig) {
         return BotTriggersApiFp(this.configuration).botTriggerCancelInstance(requestParameters.triggerId, requestParameters.botId, requestParameters.instanceId, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
-     * @summary Get list of bot trigger instance records
-     * @param {BotTriggersApiBotTriggerInstanceRecordsGetsRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof BotTriggersApi
-     */
-    public botTriggerInstanceRecordsGets(requestParameters: BotTriggersApiBotTriggerInstanceRecordsGetsRequest, options?: AxiosRequestConfig) {
-        return BotTriggersApiFp(this.configuration).botTriggerInstanceRecordsGets(requestParameters.triggerId, requestParameters.count, requestParameters.id, requestParameters.cursor, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
