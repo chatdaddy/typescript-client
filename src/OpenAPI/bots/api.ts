@@ -242,6 +242,12 @@ export interface ActionFireRecord {
      * @type {string}
      * @memberof ActionFireRecord
      */
+    'status'?: ActionFireRecordStatusEnum;
+    /**
+     * 
+     * @type {string}
+     * @memberof ActionFireRecord
+     */
     'contactId'?: string;
     /**
      * 
@@ -292,6 +298,16 @@ export interface ActionFireRecord {
      */
     'isFinal'?: boolean;
 }
+
+export const ActionFireRecordStatusEnum = {
+    Pending: 'pending',
+    Sent: 'sent',
+    Failed: 'failed',
+    Cancelled: 'cancelled'
+} as const;
+
+export type ActionFireRecordStatusEnum = typeof ActionFireRecordStatusEnum[keyof typeof ActionFireRecordStatusEnum];
+
 /**
  * 
  * @export

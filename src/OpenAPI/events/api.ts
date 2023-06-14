@@ -1297,6 +1297,12 @@ export interface BotInsertDataStartTriggersInnerInstancesInnerRecordsInner {
      * @type {string}
      * @memberof BotInsertDataStartTriggersInnerInstancesInnerRecordsInner
      */
+    'status'?: BotInsertDataStartTriggersInnerInstancesInnerRecordsInnerStatusEnum;
+    /**
+     * 
+     * @type {string}
+     * @memberof BotInsertDataStartTriggersInnerInstancesInnerRecordsInner
+     */
     'contactId'?: string;
     /**
      * 
@@ -1347,6 +1353,16 @@ export interface BotInsertDataStartTriggersInnerInstancesInnerRecordsInner {
      */
     'isFinal'?: boolean;
 }
+
+export const BotInsertDataStartTriggersInnerInstancesInnerRecordsInnerStatusEnum = {
+    Pending: 'pending',
+    Sent: 'sent',
+    Failed: 'failed',
+    Cancelled: 'cancelled'
+} as const;
+
+export type BotInsertDataStartTriggersInnerInstancesInnerRecordsInnerStatusEnum = typeof BotInsertDataStartTriggersInnerInstancesInnerRecordsInnerStatusEnum[keyof typeof BotInsertDataStartTriggersInnerInstancesInnerRecordsInnerStatusEnum];
+
 /**
  * 
  * @export
