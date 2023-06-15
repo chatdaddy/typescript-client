@@ -1160,121 +1160,6 @@ export interface BotsDataGet200Response {
 /**
  * 
  * @export
- * @interface BotsDataGetParamsParameter
- */
-export interface BotsDataGetParamsParameter {
-    /**
-     * 
-     * @type {BotsDataGetParamsParameterTriggersParams}
-     * @memberof BotsDataGetParamsParameter
-     */
-    'triggersParams'?: BotsDataGetParamsParameterTriggersParams;
-    /**
-     * 
-     * @type {BotsDataGetParamsParameterActionsParams}
-     * @memberof BotsDataGetParamsParameter
-     */
-    'actionsParams'?: BotsDataGetParamsParameterActionsParams;
-    /**
-     * 
-     * @type {BotsDataGetParamsParameterNotesParams}
-     * @memberof BotsDataGetParamsParameter
-     */
-    'notesParams'?: BotsDataGetParamsParameterNotesParams;
-}
-/**
- * 
- * @export
- * @interface BotsDataGetParamsParameterActionsParams
- */
-export interface BotsDataGetParamsParameterActionsParams {
-    /**
-     * 
-     * @type {number}
-     * @memberof BotsDataGetParamsParameterActionsParams
-     */
-    'count'?: number;
-    /**
-     * get records before the given ID
-     * @type {string}
-     * @memberof BotsDataGetParamsParameterActionsParams
-     */
-    'before'?: string;
-    /**
-     * search by name
-     * @type {string}
-     * @memberof BotsDataGetParamsParameterActionsParams
-     */
-    'q'?: string;
-    /**
-     * ID of the bot sequence
-     * @type {string}
-     * @memberof BotsDataGetParamsParameterActionsParams
-     */
-    'botId'?: string;
-}
-/**
- * 
- * @export
- * @interface BotsDataGetParamsParameterNotesParams
- */
-export interface BotsDataGetParamsParameterNotesParams {
-    /**
-     * 
-     * @type {string}
-     * @memberof BotsDataGetParamsParameterNotesParams
-     */
-    'before'?: string;
-    /**
-     * 
-     * @type {number}
-     * @memberof BotsDataGetParamsParameterNotesParams
-     */
-    'count'?: number;
-}
-/**
- * 
- * @export
- * @interface BotsDataGetParamsParameterTriggersParams
- */
-export interface BotsDataGetParamsParameterTriggersParams {
-    /**
-     * 
-     * @type {number}
-     * @memberof BotsDataGetParamsParameterTriggersParams
-     */
-    'count'?: number;
-    /**
-     * 
-     * @type {Array<string>}
-     * @memberof BotsDataGetParamsParameterTriggersParams
-     */
-    'id'?: Array<string>;
-    /**
-     * 
-     * @type {string}
-     * @memberof BotsDataGetParamsParameterTriggersParams
-     */
-    'method'?: BotsDataGetParamsParameterTriggersParamsMethodEnum;
-    /**
-     * 
-     * @type {string}
-     * @memberof BotsDataGetParamsParameterTriggersParams
-     */
-    'cursor'?: string;
-}
-
-export const BotsDataGetParamsParameterTriggersParamsMethodEnum = {
-    Webhook: 'webhook',
-    Timestamp: 'timestamp',
-    Event: 'event'
-} as const;
-
-export type BotsDataGetParamsParameterTriggersParamsMethodEnum = typeof BotsDataGetParamsParameterTriggersParamsMethodEnum[keyof typeof BotsDataGetParamsParameterTriggersParamsMethodEnum];
-
-/**
- * 
- * @export
  * @interface BotsExternalTemplateCommand200Response
  */
 export interface BotsExternalTemplateCommand200Response {
@@ -2614,16 +2499,21 @@ export const BotsApiAxiosParamCreator = function (configuration?: Configuration)
             };
         },
         /**
-         * This endpoint fetches bot data based on provided parameters
+         * This endpoint fetches bot data based on provided botId and teamId parameters
          * @summary Retrieves bot data including triggers, notes and actions
-         * @param {BotsDataGetParamsParameter} params Parameters for fetching triggers, actions, and notes
+         * @param {string} botId The ID of the bot
+         * @param {string} teamId The ID of the team
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        botsDataGet: async (params: BotsDataGetParamsParameter, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'params' is not null or undefined
-            assertParamExists('botsDataGet', 'params', params)
-            const localVarPath = `/bots/data`;
+        botsDataGet: async (botId: string, teamId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'botId' is not null or undefined
+            assertParamExists('botsDataGet', 'botId', botId)
+            // verify required parameter 'teamId' is not null or undefined
+            assertParamExists('botsDataGet', 'teamId', teamId)
+            const localVarPath = `/bots/{botId}/{teamId}/data`
+                .replace(`{${"botId"}}`, encodeURIComponent(String(botId)))
+                .replace(`{${"teamId"}}`, encodeURIComponent(String(teamId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -2634,10 +2524,6 @@ export const BotsApiAxiosParamCreator = function (configuration?: Configuration)
             const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
-
-            if (params !== undefined) {
-                localVarQueryParameter['params'] = params;
-            }
 
 
     
@@ -3019,14 +2905,15 @@ export const BotsApiFp = function(configuration?: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
-         * This endpoint fetches bot data based on provided parameters
+         * This endpoint fetches bot data based on provided botId and teamId parameters
          * @summary Retrieves bot data including triggers, notes and actions
-         * @param {BotsDataGetParamsParameter} params Parameters for fetching triggers, actions, and notes
+         * @param {string} botId The ID of the bot
+         * @param {string} teamId The ID of the team
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async botsDataGet(params: BotsDataGetParamsParameter, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BotsDataGet200Response>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.botsDataGet(params, options);
+        async botsDataGet(botId: string, teamId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BotsDataGet200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.botsDataGet(botId, teamId, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -3143,14 +3030,15 @@ export const BotsApiFactory = function (configuration?: Configuration, basePath?
             return localVarFp.botsCreate(botsCreateRequest, options).then((request) => request(axios, basePath));
         },
         /**
-         * This endpoint fetches bot data based on provided parameters
+         * This endpoint fetches bot data based on provided botId and teamId parameters
          * @summary Retrieves bot data including triggers, notes and actions
-         * @param {BotsDataGetParamsParameter} params Parameters for fetching triggers, actions, and notes
+         * @param {string} botId The ID of the bot
+         * @param {string} teamId The ID of the team
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        botsDataGet(params: BotsDataGetParamsParameter, options?: any): AxiosPromise<BotsDataGet200Response> {
-            return localVarFp.botsDataGet(params, options).then((request) => request(axios, basePath));
+        botsDataGet(botId: string, teamId: string, options?: any): AxiosPromise<BotsDataGet200Response> {
+            return localVarFp.botsDataGet(botId, teamId, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -3262,11 +3150,18 @@ export interface BotsApiBotsCreateRequest {
  */
 export interface BotsApiBotsDataGetRequest {
     /**
-     * Parameters for fetching triggers, actions, and notes
-     * @type {BotsDataGetParamsParameter}
+     * The ID of the bot
+     * @type {string}
      * @memberof BotsApiBotsDataGet
      */
-    readonly params: BotsDataGetParamsParameter
+    readonly botId: string
+
+    /**
+     * The ID of the team
+     * @type {string}
+     * @memberof BotsApiBotsDataGet
+     */
+    readonly teamId: string
 }
 
 /**
@@ -3499,7 +3394,7 @@ export class BotsApi extends BaseAPI {
     }
 
     /**
-     * This endpoint fetches bot data based on provided parameters
+     * This endpoint fetches bot data based on provided botId and teamId parameters
      * @summary Retrieves bot data including triggers, notes and actions
      * @param {BotsApiBotsDataGetRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -3507,7 +3402,7 @@ export class BotsApi extends BaseAPI {
      * @memberof BotsApi
      */
     public botsDataGet(requestParameters: BotsApiBotsDataGetRequest, options?: AxiosRequestConfig) {
-        return BotsApiFp(this.configuration).botsDataGet(requestParameters.params, options).then((request) => request(this.axios, this.basePath));
+        return BotsApiFp(this.configuration).botsDataGet(requestParameters.botId, requestParameters.teamId, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
