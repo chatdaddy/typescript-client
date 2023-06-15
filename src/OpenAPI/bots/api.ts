@@ -376,6 +376,24 @@ export interface Bot {
      */
     'externalTemplate'?: { [key: string]: ExternalTemplateProvider; };
     /**
+     * URL of the thumbnail image
+     * @type {string}
+     * @memberof Bot
+     */
+    'imageUrl'?: string;
+    /**
+     * Description of the bot
+     * @type {string}
+     * @memberof Bot
+     */
+    'description'?: string;
+    /**
+     * 
+     * @type {Array<BotNote>}
+     * @memberof Bot
+     */
+    'notes'?: Array<BotNote>;
+    /**
      * An ISO formatted timestamp
      * @type {string}
      * @memberof Bot
@@ -522,6 +540,12 @@ export interface BotMessageDelay {
     'position'?: Position;
 }
 /**
+ * @type BotNote
+ * @export
+ */
+export type BotNote = any;
+
+/**
  * 
  * @export
  * @interface BotPatch
@@ -551,6 +575,24 @@ export interface BotPatch {
      * @memberof BotPatch
      */
     'actions'?: Array<ActionContent>;
+    /**
+     * 
+     * @type {Array<BotNote>}
+     * @memberof BotPatch
+     */
+    'notes'?: Array<BotNote>;
+    /**
+     * 
+     * @type {string}
+     * @memberof BotPatch
+     */
+    'imageUrl'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof BotPatch
+     */
+    'description'?: string;
 }
 /**
  * 

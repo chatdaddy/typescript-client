@@ -843,7 +843,7 @@ export interface ActionExecuteDataAllOf1MessageDelays {
     'position'?: ActionExecuteDataAllOf1MessagePosition;
 }
 /**
- * position in x-y coordinate space
+ * 
  * @export
  * @interface ActionExecuteDataAllOf1MessagePosition
  */
@@ -1017,6 +1017,24 @@ export interface BotInsertData {
      * @type {string}
      * @memberof BotInsertData
      */
+    'imageUrl'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof BotInsertData
+     */
+    'description'?: string;
+    /**
+     * 
+     * @type {Array<BotInsertDataNotesInner>}
+     * @memberof BotInsertData
+     */
+    'notes'?: Array<BotInsertDataNotesInner>;
+    /**
+     * 
+     * @type {string}
+     * @memberof BotInsertData
+     */
     'createdAt'?: string;
     /**
      * 
@@ -1077,6 +1095,31 @@ export const BotInsertDataExternalTemplateValueStatusEnum = {
 
 export type BotInsertDataExternalTemplateValueStatusEnum = typeof BotInsertDataExternalTemplateValueStatusEnum[keyof typeof BotInsertDataExternalTemplateValueStatusEnum];
 
+/**
+ * @type BotInsertDataNotesInner
+ * @export
+ */
+export type BotInsertDataNotesInner = any;
+
+/**
+ * 
+ * @export
+ * @interface BotInsertDataNotesInnerPosition
+ */
+export interface BotInsertDataNotesInnerPosition {
+    /**
+     * 
+     * @type {number}
+     * @memberof BotInsertDataNotesInnerPosition
+     */
+    'x': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof BotInsertDataNotesInnerPosition
+     */
+    'y': number;
+}
 /**
  * 
  * @export
@@ -1794,6 +1837,24 @@ export interface BotUpdateData {
      * @memberof BotUpdateData
      */
     'externalTemplate'?: { [key: string]: BotInsertDataExternalTemplateValue; };
+    /**
+     * 
+     * @type {string}
+     * @memberof BotUpdateData
+     */
+    'imageUrl'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof BotUpdateData
+     */
+    'description'?: string;
+    /**
+     * 
+     * @type {Array<BotInsertDataNotesInner>}
+     * @memberof BotUpdateData
+     */
+    'notes'?: Array<BotInsertDataNotesInner>;
     /**
      * 
      * @type {string}
