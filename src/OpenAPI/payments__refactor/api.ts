@@ -1038,10 +1038,10 @@ interface SubscriptionsGet200Response {
     'items': Array<Subscription>;
     /**
      * 
-     * @type {string}
+     * @type {number}
      * @memberof SubscriptionsGet200Response
      */
-    'nextPageCursor'?: string;
+    'nextPage'?: number;
 }
 /**
  * 
@@ -2626,7 +2626,7 @@ export const SubscriptionsApiAxiosParamCreator = function (configuration?: Confi
          * @summary Get the list of subscriptions
          * @param {string} [teamId] Filter by teamId
          * @param {number} [count] 
-         * @param {string} [cursor] 
+         * @param {number} [page] 
          * @param {string} [q] Search by subscription ID, team ID or product name
          * @param {boolean} [includeFreeTier] Include free tier subscriptions
          * @param {'startDate' | 'endOrNextRenewalDate'} [sortBy] Sort by the given field
@@ -2636,7 +2636,7 @@ export const SubscriptionsApiAxiosParamCreator = function (configuration?: Confi
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        subscriptionsGet: async (teamId?: string, count?: number, cursor?: string, q?: string, includeFreeTier?: boolean, sortBy?: 'startDate' | 'endOrNextRenewalDate', sortDirection?: 'asc' | 'desc', endsOrRenewsAfter?: string, endsOrRenewsBefore?: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        subscriptionsGet: async (teamId?: string, count?: number, page?: number, q?: string, includeFreeTier?: boolean, sortBy?: 'startDate' | 'endOrNextRenewalDate', sortDirection?: 'asc' | 'desc', endsOrRenewsAfter?: string, endsOrRenewsBefore?: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/subscriptions`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -2661,8 +2661,8 @@ export const SubscriptionsApiAxiosParamCreator = function (configuration?: Confi
                 localVarQueryParameter['count'] = count;
             }
 
-            if (cursor !== undefined) {
-                localVarQueryParameter['cursor'] = cursor;
+            if (page !== undefined) {
+                localVarQueryParameter['page'] = page;
             }
 
             if (q !== undefined) {
@@ -2799,7 +2799,7 @@ export const SubscriptionsApiFp = function(configuration?: Configuration) {
          * @summary Get the list of subscriptions
          * @param {string} [teamId] Filter by teamId
          * @param {number} [count] 
-         * @param {string} [cursor] 
+         * @param {number} [page] 
          * @param {string} [q] Search by subscription ID, team ID or product name
          * @param {boolean} [includeFreeTier] Include free tier subscriptions
          * @param {'startDate' | 'endOrNextRenewalDate'} [sortBy] Sort by the given field
@@ -2809,8 +2809,8 @@ export const SubscriptionsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async subscriptionsGet(teamId?: string, count?: number, cursor?: string, q?: string, includeFreeTier?: boolean, sortBy?: 'startDate' | 'endOrNextRenewalDate', sortDirection?: 'asc' | 'desc', endsOrRenewsAfter?: string, endsOrRenewsBefore?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SubscriptionsGet200Response>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.subscriptionsGet(teamId, count, cursor, q, includeFreeTier, sortBy, sortDirection, endsOrRenewsAfter, endsOrRenewsBefore, options);
+        async subscriptionsGet(teamId?: string, count?: number, page?: number, q?: string, includeFreeTier?: boolean, sortBy?: 'startDate' | 'endOrNextRenewalDate', sortDirection?: 'asc' | 'desc', endsOrRenewsAfter?: string, endsOrRenewsBefore?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SubscriptionsGet200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.subscriptionsGet(teamId, count, page, q, includeFreeTier, sortBy, sortDirection, endsOrRenewsAfter, endsOrRenewsBefore, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -2851,7 +2851,7 @@ export const SubscriptionsApiFactory = function (configuration?: Configuration, 
          * @summary Get the list of subscriptions
          * @param {string} [teamId] Filter by teamId
          * @param {number} [count] 
-         * @param {string} [cursor] 
+         * @param {number} [page] 
          * @param {string} [q] Search by subscription ID, team ID or product name
          * @param {boolean} [includeFreeTier] Include free tier subscriptions
          * @param {'startDate' | 'endOrNextRenewalDate'} [sortBy] Sort by the given field
@@ -2861,8 +2861,8 @@ export const SubscriptionsApiFactory = function (configuration?: Configuration, 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        subscriptionsGet(teamId?: string, count?: number, cursor?: string, q?: string, includeFreeTier?: boolean, sortBy?: 'startDate' | 'endOrNextRenewalDate', sortDirection?: 'asc' | 'desc', endsOrRenewsAfter?: string, endsOrRenewsBefore?: string, options?: any): AxiosPromise<SubscriptionsGet200Response> {
-            return localVarFp.subscriptionsGet(teamId, count, cursor, q, includeFreeTier, sortBy, sortDirection, endsOrRenewsAfter, endsOrRenewsBefore, options).then((request) => request(axios, basePath));
+        subscriptionsGet(teamId?: string, count?: number, page?: number, q?: string, includeFreeTier?: boolean, sortBy?: 'startDate' | 'endOrNextRenewalDate', sortDirection?: 'asc' | 'desc', endsOrRenewsAfter?: string, endsOrRenewsBefore?: string, options?: any): AxiosPromise<SubscriptionsGet200Response> {
+            return localVarFp.subscriptionsGet(teamId, count, page, q, includeFreeTier, sortBy, sortDirection, endsOrRenewsAfter, endsOrRenewsBefore, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -2910,10 +2910,10 @@ export interface SubscriptionsApiSubscriptionsGetRequest {
 
     /**
      * 
-     * @type {string}
+     * @type {number}
      * @memberof SubscriptionsApiSubscriptionsGet
      */
-    readonly cursor?: string
+    readonly page?: number
 
     /**
      * Search by subscription ID, team ID or product name
@@ -3009,7 +3009,7 @@ export class SubscriptionsApi extends BaseAPI {
      * @memberof SubscriptionsApi
      */
     public subscriptionsGet(requestParameters: SubscriptionsApiSubscriptionsGetRequest = {}, options?: AxiosRequestConfig) {
-        return SubscriptionsApiFp(this.configuration).subscriptionsGet(requestParameters.teamId, requestParameters.count, requestParameters.cursor, requestParameters.q, requestParameters.includeFreeTier, requestParameters.sortBy, requestParameters.sortDirection, requestParameters.endsOrRenewsAfter, requestParameters.endsOrRenewsBefore, options).then((request) => request(this.axios, this.basePath));
+        return SubscriptionsApiFp(this.configuration).subscriptionsGet(requestParameters.teamId, requestParameters.count, requestParameters.page, requestParameters.q, requestParameters.includeFreeTier, requestParameters.sortBy, requestParameters.sortDirection, requestParameters.endsOrRenewsAfter, requestParameters.endsOrRenewsBefore, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
