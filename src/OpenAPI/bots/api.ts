@@ -643,6 +643,12 @@ export interface BotTrigger {
      */
     'conditions'?: Array<BotCondition>;
     /**
+     * Additional context for the triggering of the bot. 
+     * @type {{ [key: string]: any; }}
+     * @memberof BotTrigger
+     */
+    'context'?: { [key: string]: any; };
+    /**
      * 
      * @type {BotTriggerMethod}
      * @memberof BotTrigger

@@ -1170,6 +1170,12 @@ export interface BotInsertDataStartTriggersInner {
     'conditions'?: Array<BotInsertDataStartTriggersInnerConditionsInner>;
     /**
      * 
+     * @type {{ [key: string]: any; }}
+     * @memberof BotInsertDataStartTriggersInner
+     */
+    'context'?: { [key: string]: any; };
+    /**
+     * 
      * @type {BotInsertDataStartTriggersInnerMethod}
      * @memberof BotInsertDataStartTriggersInner
      */
