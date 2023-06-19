@@ -2499,21 +2499,17 @@ export const BotsApiAxiosParamCreator = function (configuration?: Configuration)
             };
         },
         /**
-         * This endpoint fetches bot data based on provided botId and teamId parameters
+         * This endpoint fetches bot data based on provided botId parameters
          * @summary Retrieves bot data including triggers, notes and actions
          * @param {string} botId The ID of the bot
-         * @param {string} teamId The ID of the team
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        botsDataGet: async (botId: string, teamId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        botsDataGet: async (botId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'botId' is not null or undefined
             assertParamExists('botsDataGet', 'botId', botId)
-            // verify required parameter 'teamId' is not null or undefined
-            assertParamExists('botsDataGet', 'teamId', teamId)
-            const localVarPath = `/bots/{botId}/{teamId}/data`
-                .replace(`{${"botId"}}`, encodeURIComponent(String(botId)))
-                .replace(`{${"teamId"}}`, encodeURIComponent(String(teamId)));
+            const localVarPath = `/bots/{botId}/data`
+                .replace(`{${"botId"}}`, encodeURIComponent(String(botId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -2905,15 +2901,14 @@ export const BotsApiFp = function(configuration?: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
-         * This endpoint fetches bot data based on provided botId and teamId parameters
+         * This endpoint fetches bot data based on provided botId parameters
          * @summary Retrieves bot data including triggers, notes and actions
          * @param {string} botId The ID of the bot
-         * @param {string} teamId The ID of the team
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async botsDataGet(botId: string, teamId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BotsDataGet200Response>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.botsDataGet(botId, teamId, options);
+        async botsDataGet(botId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BotsDataGet200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.botsDataGet(botId, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -3030,15 +3025,14 @@ export const BotsApiFactory = function (configuration?: Configuration, basePath?
             return localVarFp.botsCreate(botsCreateRequest, options).then((request) => request(axios, basePath));
         },
         /**
-         * This endpoint fetches bot data based on provided botId and teamId parameters
+         * This endpoint fetches bot data based on provided botId parameters
          * @summary Retrieves bot data including triggers, notes and actions
          * @param {string} botId The ID of the bot
-         * @param {string} teamId The ID of the team
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        botsDataGet(botId: string, teamId: string, options?: any): AxiosPromise<BotsDataGet200Response> {
-            return localVarFp.botsDataGet(botId, teamId, options).then((request) => request(axios, basePath));
+        botsDataGet(botId: string, options?: any): AxiosPromise<BotsDataGet200Response> {
+            return localVarFp.botsDataGet(botId, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -3155,13 +3149,6 @@ export interface BotsApiBotsDataGetRequest {
      * @memberof BotsApiBotsDataGet
      */
     readonly botId: string
-
-    /**
-     * The ID of the team
-     * @type {string}
-     * @memberof BotsApiBotsDataGet
-     */
-    readonly teamId: string
 }
 
 /**
@@ -3394,7 +3381,7 @@ export class BotsApi extends BaseAPI {
     }
 
     /**
-     * This endpoint fetches bot data based on provided botId and teamId parameters
+     * This endpoint fetches bot data based on provided botId parameters
      * @summary Retrieves bot data including triggers, notes and actions
      * @param {BotsApiBotsDataGetRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -3402,7 +3389,7 @@ export class BotsApi extends BaseAPI {
      * @memberof BotsApi
      */
     public botsDataGet(requestParameters: BotsApiBotsDataGetRequest, options?: AxiosRequestConfig) {
-        return BotsApiFp(this.configuration).botsDataGet(requestParameters.botId, requestParameters.teamId, options).then((request) => request(this.axios, this.basePath));
+        return BotsApiFp(this.configuration).botsDataGet(requestParameters.botId, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
