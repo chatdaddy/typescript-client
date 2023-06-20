@@ -754,6 +754,25 @@ export type BotTriggerInstanceStatusEnum = typeof BotTriggerInstanceStatusEnum[k
 /**
  * 
  * @export
+ * @interface BotTriggerInstancesGet200Response
+ */
+export interface BotTriggerInstancesGet200Response {
+    /**
+     * 
+     * @type {Array<BotTriggerInstance>}
+     * @memberof BotTriggerInstancesGet200Response
+     */
+    'instances': Array<BotTriggerInstance>;
+    /**
+     * Cursor to use to fetch next page of results
+     * @type {string}
+     * @memberof BotTriggerInstancesGet200Response
+     */
+    'cursor'?: string;
+}
+/**
+ * 
+ * @export
  * @interface BotTriggerMethod
  */
 export interface BotTriggerMethod {
@@ -2058,6 +2077,54 @@ export const BotTriggersApiAxiosParamCreator = function (configuration?: Configu
         },
         /**
          * 
+         * @summary Get all instances of a bot trigger
+         * @param {string} triggerId 
+         * @param {number} [count] 
+         * @param {string} [before] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        botTriggerInstancesGet: async (triggerId: string, count?: number, before?: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'triggerId' is not null or undefined
+            assertParamExists('botTriggerInstancesGet', 'triggerId', triggerId)
+            const localVarPath = `/bot-trigger-instances/{triggerId}`
+                .replace(`{${"triggerId"}}`, encodeURIComponent(String(triggerId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["TEMPLATES_READ"], configuration)
+
+            if (count !== undefined) {
+                localVarQueryParameter['count'] = count;
+            }
+
+            if (before !== undefined) {
+                localVarQueryParameter['before'] = before;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
          * @summary Start a bot trigger instance
          * @param {string} triggerId 
          * @param {string} botId 
@@ -2211,6 +2278,19 @@ export const BotTriggersApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
+         * @summary Get all instances of a bot trigger
+         * @param {string} triggerId 
+         * @param {number} [count] 
+         * @param {string} [before] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async botTriggerInstancesGet(triggerId: string, count?: number, before?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BotTriggerInstancesGet200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.botTriggerInstancesGet(triggerId, count, before, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
          * @summary Start a bot trigger instance
          * @param {string} triggerId 
          * @param {string} botId 
@@ -2267,6 +2347,18 @@ export const BotTriggersApiFactory = function (configuration?: Configuration, ba
          */
         botTriggerCancelInstance(triggerId: string, botId: string, instanceId: string, options?: any): AxiosPromise<void> {
             return localVarFp.botTriggerCancelInstance(triggerId, botId, instanceId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Get all instances of a bot trigger
+         * @param {string} triggerId 
+         * @param {number} [count] 
+         * @param {string} [before] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        botTriggerInstancesGet(triggerId: string, count?: number, before?: string, options?: any): AxiosPromise<BotTriggerInstancesGet200Response> {
+            return localVarFp.botTriggerInstancesGet(triggerId, count, before, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -2331,6 +2423,34 @@ export interface BotTriggersApiBotTriggerCancelInstanceRequest {
      * @memberof BotTriggersApiBotTriggerCancelInstance
      */
     readonly instanceId: string
+}
+
+/**
+ * Request parameters for botTriggerInstancesGet operation in BotTriggersApi.
+ * @export
+ * @interface BotTriggersApiBotTriggerInstancesGetRequest
+ */
+export interface BotTriggersApiBotTriggerInstancesGetRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof BotTriggersApiBotTriggerInstancesGet
+     */
+    readonly triggerId: string
+
+    /**
+     * 
+     * @type {number}
+     * @memberof BotTriggersApiBotTriggerInstancesGet
+     */
+    readonly count?: number
+
+    /**
+     * 
+     * @type {string}
+     * @memberof BotTriggersApiBotTriggerInstancesGet
+     */
+    readonly before?: string
 }
 
 /**
@@ -2420,6 +2540,18 @@ export class BotTriggersApi extends BaseAPI {
      */
     public botTriggerCancelInstance(requestParameters: BotTriggersApiBotTriggerCancelInstanceRequest, options?: AxiosRequestConfig) {
         return BotTriggersApiFp(this.configuration).botTriggerCancelInstance(requestParameters.triggerId, requestParameters.botId, requestParameters.instanceId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Get all instances of a bot trigger
+     * @param {BotTriggersApiBotTriggerInstancesGetRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof BotTriggersApi
+     */
+    public botTriggerInstancesGet(requestParameters: BotTriggersApiBotTriggerInstancesGetRequest, options?: AxiosRequestConfig) {
+        return BotTriggersApiFp(this.configuration).botTriggerInstancesGet(requestParameters.triggerId, requestParameters.count, requestParameters.before, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

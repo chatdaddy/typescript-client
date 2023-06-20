@@ -719,25 +719,25 @@ export interface ActionExecuteDataAllOf1MessageAttachments {
      */
     'mimetype': string;
     /**
-     * 1. can be publicly hosted url,  2. or can be base64 encoded buffer. But make sure it starts with `data:;base64,` Note: the `contact` type only supports base64 encoded data 
+     * 
      * @type {string}
      * @memberof ActionExecuteDataAllOf1MessageAttachments
      */
     'url': string;
     /**
-     * thumbnail of sticker/video/image
+     * 
      * @type {string}
      * @memberof ActionExecuteDataAllOf1MessageAttachments
      */
     'jpegThumbnail'?: string | null;
     /**
-     * duration of audio/video message
+     * 
      * @type {number}
      * @memberof ActionExecuteDataAllOf1MessageAttachments
      */
     'seconds'?: number;
     /**
-     * name of the doc message
+     * 
      * @type {string}
      * @memberof ActionExecuteDataAllOf1MessageAttachments
      */
@@ -1100,6 +1100,62 @@ export type BotInsertDataExternalTemplateValueStatusEnum = typeof BotInsertDataE
  * @export
  */
 export type BotInsertDataNotesInner = any;
+
+/**
+ * 
+ * @export
+ * @interface BotInsertDataNotesInnerAttachmentsInner
+ */
+export interface BotInsertDataNotesInnerAttachmentsInner {
+    /**
+     * 
+     * @type {string}
+     * @memberof BotInsertDataNotesInnerAttachmentsInner
+     */
+    'type': BotInsertDataNotesInnerAttachmentsInnerTypeEnum;
+    /**
+     * 
+     * @type {string}
+     * @memberof BotInsertDataNotesInnerAttachmentsInner
+     */
+    'mimetype': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof BotInsertDataNotesInnerAttachmentsInner
+     */
+    'url': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof BotInsertDataNotesInnerAttachmentsInner
+     */
+    'jpegThumbnail'?: string | null;
+    /**
+     * 
+     * @type {number}
+     * @memberof BotInsertDataNotesInnerAttachmentsInner
+     */
+    'seconds'?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof BotInsertDataNotesInnerAttachmentsInner
+     */
+    'filename'?: string;
+}
+
+export const BotInsertDataNotesInnerAttachmentsInnerTypeEnum = {
+    Image: 'image',
+    Video: 'video',
+    Contact: 'contact',
+    Sticker: 'sticker',
+    Audio: 'audio',
+    Document: 'document',
+    Location: 'location'
+} as const;
+
+export type BotInsertDataNotesInnerAttachmentsInnerTypeEnum = typeof BotInsertDataNotesInnerAttachmentsInnerTypeEnum[keyof typeof BotInsertDataNotesInnerAttachmentsInnerTypeEnum];
 
 /**
  * 
