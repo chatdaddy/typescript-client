@@ -388,6 +388,18 @@ export interface Bot {
      */
     'description'?: string;
     /**
+     * Industry of the bot
+     * @type {string}
+     * @memberof Bot
+     */
+    'industry'?: string;
+    /**
+     * Language of the bot
+     * @type {string}
+     * @memberof Bot
+     */
+    'language'?: string;
+    /**
      * 
      * @type {Array<BotNote>}
      * @memberof Bot

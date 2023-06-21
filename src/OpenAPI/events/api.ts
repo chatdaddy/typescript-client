@@ -1026,6 +1026,18 @@ export interface BotInsertData {
     'description'?: string;
     /**
      * 
+     * @type {string}
+     * @memberof BotInsertData
+     */
+    'industry'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof BotInsertData
+     */
+    'language'?: string;
+    /**
+     * 
      * @type {Array<BotInsertDataNotesInner>}
      * @memberof BotInsertData
      */
@@ -1911,6 +1923,18 @@ export interface BotUpdateData {
      * @memberof BotUpdateData
      */
     'description'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof BotUpdateData
+     */
+    'industry'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof BotUpdateData
+     */
+    'language'?: string;
     /**
      * 
      * @type {Array<BotInsertDataNotesInner>}
