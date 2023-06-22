@@ -1718,6 +1718,12 @@ export interface Message {
      */
     'hidden'?: boolean;
     /**
+     * If the message has been revised, i.e. edited, fixed or had its status updated, this will be incremented. This number is managed by CD, and will not reflect correctly for messages newly synced from the platform
+     * @type {number}
+     * @memberof Message
+     */
+    'revision'?: number;
+    /**
      * 
      * @type {MiscOptions}
      * @memberof Message
@@ -1874,6 +1880,12 @@ export interface MessageAllOf {
      * @memberof MessageAllOf
      */
     'hidden'?: boolean;
+    /**
+     * If the message has been revised, i.e. edited, fixed or had its status updated, this will be incremented. This number is managed by CD, and will not reflect correctly for messages newly synced from the platform
+     * @type {number}
+     * @memberof MessageAllOf
+     */
+    'revision'?: number;
     /**
      * 
      * @type {MiscOptions}

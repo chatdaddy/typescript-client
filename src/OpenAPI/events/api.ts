@@ -3124,6 +3124,12 @@ export interface MessageInsertData {
     'hidden'?: boolean;
     /**
      * 
+     * @type {number}
+     * @memberof MessageInsertData
+     */
+    'revision'?: number;
+    /**
+     * 
      * @type {MessageInsertDataMiscOptions}
      * @memberof MessageInsertData
      */
@@ -3896,6 +3902,12 @@ export interface MessageUpdateData {
      * @memberof MessageUpdateData
      */
     'hidden'?: boolean;
+    /**
+     * 
+     * @type {number}
+     * @memberof MessageUpdateData
+     */
+    'revision'?: number;
     /**
      * 
      * @type {MessageInsertDataMiscOptions}
