@@ -2890,12 +2890,12 @@ export const BotsApiAxiosParamCreator = function (configuration?: Configuration)
          * @param {'ASC' | 'DESC'} [order] 
          * @param {string} [folderId] 
          * @param {string} [language] 
-         * @param {string} [description] 
+         * @param {string} [industry] 
          * @param {boolean} [returnTotalCount] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        botsGets: async (q?: string, before?: string, count?: number, id?: Array<string>, sortBy?: 'name' | 'updatedAt', order?: 'ASC' | 'DESC', folderId?: string, language?: string, description?: string, returnTotalCount?: boolean, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        botsGets: async (q?: string, before?: string, count?: number, id?: Array<string>, sortBy?: 'name' | 'updatedAt', order?: 'ASC' | 'DESC', folderId?: string, language?: string, industry?: string, returnTotalCount?: boolean, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/bots`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -2944,8 +2944,8 @@ export const BotsApiAxiosParamCreator = function (configuration?: Configuration)
                 localVarQueryParameter['language'] = language;
             }
 
-            if (description !== undefined) {
-                localVarQueryParameter['description'] = description;
+            if (industry !== undefined) {
+                localVarQueryParameter['industry'] = industry;
             }
 
             if (returnTotalCount !== undefined) {
@@ -3138,13 +3138,13 @@ export const BotsApiFp = function(configuration?: Configuration) {
          * @param {'ASC' | 'DESC'} [order] 
          * @param {string} [folderId] 
          * @param {string} [language] 
-         * @param {string} [description] 
+         * @param {string} [industry] 
          * @param {boolean} [returnTotalCount] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async botsGets(q?: string, before?: string, count?: number, id?: Array<string>, sortBy?: 'name' | 'updatedAt', order?: 'ASC' | 'DESC', folderId?: string, language?: string, description?: string, returnTotalCount?: boolean, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BotsGets200Response>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.botsGets(q, before, count, id, sortBy, order, folderId, language, description, returnTotalCount, options);
+        async botsGets(q?: string, before?: string, count?: number, id?: Array<string>, sortBy?: 'name' | 'updatedAt', order?: 'ASC' | 'DESC', folderId?: string, language?: string, industry?: string, returnTotalCount?: boolean, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BotsGets200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.botsGets(q, before, count, id, sortBy, order, folderId, language, industry, returnTotalCount, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -3259,13 +3259,13 @@ export const BotsApiFactory = function (configuration?: Configuration, basePath?
          * @param {'ASC' | 'DESC'} [order] 
          * @param {string} [folderId] 
          * @param {string} [language] 
-         * @param {string} [description] 
+         * @param {string} [industry] 
          * @param {boolean} [returnTotalCount] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        botsGets(q?: string, before?: string, count?: number, id?: Array<string>, sortBy?: 'name' | 'updatedAt', order?: 'ASC' | 'DESC', folderId?: string, language?: string, description?: string, returnTotalCount?: boolean, options?: any): AxiosPromise<BotsGets200Response> {
-            return localVarFp.botsGets(q, before, count, id, sortBy, order, folderId, language, description, returnTotalCount, options).then((request) => request(axios, basePath));
+        botsGets(q?: string, before?: string, count?: number, id?: Array<string>, sortBy?: 'name' | 'updatedAt', order?: 'ASC' | 'DESC', folderId?: string, language?: string, industry?: string, returnTotalCount?: boolean, options?: any): AxiosPromise<BotsGets200Response> {
+            return localVarFp.botsGets(q, before, count, id, sortBy, order, folderId, language, industry, returnTotalCount, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -3498,7 +3498,7 @@ export interface BotsApiBotsGetsRequest {
      * @type {string}
      * @memberof BotsApiBotsGets
      */
-    readonly description?: string
+    readonly industry?: string
 
     /**
      * 
@@ -3631,7 +3631,7 @@ export class BotsApi extends BaseAPI {
      * @memberof BotsApi
      */
     public botsGets(requestParameters: BotsApiBotsGetsRequest = {}, options?: AxiosRequestConfig) {
-        return BotsApiFp(this.configuration).botsGets(requestParameters.q, requestParameters.before, requestParameters.count, requestParameters.id, requestParameters.sortBy, requestParameters.order, requestParameters.folderId, requestParameters.language, requestParameters.description, requestParameters.returnTotalCount, options).then((request) => request(this.axios, this.basePath));
+        return BotsApiFp(this.configuration).botsGets(requestParameters.q, requestParameters.before, requestParameters.count, requestParameters.id, requestParameters.sortBy, requestParameters.order, requestParameters.folderId, requestParameters.language, requestParameters.industry, requestParameters.returnTotalCount, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
