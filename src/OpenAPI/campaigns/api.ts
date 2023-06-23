@@ -115,12 +115,6 @@ export interface Campaign {
      */
     'recipients': Array<CampaignRecipients>;
     /**
-     * if want to send a broadcast fast, and don\'t want to wait long for the broadcast to complete.
-     * @type {boolean}
-     * @memberof Campaign
-     */
-    'turboMode'?: boolean;
-    /**
      * 
      * @type {ActivationTimeRange}
      * @memberof Campaign
@@ -235,12 +229,6 @@ export interface CampaignCreateAsync {
      */
     'recipientDataUrl': string;
     /**
-     * if want to send a broadcast fast, and don\'t want to wait long for the broadcast to complete.
-     * @type {boolean}
-     * @memberof CampaignCreateAsync
-     */
-    'turboMode'?: boolean;
-    /**
      * 
      * @type {ActivationTimeRange}
      * @memberof CampaignCreateAsync
@@ -339,12 +327,6 @@ export interface CampaignEdit {
      */
     'removeJids'?: Array<string>;
     /**
-     * if want to send a broadcast fast, and don\'t want to wait long for the broadcast to complete.
-     * @type {boolean}
-     * @memberof CampaignEdit
-     */
-    'turboMode'?: boolean;
-    /**
      * 
      * @type {ActivationTimeRange}
      * @memberof CampaignEdit
@@ -435,12 +417,6 @@ export interface CampaignMetadata {
      * @memberof CampaignMetadata
      */
     'counts': CampaignMetadataCounts;
-    /**
-     * if want to send a broadcast fast, and don\'t want to wait long for the broadcast to complete.
-     * @type {boolean}
-     * @memberof CampaignMetadata
-     */
-    'turboMode'?: boolean;
     /**
      * 
      * @type {ActivationTimeRange}
