@@ -1159,6 +1159,12 @@ export interface TeamDetailUpdate {
      * @memberof TeamDetailUpdate
      */
     'stripeCustomerId'?: string;
+    /**
+     * 
+     * @type {LimitationMap}
+     * @memberof TeamDetailUpdate
+     */
+    'usage'?: LimitationMap;
 }
 
 /**
