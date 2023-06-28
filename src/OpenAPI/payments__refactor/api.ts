@@ -254,7 +254,7 @@ export interface CheckoutCreateOptionsCallbackUrls {
  * @export
  * @interface CouponCodeCreateOptions
  */
-interface CouponCodeCreateOptions {
+export interface CouponCodeCreateOptions {
     /**
      * 
      * @type {string}
@@ -305,7 +305,7 @@ export interface CouponsPost200Response {
  * @enum {string}
  */
 
-const Feature = {
+export const Feature = {
     TeamInbox: 'team-inbox',
     ChatHistorySync: 'chat-history-sync',
     CustomMarketingMessage: 'custom-marketing-message',
@@ -318,7 +318,7 @@ const Feature = {
     Autocomplete: 'autocomplete'
 } as const;
 
-type Feature = typeof Feature[keyof typeof Feature];
+export type Feature = typeof Feature[keyof typeof Feature];
 
 
 /**
@@ -345,7 +345,7 @@ export type FeatureConfigOneOf = typeof FeatureConfigOneOf[keyof typeof FeatureC
  * @export
  * @interface GetPartner200Response
  */
-interface GetPartner200Response {
+export interface GetPartner200Response {
     /**
      * 
      * @type {string}
@@ -412,7 +412,7 @@ export type LimitedItem = typeof LimitedItem[keyof typeof LimitedItem];
  * @export
  * @interface PartnerReferralCreateOptions
  */
-interface PartnerReferralCreateOptions {
+export interface PartnerReferralCreateOptions {
     /**
      * ID of the product purchased
      * @type {string}
@@ -443,7 +443,7 @@ interface PartnerReferralCreateOptions {
  * @export
  * @interface PartnerReferralsGet200Response
  */
-interface PartnerReferralsGet200Response {
+export interface PartnerReferralsGet200Response {
     /**
      * 
      * @type {Array<ReferralCodeDetails>}
@@ -468,7 +468,7 @@ interface PartnerReferralsGet200Response {
  * @export
  * @interface PartnerReferralsPost200Response
  */
-interface PartnerReferralsPost200Response {
+export interface PartnerReferralsPost200Response {
     /**
      * 
      * @type {string}
@@ -506,7 +506,7 @@ export interface PaymentData {
  * @export
  * @interface Product
  */
-interface Product {
+export interface Product {
     /**
      * The ID of a product
      * @type {string}
@@ -587,7 +587,7 @@ export interface ProductCreate {
  * @export
  * @interface ProductUpdate
  */
-interface ProductUpdate {
+export interface ProductUpdate {
     /**
      * 
      * @type {ProductAccess}
@@ -606,7 +606,7 @@ interface ProductUpdate {
  * @export
  * @interface ProductsGet200Response
  */
-interface ProductsGet200Response {
+export interface ProductsGet200Response {
     /**
      * 
      * @type {Array<Product>}
@@ -644,7 +644,7 @@ export interface ProductsSelectionInner {
  * @export
  * @interface ReferralCodeDetails
  */
-interface ReferralCodeDetails {
+export interface ReferralCodeDetails {
     /**
      * referralCode string
      * @type {string}
@@ -881,7 +881,7 @@ export interface SubscribedProduct {
  * @export
  * @interface Subscription
  */
-interface Subscription {
+export interface Subscription {
     /**
      * The ID of a subscription
      * @type {string}
@@ -1029,7 +1029,7 @@ export interface SubscriptionUpdate {
  * @export
  * @interface SubscriptionsGet200Response
  */
-interface SubscriptionsGet200Response {
+export interface SubscriptionsGet200Response {
     /**
      * 
      * @type {Array<Subscription>}
@@ -1457,7 +1457,7 @@ export class AutoChargeProductsApi extends BaseAPI {
  * CouponCodesApi - axios parameter creator
  * @export
  */
-const CouponCodesApiAxiosParamCreator = function (configuration?: Configuration) {
+export const CouponCodesApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
          * Generate a coupon code
@@ -1503,7 +1503,7 @@ const CouponCodesApiAxiosParamCreator = function (configuration?: Configuration)
  * CouponCodesApi - functional programming interface
  * @export
  */
-const CouponCodesApiFp = function(configuration?: Configuration) {
+export const CouponCodesApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = CouponCodesApiAxiosParamCreator(configuration)
     return {
         /**
@@ -1523,7 +1523,7 @@ const CouponCodesApiFp = function(configuration?: Configuration) {
  * CouponCodesApi - factory interface
  * @export
  */
-const CouponCodesApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+export const CouponCodesApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
     const localVarFp = CouponCodesApiFp(configuration)
     return {
         /**
@@ -1543,7 +1543,7 @@ const CouponCodesApiFactory = function (configuration?: Configuration, basePath?
  * @export
  * @interface CouponCodesApiCouponsPostRequest
  */
-interface CouponCodesApiCouponsPostRequest {
+export interface CouponCodesApiCouponsPostRequest {
     /**
      * 
      * @type {CouponCodeCreateOptions}
@@ -1576,7 +1576,7 @@ export class CouponCodesApi extends BaseAPI {
  * ProductsApi - axios parameter creator
  * @export
  */
-const ProductsApiAxiosParamCreator = function (configuration?: Configuration) {
+export const ProductsApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
          * 
@@ -1704,7 +1704,7 @@ const ProductsApiAxiosParamCreator = function (configuration?: Configuration) {
  * ProductsApi - functional programming interface
  * @export
  */
-const ProductsApiFp = function(configuration?: Configuration) {
+export const ProductsApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = ProductsApiAxiosParamCreator(configuration)
     return {
         /**
@@ -1748,7 +1748,7 @@ const ProductsApiFp = function(configuration?: Configuration) {
  * ProductsApi - factory interface
  * @export
  */
-const ProductsApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+export const ProductsApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
     const localVarFp = ProductsApiFp(configuration)
     return {
         /**
@@ -1804,7 +1804,7 @@ export interface ProductsApiProductsGetRequest {
  * @export
  * @interface ProductsApiProductsPatchRequest
  */
-interface ProductsApiProductsPatchRequest {
+export interface ProductsApiProductsPatchRequest {
     /**
      * 
      * @type {string}
@@ -1883,7 +1883,7 @@ export class ProductsApi extends BaseAPI {
  * ReferralsApi - axios parameter creator
  * @export
  */
-const ReferralsApiAxiosParamCreator = function (configuration?: Configuration) {
+export const ReferralsApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
          * 
@@ -2067,7 +2067,7 @@ const ReferralsApiAxiosParamCreator = function (configuration?: Configuration) {
  * ReferralsApi - functional programming interface
  * @export
  */
-const ReferralsApiFp = function(configuration?: Configuration) {
+export const ReferralsApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = ReferralsApiAxiosParamCreator(configuration)
     return {
         /**
@@ -2121,7 +2121,7 @@ const ReferralsApiFp = function(configuration?: Configuration) {
  * ReferralsApi - factory interface
  * @export
  */
-const ReferralsApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+export const ReferralsApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
     const localVarFp = ReferralsApiFp(configuration)
     return {
         /**
@@ -2172,7 +2172,7 @@ const ReferralsApiFactory = function (configuration?: Configuration, basePath?: 
  * @export
  * @interface ReferralsApiGetPartnerRequest
  */
-interface ReferralsApiGetPartnerRequest {
+export interface ReferralsApiGetPartnerRequest {
     /**
      * 
      * @type {string}
@@ -2186,7 +2186,7 @@ interface ReferralsApiGetPartnerRequest {
  * @export
  * @interface ReferralsApiPartnerReferralsDeleteRequest
  */
-interface ReferralsApiPartnerReferralsDeleteRequest {
+export interface ReferralsApiPartnerReferralsDeleteRequest {
     /**
      * 
      * @type {string}
@@ -2200,7 +2200,7 @@ interface ReferralsApiPartnerReferralsDeleteRequest {
  * @export
  * @interface ReferralsApiPartnerReferralsGetRequest
  */
-interface ReferralsApiPartnerReferralsGetRequest {
+export interface ReferralsApiPartnerReferralsGetRequest {
     /**
      * The page for the cursor
      * @type {number}
@@ -2242,7 +2242,7 @@ interface ReferralsApiPartnerReferralsGetRequest {
  * @export
  * @interface ReferralsApiPartnerReferralsPostRequest
  */
-interface ReferralsApiPartnerReferralsPostRequest {
+export interface ReferralsApiPartnerReferralsPostRequest {
     /**
      * 
      * @type {PartnerReferralCreateOptions}
@@ -2308,7 +2308,7 @@ export class ReferralsApi extends BaseAPI {
  * StripeApi - axios parameter creator
  * @export
  */
-const StripeApiAxiosParamCreator = function (configuration?: Configuration) {
+export const StripeApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
          * 
@@ -2437,7 +2437,7 @@ const StripeApiAxiosParamCreator = function (configuration?: Configuration) {
  * StripeApi - functional programming interface
  * @export
  */
-const StripeApiFp = function(configuration?: Configuration) {
+export const StripeApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = StripeApiAxiosParamCreator(configuration)
     return {
         /**
@@ -2482,7 +2482,7 @@ const StripeApiFp = function(configuration?: Configuration) {
  * StripeApi - factory interface
  * @export
  */
-const StripeApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+export const StripeApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
     const localVarFp = StripeApiFp(configuration)
     return {
         /**
@@ -2539,7 +2539,7 @@ export interface StripeApiStripeCheckoutRequest {
  * @export
  * @interface StripeApiStripeHookRequest
  */
-interface StripeApiStripeHookRequest {
+export interface StripeApiStripeHookRequest {
     /**
      * 
      * @type {string}
