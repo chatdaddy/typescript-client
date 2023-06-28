@@ -1987,7 +1987,7 @@ export const ActionsApiAxiosParamCreator = function (configuration?: Configurati
          * @throws {RequiredError}
          */
         actionsGptGenerate: async (actionsGptGenerateRequest?: ActionsGptGenerateRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/actions/gpt-generate/`;
+            const localVarPath = `/actions/gpt-generate`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
