@@ -335,10 +335,10 @@ export interface ActionsGet200Response {
 export interface ActionsGptGenerate200Response {
     /**
      * 
-     * @type {Array<Action>}
+     * @type {Array<ActionContent>}
      * @memberof ActionsGptGenerate200Response
      */
-    'actions': Array<Action>;
+    'actions': Array<ActionContent>;
 }
 /**
  * 
