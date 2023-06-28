@@ -7962,13 +7962,13 @@ export const MessagesApiAxiosParamCreator = function (configuration?: Configurat
         /**
          * 
          * @summary Clears all pending/error messages
-         * @param {'pending' | 'error'} status 
+         * @param {'pending' | 'error' | 'cancelled'} status 
          * @param {string} [accountId] If specified, only clears messages of this account
          * @param {string} [chatId] If specified, only clears messages of this chat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        messagesDeletePending: async (status: 'pending' | 'error', accountId?: string, chatId?: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        messagesDeletePending: async (status: 'pending' | 'error' | 'cancelled', accountId?: string, chatId?: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'status' is not null or undefined
             assertParamExists('messagesDeletePending', 'status', status)
             const localVarPath = `/messages/{status}/retry`
@@ -8188,12 +8188,12 @@ export const MessagesApiAxiosParamCreator = function (configuration?: Configurat
         },
         /**
          * Retry all the messages in a given status
-         * @param {'pending' | 'error'} status 
+         * @param {'pending' | 'error' | 'cancelled'} status 
          * @param {MessagesPatchPendingRequest} [messagesPatchPendingRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        messagesPatchPending: async (status: 'pending' | 'error', messagesPatchPendingRequest?: MessagesPatchPendingRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        messagesPatchPending: async (status: 'pending' | 'error' | 'cancelled', messagesPatchPendingRequest?: MessagesPatchPendingRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'status' is not null or undefined
             assertParamExists('messagesPatchPending', 'status', status)
             const localVarPath = `/messages/{status}/retry`
@@ -8426,13 +8426,13 @@ export const MessagesApiFp = function(configuration?: Configuration) {
         /**
          * 
          * @summary Clears all pending/error messages
-         * @param {'pending' | 'error'} status 
+         * @param {'pending' | 'error' | 'cancelled'} status 
          * @param {string} [accountId] If specified, only clears messages of this account
          * @param {string} [chatId] If specified, only clears messages of this chat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async messagesDeletePending(status: 'pending' | 'error', accountId?: string, chatId?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AccountsLogout200Response>> {
+        async messagesDeletePending(status: 'pending' | 'error' | 'cancelled', accountId?: string, chatId?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AccountsLogout200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.messagesDeletePending(status, accountId, chatId, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -8484,12 +8484,12 @@ export const MessagesApiFp = function(configuration?: Configuration) {
         },
         /**
          * Retry all the messages in a given status
-         * @param {'pending' | 'error'} status 
+         * @param {'pending' | 'error' | 'cancelled'} status 
          * @param {MessagesPatchPendingRequest} [messagesPatchPendingRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async messagesPatchPending(status: 'pending' | 'error', messagesPatchPendingRequest?: MessagesPatchPendingRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AccountsLogout200Response>> {
+        async messagesPatchPending(status: 'pending' | 'error' | 'cancelled', messagesPatchPendingRequest?: MessagesPatchPendingRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AccountsLogout200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.messagesPatchPending(status, messagesPatchPendingRequest, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -8563,13 +8563,13 @@ export const MessagesApiFactory = function (configuration?: Configuration, baseP
         /**
          * 
          * @summary Clears all pending/error messages
-         * @param {'pending' | 'error'} status 
+         * @param {'pending' | 'error' | 'cancelled'} status 
          * @param {string} [accountId] If specified, only clears messages of this account
          * @param {string} [chatId] If specified, only clears messages of this chat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        messagesDeletePending(status: 'pending' | 'error', accountId?: string, chatId?: string, options?: any): AxiosPromise<AccountsLogout200Response> {
+        messagesDeletePending(status: 'pending' | 'error' | 'cancelled', accountId?: string, chatId?: string, options?: any): AxiosPromise<AccountsLogout200Response> {
             return localVarFp.messagesDeletePending(status, accountId, chatId, options).then((request) => request(axios, basePath));
         },
         /**
@@ -8617,12 +8617,12 @@ export const MessagesApiFactory = function (configuration?: Configuration, baseP
         },
         /**
          * Retry all the messages in a given status
-         * @param {'pending' | 'error'} status 
+         * @param {'pending' | 'error' | 'cancelled'} status 
          * @param {MessagesPatchPendingRequest} [messagesPatchPendingRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        messagesPatchPending(status: 'pending' | 'error', messagesPatchPendingRequest?: MessagesPatchPendingRequest, options?: any): AxiosPromise<AccountsLogout200Response> {
+        messagesPatchPending(status: 'pending' | 'error' | 'cancelled', messagesPatchPendingRequest?: MessagesPatchPendingRequest, options?: any): AxiosPromise<AccountsLogout200Response> {
             return localVarFp.messagesPatchPending(status, messagesPatchPendingRequest, options).then((request) => request(axios, basePath));
         },
         /**
@@ -8706,10 +8706,10 @@ export interface MessagesApiMessagesDeleteRequest {
 export interface MessagesApiMessagesDeletePendingRequest {
     /**
      * 
-     * @type {'pending' | 'error'}
+     * @type {'pending' | 'error' | 'cancelled'}
      * @memberof MessagesApiMessagesDeletePending
      */
-    readonly status: 'pending' | 'error'
+    readonly status: 'pending' | 'error' | 'cancelled'
 
     /**
      * If specified, only clears messages of this account
@@ -8874,10 +8874,10 @@ export interface MessagesApiMessagesPatchRequest {
 export interface MessagesApiMessagesPatchPendingRequest {
     /**
      * 
-     * @type {'pending' | 'error'}
+     * @type {'pending' | 'error' | 'cancelled'}
      * @memberof MessagesApiMessagesPatchPending
      */
-    readonly status: 'pending' | 'error'
+    readonly status: 'pending' | 'error' | 'cancelled'
 
     /**
      * 
