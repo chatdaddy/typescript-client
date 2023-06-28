@@ -2391,10 +2391,11 @@ export const StripeApiAxiosParamCreator = function (configuration?: Configuratio
          * @summary Get prices from Stripe
          * @param {number} [count] 
          * @param {string} [cursor] 
+         * @param {string} [q] Filter by stripe query. See https://stripe.com/docs/search#search-query-language
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        stripePricesGet: async (count?: number, cursor?: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        stripePricesGet: async (count?: number, cursor?: string, q?: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/stripe/prices`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -2417,6 +2418,10 @@ export const StripeApiAxiosParamCreator = function (configuration?: Configuratio
 
             if (cursor !== undefined) {
                 localVarQueryParameter['cursor'] = cursor;
+            }
+
+            if (q !== undefined) {
+                localVarQueryParameter['q'] = q;
             }
 
 
@@ -2468,11 +2473,12 @@ export const StripeApiFp = function(configuration?: Configuration) {
          * @summary Get prices from Stripe
          * @param {number} [count] 
          * @param {string} [cursor] 
+         * @param {string} [q] Filter by stripe query. See https://stripe.com/docs/search#search-query-language
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async stripePricesGet(count?: number, cursor?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<StripePricesGet200Response>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.stripePricesGet(count, cursor, options);
+        async stripePricesGet(count?: number, cursor?: string, q?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<StripePricesGet200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.stripePricesGet(count, cursor, q, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
     }
@@ -2511,11 +2517,12 @@ export const StripeApiFactory = function (configuration?: Configuration, basePat
          * @summary Get prices from Stripe
          * @param {number} [count] 
          * @param {string} [cursor] 
+         * @param {string} [q] Filter by stripe query. See https://stripe.com/docs/search#search-query-language
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        stripePricesGet(count?: number, cursor?: string, options?: any): AxiosPromise<StripePricesGet200Response> {
-            return localVarFp.stripePricesGet(count, cursor, options).then((request) => request(axios, basePath));
+        stripePricesGet(count?: number, cursor?: string, q?: string, options?: any): AxiosPromise<StripePricesGet200Response> {
+            return localVarFp.stripePricesGet(count, cursor, q, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -2574,6 +2581,13 @@ export interface StripeApiStripePricesGetRequest {
      * @memberof StripeApiStripePricesGet
      */
     readonly cursor?: string
+
+    /**
+     * Filter by stripe query. See https://stripe.com/docs/search#search-query-language
+     * @type {string}
+     * @memberof StripeApiStripePricesGet
+     */
+    readonly q?: string
 }
 
 /**
@@ -2616,7 +2630,7 @@ export class StripeApi extends BaseAPI {
      * @memberof StripeApi
      */
     public stripePricesGet(requestParameters: StripeApiStripePricesGetRequest = {}, options?: AxiosRequestConfig) {
-        return StripeApiFp(this.configuration).stripePricesGet(requestParameters.count, requestParameters.cursor, options).then((request) => request(this.axios, this.basePath));
+        return StripeApiFp(this.configuration).stripePricesGet(requestParameters.count, requestParameters.cursor, requestParameters.q, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
