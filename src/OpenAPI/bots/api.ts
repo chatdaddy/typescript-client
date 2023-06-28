@@ -1945,15 +1945,21 @@ export const ActionsApiAxiosParamCreator = function (configuration?: Configurati
         /**
          * 
          * @summary Generate Actions using GPT
-         * @param {string} [botId] 
-         * @param {string} [actionId] 
-         * @param {string} [industry] 
+         * @param {string} botId 
+         * @param {string} actionId 
+         * @param {string} industry 
          * @param {string} [additionalContext] 
          * @param {number} [amount] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        actionsGptGenerate: async (botId?: string, actionId?: string, industry?: string, additionalContext?: string, amount?: number, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        actionsGptGenerate: async (botId: string, actionId: string, industry: string, additionalContext?: string, amount?: number, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'botId' is not null or undefined
+            assertParamExists('actionsGptGenerate', 'botId', botId)
+            // verify required parameter 'actionId' is not null or undefined
+            assertParamExists('actionsGptGenerate', 'actionId', actionId)
+            // verify required parameter 'industry' is not null or undefined
+            assertParamExists('actionsGptGenerate', 'industry', industry)
             const localVarPath = `/actions/gpt-generate/`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -2024,15 +2030,15 @@ export const ActionsApiFp = function(configuration?: Configuration) {
         /**
          * 
          * @summary Generate Actions using GPT
-         * @param {string} [botId] 
-         * @param {string} [actionId] 
-         * @param {string} [industry] 
+         * @param {string} botId 
+         * @param {string} actionId 
+         * @param {string} industry 
          * @param {string} [additionalContext] 
          * @param {number} [amount] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async actionsGptGenerate(botId?: string, actionId?: string, industry?: string, additionalContext?: string, amount?: number, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ActionsGptGenerate200Response>> {
+        async actionsGptGenerate(botId: string, actionId: string, industry: string, additionalContext?: string, amount?: number, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ActionsGptGenerate200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.actionsGptGenerate(botId, actionId, industry, additionalContext, amount, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -2062,15 +2068,15 @@ export const ActionsApiFactory = function (configuration?: Configuration, basePa
         /**
          * 
          * @summary Generate Actions using GPT
-         * @param {string} [botId] 
-         * @param {string} [actionId] 
-         * @param {string} [industry] 
+         * @param {string} botId 
+         * @param {string} actionId 
+         * @param {string} industry 
          * @param {string} [additionalContext] 
          * @param {number} [amount] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        actionsGptGenerate(botId?: string, actionId?: string, industry?: string, additionalContext?: string, amount?: number, options?: any): AxiosPromise<ActionsGptGenerate200Response> {
+        actionsGptGenerate(botId: string, actionId: string, industry: string, additionalContext?: string, amount?: number, options?: any): AxiosPromise<ActionsGptGenerate200Response> {
             return localVarFp.actionsGptGenerate(botId, actionId, industry, additionalContext, amount, options).then((request) => request(axios, basePath));
         },
     };
@@ -2122,21 +2128,21 @@ export interface ActionsApiActionsGptGenerateRequest {
      * @type {string}
      * @memberof ActionsApiActionsGptGenerate
      */
-    readonly botId?: string
+    readonly botId: string
 
     /**
      * 
      * @type {string}
      * @memberof ActionsApiActionsGptGenerate
      */
-    readonly actionId?: string
+    readonly actionId: string
 
     /**
      * 
      * @type {string}
      * @memberof ActionsApiActionsGptGenerate
      */
-    readonly industry?: string
+    readonly industry: string
 
     /**
      * 
@@ -2180,7 +2186,7 @@ export class ActionsApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof ActionsApi
      */
-    public actionsGptGenerate(requestParameters: ActionsApiActionsGptGenerateRequest = {}, options?: AxiosRequestConfig) {
+    public actionsGptGenerate(requestParameters: ActionsApiActionsGptGenerateRequest, options?: AxiosRequestConfig) {
         return ActionsApiFp(this.configuration).actionsGptGenerate(requestParameters.botId, requestParameters.actionId, requestParameters.industry, requestParameters.additionalContext, requestParameters.amount, options).then((request) => request(this.axios, this.basePath));
     }
 }
