@@ -275,12 +275,6 @@ export interface ActionFireRecord {
     'webhooks'?: Array<ServiceResponse>;
     /**
      * 
-     * @type {Array<ServiceResponse>}
-     * @memberof ActionFireRecord
-     */
-    'notifyUsers'?: Array<ServiceResponse>;
-    /**
-     * 
      * @type {ServiceResponse}
      * @memberof ActionFireRecord
      */

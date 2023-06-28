@@ -1447,12 +1447,6 @@ export interface BotInsertDataStartTriggersInnerInstancesInnerRecordsInner {
     'webhooks'?: Array<BotInsertDataStartTriggersInnerInstancesInnerRecordsInnerMessagesInner>;
     /**
      * 
-     * @type {Array<BotInsertDataStartTriggersInnerInstancesInnerRecordsInnerMessagesInner>}
-     * @memberof BotInsertDataStartTriggersInnerInstancesInnerRecordsInner
-     */
-    'notifyUsers'?: Array<BotInsertDataStartTriggersInnerInstancesInnerRecordsInnerMessagesInner>;
-    /**
-     * 
      * @type {BotInsertDataStartTriggersInnerInstancesInnerRecordsInnerMessagesInner}
      * @memberof BotInsertDataStartTriggersInnerInstancesInnerRecordsInner
      */
