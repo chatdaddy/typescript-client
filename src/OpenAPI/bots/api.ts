@@ -354,6 +354,12 @@ export interface ActionsGptGenerateRequest {
     'actionId': string;
     /**
      * 
+     * @type {Array<Action>}
+     * @memberof ActionsGptGenerateRequest
+     */
+    'actions': Array<Action>;
+    /**
+     * 
      * @type {string}
      * @memberof ActionsGptGenerateRequest
      */
