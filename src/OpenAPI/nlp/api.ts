@@ -1168,10 +1168,10 @@ export class AutocompleteApi extends BaseAPI {
 
 
 /**
- * DefaultApi - axios parameter creator
+ * ChatbotApi - axios parameter creator
  * @export
  */
-const DefaultApiAxiosParamCreator = function (configuration?: Configuration) {
+export const ChatbotApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
          * 
@@ -1489,11 +1489,11 @@ const DefaultApiAxiosParamCreator = function (configuration?: Configuration) {
 };
 
 /**
- * DefaultApi - functional programming interface
+ * ChatbotApi - functional programming interface
  * @export
  */
-const DefaultApiFp = function(configuration?: Configuration) {
-    const localVarAxiosParamCreator = DefaultApiAxiosParamCreator(configuration)
+export const ChatbotApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = ChatbotApiAxiosParamCreator(configuration)
     return {
         /**
          * 
@@ -1589,11 +1589,11 @@ const DefaultApiFp = function(configuration?: Configuration) {
 };
 
 /**
- * DefaultApi - factory interface
+ * ChatbotApi - factory interface
  * @export
  */
-const DefaultApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
-    const localVarFp = DefaultApiFp(configuration)
+export const ChatbotApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = ChatbotApiFp(configuration)
     return {
         /**
          * 
@@ -1681,177 +1681,177 @@ const DefaultApiFactory = function (configuration?: Configuration, basePath?: st
 };
 
 /**
- * Request parameters for checkDocumentIngestionStatus operation in DefaultApi.
+ * Request parameters for checkDocumentIngestionStatus operation in ChatbotApi.
  * @export
- * @interface DefaultApiCheckDocumentIngestionStatusRequest
+ * @interface ChatbotApiCheckDocumentIngestionStatusRequest
  */
-export interface DefaultApiCheckDocumentIngestionStatusRequest {
+export interface ChatbotApiCheckDocumentIngestionStatusRequest {
     /**
      * ID of the chatbot
      * @type {string}
-     * @memberof DefaultApiCheckDocumentIngestionStatus
+     * @memberof ChatbotApiCheckDocumentIngestionStatus
      */
     readonly id: string
 }
 
 /**
- * Request parameters for createBot operation in DefaultApi.
+ * Request parameters for createBot operation in ChatbotApi.
  * @export
- * @interface DefaultApiCreateBotRequest
+ * @interface ChatbotApiCreateBotRequest
  */
-export interface DefaultApiCreateBotRequest {
+export interface ChatbotApiCreateBotRequest {
     /**
      * 
      * @type {CreateChatbotRequest}
-     * @memberof DefaultApiCreateBot
+     * @memberof ChatbotApiCreateBot
      */
     readonly createChatbotRequest?: CreateChatbotRequest
 }
 
 /**
- * Request parameters for deleteLink operation in DefaultApi.
+ * Request parameters for deleteLink operation in ChatbotApi.
  * @export
- * @interface DefaultApiDeleteLinkRequest
+ * @interface ChatbotApiDeleteLinkRequest
  */
-export interface DefaultApiDeleteLinkRequest {
+export interface ChatbotApiDeleteLinkRequest {
     /**
      * ID of the chatbot
      * @type {string}
-     * @memberof DefaultApiDeleteLink
+     * @memberof ChatbotApiDeleteLink
      */
     readonly id: string
 }
 
 /**
- * Request parameters for extractLinks operation in DefaultApi.
+ * Request parameters for extractLinks operation in ChatbotApi.
  * @export
- * @interface DefaultApiExtractLinksRequest
+ * @interface ChatbotApiExtractLinksRequest
  */
-export interface DefaultApiExtractLinksRequest {
+export interface ChatbotApiExtractLinksRequest {
     /**
      * ID of the chatbot
      * @type {string}
-     * @memberof DefaultApiExtractLinks
+     * @memberof ChatbotApiExtractLinks
      */
     readonly id: string
 
     /**
      * 
      * @type {WebScrapingRequest}
-     * @memberof DefaultApiExtractLinks
+     * @memberof ChatbotApiExtractLinks
      */
     readonly webScrapingRequest?: WebScrapingRequest
 }
 
 /**
- * Request parameters for messageBot operation in DefaultApi.
+ * Request parameters for messageBot operation in ChatbotApi.
  * @export
- * @interface DefaultApiMessageBotRequest
+ * @interface ChatbotApiMessageBotRequest
  */
-export interface DefaultApiMessageBotRequest {
+export interface ChatbotApiMessageBotRequest {
     /**
      * ID of the chatbot
      * @type {string}
-     * @memberof DefaultApiMessageBot
+     * @memberof ChatbotApiMessageBot
      */
     readonly id: string
 
     /**
      * 
      * @type {ChatbotMessageRequest}
-     * @memberof DefaultApiMessageBot
+     * @memberof ChatbotApiMessageBot
      */
     readonly chatbotMessageRequest?: ChatbotMessageRequest
 }
 
 /**
- * Request parameters for trainBot operation in DefaultApi.
+ * Request parameters for trainBot operation in ChatbotApi.
  * @export
- * @interface DefaultApiTrainBotRequest
+ * @interface ChatbotApiTrainBotRequest
  */
-export interface DefaultApiTrainBotRequest {
+export interface ChatbotApiTrainBotRequest {
     /**
      * ID of the chatbot
      * @type {string}
-     * @memberof DefaultApiTrainBot
+     * @memberof ChatbotApiTrainBot
      */
     readonly id: string
 }
 
 /**
- * Request parameters for updateBotPreferences operation in DefaultApi.
+ * Request parameters for updateBotPreferences operation in ChatbotApi.
  * @export
- * @interface DefaultApiUpdateBotPreferencesRequest
+ * @interface ChatbotApiUpdateBotPreferencesRequest
  */
-export interface DefaultApiUpdateBotPreferencesRequest {
+export interface ChatbotApiUpdateBotPreferencesRequest {
     /**
      * ID of the chatbot
      * @type {string}
-     * @memberof DefaultApiUpdateBotPreferences
+     * @memberof ChatbotApiUpdateBotPreferences
      */
     readonly id: string
 
     /**
      * 
      * @type {UpdateChatbotRequest}
-     * @memberof DefaultApiUpdateBotPreferences
+     * @memberof ChatbotApiUpdateBotPreferences
      */
     readonly updateChatbotRequest?: UpdateChatbotRequest
 }
 
 /**
- * DefaultApi - object-oriented interface
+ * ChatbotApi - object-oriented interface
  * @export
- * @class DefaultApi
+ * @class ChatbotApi
  * @extends {BaseAPI}
  */
-export class DefaultApi extends BaseAPI {
+export class ChatbotApi extends BaseAPI {
     /**
      * 
      * @summary Check document ingestion status
-     * @param {DefaultApiCheckDocumentIngestionStatusRequest} requestParameters Request parameters.
+     * @param {ChatbotApiCheckDocumentIngestionStatusRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof DefaultApi
+     * @memberof ChatbotApi
      */
-    public checkDocumentIngestionStatus(requestParameters: DefaultApiCheckDocumentIngestionStatusRequest, options?: AxiosRequestConfig) {
-        return DefaultApiFp(this.configuration).checkDocumentIngestionStatus(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    public checkDocumentIngestionStatus(requestParameters: ChatbotApiCheckDocumentIngestionStatusRequest, options?: AxiosRequestConfig) {
+        return ChatbotApiFp(this.configuration).checkDocumentIngestionStatus(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * 
      * @summary Create a chatbot
-     * @param {DefaultApiCreateBotRequest} requestParameters Request parameters.
+     * @param {ChatbotApiCreateBotRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof DefaultApi
+     * @memberof ChatbotApi
      */
-    public createBot(requestParameters: DefaultApiCreateBotRequest = {}, options?: AxiosRequestConfig) {
-        return DefaultApiFp(this.configuration).createBot(requestParameters.createChatbotRequest, options).then((request) => request(this.axios, this.basePath));
+    public createBot(requestParameters: ChatbotApiCreateBotRequest = {}, options?: AxiosRequestConfig) {
+        return ChatbotApiFp(this.configuration).createBot(requestParameters.createChatbotRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * 
      * @summary Delete links from a website
-     * @param {DefaultApiDeleteLinkRequest} requestParameters Request parameters.
+     * @param {ChatbotApiDeleteLinkRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof DefaultApi
+     * @memberof ChatbotApi
      */
-    public deleteLink(requestParameters: DefaultApiDeleteLinkRequest, options?: AxiosRequestConfig) {
-        return DefaultApiFp(this.configuration).deleteLink(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    public deleteLink(requestParameters: ChatbotApiDeleteLinkRequest, options?: AxiosRequestConfig) {
+        return ChatbotApiFp(this.configuration).deleteLink(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * 
      * @summary Extract links from a website
-     * @param {DefaultApiExtractLinksRequest} requestParameters Request parameters.
+     * @param {ChatbotApiExtractLinksRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof DefaultApi
+     * @memberof ChatbotApi
      */
-    public extractLinks(requestParameters: DefaultApiExtractLinksRequest, options?: AxiosRequestConfig) {
-        return DefaultApiFp(this.configuration).extractLinks(requestParameters.id, requestParameters.webScrapingRequest, options).then((request) => request(this.axios, this.basePath));
+    public extractLinks(requestParameters: ChatbotApiExtractLinksRequest, options?: AxiosRequestConfig) {
+        return ChatbotApiFp(this.configuration).extractLinks(requestParameters.id, requestParameters.webScrapingRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -1859,46 +1859,46 @@ export class DefaultApi extends BaseAPI {
      * @summary Get user\'s chatbots
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof DefaultApi
+     * @memberof ChatbotApi
      */
     public getBots(options?: AxiosRequestConfig) {
-        return DefaultApiFp(this.configuration).getBots(options).then((request) => request(this.axios, this.basePath));
+        return ChatbotApiFp(this.configuration).getBots(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * 
      * @summary Send message to the chatbot
-     * @param {DefaultApiMessageBotRequest} requestParameters Request parameters.
+     * @param {ChatbotApiMessageBotRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof DefaultApi
+     * @memberof ChatbotApi
      */
-    public messageBot(requestParameters: DefaultApiMessageBotRequest, options?: AxiosRequestConfig) {
-        return DefaultApiFp(this.configuration).messageBot(requestParameters.id, requestParameters.chatbotMessageRequest, options).then((request) => request(this.axios, this.basePath));
+    public messageBot(requestParameters: ChatbotApiMessageBotRequest, options?: AxiosRequestConfig) {
+        return ChatbotApiFp(this.configuration).messageBot(requestParameters.id, requestParameters.chatbotMessageRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * 
      * @summary Check the status of training
-     * @param {DefaultApiTrainBotRequest} requestParameters Request parameters.
+     * @param {ChatbotApiTrainBotRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof DefaultApi
+     * @memberof ChatbotApi
      */
-    public trainBot(requestParameters: DefaultApiTrainBotRequest, options?: AxiosRequestConfig) {
-        return DefaultApiFp(this.configuration).trainBot(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    public trainBot(requestParameters: ChatbotApiTrainBotRequest, options?: AxiosRequestConfig) {
+        return ChatbotApiFp(this.configuration).trainBot(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * 
      * @summary Update chatbot\'s preferences
-     * @param {DefaultApiUpdateBotPreferencesRequest} requestParameters Request parameters.
+     * @param {ChatbotApiUpdateBotPreferencesRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof DefaultApi
+     * @memberof ChatbotApi
      */
-    public updateBotPreferences(requestParameters: DefaultApiUpdateBotPreferencesRequest, options?: AxiosRequestConfig) {
-        return DefaultApiFp(this.configuration).updateBotPreferences(requestParameters.id, requestParameters.updateChatbotRequest, options).then((request) => request(this.axios, this.basePath));
+    public updateBotPreferences(requestParameters: ChatbotApiUpdateBotPreferencesRequest, options?: AxiosRequestConfig) {
+        return ChatbotApiFp(this.configuration).updateBotPreferences(requestParameters.id, requestParameters.updateChatbotRequest, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
