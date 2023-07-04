@@ -169,6 +169,81 @@ export const CampaignAsyncGet200ResponseStatusEnum = {
 export type CampaignAsyncGet200ResponseStatusEnum = typeof CampaignAsyncGet200ResponseStatusEnum[keyof typeof CampaignAsyncGet200ResponseStatusEnum];
 
 /**
+ * Filters to select contacts for the campaign
+ * @export
+ * @interface CampaignContactFilters
+ */
+export interface CampaignContactFilters {
+    /**
+     * Get contacts who fall in either of these tags
+     * @type {Array<string>}
+     * @memberof CampaignContactFilters
+     */
+    'tags'?: Array<string> | null;
+    /**
+     * Get contacts who do not fall in either of these tags
+     * @type {Array<string>}
+     * @memberof CampaignContactFilters
+     */
+    'notTags'?: Array<string> | null;
+    /**
+     * Get contacts assigned to this user
+     * @type {Array<string>}
+     * @memberof CampaignContactFilters
+     */
+    'assignee'?: Array<string> | null;
+    /**
+     * Get contacts not assigned to this user
+     * @type {Array<string>}
+     * @memberof CampaignContactFilters
+     */
+    'notAssignee'?: Array<string> | null;
+    /**
+     * Get contacts who have sent at least this many messages
+     * @type {number}
+     * @memberof CampaignContactFilters
+     */
+    'minMessagesSent'?: number | null;
+    /**
+     * Get contacts who have sent at most this many messages
+     * @type {number}
+     * @memberof CampaignContactFilters
+     */
+    'maxMessagesSent'?: number | null;
+    /**
+     * Get contacts who have received at least this many messages
+     * @type {number}
+     * @memberof CampaignContactFilters
+     */
+    'minMessagesRecv'?: number | null;
+    /**
+     * Get contacts who have received at most this many messages
+     * @type {number}
+     * @memberof CampaignContactFilters
+     */
+    'maxMessagesRecv'?: number | null;
+    /**
+     * only get contacts of type
+     * @type {string}
+     * @memberof CampaignContactFilters
+     */
+    'type'?: CampaignContactFiltersTypeEnum;
+    /**
+     * Get contacts of these accounts
+     * @type {string}
+     * @memberof CampaignContactFilters
+     */
+    'accountId'?: string | null;
+}
+
+export const CampaignContactFiltersTypeEnum = {
+    Group: 'group',
+    Individual: 'individual'
+} as const;
+
+export type CampaignContactFiltersTypeEnum = typeof CampaignContactFiltersTypeEnum[keyof typeof CampaignContactFiltersTypeEnum];
+
+/**
  * 
  * @export
  * @interface CampaignCreateAsync
@@ -234,6 +309,12 @@ export interface CampaignCreateAsync {
      * @memberof CampaignCreateAsync
      */
     'activationTimeRange'?: ActivationTimeRange;
+    /**
+     * 
+     * @type {CampaignContactFilters}
+     * @memberof CampaignCreateAsync
+     */
+    'contactFilters'?: CampaignContactFilters;
 }
 /**
  * 

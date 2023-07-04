@@ -123,6 +123,141 @@ export interface AutocompleteSuggestion {
 /**
  * 
  * @export
+ * @interface Chatbot
+ */
+export interface Chatbot {
+    /**
+     * ID of the chatbot
+     * @type {string}
+     * @memberof Chatbot
+     */
+    'id': string;
+    /**
+     * Name of the chatbot
+     * @type {string}
+     * @memberof Chatbot
+     */
+    'name': string;
+    /**
+     * List of stored data, such as PDF or website links, associated with the chatbot
+     * @type {Array<ChatbotStoredLinksInner>}
+     * @memberof Chatbot
+     */
+    'storedLinks': Array<ChatbotStoredLinksInner>;
+    /**
+     * An ISO formatted timestamp
+     * @type {string}
+     * @memberof Chatbot
+     */
+    'createdAt'?: string;
+    /**
+     * An ISO formatted timestamp
+     * @type {string}
+     * @memberof Chatbot
+     */
+    'updatedAt': string;
+    /**
+     * Current training status of the chatbot
+     * @type {string}
+     * @memberof Chatbot
+     */
+    'trainingStatus': ChatbotTrainingStatusEnum;
+    /**
+     * Name of the member to assign to the chatbot
+     * @type {string}
+     * @memberof Chatbot
+     */
+    'assignedMember': string;
+    /**
+     * Name of the channel to deploy to the chatbot
+     * @type {string}
+     * @memberof Chatbot
+     */
+    'deployedChannel': string;
+}
+
+export const ChatbotTrainingStatusEnum = {
+    Idle: 'idle',
+    InProgress: 'inProgress',
+    Completed: 'completed',
+    Failed: 'failed'
+} as const;
+
+export type ChatbotTrainingStatusEnum = typeof ChatbotTrainingStatusEnum[keyof typeof ChatbotTrainingStatusEnum];
+
+/**
+ * 
+ * @export
+ * @interface ChatbotMessageRequest
+ */
+export interface ChatbotMessageRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof ChatbotMessageRequest
+     */
+    'message': string;
+}
+/**
+ * 
+ * @export
+ * @interface ChatbotMessageResponse
+ */
+export interface ChatbotMessageResponse {
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof ChatbotMessageResponse
+     */
+    'message': Array<string>;
+}
+/**
+ * 
+ * @export
+ * @interface ChatbotStoredLinksInner
+ */
+export interface ChatbotStoredLinksInner {
+    /**
+     * URL of the stored data
+     * @type {string}
+     * @memberof ChatbotStoredLinksInner
+     */
+    'link': string;
+    /**
+     * An ISO formatted timestamp
+     * @type {string}
+     * @memberof ChatbotStoredLinksInner
+     */
+    'createdAt': string;
+}
+/**
+ * 
+ * @export
+ * @interface CreateChatbotRequest
+ */
+export interface CreateChatbotRequest {
+    /**
+     * ID of the chatbot
+     * @type {string}
+     * @memberof CreateChatbotRequest
+     */
+    'id': string;
+    /**
+     * Name of the chatbot
+     * @type {string}
+     * @memberof CreateChatbotRequest
+     */
+    'name': string;
+    /**
+     * 
+     * @type {Chatbot}
+     * @memberof CreateChatbotRequest
+     */
+    'chatbot': Chatbot;
+}
+/**
+ * 
+ * @export
  * @interface DeleteTriggers200Response
  */
 export interface DeleteTriggers200Response {
@@ -138,6 +273,19 @@ export interface DeleteTriggers200Response {
      * @memberof DeleteTriggers200Response
      */
     'raw'?: Array<object>;
+}
+/**
+ * 
+ * @export
+ * @interface DeleteWebScrapingRequest
+ */
+export interface DeleteWebScrapingRequest {
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof DeleteWebScrapingRequest
+     */
+    'links': Array<string>;
 }
 /**
  * 
@@ -177,6 +325,19 @@ export const ExecutionFrameDayEnum = {
 
 export type ExecutionFrameDayEnum = typeof ExecutionFrameDayEnum[keyof typeof ExecutionFrameDayEnum];
 
+/**
+ * 
+ * @export
+ * @interface GetChatbotsResponse
+ */
+export interface GetChatbotsResponse {
+    /**
+     * 
+     * @type {Array<Chatbot>}
+     * @memberof GetChatbotsResponse
+     */
+    'chatbots': Array<Chatbot>;
+}
 /**
  * 
  * @export
@@ -417,6 +578,12 @@ export interface KeywordActionExecutionRecord {
      */
     'chatId': string;
     /**
+     * Triggering message ID
+     * @type {string}
+     * @memberof KeywordActionExecutionRecord
+     */
+    'messageId'?: string;
+    /**
      * Incoming message body
      * @type {string}
      * @memberof KeywordActionExecutionRecord
@@ -575,6 +742,69 @@ export const TriggerType = {
 export type TriggerType = typeof TriggerType[keyof typeof TriggerType];
 
 
+/**
+ * 
+ * @export
+ * @interface UpdateChatbotRequest
+ */
+export interface UpdateChatbotRequest {
+    /**
+     * 
+     * @type {Chatbot}
+     * @memberof UpdateChatbotRequest
+     */
+    'chatbot': Chatbot;
+    /**
+     * List of links to add to the chatbot
+     * @type {Array<string>}
+     * @memberof UpdateChatbotRequest
+     */
+    'linksToAdd'?: Array<string>;
+    /**
+     * List of links to remove from the chatbot
+     * @type {Array<string>}
+     * @memberof UpdateChatbotRequest
+     */
+    'linksToRemove'?: Array<string>;
+    /**
+     * Name of the member to assign to the chatbot
+     * @type {string}
+     * @memberof UpdateChatbotRequest
+     */
+    'assignedMember': string;
+    /**
+     * Name of the channel to deploy to the chatbot
+     * @type {string}
+     * @memberof UpdateChatbotRequest
+     */
+    'deployedChannel': string;
+}
+/**
+ * 
+ * @export
+ * @interface WebScrapingRequest
+ */
+export interface WebScrapingRequest {
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof WebScrapingRequest
+     */
+    'links': Array<string>;
+}
+/**
+ * 
+ * @export
+ * @interface WebScrapingResponse
+ */
+export interface WebScrapingResponse {
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof WebScrapingResponse
+     */
+    'links': Array<string>;
+}
 
 /**
  * AudioTranscriptionApi - axios parameter creator
@@ -933,6 +1163,742 @@ export class AutocompleteApi extends BaseAPI {
      */
     public autocompleteModify(requestParameters: AutocompleteApiAutocompleteModifyRequest, options?: AxiosRequestConfig) {
         return AutocompleteApiFp(this.configuration).autocompleteModify(requestParameters.modifier, requestParameters.autocompleteModifyRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+/**
+ * DefaultApi - axios parameter creator
+ * @export
+ */
+const DefaultApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @summary Check document ingestion status
+         * @param {string} id ID of the chatbot
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        checkDocumentIngestionStatus: async (id: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('checkDocumentIngestionStatus', 'id', id)
+            const localVarPath = `/chatbot/{id}/documents/ingest`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["AUTOCOMPLETE_GET"], configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Create a chatbot
+         * @param {CreateChatbotRequest} [createChatbotRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createBot: async (createChatbotRequest?: CreateChatbotRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/chatbots`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["AUTOCOMPLETE_GET"], configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(createChatbotRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Delete links from a website
+         * @param {string} id ID of the chatbot
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteLink: async (id: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('deleteLink', 'id', id)
+            const localVarPath = `/chatbot/{id}/web-scraping`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["AUTOCOMPLETE_GET"], configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Extract links from a website
+         * @param {string} id ID of the chatbot
+         * @param {WebScrapingRequest} [webScrapingRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        extractLinks: async (id: string, webScrapingRequest?: WebScrapingRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('extractLinks', 'id', id)
+            const localVarPath = `/chatbot/{id}/web-scraping`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["AUTOCOMPLETE_GET"], configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(webScrapingRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Get user\'s chatbots
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getBots: async (options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/chatbots`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["AUTOCOMPLETE_GET"], configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Send message to the chatbot
+         * @param {string} id ID of the chatbot
+         * @param {ChatbotMessageRequest} [chatbotMessageRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        messageBot: async (id: string, chatbotMessageRequest?: ChatbotMessageRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('messageBot', 'id', id)
+            const localVarPath = `/chatbot/{id}/message`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["AUTOCOMPLETE_GET"], configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(chatbotMessageRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Check the status of training
+         * @param {string} id ID of the chatbot
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        trainBot: async (id: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('trainBot', 'id', id)
+            const localVarPath = `/chatbot/{id}/train`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["AUTOCOMPLETE_GET"], configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Update chatbot\'s preferences
+         * @param {string} id ID of the chatbot
+         * @param {UpdateChatbotRequest} [updateChatbotRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        updateBotPreferences: async (id: string, updateChatbotRequest?: UpdateChatbotRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('updateBotPreferences', 'id', id)
+            const localVarPath = `/chatbots/{id}`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PATCH', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["AUTOCOMPLETE_GET"], configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(updateChatbotRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * DefaultApi - functional programming interface
+ * @export
+ */
+const DefaultApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = DefaultApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * 
+         * @summary Check document ingestion status
+         * @param {string} id ID of the chatbot
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async checkDocumentIngestionStatus(id: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.checkDocumentIngestionStatus(id, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary Create a chatbot
+         * @param {CreateChatbotRequest} [createChatbotRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async createBot(createChatbotRequest?: CreateChatbotRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.createBot(createChatbotRequest, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary Delete links from a website
+         * @param {string} id ID of the chatbot
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async deleteLink(id: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteLink(id, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary Extract links from a website
+         * @param {string} id ID of the chatbot
+         * @param {WebScrapingRequest} [webScrapingRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async extractLinks(id: string, webScrapingRequest?: WebScrapingRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<WebScrapingResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.extractLinks(id, webScrapingRequest, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary Get user\'s chatbots
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getBots(options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetChatbotsResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getBots(options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary Send message to the chatbot
+         * @param {string} id ID of the chatbot
+         * @param {ChatbotMessageRequest} [chatbotMessageRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async messageBot(id: string, chatbotMessageRequest?: ChatbotMessageRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ChatbotMessageResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.messageBot(id, chatbotMessageRequest, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary Check the status of training
+         * @param {string} id ID of the chatbot
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async trainBot(id: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.trainBot(id, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary Update chatbot\'s preferences
+         * @param {string} id ID of the chatbot
+         * @param {UpdateChatbotRequest} [updateChatbotRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async updateBotPreferences(id: string, updateChatbotRequest?: UpdateChatbotRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.updateBotPreferences(id, updateChatbotRequest, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+    }
+};
+
+/**
+ * DefaultApi - factory interface
+ * @export
+ */
+const DefaultApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = DefaultApiFp(configuration)
+    return {
+        /**
+         * 
+         * @summary Check document ingestion status
+         * @param {string} id ID of the chatbot
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        checkDocumentIngestionStatus(id: string, options?: any): AxiosPromise<void> {
+            return localVarFp.checkDocumentIngestionStatus(id, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Create a chatbot
+         * @param {CreateChatbotRequest} [createChatbotRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createBot(createChatbotRequest?: CreateChatbotRequest, options?: any): AxiosPromise<void> {
+            return localVarFp.createBot(createChatbotRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Delete links from a website
+         * @param {string} id ID of the chatbot
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteLink(id: string, options?: any): AxiosPromise<void> {
+            return localVarFp.deleteLink(id, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Extract links from a website
+         * @param {string} id ID of the chatbot
+         * @param {WebScrapingRequest} [webScrapingRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        extractLinks(id: string, webScrapingRequest?: WebScrapingRequest, options?: any): AxiosPromise<WebScrapingResponse> {
+            return localVarFp.extractLinks(id, webScrapingRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Get user\'s chatbots
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getBots(options?: any): AxiosPromise<GetChatbotsResponse> {
+            return localVarFp.getBots(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Send message to the chatbot
+         * @param {string} id ID of the chatbot
+         * @param {ChatbotMessageRequest} [chatbotMessageRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        messageBot(id: string, chatbotMessageRequest?: ChatbotMessageRequest, options?: any): AxiosPromise<ChatbotMessageResponse> {
+            return localVarFp.messageBot(id, chatbotMessageRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Check the status of training
+         * @param {string} id ID of the chatbot
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        trainBot(id: string, options?: any): AxiosPromise<void> {
+            return localVarFp.trainBot(id, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Update chatbot\'s preferences
+         * @param {string} id ID of the chatbot
+         * @param {UpdateChatbotRequest} [updateChatbotRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        updateBotPreferences(id: string, updateChatbotRequest?: UpdateChatbotRequest, options?: any): AxiosPromise<void> {
+            return localVarFp.updateBotPreferences(id, updateChatbotRequest, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * Request parameters for checkDocumentIngestionStatus operation in DefaultApi.
+ * @export
+ * @interface DefaultApiCheckDocumentIngestionStatusRequest
+ */
+export interface DefaultApiCheckDocumentIngestionStatusRequest {
+    /**
+     * ID of the chatbot
+     * @type {string}
+     * @memberof DefaultApiCheckDocumentIngestionStatus
+     */
+    readonly id: string
+}
+
+/**
+ * Request parameters for createBot operation in DefaultApi.
+ * @export
+ * @interface DefaultApiCreateBotRequest
+ */
+export interface DefaultApiCreateBotRequest {
+    /**
+     * 
+     * @type {CreateChatbotRequest}
+     * @memberof DefaultApiCreateBot
+     */
+    readonly createChatbotRequest?: CreateChatbotRequest
+}
+
+/**
+ * Request parameters for deleteLink operation in DefaultApi.
+ * @export
+ * @interface DefaultApiDeleteLinkRequest
+ */
+export interface DefaultApiDeleteLinkRequest {
+    /**
+     * ID of the chatbot
+     * @type {string}
+     * @memberof DefaultApiDeleteLink
+     */
+    readonly id: string
+}
+
+/**
+ * Request parameters for extractLinks operation in DefaultApi.
+ * @export
+ * @interface DefaultApiExtractLinksRequest
+ */
+export interface DefaultApiExtractLinksRequest {
+    /**
+     * ID of the chatbot
+     * @type {string}
+     * @memberof DefaultApiExtractLinks
+     */
+    readonly id: string
+
+    /**
+     * 
+     * @type {WebScrapingRequest}
+     * @memberof DefaultApiExtractLinks
+     */
+    readonly webScrapingRequest?: WebScrapingRequest
+}
+
+/**
+ * Request parameters for messageBot operation in DefaultApi.
+ * @export
+ * @interface DefaultApiMessageBotRequest
+ */
+export interface DefaultApiMessageBotRequest {
+    /**
+     * ID of the chatbot
+     * @type {string}
+     * @memberof DefaultApiMessageBot
+     */
+    readonly id: string
+
+    /**
+     * 
+     * @type {ChatbotMessageRequest}
+     * @memberof DefaultApiMessageBot
+     */
+    readonly chatbotMessageRequest?: ChatbotMessageRequest
+}
+
+/**
+ * Request parameters for trainBot operation in DefaultApi.
+ * @export
+ * @interface DefaultApiTrainBotRequest
+ */
+export interface DefaultApiTrainBotRequest {
+    /**
+     * ID of the chatbot
+     * @type {string}
+     * @memberof DefaultApiTrainBot
+     */
+    readonly id: string
+}
+
+/**
+ * Request parameters for updateBotPreferences operation in DefaultApi.
+ * @export
+ * @interface DefaultApiUpdateBotPreferencesRequest
+ */
+export interface DefaultApiUpdateBotPreferencesRequest {
+    /**
+     * ID of the chatbot
+     * @type {string}
+     * @memberof DefaultApiUpdateBotPreferences
+     */
+    readonly id: string
+
+    /**
+     * 
+     * @type {UpdateChatbotRequest}
+     * @memberof DefaultApiUpdateBotPreferences
+     */
+    readonly updateChatbotRequest?: UpdateChatbotRequest
+}
+
+/**
+ * DefaultApi - object-oriented interface
+ * @export
+ * @class DefaultApi
+ * @extends {BaseAPI}
+ */
+export class DefaultApi extends BaseAPI {
+    /**
+     * 
+     * @summary Check document ingestion status
+     * @param {DefaultApiCheckDocumentIngestionStatusRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApi
+     */
+    public checkDocumentIngestionStatus(requestParameters: DefaultApiCheckDocumentIngestionStatusRequest, options?: AxiosRequestConfig) {
+        return DefaultApiFp(this.configuration).checkDocumentIngestionStatus(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Create a chatbot
+     * @param {DefaultApiCreateBotRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApi
+     */
+    public createBot(requestParameters: DefaultApiCreateBotRequest = {}, options?: AxiosRequestConfig) {
+        return DefaultApiFp(this.configuration).createBot(requestParameters.createChatbotRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Delete links from a website
+     * @param {DefaultApiDeleteLinkRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApi
+     */
+    public deleteLink(requestParameters: DefaultApiDeleteLinkRequest, options?: AxiosRequestConfig) {
+        return DefaultApiFp(this.configuration).deleteLink(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Extract links from a website
+     * @param {DefaultApiExtractLinksRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApi
+     */
+    public extractLinks(requestParameters: DefaultApiExtractLinksRequest, options?: AxiosRequestConfig) {
+        return DefaultApiFp(this.configuration).extractLinks(requestParameters.id, requestParameters.webScrapingRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Get user\'s chatbots
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApi
+     */
+    public getBots(options?: AxiosRequestConfig) {
+        return DefaultApiFp(this.configuration).getBots(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Send message to the chatbot
+     * @param {DefaultApiMessageBotRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApi
+     */
+    public messageBot(requestParameters: DefaultApiMessageBotRequest, options?: AxiosRequestConfig) {
+        return DefaultApiFp(this.configuration).messageBot(requestParameters.id, requestParameters.chatbotMessageRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Check the status of training
+     * @param {DefaultApiTrainBotRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApi
+     */
+    public trainBot(requestParameters: DefaultApiTrainBotRequest, options?: AxiosRequestConfig) {
+        return DefaultApiFp(this.configuration).trainBot(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Update chatbot\'s preferences
+     * @param {DefaultApiUpdateBotPreferencesRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApi
+     */
+    public updateBotPreferences(requestParameters: DefaultApiUpdateBotPreferencesRequest, options?: AxiosRequestConfig) {
+        return DefaultApiFp(this.configuration).updateBotPreferences(requestParameters.id, requestParameters.updateChatbotRequest, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

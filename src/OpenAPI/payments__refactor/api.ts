@@ -121,7 +121,7 @@ export interface AccountLimitationMap {
  */
 export interface AmountWithCurrency {
     /**
-     * 
+     * The amount in cents. So 100 is $1.00
      * @type {number}
      * @memberof AmountWithCurrency
      */
@@ -408,17 +408,78 @@ export type LimitedItem = typeof LimitedItem[keyof typeof LimitedItem];
 
 
 /**
+ * Object which stores referral code details
+ * @export
+ * @interface PartnerReferral
+ */
+export interface PartnerReferral {
+    /**
+     * referralCode string; ID for the code
+     * @type {string}
+     * @memberof PartnerReferral
+     */
+    'referralCode': string;
+    /**
+     * ID of the stripe price, the usage of this referral code will give access to
+     * @type {string}
+     * @memberof PartnerReferral
+     */
+    'stripePriceId': string | null;
+    /**
+     * 
+     * @type {StripePrice}
+     * @memberof PartnerReferral
+     */
+    'stripePrice'?: StripePrice;
+    /**
+     * teamId of partnerAdmin associated with the referralCode
+     * @type {string}
+     * @memberof PartnerReferral
+     */
+    'partnerAdminTeam': string;
+    /**
+     * partnerAdmin of team associated with the referralCode
+     * @type {string}
+     * @memberof PartnerReferral
+     */
+    'partnerAdmin': string;
+    /**
+     * Time the product can be used for in days
+     * @type {number}
+     * @memberof PartnerReferral
+     */
+    'usagePeriodDays': number;
+    /**
+     * An ISO formatted timestamp
+     * @type {string}
+     * @memberof PartnerReferral
+     */
+    'referralCodeExpiry'?: string;
+    /**
+     * userId of creator of the code
+     * @type {string}
+     * @memberof PartnerReferral
+     */
+    'createdBy': string;
+    /**
+     * An ISO formatted timestamp
+     * @type {string}
+     * @memberof PartnerReferral
+     */
+    'createdAt': string;
+}
+/**
  * options to generate partnerReferral
  * @export
  * @interface PartnerReferralCreateOptions
  */
 export interface PartnerReferralCreateOptions {
     /**
-     * ID of the product purchased
+     * ID of the product that\'ll be given for free when the referral code is used
      * @type {string}
      * @memberof PartnerReferralCreateOptions
      */
-    'productId': string | null;
+    'stripePriceId': string | null;
     /**
      * time the product can be used for in days
      * @type {number}
@@ -446,10 +507,10 @@ export interface PartnerReferralCreateOptions {
 export interface PartnerReferralsGet200Response {
     /**
      * 
-     * @type {Array<ReferralCodeDetails>}
+     * @type {Array<PartnerReferral>}
      * @memberof PartnerReferralsGet200Response
      */
-    'items': Array<ReferralCodeDetails>;
+    'items': Array<PartnerReferral>;
     /**
      * 
      * @type {number}
@@ -640,61 +701,6 @@ export interface ProductsSelectionInner {
     'quantity': number;
 }
 /**
- * Object which stores referral code details
- * @export
- * @interface ReferralCodeDetails
- */
-export interface ReferralCodeDetails {
-    /**
-     * referralCode string
-     * @type {string}
-     * @memberof ReferralCodeDetails
-     */
-    'referralCode': string;
-    /**
-     * ID of the product purchased
-     * @type {string}
-     * @memberof ReferralCodeDetails
-     */
-    'productId': string | null;
-    /**
-     * teamId of partnerAdmin associated with the referralCode
-     * @type {string}
-     * @memberof ReferralCodeDetails
-     */
-    'partnerAdminTeam': string;
-    /**
-     * partnerAdmin of team associated with the referralCode
-     * @type {string}
-     * @memberof ReferralCodeDetails
-     */
-    'partnerAdmin': string;
-    /**
-     * time the product can be used for in days
-     * @type {number}
-     * @memberof ReferralCodeDetails
-     */
-    'usagePeriodDays': number;
-    /**
-     * An ISO formatted timestamp
-     * @type {string}
-     * @memberof ReferralCodeDetails
-     */
-    'referralCodeExpiry'?: string;
-    /**
-     * userId of creator of the code
-     * @type {string}
-     * @memberof ReferralCodeDetails
-     */
-    'createdBy': string;
-    /**
-     * An ISO formatted timestamp
-     * @type {string}
-     * @memberof ReferralCodeDetails
-     */
-    'createdAt': string;
-}
-/**
  * 
  * @export
  * @interface StripeCheckout200Response
@@ -870,6 +876,12 @@ export interface SubscribedProduct {
      */
     'productId': string;
     /**
+     * The stripe price ID that was used to purchase this subscription product
+     * @type {string}
+     * @memberof SubscribedProduct
+     */
+    'stripePriceId': string;
+    /**
      * 
      * @type {number}
      * @memberof SubscribedProduct
@@ -962,6 +974,12 @@ export interface SubscriptionCreate {
      */
     'extraDays'?: number;
     /**
+     * Free trial days to add to the subscription. Invalid request with endDate, extraDays, or nextCycleAnchor, and createOnStripe=false.
+     * @type {number}
+     * @memberof SubscriptionCreate
+     */
+    'freeTrialDays'?: number;
+    /**
      * Anchor the next cycle to a specific date. Invalid request with endDate. Only valid for stripe subscriptions.
      * @type {string}
      * @memberof SubscriptionCreate
@@ -973,6 +991,12 @@ export interface SubscriptionCreate {
      * @memberof SubscriptionCreate
      */
     'createOnStripe': boolean;
+    /**
+     * Refresh access after creating the subscription.
+     * @type {boolean}
+     * @memberof SubscriptionCreate
+     */
+    'refreshAccess'?: boolean;
 }
 /**
  * 
@@ -1140,6 +1164,12 @@ export interface TeamDetailCreate {
      * @memberof TeamDetailCreate
      */
     'partnership'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof TeamDetailCreate
+     */
+    'referralCode'?: string;
 }
 /**
  * 
