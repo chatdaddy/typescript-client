@@ -1,7 +1,7 @@
 import dotenv from 'dotenv'
 dotenv.config()
 
-import { makeAccessTokenFactory, Scope } from '@chatdaddy/service-auth-client'
+import { makeAccessTokenFactory, Scope } from '../src'
 import { ChatsApi, Configuration, ContactsApi, ContactsPatch, MessageComposeStatusEnum, MessagesApi } from '../src'
 
 const MIN_MESSAGES_RECV = 5

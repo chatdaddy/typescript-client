@@ -2,7 +2,7 @@ import dotenv from 'dotenv'
 dotenv.config()
 
 import { AccountState, AccountType } from './../src/OpenAPI/InstantMessaging/api'
-import { Configuration, makeAccessTokenFactory, Scope } from '@chatdaddy/service-auth-client'
+import { Configuration, makeAccessTokenFactory, Scope } from '../src'
 import { AccountApi } from '../src'
 import qrterminal from 'qrcode-terminal'
 

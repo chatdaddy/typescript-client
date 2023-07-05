@@ -55,34 +55,35 @@ Presently, all access tokens last for **1 hour**.
 
 This SDK includes functions to easily generate and persist access tokens from refresh tokens
 ``` ts
-import { makeAccessTokenFactory } from '@chatdaddy/client'
+import { makeAccessTokenFactory, MessagesApi } from '@chatdaddy/client'
 // create a factory that takes care of auto-renewing access tokens when they expire
 const getToken = makeAccessTokenFactory({
 	request: {
 		refreshToken: '676be3ff-8d6e-4e74-8b0a-16e769d1ee80', // example, use your own refresh token
-		scopes: [Scope.MessagesSendToAll] // only add scopes to send messages
+		scopes: ['MESSAGES_SEND_TO_ALL'] // only add scopes to send messages
 	},
 })
 ;(async() => {
 	// enter the team ID you want to generate the token for
 	// read the section below to see how to get your team ID
-	const token = await getToken('976bf2fe-ar6e-4e74-8b0a-16e769d1ee80')
+	const { token } = await getToken('976bf2fe-ar6e-4e74-8b0a-16e769d1ee80')
 	console.log(token)
 	// above line would print something like "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c"
 
 	// send using WA API
-	fetch(
-		'https://api-wa.chatdaddy.tech/messages/123456789@s.whatsapp.net',
-		{
-			headers: { 
-				'authorization': `Bearer ${token}`,
-				'content-type': 'application/json'
-			},
-			body: JSON.stringify({
-				text: 'Hi there!'
-			})
-		}
+	const config = new Configuration(
+		{ accessToken: token },
 	)
+	const messagesApi = new MessagesApi(config)
+	const { data: messages } = await messagesApi.messagesPost({
+		// use a random channel (API term -- account) in your team
+		accountId: 'random',
+		// send to phone number
+		chatId: '1234667772',
+		messageCompose: {
+			text: 'Hello from API',
+		}
+	})
 })()
 
 ```
