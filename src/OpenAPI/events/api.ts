@@ -1293,10 +1293,10 @@ export interface BotInsertDataStartTriggersInnerConditionsInner {
     'propertyPath': string;
     /**
      * 
-     * @type {BotInsertDataStartTriggersInnerConditionsInnerValue}
+     * @type {BotInsertDataStartTriggersInnerConditionsInnerValues}
      * @memberof BotInsertDataStartTriggersInnerConditionsInner
      */
-    'value'?: BotInsertDataStartTriggersInnerConditionsInnerValue;
+    'values'?: BotInsertDataStartTriggersInnerConditionsInnerValues;
     /**
      * 
      * @type {string}
@@ -1321,10 +1321,10 @@ export const BotInsertDataStartTriggersInnerConditionsInnerOperatorEnum = {
 export type BotInsertDataStartTriggersInnerConditionsInnerOperatorEnum = typeof BotInsertDataStartTriggersInnerConditionsInnerOperatorEnum[keyof typeof BotInsertDataStartTriggersInnerConditionsInnerOperatorEnum];
 
 /**
- * @type BotInsertDataStartTriggersInnerConditionsInnerValue
+ * @type BotInsertDataStartTriggersInnerConditionsInnerValues
  * @export
  */
-export type BotInsertDataStartTriggersInnerConditionsInnerValue = Array<number> | Array<string>;
+export type BotInsertDataStartTriggersInnerConditionsInnerValues = Array<number> | Array<string>;
 
 /**
  * 
