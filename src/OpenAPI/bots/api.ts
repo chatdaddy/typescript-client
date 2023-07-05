@@ -513,7 +513,7 @@ export type BotConditionOperatorEnum = typeof BotConditionOperatorEnum[keyof typ
  * @type BotConditionValue
  * @export
  */
-export type BotConditionValue = boolean | number | string;
+export type BotConditionValue = Array<number> | Array<string>;
 
 /**
  * 
@@ -1146,7 +1146,7 @@ export interface BotTriggerTargetQuery {
      * @type {string}
      * @memberof BotTriggerTargetQuery
      */
-    'contactType'?: BotTriggerTargetQueryContactTypeEnum;
+    'type'?: BotTriggerTargetQueryTypeEnum;
     /**
      * 
      * @type {Array<string>}
@@ -1167,12 +1167,12 @@ export interface BotTriggerTargetQuery {
     'accountId'?: Array<string>;
 }
 
-export const BotTriggerTargetQueryContactTypeEnum = {
+export const BotTriggerTargetQueryTypeEnum = {
     Individual: 'individual',
     Group: 'group'
 } as const;
 
-export type BotTriggerTargetQueryContactTypeEnum = typeof BotTriggerTargetQueryContactTypeEnum[keyof typeof BotTriggerTargetQueryContactTypeEnum];
+export type BotTriggerTargetQueryTypeEnum = typeof BotTriggerTargetQueryTypeEnum[keyof typeof BotTriggerTargetQueryTypeEnum];
 
 /**
  * 

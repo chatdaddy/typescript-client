@@ -1324,7 +1324,7 @@ export type BotInsertDataStartTriggersInnerConditionsInnerOperatorEnum = typeof 
  * @type BotInsertDataStartTriggersInnerConditionsInnerValue
  * @export
  */
-export type BotInsertDataStartTriggersInnerConditionsInnerValue = boolean | number | string;
+export type BotInsertDataStartTriggersInnerConditionsInnerValue = Array<number> | Array<string>;
 
 /**
  * 
@@ -1776,7 +1776,7 @@ export interface BotInsertDataStartTriggersInnerTargetOneOf1Query {
      * @type {string}
      * @memberof BotInsertDataStartTriggersInnerTargetOneOf1Query
      */
-    'contactType'?: BotInsertDataStartTriggersInnerTargetOneOf1QueryContactTypeEnum;
+    'type'?: BotInsertDataStartTriggersInnerTargetOneOf1QueryTypeEnum;
     /**
      * 
      * @type {Array<string>}
@@ -1797,12 +1797,12 @@ export interface BotInsertDataStartTriggersInnerTargetOneOf1Query {
     'accountId'?: Array<string>;
 }
 
-export const BotInsertDataStartTriggersInnerTargetOneOf1QueryContactTypeEnum = {
+export const BotInsertDataStartTriggersInnerTargetOneOf1QueryTypeEnum = {
     Individual: 'individual',
     Group: 'group'
 } as const;
 
-export type BotInsertDataStartTriggersInnerTargetOneOf1QueryContactTypeEnum = typeof BotInsertDataStartTriggersInnerTargetOneOf1QueryContactTypeEnum[keyof typeof BotInsertDataStartTriggersInnerTargetOneOf1QueryContactTypeEnum];
+export type BotInsertDataStartTriggersInnerTargetOneOf1QueryTypeEnum = typeof BotInsertDataStartTriggersInnerTargetOneOf1QueryTypeEnum[keyof typeof BotInsertDataStartTriggersInnerTargetOneOf1QueryTypeEnum];
 
 /**
  * 
