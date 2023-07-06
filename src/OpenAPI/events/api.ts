@@ -999,7 +999,7 @@ export interface BotInsertData {
      * @type {Array<BotInsertDataActionsInner>}
      * @memberof BotInsertData
      */
-    'actions': Array<BotInsertDataActionsInner>;
+    'actions'?: Array<BotInsertDataActionsInner>;
     /**
      * 
      * @type {Array<BotInsertDataStartTriggersInner>}

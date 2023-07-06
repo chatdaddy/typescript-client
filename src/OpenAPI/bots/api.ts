@@ -412,7 +412,7 @@ export interface Bot {
      * @type {Array<Action>}
      * @memberof Bot
      */
-    'actions': Array<Action>;
+    'actions'?: Array<Action>;
     /**
      * 
      * @type {Array<BotTrigger>}
