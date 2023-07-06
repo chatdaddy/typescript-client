@@ -230,10 +230,10 @@ export interface CampaignContactFilters {
     'type'?: CampaignContactFiltersTypeEnum;
     /**
      * Get contacts of these accounts
-     * @type {string}
+     * @type {Array<string>}
      * @memberof CampaignContactFilters
      */
-    'accountId'?: string | null;
+    'accountId'?: Array<string> | null;
 }
 
 export const CampaignContactFiltersTypeEnum = {
