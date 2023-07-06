@@ -409,6 +409,12 @@ export interface Bot {
     'startingActionId'?: string | null;
     /**
      * 
+     * @type {Array<Action>}
+     * @memberof Bot
+     */
+    'actions': Array<Action>;
+    /**
+     * 
      * @type {Array<BotTrigger>}
      * @memberof Bot
      */

@@ -996,6 +996,12 @@ export interface BotInsertData {
     'startingActionId'?: string | null;
     /**
      * 
+     * @type {Array<BotInsertDataActionsInner>}
+     * @memberof BotInsertData
+     */
+    'actions': Array<BotInsertDataActionsInner>;
+    /**
+     * 
      * @type {Array<BotInsertDataStartTriggersInner>}
      * @memberof BotInsertData
      */
@@ -1058,6 +1064,413 @@ export interface BotInsertData {
 /**
  * 
  * @export
+ * @interface BotInsertDataActionsInner
+ */
+export interface BotInsertDataActionsInner {
+    /**
+     * 
+     * @type {string}
+     * @memberof BotInsertDataActionsInner
+     */
+    'createdAt': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof BotInsertDataActionsInner
+     */
+    'updatedAt': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof BotInsertDataActionsInner
+     */
+    'id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof BotInsertDataActionsInner
+     */
+    'botId'?: string;
+    /**
+     * Name of the template
+     * @type {string}
+     * @memberof BotInsertDataActionsInner
+     */
+    'name': string;
+    /**
+     * 
+     * @type {BotInsertDataActionsInnerAllOf1Message}
+     * @memberof BotInsertDataActionsInner
+     */
+    'message'?: BotInsertDataActionsInnerAllOf1Message | null;
+    /**
+     * set the assignee on the contact
+     * @type {string}
+     * @memberof BotInsertDataActionsInner
+     */
+    'assignee'?: string | null;
+    /**
+     * Tags to set on this contact.
+     * @type {Array<BotInsertDataActionsInnerAllOf1TagsInner>}
+     * @memberof BotInsertDataActionsInner
+     */
+    'tags'?: Array<BotInsertDataActionsInnerAllOf1TagsInner> | null;
+    /**
+     * Array of UserId
+     * @type {Array<string>}
+     * @memberof BotInsertDataActionsInner
+     */
+    'notifyUsers'?: Array<string>;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof BotInsertDataActionsInner
+     */
+    'webhooks'?: Array<string>;
+    /**
+     * 
+     * @type {BotInsertDataActionsInnerAllOf1MessageButtonsInnerPosition}
+     * @memberof BotInsertDataActionsInner
+     */
+    'position'?: BotInsertDataActionsInnerAllOf1MessageButtonsInnerPosition;
+    /**
+     * send in to remove the action
+     * @type {boolean}
+     * @memberof BotInsertDataActionsInner
+     */
+    'remove'?: boolean;
+}
+/**
+ * 
+ * @export
+ * @interface BotInsertDataActionsInnerAllOf
+ */
+export interface BotInsertDataActionsInnerAllOf {
+    /**
+     * 
+     * @type {string}
+     * @memberof BotInsertDataActionsInnerAllOf
+     */
+    'createdAt': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof BotInsertDataActionsInnerAllOf
+     */
+    'updatedAt': string;
+}
+/**
+ * 
+ * @export
+ * @interface BotInsertDataActionsInnerAllOf1
+ */
+export interface BotInsertDataActionsInnerAllOf1 {
+    /**
+     * 
+     * @type {string}
+     * @memberof BotInsertDataActionsInnerAllOf1
+     */
+    'id'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof BotInsertDataActionsInnerAllOf1
+     */
+    'botId'?: string;
+    /**
+     * Name of the template
+     * @type {string}
+     * @memberof BotInsertDataActionsInnerAllOf1
+     */
+    'name'?: string;
+    /**
+     * 
+     * @type {BotInsertDataActionsInnerAllOf1Message}
+     * @memberof BotInsertDataActionsInnerAllOf1
+     */
+    'message'?: BotInsertDataActionsInnerAllOf1Message | null;
+    /**
+     * set the assignee on the contact
+     * @type {string}
+     * @memberof BotInsertDataActionsInnerAllOf1
+     */
+    'assignee'?: string | null;
+    /**
+     * Tags to set on this contact.
+     * @type {Array<BotInsertDataActionsInnerAllOf1TagsInner>}
+     * @memberof BotInsertDataActionsInnerAllOf1
+     */
+    'tags'?: Array<BotInsertDataActionsInnerAllOf1TagsInner> | null;
+    /**
+     * Array of UserId
+     * @type {Array<string>}
+     * @memberof BotInsertDataActionsInnerAllOf1
+     */
+    'notifyUsers'?: Array<string>;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof BotInsertDataActionsInnerAllOf1
+     */
+    'webhooks'?: Array<string>;
+    /**
+     * 
+     * @type {BotInsertDataActionsInnerAllOf1MessageButtonsInnerPosition}
+     * @memberof BotInsertDataActionsInnerAllOf1
+     */
+    'position'?: BotInsertDataActionsInnerAllOf1MessageButtonsInnerPosition;
+    /**
+     * send in to remove the action
+     * @type {boolean}
+     * @memberof BotInsertDataActionsInnerAllOf1
+     */
+    'remove'?: boolean;
+}
+/**
+ * 
+ * @export
+ * @interface BotInsertDataActionsInnerAllOf1Message
+ */
+export interface BotInsertDataActionsInnerAllOf1Message {
+    /**
+     * the template message itself
+     * @type {string}
+     * @memberof BotInsertDataActionsInnerAllOf1Message
+     */
+    'text': string | null;
+    /**
+     * array of attachments for the template
+     * @type {Array<BotInsertDataActionsInnerAllOf1MessageAttachmentsInner>}
+     * @memberof BotInsertDataActionsInnerAllOf1Message
+     */
+    'attachments'?: Array<BotInsertDataActionsInnerAllOf1MessageAttachmentsInner>;
+    /**
+     * 
+     * @type {Array<BotInsertDataActionsInnerAllOf1MessageButtonsInner>}
+     * @memberof BotInsertDataActionsInnerAllOf1Message
+     */
+    'buttons'?: Array<BotInsertDataActionsInnerAllOf1MessageButtonsInner>;
+    /**
+     * 
+     * @type {Array<BotInsertDataActionsInnerAllOf1MessageDelaysInner>}
+     * @memberof BotInsertDataActionsInnerAllOf1Message
+     */
+    'delays'?: Array<BotInsertDataActionsInnerAllOf1MessageDelaysInner>;
+    /**
+     * 
+     * @type {string}
+     * @memberof BotInsertDataActionsInnerAllOf1Message
+     */
+    'quoted'?: string;
+    /**
+     * 
+     * @type {Array<BotInsertDataActionsInnerAllOf1MessageProductsInner>}
+     * @memberof BotInsertDataActionsInnerAllOf1Message
+     */
+    'products'?: Array<BotInsertDataActionsInnerAllOf1MessageProductsInner>;
+}
+/**
+ * 
+ * @export
+ * @interface BotInsertDataActionsInnerAllOf1MessageAttachmentsInner
+ */
+export interface BotInsertDataActionsInnerAllOf1MessageAttachmentsInner {
+    /**
+     * 
+     * @type {string}
+     * @memberof BotInsertDataActionsInnerAllOf1MessageAttachmentsInner
+     */
+    'type': BotInsertDataActionsInnerAllOf1MessageAttachmentsInnerTypeEnum;
+    /**
+     * 
+     * @type {string}
+     * @memberof BotInsertDataActionsInnerAllOf1MessageAttachmentsInner
+     */
+    'mimetype': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof BotInsertDataActionsInnerAllOf1MessageAttachmentsInner
+     */
+    'url': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof BotInsertDataActionsInnerAllOf1MessageAttachmentsInner
+     */
+    'jpegThumbnail'?: string | null;
+    /**
+     * 
+     * @type {number}
+     * @memberof BotInsertDataActionsInnerAllOf1MessageAttachmentsInner
+     */
+    'seconds'?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof BotInsertDataActionsInnerAllOf1MessageAttachmentsInner
+     */
+    'filename'?: string;
+}
+
+export const BotInsertDataActionsInnerAllOf1MessageAttachmentsInnerTypeEnum = {
+    Image: 'image',
+    Video: 'video',
+    Contact: 'contact',
+    Sticker: 'sticker',
+    Audio: 'audio',
+    Document: 'document',
+    Location: 'location'
+} as const;
+
+export type BotInsertDataActionsInnerAllOf1MessageAttachmentsInnerTypeEnum = typeof BotInsertDataActionsInnerAllOf1MessageAttachmentsInnerTypeEnum[keyof typeof BotInsertDataActionsInnerAllOf1MessageAttachmentsInnerTypeEnum];
+
+/**
+ * 
+ * @export
+ * @interface BotInsertDataActionsInnerAllOf1MessageButtonsInner
+ */
+export interface BotInsertDataActionsInnerAllOf1MessageButtonsInner {
+    /**
+     * 
+     * @type {string}
+     * @memberof BotInsertDataActionsInnerAllOf1MessageButtonsInner
+     */
+    'text': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof BotInsertDataActionsInnerAllOf1MessageButtonsInner
+     */
+    'triggerActionId'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof BotInsertDataActionsInnerAllOf1MessageButtonsInner
+     */
+    'triggerBotId'?: string | null;
+    /**
+     * Make a button with a link
+     * @type {string}
+     * @memberof BotInsertDataActionsInnerAllOf1MessageButtonsInner
+     */
+    'url'?: string;
+    /**
+     * Make a button with a phone number
+     * @type {string}
+     * @memberof BotInsertDataActionsInnerAllOf1MessageButtonsInner
+     */
+    'phoneNumber'?: string;
+    /**
+     * 
+     * @type {BotInsertDataActionsInnerAllOf1MessageButtonsInnerPosition}
+     * @memberof BotInsertDataActionsInnerAllOf1MessageButtonsInner
+     */
+    'position'?: BotInsertDataActionsInnerAllOf1MessageButtonsInnerPosition;
+}
+/**
+ * 
+ * @export
+ * @interface BotInsertDataActionsInnerAllOf1MessageButtonsInnerPosition
+ */
+export interface BotInsertDataActionsInnerAllOf1MessageButtonsInnerPosition {
+    /**
+     * 
+     * @type {number}
+     * @memberof BotInsertDataActionsInnerAllOf1MessageButtonsInnerPosition
+     */
+    'x': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof BotInsertDataActionsInnerAllOf1MessageButtonsInnerPosition
+     */
+    'y': number;
+}
+/**
+ * 
+ * @export
+ * @interface BotInsertDataActionsInnerAllOf1MessageDelaysInner
+ */
+export interface BotInsertDataActionsInnerAllOf1MessageDelaysInner {
+    /**
+     * Time delays on second
+     * @type {number}
+     * @memberof BotInsertDataActionsInnerAllOf1MessageDelaysInner
+     */
+    'timeDelaySec': number;
+    /**
+     * 
+     * @type {string}
+     * @memberof BotInsertDataActionsInnerAllOf1MessageDelaysInner
+     */
+    'triggerActionId': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof BotInsertDataActionsInnerAllOf1MessageDelaysInner
+     */
+    'triggerBotId'?: string | null;
+    /**
+     * Simulate typing
+     * @type {boolean}
+     * @memberof BotInsertDataActionsInnerAllOf1MessageDelaysInner
+     */
+    'simulateTyping'?: boolean;
+    /**
+     * If true, the message will be cancelled if a reply is received
+     * @type {boolean}
+     * @memberof BotInsertDataActionsInnerAllOf1MessageDelaysInner
+     */
+    'cancelIfReplyReceived'?: boolean;
+    /**
+     * 
+     * @type {BotInsertDataActionsInnerAllOf1MessageButtonsInnerPosition}
+     * @memberof BotInsertDataActionsInnerAllOf1MessageDelaysInner
+     */
+    'position'?: BotInsertDataActionsInnerAllOf1MessageButtonsInnerPosition;
+}
+/**
+ * 
+ * @export
+ * @interface BotInsertDataActionsInnerAllOf1MessageProductsInner
+ */
+export interface BotInsertDataActionsInnerAllOf1MessageProductsInner {
+    /**
+     * 
+     * @type {string}
+     * @memberof BotInsertDataActionsInnerAllOf1MessageProductsInner
+     */
+    'id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof BotInsertDataActionsInnerAllOf1MessageProductsInner
+     */
+    'accountId': string;
+}
+/**
+ * 
+ * @export
+ * @interface BotInsertDataActionsInnerAllOf1TagsInner
+ */
+export interface BotInsertDataActionsInnerAllOf1TagsInner {
+    /**
+     * 
+     * @type {string}
+     * @memberof BotInsertDataActionsInnerAllOf1TagsInner
+     */
+    'name': string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof BotInsertDataActionsInnerAllOf1TagsInner
+     */
+    'remove'?: boolean;
+}
+/**
+ * 
+ * @export
  * @interface BotInsertDataExternalTemplateValue
  */
 export interface BotInsertDataExternalTemplateValue {
@@ -1113,81 +1526,6 @@ export type BotInsertDataExternalTemplateValueStatusEnum = typeof BotInsertDataE
  */
 export type BotInsertDataNotesInner = any;
 
-/**
- * 
- * @export
- * @interface BotInsertDataNotesInnerAttachmentsInner
- */
-export interface BotInsertDataNotesInnerAttachmentsInner {
-    /**
-     * 
-     * @type {string}
-     * @memberof BotInsertDataNotesInnerAttachmentsInner
-     */
-    'type': BotInsertDataNotesInnerAttachmentsInnerTypeEnum;
-    /**
-     * 
-     * @type {string}
-     * @memberof BotInsertDataNotesInnerAttachmentsInner
-     */
-    'mimetype': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof BotInsertDataNotesInnerAttachmentsInner
-     */
-    'url': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof BotInsertDataNotesInnerAttachmentsInner
-     */
-    'jpegThumbnail'?: string | null;
-    /**
-     * 
-     * @type {number}
-     * @memberof BotInsertDataNotesInnerAttachmentsInner
-     */
-    'seconds'?: number;
-    /**
-     * 
-     * @type {string}
-     * @memberof BotInsertDataNotesInnerAttachmentsInner
-     */
-    'filename'?: string;
-}
-
-export const BotInsertDataNotesInnerAttachmentsInnerTypeEnum = {
-    Image: 'image',
-    Video: 'video',
-    Contact: 'contact',
-    Sticker: 'sticker',
-    Audio: 'audio',
-    Document: 'document',
-    Location: 'location'
-} as const;
-
-export type BotInsertDataNotesInnerAttachmentsInnerTypeEnum = typeof BotInsertDataNotesInnerAttachmentsInnerTypeEnum[keyof typeof BotInsertDataNotesInnerAttachmentsInnerTypeEnum];
-
-/**
- * 
- * @export
- * @interface BotInsertDataNotesInnerPosition
- */
-export interface BotInsertDataNotesInnerPosition {
-    /**
-     * 
-     * @type {number}
-     * @memberof BotInsertDataNotesInnerPosition
-     */
-    'x': number;
-    /**
-     * 
-     * @type {number}
-     * @memberof BotInsertDataNotesInnerPosition
-     */
-    'y': number;
-}
 /**
  * 
  * @export
@@ -1887,6 +2225,12 @@ export interface BotUpdateData {
      * @memberof BotUpdateData
      */
     'startingActionId'?: string | null;
+    /**
+     * 
+     * @type {Array<BotInsertDataActionsInner>}
+     * @memberof BotUpdateData
+     */
+    'actions'?: Array<BotInsertDataActionsInner>;
     /**
      * 
      * @type {Array<BotInsertDataStartTriggersInner>}
