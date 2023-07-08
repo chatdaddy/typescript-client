@@ -661,6 +661,18 @@ export interface BotPatch {
      * @memberof BotPatch
      */
     'description'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof BotPatch
+     */
+    'industry'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof BotPatch
+     */
+    'language'?: string;
 }
 /**
  * 
