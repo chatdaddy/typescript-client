@@ -1724,6 +1724,12 @@ export interface Message {
      */
     'revision'?: number;
     /**
+     * An ISO formatted timestamp
+     * @type {string}
+     * @memberof Message
+     */
+    'editedAt'?: string | null;
+    /**
      * 
      * @type {MiscOptions}
      * @memberof Message
@@ -1886,6 +1892,12 @@ export interface MessageAllOf {
      * @memberof MessageAllOf
      */
     'revision'?: number;
+    /**
+     * An ISO formatted timestamp
+     * @type {string}
+     * @memberof MessageAllOf
+     */
+    'editedAt'?: string | null;
     /**
      * 
      * @type {MiscOptions}

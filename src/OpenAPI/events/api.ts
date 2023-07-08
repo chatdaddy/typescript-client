@@ -3468,6 +3468,12 @@ export interface MessageInsertData {
     'revision'?: number;
     /**
      * 
+     * @type {string}
+     * @memberof MessageInsertData
+     */
+    'editedAt'?: string | null;
+    /**
+     * 
      * @type {MessageInsertDataMiscOptions}
      * @memberof MessageInsertData
      */
@@ -4246,6 +4252,12 @@ export interface MessageUpdateData {
      * @memberof MessageUpdateData
      */
     'revision'?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof MessageUpdateData
+     */
+    'editedAt'?: string | null;
     /**
      * 
      * @type {MessageInsertDataMiscOptions}
