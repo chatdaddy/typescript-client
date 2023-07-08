@@ -673,6 +673,12 @@ export interface BotPatch {
      * @memberof BotPatch
      */
     'language'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof BotPatch
+     */
+    'folderId'?: string;
 }
 /**
  * 
