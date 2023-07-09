@@ -643,6 +643,12 @@ export interface BotNote {
      * @memberof BotNote
      */
     'position': Position;
+    /**
+     * send in to remove the note
+     * @type {boolean}
+     * @memberof BotNote
+     */
+    'remove'?: boolean;
 }
 /**
  * 

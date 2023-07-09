@@ -1556,6 +1556,12 @@ export interface BotInsertDataNotesInner {
      * @memberof BotInsertDataNotesInner
      */
     'position': BotInsertDataActionsInnerAllOf1MessageButtonsInnerPosition;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof BotInsertDataNotesInner
+     */
+    'remove'?: boolean;
 }
 /**
  * 
