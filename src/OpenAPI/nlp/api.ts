@@ -248,10 +248,17 @@ export interface CreateChatbotRequest {
      * @memberof CreateChatbotRequest
      */
     'name': string;
+}
+/**
+ * 
+ * @export
+ * @interface CreateChatbotResponse
+ */
+export interface CreateChatbotResponse {
     /**
      * 
      * @type {Chatbot}
-     * @memberof CreateChatbotRequest
+     * @memberof CreateChatbotResponse
      */
     'chatbot': Chatbot;
 }
@@ -785,15 +792,15 @@ export interface StoredLinks {
 /**
  * 
  * @export
- * @interface TrainingLinksRequest
+ * @interface TrainingStatusResponse
  */
-export interface TrainingLinksRequest {
+export interface TrainingStatusResponse {
     /**
-     * 
-     * @type {StoredLinks}
-     * @memberof TrainingLinksRequest
+     * Status of training
+     * @type {string}
+     * @memberof TrainingStatusResponse
      */
-    'storedLinks': StoredLinks;
+    'status': string;
 }
 /**
  * 
@@ -1497,11 +1504,10 @@ export const ChatbotApiAxiosParamCreator = function (configuration?: Configurati
          * 
          * @summary Post links to train
          * @param {string} id ID of the chatbot
-         * @param {TrainingLinksRequest} [trainingLinksRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        trainLinks: async (id: string, trainingLinksRequest?: TrainingLinksRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        trainLinks: async (id: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
             assertParamExists('trainLinks', 'id', id)
             const localVarPath = `/chatbot/{id}/train`
@@ -1523,12 +1529,9 @@ export const ChatbotApiAxiosParamCreator = function (configuration?: Configurati
 
 
     
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(trainingLinksRequest, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -1607,7 +1610,7 @@ export const ChatbotApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async crawlStatus(id: string, getCrawlingStatusRequest?: GetCrawlingStatusRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async crawlStatus(id: string, getCrawlingStatusRequest?: GetCrawlingStatusRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetCrawlingStatusResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.crawlStatus(id, getCrawlingStatusRequest, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -1618,7 +1621,7 @@ export const ChatbotApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async createBot(createChatbotRequest?: CreateChatbotRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async createBot(createChatbotRequest?: CreateChatbotRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CreateChatbotResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.createBot(createChatbotRequest, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -1662,7 +1665,7 @@ export const ChatbotApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async refreshTrainStatus(id: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async refreshTrainStatus(id: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TrainingStatusResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.refreshTrainStatus(id, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -1670,12 +1673,11 @@ export const ChatbotApiFp = function(configuration?: Configuration) {
          * 
          * @summary Post links to train
          * @param {string} id ID of the chatbot
-         * @param {TrainingLinksRequest} [trainingLinksRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async trainLinks(id: string, trainingLinksRequest?: TrainingLinksRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.trainLinks(id, trainingLinksRequest, options);
+        async trainLinks(id: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.trainLinks(id, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -1719,7 +1721,7 @@ export const ChatbotApiFactory = function (configuration?: Configuration, basePa
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        crawlStatus(id: string, getCrawlingStatusRequest?: GetCrawlingStatusRequest, options?: any): AxiosPromise<void> {
+        crawlStatus(id: string, getCrawlingStatusRequest?: GetCrawlingStatusRequest, options?: any): AxiosPromise<GetCrawlingStatusResponse> {
             return localVarFp.crawlStatus(id, getCrawlingStatusRequest, options).then((request) => request(axios, basePath));
         },
         /**
@@ -1729,7 +1731,7 @@ export const ChatbotApiFactory = function (configuration?: Configuration, basePa
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        createBot(createChatbotRequest?: CreateChatbotRequest, options?: any): AxiosPromise<void> {
+        createBot(createChatbotRequest?: CreateChatbotRequest, options?: any): AxiosPromise<CreateChatbotResponse> {
             return localVarFp.createBot(createChatbotRequest, options).then((request) => request(axios, basePath));
         },
         /**
@@ -1769,19 +1771,18 @@ export const ChatbotApiFactory = function (configuration?: Configuration, basePa
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        refreshTrainStatus(id: string, options?: any): AxiosPromise<void> {
+        refreshTrainStatus(id: string, options?: any): AxiosPromise<TrainingStatusResponse> {
             return localVarFp.refreshTrainStatus(id, options).then((request) => request(axios, basePath));
         },
         /**
          * 
          * @summary Post links to train
          * @param {string} id ID of the chatbot
-         * @param {TrainingLinksRequest} [trainingLinksRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        trainLinks(id: string, trainingLinksRequest?: TrainingLinksRequest, options?: any): AxiosPromise<void> {
-            return localVarFp.trainLinks(id, trainingLinksRequest, options).then((request) => request(axios, basePath));
+        trainLinks(id: string, options?: any): AxiosPromise<void> {
+            return localVarFp.trainLinks(id, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -1914,13 +1915,6 @@ export interface ChatbotApiTrainLinksRequest {
      * @memberof ChatbotApiTrainLinks
      */
     readonly id: string
-
-    /**
-     * 
-     * @type {TrainingLinksRequest}
-     * @memberof ChatbotApiTrainLinks
-     */
-    readonly trainingLinksRequest?: TrainingLinksRequest
 }
 
 /**
@@ -2043,7 +2037,7 @@ export class ChatbotApi extends BaseAPI {
      * @memberof ChatbotApi
      */
     public trainLinks(requestParameters: ChatbotApiTrainLinksRequest, options?: AxiosRequestConfig) {
-        return ChatbotApiFp(this.configuration).trainLinks(requestParameters.id, requestParameters.trainingLinksRequest, options).then((request) => request(this.axios, this.basePath));
+        return ChatbotApiFp(this.configuration).trainLinks(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
