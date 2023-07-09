@@ -608,11 +608,42 @@ export interface BotMessageDelay {
     'position'?: Position;
 }
 /**
- * @type BotNote
+ * 
  * @export
+ * @interface BotNote
  */
-export type BotNote = any;
-
+export interface BotNote {
+    /**
+     * 
+     * @type {string}
+     * @memberof BotNote
+     */
+    'id'?: string;
+    /**
+     * 
+     * @type {Array<IMMessageAttachment>}
+     * @memberof BotNote
+     */
+    'attachments'?: Array<IMMessageAttachment>;
+    /**
+     * 
+     * @type {string}
+     * @memberof BotNote
+     */
+    'text'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof BotNote
+     */
+    'title': string;
+    /**
+     * 
+     * @type {Position}
+     * @memberof BotNote
+     */
+    'position': Position;
+}
 /**
  * 
  * @export

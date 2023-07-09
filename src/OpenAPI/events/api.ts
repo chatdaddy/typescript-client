@@ -1521,11 +1521,42 @@ export const BotInsertDataExternalTemplateValueStatusEnum = {
 export type BotInsertDataExternalTemplateValueStatusEnum = typeof BotInsertDataExternalTemplateValueStatusEnum[keyof typeof BotInsertDataExternalTemplateValueStatusEnum];
 
 /**
- * @type BotInsertDataNotesInner
+ * 
  * @export
+ * @interface BotInsertDataNotesInner
  */
-export type BotInsertDataNotesInner = any;
-
+export interface BotInsertDataNotesInner {
+    /**
+     * 
+     * @type {string}
+     * @memberof BotInsertDataNotesInner
+     */
+    'id'?: string;
+    /**
+     * 
+     * @type {Array<BotInsertDataActionsInnerAllOf1MessageAttachmentsInner>}
+     * @memberof BotInsertDataNotesInner
+     */
+    'attachments'?: Array<BotInsertDataActionsInnerAllOf1MessageAttachmentsInner>;
+    /**
+     * 
+     * @type {string}
+     * @memberof BotInsertDataNotesInner
+     */
+    'text'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof BotInsertDataNotesInner
+     */
+    'title': string;
+    /**
+     * 
+     * @type {BotInsertDataActionsInnerAllOf1MessageButtonsInnerPosition}
+     * @memberof BotInsertDataNotesInner
+     */
+    'position': BotInsertDataActionsInnerAllOf1MessageButtonsInnerPosition;
+}
 /**
  * 
  * @export
