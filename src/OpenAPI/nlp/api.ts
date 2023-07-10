@@ -1259,15 +1259,18 @@ export const ChatbotApiAxiosParamCreator = function (configuration?: Configurati
          * 
          * @summary To know the status of crawling
          * @param {string} id ID of the chatbot
-         * @param {string} [crawlingJobId] ID of the crawling job
+         * @param {string} crawlingJobId ID of the crawling job
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        crawlStatus: async (id: string, crawlingJobId?: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        crawlStatus: async (id: string, crawlingJobId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
             assertParamExists('crawlStatus', 'id', id)
-            const localVarPath = `/chatbot/{id}/crawling`
-                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // verify required parameter 'crawlingJobId' is not null or undefined
+            assertParamExists('crawlStatus', 'crawlingJobId', crawlingJobId)
+            const localVarPath = `/chatbot/{id}/crawling/status/{crawlingJobId}`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)))
+                .replace(`{${"crawlingJobId"}}`, encodeURIComponent(String(crawlingJobId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -1282,10 +1285,6 @@ export const ChatbotApiAxiosParamCreator = function (configuration?: Configurati
             // authentication chatdaddy required
             // oauth required
             await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["AUTOCOMPLETE_GET"], configuration)
-
-            if (crawlingJobId !== undefined) {
-                localVarQueryParameter['crawlingJobId'] = crawlingJobId;
-            }
 
 
     
@@ -1594,11 +1593,11 @@ export const ChatbotApiFp = function(configuration?: Configuration) {
          * 
          * @summary To know the status of crawling
          * @param {string} id ID of the chatbot
-         * @param {string} [crawlingJobId] ID of the crawling job
+         * @param {string} crawlingJobId ID of the crawling job
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async crawlStatus(id: string, crawlingJobId?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetCrawlingStatusResponse>> {
+        async crawlStatus(id: string, crawlingJobId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetCrawlingStatusResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.crawlStatus(id, crawlingJobId, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -1705,11 +1704,11 @@ export const ChatbotApiFactory = function (configuration?: Configuration, basePa
          * 
          * @summary To know the status of crawling
          * @param {string} id ID of the chatbot
-         * @param {string} [crawlingJobId] ID of the crawling job
+         * @param {string} crawlingJobId ID of the crawling job
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        crawlStatus(id: string, crawlingJobId?: string, options?: any): AxiosPromise<GetCrawlingStatusResponse> {
+        crawlStatus(id: string, crawlingJobId: string, options?: any): AxiosPromise<GetCrawlingStatusResponse> {
             return localVarFp.crawlStatus(id, crawlingJobId, options).then((request) => request(axios, basePath));
         },
         /**
@@ -1825,7 +1824,7 @@ export interface ChatbotApiCrawlStatusRequest {
      * @type {string}
      * @memberof ChatbotApiCrawlStatus
      */
-    readonly crawlingJobId?: string
+    readonly crawlingJobId: string
 }
 
 /**
