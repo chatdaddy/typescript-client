@@ -413,6 +413,12 @@ export interface CampaignEdit {
      * @memberof CampaignEdit
      */
     'activationTimeRange'?: ActivationTimeRange;
+    /**
+     * 
+     * @type {CampaignContactFilters}
+     * @memberof CampaignEdit
+     */
+    'contactFilters'?: CampaignContactFilters;
 }
 /**
  * 
