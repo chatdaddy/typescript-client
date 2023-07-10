@@ -2,7 +2,7 @@ import dotenv from 'dotenv'
 dotenv.config()
 
 import { makeAccessTokenFactory, Scope } from '../src'
-import { ChatsApi, Configuration, ContactsApi, ContactsPatch, MessageComposeStatusEnum, MessagesApi } from '../src'
+import { Configuration, ContactsApi, ContactsPatch } from '../src'
 
 const MIN_MESSAGES_RECV = 5
 
@@ -31,7 +31,10 @@ const run = async() => {
 	const contactsApi = new ContactsApi(new Configuration({ accessToken }))
 	// fetch all contacts with at least 5 message recv from them
 	// also return the total count
-	const { data } = await contactsApi.contactsGet(undefined, undefined, undefined, undefined, undefined, MIN_MESSAGES_RECV, undefined, undefined, undefined, undefined, undefined, undefined, true)
+	const { data } = await contactsApi.contactsGet({
+		minMessagesRecv: MIN_MESSAGES_RECV,
+		returnTotalCount: true,
+	})
 
 	console.log(`got ${data.totalCount} contacts with ${MIN_MESSAGES_RECV} messages recv`)
 	// update all the contacts with the tag "Broadcast"
@@ -42,7 +45,10 @@ const run = async() => {
 			]
 		}
 	}
-	await contactsApi.contactsPatch(undefined, undefined, undefined, undefined, undefined, MIN_MESSAGES_RECV, undefined, undefined, undefined, undefined, undefined, undefined, update)
+	await contactsApi.contactsPatch({
+		minMessagesRecv: MIN_MESSAGES_RECV,
+		contactsPatch: update,
+	})
 
 	console.log(`tagged contacts`)
 }

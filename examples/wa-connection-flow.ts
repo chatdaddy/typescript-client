@@ -1,7 +1,7 @@
 import dotenv from 'dotenv'
 dotenv.config()
 
-import { AccountState, AccountType } from './../src/OpenAPI/InstantMessaging/api'
+import { AccountState } from './../src'
 import { Configuration, makeAccessTokenFactory, Scope } from '../src'
 import { AccountApi } from '../src'
 import qrterminal from 'qrcode-terminal'
@@ -31,7 +31,9 @@ const run = async () => {
   if (!account) {
     //If account doesnt exist create one
     console.log('No account found creating account...')
-    const result = await accountsApi.accountsPost({ type: AccountType.Wa, nickname: 'example' })
+    const result = await accountsApi.accountsPost({
+      accountsPostRequest: { type: 'wa', nickname: 'example' }
+    })
     account = result.data
   }
 
@@ -45,7 +47,7 @@ const run = async () => {
 
   if (account.state === AccountState.Close) {
     // if account is closed open it to start qr code scanning process
-    await accountsApi.accountsOpen(account.accountId)
+    await accountsApi.accountsOpen({ accountId: account.accountId })
   }
 
   let qrCode

@@ -2,7 +2,7 @@ import dotenv from 'dotenv'
 dotenv.config()
 
 import { makeAccessTokenFactory, Scope } from '../src'
-import { ChatsApi, Configuration, MessageComposeStatusEnum, MessagesApi } from '../src'
+import { ChatsApi, Configuration, MessagesApi } from '../src'
 
 /**
  * Example
@@ -29,7 +29,7 @@ const run = async() => {
 	const messagesApi = new MessagesApi(new Configuration({ accessToken }))
 	const chatsApi = new ChatsApi(new Configuration({ accessToken }))
 	// find the most recent chat in the account
-	const { data } = await chatsApi.chatsGet(1)
+	const { data } = await chatsApi.chatsGet({ count: 1 })
 	const chat = data.chats[0]
 	// throw error if no chat available
 	if(!chat) {
@@ -38,13 +38,14 @@ const run = async() => {
 
 	console.log(`got chat with name: "${chat.contact?.name || 'unknown'}" and ID: "${chat.id}"`)
 	// send a text message to the chat
-	const { data: messages } = await messagesApi.messagesPost('random', chat.id, undefined, undefined, undefined, {
-		text: 'Hello from API',
-		// mark it as a pending message
-		// if you want to keep it as a "note", use the status "Note"
-		status: MessageComposeStatusEnum.Pending,
-		// will send the message in one minute (60_000ms in the future)
-		timestamp: new Date(Date.now() + 60_000).toJSON()
+	const { data: messages } = await messagesApi.messagesPost({
+		accountId: chat.accountId,
+		chatId: chat.id,
+		messageCompose: {
+			text: 'Hello from API',
+			// will send the message in one minute (60_000ms in the future)
+			timestamp: new Date(Date.now() + 60_000).toJSON()
+		}
 	})
 
 	console.log(`sending message with ID: "${messages[0].id}" to "${messages[0].chatId}" on ${messages[0].timestamp}`)
