@@ -179,49 +179,49 @@ export interface CampaignContactFilters {
      * @type {Array<string>}
      * @memberof CampaignContactFilters
      */
-    'tags'?: Array<string> | null;
+    'tags'?: Array<string>;
     /**
      * Get contacts who do not fall in either of these tags
      * @type {Array<string>}
      * @memberof CampaignContactFilters
      */
-    'notTags'?: Array<string> | null;
+    'notTags'?: Array<string>;
     /**
      * Get contacts assigned to this user
      * @type {Array<string>}
      * @memberof CampaignContactFilters
      */
-    'assignee'?: Array<string> | null;
+    'assignee'?: Array<string>;
     /**
      * Get contacts not assigned to this user
      * @type {Array<string>}
      * @memberof CampaignContactFilters
      */
-    'notAssignee'?: Array<string> | null;
+    'notAssignee'?: Array<string>;
     /**
      * Get contacts who have sent at least this many messages
      * @type {number}
      * @memberof CampaignContactFilters
      */
-    'minMessagesSent'?: number | null;
+    'minMessagesSent'?: number;
     /**
      * Get contacts who have sent at most this many messages
      * @type {number}
      * @memberof CampaignContactFilters
      */
-    'maxMessagesSent'?: number | null;
+    'maxMessagesSent'?: number;
     /**
      * Get contacts who have received at least this many messages
      * @type {number}
      * @memberof CampaignContactFilters
      */
-    'minMessagesRecv'?: number | null;
+    'minMessagesRecv'?: number;
     /**
      * Get contacts who have received at most this many messages
      * @type {number}
      * @memberof CampaignContactFilters
      */
-    'maxMessagesRecv'?: number | null;
+    'maxMessagesRecv'?: number;
     /**
      * only get contacts of type
      * @type {string}
@@ -233,7 +233,7 @@ export interface CampaignContactFilters {
      * @type {Array<string>}
      * @memberof CampaignContactFilters
      */
-    'accountId'?: Array<string> | null;
+    'accountId'?: Array<string>;
 }
 
 export const CampaignContactFiltersTypeEnum = {
