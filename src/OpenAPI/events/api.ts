@@ -1671,13 +1671,13 @@ export interface BotInsertDataStartTriggersInnerConditionsInner {
      * @type {BotInsertDataStartTriggersInnerConditionsInnerValues}
      * @memberof BotInsertDataStartTriggersInnerConditionsInner
      */
-    'values'?: BotInsertDataStartTriggersInnerConditionsInnerValues;
+    'values': BotInsertDataStartTriggersInnerConditionsInnerValues;
     /**
      * 
      * @type {string}
      * @memberof BotInsertDataStartTriggersInnerConditionsInner
      */
-    'operator'?: BotInsertDataStartTriggersInnerConditionsInnerOperatorEnum;
+    'operator': BotInsertDataStartTriggersInnerConditionsInnerOperatorEnum;
 }
 
 export const BotInsertDataStartTriggersInnerConditionsInnerOperatorEnum = {

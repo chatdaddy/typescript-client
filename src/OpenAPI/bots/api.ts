@@ -491,13 +491,13 @@ export interface BotCondition {
      * @type {BotConditionValues}
      * @memberof BotCondition
      */
-    'values'?: BotConditionValues;
+    'values': BotConditionValues;
     /**
      * 
      * @type {string}
      * @memberof BotCondition
      */
-    'operator'?: BotConditionOperatorEnum;
+    'operator': BotConditionOperatorEnum;
 }
 
 export const BotConditionOperatorEnum = {
