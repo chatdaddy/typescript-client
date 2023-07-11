@@ -1696,11 +1696,12 @@ export const BotInsertDataStartTriggersInnerConditionsInnerOperatorEnum = {
 export type BotInsertDataStartTriggersInnerConditionsInnerOperatorEnum = typeof BotInsertDataStartTriggersInnerConditionsInnerOperatorEnum[keyof typeof BotInsertDataStartTriggersInnerConditionsInnerOperatorEnum];
 
 /**
- * @type BotInsertDataStartTriggersInnerConditionsInnerValues
+ * 
  * @export
+ * @interface BotInsertDataStartTriggersInnerConditionsInnerValues
  */
-export type BotInsertDataStartTriggersInnerConditionsInnerValues = Array<number> | Array<string>;
-
+export interface BotInsertDataStartTriggersInnerConditionsInnerValues {
+}
 /**
  * 
  * @export

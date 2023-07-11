@@ -516,11 +516,12 @@ export const BotConditionOperatorEnum = {
 export type BotConditionOperatorEnum = typeof BotConditionOperatorEnum[keyof typeof BotConditionOperatorEnum];
 
 /**
- * @type BotConditionValues
+ * 
  * @export
+ * @interface BotConditionValues
  */
-export type BotConditionValues = Array<number> | Array<string>;
-
+export interface BotConditionValues {
+}
 /**
  * 
  * @export
