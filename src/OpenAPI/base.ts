@@ -47,9 +47,11 @@ export interface RequestArgs {
  * @class BaseAPI
  */
 export class BaseAPI {
+
+	static DEFAULT_AXIOS: AxiosInstance = globalAxios;
     protected configuration: Configuration | undefined;
 
-    constructor(configuration?: Configuration, protected basePath: string = undefined, protected axios: AxiosInstance = globalAxios) {
+    constructor(configuration?: Configuration, protected basePath: string = undefined, protected axios: AxiosInstance = BaseAPI.DEFAULT_AXIOS) {
         if (configuration) {
             this.configuration = configuration;
             this.basePath = configuration.basePath || this.basePath;
