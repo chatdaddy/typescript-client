@@ -27,5 +27,8 @@
   "scripts": {
     "build": "tsc",
     "prepare": "tsc"
+  },
+  "dependencies": {
+    "axios-retry": "^3.5.1"
   }
 }
