@@ -488,10 +488,10 @@ export interface BotCondition {
     'propertyPath': string;
     /**
      * 
-     * @type {BotConditionValues}
+     * @type {Array<BotConditionValuesInner>}
      * @memberof BotCondition
      */
-    'values': BotConditionValues;
+    'values': Array<BotConditionValuesInner>;
     /**
      * 
      * @type {string}
@@ -516,12 +516,11 @@ export const BotConditionOperatorEnum = {
 export type BotConditionOperatorEnum = typeof BotConditionOperatorEnum[keyof typeof BotConditionOperatorEnum];
 
 /**
- * 
+ * @type BotConditionValuesInner
  * @export
- * @interface BotConditionValues
  */
-export interface BotConditionValues {
-}
+export type BotConditionValuesInner = number | string;
+
 /**
  * 
  * @export
