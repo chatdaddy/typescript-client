@@ -163,6 +163,12 @@ export interface Chatbot {
      */
     'trainingStatus': ChatbotTrainingStatusEnum;
     /**
+     * Fallback message of the chatbot
+     * @type {string}
+     * @memberof Chatbot
+     */
+    'fallbackMessage'?: string;
+    /**
      * Name of the member to assign to the chatbot
      * @type {string}
      * @memberof Chatbot
