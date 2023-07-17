@@ -1072,6 +1072,12 @@ export interface SubscriptionsGet200Response {
      * @memberof SubscriptionsGet200Response
      */
     'nextPage'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof SubscriptionsGet200Response
+     */
+    'total'?: number;
 }
 /**
  * 
@@ -2691,10 +2697,11 @@ export const SubscriptionsApiAxiosParamCreator = function (configuration?: Confi
          * @param {string} [endsOrRenewsBefore] Filter subscriptions that end or renew before the given date
          * @param {boolean} [stripeOnly] Filter subscriptions that are only in Stripe
          * @param {Array<string>} [product] Filter subscriptions by product
+         * @param {boolean} [returnTotal] Return total number of subscriptions
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        subscriptionsGet: async (teamId?: string, count?: number, page?: number, q?: string, includeFreeTier?: boolean, sortBy?: 'startDate' | 'endOrNextRenewalDate', sortDirection?: 'asc' | 'desc', endsOrRenewsAfter?: string, endsOrRenewsBefore?: string, stripeOnly?: boolean, product?: Array<string>, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        subscriptionsGet: async (teamId?: string, count?: number, page?: number, q?: string, includeFreeTier?: boolean, sortBy?: 'startDate' | 'endOrNextRenewalDate', sortDirection?: 'asc' | 'desc', endsOrRenewsAfter?: string, endsOrRenewsBefore?: string, stripeOnly?: boolean, product?: Array<string>, returnTotal?: boolean, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/subscriptions`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -2757,6 +2764,10 @@ export const SubscriptionsApiAxiosParamCreator = function (configuration?: Confi
 
             if (product) {
                 localVarQueryParameter['product'] = product;
+            }
+
+            if (returnTotal !== undefined) {
+                localVarQueryParameter['returnTotal'] = returnTotal;
             }
 
 
@@ -2874,11 +2885,12 @@ export const SubscriptionsApiFp = function(configuration?: Configuration) {
          * @param {string} [endsOrRenewsBefore] Filter subscriptions that end or renew before the given date
          * @param {boolean} [stripeOnly] Filter subscriptions that are only in Stripe
          * @param {Array<string>} [product] Filter subscriptions by product
+         * @param {boolean} [returnTotal] Return total number of subscriptions
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async subscriptionsGet(teamId?: string, count?: number, page?: number, q?: string, includeFreeTier?: boolean, sortBy?: 'startDate' | 'endOrNextRenewalDate', sortDirection?: 'asc' | 'desc', endsOrRenewsAfter?: string, endsOrRenewsBefore?: string, stripeOnly?: boolean, product?: Array<string>, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SubscriptionsGet200Response>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.subscriptionsGet(teamId, count, page, q, includeFreeTier, sortBy, sortDirection, endsOrRenewsAfter, endsOrRenewsBefore, stripeOnly, product, options);
+        async subscriptionsGet(teamId?: string, count?: number, page?: number, q?: string, includeFreeTier?: boolean, sortBy?: 'startDate' | 'endOrNextRenewalDate', sortDirection?: 'asc' | 'desc', endsOrRenewsAfter?: string, endsOrRenewsBefore?: string, stripeOnly?: boolean, product?: Array<string>, returnTotal?: boolean, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SubscriptionsGet200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.subscriptionsGet(teamId, count, page, q, includeFreeTier, sortBy, sortDirection, endsOrRenewsAfter, endsOrRenewsBefore, stripeOnly, product, returnTotal, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -2928,11 +2940,12 @@ export const SubscriptionsApiFactory = function (configuration?: Configuration, 
          * @param {string} [endsOrRenewsBefore] Filter subscriptions that end or renew before the given date
          * @param {boolean} [stripeOnly] Filter subscriptions that are only in Stripe
          * @param {Array<string>} [product] Filter subscriptions by product
+         * @param {boolean} [returnTotal] Return total number of subscriptions
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        subscriptionsGet(teamId?: string, count?: number, page?: number, q?: string, includeFreeTier?: boolean, sortBy?: 'startDate' | 'endOrNextRenewalDate', sortDirection?: 'asc' | 'desc', endsOrRenewsAfter?: string, endsOrRenewsBefore?: string, stripeOnly?: boolean, product?: Array<string>, options?: any): AxiosPromise<SubscriptionsGet200Response> {
-            return localVarFp.subscriptionsGet(teamId, count, page, q, includeFreeTier, sortBy, sortDirection, endsOrRenewsAfter, endsOrRenewsBefore, stripeOnly, product, options).then((request) => request(axios, basePath));
+        subscriptionsGet(teamId?: string, count?: number, page?: number, q?: string, includeFreeTier?: boolean, sortBy?: 'startDate' | 'endOrNextRenewalDate', sortDirection?: 'asc' | 'desc', endsOrRenewsAfter?: string, endsOrRenewsBefore?: string, stripeOnly?: boolean, product?: Array<string>, returnTotal?: boolean, options?: any): AxiosPromise<SubscriptionsGet200Response> {
+            return localVarFp.subscriptionsGet(teamId, count, page, q, includeFreeTier, sortBy, sortDirection, endsOrRenewsAfter, endsOrRenewsBefore, stripeOnly, product, returnTotal, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -3040,6 +3053,13 @@ export interface SubscriptionsApiSubscriptionsGetRequest {
      * @memberof SubscriptionsApiSubscriptionsGet
      */
     readonly product?: Array<string>
+
+    /**
+     * Return total number of subscriptions
+     * @type {boolean}
+     * @memberof SubscriptionsApiSubscriptionsGet
+     */
+    readonly returnTotal?: boolean
 }
 
 /**
@@ -3093,7 +3113,7 @@ export class SubscriptionsApi extends BaseAPI {
      * @memberof SubscriptionsApi
      */
     public subscriptionsGet(requestParameters: SubscriptionsApiSubscriptionsGetRequest = {}, options?: AxiosRequestConfig) {
-        return SubscriptionsApiFp(this.configuration).subscriptionsGet(requestParameters.teamId, requestParameters.count, requestParameters.page, requestParameters.q, requestParameters.includeFreeTier, requestParameters.sortBy, requestParameters.sortDirection, requestParameters.endsOrRenewsAfter, requestParameters.endsOrRenewsBefore, requestParameters.stripeOnly, requestParameters.product, options).then((request) => request(this.axios, this.basePath));
+        return SubscriptionsApiFp(this.configuration).subscriptionsGet(requestParameters.teamId, requestParameters.count, requestParameters.page, requestParameters.q, requestParameters.includeFreeTier, requestParameters.sortBy, requestParameters.sortDirection, requestParameters.endsOrRenewsAfter, requestParameters.endsOrRenewsBefore, requestParameters.stripeOnly, requestParameters.product, requestParameters.returnTotal, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
