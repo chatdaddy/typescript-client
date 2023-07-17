@@ -61,6 +61,12 @@ export interface Account {
     'credentials'?: { [key: string]: any; } | null;
     /**
      * 
+     * @type {AccountTier}
+     * @memberof Account
+     */
+    'tier'?: AccountTier;
+    /**
+     * 
      * @type {AccountType}
      * @memberof Account
      */

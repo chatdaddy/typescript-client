@@ -129,6 +129,12 @@ export interface AccountInsertData {
      * @type {string}
      * @memberof AccountInsertData
      */
+    'tier'?: AccountInsertDataTierEnum;
+    /**
+     * 
+     * @type {string}
+     * @memberof AccountInsertData
+     */
     'type': AccountInsertDataTypeEnum;
     /**
      * 
@@ -198,6 +204,12 @@ export interface AccountInsertData {
     'settings': AccountInsertDataSettings;
 }
 
+export const AccountInsertDataTierEnum = {
+    LimitedMsgNoChatHistory: 'limited_msg_no_chat_history',
+    UnlimitedMsgChatHistory: 'unlimited_msg_chat_history'
+} as const;
+
+export type AccountInsertDataTierEnum = typeof AccountInsertDataTierEnum[keyof typeof AccountInsertDataTierEnum];
 export const AccountInsertDataTypeEnum = {
     Wa: 'wa',
     WaBusinessApi: 'wa-business-api',
@@ -381,6 +393,12 @@ export interface AccountUpdateData {
      * @type {string}
      * @memberof AccountUpdateData
      */
+    'tier'?: AccountUpdateDataTierEnum;
+    /**
+     * 
+     * @type {string}
+     * @memberof AccountUpdateData
+     */
     'type'?: AccountUpdateDataTypeEnum;
     /**
      * 
@@ -450,6 +468,12 @@ export interface AccountUpdateData {
     'settings'?: AccountInsertDataSettings;
 }
 
+export const AccountUpdateDataTierEnum = {
+    LimitedMsgNoChatHistory: 'limited_msg_no_chat_history',
+    UnlimitedMsgChatHistory: 'unlimited_msg_chat_history'
+} as const;
+
+export type AccountUpdateDataTierEnum = typeof AccountUpdateDataTierEnum[keyof typeof AccountUpdateDataTierEnum];
 export const AccountUpdateDataTypeEnum = {
     Wa: 'wa',
     WaBusinessApi: 'wa-business-api',
