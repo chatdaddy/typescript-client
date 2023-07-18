@@ -348,6 +348,7 @@ export interface Metric {
 
 export const MetricType = {
     MessagesSentByUser: 'messages-sent-by-user',
+    MessagesSentByAccount: 'messages-sent-by-account',
     MessagesRecvByChat: 'messages-recv-by-chat',
     AvgResponseTimeByUser: 'avg-response-time-by-user',
     MessageReplyRateByUser: 'message-reply-rate-by-user',
