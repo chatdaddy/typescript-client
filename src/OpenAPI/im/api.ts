@@ -6097,10 +6097,12 @@ export const ContactsApiAxiosParamCreator = function (configuration?: Configurat
          * @param {boolean} [returnLastMessage] 
          * @param {string} [page] 
          * @param {ContactsGetCountParameter} [count] 
+         * @param {string} [chatLastMessageFrom] 
+         * @param {string} [chatLastMessageTo] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        contactsGet: async (tags?: Array<string>, notTags?: Array<string>, contacts?: Array<string>, notContacts?: Array<string>, minMessagesSent?: number, minMessagesRecv?: number, maxMessagesSent?: number, maxMessagesRecv?: number, q?: string, assignee?: Array<string>, notAssignee?: Array<string>, accountId?: Array<string>, type?: 'group' | 'individual', returnTotalCount?: boolean, returnLastMessage?: boolean, page?: string, count?: ContactsGetCountParameter, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        contactsGet: async (tags?: Array<string>, notTags?: Array<string>, contacts?: Array<string>, notContacts?: Array<string>, minMessagesSent?: number, minMessagesRecv?: number, maxMessagesSent?: number, maxMessagesRecv?: number, q?: string, assignee?: Array<string>, notAssignee?: Array<string>, accountId?: Array<string>, type?: 'group' | 'individual', returnTotalCount?: boolean, returnLastMessage?: boolean, page?: string, count?: ContactsGetCountParameter, chatLastMessageFrom?: string, chatLastMessageTo?: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/contacts`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -6183,6 +6185,18 @@ export const ContactsApiAxiosParamCreator = function (configuration?: Configurat
 
             if (count !== undefined) {
                 localVarQueryParameter['count'] = count;
+            }
+
+            if (chatLastMessageFrom !== undefined) {
+                localVarQueryParameter['chatLastMessageFrom'] = (chatLastMessageFrom as any instanceof Date) ?
+                    (chatLastMessageFrom as any).toISOString() :
+                    chatLastMessageFrom;
+            }
+
+            if (chatLastMessageTo !== undefined) {
+                localVarQueryParameter['chatLastMessageTo'] = (chatLastMessageTo as any instanceof Date) ?
+                    (chatLastMessageTo as any).toISOString() :
+                    chatLastMessageTo;
             }
 
 
@@ -6473,11 +6487,13 @@ export const ContactsApiFp = function(configuration?: Configuration) {
          * @param {boolean} [returnLastMessage] 
          * @param {string} [page] 
          * @param {ContactsGetCountParameter} [count] 
+         * @param {string} [chatLastMessageFrom] 
+         * @param {string} [chatLastMessageTo] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async contactsGet(tags?: Array<string>, notTags?: Array<string>, contacts?: Array<string>, notContacts?: Array<string>, minMessagesSent?: number, minMessagesRecv?: number, maxMessagesSent?: number, maxMessagesRecv?: number, q?: string, assignee?: Array<string>, notAssignee?: Array<string>, accountId?: Array<string>, type?: 'group' | 'individual', returnTotalCount?: boolean, returnLastMessage?: boolean, page?: string, count?: ContactsGetCountParameter, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ContactsGet200Response>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.contactsGet(tags, notTags, contacts, notContacts, minMessagesSent, minMessagesRecv, maxMessagesSent, maxMessagesRecv, q, assignee, notAssignee, accountId, type, returnTotalCount, returnLastMessage, page, count, options);
+        async contactsGet(tags?: Array<string>, notTags?: Array<string>, contacts?: Array<string>, notContacts?: Array<string>, minMessagesSent?: number, minMessagesRecv?: number, maxMessagesSent?: number, maxMessagesRecv?: number, q?: string, assignee?: Array<string>, notAssignee?: Array<string>, accountId?: Array<string>, type?: 'group' | 'individual', returnTotalCount?: boolean, returnLastMessage?: boolean, page?: string, count?: ContactsGetCountParameter, chatLastMessageFrom?: string, chatLastMessageTo?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ContactsGet200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.contactsGet(tags, notTags, contacts, notContacts, minMessagesSent, minMessagesRecv, maxMessagesSent, maxMessagesRecv, q, assignee, notAssignee, accountId, type, returnTotalCount, returnLastMessage, page, count, chatLastMessageFrom, chatLastMessageTo, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -6595,11 +6611,13 @@ export const ContactsApiFactory = function (configuration?: Configuration, baseP
          * @param {boolean} [returnLastMessage] 
          * @param {string} [page] 
          * @param {ContactsGetCountParameter} [count] 
+         * @param {string} [chatLastMessageFrom] 
+         * @param {string} [chatLastMessageTo] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        contactsGet(tags?: Array<string>, notTags?: Array<string>, contacts?: Array<string>, notContacts?: Array<string>, minMessagesSent?: number, minMessagesRecv?: number, maxMessagesSent?: number, maxMessagesRecv?: number, q?: string, assignee?: Array<string>, notAssignee?: Array<string>, accountId?: Array<string>, type?: 'group' | 'individual', returnTotalCount?: boolean, returnLastMessage?: boolean, page?: string, count?: ContactsGetCountParameter, options?: any): AxiosPromise<ContactsGet200Response> {
-            return localVarFp.contactsGet(tags, notTags, contacts, notContacts, minMessagesSent, minMessagesRecv, maxMessagesSent, maxMessagesRecv, q, assignee, notAssignee, accountId, type, returnTotalCount, returnLastMessage, page, count, options).then((request) => request(axios, basePath));
+        contactsGet(tags?: Array<string>, notTags?: Array<string>, contacts?: Array<string>, notContacts?: Array<string>, minMessagesSent?: number, minMessagesRecv?: number, maxMessagesSent?: number, maxMessagesRecv?: number, q?: string, assignee?: Array<string>, notAssignee?: Array<string>, accountId?: Array<string>, type?: 'group' | 'individual', returnTotalCount?: boolean, returnLastMessage?: boolean, page?: string, count?: ContactsGetCountParameter, chatLastMessageFrom?: string, chatLastMessageTo?: string, options?: any): AxiosPromise<ContactsGet200Response> {
+            return localVarFp.contactsGet(tags, notTags, contacts, notContacts, minMessagesSent, minMessagesRecv, maxMessagesSent, maxMessagesRecv, q, assignee, notAssignee, accountId, type, returnTotalCount, returnLastMessage, page, count, chatLastMessageFrom, chatLastMessageTo, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -6896,6 +6914,20 @@ export interface ContactsApiContactsGetRequest {
      * @memberof ContactsApiContactsGet
      */
     readonly count?: ContactsGetCountParameter
+
+    /**
+     * 
+     * @type {string}
+     * @memberof ContactsApiContactsGet
+     */
+    readonly chatLastMessageFrom?: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof ContactsApiContactsGet
+     */
+    readonly chatLastMessageTo?: string
 }
 
 /**
@@ -7113,7 +7145,7 @@ export class ContactsApi extends BaseAPI {
      * @memberof ContactsApi
      */
     public contactsGet(requestParameters: ContactsApiContactsGetRequest = {}, options?: AxiosRequestConfig) {
-        return ContactsApiFp(this.configuration).contactsGet(requestParameters.tags, requestParameters.notTags, requestParameters.contacts, requestParameters.notContacts, requestParameters.minMessagesSent, requestParameters.minMessagesRecv, requestParameters.maxMessagesSent, requestParameters.maxMessagesRecv, requestParameters.q, requestParameters.assignee, requestParameters.notAssignee, requestParameters.accountId, requestParameters.type, requestParameters.returnTotalCount, requestParameters.returnLastMessage, requestParameters.page, requestParameters.count, options).then((request) => request(this.axios, this.basePath));
+        return ContactsApiFp(this.configuration).contactsGet(requestParameters.tags, requestParameters.notTags, requestParameters.contacts, requestParameters.notContacts, requestParameters.minMessagesSent, requestParameters.minMessagesRecv, requestParameters.maxMessagesSent, requestParameters.maxMessagesRecv, requestParameters.q, requestParameters.assignee, requestParameters.notAssignee, requestParameters.accountId, requestParameters.type, requestParameters.returnTotalCount, requestParameters.returnLastMessage, requestParameters.page, requestParameters.count, requestParameters.chatLastMessageFrom, requestParameters.chatLastMessageTo, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
