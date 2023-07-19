@@ -63,6 +63,56 @@ export interface AccountPurchase {
 /**
  * 
  * @export
+ * @interface ActiveGet200Response
+ */
+export interface ActiveGet200Response {
+    /**
+     * Stripe publishable key
+     * @type {string}
+     * @memberof ActiveGet200Response
+     */
+    'publishableKey': string;
+    /**
+     * 
+     * @type {Array<Feature>}
+     * @memberof ActiveGet200Response
+     */
+    'features': Array<Feature>;
+    /**
+     * 
+     * @type {ActiveModelLimits}
+     * @memberof ActiveGet200Response
+     */
+    'limits': ActiveModelLimits;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof ActiveGet200Response
+     */
+    'isActivePaidUser': boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof ActiveGet200Response
+     */
+    'customerId'?: string;
+}
+/**
+ * 
+ * @export
+ * @interface ActiveGet200ResponseAllOf
+ */
+export interface ActiveGet200ResponseAllOf {
+    /**
+     * 
+     * @type {string}
+     * @memberof ActiveGet200ResponseAllOf
+     */
+    'customerId'?: string;
+}
+/**
+ * 
+ * @export
  * @interface ActiveModel
  */
 export interface ActiveModel {
@@ -1929,7 +1979,7 @@ export const PurchasesApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async activeGet(options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ActiveModel>> {
+        async activeGet(options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ActiveGet200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.activeGet(options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -2037,7 +2087,7 @@ export const PurchasesApiFactory = function (configuration?: Configuration, base
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        activeGet(options?: any): AxiosPromise<ActiveModel> {
+        activeGet(options?: any): AxiosPromise<ActiveGet200Response> {
             return localVarFp.activeGet(options).then((request) => request(axios, basePath));
         },
         /**
