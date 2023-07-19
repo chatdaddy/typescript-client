@@ -145,6 +145,20 @@ export interface Account {
     'settings': AccountSettings;
 }
 /**
+ * 
+ * @export
+ * @enum {string}
+ */
+
+export const AccountAssignType = {
+    SmartAssign: 'smart-assign',
+    RoundRobin: 'round-robin'
+} as const;
+
+export type AccountAssignType = typeof AccountAssignType[keyof typeof AccountAssignType];
+
+
+/**
  * @type AccountCredentialsAlibaba
  * @export
  */
@@ -1013,6 +1027,18 @@ export interface ChatAssignment {
      * @memberof ChatAssignment
      */
     'enabled'?: boolean;
+    /**
+     * 
+     * @type {AccountAssignType}
+     * @memberof ChatAssignment
+     */
+    'assignType'?: AccountAssignType;
+    /**
+     * If round-robin assign is enabled, which member will be assigned next
+     * @type {string}
+     * @memberof ChatAssignment
+     */
+    'nextAssignee'?: string;
     /**
      * Auto assigned will work for the selected teammates
      * @type {Array<string>}

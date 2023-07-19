@@ -321,11 +321,31 @@ export interface AccountInsertDataSettingsNewChatsAssigneeIncoming {
     'enabled'?: boolean;
     /**
      * 
+     * @type {string}
+     * @memberof AccountInsertDataSettingsNewChatsAssigneeIncoming
+     */
+    'assignType'?: AccountInsertDataSettingsNewChatsAssigneeIncomingAssignTypeEnum;
+    /**
+     * 
+     * @type {string}
+     * @memberof AccountInsertDataSettingsNewChatsAssigneeIncoming
+     */
+    'nextAssignee'?: string;
+    /**
+     * 
      * @type {Array<string>}
      * @memberof AccountInsertDataSettingsNewChatsAssigneeIncoming
      */
     'assignees'?: Array<string>;
 }
+
+export const AccountInsertDataSettingsNewChatsAssigneeIncomingAssignTypeEnum = {
+    SmartAssign: 'smart-assign',
+    RoundRobin: 'round-robin'
+} as const;
+
+export type AccountInsertDataSettingsNewChatsAssigneeIncomingAssignTypeEnum = typeof AccountInsertDataSettingsNewChatsAssigneeIncomingAssignTypeEnum[keyof typeof AccountInsertDataSettingsNewChatsAssigneeIncomingAssignTypeEnum];
+
 /**
  * 
  * @export
