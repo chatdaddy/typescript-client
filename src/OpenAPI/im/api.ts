@@ -682,7 +682,7 @@ export interface AlibabaCAMSWebhookMessageItem {
      * @type {string}
      * @memberof AlibabaCAMSWebhookMessageItem
      */
-    'ConversationType'?: AlibabaCAMSWebhookMessageItemConversationTypeEnum;
+    'ConversationType'?: string;
     /**
      * 
      * @type {string}
@@ -725,12 +725,6 @@ export const AlibabaCAMSWebhookMessageItemStatusEnum = {
 } as const;
 
 export type AlibabaCAMSWebhookMessageItemStatusEnum = typeof AlibabaCAMSWebhookMessageItemStatusEnum[keyof typeof AlibabaCAMSWebhookMessageItemStatusEnum];
-export const AlibabaCAMSWebhookMessageItemConversationTypeEnum = {
-    BusinessInitiated: 'business_initiated',
-    UserInitiated: 'user_initiated'
-} as const;
-
-export type AlibabaCAMSWebhookMessageItemConversationTypeEnum = typeof AlibabaCAMSWebhookMessageItemConversationTypeEnum[keyof typeof AlibabaCAMSWebhookMessageItemConversationTypeEnum];
 
 /**
  * 
