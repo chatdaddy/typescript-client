@@ -34,7 +34,7 @@ export interface CreateQrCodesRequest {
      * @type {Array<QRCodeCreate>}
      * @memberof CreateQrCodesRequest
      */
-    'qrCodes'?: Array<QRCodeCreate>;
+    'qrCodes': Array<QRCodeCreate>;
 }
 /**
  * 
@@ -171,7 +171,7 @@ export interface UpdateQrCodesRequest {
      * @type {Array<QRCodeUpdate>}
      * @memberof UpdateQrCodesRequest
      */
-    'qrCodes'?: Array<QRCodeUpdate>;
+    'qrCodes': Array<QRCodeUpdate>;
 }
 
 /**
