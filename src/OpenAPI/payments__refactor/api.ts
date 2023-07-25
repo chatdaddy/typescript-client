@@ -202,6 +202,25 @@ export type BillingPeriod = typeof BillingPeriod[keyof typeof BillingPeriod];
 /**
  * 
  * @export
+ * @interface BillingSessionPost200Response
+ */
+export interface BillingSessionPost200Response {
+    /**
+     * 
+     * @type {string}
+     * @memberof BillingSessionPost200Response
+     */
+    'sessionId': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof BillingSessionPost200Response
+     */
+    'url': string;
+}
+/**
+ * 
+ * @export
  * @interface CheckoutCreateOptions
  */
 export interface CheckoutCreateOptions {
@@ -2354,6 +2373,47 @@ export const StripeApiAxiosParamCreator = function (configuration?: Configuratio
     return {
         /**
          * 
+         * @summary Create a new billing portal session to manage payment details
+         * @param {string} returnUrl 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        billingSessionPost: async (returnUrl: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'returnUrl' is not null or undefined
+            assertParamExists('billingSessionPost', 'returnUrl', returnUrl)
+            const localVarPath = `/billing-session`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["PAYMENTS_UPDATE"], configuration)
+
+            if (returnUrl !== undefined) {
+                localVarQueryParameter['returnUrl'] = returnUrl;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
          * @summary Create a checkout session
          * @param {CheckoutCreateOptions} [checkoutCreateOptions] 
          * @param {*} [options] Override http request option.
@@ -2489,6 +2549,17 @@ export const StripeApiFp = function(configuration?: Configuration) {
     return {
         /**
          * 
+         * @summary Create a new billing portal session to manage payment details
+         * @param {string} returnUrl 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async billingSessionPost(returnUrl: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BillingSessionPost200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.billingSessionPost(returnUrl, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
          * @summary Create a checkout session
          * @param {CheckoutCreateOptions} [checkoutCreateOptions] 
          * @param {*} [options] Override http request option.
@@ -2535,6 +2606,16 @@ export const StripeApiFactory = function (configuration?: Configuration, basePat
     return {
         /**
          * 
+         * @summary Create a new billing portal session to manage payment details
+         * @param {string} returnUrl 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        billingSessionPost(returnUrl: string, options?: any): AxiosPromise<BillingSessionPost200Response> {
+            return localVarFp.billingSessionPost(returnUrl, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
          * @summary Create a checkout session
          * @param {CheckoutCreateOptions} [checkoutCreateOptions] 
          * @param {*} [options] Override http request option.
@@ -2568,6 +2649,20 @@ export const StripeApiFactory = function (configuration?: Configuration, basePat
         },
     };
 };
+
+/**
+ * Request parameters for billingSessionPost operation in StripeApi.
+ * @export
+ * @interface StripeApiBillingSessionPostRequest
+ */
+export interface StripeApiBillingSessionPostRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof StripeApiBillingSessionPost
+     */
+    readonly returnUrl: string
+}
 
 /**
  * Request parameters for stripeCheckout operation in StripeApi.
@@ -2639,6 +2734,18 @@ export interface StripeApiStripePricesGetRequest {
  * @extends {BaseAPI}
  */
 export class StripeApi extends BaseAPI {
+    /**
+     * 
+     * @summary Create a new billing portal session to manage payment details
+     * @param {StripeApiBillingSessionPostRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof StripeApi
+     */
+    public billingSessionPost(requestParameters: StripeApiBillingSessionPostRequest, options?: AxiosRequestConfig) {
+        return StripeApiFp(this.configuration).billingSessionPost(requestParameters.returnUrl, options).then((request) => request(this.axios, this.basePath));
+    }
+
     /**
      * 
      * @summary Create a checkout session
