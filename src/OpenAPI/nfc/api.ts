@@ -105,6 +105,12 @@ export interface QRCode {
  */
 export interface QRCodeCreate {
     /**
+     * The ID of the QR Code
+     * @type {string}
+     * @memberof QRCodeCreate
+     */
+    'id': string;
+    /**
      * The URL of the QR Code
      * @type {string}
      * @memberof QRCodeCreate
