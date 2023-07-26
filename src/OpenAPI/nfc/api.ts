@@ -60,7 +60,7 @@ export interface QRCode {
      * @type {string}
      * @memberof QRCode
      */
-    'id'?: string;
+    'id': string;
     /**
      * The URL of the QR Code
      * @type {string}
