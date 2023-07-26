@@ -169,6 +169,12 @@ export interface Chatbot {
      */
     'fallbackMessage'?: string;
     /**
+     * Prompt message of the chatbot
+     * @type {string}
+     * @memberof Chatbot
+     */
+    'prompt'?: string;
+    /**
      * Name of the member to assign to the chatbot
      * @type {string}
      * @memberof Chatbot
