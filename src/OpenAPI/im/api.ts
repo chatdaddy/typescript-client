@@ -405,6 +405,58 @@ export type AccountType = typeof AccountType[keyof typeof AccountType];
 
 
 /**
+ * @type AccountWaChangeLoginMode
+ * @export
+ */
+export type AccountWaChangeLoginMode = AccountWaChangeLoginModeOneOf | AccountWaChangeLoginModeOneOf1;
+
+/**
+ * 
+ * @export
+ * @interface AccountWaChangeLoginModeOneOf
+ */
+export interface AccountWaChangeLoginModeOneOf {
+    /**
+     * 
+     * @type {string}
+     * @memberof AccountWaChangeLoginModeOneOf
+     */
+    'type': AccountWaChangeLoginModeOneOfTypeEnum;
+}
+
+export const AccountWaChangeLoginModeOneOfTypeEnum = {
+    Qr: 'qr'
+} as const;
+
+export type AccountWaChangeLoginModeOneOfTypeEnum = typeof AccountWaChangeLoginModeOneOfTypeEnum[keyof typeof AccountWaChangeLoginModeOneOfTypeEnum];
+
+/**
+ * 
+ * @export
+ * @interface AccountWaChangeLoginModeOneOf1
+ */
+export interface AccountWaChangeLoginModeOneOf1 {
+    /**
+     * 
+     * @type {string}
+     * @memberof AccountWaChangeLoginModeOneOf1
+     */
+    'type': AccountWaChangeLoginModeOneOf1TypeEnum;
+    /**
+     * Phone number to generate PIN for
+     * @type {string}
+     * @memberof AccountWaChangeLoginModeOneOf1
+     */
+    'phoneNumber': string;
+}
+
+export const AccountWaChangeLoginModeOneOf1TypeEnum = {
+    PhoneNumber: 'phoneNumber'
+} as const;
+
+export type AccountWaChangeLoginModeOneOf1TypeEnum = typeof AccountWaChangeLoginModeOneOf1TypeEnum[keyof typeof AccountWaChangeLoginModeOneOf1TypeEnum];
+
+/**
  * 
  * @export
  * @interface AccountsGet200Response
@@ -3720,6 +3772,25 @@ export interface TikTokStateInfo {
 /**
  * 
  * @export
+ * @interface WAPhonePairingState
+ */
+export interface WAPhonePairingState {
+    /**
+     * The WA ID of the phone
+     * @type {string}
+     * @memberof WAPhonePairingState
+     */
+    'jid': string;
+    /**
+     * The code to enter on the phone
+     * @type {string}
+     * @memberof WAPhonePairingState
+     */
+    'code': string;
+}
+/**
+ * 
+ * @export
  * @interface WAStateInfo
  */
 export interface WAStateInfo {
@@ -3729,6 +3800,12 @@ export interface WAStateInfo {
      * @memberof WAStateInfo
      */
     'qr'?: string;
+    /**
+     * 
+     * @type {WAPhonePairingState}
+     * @memberof WAStateInfo
+     */
+    'phonePairingState'?: WAPhonePairingState;
     /**
      * Whether the client has received all pending/offline notifications
      * @type {boolean}
@@ -4163,6 +4240,48 @@ export const AccountApiAxiosParamCreator = function (configuration?: Configurati
                 options: localVarRequestOptions,
             };
         },
+        /**
+         * 
+         * @summary Change login mode of a WhatsApp account
+         * @param {string} accountId 
+         * @param {AccountWaChangeLoginMode} [accountWaChangeLoginMode] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        waChangeLoginMode: async (accountId: string, accountWaChangeLoginMode?: AccountWaChangeLoginMode, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'accountId' is not null or undefined
+            assertParamExists('waChangeLoginMode', 'accountId', accountId)
+            const localVarPath = `/accounts/wa/{accountId}/change-login-mode`
+                .replace(`{${"accountId"}}`, encodeURIComponent(String(accountId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["ACCOUNT_PATCH"], configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(accountWaChangeLoginMode, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
     }
 };
 
@@ -4268,6 +4387,18 @@ export const AccountApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.accountsPost(accountsPostRequest, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
+        /**
+         * 
+         * @summary Change login mode of a WhatsApp account
+         * @param {string} accountId 
+         * @param {AccountWaChangeLoginMode} [accountWaChangeLoginMode] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async waChangeLoginMode(accountId: string, accountWaChangeLoginMode?: AccountWaChangeLoginMode, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AccountsLogout200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.waChangeLoginMode(accountId, accountWaChangeLoginMode, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
     }
 };
 
@@ -4364,6 +4495,17 @@ export const AccountApiFactory = function (configuration?: Configuration, basePa
          */
         accountsPost(accountsPostRequest?: AccountsPostRequest, options?: any): AxiosPromise<Account> {
             return localVarFp.accountsPost(accountsPostRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Change login mode of a WhatsApp account
+         * @param {string} accountId 
+         * @param {AccountWaChangeLoginMode} [accountWaChangeLoginMode] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        waChangeLoginMode(accountId: string, accountWaChangeLoginMode?: AccountWaChangeLoginMode, options?: any): AxiosPromise<AccountsLogout200Response> {
+            return localVarFp.waChangeLoginMode(accountId, accountWaChangeLoginMode, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -4530,6 +4672,27 @@ export interface AccountApiAccountsPostRequest {
 }
 
 /**
+ * Request parameters for waChangeLoginMode operation in AccountApi.
+ * @export
+ * @interface AccountApiWaChangeLoginModeRequest
+ */
+export interface AccountApiWaChangeLoginModeRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof AccountApiWaChangeLoginMode
+     */
+    readonly accountId: string
+
+    /**
+     * 
+     * @type {AccountWaChangeLoginMode}
+     * @memberof AccountApiWaChangeLoginMode
+     */
+    readonly accountWaChangeLoginMode?: AccountWaChangeLoginMode
+}
+
+/**
  * AccountApi - object-oriented interface
  * @export
  * @class AccountApi
@@ -4630,6 +4793,18 @@ export class AccountApi extends BaseAPI {
      */
     public accountsPost(requestParameters: AccountApiAccountsPostRequest = {}, options?: AxiosRequestConfig) {
         return AccountApiFp(this.configuration).accountsPost(requestParameters.accountsPostRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Change login mode of a WhatsApp account
+     * @param {AccountApiWaChangeLoginModeRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AccountApi
+     */
+    public waChangeLoginMode(requestParameters: AccountApiWaChangeLoginModeRequest, options?: AxiosRequestConfig) {
+        return AccountApiFp(this.configuration).waChangeLoginMode(requestParameters.accountId, requestParameters.accountWaChangeLoginMode, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
