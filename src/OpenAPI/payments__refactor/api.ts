@@ -187,6 +187,25 @@ export interface AutoChargeProductsGet200Response {
 /**
  * 
  * @export
+ * @interface AutoChargeProductsPrepare200Response
+ */
+export interface AutoChargeProductsPrepare200Response {
+    /**
+     * 
+     * @type {Access}
+     * @memberof AutoChargeProductsPrepare200Response
+     */
+    'access': Access;
+    /**
+     * 
+     * @type {LimitationMap}
+     * @memberof AutoChargeProductsPrepare200Response
+     */
+    'usage': LimitationMap;
+}
+/**
+ * 
+ * @export
  * @enum {string}
  */
 
@@ -1377,7 +1396,7 @@ export const AutoChargeProductsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async autoChargeProductsPrepare(item: LimitedItem, accountId?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async autoChargeProductsPrepare(item: LimitedItem, accountId?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AutoChargeProductsPrepare200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.autoChargeProductsPrepare(item, accountId, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -1419,7 +1438,7 @@ export const AutoChargeProductsApiFactory = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        autoChargeProductsPrepare(item: LimitedItem, accountId?: string, options?: any): AxiosPromise<void> {
+        autoChargeProductsPrepare(item: LimitedItem, accountId?: string, options?: any): AxiosPromise<AutoChargeProductsPrepare200Response> {
             return localVarFp.autoChargeProductsPrepare(item, accountId, options).then((request) => request(axios, basePath));
         },
         /**
