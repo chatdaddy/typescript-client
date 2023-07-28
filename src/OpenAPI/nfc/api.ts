@@ -140,7 +140,7 @@ export interface QRCodeCreate {
      * @type {string}
      * @memberof QRCodeCreate
      */
-    'redirectUrl': string;
+    'redirectUrl'?: string;
     /**
      * The category of the QR Code
      * @type {string}
