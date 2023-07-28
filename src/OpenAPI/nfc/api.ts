@@ -26,6 +26,19 @@ import { COLLECTION_FORMATS, RequestArgs, BaseAPI, RequiredError } from '../base
 /**
  * 
  * @export
+ * @interface CreateQrCodes200Response
+ */
+export interface CreateQrCodes200Response {
+    /**
+     * 
+     * @type {Array<QRCode>}
+     * @memberof CreateQrCodes200Response
+     */
+    'qrCodes'?: Array<QRCode>;
+}
+/**
+ * 
+ * @export
  * @interface CreateQrCodesRequest
  */
 export interface CreateQrCodesRequest {
@@ -48,6 +61,12 @@ export interface GetQrCodes200Response {
      * @memberof GetQrCodes200Response
      */
     'qrCodes'?: Array<QRCode>;
+    /**
+     * Cursor to use to fetch next page of results
+     * @type {string}
+     * @memberof GetQrCodes200Response
+     */
+    'cursor'?: string;
 }
 /**
  * 
@@ -290,10 +309,6 @@ export const QrCodeApiAxiosParamCreator = function (configuration?: Configuratio
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
-            // authentication chatdaddy required
-            // oauth required
-            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", [], configuration)
-
 
     
             setSearchParams(localVarUrlObj, localVarQueryParameter);
@@ -308,10 +323,13 @@ export const QrCodeApiAxiosParamCreator = function (configuration?: Configuratio
         /**
          * 
          * @summary Get all QrCodes
+         * @param {string} [q] 
+         * @param {number} [count] 
+         * @param {string} [cursor] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getQrCodes: async (options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getQrCodes: async (q?: string, count?: number, cursor?: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/qr-code`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -324,9 +342,17 @@ export const QrCodeApiAxiosParamCreator = function (configuration?: Configuratio
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
-            // authentication chatdaddy required
-            // oauth required
-            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", [], configuration)
+            if (q !== undefined) {
+                localVarQueryParameter['q'] = q;
+            }
+
+            if (count !== undefined) {
+                localVarQueryParameter['count'] = count;
+            }
+
+            if (cursor !== undefined) {
+                localVarQueryParameter['cursor'] = cursor;
+            }
 
 
     
@@ -361,10 +387,6 @@ export const QrCodeApiAxiosParamCreator = function (configuration?: Configuratio
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
-            // authentication chatdaddy required
-            // oauth required
-            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", [], configuration)
-
 
     
             localVarHeaderParameter['Content-Type'] = 'application/json';
@@ -396,7 +418,7 @@ export const QrCodeApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async createQrCodes(createQrCodesRequest: CreateQrCodesRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetQrCodes200Response>> {
+        async createQrCodes(createQrCodesRequest: CreateQrCodesRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CreateQrCodes200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.createQrCodes(createQrCodesRequest, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -425,11 +447,14 @@ export const QrCodeApiFp = function(configuration?: Configuration) {
         /**
          * 
          * @summary Get all QrCodes
+         * @param {string} [q] 
+         * @param {number} [count] 
+         * @param {string} [cursor] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getQrCodes(options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetQrCodes200Response>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getQrCodes(options);
+        async getQrCodes(q?: string, count?: number, cursor?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetQrCodes200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getQrCodes(q, count, cursor, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -439,7 +464,7 @@ export const QrCodeApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async updateQrCodes(updateQrCodesRequest: UpdateQrCodesRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetQrCodes200Response>> {
+        async updateQrCodes(updateQrCodesRequest: UpdateQrCodesRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CreateQrCodes200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.updateQrCodes(updateQrCodesRequest, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -460,7 +485,7 @@ export const QrCodeApiFactory = function (configuration?: Configuration, basePat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        createQrCodes(createQrCodesRequest: CreateQrCodesRequest, options?: any): AxiosPromise<GetQrCodes200Response> {
+        createQrCodes(createQrCodesRequest: CreateQrCodesRequest, options?: any): AxiosPromise<CreateQrCodes200Response> {
             return localVarFp.createQrCodes(createQrCodesRequest, options).then((request) => request(axios, basePath));
         },
         /**
@@ -486,11 +511,14 @@ export const QrCodeApiFactory = function (configuration?: Configuration, basePat
         /**
          * 
          * @summary Get all QrCodes
+         * @param {string} [q] 
+         * @param {number} [count] 
+         * @param {string} [cursor] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getQrCodes(options?: any): AxiosPromise<GetQrCodes200Response> {
-            return localVarFp.getQrCodes(options).then((request) => request(axios, basePath));
+        getQrCodes(q?: string, count?: number, cursor?: string, options?: any): AxiosPromise<GetQrCodes200Response> {
+            return localVarFp.getQrCodes(q, count, cursor, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -499,7 +527,7 @@ export const QrCodeApiFactory = function (configuration?: Configuration, basePat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        updateQrCodes(updateQrCodesRequest: UpdateQrCodesRequest, options?: any): AxiosPromise<GetQrCodes200Response> {
+        updateQrCodes(updateQrCodesRequest: UpdateQrCodesRequest, options?: any): AxiosPromise<CreateQrCodes200Response> {
             return localVarFp.updateQrCodes(updateQrCodesRequest, options).then((request) => request(axios, basePath));
         },
     };
@@ -545,6 +573,34 @@ export interface QrCodeApiGetQrCodeRequest {
      * @memberof QrCodeApiGetQrCode
      */
     readonly id: string
+}
+
+/**
+ * Request parameters for getQrCodes operation in QrCodeApi.
+ * @export
+ * @interface QrCodeApiGetQrCodesRequest
+ */
+export interface QrCodeApiGetQrCodesRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof QrCodeApiGetQrCodes
+     */
+    readonly q?: string
+
+    /**
+     * 
+     * @type {number}
+     * @memberof QrCodeApiGetQrCodes
+     */
+    readonly count?: number
+
+    /**
+     * 
+     * @type {string}
+     * @memberof QrCodeApiGetQrCodes
+     */
+    readonly cursor?: string
 }
 
 /**
@@ -607,12 +663,13 @@ export class QrCodeApi extends BaseAPI {
     /**
      * 
      * @summary Get all QrCodes
+     * @param {QrCodeApiGetQrCodesRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof QrCodeApi
      */
-    public getQrCodes(options?: AxiosRequestConfig) {
-        return QrCodeApiFp(this.configuration).getQrCodes(options).then((request) => request(this.axios, this.basePath));
+    public getQrCodes(requestParameters: QrCodeApiGetQrCodesRequest = {}, options?: AxiosRequestConfig) {
+        return QrCodeApiFp(this.configuration).getQrCodes(requestParameters.q, requestParameters.count, requestParameters.cursor, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
