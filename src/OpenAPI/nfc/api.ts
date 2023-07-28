@@ -91,7 +91,7 @@ export interface QRCode {
      * @type {string}
      * @memberof QRCode
      */
-    'redirectUrl': string;
+    'redirectUrl'?: string;
     /**
      * The category of the QR Code
      * @type {string}
