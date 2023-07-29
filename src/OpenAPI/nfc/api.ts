@@ -97,6 +97,37 @@ export interface LoginRequest {
 /**
  * 
  * @export
+ * @interface OTP
+ */
+interface OTP {
+    /**
+     * 
+     * @type {number}
+     * @memberof OTP
+     */
+    'phoneNumber': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof OTP
+     */
+    'otp'?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof OTP
+     */
+    'expiresAt': string;
+    /**
+     * 
+     * @type {number}
+     * @memberof OTP
+     */
+    'resendsLeft': number;
+}
+/**
+ * 
+ * @export
  * @interface QRCode
  */
 export interface QRCode {
