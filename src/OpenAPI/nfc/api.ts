@@ -526,9 +526,9 @@ export const QrCodeApiAxiosParamCreator = function (configuration?: Configuratio
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getQrCodseByPhone: async (phone: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getQrCodesByPhone: async (phone: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'phone' is not null or undefined
-            assertParamExists('getQrCodseByPhone', 'phone', phone)
+            assertParamExists('getQrCodesByPhone', 'phone', phone)
             const localVarPath = `/qr-codes/{phone}`
                 .replace(`{${"phone"}}`, encodeURIComponent(String(phone)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -699,8 +699,8 @@ export const QrCodeApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getQrCodseByPhone(phone: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CreateQrCodes200Response>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getQrCodseByPhone(phone, options);
+        async getQrCodesByPhone(phone: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CreateQrCodes200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getQrCodesByPhone(phone, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -785,8 +785,8 @@ export const QrCodeApiFactory = function (configuration?: Configuration, basePat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getQrCodseByPhone(phone: string, options?: any): AxiosPromise<CreateQrCodes200Response> {
-            return localVarFp.getQrCodseByPhone(phone, options).then((request) => request(axios, basePath));
+        getQrCodesByPhone(phone: string, options?: any): AxiosPromise<CreateQrCodes200Response> {
+            return localVarFp.getQrCodesByPhone(phone, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -883,15 +883,15 @@ export interface QrCodeApiGetQrCodesRequest {
 }
 
 /**
- * Request parameters for getQrCodseByPhone operation in QrCodeApi.
+ * Request parameters for getQrCodesByPhone operation in QrCodeApi.
  * @export
- * @interface QrCodeApiGetQrCodseByPhoneRequest
+ * @interface QrCodeApiGetQrCodesByPhoneRequest
  */
-export interface QrCodeApiGetQrCodseByPhoneRequest {
+export interface QrCodeApiGetQrCodesByPhoneRequest {
     /**
      * The phone of QrCodes to retrieve
      * @type {string}
-     * @memberof QrCodeApiGetQrCodseByPhone
+     * @memberof QrCodeApiGetQrCodesByPhone
      */
     readonly phone: string
 }
@@ -989,13 +989,13 @@ export class QrCodeApi extends BaseAPI {
     /**
      * 
      * @summary Get QrCodes by phone
-     * @param {QrCodeApiGetQrCodseByPhoneRequest} requestParameters Request parameters.
+     * @param {QrCodeApiGetQrCodesByPhoneRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof QrCodeApi
      */
-    public getQrCodseByPhone(requestParameters: QrCodeApiGetQrCodseByPhoneRequest, options?: AxiosRequestConfig) {
-        return QrCodeApiFp(this.configuration).getQrCodseByPhone(requestParameters.phone, options).then((request) => request(this.axios, this.basePath));
+    public getQrCodesByPhone(requestParameters: QrCodeApiGetQrCodesByPhoneRequest, options?: AxiosRequestConfig) {
+        return QrCodeApiFp(this.configuration).getQrCodesByPhone(requestParameters.phone, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
