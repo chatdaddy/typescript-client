@@ -71,6 +71,32 @@ export interface GetQrCodes200Response {
 /**
  * 
  * @export
+ * @interface Login200Response
+ */
+export interface Login200Response {
+    /**
+     * The token of the user
+     * @type {string}
+     * @memberof Login200Response
+     */
+    'token'?: string;
+}
+/**
+ * 
+ * @export
+ * @interface LoginRequest
+ */
+export interface LoginRequest {
+    /**
+     * The phone of the user
+     * @type {string}
+     * @memberof LoginRequest
+     */
+    'phone': string;
+}
+/**
+ * 
+ * @export
  * @interface QRCode
  */
 export interface QRCode {
@@ -198,6 +224,130 @@ export interface UpdateQrCodesRequest {
      */
     'qrCodes': Array<QRCodeUpdate>;
 }
+
+/**
+ * AuthApi - axios parameter creator
+ * @export
+ */
+export const AuthApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @summary Login
+         * @param {LoginRequest} loginRequest Login credentials
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        login: async (loginRequest: LoginRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'loginRequest' is not null or undefined
+            assertParamExists('login', 'loginRequest', loginRequest)
+            const localVarPath = `/login`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication otp required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(loginRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * AuthApi - functional programming interface
+ * @export
+ */
+export const AuthApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = AuthApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * 
+         * @summary Login
+         * @param {LoginRequest} loginRequest Login credentials
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async login(loginRequest: LoginRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Login200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.login(loginRequest, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+    }
+};
+
+/**
+ * AuthApi - factory interface
+ * @export
+ */
+export const AuthApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = AuthApiFp(configuration)
+    return {
+        /**
+         * 
+         * @summary Login
+         * @param {LoginRequest} loginRequest Login credentials
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        login(loginRequest: LoginRequest, options?: any): AxiosPromise<Login200Response> {
+            return localVarFp.login(loginRequest, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * Request parameters for login operation in AuthApi.
+ * @export
+ * @interface AuthApiLoginRequest
+ */
+export interface AuthApiLoginRequest {
+    /**
+     * Login credentials
+     * @type {LoginRequest}
+     * @memberof AuthApiLogin
+     */
+    readonly loginRequest: LoginRequest
+}
+
+/**
+ * AuthApi - object-oriented interface
+ * @export
+ * @class AuthApi
+ * @extends {BaseAPI}
+ */
+export class AuthApi extends BaseAPI {
+    /**
+     * 
+     * @summary Login
+     * @param {AuthApiLoginRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AuthApi
+     */
+    public login(requestParameters: AuthApiLoginRequest, options?: AxiosRequestConfig) {
+        return AuthApiFp(this.configuration).login(requestParameters.loginRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
 
 /**
  * QrCodeApi - axios parameter creator
@@ -342,6 +492,10 @@ export const QrCodeApiAxiosParamCreator = function (configuration?: Configuratio
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", [], configuration)
+
             if (q !== undefined) {
                 localVarQueryParameter['q'] = q;
             }
@@ -359,6 +513,83 @@ export const QrCodeApiAxiosParamCreator = function (configuration?: Configuratio
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Get QrCodes by phone
+         * @param {string} phone The phone of QrCodes to retrieve
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getQrCodseByPhone: async (phone: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'phone' is not null or undefined
+            assertParamExists('getQrCodseByPhone', 'phone', phone)
+            const localVarPath = `/qr-codes/{phone}`
+                .replace(`{${"phone"}}`, encodeURIComponent(String(phone)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication otptoken required
+            await setApiKeyToObject(localVarQueryParameter, "otptoken", configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Update a QrCode
+         * @param {string} id The ID of the QrCode to retrieve
+         * @param {QRCodeUpdate} qRCodeUpdate QrCode to update
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        updateQrCode: async (id: string, qRCodeUpdate: QRCodeUpdate, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('updateQrCode', 'id', id)
+            // verify required parameter 'qRCodeUpdate' is not null or undefined
+            assertParamExists('updateQrCode', 'qRCodeUpdate', qRCodeUpdate)
+            const localVarPath = `/qr-code/{id}`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PATCH', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(qRCodeUpdate, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -386,6 +617,10 @@ export const QrCodeApiAxiosParamCreator = function (configuration?: Configuratio
             const localVarRequestOptions = { method: 'PATCH', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", [], configuration)
 
 
     
@@ -459,6 +694,29 @@ export const QrCodeApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
+         * @summary Get QrCodes by phone
+         * @param {string} phone The phone of QrCodes to retrieve
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getQrCodseByPhone(phone: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CreateQrCodes200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getQrCodseByPhone(phone, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary Update a QrCode
+         * @param {string} id The ID of the QrCode to retrieve
+         * @param {QRCodeUpdate} qRCodeUpdate QrCode to update
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async updateQrCode(id: string, qRCodeUpdate: QRCodeUpdate, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<QRCode>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.updateQrCode(id, qRCodeUpdate, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
          * @summary Updates QrCodes
          * @param {UpdateQrCodesRequest} updateQrCodesRequest QrCodes to update
          * @param {*} [options] Override http request option.
@@ -519,6 +777,27 @@ export const QrCodeApiFactory = function (configuration?: Configuration, basePat
          */
         getQrCodes(q?: string, count?: number, cursor?: string, options?: any): AxiosPromise<GetQrCodes200Response> {
             return localVarFp.getQrCodes(q, count, cursor, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Get QrCodes by phone
+         * @param {string} phone The phone of QrCodes to retrieve
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getQrCodseByPhone(phone: string, options?: any): AxiosPromise<CreateQrCodes200Response> {
+            return localVarFp.getQrCodseByPhone(phone, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Update a QrCode
+         * @param {string} id The ID of the QrCode to retrieve
+         * @param {QRCodeUpdate} qRCodeUpdate QrCode to update
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        updateQrCode(id: string, qRCodeUpdate: QRCodeUpdate, options?: any): AxiosPromise<QRCode> {
+            return localVarFp.updateQrCode(id, qRCodeUpdate, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -604,6 +883,41 @@ export interface QrCodeApiGetQrCodesRequest {
 }
 
 /**
+ * Request parameters for getQrCodseByPhone operation in QrCodeApi.
+ * @export
+ * @interface QrCodeApiGetQrCodseByPhoneRequest
+ */
+export interface QrCodeApiGetQrCodseByPhoneRequest {
+    /**
+     * The phone of QrCodes to retrieve
+     * @type {string}
+     * @memberof QrCodeApiGetQrCodseByPhone
+     */
+    readonly phone: string
+}
+
+/**
+ * Request parameters for updateQrCode operation in QrCodeApi.
+ * @export
+ * @interface QrCodeApiUpdateQrCodeRequest
+ */
+export interface QrCodeApiUpdateQrCodeRequest {
+    /**
+     * The ID of the QrCode to retrieve
+     * @type {string}
+     * @memberof QrCodeApiUpdateQrCode
+     */
+    readonly id: string
+
+    /**
+     * QrCode to update
+     * @type {QRCodeUpdate}
+     * @memberof QrCodeApiUpdateQrCode
+     */
+    readonly qRCodeUpdate: QRCodeUpdate
+}
+
+/**
  * Request parameters for updateQrCodes operation in QrCodeApi.
  * @export
  * @interface QrCodeApiUpdateQrCodesRequest
@@ -670,6 +984,30 @@ export class QrCodeApi extends BaseAPI {
      */
     public getQrCodes(requestParameters: QrCodeApiGetQrCodesRequest = {}, options?: AxiosRequestConfig) {
         return QrCodeApiFp(this.configuration).getQrCodes(requestParameters.q, requestParameters.count, requestParameters.cursor, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Get QrCodes by phone
+     * @param {QrCodeApiGetQrCodseByPhoneRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof QrCodeApi
+     */
+    public getQrCodseByPhone(requestParameters: QrCodeApiGetQrCodseByPhoneRequest, options?: AxiosRequestConfig) {
+        return QrCodeApiFp(this.configuration).getQrCodseByPhone(requestParameters.phone, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Update a QrCode
+     * @param {QrCodeApiUpdateQrCodeRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof QrCodeApi
+     */
+    public updateQrCode(requestParameters: QrCodeApiUpdateQrCodeRequest, options?: AxiosRequestConfig) {
+        return QrCodeApiFp(this.configuration).updateQrCode(requestParameters.id, requestParameters.qRCodeUpdate, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
