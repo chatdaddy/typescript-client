@@ -573,9 +573,6 @@ export const QrCodeApiAxiosParamCreator = function (configuration?: Configuratio
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
-            // authentication otptoken required
-            await setApiKeyToObject(localVarQueryParameter, "otptoken", configuration)
-
 
     
             setSearchParams(localVarUrlObj, localVarQueryParameter);
