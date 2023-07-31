@@ -825,8 +825,8 @@ export interface TrainingStatusResponse {
 }
 
 export const TrainingStatusResponseStatusEnum = {
-    Pending: 'pending',
-    Running: 'running',
+    Idle: 'idle',
+    InProgress: 'inProgress',
     Completed: 'completed',
     Failed: 'failed'
 } as const;
