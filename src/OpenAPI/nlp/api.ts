@@ -386,7 +386,7 @@ export interface GetCrawlingStatusResponse {
 export const GetCrawlingStatusResponseStatusEnum = {
     Pending: 'pending',
     Running: 'running',
-    Completed: 'completed',
+    Finished: 'finished',
     Failed: 'failed'
 } as const;
 
