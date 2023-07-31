@@ -374,14 +374,24 @@ export interface GetCrawlingStatusResponse {
      * @type {string}
      * @memberof GetCrawlingStatusResponse
      */
-    'status': string;
+    'status': GetCrawlingStatusResponseStatusEnum;
     /**
      * crawling progress
-     * @type {string}
+     * @type {number}
      * @memberof GetCrawlingStatusResponse
      */
-    'progress': string;
+    'progress': number;
 }
+
+export const GetCrawlingStatusResponseStatusEnum = {
+    Pending: 'pending',
+    Running: 'running',
+    Completed: 'completed',
+    Failed: 'failed'
+} as const;
+
+export type GetCrawlingStatusResponseStatusEnum = typeof GetCrawlingStatusResponseStatusEnum[keyof typeof GetCrawlingStatusResponseStatusEnum];
+
 /**
  * 
  * @export
@@ -805,14 +815,24 @@ export interface TrainingStatusResponse {
      * @type {string}
      * @memberof TrainingStatusResponse
      */
-    'status': string;
+    'status': TrainingStatusResponseStatusEnum;
     /**
      * Progress of training
-     * @type {string}
+     * @type {number}
      * @memberof TrainingStatusResponse
      */
-    'progress': string;
+    'progress': number;
 }
+
+export const TrainingStatusResponseStatusEnum = {
+    Pending: 'pending',
+    Running: 'running',
+    Completed: 'completed',
+    Failed: 'failed'
+} as const;
+
+export type TrainingStatusResponseStatusEnum = typeof TrainingStatusResponseStatusEnum[keyof typeof TrainingStatusResponseStatusEnum];
+
 /**
  * 
  * @export
@@ -1282,18 +1302,14 @@ export const ChatbotApiAxiosParamCreator = function (configuration?: Configurati
         /**
          * 
          * @summary To know the status of crawling
-         * @param {string} id ID of the chatbot
          * @param {string} crawlingJobId ID of the crawling job
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        crawlStatus: async (id: string, crawlingJobId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'id' is not null or undefined
-            assertParamExists('crawlStatus', 'id', id)
+        crawlStatus: async (crawlingJobId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'crawlingJobId' is not null or undefined
             assertParamExists('crawlStatus', 'crawlingJobId', crawlingJobId)
-            const localVarPath = `/chatbot/{id}/crawling/status/{crawlingJobId}`
-                .replace(`{${"id"}}`, encodeURIComponent(String(id)))
+            const localVarPath = `/chatbot/crawling/status/{crawlingJobId}`
                 .replace(`{${"crawlingJobId"}}`, encodeURIComponent(String(crawlingJobId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -1654,13 +1670,12 @@ export const ChatbotApiFp = function(configuration?: Configuration) {
         /**
          * 
          * @summary To know the status of crawling
-         * @param {string} id ID of the chatbot
          * @param {string} crawlingJobId ID of the crawling job
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async crawlStatus(id: string, crawlingJobId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetCrawlingStatusResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.crawlStatus(id, crawlingJobId, options);
+        async crawlStatus(crawlingJobId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetCrawlingStatusResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.crawlStatus(crawlingJobId, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -1776,13 +1791,12 @@ export const ChatbotApiFactory = function (configuration?: Configuration, basePa
         /**
          * 
          * @summary To know the status of crawling
-         * @param {string} id ID of the chatbot
          * @param {string} crawlingJobId ID of the crawling job
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        crawlStatus(id: string, crawlingJobId: string, options?: any): AxiosPromise<GetCrawlingStatusResponse> {
-            return localVarFp.crawlStatus(id, crawlingJobId, options).then((request) => request(axios, basePath));
+        crawlStatus(crawlingJobId: string, options?: any): AxiosPromise<GetCrawlingStatusResponse> {
+            return localVarFp.crawlStatus(crawlingJobId, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -1895,13 +1909,6 @@ export interface ChatbotApiCrawlLinksRequest {
  * @interface ChatbotApiCrawlStatusRequest
  */
 export interface ChatbotApiCrawlStatusRequest {
-    /**
-     * ID of the chatbot
-     * @type {string}
-     * @memberof ChatbotApiCrawlStatus
-     */
-    readonly id: string
-
     /**
      * ID of the crawling job
      * @type {string}
@@ -2050,7 +2057,7 @@ export class ChatbotApi extends BaseAPI {
      * @memberof ChatbotApi
      */
     public crawlStatus(requestParameters: ChatbotApiCrawlStatusRequest, options?: AxiosRequestConfig) {
-        return ChatbotApiFp(this.configuration).crawlStatus(requestParameters.id, requestParameters.crawlingJobId, options).then((request) => request(this.axios, this.basePath));
+        return ChatbotApiFp(this.configuration).crawlStatus(requestParameters.crawlingJobId, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
