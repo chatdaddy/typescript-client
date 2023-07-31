@@ -309,6 +309,10 @@ export const QrCodeApiAxiosParamCreator = function (configuration?: Configuratio
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", [], configuration)
+
 
     
             setSearchParams(localVarUrlObj, localVarQueryParameter);
@@ -392,6 +396,44 @@ export const QrCodeApiAxiosParamCreator = function (configuration?: Configuratio
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", [], configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Redirect based on QrCode state
+         * @param {string} id The ID of the QrCode to retrieve
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        redirectQrCode: async (id: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('redirectQrCode', 'id', id)
+            const localVarPath = `/redirect/{id}`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
 
     
             setSearchParams(localVarUrlObj, localVarQueryParameter);
@@ -428,6 +470,10 @@ export const QrCodeApiAxiosParamCreator = function (configuration?: Configuratio
             const localVarRequestOptions = { method: 'PATCH', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", [], configuration)
 
 
     
@@ -552,6 +598,17 @@ export const QrCodeApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
+         * @summary Redirect based on QrCode state
+         * @param {string} id The ID of the QrCode to retrieve
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async redirectQrCode(id: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.redirectQrCode(id, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
          * @summary Update a QrCode
          * @param {string} id The ID of the QrCode to retrieve
          * @param {QRCodeUpdate} qRCodeUpdate QrCode to update
@@ -634,6 +691,16 @@ export const QrCodeApiFactory = function (configuration?: Configuration, basePat
          */
         getQrCodesByPhone(phone: string, options?: any): AxiosPromise<CreateQrCodes200Response> {
             return localVarFp.getQrCodesByPhone(phone, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Redirect based on QrCode state
+         * @param {string} id The ID of the QrCode to retrieve
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        redirectQrCode(id: string, options?: any): AxiosPromise<void> {
+            return localVarFp.redirectQrCode(id, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -744,6 +811,20 @@ export interface QrCodeApiGetQrCodesByPhoneRequest {
 }
 
 /**
+ * Request parameters for redirectQrCode operation in QrCodeApi.
+ * @export
+ * @interface QrCodeApiRedirectQrCodeRequest
+ */
+export interface QrCodeApiRedirectQrCodeRequest {
+    /**
+     * The ID of the QrCode to retrieve
+     * @type {string}
+     * @memberof QrCodeApiRedirectQrCode
+     */
+    readonly id: string
+}
+
+/**
  * Request parameters for updateQrCode operation in QrCodeApi.
  * @export
  * @interface QrCodeApiUpdateQrCodeRequest
@@ -843,6 +924,18 @@ export class QrCodeApi extends BaseAPI {
      */
     public getQrCodesByPhone(requestParameters: QrCodeApiGetQrCodesByPhoneRequest, options?: AxiosRequestConfig) {
         return QrCodeApiFp(this.configuration).getQrCodesByPhone(requestParameters.phone, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Redirect based on QrCode state
+     * @param {QrCodeApiRedirectQrCodeRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof QrCodeApi
+     */
+    public redirectQrCode(requestParameters: QrCodeApiRedirectQrCodeRequest, options?: AxiosRequestConfig) {
+        return QrCodeApiFp(this.configuration).redirectQrCode(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
