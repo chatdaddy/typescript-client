@@ -521,6 +521,38 @@ export interface OtpPostRequest {
 /**
  * 
  * @export
+ * @interface OtpTokenPost200Response
+ */
+export interface OtpTokenPost200Response {
+    /**
+     * 
+     * @type {string}
+     * @memberof OtpTokenPost200Response
+     */
+    'access_token': string;
+}
+/**
+ * 
+ * @export
+ * @interface OtpTokenPostRequest
+ */
+export interface OtpTokenPostRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof OtpTokenPostRequest
+     */
+    'phoneNumber': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof OtpTokenPostRequest
+     */
+    'otp': string;
+}
+/**
+ * 
+ * @export
  * @interface PartnerTeamPatchRequest
  */
 export interface PartnerTeamPatchRequest {
@@ -2213,6 +2245,43 @@ export const OTPApiAxiosParamCreator = function (configuration?: Configuration) 
                 options: localVarRequestOptions,
             };
         },
+        /**
+         * 
+         * @summary Generate an OTP token
+         * @param {OtpTokenPostRequest} [otpTokenPostRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        otpTokenPost: async (otpTokenPostRequest?: OtpTokenPostRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/otp/token`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication otp required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(otpTokenPostRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
     }
 };
 
@@ -2244,6 +2313,17 @@ export const OTPApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.otpPost(otpPostRequest, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
+        /**
+         * 
+         * @summary Generate an OTP token
+         * @param {OtpTokenPostRequest} [otpTokenPostRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async otpTokenPost(otpTokenPostRequest?: OtpTokenPostRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<OtpTokenPost200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.otpTokenPost(otpTokenPostRequest, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
     }
 };
 
@@ -2273,6 +2353,16 @@ export const OTPApiFactory = function (configuration?: Configuration, basePath?:
         otpPost(otpPostRequest?: OtpPostRequest, options?: any): AxiosPromise<OTP> {
             return localVarFp.otpPost(otpPostRequest, options).then((request) => request(axios, basePath));
         },
+        /**
+         * 
+         * @summary Generate an OTP token
+         * @param {OtpTokenPostRequest} [otpTokenPostRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        otpTokenPost(otpTokenPostRequest?: OtpTokenPostRequest, options?: any): AxiosPromise<OtpTokenPost200Response> {
+            return localVarFp.otpTokenPost(otpTokenPostRequest, options).then((request) => request(axios, basePath));
+        },
     };
 };
 
@@ -2288,6 +2378,20 @@ export interface OTPApiOtpPostRequest {
      * @memberof OTPApiOtpPost
      */
     readonly otpPostRequest?: OtpPostRequest
+}
+
+/**
+ * Request parameters for otpTokenPost operation in OTPApi.
+ * @export
+ * @interface OTPApiOtpTokenPostRequest
+ */
+export interface OTPApiOtpTokenPostRequest {
+    /**
+     * 
+     * @type {OtpTokenPostRequest}
+     * @memberof OTPApiOtpTokenPost
+     */
+    readonly otpTokenPostRequest?: OtpTokenPostRequest
 }
 
 /**
@@ -2318,6 +2422,18 @@ export class OTPApi extends BaseAPI {
      */
     public otpPost(requestParameters: OTPApiOtpPostRequest = {}, options?: AxiosRequestConfig) {
         return OTPApiFp(this.configuration).otpPost(requestParameters.otpPostRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Generate an OTP token
+     * @param {OTPApiOtpTokenPostRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof OTPApi
+     */
+    public otpTokenPost(requestParameters: OTPApiOtpTokenPostRequest = {}, options?: AxiosRequestConfig) {
+        return OTPApiFp(this.configuration).otpTokenPost(requestParameters.otpTokenPostRequest, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
