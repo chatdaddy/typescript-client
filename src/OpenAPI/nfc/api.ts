@@ -26,19 +26,6 @@ import { COLLECTION_FORMATS, RequestArgs, BaseAPI, RequiredError } from '../base
 /**
  * 
  * @export
- * @interface CreateQrCodes200Response
- */
-export interface CreateQrCodes200Response {
-    /**
-     * 
-     * @type {Array<QRCode>}
-     * @memberof CreateQrCodes200Response
-     */
-    'qrCodes'?: Array<QRCode>;
-}
-/**
- * 
- * @export
  * @interface CreateQrCodesRequest
  */
 export interface CreateQrCodesRequest {
@@ -61,69 +48,6 @@ export interface GetQrCodes200Response {
      * @memberof GetQrCodes200Response
      */
     'qrCodes'?: Array<QRCode>;
-    /**
-     * Cursor to use to fetch next page of results
-     * @type {string}
-     * @memberof GetQrCodes200Response
-     */
-    'cursor'?: string;
-}
-/**
- * 
- * @export
- * @interface Login200Response
- */
-export interface Login200Response {
-    /**
-     * The token of the user
-     * @type {string}
-     * @memberof Login200Response
-     */
-    'token'?: string;
-}
-/**
- * 
- * @export
- * @interface LoginRequest
- */
-export interface LoginRequest {
-    /**
-     * The phone of the user
-     * @type {string}
-     * @memberof LoginRequest
-     */
-    'phone': string;
-}
-/**
- * 
- * @export
- * @interface OTP
- */
-interface OTP {
-    /**
-     * 
-     * @type {number}
-     * @memberof OTP
-     */
-    'phoneNumber': number;
-    /**
-     * 
-     * @type {number}
-     * @memberof OTP
-     */
-    'otp'?: number;
-    /**
-     * 
-     * @type {string}
-     * @memberof OTP
-     */
-    'expiresAt': string;
-    /**
-     * 
-     * @type {number}
-     * @memberof OTP
-     */
-    'resendsLeft': number;
 }
 /**
  * 
@@ -382,11 +306,11 @@ export const QrCodeApiAxiosParamCreator = function (configuration?: Configuratio
          * @summary Get all QrCodes
          * @param {string} [q] 
          * @param {number} [count] 
-         * @param {string} [cursor] 
+         * @param {number} [page] The page number
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getQrCodes: async (q?: string, count?: number, cursor?: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getQrCodes: async (q?: string, count?: number, page?: number, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/qr-code`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -411,8 +335,8 @@ export const QrCodeApiAxiosParamCreator = function (configuration?: Configuratio
                 localVarQueryParameter['count'] = count;
             }
 
-            if (cursor !== undefined) {
-                localVarQueryParameter['cursor'] = cursor;
+            if (page !== undefined) {
+                localVarQueryParameter['page'] = page;
             }
 
 
@@ -454,45 +378,6 @@ export const QrCodeApiAxiosParamCreator = function (configuration?: Configuratio
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @summary Login
-         * @param {LoginRequest} loginRequest Login credentials
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        login: async (loginRequest: LoginRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'loginRequest' is not null or undefined
-            assertParamExists('login', 'loginRequest', loginRequest)
-            const localVarPath = `/login`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication otp required
-            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
-
-
-    
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(loginRequest, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -596,7 +481,7 @@ export const QrCodeApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async createQrCodes(createQrCodesRequest: CreateQrCodesRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CreateQrCodes200Response>> {
+        async createQrCodes(createQrCodesRequest: CreateQrCodesRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetQrCodes200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.createQrCodes(createQrCodesRequest, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -627,12 +512,12 @@ export const QrCodeApiFp = function(configuration?: Configuration) {
          * @summary Get all QrCodes
          * @param {string} [q] 
          * @param {number} [count] 
-         * @param {string} [cursor] 
+         * @param {number} [page] The page number
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getQrCodes(q?: string, count?: number, cursor?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetQrCodes200Response>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getQrCodes(q, count, cursor, options);
+        async getQrCodes(q?: string, count?: number, page?: number, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetQrCodes200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getQrCodes(q, count, page, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -642,19 +527,8 @@ export const QrCodeApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getQrCodesByPhone(phone: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CreateQrCodes200Response>> {
+        async getQrCodesByPhone(phone: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetQrCodes200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getQrCodesByPhone(phone, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-        /**
-         * 
-         * @summary Login
-         * @param {LoginRequest} loginRequest Login credentials
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async login(loginRequest: LoginRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Login200Response>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.login(loginRequest, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -676,7 +550,7 @@ export const QrCodeApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async updateQrCodes(updateQrCodesRequest: UpdateQrCodesRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CreateQrCodes200Response>> {
+        async updateQrCodes(updateQrCodesRequest: UpdateQrCodesRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetQrCodes200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.updateQrCodes(updateQrCodesRequest, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -697,7 +571,7 @@ export const QrCodeApiFactory = function (configuration?: Configuration, basePat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        createQrCodes(createQrCodesRequest: CreateQrCodesRequest, options?: any): AxiosPromise<CreateQrCodes200Response> {
+        createQrCodes(createQrCodesRequest: CreateQrCodesRequest, options?: any): AxiosPromise<GetQrCodes200Response> {
             return localVarFp.createQrCodes(createQrCodesRequest, options).then((request) => request(axios, basePath));
         },
         /**
@@ -725,12 +599,12 @@ export const QrCodeApiFactory = function (configuration?: Configuration, basePat
          * @summary Get all QrCodes
          * @param {string} [q] 
          * @param {number} [count] 
-         * @param {string} [cursor] 
+         * @param {number} [page] The page number
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getQrCodes(q?: string, count?: number, cursor?: string, options?: any): AxiosPromise<GetQrCodes200Response> {
-            return localVarFp.getQrCodes(q, count, cursor, options).then((request) => request(axios, basePath));
+        getQrCodes(q?: string, count?: number, page?: number, options?: any): AxiosPromise<GetQrCodes200Response> {
+            return localVarFp.getQrCodes(q, count, page, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -739,18 +613,8 @@ export const QrCodeApiFactory = function (configuration?: Configuration, basePat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getQrCodesByPhone(phone: string, options?: any): AxiosPromise<CreateQrCodes200Response> {
+        getQrCodesByPhone(phone: string, options?: any): AxiosPromise<GetQrCodes200Response> {
             return localVarFp.getQrCodesByPhone(phone, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
-         * @summary Login
-         * @param {LoginRequest} loginRequest Login credentials
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        login(loginRequest: LoginRequest, options?: any): AxiosPromise<Login200Response> {
-            return localVarFp.login(loginRequest, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -770,7 +634,7 @@ export const QrCodeApiFactory = function (configuration?: Configuration, basePat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        updateQrCodes(updateQrCodesRequest: UpdateQrCodesRequest, options?: any): AxiosPromise<CreateQrCodes200Response> {
+        updateQrCodes(updateQrCodesRequest: UpdateQrCodesRequest, options?: any): AxiosPromise<GetQrCodes200Response> {
             return localVarFp.updateQrCodes(updateQrCodesRequest, options).then((request) => request(axios, basePath));
         },
     };
@@ -839,11 +703,11 @@ export interface QrCodeApiGetQrCodesRequest {
     readonly count?: number
 
     /**
-     * 
-     * @type {string}
+     * The page number
+     * @type {number}
      * @memberof QrCodeApiGetQrCodes
      */
-    readonly cursor?: string
+    readonly page?: number
 }
 
 /**
@@ -858,20 +722,6 @@ export interface QrCodeApiGetQrCodesByPhoneRequest {
      * @memberof QrCodeApiGetQrCodesByPhone
      */
     readonly phone: string
-}
-
-/**
- * Request parameters for login operation in QrCodeApi.
- * @export
- * @interface QrCodeApiLoginRequest
- */
-export interface QrCodeApiLoginRequest {
-    /**
-     * Login credentials
-     * @type {LoginRequest}
-     * @memberof QrCodeApiLogin
-     */
-    readonly loginRequest: LoginRequest
 }
 
 /**
@@ -961,7 +811,7 @@ export class QrCodeApi extends BaseAPI {
      * @memberof QrCodeApi
      */
     public getQrCodes(requestParameters: QrCodeApiGetQrCodesRequest = {}, options?: AxiosRequestConfig) {
-        return QrCodeApiFp(this.configuration).getQrCodes(requestParameters.q, requestParameters.count, requestParameters.cursor, options).then((request) => request(this.axios, this.basePath));
+        return QrCodeApiFp(this.configuration).getQrCodes(requestParameters.q, requestParameters.count, requestParameters.page, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -974,18 +824,6 @@ export class QrCodeApi extends BaseAPI {
      */
     public getQrCodesByPhone(requestParameters: QrCodeApiGetQrCodesByPhoneRequest, options?: AxiosRequestConfig) {
         return QrCodeApiFp(this.configuration).getQrCodesByPhone(requestParameters.phone, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
-     * @summary Login
-     * @param {QrCodeApiLoginRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof QrCodeApi
-     */
-    public login(requestParameters: QrCodeApiLoginRequest, options?: AxiosRequestConfig) {
-        return QrCodeApiFp(this.configuration).login(requestParameters.loginRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
