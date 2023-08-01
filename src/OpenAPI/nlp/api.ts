@@ -186,6 +186,12 @@ export interface Chatbot {
      * @memberof Chatbot
      */
     'deployedAccount'?: string;
+    /**
+     * Training Progress
+     * @type {number}
+     * @memberof Chatbot
+     */
+    'trainingProgress'?: number;
 }
 
 export const ChatbotTrainingStatusEnum = {
@@ -803,6 +809,12 @@ export interface StoredLinks {
      * @memberof StoredLinks
      */
     'createdAt'?: string;
+    /**
+     * Name of the file
+     * @type {string}
+     * @memberof StoredLinks
+     */
+    'fileName'?: string;
 }
 /**
  * 
