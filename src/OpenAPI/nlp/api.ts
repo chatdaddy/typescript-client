@@ -176,16 +176,16 @@ export interface Chatbot {
     'prompt'?: string;
     /**
      * Name of the member to assign to the chatbot
-     * @type {string}
+     * @type {number}
      * @memberof Chatbot
      */
-    'assignedMember'?: string;
+    'assignedMember'?: number | null;
     /**
      * Name of the channel to deploy to the chatbot
-     * @type {string}
+     * @type {number}
      * @memberof Chatbot
      */
-    'deployedAccount'?: string;
+    'deployedAccount'?: number | null;
     /**
      * Training Progress
      * @type {number}
@@ -810,11 +810,11 @@ export interface StoredLinks {
      */
     'createdAt'?: string;
     /**
-     * Name of the file
-     * @type {string}
+     * 
+     * @type {number}
      * @memberof StoredLinks
      */
-    'fileName'?: string;
+    'fileName'?: number | null;
 }
 /**
  * 
