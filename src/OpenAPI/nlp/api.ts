@@ -243,10 +243,10 @@ export interface CrawledLinksResponse {
     'crawlingJobId': string;
     /**
      * 
-     * @type {Array<string>}
+     * @type {Array<StoredLinks>}
      * @memberof CrawledLinksResponse
      */
-    'links': Array<string>;
+    'links': Array<StoredLinks>;
 }
 /**
  * 
