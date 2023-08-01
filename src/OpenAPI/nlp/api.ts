@@ -163,12 +163,6 @@ export interface Chatbot {
      */
     'trainingStatus': ChatbotTrainingStatusEnum;
     /**
-     * Progress of training
-     * @type {number}
-     * @memberof Chatbot
-     */
-    'trainingProgress'?: number;
-    /**
      * Fallback message of the chatbot
      * @type {string}
      * @memberof Chatbot
@@ -809,19 +803,6 @@ export interface StoredLinks {
      * @memberof StoredLinks
      */
     'createdAt'?: string;
-}
-/**
- * 
- * @export
- * @interface TrainProgressRequest
- */
-export interface TrainProgressRequest {
-    /**
-     * Progress of training
-     * @type {number}
-     * @memberof TrainProgressRequest
-     */
-    'progress': number;
 }
 /**
  * 
@@ -1660,48 +1641,6 @@ export const ChatbotApiAxiosParamCreator = function (configuration?: Configurati
         },
         /**
          * 
-         * @summary Training Progress update
-         * @param {string} id ID of the chatbot
-         * @param {TrainProgressRequest} [trainProgressRequest] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        trainProgress: async (id: string, trainProgressRequest?: TrainProgressRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'id' is not null or undefined
-            assertParamExists('trainProgress', 'id', id)
-            const localVarPath = `/webhook/{id}/train`
-                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'PATCH', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication chatdaddy required
-            // oauth required
-            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["AUTOCOMPLETE_GET"], configuration)
-
-
-    
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(trainProgressRequest, localVarRequestOptions, configuration)
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
          * @summary Update chatbot\'s preferences
          * @param {string} id ID of the chatbot
          * @param {UpdateChatbotRequest} [updateChatbotRequest] 
@@ -1854,18 +1793,6 @@ export const ChatbotApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
-         * @summary Training Progress update
-         * @param {string} id ID of the chatbot
-         * @param {TrainProgressRequest} [trainProgressRequest] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async trainProgress(id: string, trainProgressRequest?: TrainProgressRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.trainProgress(id, trainProgressRequest, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-        /**
-         * 
          * @summary Update chatbot\'s preferences
          * @param {string} id ID of the chatbot
          * @param {UpdateChatbotRequest} [updateChatbotRequest] 
@@ -1976,17 +1903,6 @@ export const ChatbotApiFactory = function (configuration?: Configuration, basePa
          */
         trainLinks(id: string, options?: any): AxiosPromise<void> {
             return localVarFp.trainLinks(id, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
-         * @summary Training Progress update
-         * @param {string} id ID of the chatbot
-         * @param {TrainProgressRequest} [trainProgressRequest] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        trainProgress(id: string, trainProgressRequest?: TrainProgressRequest, options?: any): AxiosPromise<void> {
-            return localVarFp.trainProgress(id, trainProgressRequest, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -2129,27 +2045,6 @@ export interface ChatbotApiTrainLinksRequest {
 }
 
 /**
- * Request parameters for trainProgress operation in ChatbotApi.
- * @export
- * @interface ChatbotApiTrainProgressRequest
- */
-export interface ChatbotApiTrainProgressRequest {
-    /**
-     * ID of the chatbot
-     * @type {string}
-     * @memberof ChatbotApiTrainProgress
-     */
-    readonly id: string
-
-    /**
-     * 
-     * @type {TrainProgressRequest}
-     * @memberof ChatbotApiTrainProgress
-     */
-    readonly trainProgressRequest?: TrainProgressRequest
-}
-
-/**
  * Request parameters for updateBotPreferences operation in ChatbotApi.
  * @export
  * @interface ChatbotApiUpdateBotPreferencesRequest
@@ -2282,18 +2177,6 @@ export class ChatbotApi extends BaseAPI {
      */
     public trainLinks(requestParameters: ChatbotApiTrainLinksRequest, options?: AxiosRequestConfig) {
         return ChatbotApiFp(this.configuration).trainLinks(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
-     * @summary Training Progress update
-     * @param {ChatbotApiTrainProgressRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof ChatbotApi
-     */
-    public trainProgress(requestParameters: ChatbotApiTrainProgressRequest, options?: AxiosRequestConfig) {
-        return ChatbotApiFp(this.configuration).trainProgress(requestParameters.id, requestParameters.trainProgressRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
