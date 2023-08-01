@@ -4222,6 +4222,12 @@ export interface MessageInsertDataSender {
      * @memberof MessageInsertDataSender
      */
     'userId': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof MessageInsertDataSender
+     */
+    'createdAt'?: string;
 }
 /**
  * 

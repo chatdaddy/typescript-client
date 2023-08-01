@@ -2033,6 +2033,12 @@ export interface MessageAllOfSender {
      * @memberof MessageAllOfSender
      */
     'userId': string;
+    /**
+     * An ISO formatted timestamp
+     * @type {string}
+     * @memberof MessageAllOfSender
+     */
+    'createdAt'?: string;
 }
 /**
  * 
