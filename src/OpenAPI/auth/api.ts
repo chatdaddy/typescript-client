@@ -1398,6 +1398,19 @@ export interface UsersGet200Response {
 /**
  * 
  * @export
+ * @interface UsersPhoneNumberPatchRequest
+ */
+export interface UsersPhoneNumberPatchRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof UsersPhoneNumberPatchRequest
+     */
+    'phoneNumber': string;
+}
+/**
+ * 
+ * @export
  * @interface WebPushSubscription
  */
 export interface WebPushSubscription {
@@ -3338,6 +3351,43 @@ export const UsersApiAxiosParamCreator = function (configuration?: Configuration
         },
         /**
          * 
+         * @summary Updates users Phonenumber
+         * @param {UsersPhoneNumberPatchRequest} [usersPhoneNumberPatchRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        usersPhoneNumberPatch: async (usersPhoneNumberPatchRequest?: UsersPhoneNumberPatchRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/users/phonenumber`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PATCH', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication otp required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(usersPhoneNumberPatchRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
          * @summary Create a new user
          * @param {UserCreate} [userCreate] 
          * @param {*} [options] Override http request option.
@@ -3442,6 +3492,17 @@ export const UsersApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
+         * @summary Updates users Phonenumber
+         * @param {UsersPhoneNumberPatchRequest} [usersPhoneNumberPatchRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async usersPhoneNumberPatch(usersPhoneNumberPatchRequest?: UsersPhoneNumberPatchRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.usersPhoneNumberPatch(usersPhoneNumberPatchRequest, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
          * @summary Create a new user
          * @param {UserCreate} [userCreate] 
          * @param {*} [options] Override http request option.
@@ -3509,6 +3570,16 @@ export const UsersApiFactory = function (configuration?: Configuration, basePath
          */
         usersPatch(userId?: string, userPatch?: UserPatch, options?: any): AxiosPromise<User> {
             return localVarFp.usersPatch(userId, userPatch, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Updates users Phonenumber
+         * @param {UsersPhoneNumberPatchRequest} [usersPhoneNumberPatchRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        usersPhoneNumberPatch(usersPhoneNumberPatchRequest?: UsersPhoneNumberPatchRequest, options?: any): AxiosPromise<void> {
+            return localVarFp.usersPhoneNumberPatch(usersPhoneNumberPatchRequest, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -3643,6 +3714,20 @@ export interface UsersApiUsersPatchRequest {
 }
 
 /**
+ * Request parameters for usersPhoneNumberPatch operation in UsersApi.
+ * @export
+ * @interface UsersApiUsersPhoneNumberPatchRequest
+ */
+export interface UsersApiUsersPhoneNumberPatchRequest {
+    /**
+     * 
+     * @type {UsersPhoneNumberPatchRequest}
+     * @memberof UsersApiUsersPhoneNumberPatch
+     */
+    readonly usersPhoneNumberPatchRequest?: UsersPhoneNumberPatchRequest
+}
+
+/**
  * Request parameters for usersPost operation in UsersApi.
  * @export
  * @interface UsersApiUsersPostRequest
@@ -3709,6 +3794,18 @@ export class UsersApi extends BaseAPI {
      */
     public usersPatch(requestParameters: UsersApiUsersPatchRequest = {}, options?: AxiosRequestConfig) {
         return UsersApiFp(this.configuration).usersPatch(requestParameters.userId, requestParameters.userPatch, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Updates users Phonenumber
+     * @param {UsersApiUsersPhoneNumberPatchRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof UsersApi
+     */
+    public usersPhoneNumberPatch(requestParameters: UsersApiUsersPhoneNumberPatchRequest = {}, options?: AxiosRequestConfig) {
+        return UsersApiFp(this.configuration).usersPhoneNumberPatch(requestParameters.usersPhoneNumberPatchRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
