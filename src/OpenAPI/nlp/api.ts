@@ -192,6 +192,12 @@ export interface Chatbot {
      * @memberof Chatbot
      */
     'trainingProgress'?: number;
+    /**
+     * 
+     * @type {PendingJob}
+     * @memberof Chatbot
+     */
+    'pendingJob'?: PendingJob;
 }
 
 export const ChatbotTrainingStatusEnum = {
@@ -752,6 +758,25 @@ export interface KeywordBasedAction {
      * @memberof KeywordBasedAction
      */
     'updatedAt'?: string;
+}
+/**
+ * 
+ * @export
+ * @interface PendingJob
+ */
+export interface PendingJob {
+    /**
+     * 
+     * @type {string}
+     * @memberof PendingJob
+     */
+    'jobId': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof PendingJob
+     */
+    'link': string;
 }
 /**
  * 
