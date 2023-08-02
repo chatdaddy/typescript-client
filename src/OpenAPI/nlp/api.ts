@@ -947,13 +947,13 @@ export interface UpdateChatbotRequest {
      * @type {string}
      * @memberof UpdateChatbotRequest
      */
-    'assignedMember'?: string;
+    'assignedMember'?: string | null;
     /**
      * Name of the channel to deploy to the chatbot
      * @type {string}
      * @memberof UpdateChatbotRequest
      */
-    'deployedAccount'?: string;
+    'deployedAccount'?: string | null;
     /**
      * 
      * @type {Array<string>}
