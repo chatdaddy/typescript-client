@@ -1403,10 +1403,16 @@ export interface UsersGet200Response {
 export interface UsersPhoneNumberPatchRequest {
     /**
      * 
+     * @type {number}
+     * @memberof UsersPhoneNumberPatchRequest
+     */
+    'phoneNumber': number;
+    /**
+     * 
      * @type {string}
      * @memberof UsersPhoneNumberPatchRequest
      */
-    'phoneNumber': string;
+    'userId'?: string;
 }
 /**
  * 
