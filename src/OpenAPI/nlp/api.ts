@@ -240,6 +240,12 @@ export interface ChatbotMessageResponse {
      * @memberof ChatbotMessageResponse
      */
     'message': Array<string>;
+    /**
+     * List of sources the bot used to generate the response
+     * @type {Array<string>}
+     * @memberof ChatbotMessageResponse
+     */
+    'sources': Array<string>;
 }
 /**
  * 
@@ -1527,11 +1533,12 @@ export const ChatbotApiAxiosParamCreator = function (configuration?: Configurati
          * 
          * @summary Send message to the chatbot
          * @param {string} id ID of the chatbot
+         * @param {boolean} [includeSourcesInMessage] Include sources in the message text
          * @param {ChatbotMessageRequest} [chatbotMessageRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        messageBot: async (id: string, chatbotMessageRequest?: ChatbotMessageRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        messageBot: async (id: string, includeSourcesInMessage?: boolean, chatbotMessageRequest?: ChatbotMessageRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
             assertParamExists('messageBot', 'id', id)
             const localVarPath = `/chatbot/{id}/message`
@@ -1550,6 +1557,10 @@ export const ChatbotApiAxiosParamCreator = function (configuration?: Configurati
             // authentication chatdaddy required
             // oauth required
             await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["AUTOCOMPLETE_GET"], configuration)
+
+            if (includeSourcesInMessage !== undefined) {
+                localVarQueryParameter['includeSourcesInMessage'] = includeSourcesInMessage;
+            }
 
 
     
@@ -1715,12 +1726,13 @@ export const ChatbotApiFp = function(configuration?: Configuration) {
          * 
          * @summary Send message to the chatbot
          * @param {string} id ID of the chatbot
+         * @param {boolean} [includeSourcesInMessage] Include sources in the message text
          * @param {ChatbotMessageRequest} [chatbotMessageRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async messageBot(id: string, chatbotMessageRequest?: ChatbotMessageRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ChatbotMessageResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.messageBot(id, chatbotMessageRequest, options);
+        async messageBot(id: string, includeSourcesInMessage?: boolean, chatbotMessageRequest?: ChatbotMessageRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ChatbotMessageResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.messageBot(id, includeSourcesInMessage, chatbotMessageRequest, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -1811,12 +1823,13 @@ export const ChatbotApiFactory = function (configuration?: Configuration, basePa
          * 
          * @summary Send message to the chatbot
          * @param {string} id ID of the chatbot
+         * @param {boolean} [includeSourcesInMessage] Include sources in the message text
          * @param {ChatbotMessageRequest} [chatbotMessageRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        messageBot(id: string, chatbotMessageRequest?: ChatbotMessageRequest, options?: any): AxiosPromise<ChatbotMessageResponse> {
-            return localVarFp.messageBot(id, chatbotMessageRequest, options).then((request) => request(axios, basePath));
+        messageBot(id: string, includeSourcesInMessage?: boolean, chatbotMessageRequest?: ChatbotMessageRequest, options?: any): AxiosPromise<ChatbotMessageResponse> {
+            return localVarFp.messageBot(id, includeSourcesInMessage, chatbotMessageRequest, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -1924,6 +1937,13 @@ export interface ChatbotApiMessageBotRequest {
      * @memberof ChatbotApiMessageBot
      */
     readonly id: string
+
+    /**
+     * Include sources in the message text
+     * @type {boolean}
+     * @memberof ChatbotApiMessageBot
+     */
+    readonly includeSourcesInMessage?: boolean
 
     /**
      * 
@@ -2043,7 +2063,7 @@ export class ChatbotApi extends BaseAPI {
      * @memberof ChatbotApi
      */
     public messageBot(requestParameters: ChatbotApiMessageBotRequest, options?: AxiosRequestConfig) {
-        return ChatbotApiFp(this.configuration).messageBot(requestParameters.id, requestParameters.chatbotMessageRequest, options).then((request) => request(this.axios, this.basePath));
+        return ChatbotApiFp(this.configuration).messageBot(requestParameters.id, requestParameters.includeSourcesInMessage, requestParameters.chatbotMessageRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
