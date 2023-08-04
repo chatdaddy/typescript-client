@@ -614,6 +614,12 @@ export interface BotMessageDelay {
  */
 export interface BotMessageInput {
     /**
+     * Name of the input
+     * @type {string}
+     * @memberof BotMessageInput
+     */
+    'name'?: string;
+    /**
      * Type of input
      * @type {string}
      * @memberof BotMessageInput

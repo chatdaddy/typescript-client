@@ -899,6 +899,12 @@ export interface ActionExecuteDataAllOf1MessageDelays {
  */
 export interface ActionExecuteDataAllOf1MessageInput {
     /**
+     * Name of the input
+     * @type {string}
+     * @memberof ActionExecuteDataAllOf1MessageInput
+     */
+    'name'?: string;
+    /**
      * Type of input
      * @type {string}
      * @memberof ActionExecuteDataAllOf1MessageInput
@@ -1531,6 +1537,12 @@ export interface BotInsertDataActionsInnerAllOf1MessageDelaysInner {
  * @interface BotInsertDataActionsInnerAllOf1MessageInput
  */
 export interface BotInsertDataActionsInnerAllOf1MessageInput {
+    /**
+     * Name of the input
+     * @type {string}
+     * @memberof BotInsertDataActionsInnerAllOf1MessageInput
+     */
+    'name'?: string;
     /**
      * Type of input
      * @type {string}
