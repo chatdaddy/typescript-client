@@ -905,11 +905,11 @@ export interface ActionExecuteDataAllOf1MessageInput {
      */
     'name'?: string;
     /**
-     * Type of input
-     * @type {string}
+     * 
+     * @type {ActionExecuteDataAllOf1MessageInputValidation}
      * @memberof ActionExecuteDataAllOf1MessageInput
      */
-    'type'?: ActionExecuteDataAllOf1MessageInputTypeEnum;
+    'validation'?: ActionExecuteDataAllOf1MessageInputValidation;
     /**
      * 
      * @type {string}
@@ -929,13 +929,26 @@ export interface ActionExecuteDataAllOf1MessageInput {
      */
     'position'?: ActionExecuteDataAllOf1MessagePosition;
 }
+/**
+ * 
+ * @export
+ * @interface ActionExecuteDataAllOf1MessageInputValidation
+ */
+export interface ActionExecuteDataAllOf1MessageInputValidation {
+    /**
+     * 
+     * @type {string}
+     * @memberof ActionExecuteDataAllOf1MessageInputValidation
+     */
+    'type': ActionExecuteDataAllOf1MessageInputValidationTypeEnum;
+}
 
-export const ActionExecuteDataAllOf1MessageInputTypeEnum = {
-    Number: 'number',
-    String: 'string'
+export const ActionExecuteDataAllOf1MessageInputValidationTypeEnum = {
+    String: 'string',
+    Integer: 'integer'
 } as const;
 
-export type ActionExecuteDataAllOf1MessageInputTypeEnum = typeof ActionExecuteDataAllOf1MessageInputTypeEnum[keyof typeof ActionExecuteDataAllOf1MessageInputTypeEnum];
+export type ActionExecuteDataAllOf1MessageInputValidationTypeEnum = typeof ActionExecuteDataAllOf1MessageInputValidationTypeEnum[keyof typeof ActionExecuteDataAllOf1MessageInputValidationTypeEnum];
 
 /**
  * 
@@ -1544,11 +1557,11 @@ export interface BotInsertDataActionsInnerAllOf1MessageInput {
      */
     'name'?: string;
     /**
-     * Type of input
-     * @type {string}
+     * 
+     * @type {BotInsertDataActionsInnerAllOf1MessageInputValidation}
      * @memberof BotInsertDataActionsInnerAllOf1MessageInput
      */
-    'type'?: BotInsertDataActionsInnerAllOf1MessageInputTypeEnum;
+    'validation'?: BotInsertDataActionsInnerAllOf1MessageInputValidation;
     /**
      * 
      * @type {string}
@@ -1568,13 +1581,26 @@ export interface BotInsertDataActionsInnerAllOf1MessageInput {
      */
     'position'?: BotInsertDataActionsInnerAllOf1MessageButtonsInnerPosition;
 }
+/**
+ * 
+ * @export
+ * @interface BotInsertDataActionsInnerAllOf1MessageInputValidation
+ */
+export interface BotInsertDataActionsInnerAllOf1MessageInputValidation {
+    /**
+     * 
+     * @type {string}
+     * @memberof BotInsertDataActionsInnerAllOf1MessageInputValidation
+     */
+    'type': BotInsertDataActionsInnerAllOf1MessageInputValidationTypeEnum;
+}
 
-export const BotInsertDataActionsInnerAllOf1MessageInputTypeEnum = {
-    Number: 'number',
-    String: 'string'
+export const BotInsertDataActionsInnerAllOf1MessageInputValidationTypeEnum = {
+    String: 'string',
+    Integer: 'integer'
 } as const;
 
-export type BotInsertDataActionsInnerAllOf1MessageInputTypeEnum = typeof BotInsertDataActionsInnerAllOf1MessageInputTypeEnum[keyof typeof BotInsertDataActionsInnerAllOf1MessageInputTypeEnum];
+export type BotInsertDataActionsInnerAllOf1MessageInputValidationTypeEnum = typeof BotInsertDataActionsInnerAllOf1MessageInputValidationTypeEnum[keyof typeof BotInsertDataActionsInnerAllOf1MessageInputValidationTypeEnum];
 
 /**
  * 
@@ -1942,6 +1968,12 @@ export interface BotInsertDataStartTriggersInnerInstancesInnerRecordsInner {
      * @memberof BotInsertDataStartTriggersInnerInstancesInnerRecordsInner
      */
     'contactId'?: string;
+    /**
+     * 
+     * @type {{ [key: string]: any; }}
+     * @memberof BotInsertDataStartTriggersInnerInstancesInnerRecordsInner
+     */
+    'inputParameters'?: { [key: string]: any; };
     /**
      * 
      * @type {string}

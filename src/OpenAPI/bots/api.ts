@@ -251,6 +251,12 @@ export interface ActionFireRecord {
     'contactId'?: string;
     /**
      * 
+     * @type {{ [key: string]: any; }}
+     * @memberof ActionFireRecord
+     */
+    'inputParameters'?: { [key: string]: any; };
+    /**
+     * 
      * @type {string}
      * @memberof ActionFireRecord
      */
@@ -620,11 +626,11 @@ export interface BotMessageInput {
      */
     'name'?: string;
     /**
-     * Type of input
-     * @type {string}
+     * 
+     * @type {BotMessageInputValidation}
      * @memberof BotMessageInput
      */
-    'type'?: BotMessageInputTypeEnum;
+    'validation'?: BotMessageInputValidation;
     /**
      * 
      * @type {string}
@@ -644,13 +650,26 @@ export interface BotMessageInput {
      */
     'position'?: Position;
 }
+/**
+ * 
+ * @export
+ * @interface BotMessageInputValidation
+ */
+export interface BotMessageInputValidation {
+    /**
+     * 
+     * @type {string}
+     * @memberof BotMessageInputValidation
+     */
+    'type': BotMessageInputValidationTypeEnum;
+}
 
-export const BotMessageInputTypeEnum = {
-    Number: 'number',
-    String: 'string'
+export const BotMessageInputValidationTypeEnum = {
+    String: 'string',
+    Integer: 'integer'
 } as const;
 
-export type BotMessageInputTypeEnum = typeof BotMessageInputTypeEnum[keyof typeof BotMessageInputTypeEnum];
+export type BotMessageInputValidationTypeEnum = typeof BotMessageInputValidationTypeEnum[keyof typeof BotMessageInputValidationTypeEnum];
 
 /**
  * 
