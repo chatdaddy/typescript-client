@@ -610,6 +610,45 @@ export interface BotMessageDelay {
 /**
  * 
  * @export
+ * @interface BotMessageInput
+ */
+export interface BotMessageInput {
+    /**
+     * Type of input
+     * @type {string}
+     * @memberof BotMessageInput
+     */
+    'type'?: BotMessageInputTypeEnum;
+    /**
+     * 
+     * @type {string}
+     * @memberof BotMessageInput
+     */
+    'triggerActionId'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof BotMessageInput
+     */
+    'triggerBotId'?: string | null;
+    /**
+     * 
+     * @type {Position}
+     * @memberof BotMessageInput
+     */
+    'position'?: Position;
+}
+
+export const BotMessageInputTypeEnum = {
+    Number: 'number',
+    String: 'string'
+} as const;
+
+export type BotMessageInputTypeEnum = typeof BotMessageInputTypeEnum[keyof typeof BotMessageInputTypeEnum];
+
+/**
+ * 
+ * @export
  * @interface BotNote
  */
 export interface BotNote {
@@ -1669,6 +1708,12 @@ export interface MessageObj {
      * @memberof MessageObj
      */
     'delays'?: Array<BotMessageDelay>;
+    /**
+     * 
+     * @type {BotMessageInput}
+     * @memberof MessageObj
+     */
+    'input'?: BotMessageInput;
     /**
      * 
      * @type {string}

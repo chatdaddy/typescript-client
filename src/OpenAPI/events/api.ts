@@ -733,6 +733,12 @@ export interface ActionExecuteDataAllOf1Message {
     'delays'?: Array<ActionExecuteDataAllOf1MessageDelays>;
     /**
      * 
+     * @type {ActionExecuteDataAllOf1MessageInput}
+     * @memberof ActionExecuteDataAllOf1Message
+     */
+    'input'?: ActionExecuteDataAllOf1MessageInput;
+    /**
+     * 
      * @type {string}
      * @memberof ActionExecuteDataAllOf1Message
      */
@@ -886,6 +892,45 @@ export interface ActionExecuteDataAllOf1MessageDelays {
      */
     'position'?: ActionExecuteDataAllOf1MessagePosition;
 }
+/**
+ * 
+ * @export
+ * @interface ActionExecuteDataAllOf1MessageInput
+ */
+export interface ActionExecuteDataAllOf1MessageInput {
+    /**
+     * Type of input
+     * @type {string}
+     * @memberof ActionExecuteDataAllOf1MessageInput
+     */
+    'type'?: ActionExecuteDataAllOf1MessageInputTypeEnum;
+    /**
+     * 
+     * @type {string}
+     * @memberof ActionExecuteDataAllOf1MessageInput
+     */
+    'triggerActionId'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof ActionExecuteDataAllOf1MessageInput
+     */
+    'triggerBotId'?: string | null;
+    /**
+     * 
+     * @type {ActionExecuteDataAllOf1MessagePosition}
+     * @memberof ActionExecuteDataAllOf1MessageInput
+     */
+    'position'?: ActionExecuteDataAllOf1MessagePosition;
+}
+
+export const ActionExecuteDataAllOf1MessageInputTypeEnum = {
+    Number: 'number',
+    String: 'string'
+} as const;
+
+export type ActionExecuteDataAllOf1MessageInputTypeEnum = typeof ActionExecuteDataAllOf1MessageInputTypeEnum[keyof typeof ActionExecuteDataAllOf1MessageInputTypeEnum];
+
 /**
  * 
  * @export
@@ -1302,6 +1347,12 @@ export interface BotInsertDataActionsInnerAllOf1Message {
     'delays'?: Array<BotInsertDataActionsInnerAllOf1MessageDelaysInner>;
     /**
      * 
+     * @type {BotInsertDataActionsInnerAllOf1MessageInput}
+     * @memberof BotInsertDataActionsInnerAllOf1Message
+     */
+    'input'?: BotInsertDataActionsInnerAllOf1MessageInput;
+    /**
+     * 
      * @type {string}
      * @memberof BotInsertDataActionsInnerAllOf1Message
      */
@@ -1474,6 +1525,45 @@ export interface BotInsertDataActionsInnerAllOf1MessageDelaysInner {
      */
     'position'?: BotInsertDataActionsInnerAllOf1MessageButtonsInnerPosition;
 }
+/**
+ * 
+ * @export
+ * @interface BotInsertDataActionsInnerAllOf1MessageInput
+ */
+export interface BotInsertDataActionsInnerAllOf1MessageInput {
+    /**
+     * Type of input
+     * @type {string}
+     * @memberof BotInsertDataActionsInnerAllOf1MessageInput
+     */
+    'type'?: BotInsertDataActionsInnerAllOf1MessageInputTypeEnum;
+    /**
+     * 
+     * @type {string}
+     * @memberof BotInsertDataActionsInnerAllOf1MessageInput
+     */
+    'triggerActionId'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof BotInsertDataActionsInnerAllOf1MessageInput
+     */
+    'triggerBotId'?: string | null;
+    /**
+     * 
+     * @type {BotInsertDataActionsInnerAllOf1MessageButtonsInnerPosition}
+     * @memberof BotInsertDataActionsInnerAllOf1MessageInput
+     */
+    'position'?: BotInsertDataActionsInnerAllOf1MessageButtonsInnerPosition;
+}
+
+export const BotInsertDataActionsInnerAllOf1MessageInputTypeEnum = {
+    Number: 'number',
+    String: 'string'
+} as const;
+
+export type BotInsertDataActionsInnerAllOf1MessageInputTypeEnum = typeof BotInsertDataActionsInnerAllOf1MessageInputTypeEnum[keyof typeof BotInsertDataActionsInnerAllOf1MessageInputTypeEnum];
+
 /**
  * 
  * @export
