@@ -1006,6 +1006,12 @@ export interface SubscriptionCreate {
      */
     'products': Array<ProductsSelectionInner>;
     /**
+     * 
+     * @type {string}
+     * @memberof SubscriptionCreate
+     */
+    'startDate'?: string;
+    /**
      * An ISO formatted timestamp
      * @type {string}
      * @memberof SubscriptionCreate
