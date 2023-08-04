@@ -624,7 +624,7 @@ export interface BotMessageInput {
      * @type {string}
      * @memberof BotMessageInput
      */
-    'name'?: string;
+    'name': string;
     /**
      * 
      * @type {BotMessageInputValidation}

@@ -903,7 +903,7 @@ export interface ActionExecuteDataAllOf1MessageInput {
      * @type {string}
      * @memberof ActionExecuteDataAllOf1MessageInput
      */
-    'name'?: string;
+    'name': string;
     /**
      * 
      * @type {ActionExecuteDataAllOf1MessageInputValidation}
@@ -1555,7 +1555,7 @@ export interface BotInsertDataActionsInnerAllOf1MessageInput {
      * @type {string}
      * @memberof BotInsertDataActionsInnerAllOf1MessageInput
      */
-    'name'?: string;
+    'name': string;
     /**
      * 
      * @type {BotInsertDataActionsInnerAllOf1MessageInputValidation}
