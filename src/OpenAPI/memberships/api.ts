@@ -117,11 +117,11 @@ export interface MembershipAction {
      */
     'id': string;
     /**
-     * The userId of the pending membership action
+     * The id of the membership
      * @type {string}
      * @memberof MembershipAction
      */
-    'contactId': string;
+    'membershipId': string;
     /**
      * 
      * @type {string}
