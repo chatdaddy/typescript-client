@@ -267,6 +267,12 @@ export interface CheckoutCreateOptions {
      * @memberof CheckoutCreateOptions
      */
     'extraDays'?: number;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof CheckoutCreateOptions
+     */
+    'disableAutoRenew'?: boolean;
 }
 /**
  * 
