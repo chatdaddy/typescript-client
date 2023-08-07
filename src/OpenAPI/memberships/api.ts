@@ -255,6 +255,19 @@ export type UpdateMembershipActionRequestApprovalStateEnum = typeof UpdateMember
 /**
  * 
  * @export
+ * @interface UpdateMembershipSettings200Response
+ */
+export interface UpdateMembershipSettings200Response {
+    /**
+     * 
+     * @type {MembershipSettingsPatch}
+     * @memberof UpdateMembershipSettings200Response
+     */
+    'membershipSettings': MembershipSettingsPatch;
+}
+/**
+ * 
+ * @export
  * @interface UpdateMembershipSettingsRequest
  */
 export interface UpdateMembershipSettingsRequest {
@@ -511,7 +524,7 @@ export const MembershipSettingsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async updateMembershipSettings(updateMembershipSettingsRequest: UpdateMembershipSettingsRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<UpdateMembershipSettingsRequest>> {
+        async updateMembershipSettings(updateMembershipSettingsRequest: UpdateMembershipSettingsRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<UpdateMembershipSettings200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.updateMembershipSettings(updateMembershipSettingsRequest, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -541,7 +554,7 @@ export const MembershipSettingsApiFactory = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        updateMembershipSettings(updateMembershipSettingsRequest: UpdateMembershipSettingsRequest, options?: any): AxiosPromise<UpdateMembershipSettingsRequest> {
+        updateMembershipSettings(updateMembershipSettingsRequest: UpdateMembershipSettingsRequest, options?: any): AxiosPromise<UpdateMembershipSettings200Response> {
             return localVarFp.updateMembershipSettings(updateMembershipSettingsRequest, options).then((request) => request(axios, basePath));
         },
     };
