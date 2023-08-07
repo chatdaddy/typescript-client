@@ -96,10 +96,10 @@ export interface GetMemberships200Response {
 export interface Membership {
     /**
      * The id of the membership
-     * @type {string}
+     * @type {number}
      * @memberof Membership
      */
-    'id'?: string;
+    'id'?: number;
     /**
      * The userId of the membership
      * @type {string}
@@ -145,10 +145,10 @@ export interface Membership {
 export interface MembershipAction {
     /**
      * The id of the pending membership action
-     * @type {string}
+     * @type {number}
      * @memberof MembershipAction
      */
-    'id': string;
+    'id': number;
     /**
      * The id of the membership
      * @type {string}
