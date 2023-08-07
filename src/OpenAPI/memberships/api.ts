@@ -31,10 +31,10 @@ import { COLLECTION_FORMATS, RequestArgs, BaseAPI, RequiredError } from '../base
 export interface CreateMembershipActionRequest {
     /**
      * The id of the membership
-     * @type {string}
+     * @type {number}
      * @memberof CreateMembershipActionRequest
      */
-    'membershipId': string;
+    'membershipId': number;
     /**
      * 
      * @type {string}
@@ -348,12 +348,12 @@ export const MembershipActionsApiAxiosParamCreator = function (configuration?: C
         /**
          * 
          * @summary Update a membership action
-         * @param {string} id The id of the membership action to update
+         * @param {number} id The id of the membership action to update
          * @param {UpdateMembershipActionRequest} updateMembershipActionRequest The membership action to update
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        updateMembershipAction: async (id: string, updateMembershipActionRequest: UpdateMembershipActionRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        updateMembershipAction: async (id: number, updateMembershipActionRequest: UpdateMembershipActionRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
             assertParamExists('updateMembershipAction', 'id', id)
             // verify required parameter 'updateMembershipActionRequest' is not null or undefined
@@ -413,12 +413,12 @@ export const MembershipActionsApiFp = function(configuration?: Configuration) {
         /**
          * 
          * @summary Update a membership action
-         * @param {string} id The id of the membership action to update
+         * @param {number} id The id of the membership action to update
          * @param {UpdateMembershipActionRequest} updateMembershipActionRequest The membership action to update
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async updateMembershipAction(id: string, updateMembershipActionRequest: UpdateMembershipActionRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async updateMembershipAction(id: number, updateMembershipActionRequest: UpdateMembershipActionRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.updateMembershipAction(id, updateMembershipActionRequest, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -445,12 +445,12 @@ export const MembershipActionsApiFactory = function (configuration?: Configurati
         /**
          * 
          * @summary Update a membership action
-         * @param {string} id The id of the membership action to update
+         * @param {number} id The id of the membership action to update
          * @param {UpdateMembershipActionRequest} updateMembershipActionRequest The membership action to update
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        updateMembershipAction(id: string, updateMembershipActionRequest: UpdateMembershipActionRequest, options?: any): AxiosPromise<void> {
+        updateMembershipAction(id: number, updateMembershipActionRequest: UpdateMembershipActionRequest, options?: any): AxiosPromise<void> {
             return localVarFp.updateMembershipAction(id, updateMembershipActionRequest, options).then((request) => request(axios, basePath));
         },
     };
@@ -478,10 +478,10 @@ export interface MembershipActionsApiCreateMembershipActionRequest {
 export interface MembershipActionsApiUpdateMembershipActionRequest {
     /**
      * The id of the membership action to update
-     * @type {string}
+     * @type {number}
      * @memberof MembershipActionsApiUpdateMembershipAction
      */
-    readonly id: string
+    readonly id: number
 
     /**
      * The membership action to update
