@@ -242,7 +242,7 @@ export interface UpdateMembershipActionRequest {
      * @type {string}
      * @memberof UpdateMembershipActionRequest
      */
-    'approvalState'?: UpdateMembershipActionRequestApprovalStateEnum;
+    'approvalState': UpdateMembershipActionRequestApprovalStateEnum;
 }
 
 export const UpdateMembershipActionRequestApprovalStateEnum = {
