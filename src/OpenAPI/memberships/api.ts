@@ -31,10 +31,10 @@ import { COLLECTION_FORMATS, RequestArgs, BaseAPI, RequiredError } from '../base
 export interface CreateMembershipActionRequest {
     /**
      * The id of the membership
-     * @type {number}
+     * @type {string}
      * @memberof CreateMembershipActionRequest
      */
-    'membershipId': number;
+    'membershipId': string;
     /**
      * 
      * @type {string}
@@ -96,10 +96,10 @@ export interface GetMemberships200Response {
 export interface Membership {
     /**
      * The id of the membership
-     * @type {number}
+     * @type {string}
      * @memberof Membership
      */
-    'id'?: number;
+    'id'?: string;
     /**
      * The userId of the membership
      * @type {string}
@@ -145,10 +145,10 @@ export interface Membership {
 export interface MembershipAction {
     /**
      * The id of the pending membership action
-     * @type {number}
+     * @type {string}
      * @memberof MembershipAction
      */
-    'id': number;
+    'id': string;
     /**
      * The id of the membership
      * @type {string}
@@ -348,12 +348,12 @@ export const MembershipActionsApiAxiosParamCreator = function (configuration?: C
         /**
          * 
          * @summary Update a membership action
-         * @param {number} id The id of the membership action to update
+         * @param {string} id The id of the membership action to update
          * @param {UpdateMembershipActionRequest} updateMembershipActionRequest The membership action to update
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        updateMembershipAction: async (id: number, updateMembershipActionRequest: UpdateMembershipActionRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        updateMembershipAction: async (id: string, updateMembershipActionRequest: UpdateMembershipActionRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
             assertParamExists('updateMembershipAction', 'id', id)
             // verify required parameter 'updateMembershipActionRequest' is not null or undefined
@@ -413,12 +413,12 @@ export const MembershipActionsApiFp = function(configuration?: Configuration) {
         /**
          * 
          * @summary Update a membership action
-         * @param {number} id The id of the membership action to update
+         * @param {string} id The id of the membership action to update
          * @param {UpdateMembershipActionRequest} updateMembershipActionRequest The membership action to update
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async updateMembershipAction(id: number, updateMembershipActionRequest: UpdateMembershipActionRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async updateMembershipAction(id: string, updateMembershipActionRequest: UpdateMembershipActionRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.updateMembershipAction(id, updateMembershipActionRequest, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -445,12 +445,12 @@ export const MembershipActionsApiFactory = function (configuration?: Configurati
         /**
          * 
          * @summary Update a membership action
-         * @param {number} id The id of the membership action to update
+         * @param {string} id The id of the membership action to update
          * @param {UpdateMembershipActionRequest} updateMembershipActionRequest The membership action to update
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        updateMembershipAction(id: number, updateMembershipActionRequest: UpdateMembershipActionRequest, options?: any): AxiosPromise<void> {
+        updateMembershipAction(id: string, updateMembershipActionRequest: UpdateMembershipActionRequest, options?: any): AxiosPromise<void> {
             return localVarFp.updateMembershipAction(id, updateMembershipActionRequest, options).then((request) => request(axios, basePath));
         },
     };
@@ -478,10 +478,10 @@ export interface MembershipActionsApiCreateMembershipActionRequest {
 export interface MembershipActionsApiUpdateMembershipActionRequest {
     /**
      * The id of the membership action to update
-     * @type {number}
+     * @type {string}
      * @memberof MembershipActionsApiUpdateMembershipAction
      */
-    readonly id: number
+    readonly id: string
 
     /**
      * The membership action to update
