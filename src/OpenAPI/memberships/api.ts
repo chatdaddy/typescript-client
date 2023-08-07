@@ -315,7 +315,7 @@ export const MembershipActionsApiAxiosParamCreator = function (configuration?: C
         createMembershipAction: async (createMembershipActionRequest: CreateMembershipActionRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'createMembershipActionRequest' is not null or undefined
             assertParamExists('createMembershipAction', 'createMembershipActionRequest', createMembershipActionRequest)
-            const localVarPath = `/memberships/actions/`;
+            const localVarPath = `/memberships/actions`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
