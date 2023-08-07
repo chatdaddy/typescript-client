@@ -80,6 +80,12 @@ export interface Membership {
      */
     'teamId'?: string;
     /**
+     * 
+     * @type {Array<MembershipAction>}
+     * @memberof Membership
+     */
+    'actions'?: Array<MembershipAction>;
+    /**
      * The number of points the membership has
      * @type {number}
      * @memberof Membership
@@ -98,6 +104,64 @@ export interface Membership {
      */
     'updatedAt'?: string;
 }
+/**
+ * 
+ * @export
+ * @interface MembershipAction
+ */
+export interface MembershipAction {
+    /**
+     * The id of the pending membership action
+     * @type {string}
+     * @memberof MembershipAction
+     */
+    'id': string;
+    /**
+     * The userId of the pending membership action
+     * @type {string}
+     * @memberof MembershipAction
+     */
+    'contactId': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof MembershipAction
+     */
+    'actionType': MembershipActionActionTypeEnum;
+    /**
+     * 
+     * @type {string}
+     * @memberof MembershipAction
+     */
+    'approvalState': MembershipActionApprovalStateEnum;
+    /**
+     * The number of points to add or remove
+     * @type {number}
+     * @memberof MembershipAction
+     */
+    'amount': number;
+    /**
+     * The date and time the pending membership action was created
+     * @type {string}
+     * @memberof MembershipAction
+     */
+    'timestamp': string;
+}
+
+export const MembershipActionActionTypeEnum = {
+    Add: 'add',
+    Remove: 'remove'
+} as const;
+
+export type MembershipActionActionTypeEnum = typeof MembershipActionActionTypeEnum[keyof typeof MembershipActionActionTypeEnum];
+export const MembershipActionApprovalStateEnum = {
+    Approved: 'approved',
+    Rejected: 'rejected',
+    Pending: 'pending'
+} as const;
+
+export type MembershipActionApprovalStateEnum = typeof MembershipActionApprovalStateEnum[keyof typeof MembershipActionApprovalStateEnum];
+
 /**
  * 
  * @export
@@ -170,47 +234,174 @@ export interface MembershipSettingsPatch {
 /**
  * 
  * @export
- * @interface PendingMembershipAction
+ * @interface UpdateMembershipActionRequest
  */
-export interface PendingMembershipAction {
-    /**
-     * The id of the pending membership action
-     * @type {string}
-     * @memberof PendingMembershipAction
-     */
-    'id'?: string;
-    /**
-     * The userId of the pending membership action
-     * @type {string}
-     * @memberof PendingMembershipAction
-     */
-    'contactId'?: string;
+export interface UpdateMembershipActionRequest {
     /**
      * 
      * @type {string}
-     * @memberof PendingMembershipAction
+     * @memberof UpdateMembershipActionRequest
      */
-    'action'?: PendingMembershipActionActionEnum;
-    /**
-     * The number of points to add or remove
-     * @type {number}
-     * @memberof PendingMembershipAction
-     */
-    'amount'?: number;
-    /**
-     * The date and time the pending membership action was created
-     * @type {string}
-     * @memberof PendingMembershipAction
-     */
-    'timestamp'?: string;
+    'approvalState'?: UpdateMembershipActionRequestApprovalStateEnum;
 }
 
-export const PendingMembershipActionActionEnum = {
-    Add: 'add',
-    Remove: 'remove'
+export const UpdateMembershipActionRequestApprovalStateEnum = {
+    Approved: 'approved',
+    Rejected: 'rejected'
 } as const;
 
-export type PendingMembershipActionActionEnum = typeof PendingMembershipActionActionEnum[keyof typeof PendingMembershipActionActionEnum];
+export type UpdateMembershipActionRequestApprovalStateEnum = typeof UpdateMembershipActionRequestApprovalStateEnum[keyof typeof UpdateMembershipActionRequestApprovalStateEnum];
+
+/**
+ * 
+ * @export
+ * @interface UpdateMembershipSettingsRequest
+ */
+export interface UpdateMembershipSettingsRequest {
+    /**
+     * 
+     * @type {MembershipSettingsPatch}
+     * @memberof UpdateMembershipSettingsRequest
+     */
+    'membershipSettings'?: MembershipSettingsPatch;
+}
+
+/**
+ * MembershipActionsApi - axios parameter creator
+ * @export
+ */
+export const MembershipActionsApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @summary Update a membership action
+         * @param {string} id The id of the membership action to update
+         * @param {UpdateMembershipActionRequest} updateMembershipActionRequest The membership action to update
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        updateMembershipAction: async (id: string, updateMembershipActionRequest: UpdateMembershipActionRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('updateMembershipAction', 'id', id)
+            // verify required parameter 'updateMembershipActionRequest' is not null or undefined
+            assertParamExists('updateMembershipAction', 'updateMembershipActionRequest', updateMembershipActionRequest)
+            const localVarPath = `/memberships/actions/{id}`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PATCH', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", [], configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(updateMembershipActionRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * MembershipActionsApi - functional programming interface
+ * @export
+ */
+export const MembershipActionsApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = MembershipActionsApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * 
+         * @summary Update a membership action
+         * @param {string} id The id of the membership action to update
+         * @param {UpdateMembershipActionRequest} updateMembershipActionRequest The membership action to update
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async updateMembershipAction(id: string, updateMembershipActionRequest: UpdateMembershipActionRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.updateMembershipAction(id, updateMembershipActionRequest, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+    }
+};
+
+/**
+ * MembershipActionsApi - factory interface
+ * @export
+ */
+export const MembershipActionsApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = MembershipActionsApiFp(configuration)
+    return {
+        /**
+         * 
+         * @summary Update a membership action
+         * @param {string} id The id of the membership action to update
+         * @param {UpdateMembershipActionRequest} updateMembershipActionRequest The membership action to update
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        updateMembershipAction(id: string, updateMembershipActionRequest: UpdateMembershipActionRequest, options?: any): AxiosPromise<void> {
+            return localVarFp.updateMembershipAction(id, updateMembershipActionRequest, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * Request parameters for updateMembershipAction operation in MembershipActionsApi.
+ * @export
+ * @interface MembershipActionsApiUpdateMembershipActionRequest
+ */
+export interface MembershipActionsApiUpdateMembershipActionRequest {
+    /**
+     * The id of the membership action to update
+     * @type {string}
+     * @memberof MembershipActionsApiUpdateMembershipAction
+     */
+    readonly id: string
+
+    /**
+     * The membership action to update
+     * @type {UpdateMembershipActionRequest}
+     * @memberof MembershipActionsApiUpdateMembershipAction
+     */
+    readonly updateMembershipActionRequest: UpdateMembershipActionRequest
+}
+
+/**
+ * MembershipActionsApi - object-oriented interface
+ * @export
+ * @class MembershipActionsApi
+ * @extends {BaseAPI}
+ */
+export class MembershipActionsApi extends BaseAPI {
+    /**
+     * 
+     * @summary Update a membership action
+     * @param {MembershipActionsApiUpdateMembershipActionRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof MembershipActionsApi
+     */
+    public updateMembershipAction(requestParameters: MembershipActionsApiUpdateMembershipActionRequest, options?: AxiosRequestConfig) {
+        return MembershipActionsApiFp(this.configuration).updateMembershipAction(requestParameters.id, requestParameters.updateMembershipActionRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+}
 
 
 /**
@@ -256,13 +447,13 @@ export const MembershipSettingsApiAxiosParamCreator = function (configuration?: 
         /**
          * 
          * @summary Update a membership settings
-         * @param {MembershipSettingsPatch} membershipSettingsPatch The membership settings to update
+         * @param {UpdateMembershipSettingsRequest} updateMembershipSettingsRequest The membership settings to update
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        updateMembershipSettings: async (membershipSettingsPatch: MembershipSettingsPatch, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'membershipSettingsPatch' is not null or undefined
-            assertParamExists('updateMembershipSettings', 'membershipSettingsPatch', membershipSettingsPatch)
+        updateMembershipSettings: async (updateMembershipSettingsRequest: UpdateMembershipSettingsRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'updateMembershipSettingsRequest' is not null or undefined
+            assertParamExists('updateMembershipSettings', 'updateMembershipSettingsRequest', updateMembershipSettingsRequest)
             const localVarPath = `/membership-settings`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -286,7 +477,7 @@ export const MembershipSettingsApiAxiosParamCreator = function (configuration?: 
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(membershipSettingsPatch, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(updateMembershipSettingsRequest, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -316,12 +507,12 @@ export const MembershipSettingsApiFp = function(configuration?: Configuration) {
         /**
          * 
          * @summary Update a membership settings
-         * @param {MembershipSettingsPatch} membershipSettingsPatch The membership settings to update
+         * @param {UpdateMembershipSettingsRequest} updateMembershipSettingsRequest The membership settings to update
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async updateMembershipSettings(membershipSettingsPatch: MembershipSettingsPatch, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetMembershipSettings200Response>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.updateMembershipSettings(membershipSettingsPatch, options);
+        async updateMembershipSettings(updateMembershipSettingsRequest: UpdateMembershipSettingsRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<UpdateMembershipSettingsRequest>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.updateMembershipSettings(updateMembershipSettingsRequest, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
     }
@@ -346,12 +537,12 @@ export const MembershipSettingsApiFactory = function (configuration?: Configurat
         /**
          * 
          * @summary Update a membership settings
-         * @param {MembershipSettingsPatch} membershipSettingsPatch The membership settings to update
+         * @param {UpdateMembershipSettingsRequest} updateMembershipSettingsRequest The membership settings to update
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        updateMembershipSettings(membershipSettingsPatch: MembershipSettingsPatch, options?: any): AxiosPromise<GetMembershipSettings200Response> {
-            return localVarFp.updateMembershipSettings(membershipSettingsPatch, options).then((request) => request(axios, basePath));
+        updateMembershipSettings(updateMembershipSettingsRequest: UpdateMembershipSettingsRequest, options?: any): AxiosPromise<UpdateMembershipSettingsRequest> {
+            return localVarFp.updateMembershipSettings(updateMembershipSettingsRequest, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -364,10 +555,10 @@ export const MembershipSettingsApiFactory = function (configuration?: Configurat
 export interface MembershipSettingsApiUpdateMembershipSettingsRequest {
     /**
      * The membership settings to update
-     * @type {MembershipSettingsPatch}
+     * @type {UpdateMembershipSettingsRequest}
      * @memberof MembershipSettingsApiUpdateMembershipSettings
      */
-    readonly membershipSettingsPatch: MembershipSettingsPatch
+    readonly updateMembershipSettingsRequest: UpdateMembershipSettingsRequest
 }
 
 /**
@@ -397,7 +588,7 @@ export class MembershipSettingsApi extends BaseAPI {
      * @memberof MembershipSettingsApi
      */
     public updateMembershipSettings(requestParameters: MembershipSettingsApiUpdateMembershipSettingsRequest, options?: AxiosRequestConfig) {
-        return MembershipSettingsApiFp(this.configuration).updateMembershipSettings(requestParameters.membershipSettingsPatch, options).then((request) => request(this.axios, this.basePath));
+        return MembershipSettingsApiFp(this.configuration).updateMembershipSettings(requestParameters.updateMembershipSettingsRequest, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
@@ -491,10 +682,11 @@ export const MembershipsApiAxiosParamCreator = function (configuration?: Configu
          * @summary Get memberships
          * @param {number} [count] The number of memberships to get
          * @param {string} [cursor] The cursor to get memberships from
+         * @param {boolean} [onlyPending] Whether to only get memberships with pending actions
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getMemberships: async (count?: number, cursor?: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getMemberships: async (count?: number, cursor?: string, onlyPending?: boolean, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/memberships`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -517,6 +709,10 @@ export const MembershipsApiAxiosParamCreator = function (configuration?: Configu
 
             if (cursor !== undefined) {
                 localVarQueryParameter['cursor'] = cursor;
+            }
+
+            if (onlyPending !== undefined) {
+                localVarQueryParameter['onlyPending'] = onlyPending;
             }
 
 
@@ -567,11 +763,12 @@ export const MembershipsApiFp = function(configuration?: Configuration) {
          * @summary Get memberships
          * @param {number} [count] The number of memberships to get
          * @param {string} [cursor] The cursor to get memberships from
+         * @param {boolean} [onlyPending] Whether to only get memberships with pending actions
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getMemberships(count?: number, cursor?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetMemberships200Response>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getMemberships(count, cursor, options);
+        async getMemberships(count?: number, cursor?: string, onlyPending?: boolean, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetMemberships200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getMemberships(count, cursor, onlyPending, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
     }
@@ -609,11 +806,12 @@ export const MembershipsApiFactory = function (configuration?: Configuration, ba
          * @summary Get memberships
          * @param {number} [count] The number of memberships to get
          * @param {string} [cursor] The cursor to get memberships from
+         * @param {boolean} [onlyPending] Whether to only get memberships with pending actions
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getMemberships(count?: number, cursor?: string, options?: any): AxiosPromise<GetMemberships200Response> {
-            return localVarFp.getMemberships(count, cursor, options).then((request) => request(axios, basePath));
+        getMemberships(count?: number, cursor?: string, onlyPending?: boolean, options?: any): AxiosPromise<GetMemberships200Response> {
+            return localVarFp.getMemberships(count, cursor, onlyPending, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -665,6 +863,13 @@ export interface MembershipsApiGetMembershipsRequest {
      * @memberof MembershipsApiGetMemberships
      */
     readonly cursor?: string
+
+    /**
+     * Whether to only get memberships with pending actions
+     * @type {boolean}
+     * @memberof MembershipsApiGetMemberships
+     */
+    readonly onlyPending?: boolean
 }
 
 /**
@@ -707,7 +912,7 @@ export class MembershipsApi extends BaseAPI {
      * @memberof MembershipsApi
      */
     public getMemberships(requestParameters: MembershipsApiGetMembershipsRequest = {}, options?: AxiosRequestConfig) {
-        return MembershipsApiFp(this.configuration).getMemberships(requestParameters.count, requestParameters.cursor, options).then((request) => request(this.axios, this.basePath));
+        return MembershipsApiFp(this.configuration).getMemberships(requestParameters.count, requestParameters.cursor, requestParameters.onlyPending, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
