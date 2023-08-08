@@ -1,4 +1,4 @@
-const BASE_PATH = "https://api-nfc.chatdaddy.tech".replace(/\/+$/, "");
+const BASE_PATH = "https://api-nfc.wscrm.me".replace(/\/+$/, "");
 
 /* tslint:disable */
 /* eslint-disable */
