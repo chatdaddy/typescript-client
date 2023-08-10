@@ -300,10 +300,10 @@ export interface UpdateMembershipSettingsRequest {
 }
 
 /**
- * MembershipActionsApi - axios parameter creator
+ * MembershipApi - axios parameter creator
  * @export
  */
-export const MembershipActionsApiAxiosParamCreator = function (configuration?: Configuration) {
+export const MembershipApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
          * 
@@ -339,6 +339,40 @@ export const MembershipActionsApiAxiosParamCreator = function (configuration?: C
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
             localVarRequestOptions.data = serializeDataIfNeeded(createMembershipActionRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Get membership settings
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getMembershipSettings: async (options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/membership-settings`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", [], configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -393,11 +427,11 @@ export const MembershipActionsApiAxiosParamCreator = function (configuration?: C
 };
 
 /**
- * MembershipActionsApi - functional programming interface
+ * MembershipApi - functional programming interface
  * @export
  */
-export const MembershipActionsApiFp = function(configuration?: Configuration) {
-    const localVarAxiosParamCreator = MembershipActionsApiAxiosParamCreator(configuration)
+export const MembershipApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = MembershipApiAxiosParamCreator(configuration)
     return {
         /**
          * 
@@ -408,6 +442,16 @@ export const MembershipActionsApiFp = function(configuration?: Configuration) {
          */
         async createMembershipAction(createMembershipActionRequest: CreateMembershipActionRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MembershipAction>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.createMembershipAction(createMembershipActionRequest, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary Get membership settings
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getMembershipSettings(options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetMembershipSettings200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getMembershipSettings(options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -426,11 +470,11 @@ export const MembershipActionsApiFp = function(configuration?: Configuration) {
 };
 
 /**
- * MembershipActionsApi - factory interface
+ * MembershipApi - factory interface
  * @export
  */
-export const MembershipActionsApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
-    const localVarFp = MembershipActionsApiFp(configuration)
+export const MembershipApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = MembershipApiFp(configuration)
     return {
         /**
          * 
@@ -441,6 +485,15 @@ export const MembershipActionsApiFactory = function (configuration?: Configurati
          */
         createMembershipAction(createMembershipActionRequest: CreateMembershipActionRequest, options?: any): AxiosPromise<MembershipAction> {
             return localVarFp.createMembershipAction(createMembershipActionRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Get membership settings
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getMembershipSettings(options?: any): AxiosPromise<GetMembershipSettings200Response> {
+            return localVarFp.getMembershipSettings(options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -457,69 +510,80 @@ export const MembershipActionsApiFactory = function (configuration?: Configurati
 };
 
 /**
- * Request parameters for createMembershipAction operation in MembershipActionsApi.
+ * Request parameters for createMembershipAction operation in MembershipApi.
  * @export
- * @interface MembershipActionsApiCreateMembershipActionRequest
+ * @interface MembershipApiCreateMembershipActionRequest
  */
-export interface MembershipActionsApiCreateMembershipActionRequest {
+export interface MembershipApiCreateMembershipActionRequest {
     /**
      * The membership action to create
      * @type {CreateMembershipActionRequest}
-     * @memberof MembershipActionsApiCreateMembershipAction
+     * @memberof MembershipApiCreateMembershipAction
      */
     readonly createMembershipActionRequest: CreateMembershipActionRequest
 }
 
 /**
- * Request parameters for updateMembershipAction operation in MembershipActionsApi.
+ * Request parameters for updateMembershipAction operation in MembershipApi.
  * @export
- * @interface MembershipActionsApiUpdateMembershipActionRequest
+ * @interface MembershipApiUpdateMembershipActionRequest
  */
-export interface MembershipActionsApiUpdateMembershipActionRequest {
+export interface MembershipApiUpdateMembershipActionRequest {
     /**
      * The id of the membership action to update
      * @type {string}
-     * @memberof MembershipActionsApiUpdateMembershipAction
+     * @memberof MembershipApiUpdateMembershipAction
      */
     readonly id: string
 
     /**
      * The membership action to update
      * @type {UpdateMembershipActionRequest}
-     * @memberof MembershipActionsApiUpdateMembershipAction
+     * @memberof MembershipApiUpdateMembershipAction
      */
     readonly updateMembershipActionRequest: UpdateMembershipActionRequest
 }
 
 /**
- * MembershipActionsApi - object-oriented interface
+ * MembershipApi - object-oriented interface
  * @export
- * @class MembershipActionsApi
+ * @class MembershipApi
  * @extends {BaseAPI}
  */
-export class MembershipActionsApi extends BaseAPI {
+export class MembershipApi extends BaseAPI {
     /**
      * 
      * @summary Create a membership action
-     * @param {MembershipActionsApiCreateMembershipActionRequest} requestParameters Request parameters.
+     * @param {MembershipApiCreateMembershipActionRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof MembershipActionsApi
+     * @memberof MembershipApi
      */
-    public createMembershipAction(requestParameters: MembershipActionsApiCreateMembershipActionRequest, options?: AxiosRequestConfig) {
-        return MembershipActionsApiFp(this.configuration).createMembershipAction(requestParameters.createMembershipActionRequest, options).then((request) => request(this.axios, this.basePath));
+    public createMembershipAction(requestParameters: MembershipApiCreateMembershipActionRequest, options?: AxiosRequestConfig) {
+        return MembershipApiFp(this.configuration).createMembershipAction(requestParameters.createMembershipActionRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Get membership settings
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof MembershipApi
+     */
+    public getMembershipSettings(options?: AxiosRequestConfig) {
+        return MembershipApiFp(this.configuration).getMembershipSettings(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * 
      * @summary Update a membership action
-     * @param {MembershipActionsApiUpdateMembershipActionRequest} requestParameters Request parameters.
+     * @param {MembershipApiUpdateMembershipActionRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof MembershipActionsApi
+     * @memberof MembershipApi
      */
-    public updateMembershipAction(requestParameters: MembershipActionsApiUpdateMembershipActionRequest, options?: AxiosRequestConfig) {
-        return MembershipActionsApiFp(this.configuration).updateMembershipAction(requestParameters.id, requestParameters.updateMembershipActionRequest, options).then((request) => request(this.axios, this.basePath));
+    public updateMembershipAction(requestParameters: MembershipApiUpdateMembershipActionRequest, options?: AxiosRequestConfig) {
+        return MembershipApiFp(this.configuration).updateMembershipAction(requestParameters.id, requestParameters.updateMembershipActionRequest, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
@@ -530,40 +594,6 @@ export class MembershipActionsApi extends BaseAPI {
  */
 export const MembershipSettingsApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
-        /**
-         * 
-         * @summary Get membership settings
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getMembershipSettings: async (options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/membership-settings`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication chatdaddy required
-            // oauth required
-            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", [], configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
         /**
          * 
          * @summary Update a membership settings
@@ -616,16 +646,6 @@ export const MembershipSettingsApiFp = function(configuration?: Configuration) {
     return {
         /**
          * 
-         * @summary Get membership settings
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async getMembershipSettings(options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetMembershipSettings200Response>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getMembershipSettings(options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-        /**
-         * 
          * @summary Update a membership settings
          * @param {UpdateMembershipSettingsRequest} updateMembershipSettingsRequest The membership settings to update
          * @param {*} [options] Override http request option.
@@ -645,15 +665,6 @@ export const MembershipSettingsApiFp = function(configuration?: Configuration) {
 export const MembershipSettingsApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
     const localVarFp = MembershipSettingsApiFp(configuration)
     return {
-        /**
-         * 
-         * @summary Get membership settings
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getMembershipSettings(options?: any): AxiosPromise<GetMembershipSettings200Response> {
-            return localVarFp.getMembershipSettings(options).then((request) => request(axios, basePath));
-        },
         /**
          * 
          * @summary Update a membership settings
@@ -688,17 +699,6 @@ export interface MembershipSettingsApiUpdateMembershipSettingsRequest {
  * @extends {BaseAPI}
  */
 export class MembershipSettingsApi extends BaseAPI {
-    /**
-     * 
-     * @summary Get membership settings
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof MembershipSettingsApi
-     */
-    public getMembershipSettings(options?: AxiosRequestConfig) {
-        return MembershipSettingsApiFp(this.configuration).getMembershipSettings(options).then((request) => request(this.axios, this.basePath));
-    }
-
     /**
      * 
      * @summary Update a membership settings
