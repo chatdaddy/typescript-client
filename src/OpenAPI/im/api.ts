@@ -88,6 +88,12 @@ export interface Account {
      * @type {string}
      * @memberof Account
      */
+    'deletedAt'?: string | null;
+    /**
+     * An ISO formatted timestamp
+     * @type {string}
+     * @memberof Account
+     */
     'lastLoginAt'?: string | null;
     /**
      * An ISO formatted timestamp

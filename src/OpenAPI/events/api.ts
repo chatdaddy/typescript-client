@@ -153,6 +153,12 @@ export interface AccountInsertData {
      * @type {string}
      * @memberof AccountInsertData
      */
+    'deletedAt'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof AccountInsertData
+     */
     'lastLoginAt'?: string | null;
     /**
      * 
@@ -432,6 +438,12 @@ export interface AccountUpdateData {
      * @memberof AccountUpdateData
      */
     'updatedAt'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof AccountUpdateData
+     */
+    'deletedAt'?: string | null;
     /**
      * 
      * @type {string}
