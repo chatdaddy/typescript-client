@@ -133,12 +133,6 @@ export interface Chatbot {
      */
     'id': string;
     /**
-     * Name of the chatbot
-     * @type {string}
-     * @memberof Chatbot
-     */
-    'name': string;
-    /**
      * 
      * @type {Array<Document>}
      * @memberof Chatbot
@@ -163,41 +157,59 @@ export interface Chatbot {
      */
     'trainingStatus': ChatbotTrainingStatusEnum;
     /**
-     * Fallback message of the chatbot
-     * @type {string}
-     * @memberof Chatbot
-     */
-    'fallbackMessage'?: string;
-    /**
-     * Prompt message of the chatbot
-     * @type {string}
-     * @memberof Chatbot
-     */
-    'prompt'?: string;
-    /**
-     * Name of the member to assign to the chatbot
-     * @type {string}
-     * @memberof Chatbot
-     */
-    'assignedMember'?: string | null;
-    /**
-     * Name of the channel to deploy to the chatbot
-     * @type {string}
-     * @memberof Chatbot
-     */
-    'deployedAccount'?: string | null;
-    /**
-     * Training Progress
-     * @type {number}
-     * @memberof Chatbot
-     */
-    'trainingProgress'?: number;
-    /**
      * 
      * @type {Array<Job>}
      * @memberof Chatbot
      */
     'jobs'?: Array<Job>;
+    /**
+     * Name of the chatbot
+     * @type {string}
+     * @memberof Chatbot
+     */
+    'name': string;
+    /**
+     * Fallback message of the chatbot
+     * @type {string}
+     * @memberof Chatbot
+     */
+    'fallbackMessage': string;
+    /**
+     * Prompt message of the chatbot
+     * @type {string}
+     * @memberof Chatbot
+     */
+    'prompt': string;
+    /**
+     * Name of the member to assign to the chatbot
+     * @type {string}
+     * @memberof Chatbot
+     */
+    'assignedMember': string | null;
+    /**
+     * Name of the channel to deploy to the chatbot
+     * @type {string}
+     * @memberof Chatbot
+     */
+    'deployedAccount': string | null;
+    /**
+     * Use this chatbot as an AI assistant. Only one chatbot can be used as an AI assistant per team
+     * @type {boolean}
+     * @memberof Chatbot
+     */
+    'useAsAiAssistant': boolean;
+    /**
+     * Whether the chatbot is enabled to send messages to the deployed account
+     * @type {boolean}
+     * @memberof Chatbot
+     */
+    'enableAccountDeployment': boolean;
+    /**
+     * Should generated responses include the source of the data
+     * @type {boolean}
+     * @memberof Chatbot
+     */
+    'includeSourceInResponse': boolean;
 }
 
 export const ChatbotTrainingStatusEnum = {
@@ -208,6 +220,59 @@ export const ChatbotTrainingStatusEnum = {
 } as const;
 
 export type ChatbotTrainingStatusEnum = typeof ChatbotTrainingStatusEnum[keyof typeof ChatbotTrainingStatusEnum];
+
+/**
+ * 
+ * @export
+ * @interface ChatbotAllOf
+ */
+export interface ChatbotAllOf {
+    /**
+     * ID of the chatbot
+     * @type {string}
+     * @memberof ChatbotAllOf
+     */
+    'id': string;
+    /**
+     * 
+     * @type {Array<Document>}
+     * @memberof ChatbotAllOf
+     */
+    'documents'?: Array<Document>;
+    /**
+     * An ISO formatted timestamp
+     * @type {string}
+     * @memberof ChatbotAllOf
+     */
+    'createdAt': string;
+    /**
+     * An ISO formatted timestamp
+     * @type {string}
+     * @memberof ChatbotAllOf
+     */
+    'updatedAt': string;
+    /**
+     * Current training status of the chatbot
+     * @type {string}
+     * @memberof ChatbotAllOf
+     */
+    'trainingStatus': ChatbotAllOfTrainingStatusEnum;
+    /**
+     * 
+     * @type {Array<Job>}
+     * @memberof ChatbotAllOf
+     */
+    'jobs'?: Array<Job>;
+}
+
+export const ChatbotAllOfTrainingStatusEnum = {
+    Pending: 'pending',
+    Running: 'running',
+    Finished: 'finished',
+    Failed: 'failed'
+} as const;
+
+export type ChatbotAllOfTrainingStatusEnum = typeof ChatbotAllOfTrainingStatusEnum[keyof typeof ChatbotAllOfTrainingStatusEnum];
 
 /**
  * 
@@ -246,19 +311,6 @@ export interface ChatbotMessageResponse {
      * @memberof ChatbotMessageResponse
      */
     'sources': Array<string>;
-}
-/**
- * 
- * @export
- * @interface CreateChatbotRequest
- */
-export interface CreateChatbotRequest {
-    /**
-     * Name of the chatbot
-     * @type {string}
-     * @memberof CreateChatbotRequest
-     */
-    'name': string;
 }
 /**
  * 
@@ -927,6 +979,61 @@ export type TriggerType = typeof TriggerType[keyof typeof TriggerType];
 /**
  * 
  * @export
+ * @interface UpdatableChatbotProperties
+ */
+export interface UpdatableChatbotProperties {
+    /**
+     * Name of the chatbot
+     * @type {string}
+     * @memberof UpdatableChatbotProperties
+     */
+    'name'?: string;
+    /**
+     * Fallback message of the chatbot
+     * @type {string}
+     * @memberof UpdatableChatbotProperties
+     */
+    'fallbackMessage'?: string;
+    /**
+     * Prompt message of the chatbot
+     * @type {string}
+     * @memberof UpdatableChatbotProperties
+     */
+    'prompt'?: string;
+    /**
+     * Name of the member to assign to the chatbot
+     * @type {string}
+     * @memberof UpdatableChatbotProperties
+     */
+    'assignedMember'?: string | null;
+    /**
+     * Name of the channel to deploy to the chatbot
+     * @type {string}
+     * @memberof UpdatableChatbotProperties
+     */
+    'deployedAccount'?: string | null;
+    /**
+     * Use this chatbot as an AI assistant. Only one chatbot can be used as an AI assistant per team
+     * @type {boolean}
+     * @memberof UpdatableChatbotProperties
+     */
+    'useAsAiAssistant'?: boolean;
+    /**
+     * Whether the chatbot is enabled to send messages to the deployed account
+     * @type {boolean}
+     * @memberof UpdatableChatbotProperties
+     */
+    'enableAccountDeployment'?: boolean;
+    /**
+     * Should generated responses include the source of the data
+     * @type {boolean}
+     * @memberof UpdatableChatbotProperties
+     */
+    'includeSourceInResponse'?: boolean;
+}
+/**
+ * 
+ * @export
  * @interface UpdateChatbotRequest
  */
 export interface UpdateChatbotRequest {
@@ -961,9 +1068,40 @@ export interface UpdateChatbotRequest {
      */
     'deployedAccount'?: string | null;
     /**
+     * Use this chatbot as an AI assistant. Only one chatbot can be used as an AI assistant per team
+     * @type {boolean}
+     * @memberof UpdateChatbotRequest
+     */
+    'useAsAiAssistant'?: boolean;
+    /**
+     * Whether the chatbot is enabled to send messages to the deployed account
+     * @type {boolean}
+     * @memberof UpdateChatbotRequest
+     */
+    'enableAccountDeployment'?: boolean;
+    /**
+     * Should generated responses include the source of the data
+     * @type {boolean}
+     * @memberof UpdateChatbotRequest
+     */
+    'includeSourceInResponse'?: boolean;
+    /**
      * 
      * @type {Array<string>}
      * @memberof UpdateChatbotRequest
+     */
+    'removeDocumentIds'?: Array<string>;
+}
+/**
+ * 
+ * @export
+ * @interface UpdateChatbotRequestAllOf
+ */
+export interface UpdateChatbotRequestAllOf {
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof UpdateChatbotRequestAllOf
      */
     'removeDocumentIds'?: Array<string>;
 }
@@ -1376,11 +1514,11 @@ export const ChatbotApiAxiosParamCreator = function (configuration?: Configurati
         /**
          * 
          * @summary Create a chatbot
-         * @param {CreateChatbotRequest} [createChatbotRequest] 
+         * @param {UpdatableChatbotProperties} [body] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        createBot: async (createChatbotRequest?: CreateChatbotRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        createBot: async (body?: UpdatableChatbotProperties, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/chatbots`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -1404,7 +1542,7 @@ export const ChatbotApiAxiosParamCreator = function (configuration?: Configurati
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(createChatbotRequest, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(body, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -1680,12 +1818,12 @@ export const ChatbotApiFp = function(configuration?: Configuration) {
         /**
          * 
          * @summary Create a chatbot
-         * @param {CreateChatbotRequest} [createChatbotRequest] 
+         * @param {UpdatableChatbotProperties} [body] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async createBot(createChatbotRequest?: CreateChatbotRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CreateChatbotResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.createBot(createChatbotRequest, options);
+        async createBot(body?: UpdatableChatbotProperties, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CreateChatbotResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.createBot(body, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -1781,12 +1919,12 @@ export const ChatbotApiFactory = function (configuration?: Configuration, basePa
         /**
          * 
          * @summary Create a chatbot
-         * @param {CreateChatbotRequest} [createChatbotRequest] 
+         * @param {UpdatableChatbotProperties} [body] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        createBot(createChatbotRequest?: CreateChatbotRequest, options?: any): AxiosPromise<CreateChatbotResponse> {
-            return localVarFp.createBot(createChatbotRequest, options).then((request) => request(axios, basePath));
+        createBot(body?: UpdatableChatbotProperties, options?: any): AxiosPromise<CreateChatbotResponse> {
+            return localVarFp.createBot(body, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -1877,10 +2015,10 @@ export interface ChatbotApiChatbotRefreshRequest {
 export interface ChatbotApiCreateBotRequest {
     /**
      * 
-     * @type {CreateChatbotRequest}
+     * @type {UpdatableChatbotProperties}
      * @memberof ChatbotApiCreateBot
      */
-    readonly createChatbotRequest?: CreateChatbotRequest
+    readonly body?: UpdatableChatbotProperties
 }
 
 /**
@@ -2016,7 +2154,7 @@ export class ChatbotApi extends BaseAPI {
      * @memberof ChatbotApi
      */
     public createBot(requestParameters: ChatbotApiCreateBotRequest = {}, options?: AxiosRequestConfig) {
-        return ChatbotApiFp(this.configuration).createBot(requestParameters.createChatbotRequest, options).then((request) => request(this.axios, this.basePath));
+        return ChatbotApiFp(this.configuration).createBot(requestParameters.body, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
