@@ -3989,8 +3989,8 @@ export const AccountApiAxiosParamCreator = function (configuration?: Configurati
             };
         },
         /**
-         * 
-         * @summary Delete an account
+         * You can continue to poll this route to check if it has been deleted. When deleted, the route will return a 404.
+         * @summary Enqueues a task to delete the account
          * @param {string} accountId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -4322,8 +4322,8 @@ export const AccountApiFp = function(configuration?: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
-         * 
-         * @summary Delete an account
+         * You can continue to poll this route to check if it has been deleted. When deleted, the route will return a 404.
+         * @summary Enqueues a task to delete the account
          * @param {string} accountId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -4437,8 +4437,8 @@ export const AccountApiFactory = function (configuration?: Configuration, basePa
             return localVarFp.accountsClose(accountId, logout, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
-         * @summary Delete an account
+         * You can continue to poll this route to check if it has been deleted. When deleted, the route will return a 404.
+         * @summary Enqueues a task to delete the account
          * @param {string} accountId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -4730,8 +4730,8 @@ export class AccountApi extends BaseAPI {
     }
 
     /**
-     * 
-     * @summary Delete an account
+     * You can continue to poll this route to check if it has been deleted. When deleted, the route will return a 404.
+     * @summary Enqueues a task to delete the account
      * @param {AccountApiAccountsDeleteRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
