@@ -10832,11 +10832,11 @@ export const TagsApiAxiosParamCreator = function (configuration?: Configuration)
          * @summary Get all the tags
          * @param {string} [q] 
          * @param {number} [count] 
-         * @param {string} [cursor] 
+         * @param {number} [page] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        tagsGet: async (q?: string, count?: number, cursor?: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        tagsGet: async (q?: string, count?: number, page?: number, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/tags`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -10861,8 +10861,8 @@ export const TagsApiAxiosParamCreator = function (configuration?: Configuration)
                 localVarQueryParameter['count'] = count;
             }
 
-            if (cursor !== undefined) {
-                localVarQueryParameter['cursor'] = cursor;
+            if (page !== undefined) {
+                localVarQueryParameter['page'] = page;
             }
 
 
@@ -11047,12 +11047,12 @@ export const TagsApiFp = function(configuration?: Configuration) {
          * @summary Get all the tags
          * @param {string} [q] 
          * @param {number} [count] 
-         * @param {string} [cursor] 
+         * @param {number} [page] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async tagsGet(q?: string, count?: number, cursor?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TagsGet200Response>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.tagsGet(q, count, cursor, options);
+        async tagsGet(q?: string, count?: number, page?: number, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TagsGet200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.tagsGet(q, count, page, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -11114,12 +11114,12 @@ export const TagsApiFactory = function (configuration?: Configuration, basePath?
          * @summary Get all the tags
          * @param {string} [q] 
          * @param {number} [count] 
-         * @param {string} [cursor] 
+         * @param {number} [page] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        tagsGet(q?: string, count?: number, cursor?: string, options?: any): AxiosPromise<TagsGet200Response> {
-            return localVarFp.tagsGet(q, count, cursor, options).then((request) => request(axios, basePath));
+        tagsGet(q?: string, count?: number, page?: number, options?: any): AxiosPromise<TagsGet200Response> {
+            return localVarFp.tagsGet(q, count, page, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -11192,10 +11192,10 @@ export interface TagsApiTagsGetRequest {
 
     /**
      * 
-     * @type {string}
+     * @type {number}
      * @memberof TagsApiTagsGet
      */
-    readonly cursor?: string
+    readonly page?: number
 }
 
 /**
@@ -11345,7 +11345,7 @@ export class TagsApi extends BaseAPI {
      * @memberof TagsApi
      */
     public tagsGet(requestParameters: TagsApiTagsGetRequest = {}, options?: AxiosRequestConfig) {
-        return TagsApiFp(this.configuration).tagsGet(requestParameters.q, requestParameters.count, requestParameters.cursor, options).then((request) => request(this.axios, this.basePath));
+        return TagsApiFp(this.configuration).tagsGet(requestParameters.q, requestParameters.count, requestParameters.page, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
