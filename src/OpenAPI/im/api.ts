@@ -10833,10 +10833,11 @@ export const TagsApiAxiosParamCreator = function (configuration?: Configuration)
          * @param {string} [q] 
          * @param {number} [count] 
          * @param {number} [page] 
+         * @param {boolean} [isCustomField] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        tagsGet: async (q?: string, count?: number, page?: number, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        tagsGet: async (q?: string, count?: number, page?: number, isCustomField?: boolean, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/tags`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -10863,6 +10864,10 @@ export const TagsApiAxiosParamCreator = function (configuration?: Configuration)
 
             if (page !== undefined) {
                 localVarQueryParameter['page'] = page;
+            }
+
+            if (isCustomField !== undefined) {
+                localVarQueryParameter['isCustomField'] = isCustomField;
             }
 
 
@@ -11048,11 +11053,12 @@ export const TagsApiFp = function(configuration?: Configuration) {
          * @param {string} [q] 
          * @param {number} [count] 
          * @param {number} [page] 
+         * @param {boolean} [isCustomField] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async tagsGet(q?: string, count?: number, page?: number, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TagsGet200Response>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.tagsGet(q, count, page, options);
+        async tagsGet(q?: string, count?: number, page?: number, isCustomField?: boolean, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TagsGet200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.tagsGet(q, count, page, isCustomField, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -11115,11 +11121,12 @@ export const TagsApiFactory = function (configuration?: Configuration, basePath?
          * @param {string} [q] 
          * @param {number} [count] 
          * @param {number} [page] 
+         * @param {boolean} [isCustomField] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        tagsGet(q?: string, count?: number, page?: number, options?: any): AxiosPromise<TagsGet200Response> {
-            return localVarFp.tagsGet(q, count, page, options).then((request) => request(axios, basePath));
+        tagsGet(q?: string, count?: number, page?: number, isCustomField?: boolean, options?: any): AxiosPromise<TagsGet200Response> {
+            return localVarFp.tagsGet(q, count, page, isCustomField, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -11196,6 +11203,13 @@ export interface TagsApiTagsGetRequest {
      * @memberof TagsApiTagsGet
      */
     readonly page?: number
+
+    /**
+     * 
+     * @type {boolean}
+     * @memberof TagsApiTagsGet
+     */
+    readonly isCustomField?: boolean
 }
 
 /**
@@ -11345,7 +11359,7 @@ export class TagsApi extends BaseAPI {
      * @memberof TagsApi
      */
     public tagsGet(requestParameters: TagsApiTagsGetRequest = {}, options?: AxiosRequestConfig) {
-        return TagsApiFp(this.configuration).tagsGet(requestParameters.q, requestParameters.count, requestParameters.page, options).then((request) => request(this.axios, this.basePath));
+        return TagsApiFp(this.configuration).tagsGet(requestParameters.q, requestParameters.count, requestParameters.page, requestParameters.isCustomField, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
