@@ -30,11 +30,23 @@ import { COLLECTION_FORMATS, RequestArgs, BaseAPI, RequiredError } from '../base
  */
 export interface AutocompleteInbox200Response {
     /**
+     * Name of the chatbot that generated the suggestions. Will use \"chatgpt\" if used vanilla GPT
+     * @type {string}
+     * @memberof AutocompleteInbox200Response
+     */
+    'chatbotName': string;
+    /**
      * 
      * @type {Array<AutocompleteSuggestion>}
      * @memberof AutocompleteInbox200Response
      */
     'suggestions': Array<AutocompleteSuggestion>;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof AutocompleteInbox200Response
+     */
+    'sources'?: Array<string>;
 }
 /**
  * 
