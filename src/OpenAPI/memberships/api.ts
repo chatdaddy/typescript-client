@@ -31,10 +31,10 @@ import { COLLECTION_FORMATS, RequestArgs, BaseAPI, RequiredError } from '../base
 export interface CreateMembershipActionRequest {
     /**
      * The id of the membership
-     * @type {string}
+     * @type {number}
      * @memberof CreateMembershipActionRequest
      */
-    'membershipId': string;
+    'membershipId': number;
     /**
      * 
      * @type {string}
@@ -96,10 +96,10 @@ export interface GetMemberships200Response {
 export interface Membership {
     /**
      * The id of the membership
-     * @type {string}
+     * @type {number}
      * @memberof Membership
      */
-    'id'?: string;
+    'id'?: number;
     /**
      * The userId of the membership
      * @type {string}
@@ -145,16 +145,16 @@ export interface Membership {
 export interface MembershipAction {
     /**
      * The id of the pending membership action
-     * @type {string}
+     * @type {number}
      * @memberof MembershipAction
      */
-    'id': string;
+    'id': number;
     /**
      * The id of the membership
-     * @type {string}
+     * @type {number}
      * @memberof MembershipAction
      */
-    'membershipId': string;
+    'membershipId': number;
     /**
      * 
      * @type {string}
@@ -461,12 +461,12 @@ export const MembershipsApiAxiosParamCreator = function (configuration?: Configu
          * 
          * @summary Get memberships
          * @param {number} [count] The number of memberships to get
-         * @param {string} [cursor] The cursor to get memberships from
+         * @param {number} [cursor] The cursor to get memberships from
          * @param {boolean} [onlyPending] Whether to only get memberships with pending actions
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getMemberships: async (count?: number, cursor?: string, onlyPending?: boolean, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getMemberships: async (count?: number, cursor?: number, onlyPending?: boolean, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/memberships`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -509,12 +509,12 @@ export const MembershipsApiAxiosParamCreator = function (configuration?: Configu
         /**
          * 
          * @summary Update a membership action
-         * @param {string} id The id of the membership action to update
+         * @param {number} id The id of the membership action to update
          * @param {UpdateMembershipActionRequest} updateMembershipActionRequest The membership action to update
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        updateMembershipAction: async (id: string, updateMembershipActionRequest: UpdateMembershipActionRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        updateMembershipAction: async (id: number, updateMembershipActionRequest: UpdateMembershipActionRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
             assertParamExists('updateMembershipAction', 'id', id)
             // verify required parameter 'updateMembershipActionRequest' is not null or undefined
@@ -647,24 +647,24 @@ export const MembershipsApiFp = function(configuration?: Configuration) {
          * 
          * @summary Get memberships
          * @param {number} [count] The number of memberships to get
-         * @param {string} [cursor] The cursor to get memberships from
+         * @param {number} [cursor] The cursor to get memberships from
          * @param {boolean} [onlyPending] Whether to only get memberships with pending actions
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getMemberships(count?: number, cursor?: string, onlyPending?: boolean, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetMemberships200Response>> {
+        async getMemberships(count?: number, cursor?: number, onlyPending?: boolean, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetMemberships200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getMemberships(count, cursor, onlyPending, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
          * 
          * @summary Update a membership action
-         * @param {string} id The id of the membership action to update
+         * @param {number} id The id of the membership action to update
          * @param {UpdateMembershipActionRequest} updateMembershipActionRequest The membership action to update
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async updateMembershipAction(id: string, updateMembershipActionRequest: UpdateMembershipActionRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async updateMembershipAction(id: number, updateMembershipActionRequest: UpdateMembershipActionRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.updateMembershipAction(id, updateMembershipActionRequest, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -732,23 +732,23 @@ export const MembershipsApiFactory = function (configuration?: Configuration, ba
          * 
          * @summary Get memberships
          * @param {number} [count] The number of memberships to get
-         * @param {string} [cursor] The cursor to get memberships from
+         * @param {number} [cursor] The cursor to get memberships from
          * @param {boolean} [onlyPending] Whether to only get memberships with pending actions
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getMemberships(count?: number, cursor?: string, onlyPending?: boolean, options?: any): AxiosPromise<GetMemberships200Response> {
+        getMemberships(count?: number, cursor?: number, onlyPending?: boolean, options?: any): AxiosPromise<GetMemberships200Response> {
             return localVarFp.getMemberships(count, cursor, onlyPending, options).then((request) => request(axios, basePath));
         },
         /**
          * 
          * @summary Update a membership action
-         * @param {string} id The id of the membership action to update
+         * @param {number} id The id of the membership action to update
          * @param {UpdateMembershipActionRequest} updateMembershipActionRequest The membership action to update
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        updateMembershipAction(id: string, updateMembershipActionRequest: UpdateMembershipActionRequest, options?: any): AxiosPromise<void> {
+        updateMembershipAction(id: number, updateMembershipActionRequest: UpdateMembershipActionRequest, options?: any): AxiosPromise<void> {
             return localVarFp.updateMembershipAction(id, updateMembershipActionRequest, options).then((request) => request(axios, basePath));
         },
         /**
@@ -821,10 +821,10 @@ export interface MembershipsApiGetMembershipsRequest {
 
     /**
      * The cursor to get memberships from
-     * @type {string}
+     * @type {number}
      * @memberof MembershipsApiGetMemberships
      */
-    readonly cursor?: string
+    readonly cursor?: number
 
     /**
      * Whether to only get memberships with pending actions
@@ -842,10 +842,10 @@ export interface MembershipsApiGetMembershipsRequest {
 export interface MembershipsApiUpdateMembershipActionRequest {
     /**
      * The id of the membership action to update
-     * @type {string}
+     * @type {number}
      * @memberof MembershipsApiUpdateMembershipAction
      */
-    readonly id: string
+    readonly id: number
 
     /**
      * The membership action to update
