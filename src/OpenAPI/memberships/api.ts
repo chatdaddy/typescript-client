@@ -83,10 +83,10 @@ export interface GetMemberships200Response {
     'memberships'?: Array<Membership>;
     /**
      * 
-     * @type {string}
+     * @type {number}
      * @memberof GetMemberships200Response
      */
-    'cursor'?: string;
+    'cursor'?: number;
 }
 /**
  * 
