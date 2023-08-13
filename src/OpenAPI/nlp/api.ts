@@ -30,11 +30,17 @@ import { COLLECTION_FORMATS, RequestArgs, BaseAPI, RequiredError } from '../base
  */
 export interface AutocompleteInbox200Response {
     /**
-     * Name of the chatbot that generated the suggestions. Will use \"chatgpt\" if used vanilla GPT
+     * Name of the chatbot that generated the suggestions. Will use \"ChatDaddy AI\" if used vanilla GPT
      * @type {string}
      * @memberof AutocompleteInbox200Response
      */
     'chatbotName': string;
+    /**
+     * ID of the chatbot that generated the suggestions. Empty if used vanilla GPT
+     * @type {string}
+     * @memberof AutocompleteInbox200Response
+     */
+    'chatbotId'?: string;
     /**
      * 
      * @type {Array<AutocompleteSuggestion>}
@@ -1614,10 +1620,11 @@ export const ChatbotApiAxiosParamCreator = function (configuration?: Configurati
         /**
          * 
          * @summary Get user\'s chatbots
+         * @param {Array<string>} [id] Find the chatbots with the given ids
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getBots: async (options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getBots: async (id?: Array<string>, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/chatbots`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -1633,6 +1640,10 @@ export const ChatbotApiAxiosParamCreator = function (configuration?: Configurati
             // authentication chatdaddy required
             // oauth required
             await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["AUTOCOMPLETE_GET"], configuration)
+
+            if (id) {
+                localVarQueryParameter['id'] = id;
+            }
 
 
     
@@ -1859,11 +1870,12 @@ export const ChatbotApiFp = function(configuration?: Configuration) {
         /**
          * 
          * @summary Get user\'s chatbots
+         * @param {Array<string>} [id] Find the chatbots with the given ids
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getBots(options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetChatbotsResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getBots(options);
+        async getBots(id?: Array<string>, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetChatbotsResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getBots(id, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -1957,11 +1969,12 @@ export const ChatbotApiFactory = function (configuration?: Configuration, basePa
         /**
          * 
          * @summary Get user\'s chatbots
+         * @param {Array<string>} [id] Find the chatbots with the given ids
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getBots(options?: any): AxiosPromise<GetChatbotsResponse> {
-            return localVarFp.getBots(options).then((request) => request(axios, basePath));
+        getBots(id?: Array<string>, options?: any): AxiosPromise<GetChatbotsResponse> {
+            return localVarFp.getBots(id, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -2050,6 +2063,20 @@ export interface ChatbotApiDeleteBotRequest {
      * @memberof ChatbotApiDeleteBot
      */
     readonly id: string
+}
+
+/**
+ * Request parameters for getBots operation in ChatbotApi.
+ * @export
+ * @interface ChatbotApiGetBotsRequest
+ */
+export interface ChatbotApiGetBotsRequest {
+    /**
+     * Find the chatbots with the given ids
+     * @type {Array<string>}
+     * @memberof ChatbotApiGetBots
+     */
+    readonly id?: Array<string>
 }
 
 /**
@@ -2182,12 +2209,13 @@ export class ChatbotApi extends BaseAPI {
     /**
      * 
      * @summary Get user\'s chatbots
+     * @param {ChatbotApiGetBotsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof ChatbotApi
      */
-    public getBots(options?: AxiosRequestConfig) {
-        return ChatbotApiFp(this.configuration).getBots(options).then((request) => request(this.axios, this.basePath));
+    public getBots(requestParameters: ChatbotApiGetBotsRequest = {}, options?: AxiosRequestConfig) {
+        return ChatbotApiFp(this.configuration).getBots(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
