@@ -575,468 +575,117 @@ export type ActionExecuteEventEnum = typeof ActionExecuteEventEnum[keyof typeof 
 export interface ActionExecuteData {
     /**
      * 
-     * @type {string}
-     * @memberof ActionExecuteData
-     */
-    'createdAt': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ActionExecuteData
-     */
-    'updatedAt': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ActionExecuteData
-     */
-    'id': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ActionExecuteData
-     */
-    'botId'?: string;
-    /**
-     * Name of the template
-     * @type {string}
-     * @memberof ActionExecuteData
-     */
-    'name': string;
-    /**
-     * 
-     * @type {ActionExecuteDataAllOf1Message}
-     * @memberof ActionExecuteData
-     */
-    'message'?: ActionExecuteDataAllOf1Message | null;
-    /**
-     * set the assignee on the contact
-     * @type {string}
-     * @memberof ActionExecuteData
-     */
-    'assignee'?: string | null;
-    /**
-     * Tags to set on this contact.
-     * @type {Array<ActionExecuteDataAllOf1Tags>}
-     * @memberof ActionExecuteData
-     */
-    'tags'?: Array<ActionExecuteDataAllOf1Tags> | null;
-    /**
-     * Array of UserId
-     * @type {Array<string>}
-     * @memberof ActionExecuteData
-     */
-    'notifyUsers'?: Array<string>;
-    /**
-     * 
-     * @type {Array<string>}
-     * @memberof ActionExecuteData
-     */
-    'webhooks'?: Array<string>;
-    /**
-     * 
-     * @type {ActionExecuteDataAllOf1MessagePosition}
-     * @memberof ActionExecuteData
-     */
-    'position'?: ActionExecuteDataAllOf1MessagePosition;
-    /**
-     * send in to remove the action
-     * @type {boolean}
-     * @memberof ActionExecuteData
-     */
-    'remove'?: boolean;
-}
-/**
- * 
- * @export
- * @interface ActionExecuteDataAllOf
- */
-export interface ActionExecuteDataAllOf {
-    /**
-     * 
-     * @type {string}
-     * @memberof ActionExecuteDataAllOf
-     */
-    'createdAt': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ActionExecuteDataAllOf
-     */
-    'updatedAt': string;
-}
-/**
- * 
- * @export
- * @interface ActionExecuteDataAllOf1
- */
-export interface ActionExecuteDataAllOf1 {
-    /**
-     * 
-     * @type {string}
-     * @memberof ActionExecuteDataAllOf1
-     */
-    'id'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ActionExecuteDataAllOf1
-     */
-    'botId'?: string;
-    /**
-     * Name of the template
-     * @type {string}
-     * @memberof ActionExecuteDataAllOf1
-     */
-    'name'?: string;
-    /**
-     * 
-     * @type {ActionExecuteDataAllOf1Message}
-     * @memberof ActionExecuteDataAllOf1
-     */
-    'message'?: ActionExecuteDataAllOf1Message | null;
-    /**
-     * set the assignee on the contact
-     * @type {string}
-     * @memberof ActionExecuteDataAllOf1
-     */
-    'assignee'?: string | null;
-    /**
-     * Tags to set on this contact.
-     * @type {Array<ActionExecuteDataAllOf1Tags>}
-     * @memberof ActionExecuteDataAllOf1
-     */
-    'tags'?: Array<ActionExecuteDataAllOf1Tags> | null;
-    /**
-     * Array of UserId
-     * @type {Array<string>}
-     * @memberof ActionExecuteDataAllOf1
-     */
-    'notifyUsers'?: Array<string>;
-    /**
-     * 
-     * @type {Array<string>}
-     * @memberof ActionExecuteDataAllOf1
-     */
-    'webhooks'?: Array<string>;
-    /**
-     * 
-     * @type {ActionExecuteDataAllOf1MessagePosition}
-     * @memberof ActionExecuteDataAllOf1
-     */
-    'position'?: ActionExecuteDataAllOf1MessagePosition;
-    /**
-     * send in to remove the action
-     * @type {boolean}
-     * @memberof ActionExecuteDataAllOf1
-     */
-    'remove'?: boolean;
-}
-/**
- * 
- * @export
- * @interface ActionExecuteDataAllOf1Message
- */
-export interface ActionExecuteDataAllOf1Message {
-    /**
-     * the template message itself
-     * @type {string}
-     * @memberof ActionExecuteDataAllOf1Message
-     */
-    'text': string | null;
-    /**
-     * array of attachments for the template
-     * @type {Array<ActionExecuteDataAllOf1MessageAttachments>}
-     * @memberof ActionExecuteDataAllOf1Message
-     */
-    'attachments'?: Array<ActionExecuteDataAllOf1MessageAttachments>;
-    /**
-     * 
-     * @type {Array<ActionExecuteDataAllOf1MessageButtons>}
-     * @memberof ActionExecuteDataAllOf1Message
-     */
-    'buttons'?: Array<ActionExecuteDataAllOf1MessageButtons>;
-    /**
-     * 
-     * @type {Array<ActionExecuteDataAllOf1MessageDelays>}
-     * @memberof ActionExecuteDataAllOf1Message
-     */
-    'delays'?: Array<ActionExecuteDataAllOf1MessageDelays>;
-    /**
-     * 
-     * @type {ActionExecuteDataAllOf1MessageInput}
-     * @memberof ActionExecuteDataAllOf1Message
-     */
-    'input'?: ActionExecuteDataAllOf1MessageInput;
-    /**
-     * 
-     * @type {string}
-     * @memberof ActionExecuteDataAllOf1Message
-     */
-    'quoted'?: string;
-    /**
-     * 
-     * @type {Array<ActionExecuteDataAllOf1MessageProducts>}
-     * @memberof ActionExecuteDataAllOf1Message
-     */
-    'products'?: Array<ActionExecuteDataAllOf1MessageProducts>;
-}
-/**
- * 
- * @export
- * @interface ActionExecuteDataAllOf1MessageAttachments
- */
-export interface ActionExecuteDataAllOf1MessageAttachments {
-    /**
-     * 
-     * @type {string}
-     * @memberof ActionExecuteDataAllOf1MessageAttachments
-     */
-    'type': ActionExecuteDataAllOf1MessageAttachmentsTypeEnum;
-    /**
-     * 
-     * @type {string}
-     * @memberof ActionExecuteDataAllOf1MessageAttachments
-     */
-    'mimetype': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ActionExecuteDataAllOf1MessageAttachments
-     */
-    'url': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ActionExecuteDataAllOf1MessageAttachments
-     */
-    'jpegThumbnail'?: string | null;
-    /**
-     * 
      * @type {number}
-     * @memberof ActionExecuteDataAllOf1MessageAttachments
+     * @memberof ActionExecuteData
      */
-    'seconds'?: number;
+    'id': number;
     /**
      * 
      * @type {string}
-     * @memberof ActionExecuteDataAllOf1MessageAttachments
+     * @memberof ActionExecuteData
      */
-    'filename'?: string;
+    'actionId': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ActionExecuteData
+     */
+    'botId': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ActionExecuteData
+     */
+    'instanceId'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ActionExecuteData
+     */
+    'status'?: ActionExecuteDataStatusEnum;
+    /**
+     * 
+     * @type {string}
+     * @memberof ActionExecuteData
+     */
+    'contactId'?: string;
+    /**
+     * 
+     * @type {{ [key: string]: any; }}
+     * @memberof ActionExecuteData
+     */
+    'inputParameters'?: { [key: string]: any; };
+    /**
+     * 
+     * @type {string}
+     * @memberof ActionExecuteData
+     */
+    'accountId'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ActionExecuteData
+     */
+    'createdAt'?: string;
+    /**
+     * 
+     * @type {Array<ActionExecuteDataMessagesInner>}
+     * @memberof ActionExecuteData
+     */
+    'messages'?: Array<ActionExecuteDataMessagesInner>;
+    /**
+     * 
+     * @type {Array<ActionExecuteDataMessagesInner>}
+     * @memberof ActionExecuteData
+     */
+    'webhooks'?: Array<ActionExecuteDataMessagesInner>;
+    /**
+     * 
+     * @type {ActionExecuteDataMessagesInner}
+     * @memberof ActionExecuteData
+     */
+    'contact'?: ActionExecuteDataMessagesInner;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof ActionExecuteData
+     */
+    'isStart'?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof ActionExecuteData
+     */
+    'isFinal'?: boolean;
 }
 
-export const ActionExecuteDataAllOf1MessageAttachmentsTypeEnum = {
-    Image: 'image',
-    Video: 'video',
-    Contact: 'contact',
-    Sticker: 'sticker',
-    Audio: 'audio',
-    Document: 'document',
-    Location: 'location'
+export const ActionExecuteDataStatusEnum = {
+    Pending: 'pending',
+    Sent: 'sent',
+    Failed: 'failed',
+    Cancelled: 'cancelled'
 } as const;
 
-export type ActionExecuteDataAllOf1MessageAttachmentsTypeEnum = typeof ActionExecuteDataAllOf1MessageAttachmentsTypeEnum[keyof typeof ActionExecuteDataAllOf1MessageAttachmentsTypeEnum];
+export type ActionExecuteDataStatusEnum = typeof ActionExecuteDataStatusEnum[keyof typeof ActionExecuteDataStatusEnum];
 
 /**
  * 
  * @export
- * @interface ActionExecuteDataAllOf1MessageButtons
+ * @interface ActionExecuteDataMessagesInner
  */
-export interface ActionExecuteDataAllOf1MessageButtons {
-    /**
-     * 
-     * @type {string}
-     * @memberof ActionExecuteDataAllOf1MessageButtons
-     */
-    'text': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ActionExecuteDataAllOf1MessageButtons
-     */
-    'triggerActionId'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof ActionExecuteDataAllOf1MessageButtons
-     */
-    'triggerBotId'?: string | null;
-    /**
-     * Make a button with a link
-     * @type {string}
-     * @memberof ActionExecuteDataAllOf1MessageButtons
-     */
-    'url'?: string;
-    /**
-     * Make a button with a phone number
-     * @type {string}
-     * @memberof ActionExecuteDataAllOf1MessageButtons
-     */
-    'phoneNumber'?: string;
-    /**
-     * 
-     * @type {ActionExecuteDataAllOf1MessagePosition}
-     * @memberof ActionExecuteDataAllOf1MessageButtons
-     */
-    'position'?: ActionExecuteDataAllOf1MessagePosition;
-}
-/**
- * 
- * @export
- * @interface ActionExecuteDataAllOf1MessageDelays
- */
-export interface ActionExecuteDataAllOf1MessageDelays {
-    /**
-     * Time delays on second
-     * @type {number}
-     * @memberof ActionExecuteDataAllOf1MessageDelays
-     */
-    'timeDelaySec': number;
-    /**
-     * 
-     * @type {string}
-     * @memberof ActionExecuteDataAllOf1MessageDelays
-     */
-    'triggerActionId': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ActionExecuteDataAllOf1MessageDelays
-     */
-    'triggerBotId'?: string | null;
-    /**
-     * Simulate typing
-     * @type {boolean}
-     * @memberof ActionExecuteDataAllOf1MessageDelays
-     */
-    'simulateTyping'?: boolean;
-    /**
-     * If true, the message will be cancelled if a reply is received
-     * @type {boolean}
-     * @memberof ActionExecuteDataAllOf1MessageDelays
-     */
-    'cancelIfReplyReceived'?: boolean;
-    /**
-     * 
-     * @type {ActionExecuteDataAllOf1MessagePosition}
-     * @memberof ActionExecuteDataAllOf1MessageDelays
-     */
-    'position'?: ActionExecuteDataAllOf1MessagePosition;
-}
-/**
- * 
- * @export
- * @interface ActionExecuteDataAllOf1MessageInput
- */
-export interface ActionExecuteDataAllOf1MessageInput {
-    /**
-     * Name of the input
-     * @type {string}
-     * @memberof ActionExecuteDataAllOf1MessageInput
-     */
-    'name': string;
-    /**
-     * 
-     * @type {ActionExecuteDataAllOf1MessageInputValidation}
-     * @memberof ActionExecuteDataAllOf1MessageInput
-     */
-    'validation'?: ActionExecuteDataAllOf1MessageInputValidation;
-    /**
-     * 
-     * @type {string}
-     * @memberof ActionExecuteDataAllOf1MessageInput
-     */
-    'triggerActionId'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof ActionExecuteDataAllOf1MessageInput
-     */
-    'triggerBotId'?: string | null;
-    /**
-     * 
-     * @type {ActionExecuteDataAllOf1MessagePosition}
-     * @memberof ActionExecuteDataAllOf1MessageInput
-     */
-    'position'?: ActionExecuteDataAllOf1MessagePosition;
-}
-/**
- * 
- * @export
- * @interface ActionExecuteDataAllOf1MessageInputValidation
- */
-export interface ActionExecuteDataAllOf1MessageInputValidation {
-    /**
-     * 
-     * @type {string}
-     * @memberof ActionExecuteDataAllOf1MessageInputValidation
-     */
-    'type': ActionExecuteDataAllOf1MessageInputValidationTypeEnum;
-}
-
-export const ActionExecuteDataAllOf1MessageInputValidationTypeEnum = {
-    String: 'string',
-    Integer: 'integer'
-} as const;
-
-export type ActionExecuteDataAllOf1MessageInputValidationTypeEnum = typeof ActionExecuteDataAllOf1MessageInputValidationTypeEnum[keyof typeof ActionExecuteDataAllOf1MessageInputValidationTypeEnum];
-
-/**
- * 
- * @export
- * @interface ActionExecuteDataAllOf1MessagePosition
- */
-export interface ActionExecuteDataAllOf1MessagePosition {
+export interface ActionExecuteDataMessagesInner {
     /**
      * 
      * @type {number}
-     * @memberof ActionExecuteDataAllOf1MessagePosition
+     * @memberof ActionExecuteDataMessagesInner
      */
-    'x': number;
+    'statusCode': number;
     /**
      * 
-     * @type {number}
-     * @memberof ActionExecuteDataAllOf1MessagePosition
+     * @type {{ [key: string]: any; }}
+     * @memberof ActionExecuteDataMessagesInner
      */
-    'y': number;
-}
-/**
- * 
- * @export
- * @interface ActionExecuteDataAllOf1MessageProducts
- */
-export interface ActionExecuteDataAllOf1MessageProducts {
-    /**
-     * 
-     * @type {string}
-     * @memberof ActionExecuteDataAllOf1MessageProducts
-     */
-    'id': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ActionExecuteDataAllOf1MessageProducts
-     */
-    'accountId': string;
-}
-/**
- * 
- * @export
- * @interface ActionExecuteDataAllOf1Tags
- */
-export interface ActionExecuteDataAllOf1Tags {
-    /**
-     * 
-     * @type {string}
-     * @memberof ActionExecuteDataAllOf1Tags
-     */
-    'name': string;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof ActionExecuteDataAllOf1Tags
-     */
-    'remove'?: boolean;
+    'body'?: { [key: string]: any; };
 }
 /**
  * 
@@ -2019,22 +1668,22 @@ export interface BotInsertDataStartTriggersInnerInstancesInnerRecordsInner {
     'createdAt'?: string;
     /**
      * 
-     * @type {Array<BotInsertDataStartTriggersInnerInstancesInnerRecordsInnerMessagesInner>}
+     * @type {Array<ActionExecuteDataMessagesInner>}
      * @memberof BotInsertDataStartTriggersInnerInstancesInnerRecordsInner
      */
-    'messages'?: Array<BotInsertDataStartTriggersInnerInstancesInnerRecordsInnerMessagesInner>;
+    'messages'?: Array<ActionExecuteDataMessagesInner>;
     /**
      * 
-     * @type {Array<BotInsertDataStartTriggersInnerInstancesInnerRecordsInnerMessagesInner>}
+     * @type {Array<ActionExecuteDataMessagesInner>}
      * @memberof BotInsertDataStartTriggersInnerInstancesInnerRecordsInner
      */
-    'webhooks'?: Array<BotInsertDataStartTriggersInnerInstancesInnerRecordsInnerMessagesInner>;
+    'webhooks'?: Array<ActionExecuteDataMessagesInner>;
     /**
      * 
-     * @type {BotInsertDataStartTriggersInnerInstancesInnerRecordsInnerMessagesInner}
+     * @type {ActionExecuteDataMessagesInner}
      * @memberof BotInsertDataStartTriggersInnerInstancesInnerRecordsInner
      */
-    'contact'?: BotInsertDataStartTriggersInnerInstancesInnerRecordsInnerMessagesInner;
+    'contact'?: ActionExecuteDataMessagesInner;
     /**
      * 
      * @type {boolean}
@@ -2058,25 +1707,6 @@ export const BotInsertDataStartTriggersInnerInstancesInnerRecordsInnerStatusEnum
 
 export type BotInsertDataStartTriggersInnerInstancesInnerRecordsInnerStatusEnum = typeof BotInsertDataStartTriggersInnerInstancesInnerRecordsInnerStatusEnum[keyof typeof BotInsertDataStartTriggersInnerInstancesInnerRecordsInnerStatusEnum];
 
-/**
- * 
- * @export
- * @interface BotInsertDataStartTriggersInnerInstancesInnerRecordsInnerMessagesInner
- */
-export interface BotInsertDataStartTriggersInnerInstancesInnerRecordsInnerMessagesInner {
-    /**
-     * 
-     * @type {number}
-     * @memberof BotInsertDataStartTriggersInnerInstancesInnerRecordsInnerMessagesInner
-     */
-    'statusCode': number;
-    /**
-     * 
-     * @type {{ [key: string]: any; }}
-     * @memberof BotInsertDataStartTriggersInnerInstancesInnerRecordsInnerMessagesInner
-     */
-    'body'?: { [key: string]: any; };
-}
 /**
  * 
  * @export
