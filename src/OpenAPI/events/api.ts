@@ -3226,6 +3226,81 @@ export type EventName = typeof EventName[keyof typeof EventName];
 
 
 /**
+ * 
+ * @export
+ * @interface EventSubscription
+ */
+export interface EventSubscription {
+    /**
+     * ID of the subscription
+     * @type {string}
+     * @memberof EventSubscription
+     */
+    'id': string;
+    /**
+     * Whether the subscription is enabled
+     * @type {boolean}
+     * @memberof EventSubscription
+     */
+    'enabled': boolean;
+    /**
+     * The owner id the connection
+     * @type {string}
+     * @memberof EventSubscription
+     */
+    'ownerId'?: string;
+    /**
+     * The User ID that created the subscription
+     * @type {string}
+     * @memberof EventSubscription
+     */
+    'userId': string;
+    /**
+     * An ISO formatted timestamp
+     * @type {string}
+     * @memberof EventSubscription
+     */
+    'createdAt'?: string;
+    /**
+     * the events to subscribe to
+     * @type {Array<EventName>}
+     * @memberof EventSubscription
+     */
+    'events': Array<EventName>;
+    /**
+     * the IM accounts to receive events from
+     * @type {Array<string>}
+     * @memberof EventSubscription
+     */
+    'accounts'?: Array<string>;
+    /**
+     * 
+     * @type {{ [key: string]: any; }}
+     * @memberof EventSubscription
+     */
+    'schema'?: { [key: string]: any; } | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof EventSubscription
+     */
+    'type': EventSubscriptionTypeEnum;
+    /**
+     * Web hook url to fire to
+     * @type {string}
+     * @memberof EventSubscription
+     */
+    'url'?: string;
+}
+
+export const EventSubscriptionTypeEnum = {
+    Webhook: 'webhook',
+    Websocket: 'websocket'
+} as const;
+
+export type EventSubscriptionTypeEnum = typeof EventSubscriptionTypeEnum[keyof typeof EventSubscriptionTypeEnum];
+
+/**
  * @type EventWebhookData
  * The request body you\'ll receive in a webhook
  * @export
@@ -5124,37 +5199,37 @@ export type PlatformproductUpdateDataSyncStatusEnum = typeof PlatformproductUpda
 /**
  * 
  * @export
- * @interface PostSubscription
+ * @interface PostEventSubscription
  */
-export interface PostSubscription {
+export interface PostEventSubscription {
     /**
      * whether the subscription is enabled
      * @type {boolean}
-     * @memberof PostSubscription
+     * @memberof PostEventSubscription
      */
     'enabled': boolean;
     /**
      * the events to listen for
      * @type {Array<EventName>}
-     * @memberof PostSubscription
+     * @memberof PostEventSubscription
      */
     'events'?: Array<EventName>;
     /**
      * 
      * @type {Array<string>}
-     * @memberof PostSubscription
+     * @memberof PostEventSubscription
      */
     'accounts'?: Array<string>;
     /**
      * Optionally specify ajv schema object, if validation of data fails -- the subscription will not fire
      * @type {{ [key: string]: any; }}
-     * @memberof PostSubscription
+     * @memberof PostEventSubscription
      */
     'schema'?: { [key: string]: any; } | null;
     /**
      * Web hook url to fire to
      * @type {string}
-     * @memberof PostSubscription
+     * @memberof PostEventSubscription
      */
     'url': string;
 }
@@ -5515,81 +5590,6 @@ export interface StaleAccountNotificationData {
 /**
  * 
  * @export
- * @interface Subscription
- */
-export interface Subscription {
-    /**
-     * ID of the subscription
-     * @type {string}
-     * @memberof Subscription
-     */
-    'id': string;
-    /**
-     * Whether the subscription is enabled
-     * @type {boolean}
-     * @memberof Subscription
-     */
-    'enabled': boolean;
-    /**
-     * The owner id the connection
-     * @type {string}
-     * @memberof Subscription
-     */
-    'ownerId'?: string;
-    /**
-     * The User ID that created the subscription
-     * @type {string}
-     * @memberof Subscription
-     */
-    'userId': string;
-    /**
-     * An ISO formatted timestamp
-     * @type {string}
-     * @memberof Subscription
-     */
-    'createdAt'?: string;
-    /**
-     * the events to subscribe to
-     * @type {Array<EventName>}
-     * @memberof Subscription
-     */
-    'events': Array<EventName>;
-    /**
-     * the IM accounts to receive events from
-     * @type {Array<string>}
-     * @memberof Subscription
-     */
-    'accounts'?: Array<string>;
-    /**
-     * 
-     * @type {{ [key: string]: any; }}
-     * @memberof Subscription
-     */
-    'schema'?: { [key: string]: any; } | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof Subscription
-     */
-    'type': SubscriptionTypeEnum;
-    /**
-     * Web hook url to fire to
-     * @type {string}
-     * @memberof Subscription
-     */
-    'url'?: string;
-}
-
-export const SubscriptionTypeEnum = {
-    Webhook: 'webhook',
-    Websocket: 'websocket'
-} as const;
-
-export type SubscriptionTypeEnum = typeof SubscriptionTypeEnum[keyof typeof SubscriptionTypeEnum];
-
-/**
- * 
- * @export
  * @interface SubscriptionsDelete200Response
  */
 export interface SubscriptionsDelete200Response {
@@ -5608,10 +5608,10 @@ export interface SubscriptionsDelete200Response {
 export interface SubscriptionsGet200Response {
     /**
      * 
-     * @type {Array<Subscription>}
+     * @type {Array<EventSubscription>}
      * @memberof SubscriptionsGet200Response
      */
-    'subscriptions': Array<Subscription>;
+    'subscriptions': Array<EventSubscription>;
 }
 /**
  * 
@@ -7077,37 +7077,37 @@ export interface UnreadChatsNotificationData {
 /**
  * 
  * @export
- * @interface UpdateSubscription
+ * @interface UpdateEventSubscription
  */
-export interface UpdateSubscription {
+export interface UpdateEventSubscription {
     /**
      * whether the subscription is enabled
      * @type {boolean}
-     * @memberof UpdateSubscription
+     * @memberof UpdateEventSubscription
      */
     'enabled'?: boolean;
     /**
      * the events to listen for
      * @type {Array<EventName>}
-     * @memberof UpdateSubscription
+     * @memberof UpdateEventSubscription
      */
     'events'?: Array<EventName>;
     /**
      * 
      * @type {Array<string>}
-     * @memberof UpdateSubscription
+     * @memberof UpdateEventSubscription
      */
     'accounts'?: Array<string>;
     /**
      * Optionally specify ajv schema object, if validation of data fails -- the subscription will not fire
      * @type {{ [key: string]: any; }}
-     * @memberof UpdateSubscription
+     * @memberof UpdateEventSubscription
      */
     'schema'?: { [key: string]: any; } | null;
     /**
      * Web hook url to fire to
      * @type {string}
-     * @memberof UpdateSubscription
+     * @memberof UpdateEventSubscription
      */
     'url'?: string;
 }
@@ -7539,11 +7539,11 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
          * 
          * @summary Update a webhook subscription
          * @param {string} id 
-         * @param {UpdateSubscription} [updateSubscription] 
+         * @param {UpdateEventSubscription} [updateEventSubscription] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        subscriptionsPatch: async (id: string, updateSubscription?: UpdateSubscription, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        subscriptionsPatch: async (id: string, updateEventSubscription?: UpdateEventSubscription, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
             assertParamExists('subscriptionsPatch', 'id', id)
             const localVarPath = `/subscriptions/{id}`
@@ -7570,7 +7570,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(updateSubscription, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(updateEventSubscription, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -7580,11 +7580,11 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
         /**
          * 
          * @summary Create a webhook subscription
-         * @param {PostSubscription} [postSubscription] 
+         * @param {PostEventSubscription} [postEventSubscription] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        subscriptionsPost: async (postSubscription?: PostSubscription, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        subscriptionsPost: async (postEventSubscription?: PostEventSubscription, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/subscriptions`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -7608,7 +7608,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(postSubscription, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(postEventSubscription, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -7650,23 +7650,23 @@ export const DefaultApiFp = function(configuration?: Configuration) {
          * 
          * @summary Update a webhook subscription
          * @param {string} id 
-         * @param {UpdateSubscription} [updateSubscription] 
+         * @param {UpdateEventSubscription} [updateEventSubscription] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async subscriptionsPatch(id: string, updateSubscription?: UpdateSubscription, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Subscription>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.subscriptionsPatch(id, updateSubscription, options);
+        async subscriptionsPatch(id: string, updateEventSubscription?: UpdateEventSubscription, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<EventSubscription>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.subscriptionsPatch(id, updateEventSubscription, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
          * 
          * @summary Create a webhook subscription
-         * @param {PostSubscription} [postSubscription] 
+         * @param {PostEventSubscription} [postEventSubscription] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async subscriptionsPost(postSubscription?: PostSubscription, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Subscription>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.subscriptionsPost(postSubscription, options);
+        async subscriptionsPost(postEventSubscription?: PostEventSubscription, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<EventSubscription>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.subscriptionsPost(postEventSubscription, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
     }
@@ -7702,22 +7702,22 @@ export const DefaultApiFactory = function (configuration?: Configuration, basePa
          * 
          * @summary Update a webhook subscription
          * @param {string} id 
-         * @param {UpdateSubscription} [updateSubscription] 
+         * @param {UpdateEventSubscription} [updateEventSubscription] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        subscriptionsPatch(id: string, updateSubscription?: UpdateSubscription, options?: any): AxiosPromise<Subscription> {
-            return localVarFp.subscriptionsPatch(id, updateSubscription, options).then((request) => request(axios, basePath));
+        subscriptionsPatch(id: string, updateEventSubscription?: UpdateEventSubscription, options?: any): AxiosPromise<EventSubscription> {
+            return localVarFp.subscriptionsPatch(id, updateEventSubscription, options).then((request) => request(axios, basePath));
         },
         /**
          * 
          * @summary Create a webhook subscription
-         * @param {PostSubscription} [postSubscription] 
+         * @param {PostEventSubscription} [postEventSubscription] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        subscriptionsPost(postSubscription?: PostSubscription, options?: any): AxiosPromise<Subscription> {
-            return localVarFp.subscriptionsPost(postSubscription, options).then((request) => request(axios, basePath));
+        subscriptionsPost(postEventSubscription?: PostEventSubscription, options?: any): AxiosPromise<EventSubscription> {
+            return localVarFp.subscriptionsPost(postEventSubscription, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -7751,10 +7751,10 @@ export interface DefaultApiSubscriptionsPatchRequest {
 
     /**
      * 
-     * @type {UpdateSubscription}
+     * @type {UpdateEventSubscription}
      * @memberof DefaultApiSubscriptionsPatch
      */
-    readonly updateSubscription?: UpdateSubscription
+    readonly updateEventSubscription?: UpdateEventSubscription
 }
 
 /**
@@ -7765,10 +7765,10 @@ export interface DefaultApiSubscriptionsPatchRequest {
 export interface DefaultApiSubscriptionsPostRequest {
     /**
      * 
-     * @type {PostSubscription}
+     * @type {PostEventSubscription}
      * @memberof DefaultApiSubscriptionsPost
      */
-    readonly postSubscription?: PostSubscription
+    readonly postEventSubscription?: PostEventSubscription
 }
 
 /**
@@ -7810,7 +7810,7 @@ export class DefaultApi extends BaseAPI {
      * @memberof DefaultApi
      */
     public subscriptionsPatch(requestParameters: DefaultApiSubscriptionsPatchRequest, options?: AxiosRequestConfig) {
-        return DefaultApiFp(this.configuration).subscriptionsPatch(requestParameters.id, requestParameters.updateSubscription, options).then((request) => request(this.axios, this.basePath));
+        return DefaultApiFp(this.configuration).subscriptionsPatch(requestParameters.id, requestParameters.updateEventSubscription, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -7822,7 +7822,7 @@ export class DefaultApi extends BaseAPI {
      * @memberof DefaultApi
      */
     public subscriptionsPost(requestParameters: DefaultApiSubscriptionsPostRequest = {}, options?: AxiosRequestConfig) {
-        return DefaultApiFp(this.configuration).subscriptionsPost(requestParameters.postSubscription, options).then((request) => request(this.axios, this.basePath));
+        return DefaultApiFp(this.configuration).subscriptionsPost(requestParameters.postEventSubscription, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

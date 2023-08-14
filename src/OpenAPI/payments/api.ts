@@ -943,7 +943,7 @@ export interface SubscribedProduct {
  * @export
  * @interface Subscription
  */
-interface Subscription {
+export interface Subscription {
     /**
      * The ID of a subscription
      * @type {string}
