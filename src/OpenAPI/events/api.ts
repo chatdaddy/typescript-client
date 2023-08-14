@@ -7458,10 +7458,10 @@ export type UserUpdateDataCreatedByMethodEnum = typeof UserUpdateDataCreatedByMe
 
 
 /**
- * DefaultApi - axios parameter creator
+ * EventSubscriptionApi - axios parameter creator
  * @export
  */
-export const DefaultApiAxiosParamCreator = function (configuration?: Configuration) {
+export const EventSubscriptionApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
          * 
@@ -7619,11 +7619,11 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 };
 
 /**
- * DefaultApi - functional programming interface
+ * EventSubscriptionApi - functional programming interface
  * @export
  */
-export const DefaultApiFp = function(configuration?: Configuration) {
-    const localVarAxiosParamCreator = DefaultApiAxiosParamCreator(configuration)
+export const EventSubscriptionApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = EventSubscriptionApiAxiosParamCreator(configuration)
     return {
         /**
          * 
@@ -7673,11 +7673,11 @@ export const DefaultApiFp = function(configuration?: Configuration) {
 };
 
 /**
- * DefaultApi - factory interface
+ * EventSubscriptionApi - factory interface
  * @export
  */
-export const DefaultApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
-    const localVarFp = DefaultApiFp(configuration)
+export const EventSubscriptionApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = EventSubscriptionApiFp(configuration)
     return {
         /**
          * 
@@ -7723,71 +7723,71 @@ export const DefaultApiFactory = function (configuration?: Configuration, basePa
 };
 
 /**
- * Request parameters for subscriptionsDelete operation in DefaultApi.
+ * Request parameters for subscriptionsDelete operation in EventSubscriptionApi.
  * @export
- * @interface DefaultApiSubscriptionsDeleteRequest
+ * @interface EventSubscriptionApiSubscriptionsDeleteRequest
  */
-export interface DefaultApiSubscriptionsDeleteRequest {
+export interface EventSubscriptionApiSubscriptionsDeleteRequest {
     /**
      * 
      * @type {string}
-     * @memberof DefaultApiSubscriptionsDelete
+     * @memberof EventSubscriptionApiSubscriptionsDelete
      */
     readonly id: string
 }
 
 /**
- * Request parameters for subscriptionsPatch operation in DefaultApi.
+ * Request parameters for subscriptionsPatch operation in EventSubscriptionApi.
  * @export
- * @interface DefaultApiSubscriptionsPatchRequest
+ * @interface EventSubscriptionApiSubscriptionsPatchRequest
  */
-export interface DefaultApiSubscriptionsPatchRequest {
+export interface EventSubscriptionApiSubscriptionsPatchRequest {
     /**
      * 
      * @type {string}
-     * @memberof DefaultApiSubscriptionsPatch
+     * @memberof EventSubscriptionApiSubscriptionsPatch
      */
     readonly id: string
 
     /**
      * 
      * @type {UpdateEventSubscription}
-     * @memberof DefaultApiSubscriptionsPatch
+     * @memberof EventSubscriptionApiSubscriptionsPatch
      */
     readonly updateEventSubscription?: UpdateEventSubscription
 }
 
 /**
- * Request parameters for subscriptionsPost operation in DefaultApi.
+ * Request parameters for subscriptionsPost operation in EventSubscriptionApi.
  * @export
- * @interface DefaultApiSubscriptionsPostRequest
+ * @interface EventSubscriptionApiSubscriptionsPostRequest
  */
-export interface DefaultApiSubscriptionsPostRequest {
+export interface EventSubscriptionApiSubscriptionsPostRequest {
     /**
      * 
      * @type {PostEventSubscription}
-     * @memberof DefaultApiSubscriptionsPost
+     * @memberof EventSubscriptionApiSubscriptionsPost
      */
     readonly postEventSubscription?: PostEventSubscription
 }
 
 /**
- * DefaultApi - object-oriented interface
+ * EventSubscriptionApi - object-oriented interface
  * @export
- * @class DefaultApi
+ * @class EventSubscriptionApi
  * @extends {BaseAPI}
  */
-export class DefaultApi extends BaseAPI {
+export class EventSubscriptionApi extends BaseAPI {
     /**
      * 
      * @summary Delete a webhook subscription
-     * @param {DefaultApiSubscriptionsDeleteRequest} requestParameters Request parameters.
+     * @param {EventSubscriptionApiSubscriptionsDeleteRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof DefaultApi
+     * @memberof EventSubscriptionApi
      */
-    public subscriptionsDelete(requestParameters: DefaultApiSubscriptionsDeleteRequest, options?: AxiosRequestConfig) {
-        return DefaultApiFp(this.configuration).subscriptionsDelete(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    public subscriptionsDelete(requestParameters: EventSubscriptionApiSubscriptionsDeleteRequest, options?: AxiosRequestConfig) {
+        return EventSubscriptionApiFp(this.configuration).subscriptionsDelete(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -7795,34 +7795,34 @@ export class DefaultApi extends BaseAPI {
      * @summary Get all current webhook & websocket subscriptions
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof DefaultApi
+     * @memberof EventSubscriptionApi
      */
     public subscriptionsGet(options?: AxiosRequestConfig) {
-        return DefaultApiFp(this.configuration).subscriptionsGet(options).then((request) => request(this.axios, this.basePath));
+        return EventSubscriptionApiFp(this.configuration).subscriptionsGet(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * 
      * @summary Update a webhook subscription
-     * @param {DefaultApiSubscriptionsPatchRequest} requestParameters Request parameters.
+     * @param {EventSubscriptionApiSubscriptionsPatchRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof DefaultApi
+     * @memberof EventSubscriptionApi
      */
-    public subscriptionsPatch(requestParameters: DefaultApiSubscriptionsPatchRequest, options?: AxiosRequestConfig) {
-        return DefaultApiFp(this.configuration).subscriptionsPatch(requestParameters.id, requestParameters.updateEventSubscription, options).then((request) => request(this.axios, this.basePath));
+    public subscriptionsPatch(requestParameters: EventSubscriptionApiSubscriptionsPatchRequest, options?: AxiosRequestConfig) {
+        return EventSubscriptionApiFp(this.configuration).subscriptionsPatch(requestParameters.id, requestParameters.updateEventSubscription, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * 
      * @summary Create a webhook subscription
-     * @param {DefaultApiSubscriptionsPostRequest} requestParameters Request parameters.
+     * @param {EventSubscriptionApiSubscriptionsPostRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof DefaultApi
+     * @memberof EventSubscriptionApi
      */
-    public subscriptionsPost(requestParameters: DefaultApiSubscriptionsPostRequest = {}, options?: AxiosRequestConfig) {
-        return DefaultApiFp(this.configuration).subscriptionsPost(requestParameters.postEventSubscription, options).then((request) => request(this.axios, this.basePath));
+    public subscriptionsPost(requestParameters: EventSubscriptionApiSubscriptionsPostRequest = {}, options?: AxiosRequestConfig) {
+        return EventSubscriptionApiFp(this.configuration).subscriptionsPost(requestParameters.postEventSubscription, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
