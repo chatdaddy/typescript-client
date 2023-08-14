@@ -293,6 +293,25 @@ export interface AccountInsertDataSettings {
      * @memberof AccountInsertDataSettings
      */
     'autoSyncProductsToPlatform'?: boolean;
+    /**
+     * 
+     * @type {AccountInsertDataSettingsKeepDeletedMessages}
+     * @memberof AccountInsertDataSettings
+     */
+    'keepDeletedMessages'?: AccountInsertDataSettingsKeepDeletedMessages;
+}
+/**
+ * 
+ * @export
+ * @interface AccountInsertDataSettingsKeepDeletedMessages
+ */
+export interface AccountInsertDataSettingsKeepDeletedMessages {
+    /**
+     * 
+     * @type {boolean}
+     * @memberof AccountInsertDataSettingsKeepDeletedMessages
+     */
+    'fromMe': boolean;
 }
 /**
  * 

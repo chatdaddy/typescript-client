@@ -345,6 +345,12 @@ export interface AccountSettings {
      * @memberof AccountSettings
      */
     'autoSyncProductsToPlatform'?: boolean;
+    /**
+     * 
+     * @type {KeepDeletedMessagesSettings}
+     * @memberof AccountSettings
+     */
+    'keepDeletedMessages'?: KeepDeletedMessagesSettings;
 }
 /**
  * All new chats will be auto asssigned if one of the option is enabled and select any Assignee
@@ -1735,6 +1741,19 @@ export interface GroupsInviteCode200Response {
      * @memberof GroupsInviteCode200Response
      */
     'inviteCode': string;
+}
+/**
+ * 
+ * @export
+ * @interface KeepDeletedMessagesSettings
+ */
+export interface KeepDeletedMessagesSettings {
+    /**
+     * Should messages sent by the account be kept.
+     * @type {boolean}
+     * @memberof KeepDeletedMessagesSettings
+     */
+    'fromMe': boolean;
 }
 /**
  * 
