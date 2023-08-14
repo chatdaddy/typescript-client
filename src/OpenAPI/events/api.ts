@@ -3211,9 +3211,6 @@ export const EventName = {
     TeammemberInsert: 'teammember-insert',
     TeammemberUpdate: 'teammember-update',
     TeammemberDelete: 'teammember-delete',
-    PurchasedetailInsert: 'purchasedetail-insert',
-    PurchasedetailUpdate: 'purchasedetail-update',
-    PurchasedetailDelete: 'purchasedetail-delete',
     PlatformproductInsert: 'platformproduct-insert',
     PlatformproductUpdate: 'platformproduct-update',
     PlatformproductDelete: 'platformproduct-delete',
@@ -3233,7 +3230,7 @@ export type EventName = typeof EventName[keyof typeof EventName];
  * The request body you\'ll receive in a webhook
  * @export
  */
-export type EventWebhookData = AccountDelete | AccountInsert | AccountUpdate | ActionExecute | BotDelete | BotInsert | BotUpdate | ChatDelete | ChatInsert | ChatUpdate | ContactDelete | ContactInsert | ContactUpdate | FewMessagesLeft | GroupUpdate | MessageDelete | MessageInsert | MessageUpdate | OrderInsert | PlatformproductDelete | PlatformproductInsert | PlatformproductUpdate | PresenceUpdate | PurchasedetailDelete | PurchasedetailInsert | PurchasedetailUpdate | StaleAccountNotification | TeamDelete | TeamInsert | TeamUpdate | TeammemberDelete | TeammemberInsert | TeammemberUpdate | TrackingDelete | TrackingInsert | TrackingUpdate | UnreadChatsNotification | UserDelete | UserInsert | UserUpdate;
+export type EventWebhookData = AccountDelete | AccountInsert | AccountUpdate | ActionExecute | BotDelete | BotInsert | BotUpdate | ChatDelete | ChatInsert | ChatUpdate | ContactDelete | ContactInsert | ContactUpdate | FewMessagesLeft | GroupUpdate | MessageDelete | MessageInsert | MessageUpdate | OrderInsert | PlatformproductDelete | PlatformproductInsert | PlatformproductUpdate | PresenceUpdate | StaleAccountNotification | TeamDelete | TeamInsert | TeamUpdate | TeammemberDelete | TeammemberInsert | TeammemberUpdate | TrackingDelete | TrackingInsert | TrackingUpdate | UnreadChatsNotification | UserDelete | UserInsert | UserUpdate;
 
 /**
  * 
@@ -5243,32 +5240,6 @@ export type PresenceUpdateDataTypeEnum = typeof PresenceUpdateDataTypeEnum[keyof
 /**
  * 
  * @export
- * @interface PurchasedetailDelete
- */
-export interface PurchasedetailDelete {
-    /**
-     * 
-     * @type {string}
-     * @memberof PurchasedetailDelete
-     */
-    'event': PurchasedetailDeleteEventEnum;
-    /**
-     * 
-     * @type {Array<PurchasedetailDeleteData>}
-     * @memberof PurchasedetailDelete
-     */
-    'data': Array<PurchasedetailDeleteData>;
-}
-
-export const PurchasedetailDeleteEventEnum = {
-    PurchasedetailDelete: 'purchasedetail-delete'
-} as const;
-
-export type PurchasedetailDeleteEventEnum = typeof PurchasedetailDeleteEventEnum[keyof typeof PurchasedetailDeleteEventEnum];
-
-/**
- * 
- * @export
  * @interface PurchasedetailDeleteData
  */
 export interface PurchasedetailDeleteData {
@@ -5285,32 +5256,6 @@ export interface PurchasedetailDeleteData {
      */
     'teamId': string;
 }
-/**
- * 
- * @export
- * @interface PurchasedetailInsert
- */
-export interface PurchasedetailInsert {
-    /**
-     * 
-     * @type {string}
-     * @memberof PurchasedetailInsert
-     */
-    'event': PurchasedetailInsertEventEnum;
-    /**
-     * 
-     * @type {Array<PurchasedetailInsertData>}
-     * @memberof PurchasedetailInsert
-     */
-    'data': Array<PurchasedetailInsertData>;
-}
-
-export const PurchasedetailInsertEventEnum = {
-    PurchasedetailInsert: 'purchasedetail-insert'
-} as const;
-
-export type PurchasedetailInsertEventEnum = typeof PurchasedetailInsertEventEnum[keyof typeof PurchasedetailInsertEventEnum];
-
 /**
  * 
  * @export
@@ -5451,32 +5396,6 @@ export interface PurchasedetailInsertDataTrial {
      */
     'expiry'?: string;
 }
-/**
- * 
- * @export
- * @interface PurchasedetailUpdate
- */
-export interface PurchasedetailUpdate {
-    /**
-     * 
-     * @type {string}
-     * @memberof PurchasedetailUpdate
-     */
-    'event': PurchasedetailUpdateEventEnum;
-    /**
-     * 
-     * @type {Array<PurchasedetailUpdateData>}
-     * @memberof PurchasedetailUpdate
-     */
-    'data': Array<PurchasedetailUpdateData>;
-}
-
-export const PurchasedetailUpdateEventEnum = {
-    PurchasedetailUpdate: 'purchasedetail-update'
-} as const;
-
-export type PurchasedetailUpdateEventEnum = typeof PurchasedetailUpdateEventEnum[keyof typeof PurchasedetailUpdateEventEnum];
-
 /**
  * 
  * @export
