@@ -1704,6 +1704,43 @@ export interface IMMessageProduct {
     'accountId': string;
 }
 /**
+ * Optional context about the sender of the message
+ * @export
+ * @interface IMMessageSenderContext
+ */
+export interface IMMessageSenderContext {
+    /**
+     * 
+     * @type {string}
+     * @memberof IMMessageSenderContext
+     */
+    'type': IMMessageSenderContextTypeEnum;
+    /**
+     * ID of the object that sent the message. For example, the campaign ID or keyword reply ID
+     * @type {string}
+     * @memberof IMMessageSenderContext
+     */
+    'objectId': string;
+    /**
+     * Name of the object that sent the message. For example, the campaign name or keyword reply name
+     * @type {string}
+     * @memberof IMMessageSenderContext
+     */
+    'objectName'?: string;
+}
+
+export const IMMessageSenderContextTypeEnum = {
+    KeywordReply: 'keyword-reply',
+    DefaultReply: 'default-reply',
+    Campaigns: 'campaigns',
+    Notifications: 'notifications',
+    Bot: 'bot',
+    AiChatbot: 'ai-chatbot'
+} as const;
+
+export type IMMessageSenderContextTypeEnum = typeof IMMessageSenderContextTypeEnum[keyof typeof IMMessageSenderContextTypeEnum];
+
+/**
  * 
  * @export
  * @interface MessageObj
@@ -1800,6 +1837,12 @@ export interface MessageSendOptions {
      * @memberof MessageSendOptions
      */
     'quoted'?: MessageSendOptionsQuoted;
+    /**
+     * 
+     * @type {MessageSendOptionsSender}
+     * @memberof MessageSendOptions
+     */
+    'sender'?: MessageSendOptionsSender;
 }
 /**
  * 
@@ -1819,6 +1862,19 @@ export interface MessageSendOptionsQuoted {
      * @memberof MessageSendOptionsQuoted
      */
     'id': string;
+}
+/**
+ * 
+ * @export
+ * @interface MessageSendOptionsSender
+ */
+export interface MessageSendOptionsSender {
+    /**
+     * 
+     * @type {IMMessageSenderContext}
+     * @memberof MessageSendOptionsSender
+     */
+    'context': IMMessageSenderContext;
 }
 /**
  * position in x-y coordinate space

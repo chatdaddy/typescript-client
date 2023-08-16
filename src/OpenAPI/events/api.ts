@@ -1808,6 +1808,12 @@ export interface BotInsertDataStartTriggersInnerOptionsMiscOptions {
      * @memberof BotInsertDataStartTriggersInnerOptionsMiscOptions
      */
     'quoted'?: BotInsertDataStartTriggersInnerOptionsMiscOptionsQuoted;
+    /**
+     * 
+     * @type {BotInsertDataStartTriggersInnerOptionsMiscOptionsSender}
+     * @memberof BotInsertDataStartTriggersInnerOptionsMiscOptions
+     */
+    'sender'?: BotInsertDataStartTriggersInnerOptionsMiscOptionsSender;
 }
 /**
  * 
@@ -1827,6 +1833,19 @@ export interface BotInsertDataStartTriggersInnerOptionsMiscOptionsQuoted {
      * @memberof BotInsertDataStartTriggersInnerOptionsMiscOptionsQuoted
      */
     'id': string;
+}
+/**
+ * 
+ * @export
+ * @interface BotInsertDataStartTriggersInnerOptionsMiscOptionsSender
+ */
+export interface BotInsertDataStartTriggersInnerOptionsMiscOptionsSender {
+    /**
+     * 
+     * @type {MessageInsertDataSenderContext}
+     * @memberof BotInsertDataStartTriggersInnerOptionsMiscOptionsSender
+     */
+    'context': MessageInsertDataSenderContext;
 }
 /**
  * @type BotInsertDataStartTriggersInnerTarget
