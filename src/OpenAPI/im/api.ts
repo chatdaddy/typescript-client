@@ -2716,7 +2716,7 @@ export interface MessageSenderContext {
      */
     'type': MessageSenderContextTypeEnum;
     /**
-     * ID of the object that sent the message. For example, the campaign ID or keyword reply ID
+     * ID of the object that sent the message. For example, the campaign ID or keyword reply ID. Separate sub-objects with a `/`. For example, to specify the action of a bot -- use `bot_id/action_id`
      * @type {string}
      * @memberof MessageSenderContext
      */
