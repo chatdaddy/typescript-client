@@ -7204,10 +7204,11 @@ export const EventSubscriptionApiAxiosParamCreator = function (configuration?: C
          * @summary Get all current webhook & websocket subscriptions
          * @param {EventSubscriptionType} [type] Filter by subscription type
          * @param {string} [accountId] Filter by subscriptions that are enabled for this account
+         * @param {Array<string>} [userId] Filter by subscriptions that are enabled for the specified users
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        subscriptionsGet: async (type?: EventSubscriptionType, accountId?: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        subscriptionsGet: async (type?: EventSubscriptionType, accountId?: string, userId?: Array<string>, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/subscriptions`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -7230,6 +7231,10 @@ export const EventSubscriptionApiAxiosParamCreator = function (configuration?: C
 
             if (accountId !== undefined) {
                 localVarQueryParameter['accountId'] = accountId;
+            }
+
+            if (userId) {
+                localVarQueryParameter['userId'] = userId;
             }
 
 
@@ -7349,11 +7354,12 @@ export const EventSubscriptionApiFp = function(configuration?: Configuration) {
          * @summary Get all current webhook & websocket subscriptions
          * @param {EventSubscriptionType} [type] Filter by subscription type
          * @param {string} [accountId] Filter by subscriptions that are enabled for this account
+         * @param {Array<string>} [userId] Filter by subscriptions that are enabled for the specified users
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async subscriptionsGet(type?: EventSubscriptionType, accountId?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SubscriptionsGet200Response>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.subscriptionsGet(type, accountId, options);
+        async subscriptionsGet(type?: EventSubscriptionType, accountId?: string, userId?: Array<string>, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SubscriptionsGet200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.subscriptionsGet(type, accountId, userId, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -7404,11 +7410,12 @@ export const EventSubscriptionApiFactory = function (configuration?: Configurati
          * @summary Get all current webhook & websocket subscriptions
          * @param {EventSubscriptionType} [type] Filter by subscription type
          * @param {string} [accountId] Filter by subscriptions that are enabled for this account
+         * @param {Array<string>} [userId] Filter by subscriptions that are enabled for the specified users
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        subscriptionsGet(type?: EventSubscriptionType, accountId?: string, options?: any): AxiosPromise<SubscriptionsGet200Response> {
-            return localVarFp.subscriptionsGet(type, accountId, options).then((request) => request(axios, basePath));
+        subscriptionsGet(type?: EventSubscriptionType, accountId?: string, userId?: Array<string>, options?: any): AxiosPromise<SubscriptionsGet200Response> {
+            return localVarFp.subscriptionsGet(type, accountId, userId, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -7467,6 +7474,13 @@ export interface EventSubscriptionApiSubscriptionsGetRequest {
      * @memberof EventSubscriptionApiSubscriptionsGet
      */
     readonly accountId?: string
+
+    /**
+     * Filter by subscriptions that are enabled for the specified users
+     * @type {Array<string>}
+     * @memberof EventSubscriptionApiSubscriptionsGet
+     */
+    readonly userId?: Array<string>
 }
 
 /**
@@ -7532,7 +7546,7 @@ export class EventSubscriptionApi extends BaseAPI {
      * @memberof EventSubscriptionApi
      */
     public subscriptionsGet(requestParameters: EventSubscriptionApiSubscriptionsGetRequest = {}, options?: AxiosRequestConfig) {
-        return EventSubscriptionApiFp(this.configuration).subscriptionsGet(requestParameters.type, requestParameters.accountId, options).then((request) => request(this.axios, this.basePath));
+        return EventSubscriptionApiFp(this.configuration).subscriptionsGet(requestParameters.type, requestParameters.accountId, requestParameters.userId, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
