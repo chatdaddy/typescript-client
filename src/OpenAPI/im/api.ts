@@ -2064,6 +2064,12 @@ export interface MessageAllOfSender {
      * @memberof MessageAllOfSender
      */
     'createdAt'?: string;
+    /**
+     * 
+     * @type {MessageSenderContext}
+     * @memberof MessageAllOfSender
+     */
+    'context'?: MessageSenderContext;
 }
 /**
  * 
@@ -2215,7 +2221,7 @@ export interface MessageButton {
  */
 export interface MessageCompose {
     /**
-     * Specify the message Id -- can be used to atomically send messages. Two messages with the same ID will never be sent twice 
+     * Specify the message Id -- can be used as an idempotency key. Ensures, that two messages with the same ID will never be sent twice 
      * @type {string}
      * @memberof MessageCompose
      */
@@ -2244,6 +2250,12 @@ export interface MessageCompose {
      * @memberof MessageCompose
      */
     'parameters'?: { [key: string]: any; };
+    /**
+     * 
+     * @type {MessageComposeAllOfSender}
+     * @memberof MessageCompose
+     */
+    'sender'?: MessageComposeAllOfSender;
     /**
      * 
      * @type {Array<string>}
@@ -2332,7 +2344,7 @@ export type MessageComposeStatusEnum = typeof MessageComposeStatusEnum[keyof typ
  */
 export interface MessageComposeAllOf {
     /**
-     * Specify the message Id -- can be used to atomically send messages. Two messages with the same ID will never be sent twice 
+     * Specify the message Id -- can be used as an idempotency key. Ensures, that two messages with the same ID will never be sent twice 
      * @type {string}
      * @memberof MessageComposeAllOf
      */
@@ -2361,6 +2373,12 @@ export interface MessageComposeAllOf {
      * @memberof MessageComposeAllOf
      */
     'parameters'?: { [key: string]: any; };
+    /**
+     * 
+     * @type {MessageComposeAllOfSender}
+     * @memberof MessageComposeAllOf
+     */
+    'sender'?: MessageComposeAllOfSender;
 }
 
 export const MessageComposeAllOfStatusEnum = {
@@ -2370,6 +2388,19 @@ export const MessageComposeAllOfStatusEnum = {
 
 export type MessageComposeAllOfStatusEnum = typeof MessageComposeAllOfStatusEnum[keyof typeof MessageComposeAllOfStatusEnum];
 
+/**
+ * 
+ * @export
+ * @interface MessageComposeAllOfSender
+ */
+export interface MessageComposeAllOfSender {
+    /**
+     * 
+     * @type {MessageSenderContext}
+     * @memberof MessageComposeAllOfSender
+     */
+    'context': MessageSenderContext;
+}
 /**
  * 
  * @export
@@ -2672,6 +2703,43 @@ export interface MessageReaction {
      */
     'timestamp'?: string;
 }
+/**
+ * Optional context about the sender of the message
+ * @export
+ * @interface MessageSenderContext
+ */
+export interface MessageSenderContext {
+    /**
+     * 
+     * @type {string}
+     * @memberof MessageSenderContext
+     */
+    'type': MessageSenderContextTypeEnum;
+    /**
+     * ID of the object that sent the message. For example, the campaign ID or keyword reply ID
+     * @type {string}
+     * @memberof MessageSenderContext
+     */
+    'objectId': string;
+    /**
+     * Name of the object that sent the message. For example, the campaign name or keyword reply name
+     * @type {string}
+     * @memberof MessageSenderContext
+     */
+    'objectName'?: string;
+}
+
+export const MessageSenderContextTypeEnum = {
+    KeywordReply: 'keyword-reply',
+    DefaultReply: 'default-reply',
+    Campaigns: 'campaigns',
+    Notifications: 'notifications',
+    Bot: 'bot',
+    AiChatbot: 'ai-chatbot'
+} as const;
+
+export type MessageSenderContextTypeEnum = typeof MessageSenderContextTypeEnum[keyof typeof MessageSenderContextTypeEnum];
+
 /**
  * 
  * @export

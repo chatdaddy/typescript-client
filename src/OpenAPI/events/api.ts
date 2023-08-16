@@ -4095,7 +4095,50 @@ export interface MessageInsertDataSender {
      * @memberof MessageInsertDataSender
      */
     'createdAt'?: string;
+    /**
+     * 
+     * @type {MessageInsertDataSenderContext}
+     * @memberof MessageInsertDataSender
+     */
+    'context'?: MessageInsertDataSenderContext;
 }
+/**
+ * 
+ * @export
+ * @interface MessageInsertDataSenderContext
+ */
+export interface MessageInsertDataSenderContext {
+    /**
+     * 
+     * @type {string}
+     * @memberof MessageInsertDataSenderContext
+     */
+    'type': MessageInsertDataSenderContextTypeEnum;
+    /**
+     * 
+     * @type {string}
+     * @memberof MessageInsertDataSenderContext
+     */
+    'objectId': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof MessageInsertDataSenderContext
+     */
+    'objectName'?: string;
+}
+
+export const MessageInsertDataSenderContextTypeEnum = {
+    KeywordReply: 'keyword-reply',
+    DefaultReply: 'default-reply',
+    Campaigns: 'campaigns',
+    Notifications: 'notifications',
+    Bot: 'bot',
+    AiChatbot: 'ai-chatbot'
+} as const;
+
+export type MessageInsertDataSenderContextTypeEnum = typeof MessageInsertDataSenderContextTypeEnum[keyof typeof MessageInsertDataSenderContextTypeEnum];
+
 /**
  * 
  * @export
