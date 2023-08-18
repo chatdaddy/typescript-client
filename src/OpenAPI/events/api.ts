@@ -3382,6 +3382,12 @@ export interface MembershipactionInsertData {
      */
     'membershipId': number;
     /**
+     * The contactId of the membership
+     * @type {string}
+     * @memberof MembershipactionInsertData
+     */
+    'contactId'?: string;
+    /**
      * 
      * @type {string}
      * @memberof MembershipactionInsertData

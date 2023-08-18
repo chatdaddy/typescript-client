@@ -156,6 +156,12 @@ export interface MembershipAction {
      */
     'membershipId': number;
     /**
+     * The contactId of the membership
+     * @type {string}
+     * @memberof MembershipAction
+     */
+    'contactId'?: string;
+    /**
      * 
      * @type {string}
      * @memberof MembershipAction
