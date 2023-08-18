@@ -2839,6 +2839,7 @@ export const EventName = {
     FewMessagesLeft: 'few-messages-left',
     StaleAccountNotification: 'stale-account-notification',
     UnreadChatsNotification: 'unread-chats-notification',
+    MembershipactionInsert: 'membershipaction-insert',
     ContactInsert: 'contact-insert',
     ContactUpdate: 'contact-update',
     ContactDelete: 'contact-delete',
@@ -2960,7 +2961,7 @@ export type EventSubscriptionType = typeof EventSubscriptionType[keyof typeof Ev
  * The request body you\'ll receive in a webhook
  * @export
  */
-export type EventWebhookData = AccountDelete | AccountInsert | AccountUpdate | ActionExecute | BotDelete | BotInsert | BotUpdate | ChatDelete | ChatInsert | ChatUpdate | ContactDelete | ContactInsert | ContactUpdate | FewMessagesLeft | GroupUpdate | MessageDelete | MessageInsert | MessageUpdate | OrderInsert | PlatformproductDelete | PlatformproductInsert | PlatformproductUpdate | PresenceUpdate | StaleAccountNotification | TeamDelete | TeamInsert | TeamUpdate | TeammemberDelete | TeammemberInsert | TeammemberUpdate | TrackingDelete | TrackingInsert | TrackingUpdate | UnreadChatsNotification | UserDelete | UserInsert | UserUpdate;
+export type EventWebhookData = AccountDelete | AccountInsert | AccountUpdate | ActionExecute | BotDelete | BotInsert | BotUpdate | ChatDelete | ChatInsert | ChatUpdate | ContactDelete | ContactInsert | ContactUpdate | FewMessagesLeft | GroupUpdate | MembershipactionInsert | MessageDelete | MessageInsert | MessageUpdate | OrderInsert | PlatformproductDelete | PlatformproductInsert | PlatformproductUpdate | PresenceUpdate | StaleAccountNotification | TeamDelete | TeamInsert | TeamUpdate | TeammemberDelete | TeammemberInsert | TeammemberUpdate | TrackingDelete | TrackingInsert | TrackingUpdate | UnreadChatsNotification | UserDelete | UserInsert | UserUpdate;
 
 /**
  * 
@@ -3277,6 +3278,148 @@ export const GroupUpdateDataParticipantsInnerAdminEnum = {
 } as const;
 
 export type GroupUpdateDataParticipantsInnerAdminEnum = typeof GroupUpdateDataParticipantsInnerAdminEnum[keyof typeof GroupUpdateDataParticipantsInnerAdminEnum];
+
+/**
+ * 
+ * @export
+ * @interface MembershipActionInsertData
+ */
+export interface MembershipActionInsertData {
+    /**
+     * The id of the pending membership action
+     * @type {number}
+     * @memberof MembershipActionInsertData
+     */
+    'id': number;
+    /**
+     * The id of the membership
+     * @type {number}
+     * @memberof MembershipActionInsertData
+     */
+    'membershipId': number;
+    /**
+     * 
+     * @type {string}
+     * @memberof MembershipActionInsertData
+     */
+    'actionType': MembershipActionInsertDataActionTypeEnum;
+    /**
+     * 
+     * @type {string}
+     * @memberof MembershipActionInsertData
+     */
+    'approvalState': MembershipActionInsertDataApprovalStateEnum;
+    /**
+     * The number of points to add or remove
+     * @type {number}
+     * @memberof MembershipActionInsertData
+     */
+    'amount': number;
+    /**
+     * The date and time the pending membership action was created
+     * @type {string}
+     * @memberof MembershipActionInsertData
+     */
+    'timestamp': string;
+}
+
+export const MembershipActionInsertDataActionTypeEnum = {
+    Add: 'add',
+    Remove: 'remove'
+} as const;
+
+export type MembershipActionInsertDataActionTypeEnum = typeof MembershipActionInsertDataActionTypeEnum[keyof typeof MembershipActionInsertDataActionTypeEnum];
+export const MembershipActionInsertDataApprovalStateEnum = {
+    Approved: 'approved',
+    Rejected: 'rejected',
+    Pending: 'pending'
+} as const;
+
+export type MembershipActionInsertDataApprovalStateEnum = typeof MembershipActionInsertDataApprovalStateEnum[keyof typeof MembershipActionInsertDataApprovalStateEnum];
+
+/**
+ * 
+ * @export
+ * @interface MembershipactionInsert
+ */
+export interface MembershipactionInsert {
+    /**
+     * 
+     * @type {string}
+     * @memberof MembershipactionInsert
+     */
+    'event': MembershipactionInsertEventEnum;
+    /**
+     * 
+     * @type {Array<MembershipactionInsertData>}
+     * @memberof MembershipactionInsert
+     */
+    'data': Array<MembershipactionInsertData>;
+}
+
+export const MembershipactionInsertEventEnum = {
+    MembershipactionInsert: 'membershipaction-insert'
+} as const;
+
+export type MembershipactionInsertEventEnum = typeof MembershipactionInsertEventEnum[keyof typeof MembershipactionInsertEventEnum];
+
+/**
+ * 
+ * @export
+ * @interface MembershipactionInsertData
+ */
+export interface MembershipactionInsertData {
+    /**
+     * The id of the pending membership action
+     * @type {number}
+     * @memberof MembershipactionInsertData
+     */
+    'id': number;
+    /**
+     * The id of the membership
+     * @type {number}
+     * @memberof MembershipactionInsertData
+     */
+    'membershipId': number;
+    /**
+     * 
+     * @type {string}
+     * @memberof MembershipactionInsertData
+     */
+    'actionType': MembershipactionInsertDataActionTypeEnum;
+    /**
+     * 
+     * @type {string}
+     * @memberof MembershipactionInsertData
+     */
+    'approvalState': MembershipactionInsertDataApprovalStateEnum;
+    /**
+     * The number of points to add or remove
+     * @type {number}
+     * @memberof MembershipactionInsertData
+     */
+    'amount': number;
+    /**
+     * The date and time the pending membership action was created
+     * @type {string}
+     * @memberof MembershipactionInsertData
+     */
+    'timestamp': string;
+}
+
+export const MembershipactionInsertDataActionTypeEnum = {
+    Add: 'add',
+    Remove: 'remove'
+} as const;
+
+export type MembershipactionInsertDataActionTypeEnum = typeof MembershipactionInsertDataActionTypeEnum[keyof typeof MembershipactionInsertDataActionTypeEnum];
+export const MembershipactionInsertDataApprovalStateEnum = {
+    Approved: 'approved',
+    Rejected: 'rejected',
+    Pending: 'pending'
+} as const;
+
+export type MembershipactionInsertDataApprovalStateEnum = typeof MembershipactionInsertDataApprovalStateEnum[keyof typeof MembershipactionInsertDataApprovalStateEnum];
 
 /**
  * 
