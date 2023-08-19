@@ -4098,10 +4098,11 @@ export const AccountApiAxiosParamCreator = function (configuration?: Configurati
          * You can continue to poll this route to check if it has been deleted. When deleted, the route will return a 404.
          * @summary Enqueues a task to delete the account
          * @param {string} accountId 
+         * @param {boolean} [deleteNow] Delete the account immediately. Otherwise, the account will be completely removed after 24 hours
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        accountsDelete: async (accountId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        accountsDelete: async (accountId: string, deleteNow?: boolean, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'accountId' is not null or undefined
             assertParamExists('accountsDelete', 'accountId', accountId)
             const localVarPath = `/accounts/{accountId}`
@@ -4120,6 +4121,10 @@ export const AccountApiAxiosParamCreator = function (configuration?: Configurati
             // authentication chatdaddy required
             // oauth required
             await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["ACCOUNT_DELETE"], configuration)
+
+            if (deleteNow !== undefined) {
+                localVarQueryParameter['deleteNow'] = deleteNow;
+            }
 
 
     
@@ -4431,11 +4436,12 @@ export const AccountApiFp = function(configuration?: Configuration) {
          * You can continue to poll this route to check if it has been deleted. When deleted, the route will return a 404.
          * @summary Enqueues a task to delete the account
          * @param {string} accountId 
+         * @param {boolean} [deleteNow] Delete the account immediately. Otherwise, the account will be completely removed after 24 hours
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async accountsDelete(accountId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AccountsLogout200Response>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.accountsDelete(accountId, options);
+        async accountsDelete(accountId: string, deleteNow?: boolean, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AccountsLogout200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.accountsDelete(accountId, deleteNow, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -4546,11 +4552,12 @@ export const AccountApiFactory = function (configuration?: Configuration, basePa
          * You can continue to poll this route to check if it has been deleted. When deleted, the route will return a 404.
          * @summary Enqueues a task to delete the account
          * @param {string} accountId 
+         * @param {boolean} [deleteNow] Delete the account immediately. Otherwise, the account will be completely removed after 24 hours
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        accountsDelete(accountId: string, options?: any): AxiosPromise<AccountsLogout200Response> {
-            return localVarFp.accountsDelete(accountId, options).then((request) => request(axios, basePath));
+        accountsDelete(accountId: string, deleteNow?: boolean, options?: any): AxiosPromise<AccountsLogout200Response> {
+            return localVarFp.accountsDelete(accountId, deleteNow, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -4669,6 +4676,13 @@ export interface AccountApiAccountsDeleteRequest {
      * @memberof AccountApiAccountsDelete
      */
     readonly accountId: string
+
+    /**
+     * Delete the account immediately. Otherwise, the account will be completely removed after 24 hours
+     * @type {boolean}
+     * @memberof AccountApiAccountsDelete
+     */
+    readonly deleteNow?: boolean
 }
 
 /**
@@ -4844,7 +4858,7 @@ export class AccountApi extends BaseAPI {
      * @memberof AccountApi
      */
     public accountsDelete(requestParameters: AccountApiAccountsDeleteRequest, options?: AxiosRequestConfig) {
-        return AccountApiFp(this.configuration).accountsDelete(requestParameters.accountId, options).then((request) => request(this.axios, this.basePath));
+        return AccountApiFp(this.configuration).accountsDelete(requestParameters.accountId, requestParameters.deleteNow, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
