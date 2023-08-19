@@ -982,7 +982,7 @@ export interface Chat {
      * @type {TicketStatus}
      * @memberof Chat
      */
-    'ticketStatus'?: TicketStatus;
+    'ticketStatus'?: TicketStatus | null;
     /**
      * Timestamp of when the chat was muted
      * @type {number}
