@@ -2375,7 +2375,6 @@ export interface ChatInsertData {
 }
 
 export const ChatInsertDataTicketStatusEnum = {
-    Open: 'open',
     Closed: 'closed'
 } as const;
 
@@ -2524,7 +2523,6 @@ export interface ChatUpdateData {
 }
 
 export const ChatUpdateDataTicketStatusEnum = {
-    Open: 'open',
     Closed: 'closed'
 } as const;
 
