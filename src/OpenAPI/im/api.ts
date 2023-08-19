@@ -979,10 +979,10 @@ export interface Chat {
     'readOnly': boolean;
     /**
      * 
-     * @type {string}
+     * @type {TicketStatus}
      * @memberof Chat
      */
-    'ticketStatus'?: ChatTicketStatusEnum;
+    'ticketStatus'?: TicketStatus;
     /**
      * Timestamp of when the chat was muted
      * @type {number}
@@ -1062,13 +1062,6 @@ export interface Chat {
      */
     'cursor': string;
 }
-
-export const ChatTicketStatusEnum = {
-    Closed: 'closed'
-} as const;
-
-export type ChatTicketStatusEnum = typeof ChatTicketStatusEnum[keyof typeof ChatTicketStatusEnum];
-
 /**
  * 
  * @export
@@ -3851,6 +3844,25 @@ export interface TemplatesSubmitForReviewRequest {
     'message': TemplateCreate;
 }
 /**
+ * @type TicketStatus
+ * @export
+ */
+export type TicketStatus = TicketStatusOneOf;
+
+/**
+ * 
+ * @export
+ * @enum {string}
+ */
+
+export const TicketStatusOneOf = {
+    Closed: 'closed'
+} as const;
+
+export type TicketStatusOneOf = typeof TicketStatusOneOf[keyof typeof TicketStatusOneOf];
+
+
+/**
  * 
  * @export
  * @interface TikTokStateInfo
@@ -5971,6 +5983,52 @@ export const ChatsApiAxiosParamCreator = function (configuration?: Configuration
                 options: localVarRequestOptions,
             };
         },
+        /**
+         * 
+         * @summary Update a chat\'s ticket status -- closed | null\'
+         * @param {string} accountId 
+         * @param {string} id 
+         * @param {TicketStatus} [ticketStatus] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        chatsTicketStatusPatch: async (accountId: string, id: string, ticketStatus?: TicketStatus, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'accountId' is not null or undefined
+            assertParamExists('chatsTicketStatusPatch', 'accountId', accountId)
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('chatsTicketStatusPatch', 'id', id)
+            const localVarPath = `/chats/{accountId}/{id}/ticket-status`
+                .replace(`{${"accountId"}}`, encodeURIComponent(String(accountId)))
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PATCH', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["CHATS_ACCESS_ALL", "CHATS_ACCESS_ASSIGNED"], configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(ticketStatus, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
     }
 };
 
@@ -6035,6 +6093,19 @@ export const ChatsApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.chatsPresencePost(accountId, id, presence, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
+        /**
+         * 
+         * @summary Update a chat\'s ticket status -- closed | null\'
+         * @param {string} accountId 
+         * @param {string} id 
+         * @param {TicketStatus} [ticketStatus] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async chatsTicketStatusPatch(accountId: string, id: string, ticketStatus?: TicketStatus, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Chat>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.chatsTicketStatusPatch(accountId, id, ticketStatus, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
     }
 };
 
@@ -6095,6 +6166,18 @@ export const ChatsApiFactory = function (configuration?: Configuration, basePath
          */
         chatsPresencePost(accountId: string, id: string, presence: PresenceType, options?: any): AxiosPromise<AccountsLogout200Response> {
             return localVarFp.chatsPresencePost(accountId, id, presence, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Update a chat\'s ticket status -- closed | null\'
+         * @param {string} accountId 
+         * @param {string} id 
+         * @param {TicketStatus} [ticketStatus] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        chatsTicketStatusPatch(accountId: string, id: string, ticketStatus?: TicketStatus, options?: any): AxiosPromise<Chat> {
+            return localVarFp.chatsTicketStatusPatch(accountId, id, ticketStatus, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -6289,6 +6372,34 @@ export interface ChatsApiChatsPresencePostRequest {
 }
 
 /**
+ * Request parameters for chatsTicketStatusPatch operation in ChatsApi.
+ * @export
+ * @interface ChatsApiChatsTicketStatusPatchRequest
+ */
+export interface ChatsApiChatsTicketStatusPatchRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof ChatsApiChatsTicketStatusPatch
+     */
+    readonly accountId: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof ChatsApiChatsTicketStatusPatch
+     */
+    readonly id: string
+
+    /**
+     * 
+     * @type {TicketStatus}
+     * @memberof ChatsApiChatsTicketStatusPatch
+     */
+    readonly ticketStatus?: TicketStatus
+}
+
+/**
  * ChatsApi - object-oriented interface
  * @export
  * @class ChatsApi
@@ -6329,6 +6440,18 @@ export class ChatsApi extends BaseAPI {
      */
     public chatsPresencePost(requestParameters: ChatsApiChatsPresencePostRequest, options?: AxiosRequestConfig) {
         return ChatsApiFp(this.configuration).chatsPresencePost(requestParameters.accountId, requestParameters.id, requestParameters.presence, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Update a chat\'s ticket status -- closed | null\'
+     * @param {ChatsApiChatsTicketStatusPatchRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ChatsApi
+     */
+    public chatsTicketStatusPatch(requestParameters: ChatsApiChatsTicketStatusPatchRequest, options?: AxiosRequestConfig) {
+        return ChatsApiFp(this.configuration).chatsTicketStatusPatch(requestParameters.accountId, requestParameters.id, requestParameters.ticketStatus, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
