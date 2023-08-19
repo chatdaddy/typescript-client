@@ -978,6 +978,12 @@ export interface Chat {
      */
     'readOnly': boolean;
     /**
+     * 
+     * @type {string}
+     * @memberof Chat
+     */
+    'ticketStatus'?: ChatTicketStatusEnum;
+    /**
      * Timestamp of when the chat was muted
      * @type {number}
      * @memberof Chat
@@ -1056,6 +1062,14 @@ export interface Chat {
      */
     'cursor': string;
 }
+
+export const ChatTicketStatusEnum = {
+    Open: 'open',
+    Closed: 'closed'
+} as const;
+
+export type ChatTicketStatusEnum = typeof ChatTicketStatusEnum[keyof typeof ChatTicketStatusEnum];
+
 /**
  * 
  * @export
