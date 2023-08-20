@@ -982,7 +982,7 @@ export interface Chat {
      * @type {TicketStatus}
      * @memberof Chat
      */
-    'ticketStatus'?: TicketStatus;
+    'ticketStatus'?: TicketStatus | null;
     /**
      * Timestamp of when the chat was muted
      * @type {number}
@@ -3864,22 +3864,16 @@ export interface TemplatesSubmitForReviewRequest {
     'message': TemplateCreate;
 }
 /**
- * @type TicketStatus
- * @export
- */
-export type TicketStatus = TicketStatusOneOf | any;
-
-/**
  * 
  * @export
  * @enum {string}
  */
 
-export const TicketStatusOneOf = {
+export const TicketStatus = {
     Closed: 'closed'
 } as const;
 
-export type TicketStatusOneOf = typeof TicketStatusOneOf[keyof typeof TicketStatusOneOf];
+export type TicketStatus = typeof TicketStatus[keyof typeof TicketStatus];
 
 
 /**
