@@ -2375,7 +2375,8 @@ export interface ChatInsertData {
 }
 
 export const ChatInsertDataTicketStatusEnum = {
-    Closed: 'closed'
+    Closed: 'closed',
+    Null: 'null'
 } as const;
 
 export type ChatInsertDataTicketStatusEnum = typeof ChatInsertDataTicketStatusEnum[keyof typeof ChatInsertDataTicketStatusEnum];
@@ -2523,7 +2524,8 @@ export interface ChatUpdateData {
 }
 
 export const ChatUpdateDataTicketStatusEnum = {
-    Closed: 'closed'
+    Closed: 'closed',
+    Null: 'null'
 } as const;
 
 export type ChatUpdateDataTicketStatusEnum = typeof ChatUpdateDataTicketStatusEnum[keyof typeof ChatUpdateDataTicketStatusEnum];

@@ -3870,7 +3870,8 @@ export interface TemplatesSubmitForReviewRequest {
  */
 
 export const TicketStatus = {
-    Closed: 'closed'
+    Closed: 'closed',
+    Null: 'null'
 } as const;
 
 export type TicketStatus = typeof TicketStatus[keyof typeof TicketStatus];
