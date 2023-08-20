@@ -1200,6 +1200,26 @@ export interface ChatsGet200Response {
 /**
  * 
  * @export
+ * @interface ChatsTicketStatusPatchRequest
+ */
+export interface ChatsTicketStatusPatchRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof ChatsTicketStatusPatchRequest
+     */
+    'ticketStatus'?: ChatsTicketStatusPatchRequestTicketStatusEnum;
+}
+
+export const ChatsTicketStatusPatchRequestTicketStatusEnum = {
+    Closed: 'closed'
+} as const;
+
+export type ChatsTicketStatusPatchRequestTicketStatusEnum = typeof ChatsTicketStatusPatchRequestTicketStatusEnum[keyof typeof ChatsTicketStatusPatchRequestTicketStatusEnum];
+
+/**
+ * 
+ * @export
  * @interface Contact
  */
 export interface Contact {
@@ -5982,11 +6002,11 @@ export const ChatsApiAxiosParamCreator = function (configuration?: Configuration
          * @summary Update a chat\'s ticket status -- closed | null\'
          * @param {string} accountId 
          * @param {string} id 
-         * @param {string} [body] 
+         * @param {ChatsTicketStatusPatchRequest} [chatsTicketStatusPatchRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        chatsTicketStatusPatch: async (accountId: string, id: string, body?: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        chatsTicketStatusPatch: async (accountId: string, id: string, chatsTicketStatusPatchRequest?: ChatsTicketStatusPatchRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'accountId' is not null or undefined
             assertParamExists('chatsTicketStatusPatch', 'accountId', accountId)
             // verify required parameter 'id' is not null or undefined
@@ -6016,7 +6036,7 @@ export const ChatsApiAxiosParamCreator = function (configuration?: Configuration
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(body, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(chatsTicketStatusPatchRequest, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -6092,12 +6112,12 @@ export const ChatsApiFp = function(configuration?: Configuration) {
          * @summary Update a chat\'s ticket status -- closed | null\'
          * @param {string} accountId 
          * @param {string} id 
-         * @param {string} [body] 
+         * @param {ChatsTicketStatusPatchRequest} [chatsTicketStatusPatchRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async chatsTicketStatusPatch(accountId: string, id: string, body?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AccountsLogout200Response>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.chatsTicketStatusPatch(accountId, id, body, options);
+        async chatsTicketStatusPatch(accountId: string, id: string, chatsTicketStatusPatchRequest?: ChatsTicketStatusPatchRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AccountsLogout200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.chatsTicketStatusPatch(accountId, id, chatsTicketStatusPatchRequest, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
     }
@@ -6166,12 +6186,12 @@ export const ChatsApiFactory = function (configuration?: Configuration, basePath
          * @summary Update a chat\'s ticket status -- closed | null\'
          * @param {string} accountId 
          * @param {string} id 
-         * @param {string} [body] 
+         * @param {ChatsTicketStatusPatchRequest} [chatsTicketStatusPatchRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        chatsTicketStatusPatch(accountId: string, id: string, body?: string, options?: any): AxiosPromise<AccountsLogout200Response> {
-            return localVarFp.chatsTicketStatusPatch(accountId, id, body, options).then((request) => request(axios, basePath));
+        chatsTicketStatusPatch(accountId: string, id: string, chatsTicketStatusPatchRequest?: ChatsTicketStatusPatchRequest, options?: any): AxiosPromise<AccountsLogout200Response> {
+            return localVarFp.chatsTicketStatusPatch(accountId, id, chatsTicketStatusPatchRequest, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -6387,10 +6407,10 @@ export interface ChatsApiChatsTicketStatusPatchRequest {
 
     /**
      * 
-     * @type {string}
+     * @type {ChatsTicketStatusPatchRequest}
      * @memberof ChatsApiChatsTicketStatusPatch
      */
-    readonly body?: string
+    readonly chatsTicketStatusPatchRequest?: ChatsTicketStatusPatchRequest
 }
 
 /**
@@ -6445,7 +6465,7 @@ export class ChatsApi extends BaseAPI {
      * @memberof ChatsApi
      */
     public chatsTicketStatusPatch(requestParameters: ChatsApiChatsTicketStatusPatchRequest, options?: AxiosRequestConfig) {
-        return ChatsApiFp(this.configuration).chatsTicketStatusPatch(requestParameters.accountId, requestParameters.id, requestParameters.body, options).then((request) => request(this.axios, this.basePath));
+        return ChatsApiFp(this.configuration).chatsTicketStatusPatch(requestParameters.accountId, requestParameters.id, requestParameters.chatsTicketStatusPatchRequest, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
