@@ -3864,25 +3864,10 @@ export interface TemplatesSubmitForReviewRequest {
     'message': TemplateCreate;
 }
 /**
- * 
+ * @type TicketStatus
  * @export
- * @interface TicketStatus
  */
-export interface TicketStatus {
-}
-/**
- * 
- * @export
- * @enum {string}
- */
-
-export const TicketStatusAnyOf = {
-    One: 'one',
-    Two: 'two'
-} as const;
-
-export type TicketStatusAnyOf = typeof TicketStatusAnyOf[keyof typeof TicketStatusAnyOf];
-
+export type TicketStatus = TicketStatusOneOf | any;
 
 /**
  * 
@@ -3890,11 +3875,11 @@ export type TicketStatusAnyOf = typeof TicketStatusAnyOf[keyof typeof TicketStat
  * @enum {string}
  */
 
-export const TicketStatusAnyOf1 = {
-    Null: 'null'
+export const TicketStatusOneOf = {
+    Closed: 'closed'
 } as const;
 
-export type TicketStatusAnyOf1 = typeof TicketStatusAnyOf1[keyof typeof TicketStatusAnyOf1];
+export type TicketStatusOneOf = typeof TicketStatusOneOf[keyof typeof TicketStatusOneOf];
 
 
 /**

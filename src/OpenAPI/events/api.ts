@@ -2374,12 +2374,11 @@ export interface ChatInsertData {
     'cursor': string;
 }
 /**
- * 
+ * @type ChatInsertDataTicketStatus
  * @export
- * @interface ChatInsertDataTicketStatus
  */
-export interface ChatInsertDataTicketStatus {
-}
+export type ChatInsertDataTicketStatus = any | string;
+
 /**
  * 
  * @export
