@@ -6096,7 +6096,7 @@ export const ChatsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async chatsTicketStatusPatch(accountId: string, id: string, body?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Chat>> {
+        async chatsTicketStatusPatch(accountId: string, id: string, body?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.chatsTicketStatusPatch(accountId, id, body, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -6170,7 +6170,7 @@ export const ChatsApiFactory = function (configuration?: Configuration, basePath
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        chatsTicketStatusPatch(accountId: string, id: string, body?: string, options?: any): AxiosPromise<Chat> {
+        chatsTicketStatusPatch(accountId: string, id: string, body?: string, options?: any): AxiosPromise<void> {
             return localVarFp.chatsTicketStatusPatch(accountId, id, body, options).then((request) => request(axios, basePath));
         },
     };
