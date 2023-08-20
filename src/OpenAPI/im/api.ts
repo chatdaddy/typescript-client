@@ -1212,7 +1212,8 @@ export interface ChatsTicketStatusPatchRequest {
 }
 
 export const ChatsTicketStatusPatchRequestTicketStatusEnum = {
-    Closed: 'closed'
+    Closed: 'closed',
+    Open: 'open'
 } as const;
 
 export type ChatsTicketStatusPatchRequestTicketStatusEnum = typeof ChatsTicketStatusPatchRequestTicketStatusEnum[keyof typeof ChatsTicketStatusPatchRequestTicketStatusEnum];
