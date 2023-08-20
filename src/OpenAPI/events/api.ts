@@ -5768,8 +5768,15 @@ export interface TeamInsertDataCreator {
      * 
      * @type {UserInsertDataNotify}
      * @memberof TeamInsertDataCreator
+     * @deprecated
      */
     'notify': UserInsertDataNotify;
+    /**
+     * 
+     * @type {UserInsertDataNotificationPreferences}
+     * @memberof TeamInsertDataCreator
+     */
+    'notificationPreferences': UserInsertDataNotificationPreferences;
     /**
      * 
      * @type {string}
@@ -7113,8 +7120,15 @@ export interface UserInsertData {
      * 
      * @type {UserInsertDataNotify}
      * @memberof UserInsertData
+     * @deprecated
      */
     'notify': UserInsertDataNotify;
+    /**
+     * 
+     * @type {UserInsertDataNotificationPreferences}
+     * @memberof UserInsertData
+     */
+    'notificationPreferences': UserInsertDataNotificationPreferences;
     /**
      * 
      * @type {string}
@@ -7150,6 +7164,193 @@ export const UserInsertDataCreatedByMethodEnum = {
 } as const;
 
 export type UserInsertDataCreatedByMethodEnum = typeof UserInsertDataCreatedByMethodEnum[keyof typeof UserInsertDataCreatedByMethodEnum];
+
+/**
+ * 
+ * @export
+ * @interface UserInsertDataNotificationPreferences
+ */
+export interface UserInsertDataNotificationPreferences {
+    /**
+     * 
+     * @type {UserInsertDataNotificationPreferencesAccountDisconnected}
+     * @memberof UserInsertDataNotificationPreferences
+     */
+    'accountDisconnected'?: UserInsertDataNotificationPreferencesAccountDisconnected;
+    /**
+     * 
+     * @type {UserInsertDataNotificationPreferencesContactAssignedToMe}
+     * @memberof UserInsertDataNotificationPreferences
+     */
+    'contactAssignedToMe'?: UserInsertDataNotificationPreferencesContactAssignedToMe;
+    /**
+     * 
+     * @type {UserInsertDataNotificationPreferencesNewMessage}
+     * @memberof UserInsertDataNotificationPreferences
+     */
+    'newMessage'?: UserInsertDataNotificationPreferencesNewMessage;
+    /**
+     * 
+     * @type {UserInsertDataNotificationPreferencesContactAssignedToMe}
+     * @memberof UserInsertDataNotificationPreferences
+     */
+    'teamMemberAdded'?: UserInsertDataNotificationPreferencesContactAssignedToMe;
+    /**
+     * 
+     * @type {UserInsertDataNotificationPreferencesContactAssignedToMe}
+     * @memberof UserInsertDataNotificationPreferences
+     */
+    'trackingAdded'?: UserInsertDataNotificationPreferencesContactAssignedToMe;
+    /**
+     * 
+     * @type {UserInsertDataNotificationPreferencesContactAssignedToMe}
+     * @memberof UserInsertDataNotificationPreferences
+     */
+    'trackingErrored'?: UserInsertDataNotificationPreferencesContactAssignedToMe;
+    /**
+     * 
+     * @type {UserInsertDataNotificationPreferencesAccountDisconnected}
+     * @memberof UserInsertDataNotificationPreferences
+     */
+    'botExternalTemplateStatusUpdated'?: UserInsertDataNotificationPreferencesAccountDisconnected;
+    /**
+     * 
+     * @type {UserInsertDataNotificationPreferencesContactAssignedToMe}
+     * @memberof UserInsertDataNotificationPreferences
+     */
+    'actionExecute'?: UserInsertDataNotificationPreferencesContactAssignedToMe;
+    /**
+     * 
+     * @type {UserInsertDataNotificationPreferencesContactAssignedToMe}
+     * @memberof UserInsertDataNotificationPreferences
+     */
+    'noteMentionsMe'?: UserInsertDataNotificationPreferencesContactAssignedToMe;
+    /**
+     * 
+     * @type {UserInsertDataNotificationPreferencesContactAssignedToMe}
+     * @memberof UserInsertDataNotificationPreferences
+     */
+    'payments'?: UserInsertDataNotificationPreferencesContactAssignedToMe;
+}
+/**
+ * 
+ * @export
+ * @interface UserInsertDataNotificationPreferencesAccountDisconnected
+ */
+export interface UserInsertDataNotificationPreferencesAccountDisconnected {
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof UserInsertDataNotificationPreferencesAccountDisconnected
+     */
+    'destinations': Array<UserInsertDataNotificationPreferencesAccountDisconnectedDestinationsEnum>;
+    /**
+     * 
+     * @type {Array<UserInsertDataNotificationPreferencesAccountDisconnectedAccountsInner>}
+     * @memberof UserInsertDataNotificationPreferencesAccountDisconnected
+     */
+    'accounts'?: Array<UserInsertDataNotificationPreferencesAccountDisconnectedAccountsInner>;
+}
+
+export const UserInsertDataNotificationPreferencesAccountDisconnectedDestinationsEnum = {
+    Push: 'push',
+    Email: 'email',
+    Whatsapp: 'whatsapp'
+} as const;
+
+export type UserInsertDataNotificationPreferencesAccountDisconnectedDestinationsEnum = typeof UserInsertDataNotificationPreferencesAccountDisconnectedDestinationsEnum[keyof typeof UserInsertDataNotificationPreferencesAccountDisconnectedDestinationsEnum];
+
+/**
+ * 
+ * @export
+ * @interface UserInsertDataNotificationPreferencesAccountDisconnectedAccountsInner
+ */
+export interface UserInsertDataNotificationPreferencesAccountDisconnectedAccountsInner {
+    /**
+     * 
+     * @type {string}
+     * @memberof UserInsertDataNotificationPreferencesAccountDisconnectedAccountsInner
+     */
+    'id': string;
+}
+/**
+ * 
+ * @export
+ * @interface UserInsertDataNotificationPreferencesContactAssignedToMe
+ */
+export interface UserInsertDataNotificationPreferencesContactAssignedToMe {
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof UserInsertDataNotificationPreferencesContactAssignedToMe
+     */
+    'destinations': Array<UserInsertDataNotificationPreferencesContactAssignedToMeDestinationsEnum>;
+}
+
+export const UserInsertDataNotificationPreferencesContactAssignedToMeDestinationsEnum = {
+    Push: 'push',
+    Email: 'email',
+    Whatsapp: 'whatsapp'
+} as const;
+
+export type UserInsertDataNotificationPreferencesContactAssignedToMeDestinationsEnum = typeof UserInsertDataNotificationPreferencesContactAssignedToMeDestinationsEnum[keyof typeof UserInsertDataNotificationPreferencesContactAssignedToMeDestinationsEnum];
+
+/**
+ * 
+ * @export
+ * @interface UserInsertDataNotificationPreferencesNewMessage
+ */
+export interface UserInsertDataNotificationPreferencesNewMessage {
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof UserInsertDataNotificationPreferencesNewMessage
+     */
+    'destinations': Array<UserInsertDataNotificationPreferencesNewMessageDestinationsEnum>;
+    /**
+     * 
+     * @type {UserInsertDataNotificationPreferencesNewMessageDefaultType}
+     * @memberof UserInsertDataNotificationPreferencesNewMessage
+     */
+    'defaultType'?: UserInsertDataNotificationPreferencesNewMessageDefaultType;
+    /**
+     * 
+     * @type {Array<UserInsertDataNotificationPreferencesNewMessageAccountsInner>}
+     * @memberof UserInsertDataNotificationPreferencesNewMessage
+     */
+    'accounts'?: Array<UserInsertDataNotificationPreferencesNewMessageAccountsInner>;
+}
+
+export const UserInsertDataNotificationPreferencesNewMessageDestinationsEnum = {
+    Push: 'push'
+} as const;
+
+export type UserInsertDataNotificationPreferencesNewMessageDestinationsEnum = typeof UserInsertDataNotificationPreferencesNewMessageDestinationsEnum[keyof typeof UserInsertDataNotificationPreferencesNewMessageDestinationsEnum];
+
+/**
+ * 
+ * @export
+ * @interface UserInsertDataNotificationPreferencesNewMessageAccountsInner
+ */
+export interface UserInsertDataNotificationPreferencesNewMessageAccountsInner {
+    /**
+     * 
+     * @type {string}
+     * @memberof UserInsertDataNotificationPreferencesNewMessageAccountsInner
+     */
+    'id': string;
+    /**
+     * 
+     * @type {UserInsertDataNotificationPreferencesNewMessageDefaultType}
+     * @memberof UserInsertDataNotificationPreferencesNewMessageAccountsInner
+     */
+    'type': UserInsertDataNotificationPreferencesNewMessageDefaultType;
+}
+/**
+ * @type UserInsertDataNotificationPreferencesNewMessageDefaultType
+ * @export
+ */
+export type UserInsertDataNotificationPreferencesNewMessageDefaultType = Array<string> | string;
 
 /**
  * 
@@ -7291,8 +7492,15 @@ export interface UserUpdateData {
      * 
      * @type {UserInsertDataNotify}
      * @memberof UserUpdateData
+     * @deprecated
      */
     'notify'?: UserInsertDataNotify;
+    /**
+     * 
+     * @type {UserInsertDataNotificationPreferences}
+     * @memberof UserUpdateData
+     */
+    'notificationPreferences'?: UserInsertDataNotificationPreferences;
     /**
      * 
      * @type {string}

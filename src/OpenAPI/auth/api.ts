@@ -24,6 +24,38 @@ import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObj
 import { COLLECTION_FORMATS, RequestArgs, BaseAPI, RequiredError } from '../base';
 
 /**
+ * 
+ * @export
+ * @interface AccountNotificationPreference
+ */
+export interface AccountNotificationPreference {
+    /**
+     * 
+     * @type {Array<NotificationDestination>}
+     * @memberof AccountNotificationPreference
+     */
+    'destinations': Array<NotificationDestination>;
+    /**
+     * List of accounts to receive notifications for. If empty, all accounts will be notified.
+     * @type {Array<AccountNotificationPreferenceAccountsInner>}
+     * @memberof AccountNotificationPreference
+     */
+    'accounts'?: Array<AccountNotificationPreferenceAccountsInner>;
+}
+/**
+ * 
+ * @export
+ * @interface AccountNotificationPreferenceAccountsInner
+ */
+export interface AccountNotificationPreferenceAccountsInner {
+    /**
+     * 
+     * @type {string}
+     * @memberof AccountNotificationPreferenceAccountsInner
+     */
+    'id': string;
+}
+/**
  * @type AuthRequest
  * @export
  */
@@ -293,38 +325,165 @@ export interface JWTUser {
     'emailAddress'?: string;
 }
 /**
+ * 
+ * @export
+ * @interface NewMessageNotificationPreference
+ */
+export interface NewMessageNotificationPreference {
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof NewMessageNotificationPreference
+     */
+    'destinations': Array<NewMessageNotificationPreferenceDestinationsEnum>;
+    /**
+     * 
+     * @type {NewMessageNotificationType}
+     * @memberof NewMessageNotificationPreference
+     */
+    'defaultType'?: NewMessageNotificationType;
+    /**
+     * List of accounts to receive notifications for. If empty, all accounts will be notified based on the preference set in \"\"
+     * @type {Array<NewMessageNotificationPreferenceAccountsInner>}
+     * @memberof NewMessageNotificationPreference
+     */
+    'accounts'?: Array<NewMessageNotificationPreferenceAccountsInner>;
+}
+
+export const NewMessageNotificationPreferenceDestinationsEnum = {
+    Push: 'push'
+} as const;
+
+export type NewMessageNotificationPreferenceDestinationsEnum = typeof NewMessageNotificationPreferenceDestinationsEnum[keyof typeof NewMessageNotificationPreferenceDestinationsEnum];
+
+/**
+ * 
+ * @export
+ * @interface NewMessageNotificationPreferenceAccountsInner
+ */
+export interface NewMessageNotificationPreferenceAccountsInner {
+    /**
+     * 
+     * @type {string}
+     * @memberof NewMessageNotificationPreferenceAccountsInner
+     */
+    'id': string;
+    /**
+     * 
+     * @type {NewMessageNotificationType}
+     * @memberof NewMessageNotificationPreferenceAccountsInner
+     */
+    'type': NewMessageNotificationType;
+}
+/**
+ * @type NewMessageNotificationType
+ * @export
+ */
+export type NewMessageNotificationType = Array<string> | NewMessageNotificationTypeOneOf;
+
+/**
+ * 
+ * @export
+ * @enum {string}
+ */
+
+export const NewMessageNotificationTypeOneOf = {
+    All: 'all'
+} as const;
+
+export type NewMessageNotificationTypeOneOf = typeof NewMessageNotificationTypeOneOf[keyof typeof NewMessageNotificationTypeOneOf];
+
+
+/**
+ * 
+ * @export
+ * @enum {string}
+ */
+
+export const NotificationDestination = {
+    Push: 'push',
+    Email: 'email',
+    Whatsapp: 'whatsapp'
+} as const;
+
+export type NotificationDestination = typeof NotificationDestination[keyof typeof NotificationDestination];
+
+
+/**
+ * 
+ * @export
+ * @interface NotificationPreferences
+ */
+export interface NotificationPreferences {
+    /**
+     * 
+     * @type {AccountNotificationPreference}
+     * @memberof NotificationPreferences
+     */
+    'accountDisconnected'?: AccountNotificationPreference;
+    /**
+     * 
+     * @type {SimpleNotificationPreference}
+     * @memberof NotificationPreferences
+     */
+    'contactAssignedToMe'?: SimpleNotificationPreference;
+    /**
+     * 
+     * @type {NewMessageNotificationPreference}
+     * @memberof NotificationPreferences
+     */
+    'newMessage'?: NewMessageNotificationPreference;
+    /**
+     * 
+     * @type {SimpleNotificationPreference}
+     * @memberof NotificationPreferences
+     */
+    'teamMemberAdded'?: SimpleNotificationPreference;
+    /**
+     * 
+     * @type {SimpleNotificationPreference}
+     * @memberof NotificationPreferences
+     */
+    'trackingAdded'?: SimpleNotificationPreference;
+    /**
+     * 
+     * @type {SimpleNotificationPreference}
+     * @memberof NotificationPreferences
+     */
+    'trackingErrored'?: SimpleNotificationPreference;
+    /**
+     * 
+     * @type {AccountNotificationPreference}
+     * @memberof NotificationPreferences
+     */
+    'botExternalTemplateStatusUpdated'?: AccountNotificationPreference;
+    /**
+     * 
+     * @type {SimpleNotificationPreference}
+     * @memberof NotificationPreferences
+     */
+    'actionExecute'?: SimpleNotificationPreference;
+    /**
+     * 
+     * @type {SimpleNotificationPreference}
+     * @memberof NotificationPreferences
+     */
+    'noteMentionsMe'?: SimpleNotificationPreference;
+    /**
+     * 
+     * @type {SimpleNotificationPreference}
+     * @memberof NotificationPreferences
+     */
+    'payments'?: SimpleNotificationPreference;
+}
+/**
  * @type NotificationResult
  * @export
  */
 export type NotificationResult = boolean | string;
 
 /**
- * 
- * @export
- * @interface Notify200Response
- */
-export interface Notify200Response {
-    /**
-     * 
-     * @type {NotificationResult}
-     * @memberof Notify200Response
-     */
-    'whatsapp': NotificationResult;
-    /**
-     * 
-     * @type {NotificationResult}
-     * @memberof Notify200Response
-     */
-    'email': NotificationResult;
-    /**
-     * 
-     * @type {NotificationResult}
-     * @memberof Notify200Response
-     */
-    'desktop'?: NotificationResult;
-}
-/**
- * 
+ * Deprecated. Use notificationPreferences instead
  * @export
  * @interface NotifyModel
  */
@@ -790,6 +949,19 @@ export type Scope = typeof Scope[keyof typeof Scope];
 /**
  * 
  * @export
+ * @interface SimpleNotificationPreference
+ */
+export interface SimpleNotificationPreference {
+    /**
+     * 
+     * @type {Array<NotificationDestination>}
+     * @memberof SimpleNotificationPreference
+     */
+    'destinations': Array<NotificationDestination>;
+}
+/**
+ * 
+ * @export
  * @interface Team
  */
 export interface Team {
@@ -1216,8 +1388,15 @@ export interface User {
      * 
      * @type {NotifyModel}
      * @memberof User
+     * @deprecated
      */
     'notify': NotifyModel;
+    /**
+     * 
+     * @type {NotificationPreferences}
+     * @memberof User
+     */
+    'notificationPreferences': NotificationPreferences;
     /**
      * The referral code used for sign-up
      * @type {string}
@@ -1225,7 +1404,7 @@ export interface User {
      */
     'referralCode'?: string | null;
     /**
-     * The signature of the user
+     * The signature of the user to use in messages
      * @type {string}
      * @memberof User
      */
@@ -1289,8 +1468,15 @@ export interface UserCreate {
      * 
      * @type {NotifyModel}
      * @memberof UserCreate
+     * @deprecated
      */
     'notify'?: NotifyModel;
+    /**
+     * 
+     * @type {NotificationPreferences}
+     * @memberof UserCreate
+     */
+    'notificationPreferences'?: NotificationPreferences;
     /**
      * Sign up with a referral code
      * @type {string}
@@ -1337,8 +1523,15 @@ export interface UserPatch {
      * 
      * @type {NotifyModel}
      * @memberof UserPatch
+     * @deprecated
      */
     'notify'?: NotifyModel;
+    /**
+     * 
+     * @type {NotificationPreferences}
+     * @memberof UserPatch
+     */
+    'notificationPreferences'?: NotificationPreferences;
     /**
      * Phone number. Only admin access can modify or specify OTP
      * @type {number}
@@ -1644,199 +1837,6 @@ export class InviteLinksApi extends BaseAPI {
      */
     public inviteLinksPost(requestParameters: InviteLinksApiInviteLinksPostRequest = {}, options?: AxiosRequestConfig) {
         return InviteLinksApiFp(this.configuration).inviteLinksPost(requestParameters.inviteLinksPostRequest, options).then((request) => request(this.axios, this.basePath));
-    }
-}
-
-
-/**
- * NotificationsApi - axios parameter creator
- * @export
- */
-export const NotificationsApiAxiosParamCreator = function (configuration?: Configuration) {
-    return {
-        /**
-         * 
-         * @summary Notify a team member
-         * @param {string} [userId] The user to notify, leave undefined to send to team owner
-         * @param {string} [teamId] 
-         * @param {boolean} [notifyWhatsApp] Override notify on WhatsApp
-         * @param {boolean} [notifyEmail] Override notify on Email
-         * @param {boolean} [notifyDesktop] Override notify on Desktop
-         * @param {NotifyRequestWithContent} [notifyRequestWithContent] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        notify: async (userId?: string, teamId?: string, notifyWhatsApp?: boolean, notifyEmail?: boolean, notifyDesktop?: boolean, notifyRequestWithContent?: NotifyRequestWithContent, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/notify`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication chatdaddy required
-            // oauth required
-            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["TEAM_NOTIFY"], configuration)
-
-            if (userId !== undefined) {
-                localVarQueryParameter['userId'] = userId;
-            }
-
-            if (teamId !== undefined) {
-                localVarQueryParameter['teamId'] = teamId;
-            }
-
-            if (notifyWhatsApp !== undefined) {
-                localVarQueryParameter['notifyWhatsApp'] = notifyWhatsApp;
-            }
-
-            if (notifyEmail !== undefined) {
-                localVarQueryParameter['notifyEmail'] = notifyEmail;
-            }
-
-            if (notifyDesktop !== undefined) {
-                localVarQueryParameter['notifyDesktop'] = notifyDesktop;
-            }
-
-
-    
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(notifyRequestWithContent, localVarRequestOptions, configuration)
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-    }
-};
-
-/**
- * NotificationsApi - functional programming interface
- * @export
- */
-export const NotificationsApiFp = function(configuration?: Configuration) {
-    const localVarAxiosParamCreator = NotificationsApiAxiosParamCreator(configuration)
-    return {
-        /**
-         * 
-         * @summary Notify a team member
-         * @param {string} [userId] The user to notify, leave undefined to send to team owner
-         * @param {string} [teamId] 
-         * @param {boolean} [notifyWhatsApp] Override notify on WhatsApp
-         * @param {boolean} [notifyEmail] Override notify on Email
-         * @param {boolean} [notifyDesktop] Override notify on Desktop
-         * @param {NotifyRequestWithContent} [notifyRequestWithContent] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async notify(userId?: string, teamId?: string, notifyWhatsApp?: boolean, notifyEmail?: boolean, notifyDesktop?: boolean, notifyRequestWithContent?: NotifyRequestWithContent, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Notify200Response>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.notify(userId, teamId, notifyWhatsApp, notifyEmail, notifyDesktop, notifyRequestWithContent, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-    }
-};
-
-/**
- * NotificationsApi - factory interface
- * @export
- */
-export const NotificationsApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
-    const localVarFp = NotificationsApiFp(configuration)
-    return {
-        /**
-         * 
-         * @summary Notify a team member
-         * @param {string} [userId] The user to notify, leave undefined to send to team owner
-         * @param {string} [teamId] 
-         * @param {boolean} [notifyWhatsApp] Override notify on WhatsApp
-         * @param {boolean} [notifyEmail] Override notify on Email
-         * @param {boolean} [notifyDesktop] Override notify on Desktop
-         * @param {NotifyRequestWithContent} [notifyRequestWithContent] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        notify(userId?: string, teamId?: string, notifyWhatsApp?: boolean, notifyEmail?: boolean, notifyDesktop?: boolean, notifyRequestWithContent?: NotifyRequestWithContent, options?: any): AxiosPromise<Notify200Response> {
-            return localVarFp.notify(userId, teamId, notifyWhatsApp, notifyEmail, notifyDesktop, notifyRequestWithContent, options).then((request) => request(axios, basePath));
-        },
-    };
-};
-
-/**
- * Request parameters for notify operation in NotificationsApi.
- * @export
- * @interface NotificationsApiNotifyRequest
- */
-export interface NotificationsApiNotifyRequest {
-    /**
-     * The user to notify, leave undefined to send to team owner
-     * @type {string}
-     * @memberof NotificationsApiNotify
-     */
-    readonly userId?: string
-
-    /**
-     * 
-     * @type {string}
-     * @memberof NotificationsApiNotify
-     */
-    readonly teamId?: string
-
-    /**
-     * Override notify on WhatsApp
-     * @type {boolean}
-     * @memberof NotificationsApiNotify
-     */
-    readonly notifyWhatsApp?: boolean
-
-    /**
-     * Override notify on Email
-     * @type {boolean}
-     * @memberof NotificationsApiNotify
-     */
-    readonly notifyEmail?: boolean
-
-    /**
-     * Override notify on Desktop
-     * @type {boolean}
-     * @memberof NotificationsApiNotify
-     */
-    readonly notifyDesktop?: boolean
-
-    /**
-     * 
-     * @type {NotifyRequestWithContent}
-     * @memberof NotificationsApiNotify
-     */
-    readonly notifyRequestWithContent?: NotifyRequestWithContent
-}
-
-/**
- * NotificationsApi - object-oriented interface
- * @export
- * @class NotificationsApi
- * @extends {BaseAPI}
- */
-export class NotificationsApi extends BaseAPI {
-    /**
-     * 
-     * @summary Notify a team member
-     * @param {NotificationsApiNotifyRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof NotificationsApi
-     */
-    public notify(requestParameters: NotificationsApiNotifyRequest = {}, options?: AxiosRequestConfig) {
-        return NotificationsApiFp(this.configuration).notify(requestParameters.userId, requestParameters.teamId, requestParameters.notifyWhatsApp, requestParameters.notifyEmail, requestParameters.notifyDesktop, requestParameters.notifyRequestWithContent, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
