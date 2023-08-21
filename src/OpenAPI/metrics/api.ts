@@ -15,13 +15,15 @@ const BASE_PATH = "https://api-metrics.chatdaddy.tech".replace(/\/+$/, "");
  */
 
 
-import { Configuration } from '../configuration';
-import globalAxios, { AxiosPromise, AxiosInstance, AxiosRequestConfig } from 'axios';
+import type { Configuration } from '../configuration';
+import type { AxiosPromise, AxiosInstance, AxiosRequestConfig } from 'axios';
+import globalAxios from 'axios';
 // Some imports not used depending on template conditions
 // @ts-ignore
 import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObject, setBearerAuthToObject, setOAuthToObject, setSearchParams, serializeDataIfNeeded, toPathString, createRequestFunction } from '../common';
+import type { RequestArgs } from '../base';
 // @ts-ignore
-import { COLLECTION_FORMATS, RequestArgs, BaseAPI, RequiredError } from '../base';
+import { COLLECTION_FORMATS, BaseAPI, RequiredError } from './base';
 
 /**
  * 
@@ -82,6 +84,8 @@ export interface BroadCastNotification {
      */
     'broadCastStatus'?: PaymentStatus;
 }
+
+
 /**
  * 
  * @export
@@ -210,6 +214,8 @@ export interface HomeMetricUpdateRequest {
      */
     'aggregate': DataAggregateType;
 }
+
+
 /**
  * 
  * @export
@@ -259,6 +265,8 @@ export interface InboxNotification {
      */
     'paymentStatus'?: PaymentStatus;
 }
+
+
 /**
  * 
  * @export
@@ -398,6 +406,8 @@ export interface MetricsResult {
      */
     'dataAggregate': DataAggregateType;
 }
+
+
 /**
  * 
  * @export
@@ -786,6 +796,8 @@ export interface ShopNotification {
      */
     'channel'?: Array<string>;
 }
+
+
 /**
  * 
  * @export
@@ -1134,57 +1146,42 @@ export const MetricsApiFactory = function (configuration?: Configuration, basePa
         /**
          * Will return: - 30 results for the \"day\" aggregate - 12 results for the \"week\" aggregate - 6 results for the \"month\" aggregate 
          * @summary Get all metrics for the home page
-         * @param {Aggregate} aggregate Aggregate function to use
-         * @param {number} [page] 
-         * @param {boolean} [includePreviousPeriod] 
-         * @param {string} [timezoneOffset] Timezone offset to query the data in
+         * @param {MetricsApiGetHomeMetricsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getHomeMetrics(aggregate: Aggregate, page?: number, includePreviousPeriod?: boolean, timezoneOffset?: string, options?: any): AxiosPromise<GetHomeMetrics200Response> {
-            return localVarFp.getHomeMetrics(aggregate, page, includePreviousPeriod, timezoneOffset, options).then((request) => request(axios, basePath));
+        getHomeMetrics(requestParameters: MetricsApiGetHomeMetricsRequest, options?: AxiosRequestConfig): AxiosPromise<GetHomeMetrics200Response> {
+            return localVarFp.getHomeMetrics(requestParameters.aggregate, requestParameters.page, requestParameters.includePreviousPeriod, requestParameters.timezoneOffset, options).then((request) => request(axios, basePath));
         },
         /**
          * 
          * @summary Query a given metric
-         * @param {MetricType} metric 
-         * @param {Aggregate} aggregate 
-         * @param {number} [count] Number of results to return
-         * @param {number} [page] 
-         * @param {Array<string>} [key] fetch data for only these specific keys
-         * @param {string} [timezoneOffset] Timezone offset to query the data in
-         * @param {DataAggregateType} [dataAggregation] How to aggregate the data
+         * @param {MetricsApiGetMetricsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getMetrics(metric: MetricType, aggregate: Aggregate, count?: number, page?: number, key?: Array<string>, timezoneOffset?: string, dataAggregation?: DataAggregateType, options?: any): AxiosPromise<GetMetrics200Response> {
-            return localVarFp.getMetrics(metric, aggregate, count, page, key, timezoneOffset, dataAggregation, options).then((request) => request(axios, basePath));
+        getMetrics(requestParameters: MetricsApiGetMetricsRequest, options?: AxiosRequestConfig): AxiosPromise<GetMetrics200Response> {
+            return localVarFp.getMetrics(requestParameters.metric, requestParameters.aggregate, requestParameters.count, requestParameters.page, requestParameters.key, requestParameters.timezoneOffset, requestParameters.dataAggregation, options).then((request) => request(axios, basePath));
         },
         /**
          * 
          * @summary Query the top performing keys for a metric & aggregate
-         * @param {MetricType} metric 
-         * @param {Aggregate} aggregate 
-         * @param {number} [count] Number of results to return
-         * @param {string} [timezoneOffset] Timezone offset to query the data in
-         * @param {'sum' | 'avg'} [dataAggregation] How to aggregate the data
-         * @param {string} [timestamp] Timestamp to fetch the top keys for
-         * @param {'asc' | 'desc'} [orderDirection] Order direction for the top keys
+         * @param {MetricsApiGetTopMetricKeysRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getTopMetricKeys(metric: MetricType, aggregate: Aggregate, count?: number, timezoneOffset?: string, dataAggregation?: 'sum' | 'avg', timestamp?: string, orderDirection?: 'asc' | 'desc', options?: any): AxiosPromise<GetTopMetricKeys200Response> {
-            return localVarFp.getTopMetricKeys(metric, aggregate, count, timezoneOffset, dataAggregation, timestamp, orderDirection, options).then((request) => request(axios, basePath));
+        getTopMetricKeys(requestParameters: MetricsApiGetTopMetricKeysRequest, options?: AxiosRequestConfig): AxiosPromise<GetTopMetricKeys200Response> {
+            return localVarFp.getTopMetricKeys(requestParameters.metric, requestParameters.aggregate, requestParameters.count, requestParameters.timezoneOffset, requestParameters.dataAggregation, requestParameters.timestamp, requestParameters.orderDirection, options).then((request) => request(axios, basePath));
         },
         /**
          * 
          * @summary Change the default metrics seen on the home page
-         * @param {UpdateHomeMetricsRequest} [updateHomeMetricsRequest] 
+         * @param {MetricsApiUpdateHomeMetricsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        updateHomeMetrics(updateHomeMetricsRequest?: UpdateHomeMetricsRequest, options?: any): AxiosPromise<void> {
-            return localVarFp.updateHomeMetrics(updateHomeMetricsRequest, options).then((request) => request(axios, basePath));
+        updateHomeMetrics(requestParameters: MetricsApiUpdateHomeMetricsRequest = {}, options?: AxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.updateHomeMetrics(requestParameters.updateHomeMetricsRequest, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -1510,16 +1507,12 @@ export const NotificationApiFactory = function (configuration?: Configuration, b
         /**
          * 
          * @summary Get notifications data
-         * @param {string} [id] 
-         * @param {NotificationCategory} [category] 
-         * @param {number} [count] Number of results to return
-         * @param {string} [q] 
-         * @param {string} [cursor] 
+         * @param {NotificationApiGetNotificationsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getNotifications(id?: string, category?: NotificationCategory, count?: number, q?: string, cursor?: string, options?: any): AxiosPromise<GetNotifications200Response> {
-            return localVarFp.getNotifications(id, category, count, q, cursor, options).then((request) => request(axios, basePath));
+        getNotifications(requestParameters: NotificationApiGetNotificationsRequest = {}, options?: AxiosRequestConfig): AxiosPromise<GetNotifications200Response> {
+            return localVarFp.getNotifications(requestParameters.id, requestParameters.category, requestParameters.count, requestParameters.q, requestParameters.cursor, options).then((request) => request(axios, basePath));
         },
     };
 };

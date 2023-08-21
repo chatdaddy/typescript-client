@@ -15,13 +15,15 @@ const BASE_PATH = "https://api-transcoder.chatdaddy.tech".replace(/\/+$/, "");
  */
 
 
-import { Configuration } from '../configuration';
-import globalAxios, { AxiosPromise, AxiosInstance, AxiosRequestConfig } from 'axios';
+import type { Configuration } from '../configuration';
+import type { AxiosPromise, AxiosInstance, AxiosRequestConfig } from 'axios';
+import globalAxios from 'axios';
 // Some imports not used depending on template conditions
 // @ts-ignore
 import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObject, setBearerAuthToObject, setOAuthToObject, setSearchParams, serializeDataIfNeeded, toPathString, createRequestFunction } from '../common';
+import type { RequestArgs } from '../base';
 // @ts-ignore
-import { COLLECTION_FORMATS, RequestArgs, BaseAPI, RequiredError } from '../base';
+import { COLLECTION_FORMATS, BaseAPI, RequiredError } from './base';
 
 /**
  * 
@@ -223,32 +225,22 @@ export const TranscodeApiFactory = function (configuration?: Configuration, base
         /**
          * 
          * @summary Stream content from an encrypted message attachment
-         * @param {string} accountId Account ID
-         * @param {string} chatId Chat ID
-         * @param {string} id Message ID
-         * @param {number} index Attachment index
-         * @param {string} [token] ChatDaddy auth token, optionally provide in query
-         * @param {string} [mimetype] override the mimetype of the media post transcoding
+         * @param {TranscodeApiStreamMessageAttachmentRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        streamMessageAttachment(accountId: string, chatId: string, id: string, index: number, token?: string, mimetype?: string, options?: any): AxiosPromise<void> {
-            return localVarFp.streamMessageAttachment(accountId, chatId, id, index, token, mimetype, options).then((request) => request(axios, basePath));
+        streamMessageAttachment(requestParameters: TranscodeApiStreamMessageAttachmentRequest, options?: AxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.streamMessageAttachment(requestParameters.accountId, requestParameters.chatId, requestParameters.id, requestParameters.index, requestParameters.token, requestParameters.mimetype, options).then((request) => request(axios, basePath));
         },
         /**
          * 
          * @summary Transcode hosted media
-         * @param {TranscodeMethod} method What to do with the transcoded media
-         * @param {string} url The URL to transcode
-         * @param {string} [key] Base64 encoded key for decryption
-         * @param {string} [iv] Base64 encoded IV for decryption
-         * @param {string} [expectedMimetype] expected mimetype of the media post transcoding
-         * @param {string} [token] ChatDaddy auth token, optionally provide in query
+         * @param {TranscodeApiTranscodeRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        transcode(method: TranscodeMethod, url: string, key?: string, iv?: string, expectedMimetype?: string, token?: string, options?: any): AxiosPromise<void> {
-            return localVarFp.transcode(method, url, key, iv, expectedMimetype, token, options).then((request) => request(axios, basePath));
+        transcode(requestParameters: TranscodeApiTranscodeRequest, options?: AxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.transcode(requestParameters.method, requestParameters.url, requestParameters.key, requestParameters.iv, requestParameters.expectedMimetype, requestParameters.token, options).then((request) => request(axios, basePath));
         },
     };
 };

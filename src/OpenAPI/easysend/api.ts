@@ -15,13 +15,15 @@ const BASE_PATH = "https://api-notifications.chatdaddy.tech".replace(/\/+$/, "")
  */
 
 
-import { Configuration } from '../configuration';
-import globalAxios, { AxiosPromise, AxiosInstance, AxiosRequestConfig } from 'axios';
+import type { Configuration } from '../configuration';
+import type { AxiosPromise, AxiosInstance, AxiosRequestConfig } from 'axios';
+import globalAxios from 'axios';
 // Some imports not used depending on template conditions
 // @ts-ignore
 import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObject, setBearerAuthToObject, setOAuthToObject, setSearchParams, serializeDataIfNeeded, toPathString, createRequestFunction } from '../common';
+import type { RequestArgs } from '../base';
 // @ts-ignore
-import { COLLECTION_FORMATS, RequestArgs, BaseAPI, RequiredError } from '../base';
+import { COLLECTION_FORMATS, BaseAPI, RequiredError } from './base';
 
 /**
  * 
@@ -739,6 +741,8 @@ export interface EventTriggerCreateDelay {
      */
     'type'?: DelayTypeModel;
 }
+
+
 /**
  * 
  * @export
@@ -2048,13 +2052,12 @@ export const AdminApiFactory = function (configuration?: Configuration, basePath
         /**
          * 
          * @summary Get admin data
-         * @param {Array<string>} [teamId] Fetch orders of the specified teamIds
-         * @param {'ASC' | 'DESC'} [direction] Fetch orders sent to the specified phone number
+         * @param {AdminApiAdminDataGetRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        adminDataGet(teamId?: Array<string>, direction?: 'ASC' | 'DESC', options?: any): AxiosPromise<Array<AdminDataGet200ResponseInner>> {
-            return localVarFp.adminDataGet(teamId, direction, options).then((request) => request(axios, basePath));
+        adminDataGet(requestParameters: AdminApiAdminDataGetRequest = {}, options?: AxiosRequestConfig): AxiosPromise<Array<AdminDataGet200ResponseInner>> {
+            return localVarFp.adminDataGet(requestParameters.teamId, requestParameters.direction, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -2280,34 +2283,32 @@ export const EventsApiFactory = function (configuration?: Configuration, basePat
         /**
          * To be called by a scraping service whenever something happens. Examples include -- an email is received, an order is placed or updated, an order is cancelled, etc.
          * @summary Update data/order details of a tracking
-         * @param {string} secretId The secret ID of the tracking made available to the service
-         * @param {string} [accountId] The account ID to use when sending the flow
-         * @param {DataPatchRequest} [dataPatchRequest] 
+         * @param {EventsApiDataPatchRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        dataPatch(secretId: string, accountId?: string, dataPatchRequest?: DataPatchRequest, options?: any): AxiosPromise<void> {
-            return localVarFp.dataPatch(secretId, accountId, dataPatchRequest, options).then((request) => request(axios, basePath));
+        dataPatch(requestParameters: EventsApiDataPatchRequest, options?: AxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.dataPatch(requestParameters.secretId, requestParameters.accountId, requestParameters.dataPatchRequest, options).then((request) => request(axios, basePath));
         },
         /**
          * 
          * @summary Resend the WA message associated with this data point
-         * @param {string} dataId The secret sent to the parsing service
+         * @param {EventsApiDataResendRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        dataResend(dataId: string, options?: any): AxiosPromise<DataResend200Response> {
-            return localVarFp.dataResend(dataId, options).then((request) => request(axios, basePath));
+        dataResend(requestParameters: EventsApiDataResendRequest, options?: AxiosRequestConfig): AxiosPromise<DataResend200Response> {
+            return localVarFp.dataResend(requestParameters.dataId, options).then((request) => request(axios, basePath));
         },
         /**
          * 
          * @summary Post the order data on easysend.
-         * @param {OrderPostRequest} [orderPostRequest] 
+         * @param {EventsApiOrderPostRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        orderPost(orderPostRequest?: OrderPostRequest, options?: any): AxiosPromise<OrderPost200Response> {
-            return localVarFp.orderPost(orderPostRequest, options).then((request) => request(axios, basePath));
+        orderPost(requestParameters: EventsApiOrderPostRequest = {}, options?: AxiosRequestConfig): AxiosPromise<OrderPost200Response> {
+            return localVarFp.orderPost(requestParameters.orderPostRequest, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -2772,69 +2773,62 @@ export const PaymentIntegrationsApiFactory = function (configuration?: Configura
         /**
          * 
          * @summary Create a payment integration
-         * @param {CreatePaymentIntegrationRequest} [createPaymentIntegrationRequest] 
+         * @param {PaymentIntegrationsApiCreatePaymentIntegrationRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        createPaymentIntegration(createPaymentIntegrationRequest?: CreatePaymentIntegrationRequest, options?: any): AxiosPromise<PaymentIntegration> {
-            return localVarFp.createPaymentIntegration(createPaymentIntegrationRequest, options).then((request) => request(axios, basePath));
+        createPaymentIntegration(requestParameters: PaymentIntegrationsApiCreatePaymentIntegrationRequest = {}, options?: AxiosRequestConfig): AxiosPromise<PaymentIntegration> {
+            return localVarFp.createPaymentIntegration(requestParameters.createPaymentIntegrationRequest, options).then((request) => request(axios, basePath));
         },
         /**
          * 
          * @summary delete the user\'s payment integration
-         * @param {Array<string>} id the ids of the payment integration to delete
+         * @param {PaymentIntegrationsApiDeletePaymentIntegrationRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deletePaymentIntegration(id: Array<string>, options?: any): AxiosPromise<SuccessResponse> {
-            return localVarFp.deletePaymentIntegration(id, options).then((request) => request(axios, basePath));
+        deletePaymentIntegration(requestParameters: PaymentIntegrationsApiDeletePaymentIntegrationRequest, options?: AxiosRequestConfig): AxiosPromise<SuccessResponse> {
+            return localVarFp.deletePaymentIntegration(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
          * 
          * @summary Get all payment integrations available to a user
-         * @param {string} teamId 
-         * @param {string} [id] Fetch the payment integrations with the id specified
-         * @param {boolean} [isEnabled] Fetch only enabled integrations if true
-         * @param {boolean} [fetchAll] Fetch all integrations if you have admin Access
+         * @param {PaymentIntegrationsApiGetPaymentIntegrationsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getPaymentIntegrations(teamId: string, id?: string, isEnabled?: boolean, fetchAll?: boolean, options?: any): AxiosPromise<GetPaymentIntegrations200Response> {
-            return localVarFp.getPaymentIntegrations(teamId, id, isEnabled, fetchAll, options).then((request) => request(axios, basePath));
+        getPaymentIntegrations(requestParameters: PaymentIntegrationsApiGetPaymentIntegrationsRequest, options?: AxiosRequestConfig): AxiosPromise<GetPaymentIntegrations200Response> {
+            return localVarFp.getPaymentIntegrations(requestParameters.teamId, requestParameters.id, requestParameters.isEnabled, requestParameters.fetchAll, options).then((request) => request(axios, basePath));
         },
         /**
          * 
          * @summary update the user\'s payment integration
-         * @param {string} id the id of the payment integration to patch
-         * @param {PatchPaymentIntegrationRequest} [patchPaymentIntegrationRequest] 
+         * @param {PaymentIntegrationsApiPatchPaymentIntegrationRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        patchPaymentIntegration(id: string, patchPaymentIntegrationRequest?: PatchPaymentIntegrationRequest, options?: any): AxiosPromise<SuccessResponse> {
-            return localVarFp.patchPaymentIntegration(id, patchPaymentIntegrationRequest, options).then((request) => request(axios, basePath));
+        patchPaymentIntegration(requestParameters: PaymentIntegrationsApiPatchPaymentIntegrationRequest, options?: AxiosRequestConfig): AxiosPromise<SuccessResponse> {
+            return localVarFp.patchPaymentIntegration(requestParameters.id, requestParameters.patchPaymentIntegrationRequest, options).then((request) => request(axios, basePath));
         },
         /**
          * This endpoint is used by payment integrations to notify the server of payment events
          * @summary Webhook for payment integrations
-         * @param {string} name Name of the payment integration
-         * @param {string} secret Secret of the payment integration
-         * @param {{ [key: string]: any; }} [requestBody] 
+         * @param {PaymentIntegrationsApiPaymentIntegrationWebhookRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        paymentIntegrationWebhook(name: string, secret: string, requestBody?: { [key: string]: any; }, options?: any): AxiosPromise<SuccessResponse> {
-            return localVarFp.paymentIntegrationWebhook(name, secret, requestBody, options).then((request) => request(axios, basePath));
+        paymentIntegrationWebhook(requestParameters: PaymentIntegrationsApiPaymentIntegrationWebhookRequest, options?: AxiosRequestConfig): AxiosPromise<SuccessResponse> {
+            return localVarFp.paymentIntegrationWebhook(requestParameters.name, requestParameters.secret, requestParameters.requestBody, options).then((request) => request(axios, basePath));
         },
         /**
          * 
          * @summary Generate a payment link
-         * @param {string} id the id of the payment integration to generate a payment link for
-         * @param {PaymentLinkPostRequest} [paymentLinkPostRequest] 
+         * @param {PaymentIntegrationsApiPaymentLinkPostRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        paymentLinkPost(id: string, paymentLinkPostRequest?: PaymentLinkPostRequest, options?: any): AxiosPromise<PaymentLink> {
-            return localVarFp.paymentLinkPost(id, paymentLinkPostRequest, options).then((request) => request(axios, basePath));
+        paymentLinkPost(requestParameters: PaymentIntegrationsApiPaymentLinkPostRequest, options?: AxiosRequestConfig): AxiosPromise<PaymentLink> {
+            return localVarFp.paymentLinkPost(requestParameters.id, requestParameters.paymentLinkPostRequest, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -3212,27 +3206,21 @@ export const PaymentRecordsApiFactory = function (configuration?: Configuration,
     return {
         /**
          * 
-         * @param {PaymentRecordPostRequest} [paymentRecordPostRequest] 
+         * @param {PaymentRecordsApiPaymentRecordPostRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        paymentRecordPost(paymentRecordPostRequest?: PaymentRecordPostRequest, options?: any): AxiosPromise<PaymentRecord> {
-            return localVarFp.paymentRecordPost(paymentRecordPostRequest, options).then((request) => request(axios, basePath));
+        paymentRecordPost(requestParameters: PaymentRecordsApiPaymentRecordPostRequest = {}, options?: AxiosRequestConfig): AxiosPromise<PaymentRecord> {
+            return localVarFp.paymentRecordPost(requestParameters.paymentRecordPostRequest, options).then((request) => request(axios, basePath));
         },
         /**
          * 
-         * @param {number} [pageSize] Number of items to retreive
-         * @param {string} [cursor] Cursor to retreive items. It is the ID before which you want to retrieve the orders
-         * @param {Array<number>} [ids] Fetch payment records of specified transaction ids
-         * @param {Array<string>} [paymentIntegrationId] Fetch payment records of specified integration ids
-         * @param {string} [orderId] Fetch payment records by orderId
-         * @param {'completed' | 'pending' | 'cancelled'} [status] Fetch payment records with status
-         * @param {boolean} [fetchAll] Fetch all records if you have admin Access
+         * @param {PaymentRecordsApiPaymentRecordsGetRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        paymentRecordsGet(pageSize?: number, cursor?: string, ids?: Array<number>, paymentIntegrationId?: Array<string>, orderId?: string, status?: 'completed' | 'pending' | 'cancelled', fetchAll?: boolean, options?: any): AxiosPromise<PaymentRecordsGet200Response> {
-            return localVarFp.paymentRecordsGet(pageSize, cursor, ids, paymentIntegrationId, orderId, status, fetchAll, options).then((request) => request(axios, basePath));
+        paymentRecordsGet(requestParameters: PaymentRecordsApiPaymentRecordsGetRequest = {}, options?: AxiosRequestConfig): AxiosPromise<PaymentRecordsGet200Response> {
+            return localVarFp.paymentRecordsGet(requestParameters.pageSize, requestParameters.cursor, requestParameters.ids, requestParameters.paymentIntegrationId, requestParameters.orderId, requestParameters.status, requestParameters.fetchAll, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -3433,15 +3421,12 @@ export const PaymentSystemsApiFactory = function (configuration?: Configuration,
         /**
          * 
          * @summary Get available payment systems
-         * @param {string} teamId 
-         * @param {string} [country] Fetch Payment Systems from a particular country
-         * @param {string} [q] Fetch Payment Systems by query
-         * @param {boolean} [fetchAll] Fetch all systems if you have admin Access
+         * @param {PaymentSystemsApiPaymentSystemsGetRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        paymentSystemsGet(teamId: string, country?: string, q?: string, fetchAll?: boolean, options?: any): AxiosPromise<PaymentSystemsGet200Response> {
-            return localVarFp.paymentSystemsGet(teamId, country, q, fetchAll, options).then((request) => request(axios, basePath));
+        paymentSystemsGet(requestParameters: PaymentSystemsApiPaymentSystemsGetRequest, options?: AxiosRequestConfig): AxiosPromise<PaymentSystemsGet200Response> {
+            return localVarFp.paymentSystemsGet(requestParameters.teamId, requestParameters.country, requestParameters.q, requestParameters.fetchAll, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -3717,12 +3702,12 @@ export const ServicesApiFactory = function (configuration?: Configuration, baseP
         /**
          * This deletes the service and any trackings associated with it
          * @summary Removes the specified service
-         * @param {string} id ID of service to remove
+         * @param {ServicesApiServicesDeleteRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        servicesDelete(id: string, options?: any): AxiosPromise<void> {
-            return localVarFp.servicesDelete(id, options).then((request) => request(axios, basePath));
+        servicesDelete(requestParameters: ServicesApiServicesDeleteRequest, options?: AxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.servicesDelete(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
          * This contains all the metadata required to display & create a \"tracking\" for said service. 
@@ -3730,18 +3715,18 @@ export const ServicesApiFactory = function (configuration?: Configuration, baseP
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        servicesGet(options?: any): AxiosPromise<Services> {
+        servicesGet(options?: AxiosRequestConfig): AxiosPromise<Services> {
             return localVarFp.servicesGet(options).then((request) => request(axios, basePath));
         },
         /**
          * 
          * @summary Adds a new service to the list
-         * @param {PostServiceModel} [postServiceModel] 
+         * @param {ServicesApiServicesPostRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        servicesPost(postServiceModel?: PostServiceModel, options?: any): AxiosPromise<void> {
-            return localVarFp.servicesPost(postServiceModel, options).then((request) => request(axios, basePath));
+        servicesPost(requestParameters: ServicesApiServicesPostRequest = {}, options?: AxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.servicesPost(requestParameters.postServiceModel, options).then((request) => request(axios, basePath));
         },
         /**
          * Call this endpoint to reload all service schemas by fetching them from the their respective hosted URLs 
@@ -3749,7 +3734,7 @@ export const ServicesApiFactory = function (configuration?: Configuration, baseP
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        servicesReload(options?: any): AxiosPromise<void> {
+        servicesReload(options?: AxiosRequestConfig): AxiosPromise<void> {
             return localVarFp.servicesReload(options).then((request) => request(axios, basePath));
         },
     };
@@ -3972,23 +3957,22 @@ export const ShopMetadataApiFactory = function (configuration?: Configuration, b
         /**
          * 
          * @summary Get the shop metadata
-         * @param {string} teamId Fetch a particular team\&#39;s metadata
+         * @param {ShopMetadataApiShopMetadataGetRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        shopMetadataGet(teamId: string, options?: any): AxiosPromise<ShopMetadataGet200Response> {
-            return localVarFp.shopMetadataGet(teamId, options).then((request) => request(axios, basePath));
+        shopMetadataGet(requestParameters: ShopMetadataApiShopMetadataGetRequest, options?: AxiosRequestConfig): AxiosPromise<ShopMetadataGet200Response> {
+            return localVarFp.shopMetadataGet(requestParameters.teamId, options).then((request) => request(axios, basePath));
         },
         /**
          * 
          * @summary Update the shop metadata
-         * @param {string} teamId Patch a  particular team\&#39;s metadata
-         * @param {ShopMetadataGet200Response} [shopMetadataGet200Response] 
+         * @param {ShopMetadataApiShopMetadataPatchRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        shopMetadataPatch(teamId: string, shopMetadataGet200Response?: ShopMetadataGet200Response, options?: any): AxiosPromise<ShopMetadataGet200Response> {
-            return localVarFp.shopMetadataPatch(teamId, shopMetadataGet200Response, options).then((request) => request(axios, basePath));
+        shopMetadataPatch(requestParameters: ShopMetadataApiShopMetadataPatchRequest, options?: AxiosRequestConfig): AxiosPromise<ShopMetadataGet200Response> {
+            return localVarFp.shopMetadataPatch(requestParameters.teamId, requestParameters.shopMetadataGet200Response, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -4139,12 +4123,12 @@ export const TrackingProductsApiFactory = function (configuration?: Configuratio
         /**
          * 
          * @summary Get products of the tracking
-         * @param {number} trackingId Fetch products of the specified trackingId
+         * @param {TrackingProductsApiProductsGetRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        productsGet(trackingId: number, options?: any): AxiosPromise<ServiceProductsData> {
-            return localVarFp.productsGet(trackingId, options).then((request) => request(axios, basePath));
+        productsGet(requestParameters: TrackingProductsApiProductsGetRequest, options?: AxiosRequestConfig): AxiosPromise<ServiceProductsData> {
+            return localVarFp.productsGet(requestParameters.trackingId, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -4795,60 +4779,32 @@ export const TrackingsApiFactory = function (configuration?: Configuration, base
         /**
          * 
          * @summary Get the event histor
-         * @param {number} [trackingId] Fetch orders of the specified trackingId
-         * @param {number} [phoneNumber] Fetch orders sent to the specified phone number
-         * @param {number} [triggerId] Fetch orders of the specified triggerId
-         * @param {number} [pageSize] Number of items to retreive
-         * @param {string} [cursor] Cursor to retreive items. It can be anyone of orderBy by which you want to retrieve the orders
-         * @param {'orderCustomer' | 'orderId' | 'orderDate' | 'deliveryDate'} [orderBy] Order by which value
-         * @param {'ASC' | 'DESC'} [direction] Sorting order of the response
-         * @param {string} [startTime] 
-         * @param {string} [endTime] 
-         * @param {Array<string>} [orderStatus] 
-         * @param {Array<string>} [paymentStatus] 
-         * @param {Array<string>} [messageStatus] 
-         * @param {string} [q] Query to retrieve select orders
-         * @param {boolean} [excludeTests] Should tests be excluded
-         * @param {boolean} [includeNullTriggers] Should events which did not trigger an EventTrigger be included?
-         * @param {boolean} [returnTotal] Should a total of the number of orders returned by the given query be included
+         * @param {TrackingsApiDataGetRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        dataGet(trackingId?: number, phoneNumber?: number, triggerId?: number, pageSize?: number, cursor?: string, orderBy?: 'orderCustomer' | 'orderId' | 'orderDate' | 'deliveryDate', direction?: 'ASC' | 'DESC', startTime?: string, endTime?: string, orderStatus?: Array<string>, paymentStatus?: Array<string>, messageStatus?: Array<string>, q?: string, excludeTests?: boolean, includeNullTriggers?: boolean, returnTotal?: boolean, options?: any): AxiosPromise<DataGet200Response> {
-            return localVarFp.dataGet(trackingId, phoneNumber, triggerId, pageSize, cursor, orderBy, direction, startTime, endTime, orderStatus, paymentStatus, messageStatus, q, excludeTests, includeNullTriggers, returnTotal, options).then((request) => request(axios, basePath));
+        dataGet(requestParameters: TrackingsApiDataGetRequest = {}, options?: AxiosRequestConfig): AxiosPromise<DataGet200Response> {
+            return localVarFp.dataGet(requestParameters.trackingId, requestParameters.phoneNumber, requestParameters.triggerId, requestParameters.pageSize, requestParameters.cursor, requestParameters.orderBy, requestParameters.direction, requestParameters.startTime, requestParameters.endTime, requestParameters.orderStatus, requestParameters.paymentStatus, requestParameters.messageStatus, requestParameters.q, requestParameters.excludeTests, requestParameters.includeNullTriggers, requestParameters.returnTotal, options).then((request) => request(axios, basePath));
         },
         /**
          * 
          * @summary Get the updated order data
-         * @param {number} [trackingId] Fetch orders of the specified trackingId
-         * @param {number} [phoneNumber] Fetch orders sent to the specified phone number
-         * @param {number} [pageSize] Number of items to retreive
-         * @param {string} [cursor] Cursor to retreive items. It can be anyone of orderBy by which you want to retrieve the orders
-         * @param {'orderCustomer' | 'orderId' | 'orderDate' | 'deliveryDate' | 'createdAt' | 'updatedAt'} [orderBy] Order by which value
-         * @param {'ASC' | 'DESC'} [direction] Sorting order of the response
-         * @param {string} [startTime] 
-         * @param {string} [endTime] 
-         * @param {Array<string>} [orderStatus] 
-         * @param {Array<string>} [paymentStatus] 
-         * @param {Array<string>} [messageStatus] 
-         * @param {string} [q] Query to retrieve select orders
-         * @param {boolean} [excludeTests] Should tests be excluded
-         * @param {boolean} [returnTotal] Should a total of the number of orders returned by the given query be included
+         * @param {TrackingsApiOrderDataGetRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        orderDataGet(trackingId?: number, phoneNumber?: number, pageSize?: number, cursor?: string, orderBy?: 'orderCustomer' | 'orderId' | 'orderDate' | 'deliveryDate' | 'createdAt' | 'updatedAt', direction?: 'ASC' | 'DESC', startTime?: string, endTime?: string, orderStatus?: Array<string>, paymentStatus?: Array<string>, messageStatus?: Array<string>, q?: string, excludeTests?: boolean, returnTotal?: boolean, options?: any): AxiosPromise<OrderDataGet200Response> {
-            return localVarFp.orderDataGet(trackingId, phoneNumber, pageSize, cursor, orderBy, direction, startTime, endTime, orderStatus, paymentStatus, messageStatus, q, excludeTests, returnTotal, options).then((request) => request(axios, basePath));
+        orderDataGet(requestParameters: TrackingsApiOrderDataGetRequest = {}, options?: AxiosRequestConfig): AxiosPromise<OrderDataGet200Response> {
+            return localVarFp.orderDataGet(requestParameters.trackingId, requestParameters.phoneNumber, requestParameters.pageSize, requestParameters.cursor, requestParameters.orderBy, requestParameters.direction, requestParameters.startTime, requestParameters.endTime, requestParameters.orderStatus, requestParameters.paymentStatus, requestParameters.messageStatus, requestParameters.q, requestParameters.excludeTests, requestParameters.returnTotal, options).then((request) => request(axios, basePath));
         },
         /**
          * This deletes the tracking and its associated flowIds from the Database permanently.
          * @summary Stop tracking
-         * @param {number} trackingId The Tracking
+         * @param {TrackingsApiTrackingDeleteRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        trackingDelete(trackingId: number, options?: any): AxiosPromise<void> {
-            return localVarFp.trackingDelete(trackingId, options).then((request) => request(axios, basePath));
+        trackingDelete(requestParameters: TrackingsApiTrackingDeleteRequest, options?: AxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.trackingDelete(requestParameters.trackingId, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -4856,52 +4812,48 @@ export const TrackingsApiFactory = function (configuration?: Configuration, base
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        trackingGet(options?: any): AxiosPromise<TrackServices> {
+        trackingGet(options?: AxiosRequestConfig): AxiosPromise<TrackServices> {
             return localVarFp.trackingGet(options).then((request) => request(axios, basePath));
         },
         /**
          * Edit existing events\' flowIds or create new events. Credentials array is forwarded to scrapper for updation.
          * @summary Update events, credentials, notifyUsers or isActive of a tracking
-         * @param {number} trackingId The Tracking
-         * @param {UpdateTracking} [updateTracking] 
+         * @param {TrackingsApiTrackingPatchRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        trackingPatch(trackingId: number, updateTracking?: UpdateTracking, options?: any): AxiosPromise<TrackingPatch200Response> {
-            return localVarFp.trackingPatch(trackingId, updateTracking, options).then((request) => request(axios, basePath));
+        trackingPatch(requestParameters: TrackingsApiTrackingPatchRequest, options?: AxiosRequestConfig): AxiosPromise<TrackingPatch200Response> {
+            return localVarFp.trackingPatch(requestParameters.trackingId, requestParameters.updateTracking, options).then((request) => request(axios, basePath));
         },
         /**
          * 
          * @summary Start tracking of a new service for a team
-         * @param {PostTracking} [postTracking] 
+         * @param {TrackingsApiTrackingPostRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        trackingPost(postTracking?: PostTracking, options?: any): AxiosPromise<TrackingPost200Response> {
-            return localVarFp.trackingPost(postTracking, options).then((request) => request(axios, basePath));
+        trackingPost(requestParameters: TrackingsApiTrackingPostRequest = {}, options?: AxiosRequestConfig): AxiosPromise<TrackingPost200Response> {
+            return localVarFp.trackingPost(requestParameters.postTracking, options).then((request) => request(axios, basePath));
         },
         /**
          * This endpoint is used by the external tracking integration to update the error state of a tracking. The scrapper will call this endpoint when it encounters an irrecoverable error while scraping. 
          * @summary Update the error state of a tracking
-         * @param {string} secretId The secret ID of the tracking made available to the service
-         * @param {UpdateTrackingErrorState} [updateTrackingErrorState] 
+         * @param {TrackingsApiTrackingUpdateErrorStateRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        trackingUpdateErrorState(secretId: string, updateTrackingErrorState?: UpdateTrackingErrorState, options?: any): AxiosPromise<void> {
-            return localVarFp.trackingUpdateErrorState(secretId, updateTrackingErrorState, options).then((request) => request(axios, basePath));
+        trackingUpdateErrorState(requestParameters: TrackingsApiTrackingUpdateErrorStateRequest, options?: AxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.trackingUpdateErrorState(requestParameters.secretId, requestParameters.updateTrackingErrorState, options).then((request) => request(axios, basePath));
         },
         /**
          * 
          * @summary Test a trigger
-         * @param {number} trackingId The trackingId to test
-         * @param {number} triggerId The triggerId to test
-         * @param {string} [recipientPhoneNumber] Phone number to send the test to
+         * @param {TrackingsApiTriggerTestRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        triggerTest(trackingId: number, triggerId: number, recipientPhoneNumber?: string, options?: any): AxiosPromise<TriggerTest200Response> {
-            return localVarFp.triggerTest(trackingId, triggerId, recipientPhoneNumber, options).then((request) => request(axios, basePath));
+        triggerTest(requestParameters: TrackingsApiTriggerTestRequest, options?: AxiosRequestConfig): AxiosPromise<TriggerTest200Response> {
+            return localVarFp.triggerTest(requestParameters.trackingId, requestParameters.triggerId, requestParameters.recipientPhoneNumber, options).then((request) => request(axios, basePath));
         },
     };
 };

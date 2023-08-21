@@ -15,13 +15,15 @@ const BASE_PATH = "https://api-nfc.wscrm.me".replace(/\/+$/, "");
  */
 
 
-import { Configuration } from '../configuration';
-import globalAxios, { AxiosPromise, AxiosInstance, AxiosRequestConfig } from 'axios';
+import type { Configuration } from '../configuration';
+import type { AxiosPromise, AxiosInstance, AxiosRequestConfig } from 'axios';
+import globalAxios from 'axios';
 // Some imports not used depending on template conditions
 // @ts-ignore
 import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObject, setBearerAuthToObject, setOAuthToObject, setSearchParams, serializeDataIfNeeded, toPathString, createRequestFunction } from '../common';
+import type { RequestArgs } from '../base';
 // @ts-ignore
-import { COLLECTION_FORMATS, RequestArgs, BaseAPI, RequiredError } from '../base';
+import { COLLECTION_FORMATS, BaseAPI, RequiredError } from './base';
 
 /**
  * 
@@ -643,85 +645,82 @@ export const QrCodeApiFactory = function (configuration?: Configuration, basePat
         /**
          * 
          * @summary Creates QrCodes
-         * @param {CreateQrCodesRequest} createQrCodesRequest QrCodes to create
+         * @param {QrCodeApiCreateQrCodesRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        createQrCodes(createQrCodesRequest: CreateQrCodesRequest, options?: any): AxiosPromise<CreateQrCodes200Response> {
-            return localVarFp.createQrCodes(createQrCodesRequest, options).then((request) => request(axios, basePath));
+        createQrCodes(requestParameters: QrCodeApiCreateQrCodesRequest, options?: AxiosRequestConfig): AxiosPromise<CreateQrCodes200Response> {
+            return localVarFp.createQrCodes(requestParameters.createQrCodesRequest, options).then((request) => request(axios, basePath));
         },
         /**
          * 
          * @summary Deletes QrCodes
-         * @param {Array<string>} ids The IDs of the QrCodes to delete
+         * @param {QrCodeApiDeleteQrCodesRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteQrCodes(ids: Array<string>, options?: any): AxiosPromise<void> {
-            return localVarFp.deleteQrCodes(ids, options).then((request) => request(axios, basePath));
+        deleteQrCodes(requestParameters: QrCodeApiDeleteQrCodesRequest, options?: AxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.deleteQrCodes(requestParameters.ids, options).then((request) => request(axios, basePath));
         },
         /**
          * 
          * @summary Get a QrCode
-         * @param {string} id The ID of the QrCode to retrieve
+         * @param {QrCodeApiGetQrCodeRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getQrCode(id: string, options?: any): AxiosPromise<QRCode> {
-            return localVarFp.getQrCode(id, options).then((request) => request(axios, basePath));
+        getQrCode(requestParameters: QrCodeApiGetQrCodeRequest, options?: AxiosRequestConfig): AxiosPromise<QRCode> {
+            return localVarFp.getQrCode(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
          * 
          * @summary Get all QrCodes
-         * @param {string} [q] 
-         * @param {number} [count] 
-         * @param {number} [page] The page number
+         * @param {QrCodeApiGetQrCodesRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getQrCodes(q?: string, count?: number, page?: number, options?: any): AxiosPromise<GetQrCodes200Response> {
-            return localVarFp.getQrCodes(q, count, page, options).then((request) => request(axios, basePath));
+        getQrCodes(requestParameters: QrCodeApiGetQrCodesRequest = {}, options?: AxiosRequestConfig): AxiosPromise<GetQrCodes200Response> {
+            return localVarFp.getQrCodes(requestParameters.q, requestParameters.count, requestParameters.page, options).then((request) => request(axios, basePath));
         },
         /**
          * 
          * @summary Get QrCodes by phone
-         * @param {string} phone The phone of QrCodes to retrieve
+         * @param {QrCodeApiGetQrCodesByPhoneRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getQrCodesByPhone(phone: string, options?: any): AxiosPromise<CreateQrCodes200Response> {
-            return localVarFp.getQrCodesByPhone(phone, options).then((request) => request(axios, basePath));
+        getQrCodesByPhone(requestParameters: QrCodeApiGetQrCodesByPhoneRequest, options?: AxiosRequestConfig): AxiosPromise<CreateQrCodes200Response> {
+            return localVarFp.getQrCodesByPhone(requestParameters.phone, options).then((request) => request(axios, basePath));
         },
         /**
          * 
          * @summary Redirect based on QrCode state
-         * @param {string} id The ID of the QrCode to retrieve
+         * @param {QrCodeApiRedirectQrCodeRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        redirectQrCode(id: string, options?: any): AxiosPromise<void> {
-            return localVarFp.redirectQrCode(id, options).then((request) => request(axios, basePath));
+        redirectQrCode(requestParameters: QrCodeApiRedirectQrCodeRequest, options?: AxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.redirectQrCode(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
          * 
          * @summary Update a QrCode
-         * @param {string} id The ID of the QrCode to retrieve
-         * @param {QRCodeUpdate} qRCodeUpdate QrCode to update
+         * @param {QrCodeApiUpdateQrCodeRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        updateQrCode(id: string, qRCodeUpdate: QRCodeUpdate, options?: any): AxiosPromise<QRCode> {
-            return localVarFp.updateQrCode(id, qRCodeUpdate, options).then((request) => request(axios, basePath));
+        updateQrCode(requestParameters: QrCodeApiUpdateQrCodeRequest, options?: AxiosRequestConfig): AxiosPromise<QRCode> {
+            return localVarFp.updateQrCode(requestParameters.id, requestParameters.qRCodeUpdate, options).then((request) => request(axios, basePath));
         },
         /**
          * 
          * @summary Updates QrCodes
-         * @param {UpdateQrCodesRequest} updateQrCodesRequest QrCodes to update
+         * @param {QrCodeApiUpdateQrCodesRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        updateQrCodes(updateQrCodesRequest: UpdateQrCodesRequest, options?: any): AxiosPromise<CreateQrCodes200Response> {
-            return localVarFp.updateQrCodes(updateQrCodesRequest, options).then((request) => request(axios, basePath));
+        updateQrCodes(requestParameters: QrCodeApiUpdateQrCodesRequest, options?: AxiosRequestConfig): AxiosPromise<CreateQrCodes200Response> {
+            return localVarFp.updateQrCodes(requestParameters.updateQrCodesRequest, options).then((request) => request(axios, basePath));
         },
     };
 };

@@ -15,13 +15,15 @@ const BASE_PATH = "https://25u5hq78w6.execute-api.ap-east-1.amazonaws.com/v1".re
  */
 
 
-import { Configuration } from '../configuration';
-import globalAxios, { AxiosPromise, AxiosInstance, AxiosRequestConfig } from 'axios';
+import type { Configuration } from '../configuration';
+import type { AxiosPromise, AxiosInstance, AxiosRequestConfig } from 'axios';
+import globalAxios from 'axios';
 // Some imports not used depending on template conditions
 // @ts-ignore
 import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObject, setBearerAuthToObject, setOAuthToObject, setSearchParams, serializeDataIfNeeded, toPathString, createRequestFunction } from '../common';
+import type { RequestArgs } from '../base';
 // @ts-ignore
-import { COLLECTION_FORMATS, RequestArgs, BaseAPI, RequiredError } from '../base';
+import { COLLECTION_FORMATS, BaseAPI, RequiredError } from './base';
 
 /**
  * 
@@ -152,6 +154,8 @@ export interface AutoChargeProduct {
      */
     'stripePriceId': string;
 }
+
+
 /**
  * 
  * @export
@@ -171,6 +175,8 @@ export interface AutoChargeProductSet {
      */
     'stripePriceId': string | null;
 }
+
+
 /**
  * 
  * @export
@@ -369,20 +375,7 @@ export type Feature = typeof Feature[keyof typeof Feature];
  * @type FeatureConfig
  * @export
  */
-export type FeatureConfig = Array<Feature> | FeatureConfigOneOf;
-
-/**
- * Give access to all features, present & future
- * @export
- * @enum {string}
- */
-
-export const FeatureConfigOneOf = {
-    All: 'all'
-} as const;
-
-export type FeatureConfigOneOf = typeof FeatureConfigOneOf[keyof typeof FeatureConfigOneOf];
-
+export type FeatureConfig = Array<Feature> | string;
 
 /**
  * 
@@ -850,6 +843,8 @@ export interface StripePrice {
      */
     'region'?: string;
 }
+
+
 /**
  * Update a stripe price ID attachment. Supply ID to attach, or supply remove=true to detach. Supply region to mark price to a specific region.
  * @export
@@ -1439,29 +1434,28 @@ export const AutoChargeProductsApiFactory = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        autoChargeProductsGet(options?: any): AxiosPromise<AutoChargeProductsGet200Response> {
+        autoChargeProductsGet(options?: AxiosRequestConfig): AxiosPromise<AutoChargeProductsGet200Response> {
             return localVarFp.autoChargeProductsGet(options).then((request) => request(axios, basePath));
         },
         /**
          * - If usage < limit, then no action is taken - If usage >= limit, then:   - a metered subscription is created, if it doesn\'t exist   - fails if cannot be auto-charged
          * @summary Prepares the team for auto charge
-         * @param {LimitedItem} item 
-         * @param {string} [accountId] The account ID to prepare usage for. Relevant for messages only.
+         * @param {AutoChargeProductsApiAutoChargeProductsPrepareRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        autoChargeProductsPrepare(item: LimitedItem, accountId?: string, options?: any): AxiosPromise<AutoChargeProductsPrepare200Response> {
-            return localVarFp.autoChargeProductsPrepare(item, accountId, options).then((request) => request(axios, basePath));
+        autoChargeProductsPrepare(requestParameters: AutoChargeProductsApiAutoChargeProductsPrepareRequest, options?: AxiosRequestConfig): AxiosPromise<AutoChargeProductsPrepare200Response> {
+            return localVarFp.autoChargeProductsPrepare(requestParameters.item, requestParameters.accountId, options).then((request) => request(axios, basePath));
         },
         /**
          * 
          * @summary Sets config for auto charge product
-         * @param {AutoChargeProductSet} [autoChargeProductSet] 
+         * @param {AutoChargeProductsApiAutoChargeProductsSetRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        autoChargeProductsSet(autoChargeProductSet?: AutoChargeProductSet, options?: any): AxiosPromise<void> {
-            return localVarFp.autoChargeProductsSet(autoChargeProductSet, options).then((request) => request(axios, basePath));
+        autoChargeProductsSet(requestParameters: AutoChargeProductsApiAutoChargeProductsSetRequest = {}, options?: AxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.autoChargeProductsSet(requestParameters.autoChargeProductSet, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -1620,12 +1614,12 @@ export const CouponCodesApiFactory = function (configuration?: Configuration, ba
     return {
         /**
          * Generate a coupon code
-         * @param {CouponCodeCreateOptions} [couponCodeCreateOptions] 
+         * @param {CouponCodesApiCouponsPostRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        couponsPost(couponCodeCreateOptions?: CouponCodeCreateOptions, options?: any): AxiosPromise<CouponsPost200Response> {
-            return localVarFp.couponsPost(couponCodeCreateOptions, options).then((request) => request(axios, basePath));
+        couponsPost(requestParameters: CouponCodesApiCouponsPostRequest = {}, options?: AxiosRequestConfig): AxiosPromise<CouponsPost200Response> {
+            return localVarFp.couponsPost(requestParameters.couponCodeCreateOptions, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -1846,33 +1840,32 @@ export const ProductsApiFactory = function (configuration?: Configuration, baseP
         /**
          * 
          * @summary Fetch All Available Products
-         * @param {string} [region] The region to filter by
+         * @param {ProductsApiProductsGetRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        productsGet(region?: string, options?: any): AxiosPromise<ProductsGet200Response> {
-            return localVarFp.productsGet(region, options).then((request) => request(axios, basePath));
+        productsGet(requestParameters: ProductsApiProductsGetRequest = {}, options?: AxiosRequestConfig): AxiosPromise<ProductsGet200Response> {
+            return localVarFp.productsGet(requestParameters.region, options).then((request) => request(axios, basePath));
         },
         /**
          * 
          * @summary Update a product\'s properties
-         * @param {string} id 
-         * @param {ProductUpdate} [productUpdate] 
+         * @param {ProductsApiProductsPatchRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        productsPatch(id: string, productUpdate?: ProductUpdate, options?: any): AxiosPromise<void> {
-            return localVarFp.productsPatch(id, productUpdate, options).then((request) => request(axios, basePath));
+        productsPatch(requestParameters: ProductsApiProductsPatchRequest, options?: AxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.productsPatch(requestParameters.id, requestParameters.productUpdate, options).then((request) => request(axios, basePath));
         },
         /**
          * 
          * @summary Create a new product
-         * @param {ProductCreate} [productCreate] 
+         * @param {ProductsApiProductsPostRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        productsPost(productCreate?: ProductCreate, options?: any): AxiosPromise<Product> {
-            return localVarFp.productsPost(productCreate, options).then((request) => request(axios, basePath));
+        productsPost(requestParameters: ProductsApiProductsPostRequest = {}, options?: AxiosRequestConfig): AxiosPromise<Product> {
+            return localVarFp.productsPost(requestParameters.productCreate, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -2218,43 +2211,39 @@ export const ReferralsApiFactory = function (configuration?: Configuration, base
     return {
         /**
          * 
-         * @param {string} referralCode 
+         * @param {ReferralsApiGetPartnerRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getPartner(referralCode: string, options?: any): AxiosPromise<GetPartner200Response> {
-            return localVarFp.getPartner(referralCode, options).then((request) => request(axios, basePath));
+        getPartner(requestParameters: ReferralsApiGetPartnerRequest, options?: AxiosRequestConfig): AxiosPromise<GetPartner200Response> {
+            return localVarFp.getPartner(requestParameters.referralCode, options).then((request) => request(axios, basePath));
         },
         /**
          * 
-         * @param {string} referralCode 
+         * @param {ReferralsApiPartnerReferralsDeleteRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        partnerReferralsDelete(referralCode: string, options?: any): AxiosPromise<void> {
-            return localVarFp.partnerReferralsDelete(referralCode, options).then((request) => request(axios, basePath));
+        partnerReferralsDelete(requestParameters: ReferralsApiPartnerReferralsDeleteRequest, options?: AxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.partnerReferralsDelete(requestParameters.referralCode, options).then((request) => request(axios, basePath));
         },
         /**
          * 
-         * @param {number} [page] The page for the cursor
-         * @param {number} [count] The numbers of items to return
-         * @param {Array<string>} [id] The array of referralCodes to be fetched
-         * @param {string} [q] Search by id, productId, etc
-         * @param {boolean} [returnTotal] Include the total number of referralCodes
+         * @param {ReferralsApiPartnerReferralsGetRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        partnerReferralsGet(page?: number, count?: number, id?: Array<string>, q?: string, returnTotal?: boolean, options?: any): AxiosPromise<PartnerReferralsGet200Response> {
-            return localVarFp.partnerReferralsGet(page, count, id, q, returnTotal, options).then((request) => request(axios, basePath));
+        partnerReferralsGet(requestParameters: ReferralsApiPartnerReferralsGetRequest = {}, options?: AxiosRequestConfig): AxiosPromise<PartnerReferralsGet200Response> {
+            return localVarFp.partnerReferralsGet(requestParameters.page, requestParameters.count, requestParameters.id, requestParameters.q, requestParameters.returnTotal, options).then((request) => request(axios, basePath));
         },
         /**
          * 
-         * @param {PartnerReferralCreateOptions} [partnerReferralCreateOptions] 
+         * @param {ReferralsApiPartnerReferralsPostRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        partnerReferralsPost(partnerReferralCreateOptions?: PartnerReferralCreateOptions, options?: any): AxiosPromise<PartnerReferralsPost200Response> {
-            return localVarFp.partnerReferralsPost(partnerReferralCreateOptions, options).then((request) => request(axios, basePath));
+        partnerReferralsPost(requestParameters: ReferralsApiPartnerReferralsPostRequest = {}, options?: AxiosRequestConfig): AxiosPromise<PartnerReferralsPost200Response> {
+            return localVarFp.partnerReferralsPost(requestParameters.partnerReferralCreateOptions, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -2638,45 +2627,42 @@ export const StripeApiFactory = function (configuration?: Configuration, basePat
         /**
          * 
          * @summary Create a new billing portal session to manage payment details
-         * @param {string} returnUrl 
+         * @param {StripeApiBillingSessionPostRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        billingSessionPost(returnUrl: string, options?: any): AxiosPromise<BillingSessionPost200Response> {
-            return localVarFp.billingSessionPost(returnUrl, options).then((request) => request(axios, basePath));
+        billingSessionPost(requestParameters: StripeApiBillingSessionPostRequest, options?: AxiosRequestConfig): AxiosPromise<BillingSessionPost200Response> {
+            return localVarFp.billingSessionPost(requestParameters.returnUrl, options).then((request) => request(axios, basePath));
         },
         /**
          * 
          * @summary Create a checkout session
-         * @param {CheckoutCreateOptions} [checkoutCreateOptions] 
+         * @param {StripeApiStripeCheckoutRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        stripeCheckout(checkoutCreateOptions?: CheckoutCreateOptions, options?: any): AxiosPromise<StripeCheckout200Response> {
-            return localVarFp.stripeCheckout(checkoutCreateOptions, options).then((request) => request(axios, basePath));
+        stripeCheckout(requestParameters: StripeApiStripeCheckoutRequest = {}, options?: AxiosRequestConfig): AxiosPromise<StripeCheckout200Response> {
+            return localVarFp.stripeCheckout(requestParameters.checkoutCreateOptions, options).then((request) => request(axios, basePath));
         },
         /**
          * 
          * @summary Receive stripe hook
-         * @param {string} secret 
-         * @param {{ [key: string]: any; }} [requestBody] 
+         * @param {StripeApiStripeHookRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        stripeHook(secret: string, requestBody?: { [key: string]: any; }, options?: any): AxiosPromise<void> {
-            return localVarFp.stripeHook(secret, requestBody, options).then((request) => request(axios, basePath));
+        stripeHook(requestParameters: StripeApiStripeHookRequest, options?: AxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.stripeHook(requestParameters.secret, requestParameters.requestBody, options).then((request) => request(axios, basePath));
         },
         /**
          * Use results from here to attach prices to products.
          * @summary Get prices from Stripe
-         * @param {number} [count] 
-         * @param {string} [cursor] 
-         * @param {string} [q] Filter by stripe query. See https://stripe.com/docs/search#search-query-language
+         * @param {StripeApiStripePricesGetRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        stripePricesGet(count?: number, cursor?: string, q?: string, options?: any): AxiosPromise<StripePricesGet200Response> {
-            return localVarFp.stripePricesGet(count, cursor, q, options).then((request) => request(axios, basePath));
+        stripePricesGet(requestParameters: StripeApiStripePricesGetRequest = {}, options?: AxiosRequestConfig): AxiosPromise<StripePricesGet200Response> {
+            return localVarFp.stripePricesGet(requestParameters.count, requestParameters.cursor, requestParameters.q, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -3067,44 +3053,32 @@ export const SubscriptionsApiFactory = function (configuration?: Configuration, 
         /**
          * 
          * @summary Get the list of subscriptions
-         * @param {string} [teamId] Filter by teamId
-         * @param {number} [count] 
-         * @param {number} [page] 
-         * @param {string} [q] Search by subscription ID, team ID or product name
-         * @param {boolean} [includeFreeTier] Include free tier subscriptions
-         * @param {'startDate' | 'endOrNextRenewalDate'} [sortBy] Sort by the given field
-         * @param {'asc' | 'desc'} [sortDirection] Sort direction
-         * @param {string} [endsOrRenewsAfter] Filter subscriptions that end or renew after the given date
-         * @param {string} [endsOrRenewsBefore] Filter subscriptions that end or renew before the given date
-         * @param {boolean} [stripeOnly] Filter subscriptions that are only in Stripe
-         * @param {Array<string>} [product] Filter subscriptions by product
-         * @param {boolean} [returnTotal] Return total number of subscriptions
+         * @param {SubscriptionsApiSubscriptionsGetRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        subscriptionsGet(teamId?: string, count?: number, page?: number, q?: string, includeFreeTier?: boolean, sortBy?: 'startDate' | 'endOrNextRenewalDate', sortDirection?: 'asc' | 'desc', endsOrRenewsAfter?: string, endsOrRenewsBefore?: string, stripeOnly?: boolean, product?: Array<string>, returnTotal?: boolean, options?: any): AxiosPromise<SubscriptionsGet200Response> {
-            return localVarFp.subscriptionsGet(teamId, count, page, q, includeFreeTier, sortBy, sortDirection, endsOrRenewsAfter, endsOrRenewsBefore, stripeOnly, product, returnTotal, options).then((request) => request(axios, basePath));
+        subscriptionsGet(requestParameters: SubscriptionsApiSubscriptionsGetRequest = {}, options?: AxiosRequestConfig): AxiosPromise<SubscriptionsGet200Response> {
+            return localVarFp.subscriptionsGet(requestParameters.teamId, requestParameters.count, requestParameters.page, requestParameters.q, requestParameters.includeFreeTier, requestParameters.sortBy, requestParameters.sortDirection, requestParameters.endsOrRenewsAfter, requestParameters.endsOrRenewsBefore, requestParameters.stripeOnly, requestParameters.product, requestParameters.returnTotal, options).then((request) => request(axios, basePath));
         },
         /**
          * 
          * @summary Update a subscription\'s properties
-         * @param {string} id 
-         * @param {SubscriptionUpdate} [subscriptionUpdate] 
+         * @param {SubscriptionsApiSubscriptionsPatchRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        subscriptionsPatch(id: string, subscriptionUpdate?: SubscriptionUpdate, options?: any): AxiosPromise<void> {
-            return localVarFp.subscriptionsPatch(id, subscriptionUpdate, options).then((request) => request(axios, basePath));
+        subscriptionsPatch(requestParameters: SubscriptionsApiSubscriptionsPatchRequest, options?: AxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.subscriptionsPatch(requestParameters.id, requestParameters.subscriptionUpdate, options).then((request) => request(axios, basePath));
         },
         /**
          * Subscription created here does not get counted in revenue. Not recommended, create a payment link instead.
          * @summary Manually create a subscription for the team
-         * @param {SubscriptionCreate} [subscriptionCreate] 
+         * @param {SubscriptionsApiSubscriptionsPostRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        subscriptionsPost(subscriptionCreate?: SubscriptionCreate, options?: any): AxiosPromise<Subscription> {
-            return localVarFp.subscriptionsPost(subscriptionCreate, options).then((request) => request(axios, basePath));
+        subscriptionsPost(requestParameters: SubscriptionsApiSubscriptionsPostRequest = {}, options?: AxiosRequestConfig): AxiosPromise<Subscription> {
+            return localVarFp.subscriptionsPost(requestParameters.subscriptionCreate, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -3550,12 +3524,12 @@ export const TeamDetailApiFactory = function (configuration?: Configuration, bas
         /**
          * If the account is an independent account, the access details for the account are returned. Otherwise, the team\'s access details are returned.
          * @summary Get the access details for the given account
-         * @param {string} accountId 
+         * @param {TeamDetailApiTeamDetailAccountAccessGetRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        teamDetailAccountAccessGet(accountId: string, options?: any): AxiosPromise<AccountAccessDetail> {
-            return localVarFp.teamDetailAccountAccessGet(accountId, options).then((request) => request(axios, basePath));
+        teamDetailAccountAccessGet(requestParameters: TeamDetailApiTeamDetailAccountAccessGetRequest, options?: AxiosRequestConfig): AxiosPromise<AccountAccessDetail> {
+            return localVarFp.teamDetailAccountAccessGet(requestParameters.accountId, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -3563,38 +3537,38 @@ export const TeamDetailApiFactory = function (configuration?: Configuration, bas
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        teamDetailGet(options?: any): AxiosPromise<TeamDetail> {
+        teamDetailGet(options?: AxiosRequestConfig): AxiosPromise<TeamDetail> {
             return localVarFp.teamDetailGet(options).then((request) => request(axios, basePath));
         },
         /**
          * 
          * @summary Update the team\'s subscription and payment details
-         * @param {TeamDetailUpdate} [teamDetailUpdate] 
+         * @param {TeamDetailApiTeamDetailPatchRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        teamDetailPatch(teamDetailUpdate?: TeamDetailUpdate, options?: any): AxiosPromise<void> {
-            return localVarFp.teamDetailPatch(teamDetailUpdate, options).then((request) => request(axios, basePath));
+        teamDetailPatch(requestParameters: TeamDetailApiTeamDetailPatchRequest = {}, options?: AxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.teamDetailPatch(requestParameters.teamDetailUpdate, options).then((request) => request(axios, basePath));
         },
         /**
          * 
          * @summary Initialise a team with the free tier
-         * @param {TeamDetailCreate} [teamDetailCreate] 
+         * @param {TeamDetailApiTeamDetailPostRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        teamDetailPost(teamDetailCreate?: TeamDetailCreate, options?: any): AxiosPromise<TeamDetail> {
-            return localVarFp.teamDetailPost(teamDetailCreate, options).then((request) => request(axios, basePath));
+        teamDetailPost(requestParameters: TeamDetailApiTeamDetailPostRequest = {}, options?: AxiosRequestConfig): AxiosPromise<TeamDetail> {
+            return localVarFp.teamDetailPost(requestParameters.teamDetailCreate, options).then((request) => request(axios, basePath));
         },
         /**
          * Fetches the list of active subscriptions/purchases from stripe and calculates what the current subscriptions should be. This route can be called to refresh the subscription after checkout to ensure the subscription is retreived. 
          * @summary Refreshes the access given by subscriptions
-         * @param {boolean} [refreshUsage] Refreshes usage statistics as well
+         * @param {TeamDetailApiTeamDetailRefreshAccessRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        teamDetailRefreshAccess(refreshUsage?: boolean, options?: any): AxiosPromise<void> {
-            return localVarFp.teamDetailRefreshAccess(refreshUsage, options).then((request) => request(axios, basePath));
+        teamDetailRefreshAccess(requestParameters: TeamDetailApiTeamDetailRefreshAccessRequest = {}, options?: AxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.teamDetailRefreshAccess(requestParameters.refreshUsage, options).then((request) => request(axios, basePath));
         },
     };
 };

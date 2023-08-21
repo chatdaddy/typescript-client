@@ -15,13 +15,15 @@ const BASE_PATH = "https://api-events.chatdaddy.tech".replace(/\/+$/, "");
  */
 
 
-import { Configuration } from '../configuration';
-import globalAxios, { AxiosPromise, AxiosInstance, AxiosRequestConfig } from 'axios';
+import type { Configuration } from '../configuration';
+import type { AxiosPromise, AxiosInstance, AxiosRequestConfig } from 'axios';
+import globalAxios from 'axios';
 // Some imports not used depending on template conditions
 // @ts-ignore
 import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObject, setBearerAuthToObject, setOAuthToObject, setSearchParams, serializeDataIfNeeded, toPathString, createRequestFunction } from '../common';
+import type { RequestArgs } from '../base';
 // @ts-ignore
-import { COLLECTION_FORMATS, RequestArgs, BaseAPI, RequiredError } from '../base';
+import { COLLECTION_FORMATS, BaseAPI, RequiredError } from './base';
 
 /**
  * 
@@ -2375,7 +2377,8 @@ export interface ChatInsertData {
 }
 
 export const ChatInsertDataTicketStatusEnum = {
-    Closed: 'closed'
+    Closed: 'closed',
+    Null: null as null
 } as const;
 
 export type ChatInsertDataTicketStatusEnum = typeof ChatInsertDataTicketStatusEnum[keyof typeof ChatInsertDataTicketStatusEnum];
@@ -2523,7 +2526,8 @@ export interface ChatUpdateData {
 }
 
 export const ChatUpdateDataTicketStatusEnum = {
-    Closed: 'closed'
+    Closed: 'closed',
+    Null: 'null'
 } as const;
 
 export type ChatUpdateDataTicketStatusEnum = typeof ChatUpdateDataTicketStatusEnum[keyof typeof ChatUpdateDataTicketStatusEnum];
@@ -2968,6 +2972,8 @@ export interface EventSubscription {
      */
     'url'?: string;
 }
+
+
 /**
  * 
  * @export
@@ -7781,45 +7787,42 @@ export const EventSubscriptionApiFactory = function (configuration?: Configurati
         /**
          * 
          * @summary Delete a webhook subscription
-         * @param {string} id 
+         * @param {EventSubscriptionApiSubscriptionsDeleteRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        subscriptionsDelete(id: string, options?: any): AxiosPromise<SubscriptionsDelete200Response> {
-            return localVarFp.subscriptionsDelete(id, options).then((request) => request(axios, basePath));
+        subscriptionsDelete(requestParameters: EventSubscriptionApiSubscriptionsDeleteRequest, options?: AxiosRequestConfig): AxiosPromise<SubscriptionsDelete200Response> {
+            return localVarFp.subscriptionsDelete(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
          * 
          * @summary Get all current webhook & websocket subscriptions
-         * @param {EventSubscriptionType} [type] Filter by subscription type
-         * @param {string} [accountId] Filter by subscriptions that are enabled for this account
-         * @param {Array<string>} [userId] Filter by subscriptions that are enabled for the specified users
+         * @param {EventSubscriptionApiSubscriptionsGetRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        subscriptionsGet(type?: EventSubscriptionType, accountId?: string, userId?: Array<string>, options?: any): AxiosPromise<SubscriptionsGet200Response> {
-            return localVarFp.subscriptionsGet(type, accountId, userId, options).then((request) => request(axios, basePath));
+        subscriptionsGet(requestParameters: EventSubscriptionApiSubscriptionsGetRequest = {}, options?: AxiosRequestConfig): AxiosPromise<SubscriptionsGet200Response> {
+            return localVarFp.subscriptionsGet(requestParameters.type, requestParameters.accountId, requestParameters.userId, options).then((request) => request(axios, basePath));
         },
         /**
          * 
          * @summary Update a webhook subscription
-         * @param {string} id 
-         * @param {UpdateEventSubscription} [updateEventSubscription] 
+         * @param {EventSubscriptionApiSubscriptionsPatchRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        subscriptionsPatch(id: string, updateEventSubscription?: UpdateEventSubscription, options?: any): AxiosPromise<EventSubscription> {
-            return localVarFp.subscriptionsPatch(id, updateEventSubscription, options).then((request) => request(axios, basePath));
+        subscriptionsPatch(requestParameters: EventSubscriptionApiSubscriptionsPatchRequest, options?: AxiosRequestConfig): AxiosPromise<EventSubscription> {
+            return localVarFp.subscriptionsPatch(requestParameters.id, requestParameters.updateEventSubscription, options).then((request) => request(axios, basePath));
         },
         /**
          * 
          * @summary Create a webhook subscription
-         * @param {PostEventSubscription} [postEventSubscription] 
+         * @param {EventSubscriptionApiSubscriptionsPostRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        subscriptionsPost(postEventSubscription?: PostEventSubscription, options?: any): AxiosPromise<EventSubscription> {
-            return localVarFp.subscriptionsPost(postEventSubscription, options).then((request) => request(axios, basePath));
+        subscriptionsPost(requestParameters: EventSubscriptionApiSubscriptionsPostRequest = {}, options?: AxiosRequestConfig): AxiosPromise<EventSubscription> {
+            return localVarFp.subscriptionsPost(requestParameters.postEventSubscription, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -8053,14 +8056,12 @@ export const WebSocketApiFactory = function (configuration?: Configuration, base
         /**
          * Note: you need to fetch the WS from wss://live.chatdaddy.tech Not from the base url mentioned in the API doc 
          * @summary The WebSocket Route
-         * @param {string} accessToken the JWT authorization token
-         * @param {Array<EventName>} events Events to subscribe to
-         * @param {Array<string>} [accounts] Set the IM accounts to receive events from
+         * @param {WebSocketApiRootGetRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        rootGet(accessToken: string, events: Array<EventName>, accounts?: Array<string>, options?: any): AxiosPromise<void> {
-            return localVarFp.rootGet(accessToken, events, accounts, options).then((request) => request(axios, basePath));
+        rootGet(requestParameters: WebSocketApiRootGetRequest, options?: AxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.rootGet(requestParameters.accessToken, requestParameters.events, requestParameters.accounts, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -8185,12 +8186,12 @@ export const WebhookExampleApiFactory = function (configuration?: Configuration,
     return {
         /**
          * Example of what to expect from a ChatDaddy Webhook, this is not a real route. Points to keep in mind: - the request body you\'ll receive in the webhook will   match the request body shown in this route - there will be a chatdaddy token in the headers with no scopes - a POST request will be made to the url - ChatDaddy expects a 200 response to mark a successful delivery 
-         * @param {EventWebhookData} [eventWebhookData] 
+         * @param {WebhookExampleApiWebhookExamplePostRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        webhookExamplePost(eventWebhookData?: EventWebhookData, options?: any): AxiosPromise<void> {
-            return localVarFp.webhookExamplePost(eventWebhookData, options).then((request) => request(axios, basePath));
+        webhookExamplePost(requestParameters: WebhookExampleApiWebhookExamplePostRequest = {}, options?: AxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.webhookExamplePost(requestParameters.eventWebhookData, options).then((request) => request(axios, basePath));
         },
     };
 };

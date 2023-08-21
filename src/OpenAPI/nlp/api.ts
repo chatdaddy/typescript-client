@@ -15,13 +15,15 @@ const BASE_PATH = "https://api-keywordreply.chatdaddy.tech".replace(/\/+$/, "");
  */
 
 
-import { Configuration } from '../configuration';
-import globalAxios, { AxiosPromise, AxiosInstance, AxiosRequestConfig } from 'axios';
+import type { Configuration } from '../configuration';
+import type { AxiosPromise, AxiosInstance, AxiosRequestConfig } from 'axios';
+import globalAxios from 'axios';
 // Some imports not used depending on template conditions
 // @ts-ignore
 import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObject, setBearerAuthToObject, setOAuthToObject, setSearchParams, serializeDataIfNeeded, toPathString, createRequestFunction } from '../common';
+import type { RequestArgs } from '../base';
 // @ts-ignore
-import { COLLECTION_FORMATS, RequestArgs, BaseAPI, RequiredError } from '../base';
+import { COLLECTION_FORMATS, BaseAPI, RequiredError } from './base';
 
 /**
  * 
@@ -567,6 +569,8 @@ export interface Job {
      */
     'status': JobStatus;
 }
+
+
 /**
  * 
  * @export
@@ -689,6 +693,8 @@ export interface KeywordActionCreateRequestObj {
      */
     'executionFrames'?: Array<ExecutionFrame>;
 }
+
+
 /**
  * 
  * @export
@@ -768,6 +774,8 @@ export interface KeywordActionEditRequestObj {
      */
     'executionFrames'?: Array<ExecutionFrame>;
 }
+
+
 /**
  * 
  * @export
@@ -902,6 +910,8 @@ export interface KeywordBasedAction {
      */
     'updatedAt'?: string;
 }
+
+
 /**
  * 
  * @export
@@ -1216,12 +1226,12 @@ export const AudioTranscriptionApiFactory = function (configuration?: Configurat
         /**
          * Accepts an audio URL and converts it to text using AWS Transcribe. Supports both streaming and batch processing.
          * @summary Convert audio URL to text
-         * @param {TranscribePostRequest} transcribePostRequest 
+         * @param {AudioTranscriptionApiTranscribePostRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        transcribePost(transcribePostRequest: TranscribePostRequest, options?: any): AxiosPromise<TranscribePost200Response> {
-            return localVarFp.transcribePost(transcribePostRequest, options).then((request) => request(axios, basePath));
+        transcribePost(requestParameters: AudioTranscriptionApiTranscribePostRequest, options?: AxiosRequestConfig): AxiosPromise<TranscribePost200Response> {
+            return localVarFp.transcribePost(requestParameters.transcribePostRequest, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -1400,24 +1410,22 @@ export const AutocompleteApiFactory = function (configuration?: Configuration, b
         /**
          * 
          * @summary Returns autocomplete suggestions for a chat
-         * @param {string} accountId 
-         * @param {string} chatId 
+         * @param {AutocompleteApiAutocompleteInboxRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        autocompleteInbox(accountId: string, chatId: string, options?: any): AxiosPromise<AutocompleteInbox200Response> {
-            return localVarFp.autocompleteInbox(accountId, chatId, options).then((request) => request(axios, basePath));
+        autocompleteInbox(requestParameters: AutocompleteApiAutocompleteInboxRequest, options?: AxiosRequestConfig): AxiosPromise<AutocompleteInbox200Response> {
+            return localVarFp.autocompleteInbox(requestParameters.accountId, requestParameters.chatId, options).then((request) => request(axios, basePath));
         },
         /**
          * 
          * @summary Apply some modification to the given text
-         * @param {AutocompleteModifier} modifier 
-         * @param {AutocompleteModifyRequest} autocompleteModifyRequest 
+         * @param {AutocompleteApiAutocompleteModifyRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        autocompleteModify(modifier: AutocompleteModifier, autocompleteModifyRequest: AutocompleteModifyRequest, options?: any): AxiosPromise<AutocompleteModify200Response> {
-            return localVarFp.autocompleteModify(modifier, autocompleteModifyRequest, options).then((request) => request(axios, basePath));
+        autocompleteModify(requestParameters: AutocompleteApiAutocompleteModifyRequest, options?: AxiosRequestConfig): AxiosPromise<AutocompleteModify200Response> {
+            return localVarFp.autocompleteModify(requestParameters.modifier, requestParameters.autocompleteModifyRequest, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -1939,86 +1947,82 @@ export const ChatbotApiFactory = function (configuration?: Configuration, basePa
         /**
          * 
          * @summary Refresh Chatbot data
-         * @param {string} id ID of the chatbot
+         * @param {ChatbotApiChatbotRefreshRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        chatbotRefresh(id: string, options?: any): AxiosPromise<Chatbot> {
-            return localVarFp.chatbotRefresh(id, options).then((request) => request(axios, basePath));
+        chatbotRefresh(requestParameters: ChatbotApiChatbotRefreshRequest, options?: AxiosRequestConfig): AxiosPromise<Chatbot> {
+            return localVarFp.chatbotRefresh(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
          * 
          * @summary Create a chatbot
-         * @param {object} [body] 
+         * @param {ChatbotApiCreateBotRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        createBot(body?: object, options?: any): AxiosPromise<CreateChatbotResponse> {
-            return localVarFp.createBot(body, options).then((request) => request(axios, basePath));
+        createBot(requestParameters: ChatbotApiCreateBotRequest = {}, options?: AxiosRequestConfig): AxiosPromise<CreateChatbotResponse> {
+            return localVarFp.createBot(requestParameters.body, options).then((request) => request(axios, basePath));
         },
         /**
          * 
          * @summary delete a chatbot
-         * @param {string} id ID of the chatbot
+         * @param {ChatbotApiDeleteBotRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteBot(id: string, options?: any): AxiosPromise<void> {
-            return localVarFp.deleteBot(id, options).then((request) => request(axios, basePath));
+        deleteBot(requestParameters: ChatbotApiDeleteBotRequest, options?: AxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.deleteBot(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
          * 
          * @summary Get user\'s chatbots
-         * @param {Array<string>} [id] Find the chatbots with the given ids
+         * @param {ChatbotApiGetBotsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getBots(id?: Array<string>, options?: any): AxiosPromise<GetChatbotsResponse> {
-            return localVarFp.getBots(id, options).then((request) => request(axios, basePath));
+        getBots(requestParameters: ChatbotApiGetBotsRequest = {}, options?: AxiosRequestConfig): AxiosPromise<GetChatbotsResponse> {
+            return localVarFp.getBots(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
          * 
          * @summary Start an extraction or crawling job
-         * @param {string} id ID of the chatbot
-         * @param {JobType} type Type of data to be added
-         * @param {StartJobRequest} [startJobRequest] 
+         * @param {ChatbotApiJobStartRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        jobStart(id: string, type: JobType, startJobRequest?: StartJobRequest, options?: any): AxiosPromise<StartJobResponse> {
-            return localVarFp.jobStart(id, type, startJobRequest, options).then((request) => request(axios, basePath));
+        jobStart(requestParameters: ChatbotApiJobStartRequest, options?: AxiosRequestConfig): AxiosPromise<StartJobResponse> {
+            return localVarFp.jobStart(requestParameters.id, requestParameters.type, requestParameters.startJobRequest, options).then((request) => request(axios, basePath));
         },
         /**
          * 
          * @summary Send message to the chatbot
-         * @param {string} id ID of the chatbot
-         * @param {ChatbotMessageRequest} [chatbotMessageRequest] 
+         * @param {ChatbotApiMessageBotRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        messageBot(id: string, chatbotMessageRequest?: ChatbotMessageRequest, options?: any): AxiosPromise<ChatbotMessageResponse> {
-            return localVarFp.messageBot(id, chatbotMessageRequest, options).then((request) => request(axios, basePath));
+        messageBot(requestParameters: ChatbotApiMessageBotRequest, options?: AxiosRequestConfig): AxiosPromise<ChatbotMessageResponse> {
+            return localVarFp.messageBot(requestParameters.id, requestParameters.chatbotMessageRequest, options).then((request) => request(axios, basePath));
         },
         /**
          * 
          * @summary Start training the chatbot
-         * @param {string} id ID of the chatbot
+         * @param {ChatbotApiTrainChatbotRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        trainChatbot(id: string, options?: any): AxiosPromise<void> {
-            return localVarFp.trainChatbot(id, options).then((request) => request(axios, basePath));
+        trainChatbot(requestParameters: ChatbotApiTrainChatbotRequest, options?: AxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.trainChatbot(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
          * 
          * @summary Update chatbot
-         * @param {string} id ID of the chatbot
-         * @param {UpdateChatbotRequest} [updateChatbotRequest] 
+         * @param {ChatbotApiUpdateBotRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        updateBot(id: string, updateChatbotRequest?: UpdateChatbotRequest, options?: any): AxiosPromise<void> {
-            return localVarFp.updateBot(id, updateChatbotRequest, options).then((request) => request(axios, basePath));
+        updateBot(requestParameters: ChatbotApiUpdateBotRequest, options?: AxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.updateBot(requestParameters.id, requestParameters.updateChatbotRequest, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -2598,60 +2602,52 @@ export const KeywordsApiFactory = function (configuration?: Configuration, baseP
         /**
          * 
          * @summary Create new Keyword Based Action
-         * @param {Array<KeywordActionCreateRequestObj>} keywordActionCreateRequestObj 
+         * @param {KeywordsApiCreateTriggerRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        createTrigger(keywordActionCreateRequestObj: Array<KeywordActionCreateRequestObj>, options?: any): AxiosPromise<Array<KeywordBasedAction>> {
-            return localVarFp.createTrigger(keywordActionCreateRequestObj, options).then((request) => request(axios, basePath));
+        createTrigger(requestParameters: KeywordsApiCreateTriggerRequest, options?: AxiosRequestConfig): AxiosPromise<Array<KeywordBasedAction>> {
+            return localVarFp.createTrigger(requestParameters.keywordActionCreateRequestObj, options).then((request) => request(axios, basePath));
         },
         /**
          * 
          * @summary Delete Keyword Based Action
-         * @param {Array<string>} ids 
+         * @param {KeywordsApiDeleteTriggersRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteTriggers(ids: Array<string>, options?: any): AxiosPromise<DeleteTriggers200Response> {
-            return localVarFp.deleteTriggers(ids, options).then((request) => request(axios, basePath));
+        deleteTriggers(requestParameters: KeywordsApiDeleteTriggersRequest, options?: AxiosRequestConfig): AxiosPromise<DeleteTriggers200Response> {
+            return localVarFp.deleteTriggers(requestParameters.ids, options).then((request) => request(axios, basePath));
         },
         /**
          * 
          * @summary Edit Keyword Based Action
-         * @param {Array<KeywordActionEditRequestObj>} keywordActionEditRequestObj 
+         * @param {KeywordsApiEditTriggerRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        editTrigger(keywordActionEditRequestObj: Array<KeywordActionEditRequestObj>, options?: any): AxiosPromise<Array<KeywordBasedAction>> {
-            return localVarFp.editTrigger(keywordActionEditRequestObj, options).then((request) => request(axios, basePath));
+        editTrigger(requestParameters: KeywordsApiEditTriggerRequest, options?: AxiosRequestConfig): AxiosPromise<Array<KeywordBasedAction>> {
+            return localVarFp.editTrigger(requestParameters.keywordActionEditRequestObj, options).then((request) => request(axios, basePath));
         },
         /**
          * 
          * @summary Returns the trigger log of the keyword reply.
-         * @param {string} id 
-         * @param {number} [count] 
-         * @param {string} [cursor] 
-         * @param {boolean} [returnTotalTriggered] 
+         * @param {KeywordsApiGetExecutionRecordRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getExecutionRecord(id: string, count?: number, cursor?: string, returnTotalTriggered?: boolean, options?: any): AxiosPromise<GetExecutionRecord200Response> {
-            return localVarFp.getExecutionRecord(id, count, cursor, returnTotalTriggered, options).then((request) => request(axios, basePath));
+        getExecutionRecord(requestParameters: KeywordsApiGetExecutionRecordRequest, options?: AxiosRequestConfig): AxiosPromise<GetExecutionRecord200Response> {
+            return localVarFp.getExecutionRecord(requestParameters.id, requestParameters.count, requestParameters.cursor, requestParameters.returnTotalTriggered, options).then((request) => request(axios, basePath));
         },
         /**
          * 
          * @summary Query for user\'s Keyword Actions
-         * @param {string} [q] 
-         * @param {number} [count] 
-         * @param {Array<string>} [id] 
-         * @param {TriggerType} [triggerType] Query keywords with the specific trigger type
-         * @param {string} [cursor] 
-         * @param {boolean} [returnTotalCount] 
+         * @param {KeywordsApiGetTriggersRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getTriggers(q?: string, count?: number, id?: Array<string>, triggerType?: TriggerType, cursor?: string, returnTotalCount?: boolean, options?: any): AxiosPromise<GetTriggers200Response> {
-            return localVarFp.getTriggers(q, count, id, triggerType, cursor, returnTotalCount, options).then((request) => request(axios, basePath));
+        getTriggers(requestParameters: KeywordsApiGetTriggersRequest = {}, options?: AxiosRequestConfig): AxiosPromise<GetTriggers200Response> {
+            return localVarFp.getTriggers(requestParameters.q, requestParameters.count, requestParameters.id, requestParameters.triggerType, requestParameters.cursor, requestParameters.returnTotalCount, options).then((request) => request(axios, basePath));
         },
     };
 };

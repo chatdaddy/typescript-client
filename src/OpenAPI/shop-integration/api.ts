@@ -15,13 +15,15 @@ const BASE_PATH = "https://replace.your.own.url.here".replace(/\/+$/, "");
  */
 
 
-import { Configuration } from '../configuration';
-import globalAxios, { AxiosPromise, AxiosInstance, AxiosRequestConfig } from 'axios';
+import type { Configuration } from '../configuration';
+import type { AxiosPromise, AxiosInstance, AxiosRequestConfig } from 'axios';
+import globalAxios from 'axios';
 // Some imports not used depending on template conditions
 // @ts-ignore
 import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObject, setBearerAuthToObject, setOAuthToObject, setSearchParams, serializeDataIfNeeded, toPathString, createRequestFunction } from '../common';
+import type { RequestArgs } from '../base';
 // @ts-ignore
-import { COLLECTION_FORMATS, RequestArgs, BaseAPI, RequiredError } from '../base';
+import { COLLECTION_FORMATS, BaseAPI, RequiredError } from './base';
 
 /**
  * 
@@ -498,6 +500,8 @@ interface PlatformProduct {
      */
     'cursor'?: string;
 }
+
+
 /**
  * 
  * @export
@@ -752,6 +756,8 @@ export interface ShopProduct {
      */
     'cursor'?: string;
 }
+
+
 /**
  * 
  * @export
@@ -1078,23 +1084,22 @@ export const ShopIntegrationApiFactory = function (configuration?: Configuration
         /**
          * This route is for registering a new tracking for a user   - The `id` parameter is the ID of this tracking   - Service should keep the `id` parameter secret 
          * @summary Create a new tracking with the specified ID
-         * @param {string} id The ID of the tracking
-         * @param {CreateTrackingRequest} [createTrackingRequest] 
+         * @param {ShopIntegrationApiCreateTrackingRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        createTracking(id: string, createTrackingRequest?: CreateTrackingRequest, options?: any): AxiosPromise<void> {
-            return localVarFp.createTracking(id, createTrackingRequest, options).then((request) => request(axios, basePath));
+        createTracking(requestParameters: ShopIntegrationApiCreateTrackingRequest, options?: AxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.createTracking(requestParameters.id, requestParameters.createTrackingRequest, options).then((request) => request(axios, basePath));
         },
         /**
          * This route is for deleting a tracking for a user  It is expected the tracking is removed from the service within 500ms of this request as the easysend service may create a new tracking with the same ID immediately after this request. 
          * @summary Delete a tracking with the specified ID
-         * @param {string} id The ID of the tracking
+         * @param {ShopIntegrationApiDeleteTrackingRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteTracking(id: string, options?: any): AxiosPromise<void> {
-            return localVarFp.deleteTracking(id, options).then((request) => request(axios, basePath));
+        deleteTracking(requestParameters: ShopIntegrationApiDeleteTrackingRequest, options?: AxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.deleteTracking(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
          * This route is used by easysend to determine all the specifications of the service including: - JSON schema describing the parameters each data point will contain - credentials required - an image - description & name 
@@ -1102,20 +1107,18 @@ export const ShopIntegrationApiFactory = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getSchema(options?: any): AxiosPromise<ShopServiceSchema> {
+        getSchema(options?: AxiosRequestConfig): AxiosPromise<ShopServiceSchema> {
             return localVarFp.getSchema(options).then((request) => request(axios, basePath));
         },
         /**
          * Return products listed by the user on the provider. Eg. products listed on an ecommerce store. 
          * @summary Get products for the tracking
-         * @param {string} id The ID of the tracking
-         * @param {number} [limit] The maximum number of products to return
-         * @param {number} [page] The page number to return
+         * @param {ShopIntegrationApiGetTrackingProductsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getTrackingProducts(id: string, limit?: number, page?: number, options?: any): AxiosPromise<GetTrackingProducts200Response> {
-            return localVarFp.getTrackingProducts(id, limit, page, options).then((request) => request(axios, basePath));
+        getTrackingProducts(requestParameters: ShopIntegrationApiGetTrackingProductsRequest, options?: AxiosRequestConfig): AxiosPromise<GetTrackingProducts200Response> {
+            return localVarFp.getTrackingProducts(requestParameters.id, requestParameters.limit, requestParameters.page, options).then((request) => request(axios, basePath));
         },
     };
 };

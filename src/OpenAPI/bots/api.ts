@@ -15,13 +15,15 @@ const BASE_PATH = "https://api-bots.chatdaddy.tech".replace(/\/+$/, "");
  */
 
 
-import { Configuration } from '../configuration';
-import globalAxios, { AxiosPromise, AxiosInstance, AxiosRequestConfig } from 'axios';
+import type { Configuration } from '../configuration';
+import type { AxiosPromise, AxiosInstance, AxiosRequestConfig } from 'axios';
+import globalAxios from 'axios';
 // Some imports not used depending on template conditions
 // @ts-ignore
 import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObject, setBearerAuthToObject, setOAuthToObject, setSearchParams, serializeDataIfNeeded, toPathString, createRequestFunction } from '../common';
+import type { RequestArgs } from '../base';
 // @ts-ignore
-import { COLLECTION_FORMATS, RequestArgs, BaseAPI, RequiredError } from '../base';
+import { COLLECTION_FORMATS, BaseAPI, RequiredError } from './base';
 
 /**
  * 
@@ -1665,6 +1667,8 @@ export interface IMMessageAttachment {
      */
     'filename'?: string;
 }
+
+
 /**
  * 
  * @export
@@ -2252,25 +2256,22 @@ export const ActionsApiFactory = function (configuration?: Configuration, basePa
         /**
          * 
          * @summary Gets all actions related to account/team
-         * @param {number} [count] 
-         * @param {string} [before] 
-         * @param {string} [q] 
-         * @param {string} [botId] 
+         * @param {ActionsApiActionsGetRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        actionsGet(count?: number, before?: string, q?: string, botId?: string, options?: any): AxiosPromise<ActionsGet200Response> {
-            return localVarFp.actionsGet(count, before, q, botId, options).then((request) => request(axios, basePath));
+        actionsGet(requestParameters: ActionsApiActionsGetRequest = {}, options?: AxiosRequestConfig): AxiosPromise<ActionsGet200Response> {
+            return localVarFp.actionsGet(requestParameters.count, requestParameters.before, requestParameters.q, requestParameters.botId, options).then((request) => request(axios, basePath));
         },
         /**
          * 
          * @summary Generate Actions using GPT
-         * @param {ActionsGptGenerateRequest} [actionsGptGenerateRequest] 
+         * @param {ActionsApiActionsGptGenerateRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        actionsGptGenerate(actionsGptGenerateRequest?: ActionsGptGenerateRequest, options?: any): AxiosPromise<ActionsGptGenerate200Response> {
-            return localVarFp.actionsGptGenerate(actionsGptGenerateRequest, options).then((request) => request(axios, basePath));
+        actionsGptGenerate(requestParameters: ActionsApiActionsGptGenerateRequest = {}, options?: AxiosRequestConfig): AxiosPromise<ActionsGptGenerate200Response> {
+            return localVarFp.actionsGptGenerate(requestParameters.actionsGptGenerateRequest, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -2673,60 +2674,52 @@ export const BotTriggersApiFactory = function (configuration?: Configuration, ba
         /**
          * 
          * @summary Cancel a bot trigger instance
-         * @param {string} triggerId 
-         * @param {string} botId 
-         * @param {string} instanceId 
+         * @param {BotTriggersApiBotTriggerCancelInstanceRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        botTriggerCancelInstance(triggerId: string, botId: string, instanceId: string, options?: any): AxiosPromise<void> {
-            return localVarFp.botTriggerCancelInstance(triggerId, botId, instanceId, options).then((request) => request(axios, basePath));
+        botTriggerCancelInstance(requestParameters: BotTriggersApiBotTriggerCancelInstanceRequest, options?: AxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.botTriggerCancelInstance(requestParameters.triggerId, requestParameters.botId, requestParameters.instanceId, options).then((request) => request(axios, basePath));
         },
         /**
          * 
          * @summary Get all instances of a bot trigger
-         * @param {string} triggerId 
-         * @param {number} [count] 
-         * @param {string} [before] 
+         * @param {BotTriggersApiBotTriggerInstancesGetRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        botTriggerInstancesGet(triggerId: string, count?: number, before?: string, options?: any): AxiosPromise<BotTriggerInstancesGet200Response> {
-            return localVarFp.botTriggerInstancesGet(triggerId, count, before, options).then((request) => request(axios, basePath));
+        botTriggerInstancesGet(requestParameters: BotTriggersApiBotTriggerInstancesGetRequest, options?: AxiosRequestConfig): AxiosPromise<BotTriggerInstancesGet200Response> {
+            return localVarFp.botTriggerInstancesGet(requestParameters.triggerId, requestParameters.count, requestParameters.before, options).then((request) => request(axios, basePath));
         },
         /**
          * 
          * @summary Start a bot trigger instance
-         * @param {string} triggerId 
-         * @param {string} botId 
-         * @param {string} instanceId 
+         * @param {BotTriggersApiBotTriggerStartInstanceRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        botTriggerStartInstance(triggerId: string, botId: string, instanceId: string, options?: any): AxiosPromise<void> {
-            return localVarFp.botTriggerStartInstance(triggerId, botId, instanceId, options).then((request) => request(axios, basePath));
+        botTriggerStartInstance(requestParameters: BotTriggersApiBotTriggerStartInstanceRequest, options?: AxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.botTriggerStartInstance(requestParameters.triggerId, requestParameters.botId, requestParameters.instanceId, options).then((request) => request(axios, basePath));
         },
         /**
          * 
          * @summary Fire a bot trigger via webhook
-         * @param {string} triggerId 
-         * @param {string} botId 
-         * @param {BotTriggerWebhookRequest} [botTriggerWebhookRequest] 
+         * @param {BotTriggersApiBotTriggerWebhookRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        botTriggerWebhook(triggerId: string, botId: string, botTriggerWebhookRequest?: BotTriggerWebhookRequest, options?: any): AxiosPromise<void> {
-            return localVarFp.botTriggerWebhook(triggerId, botId, botTriggerWebhookRequest, options).then((request) => request(axios, basePath));
+        botTriggerWebhook(requestParameters: BotTriggersApiBotTriggerWebhookRequest, options?: AxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.botTriggerWebhook(requestParameters.triggerId, requestParameters.botId, requestParameters.botTriggerWebhookRequest, options).then((request) => request(axios, basePath));
         },
         /**
          * 
          * @summary Update a bot trigger
-         * @param {BotTriggersPatchRequest} [botTriggersPatchRequest] 
+         * @param {BotTriggersApiBotTriggersPatchRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        botTriggersPatch(botTriggersPatchRequest?: BotTriggersPatchRequest, options?: any): AxiosPromise<void> {
-            return localVarFp.botTriggersPatch(botTriggersPatchRequest, options).then((request) => request(axios, basePath));
+        botTriggersPatch(requestParameters: BotTriggersApiBotTriggersPatchRequest = {}, options?: AxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.botTriggersPatch(requestParameters.botTriggersPatchRequest, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -3505,110 +3498,92 @@ export const BotsApiFactory = function (configuration?: Configuration, basePath?
         /**
          * 
          * @summary Creates new bot
-         * @param {BotsCreateRequest} [botsCreateRequest] 
+         * @param {BotsApiBotsCreateRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        botsCreate(botsCreateRequest?: BotsCreateRequest, options?: any): AxiosPromise<Bot> {
-            return localVarFp.botsCreate(botsCreateRequest, options).then((request) => request(axios, basePath));
+        botsCreate(requestParameters: BotsApiBotsCreateRequest = {}, options?: AxiosRequestConfig): AxiosPromise<Bot> {
+            return localVarFp.botsCreate(requestParameters.botsCreateRequest, options).then((request) => request(axios, basePath));
         },
         /**
          * This endpoint fetches bot data based on provided botId parameters
          * @summary Retrieves bot data including triggers, notes and actions
-         * @param {string} botId The ID of the bot
+         * @param {BotsApiBotsDataGetRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        botsDataGet(botId: string, options?: any): AxiosPromise<BotsDataGet200Response> {
-            return localVarFp.botsDataGet(botId, options).then((request) => request(axios, basePath));
+        botsDataGet(requestParameters: BotsApiBotsDataGetRequest, options?: AxiosRequestConfig): AxiosPromise<BotsDataGet200Response> {
+            return localVarFp.botsDataGet(requestParameters.botId, options).then((request) => request(axios, basePath));
         },
         /**
          * 
          * @summary Deletes list of bots
-         * @param {Array<string>} bots 
+         * @param {BotsApiBotsDeletesRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        botsDeletes(bots: Array<string>, options?: any): AxiosPromise<void> {
-            return localVarFp.botsDeletes(bots, options).then((request) => request(axios, basePath));
+        botsDeletes(requestParameters: BotsApiBotsDeletesRequest, options?: AxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.botsDeletes(requestParameters.bots, options).then((request) => request(axios, basePath));
         },
         /**
          * Either submit for review, unlink from the external template provider or link with an existing template ID
          * @summary Execute a command to update the status for the external template
-         * @param {string} id 
-         * @param {string} accountId 
-         * @param {TemplateCommand} command 
-         * @param {string} [language] ISO code of the language, required for WA business templates
-         * @param {string} [category] 
-         * @param {string} [templateId] The external ID of the template to link with, only valid for the \&quot;link\&quot; command
+         * @param {BotsApiBotsExternalTemplateCommandRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        botsExternalTemplateCommand(id: string, accountId: string, command: TemplateCommand, language?: string, category?: string, templateId?: string, options?: any): AxiosPromise<BotsExternalTemplateCommand200Response> {
-            return localVarFp.botsExternalTemplateCommand(id, accountId, command, language, category, templateId, options).then((request) => request(axios, basePath));
+        botsExternalTemplateCommand(requestParameters: BotsApiBotsExternalTemplateCommandRequest, options?: AxiosRequestConfig): AxiosPromise<BotsExternalTemplateCommand200Response> {
+            return localVarFp.botsExternalTemplateCommand(requestParameters.id, requestParameters.accountId, requestParameters.command, requestParameters.language, requestParameters.category, requestParameters.templateId, options).then((request) => request(axios, basePath));
         },
         /**
          * Will throw a 400 if there is no starting action ID
          * @summary Initiates a bot sequence. Fires the starting action ID
-         * @param {string} id 
-         * @param {BotsFireRequest} [botsFireRequest] 
+         * @param {BotsApiBotsFireRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        botsFire(id: string, botsFireRequest?: BotsFireRequest, options?: any): AxiosPromise<ActionFireRecord> {
-            return localVarFp.botsFire(id, botsFireRequest, options).then((request) => request(axios, basePath));
+        botsFire(requestParameters: BotsApiBotsFireRequest, options?: AxiosRequestConfig): AxiosPromise<ActionFireRecord> {
+            return localVarFp.botsFire(requestParameters.id, requestParameters.botsFireRequest, options).then((request) => request(axios, basePath));
         },
         /**
          * 
          * @summary Returns list of execution records
-         * @param {number} [count] 
-         * @param {number} [beforeId] 
-         * @param {string} [botId] 
+         * @param {BotsApiBotsGetRecordRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        botsGetRecord(count?: number, beforeId?: number, botId?: string, options?: any): AxiosPromise<BotsGetRecord200Response> {
-            return localVarFp.botsGetRecord(count, beforeId, botId, options).then((request) => request(axios, basePath));
+        botsGetRecord(requestParameters: BotsApiBotsGetRecordRequest = {}, options?: AxiosRequestConfig): AxiosPromise<BotsGetRecord200Response> {
+            return localVarFp.botsGetRecord(requestParameters.count, requestParameters.beforeId, requestParameters.botId, options).then((request) => request(axios, basePath));
         },
         /**
          * 
          * @summary Get list of bots
-         * @param {string} [q] 
-         * @param {string} [before] 
-         * @param {number} [count] 
-         * @param {Array<string>} [id] 
-         * @param {'name' | 'updatedAt'} [sortBy] 
-         * @param {'ASC' | 'DESC'} [order] 
-         * @param {string} [folderId] 
-         * @param {string} [language] 
-         * @param {string} [industry] 
-         * @param {boolean} [returnTotalCount] 
+         * @param {BotsApiBotsGetsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        botsGets(q?: string, before?: string, count?: number, id?: Array<string>, sortBy?: 'name' | 'updatedAt', order?: 'ASC' | 'DESC', folderId?: string, language?: string, industry?: string, returnTotalCount?: boolean, options?: any): AxiosPromise<BotsGets200Response> {
-            return localVarFp.botsGets(q, before, count, id, sortBy, order, folderId, language, industry, returnTotalCount, options).then((request) => request(axios, basePath));
+        botsGets(requestParameters: BotsApiBotsGetsRequest = {}, options?: AxiosRequestConfig): AxiosPromise<BotsGets200Response> {
+            return localVarFp.botsGets(requestParameters.q, requestParameters.before, requestParameters.count, requestParameters.id, requestParameters.sortBy, requestParameters.order, requestParameters.folderId, requestParameters.language, requestParameters.industry, requestParameters.returnTotalCount, options).then((request) => request(axios, basePath));
         },
         /**
          * 
          * @summary Update an action
-         * @param {string} id 
-         * @param {BotPatch} [botPatch] 
+         * @param {BotsApiBotsPatchRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        botsPatch(id: string, botPatch?: BotPatch, options?: any): AxiosPromise<void> {
-            return localVarFp.botsPatch(id, botPatch, options).then((request) => request(axios, basePath));
+        botsPatch(requestParameters: BotsApiBotsPatchRequest, options?: AxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.botsPatch(requestParameters.id, requestParameters.botPatch, options).then((request) => request(axios, basePath));
         },
         /**
          * 
          * @summary Update status of some templates
-         * @param {TemplateStatusUpdateRequest} [templateStatusUpdateRequest] 
+         * @param {BotsApiExternalTemplateStatusUpdateRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        externalTemplateStatusUpdate(templateStatusUpdateRequest?: TemplateStatusUpdateRequest, options?: any): AxiosPromise<void> {
-            return localVarFp.externalTemplateStatusUpdate(templateStatusUpdateRequest, options).then((request) => request(axios, basePath));
+        externalTemplateStatusUpdate(requestParameters: BotsApiExternalTemplateStatusUpdateRequest = {}, options?: AxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.externalTemplateStatusUpdate(requestParameters.templateStatusUpdateRequest, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -4228,45 +4203,42 @@ export const FoldersApiFactory = function (configuration?: Configuration, basePa
         /**
          * 
          * @summary Create folder
-         * @param {FolderCreateRequest} [folderCreateRequest] 
+         * @param {FoldersApiFolderCreateRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        folderCreate(folderCreateRequest?: FolderCreateRequest, options?: any): AxiosPromise<Folder> {
-            return localVarFp.folderCreate(folderCreateRequest, options).then((request) => request(axios, basePath));
+        folderCreate(requestParameters: FoldersApiFolderCreateRequest = {}, options?: AxiosRequestConfig): AxiosPromise<Folder> {
+            return localVarFp.folderCreate(requestParameters.folderCreateRequest, options).then((request) => request(axios, basePath));
         },
         /**
          * 
          * @summary Deletes list of folders
-         * @param {Array<string>} folders 
+         * @param {FoldersApiFolderDeleteRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        folderDelete(folders: Array<string>, options?: any): AxiosPromise<void> {
-            return localVarFp.folderDelete(folders, options).then((request) => request(axios, basePath));
+        folderDelete(requestParameters: FoldersApiFolderDeleteRequest, options?: AxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.folderDelete(requestParameters.folders, options).then((request) => request(axios, basePath));
         },
         /**
          * 
          * @summary Gets all folders related to account/team
-         * @param {number} [count] 
-         * @param {string} [before] 
-         * @param {string} [q] 
+         * @param {FoldersApiFolderGetRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        folderGet(count?: number, before?: string, q?: string, options?: any): AxiosPromise<FolderGet200Response> {
-            return localVarFp.folderGet(count, before, q, options).then((request) => request(axios, basePath));
+        folderGet(requestParameters: FoldersApiFolderGetRequest = {}, options?: AxiosRequestConfig): AxiosPromise<FolderGet200Response> {
+            return localVarFp.folderGet(requestParameters.count, requestParameters.before, requestParameters.q, options).then((request) => request(axios, basePath));
         },
         /**
          * 
          * @summary Update folder
-         * @param {string} folderId 
-         * @param {FolderUpdateRequest} [folderUpdateRequest] 
+         * @param {FoldersApiFolderUpdateRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        folderUpdate(folderId: string, folderUpdateRequest?: FolderUpdateRequest, options?: any): AxiosPromise<void> {
-            return localVarFp.folderUpdate(folderId, folderUpdateRequest, options).then((request) => request(axios, basePath));
+        folderUpdate(requestParameters: FoldersApiFolderUpdateRequest, options?: AxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.folderUpdate(requestParameters.folderId, requestParameters.folderUpdateRequest, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -4553,26 +4525,22 @@ export const StoreApiFactory = function (configuration?: Configuration, basePath
         /**
          * 
          * @summary Create options in the store
-         * @param {StoreCreateRequest} [storeCreateRequest] 
+         * @param {StoreApiStoreCreateRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        storeCreate(storeCreateRequest?: StoreCreateRequest, options?: any): AxiosPromise<TemplateItem> {
-            return localVarFp.storeCreate(storeCreateRequest, options).then((request) => request(axios, basePath));
+        storeCreate(requestParameters: StoreApiStoreCreateRequest = {}, options?: AxiosRequestConfig): AxiosPromise<TemplateItem> {
+            return localVarFp.storeCreate(requestParameters.storeCreateRequest, options).then((request) => request(axios, basePath));
         },
         /**
          * 
          * @summary Get options in the store
-         * @param {number} [count] 
-         * @param {string} [before] 
-         * @param {string} [q] 
-         * @param {string} [language] 
-         * @param {Array<string>} [categoryKeyValue] 
+         * @param {StoreApiStoreGetRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        storeGet(count?: number, before?: string, q?: string, language?: string, categoryKeyValue?: Array<string>, options?: any): AxiosPromise<StoreGet200Response> {
-            return localVarFp.storeGet(count, before, q, language, categoryKeyValue, options).then((request) => request(axios, basePath));
+        storeGet(requestParameters: StoreApiStoreGetRequest = {}, options?: AxiosRequestConfig): AxiosPromise<StoreGet200Response> {
+            return localVarFp.storeGet(requestParameters.count, requestParameters.before, requestParameters.q, requestParameters.language, requestParameters.categoryKeyValue, options).then((request) => request(axios, basePath));
         },
     };
 };

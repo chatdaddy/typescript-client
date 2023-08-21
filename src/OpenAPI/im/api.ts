@@ -15,13 +15,15 @@ const BASE_PATH = "https://api-im.chatdaddy.tech".replace(/\/+$/, "");
  */
 
 
-import { Configuration } from '../configuration';
-import globalAxios, { AxiosPromise, AxiosInstance, AxiosRequestConfig } from 'axios';
+import type { Configuration } from '../configuration';
+import type { AxiosPromise, AxiosInstance, AxiosRequestConfig } from 'axios';
+import globalAxios from 'axios';
 // Some imports not used depending on template conditions
 // @ts-ignore
 import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObject, setBearerAuthToObject, setOAuthToObject, setSearchParams, serializeDataIfNeeded, toPathString, createRequestFunction } from '../common';
+import type { RequestArgs } from '../base';
 // @ts-ignore
-import { COLLECTION_FORMATS, RequestArgs, BaseAPI, RequiredError } from '../base';
+import { COLLECTION_FORMATS, BaseAPI, RequiredError } from './base';
 
 /**
  * 
@@ -150,6 +152,8 @@ export interface Account {
      */
     'settings': AccountSettings;
 }
+
+
 /**
  * 
  * @export
@@ -537,6 +541,8 @@ export interface AccountsPatchRequest {
      */
     'assignees'?: Array<string>;
 }
+
+
 /**
  * @type AccountsPatchRequestCredentials
  * @export
@@ -568,6 +574,8 @@ export interface AccountsPostRequest {
      */
     'nickname'?: string;
 }
+
+
 /**
  * 
  * @export
@@ -1062,6 +1070,8 @@ export interface Chat {
      */
     'cursor': string;
 }
+
+
 /**
  * 
  * @export
@@ -1123,6 +1133,8 @@ export interface ChatAssignment {
      */
     'assignees'?: Array<string>;
 }
+
+
 /**
  * 
  * @export
@@ -1166,6 +1178,8 @@ export interface ChatPresence {
      */
     'type': PresenceType;
 }
+
+
 /**
  * 
  * @export
@@ -1327,6 +1341,8 @@ export interface Contact {
      */
     'chat'?: ContactChat;
 }
+
+
 /**
  * 
  * @export
@@ -1454,20 +1470,7 @@ export interface ContactsGet200Response {
  * @type ContactsGetCountParameter
  * @export
  */
-export type ContactsGetCountParameter = ContactsGetCountParameterOneOf | number;
-
-/**
- * 
- * @export
- * @enum {string}
- */
-
-export const ContactsGetCountParameterOneOf = {
-    All: 'all'
-} as const;
-
-export type ContactsGetCountParameterOneOf = typeof ContactsGetCountParameterOneOf[keyof typeof ContactsGetCountParameterOneOf];
-
+export type ContactsGetCountParameter = number | string;
 
 /**
  * 
@@ -1633,6 +1636,8 @@ export interface GroupAction {
      */
     'participants': Array<string>;
 }
+
+
 /**
  * 
  * @export
@@ -1951,6 +1956,8 @@ export interface Message {
      */
     'reactions'?: Array<MessageReaction> | null;
 }
+
+
 /**
  * 
  * @export
@@ -2048,6 +2055,8 @@ export interface MessageAllOf {
      */
     'miscOptions'?: MiscOptions;
 }
+
+
 /**
  * 
  * @export
@@ -2165,6 +2174,8 @@ export interface MessageAttachment {
      */
     'decryption'?: MessageAttachmentDecryption;
 }
+
+
 /**
  * 
  * @export
@@ -3181,6 +3192,8 @@ export interface PlatformProduct {
      */
     'cursor'?: string;
 }
+
+
 /**
  * 
  * @export
@@ -3807,6 +3820,8 @@ export interface TemplateCreateAttachmentsInner {
      */
     'filename'?: string;
 }
+
+
 /**
  * 
  * @export
@@ -3832,6 +3847,8 @@ export interface TemplateParams {
      */
     'category': TemplateCategory;
 }
+
+
 /**
  * 
  * @export
@@ -3871,7 +3888,8 @@ export interface TemplatesSubmitForReviewRequest {
  */
 
 export const TicketStatus = {
-    Closed: 'closed'
+    Closed: 'closed',
+    Null: null as null
 } as const;
 
 export type TicketStatus = typeof TicketStatus[keyof typeof TicketStatus];
@@ -4557,101 +4575,92 @@ export const AccountApiFactory = function (configuration?: Configuration, basePa
         /**
          * 
          * @summary Archive an account. Logs out of the account & removes all synced chats, messages. Keeps contacts, and notes.
-         * @param {string} accountId 
+         * @param {AccountApiAccountsArchiveRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        accountsArchive(accountId: string, options?: any): AxiosPromise<AccountsLogout200Response> {
-            return localVarFp.accountsArchive(accountId, options).then((request) => request(axios, basePath));
+        accountsArchive(requestParameters: AccountApiAccountsArchiveRequest, options?: AxiosRequestConfig): AxiosPromise<AccountsLogout200Response> {
+            return localVarFp.accountsArchive(requestParameters.accountId, options).then((request) => request(axios, basePath));
         },
         /**
          * 
          * @summary Close connection to the account
-         * @param {string} accountId 
-         * @param {boolean} [logout] Closes the account and logs out from the account
+         * @param {AccountApiAccountsCloseRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        accountsClose(accountId: string, logout?: boolean, options?: any): AxiosPromise<void> {
-            return localVarFp.accountsClose(accountId, logout, options).then((request) => request(axios, basePath));
+        accountsClose(requestParameters: AccountApiAccountsCloseRequest, options?: AxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.accountsClose(requestParameters.accountId, requestParameters.logout, options).then((request) => request(axios, basePath));
         },
         /**
          * You can continue to poll this route to check if it has been deleted. When deleted, the route will return a 404.
          * @summary Enqueues a task to delete the account
-         * @param {string} accountId 
-         * @param {boolean} [deleteNow] Delete the account immediately. Otherwise, the account will be completely removed after 24 hours
+         * @param {AccountApiAccountsDeleteRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        accountsDelete(accountId: string, deleteNow?: boolean, options?: any): AxiosPromise<AccountsLogout200Response> {
-            return localVarFp.accountsDelete(accountId, deleteNow, options).then((request) => request(axios, basePath));
+        accountsDelete(requestParameters: AccountApiAccountsDeleteRequest, options?: AxiosRequestConfig): AxiosPromise<AccountsLogout200Response> {
+            return localVarFp.accountsDelete(requestParameters.accountId, requestParameters.deleteNow, options).then((request) => request(axios, basePath));
         },
         /**
          * 
          * @summary Get the list of all accounts
-         * @param {string} [q] search accounts by ID/Nickname
-         * @param {boolean} [all] 
-         * @param {AccountState} [state] only fetch accounts with a state
-         * @param {number} [page] 
-         * @param {number} [count] 
-         * @param {boolean} [returnCount] return total count of accounts
+         * @param {AccountApiAccountsGetRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        accountsGet(q?: string, all?: boolean, state?: AccountState, page?: number, count?: number, returnCount?: boolean, options?: any): AxiosPromise<AccountsGet200Response> {
-            return localVarFp.accountsGet(q, all, state, page, count, returnCount, options).then((request) => request(axios, basePath));
+        accountsGet(requestParameters: AccountApiAccountsGetRequest = {}, options?: AxiosRequestConfig): AxiosPromise<AccountsGet200Response> {
+            return localVarFp.accountsGet(requestParameters.q, requestParameters.all, requestParameters.state, requestParameters.page, requestParameters.count, requestParameters.returnCount, options).then((request) => request(axios, basePath));
         },
         /**
          * 
          * @summary Logout and clear credentials from the account
-         * @param {string} accountId 
+         * @param {AccountApiAccountsLogoutRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        accountsLogout(accountId: string, options?: any): AxiosPromise<AccountsLogout200Response> {
-            return localVarFp.accountsLogout(accountId, options).then((request) => request(axios, basePath));
+        accountsLogout(requestParameters: AccountApiAccountsLogoutRequest, options?: AxiosRequestConfig): AxiosPromise<AccountsLogout200Response> {
+            return localVarFp.accountsLogout(requestParameters.accountId, options).then((request) => request(axios, basePath));
         },
         /**
          * 
          * @summary Open connection to the account
-         * @param {string} accountId 
+         * @param {AccountApiAccountsOpenRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        accountsOpen(accountId: string, options?: any): AxiosPromise<void> {
-            return localVarFp.accountsOpen(accountId, options).then((request) => request(axios, basePath));
+        accountsOpen(requestParameters: AccountApiAccountsOpenRequest, options?: AxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.accountsOpen(requestParameters.accountId, options).then((request) => request(axios, basePath));
         },
         /**
          * Update name of the account or its settings
          * @summary Update an account
-         * @param {string} accountId 
-         * @param {AccountsPatchRequest} [accountsPatchRequest] 
+         * @param {AccountApiAccountsPatchRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        accountsPatch(accountId: string, accountsPatchRequest?: AccountsPatchRequest, options?: any): AxiosPromise<AccountsLogout200Response> {
-            return localVarFp.accountsPatch(accountId, accountsPatchRequest, options).then((request) => request(axios, basePath));
+        accountsPatch(requestParameters: AccountApiAccountsPatchRequest, options?: AxiosRequestConfig): AxiosPromise<AccountsLogout200Response> {
+            return localVarFp.accountsPatch(requestParameters.accountId, requestParameters.accountsPatchRequest, options).then((request) => request(axios, basePath));
         },
         /**
          * 
          * @summary Add a new account
-         * @param {AccountsPostRequest} [accountsPostRequest] 
+         * @param {AccountApiAccountsPostRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        accountsPost(accountsPostRequest?: AccountsPostRequest, options?: any): AxiosPromise<Account> {
-            return localVarFp.accountsPost(accountsPostRequest, options).then((request) => request(axios, basePath));
+        accountsPost(requestParameters: AccountApiAccountsPostRequest = {}, options?: AxiosRequestConfig): AxiosPromise<Account> {
+            return localVarFp.accountsPost(requestParameters.accountsPostRequest, options).then((request) => request(axios, basePath));
         },
         /**
          * 
          * @summary Change login mode of a WhatsApp account
-         * @param {string} accountId 
-         * @param {AccountWaChangeLoginMode} [accountWaChangeLoginMode] 
+         * @param {AccountApiWaChangeLoginModeRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        waChangeLoginMode(accountId: string, accountWaChangeLoginMode?: AccountWaChangeLoginMode, options?: any): AxiosPromise<AccountsLogout200Response> {
-            return localVarFp.waChangeLoginMode(accountId, accountWaChangeLoginMode, options).then((request) => request(axios, basePath));
+        waChangeLoginMode(requestParameters: AccountApiWaChangeLoginModeRequest, options?: AxiosRequestConfig): AxiosPromise<AccountsLogout200Response> {
+            return localVarFp.waChangeLoginMode(requestParameters.accountId, requestParameters.accountWaChangeLoginMode, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -5301,13 +5310,12 @@ export const AlibabaCamsApiFactory = function (configuration?: Configuration, ba
         /**
          * 
          * @summary Submit ISV terms to Alibaba CAMS API
-         * @param {string} accountId 
-         * @param {AlibabaCAMSISVTerms} [alibabaCAMSISVTerms] 
+         * @param {AlibabaCamsApiAlibabaCamsIsvTermsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        alibabaCamsIsvTerms(accountId: string, alibabaCAMSISVTerms?: AlibabaCAMSISVTerms, options?: any): AxiosPromise<void> {
-            return localVarFp.alibabaCamsIsvTerms(accountId, alibabaCAMSISVTerms, options).then((request) => request(axios, basePath));
+        alibabaCamsIsvTerms(requestParameters: AlibabaCamsApiAlibabaCamsIsvTermsRequest, options?: AxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.alibabaCamsIsvTerms(requestParameters.accountId, requestParameters.alibabaCAMSISVTerms, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -5315,52 +5323,48 @@ export const AlibabaCamsApiFactory = function (configuration?: Configuration, ba
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        alibabaCamsMetadata(options?: any): AxiosPromise<AlibabaCamsMetadata200Response> {
+        alibabaCamsMetadata(options?: AxiosRequestConfig): AxiosPromise<AlibabaCamsMetadata200Response> {
             return localVarFp.alibabaCamsMetadata(options).then((request) => request(axios, basePath));
         },
         /**
          * 
          * @summary Update business info for Alibaba CAMS API
-         * @param {string} accountId 
-         * @param {AlibabaCamsProfileUpdateRequest} [alibabaCamsProfileUpdateRequest] 
+         * @param {AlibabaCamsApiAlibabaCamsProfileUpdateRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        alibabaCamsProfileUpdate(accountId: string, alibabaCamsProfileUpdateRequest?: AlibabaCamsProfileUpdateRequest, options?: any): AxiosPromise<void> {
-            return localVarFp.alibabaCamsProfileUpdate(accountId, alibabaCamsProfileUpdateRequest, options).then((request) => request(axios, basePath));
+        alibabaCamsProfileUpdate(requestParameters: AlibabaCamsApiAlibabaCamsProfileUpdateRequest, options?: AxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.alibabaCamsProfileUpdate(requestParameters.accountId, requestParameters.alibabaCamsProfileUpdateRequest, options).then((request) => request(axios, basePath));
         },
         /**
          * 
          * @summary Register an account with a token from embedded sign up
-         * @param {string} accountId 
-         * @param {AlibabaCamsRegisterRequest} [alibabaCamsRegisterRequest] 
+         * @param {AlibabaCamsApiAlibabaCamsRegisterRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        alibabaCamsRegister(accountId: string, alibabaCamsRegisterRequest?: AlibabaCamsRegisterRequest, options?: any): AxiosPromise<AlibabaCamsRegister200Response> {
-            return localVarFp.alibabaCamsRegister(accountId, alibabaCamsRegisterRequest, options).then((request) => request(axios, basePath));
+        alibabaCamsRegister(requestParameters: AlibabaCamsApiAlibabaCamsRegisterRequest, options?: AxiosRequestConfig): AxiosPromise<AlibabaCamsRegister200Response> {
+            return localVarFp.alibabaCamsRegister(requestParameters.accountId, requestParameters.alibabaCamsRegisterRequest, options).then((request) => request(axios, basePath));
         },
         /**
          * 
          * @summary Sync the account state with Alibaba CAMS
-         * @param {string} accountId 
+         * @param {AlibabaCamsApiAlibabaCamsSyncRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        alibabaCamsSync(accountId: string, options?: any): AxiosPromise<AlibabaCamsSync200Response> {
-            return localVarFp.alibabaCamsSync(accountId, options).then((request) => request(axios, basePath));
+        alibabaCamsSync(requestParameters: AlibabaCamsApiAlibabaCamsSyncRequest, options?: AxiosRequestConfig): AxiosPromise<AlibabaCamsSync200Response> {
+            return localVarFp.alibabaCamsSync(requestParameters.accountId, options).then((request) => request(axios, basePath));
         },
         /**
          * 
          * @summary Receive a message from Alibaba CAMS API
-         * @param {string} accountId 
-         * @param {string} secret 
-         * @param {Array<AlibabaCAMSWebhookItem>} [alibabaCAMSWebhookItem] 
+         * @param {AlibabaCamsApiWebhookAlibabaCamsPostRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        webhookAlibabaCamsPost(accountId: string, secret: string, alibabaCAMSWebhookItem?: Array<AlibabaCAMSWebhookItem>, options?: any): AxiosPromise<AccountsLogout200Response> {
-            return localVarFp.webhookAlibabaCamsPost(accountId, secret, alibabaCAMSWebhookItem, options).then((request) => request(axios, basePath));
+        webhookAlibabaCamsPost(requestParameters: AlibabaCamsApiWebhookAlibabaCamsPostRequest, options?: AxiosRequestConfig): AxiosPromise<AccountsLogout200Response> {
+            return localVarFp.webhookAlibabaCamsPost(requestParameters.accountId, requestParameters.secret, requestParameters.alibabaCAMSWebhookItem, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -5684,23 +5688,22 @@ export const ChatHistoryApiFactory = function (configuration?: Configuration, ba
         /**
          * 
          * @summary Fetch chat history as a file
-         * @param {string} [timeZone] 
-         * @param {Array<string>} [chatId] 
+         * @param {ChatHistoryApiGetChatHistoryRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getChatHistory(timeZone?: string, chatId?: Array<string>, options?: any): AxiosPromise<GetChatHistory200Response> {
-            return localVarFp.getChatHistory(timeZone, chatId, options).then((request) => request(axios, basePath));
+        getChatHistory(requestParameters: ChatHistoryApiGetChatHistoryRequest = {}, options?: AxiosRequestConfig): AxiosPromise<GetChatHistory200Response> {
+            return localVarFp.getChatHistory(requestParameters.timeZone, requestParameters.chatId, options).then((request) => request(axios, basePath));
         },
         /**
          * 
          * @summary Poll route to see if file is done
-         * @param {string} requestId 
+         * @param {ChatHistoryApiPollChatHistoryRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        pollChatHistory(requestId: string, options?: any): AxiosPromise<PollChatHistory200Response> {
-            return localVarFp.pollChatHistory(requestId, options).then((request) => request(axios, basePath));
+        pollChatHistory(requestParameters: ChatHistoryApiPollChatHistoryRequest, options?: AxiosRequestConfig): AxiosPromise<PollChatHistory200Response> {
+            return localVarFp.pollChatHistory(requestParameters.requestId, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -6134,65 +6137,42 @@ export const ChatsApiFactory = function (configuration?: Configuration, basePath
         /**
          * 
          * @summary Get chats
-         * @param {number} [count] 
-         * @param {string} [page] 
-         * @param {boolean} [archive] 
-         * @param {boolean} [unread] 
-         * @param {boolean} [hasPendingMessage] 
-         * @param {string} [mentioned] 
-         * @param {boolean} [hasUnsolvedNote] 
-         * @param {boolean} [hasFailedMessage] 
-         * @param {'closed' | 'all'} [ticketStatus] 
-         * @param {boolean} [lastMessageFromMe] 
-         * @param {Array<string>} [tags] Get contacts who fall in either of these tags
-         * @param {Array<string>} [notTags] Get contacts who are not in any of these tags
-         * @param {Array<string>} [contacts] Get these specific contact ids
-         * @param {string} [q] Search string for contact name/phone number/email
-         * @param {Array<string>} [assignee] Get contacts assigned to the specified users
-         * @param {Array<string>} [accountId] Get contacts only belonging to this account
-         * @param {'group' | 'individual'} [type] only get contacts of type
-         * @param {boolean} [returnUnreadChatCount] 
+         * @param {ChatsApiChatsGetRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        chatsGet(count?: number, page?: string, archive?: boolean, unread?: boolean, hasPendingMessage?: boolean, mentioned?: string, hasUnsolvedNote?: boolean, hasFailedMessage?: boolean, ticketStatus?: 'closed' | 'all', lastMessageFromMe?: boolean, tags?: Array<string>, notTags?: Array<string>, contacts?: Array<string>, q?: string, assignee?: Array<string>, accountId?: Array<string>, type?: 'group' | 'individual', returnUnreadChatCount?: boolean, options?: any): AxiosPromise<ChatsGet200Response> {
-            return localVarFp.chatsGet(count, page, archive, unread, hasPendingMessage, mentioned, hasUnsolvedNote, hasFailedMessage, ticketStatus, lastMessageFromMe, tags, notTags, contacts, q, assignee, accountId, type, returnUnreadChatCount, options).then((request) => request(axios, basePath));
+        chatsGet(requestParameters: ChatsApiChatsGetRequest = {}, options?: AxiosRequestConfig): AxiosPromise<ChatsGet200Response> {
+            return localVarFp.chatsGet(requestParameters.count, requestParameters.page, requestParameters.archive, requestParameters.unread, requestParameters.hasPendingMessage, requestParameters.mentioned, requestParameters.hasUnsolvedNote, requestParameters.hasFailedMessage, requestParameters.ticketStatus, requestParameters.lastMessageFromMe, requestParameters.tags, requestParameters.notTags, requestParameters.contacts, requestParameters.q, requestParameters.assignee, requestParameters.accountId, requestParameters.type, requestParameters.returnUnreadChatCount, options).then((request) => request(axios, basePath));
         },
         /**
          * 
          * @summary Update a chat -- read, unread, archive, pin etc.
-         * @param {string} accountId 
-         * @param {string} id 
-         * @param {ChatAction} [chatAction] 
+         * @param {ChatsApiChatsPatchRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        chatsPatch(accountId: string, id: string, chatAction?: ChatAction, options?: any): AxiosPromise<Chat> {
-            return localVarFp.chatsPatch(accountId, id, chatAction, options).then((request) => request(axios, basePath));
+        chatsPatch(requestParameters: ChatsApiChatsPatchRequest, options?: AxiosRequestConfig): AxiosPromise<Chat> {
+            return localVarFp.chatsPatch(requestParameters.accountId, requestParameters.id, requestParameters.chatAction, options).then((request) => request(axios, basePath));
         },
         /**
          * Note: Sending an \"available\" presence, will also subscribe you to events from the other party
          * @summary Update a chat\'s presence.
-         * @param {string} accountId 
-         * @param {string} id 
-         * @param {PresenceType} presence 
+         * @param {ChatsApiChatsPresencePostRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        chatsPresencePost(accountId: string, id: string, presence: PresenceType, options?: any): AxiosPromise<AccountsLogout200Response> {
-            return localVarFp.chatsPresencePost(accountId, id, presence, options).then((request) => request(axios, basePath));
+        chatsPresencePost(requestParameters: ChatsApiChatsPresencePostRequest, options?: AxiosRequestConfig): AxiosPromise<AccountsLogout200Response> {
+            return localVarFp.chatsPresencePost(requestParameters.accountId, requestParameters.id, requestParameters.presence, options).then((request) => request(axios, basePath));
         },
         /**
          * 
          * @summary Update a chat\'s ticket status -- closed | null\'
-         * @param {string} accountId 
-         * @param {string} id 
-         * @param {ChatsTicketStatusPatchRequest} [chatsTicketStatusPatchRequest] 
+         * @param {ChatsApiChatsTicketStatusPatchRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        chatsTicketStatusPatch(accountId: string, id: string, chatsTicketStatusPatchRequest?: ChatsTicketStatusPatchRequest, options?: any): AxiosPromise<AccountsLogout200Response> {
-            return localVarFp.chatsTicketStatusPatch(accountId, id, chatsTicketStatusPatchRequest, options).then((request) => request(axios, basePath));
+        chatsTicketStatusPatch(requestParameters: ChatsApiChatsTicketStatusPatchRequest, options?: AxiosRequestConfig): AxiosPromise<AccountsLogout200Response> {
+            return localVarFp.chatsTicketStatusPatch(requestParameters.accountId, requestParameters.id, requestParameters.chatsTicketStatusPatchRequest, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -7106,112 +7086,62 @@ export const ContactsApiFactory = function (configuration?: Configuration, baseP
         /**
          * Eg. provide a phone number to check whether the user is registered on WhatsApp
          * @summary Check a given user exists on the IM platform
-         * @param {'whatsapp'} type which account type to check from
-         * @param {string} [phoneNumber] check for the given phone number
+         * @param {ContactsApiContactsCheckExistsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        contactsCheckExists(type: 'whatsapp', phoneNumber?: string, options?: any): AxiosPromise<ContactsCheckExists200Response> {
-            return localVarFp.contactsCheckExists(type, phoneNumber, options).then((request) => request(axios, basePath));
+        contactsCheckExists(requestParameters: ContactsApiContactsCheckExistsRequest, options?: AxiosRequestConfig): AxiosPromise<ContactsCheckExists200Response> {
+            return localVarFp.contactsCheckExists(requestParameters.type, requestParameters.phoneNumber, options).then((request) => request(axios, basePath));
         },
         /**
          * 
          * @summary Delete contacts
-         * @param {Array<string>} [tags] Get contacts who fall in either of these tags
-         * @param {Array<string>} [notTags] Get contacts who are not in any of these tags
-         * @param {Array<string>} [contacts] Get these specific contact ids
-         * @param {Array<string>} [notContacts] Do not get these specific contacts
-         * @param {number} [minMessagesSent] Minimum messages sent
-         * @param {number} [minMessagesRecv] Minimum messages received
-         * @param {number} [maxMessagesSent] Maximum messages sent
-         * @param {number} [maxMessagesRecv] Maximum messages received
-         * @param {string} [q] Search string for contact name/phone number/email
-         * @param {Array<string>} [assignee] Get contacts assigned to the specified users
-         * @param {Array<string>} [notAssignee] Exclude contacts assigned to the specified users
-         * @param {Array<string>} [accountId] Get contacts only belonging to this account
-         * @param {'group' | 'individual'} [type] only get contacts of type
+         * @param {ContactsApiContactsDeleteRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        contactsDelete(tags?: Array<string>, notTags?: Array<string>, contacts?: Array<string>, notContacts?: Array<string>, minMessagesSent?: number, minMessagesRecv?: number, maxMessagesSent?: number, maxMessagesRecv?: number, q?: string, assignee?: Array<string>, notAssignee?: Array<string>, accountId?: Array<string>, type?: 'group' | 'individual', options?: any): AxiosPromise<AccountsLogout200Response> {
-            return localVarFp.contactsDelete(tags, notTags, contacts, notContacts, minMessagesSent, minMessagesRecv, maxMessagesSent, maxMessagesRecv, q, assignee, notAssignee, accountId, type, options).then((request) => request(axios, basePath));
+        contactsDelete(requestParameters: ContactsApiContactsDeleteRequest = {}, options?: AxiosRequestConfig): AxiosPromise<AccountsLogout200Response> {
+            return localVarFp.contactsDelete(requestParameters.tags, requestParameters.notTags, requestParameters.contacts, requestParameters.notContacts, requestParameters.minMessagesSent, requestParameters.minMessagesRecv, requestParameters.maxMessagesSent, requestParameters.maxMessagesRecv, requestParameters.q, requestParameters.assignee, requestParameters.notAssignee, requestParameters.accountId, requestParameters.type, options).then((request) => request(axios, basePath));
         },
         /**
          * 
          * @summary Get contacts
-         * @param {Array<string>} [tags] Get contacts who fall in either of these tags
-         * @param {Array<string>} [notTags] Get contacts who are not in any of these tags
-         * @param {Array<string>} [contacts] Get these specific contact ids
-         * @param {Array<string>} [notContacts] Do not get these specific contacts
-         * @param {number} [minMessagesSent] Minimum messages sent
-         * @param {number} [minMessagesRecv] Minimum messages received
-         * @param {number} [maxMessagesSent] Maximum messages sent
-         * @param {number} [maxMessagesRecv] Maximum messages received
-         * @param {string} [q] Search string for contact name/phone number/email
-         * @param {Array<string>} [assignee] Get contacts assigned to the specified users
-         * @param {Array<string>} [notAssignee] Exclude contacts assigned to the specified users
-         * @param {Array<string>} [accountId] Get contacts only belonging to this account
-         * @param {'group' | 'individual'} [type] only get contacts of type
-         * @param {boolean} [returnTotalCount] 
-         * @param {boolean} [returnLastMessage] 
-         * @param {string} [page] 
-         * @param {ContactsGetCountParameter} [count] 
-         * @param {string} [chatLastMessageFrom] 
-         * @param {string} [chatLastMessageTo] 
+         * @param {ContactsApiContactsGetRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        contactsGet(tags?: Array<string>, notTags?: Array<string>, contacts?: Array<string>, notContacts?: Array<string>, minMessagesSent?: number, minMessagesRecv?: number, maxMessagesSent?: number, maxMessagesRecv?: number, q?: string, assignee?: Array<string>, notAssignee?: Array<string>, accountId?: Array<string>, type?: 'group' | 'individual', returnTotalCount?: boolean, returnLastMessage?: boolean, page?: string, count?: ContactsGetCountParameter, chatLastMessageFrom?: string, chatLastMessageTo?: string, options?: any): AxiosPromise<ContactsGet200Response> {
-            return localVarFp.contactsGet(tags, notTags, contacts, notContacts, minMessagesSent, minMessagesRecv, maxMessagesSent, maxMessagesRecv, q, assignee, notAssignee, accountId, type, returnTotalCount, returnLastMessage, page, count, chatLastMessageFrom, chatLastMessageTo, options).then((request) => request(axios, basePath));
+        contactsGet(requestParameters: ContactsApiContactsGetRequest = {}, options?: AxiosRequestConfig): AxiosPromise<ContactsGet200Response> {
+            return localVarFp.contactsGet(requestParameters.tags, requestParameters.notTags, requestParameters.contacts, requestParameters.notContacts, requestParameters.minMessagesSent, requestParameters.minMessagesRecv, requestParameters.maxMessagesSent, requestParameters.maxMessagesRecv, requestParameters.q, requestParameters.assignee, requestParameters.notAssignee, requestParameters.accountId, requestParameters.type, requestParameters.returnTotalCount, requestParameters.returnLastMessage, requestParameters.page, requestParameters.count, requestParameters.chatLastMessageFrom, requestParameters.chatLastMessageTo, options).then((request) => request(axios, basePath));
         },
         /**
          * 
          * @summary Get the display image of a contact
-         * @param {string} id 
-         * @param {string} accountId 
-         * @param {'preview' | 'full'} [type] Whether to fetch preview sized image or the full image
+         * @param {ContactsApiContactsImageGetRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        contactsImageGet(id: string, accountId: string, type?: 'preview' | 'full', options?: any): AxiosPromise<ContactsImageGet200Response> {
-            return localVarFp.contactsImageGet(id, accountId, type, options).then((request) => request(axios, basePath));
+        contactsImageGet(requestParameters: ContactsApiContactsImageGetRequest, options?: AxiosRequestConfig): AxiosPromise<ContactsImageGet200Response> {
+            return localVarFp.contactsImageGet(requestParameters.id, requestParameters.accountId, requestParameters.type, options).then((request) => request(axios, basePath));
         },
         /**
          * 
          * @summary Update contacts
-         * @param {Array<string>} [tags] Get contacts who fall in either of these tags
-         * @param {Array<string>} [notTags] Get contacts who are not in any of these tags
-         * @param {Array<string>} [contacts] Get these specific contact ids
-         * @param {Array<string>} [notContacts] Do not get these specific contacts
-         * @param {number} [minMessagesSent] Minimum messages sent
-         * @param {number} [minMessagesRecv] Minimum messages received
-         * @param {number} [maxMessagesSent] Maximum messages sent
-         * @param {number} [maxMessagesRecv] Maximum messages received
-         * @param {string} [q] Search string for contact name/phone number/email
-         * @param {Array<string>} [assignee] Get contacts assigned to the specified users
-         * @param {Array<string>} [notAssignee] Exclude contacts assigned to the specified users
-         * @param {Array<string>} [accountId] Get contacts only belonging to this account
-         * @param {'group' | 'individual'} [type] only get contacts of type
-         * @param {string} [messageContainsText] 
-         * @param {string} [messageFrom] 
-         * @param {string} [messageTo] 
-         * @param {boolean} [messageFromMe] 
-         * @param {ContactsPatch} [contactsPatch] 
+         * @param {ContactsApiContactsPatchRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        contactsPatch(tags?: Array<string>, notTags?: Array<string>, contacts?: Array<string>, notContacts?: Array<string>, minMessagesSent?: number, minMessagesRecv?: number, maxMessagesSent?: number, maxMessagesRecv?: number, q?: string, assignee?: Array<string>, notAssignee?: Array<string>, accountId?: Array<string>, type?: 'group' | 'individual', messageContainsText?: string, messageFrom?: string, messageTo?: string, messageFromMe?: boolean, contactsPatch?: ContactsPatch, options?: any): AxiosPromise<ContactsPatch200Response> {
-            return localVarFp.contactsPatch(tags, notTags, contacts, notContacts, minMessagesSent, minMessagesRecv, maxMessagesSent, maxMessagesRecv, q, assignee, notAssignee, accountId, type, messageContainsText, messageFrom, messageTo, messageFromMe, contactsPatch, options).then((request) => request(axios, basePath));
+        contactsPatch(requestParameters: ContactsApiContactsPatchRequest = {}, options?: AxiosRequestConfig): AxiosPromise<ContactsPatch200Response> {
+            return localVarFp.contactsPatch(requestParameters.tags, requestParameters.notTags, requestParameters.contacts, requestParameters.notContacts, requestParameters.minMessagesSent, requestParameters.minMessagesRecv, requestParameters.maxMessagesSent, requestParameters.maxMessagesRecv, requestParameters.q, requestParameters.assignee, requestParameters.notAssignee, requestParameters.accountId, requestParameters.type, requestParameters.messageContainsText, requestParameters.messageFrom, requestParameters.messageTo, requestParameters.messageFromMe, requestParameters.contactsPatch, options).then((request) => request(axios, basePath));
         },
         /**
          * 
          * @summary Create contacts
-         * @param {ContactsPost} [contactsPost] 
+         * @param {ContactsApiContactsPostRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        contactsPost(contactsPost?: ContactsPost, options?: any): AxiosPromise<AccountsLogout200Response> {
-            return localVarFp.contactsPost(contactsPost, options).then((request) => request(axios, basePath));
+        contactsPost(requestParameters: ContactsApiContactsPostRequest = {}, options?: AxiosRequestConfig): AxiosPromise<AccountsLogout200Response> {
+            return localVarFp.contactsPost(requestParameters.contactsPost, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -7820,13 +7750,12 @@ export const FilesApiFactory = function (configuration?: Configuration, basePath
         /**
          * 
          * @summary Upload a file to the media files bucket
-         * @param {string} mimetype 
-         * @param {string} name 
+         * @param {FilesApiFilesPostRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        filesPost(mimetype: string, name: string, options?: any): AxiosPromise<{ [key: string]: any; }> {
-            return localVarFp.filesPost(mimetype, name, options).then((request) => request(axios, basePath));
+        filesPost(requestParameters: FilesApiFilesPostRequest, options?: AxiosRequestConfig): AxiosPromise<{ [key: string]: any; }> {
+            return localVarFp.filesPost(requestParameters.mimetype, requestParameters.name, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -8245,71 +8174,62 @@ export const GroupsApiFactory = function (configuration?: Configuration, basePat
         /**
          * 
          * @summary Get metadata for a group
-         * @param {string} accountId 
-         * @param {string} id 
-         * @param {boolean} [forceRefresh] Fetches the group metadata again from the platform
+         * @param {GroupsApiGroupsGetRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        groupsGet(accountId: string, id: string, forceRefresh?: boolean, options?: any): AxiosPromise<GroupMetadata> {
-            return localVarFp.groupsGet(accountId, id, forceRefresh, options).then((request) => request(axios, basePath));
+        groupsGet(requestParameters: GroupsApiGroupsGetRequest, options?: AxiosRequestConfig): AxiosPromise<GroupMetadata> {
+            return localVarFp.groupsGet(requestParameters.accountId, requestParameters.id, requestParameters.forceRefresh, options).then((request) => request(axios, basePath));
         },
         /**
          * 
          * @summary Get invite code for a group
-         * @param {string} accountId 
-         * @param {string} id 
+         * @param {GroupsApiGroupsInviteCodeRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        groupsInviteCode(accountId: string, id: string, options?: any): AxiosPromise<GroupsInviteCode200Response> {
-            return localVarFp.groupsInviteCode(accountId, id, options).then((request) => request(axios, basePath));
+        groupsInviteCode(requestParameters: GroupsApiGroupsInviteCodeRequest, options?: AxiosRequestConfig): AxiosPromise<GroupsInviteCode200Response> {
+            return localVarFp.groupsInviteCode(requestParameters.accountId, requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
          * 
          * @summary Join a group using invite code
-         * @param {string} accountId 
-         * @param {string} id 
-         * @param {string} code 
+         * @param {GroupsApiGroupsJoinRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        groupsJoin(accountId: string, id: string, code: string, options?: any): AxiosPromise<GroupMetadata> {
-            return localVarFp.groupsJoin(accountId, id, code, options).then((request) => request(axios, basePath));
+        groupsJoin(requestParameters: GroupsApiGroupsJoinRequest, options?: AxiosRequestConfig): AxiosPromise<GroupMetadata> {
+            return localVarFp.groupsJoin(requestParameters.accountId, requestParameters.id, requestParameters.code, options).then((request) => request(axios, basePath));
         },
         /**
          * 
          * @summary Leave a group
-         * @param {string} accountId 
-         * @param {string} id 
+         * @param {GroupsApiGroupsLeaveRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        groupsLeave(accountId: string, id: string, options?: any): AxiosPromise<{ [key: string]: any; }> {
-            return localVarFp.groupsLeave(accountId, id, options).then((request) => request(axios, basePath));
+        groupsLeave(requestParameters: GroupsApiGroupsLeaveRequest, options?: AxiosRequestConfig): AxiosPromise<{ [key: string]: any; }> {
+            return localVarFp.groupsLeave(requestParameters.accountId, requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
          * 
          * @summary Update a group
-         * @param {string} accountId 
-         * @param {string} id 
-         * @param {GroupAction} [groupAction] 
+         * @param {GroupsApiGroupsPatchRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        groupsPatch(accountId: string, id: string, groupAction?: GroupAction, options?: any): AxiosPromise<GroupMetadata> {
-            return localVarFp.groupsPatch(accountId, id, groupAction, options).then((request) => request(axios, basePath));
+        groupsPatch(requestParameters: GroupsApiGroupsPatchRequest, options?: AxiosRequestConfig): AxiosPromise<GroupMetadata> {
+            return localVarFp.groupsPatch(requestParameters.accountId, requestParameters.id, requestParameters.groupAction, options).then((request) => request(axios, basePath));
         },
         /**
          * 
          * @summary Create a new group
-         * @param {string} accountId 
-         * @param {GroupCreate} [groupCreate] 
+         * @param {GroupsApiGroupsPostRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        groupsPost(accountId: string, groupCreate?: GroupCreate, options?: any): AxiosPromise<GroupMetadata> {
-            return localVarFp.groupsPost(accountId, groupCreate, options).then((request) => request(axios, basePath));
+        groupsPost(requestParameters: GroupsApiGroupsPostRequest, options?: AxiosRequestConfig): AxiosPromise<GroupMetadata> {
+            return localVarFp.groupsPost(requestParameters.accountId, requestParameters.groupCreate, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -9186,121 +9106,90 @@ export const MessagesApiFactory = function (configuration?: Configuration, baseP
         /**
          * 
          * @summary Delete a message
-         * @param {string} accountId 
-         * @param {string} chatId 
-         * @param {string} id 
+         * @param {MessagesApiMessagesDeleteRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        messagesDelete(accountId: string, chatId: string, id: string, options?: any): AxiosPromise<AccountsLogout200Response> {
-            return localVarFp.messagesDelete(accountId, chatId, id, options).then((request) => request(axios, basePath));
+        messagesDelete(requestParameters: MessagesApiMessagesDeleteRequest, options?: AxiosRequestConfig): AxiosPromise<AccountsLogout200Response> {
+            return localVarFp.messagesDelete(requestParameters.accountId, requestParameters.chatId, requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
          * 
          * @summary Clears all pending/error messages
-         * @param {'pending' | 'error' | 'cancelled'} status 
-         * @param {string} [accountId] If specified, only clears messages of this account
-         * @param {string} [chatId] If specified, only clears messages of this chat
+         * @param {MessagesApiMessagesDeletePendingRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        messagesDeletePending(status: 'pending' | 'error' | 'cancelled', accountId?: string, chatId?: string, options?: any): AxiosPromise<AccountsLogout200Response> {
-            return localVarFp.messagesDeletePending(status, accountId, chatId, options).then((request) => request(axios, basePath));
+        messagesDeletePending(requestParameters: MessagesApiMessagesDeletePendingRequest, options?: AxiosRequestConfig): AxiosPromise<AccountsLogout200Response> {
+            return localVarFp.messagesDeletePending(requestParameters.status, requestParameters.accountId, requestParameters.chatId, options).then((request) => request(axios, basePath));
         },
         /**
          * 
-         * @param {string} accountId 
-         * @param {string} chatId 
-         * @param {string} id 
-         * @param {Array<string>} toChatId 
+         * @param {MessagesApiMessagesForwardRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        messagesForward(accountId: string, chatId: string, id: string, toChatId: Array<string>, options?: any): AxiosPromise<Array<Message>> {
-            return localVarFp.messagesForward(accountId, chatId, id, toChatId, options).then((request) => request(axios, basePath));
+        messagesForward(requestParameters: MessagesApiMessagesForwardRequest, options?: AxiosRequestConfig): AxiosPromise<Array<Message>> {
+            return localVarFp.messagesForward(requestParameters.accountId, requestParameters.chatId, requestParameters.id, requestParameters.toChatId, options).then((request) => request(axios, basePath));
         },
         /**
          * 
          * @summary Fetch messages of the chat
-         * @param {string} accountId 
-         * @param {string} chatId 
-         * @param {string} [beforeId] Get messages before this message ID
-         * @param {number} [count] Number of messages to fetch
-         * @param {boolean} [forceReload] Deletes all cached messages for this chat &amp; fetches messages again from the original API source
-         * @param {'note' | 'pending' | 'error'} [status] fetch only \&quot;notes\&quot;, \&quot;pending\&quot; or \&quot;error\&quot; messages
-         * @param {boolean} [fromMe] fetch only messages sent by me/or the other party
-         * @param {Array<MessageAttachmentType>} [attachmentType] Fetch only messages with attachments of this type
-         * @param {boolean} [includeCursorMessage] should include cursor message in the response
+         * @param {MessagesApiMessagesGetRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        messagesGet(accountId: string, chatId: string, beforeId?: string, count?: number, forceReload?: boolean, status?: 'note' | 'pending' | 'error', fromMe?: boolean, attachmentType?: Array<MessageAttachmentType>, includeCursorMessage?: boolean, options?: any): AxiosPromise<MessagesGet200Response> {
-            return localVarFp.messagesGet(accountId, chatId, beforeId, count, forceReload, status, fromMe, attachmentType, includeCursorMessage, options).then((request) => request(axios, basePath));
+        messagesGet(requestParameters: MessagesApiMessagesGetRequest, options?: AxiosRequestConfig): AxiosPromise<MessagesGet200Response> {
+            return localVarFp.messagesGet(requestParameters.accountId, requestParameters.chatId, requestParameters.beforeId, requestParameters.count, requestParameters.forceReload, requestParameters.status, requestParameters.fromMe, requestParameters.attachmentType, requestParameters.includeCursorMessage, options).then((request) => request(axios, basePath));
         },
         /**
          * Can reschedule a message, update the content of a note or mark it as resolved 
          * @summary Modify a message/note
-         * @param {string} accountId 
-         * @param {string} chatId 
-         * @param {string} id 
-         * @param {MessagesPatchRequest} [messagesPatchRequest] 
+         * @param {MessagesApiMessagesPatchRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        messagesPatch(accountId: string, chatId: string, id: string, messagesPatchRequest?: MessagesPatchRequest, options?: any): AxiosPromise<Message> {
-            return localVarFp.messagesPatch(accountId, chatId, id, messagesPatchRequest, options).then((request) => request(axios, basePath));
+        messagesPatch(requestParameters: MessagesApiMessagesPatchRequest, options?: AxiosRequestConfig): AxiosPromise<Message> {
+            return localVarFp.messagesPatch(requestParameters.accountId, requestParameters.chatId, requestParameters.id, requestParameters.messagesPatchRequest, options).then((request) => request(axios, basePath));
         },
         /**
          * Retry all the messages in a given status
-         * @param {'pending' | 'error' | 'cancelled'} status 
-         * @param {MessagesPatchPendingRequest} [messagesPatchPendingRequest] 
+         * @param {MessagesApiMessagesPatchPendingRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        messagesPatchPending(status: 'pending' | 'error' | 'cancelled', messagesPatchPendingRequest?: MessagesPatchPendingRequest, options?: any): AxiosPromise<AccountsLogout200Response> {
-            return localVarFp.messagesPatchPending(status, messagesPatchPendingRequest, options).then((request) => request(axios, basePath));
+        messagesPatchPending(requestParameters: MessagesApiMessagesPatchPendingRequest, options?: AxiosRequestConfig): AxiosPromise<AccountsLogout200Response> {
+            return localVarFp.messagesPatchPending(requestParameters.status, requestParameters.messagesPatchPendingRequest, options).then((request) => request(axios, basePath));
         },
         /**
          * Send a message with text and/or attachments. The `text` property can be used as a [mustache](https://mustache.github.io) template which automatically prefills data from the contact\'s details including **custom fields**. Some examples:   1. `{\"text\": \"Hello there {{name}}\"}` will automatically pre-fill the contact\'s name (if present)   2. `{\"text\": \"Hello {{name}} your number is {{phoneNumber}}\"}` will automatically pre-fill the contact\'s name & phone number   3. `{\"text\": \"Hello {{name}} your pet name is {{pet name}}\"}` will automatically pre-fill `petName` if the contact has such a custom field
          * @summary Send a message
-         * @param {string} accountId The account to use to send the message. Pass as the literal \&quot;random\&quot; to use a random account 
-         * @param {string} chatId The contact to send the message to.  To send to a phone number, supply the phone number with country code and no spaces. Eg. &#x60;911234534211&#x60;, &#x60;91345567543@s.whatsapp.net&#x60; 
-         * @param {boolean} [requireOpenAccount] Only sends the message if the account is open, returns 428 otherwise
-         * @param {boolean} [useRandomAccountIfAccountClosed] Use random account (if available) to send the message, if the account specified is closed
-         * @param {boolean} [includeMarketingMessage] Includes the default marketing message for the account in the message
-         * @param {MessageCompose} [messageCompose] 
+         * @param {MessagesApiMessagesPostRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        messagesPost(accountId: string, chatId: string, requireOpenAccount?: boolean, useRandomAccountIfAccountClosed?: boolean, includeMarketingMessage?: boolean, messageCompose?: MessageCompose, options?: any): AxiosPromise<Array<Message>> {
-            return localVarFp.messagesPost(accountId, chatId, requireOpenAccount, useRandomAccountIfAccountClosed, includeMarketingMessage, messageCompose, options).then((request) => request(axios, basePath));
+        messagesPost(requestParameters: MessagesApiMessagesPostRequest, options?: AxiosRequestConfig): AxiosPromise<Array<Message>> {
+            return localVarFp.messagesPost(requestParameters.accountId, requestParameters.chatId, requestParameters.requireOpenAccount, requestParameters.useRandomAccountIfAccountClosed, requestParameters.includeMarketingMessage, requestParameters.messageCompose, options).then((request) => request(axios, basePath));
         },
         /**
          * 
          * @summary refresh a message, in case the media expired
-         * @param {string} accountId 
-         * @param {string} chatId 
-         * @param {string} id 
+         * @param {MessagesApiMessagesRefreshRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        messagesRefresh(accountId: string, chatId: string, id: string, options?: any): AxiosPromise<Message> {
-            return localVarFp.messagesRefresh(accountId, chatId, id, options).then((request) => request(axios, basePath));
+        messagesRefresh(requestParameters: MessagesApiMessagesRefreshRequest, options?: AxiosRequestConfig): AxiosPromise<Message> {
+            return localVarFp.messagesRefresh(requestParameters.accountId, requestParameters.chatId, requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
          * 
          * @summary Search messages
-         * @param {string} q 
-         * @param {Array<string>} [accountId] Get contacts only belonging to this account
-         * @param {string} [chatId] 
-         * @param {number} [page] Page number
-         * @param {number} [count] Number of messages to fetch
-         * @param {boolean} [returnChats] Return the corresponding chats alongside the messages
+         * @param {MessagesApiMessagesSearchRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        messagesSearch(q: string, accountId?: Array<string>, chatId?: string, page?: number, count?: number, returnChats?: boolean, options?: any): AxiosPromise<MessagesSearch200Response> {
-            return localVarFp.messagesSearch(q, accountId, chatId, page, count, returnChats, options).then((request) => request(axios, basePath));
+        messagesSearch(requestParameters: MessagesApiMessagesSearchRequest, options?: AxiosRequestConfig): AxiosPromise<MessagesSearch200Response> {
+            return localVarFp.messagesSearch(requestParameters.q, requestParameters.accountId, requestParameters.chatId, requestParameters.page, requestParameters.count, requestParameters.returnChats, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -10212,82 +10101,61 @@ export const ProductApiFactory = function (configuration?: Configuration, basePa
         /**
          * 
          * @summary Fetch details of an order (likely from an order message)
-         * @param {string} accountId 
-         * @param {string} orderId 
-         * @param {string} [token] 
+         * @param {ProductApiOrderDetailsGetRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        orderDetailsGet(accountId: string, orderId: string, token?: string, options?: any): AxiosPromise<OrderDetails> {
-            return localVarFp.orderDetailsGet(accountId, orderId, token, options).then((request) => request(axios, basePath));
+        orderDetailsGet(requestParameters: ProductApiOrderDetailsGetRequest, options?: AxiosRequestConfig): AxiosPromise<OrderDetails> {
+            return localVarFp.orderDetailsGet(requestParameters.accountId, requestParameters.orderId, requestParameters.token, options).then((request) => request(axios, basePath));
         },
         /**
          * 
          * @summary Delete products by the given filter from the catalog
-         * @param {string} accountId 
-         * @param {Array<string>} [id] 
-         * @param {Array<string>} [notId] 
-         * @param {string} [q] 
+         * @param {ProductApiPlatformProductsDeleteRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        platformProductsDelete(accountId: string, id?: Array<string>, notId?: Array<string>, q?: string, options?: any): AxiosPromise<AccountsLogout200Response> {
-            return localVarFp.platformProductsDelete(accountId, id, notId, q, options).then((request) => request(axios, basePath));
+        platformProductsDelete(requestParameters: ProductApiPlatformProductsDeleteRequest, options?: AxiosRequestConfig): AxiosPromise<AccountsLogout200Response> {
+            return localVarFp.platformProductsDelete(requestParameters.accountId, requestParameters.id, requestParameters.notId, requestParameters.q, options).then((request) => request(axios, basePath));
         },
         /**
          * Returns the WA catalog. Only available on WA Business apps. 
          * @summary Get the products from WA catalog.
-         * @param {string} teamId 
-         * @param {Array<string>} [accountId] 
-         * @param {string} [q] Filter if product title/description contains this
-         * @param {string} [category] Filter based on collection/category
-         * @param {string} [notCategory] Returns products not belonging to the specified category
-         * @param {Array<string>} [id] 
-         * @param {string} [cursor] 
-         * @param {number} [count] 
-         * @param {boolean} [returnTotalCount] 
+         * @param {ProductApiPlatformProductsGetRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        platformProductsGet(teamId: string, accountId?: Array<string>, q?: string, category?: string, notCategory?: string, id?: Array<string>, cursor?: string, count?: number, returnTotalCount?: boolean, options?: any): AxiosPromise<PlatformProductsGet200Response> {
-            return localVarFp.platformProductsGet(teamId, accountId, q, category, notCategory, id, cursor, count, returnTotalCount, options).then((request) => request(axios, basePath));
+        platformProductsGet(requestParameters: ProductApiPlatformProductsGetRequest, options?: AxiosRequestConfig): AxiosPromise<PlatformProductsGet200Response> {
+            return localVarFp.platformProductsGet(requestParameters.teamId, requestParameters.accountId, requestParameters.q, requestParameters.category, requestParameters.notCategory, requestParameters.id, requestParameters.cursor, requestParameters.count, requestParameters.returnTotalCount, options).then((request) => request(axios, basePath));
         },
         /**
          * 
          * @summary Update products by the given filter in the WA catalog
-         * @param {string} accountId 
-         * @param {Array<string>} [id] 
-         * @param {Array<string>} [notId] 
-         * @param {string} [q] 
-         * @param {PlatformProductUpdate} [platformProductUpdate] 
+         * @param {ProductApiPlatformProductsPatchRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        platformProductsPatch(accountId: string, id?: Array<string>, notId?: Array<string>, q?: string, platformProductUpdate?: PlatformProductUpdate, options?: any): AxiosPromise<PlatformProductsPost200Response> {
-            return localVarFp.platformProductsPatch(accountId, id, notId, q, platformProductUpdate, options).then((request) => request(axios, basePath));
+        platformProductsPatch(requestParameters: ProductApiPlatformProductsPatchRequest, options?: AxiosRequestConfig): AxiosPromise<PlatformProductsPost200Response> {
+            return localVarFp.platformProductsPatch(requestParameters.accountId, requestParameters.id, requestParameters.notId, requestParameters.q, requestParameters.platformProductUpdate, options).then((request) => request(axios, basePath));
         },
         /**
          * 
          * @summary Upsert products to the WA catalog
-         * @param {string} accountId 
-         * @param {PlatformProductsPostRequest} [platformProductsPostRequest] 
+         * @param {ProductApiPlatformProductsPostRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        platformProductsPost(accountId: string, platformProductsPostRequest?: PlatformProductsPostRequest, options?: any): AxiosPromise<PlatformProductsPost200Response> {
-            return localVarFp.platformProductsPost(accountId, platformProductsPostRequest, options).then((request) => request(axios, basePath));
+        platformProductsPost(requestParameters: ProductApiPlatformProductsPostRequest, options?: AxiosRequestConfig): AxiosPromise<PlatformProductsPost200Response> {
+            return localVarFp.platformProductsPost(requestParameters.accountId, requestParameters.platformProductsPostRequest, options).then((request) => request(axios, basePath));
         },
         /**
          * Trigger sync of the specified products on ChatDaddy with WhatsApp
-         * @param {string} accountId Account ID to sync products from/to
-         * @param {Array<string>} [id] Products to sync with WhatsApp. Leave unspecified to trigger all
-         * @param {boolean} [syncForward] Sync products from ChatDaddy to WhatsApp
-         * @param {boolean} [syncBackward] Sync missing products from WhatsApp to ChatDaddy
+         * @param {ProductApiPlatformProductsSyncRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        platformProductsSync(accountId: string, id?: Array<string>, syncForward?: boolean, syncBackward?: boolean, options?: any): AxiosPromise<AccountsLogout200Response> {
-            return localVarFp.platformProductsSync(accountId, id, syncForward, syncBackward, options).then((request) => request(axios, basePath));
+        platformProductsSync(requestParameters: ProductApiPlatformProductsSyncRequest, options?: AxiosRequestConfig): AxiosPromise<AccountsLogout200Response> {
+            return localVarFp.platformProductsSync(requestParameters.accountId, requestParameters.id, requestParameters.syncForward, requestParameters.syncBackward, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -10853,47 +10721,42 @@ export const ProductCategoriesApiFactory = function (configuration?: Configurati
         /**
          * 
          * @summary Delete a category
-         * @param {string} accountId 
-         * @param {string} categoryId 
+         * @param {ProductCategoriesApiPlatformProductCategoriesDeleteRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        platformProductCategoriesDelete(accountId: string, categoryId: string, options?: any): AxiosPromise<AccountsLogout200Response> {
-            return localVarFp.platformProductCategoriesDelete(accountId, categoryId, options).then((request) => request(axios, basePath));
+        platformProductCategoriesDelete(requestParameters: ProductCategoriesApiPlatformProductCategoriesDeleteRequest, options?: AxiosRequestConfig): AxiosPromise<AccountsLogout200Response> {
+            return localVarFp.platformProductCategoriesDelete(requestParameters.accountId, requestParameters.categoryId, options).then((request) => request(axios, basePath));
         },
         /**
          * 
          * @summary Get the categories (collections) from WA catalog.
-         * @param {string} teamId 
-         * @param {string} [accountId] 
+         * @param {ProductCategoriesApiPlatformProductCategoriesGetRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        platformProductCategoriesGet(teamId: string, accountId?: string, options?: any): AxiosPromise<PlatformProductCategoriesGet200Response> {
-            return localVarFp.platformProductCategoriesGet(teamId, accountId, options).then((request) => request(axios, basePath));
+        platformProductCategoriesGet(requestParameters: ProductCategoriesApiPlatformProductCategoriesGetRequest, options?: AxiosRequestConfig): AxiosPromise<PlatformProductCategoriesGet200Response> {
+            return localVarFp.platformProductCategoriesGet(requestParameters.teamId, requestParameters.accountId, options).then((request) => request(axios, basePath));
         },
         /**
          * Update name of the category or add/remove a product
          * @summary Update a category
-         * @param {string} accountId 
-         * @param {string} categoryId 
-         * @param {ProductCategoryPatchRequest} [productCategoryPatchRequest] 
+         * @param {ProductCategoriesApiPlatformProductCategoriesPatchRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        platformProductCategoriesPatch(accountId: string, categoryId: string, productCategoryPatchRequest?: ProductCategoryPatchRequest, options?: any): AxiosPromise<AccountsLogout200Response> {
-            return localVarFp.platformProductCategoriesPatch(accountId, categoryId, productCategoryPatchRequest, options).then((request) => request(axios, basePath));
+        platformProductCategoriesPatch(requestParameters: ProductCategoriesApiPlatformProductCategoriesPatchRequest, options?: AxiosRequestConfig): AxiosPromise<AccountsLogout200Response> {
+            return localVarFp.platformProductCategoriesPatch(requestParameters.accountId, requestParameters.categoryId, requestParameters.productCategoryPatchRequest, options).then((request) => request(axios, basePath));
         },
         /**
          * 
          * @summary Add a new product category
-         * @param {string} accountId 
-         * @param {PlatformProductCategoriesPostRequest} [platformProductCategoriesPostRequest] 
+         * @param {ProductCategoriesApiPlatformProductCategoriesPostRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        platformProductCategoriesPost(accountId: string, platformProductCategoriesPostRequest?: PlatformProductCategoriesPostRequest, options?: any): AxiosPromise<ProductCategory> {
-            return localVarFp.platformProductCategoriesPost(accountId, platformProductCategoriesPostRequest, options).then((request) => request(axios, basePath));
+        platformProductCategoriesPost(requestParameters: ProductCategoriesApiPlatformProductCategoriesPostRequest, options?: AxiosRequestConfig): AxiosPromise<ProductCategory> {
+            return localVarFp.platformProductCategoriesPost(requestParameters.accountId, requestParameters.platformProductCategoriesPostRequest, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -11374,57 +11237,41 @@ export const TagsApiFactory = function (configuration?: Configuration, basePath?
         /**
          * 
          * @summary Delete a tag
-         * @param {string} name 
+         * @param {TagsApiTagsDeleteRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        tagsDelete(name: string, options?: any): AxiosPromise<AccountsLogout200Response> {
-            return localVarFp.tagsDelete(name, options).then((request) => request(axios, basePath));
+        tagsDelete(requestParameters: TagsApiTagsDeleteRequest, options?: AxiosRequestConfig): AxiosPromise<AccountsLogout200Response> {
+            return localVarFp.tagsDelete(requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
          * 
          * @summary Get all the tags
-         * @param {string} [q] 
-         * @param {number} [count] 
-         * @param {number} [page] 
-         * @param {boolean} [isCustomField] 
+         * @param {TagsApiTagsGetRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        tagsGet(q?: string, count?: number, page?: number, isCustomField?: boolean, options?: any): AxiosPromise<TagsGet200Response> {
-            return localVarFp.tagsGet(q, count, page, isCustomField, options).then((request) => request(axios, basePath));
+        tagsGet(requestParameters: TagsApiTagsGetRequest = {}, options?: AxiosRequestConfig): AxiosPromise<TagsGet200Response> {
+            return localVarFp.tagsGet(requestParameters.q, requestParameters.count, requestParameters.page, requestParameters.isCustomField, options).then((request) => request(axios, basePath));
         },
         /**
          * 
-         * @param {string} name 
-         * @param {TagsPatchRequest} [tagsPatchRequest] 
+         * @param {TagsApiTagsPatchRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        tagsPatch(name: string, tagsPatchRequest?: TagsPatchRequest, options?: any): AxiosPromise<Tag> {
-            return localVarFp.tagsPatch(name, tagsPatchRequest, options).then((request) => request(axios, basePath));
+        tagsPatch(requestParameters: TagsApiTagsPatchRequest, options?: AxiosRequestConfig): AxiosPromise<Tag> {
+            return localVarFp.tagsPatch(requestParameters.name, requestParameters.tagsPatchRequest, options).then((request) => request(axios, basePath));
         },
         /**
          * 
          * @summary Create a tag
-         * @param {string} name 
-         * @param {Array<string>} [tags] Get contacts who fall in either of these tags
-         * @param {Array<string>} [notTags] Get contacts who are not in any of these tags
-         * @param {Array<string>} [contacts] Get these specific contact ids
-         * @param {Array<string>} [notContacts] Do not get these specific contacts
-         * @param {number} [minMessagesSent] Minimum messages sent
-         * @param {number} [minMessagesRecv] Minimum messages received
-         * @param {number} [maxMessagesSent] Maximum messages sent
-         * @param {number} [maxMessagesRecv] Maximum messages received
-         * @param {string} [q] Search string for contact name/phone number/email
-         * @param {Array<string>} [assignee] Get contacts assigned to the specified users
-         * @param {Array<string>} [accountId] Get contacts only belonging to this account
-         * @param {'group' | 'individual'} [type] only get contacts of type
+         * @param {TagsApiTagsPostRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        tagsPost(name: string, tags?: Array<string>, notTags?: Array<string>, contacts?: Array<string>, notContacts?: Array<string>, minMessagesSent?: number, minMessagesRecv?: number, maxMessagesSent?: number, maxMessagesRecv?: number, q?: string, assignee?: Array<string>, accountId?: Array<string>, type?: 'group' | 'individual', options?: any): AxiosPromise<Tag> {
-            return localVarFp.tagsPost(name, tags, notTags, contacts, notContacts, minMessagesSent, minMessagesRecv, maxMessagesSent, maxMessagesRecv, q, assignee, accountId, type, options).then((request) => request(axios, basePath));
+        tagsPost(requestParameters: TagsApiTagsPostRequest, options?: AxiosRequestConfig): AxiosPromise<Tag> {
+            return localVarFp.tagsPost(requestParameters.name, requestParameters.tags, requestParameters.notTags, requestParameters.contacts, requestParameters.notContacts, requestParameters.minMessagesSent, requestParameters.minMessagesRecv, requestParameters.maxMessagesSent, requestParameters.maxMessagesRecv, requestParameters.q, requestParameters.assignee, requestParameters.accountId, requestParameters.type, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -11790,24 +11637,22 @@ export const TemplatesApiFactory = function (configuration?: Configuration, base
         /**
          * 
          * @summary Delete a template on the platform
-         * @param {string} accountId 
-         * @param {string} templateId 
+         * @param {TemplatesApiTemplatesDeleteRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        templatesDelete(accountId: string, templateId: string, options?: any): AxiosPromise<void> {
-            return localVarFp.templatesDelete(accountId, templateId, options).then((request) => request(axios, basePath));
+        templatesDelete(requestParameters: TemplatesApiTemplatesDeleteRequest, options?: AxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.templatesDelete(requestParameters.accountId, requestParameters.templateId, options).then((request) => request(axios, basePath));
         },
         /**
          * 
          * @summary Submit a template for review
-         * @param {string} accountId 
-         * @param {TemplatesSubmitForReviewRequest} [templatesSubmitForReviewRequest] 
+         * @param {TemplatesApiTemplatesSubmitForReviewRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        templatesSubmitForReview(accountId: string, templatesSubmitForReviewRequest?: TemplatesSubmitForReviewRequest, options?: any): AxiosPromise<TemplatesSubmitForReview200Response> {
-            return localVarFp.templatesSubmitForReview(accountId, templatesSubmitForReviewRequest, options).then((request) => request(axios, basePath));
+        templatesSubmitForReview(requestParameters: TemplatesApiTemplatesSubmitForReviewRequest, options?: AxiosRequestConfig): AxiosPromise<TemplatesSubmitForReview200Response> {
+            return localVarFp.templatesSubmitForReview(requestParameters.accountId, requestParameters.templatesSubmitForReviewRequest, options).then((request) => request(axios, basePath));
         },
     };
 };

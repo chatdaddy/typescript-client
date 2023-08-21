@@ -15,13 +15,15 @@ const BASE_PATH = "https://api-teams.chatdaddy.tech".replace(/\/+$/, "");
  */
 
 
-import { Configuration } from '../configuration';
-import globalAxios, { AxiosPromise, AxiosInstance, AxiosRequestConfig } from 'axios';
+import type { Configuration } from '../configuration';
+import type { AxiosPromise, AxiosInstance, AxiosRequestConfig } from 'axios';
+import globalAxios from 'axios';
 // Some imports not used depending on template conditions
 // @ts-ignore
 import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObject, setBearerAuthToObject, setOAuthToObject, setSearchParams, serializeDataIfNeeded, toPathString, createRequestFunction } from '../common';
+import type { RequestArgs } from '../base';
 // @ts-ignore
-import { COLLECTION_FORMATS, RequestArgs, BaseAPI, RequiredError } from '../base';
+import { COLLECTION_FORMATS, BaseAPI, RequiredError } from './base';
 
 /**
  * 
@@ -379,20 +381,7 @@ export interface NewMessageNotificationPreferenceAccountsInner {
  * @type NewMessageNotificationType
  * @export
  */
-export type NewMessageNotificationType = Array<string> | NewMessageNotificationTypeOneOf;
-
-/**
- * 
- * @export
- * @enum {string}
- */
-
-export const NewMessageNotificationTypeOneOf = {
-    All: 'all'
-} as const;
-
-export type NewMessageNotificationTypeOneOf = typeof NewMessageNotificationTypeOneOf[keyof typeof NewMessageNotificationTypeOneOf];
-
+export type NewMessageNotificationType = Array<string> | string;
 
 /**
  * 
@@ -620,6 +609,8 @@ export interface OnboardingStep {
      */
     'doneBy': string;
 }
+
+
 /**
  * 
  * @export
@@ -1428,6 +1419,8 @@ export interface User {
      */
     'partnership'?: string | null;
 }
+
+
 /**
  * 
  * @export
@@ -1760,22 +1753,22 @@ export const InviteLinksApiFactory = function (configuration?: Configuration, ba
         /**
          * 
          * @summary Get info about an invite link
-         * @param {string} id the invite link ID
+         * @param {InviteLinksApiInviteLinksGetRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        inviteLinksGet(id: string, options?: any): AxiosPromise<InviteLink> {
-            return localVarFp.inviteLinksGet(id, options).then((request) => request(axios, basePath));
+        inviteLinksGet(requestParameters: InviteLinksApiInviteLinksGetRequest, options?: AxiosRequestConfig): AxiosPromise<InviteLink> {
+            return localVarFp.inviteLinksGet(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
          * To generate an invite link for a specific set of scopes, you must also have the same set of scopes. Eg. you cannot generate a link which gives access to `MESSAGE_SEND` when you don\'t have access to `MESSAGE_SEND` yourself. This is done for obvious security concerns. 
          * @summary Create an invite link for the team
-         * @param {InviteLinksPostRequest} [inviteLinksPostRequest] 
+         * @param {InviteLinksApiInviteLinksPostRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        inviteLinksPost(inviteLinksPostRequest?: InviteLinksPostRequest, options?: any): AxiosPromise<InviteLink> {
-            return localVarFp.inviteLinksPost(inviteLinksPostRequest, options).then((request) => request(axios, basePath));
+        inviteLinksPost(requestParameters: InviteLinksApiInviteLinksPostRequest = {}, options?: AxiosRequestConfig): AxiosPromise<InviteLink> {
+            return localVarFp.inviteLinksPost(requestParameters.inviteLinksPostRequest, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -2054,12 +2047,12 @@ export const OAuthApiFactory = function (configuration?: Configuration, basePath
         /**
          * If the token is not specified, all tokens of the user are revoked
          * @summary Revoke refresh tokens
-         * @param {string} [token] 
+         * @param {OAuthApiTokenDeleteRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        tokenDelete(token?: string, options?: any): AxiosPromise<void> {
-            return localVarFp.tokenDelete(token, options).then((request) => request(axios, basePath));
+        tokenDelete(requestParameters: OAuthApiTokenDeleteRequest = {}, options?: AxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.tokenDelete(requestParameters.token, options).then((request) => request(axios, basePath));
         },
         /**
          * Returns in descending order of most recently used
@@ -2067,28 +2060,28 @@ export const OAuthApiFactory = function (configuration?: Configuration, basePath
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        tokenGet(options?: any): AxiosPromise<Array<RefreshToken>> {
+        tokenGet(options?: AxiosRequestConfig): AxiosPromise<Array<RefreshToken>> {
             return localVarFp.tokenGet(options).then((request) => request(axios, basePath));
         },
         /**
          * 
          * @summary Login to ChatDaddy
-         * @param {AuthRequest} [authRequest] 
+         * @param {OAuthApiTokenPostRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        tokenPost(authRequest?: AuthRequest, options?: any): AxiosPromise<TokenPost200Response> {
-            return localVarFp.tokenPost(authRequest, options).then((request) => request(axios, basePath));
+        tokenPost(requestParameters: OAuthApiTokenPostRequest = {}, options?: AxiosRequestConfig): AxiosPromise<TokenPost200Response> {
+            return localVarFp.tokenPost(requestParameters.authRequest, options).then((request) => request(axios, basePath));
         },
         /**
          * 
          * @summary Login via an external partner
-         * @param {ExternalTokenRequest} [externalTokenRequest] 
+         * @param {OAuthApiTokenPostExternalRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        tokenPostExternal(externalTokenRequest?: ExternalTokenRequest, options?: any): AxiosPromise<ExternalTokenPostResponse> {
-            return localVarFp.tokenPostExternal(externalTokenRequest, options).then((request) => request(axios, basePath));
+        tokenPostExternal(requestParameters: OAuthApiTokenPostExternalRequest = {}, options?: AxiosRequestConfig): AxiosPromise<ExternalTokenPostResponse> {
+            return localVarFp.tokenPostExternal(requestParameters.externalTokenRequest, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -2359,28 +2352,28 @@ export const OTPApiFactory = function (configuration?: Configuration, basePath?:
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        confirmOtp(options?: any): AxiosPromise<ConfirmOtp200Response> {
+        confirmOtp(options?: AxiosRequestConfig): AxiosPromise<ConfirmOtp200Response> {
             return localVarFp.confirmOtp(options).then((request) => request(axios, basePath));
         },
         /**
          * 
          * @summary Generate an OTP
-         * @param {OtpPostRequest} [otpPostRequest] 
+         * @param {OTPApiOtpPostRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        otpPost(otpPostRequest?: OtpPostRequest, options?: any): AxiosPromise<OTP> {
-            return localVarFp.otpPost(otpPostRequest, options).then((request) => request(axios, basePath));
+        otpPost(requestParameters: OTPApiOtpPostRequest = {}, options?: AxiosRequestConfig): AxiosPromise<OTP> {
+            return localVarFp.otpPost(requestParameters.otpPostRequest, options).then((request) => request(axios, basePath));
         },
         /**
          * 
          * @summary Generate an OTP token
-         * @param {OtpTokenPostRequest} [otpTokenPostRequest] 
+         * @param {OTPApiOtpTokenPostRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        otpTokenPost(otpTokenPostRequest?: OtpTokenPostRequest, options?: any): AxiosPromise<OtpTokenPost200Response> {
-            return localVarFp.otpTokenPost(otpTokenPostRequest, options).then((request) => request(axios, basePath));
+        otpTokenPost(requestParameters: OTPApiOtpTokenPostRequest = {}, options?: AxiosRequestConfig): AxiosPromise<OtpTokenPost200Response> {
+            return localVarFp.otpTokenPost(requestParameters.otpTokenPostRequest, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -2832,68 +2825,52 @@ export const TeamsApiFactory = function (configuration?: Configuration, basePath
         /**
          * 
          * @summary Upgrade the team to \'partner\' if partner is specified, else, downgrade partner status
-         * @param {string} teamId the teamId of the team to be upgraded/downgraded
-         * @param {PartnerTeamPatchRequest} [partnerTeamPatchRequest] 
+         * @param {TeamsApiPartnerTeamPatchRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        partnerTeamPatch(teamId: string, partnerTeamPatchRequest?: PartnerTeamPatchRequest, options?: any): AxiosPromise<TeamsPatch200Response> {
-            return localVarFp.partnerTeamPatch(teamId, partnerTeamPatchRequest, options).then((request) => request(axios, basePath));
+        partnerTeamPatch(requestParameters: TeamsApiPartnerTeamPatchRequest, options?: AxiosRequestConfig): AxiosPromise<TeamsPatch200Response> {
+            return localVarFp.partnerTeamPatch(requestParameters.teamId, requestParameters.partnerTeamPatchRequest, options).then((request) => request(axios, basePath));
         },
         /**
          * 
          * @summary Mark a team as having completed an onboarding step
-         * @param {OnboardingStepID} step the onboarding step to mark as completed
+         * @param {TeamsApiTeamsCompletedOnboardingStepPostRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        teamsCompletedOnboardingStepPost(step: OnboardingStepID, options?: any): AxiosPromise<TeamsPatch200Response> {
-            return localVarFp.teamsCompletedOnboardingStepPost(step, options).then((request) => request(axios, basePath));
+        teamsCompletedOnboardingStepPost(requestParameters: TeamsApiTeamsCompletedOnboardingStepPostRequest, options?: AxiosRequestConfig): AxiosPromise<TeamsPatch200Response> {
+            return localVarFp.teamsCompletedOnboardingStepPost(requestParameters.step, options).then((request) => request(axios, basePath));
         },
         /**
          * 
          * @summary Fetch teams you have access to
-         * @param {string} [q] Search by name, ID, invite code, etc.
-         * @param {string} [partnership] Search by partnership
-         * @param {number} [onboardingScoreMin] The minimum onboarding score of the teams to return
-         * @param {number} [onboardingScoreMax] The maximum onboarding score of the teams to return
-         * @param {string} [createdAfter] Teams after a given date-time
-         * @param {Array<OnboardingStepID>} [completedSteps] Teams that have completed the given Steps
-         * @param {Array<string>} [id] Fetch specific teams by ID
-         * @param {string} [userId] teams that contain this user ID
-         * @param {number} [count] The numbers of items to return
-         * @param {number} [page] The page number
-         * @param {boolean} [includeTeamMembers] Should include the team members. Will only return members for which you have the &#x60;TEAMMEMBERS_READ&#x60; scope
-         * @param {boolean} [includeInviteLinks] Should include the invite links.  Will only return invite links for which you have the &#x60;TEAMLINKS_READ&#x60; scope
-         * @param {boolean} [includeTotal] include the count of the total teams
-         * @param {boolean} [includeCreator] include the creator\&#39;s data in the API result
-         * @param {string} [partner] string to identify user with a partner
-         * @param {boolean} [returnOnboardingScore] return the onboarding score for the team
+         * @param {TeamsApiTeamsGetRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        teamsGet(q?: string, partnership?: string, onboardingScoreMin?: number, onboardingScoreMax?: number, createdAfter?: string, completedSteps?: Array<OnboardingStepID>, id?: Array<string>, userId?: string, count?: number, page?: number, includeTeamMembers?: boolean, includeInviteLinks?: boolean, includeTotal?: boolean, includeCreator?: boolean, partner?: string, returnOnboardingScore?: boolean, options?: any): AxiosPromise<TeamsGet200Response> {
-            return localVarFp.teamsGet(q, partnership, onboardingScoreMin, onboardingScoreMax, createdAfter, completedSteps, id, userId, count, page, includeTeamMembers, includeInviteLinks, includeTotal, includeCreator, partner, returnOnboardingScore, options).then((request) => request(axios, basePath));
+        teamsGet(requestParameters: TeamsApiTeamsGetRequest = {}, options?: AxiosRequestConfig): AxiosPromise<TeamsGet200Response> {
+            return localVarFp.teamsGet(requestParameters.q, requestParameters.partnership, requestParameters.onboardingScoreMin, requestParameters.onboardingScoreMax, requestParameters.createdAfter, requestParameters.completedSteps, requestParameters.id, requestParameters.userId, requestParameters.count, requestParameters.page, requestParameters.includeTeamMembers, requestParameters.includeInviteLinks, requestParameters.includeTotal, requestParameters.includeCreator, requestParameters.partner, requestParameters.returnOnboardingScore, options).then((request) => request(axios, basePath));
         },
         /**
          * 
          * @summary Join a team
-         * @param {string} id inviteLink ID
+         * @param {TeamsApiTeamsJoinInviteRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        teamsJoinInvite(id: string, options?: any): AxiosPromise<void> {
-            return localVarFp.teamsJoinInvite(id, options).then((request) => request(axios, basePath));
+        teamsJoinInvite(requestParameters: TeamsApiTeamsJoinInviteRequest, options?: AxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.teamsJoinInvite(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
          * - If you want to update/delete members -- ensure you have the `TEAMMEMBERS_UPDATE` scope - If you want to delete invite links -- ensure you have the `TEAMLINKS_UPDATE` scope - Also you cannot delete/update yourself in the team. If you attempt to do so, a 400 will be returned 
          * @summary Update the team the access token is for
-         * @param {TeamPatchRequest} [teamPatchRequest] 
+         * @param {TeamsApiTeamsPatchRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        teamsPatch(teamPatchRequest?: TeamPatchRequest, options?: any): AxiosPromise<TeamsPatch200Response> {
-            return localVarFp.teamsPatch(teamPatchRequest, options).then((request) => request(axios, basePath));
+        teamsPatch(requestParameters: TeamsApiTeamsPatchRequest = {}, options?: AxiosRequestConfig): AxiosPromise<TeamsPatch200Response> {
+            return localVarFp.teamsPatch(requestParameters.teamPatchRequest, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -3412,12 +3389,12 @@ export const UsersApiAxiosParamCreator = function (configuration?: Configuration
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
+            // authentication otp required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
             // authentication chatdaddy required
             // oauth required
             await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["ADMIN_PANEL_ACCESS", "PARTNER_ADMIN_PANEL_ACCESS"], configuration)
-
-            // authentication otp required
-            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
 
 
     
@@ -3531,71 +3508,62 @@ export const UsersApiFactory = function (configuration?: Configuration, basePath
         /**
          * Deletes the user specified
          * @summary Delete a user
-         * @param {string} id 
+         * @param {UsersApiUsersDeleteRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        usersDelete(id: string, options?: any): AxiosPromise<void> {
-            return localVarFp.usersDelete(id, options).then((request) => request(axios, basePath));
+        usersDelete(requestParameters: UsersApiUsersDeleteRequest, options?: AxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.usersDelete(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
          * 
          * @summary Fetch users you have access to
-         * @param {string} [q] Search by name, ID, email, phone etc.
-         * @param {string} [partnership] Search by partnership
-         * @param {Array<string>} [id] Fetch specific users by ID
-         * @param {Array<string>} [originalTeamId] Fetch specific users by original team ID
-         * @param {number} [count] The numbers of items to return
-         * @param {number} [page] The page number
-         * @param {boolean} [includeMemberships] Should include the user\&#39;s memberships
-         * @param {boolean} [includeTotal] should return total count of accessible users
-         * @param {Array<string>} [other] other internal query options
+         * @param {UsersApiUsersGetRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        usersGet(q?: string, partnership?: string, id?: Array<string>, originalTeamId?: Array<string>, count?: number, page?: number, includeMemberships?: boolean, includeTotal?: boolean, other?: Array<string>, options?: any): AxiosPromise<UsersGet200Response> {
-            return localVarFp.usersGet(q, partnership, id, originalTeamId, count, page, includeMemberships, includeTotal, other, options).then((request) => request(axios, basePath));
+        usersGet(requestParameters: UsersApiUsersGetRequest = {}, options?: AxiosRequestConfig): AxiosPromise<UsersGet200Response> {
+            return localVarFp.usersGet(requestParameters.q, requestParameters.partnership, requestParameters.id, requestParameters.originalTeamId, requestParameters.count, requestParameters.page, requestParameters.includeMemberships, requestParameters.includeTotal, requestParameters.other, options).then((request) => request(axios, basePath));
         },
         /**
          * 
          * @summary Reset user password
-         * @param {ResetPassword} [resetPassword] 
+         * @param {UsersApiUsersPasswordPatchRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        usersPasswordPatch(resetPassword?: ResetPassword, options?: any): AxiosPromise<void> {
-            return localVarFp.usersPasswordPatch(resetPassword, options).then((request) => request(axios, basePath));
+        usersPasswordPatch(requestParameters: UsersApiUsersPasswordPatchRequest = {}, options?: AxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.usersPasswordPatch(requestParameters.resetPassword, options).then((request) => request(axios, basePath));
         },
         /**
          * 
          * @summary Update the user in the access token
-         * @param {string} [userId] Change the password of this user ID
-         * @param {UserPatch} [userPatch] 
+         * @param {UsersApiUsersPatchRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        usersPatch(userId?: string, userPatch?: UserPatch, options?: any): AxiosPromise<User> {
-            return localVarFp.usersPatch(userId, userPatch, options).then((request) => request(axios, basePath));
+        usersPatch(requestParameters: UsersApiUsersPatchRequest = {}, options?: AxiosRequestConfig): AxiosPromise<User> {
+            return localVarFp.usersPatch(requestParameters.userId, requestParameters.userPatch, options).then((request) => request(axios, basePath));
         },
         /**
          * 
          * @summary Updates users Phonenumber
-         * @param {UsersPhoneNumberPatchRequest} [usersPhoneNumberPatchRequest] 
+         * @param {UsersApiUsersPhoneNumberPatchRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        usersPhoneNumberPatch(usersPhoneNumberPatchRequest?: UsersPhoneNumberPatchRequest, options?: any): AxiosPromise<void> {
-            return localVarFp.usersPhoneNumberPatch(usersPhoneNumberPatchRequest, options).then((request) => request(axios, basePath));
+        usersPhoneNumberPatch(requestParameters: UsersApiUsersPhoneNumberPatchRequest = {}, options?: AxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.usersPhoneNumberPatch(requestParameters.usersPhoneNumberPatchRequest, options).then((request) => request(axios, basePath));
         },
         /**
          * 
          * @summary Create a new user
-         * @param {UserCreate} [userCreate] 
+         * @param {UsersApiUsersPostRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        usersPost(userCreate?: UserCreate, options?: any): AxiosPromise<User> {
-            return localVarFp.usersPost(userCreate, options).then((request) => request(axios, basePath));
+        usersPost(requestParameters: UsersApiUsersPostRequest = {}, options?: AxiosRequestConfig): AxiosPromise<User> {
+            return localVarFp.usersPost(requestParameters.userCreate, options).then((request) => request(axios, basePath));
         },
     };
 };
