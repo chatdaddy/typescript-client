@@ -1208,7 +1208,7 @@ export interface ChatsTicketStatusPatchRequest {
      * @type {string}
      * @memberof ChatsTicketStatusPatchRequest
      */
-    'ticketStatus'?: ChatsTicketStatusPatchRequestTicketStatusEnum;
+    'ticketStatus': ChatsTicketStatusPatchRequestTicketStatusEnum;
 }
 
 export const ChatsTicketStatusPatchRequestTicketStatusEnum = {
@@ -3865,7 +3865,7 @@ export interface TemplatesSubmitForReviewRequest {
     'message': TemplateCreate;
 }
 /**
- * 
+ * Status of the ticket. Null/undefined mean the ticket is open
  * @export
  * @enum {string}
  */
@@ -5790,7 +5790,7 @@ export const ChatsApiAxiosParamCreator = function (configuration?: Configuration
          * @param {string} [mentioned] 
          * @param {boolean} [hasUnsolvedNote] 
          * @param {boolean} [hasFailedMessage] 
-         * @param {'closed'} [ticketStatus] 
+         * @param {'closed' | 'all'} [ticketStatus] 
          * @param {boolean} [lastMessageFromMe] 
          * @param {Array<string>} [tags] Get contacts who fall in either of these tags
          * @param {Array<string>} [notTags] Get contacts who are not in any of these tags
@@ -5803,7 +5803,7 @@ export const ChatsApiAxiosParamCreator = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        chatsGet: async (count?: number, page?: string, archive?: boolean, unread?: boolean, hasPendingMessage?: boolean, mentioned?: string, hasUnsolvedNote?: boolean, hasFailedMessage?: boolean, ticketStatus?: 'closed', lastMessageFromMe?: boolean, tags?: Array<string>, notTags?: Array<string>, contacts?: Array<string>, q?: string, assignee?: Array<string>, accountId?: Array<string>, type?: 'group' | 'individual', returnUnreadChatCount?: boolean, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        chatsGet: async (count?: number, page?: string, archive?: boolean, unread?: boolean, hasPendingMessage?: boolean, mentioned?: string, hasUnsolvedNote?: boolean, hasFailedMessage?: boolean, ticketStatus?: 'closed' | 'all', lastMessageFromMe?: boolean, tags?: Array<string>, notTags?: Array<string>, contacts?: Array<string>, q?: string, assignee?: Array<string>, accountId?: Array<string>, type?: 'group' | 'individual', returnUnreadChatCount?: boolean, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/chats`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -6065,7 +6065,7 @@ export const ChatsApiFp = function(configuration?: Configuration) {
          * @param {string} [mentioned] 
          * @param {boolean} [hasUnsolvedNote] 
          * @param {boolean} [hasFailedMessage] 
-         * @param {'closed'} [ticketStatus] 
+         * @param {'closed' | 'all'} [ticketStatus] 
          * @param {boolean} [lastMessageFromMe] 
          * @param {Array<string>} [tags] Get contacts who fall in either of these tags
          * @param {Array<string>} [notTags] Get contacts who are not in any of these tags
@@ -6078,7 +6078,7 @@ export const ChatsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async chatsGet(count?: number, page?: string, archive?: boolean, unread?: boolean, hasPendingMessage?: boolean, mentioned?: string, hasUnsolvedNote?: boolean, hasFailedMessage?: boolean, ticketStatus?: 'closed', lastMessageFromMe?: boolean, tags?: Array<string>, notTags?: Array<string>, contacts?: Array<string>, q?: string, assignee?: Array<string>, accountId?: Array<string>, type?: 'group' | 'individual', returnUnreadChatCount?: boolean, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ChatsGet200Response>> {
+        async chatsGet(count?: number, page?: string, archive?: boolean, unread?: boolean, hasPendingMessage?: boolean, mentioned?: string, hasUnsolvedNote?: boolean, hasFailedMessage?: boolean, ticketStatus?: 'closed' | 'all', lastMessageFromMe?: boolean, tags?: Array<string>, notTags?: Array<string>, contacts?: Array<string>, q?: string, assignee?: Array<string>, accountId?: Array<string>, type?: 'group' | 'individual', returnUnreadChatCount?: boolean, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ChatsGet200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.chatsGet(count, page, archive, unread, hasPendingMessage, mentioned, hasUnsolvedNote, hasFailedMessage, ticketStatus, lastMessageFromMe, tags, notTags, contacts, q, assignee, accountId, type, returnUnreadChatCount, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -6142,7 +6142,7 @@ export const ChatsApiFactory = function (configuration?: Configuration, basePath
          * @param {string} [mentioned] 
          * @param {boolean} [hasUnsolvedNote] 
          * @param {boolean} [hasFailedMessage] 
-         * @param {'closed'} [ticketStatus] 
+         * @param {'closed' | 'all'} [ticketStatus] 
          * @param {boolean} [lastMessageFromMe] 
          * @param {Array<string>} [tags] Get contacts who fall in either of these tags
          * @param {Array<string>} [notTags] Get contacts who are not in any of these tags
@@ -6155,7 +6155,7 @@ export const ChatsApiFactory = function (configuration?: Configuration, basePath
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        chatsGet(count?: number, page?: string, archive?: boolean, unread?: boolean, hasPendingMessage?: boolean, mentioned?: string, hasUnsolvedNote?: boolean, hasFailedMessage?: boolean, ticketStatus?: 'closed', lastMessageFromMe?: boolean, tags?: Array<string>, notTags?: Array<string>, contacts?: Array<string>, q?: string, assignee?: Array<string>, accountId?: Array<string>, type?: 'group' | 'individual', returnUnreadChatCount?: boolean, options?: any): AxiosPromise<ChatsGet200Response> {
+        chatsGet(count?: number, page?: string, archive?: boolean, unread?: boolean, hasPendingMessage?: boolean, mentioned?: string, hasUnsolvedNote?: boolean, hasFailedMessage?: boolean, ticketStatus?: 'closed' | 'all', lastMessageFromMe?: boolean, tags?: Array<string>, notTags?: Array<string>, contacts?: Array<string>, q?: string, assignee?: Array<string>, accountId?: Array<string>, type?: 'group' | 'individual', returnUnreadChatCount?: boolean, options?: any): AxiosPromise<ChatsGet200Response> {
             return localVarFp.chatsGet(count, page, archive, unread, hasPendingMessage, mentioned, hasUnsolvedNote, hasFailedMessage, ticketStatus, lastMessageFromMe, tags, notTags, contacts, q, assignee, accountId, type, returnUnreadChatCount, options).then((request) => request(axios, basePath));
         },
         /**
@@ -6261,10 +6261,10 @@ export interface ChatsApiChatsGetRequest {
 
     /**
      * 
-     * @type {'closed'}
+     * @type {'closed' | 'all'}
      * @memberof ChatsApiChatsGet
      */
-    readonly ticketStatus?: 'closed'
+    readonly ticketStatus?: 'closed' | 'all'
 
     /**
      * 
