@@ -2527,7 +2527,7 @@ export interface ChatUpdateData {
 
 export const ChatUpdateDataTicketStatusEnum = {
     Closed: 'closed',
-    Null: 'null'
+    Null: null as null
 } as const;
 
 export type ChatUpdateDataTicketStatusEnum = typeof ChatUpdateDataTicketStatusEnum[keyof typeof ChatUpdateDataTicketStatusEnum];
