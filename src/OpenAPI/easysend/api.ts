@@ -3865,13 +3865,12 @@ export const ShopMetadataApiAxiosParamCreator = function (configuration?: Config
         /**
          * 
          * @summary Get the shop metadata
-         * @param {string} id Fetch a particular team\&#39;s metadata
+         * @param {string} [id] Fetch a particular team\&#39;s metadata
+         * @param {string} [shopName] Fetch a particular team\&#39;s metadata
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        shopMetadataGet: async (id: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'id' is not null or undefined
-            assertParamExists('shopMetadataGet', 'id', id)
+        shopMetadataGet: async (id?: string, shopName?: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/shop-metadata`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -3888,6 +3887,10 @@ export const ShopMetadataApiAxiosParamCreator = function (configuration?: Config
                 localVarQueryParameter['id'] = id;
             }
 
+            if (shopName !== undefined) {
+                localVarQueryParameter['shopName'] = shopName;
+            }
+
 
     
             setSearchParams(localVarUrlObj, localVarQueryParameter);
@@ -3902,7 +3905,7 @@ export const ShopMetadataApiAxiosParamCreator = function (configuration?: Config
         /**
          * 
          * @summary Update the shop metadata
-         * @param {string} id Patch a  particular team\&#39;s metadata
+         * @param {string} id Patch a particular team\&#39;s metadata
          * @param {ShopMetadataGet200Response} [shopMetadataGet200Response] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -3957,18 +3960,19 @@ export const ShopMetadataApiFp = function(configuration?: Configuration) {
         /**
          * 
          * @summary Get the shop metadata
-         * @param {string} id Fetch a particular team\&#39;s metadata
+         * @param {string} [id] Fetch a particular team\&#39;s metadata
+         * @param {string} [shopName] Fetch a particular team\&#39;s metadata
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async shopMetadataGet(id: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ShopMetadataGet200Response>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.shopMetadataGet(id, options);
+        async shopMetadataGet(id?: string, shopName?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ShopMetadataGet200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.shopMetadataGet(id, shopName, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
          * 
          * @summary Update the shop metadata
-         * @param {string} id Patch a  particular team\&#39;s metadata
+         * @param {string} id Patch a particular team\&#39;s metadata
          * @param {ShopMetadataGet200Response} [shopMetadataGet200Response] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -3994,8 +3998,8 @@ export const ShopMetadataApiFactory = function (configuration?: Configuration, b
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        shopMetadataGet(requestParameters: ShopMetadataApiShopMetadataGetRequest, options?: AxiosRequestConfig): AxiosPromise<ShopMetadataGet200Response> {
-            return localVarFp.shopMetadataGet(requestParameters.id, options).then((request) => request(axios, basePath));
+        shopMetadataGet(requestParameters: ShopMetadataApiShopMetadataGetRequest = {}, options?: AxiosRequestConfig): AxiosPromise<ShopMetadataGet200Response> {
+            return localVarFp.shopMetadataGet(requestParameters.id, requestParameters.shopName, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -4021,7 +4025,14 @@ export interface ShopMetadataApiShopMetadataGetRequest {
      * @type {string}
      * @memberof ShopMetadataApiShopMetadataGet
      */
-    readonly id: string
+    readonly id?: string
+
+    /**
+     * Fetch a particular team\&#39;s metadata
+     * @type {string}
+     * @memberof ShopMetadataApiShopMetadataGet
+     */
+    readonly shopName?: string
 }
 
 /**
@@ -4031,7 +4042,7 @@ export interface ShopMetadataApiShopMetadataGetRequest {
  */
 export interface ShopMetadataApiShopMetadataPatchRequest {
     /**
-     * Patch a  particular team\&#39;s metadata
+     * Patch a particular team\&#39;s metadata
      * @type {string}
      * @memberof ShopMetadataApiShopMetadataPatch
      */
@@ -4060,8 +4071,8 @@ export class ShopMetadataApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof ShopMetadataApi
      */
-    public shopMetadataGet(requestParameters: ShopMetadataApiShopMetadataGetRequest, options?: AxiosRequestConfig) {
-        return ShopMetadataApiFp(this.configuration).shopMetadataGet(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    public shopMetadataGet(requestParameters: ShopMetadataApiShopMetadataGetRequest = {}, options?: AxiosRequestConfig) {
+        return ShopMetadataApiFp(this.configuration).shopMetadataGet(requestParameters.id, requestParameters.shopName, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
