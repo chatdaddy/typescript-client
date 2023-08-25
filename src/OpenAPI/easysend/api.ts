@@ -1674,6 +1674,12 @@ export interface ShopMetadataGet200Response {
  */
 export interface ShopMetadataModel {
     /**
+     * Unique identifier for the shop. if CD shop then it is the teamId else phonenumber
+     * @type {string}
+     * @memberof ShopMetadataModel
+     */
+    'id'?: string;
+    /**
      * 
      * @type {string}
      * @memberof ShopMetadataModel
@@ -1691,7 +1697,34 @@ export interface ShopMetadataModel {
      * @memberof ShopMetadataModel
      */
     'shopImageUrl'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ShopMetadataModel
+     */
+    'shopService'?: ShopMetadataModelShopServiceEnum;
+    /**
+     * 
+     * @type {string}
+     * @memberof ShopMetadataModel
+     */
+    'type'?: ShopMetadataModelTypeEnum;
 }
+
+export const ShopMetadataModelShopServiceEnum = {
+    Shopify: 'shopify',
+    Shopline: 'shopline',
+    Woocommerce: 'woocommerce'
+} as const;
+
+export type ShopMetadataModelShopServiceEnum = typeof ShopMetadataModelShopServiceEnum[keyof typeof ShopMetadataModelShopServiceEnum];
+export const ShopMetadataModelTypeEnum = {
+    CdTeam: 'cd-team',
+    ExternalShop: 'external-shop'
+} as const;
+
+export type ShopMetadataModelTypeEnum = typeof ShopMetadataModelTypeEnum[keyof typeof ShopMetadataModelTypeEnum];
+
 /**
  * 
  * @export
