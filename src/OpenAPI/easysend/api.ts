@@ -3866,7 +3866,7 @@ export const ShopMetadataApiAxiosParamCreator = function (configuration?: Config
          * 
          * @summary Get the shop metadata
          * @param {string} [id] Fetch a particular team\&#39;s metadata
-         * @param {string} [shopName] Fetch a particular team\&#39;s metadata
+         * @param {string} [shopName] Fetch a particular shops\&#39;s metadata
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -3961,7 +3961,7 @@ export const ShopMetadataApiFp = function(configuration?: Configuration) {
          * 
          * @summary Get the shop metadata
          * @param {string} [id] Fetch a particular team\&#39;s metadata
-         * @param {string} [shopName] Fetch a particular team\&#39;s metadata
+         * @param {string} [shopName] Fetch a particular shops\&#39;s metadata
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -4028,7 +4028,7 @@ export interface ShopMetadataApiShopMetadataGetRequest {
     readonly id?: string
 
     /**
-     * Fetch a particular team\&#39;s metadata
+     * Fetch a particular shops\&#39;s metadata
      * @type {string}
      * @memberof ShopMetadataApiShopMetadataGet
      */
