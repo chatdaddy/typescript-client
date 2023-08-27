@@ -401,6 +401,31 @@ export type NotificationDestination = typeof NotificationDestination[keyof typeo
 /**
  * 
  * @export
+ * @interface NotificationMiscData
+ */
+export interface NotificationMiscData {
+    /**
+     * The path to open when the notification is clicked
+     * @type {string}
+     * @memberof NotificationMiscData
+     */
+    'path'?: string;
+    /**
+     * The image to show in the notification
+     * @type {string}
+     * @memberof NotificationMiscData
+     */
+    'imgUrl'?: string;
+    /**
+     * 
+     * @type {{ [key: string]: any; }}
+     * @memberof NotificationMiscData
+     */
+    'context'?: { [key: string]: any; };
+}
+/**
+ * 
+ * @export
  * @interface NotificationPreferences
  */
 export interface NotificationPreferences {
@@ -1599,6 +1624,74 @@ export interface UsersPhoneNumberPatchRequest {
      * @memberof UsersPhoneNumberPatchRequest
      */
     'userId'?: string;
+}
+/**
+ * 
+ * @export
+ * @interface WebPushNotification
+ */
+export interface WebPushNotification {
+    /**
+     * 
+     * @type {string}
+     * @memberof WebPushNotification
+     */
+    'title': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof WebPushNotification
+     */
+    'text': string;
+    /**
+     * When true, the notification is only shown if the user is online
+     * @type {boolean}
+     * @memberof WebPushNotification
+     */
+    'onlineOnly'?: boolean;
+    /**
+     * The path to open when the notification is clicked
+     * @type {string}
+     * @memberof WebPushNotification
+     */
+    'path'?: string;
+    /**
+     * The image to show in the notification
+     * @type {string}
+     * @memberof WebPushNotification
+     */
+    'imgUrl'?: string;
+    /**
+     * 
+     * @type {{ [key: string]: any; }}
+     * @memberof WebPushNotification
+     */
+    'context'?: { [key: string]: any; };
+}
+/**
+ * 
+ * @export
+ * @interface WebPushNotificationAllOf
+ */
+export interface WebPushNotificationAllOf {
+    /**
+     * 
+     * @type {string}
+     * @memberof WebPushNotificationAllOf
+     */
+    'title': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof WebPushNotificationAllOf
+     */
+    'text': string;
+    /**
+     * When true, the notification is only shown if the user is online
+     * @type {boolean}
+     * @memberof WebPushNotificationAllOf
+     */
+    'onlineOnly'?: boolean;
 }
 /**
  * 
