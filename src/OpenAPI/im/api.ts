@@ -8622,6 +8622,7 @@ export const MessagesApiAxiosParamCreator = function (configuration?: Configurat
          * @param {string} [beforeId] Get messages before this message ID
          * @param {number} [count] Number of messages to fetch
          * @param {boolean} [forceReload] Deletes all cached messages for this chat &amp; fetches messages again from the original API source
+         * @param {boolean} [fetchFromPlatform] Fetches messages from the platform, if the messages are not present in the DB
          * @param {'note' | 'pending' | 'error'} [status] fetch only \&quot;notes\&quot;, \&quot;pending\&quot; or \&quot;error\&quot; messages
          * @param {boolean} [fromMe] fetch only messages sent by me/or the other party
          * @param {Array<MessageAttachmentType>} [attachmentType] Fetch only messages with attachments of this type
@@ -8629,7 +8630,7 @@ export const MessagesApiAxiosParamCreator = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        messagesGet: async (accountId: string, chatId: string, beforeId?: string, count?: number, forceReload?: boolean, status?: 'note' | 'pending' | 'error', fromMe?: boolean, attachmentType?: Array<MessageAttachmentType>, includeCursorMessage?: boolean, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        messagesGet: async (accountId: string, chatId: string, beforeId?: string, count?: number, forceReload?: boolean, fetchFromPlatform?: boolean, status?: 'note' | 'pending' | 'error', fromMe?: boolean, attachmentType?: Array<MessageAttachmentType>, includeCursorMessage?: boolean, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'accountId' is not null or undefined
             assertParamExists('messagesGet', 'accountId', accountId)
             // verify required parameter 'chatId' is not null or undefined
@@ -8662,6 +8663,10 @@ export const MessagesApiAxiosParamCreator = function (configuration?: Configurat
 
             if (forceReload !== undefined) {
                 localVarQueryParameter['forceReload'] = forceReload;
+            }
+
+            if (fetchFromPlatform !== undefined) {
+                localVarQueryParameter['fetchFromPlatform'] = fetchFromPlatform;
             }
 
             if (status !== undefined) {
@@ -9012,6 +9017,7 @@ export const MessagesApiFp = function(configuration?: Configuration) {
          * @param {string} [beforeId] Get messages before this message ID
          * @param {number} [count] Number of messages to fetch
          * @param {boolean} [forceReload] Deletes all cached messages for this chat &amp; fetches messages again from the original API source
+         * @param {boolean} [fetchFromPlatform] Fetches messages from the platform, if the messages are not present in the DB
          * @param {'note' | 'pending' | 'error'} [status] fetch only \&quot;notes\&quot;, \&quot;pending\&quot; or \&quot;error\&quot; messages
          * @param {boolean} [fromMe] fetch only messages sent by me/or the other party
          * @param {Array<MessageAttachmentType>} [attachmentType] Fetch only messages with attachments of this type
@@ -9019,8 +9025,8 @@ export const MessagesApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async messagesGet(accountId: string, chatId: string, beforeId?: string, count?: number, forceReload?: boolean, status?: 'note' | 'pending' | 'error', fromMe?: boolean, attachmentType?: Array<MessageAttachmentType>, includeCursorMessage?: boolean, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MessagesGet200Response>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.messagesGet(accountId, chatId, beforeId, count, forceReload, status, fromMe, attachmentType, includeCursorMessage, options);
+        async messagesGet(accountId: string, chatId: string, beforeId?: string, count?: number, forceReload?: boolean, fetchFromPlatform?: boolean, status?: 'note' | 'pending' | 'error', fromMe?: boolean, attachmentType?: Array<MessageAttachmentType>, includeCursorMessage?: boolean, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MessagesGet200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.messagesGet(accountId, chatId, beforeId, count, forceReload, fetchFromPlatform, status, fromMe, attachmentType, includeCursorMessage, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -9140,7 +9146,7 @@ export const MessagesApiFactory = function (configuration?: Configuration, baseP
          * @throws {RequiredError}
          */
         messagesGet(requestParameters: MessagesApiMessagesGetRequest, options?: AxiosRequestConfig): AxiosPromise<MessagesGet200Response> {
-            return localVarFp.messagesGet(requestParameters.accountId, requestParameters.chatId, requestParameters.beforeId, requestParameters.count, requestParameters.forceReload, requestParameters.status, requestParameters.fromMe, requestParameters.attachmentType, requestParameters.includeCursorMessage, options).then((request) => request(axios, basePath));
+            return localVarFp.messagesGet(requestParameters.accountId, requestParameters.chatId, requestParameters.beforeId, requestParameters.count, requestParameters.forceReload, requestParameters.fetchFromPlatform, requestParameters.status, requestParameters.fromMe, requestParameters.attachmentType, requestParameters.includeCursorMessage, options).then((request) => request(axios, basePath));
         },
         /**
          * Can reschedule a message, update the content of a note or mark it as resolved 
@@ -9325,6 +9331,13 @@ export interface MessagesApiMessagesGetRequest {
      * @memberof MessagesApiMessagesGet
      */
     readonly forceReload?: boolean
+
+    /**
+     * Fetches messages from the platform, if the messages are not present in the DB
+     * @type {boolean}
+     * @memberof MessagesApiMessagesGet
+     */
+    readonly fetchFromPlatform?: boolean
 
     /**
      * fetch only \&quot;notes\&quot;, \&quot;pending\&quot; or \&quot;error\&quot; messages
@@ -9588,7 +9601,7 @@ export class MessagesApi extends BaseAPI {
      * @memberof MessagesApi
      */
     public messagesGet(requestParameters: MessagesApiMessagesGetRequest, options?: AxiosRequestConfig) {
-        return MessagesApiFp(this.configuration).messagesGet(requestParameters.accountId, requestParameters.chatId, requestParameters.beforeId, requestParameters.count, requestParameters.forceReload, requestParameters.status, requestParameters.fromMe, requestParameters.attachmentType, requestParameters.includeCursorMessage, options).then((request) => request(this.axios, this.basePath));
+        return MessagesApiFp(this.configuration).messagesGet(requestParameters.accountId, requestParameters.chatId, requestParameters.beforeId, requestParameters.count, requestParameters.forceReload, requestParameters.fetchFromPlatform, requestParameters.status, requestParameters.fromMe, requestParameters.attachmentType, requestParameters.includeCursorMessage, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
