@@ -1699,6 +1699,18 @@ export interface ShopMetadataModel {
     'shopImageUrl'?: string;
     /**
      * 
+     * @type {boolean}
+     * @memberof ShopMetadataModel
+     */
+    'completedShopSetupProcess'?: boolean;
+    /**
+     * 
+     * @type {{ [key: string]: any; }}
+     * @memberof ShopMetadataModel
+     */
+    'onBoardingData'?: { [key: string]: any; };
+    /**
+     * 
      * @type {string}
      * @memberof ShopMetadataModel
      */
