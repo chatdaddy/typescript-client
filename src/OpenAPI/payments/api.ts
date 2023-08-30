@@ -1281,7 +1281,7 @@ export const AutoChargeProductsApiAxiosParamCreator = function (configuration?: 
 
             // authentication chatdaddy required
             // oauth required
-            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["ADMIN_PANEL_ACCESS"], configuration)
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", [], configuration)
 
 
     
