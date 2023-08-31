@@ -1720,6 +1720,12 @@ export interface ShopMetadataModel {
      * @type {string}
      * @memberof ShopMetadataModel
      */
+    'externalShopUrl'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ShopMetadataModel
+     */
     'type'?: ShopMetadataModelTypeEnum;
 }
 
