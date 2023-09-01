@@ -1107,6 +1107,12 @@ export interface BotInsertDataActionsInnerAllOf1MessageAttachmentsInner {
      * @memberof BotInsertDataActionsInnerAllOf1MessageAttachmentsInner
      */
     'filename'?: string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof BotInsertDataActionsInnerAllOf1MessageAttachmentsInner
+     */
+    'pttAudio'?: boolean;
 }
 
 export const BotInsertDataActionsInnerAllOf1MessageAttachmentsInnerTypeEnum = {

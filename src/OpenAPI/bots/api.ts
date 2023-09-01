@@ -1666,6 +1666,12 @@ export interface IMMessageAttachment {
      * @memberof IMMessageAttachment
      */
     'filename'?: string;
+    /**
+     * push to text feature
+     * @type {boolean}
+     * @memberof IMMessageAttachment
+     */
+    'pttAudio'?: boolean;
 }
 
 
