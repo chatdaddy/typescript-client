@@ -1746,6 +1746,19 @@ export type ShopMetadataModelTypeEnum = typeof ShopMetadataModelTypeEnum[keyof t
 /**
  * 
  * @export
+ * @interface ShopMetadataPostRequest
+ */
+export interface ShopMetadataPostRequest {
+    /**
+     * 
+     * @type {Array<ShopMetadataModel>}
+     * @memberof ShopMetadataPostRequest
+     */
+    'shopMetadata'?: Array<ShopMetadataModel>;
+}
+/**
+ * 
+ * @export
  * @interface SuccessResponse
  */
 export interface SuccessResponse {
@@ -3965,6 +3978,40 @@ export const ShopMetadataApiAxiosParamCreator = function (configuration?: Config
                 options: localVarRequestOptions,
             };
         },
+        /**
+         * 
+         * @summary Create shop metadata in bulk
+         * @param {ShopMetadataPostRequest} [shopMetadataPostRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        shopMetadataPost: async (shopMetadataPostRequest?: ShopMetadataPostRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/shop-metadata`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(shopMetadataPostRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
     }
 };
 
@@ -3999,6 +4046,17 @@ export const ShopMetadataApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.shopMetadataPatch(id, shopMetadataGet200Response, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
+        /**
+         * 
+         * @summary Create shop metadata in bulk
+         * @param {ShopMetadataPostRequest} [shopMetadataPostRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async shopMetadataPost(shopMetadataPostRequest?: ShopMetadataPostRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ShopMetadataPostRequest>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.shopMetadataPost(shopMetadataPostRequest, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
     }
 };
 
@@ -4028,6 +4086,16 @@ export const ShopMetadataApiFactory = function (configuration?: Configuration, b
          */
         shopMetadataPatch(requestParameters: ShopMetadataApiShopMetadataPatchRequest, options?: AxiosRequestConfig): AxiosPromise<ShopMetadataGet200Response> {
             return localVarFp.shopMetadataPatch(requestParameters.id, requestParameters.shopMetadataGet200Response, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Create shop metadata in bulk
+         * @param {ShopMetadataApiShopMetadataPostRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        shopMetadataPost(requestParameters: ShopMetadataApiShopMetadataPostRequest = {}, options?: AxiosRequestConfig): AxiosPromise<ShopMetadataPostRequest> {
+            return localVarFp.shopMetadataPost(requestParameters.shopMetadataPostRequest, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -4075,6 +4143,20 @@ export interface ShopMetadataApiShopMetadataPatchRequest {
 }
 
 /**
+ * Request parameters for shopMetadataPost operation in ShopMetadataApi.
+ * @export
+ * @interface ShopMetadataApiShopMetadataPostRequest
+ */
+export interface ShopMetadataApiShopMetadataPostRequest {
+    /**
+     * 
+     * @type {ShopMetadataPostRequest}
+     * @memberof ShopMetadataApiShopMetadataPost
+     */
+    readonly shopMetadataPostRequest?: ShopMetadataPostRequest
+}
+
+/**
  * ShopMetadataApi - object-oriented interface
  * @export
  * @class ShopMetadataApi
@@ -4103,6 +4185,18 @@ export class ShopMetadataApi extends BaseAPI {
      */
     public shopMetadataPatch(requestParameters: ShopMetadataApiShopMetadataPatchRequest, options?: AxiosRequestConfig) {
         return ShopMetadataApiFp(this.configuration).shopMetadataPatch(requestParameters.id, requestParameters.shopMetadataGet200Response, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Create shop metadata in bulk
+     * @param {ShopMetadataApiShopMetadataPostRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ShopMetadataApi
+     */
+    public shopMetadataPost(requestParameters: ShopMetadataApiShopMetadataPostRequest = {}, options?: AxiosRequestConfig) {
+        return ShopMetadataApiFp(this.configuration).shopMetadataPost(requestParameters.shopMetadataPostRequest, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
