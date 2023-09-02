@@ -1732,7 +1732,8 @@ export interface ShopMetadataModel {
 export const ShopMetadataModelShopServiceEnum = {
     Shopify: 'shopify',
     Shopline: 'shopline',
-    Woocommerce: 'woocommerce'
+    Woocommerce: 'woocommerce',
+    Boutir: 'boutir'
 } as const;
 
 export type ShopMetadataModelShopServiceEnum = typeof ShopMetadataModelShopServiceEnum[keyof typeof ShopMetadataModelShopServiceEnum];
