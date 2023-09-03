@@ -90,7 +90,7 @@ export function serialiseOrderMessage(
     afterItemsContent?: string
 ): string {
     const itemsContent = order.items
-        .map((item) => `${item.quantity} x ${item.name} ${item.currency} ${item.price}`)
+        .map((item) => `${item.quantity} x ${item.name} (${item.id}) ${item.currency} ${item.price}`)
         .join('\n')
 
     const total =
