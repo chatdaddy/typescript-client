@@ -102,7 +102,7 @@ export function serialiseOrderMessage(
 
     return `${DETECTION_TXT}${
         beforeItemsContent ? `\n${beforeItemsContent}` : ''
-    }\n${ORDER_DETAILS_START}\n${itemsContent}\nTotal: ${total}\n${remarksContent}${
+    }\n${ORDER_DETAILS_START}\n${itemsContent}\n\nTotal: ${total}\n${remarksContent}${
         afterItemsContent ? `\n${afterItemsContent}` : ''
     }`
 }
