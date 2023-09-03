@@ -100,9 +100,17 @@ export function serialiseOrderMessage(
 
     const remarksContent = order.remarks ? `Remarks: ${order.remarks}` : ''
 
-    return `${DETECTION_TXT}${
-        beforeItemsContent ? `\n${beforeItemsContent}` : ''
-    }\n${ORDER_DETAILS_START}\n${itemsContent}\n\nTotal: ${total}\n${remarksContent}${
-        afterItemsContent ? `\n${afterItemsContent}` : ''
-    }`
+    return (
+        DETECTION_TXT +
+        '\n' +
+        (beforeItemsContent ? beforeItemsContent + '\n' : '') +
+        ORDER_DETAILS_START +
+        '\n' +
+        itemsContent +
+        '\n\nTotal: ' +
+        total +
+        '\n' +
+        (remarksContent ? remarksContent + '\n' : '') +
+        (afterItemsContent ? afterItemsContent + '\n' : '')
+    )
 }
