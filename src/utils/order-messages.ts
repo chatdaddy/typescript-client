@@ -90,7 +90,7 @@ export function serialiseOrderMessage(
     afterItemsContent?: string
 ): string {
     const itemsContent = order.items
-        .map((item) => `(${item.quantity}) x ${item.name} (${item.currency} ${item.price})`)
+        .map((item) => `${item.quantity} x ${item.name} ${item.currency} ${item.price}`)
         .join('\n')
 
     const total =
@@ -102,5 +102,7 @@ export function serialiseOrderMessage(
 
     return `${DETECTION_TXT}${
         beforeItemsContent ? `\n${beforeItemsContent}` : ''
-    }\n${itemsContent}\nTotal: ${total}\n${remarksContent}${afterItemsContent ? `\n${afterItemsContent}` : ''}`
+    }\n${ORDER_DETAILS_START}\n${itemsContent}\nTotal: ${total}\n${remarksContent}${
+        afterItemsContent ? `\n${afterItemsContent}` : ''
+    }`
 }
