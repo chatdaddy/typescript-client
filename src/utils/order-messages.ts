@@ -86,8 +86,8 @@ export function checkAndParseOrderMessage(txt: string): SimpleOrder {
  */
 export function serialiseOrderMessage(
     order: OrderMessage,
-    beforeItemsContent: string,
-    afterItemsContent: string
+    beforeItemsContent?: string,
+    afterItemsContent?: string
 ): string {
     const itemsContent = order.items
         .map((item) => `(${item.quantity}) x ${item.name} (${item.currency} ${item.price})`)
@@ -100,5 +100,7 @@ export function serialiseOrderMessage(
 
     const remarksContent = order.remarks ? `Remarks: ${order.remarks}` : ''
 
-    return `${DETECTION_TXT}\n${beforeItemsContent}\n${itemsContent}\nTotal: ${total}\n${remarksContent}\n${afterItemsContent}`
+    return `${DETECTION_TXT}${
+        beforeItemsContent ? `\n${beforeItemsContent}` : ''
+    }\n${itemsContent}\nTotal: ${total}\n${remarksContent}${afterItemsContent ? `\n${afterItemsContent}` : ''}`
 }
