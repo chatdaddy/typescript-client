@@ -1,6 +1,8 @@
-import { SimpleOrder, SimpleOrderItem } from './types'
+import { OrderMessage, SimpleOrder, SimpleOrderItem } from './types'
 
-const DETECTION_TXT = 'Hi, I would like to place a ShopDaddy order'
+const DETECTION_TXT = 'Ordering from WhatsApp Shop:'
+const ORDER_DETAILS_START = 'My Order Details:'
+const REMARKS_LABEL = 'Total:'
 const MAX_UQ_PRODUCTS_IN_ORDER = 20
 
 /**
@@ -9,63 +11,94 @@ const MAX_UQ_PRODUCTS_IN_ORDER = 20
  *
  * {{DETECTION_TXT}}
  * - QUANTITYx ITEM_NAME (ITEM_ID)
- * remarks: REMARKS
+ * Total: TOTAL_AMOUNT
  *
  * @param txt Eg. of an order message:
- * Hi, I would like to place a ShopDaddy order
- * - 2x hamburger (ham_123)
- * - 1x cheeseburger (cheese_123)
- * - 1x fries (fries_123)
- * remarks: no pickles
+ * Ordering from WhatsApp Shop:
+ * ---other content-----
+ *
+ * My Order Details:
+ * - 2 x hamburger (ham_123)
+ * - 1 x cheeseburger (cheese_123)
+ * - 1 x fries (fries_123)
+ * Total: HKD 500
+ * Remarks: no pickles
  */
 export function checkAndParseOrderMessage(txt: string): SimpleOrder {
-	const lines = txt.trim().split('\n')
-	if(lines[0] !== DETECTION_TXT) {
-		return
-	}
+    const lines = txt.trim().split('\n')
+    if (lines[0] !== DETECTION_TXT) {
+        return
+    }
 
-	if((lines.length - 1) > MAX_UQ_PRODUCTS_IN_ORDER) {
-		throw new Error(`Too many unique products in order (max ${MAX_UQ_PRODUCTS_IN_ORDER})`)
-	}
+    const orderItems: SimpleOrderItem[] = []
+    let remarks: string | undefined
+    let isOrderDetailsSection = false
 
-	const orderItems: SimpleOrderItem[] = []
-	let remarks: string | undefined
-	for(let i = 1; i < lines.length; i++) {
-		if(i === lines.length - 1 && lines[i].startsWith('remarks:')) {
-			// trim out the "remarks: " part
-			remarks = lines[i].substring(8).trim()
-			continue
-		}
+    for (let i = 1; i < lines.length; i++) {
+        if (lines[i].startsWith(ORDER_DETAILS_START)) {
+            isOrderDetailsSection = true
+            continue
+        }
 
-		const match = lines[i]
-			.trim()
-			.match(/- (\d+)x (.+) \((.+)\)/i)
-		if(!match) {
-			throw new Error(`Invalid order item: ${lines[i]}`)
-		}
+        if (!isOrderDetailsSection) {
+            continue
+        }
 
-		orderItems.push({
-			quantity: +match[1],
-			name: match[2],
-			id: match[3]
-		})
-	}
+        if (lines[i].trim() === '') {
+            // Stop parsing when an empty line is encountered after order details
+            break
+        }
 
-	return { items: orderItems, remarks }
+        const match = lines[i].trim().match(/(\d+) x (.+) \((.+)\)/i)
+        if (!match) {
+            throw new Error(`Invalid order item: ${lines[i]}`)
+        }
+
+        if (orderItems.length >= MAX_UQ_PRODUCTS_IN_ORDER) {
+            throw new Error(`Order contains more than ${MAX_UQ_PRODUCTS_IN_ORDER} unique products`)
+        }
+
+        orderItems.push({
+            quantity: +match[1],
+            name: match[2],
+            id: match[3],
+        })
+    }
+
+    // Extract remarks if present
+    const totalLineIndex = lines.findIndex((line) => line.trim().startsWith(REMARKS_LABEL))
+    if (totalLineIndex !== -1) {
+        const remarksLine = lines[totalLineIndex + 1]
+        if (remarksLine && remarksLine.trim() !== '') {
+            remarks = remarksLine.trim()
+        }
+    }
+
+    return { items: orderItems, remarks }
 }
 
 /**
- * Serialises an order message from an array of order items.
+ * Serializes an order message from an array of order items.
+ *
+ * @param order Order details including items and remarks.
+ * @param beforeItemsContent Content to add before order items.
+ * @param afterItemsContent Content to add after order items.
  */
-export function serialiseOrderMessage({ items, remarks }: SimpleOrder) {
-	const lines = [
-		DETECTION_TXT,
-		...items.map(item => `- ${item.quantity}x ${item.name} (${item.id})`)
-	]
+export function serialiseOrderMessage(
+    order: OrderMessage,
+    beforeItemsContent: string,
+    afterItemsContent: string
+): string {
+    const itemsContent = order.items
+        .map((item) => `(${item.quantity}) x ${item.name} (${item.currency} ${item.price})`)
+        .join('\n')
 
-	if(remarks) {
-		lines.push(`remarks: ${remarks.replace(/\n/g, ' ')}`)
-	}
+    const total =
+        order.items.length > 0
+            ? `${order.items[0].currency} ${order.items.reduce((sum, item) => sum + item.price, 0)}`
+            : ''
 
-	return lines.join('\n')
+    const remarksContent = order.remarks ? `Remarks: ${order.remarks}` : ''
+
+    return `${DETECTION_TXT}\n${beforeItemsContent}\n${itemsContent}\nTotal: ${total}\n${remarksContent}\n${afterItemsContent}`
 }
