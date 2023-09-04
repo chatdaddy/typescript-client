@@ -1,6 +1,6 @@
 import { OrderMessage, SimpleOrder, SimpleOrderItem } from './types'
 
-const DETECTION_TXT = 'Ordering from WhatsApp Shop:'
+const DETECTION_TXT = 'WhatsApp Shop Order:'
 const ORDER_DETAILS_START = 'My Order Details:'
 const REMARKS_LABEL = 'Total:'
 const MAX_UQ_PRODUCTS_IN_ORDER = 20
