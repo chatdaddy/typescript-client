@@ -1,6 +1,6 @@
 import { OrderMessage, SimpleOrder, SimpleOrderItem } from './types'
 
-const DETECTION_TXT = 'Ordering from WhatsApp Shop'
+const DETECTION_TXT = 'Ordering from WhatsApp Shop:'
 const ORDER_DETAILS_START = 'My Order Details:'
 const REMARKS_LABEL = 'Total:'
 const MAX_UQ_PRODUCTS_IN_ORDER = 20
@@ -100,17 +100,19 @@ export function serialiseOrderMessage(
 
     const remarksContent = order.remarks ? `Remarks: ${order.remarks}` : ''
 
-    return (
-        DETECTION_TXT +
-        '\n\n' +
-        (beforeItemsContent ? beforeItemsContent + '\n' : '') +
-        ORDER_DETAILS_START +
-        '\n' +
-        itemsContent +
-        '\n\nTotal: ' +
-        total +
-        '\n' +
-        (remarksContent ? remarksContent + '\n' : '') +
-        (afterItemsContent ? afterItemsContent + '\n' : '')
-    )
+    const lines = [`${DETECTION_TXT}\n`]
+    if (beforeItemsContent) {
+        lines.push(beforeItemsContent)
+    }
+    lines.push(ORDER_DETAILS_START)
+    lines.push(itemsContent)
+    lines.push(`\nTotal: ${total}`)
+    if (remarksContent) {
+        lines.push(remarksContent)
+    }
+    if (afterItemsContent) {
+        lines.push(afterItemsContent)
+    }
+
+    return lines.join('\n')
 }
