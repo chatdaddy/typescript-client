@@ -238,6 +238,18 @@ export interface CampaignContactFilters {
      * @memberof CampaignContactFilters
      */
     'accountId'?: Array<string>;
+    /**
+     * Get these contact ids
+     * @type {Array<string>}
+     * @memberof CampaignContactFilters
+     */
+    'contacts'?: Array<string>;
+    /**
+     * Do not get these contactIds
+     * @type {Array<string>}
+     * @memberof CampaignContactFilters
+     */
+    'notContacts'?: Array<string>;
 }
 
 export const CampaignContactFiltersTypeEnum = {
