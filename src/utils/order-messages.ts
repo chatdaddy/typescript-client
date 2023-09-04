@@ -1,6 +1,6 @@
 import { OrderMessage, SimpleOrder, SimpleOrderItem } from './types'
 
-const DETECTION_TXT = 'WhatsApp Shop Order:'
+const DETECTION_TXT = 'Ordering from WhatsApp Shop'
 const ORDER_DETAILS_START = 'My Order Details:'
 const REMARKS_LABEL = 'Total:'
 const MAX_UQ_PRODUCTS_IN_ORDER = 20
@@ -102,7 +102,7 @@ export function serialiseOrderMessage(
 
     return (
         DETECTION_TXT +
-        '\n' +
+        '\n\n' +
         (beforeItemsContent ? beforeItemsContent + '\n' : '') +
         ORDER_DETAILS_START +
         '\n' +
