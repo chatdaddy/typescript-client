@@ -1054,6 +1054,12 @@ export interface BotInsertDataActionsInnerAllOf1Message {
     'input'?: BotInsertDataActionsInnerAllOf1MessageInput;
     /**
      * 
+     * @type {BotInsertDataActionsInnerAllOf1MessageCondition}
+     * @memberof BotInsertDataActionsInnerAllOf1Message
+     */
+    'condition'?: BotInsertDataActionsInnerAllOf1MessageCondition;
+    /**
+     * 
      * @type {string}
      * @memberof BotInsertDataActionsInnerAllOf1Message
      */
@@ -1188,6 +1194,130 @@ export interface BotInsertDataActionsInnerAllOf1MessageButtonsInnerPosition {
      * @memberof BotInsertDataActionsInnerAllOf1MessageButtonsInnerPosition
      */
     'y': number;
+}
+/**
+ * Groups of validations
+ * @export
+ * @interface BotInsertDataActionsInnerAllOf1MessageCondition
+ */
+export interface BotInsertDataActionsInnerAllOf1MessageCondition {
+    /**
+     * 
+     * @type {BotInsertDataActionsInnerAllOf1MessageConditionNoValidationMatch}
+     * @memberof BotInsertDataActionsInnerAllOf1MessageCondition
+     */
+    'noValidationMatch'?: BotInsertDataActionsInnerAllOf1MessageConditionNoValidationMatch;
+    /**
+     * List of conditions to validate
+     * @type {Array<BotInsertDataActionsInnerAllOf1MessageConditionGroupsInner>}
+     * @memberof BotInsertDataActionsInnerAllOf1MessageCondition
+     */
+    'groups'?: Array<BotInsertDataActionsInnerAllOf1MessageConditionGroupsInner>;
+}
+/**
+ * 
+ * @export
+ * @interface BotInsertDataActionsInnerAllOf1MessageConditionGroupsInner
+ */
+export interface BotInsertDataActionsInnerAllOf1MessageConditionGroupsInner {
+    /**
+     * Operator for all validations
+     * @type {string}
+     * @memberof BotInsertDataActionsInnerAllOf1MessageConditionGroupsInner
+     */
+    'operator': BotInsertDataActionsInnerAllOf1MessageConditionGroupsInnerOperatorEnum;
+    /**
+     * Fields to validate
+     * @type {Array<BotInsertDataActionsInnerAllOf1MessageConditionGroupsInnerValidationInner>}
+     * @memberof BotInsertDataActionsInnerAllOf1MessageConditionGroupsInner
+     */
+    'validation': Array<BotInsertDataActionsInnerAllOf1MessageConditionGroupsInnerValidationInner>;
+    /**
+     * Trigger action if this validation passed
+     * @type {string}
+     * @memberof BotInsertDataActionsInnerAllOf1MessageConditionGroupsInner
+     */
+    'triggerActionId'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof BotInsertDataActionsInnerAllOf1MessageConditionGroupsInner
+     */
+    'triggerBotId'?: string | null;
+}
+
+export const BotInsertDataActionsInnerAllOf1MessageConditionGroupsInnerOperatorEnum = {
+    And: 'and',
+    Or: 'or'
+} as const;
+
+export type BotInsertDataActionsInnerAllOf1MessageConditionGroupsInnerOperatorEnum = typeof BotInsertDataActionsInnerAllOf1MessageConditionGroupsInnerOperatorEnum[keyof typeof BotInsertDataActionsInnerAllOf1MessageConditionGroupsInnerOperatorEnum];
+
+/**
+ * 
+ * @export
+ * @interface BotInsertDataActionsInnerAllOf1MessageConditionGroupsInnerValidationInner
+ */
+export interface BotInsertDataActionsInnerAllOf1MessageConditionGroupsInnerValidationInner {
+    /**
+     * 
+     * @type {string}
+     * @memberof BotInsertDataActionsInnerAllOf1MessageConditionGroupsInnerValidationInner
+     */
+    'propertyPath': string;
+    /**
+     * 
+     * @type {Array<BotInsertDataActionsInnerAllOf1MessageConditionGroupsInnerValidationInnerValuesInner>}
+     * @memberof BotInsertDataActionsInnerAllOf1MessageConditionGroupsInnerValidationInner
+     */
+    'values': Array<BotInsertDataActionsInnerAllOf1MessageConditionGroupsInnerValidationInnerValuesInner>;
+    /**
+     * 
+     * @type {string}
+     * @memberof BotInsertDataActionsInnerAllOf1MessageConditionGroupsInnerValidationInner
+     */
+    'operator': BotInsertDataActionsInnerAllOf1MessageConditionGroupsInnerValidationInnerOperatorEnum;
+}
+
+export const BotInsertDataActionsInnerAllOf1MessageConditionGroupsInnerValidationInnerOperatorEnum = {
+    Equals: 'equals',
+    NotEquals: 'notEquals',
+    GreaterThan: 'greaterThan',
+    LessThan: 'lessThan',
+    GreaterThanOrEquals: 'greaterThanOrEquals',
+    LessThanOrEquals: 'lessThanOrEquals',
+    Contains: 'contains',
+    NotContains: 'notContains',
+    StartsWith: 'startsWith',
+    EndsWith: 'endsWith'
+} as const;
+
+export type BotInsertDataActionsInnerAllOf1MessageConditionGroupsInnerValidationInnerOperatorEnum = typeof BotInsertDataActionsInnerAllOf1MessageConditionGroupsInnerValidationInnerOperatorEnum[keyof typeof BotInsertDataActionsInnerAllOf1MessageConditionGroupsInnerValidationInnerOperatorEnum];
+
+/**
+ * @type BotInsertDataActionsInnerAllOf1MessageConditionGroupsInnerValidationInnerValuesInner
+ * @export
+ */
+export type BotInsertDataActionsInnerAllOf1MessageConditionGroupsInnerValidationInnerValuesInner = number | string;
+
+/**
+ * 
+ * @export
+ * @interface BotInsertDataActionsInnerAllOf1MessageConditionNoValidationMatch
+ */
+export interface BotInsertDataActionsInnerAllOf1MessageConditionNoValidationMatch {
+    /**
+     * Trigger action if all validations failed
+     * @type {string}
+     * @memberof BotInsertDataActionsInnerAllOf1MessageConditionNoValidationMatch
+     */
+    'triggerActionId': string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof BotInsertDataActionsInnerAllOf1MessageConditionNoValidationMatch
+     */
+    'triggerBotId'?: string | null;
 }
 /**
  * 
@@ -1467,10 +1597,10 @@ export interface BotInsertDataStartTriggersInner {
     'sendInterval'?: number;
     /**
      * 
-     * @type {Array<BotInsertDataStartTriggersInnerConditionsInner>}
+     * @type {Array<BotInsertDataActionsInnerAllOf1MessageConditionGroupsInnerValidationInner>}
      * @memberof BotInsertDataStartTriggersInner
      */
-    'conditions'?: Array<BotInsertDataStartTriggersInnerConditionsInner>;
+    'conditions'?: Array<BotInsertDataActionsInnerAllOf1MessageConditionGroupsInnerValidationInner>;
     /**
      * 
      * @type {{ [key: string]: any; }}
@@ -1514,53 +1644,6 @@ export interface BotInsertDataStartTriggersInner {
      */
     'instances'?: Array<BotInsertDataStartTriggersInnerInstancesInner>;
 }
-/**
- * 
- * @export
- * @interface BotInsertDataStartTriggersInnerConditionsInner
- */
-export interface BotInsertDataStartTriggersInnerConditionsInner {
-    /**
-     * 
-     * @type {string}
-     * @memberof BotInsertDataStartTriggersInnerConditionsInner
-     */
-    'propertyPath': string;
-    /**
-     * 
-     * @type {Array<BotInsertDataStartTriggersInnerConditionsInnerValuesInner>}
-     * @memberof BotInsertDataStartTriggersInnerConditionsInner
-     */
-    'values': Array<BotInsertDataStartTriggersInnerConditionsInnerValuesInner>;
-    /**
-     * 
-     * @type {string}
-     * @memberof BotInsertDataStartTriggersInnerConditionsInner
-     */
-    'operator': BotInsertDataStartTriggersInnerConditionsInnerOperatorEnum;
-}
-
-export const BotInsertDataStartTriggersInnerConditionsInnerOperatorEnum = {
-    Equals: 'equals',
-    NotEquals: 'notEquals',
-    GreaterThan: 'greaterThan',
-    LessThan: 'lessThan',
-    GreaterThanOrEquals: 'greaterThanOrEquals',
-    LessThanOrEquals: 'lessThanOrEquals',
-    Contains: 'contains',
-    NotContains: 'notContains',
-    StartsWith: 'startsWith',
-    EndsWith: 'endsWith'
-} as const;
-
-export type BotInsertDataStartTriggersInnerConditionsInnerOperatorEnum = typeof BotInsertDataStartTriggersInnerConditionsInnerOperatorEnum[keyof typeof BotInsertDataStartTriggersInnerConditionsInnerOperatorEnum];
-
-/**
- * @type BotInsertDataStartTriggersInnerConditionsInnerValuesInner
- * @export
- */
-export type BotInsertDataStartTriggersInnerConditionsInnerValuesInner = number | string;
-
 /**
  * 
  * @export

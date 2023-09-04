@@ -573,6 +573,83 @@ export interface BotMessageButton {
     'position'?: Position;
 }
 /**
+ * Groups of validations
+ * @export
+ * @interface BotMessageCondition
+ */
+export interface BotMessageCondition {
+    /**
+     * 
+     * @type {BotMessageConditionNoValidationMatch}
+     * @memberof BotMessageCondition
+     */
+    'noValidationMatch'?: BotMessageConditionNoValidationMatch;
+    /**
+     * List of conditions to validate
+     * @type {Array<BotMessageConditionGroupsInner>}
+     * @memberof BotMessageCondition
+     */
+    'groups'?: Array<BotMessageConditionGroupsInner>;
+}
+/**
+ * 
+ * @export
+ * @interface BotMessageConditionGroupsInner
+ */
+export interface BotMessageConditionGroupsInner {
+    /**
+     * Operator for all validations
+     * @type {string}
+     * @memberof BotMessageConditionGroupsInner
+     */
+    'operator': BotMessageConditionGroupsInnerOperatorEnum;
+    /**
+     * Fields to validate
+     * @type {Array<BotCondition>}
+     * @memberof BotMessageConditionGroupsInner
+     */
+    'validation': Array<BotCondition>;
+    /**
+     * Trigger action if this validation passed
+     * @type {string}
+     * @memberof BotMessageConditionGroupsInner
+     */
+    'triggerActionId'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof BotMessageConditionGroupsInner
+     */
+    'triggerBotId'?: string | null;
+}
+
+export const BotMessageConditionGroupsInnerOperatorEnum = {
+    And: 'and',
+    Or: 'or'
+} as const;
+
+export type BotMessageConditionGroupsInnerOperatorEnum = typeof BotMessageConditionGroupsInnerOperatorEnum[keyof typeof BotMessageConditionGroupsInnerOperatorEnum];
+
+/**
+ * 
+ * @export
+ * @interface BotMessageConditionNoValidationMatch
+ */
+export interface BotMessageConditionNoValidationMatch {
+    /**
+     * Trigger action if all validations failed
+     * @type {string}
+     * @memberof BotMessageConditionNoValidationMatch
+     */
+    'triggerActionId': string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof BotMessageConditionNoValidationMatch
+     */
+    'triggerBotId'?: string | null;
+}
+/**
  * 
  * @export
  * @interface BotMessageDelay
@@ -1786,6 +1863,12 @@ export interface MessageObj {
      * @memberof MessageObj
      */
     'input'?: BotMessageInput;
+    /**
+     * 
+     * @type {BotMessageCondition}
+     * @memberof MessageObj
+     */
+    'condition'?: BotMessageCondition;
     /**
      * 
      * @type {string}
