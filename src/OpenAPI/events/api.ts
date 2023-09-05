@@ -850,6 +850,12 @@ export interface BotInsertData {
      * @memberof BotInsertData
      */
     'updatedAt'?: string;
+    /**
+     * 
+     * @type {Array<BotInsertDataSharedSlugsInner>}
+     * @memberof BotInsertData
+     */
+    'sharedSlugs'?: Array<BotInsertDataSharedSlugsInner>;
 }
 /**
  * 
@@ -1552,6 +1558,25 @@ export interface BotInsertDataNotesInner {
      * @memberof BotInsertDataNotesInner
      */
     'remove'?: boolean;
+}
+/**
+ * 
+ * @export
+ * @interface BotInsertDataSharedSlugsInner
+ */
+export interface BotInsertDataSharedSlugsInner {
+    /**
+     * 
+     * @type {string}
+     * @memberof BotInsertDataSharedSlugsInner
+     */
+    'slug': string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof BotInsertDataSharedSlugsInner
+     */
+    'editable'?: boolean;
 }
 /**
  * 
@@ -2277,6 +2302,12 @@ export interface BotUpdateData {
      * @memberof BotUpdateData
      */
     'updatedAt'?: string;
+    /**
+     * 
+     * @type {Array<BotInsertDataSharedSlugsInner>}
+     * @memberof BotUpdateData
+     */
+    'sharedSlugs'?: Array<BotInsertDataSharedSlugsInner>;
 }
 /**
  * 

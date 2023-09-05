@@ -481,6 +481,12 @@ export interface Bot {
      * @memberof Bot
      */
     'updatedAt'?: string;
+    /**
+     * Slugs which is generated and shared with other to view the message flow
+     * @type {Array<SharedSlug>}
+     * @memberof Bot
+     */
+    'sharedSlugs'?: Array<SharedSlug>;
 }
 /**
  * 
@@ -859,6 +865,25 @@ export interface BotPatch {
      * @memberof BotPatch
      */
     'folderId'?: string;
+}
+/**
+ * 
+ * @export
+ * @interface BotShareRequest
+ */
+export interface BotShareRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof BotShareRequest
+     */
+    'botId': string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof BotShareRequest
+     */
+    'editable'?: boolean;
 }
 /**
  * 
@@ -2006,6 +2031,25 @@ export interface ServiceResponse {
      * @memberof ServiceResponse
      */
     'body'?: { [key: string]: any; };
+}
+/**
+ * 
+ * @export
+ * @interface SharedSlug
+ */
+export interface SharedSlug {
+    /**
+     * 
+     * @type {string}
+     * @memberof SharedSlug
+     */
+    'slug': string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof SharedSlug
+     */
+    'editable'?: boolean;
 }
 /**
  * 
@@ -4047,6 +4091,210 @@ export class BotsApi extends BaseAPI {
 
 
 /**
+ * DefaultApi - axios parameter creator
+ * @export
+ */
+export const DefaultApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @summary Create new slug, which is used the share the bot
+         * @param {BotShareRequest} [botShareRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        botShare: async (botShareRequest?: BotShareRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/bot/share`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["TEMPLATES_READ"], configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(botShareRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Get the bot which is associated with token
+         * @param {string} slug The slug of the bot
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getShareBot: async (slug: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'slug' is not null or undefined
+            assertParamExists('getShareBot', 'slug', slug)
+            const localVarPath = `/bot/share/{slug}`
+                .replace(`{${"slug"}}`, encodeURIComponent(String(slug)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * DefaultApi - functional programming interface
+ * @export
+ */
+export const DefaultApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = DefaultApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * 
+         * @summary Create new slug, which is used the share the bot
+         * @param {BotShareRequest} [botShareRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async botShare(botShareRequest?: BotShareRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SharedSlug>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.botShare(botShareRequest, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary Get the bot which is associated with token
+         * @param {string} slug The slug of the bot
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getShareBot(slug: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Bot>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getShareBot(slug, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+    }
+};
+
+/**
+ * DefaultApi - factory interface
+ * @export
+ */
+export const DefaultApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = DefaultApiFp(configuration)
+    return {
+        /**
+         * 
+         * @summary Create new slug, which is used the share the bot
+         * @param {DefaultApiBotShareRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        botShare(requestParameters: DefaultApiBotShareRequest = {}, options?: AxiosRequestConfig): AxiosPromise<SharedSlug> {
+            return localVarFp.botShare(requestParameters.botShareRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Get the bot which is associated with token
+         * @param {DefaultApiGetShareBotRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getShareBot(requestParameters: DefaultApiGetShareBotRequest, options?: AxiosRequestConfig): AxiosPromise<Bot> {
+            return localVarFp.getShareBot(requestParameters.slug, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * Request parameters for botShare operation in DefaultApi.
+ * @export
+ * @interface DefaultApiBotShareRequest
+ */
+export interface DefaultApiBotShareRequest {
+    /**
+     * 
+     * @type {BotShareRequest}
+     * @memberof DefaultApiBotShare
+     */
+    readonly botShareRequest?: BotShareRequest
+}
+
+/**
+ * Request parameters for getShareBot operation in DefaultApi.
+ * @export
+ * @interface DefaultApiGetShareBotRequest
+ */
+export interface DefaultApiGetShareBotRequest {
+    /**
+     * The slug of the bot
+     * @type {string}
+     * @memberof DefaultApiGetShareBot
+     */
+    readonly slug: string
+}
+
+/**
+ * DefaultApi - object-oriented interface
+ * @export
+ * @class DefaultApi
+ * @extends {BaseAPI}
+ */
+export class DefaultApi extends BaseAPI {
+    /**
+     * 
+     * @summary Create new slug, which is used the share the bot
+     * @param {DefaultApiBotShareRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApi
+     */
+    public botShare(requestParameters: DefaultApiBotShareRequest = {}, options?: AxiosRequestConfig) {
+        return DefaultApiFp(this.configuration).botShare(requestParameters.botShareRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Get the bot which is associated with token
+     * @param {DefaultApiGetShareBotRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApi
+     */
+    public getShareBot(requestParameters: DefaultApiGetShareBotRequest, options?: AxiosRequestConfig) {
+        return DefaultApiFp(this.configuration).getShareBot(requestParameters.slug, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+/**
  * FoldersApi - axios parameter creator
  * @export
  */
@@ -4462,6 +4710,132 @@ export class FoldersApi extends BaseAPI {
      */
     public folderUpdate(requestParameters: FoldersApiFolderUpdateRequest, options?: AxiosRequestConfig) {
         return FoldersApiFp(this.configuration).folderUpdate(requestParameters.folderId, requestParameters.folderUpdateRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+/**
+ * SlugApi - axios parameter creator
+ * @export
+ */
+export const SlugApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @summary Deletes list of slugs
+         * @param {Array<string>} slugs 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        slugsDelete: async (slugs: Array<string>, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'slugs' is not null or undefined
+            assertParamExists('slugsDelete', 'slugs', slugs)
+            const localVarPath = `/bot/share`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["TEMPLATES_DELETE"], configuration)
+
+            if (slugs) {
+                localVarQueryParameter['slugs'] = slugs;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * SlugApi - functional programming interface
+ * @export
+ */
+export const SlugApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = SlugApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * 
+         * @summary Deletes list of slugs
+         * @param {Array<string>} slugs 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async slugsDelete(slugs: Array<string>, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.slugsDelete(slugs, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+    }
+};
+
+/**
+ * SlugApi - factory interface
+ * @export
+ */
+export const SlugApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = SlugApiFp(configuration)
+    return {
+        /**
+         * 
+         * @summary Deletes list of slugs
+         * @param {SlugApiSlugsDeleteRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        slugsDelete(requestParameters: SlugApiSlugsDeleteRequest, options?: AxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.slugsDelete(requestParameters.slugs, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * Request parameters for slugsDelete operation in SlugApi.
+ * @export
+ * @interface SlugApiSlugsDeleteRequest
+ */
+export interface SlugApiSlugsDeleteRequest {
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof SlugApiSlugsDelete
+     */
+    readonly slugs: Array<string>
+}
+
+/**
+ * SlugApi - object-oriented interface
+ * @export
+ * @class SlugApi
+ * @extends {BaseAPI}
+ */
+export class SlugApi extends BaseAPI {
+    /**
+     * 
+     * @summary Deletes list of slugs
+     * @param {SlugApiSlugsDeleteRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof SlugApi
+     */
+    public slugsDelete(requestParameters: SlugApiSlugsDeleteRequest, options?: AxiosRequestConfig) {
+        return SlugApiFp(this.configuration).slugsDelete(requestParameters.slugs, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
