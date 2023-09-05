@@ -1650,6 +1650,12 @@ export interface WebPushNotification {
      */
     'onlineOnly'?: boolean;
     /**
+     * 
+     * @type {string}
+     * @memberof WebPushNotification
+     */
+    'teamId': string;
+    /**
      * The path to open when the notification is clicked
      * @type {string}
      * @memberof WebPushNotification
@@ -1692,6 +1698,12 @@ export interface WebPushNotificationAllOf {
      * @memberof WebPushNotificationAllOf
      */
     'onlineOnly'?: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof WebPushNotificationAllOf
+     */
+    'teamId': string;
 }
 /**
  * 
