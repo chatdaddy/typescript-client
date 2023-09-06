@@ -401,31 +401,6 @@ export type NotificationDestination = typeof NotificationDestination[keyof typeo
 /**
  * 
  * @export
- * @interface NotificationMiscData
- */
-export interface NotificationMiscData {
-    /**
-     * The path to open when the notification is clicked
-     * @type {string}
-     * @memberof NotificationMiscData
-     */
-    'path'?: string;
-    /**
-     * The image to show in the notification
-     * @type {string}
-     * @memberof NotificationMiscData
-     */
-    'imgUrl'?: string;
-    /**
-     * 
-     * @type {{ [key: string]: any; }}
-     * @memberof NotificationMiscData
-     */
-    'context'?: { [key: string]: any; };
-}
-/**
- * 
- * @export
  * @interface NotificationPreferences
  */
 export interface NotificationPreferences {
@@ -1673,37 +1648,6 @@ export interface WebPushNotification {
      * @memberof WebPushNotification
      */
     'context'?: { [key: string]: any; };
-}
-/**
- * 
- * @export
- * @interface WebPushNotificationAllOf
- */
-export interface WebPushNotificationAllOf {
-    /**
-     * 
-     * @type {string}
-     * @memberof WebPushNotificationAllOf
-     */
-    'title': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof WebPushNotificationAllOf
-     */
-    'text': string;
-    /**
-     * When true, the notification is only shown if the user is online
-     * @type {boolean}
-     * @memberof WebPushNotificationAllOf
-     */
-    'onlineOnly'?: boolean;
-    /**
-     * 
-     * @type {string}
-     * @memberof WebPushNotificationAllOf
-     */
-    'teamId': string;
 }
 /**
  * 

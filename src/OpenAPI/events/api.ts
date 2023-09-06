@@ -5626,62 +5626,6 @@ export interface PushNotificationData {
 /**
  * 
  * @export
- * @interface PushNotificationDataAllOf
- */
-export interface PushNotificationDataAllOf {
-    /**
-     * 
-     * @type {string}
-     * @memberof PushNotificationDataAllOf
-     */
-    'title': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof PushNotificationDataAllOf
-     */
-    'text': string;
-    /**
-     * When true, the notification is only shown if the user is online
-     * @type {boolean}
-     * @memberof PushNotificationDataAllOf
-     */
-    'onlineOnly'?: boolean;
-    /**
-     * 
-     * @type {string}
-     * @memberof PushNotificationDataAllOf
-     */
-    'teamId': string;
-}
-/**
- * 
- * @export
- * @interface PushNotificationDataAllOf1
- */
-export interface PushNotificationDataAllOf1 {
-    /**
-     * The path to open when the notification is clicked
-     * @type {string}
-     * @memberof PushNotificationDataAllOf1
-     */
-    'path'?: string;
-    /**
-     * The image to show in the notification
-     * @type {string}
-     * @memberof PushNotificationDataAllOf1
-     */
-    'imgUrl'?: string;
-    /**
-     * 
-     * @type {{ [key: string]: any; }}
-     * @memberof PushNotificationDataAllOf1
-     */
-    'context'?: { [key: string]: any; };
-}
-/**
- * 
- * @export
  * @interface StaleAccountNotification
  */
 export interface StaleAccountNotification {
