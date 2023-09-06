@@ -2990,6 +2990,7 @@ export const EventName = {
     StaleAccountNotification: 'stale-account-notification',
     UnreadChatsNotification: 'unread-chats-notification',
     MembershipactionInsert: 'membershipaction-insert',
+    PushNotification: 'push-notification',
     ContactInsert: 'contact-insert',
     ContactUpdate: 'contact-update',
     ContactDelete: 'contact-delete',
@@ -3113,7 +3114,7 @@ export type EventSubscriptionType = typeof EventSubscriptionType[keyof typeof Ev
  * The request body you\'ll receive in a webhook
  * @export
  */
-export type EventWebhookData = AccountDelete | AccountInsert | AccountUpdate | ActionExecute | BotDelete | BotInsert | BotUpdate | ChatDelete | ChatInsert | ChatUpdate | ContactDelete | ContactInsert | ContactUpdate | FewMessagesLeft | GroupUpdate | MembershipactionInsert | MessageDelete | MessageInsert | MessageUpdate | OrderInsert | PlatformproductDelete | PlatformproductInsert | PlatformproductUpdate | PresenceUpdate | StaleAccountNotification | TeamDelete | TeamInsert | TeamUpdate | TeammemberDelete | TeammemberInsert | TeammemberUpdate | TrackingDelete | TrackingInsert | TrackingUpdate | UnreadChatsNotification | UserDelete | UserInsert | UserUpdate;
+export type EventWebhookData = AccountDelete | AccountInsert | AccountUpdate | ActionExecute | BotDelete | BotInsert | BotUpdate | ChatDelete | ChatInsert | ChatUpdate | ContactDelete | ContactInsert | ContactUpdate | FewMessagesLeft | GroupUpdate | MembershipactionInsert | MessageDelete | MessageInsert | MessageUpdate | OrderInsert | PlatformproductDelete | PlatformproductInsert | PlatformproductUpdate | PresenceUpdate | PushNotification | StaleAccountNotification | TeamDelete | TeamInsert | TeamUpdate | TeammemberDelete | TeammemberInsert | TeammemberUpdate | TrackingDelete | TrackingInsert | TrackingUpdate | UnreadChatsNotification | UserDelete | UserInsert | UserUpdate;
 
 /**
  * 
@@ -5550,6 +5551,137 @@ export type PurchasedetailUpdateDataStatusEnum = typeof PurchasedetailUpdateData
 /**
  * 
  * @export
+ * @interface PushNotification
+ */
+export interface PushNotification {
+    /**
+     * 
+     * @type {string}
+     * @memberof PushNotification
+     */
+    'event': PushNotificationEventEnum;
+    /**
+     * 
+     * @type {Array<PushNotificationData>}
+     * @memberof PushNotification
+     */
+    'data': Array<PushNotificationData>;
+}
+
+export const PushNotificationEventEnum = {
+    PushNotification: 'push-notification'
+} as const;
+
+export type PushNotificationEventEnum = typeof PushNotificationEventEnum[keyof typeof PushNotificationEventEnum];
+
+/**
+ * 
+ * @export
+ * @interface PushNotificationData
+ */
+export interface PushNotificationData {
+    /**
+     * 
+     * @type {string}
+     * @memberof PushNotificationData
+     */
+    'title': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof PushNotificationData
+     */
+    'text': string;
+    /**
+     * When true, the notification is only shown if the user is online
+     * @type {boolean}
+     * @memberof PushNotificationData
+     */
+    'onlineOnly'?: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof PushNotificationData
+     */
+    'teamId': string;
+    /**
+     * The path to open when the notification is clicked
+     * @type {string}
+     * @memberof PushNotificationData
+     */
+    'path'?: string;
+    /**
+     * The image to show in the notification
+     * @type {string}
+     * @memberof PushNotificationData
+     */
+    'imgUrl'?: string;
+    /**
+     * 
+     * @type {{ [key: string]: any; }}
+     * @memberof PushNotificationData
+     */
+    'context'?: { [key: string]: any; };
+}
+/**
+ * 
+ * @export
+ * @interface PushNotificationDataAllOf
+ */
+export interface PushNotificationDataAllOf {
+    /**
+     * 
+     * @type {string}
+     * @memberof PushNotificationDataAllOf
+     */
+    'title': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof PushNotificationDataAllOf
+     */
+    'text': string;
+    /**
+     * When true, the notification is only shown if the user is online
+     * @type {boolean}
+     * @memberof PushNotificationDataAllOf
+     */
+    'onlineOnly'?: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof PushNotificationDataAllOf
+     */
+    'teamId': string;
+}
+/**
+ * 
+ * @export
+ * @interface PushNotificationDataAllOf1
+ */
+export interface PushNotificationDataAllOf1 {
+    /**
+     * The path to open when the notification is clicked
+     * @type {string}
+     * @memberof PushNotificationDataAllOf1
+     */
+    'path'?: string;
+    /**
+     * The image to show in the notification
+     * @type {string}
+     * @memberof PushNotificationDataAllOf1
+     */
+    'imgUrl'?: string;
+    /**
+     * 
+     * @type {{ [key: string]: any; }}
+     * @memberof PushNotificationDataAllOf1
+     */
+    'context'?: { [key: string]: any; };
+}
+/**
+ * 
+ * @export
  * @interface StaleAccountNotification
  */
 export interface StaleAccountNotification {
@@ -7759,6 +7891,48 @@ export const EventSubscriptionApiAxiosParamCreator = function (configuration?: C
         },
         /**
          * 
+         * @summary Send message to subscription
+         * @param {string} id 
+         * @param {EventWebhookData} [eventWebhookData] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        subscriptionsMessagePost: async (id: string, eventWebhookData?: EventWebhookData, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('subscriptionsMessagePost', 'id', id)
+            const localVarPath = `/subscriptions/{id}/message`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["ADMIN_PANEL_ACCESS"], configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(eventWebhookData, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
          * @summary Update a webhook subscription
          * @param {string} id 
          * @param {UpdateEventSubscription} [updateEventSubscription] 
@@ -7873,6 +8047,18 @@ export const EventSubscriptionApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
+         * @summary Send message to subscription
+         * @param {string} id 
+         * @param {EventWebhookData} [eventWebhookData] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async subscriptionsMessagePost(id: string, eventWebhookData?: EventWebhookData, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.subscriptionsMessagePost(id, eventWebhookData, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
          * @summary Update a webhook subscription
          * @param {string} id 
          * @param {UpdateEventSubscription} [updateEventSubscription] 
@@ -7923,6 +8109,16 @@ export const EventSubscriptionApiFactory = function (configuration?: Configurati
          */
         subscriptionsGet(requestParameters: EventSubscriptionApiSubscriptionsGetRequest = {}, options?: AxiosRequestConfig): AxiosPromise<SubscriptionsGet200Response> {
             return localVarFp.subscriptionsGet(requestParameters.type, requestParameters.accountId, requestParameters.userId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Send message to subscription
+         * @param {EventSubscriptionApiSubscriptionsMessagePostRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        subscriptionsMessagePost(requestParameters: EventSubscriptionApiSubscriptionsMessagePostRequest, options?: AxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.subscriptionsMessagePost(requestParameters.id, requestParameters.eventWebhookData, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -7990,6 +8186,27 @@ export interface EventSubscriptionApiSubscriptionsGetRequest {
 }
 
 /**
+ * Request parameters for subscriptionsMessagePost operation in EventSubscriptionApi.
+ * @export
+ * @interface EventSubscriptionApiSubscriptionsMessagePostRequest
+ */
+export interface EventSubscriptionApiSubscriptionsMessagePostRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof EventSubscriptionApiSubscriptionsMessagePost
+     */
+    readonly id: string
+
+    /**
+     * 
+     * @type {EventWebhookData}
+     * @memberof EventSubscriptionApiSubscriptionsMessagePost
+     */
+    readonly eventWebhookData?: EventWebhookData
+}
+
+/**
  * Request parameters for subscriptionsPatch operation in EventSubscriptionApi.
  * @export
  * @interface EventSubscriptionApiSubscriptionsPatchRequest
@@ -8053,6 +8270,18 @@ export class EventSubscriptionApi extends BaseAPI {
      */
     public subscriptionsGet(requestParameters: EventSubscriptionApiSubscriptionsGetRequest = {}, options?: AxiosRequestConfig) {
         return EventSubscriptionApiFp(this.configuration).subscriptionsGet(requestParameters.type, requestParameters.accountId, requestParameters.userId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Send message to subscription
+     * @param {EventSubscriptionApiSubscriptionsMessagePostRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof EventSubscriptionApi
+     */
+    public subscriptionsMessagePost(requestParameters: EventSubscriptionApiSubscriptionsMessagePostRequest, options?: AxiosRequestConfig) {
+        return EventSubscriptionApiFp(this.configuration).subscriptionsMessagePost(requestParameters.id, requestParameters.eventWebhookData, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
