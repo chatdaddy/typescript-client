@@ -242,7 +242,8 @@ export const ChatbotTrainingStatusEnum = {
     Pending: 'pending',
     Running: 'running',
     Finished: 'finished',
-    Failed: 'failed'
+    Failed: 'failed',
+    Aborted: 'aborted'
 } as const;
 
 export type ChatbotTrainingStatusEnum = typeof ChatbotTrainingStatusEnum[keyof typeof ChatbotTrainingStatusEnum];
@@ -301,7 +302,8 @@ export const ChatbotAllOfTrainingStatusEnum = {
     Pending: 'pending',
     Running: 'running',
     Finished: 'finished',
-    Failed: 'failed'
+    Failed: 'failed',
+    Aborted: 'aborted'
 } as const;
 
 export type ChatbotAllOfTrainingStatusEnum = typeof ChatbotAllOfTrainingStatusEnum[keyof typeof ChatbotAllOfTrainingStatusEnum];
@@ -581,7 +583,8 @@ export const JobStatus = {
     Pending: 'pending',
     Running: 'running',
     Finished: 'finished',
-    Failed: 'failed'
+    Failed: 'failed',
+    Aborted: 'aborted'
 } as const;
 
 export type JobStatus = typeof JobStatus[keyof typeof JobStatus];
