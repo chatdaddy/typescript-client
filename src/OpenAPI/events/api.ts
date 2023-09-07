@@ -4956,7 +4956,7 @@ export interface PlatformproductInsertData {
      * @type {string}
      * @memberof PlatformproductInsertData
      */
-    'availability': PlatformproductInsertDataAvailabilityEnum;
+    'availability'?: PlatformproductInsertDataAvailabilityEnum;
     /**
      * 
      * @type {string}

@@ -462,7 +462,7 @@ interface PlatformProduct {
      * @type {ProductAvailability}
      * @memberof PlatformProduct
      */
-    'availability': ProductAvailability;
+    'availability'?: ProductAvailability;
     /**
      * 
      * @type {ProductSyncStatus}
@@ -718,7 +718,7 @@ export interface ShopProduct {
      * @type {ProductAvailability}
      * @memberof ShopProduct
      */
-    'availability': ProductAvailability;
+    'availability'?: ProductAvailability;
     /**
      * 
      * @type {ProductSyncStatus}

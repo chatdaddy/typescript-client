@@ -3154,7 +3154,7 @@ export interface PlatformProduct {
      * @type {ProductAvailability}
      * @memberof PlatformProduct
      */
-    'availability': ProductAvailability;
+    'availability'?: ProductAvailability;
     /**
      * 
      * @type {ProductSyncStatus}

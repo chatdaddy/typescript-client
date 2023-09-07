@@ -714,7 +714,7 @@ export type CampaignState = typeof CampaignState[keyof typeof CampaignState];
 
 
 /**
- * Body of the response from the WA service
+ * The response received from botsFire which it receives from WhatsApp. It contains either an error message or is of type \"Message\" of the IM service 
  * @export
  * @interface WaResponse
  */
@@ -727,10 +727,10 @@ export interface WaResponse {
     'code'?: number;
     /**
      * 
-     * @type {string}
+     * @type {object}
      * @memberof WaResponse
      */
-    'body'?: string;
+    'body'?: object;
 }
 
 /**
