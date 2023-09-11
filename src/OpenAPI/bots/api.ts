@@ -538,6 +538,31 @@ export type BotConditionValuesInner = number | string;
 /**
  * 
  * @export
+ * @interface BotData
+ */
+export interface BotData {
+    /**
+     * 
+     * @type {Array<BotTrigger>}
+     * @memberof BotData
+     */
+    'triggers': Array<BotTrigger>;
+    /**
+     * 
+     * @type {Array<Action>}
+     * @memberof BotData
+     */
+    'actions': Array<Action>;
+    /**
+     * 
+     * @type {Array<BotNote>}
+     * @memberof BotData
+     */
+    'notes': Array<BotNote>;
+}
+/**
+ * 
+ * @export
  * @interface BotMessageButton
  */
 export interface BotMessageButton {
@@ -1447,31 +1472,6 @@ export interface BotsCreateRequest {
      * @memberof BotsCreateRequest
      */
     'name'?: string;
-}
-/**
- * 
- * @export
- * @interface BotsDataGet200Response
- */
-export interface BotsDataGet200Response {
-    /**
-     * 
-     * @type {Array<BotTrigger>}
-     * @memberof BotsDataGet200Response
-     */
-    'triggers': Array<BotTrigger>;
-    /**
-     * 
-     * @type {Array<Action>}
-     * @memberof BotsDataGet200Response
-     */
-    'actions': Array<Action>;
-    /**
-     * 
-     * @type {Array<BotNote>}
-     * @memberof BotsDataGet200Response
-     */
-    'notes': Array<BotNote>;
 }
 /**
  * 
@@ -3135,6 +3135,40 @@ export const BotsApiAxiosParamCreator = function (configuration?: Configuration)
             };
         },
         /**
+         * This endpoint fetches bot data based on provided slug parameters
+         * @summary Retrieves bot data including triggers, notes and actions
+         * @param {string} slug The shared sulg of the bot
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        botsDataGetBySlug: async (slug: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'slug' is not null or undefined
+            assertParamExists('botsDataGetBySlug', 'slug', slug)
+            const localVarPath = `/bots/share/{slug}/data`
+                .replace(`{${"slug"}}`, encodeURIComponent(String(slug)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * 
          * @summary Deletes list of bots
          * @param {Array<string>} bots 
@@ -3519,8 +3553,19 @@ export const BotsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async botsDataGet(botId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BotsDataGet200Response>> {
+        async botsDataGet(botId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BotData>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.botsDataGet(botId, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * This endpoint fetches bot data based on provided slug parameters
+         * @summary Retrieves bot data including triggers, notes and actions
+         * @param {string} slug The shared sulg of the bot
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async botsDataGetBySlug(slug: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BotData>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.botsDataGetBySlug(slug, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -3645,8 +3690,18 @@ export const BotsApiFactory = function (configuration?: Configuration, basePath?
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        botsDataGet(requestParameters: BotsApiBotsDataGetRequest, options?: AxiosRequestConfig): AxiosPromise<BotsDataGet200Response> {
+        botsDataGet(requestParameters: BotsApiBotsDataGetRequest, options?: AxiosRequestConfig): AxiosPromise<BotData> {
             return localVarFp.botsDataGet(requestParameters.botId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * This endpoint fetches bot data based on provided slug parameters
+         * @summary Retrieves bot data including triggers, notes and actions
+         * @param {BotsApiBotsDataGetBySlugRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        botsDataGetBySlug(requestParameters: BotsApiBotsDataGetBySlugRequest, options?: AxiosRequestConfig): AxiosPromise<BotData> {
+            return localVarFp.botsDataGetBySlug(requestParameters.slug, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -3747,6 +3802,20 @@ export interface BotsApiBotsDataGetRequest {
      * @memberof BotsApiBotsDataGet
      */
     readonly botId: string
+}
+
+/**
+ * Request parameters for botsDataGetBySlug operation in BotsApi.
+ * @export
+ * @interface BotsApiBotsDataGetBySlugRequest
+ */
+export interface BotsApiBotsDataGetBySlugRequest {
+    /**
+     * The shared sulg of the bot
+     * @type {string}
+     * @memberof BotsApiBotsDataGetBySlug
+     */
+    readonly slug: string
 }
 
 /**
@@ -4002,6 +4071,18 @@ export class BotsApi extends BaseAPI {
      */
     public botsDataGet(requestParameters: BotsApiBotsDataGetRequest, options?: AxiosRequestConfig) {
         return BotsApiFp(this.configuration).botsDataGet(requestParameters.botId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * This endpoint fetches bot data based on provided slug parameters
+     * @summary Retrieves bot data including triggers, notes and actions
+     * @param {BotsApiBotsDataGetBySlugRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof BotsApi
+     */
+    public botsDataGetBySlug(requestParameters: BotsApiBotsDataGetBySlugRequest, options?: AxiosRequestConfig) {
+        return BotsApiFp(this.configuration).botsDataGetBySlug(requestParameters.slug, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
