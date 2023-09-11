@@ -1790,6 +1790,69 @@ export interface KeepDeletedMessagesSettings {
 /**
  * 
  * @export
+ * @interface ListMessage
+ */
+export interface ListMessage {
+    /**
+     * 
+     * @type {Array<ListMessageSection>}
+     * @memberof ListMessage
+     */
+    'sections': Array<ListMessageSection>;
+    /**
+     * The maximum number of options that can be selected
+     * @type {number}
+     * @memberof ListMessage
+     */
+    'maxSelections'?: number;
+}
+/**
+ * 
+ * @export
+ * @interface ListMessageOption
+ */
+export interface ListMessageOption {
+    /**
+     * 
+     * @type {string}
+     * @memberof ListMessageOption
+     */
+    'id': string;
+    /**
+     * The text of the option
+     * @type {string}
+     * @memberof ListMessageOption
+     */
+    'text'?: string;
+}
+/**
+ * 
+ * @export
+ * @interface ListMessageSection
+ */
+export interface ListMessageSection {
+    /**
+     * The title of the section
+     * @type {string}
+     * @memberof ListMessageSection
+     */
+    'title': string;
+    /**
+     * 
+     * @type {Array<ListMessageOption>}
+     * @memberof ListMessageSection
+     */
+    'options': Array<ListMessageOption>;
+    /**
+     * The maximum number of options that can be selected
+     * @type {number}
+     * @memberof ListMessageSection
+     */
+    'maxSelections'?: number;
+}
+/**
+ * 
+ * @export
  * @interface Message
  */
 export interface Message {
@@ -1931,6 +1994,12 @@ export interface Message {
      * @memberof Message
      */
     'poll'?: Poll;
+    /**
+     * 
+     * @type {ListMessage}
+     * @memberof Message
+     */
+    'list'?: ListMessage;
     /**
      * 
      * @type {Array<MessageProduct>}
@@ -2344,6 +2413,12 @@ export interface MessageCompose {
     'poll'?: Poll;
     /**
      * 
+     * @type {ListMessage}
+     * @memberof MessageCompose
+     */
+    'list'?: ListMessage;
+    /**
+     * 
      * @type {Array<MessageProduct>}
      * @memberof MessageCompose
      */
@@ -2493,6 +2568,12 @@ export interface MessageContent {
      * @memberof MessageContent
      */
     'poll'?: Poll;
+    /**
+     * 
+     * @type {ListMessage}
+     * @memberof MessageContent
+     */
+    'list'?: ListMessage;
     /**
      * 
      * @type {Array<MessageProduct>}
@@ -3788,6 +3869,12 @@ export interface TemplateCreate {
      * @memberof TemplateCreate
      */
     'buttons'?: Array<MessageButton>;
+    /**
+     * 
+     * @type {Array<ListMessage>}
+     * @memberof TemplateCreate
+     */
+    'list'?: Array<ListMessage>;
     /**
      * 
      * @type {Array<TemplateCreateAttachmentsInner>}

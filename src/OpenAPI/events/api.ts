@@ -3803,6 +3803,12 @@ export interface MessageInsertData {
     'poll'?: MessageInsertDataPoll;
     /**
      * 
+     * @type {MessageInsertDataList}
+     * @memberof MessageInsertData
+     */
+    'list'?: MessageInsertDataList;
+    /**
+     * 
      * @type {Array<MessageInsertDataProductsInner>}
      * @memberof MessageInsertData
      */
@@ -4075,6 +4081,69 @@ export interface MessageInsertDataLinkPreview {
      * @memberof MessageInsertDataLinkPreview
      */
     'matchedText'?: string;
+}
+/**
+ * 
+ * @export
+ * @interface MessageInsertDataList
+ */
+export interface MessageInsertDataList {
+    /**
+     * 
+     * @type {Array<MessageInsertDataListSectionsInner>}
+     * @memberof MessageInsertDataList
+     */
+    'sections': Array<MessageInsertDataListSectionsInner>;
+    /**
+     * 
+     * @type {number}
+     * @memberof MessageInsertDataList
+     */
+    'maxSelections'?: number;
+}
+/**
+ * 
+ * @export
+ * @interface MessageInsertDataListSectionsInner
+ */
+export interface MessageInsertDataListSectionsInner {
+    /**
+     * 
+     * @type {string}
+     * @memberof MessageInsertDataListSectionsInner
+     */
+    'title': string;
+    /**
+     * 
+     * @type {Array<MessageInsertDataListSectionsInnerOptionsInner>}
+     * @memberof MessageInsertDataListSectionsInner
+     */
+    'options': Array<MessageInsertDataListSectionsInnerOptionsInner>;
+    /**
+     * 
+     * @type {number}
+     * @memberof MessageInsertDataListSectionsInner
+     */
+    'maxSelections'?: number;
+}
+/**
+ * 
+ * @export
+ * @interface MessageInsertDataListSectionsInnerOptionsInner
+ */
+export interface MessageInsertDataListSectionsInnerOptionsInner {
+    /**
+     * 
+     * @type {string}
+     * @memberof MessageInsertDataListSectionsInnerOptionsInner
+     */
+    'id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof MessageInsertDataListSectionsInnerOptionsInner
+     */
+    'text'?: string;
 }
 /**
  * 
@@ -4636,6 +4705,12 @@ export interface MessageUpdateData {
      * @memberof MessageUpdateData
      */
     'poll'?: MessageInsertDataPoll;
+    /**
+     * 
+     * @type {MessageInsertDataList}
+     * @memberof MessageUpdateData
+     */
+    'list'?: MessageInsertDataList;
     /**
      * 
      * @type {Array<MessageInsertDataProductsInner>}
