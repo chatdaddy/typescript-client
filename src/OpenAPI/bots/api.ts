@@ -313,6 +313,25 @@ export type ActionFireRecordStatusEnum = typeof ActionFireRecordStatusEnum[keyof
 /**
  * 
  * @export
+ * @interface ActionTarget
+ */
+export interface ActionTarget {
+    /**
+     * 
+     * @type {string}
+     * @memberof ActionTarget
+     */
+    'triggerActionId': string;
+    /**
+     * ID of the bot sequence
+     * @type {string}
+     * @memberof ActionTarget
+     */
+    'triggerBotId'?: string;
+}
+/**
+ * 
+ * @export
  * @interface ActionsGet200Response
  */
 export interface ActionsGet200Response {
@@ -573,9 +592,10 @@ export interface BotMessageButton {
      */
     'text': string;
     /**
-     * 
+     * Use \"nextAction\" instead
      * @type {string}
      * @memberof BotMessageButton
+     * @deprecated
      */
     'triggerActionId'?: string | null;
     /**
@@ -602,83 +622,12 @@ export interface BotMessageButton {
      * @memberof BotMessageButton
      */
     'position'?: Position;
-}
-/**
- * Groups of validations
- * @export
- * @interface BotMessageCondition
- */
-export interface BotMessageCondition {
     /**
      * 
-     * @type {BotMessageConditionNoValidationMatch}
-     * @memberof BotMessageCondition
+     * @type {NextAction}
+     * @memberof BotMessageButton
      */
-    'noValidationMatch'?: BotMessageConditionNoValidationMatch;
-    /**
-     * List of conditions to validate
-     * @type {Array<BotMessageConditionGroupsInner>}
-     * @memberof BotMessageCondition
-     */
-    'groups'?: Array<BotMessageConditionGroupsInner>;
-}
-/**
- * 
- * @export
- * @interface BotMessageConditionGroupsInner
- */
-export interface BotMessageConditionGroupsInner {
-    /**
-     * Operator for all validations
-     * @type {string}
-     * @memberof BotMessageConditionGroupsInner
-     */
-    'operator': BotMessageConditionGroupsInnerOperatorEnum;
-    /**
-     * Fields to validate
-     * @type {Array<BotCondition>}
-     * @memberof BotMessageConditionGroupsInner
-     */
-    'validation': Array<BotCondition>;
-    /**
-     * Trigger action if this validation passed
-     * @type {string}
-     * @memberof BotMessageConditionGroupsInner
-     */
-    'triggerActionId'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof BotMessageConditionGroupsInner
-     */
-    'triggerBotId'?: string | null;
-}
-
-export const BotMessageConditionGroupsInnerOperatorEnum = {
-    And: 'and',
-    Or: 'or'
-} as const;
-
-export type BotMessageConditionGroupsInnerOperatorEnum = typeof BotMessageConditionGroupsInnerOperatorEnum[keyof typeof BotMessageConditionGroupsInnerOperatorEnum];
-
-/**
- * 
- * @export
- * @interface BotMessageConditionNoValidationMatch
- */
-export interface BotMessageConditionNoValidationMatch {
-    /**
-     * Trigger action if all validations failed
-     * @type {string}
-     * @memberof BotMessageConditionNoValidationMatch
-     */
-    'triggerActionId': string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof BotMessageConditionNoValidationMatch
-     */
-    'triggerBotId'?: string | null;
+    'nextAction'?: NextAction;
 }
 /**
  * 
@@ -693,9 +642,10 @@ export interface BotMessageDelay {
      */
     'timeDelaySec': number;
     /**
-     * 
+     * Use \"nextAction\" instead
      * @type {string}
      * @memberof BotMessageDelay
+     * @deprecated
      */
     'triggerActionId': string;
     /**
@@ -722,6 +672,12 @@ export interface BotMessageDelay {
      * @memberof BotMessageDelay
      */
     'position'?: Position;
+    /**
+     * 
+     * @type {NextAction}
+     * @memberof BotMessageDelay
+     */
+    'nextAction'?: NextAction;
 }
 /**
  * 
@@ -742,9 +698,10 @@ export interface BotMessageInput {
      */
     'validation'?: BotMessageInputValidation;
     /**
-     * 
+     * Use \"nextAction\" instead
      * @type {string}
      * @memberof BotMessageInput
+     * @deprecated
      */
     'triggerActionId'?: string | null;
     /**
@@ -753,6 +710,12 @@ export interface BotMessageInput {
      * @memberof BotMessageInput
      */
     'triggerBotId'?: string | null;
+    /**
+     * 
+     * @type {NextAction}
+     * @memberof BotMessageInput
+     */
+    'nextAction'?: NextAction;
     /**
      * 
      * @type {Position}
@@ -1890,12 +1853,6 @@ export interface MessageObj {
     'input'?: BotMessageInput;
     /**
      * 
-     * @type {BotMessageCondition}
-     * @memberof MessageObj
-     */
-    'condition'?: BotMessageCondition;
-    /**
-     * 
      * @type {string}
      * @memberof MessageObj
      */
@@ -1993,6 +1950,96 @@ export interface MessageSendOptionsSender {
      * @memberof MessageSendOptionsSender
      */
     'context': IMMessageSenderContext;
+}
+/**
+ * Specify the next action to be fired
+ * @export
+ * @interface NextAction
+ */
+export interface NextAction {
+    /**
+     * 
+     * @type {NextActionDefaultAction}
+     * @memberof NextAction
+     */
+    'defaultAction'?: NextActionDefaultAction;
+    /**
+     * List of conditions to validate
+     * @type {Array<NextActionGroupsInner>}
+     * @memberof NextAction
+     */
+    'groups'?: Array<NextActionGroupsInner>;
+}
+/**
+ * Fired if all validations failed or no validations are provided
+ * @export
+ * @interface NextActionDefaultAction
+ */
+export interface NextActionDefaultAction {
+    /**
+     * 
+     * @type {string}
+     * @memberof NextActionDefaultAction
+     */
+    'triggerActionId': string;
+    /**
+     * ID of the bot sequence
+     * @type {string}
+     * @memberof NextActionDefaultAction
+     */
+    'triggerBotId'?: string;
+}
+/**
+ * 
+ * @export
+ * @interface NextActionGroupsInner
+ */
+export interface NextActionGroupsInner {
+    /**
+     * Operator for all validations
+     * @type {string}
+     * @memberof NextActionGroupsInner
+     */
+    'operator': NextActionGroupsInnerOperatorEnum;
+    /**
+     * Fields to validate
+     * @type {Array<BotCondition>}
+     * @memberof NextActionGroupsInner
+     */
+    'validation': Array<BotCondition>;
+    /**
+     * 
+     * @type {NextActionGroupsInnerTarget}
+     * @memberof NextActionGroupsInner
+     */
+    'target': NextActionGroupsInnerTarget;
+}
+
+export const NextActionGroupsInnerOperatorEnum = {
+    And: 'and',
+    Or: 'or'
+} as const;
+
+export type NextActionGroupsInnerOperatorEnum = typeof NextActionGroupsInnerOperatorEnum[keyof typeof NextActionGroupsInnerOperatorEnum];
+
+/**
+ * Action to fire if all validations pass
+ * @export
+ * @interface NextActionGroupsInnerTarget
+ */
+export interface NextActionGroupsInnerTarget {
+    /**
+     * 
+     * @type {string}
+     * @memberof NextActionGroupsInnerTarget
+     */
+    'triggerActionId': string;
+    /**
+     * ID of the bot sequence
+     * @type {string}
+     * @memberof NextActionGroupsInnerTarget
+     */
+    'triggerBotId'?: string;
 }
 /**
  * position in x-y coordinate space
