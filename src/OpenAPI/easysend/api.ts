@@ -1505,36 +1505,86 @@ export interface PostTracking {
     'autoPayment'?: TrackingAutoPaymentConfig | null;
 }
 /**
+ * @type SecretAuthRequest
+ * @export
+ */
+export type SecretAuthRequest = SecretAuthRequestWithEmail | SecretAuthRequestWithOptionalEmail;
+
+/**
  * Authentication details for the payment system to create a payment integration
  * @export
- * @interface SecretAuthRequest
+ * @interface SecretAuthRequestWithEmail
  */
-export interface SecretAuthRequest {
+export interface SecretAuthRequestWithEmail {
     /**
      * 
      * @type {string}
-     * @memberof SecretAuthRequest
+     * @memberof SecretAuthRequestWithEmail
      */
-    'type': SecretAuthRequestTypeEnum;
+    'type': SecretAuthRequestWithEmailTypeEnum;
     /**
      * Authorization secret
      * @type {string}
-     * @memberof SecretAuthRequest
+     * @memberof SecretAuthRequestWithEmail
+     */
+    'secret'?: string;
+    /**
+     * Username
+     * @type {string}
+     * @memberof SecretAuthRequestWithEmail
+     */
+    'username'?: string;
+    /**
+     * Email so we can use this to map the integration on our end to the payment partner\'s end
+     * @type {string}
+     * @memberof SecretAuthRequestWithEmail
+     */
+    'email': string;
+}
+
+export const SecretAuthRequestWithEmailTypeEnum = {
+    Secret: 'secret'
+} as const;
+
+export type SecretAuthRequestWithEmailTypeEnum = typeof SecretAuthRequestWithEmailTypeEnum[keyof typeof SecretAuthRequestWithEmailTypeEnum];
+
+/**
+ * Authentication details for the payment system to create a payment integration
+ * @export
+ * @interface SecretAuthRequestWithOptionalEmail
+ */
+export interface SecretAuthRequestWithOptionalEmail {
+    /**
+     * 
+     * @type {string}
+     * @memberof SecretAuthRequestWithOptionalEmail
+     */
+    'type': SecretAuthRequestWithOptionalEmailTypeEnum;
+    /**
+     * Authorization secret
+     * @type {string}
+     * @memberof SecretAuthRequestWithOptionalEmail
      */
     'secret': string;
     /**
      * Username
      * @type {string}
-     * @memberof SecretAuthRequest
+     * @memberof SecretAuthRequestWithOptionalEmail
      */
     'username': string;
+    /**
+     * Email so we can use this to map the integration on our end to the payment partner\'s end
+     * @type {string}
+     * @memberof SecretAuthRequestWithOptionalEmail
+     */
+    'email'?: string;
 }
 
-export const SecretAuthRequestTypeEnum = {
+export const SecretAuthRequestWithOptionalEmailTypeEnum = {
     Secret: 'secret'
 } as const;
 
-export type SecretAuthRequestTypeEnum = typeof SecretAuthRequestTypeEnum[keyof typeof SecretAuthRequestTypeEnum];
+export type SecretAuthRequestWithOptionalEmailTypeEnum = typeof SecretAuthRequestWithOptionalEmailTypeEnum[keyof typeof SecretAuthRequestWithOptionalEmailTypeEnum];
 
 /**
  * 
