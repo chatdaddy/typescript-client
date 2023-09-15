@@ -2097,6 +2097,12 @@ export interface SharedSlug {
      * @memberof SharedSlug
      */
     'editable'?: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof SharedSlug
+     */
+    'userId': string;
 }
 /**
  * 

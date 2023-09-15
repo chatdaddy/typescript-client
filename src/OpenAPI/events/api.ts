@@ -1624,6 +1624,12 @@ export interface BotInsertDataSharedSlugsInner {
      * @memberof BotInsertDataSharedSlugsInner
      */
     'editable'?: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof BotInsertDataSharedSlugsInner
+     */
+    'userId': string;
 }
 /**
  * 
