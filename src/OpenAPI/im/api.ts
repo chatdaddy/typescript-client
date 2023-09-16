@@ -3871,10 +3871,10 @@ export interface TemplateCreate {
     'buttons'?: Array<MessageButton>;
     /**
      * 
-     * @type {Array<ListMessage>}
+     * @type {ListMessage}
      * @memberof TemplateCreate
      */
-    'list'?: Array<ListMessage>;
+    'list'?: ListMessage;
     /**
      * 
      * @type {Array<TemplateCreateAttachmentsInner>}
