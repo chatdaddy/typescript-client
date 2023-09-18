@@ -747,6 +747,81 @@ export type BotMessageInputValidationTypeEnum = typeof BotMessageInputValidation
 /**
  * 
  * @export
+ * @interface BotMessageList
+ */
+export interface BotMessageList {
+    /**
+     * 
+     * @type {Array<BotMessageListSectionsInner>}
+     * @memberof BotMessageList
+     */
+    'sections': Array<BotMessageListSectionsInner>;
+    /**
+     * 
+     * @type {string}
+     * @memberof BotMessageList
+     */
+    'triggerActionId'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof BotMessageList
+     */
+    'triggerBotId'?: string | null;
+    /**
+     * 
+     * @type {Position}
+     * @memberof BotMessageList
+     */
+    'position'?: Position;
+    /**
+     * 
+     * @type {NextAction}
+     * @memberof BotMessageList
+     */
+    'nextAction'?: NextAction;
+}
+/**
+ * 
+ * @export
+ * @interface BotMessageListSectionsInner
+ */
+export interface BotMessageListSectionsInner {
+    /**
+     * 
+     * @type {string}
+     * @memberof BotMessageListSectionsInner
+     */
+    'title': string;
+    /**
+     * 
+     * @type {Array<BotMessageListSectionsInnerOptionsInner>}
+     * @memberof BotMessageListSectionsInner
+     */
+    'options': Array<BotMessageListSectionsInnerOptionsInner>;
+}
+/**
+ * 
+ * @export
+ * @interface BotMessageListSectionsInnerOptionsInner
+ */
+export interface BotMessageListSectionsInnerOptionsInner {
+    /**
+     * 
+     * @type {string}
+     * @memberof BotMessageListSectionsInnerOptionsInner
+     */
+    'text': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof BotMessageListSectionsInnerOptionsInner
+     */
+    'description'?: string;
+}
+/**
+ * 
+ * @export
  * @interface BotNote
  */
 export interface BotNote {
@@ -1851,6 +1926,12 @@ export interface MessageObj {
      * @memberof MessageObj
      */
     'input'?: BotMessageInput;
+    /**
+     * 
+     * @type {BotMessageList}
+     * @memberof MessageObj
+     */
+    'list'?: BotMessageList;
     /**
      * 
      * @type {string}

@@ -1060,6 +1060,12 @@ export interface BotInsertDataActionsInnerAllOf1Message {
     'input'?: BotInsertDataActionsInnerAllOf1MessageInput;
     /**
      * 
+     * @type {BotInsertDataActionsInnerAllOf1MessageList}
+     * @memberof BotInsertDataActionsInnerAllOf1Message
+     */
+    'list'?: BotInsertDataActionsInnerAllOf1MessageList;
+    /**
+     * 
      * @type {string}
      * @memberof BotInsertDataActionsInnerAllOf1Message
      */
@@ -1473,6 +1479,81 @@ export const BotInsertDataActionsInnerAllOf1MessageInputValidationTypeEnum = {
 
 export type BotInsertDataActionsInnerAllOf1MessageInputValidationTypeEnum = typeof BotInsertDataActionsInnerAllOf1MessageInputValidationTypeEnum[keyof typeof BotInsertDataActionsInnerAllOf1MessageInputValidationTypeEnum];
 
+/**
+ * 
+ * @export
+ * @interface BotInsertDataActionsInnerAllOf1MessageList
+ */
+export interface BotInsertDataActionsInnerAllOf1MessageList {
+    /**
+     * 
+     * @type {Array<BotInsertDataActionsInnerAllOf1MessageListSectionsInner>}
+     * @memberof BotInsertDataActionsInnerAllOf1MessageList
+     */
+    'sections': Array<BotInsertDataActionsInnerAllOf1MessageListSectionsInner>;
+    /**
+     * 
+     * @type {string}
+     * @memberof BotInsertDataActionsInnerAllOf1MessageList
+     */
+    'triggerActionId'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof BotInsertDataActionsInnerAllOf1MessageList
+     */
+    'triggerBotId'?: string | null;
+    /**
+     * 
+     * @type {BotInsertDataActionsInnerAllOf1MessageButtonsInnerPosition}
+     * @memberof BotInsertDataActionsInnerAllOf1MessageList
+     */
+    'position'?: BotInsertDataActionsInnerAllOf1MessageButtonsInnerPosition;
+    /**
+     * 
+     * @type {BotInsertDataActionsInnerAllOf1MessageButtonsInnerNextAction}
+     * @memberof BotInsertDataActionsInnerAllOf1MessageList
+     */
+    'nextAction'?: BotInsertDataActionsInnerAllOf1MessageButtonsInnerNextAction;
+}
+/**
+ * 
+ * @export
+ * @interface BotInsertDataActionsInnerAllOf1MessageListSectionsInner
+ */
+export interface BotInsertDataActionsInnerAllOf1MessageListSectionsInner {
+    /**
+     * 
+     * @type {string}
+     * @memberof BotInsertDataActionsInnerAllOf1MessageListSectionsInner
+     */
+    'title': string;
+    /**
+     * 
+     * @type {Array<BotInsertDataActionsInnerAllOf1MessageListSectionsInnerOptionsInner>}
+     * @memberof BotInsertDataActionsInnerAllOf1MessageListSectionsInner
+     */
+    'options': Array<BotInsertDataActionsInnerAllOf1MessageListSectionsInnerOptionsInner>;
+}
+/**
+ * 
+ * @export
+ * @interface BotInsertDataActionsInnerAllOf1MessageListSectionsInnerOptionsInner
+ */
+export interface BotInsertDataActionsInnerAllOf1MessageListSectionsInnerOptionsInner {
+    /**
+     * 
+     * @type {string}
+     * @memberof BotInsertDataActionsInnerAllOf1MessageListSectionsInnerOptionsInner
+     */
+    'text': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof BotInsertDataActionsInnerAllOf1MessageListSectionsInnerOptionsInner
+     */
+    'description'?: string;
+}
 /**
  * 
  * @export
