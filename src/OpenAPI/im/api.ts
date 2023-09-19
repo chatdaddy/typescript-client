@@ -3027,6 +3027,12 @@ export interface MiscOptions {
      */
     'buttonReplyId'?: string;
     /**
+     * the ID of the list item clicked
+     * @type {string}
+     * @memberof MiscOptions
+     */
+    'listReplyId'?: string;
+    /**
      * the option of the poll that was clicked
      * @type {Array<string>}
      * @memberof MiscOptions

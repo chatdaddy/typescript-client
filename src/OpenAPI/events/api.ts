@@ -4335,6 +4335,12 @@ export interface MessageInsertDataMiscOptions {
     'buttonReplyId'?: string;
     /**
      * 
+     * @type {string}
+     * @memberof MessageInsertDataMiscOptions
+     */
+    'listReplyId'?: string;
+    /**
+     * 
      * @type {Array<string>}
      * @memberof MessageInsertDataMiscOptions
      */
