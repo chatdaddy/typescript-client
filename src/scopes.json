@@ -309,15 +309,6 @@
     ],
     "group": null
   },
-  "REFERRAL_APPLY_CREDIT": {
-    "number": 25,
-    "description": "Apply credit to coupon code from pending credit",
-    "features": [],
-    "roles": [
-      "admin"
-    ],
-    "group": "Credit Access"
-  },
   "TEAM_UPDATE": {
     "number": 29,
     "description": "Modify the details of the team",
@@ -329,7 +320,7 @@
   },
   "ACCOUNT_CREATE": {
     "number": 30,
-    "description": "Add an additional IM account",
+    "description": "Add an additional Channel",
     "features": [
       "team-inbox"
     ],
@@ -340,7 +331,7 @@
   },
   "ACCOUNT_READ": {
     "number": 31,
-    "description": "Read all available accounts",
+    "description": "Read all available Channels",
     "features": [
       "team-inbox"
     ],
@@ -354,7 +345,7 @@
   },
   "ACCOUNT_DELETE": {
     "number": 32,
-    "description": "Delete an IM account",
+    "description": "Delete a Channel",
     "features": [
       "team-inbox"
     ],
@@ -365,7 +356,7 @@
   },
   "ACCOUNT_PATCH": {
     "number": 30,
-    "description": "Update an existing IM account (open, close, logout etc)",
+    "description": "Update an existing Channel (open, close, logout etc)",
     "features": [
       "team-inbox"
     ],
