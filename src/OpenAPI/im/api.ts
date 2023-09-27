@@ -3992,6 +3992,25 @@ export type TicketStatus = typeof TicketStatus[keyof typeof TicketStatus];
 /**
  * 
  * @export
+ * @interface TikTokChatState
+ */
+export interface TikTokChatState {
+    /**
+     * Whether the chat is synced. If false, the chat will not be available
+     * @type {number}
+     * @memberof TikTokChatState
+     */
+    'synced': number;
+    /**
+     * Cursor to sync from. If null, the chat will be synced from the beginning
+     * @type {string}
+     * @memberof TikTokChatState
+     */
+    'cursor'?: string;
+}
+/**
+ * 
+ * @export
  * @interface TikTokStateInfo
  */
 export interface TikTokStateInfo {
@@ -4003,16 +4022,16 @@ export interface TikTokStateInfo {
     'isSyncing'?: boolean;
     /**
      * 
-     * @type {number}
+     * @type {TikTokChatState}
      * @memberof TikTokStateInfo
      */
-    'chatsSynced'?: number;
+    'strangerChats'?: TikTokChatState;
     /**
-     * Number of chats synced that are not in the user\'s contact list
-     * @type {number}
+     * 
+     * @type {TikTokChatState}
      * @memberof TikTokStateInfo
      */
-    'strangerChatsSynced'?: number;
+    'normalChats'?: TikTokChatState;
     /**
      * 
      * @type {string}
