@@ -4008,6 +4008,12 @@ export interface TikTokStateInfo {
      */
     'chatsSynced'?: number;
     /**
+     * Number of chats synced that are not in the user\'s contact list
+     * @type {number}
+     * @memberof TikTokStateInfo
+     */
+    'strangerChatsSynced'?: number;
+    /**
      * 
      * @type {string}
      * @memberof TikTokStateInfo
