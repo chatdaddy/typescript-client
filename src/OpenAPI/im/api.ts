@@ -744,6 +744,12 @@ export interface AlibabaCAMSWebhookMessageItem {
      */
     'MessageId': string;
     /**
+     * 
+     * @type {AlibabaCAMSWebhookMessageItemContext}
+     * @memberof AlibabaCAMSWebhookMessageItem
+     */
+    'Context'?: AlibabaCAMSWebhookMessageItemContext;
+    /**
      * Name of the user that sent the message
      * @type {string}
      * @memberof AlibabaCAMSWebhookMessageItem
@@ -799,6 +805,25 @@ export const AlibabaCAMSWebhookMessageItemStatusEnum = {
 
 export type AlibabaCAMSWebhookMessageItemStatusEnum = typeof AlibabaCAMSWebhookMessageItemStatusEnum[keyof typeof AlibabaCAMSWebhookMessageItemStatusEnum];
 
+/**
+ * 
+ * @export
+ * @interface AlibabaCAMSWebhookMessageItemContext
+ */
+export interface AlibabaCAMSWebhookMessageItemContext {
+    /**
+     * The user ID of the person that sent it
+     * @type {string}
+     * @memberof AlibabaCAMSWebhookMessageItemContext
+     */
+    'from': string;
+    /**
+     * The ID of the message that was replied to
+     * @type {string}
+     * @memberof AlibabaCAMSWebhookMessageItemContext
+     */
+    'id': string;
+}
 /**
  * 
  * @export
