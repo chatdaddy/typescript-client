@@ -27,3 +27,20 @@ export type PaymentGateway = {
     id:string
     name:string
 }
+
+export type OrderSerialiseContext = {
+    shopName:string,
+    customer?:customer
+    paymentIntegration?:paymentIntegration
+}
+
+export type customer = {
+    name:string
+    mobileNumber:string
+    shippingAddress:string
+}
+
+export type paymentIntegration = {
+    id: string,
+    name:string
+}

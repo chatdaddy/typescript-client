@@ -1,10 +1,11 @@
-import { OrderMessage, PaymentGateway, SimpleOrder, SimpleOrderItem } from './types'
+import { OrderMessage, OrderSerialiseContext, PaymentGateway, SimpleOrder, SimpleOrderItem, customer, paymentIntegration } from './types'
 
 const DETECTION_TXT = 'Ordering from WhatsApp Shop:'
 const ORDER_DETAILS_START = 'My Order Details:'
 const REMARKS_LABEL = 'Total:'
 const MAX_UQ_PRODUCTS_IN_ORDER = 20
 const PAYMENT_GATEWAY_ID_LABEL = 'Payment Gateway ID:'
+const SEPERATOR = '==========================='
 
 /**
  * Parses an order message and returns an object with
@@ -91,18 +92,39 @@ export function checkAndParseOrderMessage(txt: string): SimpleOrder {
     return { items: orderItems, remarks, paymentGatewayId }
 }
 
+function formatBeforeMessage(shopName:string):string {
+
+    const beforeLines = []  
+    beforeLines.push(`✅Hi! ${shopName}`)
+    beforeLines.push(`Order Time: ${new Date().toLocaleString()}`)
+    
+    return beforeLines.join('\n')
+}
+
+function formatAfterMessage(userDetails:customer | undefined): string | undefined {
+
+    if(!userDetails){
+        return
+    }
+
+    const afterLines = []
+
+    afterLines.push(`👩🏻 Recipient Name: ${userDetails.name}`)
+    afterLines.push(`📞 Recipient Phone: ${userDetails.mobileNumber}`)
+    afterLines.push(`🏠 Delivery Address: ${userDetails.shippingAddress}`)
+
+    return afterLines.join('\n')
+}
+
 /**
  * Serializes an order message from an array of order items.
  *
  * @param order Order details including items and remarks.
- * @param beforeItemsContent Content to add before order items.
- * @param afterItemsContent Content to add after order items.
+ * @param context Contains details to format before and after messages.
  */
 export function serialiseOrderMessage(
     order: OrderMessage,
-    beforeItemsContent?: string,
-    afterItemsContent?: string,
-    paymentGatewayDetails?:PaymentGateway
+    context:OrderSerialiseContext,
 ): string {
     const itemsContent = order.items
         .map((item) => `${item.quantity} x ${item.name} (${item.id}) ${item.currency} ${item.price}`)
@@ -116,24 +138,33 @@ export function serialiseOrderMessage(
     const remarksContent = order.remarks ? `Remarks: ${order.remarks}` : ''
 
     const lines = [`${DETECTION_TXT}\n`]
-    if (beforeItemsContent) {
-        lines.push(beforeItemsContent)
+
+    if (context.shopName.trim() !== "") {
+        const beforeContent = formatBeforeMessage(context.shopName)
+        lines.push(beforeContent)
+        lines.push(`\n${SEPERATOR}\n`)
     }
+    
     lines.push(ORDER_DETAILS_START)
     lines.push(itemsContent)
     lines.push(`\nTotal: ${total}`)
 
-    //Payment type selected when on the checkout section
-    if(paymentGatewayDetails){
-        lines.push(`\nPayment Gateway:${paymentGatewayDetails.name}`)
-        lines.push(`${PAYMENT_GATEWAY_ID_LABEL} ${paymentGatewayDetails.id}`)
-    }
-
     if (remarksContent) {
         lines.push(remarksContent)
     }
-    if (afterItemsContent) {
-        lines.push(afterItemsContent)
+
+     //Payment type selected when on the checkout section
+    if(context?.paymentIntegration?.id){
+        lines.push(`\n${SEPERATOR}\n`)
+        lines.push('\nPayment Status : 🔴Pending')
+        lines.push(`\nPayment Gateway:${context?.paymentIntegration?.name}`)
+        lines.push(`${PAYMENT_GATEWAY_ID_LABEL} ${context?.paymentIntegration?.id}`)
+    }
+
+    if (context?.customer) {
+        const afterContent = formatAfterMessage(context.customer)
+        lines.push(afterContent)
+        lines.push(`\n${SEPERATOR}\n`)
     }
 
     return lines.join('\n')
