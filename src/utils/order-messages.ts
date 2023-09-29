@@ -1,9 +1,10 @@
-import { OrderMessage, SimpleOrder, SimpleOrderItem } from './types'
+import { OrderMessage, PaymentGateway, SimpleOrder, SimpleOrderItem } from './types'
 
 const DETECTION_TXT = 'Ordering from WhatsApp Shop:'
 const ORDER_DETAILS_START = 'My Order Details:'
 const REMARKS_LABEL = 'Total:'
 const MAX_UQ_PRODUCTS_IN_ORDER = 20
+const PAYMENT_GATEWAY_ID_LABEL = 'Payment Gateway ID:'
 
 /**
  * Parses an order message and returns an object with
@@ -23,6 +24,9 @@ const MAX_UQ_PRODUCTS_IN_ORDER = 20
  * - 1 x fries (fries_123)
  * Total: HKD 500
  * Remarks: no pickles
+ * 
+ * Payment Gateway Name: Stripe
+ * Payment Gateway ID: pi_23812312
  */
 export function checkAndParseOrderMessage(txt: string): SimpleOrder {
     const lines = txt.trim().split('\n')
@@ -32,6 +36,7 @@ export function checkAndParseOrderMessage(txt: string): SimpleOrder {
 
     const orderItems: SimpleOrderItem[] = []
     let remarks: string | undefined
+    let paymentGatewayId: string | undefined
     let isOrderDetailsSection = false
 
     for (let i = 1; i < lines.length; i++) {
@@ -74,7 +79,16 @@ export function checkAndParseOrderMessage(txt: string): SimpleOrder {
         }
     }
 
-    return { items: orderItems, remarks }
+    // Extract payment gateway details
+    const totalPaymentLines = lines.findIndex((line) => line.trim().startsWith(PAYMENT_GATEWAY_ID_LABEL))
+    if(totalPaymentLines !== -1){
+        const paymentGatewayLine = lines[totalPaymentLines+1]
+        if(paymentGatewayLine && paymentGatewayLine.trim() !== ''){
+            paymentGatewayId = paymentGatewayLine.trim()
+        }
+    }
+
+    return { items: orderItems, remarks, paymentGatewayId }
 }
 
 /**
@@ -87,7 +101,8 @@ export function checkAndParseOrderMessage(txt: string): SimpleOrder {
 export function serialiseOrderMessage(
     order: OrderMessage,
     beforeItemsContent?: string,
-    afterItemsContent?: string
+    afterItemsContent?: string,
+    paymentGatewayDetails?:PaymentGateway
 ): string {
     const itemsContent = order.items
         .map((item) => `${item.quantity} x ${item.name} (${item.id}) ${item.currency} ${item.price}`)
@@ -107,6 +122,13 @@ export function serialiseOrderMessage(
     lines.push(ORDER_DETAILS_START)
     lines.push(itemsContent)
     lines.push(`\nTotal: ${total}`)
+
+    //Payment type selected when on the checkout section
+    if(paymentGatewayDetails){
+        lines.push(`\nPayment Gateway:${paymentGatewayDetails.name}`)
+        lines.push(`${PAYMENT_GATEWAY_ID_LABEL} ${paymentGatewayDetails.id}`)
+    }
+
     if (remarksContent) {
         lines.push(remarksContent)
     }

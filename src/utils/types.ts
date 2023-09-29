@@ -1,6 +1,7 @@
 export type SimpleOrder = {
     items: SimpleOrderItem[]
     remarks?: string
+    paymentGatewayId?:string
 }
 
 export type SimpleOrderItem = {
@@ -20,4 +21,9 @@ export type OrderItem = {
     id: string
     price: number
     currency: string
+}
+
+export type PaymentGateway = {
+    id:string
+    name:string
 }
