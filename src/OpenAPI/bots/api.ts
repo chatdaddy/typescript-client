@@ -1777,13 +1777,13 @@ export interface IMMessageAttachment {
      */
     'type': IMMessageAttachmentType;
     /**
-     * 
+     * MIME type of the attachment
      * @type {string}
      * @memberof IMMessageAttachment
      */
     'mimetype': string;
     /**
-     * 1. can be publicly hosted url,  2. or can be base64 encoded buffer. But make sure it starts with `data:;base64,` Note: the `contact` type only supports base64 encoded data 
+     * Public URL of the attachment
      * @type {string}
      * @memberof IMMessageAttachment
      */
