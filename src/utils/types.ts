@@ -13,6 +13,7 @@ export type SimpleOrderItem = {
 export type OrderMessage = {
     items: OrderItem[]
     remarks?: string
+    customer?:Customer
 }
 
 export type OrderItem = {
@@ -30,17 +31,16 @@ export type PaymentGateway = {
 
 export type OrderSerialiseContext = {
     shopName:string,
-    customer?:customer
-    paymentIntegration?:paymentIntegration
+    paymentIntegration?:PaymentIntegration
 }
 
-export type customer = {
+export type Customer = {
     name:string
     mobileNumber:string
     shippingAddress:string
 }
 
-export type paymentIntegration = {
+export type PaymentIntegration = {
     id: string,
     name:string
 }

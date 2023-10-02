@@ -1,4 +1,4 @@
-import { OrderMessage, OrderSerialiseContext, PaymentGateway, SimpleOrder, SimpleOrderItem, customer, paymentIntegration } from './types'
+import { OrderMessage, OrderSerialiseContext, PaymentGateway, SimpleOrder, SimpleOrderItem, Customer } from './types'
 
 const DETECTION_TXT = 'Ordering from WhatsApp Shop:'
 const ORDER_DETAILS_START = 'My Order Details:'
@@ -92,7 +92,7 @@ export function checkAndParseOrderMessage(txt: string): SimpleOrder {
     return { items: orderItems, remarks, paymentGatewayId }
 }
 
-function formatBeforeMessage(shopName:string):string {
+function serialisePreOrderMessage(shopName:string):string {
 
     const beforeLines = []  
     beforeLines.push(`✅Hi! ${shopName}`)
@@ -101,7 +101,7 @@ function formatBeforeMessage(shopName:string):string {
     return beforeLines.join('\n')
 }
 
-function formatAfterMessage(userDetails:customer | undefined): string | undefined {
+function serialisePostOrderMessage(userDetails:Customer | undefined): string | undefined {
 
     if(!userDetails){
         return
@@ -140,11 +140,11 @@ export function serialiseOrderMessage(
     const lines = [`${DETECTION_TXT}\n`]
 
     if (context.shopName.trim() !== "") {
-        const beforeContent = formatBeforeMessage(context.shopName)
+        const beforeContent = serialisePreOrderMessage(context.shopName)
         lines.push(beforeContent)
         lines.push(`\n${SEPERATOR}\n`)
     }
-    
+
     lines.push(ORDER_DETAILS_START)
     lines.push(itemsContent)
     lines.push(`\nTotal: ${total}`)
@@ -161,8 +161,8 @@ export function serialiseOrderMessage(
         lines.push(`${PAYMENT_GATEWAY_ID_LABEL} ${context?.paymentIntegration?.id}`)
     }
 
-    if (context?.customer) {
-        const afterContent = formatAfterMessage(context.customer)
+    if (order?.customer) {
+        const afterContent = serialisePostOrderMessage(order.customer)
         lines.push(afterContent)
         lines.push(`\n${SEPERATOR}\n`)
     }
