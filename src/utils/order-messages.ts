@@ -1,9 +1,11 @@
-import { OrderMessage, SimpleOrder, SimpleOrderItem } from './types'
+import { OrderMessage, OrderSerialiseContext, PaymentGateway, SimpleOrder, SimpleOrderItem, Customer } from './types'
 
 const DETECTION_TXT = 'Ordering from WhatsApp Shop:'
 const ORDER_DETAILS_START = 'My Order Details:'
 const REMARKS_LABEL = 'Total:'
 const MAX_UQ_PRODUCTS_IN_ORDER = 20
+const PAYMENT_GATEWAY_ID_LABEL = 'Payment Gateway ID:'
+const SEPERATOR = '==========================='
 
 /**
  * Parses an order message and returns an object with
@@ -23,6 +25,9 @@ const MAX_UQ_PRODUCTS_IN_ORDER = 20
  * - 1 x fries (fries_123)
  * Total: HKD 500
  * Remarks: no pickles
+ * 
+ * Payment Gateway Name: Stripe
+ * Payment Gateway ID: pi_23812312
  */
 export function checkAndParseOrderMessage(txt: string): SimpleOrder {
     const lines = txt.trim().split('\n')
@@ -32,6 +37,7 @@ export function checkAndParseOrderMessage(txt: string): SimpleOrder {
 
     const orderItems: SimpleOrderItem[] = []
     let remarks: string | undefined
+    let paymentGatewayId: string | undefined
     let isOrderDetailsSection = false
 
     for (let i = 1; i < lines.length; i++) {
@@ -74,21 +80,29 @@ export function checkAndParseOrderMessage(txt: string): SimpleOrder {
         }
     }
 
-    return { items: orderItems, remarks }
+    // Extract payment gateway details
+    const totalPaymentLines = lines.findIndex((line) => line.trim().startsWith(PAYMENT_GATEWAY_ID_LABEL))
+    if(totalPaymentLines !== -1){
+        const paymentGatewayLine = lines[totalPaymentLines+1]
+        if(!paymentGatewayLine.trim()){
+            paymentGatewayId = paymentGatewayLine.trim()
+        }
+    }
+
+    return { items: orderItems, remarks, paymentGatewayId }
 }
 
 /**
  * Serializes an order message from an array of order items.
  *
  * @param order Order details including items and remarks.
- * @param beforeItemsContent Content to add before order items.
- * @param afterItemsContent Content to add after order items.
+ * @param context Contains details to format before and after messages.
  */
 export function serialiseOrderMessage(
     order: OrderMessage,
-    beforeItemsContent?: string,
-    afterItemsContent?: string
+    context:OrderSerialiseContext,
 ): string {
+
     const itemsContent = order.items
         .map((item) => `${item.quantity} x ${item.name} (${item.id}) ${item.currency} ${item.price}`)
         .join('\n')
@@ -101,17 +115,42 @@ export function serialiseOrderMessage(
     const remarksContent = order.remarks ? `Remarks: ${order.remarks}` : ''
 
     const lines = [`${DETECTION_TXT}\n`]
-    if (beforeItemsContent) {
-        lines.push(beforeItemsContent)
+
+
+
+    // handles serialzing message before main order content
+    if (context.shopName.trim() !== "") {
+
+        lines.push(`✅Hi! ${context.shopName}`)
+        lines.push(`Order Time: ${new Date().toLocaleString()}`)
+        
+        lines.push(`\n${SEPERATOR}\n`)
     }
+
     lines.push(ORDER_DETAILS_START)
     lines.push(itemsContent)
     lines.push(`\nTotal: ${total}`)
+
     if (remarksContent) {
         lines.push(remarksContent)
     }
-    if (afterItemsContent) {
-        lines.push(afterItemsContent)
+
+     //Payment type selected when on the checkout section
+    if(context?.paymentIntegration?.id){
+        lines.push(`\n${SEPERATOR}\n`)
+        lines.push('\nPayment Status : 🔴Pending')
+        lines.push(`\nPayment Gateway:${context?.paymentIntegration?.name}`)
+        lines.push(`${PAYMENT_GATEWAY_ID_LABEL} ${context?.paymentIntegration?.id}`)
+    }
+
+
+    // handles serialzing message after main order content
+    if (order?.customer) {
+    
+        lines.push(`👩🏻 Recipient Name: ${order.customer.name}`)
+        lines.push(`📞 Recipient Phone: ${order.customer.mobileNumber}`)
+        lines.push(`🏠 Delivery Address: ${order.customer.shippingAddress}`)
+        lines.push(`\n${SEPERATOR}\n`)
     }
 
     return lines.join('\n')

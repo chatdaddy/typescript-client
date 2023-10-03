@@ -1,6 +1,7 @@
 export type SimpleOrder = {
     items: SimpleOrderItem[]
     remarks?: string
+    paymentGatewayId?:string
 }
 
 export type SimpleOrderItem = {
@@ -12,6 +13,7 @@ export type SimpleOrderItem = {
 export type OrderMessage = {
     items: OrderItem[]
     remarks?: string
+    customer?:Customer
 }
 
 export type OrderItem = {
@@ -20,4 +22,25 @@ export type OrderItem = {
     id: string
     price: number
     currency: string
+}
+
+export type PaymentGateway = {
+    id:string
+    name:string
+}
+
+export type OrderSerialiseContext = {
+    shopName:string,
+    paymentIntegration?:PaymentIntegration
+}
+
+export type Customer = {
+    name:string
+    mobileNumber:string
+    shippingAddress:string
+}
+
+export type PaymentIntegration = {
+    id: string,
+    name:string
 }
