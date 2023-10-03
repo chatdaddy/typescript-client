@@ -121,11 +121,9 @@ export function serialiseOrderMessage(
     // handles serialzing message before main order content
     if (context.shopName.trim() !== "") {
 
-        const beforeLines = []  
-        beforeLines.push(`✅Hi! ${context.shopName}`)
-        beforeLines.push(`Order Time: ${new Date().toLocaleString()}`)
-
-        lines.push(beforeLines.join('\n'))
+        lines.push(`✅Hi! ${context.shopName}`)
+        lines.push(`Order Time: ${new Date().toLocaleString()}`)
+        
         lines.push(`\n${SEPERATOR}\n`)
     }
 
@@ -148,14 +146,10 @@ export function serialiseOrderMessage(
 
     // handles serialzing message after main order content
     if (order?.customer) {
-
-        const afterLines = []
     
-        afterLines.push(`👩🏻 Recipient Name: ${order.customer.name}`)
-        afterLines.push(`📞 Recipient Phone: ${order.customer.mobileNumber}`)
-        afterLines.push(`🏠 Delivery Address: ${order.customer.shippingAddress}`)
-
-        lines.push(afterLines.join('\n'))
+        lines.push(`👩🏻 Recipient Name: ${order.customer.name}`)
+        lines.push(`📞 Recipient Phone: ${order.customer.mobileNumber}`)
+        lines.push(`🏠 Delivery Address: ${order.customer.shippingAddress}`)
         lines.push(`\n${SEPERATOR}\n`)
     }
 
