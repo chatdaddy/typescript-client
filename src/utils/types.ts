@@ -31,7 +31,7 @@ export type PaymentGateway = {
 
 export type OrderSerialiseContext = {
     shopName:string,
-    paymentIntegration?:PaymentIntegration
+    paymentIntegration?:OrderPaymentIntegration
 }
 
 export type Customer = {
@@ -40,7 +40,7 @@ export type Customer = {
     shippingAddress:string
 }
 
-export type PaymentIntegration = {
+export type OrderPaymentIntegration = {
     id: string,
     name:string
 }
