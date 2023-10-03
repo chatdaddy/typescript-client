@@ -84,7 +84,7 @@ export function checkAndParseOrderMessage(txt: string): SimpleOrder {
     const totalPaymentLines = lines.findIndex((line) => line.trim().startsWith(PAYMENT_GATEWAY_ID_LABEL))
     if(totalPaymentLines !== -1){
         const paymentGatewayLine = lines[totalPaymentLines+1]
-        if(paymentGatewayLine && paymentGatewayLine.trim() !== ''){
+        if(!paymentGatewayLine.trim()){
             paymentGatewayId = paymentGatewayLine.trim()
         }
     }
@@ -103,31 +103,6 @@ export function serialiseOrderMessage(
     context:OrderSerialiseContext,
 ): string {
 
-    function serialisePreOrderMessage(shopName:string):string {
-
-        const beforeLines = []  
-        beforeLines.push(`✅Hi! ${shopName}`)
-        beforeLines.push(`Order Time: ${new Date().toLocaleString()}`)
-        
-        return beforeLines.join('\n')
-    }
-    
-    function serialisePostOrderMessage(userDetails:Customer | undefined): string | undefined {
-    
-        if(!userDetails){
-            return
-        }
-    
-        const afterLines = []
-    
-        afterLines.push(`👩🏻 Recipient Name: ${userDetails.name}`)
-        afterLines.push(`📞 Recipient Phone: ${userDetails.mobileNumber}`)
-        afterLines.push(`🏠 Delivery Address: ${userDetails.shippingAddress}`)
-    
-        return afterLines.join('\n')
-    }
-
-
     const itemsContent = order.items
         .map((item) => `${item.quantity} x ${item.name} (${item.id}) ${item.currency} ${item.price}`)
         .join('\n')
@@ -141,9 +116,16 @@ export function serialiseOrderMessage(
 
     const lines = [`${DETECTION_TXT}\n`]
 
+
+
+    // handles serialzing message before main order content
     if (context.shopName.trim() !== "") {
-        const beforeContent = serialisePreOrderMessage(context.shopName)
-        lines.push(beforeContent)
+
+        const beforeLines = []  
+        beforeLines.push(`✅Hi! ${context.shopName}`)
+        beforeLines.push(`Order Time: ${new Date().toLocaleString()}`)
+
+        lines.push(beforeLines.join('\n'))
         lines.push(`\n${SEPERATOR}\n`)
     }
 
@@ -163,9 +145,17 @@ export function serialiseOrderMessage(
         lines.push(`${PAYMENT_GATEWAY_ID_LABEL} ${context?.paymentIntegration?.id}`)
     }
 
+
+    // handles serialzing message after main order content
     if (order?.customer) {
-        const afterContent = serialisePostOrderMessage(order.customer)
-        lines.push(afterContent)
+
+        const afterLines = []
+    
+        afterLines.push(`👩🏻 Recipient Name: ${order.customer.name}`)
+        afterLines.push(`📞 Recipient Phone: ${order.customer.mobileNumber}`)
+        afterLines.push(`🏠 Delivery Address: ${order.customer.shippingAddress}`)
+
+        lines.push(afterLines.join('\n'))
         lines.push(`\n${SEPERATOR}\n`)
     }
 
