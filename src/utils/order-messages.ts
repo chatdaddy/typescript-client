@@ -92,30 +92,6 @@ export function checkAndParseOrderMessage(txt: string): SimpleOrder {
     return { items: orderItems, remarks, paymentGatewayId }
 }
 
-function serialisePreOrderMessage(shopName:string):string {
-
-    const beforeLines = []  
-    beforeLines.push(`✅Hi! ${shopName}`)
-    beforeLines.push(`Order Time: ${new Date().toLocaleString()}`)
-    
-    return beforeLines.join('\n')
-}
-
-function serialisePostOrderMessage(userDetails:Customer | undefined): string | undefined {
-
-    if(!userDetails){
-        return
-    }
-
-    const afterLines = []
-
-    afterLines.push(`👩🏻 Recipient Name: ${userDetails.name}`)
-    afterLines.push(`📞 Recipient Phone: ${userDetails.mobileNumber}`)
-    afterLines.push(`🏠 Delivery Address: ${userDetails.shippingAddress}`)
-
-    return afterLines.join('\n')
-}
-
 /**
  * Serializes an order message from an array of order items.
  *
@@ -126,6 +102,32 @@ export function serialiseOrderMessage(
     order: OrderMessage,
     context:OrderSerialiseContext,
 ): string {
+
+    function serialisePreOrderMessage(shopName:string):string {
+
+        const beforeLines = []  
+        beforeLines.push(`✅Hi! ${shopName}`)
+        beforeLines.push(`Order Time: ${new Date().toLocaleString()}`)
+        
+        return beforeLines.join('\n')
+    }
+    
+    function serialisePostOrderMessage(userDetails:Customer | undefined): string | undefined {
+    
+        if(!userDetails){
+            return
+        }
+    
+        const afterLines = []
+    
+        afterLines.push(`👩🏻 Recipient Name: ${userDetails.name}`)
+        afterLines.push(`📞 Recipient Phone: ${userDetails.mobileNumber}`)
+        afterLines.push(`🏠 Delivery Address: ${userDetails.shippingAddress}`)
+    
+        return afterLines.join('\n')
+    }
+
+
     const itemsContent = order.items
         .map((item) => `${item.quantity} x ${item.name} (${item.id}) ${item.currency} ${item.price}`)
         .join('\n')
