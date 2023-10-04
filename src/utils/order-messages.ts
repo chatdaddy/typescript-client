@@ -83,7 +83,7 @@ export function checkAndParseOrderMessage(txt: string): SimpleOrder {
     // Extract payment gateway details
     const totalPaymentLines = lines.findIndex((line) => line.trim().startsWith(PAYMENT_GATEWAY_ID_LABEL))
     if(totalPaymentLines !== -1){
-        const paymentGatewayLine = lines[totalPaymentLines+1]
+        const paymentGatewayLine = lines[totalPaymentLines]
         if(paymentGatewayLine.trim()){
             paymentGatewayId = paymentGatewayLine.trim()
         }
