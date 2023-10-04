@@ -7,6 +7,8 @@ const MAX_UQ_PRODUCTS_IN_ORDER = 20
 const PAYMENT_GATEWAY_ID_LABEL = 'Payment Gateway ID:'
 const SEPERATOR = '==========================='
 
+const PAYMENT_ID_REGEX = new RegExp(/(\bpi_\S+\b)/ig)
+
 /**
  * Parses an order message and returns an object with
  * the order details. Format of the message is:
@@ -85,7 +87,7 @@ export function checkAndParseOrderMessage(txt: string): SimpleOrder {
     if(totalPaymentLines !== -1){
         const paymentGatewayLine = lines[totalPaymentLines]
         if(paymentGatewayLine.trim()){
-            [paymentGatewayId] = paymentGatewayLine.trim().match(/(\bpi\S+\b)/ig)
+            paymentGatewayId = paymentGatewayLine.trim().match(PAYMENT_ID_REGEX)?.[0]
         }
     }
 
