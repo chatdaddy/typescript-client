@@ -85,7 +85,7 @@ export function checkAndParseOrderMessage(txt: string): SimpleOrder {
     if(totalPaymentLines !== -1){
         const paymentGatewayLine = lines[totalPaymentLines]
         if(paymentGatewayLine.trim()){
-            paymentGatewayId = paymentGatewayLine.trim()
+            [paymentGatewayId] = paymentGatewayLine.trim().match(/(\bpi\S+\b)/ig)
         }
     }
 
