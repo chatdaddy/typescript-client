@@ -67,7 +67,8 @@ import { makeAccessTokenFactory, AccountApi, AccountTier, AccountType, Configura
 		if(!data.autoChargeItems.includes(accountTier)) {
 			await teamDetailApi.teamDetailPatch({
 				teamDetailUpdate: {
-					autoChargeItems: new Set([...data.autoChargeItems, accountTier])
+					// @ts-ignore
+					autoChargeItems: [...data.autoChargeItems, accountTier]
 				}
 			})
 
