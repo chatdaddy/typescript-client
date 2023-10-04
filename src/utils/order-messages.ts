@@ -75,8 +75,8 @@ export function checkAndParseOrderMessage(txt: string): SimpleOrder {
     const totalLineIndex = lines.findIndex((line) => line.trim().startsWith(REMARKS_LABEL))
     if (totalLineIndex !== -1) {
         const remarksLine = lines[totalLineIndex + 1]
-        if (remarksLine && remarksLine.trim() !== '') {
-            remarks = remarksLine.trim()
+        if (remarksLine.trim()) {
+            remarks = remarksLine
         }
     }
 
@@ -84,7 +84,7 @@ export function checkAndParseOrderMessage(txt: string): SimpleOrder {
     const totalPaymentLines = lines.findIndex((line) => line.trim().startsWith(PAYMENT_GATEWAY_ID_LABEL))
     if(totalPaymentLines !== -1){
         const paymentGatewayLine = lines[totalPaymentLines+1]
-        if(!paymentGatewayLine.trim()){
+        if(paymentGatewayLine.trim()){
             paymentGatewayId = paymentGatewayLine.trim()
         }
     }
