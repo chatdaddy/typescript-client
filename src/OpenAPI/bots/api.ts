@@ -758,18 +758,6 @@ export interface BotMessageList {
     'sections': Array<BotMessageListSectionsInner>;
     /**
      * 
-     * @type {string}
-     * @memberof BotMessageList
-     */
-    'triggerActionId'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof BotMessageList
-     */
-    'triggerBotId'?: string | null;
-    /**
-     * 
      * @type {Position}
      * @memberof BotMessageList
      */
@@ -818,6 +806,12 @@ export interface BotMessageListSectionsInnerOptionsInner {
      * @memberof BotMessageListSectionsInnerOptionsInner
      */
     'description'?: string;
+    /**
+     * 
+     * @type {ActionTarget}
+     * @memberof BotMessageListSectionsInnerOptionsInner
+     */
+    'actionTarget'?: ActionTarget;
 }
 /**
  * 

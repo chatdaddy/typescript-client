@@ -1493,18 +1493,6 @@ export interface BotInsertDataActionsInnerAllOf1MessageList {
     'sections': Array<BotInsertDataActionsInnerAllOf1MessageListSectionsInner>;
     /**
      * 
-     * @type {string}
-     * @memberof BotInsertDataActionsInnerAllOf1MessageList
-     */
-    'triggerActionId'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof BotInsertDataActionsInnerAllOf1MessageList
-     */
-    'triggerBotId'?: string | null;
-    /**
-     * 
      * @type {BotInsertDataActionsInnerAllOf1MessageButtonsInnerPosition}
      * @memberof BotInsertDataActionsInnerAllOf1MessageList
      */
@@ -1553,6 +1541,12 @@ export interface BotInsertDataActionsInnerAllOf1MessageListSectionsInnerOptionsI
      * @memberof BotInsertDataActionsInnerAllOf1MessageListSectionsInnerOptionsInner
      */
     'description'?: string;
+    /**
+     * 
+     * @type {BotInsertDataActionsInnerAllOf1MessageButtonsInnerNextActionDefaultActionAllOf}
+     * @memberof BotInsertDataActionsInnerAllOf1MessageListSectionsInnerOptionsInner
+     */
+    'actionTarget'?: BotInsertDataActionsInnerAllOf1MessageButtonsInnerNextActionDefaultActionAllOf;
 }
 /**
  * 
