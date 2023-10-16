@@ -105,6 +105,182 @@ export type BroadCastStatus = typeof BroadCastStatus[keyof typeof BroadCastStatu
 /**
  * 
  * @export
+ * @interface DashboardCreate
+ */
+export interface DashboardCreate {
+    /**
+     * 
+     * @type {string}
+     * @memberof DashboardCreate
+     */
+    'name': string;
+    /**
+     * 
+     * @type {DashboardSchema}
+     * @memberof DashboardCreate
+     */
+    'schema': DashboardSchema;
+}
+/**
+ * 
+ * @export
+ * @interface DashboardData
+ */
+export interface DashboardData {
+    /**
+     * 
+     * @type {Array<MetricsResult>}
+     * @memberof DashboardData
+     */
+    'data': Array<MetricsResult>;
+}
+/**
+ * 
+ * @export
+ * @interface DashboardMetadata
+ */
+export interface DashboardMetadata {
+    /**
+     * 
+     * @type {string}
+     * @memberof DashboardMetadata
+     */
+    'id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof DashboardMetadata
+     */
+    'name': string;
+    /**
+     * An ISO formatted timestamp
+     * @type {string}
+     * @memberof DashboardMetadata
+     */
+    'createdAt': string;
+    /**
+     * An ISO formatted timestamp
+     * @type {string}
+     * @memberof DashboardMetadata
+     */
+    'updatedAt': string;
+    /**
+     * 
+     * @type {DashboardSchema}
+     * @memberof DashboardMetadata
+     */
+    'schema': DashboardSchema;
+}
+/**
+ * 
+ * @export
+ * @enum {string}
+ */
+
+export const DashboardPeriod = {
+    MonthToDate: 'month-to-date',
+    QuarterToDate: 'quarter-to-date',
+    YearToDate: 'year-to-date',
+    Last4Weeks: 'last-4-weeks',
+    Last12Weeks: 'last-12-weeks',
+    Custom: 'custom'
+} as const;
+
+export type DashboardPeriod = typeof DashboardPeriod[keyof typeof DashboardPeriod];
+
+
+/**
+ * 
+ * @export
+ * @interface DashboardSchema
+ */
+export interface DashboardSchema {
+    /**
+     * 
+     * @type {boolean}
+     * @memberof DashboardSchema
+     */
+    'includePreviousPeriod'?: boolean;
+    /**
+     * 
+     * @type {Array<DashboardSchemaItem>}
+     * @memberof DashboardSchema
+     */
+    'items': Array<DashboardSchemaItem>;
+}
+/**
+ * 
+ * @export
+ * @interface DashboardSchemaItem
+ */
+export interface DashboardSchemaItem {
+    /**
+     * 
+     * @type {MetricType}
+     * @memberof DashboardSchemaItem
+     */
+    'metric': MetricType;
+    /**
+     * 
+     * @type {DataAggregateType}
+     * @memberof DashboardSchemaItem
+     */
+    'aggregate': DataAggregateType;
+    /**
+     * 
+     * @type {string}
+     * @memberof DashboardSchemaItem
+     */
+    'key'?: string;
+}
+
+
+/**
+ * 
+ * @export
+ * @interface DashboardWithData
+ */
+export interface DashboardWithData {
+    /**
+     * 
+     * @type {string}
+     * @memberof DashboardWithData
+     */
+    'id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof DashboardWithData
+     */
+    'name': string;
+    /**
+     * An ISO formatted timestamp
+     * @type {string}
+     * @memberof DashboardWithData
+     */
+    'createdAt': string;
+    /**
+     * An ISO formatted timestamp
+     * @type {string}
+     * @memberof DashboardWithData
+     */
+    'updatedAt': string;
+    /**
+     * 
+     * @type {DashboardSchema}
+     * @memberof DashboardWithData
+     */
+    'schema': DashboardSchema;
+    /**
+     * 
+     * @type {Array<MetricsResult>}
+     * @memberof DashboardWithData
+     */
+    'data': Array<MetricsResult>;
+}
+/**
+ * 
+ * @export
  * @enum {string}
  */
 
@@ -116,6 +292,51 @@ export const DataAggregateType = {
 export type DataAggregateType = typeof DataAggregateType[keyof typeof DataAggregateType];
 
 
+/**
+ * 
+ * @export
+ * @interface DateRange
+ */
+export interface DateRange {
+    /**
+     * An ISO formatted timestamp
+     * @type {string}
+     * @memberof DateRange
+     */
+    'start': string;
+    /**
+     * An ISO formatted timestamp
+     * @type {string}
+     * @memberof DateRange
+     */
+    'end': string;
+}
+/**
+ * 
+ * @export
+ * @interface GetDashboardBySchemaRequest
+ */
+export interface GetDashboardBySchemaRequest {
+    /**
+     * 
+     * @type {DashboardSchema}
+     * @memberof GetDashboardBySchemaRequest
+     */
+    'schema': DashboardSchema;
+}
+/**
+ * 
+ * @export
+ * @interface GetDashboardMetadatas200Response
+ */
+export interface GetDashboardMetadatas200Response {
+    /**
+     * 
+     * @type {Array<DashboardMetadata>}
+     * @memberof GetDashboardMetadatas200Response
+     */
+    'items': Array<DashboardMetadata>;
+}
 /**
  * 
  * @export
@@ -405,6 +626,12 @@ export interface MetricsResult {
      * @memberof MetricsResult
      */
     'dataAggregate': DataAggregateType;
+    /**
+     * 
+     * @type {string}
+     * @memberof MetricsResult
+     */
+    'key'?: string;
 }
 
 
@@ -830,6 +1057,658 @@ export interface UpdateHomeMetricsRequest {
      */
     'metrics': Array<HomeMetricUpdateRequest>;
 }
+
+/**
+ * DashboardApi - axios parameter creator
+ * @export
+ */
+export const DashboardApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @summary Create a new dashboard metadata
+         * @param {DashboardCreate} [dashboardCreate] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createDashboardMetadata: async (dashboardCreate?: DashboardCreate, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/dashboard/metadatas`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["METRICS_GET"], configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(dashboardCreate, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Delete a dashboard metadata
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteDashboardMetadata: async (id: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('deleteDashboardMetadata', 'id', id)
+            const localVarPath = `/dashboard/metadatas/{id}`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["METRICS_GET"], configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Get dashboard data
+         * @param {DashboardPeriod} period 
+         * @param {Aggregate} aggregate Timeframe to aggregate the data in.
+         * @param {string} [id] Dashboard ID to fetch data for. If not provided, the default dashboard will be returned.
+         * @param {DateRange} [customDateRange] Custom date range to query the data in. Only required if period is set to \&quot;custom\&quot;
+         * @param {string} [timezoneOffset] Timezone offset to query the data in.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getDashboard: async (period: DashboardPeriod, aggregate: Aggregate, id?: string, customDateRange?: DateRange, timezoneOffset?: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'period' is not null or undefined
+            assertParamExists('getDashboard', 'period', period)
+            // verify required parameter 'aggregate' is not null or undefined
+            assertParamExists('getDashboard', 'aggregate', aggregate)
+            const localVarPath = `/dashboard`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["METRICS_GET"], configuration)
+
+            if (id !== undefined) {
+                localVarQueryParameter['id'] = id;
+            }
+
+            if (period !== undefined) {
+                localVarQueryParameter['period'] = period;
+            }
+
+            if (customDateRange !== undefined) {
+                localVarQueryParameter['customDateRange'] = customDateRange;
+            }
+
+            if (timezoneOffset !== undefined) {
+                localVarQueryParameter['timezoneOffset'] = timezoneOffset;
+            }
+
+            if (aggregate !== undefined) {
+                localVarQueryParameter['aggregate'] = aggregate;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Get dashboard data by schema
+         * @param {DashboardPeriod} period 
+         * @param {Aggregate} aggregate Timeframe to aggregate the data in.
+         * @param {DateRange} [customDateRange] Custom date range to query the data in. Only required if period is set to \&quot;custom\&quot;
+         * @param {string} [timezoneOffset] Timezone offset to query the data in.
+         * @param {GetDashboardBySchemaRequest} [getDashboardBySchemaRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getDashboardBySchema: async (period: DashboardPeriod, aggregate: Aggregate, customDateRange?: DateRange, timezoneOffset?: string, getDashboardBySchemaRequest?: GetDashboardBySchemaRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'period' is not null or undefined
+            assertParamExists('getDashboardBySchema', 'period', period)
+            // verify required parameter 'aggregate' is not null or undefined
+            assertParamExists('getDashboardBySchema', 'aggregate', aggregate)
+            const localVarPath = `/dashboard/get-by-schema`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["METRICS_GET"], configuration)
+
+            if (period !== undefined) {
+                localVarQueryParameter['period'] = period;
+            }
+
+            if (customDateRange !== undefined) {
+                localVarQueryParameter['customDateRange'] = customDateRange;
+            }
+
+            if (timezoneOffset !== undefined) {
+                localVarQueryParameter['timezoneOffset'] = timezoneOffset;
+            }
+
+            if (aggregate !== undefined) {
+                localVarQueryParameter['aggregate'] = aggregate;
+            }
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(getDashboardBySchemaRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Get dashboard metadatas
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getDashboardMetadatas: async (options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/dashboard/metadatas`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["METRICS_GET"], configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Update a dashboard metadata
+         * @param {string} id 
+         * @param {DashboardCreate} [dashboardCreate] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        updateDashboardMetadata: async (id: string, dashboardCreate?: DashboardCreate, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('updateDashboardMetadata', 'id', id)
+            const localVarPath = `/dashboard/metadatas/{id}`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PATCH', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["METRICS_GET"], configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(dashboardCreate, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * DashboardApi - functional programming interface
+ * @export
+ */
+export const DashboardApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = DashboardApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * 
+         * @summary Create a new dashboard metadata
+         * @param {DashboardCreate} [dashboardCreate] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async createDashboardMetadata(dashboardCreate?: DashboardCreate, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DashboardMetadata>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.createDashboardMetadata(dashboardCreate, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary Delete a dashboard metadata
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async deleteDashboardMetadata(id: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteDashboardMetadata(id, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary Get dashboard data
+         * @param {DashboardPeriod} period 
+         * @param {Aggregate} aggregate Timeframe to aggregate the data in.
+         * @param {string} [id] Dashboard ID to fetch data for. If not provided, the default dashboard will be returned.
+         * @param {DateRange} [customDateRange] Custom date range to query the data in. Only required if period is set to \&quot;custom\&quot;
+         * @param {string} [timezoneOffset] Timezone offset to query the data in.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getDashboard(period: DashboardPeriod, aggregate: Aggregate, id?: string, customDateRange?: DateRange, timezoneOffset?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DashboardWithData>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getDashboard(period, aggregate, id, customDateRange, timezoneOffset, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary Get dashboard data by schema
+         * @param {DashboardPeriod} period 
+         * @param {Aggregate} aggregate Timeframe to aggregate the data in.
+         * @param {DateRange} [customDateRange] Custom date range to query the data in. Only required if period is set to \&quot;custom\&quot;
+         * @param {string} [timezoneOffset] Timezone offset to query the data in.
+         * @param {GetDashboardBySchemaRequest} [getDashboardBySchemaRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getDashboardBySchema(period: DashboardPeriod, aggregate: Aggregate, customDateRange?: DateRange, timezoneOffset?: string, getDashboardBySchemaRequest?: GetDashboardBySchemaRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DashboardData>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getDashboardBySchema(period, aggregate, customDateRange, timezoneOffset, getDashboardBySchemaRequest, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary Get dashboard metadatas
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getDashboardMetadatas(options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetDashboardMetadatas200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getDashboardMetadatas(options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary Update a dashboard metadata
+         * @param {string} id 
+         * @param {DashboardCreate} [dashboardCreate] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async updateDashboardMetadata(id: string, dashboardCreate?: DashboardCreate, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.updateDashboardMetadata(id, dashboardCreate, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+    }
+};
+
+/**
+ * DashboardApi - factory interface
+ * @export
+ */
+export const DashboardApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = DashboardApiFp(configuration)
+    return {
+        /**
+         * 
+         * @summary Create a new dashboard metadata
+         * @param {DashboardApiCreateDashboardMetadataRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createDashboardMetadata(requestParameters: DashboardApiCreateDashboardMetadataRequest = {}, options?: AxiosRequestConfig): AxiosPromise<DashboardMetadata> {
+            return localVarFp.createDashboardMetadata(requestParameters.dashboardCreate, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Delete a dashboard metadata
+         * @param {DashboardApiDeleteDashboardMetadataRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteDashboardMetadata(requestParameters: DashboardApiDeleteDashboardMetadataRequest, options?: AxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.deleteDashboardMetadata(requestParameters.id, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Get dashboard data
+         * @param {DashboardApiGetDashboardRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getDashboard(requestParameters: DashboardApiGetDashboardRequest, options?: AxiosRequestConfig): AxiosPromise<DashboardWithData> {
+            return localVarFp.getDashboard(requestParameters.period, requestParameters.aggregate, requestParameters.id, requestParameters.customDateRange, requestParameters.timezoneOffset, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Get dashboard data by schema
+         * @param {DashboardApiGetDashboardBySchemaRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getDashboardBySchema(requestParameters: DashboardApiGetDashboardBySchemaRequest, options?: AxiosRequestConfig): AxiosPromise<DashboardData> {
+            return localVarFp.getDashboardBySchema(requestParameters.period, requestParameters.aggregate, requestParameters.customDateRange, requestParameters.timezoneOffset, requestParameters.getDashboardBySchemaRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Get dashboard metadatas
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getDashboardMetadatas(options?: AxiosRequestConfig): AxiosPromise<GetDashboardMetadatas200Response> {
+            return localVarFp.getDashboardMetadatas(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Update a dashboard metadata
+         * @param {DashboardApiUpdateDashboardMetadataRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        updateDashboardMetadata(requestParameters: DashboardApiUpdateDashboardMetadataRequest, options?: AxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.updateDashboardMetadata(requestParameters.id, requestParameters.dashboardCreate, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * Request parameters for createDashboardMetadata operation in DashboardApi.
+ * @export
+ * @interface DashboardApiCreateDashboardMetadataRequest
+ */
+export interface DashboardApiCreateDashboardMetadataRequest {
+    /**
+     * 
+     * @type {DashboardCreate}
+     * @memberof DashboardApiCreateDashboardMetadata
+     */
+    readonly dashboardCreate?: DashboardCreate
+}
+
+/**
+ * Request parameters for deleteDashboardMetadata operation in DashboardApi.
+ * @export
+ * @interface DashboardApiDeleteDashboardMetadataRequest
+ */
+export interface DashboardApiDeleteDashboardMetadataRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof DashboardApiDeleteDashboardMetadata
+     */
+    readonly id: string
+}
+
+/**
+ * Request parameters for getDashboard operation in DashboardApi.
+ * @export
+ * @interface DashboardApiGetDashboardRequest
+ */
+export interface DashboardApiGetDashboardRequest {
+    /**
+     * 
+     * @type {DashboardPeriod}
+     * @memberof DashboardApiGetDashboard
+     */
+    readonly period: DashboardPeriod
+
+    /**
+     * Timeframe to aggregate the data in.
+     * @type {Aggregate}
+     * @memberof DashboardApiGetDashboard
+     */
+    readonly aggregate: Aggregate
+
+    /**
+     * Dashboard ID to fetch data for. If not provided, the default dashboard will be returned.
+     * @type {string}
+     * @memberof DashboardApiGetDashboard
+     */
+    readonly id?: string
+
+    /**
+     * Custom date range to query the data in. Only required if period is set to \&quot;custom\&quot;
+     * @type {DateRange}
+     * @memberof DashboardApiGetDashboard
+     */
+    readonly customDateRange?: DateRange
+
+    /**
+     * Timezone offset to query the data in.
+     * @type {string}
+     * @memberof DashboardApiGetDashboard
+     */
+    readonly timezoneOffset?: string
+}
+
+/**
+ * Request parameters for getDashboardBySchema operation in DashboardApi.
+ * @export
+ * @interface DashboardApiGetDashboardBySchemaRequest
+ */
+export interface DashboardApiGetDashboardBySchemaRequest {
+    /**
+     * 
+     * @type {DashboardPeriod}
+     * @memberof DashboardApiGetDashboardBySchema
+     */
+    readonly period: DashboardPeriod
+
+    /**
+     * Timeframe to aggregate the data in.
+     * @type {Aggregate}
+     * @memberof DashboardApiGetDashboardBySchema
+     */
+    readonly aggregate: Aggregate
+
+    /**
+     * Custom date range to query the data in. Only required if period is set to \&quot;custom\&quot;
+     * @type {DateRange}
+     * @memberof DashboardApiGetDashboardBySchema
+     */
+    readonly customDateRange?: DateRange
+
+    /**
+     * Timezone offset to query the data in.
+     * @type {string}
+     * @memberof DashboardApiGetDashboardBySchema
+     */
+    readonly timezoneOffset?: string
+
+    /**
+     * 
+     * @type {GetDashboardBySchemaRequest}
+     * @memberof DashboardApiGetDashboardBySchema
+     */
+    readonly getDashboardBySchemaRequest?: GetDashboardBySchemaRequest
+}
+
+/**
+ * Request parameters for updateDashboardMetadata operation in DashboardApi.
+ * @export
+ * @interface DashboardApiUpdateDashboardMetadataRequest
+ */
+export interface DashboardApiUpdateDashboardMetadataRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof DashboardApiUpdateDashboardMetadata
+     */
+    readonly id: string
+
+    /**
+     * 
+     * @type {DashboardCreate}
+     * @memberof DashboardApiUpdateDashboardMetadata
+     */
+    readonly dashboardCreate?: DashboardCreate
+}
+
+/**
+ * DashboardApi - object-oriented interface
+ * @export
+ * @class DashboardApi
+ * @extends {BaseAPI}
+ */
+export class DashboardApi extends BaseAPI {
+    /**
+     * 
+     * @summary Create a new dashboard metadata
+     * @param {DashboardApiCreateDashboardMetadataRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DashboardApi
+     */
+    public createDashboardMetadata(requestParameters: DashboardApiCreateDashboardMetadataRequest = {}, options?: AxiosRequestConfig) {
+        return DashboardApiFp(this.configuration).createDashboardMetadata(requestParameters.dashboardCreate, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Delete a dashboard metadata
+     * @param {DashboardApiDeleteDashboardMetadataRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DashboardApi
+     */
+    public deleteDashboardMetadata(requestParameters: DashboardApiDeleteDashboardMetadataRequest, options?: AxiosRequestConfig) {
+        return DashboardApiFp(this.configuration).deleteDashboardMetadata(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Get dashboard data
+     * @param {DashboardApiGetDashboardRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DashboardApi
+     */
+    public getDashboard(requestParameters: DashboardApiGetDashboardRequest, options?: AxiosRequestConfig) {
+        return DashboardApiFp(this.configuration).getDashboard(requestParameters.period, requestParameters.aggregate, requestParameters.id, requestParameters.customDateRange, requestParameters.timezoneOffset, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Get dashboard data by schema
+     * @param {DashboardApiGetDashboardBySchemaRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DashboardApi
+     */
+    public getDashboardBySchema(requestParameters: DashboardApiGetDashboardBySchemaRequest, options?: AxiosRequestConfig) {
+        return DashboardApiFp(this.configuration).getDashboardBySchema(requestParameters.period, requestParameters.aggregate, requestParameters.customDateRange, requestParameters.timezoneOffset, requestParameters.getDashboardBySchemaRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Get dashboard metadatas
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DashboardApi
+     */
+    public getDashboardMetadatas(options?: AxiosRequestConfig) {
+        return DashboardApiFp(this.configuration).getDashboardMetadatas(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Update a dashboard metadata
+     * @param {DashboardApiUpdateDashboardMetadataRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DashboardApi
+     */
+    public updateDashboardMetadata(requestParameters: DashboardApiUpdateDashboardMetadataRequest, options?: AxiosRequestConfig) {
+        return DashboardApiFp(this.configuration).updateDashboardMetadata(requestParameters.id, requestParameters.dashboardCreate, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
 
 /**
  * MetricsApi - axios parameter creator
