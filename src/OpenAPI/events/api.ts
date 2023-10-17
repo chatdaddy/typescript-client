@@ -1207,6 +1207,12 @@ export interface BotInsertDataActionsInnerAllOf1MessageButtonsInnerNextAction {
      * @memberof BotInsertDataActionsInnerAllOf1MessageButtonsInnerNextAction
      */
     'groups'?: Array<BotInsertDataActionsInnerAllOf1MessageButtonsInnerNextActionGroupsInner>;
+    /**
+     * 
+     * @type {BotInsertDataActionsInnerAllOf1MessageButtonsInnerPosition}
+     * @memberof BotInsertDataActionsInnerAllOf1MessageButtonsInnerNextAction
+     */
+    'position'?: BotInsertDataActionsInnerAllOf1MessageButtonsInnerPosition;
 }
 /**
  * Fired if all validations failed or no validations are provided
@@ -1382,7 +1388,7 @@ export interface BotInsertDataActionsInnerAllOf1MessageDelaysInner {
      * @memberof BotInsertDataActionsInnerAllOf1MessageDelaysInner
      * @deprecated
      */
-    'triggerActionId': string;
+    'triggerActionId'?: string;
     /**
      * 
      * @type {string}

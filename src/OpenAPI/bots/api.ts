@@ -647,7 +647,7 @@ export interface BotMessageDelay {
      * @memberof BotMessageDelay
      * @deprecated
      */
-    'triggerActionId': string;
+    'triggerActionId'?: string;
     /**
      * 
      * @type {string}
@@ -2044,6 +2044,12 @@ export interface NextAction {
      * @memberof NextAction
      */
     'groups'?: Array<NextActionGroupsInner>;
+    /**
+     * 
+     * @type {Position}
+     * @memberof NextAction
+     */
+    'position'?: Position;
 }
 /**
  * Fired if all validations failed or no validations are provided
