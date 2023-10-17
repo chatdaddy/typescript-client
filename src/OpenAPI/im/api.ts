@@ -6960,11 +6960,13 @@ export const ContactsApiAxiosParamCreator = function (configuration?: Configurat
          * @param {string} [chatLastMessageTo] 
          * @param {string} [messageContainsText] 
          * @param {boolean} [messageFromMe] 
+         * @param {string} [messageFrom] Chat that contains a message must after &#x60;messageFrom&#x60; and before &#x60;messageTo&#x60;
+         * @param {string} [messageTo] Chat that contains a message must after &#x60;messageFrom&#x60; and before &#x60;messageTo&#x60;
          * @param {ContactsPatch} [contactsPatch] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        contactsPatch: async (tags?: Array<string>, notTags?: Array<string>, contacts?: Array<string>, notContacts?: Array<string>, minMessagesSent?: number, minMessagesRecv?: number, maxMessagesSent?: number, maxMessagesRecv?: number, q?: string, assignee?: Array<string>, notAssignee?: Array<string>, accountId?: Array<string>, type?: 'group' | 'individual', chatLastMessageFrom?: string, chatLastMessageTo?: string, messageContainsText?: string, messageFromMe?: boolean, contactsPatch?: ContactsPatch, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        contactsPatch: async (tags?: Array<string>, notTags?: Array<string>, contacts?: Array<string>, notContacts?: Array<string>, minMessagesSent?: number, minMessagesRecv?: number, maxMessagesSent?: number, maxMessagesRecv?: number, q?: string, assignee?: Array<string>, notAssignee?: Array<string>, accountId?: Array<string>, type?: 'group' | 'individual', chatLastMessageFrom?: string, chatLastMessageTo?: string, messageContainsText?: string, messageFromMe?: boolean, messageFrom?: string, messageTo?: string, contactsPatch?: ContactsPatch, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/contacts`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -7051,6 +7053,18 @@ export const ContactsApiAxiosParamCreator = function (configuration?: Configurat
 
             if (messageFromMe !== undefined) {
                 localVarQueryParameter['messageFromMe'] = messageFromMe;
+            }
+
+            if (messageFrom !== undefined) {
+                localVarQueryParameter['messageFrom'] = (messageFrom as any instanceof Date) ?
+                    (messageFrom as any).toISOString() :
+                    messageFrom;
+            }
+
+            if (messageTo !== undefined) {
+                localVarQueryParameter['messageTo'] = (messageTo as any instanceof Date) ?
+                    (messageTo as any).toISOString() :
+                    messageTo;
             }
 
 
@@ -7214,12 +7228,14 @@ export const ContactsApiFp = function(configuration?: Configuration) {
          * @param {string} [chatLastMessageTo] 
          * @param {string} [messageContainsText] 
          * @param {boolean} [messageFromMe] 
+         * @param {string} [messageFrom] Chat that contains a message must after &#x60;messageFrom&#x60; and before &#x60;messageTo&#x60;
+         * @param {string} [messageTo] Chat that contains a message must after &#x60;messageFrom&#x60; and before &#x60;messageTo&#x60;
          * @param {ContactsPatch} [contactsPatch] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async contactsPatch(tags?: Array<string>, notTags?: Array<string>, contacts?: Array<string>, notContacts?: Array<string>, minMessagesSent?: number, minMessagesRecv?: number, maxMessagesSent?: number, maxMessagesRecv?: number, q?: string, assignee?: Array<string>, notAssignee?: Array<string>, accountId?: Array<string>, type?: 'group' | 'individual', chatLastMessageFrom?: string, chatLastMessageTo?: string, messageContainsText?: string, messageFromMe?: boolean, contactsPatch?: ContactsPatch, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ContactsPatch200Response>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.contactsPatch(tags, notTags, contacts, notContacts, minMessagesSent, minMessagesRecv, maxMessagesSent, maxMessagesRecv, q, assignee, notAssignee, accountId, type, chatLastMessageFrom, chatLastMessageTo, messageContainsText, messageFromMe, contactsPatch, options);
+        async contactsPatch(tags?: Array<string>, notTags?: Array<string>, contacts?: Array<string>, notContacts?: Array<string>, minMessagesSent?: number, minMessagesRecv?: number, maxMessagesSent?: number, maxMessagesRecv?: number, q?: string, assignee?: Array<string>, notAssignee?: Array<string>, accountId?: Array<string>, type?: 'group' | 'individual', chatLastMessageFrom?: string, chatLastMessageTo?: string, messageContainsText?: string, messageFromMe?: boolean, messageFrom?: string, messageTo?: string, contactsPatch?: ContactsPatch, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ContactsPatch200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.contactsPatch(tags, notTags, contacts, notContacts, minMessagesSent, minMessagesRecv, maxMessagesSent, maxMessagesRecv, q, assignee, notAssignee, accountId, type, chatLastMessageFrom, chatLastMessageTo, messageContainsText, messageFromMe, messageFrom, messageTo, contactsPatch, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -7291,7 +7307,7 @@ export const ContactsApiFactory = function (configuration?: Configuration, baseP
          * @throws {RequiredError}
          */
         contactsPatch(requestParameters: ContactsApiContactsPatchRequest = {}, options?: AxiosRequestConfig): AxiosPromise<ContactsPatch200Response> {
-            return localVarFp.contactsPatch(requestParameters.tags, requestParameters.notTags, requestParameters.contacts, requestParameters.notContacts, requestParameters.minMessagesSent, requestParameters.minMessagesRecv, requestParameters.maxMessagesSent, requestParameters.maxMessagesRecv, requestParameters.q, requestParameters.assignee, requestParameters.notAssignee, requestParameters.accountId, requestParameters.type, requestParameters.chatLastMessageFrom, requestParameters.chatLastMessageTo, requestParameters.messageContainsText, requestParameters.messageFromMe, requestParameters.contactsPatch, options).then((request) => request(axios, basePath));
+            return localVarFp.contactsPatch(requestParameters.tags, requestParameters.notTags, requestParameters.contacts, requestParameters.notContacts, requestParameters.minMessagesSent, requestParameters.minMessagesRecv, requestParameters.maxMessagesSent, requestParameters.maxMessagesRecv, requestParameters.q, requestParameters.assignee, requestParameters.notAssignee, requestParameters.accountId, requestParameters.type, requestParameters.chatLastMessageFrom, requestParameters.chatLastMessageTo, requestParameters.messageContainsText, requestParameters.messageFromMe, requestParameters.messageFrom, requestParameters.messageTo, requestParameters.contactsPatch, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -7733,6 +7749,20 @@ export interface ContactsApiContactsPatchRequest {
     readonly messageFromMe?: boolean
 
     /**
+     * Chat that contains a message must after &#x60;messageFrom&#x60; and before &#x60;messageTo&#x60;
+     * @type {string}
+     * @memberof ContactsApiContactsPatch
+     */
+    readonly messageFrom?: string
+
+    /**
+     * Chat that contains a message must after &#x60;messageFrom&#x60; and before &#x60;messageTo&#x60;
+     * @type {string}
+     * @memberof ContactsApiContactsPatch
+     */
+    readonly messageTo?: string
+
+    /**
      * 
      * @type {ContactsPatch}
      * @memberof ContactsApiContactsPatch
@@ -7818,7 +7848,7 @@ export class ContactsApi extends BaseAPI {
      * @memberof ContactsApi
      */
     public contactsPatch(requestParameters: ContactsApiContactsPatchRequest = {}, options?: AxiosRequestConfig) {
-        return ContactsApiFp(this.configuration).contactsPatch(requestParameters.tags, requestParameters.notTags, requestParameters.contacts, requestParameters.notContacts, requestParameters.minMessagesSent, requestParameters.minMessagesRecv, requestParameters.maxMessagesSent, requestParameters.maxMessagesRecv, requestParameters.q, requestParameters.assignee, requestParameters.notAssignee, requestParameters.accountId, requestParameters.type, requestParameters.chatLastMessageFrom, requestParameters.chatLastMessageTo, requestParameters.messageContainsText, requestParameters.messageFromMe, requestParameters.contactsPatch, options).then((request) => request(this.axios, this.basePath));
+        return ContactsApiFp(this.configuration).contactsPatch(requestParameters.tags, requestParameters.notTags, requestParameters.contacts, requestParameters.notContacts, requestParameters.minMessagesSent, requestParameters.minMessagesRecv, requestParameters.maxMessagesSent, requestParameters.maxMessagesRecv, requestParameters.q, requestParameters.assignee, requestParameters.notAssignee, requestParameters.accountId, requestParameters.type, requestParameters.chatLastMessageFrom, requestParameters.chatLastMessageTo, requestParameters.messageContainsText, requestParameters.messageFromMe, requestParameters.messageFrom, requestParameters.messageTo, requestParameters.contactsPatch, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
