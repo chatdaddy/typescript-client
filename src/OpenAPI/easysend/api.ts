@@ -1752,6 +1752,36 @@ export interface ShopMetadataModel {
      * @type {boolean}
      * @memberof ShopMetadataModel
      */
+    'shippingEnabled'?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof ShopMetadataModel
+     */
+    'pickUpEnabled'?: boolean;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof ShopMetadataModel
+     */
+    'pickUpAddresses'?: Array<string>;
+    /**
+     * 
+     * @type {number}
+     * @memberof ShopMetadataModel
+     */
+    'shippingFee'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof ShopMetadataModel
+     */
+    'freeShippingThreshold'?: number | null;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof ShopMetadataModel
+     */
     'completedShopSetupProcess'?: boolean;
     /**
      * 
