@@ -1761,10 +1761,10 @@ export interface ShopMetadataModel {
     'pickUpEnabled'?: boolean;
     /**
      * 
-     * @type {Array<string>}
+     * @type {Array<ShopMetadataModelPickUpAddressesInner>}
      * @memberof ShopMetadataModel
      */
-    'pickUpAddresses'?: Array<string>;
+    'pickUpAddresses'?: Array<ShopMetadataModelPickUpAddressesInner>;
     /**
      * 
      * @type {number}
@@ -1824,6 +1824,25 @@ export const ShopMetadataModelTypeEnum = {
 
 export type ShopMetadataModelTypeEnum = typeof ShopMetadataModelTypeEnum[keyof typeof ShopMetadataModelTypeEnum];
 
+/**
+ * 
+ * @export
+ * @interface ShopMetadataModelPickUpAddressesInner
+ */
+export interface ShopMetadataModelPickUpAddressesInner {
+    /**
+     * 
+     * @type {string}
+     * @memberof ShopMetadataModelPickUpAddressesInner
+     */
+    'address'?: string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof ShopMetadataModelPickUpAddressesInner
+     */
+    'enabled'?: boolean;
+}
 /**
  * 
  * @export
