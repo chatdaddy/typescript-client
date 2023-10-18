@@ -1767,10 +1767,10 @@ export interface ShopMetadataModel {
     'pickUpAddresses'?: Array<ShopMetadataModelPickUpAddressesInner>;
     /**
      * 
-     * @type {number}
+     * @type {ShopMetadataModelShippingFee}
      * @memberof ShopMetadataModel
      */
-    'shippingFee'?: number;
+    'shippingFee'?: ShopMetadataModelShippingFee;
     /**
      * 
      * @type {number}
@@ -1842,6 +1842,25 @@ export interface ShopMetadataModelPickUpAddressesInner {
      * @memberof ShopMetadataModelPickUpAddressesInner
      */
     'enabled'?: boolean;
+}
+/**
+ * 
+ * @export
+ * @interface ShopMetadataModelShippingFee
+ */
+export interface ShopMetadataModelShippingFee {
+    /**
+     * 
+     * @type {number}
+     * @memberof ShopMetadataModelShippingFee
+     */
+    'amount'?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof ShopMetadataModelShippingFee
+     */
+    'currency'?: string;
 }
 /**
  * 
