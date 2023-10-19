@@ -2949,6 +2949,12 @@ export interface ContactInsertData {
     'assigner'?: string | null;
     /**
      * 
+     * @type {string}
+     * @memberof ContactInsertData
+     */
+    'assignedAt'?: string;
+    /**
+     * 
      * @type {number}
      * @memberof ContactInsertData
      */
@@ -3086,6 +3092,12 @@ export interface ContactUpdateData {
      * @memberof ContactUpdateData
      */
     'assigner'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof ContactUpdateData
+     */
+    'assignedAt'?: string;
     /**
      * 
      * @type {number}
@@ -3468,6 +3480,12 @@ export interface GroupUpdateDataOwner {
     'assigner'?: string | null;
     /**
      * 
+     * @type {string}
+     * @memberof GroupUpdateDataOwner
+     */
+    'assignedAt'?: string;
+    /**
+     * 
      * @type {number}
      * @memberof GroupUpdateDataOwner
      */
@@ -3533,11 +3551,86 @@ export interface GroupUpdateDataOwnerTagsInner {
      */
     'value'?: string | null;
     /**
-     * 
+     * used in events to denote that the tag has been removed
      * @type {boolean}
      * @memberof GroupUpdateDataOwnerTagsInner
      */
     'remove'?: boolean;
+    /**
+     * 
+     * @type {GroupUpdateDataOwnerTagsInnerAllOf1AddedMetadata}
+     * @memberof GroupUpdateDataOwnerTagsInner
+     */
+    'addedMetadata': GroupUpdateDataOwnerTagsInnerAllOf1AddedMetadata;
+    /**
+     * 
+     * @type {GroupUpdateDataOwnerTagsInnerAllOf1AddedMetadata}
+     * @memberof GroupUpdateDataOwnerTagsInner
+     */
+    'updatedMetadata'?: GroupUpdateDataOwnerTagsInnerAllOf1AddedMetadata;
+}
+/**
+ * 
+ * @export
+ * @interface GroupUpdateDataOwnerTagsInnerAllOf
+ */
+export interface GroupUpdateDataOwnerTagsInnerAllOf {
+    /**
+     * 
+     * @type {string}
+     * @memberof GroupUpdateDataOwnerTagsInnerAllOf
+     */
+    'name': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof GroupUpdateDataOwnerTagsInnerAllOf
+     */
+    'value'?: string | null;
+    /**
+     * used in events to denote that the tag has been removed
+     * @type {boolean}
+     * @memberof GroupUpdateDataOwnerTagsInnerAllOf
+     */
+    'remove'?: boolean;
+}
+/**
+ * 
+ * @export
+ * @interface GroupUpdateDataOwnerTagsInnerAllOf1
+ */
+export interface GroupUpdateDataOwnerTagsInnerAllOf1 {
+    /**
+     * 
+     * @type {GroupUpdateDataOwnerTagsInnerAllOf1AddedMetadata}
+     * @memberof GroupUpdateDataOwnerTagsInnerAllOf1
+     */
+    'addedMetadata': GroupUpdateDataOwnerTagsInnerAllOf1AddedMetadata;
+    /**
+     * 
+     * @type {GroupUpdateDataOwnerTagsInnerAllOf1AddedMetadata}
+     * @memberof GroupUpdateDataOwnerTagsInnerAllOf1
+     */
+    'updatedMetadata'?: GroupUpdateDataOwnerTagsInnerAllOf1AddedMetadata;
+}
+/**
+ * 
+ * @export
+ * @interface GroupUpdateDataOwnerTagsInnerAllOf1AddedMetadata
+ */
+export interface GroupUpdateDataOwnerTagsInnerAllOf1AddedMetadata {
+    /**
+     * 
+     * @type {string}
+     * @memberof GroupUpdateDataOwnerTagsInnerAllOf1AddedMetadata
+     */
+    'doneAt': string;
+    /**
+     * The user ID of the user on ChatDaddy
+     * @type {string}
+     * @memberof GroupUpdateDataOwnerTagsInnerAllOf1AddedMetadata
+     */
+    'doneBy': string;
 }
 /**
  * 
