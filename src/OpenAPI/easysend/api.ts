@@ -297,10 +297,10 @@ export interface AddServiceModelSetupValue {
     'description'?: string;
     /**
      * 
-     * @type {boolean}
+     * @type {AddServiceModelSetupValueRequired}
      * @memberof AddServiceModelSetupValue
      */
-    'required'?: boolean;
+    'required'?: AddServiceModelSetupValueRequired;
     /**
      * 
      * @type {string}
@@ -328,6 +328,12 @@ export const AddServiceModelSetupValueTypeEnum = {
 } as const;
 
 export type AddServiceModelSetupValueTypeEnum = typeof AddServiceModelSetupValueTypeEnum[keyof typeof AddServiceModelSetupValueTypeEnum];
+
+/**
+ * @type AddServiceModelSetupValueRequired
+ * @export
+ */
+export type AddServiceModelSetupValueRequired = boolean | string;
 
 /**
  * 
