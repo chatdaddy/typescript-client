@@ -112,11 +112,11 @@ export type AddServiceModelParametersValue = AddServiceModelParametersValueOneOf
  */
 export interface AddServiceModelParametersValueOneOf {
     /**
-     * If this parameter can have conditions. If it is an object, it is forced to be false
-     * @type {boolean}
+     * 
+     * @type {AddServiceModelParametersValueOneOfCanBeConditionedOn}
      * @memberof AddServiceModelParametersValueOneOf
      */
-    'canBeConditionedOn'?: boolean;
+    'canBeConditionedOn'?: AddServiceModelParametersValueOneOfCanBeConditionedOn;
     /**
      * 
      * @type {string}
@@ -162,11 +162,11 @@ export type AddServiceModelParametersValueOneOfFormatEnum = typeof AddServiceMod
  */
 export interface AddServiceModelParametersValueOneOf1 {
     /**
-     * If this parameter can have conditions. If it is an object, it is forced to be false
-     * @type {boolean}
+     * 
+     * @type {AddServiceModelParametersValueOneOfCanBeConditionedOn}
      * @memberof AddServiceModelParametersValueOneOf1
      */
-    'canBeConditionedOn'?: boolean;
+    'canBeConditionedOn'?: AddServiceModelParametersValueOneOfCanBeConditionedOn;
     /**
      * 
      * @type {string}
@@ -269,6 +269,13 @@ export const AddServiceModelParametersValueOneOf3TypeEnum = {
 } as const;
 
 export type AddServiceModelParametersValueOneOf3TypeEnum = typeof AddServiceModelParametersValueOneOf3TypeEnum[keyof typeof AddServiceModelParametersValueOneOf3TypeEnum];
+
+/**
+ * @type AddServiceModelParametersValueOneOfCanBeConditionedOn
+ * If this parameter can have conditions. If it is an object, it is forced to be false
+ * @export
+ */
+export type AddServiceModelParametersValueOneOfCanBeConditionedOn = boolean | string;
 
 /**
  * 
