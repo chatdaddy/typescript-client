@@ -1777,7 +1777,7 @@ export interface IMMessageAttachment {
      */
     'mimetype': string;
     /**
-     * Public URL of the attachment, also it will allow variable attachment which will start with \'{{\' and end with \'}}\'
+     * Public URL of the attachment, also it will allow variable attachment which will start with \'{{\' and end with \'}}\' or \'data:;base64\'
      * @type {string}
      * @memberof IMMessageAttachment
      */
