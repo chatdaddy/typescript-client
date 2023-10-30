@@ -17,6 +17,7 @@ import type { Configuration } from "./configuration";
 import type { RequestArgs } from "./base";
 import type { AxiosInstance, AxiosResponse } from 'axios';
 import { RequiredError } from "./base";
+import { stringify } from "qs";
 
 /**
  *
@@ -110,10 +111,8 @@ function setFlattenedQueryParams(urlSearchParams: URLSearchParams, parameter: an
  *
  * @export
  */
-export const setSearchParams = function (url: URL, ...objects: any[]) {
-    const searchParams = new URLSearchParams(url.search);
-    setFlattenedQueryParams(searchParams, objects);
-    url.search = searchParams.toString();
+export const setSearchParams = function (url: URL, object: any) {
+    url.search = stringify(object)
 }
 
 /**
