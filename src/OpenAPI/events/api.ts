@@ -1503,12 +1503,6 @@ export interface BotInsertDataActionsInnerAllOf1MessageList {
      * @memberof BotInsertDataActionsInnerAllOf1MessageList
      */
     'position'?: BotInsertDataActionsInnerAllOf1MessageButtonsInnerPosition;
-    /**
-     * 
-     * @type {BotInsertDataActionsInnerAllOf1MessageButtonsInnerNextAction}
-     * @memberof BotInsertDataActionsInnerAllOf1MessageList
-     */
-    'nextAction'?: BotInsertDataActionsInnerAllOf1MessageButtonsInnerNextAction;
 }
 /**
  * 
@@ -1549,10 +1543,10 @@ export interface BotInsertDataActionsInnerAllOf1MessageListSectionsInnerOptionsI
     'description'?: string;
     /**
      * 
-     * @type {BotInsertDataActionsInnerAllOf1MessageButtonsInnerNextActionDefaultActionAllOf}
+     * @type {BotInsertDataActionsInnerAllOf1MessageButtonsInnerNextAction}
      * @memberof BotInsertDataActionsInnerAllOf1MessageListSectionsInnerOptionsInner
      */
-    'actionTarget'?: BotInsertDataActionsInnerAllOf1MessageButtonsInnerNextActionDefaultActionAllOf;
+    'nextAction'?: BotInsertDataActionsInnerAllOf1MessageButtonsInnerNextAction;
 }
 /**
  * 

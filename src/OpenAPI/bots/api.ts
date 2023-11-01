@@ -762,12 +762,6 @@ export interface BotMessageList {
      * @memberof BotMessageList
      */
     'position'?: Position;
-    /**
-     * 
-     * @type {NextAction}
-     * @memberof BotMessageList
-     */
-    'nextAction'?: NextAction;
 }
 /**
  * 
@@ -808,10 +802,10 @@ export interface BotMessageListSectionsInnerOptionsInner {
     'description'?: string;
     /**
      * 
-     * @type {ActionTarget}
+     * @type {NextAction}
      * @memberof BotMessageListSectionsInnerOptionsInner
      */
-    'actionTarget'?: ActionTarget;
+    'nextAction'?: NextAction;
 }
 /**
  * 
