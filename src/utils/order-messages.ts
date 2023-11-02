@@ -5,9 +5,18 @@ const ORDER_DETAILS_START = 'My Order Details:'
 const REMARKS_LABEL = 'Total:'
 const MAX_UQ_PRODUCTS_IN_ORDER = 20
 const PAYMENT_GATEWAY_ID_LABEL = 'Payment Gateway ID:'
+const SHIPPING_METHOD_LABEL = 'Shipping Method'
 const SEPERATOR = '==========================='
 
 const PAYMENT_ID_REGEX = new RegExp(/(\bpi_\S+\b)/ig)
+
+function capitalizeFirstLetter(string: string) {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+}
+
+function getValueAfterLabel(string: string){
+  return string.substring(string.indexOf(':')+2)
+}
 
 /**
  * Parses an order message and returns an object with
@@ -91,7 +100,30 @@ export function checkAndParseOrderMessage(txt: string): SimpleOrder {
         }
     }
 
-    return { items: orderItems, remarks, paymentGatewayId }
+    //Extract Shipping Details
+    let shippingDetails : SimpleOrder['shippingDetails'] = {
+        shippingMethod:'delivery',
+    }
+    const shippingLine = lines.findIndex((line) => line.trim().startsWith(SHIPPING_METHOD_LABEL))
+
+    if(shippingLine !== -1){
+        const shippingMethodLine = lines[shippingLine]
+        const shippingAddressPickupLine = lines[shippingLine+1]
+        const shippingProviderLine = lines[shippingLine+2
+        ]
+        if(shippingMethodLine.trim()){
+          shippingDetails.shippingMethod =  getValueAfterLabel(shippingMethodLine).toLocaleLowerCase() as SimpleOrder['shippingDetails']['shippingMethod']
+          
+          if(shippingDetails.shippingMethod === 'delivery'){
+            shippingDetails.shippingAddress = getValueAfterLabel(shippingAddressPickupLine)
+            shippingDetails.shippingOption = getValueAfterLabel(shippingProviderLine)
+          }else{
+            shippingDetails.pickupLocation = getValueAfterLabel(shippingAddressPickupLine)
+          }
+        }
+    }
+
+    return { items: orderItems, remarks, paymentGatewayId, shippingDetails}
 }
 
 /**
@@ -140,20 +172,31 @@ export function serialiseOrderMessage(
      //Payment type selected when on the checkout section
     if(context?.paymentIntegration?.id){
         lines.push(`\n${SEPERATOR}\n`)
-        lines.push('\nPayment Status : 🔴Pending')
-        lines.push(`\nPayment Gateway:${context?.paymentIntegration?.name}`)
+        lines.push('Payment Status : 🔴Pending')
+        lines.push(`Payment Gateway:${context?.paymentIntegration?.name}`)
         lines.push(`${PAYMENT_GATEWAY_ID_LABEL} ${context?.paymentIntegration?.id}`)
     }
 
 
     // handles serialzing message after main order content
     if (order?.customer) {
-    
-        lines.push(`👩🏻 Recipient Name: ${order.customer.name}`)
+        
+        //Customer Details
+        lines.push(`\n👩🏻 Recipient Name: ${order.customer.name}`)
         lines.push(`📞 Recipient Phone: ${order.customer.mobileNumber}`)
-        lines.push(`🏠 Delivery Address: ${order.customer.shippingAddress}`)
-        lines.push(`\n${SEPERATOR}\n`)
+    
+        // Customer Shipping Details
+        lines.push(`\n${SHIPPING_METHOD_LABEL}: ${capitalizeFirstLetter(order.customer.shippingMethod)}`)
+
+        if(order.customer.shippingMethod === 'delivery'){
+            lines.push(`🏠 Delivery Address: ${order.customer.shippingAddress}`)
+            lines.push(`🚚 Delivery Provider: ${order.customer.shippingOption}`)
+        }else{
+            lines.push(`🏢 Pickup Location: ${order.customer.pickupLocation}`)
+        }
     }
+
+    lines.push(`\n${SEPERATOR}\n`)
 
     return lines.join('\n')
 }

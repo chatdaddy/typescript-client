@@ -2,6 +2,12 @@ export type SimpleOrder = {
     items: SimpleOrderItem[]
     remarks?: string
     paymentGatewayId?:string
+    shippingDetails? : {
+        shippingAddress?: string
+	    shippingMethod : 'delivery' | 'pickup'
+	    pickupLocation?: string
+	    shippingOption?: string
+    }
 }
 
 export type SimpleOrderItem = {
@@ -37,8 +43,12 @@ export type OrderSerialiseContext = {
 export type Customer = {
     name:string
     mobileNumber:string
-    shippingAddress:string
+    shippingAddress?: string
+	shippingMethod: 'delivery' | 'pickup' | undefined
+	pickupLocation?: string
+	shippingOption?: string
 }
+
 
 export type OrderPaymentIntegration = {
     id: string,
