@@ -1765,6 +1765,12 @@ export interface ShopMetadataModel {
      * @type {string}
      * @memberof ShopMetadataModel
      */
+    'shopCurrency'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof ShopMetadataModel
+     */
     'shopImageUrl'?: string;
     /**
      * 
