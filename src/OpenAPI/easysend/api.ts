@@ -898,6 +898,12 @@ export interface OrderDataModel {
      * @type {string}
      * @memberof OrderDataModel
      */
+    'note': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof OrderDataModel
+     */
     'orderStatus'?: string;
     /**
      * 
