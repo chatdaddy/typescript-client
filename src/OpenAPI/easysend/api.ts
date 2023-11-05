@@ -2123,7 +2123,7 @@ export interface UpdateOrderDataModel {
      * @type {UpdateOrderDataModelNote}
      * @memberof UpdateOrderDataModel
      */
-    'note'?: UpdateOrderDataModelNote;
+    'note'?: UpdateOrderDataModelNote | null;
 }
 /**
  * 
