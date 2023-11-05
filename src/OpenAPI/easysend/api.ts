@@ -895,10 +895,10 @@ export interface OrderDataModel {
     'status': OrderDataModelStatusEnum;
     /**
      * 
-     * @type {string}
+     * @type {OrderDataModelNote}
      * @memberof OrderDataModel
      */
-    'note': string;
+    'note': OrderDataModelNote;
     /**
      * 
      * @type {string}
@@ -945,6 +945,31 @@ export const OrderDataModelStatusEnum = {
 
 export type OrderDataModelStatusEnum = typeof OrderDataModelStatusEnum[keyof typeof OrderDataModelStatusEnum];
 
+/**
+ * 
+ * @export
+ * @interface OrderDataModelNote
+ */
+export interface OrderDataModelNote {
+    /**
+     * 
+     * @type {string}
+     * @memberof OrderDataModelNote
+     */
+    'text': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof OrderDataModelNote
+     */
+    'updatedBy': string;
+    /**
+     * An ISO formatted timestamp
+     * @type {string}
+     * @memberof OrderDataModelNote
+     */
+    'updatedAt'?: string;
+}
 /**
  * 
  * @export
