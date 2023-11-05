@@ -2115,6 +2115,44 @@ export interface TriggerTest200Response {
 /**
  * 
  * @export
+ * @interface UpdateOrderDataModel
+ */
+export interface UpdateOrderDataModel {
+    /**
+     * 
+     * @type {UpdateOrderDataModelNote}
+     * @memberof UpdateOrderDataModel
+     */
+    'note'?: UpdateOrderDataModelNote;
+}
+/**
+ * 
+ * @export
+ * @interface UpdateOrderDataModelNote
+ */
+export interface UpdateOrderDataModelNote {
+    /**
+     * 
+     * @type {string}
+     * @memberof UpdateOrderDataModelNote
+     */
+    'text'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof UpdateOrderDataModelNote
+     */
+    'updatedBy'?: string;
+    /**
+     * An ISO formatted timestamp
+     * @type {string}
+     * @memberof UpdateOrderDataModelNote
+     */
+    'updatedAt'?: string;
+}
+/**
+ * 
+ * @export
  * @interface UpdateOrderModel
  */
 export interface UpdateOrderModel {
@@ -4738,6 +4776,44 @@ export const TrackingsApiAxiosParamCreator = function (configuration?: Configura
             };
         },
         /**
+         * 
+         * @summary Update order details
+         * @param {string} orderId The orderId of the tracking made available to the service
+         * @param {UpdateOrderDataModel} [updateOrderDataModel] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        orderPatch: async (orderId: string, updateOrderDataModel?: UpdateOrderDataModel, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'orderId' is not null or undefined
+            assertParamExists('orderPatch', 'orderId', orderId)
+            const localVarPath = `/orders/{orderId}`
+                .replace(`{${"orderId"}}`, encodeURIComponent(String(orderId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PATCH', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(updateOrderDataModel, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * This deletes the tracking and its associated flowIds from the Database permanently.
          * @summary Stop tracking
          * @param {number} trackingId The Tracking
@@ -5035,6 +5111,18 @@ export const TrackingsApiFp = function(configuration?: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
+         * 
+         * @summary Update order details
+         * @param {string} orderId The orderId of the tracking made available to the service
+         * @param {UpdateOrderDataModel} [updateOrderDataModel] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async orderPatch(orderId: string, updateOrderDataModel?: UpdateOrderDataModel, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.orderPatch(orderId, updateOrderDataModel, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
          * This deletes the tracking and its associated flowIds from the Database permanently.
          * @summary Stop tracking
          * @param {number} trackingId The Tracking
@@ -5132,6 +5220,16 @@ export const TrackingsApiFactory = function (configuration?: Configuration, base
          */
         orderDataGet(requestParameters: TrackingsApiOrderDataGetRequest = {}, options?: AxiosRequestConfig): AxiosPromise<OrderDataGet200Response> {
             return localVarFp.orderDataGet(requestParameters.trackingId, requestParameters.phoneNumber, requestParameters.pageSize, requestParameters.cursor, requestParameters.orderBy, requestParameters.direction, requestParameters.startTime, requestParameters.endTime, requestParameters.orderStatus, requestParameters.paymentStatus, requestParameters.messageStatus, requestParameters.q, requestParameters.excludeTests, requestParameters.returnTotal, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Update order details
+         * @param {TrackingsApiOrderPatchRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        orderPatch(requestParameters: TrackingsApiOrderPatchRequest, options?: AxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.orderPatch(requestParameters.orderId, requestParameters.updateOrderDataModel, options).then((request) => request(axios, basePath));
         },
         /**
          * This deletes the tracking and its associated flowIds from the Database permanently.
@@ -5420,6 +5518,27 @@ export interface TrackingsApiOrderDataGetRequest {
 }
 
 /**
+ * Request parameters for orderPatch operation in TrackingsApi.
+ * @export
+ * @interface TrackingsApiOrderPatchRequest
+ */
+export interface TrackingsApiOrderPatchRequest {
+    /**
+     * The orderId of the tracking made available to the service
+     * @type {string}
+     * @memberof TrackingsApiOrderPatch
+     */
+    readonly orderId: string
+
+    /**
+     * 
+     * @type {UpdateOrderDataModel}
+     * @memberof TrackingsApiOrderPatch
+     */
+    readonly updateOrderDataModel?: UpdateOrderDataModel
+}
+
+/**
  * Request parameters for trackingDelete operation in TrackingsApi.
  * @export
  * @interface TrackingsApiTrackingDeleteRequest
@@ -5546,6 +5665,18 @@ export class TrackingsApi extends BaseAPI {
      */
     public orderDataGet(requestParameters: TrackingsApiOrderDataGetRequest = {}, options?: AxiosRequestConfig) {
         return TrackingsApiFp(this.configuration).orderDataGet(requestParameters.trackingId, requestParameters.phoneNumber, requestParameters.pageSize, requestParameters.cursor, requestParameters.orderBy, requestParameters.direction, requestParameters.startTime, requestParameters.endTime, requestParameters.orderStatus, requestParameters.paymentStatus, requestParameters.messageStatus, requestParameters.q, requestParameters.excludeTests, requestParameters.returnTotal, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Update order details
+     * @param {TrackingsApiOrderPatchRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof TrackingsApi
+     */
+    public orderPatch(requestParameters: TrackingsApiOrderPatchRequest, options?: AxiosRequestConfig) {
+        return TrackingsApiFp(this.configuration).orderPatch(requestParameters.orderId, requestParameters.updateOrderDataModel, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
