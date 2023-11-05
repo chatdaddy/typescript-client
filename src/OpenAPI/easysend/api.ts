@@ -4799,6 +4799,10 @@ export const TrackingsApiAxiosParamCreator = function (configuration?: Configura
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["NOTIFICATION_UPDATE"], configuration)
+
 
     
             localVarHeaderParameter['Content-Type'] = 'application/json';
