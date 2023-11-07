@@ -1549,86 +1549,42 @@ export interface PostTracking {
     'autoPayment'?: TrackingAutoPaymentConfig | null;
 }
 /**
- * @type SecretAuthRequest
- * @export
- */
-export type SecretAuthRequest = SecretAuthRequestWithEmail | SecretAuthRequestWithOptionalEmail;
-
-/**
  * Authentication details for the payment system to create a payment integration
  * @export
- * @interface SecretAuthRequestWithEmail
+ * @interface SecretAuthRequest
  */
-export interface SecretAuthRequestWithEmail {
+export interface SecretAuthRequest {
     /**
      * 
      * @type {string}
-     * @memberof SecretAuthRequestWithEmail
+     * @memberof SecretAuthRequest
      */
-    'type': SecretAuthRequestWithEmailTypeEnum;
+    'type': SecretAuthRequestTypeEnum;
     /**
      * Authorization secret
      * @type {string}
-     * @memberof SecretAuthRequestWithEmail
+     * @memberof SecretAuthRequest
      */
     'secret'?: string;
     /**
      * Username
      * @type {string}
-     * @memberof SecretAuthRequestWithEmail
+     * @memberof SecretAuthRequest
      */
     'username'?: string;
     /**
      * Email so we can use this to map the integration on our end to the payment partner\'s end
      * @type {string}
-     * @memberof SecretAuthRequestWithEmail
+     * @memberof SecretAuthRequest
      */
     'email': string;
 }
 
-export const SecretAuthRequestWithEmailTypeEnum = {
+export const SecretAuthRequestTypeEnum = {
     Secret: 'secret'
 } as const;
 
-export type SecretAuthRequestWithEmailTypeEnum = typeof SecretAuthRequestWithEmailTypeEnum[keyof typeof SecretAuthRequestWithEmailTypeEnum];
-
-/**
- * Authentication details for the payment system to create a payment integration
- * @export
- * @interface SecretAuthRequestWithOptionalEmail
- */
-export interface SecretAuthRequestWithOptionalEmail {
-    /**
-     * 
-     * @type {string}
-     * @memberof SecretAuthRequestWithOptionalEmail
-     */
-    'type': SecretAuthRequestWithOptionalEmailTypeEnum;
-    /**
-     * Authorization secret
-     * @type {string}
-     * @memberof SecretAuthRequestWithOptionalEmail
-     */
-    'secret': string;
-    /**
-     * Username
-     * @type {string}
-     * @memberof SecretAuthRequestWithOptionalEmail
-     */
-    'username': string;
-    /**
-     * Email so we can use this to map the integration on our end to the payment partner\'s end
-     * @type {string}
-     * @memberof SecretAuthRequestWithOptionalEmail
-     */
-    'email'?: string;
-}
-
-export const SecretAuthRequestWithOptionalEmailTypeEnum = {
-    Secret: 'secret'
-} as const;
-
-export type SecretAuthRequestWithOptionalEmailTypeEnum = typeof SecretAuthRequestWithOptionalEmailTypeEnum[keyof typeof SecretAuthRequestWithOptionalEmailTypeEnum];
+export type SecretAuthRequestTypeEnum = typeof SecretAuthRequestTypeEnum[keyof typeof SecretAuthRequestTypeEnum];
 
 /**
  * 
@@ -2881,11 +2837,15 @@ export const PaymentIntegrationsApiAxiosParamCreator = function (configuration?:
          * @summary Webhook for payment integrations
          * @param {string} name Name of the payment integration
          * @param {string} secret Secret of the payment integration
+         * @param {string} [secret2] Secret for payex integration
+         * @param {string} [mid] Merchant id for payex integration
+         * @param {string} [email] Email for payex integration
+         * @param {string} [name2] Name for payex integration
          * @param {{ [key: string]: any; }} [requestBody] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        paymentIntegrationWebhook: async (name: string, secret: string, requestBody?: { [key: string]: any; }, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        paymentIntegrationWebhook: async (name: string, secret: string, secret2?: string, mid?: string, email?: string, name2?: string, requestBody?: { [key: string]: any; }, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'name' is not null or undefined
             assertParamExists('paymentIntegrationWebhook', 'name', name)
             // verify required parameter 'secret' is not null or undefined
@@ -2903,6 +2863,22 @@ export const PaymentIntegrationsApiAxiosParamCreator = function (configuration?:
             const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
+
+            if (secret2 !== undefined) {
+                localVarQueryParameter['secret'] = secret2;
+            }
+
+            if (mid !== undefined) {
+                localVarQueryParameter['mid'] = mid;
+            }
+
+            if (email !== undefined) {
+                localVarQueryParameter['email'] = email;
+            }
+
+            if (name2 !== undefined) {
+                localVarQueryParameter['name'] = name2;
+            }
 
 
     
@@ -3023,12 +2999,16 @@ export const PaymentIntegrationsApiFp = function(configuration?: Configuration) 
          * @summary Webhook for payment integrations
          * @param {string} name Name of the payment integration
          * @param {string} secret Secret of the payment integration
+         * @param {string} [secret2] Secret for payex integration
+         * @param {string} [mid] Merchant id for payex integration
+         * @param {string} [email] Email for payex integration
+         * @param {string} [name2] Name for payex integration
          * @param {{ [key: string]: any; }} [requestBody] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async paymentIntegrationWebhook(name: string, secret: string, requestBody?: { [key: string]: any; }, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SuccessResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.paymentIntegrationWebhook(name, secret, requestBody, options);
+        async paymentIntegrationWebhook(name: string, secret: string, secret2?: string, mid?: string, email?: string, name2?: string, requestBody?: { [key: string]: any; }, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SuccessResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.paymentIntegrationWebhook(name, secret, secret2, mid, email, name2, requestBody, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -3101,7 +3081,7 @@ export const PaymentIntegrationsApiFactory = function (configuration?: Configura
          * @throws {RequiredError}
          */
         paymentIntegrationWebhook(requestParameters: PaymentIntegrationsApiPaymentIntegrationWebhookRequest, options?: AxiosRequestConfig): AxiosPromise<SuccessResponse> {
-            return localVarFp.paymentIntegrationWebhook(requestParameters.name, requestParameters.secret, requestParameters.requestBody, options).then((request) => request(axios, basePath));
+            return localVarFp.paymentIntegrationWebhook(requestParameters.name, requestParameters.secret, requestParameters.secret2, requestParameters.mid, requestParameters.email, requestParameters.name2, requestParameters.requestBody, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -3221,6 +3201,34 @@ export interface PaymentIntegrationsApiPaymentIntegrationWebhookRequest {
     readonly secret: string
 
     /**
+     * Secret for payex integration
+     * @type {string}
+     * @memberof PaymentIntegrationsApiPaymentIntegrationWebhook
+     */
+    readonly secret2?: string
+
+    /**
+     * Merchant id for payex integration
+     * @type {string}
+     * @memberof PaymentIntegrationsApiPaymentIntegrationWebhook
+     */
+    readonly mid?: string
+
+    /**
+     * Email for payex integration
+     * @type {string}
+     * @memberof PaymentIntegrationsApiPaymentIntegrationWebhook
+     */
+    readonly email?: string
+
+    /**
+     * Name for payex integration
+     * @type {string}
+     * @memberof PaymentIntegrationsApiPaymentIntegrationWebhook
+     */
+    readonly name2?: string
+
+    /**
      * 
      * @type {{ [key: string]: any; }}
      * @memberof PaymentIntegrationsApiPaymentIntegrationWebhook
@@ -3313,7 +3321,7 @@ export class PaymentIntegrationsApi extends BaseAPI {
      * @memberof PaymentIntegrationsApi
      */
     public paymentIntegrationWebhook(requestParameters: PaymentIntegrationsApiPaymentIntegrationWebhookRequest, options?: AxiosRequestConfig) {
-        return PaymentIntegrationsApiFp(this.configuration).paymentIntegrationWebhook(requestParameters.name, requestParameters.secret, requestParameters.requestBody, options).then((request) => request(this.axios, this.basePath));
+        return PaymentIntegrationsApiFp(this.configuration).paymentIntegrationWebhook(requestParameters.name, requestParameters.secret, requestParameters.secret2, requestParameters.mid, requestParameters.email, requestParameters.name2, requestParameters.requestBody, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
