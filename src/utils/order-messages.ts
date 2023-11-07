@@ -113,7 +113,7 @@ export function checkAndParseOrderMessage(txt: string): SimpleOrder {
         const shippingProviderLine = lines[shippingLine+2
         ]
         if(shippingMethodLine.trim()){
-          shippingDetails.shippingMethod =  getValueAfterLabel(shippingMethodLine).toLocaleLowerCase() as SimpleOrder['orderContext']['shippingDetails']['shippingMethod']
+          shippingDetails.shippingMethod =  getValueAfterLabel(shippingMethodLine).toLocaleLowerCase().trim() as SimpleOrder['orderContext']['shippingDetails']['shippingMethod']
           
           if(shippingDetails.shippingMethod === 'delivery'){
             shippingDetails.shippingAddress = getValueAfterLabel(shippingAddressPickupLine)
