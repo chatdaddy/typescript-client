@@ -124,7 +124,7 @@ export function checkAndParseOrderMessage(txt: string): SimpleOrder {
         }
     }
 
-    let deliveryFees:number = 0 
+    let deliveryFees = 0 
     const deliveryFeesLine = lines.findIndex((line) => line.trim().startsWith(`${DELIVERY_FEES_LABEL}`))
     if(deliveryFeesLine !== -1){
       const deliveryText = lines[deliveryFeesLine]
