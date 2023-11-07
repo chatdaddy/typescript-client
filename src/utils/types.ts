@@ -1,12 +1,16 @@
 export type SimpleOrder = {
     items: SimpleOrderItem[]
     remarks?: string
-    paymentGatewayId?:string
-    shippingDetails? : {
-        shippingAddress?: string
-	    shippingMethod : 'delivery' | 'pickup'
-	    pickupLocation?: string
-	    shippingOption?: string
+    orderContext:{
+        paymentGatewayId?:string
+        shippingDetails? : {
+            shippingAddress?: string
+	        shippingMethod : 'delivery' | 'pickup'
+	        pickupLocation?: string
+	        shippingOption?: string
+        }
+        shopName?:string
+        deliveryFees?:number
     }
 }
 
@@ -20,6 +24,7 @@ export type OrderMessage = {
     items: OrderItem[]
     remarks?: string
     customer?:Customer
+    deliveryFees?:number
 }
 
 export type OrderItem = {
