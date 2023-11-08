@@ -357,6 +357,19 @@ export interface AdminDataGet200ResponseInner {
 /**
  * 
  * @export
+ * @interface AdminPaymentSystemPost200Response
+ */
+export interface AdminPaymentSystemPost200Response {
+    /**
+     * 
+     * @type {PaymentSystem}
+     * @memberof AdminPaymentSystemPost200Response
+     */
+    'integration': PaymentSystem;
+}
+/**
+ * 
+ * @export
  * @interface CreatePaymentIntegrationRequest
  */
 export interface CreatePaymentIntegrationRequest {
@@ -2256,6 +2269,44 @@ export const AdminApiAxiosParamCreator = function (configuration?: Configuration
                 options: localVarRequestOptions,
             };
         },
+        /**
+         * 
+         * @summary Add/Update Payment system supported by chatdaddy
+         * @param {PaymentSystem} [paymentSystem] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        adminPaymentSystemPost: async (paymentSystem?: PaymentSystem, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/admin/payment-system`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["ADMIN_PANEL_ACCESS"], configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(paymentSystem, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
     }
 };
 
@@ -2278,6 +2329,17 @@ export const AdminApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.adminDataGet(teamId, direction, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
+        /**
+         * 
+         * @summary Add/Update Payment system supported by chatdaddy
+         * @param {PaymentSystem} [paymentSystem] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async adminPaymentSystemPost(paymentSystem?: PaymentSystem, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AdminPaymentSystemPost200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.adminPaymentSystemPost(paymentSystem, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
     }
 };
 
@@ -2297,6 +2359,16 @@ export const AdminApiFactory = function (configuration?: Configuration, basePath
          */
         adminDataGet(requestParameters: AdminApiAdminDataGetRequest = {}, options?: AxiosRequestConfig): AxiosPromise<Array<AdminDataGet200ResponseInner>> {
             return localVarFp.adminDataGet(requestParameters.teamId, requestParameters.direction, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Add/Update Payment system supported by chatdaddy
+         * @param {AdminApiAdminPaymentSystemPostRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        adminPaymentSystemPost(requestParameters: AdminApiAdminPaymentSystemPostRequest = {}, options?: AxiosRequestConfig): AxiosPromise<AdminPaymentSystemPost200Response> {
+            return localVarFp.adminPaymentSystemPost(requestParameters.paymentSystem, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -2323,6 +2395,20 @@ export interface AdminApiAdminDataGetRequest {
 }
 
 /**
+ * Request parameters for adminPaymentSystemPost operation in AdminApi.
+ * @export
+ * @interface AdminApiAdminPaymentSystemPostRequest
+ */
+export interface AdminApiAdminPaymentSystemPostRequest {
+    /**
+     * 
+     * @type {PaymentSystem}
+     * @memberof AdminApiAdminPaymentSystemPost
+     */
+    readonly paymentSystem?: PaymentSystem
+}
+
+/**
  * AdminApi - object-oriented interface
  * @export
  * @class AdminApi
@@ -2339,6 +2425,18 @@ export class AdminApi extends BaseAPI {
      */
     public adminDataGet(requestParameters: AdminApiAdminDataGetRequest = {}, options?: AxiosRequestConfig) {
         return AdminApiFp(this.configuration).adminDataGet(requestParameters.teamId, requestParameters.direction, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Add/Update Payment system supported by chatdaddy
+     * @param {AdminApiAdminPaymentSystemPostRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AdminApi
+     */
+    public adminPaymentSystemPost(requestParameters: AdminApiAdminPaymentSystemPostRequest = {}, options?: AxiosRequestConfig) {
+        return AdminApiFp(this.configuration).adminPaymentSystemPost(requestParameters.paymentSystem, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
