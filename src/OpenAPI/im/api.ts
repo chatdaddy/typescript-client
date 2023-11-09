@@ -3642,6 +3642,12 @@ export interface PlatformProductUpdate {
      * @memberof PlatformProductUpdate
      */
     'imageUrls'?: Array<string>;
+    /**
+     * 
+     * @type {number}
+     * @memberof PlatformProductUpdate
+     */
+    'stock'?: number | null;
 }
 /**
  * 
