@@ -436,6 +436,12 @@ interface PlatformProduct {
     'price': number | null;
     /**
      * 
+     * @type {number}
+     * @memberof PlatformProduct
+     */
+    'stock'?: number | null;
+    /**
+     * 
      * @type {string}
      * @memberof PlatformProduct
      */
@@ -690,6 +696,12 @@ export interface ShopProduct {
      * @memberof ShopProduct
      */
     'price': number | null;
+    /**
+     * 
+     * @type {number}
+     * @memberof ShopProduct
+     */
+    'stock'?: number | null;
     /**
      * 
      * @type {string}

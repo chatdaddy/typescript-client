@@ -3377,6 +3377,12 @@ export interface PlatformProduct {
     'price': number | null;
     /**
      * 
+     * @type {number}
+     * @memberof PlatformProduct
+     */
+    'stock'?: number | null;
+    /**
+     * 
      * @type {string}
      * @memberof PlatformProduct
      */
@@ -3543,6 +3549,33 @@ export interface PlatformProductCreate {
      */
     'imageUrls'?: Array<string>;
 }
+/**
+ * 
+ * @export
+ * @interface PlatformProductStockUpdate
+ */
+export interface PlatformProductStockUpdate {
+    /**
+     * The amount to add or remove from the stock
+     * @type {number}
+     * @memberof PlatformProductStockUpdate
+     */
+    'amount'?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof PlatformProductStockUpdate
+     */
+    'operation'?: PlatformProductStockUpdateOperationEnum;
+}
+
+export const PlatformProductStockUpdateOperationEnum = {
+    Add: 'add',
+    Remove: 'remove'
+} as const;
+
+export type PlatformProductStockUpdateOperationEnum = typeof PlatformProductStockUpdateOperationEnum[keyof typeof PlatformProductStockUpdateOperationEnum];
+
 /**
  * 
  * @export
@@ -10119,16 +10152,13 @@ export const ProductApiAxiosParamCreator = function (configuration?: Configurati
          * 
          * @summary Delete products by the given filter from the catalog
          * @param {string} accountId 
-         * @param {Array<string>} [id] 
-         * @param {Array<string>} [notId] 
-         * @param {string} [q] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        platformProductsDelete: async (accountId: string, id?: Array<string>, notId?: Array<string>, q?: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        platformProductsDelete: async (accountId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'accountId' is not null or undefined
             assertParamExists('platformProductsDelete', 'accountId', accountId)
-            const localVarPath = `/products/{accountId}`
+            const localVarPath = `/products/{accountId}/manage-stock`
                 .replace(`{${"accountId"}}`, encodeURIComponent(String(accountId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -10144,18 +10174,6 @@ export const ProductApiAxiosParamCreator = function (configuration?: Configurati
             // authentication chatdaddy required
             // oauth required
             await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["PRODUCTS_DELETE"], configuration)
-
-            if (id) {
-                localVarQueryParameter['id'] = id;
-            }
-
-            if (notId) {
-                localVarQueryParameter['notId'] = notId;
-            }
-
-            if (q !== undefined) {
-                localVarQueryParameter['q'] = q;
-            }
 
 
     
@@ -10239,6 +10257,48 @@ export const ProductApiAxiosParamCreator = function (configuration?: Configurati
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Update stock of a product
+         * @param {string} accountId 
+         * @param {PlatformProductStockUpdate} [platformProductStockUpdate] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        platformProductsManageStock: async (accountId: string, platformProductStockUpdate?: PlatformProductStockUpdate, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'accountId' is not null or undefined
+            assertParamExists('platformProductsManageStock', 'accountId', accountId)
+            const localVarPath = `/products/{accountId}/manage-stock`
+                .replace(`{${"accountId"}}`, encodeURIComponent(String(accountId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PATCH', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["PRODUCTS_UPDATE"], configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(platformProductStockUpdate, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -10429,14 +10489,11 @@ export const ProductApiFp = function(configuration?: Configuration) {
          * 
          * @summary Delete products by the given filter from the catalog
          * @param {string} accountId 
-         * @param {Array<string>} [id] 
-         * @param {Array<string>} [notId] 
-         * @param {string} [q] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async platformProductsDelete(accountId: string, id?: Array<string>, notId?: Array<string>, q?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AccountsLogout200Response>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.platformProductsDelete(accountId, id, notId, q, options);
+        async platformProductsDelete(accountId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AccountsLogout200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.platformProductsDelete(accountId, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -10456,6 +10513,18 @@ export const ProductApiFp = function(configuration?: Configuration) {
          */
         async platformProductsGet(teamId: string, accountId?: Array<string>, q?: string, category?: string, notCategory?: string, id?: Array<string>, cursor?: string, count?: number, returnTotalCount?: boolean, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PlatformProductsGet200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.platformProductsGet(teamId, accountId, q, category, notCategory, id, cursor, count, returnTotalCount, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary Update stock of a product
+         * @param {string} accountId 
+         * @param {PlatformProductStockUpdate} [platformProductStockUpdate] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async platformProductsManageStock(accountId: string, platformProductStockUpdate?: PlatformProductStockUpdate, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.platformProductsManageStock(accountId, platformProductStockUpdate, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -10526,7 +10595,7 @@ export const ProductApiFactory = function (configuration?: Configuration, basePa
          * @throws {RequiredError}
          */
         platformProductsDelete(requestParameters: ProductApiPlatformProductsDeleteRequest, options?: AxiosRequestConfig): AxiosPromise<AccountsLogout200Response> {
-            return localVarFp.platformProductsDelete(requestParameters.accountId, requestParameters.id, requestParameters.notId, requestParameters.q, options).then((request) => request(axios, basePath));
+            return localVarFp.platformProductsDelete(requestParameters.accountId, options).then((request) => request(axios, basePath));
         },
         /**
          * Returns the WA catalog. Only available on WA Business apps. 
@@ -10537,6 +10606,16 @@ export const ProductApiFactory = function (configuration?: Configuration, basePa
          */
         platformProductsGet(requestParameters: ProductApiPlatformProductsGetRequest, options?: AxiosRequestConfig): AxiosPromise<PlatformProductsGet200Response> {
             return localVarFp.platformProductsGet(requestParameters.teamId, requestParameters.accountId, requestParameters.q, requestParameters.category, requestParameters.notCategory, requestParameters.id, requestParameters.cursor, requestParameters.count, requestParameters.returnTotalCount, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Update stock of a product
+         * @param {ProductApiPlatformProductsManageStockRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        platformProductsManageStock(requestParameters: ProductApiPlatformProductsManageStockRequest, options?: AxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.platformProductsManageStock(requestParameters.accountId, requestParameters.platformProductStockUpdate, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -10610,27 +10689,6 @@ export interface ProductApiPlatformProductsDeleteRequest {
      * @memberof ProductApiPlatformProductsDelete
      */
     readonly accountId: string
-
-    /**
-     * 
-     * @type {Array<string>}
-     * @memberof ProductApiPlatformProductsDelete
-     */
-    readonly id?: Array<string>
-
-    /**
-     * 
-     * @type {Array<string>}
-     * @memberof ProductApiPlatformProductsDelete
-     */
-    readonly notId?: Array<string>
-
-    /**
-     * 
-     * @type {string}
-     * @memberof ProductApiPlatformProductsDelete
-     */
-    readonly q?: string
 }
 
 /**
@@ -10701,6 +10759,27 @@ export interface ProductApiPlatformProductsGetRequest {
      * @memberof ProductApiPlatformProductsGet
      */
     readonly returnTotalCount?: boolean
+}
+
+/**
+ * Request parameters for platformProductsManageStock operation in ProductApi.
+ * @export
+ * @interface ProductApiPlatformProductsManageStockRequest
+ */
+export interface ProductApiPlatformProductsManageStockRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof ProductApiPlatformProductsManageStock
+     */
+    readonly accountId: string
+
+    /**
+     * 
+     * @type {PlatformProductStockUpdate}
+     * @memberof ProductApiPlatformProductsManageStock
+     */
+    readonly platformProductStockUpdate?: PlatformProductStockUpdate
 }
 
 /**
@@ -10829,7 +10908,7 @@ export class ProductApi extends BaseAPI {
      * @memberof ProductApi
      */
     public platformProductsDelete(requestParameters: ProductApiPlatformProductsDeleteRequest, options?: AxiosRequestConfig) {
-        return ProductApiFp(this.configuration).platformProductsDelete(requestParameters.accountId, requestParameters.id, requestParameters.notId, requestParameters.q, options).then((request) => request(this.axios, this.basePath));
+        return ProductApiFp(this.configuration).platformProductsDelete(requestParameters.accountId, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -10842,6 +10921,18 @@ export class ProductApi extends BaseAPI {
      */
     public platformProductsGet(requestParameters: ProductApiPlatformProductsGetRequest, options?: AxiosRequestConfig) {
         return ProductApiFp(this.configuration).platformProductsGet(requestParameters.teamId, requestParameters.accountId, requestParameters.q, requestParameters.category, requestParameters.notCategory, requestParameters.id, requestParameters.cursor, requestParameters.count, requestParameters.returnTotalCount, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Update stock of a product
+     * @param {ProductApiPlatformProductsManageStockRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ProductApi
+     */
+    public platformProductsManageStock(requestParameters: ProductApiPlatformProductsManageStockRequest, options?: AxiosRequestConfig) {
+        return ProductApiFp(this.configuration).platformProductsManageStock(requestParameters.accountId, requestParameters.platformProductStockUpdate, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
