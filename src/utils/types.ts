@@ -6,12 +6,12 @@ export type SimpleOrder = {
         paymentGatewayId?:string
         shippingDetails? : {
             shippingAddress?: string
-	        shippingMethod : 'delivery' | 'pickup'
-	        pickupLocation?: string
-	        shippingOption?: string
+            shippingMethod: 'delivery' | 'pickup' | 'none'
+            pickupLocation?: string
+            shippingOption?: string
         }
-        shopName?:string
-        deliveryFees?:number
+        shopName?: string
+        deliveryFees?: number
     }
 }
 
@@ -24,8 +24,8 @@ export type SimpleOrderItem = {
 export type OrderMessage = {
     items: OrderItem[]
     remarks?: string
-    customer?:Customer
-    deliveryFees?:number
+    customer?: Customer
+    deliveryFees?: number
 }
 
 export type OrderItem = {
@@ -37,26 +37,25 @@ export type OrderItem = {
 }
 
 export type PaymentGateway = {
-    id:string
-    name:string
+    id: string
+    name: string
 }
 
 export type OrderSerialiseContext = {
-    shopName:string,
-    paymentIntegration?:OrderPaymentIntegration
+    shopName: string
+    paymentIntegration?: OrderPaymentIntegration
 }
 
 export type Customer = {
-    name:string
-    mobileNumber:string
+    name: string
+    mobileNumber: string
     shippingAddress?: string
-	shippingMethod: 'delivery' | 'pickup' | undefined
-	pickupLocation?: string
-	shippingOption?: string
+    shippingMethod: 'delivery' | 'pickup' | 'none'
+    pickupLocation?: string
+    shippingOption?: string
 }
 
-
 export type OrderPaymentIntegration = {
-    id: string,
-    name:string
+    id: string
+    name: string
 }

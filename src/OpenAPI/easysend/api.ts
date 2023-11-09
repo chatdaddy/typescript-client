@@ -357,6 +357,19 @@ export interface AdminDataGet200ResponseInner {
 /**
  * 
  * @export
+ * @interface AdminPaymentSystemPost200Response
+ */
+export interface AdminPaymentSystemPost200Response {
+    /**
+     * 
+     * @type {PaymentSystem}
+     * @memberof AdminPaymentSystemPost200Response
+     */
+    'integration': PaymentSystem;
+}
+/**
+ * 
+ * @export
  * @interface CreatePaymentIntegrationRequest
  */
 export interface CreatePaymentIntegrationRequest {
@@ -895,6 +908,12 @@ export interface OrderDataModel {
     'status': OrderDataModelStatusEnum;
     /**
      * 
+     * @type {OrderDataModelNote}
+     * @memberof OrderDataModel
+     */
+    'note': OrderDataModelNote;
+    /**
+     * 
      * @type {string}
      * @memberof OrderDataModel
      */
@@ -939,6 +958,31 @@ export const OrderDataModelStatusEnum = {
 
 export type OrderDataModelStatusEnum = typeof OrderDataModelStatusEnum[keyof typeof OrderDataModelStatusEnum];
 
+/**
+ * 
+ * @export
+ * @interface OrderDataModelNote
+ */
+export interface OrderDataModelNote {
+    /**
+     * 
+     * @type {string}
+     * @memberof OrderDataModelNote
+     */
+    'text': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof OrderDataModelNote
+     */
+    'updatedBy': string;
+    /**
+     * An ISO formatted timestamp
+     * @type {string}
+     * @memberof OrderDataModelNote
+     */
+    'updatedAt'?: string;
+}
 /**
  * 
  * @export
@@ -1518,86 +1562,42 @@ export interface PostTracking {
     'autoPayment'?: TrackingAutoPaymentConfig | null;
 }
 /**
- * @type SecretAuthRequest
- * @export
- */
-export type SecretAuthRequest = SecretAuthRequestWithEmail | SecretAuthRequestWithOptionalEmail;
-
-/**
  * Authentication details for the payment system to create a payment integration
  * @export
- * @interface SecretAuthRequestWithEmail
+ * @interface SecretAuthRequest
  */
-export interface SecretAuthRequestWithEmail {
+export interface SecretAuthRequest {
     /**
      * 
      * @type {string}
-     * @memberof SecretAuthRequestWithEmail
+     * @memberof SecretAuthRequest
      */
-    'type': SecretAuthRequestWithEmailTypeEnum;
+    'type': SecretAuthRequestTypeEnum;
     /**
      * Authorization secret
      * @type {string}
-     * @memberof SecretAuthRequestWithEmail
+     * @memberof SecretAuthRequest
      */
     'secret'?: string;
     /**
      * Username
      * @type {string}
-     * @memberof SecretAuthRequestWithEmail
+     * @memberof SecretAuthRequest
      */
     'username'?: string;
     /**
      * Email so we can use this to map the integration on our end to the payment partner\'s end
      * @type {string}
-     * @memberof SecretAuthRequestWithEmail
+     * @memberof SecretAuthRequest
      */
     'email': string;
 }
 
-export const SecretAuthRequestWithEmailTypeEnum = {
+export const SecretAuthRequestTypeEnum = {
     Secret: 'secret'
 } as const;
 
-export type SecretAuthRequestWithEmailTypeEnum = typeof SecretAuthRequestWithEmailTypeEnum[keyof typeof SecretAuthRequestWithEmailTypeEnum];
-
-/**
- * Authentication details for the payment system to create a payment integration
- * @export
- * @interface SecretAuthRequestWithOptionalEmail
- */
-export interface SecretAuthRequestWithOptionalEmail {
-    /**
-     * 
-     * @type {string}
-     * @memberof SecretAuthRequestWithOptionalEmail
-     */
-    'type': SecretAuthRequestWithOptionalEmailTypeEnum;
-    /**
-     * Authorization secret
-     * @type {string}
-     * @memberof SecretAuthRequestWithOptionalEmail
-     */
-    'secret': string;
-    /**
-     * Username
-     * @type {string}
-     * @memberof SecretAuthRequestWithOptionalEmail
-     */
-    'username': string;
-    /**
-     * Email so we can use this to map the integration on our end to the payment partner\'s end
-     * @type {string}
-     * @memberof SecretAuthRequestWithOptionalEmail
-     */
-    'email'?: string;
-}
-
-export const SecretAuthRequestWithOptionalEmailTypeEnum = {
-    Secret: 'secret'
-} as const;
-
-export type SecretAuthRequestWithOptionalEmailTypeEnum = typeof SecretAuthRequestWithOptionalEmailTypeEnum[keyof typeof SecretAuthRequestWithOptionalEmailTypeEnum];
+export type SecretAuthRequestTypeEnum = typeof SecretAuthRequestTypeEnum[keyof typeof SecretAuthRequestTypeEnum];
 
 /**
  * 
@@ -1754,6 +1754,12 @@ export interface ShopMetadataModel {
      * @memberof ShopMetadataModel
      */
     'shopPhoneNumber'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ShopMetadataModel
+     */
+    'shopCurrency'?: string | null;
     /**
      * 
      * @type {string}
@@ -2078,6 +2084,44 @@ export interface TriggerTest200Response {
 /**
  * 
  * @export
+ * @interface UpdateOrderDataModel
+ */
+export interface UpdateOrderDataModel {
+    /**
+     * 
+     * @type {UpdateOrderDataModelNote}
+     * @memberof UpdateOrderDataModel
+     */
+    'note'?: UpdateOrderDataModelNote | null;
+}
+/**
+ * 
+ * @export
+ * @interface UpdateOrderDataModelNote
+ */
+export interface UpdateOrderDataModelNote {
+    /**
+     * 
+     * @type {string}
+     * @memberof UpdateOrderDataModelNote
+     */
+    'text'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof UpdateOrderDataModelNote
+     */
+    'updatedBy'?: string;
+    /**
+     * An ISO formatted timestamp
+     * @type {string}
+     * @memberof UpdateOrderDataModelNote
+     */
+    'updatedAt'?: string;
+}
+/**
+ * 
+ * @export
  * @interface UpdateOrderModel
  */
 export interface UpdateOrderModel {
@@ -2225,6 +2269,44 @@ export const AdminApiAxiosParamCreator = function (configuration?: Configuration
                 options: localVarRequestOptions,
             };
         },
+        /**
+         * 
+         * @summary Add/Update Payment system supported by chatdaddy
+         * @param {PaymentSystem} [paymentSystem] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        adminPaymentSystemPost: async (paymentSystem?: PaymentSystem, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/admin/payment-system`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["ADMIN_PANEL_ACCESS"], configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(paymentSystem, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
     }
 };
 
@@ -2247,6 +2329,17 @@ export const AdminApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.adminDataGet(teamId, direction, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
+        /**
+         * 
+         * @summary Add/Update Payment system supported by chatdaddy
+         * @param {PaymentSystem} [paymentSystem] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async adminPaymentSystemPost(paymentSystem?: PaymentSystem, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AdminPaymentSystemPost200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.adminPaymentSystemPost(paymentSystem, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
     }
 };
 
@@ -2266,6 +2359,16 @@ export const AdminApiFactory = function (configuration?: Configuration, basePath
          */
         adminDataGet(requestParameters: AdminApiAdminDataGetRequest = {}, options?: AxiosRequestConfig): AxiosPromise<Array<AdminDataGet200ResponseInner>> {
             return localVarFp.adminDataGet(requestParameters.teamId, requestParameters.direction, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Add/Update Payment system supported by chatdaddy
+         * @param {AdminApiAdminPaymentSystemPostRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        adminPaymentSystemPost(requestParameters: AdminApiAdminPaymentSystemPostRequest = {}, options?: AxiosRequestConfig): AxiosPromise<AdminPaymentSystemPost200Response> {
+            return localVarFp.adminPaymentSystemPost(requestParameters.paymentSystem, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -2292,6 +2395,20 @@ export interface AdminApiAdminDataGetRequest {
 }
 
 /**
+ * Request parameters for adminPaymentSystemPost operation in AdminApi.
+ * @export
+ * @interface AdminApiAdminPaymentSystemPostRequest
+ */
+export interface AdminApiAdminPaymentSystemPostRequest {
+    /**
+     * 
+     * @type {PaymentSystem}
+     * @memberof AdminApiAdminPaymentSystemPost
+     */
+    readonly paymentSystem?: PaymentSystem
+}
+
+/**
  * AdminApi - object-oriented interface
  * @export
  * @class AdminApi
@@ -2308,6 +2425,18 @@ export class AdminApi extends BaseAPI {
      */
     public adminDataGet(requestParameters: AdminApiAdminDataGetRequest = {}, options?: AxiosRequestConfig) {
         return AdminApiFp(this.configuration).adminDataGet(requestParameters.teamId, requestParameters.direction, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Add/Update Payment system supported by chatdaddy
+     * @param {AdminApiAdminPaymentSystemPostRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AdminApi
+     */
+    public adminPaymentSystemPost(requestParameters: AdminApiAdminPaymentSystemPostRequest = {}, options?: AxiosRequestConfig) {
+        return AdminApiFp(this.configuration).adminPaymentSystemPost(requestParameters.paymentSystem, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
@@ -2806,11 +2935,15 @@ export const PaymentIntegrationsApiAxiosParamCreator = function (configuration?:
          * @summary Webhook for payment integrations
          * @param {string} name Name of the payment integration
          * @param {string} secret Secret of the payment integration
+         * @param {string} [secret2] Secret for payex integration
+         * @param {string} [mid] Merchant id for payex integration
+         * @param {string} [email] Email for payex integration
+         * @param {string} [name2] Name for payex integration
          * @param {{ [key: string]: any; }} [requestBody] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        paymentIntegrationWebhook: async (name: string, secret: string, requestBody?: { [key: string]: any; }, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        paymentIntegrationWebhook: async (name: string, secret: string, secret2?: string, mid?: string, email?: string, name2?: string, requestBody?: { [key: string]: any; }, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'name' is not null or undefined
             assertParamExists('paymentIntegrationWebhook', 'name', name)
             // verify required parameter 'secret' is not null or undefined
@@ -2828,6 +2961,22 @@ export const PaymentIntegrationsApiAxiosParamCreator = function (configuration?:
             const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
+
+            if (secret2 !== undefined) {
+                localVarQueryParameter['secret'] = secret2;
+            }
+
+            if (mid !== undefined) {
+                localVarQueryParameter['mid'] = mid;
+            }
+
+            if (email !== undefined) {
+                localVarQueryParameter['email'] = email;
+            }
+
+            if (name2 !== undefined) {
+                localVarQueryParameter['name'] = name2;
+            }
 
 
     
@@ -2948,12 +3097,16 @@ export const PaymentIntegrationsApiFp = function(configuration?: Configuration) 
          * @summary Webhook for payment integrations
          * @param {string} name Name of the payment integration
          * @param {string} secret Secret of the payment integration
+         * @param {string} [secret2] Secret for payex integration
+         * @param {string} [mid] Merchant id for payex integration
+         * @param {string} [email] Email for payex integration
+         * @param {string} [name2] Name for payex integration
          * @param {{ [key: string]: any; }} [requestBody] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async paymentIntegrationWebhook(name: string, secret: string, requestBody?: { [key: string]: any; }, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SuccessResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.paymentIntegrationWebhook(name, secret, requestBody, options);
+        async paymentIntegrationWebhook(name: string, secret: string, secret2?: string, mid?: string, email?: string, name2?: string, requestBody?: { [key: string]: any; }, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SuccessResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.paymentIntegrationWebhook(name, secret, secret2, mid, email, name2, requestBody, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -3026,7 +3179,7 @@ export const PaymentIntegrationsApiFactory = function (configuration?: Configura
          * @throws {RequiredError}
          */
         paymentIntegrationWebhook(requestParameters: PaymentIntegrationsApiPaymentIntegrationWebhookRequest, options?: AxiosRequestConfig): AxiosPromise<SuccessResponse> {
-            return localVarFp.paymentIntegrationWebhook(requestParameters.name, requestParameters.secret, requestParameters.requestBody, options).then((request) => request(axios, basePath));
+            return localVarFp.paymentIntegrationWebhook(requestParameters.name, requestParameters.secret, requestParameters.secret2, requestParameters.mid, requestParameters.email, requestParameters.name2, requestParameters.requestBody, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -3146,6 +3299,34 @@ export interface PaymentIntegrationsApiPaymentIntegrationWebhookRequest {
     readonly secret: string
 
     /**
+     * Secret for payex integration
+     * @type {string}
+     * @memberof PaymentIntegrationsApiPaymentIntegrationWebhook
+     */
+    readonly secret2?: string
+
+    /**
+     * Merchant id for payex integration
+     * @type {string}
+     * @memberof PaymentIntegrationsApiPaymentIntegrationWebhook
+     */
+    readonly mid?: string
+
+    /**
+     * Email for payex integration
+     * @type {string}
+     * @memberof PaymentIntegrationsApiPaymentIntegrationWebhook
+     */
+    readonly email?: string
+
+    /**
+     * Name for payex integration
+     * @type {string}
+     * @memberof PaymentIntegrationsApiPaymentIntegrationWebhook
+     */
+    readonly name2?: string
+
+    /**
      * 
      * @type {{ [key: string]: any; }}
      * @memberof PaymentIntegrationsApiPaymentIntegrationWebhook
@@ -3238,7 +3419,7 @@ export class PaymentIntegrationsApi extends BaseAPI {
      * @memberof PaymentIntegrationsApi
      */
     public paymentIntegrationWebhook(requestParameters: PaymentIntegrationsApiPaymentIntegrationWebhookRequest, options?: AxiosRequestConfig) {
-        return PaymentIntegrationsApiFp(this.configuration).paymentIntegrationWebhook(requestParameters.name, requestParameters.secret, requestParameters.requestBody, options).then((request) => request(this.axios, this.basePath));
+        return PaymentIntegrationsApiFp(this.configuration).paymentIntegrationWebhook(requestParameters.name, requestParameters.secret, requestParameters.secret2, requestParameters.mid, requestParameters.email, requestParameters.name2, requestParameters.requestBody, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -4701,6 +4882,48 @@ export const TrackingsApiAxiosParamCreator = function (configuration?: Configura
             };
         },
         /**
+         * 
+         * @summary Update order details
+         * @param {string} orderId The orderId of the tracking made available to the service
+         * @param {UpdateOrderDataModel} [updateOrderDataModel] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        orderPatch: async (orderId: string, updateOrderDataModel?: UpdateOrderDataModel, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'orderId' is not null or undefined
+            assertParamExists('orderPatch', 'orderId', orderId)
+            const localVarPath = `/orders/{orderId}`
+                .replace(`{${"orderId"}}`, encodeURIComponent(String(orderId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PATCH', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["NOTIFICATION_UPDATE"], configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(updateOrderDataModel, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * This deletes the tracking and its associated flowIds from the Database permanently.
          * @summary Stop tracking
          * @param {number} trackingId The Tracking
@@ -4998,6 +5221,18 @@ export const TrackingsApiFp = function(configuration?: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
+         * 
+         * @summary Update order details
+         * @param {string} orderId The orderId of the tracking made available to the service
+         * @param {UpdateOrderDataModel} [updateOrderDataModel] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async orderPatch(orderId: string, updateOrderDataModel?: UpdateOrderDataModel, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.orderPatch(orderId, updateOrderDataModel, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
          * This deletes the tracking and its associated flowIds from the Database permanently.
          * @summary Stop tracking
          * @param {number} trackingId The Tracking
@@ -5095,6 +5330,16 @@ export const TrackingsApiFactory = function (configuration?: Configuration, base
          */
         orderDataGet(requestParameters: TrackingsApiOrderDataGetRequest = {}, options?: AxiosRequestConfig): AxiosPromise<OrderDataGet200Response> {
             return localVarFp.orderDataGet(requestParameters.trackingId, requestParameters.phoneNumber, requestParameters.pageSize, requestParameters.cursor, requestParameters.orderBy, requestParameters.direction, requestParameters.startTime, requestParameters.endTime, requestParameters.orderStatus, requestParameters.paymentStatus, requestParameters.messageStatus, requestParameters.q, requestParameters.excludeTests, requestParameters.returnTotal, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Update order details
+         * @param {TrackingsApiOrderPatchRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        orderPatch(requestParameters: TrackingsApiOrderPatchRequest, options?: AxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.orderPatch(requestParameters.orderId, requestParameters.updateOrderDataModel, options).then((request) => request(axios, basePath));
         },
         /**
          * This deletes the tracking and its associated flowIds from the Database permanently.
@@ -5383,6 +5628,27 @@ export interface TrackingsApiOrderDataGetRequest {
 }
 
 /**
+ * Request parameters for orderPatch operation in TrackingsApi.
+ * @export
+ * @interface TrackingsApiOrderPatchRequest
+ */
+export interface TrackingsApiOrderPatchRequest {
+    /**
+     * The orderId of the tracking made available to the service
+     * @type {string}
+     * @memberof TrackingsApiOrderPatch
+     */
+    readonly orderId: string
+
+    /**
+     * 
+     * @type {UpdateOrderDataModel}
+     * @memberof TrackingsApiOrderPatch
+     */
+    readonly updateOrderDataModel?: UpdateOrderDataModel
+}
+
+/**
  * Request parameters for trackingDelete operation in TrackingsApi.
  * @export
  * @interface TrackingsApiTrackingDeleteRequest
@@ -5509,6 +5775,18 @@ export class TrackingsApi extends BaseAPI {
      */
     public orderDataGet(requestParameters: TrackingsApiOrderDataGetRequest = {}, options?: AxiosRequestConfig) {
         return TrackingsApiFp(this.configuration).orderDataGet(requestParameters.trackingId, requestParameters.phoneNumber, requestParameters.pageSize, requestParameters.cursor, requestParameters.orderBy, requestParameters.direction, requestParameters.startTime, requestParameters.endTime, requestParameters.orderStatus, requestParameters.paymentStatus, requestParameters.messageStatus, requestParameters.q, requestParameters.excludeTests, requestParameters.returnTotal, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Update order details
+     * @param {TrackingsApiOrderPatchRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof TrackingsApi
+     */
+    public orderPatch(requestParameters: TrackingsApiOrderPatchRequest, options?: AxiosRequestConfig) {
+        return TrackingsApiFp(this.configuration).orderPatch(requestParameters.orderId, requestParameters.updateOrderDataModel, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

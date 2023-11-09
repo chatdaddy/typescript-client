@@ -9,14 +9,14 @@ const SHIPPING_METHOD_LABEL = '🚛 Shipping Method:'
 const DELIVERY_FEES_LABEL = '🚚 Delivery Fees:'
 const SEPERATOR = '================================'
 
-const PAYMENT_ID_REGEX = new RegExp(/(\bpi_\S+\b)/ig)
+const PAYMENT_ID_REGEX = new RegExp(/(\bpi_\S+\b)/gi)
 
 function capitalizeFirstLetter(string: string) {
-    return string.charAt(0).toUpperCase() + string.slice(1);
+    return string.charAt(0).toUpperCase() + string.slice(1)
 }
 
-function getValueAfterLabel(string: string){
-  return string.substring(string.indexOf(':')+2)
+function getValueAfterLabel(string: string) {
+    return string.substring(string.indexOf(':') + 2)
 }
 
 /**
@@ -37,7 +37,7 @@ function getValueAfterLabel(string: string){
  * - 1 x fries (fries_123)
  * Total: HKD 500
  * Remarks: no pickles
- * 
+ *
  * Payment Gateway Name: Stripe
  * Payment Gateway ID: pi_23812312
  */
@@ -95,7 +95,7 @@ export function checkAndParseOrderMessage(txt: string): SimpleOrder {
 
     // Extract payment gateway details
     const totalPaymentLines = lines.findIndex((line) => line.trim().startsWith(PAYMENT_GATEWAY_ID_LABEL))
-    if(totalPaymentLines !== -1){
+    if (totalPaymentLines !== -1) {
         const paymentGatewayLine = lines[totalPaymentLines]
         const paymentGatewayNameLine = lines[totalPaymentLines-1]
         if(paymentGatewayLine.trim()){
@@ -105,44 +105,45 @@ export function checkAndParseOrderMessage(txt: string): SimpleOrder {
     }
 
     //Extract Shipping Details
-    let shippingDetails : SimpleOrder['orderContext']['shippingDetails'] = {
-        shippingMethod:'delivery',
+    let shippingDetails: SimpleOrder['orderContext']['shippingDetails'] = {
+        shippingMethod: 'delivery',
     }
     const shippingLine = lines.findIndex((line) => line.trim().startsWith(SHIPPING_METHOD_LABEL))
 
-    if(shippingLine !== -1){
+    if (shippingLine !== -1) {
         const shippingMethodLine = lines[shippingLine]
-        const shippingAddressPickupLine = lines[shippingLine+1]
-        const shippingProviderLine = lines[shippingLine+2
-        ]
-        if(shippingMethodLine.trim()){
-          shippingDetails.shippingMethod =  getValueAfterLabel(shippingMethodLine).toLocaleLowerCase().trim() as SimpleOrder['orderContext']['shippingDetails']['shippingMethod']
-          
-          if(shippingDetails.shippingMethod === 'delivery'){
-            shippingDetails.shippingAddress = getValueAfterLabel(shippingAddressPickupLine)
-            shippingDetails.shippingOption = getValueAfterLabel(shippingProviderLine)
-          }else{
-            shippingDetails.pickupLocation = getValueAfterLabel(shippingAddressPickupLine)
-          }
+        const shippingAddressPickupLine = lines[shippingLine + 1]
+        const shippingProviderLine = lines[shippingLine + 2]
+        if (shippingMethodLine.trim()) {
+            shippingDetails.shippingMethod = getValueAfterLabel(shippingMethodLine)
+                .toLocaleLowerCase()
+                .trim() as SimpleOrder['orderContext']['shippingDetails']['shippingMethod']
+
+            if (shippingDetails.shippingMethod === 'delivery') {
+                shippingDetails.shippingAddress = getValueAfterLabel(shippingAddressPickupLine)
+                shippingDetails.shippingOption = getValueAfterLabel(shippingProviderLine)
+            } else {
+                shippingDetails.pickupLocation = getValueAfterLabel(shippingAddressPickupLine)
+            }
         }
     }
 
-    let deliveryFees = 0 
+    let deliveryFees = 0
     const deliveryFeesLine = lines.findIndex((line) => line.trim().startsWith(`${DELIVERY_FEES_LABEL}`))
-    if(deliveryFeesLine !== -1){
-      const deliveryText = lines[deliveryFeesLine]
-      deliveryFees = parseFloat(deliveryText.replace(/[^0-9]/g, ""))
+    if (deliveryFeesLine !== -1) {
+        const deliveryText = lines[deliveryFeesLine]
+        deliveryFees = parseFloat(deliveryText.replace(/[^0-9]/g, ''))
     }
-
 
     const orderContext: SimpleOrder['orderContext'] = {
-        paymentGatewayId, 
+        paymentGatewayName,
+        paymentGatewayId,
         shippingDetails,
         shopName: lines[2].substring(7),
-        deliveryFees, 
+        deliveryFees,
     }
 
-    return { items: orderItems, remarks, orderContext}
+    return { items: orderItems, remarks, orderContext }
 }
 
 /**
@@ -151,21 +152,14 @@ export function checkAndParseOrderMessage(txt: string): SimpleOrder {
  * @param order Order details including items and remarks.
  * @param context Contains details to format before and after messages.
  */
-export function serialiseOrderMessage(
-    order: OrderMessage,
-    context:OrderSerialiseContext,
-): string {
-
+export function serialiseOrderMessage(order: OrderMessage, context: OrderSerialiseContext): string {
     const itemsContent = order.items
         .map((item) => `${item.quantity} x ${item.name} (${item.id}) ${item.currency} ${item.price}`)
-        .join('\n') 
+        .join('\n')
 
     const currency = order.items.length > 0 ? order.items[0].currency : 'USD'
 
-    const subTotal =
-        order.items.length > 0
-            ? `${order.items.reduce((sum, item) => sum + item.price, 0)}`
-            : ''
+    const subTotal = order.items.length > 0 ? `${order.items.reduce((sum, item) => sum + item.price, 0)}` : ''
 
     const total = parseFloat(subTotal) + (order.deliveryFees || 0) 
 
@@ -173,14 +167,11 @@ export function serialiseOrderMessage(
 
     const lines = [`${DETECTION_TXT}\n`]
 
-
-
     // handles serialzing message before main order content
-    if (context.shopName.trim() !== "") {
-
+    if (context.shopName.trim() !== '') {
         lines.push(`🛍️ Hi ${context.shopName}`)
         lines.push(`🕒 Order Time: ${new Date().toLocaleString()}`)
-        
+
         lines.push(`\n${SEPERATOR}\n`)
     }
 
@@ -188,7 +179,7 @@ export function serialiseOrderMessage(
     lines.push(itemsContent)
     lines.push(`\n💵 Subtotal: ${currency} ${subTotal}`)
 
-    if(order.deliveryFees){
+    if (order.deliveryFees) {
         lines.push(`🚚 Delivery Fees: ${currency} ${order.deliveryFees}`)
     }
 
@@ -200,29 +191,28 @@ export function serialiseOrderMessage(
 
     lines.push(`\n${SEPERATOR}\n`)
 
-     //Payment type selected when on the checkout section
-    if(context?.paymentIntegration?.id){
+    //Payment type selected when on the checkout section
+    if (context?.paymentIntegration?.id) {
         lines.push('💳 Payment Status: 🔴 Pending')
         lines.push(`🏦 Payment Gateway: ${context?.paymentIntegration?.name}`)
         lines.push(`${PAYMENT_GATEWAY_ID_LABEL}: ${context?.paymentIntegration?.id}`)
     }
 
-
     // handles serialzing message after main order content
     if (order?.customer) {
-        
         //Customer Details
         lines.push(`\n👤 Recipient Name: ${order.customer.name}`)
         lines.push(`📱 Recipient Phone: ${order.customer.mobileNumber}`)
-    
-        // Customer Shipping Details
-        lines.push(`\n${SHIPPING_METHOD_LABEL} ${capitalizeFirstLetter(order.customer.shippingMethod)}`)
+        if (order.customer.shippingMethod !== 'none') {
+            // Customer Shipping Details
+            lines.push(`\n${SHIPPING_METHOD_LABEL}: ${capitalizeFirstLetter(order.customer.shippingMethod)}`)
 
-        if(order.customer.shippingMethod === 'delivery'){
-            lines.push(`📍 Delivery Address: ${order.customer.shippingAddress}`)
-            lines.push(`🚚 Delivery Provider: ${order.customer.shippingOption}`)
-        }else{
-            lines.push(`🏢 Pickup Location: ${order.customer.pickupLocation}`)
+            if (order.customer.shippingMethod === 'delivery') {
+                lines.push(`📍 Delivery Address: ${order.customer.shippingAddress}`)
+                lines.push(`🚚 Delivery Provider: ${order.customer.shippingOption}`)
+            } else {
+                lines.push(`🏢 Pickup Location: ${order.customer.pickupLocation}`)
+            }
         }
     }
 
