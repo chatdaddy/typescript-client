@@ -159,9 +159,9 @@ export function serialiseOrderMessage(order: OrderMessage, context: OrderSeriali
 
     const currency = order.items.length > 0 ? order.items[0].currency : 'USD'
 
-    const subTotal = order.items.length > 0 ? `${order.items.reduce((sum, item) => sum + item.price, 0)}` : ''
+    const subTotal = order.items.length > 0 ? parseFloat(`${order.items.reduce((sum, item) => sum + (item.price * item.quantity), 0)}`).toFixed(2) : ''
 
-    const total = parseFloat(subTotal) + (order.deliveryFees || 0) 
+    const total = Number(parseFloat(subTotal) + (order.deliveryFees || 0)).toFixed(2) 
 
     const remarksContent = order.remarks ? `Remarks: ${order.remarks}` : ''
 
@@ -180,7 +180,7 @@ export function serialiseOrderMessage(order: OrderMessage, context: OrderSeriali
     lines.push(`\n💵 Subtotal: ${currency} ${subTotal}`)
 
     if (order.deliveryFees) {
-        lines.push(`🚚 Delivery Fees: ${currency} ${order.deliveryFees}`)
+        lines.push(`🚚 Delivery Fees: ${currency} ${Number(order.deliveryFees).toFixed(2)}`)
     }
 
     lines.push(`💵 Grand Total: ${currency} ${total}`)
