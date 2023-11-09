@@ -2,6 +2,7 @@ export type SimpleOrder = {
     items: SimpleOrderItem[]
     remarks?: string
     orderContext:{
+        paymentGatewayName?:string
         paymentGatewayId?:string
         shippingDetails? : {
             shippingAddress?: string

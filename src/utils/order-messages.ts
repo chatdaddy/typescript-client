@@ -49,6 +49,7 @@ export function checkAndParseOrderMessage(txt: string): SimpleOrder {
 
     const orderItems: SimpleOrderItem[] = []
     let remarks: string | undefined
+    let paymentGatewayName: string | undefined
     let paymentGatewayId: string | undefined
     let isOrderDetailsSection = false
 
@@ -96,7 +97,9 @@ export function checkAndParseOrderMessage(txt: string): SimpleOrder {
     const totalPaymentLines = lines.findIndex((line) => line.trim().startsWith(PAYMENT_GATEWAY_ID_LABEL))
     if(totalPaymentLines !== -1){
         const paymentGatewayLine = lines[totalPaymentLines]
+        const paymentGatewayNameLine = lines[totalPaymentLines-1]
         if(paymentGatewayLine.trim()){
+            paymentGatewayName = getValueAfterLabel(paymentGatewayNameLine)
             paymentGatewayId = paymentGatewayLine.trim().match(PAYMENT_ID_REGEX)?.[0]
         }
     }
@@ -164,7 +167,7 @@ export function serialiseOrderMessage(
             ? `${order.items.reduce((sum, item) => sum + item.price, 0)}`
             : ''
 
-    const total = subTotal + (order.deliveryFees || 0) 
+    const total = parseFloat(subTotal) + (order.deliveryFees || 0) 
 
     const remarksContent = order.remarks ? `Remarks: ${order.remarks}` : ''
 
@@ -213,7 +216,7 @@ export function serialiseOrderMessage(
         lines.push(`📱 Recipient Phone: ${order.customer.mobileNumber}`)
     
         // Customer Shipping Details
-        lines.push(`\n${SHIPPING_METHOD_LABEL}: ${capitalizeFirstLetter(order.customer.shippingMethod)}`)
+        lines.push(`\n${SHIPPING_METHOD_LABEL} ${capitalizeFirstLetter(order.customer.shippingMethod)}`)
 
         if(order.customer.shippingMethod === 'delivery'){
             lines.push(`📍 Delivery Address: ${order.customer.shippingAddress}`)
