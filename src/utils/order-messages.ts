@@ -49,6 +49,7 @@ export function checkAndParseOrderMessage(txt: string): SimpleOrder {
 
     const orderItems: SimpleOrderItem[] = []
     let remarks: string | undefined
+    let paymentGatewayName: string | undefined
     let paymentGatewayId: string | undefined
     let isOrderDetailsSection = false
 
@@ -96,7 +97,9 @@ export function checkAndParseOrderMessage(txt: string): SimpleOrder {
     const totalPaymentLines = lines.findIndex((line) => line.trim().startsWith(PAYMENT_GATEWAY_ID_LABEL))
     if (totalPaymentLines !== -1) {
         const paymentGatewayLine = lines[totalPaymentLines]
-        if (paymentGatewayLine.trim()) {
+        const paymentGatewayNameLine = lines[totalPaymentLines-1]
+        if(paymentGatewayLine.trim()){
+            paymentGatewayName = getValueAfterLabel(paymentGatewayNameLine)
             paymentGatewayId = paymentGatewayLine.trim().match(PAYMENT_ID_REGEX)?.[0]
         }
     }
@@ -133,6 +136,7 @@ export function checkAndParseOrderMessage(txt: string): SimpleOrder {
     }
 
     const orderContext: SimpleOrder['orderContext'] = {
+        paymentGatewayName,
         paymentGatewayId,
         shippingDetails,
         shopName: lines[2].substring(7),
@@ -157,7 +161,7 @@ export function serialiseOrderMessage(order: OrderMessage, context: OrderSeriali
 
     const subTotal = order.items.length > 0 ? `${order.items.reduce((sum, item) => sum + item.price, 0)}` : ''
 
-    const total = subTotal + (order.deliveryFees || 0)
+    const total = parseFloat(subTotal) + (order.deliveryFees || 0) 
 
     const remarksContent = order.remarks ? `Remarks: ${order.remarks}` : ''
 
