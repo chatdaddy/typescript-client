@@ -10164,13 +10164,16 @@ export const ProductApiAxiosParamCreator = function (configuration?: Configurati
          * 
          * @summary Delete products by the given filter from the catalog
          * @param {string} accountId 
+         * @param {Array<string>} [id] 
+         * @param {Array<string>} [notId] 
+         * @param {string} [q] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        platformProductsDelete: async (accountId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        platformProductsDelete: async (accountId: string, id?: Array<string>, notId?: Array<string>, q?: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'accountId' is not null or undefined
             assertParamExists('platformProductsDelete', 'accountId', accountId)
-            const localVarPath = `/products/{accountId}/manage-stock`
+            const localVarPath = `/products/{accountId}`
                 .replace(`{${"accountId"}}`, encodeURIComponent(String(accountId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -10186,6 +10189,18 @@ export const ProductApiAxiosParamCreator = function (configuration?: Configurati
             // authentication chatdaddy required
             // oauth required
             await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["PRODUCTS_DELETE"], configuration)
+
+            if (id) {
+                localVarQueryParameter['id'] = id;
+            }
+
+            if (notId) {
+                localVarQueryParameter['notId'] = notId;
+            }
+
+            if (q !== undefined) {
+                localVarQueryParameter['q'] = q;
+            }
 
 
     
@@ -10501,11 +10516,14 @@ export const ProductApiFp = function(configuration?: Configuration) {
          * 
          * @summary Delete products by the given filter from the catalog
          * @param {string} accountId 
+         * @param {Array<string>} [id] 
+         * @param {Array<string>} [notId] 
+         * @param {string} [q] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async platformProductsDelete(accountId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AccountsLogout200Response>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.platformProductsDelete(accountId, options);
+        async platformProductsDelete(accountId: string, id?: Array<string>, notId?: Array<string>, q?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AccountsLogout200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.platformProductsDelete(accountId, id, notId, q, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -10607,7 +10625,7 @@ export const ProductApiFactory = function (configuration?: Configuration, basePa
          * @throws {RequiredError}
          */
         platformProductsDelete(requestParameters: ProductApiPlatformProductsDeleteRequest, options?: AxiosRequestConfig): AxiosPromise<AccountsLogout200Response> {
-            return localVarFp.platformProductsDelete(requestParameters.accountId, options).then((request) => request(axios, basePath));
+            return localVarFp.platformProductsDelete(requestParameters.accountId, requestParameters.id, requestParameters.notId, requestParameters.q, options).then((request) => request(axios, basePath));
         },
         /**
          * Returns the WA catalog. Only available on WA Business apps. 
@@ -10701,6 +10719,27 @@ export interface ProductApiPlatformProductsDeleteRequest {
      * @memberof ProductApiPlatformProductsDelete
      */
     readonly accountId: string
+
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof ProductApiPlatformProductsDelete
+     */
+    readonly id?: Array<string>
+
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof ProductApiPlatformProductsDelete
+     */
+    readonly notId?: Array<string>
+
+    /**
+     * 
+     * @type {string}
+     * @memberof ProductApiPlatformProductsDelete
+     */
+    readonly q?: string
 }
 
 /**
@@ -10920,7 +10959,7 @@ export class ProductApi extends BaseAPI {
      * @memberof ProductApi
      */
     public platformProductsDelete(requestParameters: ProductApiPlatformProductsDeleteRequest, options?: AxiosRequestConfig) {
-        return ProductApiFp(this.configuration).platformProductsDelete(requestParameters.accountId, options).then((request) => request(this.axios, this.basePath));
+        return ProductApiFp(this.configuration).platformProductsDelete(requestParameters.accountId, requestParameters.id, requestParameters.notId, requestParameters.q, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
