@@ -3556,17 +3556,23 @@ export interface PlatformProductCreate {
  */
 export interface PlatformProductStockUpdate {
     /**
+     * 
+     * @type {string}
+     * @memberof PlatformProductStockUpdate
+     */
+    'productId': string;
+    /**
      * The amount to add or remove from the stock
      * @type {number}
      * @memberof PlatformProductStockUpdate
      */
-    'amount'?: number;
+    'amount': number;
     /**
      * 
      * @type {string}
      * @memberof PlatformProductStockUpdate
      */
-    'operation'?: PlatformProductStockUpdateOperationEnum;
+    'operation': PlatformProductStockUpdateOperationEnum;
 }
 
 export const PlatformProductStockUpdateOperationEnum = {
