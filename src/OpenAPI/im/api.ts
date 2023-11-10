@@ -3532,6 +3532,12 @@ export interface PlatformProductCreate {
     'currency': string;
     /**
      * 
+     * @type {number}
+     * @memberof PlatformProductCreate
+     */
+    'stock'?: number | null;
+    /**
+     * 
      * @type {boolean}
      * @memberof PlatformProductCreate
      */
