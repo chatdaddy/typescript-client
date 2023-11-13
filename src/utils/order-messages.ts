@@ -135,12 +135,34 @@ export function checkAndParseOrderMessage(txt: string): SimpleOrder {
         deliveryFees = parseFloat(deliveryText.replace(/[^0-9]/g, ''))
     }
 
+    const additionalFees: SimpleOrder['orderContext']['additionalFees'] = []
+    const additionalFeesLine = lines.findIndex((line) => line.trim().startsWith('Additional Fees:'))
+    if (additionalFeesLine !== -1) {
+        for (let i = additionalFeesLine + 1; i < lines.length; i++) {
+            if (lines[i].trim() === '') {
+                // Stop parsing when an empty line is encountered after order details
+                break
+            }
+
+            const match = lines[i].trim().match(/(.+): (.+)/i)
+            if (!match) {
+                throw new Error(`Invalid additional fee: ${lines[i]}`)
+            }
+
+            additionalFees.push({
+                name: match[1],
+                amount: match[2],
+            })
+        }
+    }
+
     const orderContext: SimpleOrder['orderContext'] = {
         paymentGatewayName,
         paymentGatewayId,
         shippingDetails,
         shopName: lines[2].substring(7),
         deliveryFees,
+        additionalFees,
     }
 
     return { items: orderItems, remarks, orderContext }
@@ -181,6 +203,13 @@ export function serialiseOrderMessage(order: OrderMessage, context: OrderSeriali
 
     if (order.deliveryFees) {
         lines.push(`🚚 Delivery Fees: ${currency} ${Number(order.deliveryFees).toFixed(2)}`)
+    }
+
+    if (order.additionalFees.length) {
+        lines.push(`Additional Fees:`)
+        order.additionalFees.forEach((fee) => {
+            lines.push(`${fee.name}: ${currency} ${fee.amount}`)
+        })
     }
 
     lines.push(`💵 Grand Total: ${currency} ${total}`)
