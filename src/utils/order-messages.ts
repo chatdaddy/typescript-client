@@ -97,8 +97,8 @@ export function checkAndParseOrderMessage(txt: string): SimpleOrder {
     const totalPaymentLines = lines.findIndex((line) => line.trim().startsWith(PAYMENT_GATEWAY_ID_LABEL))
     if (totalPaymentLines !== -1) {
         const paymentGatewayLine = lines[totalPaymentLines]
-        const paymentGatewayNameLine = lines[totalPaymentLines-1]
-        if(paymentGatewayLine.trim()){
+        const paymentGatewayNameLine = lines[totalPaymentLines - 1]
+        if (paymentGatewayLine.trim()) {
             paymentGatewayName = getValueAfterLabel(paymentGatewayNameLine)
             paymentGatewayId = paymentGatewayLine.trim().match(PAYMENT_ID_REGEX)?.[0]
         }
@@ -181,9 +181,18 @@ export function serialiseOrderMessage(order: OrderMessage, context: OrderSeriali
 
     const currency = order.items.length > 0 ? order.items[0].currency : 'USD'
 
-    const subTotal = order.items.length > 0 ? parseFloat(`${order.items.reduce((sum, item) => sum + (item.price * item.quantity), 0)}`).toFixed(2) : ''
+    const subTotal =
+        order.items.length > 0
+            ? parseFloat(`${order.items.reduce((sum, item) => sum + item.price * item.quantity, 0)}`).toFixed(2)
+            : ''
 
-    const total = Number(parseFloat(subTotal) + (order.deliveryFees || 0)).toFixed(2) 
+    const total = Number(
+        parseFloat(subTotal) +
+            (order.deliveryFees || 0) +
+            (order.additionalFees.length
+                ? order.additionalFees.reduce((sum, fee) => sum + parseFloat(fee.amount), 0)
+                : 0)
+    ).toFixed(2)
 
     const remarksContent = order.remarks ? `Remarks: ${order.remarks}` : ''
 
