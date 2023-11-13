@@ -1759,6 +1759,12 @@ export interface ShopMetadataModel {
      * @type {string}
      * @memberof ShopMetadataModel
      */
+    'shopNotice'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ShopMetadataModel
+     */
     'shopCurrency'?: string | null;
     /**
      * 
