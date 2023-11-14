@@ -214,7 +214,7 @@ export function serialiseOrderMessage(order: OrderMessage, context: OrderSeriali
         lines.push(`🚚 Delivery Fees: ${currency} ${Number(order.deliveryFees).toFixed(2)}`)
     }
 
-    if (order.additionalFees.length) {
+    if (order.additionalFees?.length) {
         lines.push(`Additional Fees:`)
         order.additionalFees.forEach((fee) => {
             lines.push(`${fee.name}: ${currency} ${fee.amount}`)
