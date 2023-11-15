@@ -1759,6 +1759,12 @@ export interface ShopMetadataModel {
      * @type {string}
      * @memberof ShopMetadataModel
      */
+    'shopNotice'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ShopMetadataModel
+     */
     'shopCurrency'?: string | null;
     /**
      * 
@@ -1786,10 +1792,16 @@ export interface ShopMetadataModel {
     'pickUpAddresses'?: Array<ShopMetadataModelPickUpAddressesInner>;
     /**
      * 
-     * @type {Array<ShopMetadataModelShippingFeeInner>}
+     * @type {Array<ShopMetadataModelAdditionalFeesInner>}
      * @memberof ShopMetadataModel
      */
-    'shippingFee'?: Array<ShopMetadataModelShippingFeeInner>;
+    'additionalFees'?: Array<ShopMetadataModelAdditionalFeesInner>;
+    /**
+     * 
+     * @type {Array<ShopMetadataModelAdditionalFeesInner>}
+     * @memberof ShopMetadataModel
+     */
+    'shippingFee'?: Array<ShopMetadataModelAdditionalFeesInner>;
     /**
      * 
      * @type {number}
@@ -1846,6 +1858,37 @@ export type ShopMetadataModelTypeEnum = typeof ShopMetadataModelTypeEnum[keyof t
 /**
  * 
  * @export
+ * @interface ShopMetadataModelAdditionalFeesInner
+ */
+export interface ShopMetadataModelAdditionalFeesInner {
+    /**
+     * 
+     * @type {number}
+     * @memberof ShopMetadataModelAdditionalFeesInner
+     */
+    'amount'?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof ShopMetadataModelAdditionalFeesInner
+     */
+    'currency'?: string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof ShopMetadataModelAdditionalFeesInner
+     */
+    'enabled'?: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof ShopMetadataModelAdditionalFeesInner
+     */
+    'name'?: string;
+}
+/**
+ * 
+ * @export
  * @interface ShopMetadataModelPickUpAddressesInner
  */
 export interface ShopMetadataModelPickUpAddressesInner {
@@ -1861,37 +1904,6 @@ export interface ShopMetadataModelPickUpAddressesInner {
      * @memberof ShopMetadataModelPickUpAddressesInner
      */
     'enabled'?: boolean;
-}
-/**
- * 
- * @export
- * @interface ShopMetadataModelShippingFeeInner
- */
-export interface ShopMetadataModelShippingFeeInner {
-    /**
-     * 
-     * @type {number}
-     * @memberof ShopMetadataModelShippingFeeInner
-     */
-    'amount'?: number;
-    /**
-     * 
-     * @type {string}
-     * @memberof ShopMetadataModelShippingFeeInner
-     */
-    'currency'?: string;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof ShopMetadataModelShippingFeeInner
-     */
-    'enabled'?: boolean;
-    /**
-     * 
-     * @type {string}
-     * @memberof ShopMetadataModelShippingFeeInner
-     */
-    'name'?: string;
 }
 /**
  * 

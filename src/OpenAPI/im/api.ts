@@ -3377,6 +3377,12 @@ export interface PlatformProduct {
     'price': number | null;
     /**
      * 
+     * @type {number}
+     * @memberof PlatformProduct
+     */
+    'stock'?: number | null;
+    /**
+     * 
      * @type {string}
      * @memberof PlatformProduct
      */
@@ -3526,6 +3532,12 @@ export interface PlatformProductCreate {
     'currency': string;
     /**
      * 
+     * @type {number}
+     * @memberof PlatformProductCreate
+     */
+    'stock'?: number | null;
+    /**
+     * 
      * @type {boolean}
      * @memberof PlatformProductCreate
      */
@@ -3603,7 +3615,41 @@ export interface PlatformProductUpdate {
      * @memberof PlatformProductUpdate
      */
     'imageUrls'?: Array<string>;
+    /**
+     * 
+     * @type {PlatformProductUpdateStock}
+     * @memberof PlatformProductUpdate
+     */
+    'stock'?: PlatformProductUpdateStock;
 }
+/**
+ * 
+ * @export
+ * @interface PlatformProductUpdateStock
+ */
+export interface PlatformProductUpdateStock {
+    /**
+     * The new stock quantity
+     * @type {number}
+     * @memberof PlatformProductUpdateStock
+     */
+    'quantity'?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof PlatformProductUpdateStock
+     */
+    'action'?: PlatformProductUpdateStockActionEnum;
+}
+
+export const PlatformProductUpdateStockActionEnum = {
+    Set: 'set',
+    Increment: 'increment',
+    Decrement: 'decrement'
+} as const;
+
+export type PlatformProductUpdateStockActionEnum = typeof PlatformProductUpdateStockActionEnum[keyof typeof PlatformProductUpdateStockActionEnum];
+
 /**
  * 
  * @export

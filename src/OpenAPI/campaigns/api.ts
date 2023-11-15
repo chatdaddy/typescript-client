@@ -516,6 +516,12 @@ export interface CampaignMetadata {
     'accountId'?: string | null;
     /**
      * 
+     * @type {CampaignContactFilters}
+     * @memberof CampaignMetadata
+     */
+    'contactFilters'?: CampaignContactFilters;
+    /**
+     * 
      * @type {CampaignMetadataCounts}
      * @memberof CampaignMetadata
      */

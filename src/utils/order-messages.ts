@@ -97,8 +97,8 @@ export function checkAndParseOrderMessage(txt: string): SimpleOrder {
     const totalPaymentLines = lines.findIndex((line) => line.trim().startsWith(PAYMENT_GATEWAY_ID_LABEL))
     if (totalPaymentLines !== -1) {
         const paymentGatewayLine = lines[totalPaymentLines]
-        const paymentGatewayNameLine = lines[totalPaymentLines-1]
-        if(paymentGatewayLine.trim()){
+        const paymentGatewayNameLine = lines[totalPaymentLines - 1]
+        if (paymentGatewayLine.trim()) {
             paymentGatewayName = getValueAfterLabel(paymentGatewayNameLine)
             paymentGatewayId = paymentGatewayLine.trim().match(PAYMENT_ID_REGEX)?.[0]
         }
@@ -135,12 +135,34 @@ export function checkAndParseOrderMessage(txt: string): SimpleOrder {
         deliveryFees = parseFloat(deliveryText.replace(/[^0-9]/g, ''))
     }
 
+    const additionalFees: SimpleOrder['orderContext']['additionalFees'] = []
+    const additionalFeesLine = lines.findIndex((line) => line.trim().startsWith('Additional Fees:'))
+    if (additionalFeesLine !== -1) {
+        for (let i = additionalFeesLine + 1; i < lines.length; i++) {
+            if (lines[i].trim() === '') {
+                // Stop parsing when an empty line is encountered after order details
+                break
+            }
+
+            const match = lines[i].trim().match(/(.+): (.+)/i)
+            if (!match) {
+                throw new Error(`Invalid additional fee: ${lines[i]}`)
+            }
+
+            additionalFees.push({
+                name: match[1],
+                amount: match[2],
+            })
+        }
+    }
+
     const orderContext: SimpleOrder['orderContext'] = {
         paymentGatewayName,
         paymentGatewayId,
         shippingDetails,
         shopName: lines[2].substring(7),
         deliveryFees,
+        additionalFees,
     }
 
     return { items: orderItems, remarks, orderContext }
@@ -159,9 +181,18 @@ export function serialiseOrderMessage(order: OrderMessage, context: OrderSeriali
 
     const currency = order.items.length > 0 ? order.items[0].currency : 'USD'
 
-    const subTotal = order.items.length > 0 ? parseFloat(`${order.items.reduce((sum, item) => sum + (item.price * item.quantity), 0)}`).toFixed(2) : ''
+    const subTotal =
+        order.items.length > 0
+            ? parseFloat(`${order.items.reduce((sum, item) => sum + item.price * item.quantity, 0)}`).toFixed(2)
+            : ''
 
-    const total = Number(parseFloat(subTotal) + (order.deliveryFees || 0)).toFixed(2) 
+    const total = Number(
+        parseFloat(subTotal) +
+            (order.deliveryFees || 0) +
+            (order.additionalFees.length
+                ? order.additionalFees.reduce((sum, fee) => sum + parseFloat(fee.amount), 0)
+                : 0)
+    ).toFixed(2)
 
     const remarksContent = order.remarks ? `Remarks: ${order.remarks}` : ''
 
@@ -183,7 +214,14 @@ export function serialiseOrderMessage(order: OrderMessage, context: OrderSeriali
         lines.push(`${DELIVERY_FEES_LABEL} ${currency} ${Number(order.deliveryFees).toFixed(2)}`)
     }
 
-    lines.push(`💵 Grand Total: ${currency} ${total}`)
+    if (order.additionalFees?.length) {
+        lines.push(`\nAdditional Fees:`)
+        order.additionalFees.forEach((fee) => {
+            lines.push(`\n${fee.name}: ${currency} ${fee.amount}`)
+        })
+    }
+
+    lines.push(`\n💵 Grand Total: ${currency} ${total}`)
 
     if (remarksContent) {
         lines.push(remarksContent)

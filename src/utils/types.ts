@@ -12,6 +12,7 @@ export type SimpleOrder = {
         }
         shopName?: string
         deliveryFees?: number
+        additionalFees?: { name: string; amount: string }[]
     }
 }
 
@@ -26,6 +27,7 @@ export type OrderMessage = {
     remarks?: string
     customer?: Customer
     deliveryFees?: number
+    additionalFees?: { name: string; amount: string }[]
 }
 
 export type OrderItem = {

@@ -5219,6 +5219,12 @@ export interface PlatformproductInsertData {
     'price': number | null;
     /**
      * 
+     * @type {number}
+     * @memberof PlatformproductInsertData
+     */
+    'stock'?: number | null;
+    /**
+     * 
      * @type {string}
      * @memberof PlatformproductInsertData
      */
@@ -5404,6 +5410,12 @@ export interface PlatformproductUpdateData {
      * @memberof PlatformproductUpdateData
      */
     'price'?: number | null;
+    /**
+     * 
+     * @type {number}
+     * @memberof PlatformproductUpdateData
+     */
+    'stock'?: number | null;
     /**
      * 
      * @type {string}
