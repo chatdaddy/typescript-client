@@ -215,13 +215,13 @@ export function serialiseOrderMessage(order: OrderMessage, context: OrderSeriali
     }
 
     if (order.additionalFees?.length) {
-        lines.push(`Additional Fees:`)
+        lines.push(`\nAdditional Fees:`)
         order.additionalFees.forEach((fee) => {
-            lines.push(`${fee.name}: ${currency} ${fee.amount}`)
+            lines.push(`\n${fee.name}: ${currency} ${fee.amount}`)
         })
     }
 
-    lines.push(`💵 Grand Total: ${currency} ${total}`)
+    lines.push(`\n💵 Grand Total: ${currency} ${total}`)
 
     if (remarksContent) {
         lines.push(remarksContent)
