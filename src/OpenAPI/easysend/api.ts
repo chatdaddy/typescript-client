@@ -4895,6 +4895,44 @@ export const TrackingsApiAxiosParamCreator = function (configuration?: Configura
         },
         /**
          * 
+         * @summary Delete order details
+         * @param {string} orderId The orderId of the tracking made available to the service
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        orderDelete: async (orderId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'orderId' is not null or undefined
+            assertParamExists('orderDelete', 'orderId', orderId)
+            const localVarPath = `/orders/{orderId}`
+                .replace(`{${"orderId"}}`, encodeURIComponent(String(orderId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["NOTIFICATION_DELETE"], configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
          * @summary Update order details
          * @param {string} orderId The orderId of the tracking made available to the service
          * @param {UpdateOrderDataModel} [updateOrderDataModel] 
@@ -5234,6 +5272,17 @@ export const TrackingsApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
+         * @summary Delete order details
+         * @param {string} orderId The orderId of the tracking made available to the service
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async orderDelete(orderId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.orderDelete(orderId, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
          * @summary Update order details
          * @param {string} orderId The orderId of the tracking made available to the service
          * @param {UpdateOrderDataModel} [updateOrderDataModel] 
@@ -5342,6 +5391,16 @@ export const TrackingsApiFactory = function (configuration?: Configuration, base
          */
         orderDataGet(requestParameters: TrackingsApiOrderDataGetRequest = {}, options?: AxiosRequestConfig): AxiosPromise<OrderDataGet200Response> {
             return localVarFp.orderDataGet(requestParameters.trackingId, requestParameters.phoneNumber, requestParameters.pageSize, requestParameters.cursor, requestParameters.orderBy, requestParameters.direction, requestParameters.startTime, requestParameters.endTime, requestParameters.orderStatus, requestParameters.paymentStatus, requestParameters.messageStatus, requestParameters.q, requestParameters.excludeTests, requestParameters.returnTotal, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Delete order details
+         * @param {TrackingsApiOrderDeleteRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        orderDelete(requestParameters: TrackingsApiOrderDeleteRequest, options?: AxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.orderDelete(requestParameters.orderId, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -5640,6 +5699,20 @@ export interface TrackingsApiOrderDataGetRequest {
 }
 
 /**
+ * Request parameters for orderDelete operation in TrackingsApi.
+ * @export
+ * @interface TrackingsApiOrderDeleteRequest
+ */
+export interface TrackingsApiOrderDeleteRequest {
+    /**
+     * The orderId of the tracking made available to the service
+     * @type {string}
+     * @memberof TrackingsApiOrderDelete
+     */
+    readonly orderId: string
+}
+
+/**
  * Request parameters for orderPatch operation in TrackingsApi.
  * @export
  * @interface TrackingsApiOrderPatchRequest
@@ -5787,6 +5860,18 @@ export class TrackingsApi extends BaseAPI {
      */
     public orderDataGet(requestParameters: TrackingsApiOrderDataGetRequest = {}, options?: AxiosRequestConfig) {
         return TrackingsApiFp(this.configuration).orderDataGet(requestParameters.trackingId, requestParameters.phoneNumber, requestParameters.pageSize, requestParameters.cursor, requestParameters.orderBy, requestParameters.direction, requestParameters.startTime, requestParameters.endTime, requestParameters.orderStatus, requestParameters.paymentStatus, requestParameters.messageStatus, requestParameters.q, requestParameters.excludeTests, requestParameters.returnTotal, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Delete order details
+     * @param {TrackingsApiOrderDeleteRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof TrackingsApi
+     */
+    public orderDelete(requestParameters: TrackingsApiOrderDeleteRequest, options?: AxiosRequestConfig) {
+        return TrackingsApiFp(this.configuration).orderDelete(requestParameters.orderId, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
