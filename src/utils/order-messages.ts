@@ -180,7 +180,7 @@ export function serialiseOrderMessage(order: OrderMessage, context: OrderSeriali
     lines.push(`\n💵 Subtotal: ${currency} ${subTotal}`)
 
     if (order.deliveryFees) {
-        lines.push(`🚚 Delivery Fees: ${currency} ${Number(order.deliveryFees).toFixed(2)}`)
+        lines.push(`${DELIVERY_FEES_LABEL} ${currency} ${Number(order.deliveryFees).toFixed(2)}`)
     }
 
     lines.push(`💵 Grand Total: ${currency} ${total}`)
@@ -195,7 +195,7 @@ export function serialiseOrderMessage(order: OrderMessage, context: OrderSeriali
     if (context?.paymentIntegration?.id) {
         lines.push('💳 Payment Status: 🔴 Pending')
         lines.push(`🏦 Payment Gateway: ${context?.paymentIntegration?.name}`)
-        lines.push(`${PAYMENT_GATEWAY_ID_LABEL}: ${context?.paymentIntegration?.id}`)
+        lines.push(`${PAYMENT_GATEWAY_ID_LABEL} ${context?.paymentIntegration?.id}`)
     }
 
     // handles serialzing message after main order content
@@ -205,7 +205,7 @@ export function serialiseOrderMessage(order: OrderMessage, context: OrderSeriali
         lines.push(`📱 Recipient Phone: ${order.customer.mobileNumber}`)
         if (order.customer.shippingMethod !== 'none') {
             // Customer Shipping Details
-            lines.push(`\n${SHIPPING_METHOD_LABEL}: ${capitalizeFirstLetter(order.customer.shippingMethod)}`)
+            lines.push(`\n${SHIPPING_METHOD_LABEL} ${capitalizeFirstLetter(order.customer.shippingMethod)}`)
 
             if (order.customer.shippingMethod === 'delivery') {
                 lines.push(`📍 Delivery Address: ${order.customer.shippingAddress}`)
