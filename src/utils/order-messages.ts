@@ -136,7 +136,7 @@ export function checkAndParseOrderMessage(txt: string): SimpleOrder {
     }
 
     const additionalFees: SimpleOrder['orderContext']['additionalFees'] = []
-    const additionalFeesLine = lines.findIndex((line) => line.trim().startsWith('Additional Fees:'))
+    const additionalFeesLine = lines.findIndex((line) => line.trim().startsWith('💵 Additional Fees:'))
     if (additionalFeesLine !== -1) {
         for (let i = additionalFeesLine + 1; i < lines.length; i++) {
             if (lines[i].trim() === '') {
@@ -215,9 +215,9 @@ export function serialiseOrderMessage(order: OrderMessage, context: OrderSeriali
     }
 
     if (order.additionalFees?.length) {
-        lines.push(`\nAdditional Fees:`)
+        lines.push(`\n💵 Additional Fees:`)
         order.additionalFees.forEach((fee) => {
-            lines.push(`\n${fee.name}: ${currency} ${fee.amount}`)
+            lines.push(`${fee.name}: ${currency} ${fee.amount}`)
         })
     }
 
