@@ -1295,6 +1295,12 @@ export interface PaymentRecord {
     'currency': string;
     /**
      * 
+     * @type {PaymentRecordNote}
+     * @memberof PaymentRecord
+     */
+    'note'?: PaymentRecordNote;
+    /**
+     * 
      * @type {string}
      * @memberof PaymentRecord
      */
@@ -1315,6 +1321,31 @@ export const PaymentRecordStatusEnum = {
 
 export type PaymentRecordStatusEnum = typeof PaymentRecordStatusEnum[keyof typeof PaymentRecordStatusEnum];
 
+/**
+ * 
+ * @export
+ * @interface PaymentRecordNote
+ */
+export interface PaymentRecordNote {
+    /**
+     * 
+     * @type {string}
+     * @memberof PaymentRecordNote
+     */
+    'text': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof PaymentRecordNote
+     */
+    'updatedBy': string;
+    /**
+     * An ISO formatted timestamp
+     * @type {string}
+     * @memberof PaymentRecordNote
+     */
+    'updatedAt': string;
+}
 /**
  * 
  * @export
@@ -1369,6 +1400,12 @@ export interface PaymentRecordPostRequest {
      * @memberof PaymentRecordPostRequest
      */
     'orderId'?: string;
+    /**
+     * 
+     * @type {PaymentRecordNote}
+     * @memberof PaymentRecordPostRequest
+     */
+    'note'?: PaymentRecordNote;
 }
 
 export const PaymentRecordPostRequestStatusEnum = {
