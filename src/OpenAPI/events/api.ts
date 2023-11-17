@@ -2964,8 +2964,8 @@ export interface ContactInsertData {
 export const ContactInsertDataTypeEnum = {
     Individual: 'individual',
     Group: 'group',
-    Broadcast: 'broadcast',
-    Post: 'post'
+    Channel: 'channel',
+    Broadcast: 'broadcast'
 } as const;
 
 export type ContactInsertDataTypeEnum = typeof ContactInsertDataTypeEnum[keyof typeof ContactInsertDataTypeEnum];
@@ -3109,8 +3109,8 @@ export interface ContactUpdateData {
 export const ContactUpdateDataTypeEnum = {
     Individual: 'individual',
     Group: 'group',
-    Broadcast: 'broadcast',
-    Post: 'post'
+    Channel: 'channel',
+    Broadcast: 'broadcast'
 } as const;
 
 export type ContactUpdateDataTypeEnum = typeof ContactUpdateDataTypeEnum[keyof typeof ContactUpdateDataTypeEnum];
@@ -3495,8 +3495,8 @@ export interface GroupUpdateDataOwner {
 export const GroupUpdateDataOwnerTypeEnum = {
     Individual: 'individual',
     Group: 'group',
-    Broadcast: 'broadcast',
-    Post: 'post'
+    Channel: 'channel',
+    Broadcast: 'broadcast'
 } as const;
 
 export type GroupUpdateDataOwnerTypeEnum = typeof GroupUpdateDataOwnerTypeEnum[keyof typeof GroupUpdateDataOwnerTypeEnum];
@@ -3638,6 +3638,12 @@ export interface GroupUpdateDataParticipantsInner {
      * @memberof GroupUpdateDataParticipantsInner
      */
     'contact': GroupUpdateDataOwner;
+    /**
+     * 
+     * @type {string}
+     * @memberof GroupUpdateDataParticipantsInner
+     */
+    'contactId'?: string;
     /**
      * 
      * @type {string}
