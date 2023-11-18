@@ -2167,6 +2167,12 @@ export interface UpdateOrderDataModel {
      * @memberof UpdateOrderDataModel
      */
     'note'?: UpdateOrderDataModelNote | null;
+    /**
+     * 
+     * @type {NullablePhoneNumber}
+     * @memberof UpdateOrderDataModel
+     */
+    'phoneNumber'?: NullablePhoneNumber;
 }
 /**
  * 
