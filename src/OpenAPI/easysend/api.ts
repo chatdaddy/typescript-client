@@ -1324,6 +1324,12 @@ export interface PaymentRecord {
      * @memberof PaymentRecord
      */
     'messageId': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof PaymentRecord
+     */
+    'attachmentUrl'?: string;
 }
 
 export const PaymentRecordStatusEnum = {
@@ -1419,6 +1425,12 @@ export interface PaymentRecordPostRequest {
      * @memberof PaymentRecordPostRequest
      */
     'note'?: PaymentRecordNote;
+    /**
+     * 
+     * @type {string}
+     * @memberof PaymentRecordPostRequest
+     */
+    'attachmentUrl'?: string;
 }
 
 export const PaymentRecordPostRequestStatusEnum = {
