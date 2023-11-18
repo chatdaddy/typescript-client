@@ -3389,6 +3389,12 @@ export interface PlatformProduct {
     'stock'?: number | null;
     /**
      * 
+     * @type {number}
+     * @memberof PlatformProduct
+     */
+    'totalStockSold'?: number | null;
+    /**
+     * 
      * @type {string}
      * @memberof PlatformProduct
      */
@@ -3627,6 +3633,12 @@ export interface PlatformProductUpdate {
      * @memberof PlatformProductUpdate
      */
     'stock'?: PlatformProductUpdateStock;
+    /**
+     * 
+     * @type {number}
+     * @memberof PlatformProductUpdate
+     */
+    'totalStockSold'?: number;
 }
 /**
  * 

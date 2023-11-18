@@ -442,6 +442,12 @@ interface PlatformProduct {
     'stock'?: number | null;
     /**
      * 
+     * @type {number}
+     * @memberof PlatformProduct
+     */
+    'totalStockSold'?: number | null;
+    /**
+     * 
      * @type {string}
      * @memberof PlatformProduct
      */
@@ -702,6 +708,12 @@ export interface ShopProduct {
      * @memberof ShopProduct
      */
     'stock'?: number | null;
+    /**
+     * 
+     * @type {number}
+     * @memberof ShopProduct
+     */
+    'totalStockSold'?: number | null;
     /**
      * 
      * @type {string}

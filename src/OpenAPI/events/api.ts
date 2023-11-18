@@ -5231,6 +5231,12 @@ export interface PlatformproductInsertData {
     'stock'?: number | null;
     /**
      * 
+     * @type {number}
+     * @memberof PlatformproductInsertData
+     */
+    'totalStockSold'?: number | null;
+    /**
+     * 
      * @type {string}
      * @memberof PlatformproductInsertData
      */
@@ -5422,6 +5428,12 @@ export interface PlatformproductUpdateData {
      * @memberof PlatformproductUpdateData
      */
     'stock'?: number | null;
+    /**
+     * 
+     * @type {number}
+     * @memberof PlatformproductUpdateData
+     */
+    'totalStockSold'?: number | null;
     /**
      * 
      * @type {string}
