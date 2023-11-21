@@ -1950,6 +1950,12 @@ export interface KeepDeletedMessagesSettings {
  */
 export interface ListMessage {
     /**
+     * The title of the list
+     * @type {string}
+     * @memberof ListMessage
+     */
+    'title'?: string;
+    /**
      * 
      * @type {Array<ListMessageSection>}
      * @memberof ListMessage

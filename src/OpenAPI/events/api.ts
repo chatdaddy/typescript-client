@@ -4323,6 +4323,12 @@ export interface MessageInsertDataLinkPreview {
 export interface MessageInsertDataList {
     /**
      * 
+     * @type {string}
+     * @memberof MessageInsertDataList
+     */
+    'title'?: string;
+    /**
+     * 
      * @type {Array<MessageInsertDataListSectionsInner>}
      * @memberof MessageInsertDataList
      */
