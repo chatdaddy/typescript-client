@@ -1493,6 +1493,12 @@ export type BotInsertDataActionsInnerAllOf1MessageInputValidationTypeEnum = type
 export interface BotInsertDataActionsInnerAllOf1MessageList {
     /**
      * 
+     * @type {string}
+     * @memberof BotInsertDataActionsInnerAllOf1MessageList
+     */
+    'title'?: string;
+    /**
+     * 
      * @type {Array<BotInsertDataActionsInnerAllOf1MessageListSectionsInner>}
      * @memberof BotInsertDataActionsInnerAllOf1MessageList
      */

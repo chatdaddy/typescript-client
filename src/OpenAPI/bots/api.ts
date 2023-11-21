@@ -752,6 +752,12 @@ export type BotMessageInputValidationTypeEnum = typeof BotMessageInputValidation
 export interface BotMessageList {
     /**
      * 
+     * @type {string}
+     * @memberof BotMessageList
+     */
+    'title'?: string;
+    /**
+     * 
      * @type {Array<BotMessageListSectionsInner>}
      * @memberof BotMessageList
      */
