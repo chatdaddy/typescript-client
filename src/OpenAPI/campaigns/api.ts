@@ -311,8 +311,15 @@ export interface CampaignCreateAsync {
      * Specify IM account to use
      * @type {string}
      * @memberof CampaignCreateAsync
+     * @deprecated
      */
     'accountId'?: string | null;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof CampaignCreateAsync
+     */
+    'accountIds'?: Array<string> | null;
     /**
      * Link to the JSON file containing the recipients data
      * @type {string}
@@ -397,8 +404,15 @@ export interface CampaignEdit {
      * Specify IM account to use
      * @type {string}
      * @memberof CampaignEdit
+     * @deprecated
      */
     'accountId'?: string | null;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof CampaignEdit
+     */
+    'accountIds'?: Array<string> | null;
     /**
      * Tags to add
      * @type {Array<string>}
@@ -512,8 +526,15 @@ export interface CampaignMetadata {
      * Specify IM account to use
      * @type {string}
      * @memberof CampaignMetadata
+     * @deprecated
      */
     'accountId'?: string | null;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof CampaignMetadata
+     */
+    'accountIds'?: Array<string> | null;
     /**
      * 
      * @type {CampaignContactFilters}
