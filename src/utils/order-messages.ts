@@ -132,7 +132,7 @@ export function checkAndParseOrderMessage(txt: string): SimpleOrder {
     const deliveryFeesLine = lines.findIndex((line) => line.trim().startsWith(`${DELIVERY_FEES_LABEL}`))
     if (deliveryFeesLine !== -1) {
         const deliveryText = lines[deliveryFeesLine]
-        deliveryFees = parseFloat(deliveryText.replace(/[^0-9]/g, ''))
+        deliveryFees = parseFloat(deliveryText.replace(/[^0-9\.]+/g,''))
     }
 
     const additionalFees: SimpleOrder['orderContext']['additionalFees'] = []
