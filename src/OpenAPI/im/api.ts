@@ -3131,6 +3131,25 @@ export interface MessagesSearch200Response {
 /**
  * 
  * @export
+ * @interface MessagesSearchRangeParameter
+ */
+export interface MessagesSearchRangeParameter {
+    /**
+     * An ISO formatted timestamp
+     * @type {string}
+     * @memberof MessagesSearchRangeParameter
+     */
+    'start': string;
+    /**
+     * An ISO formatted timestamp
+     * @type {string}
+     * @memberof MessagesSearchRangeParameter
+     */
+    'end': string;
+}
+/**
+ * 
+ * @export
  * @interface MetadataQuery
  */
 export interface MetadataQuery {
@@ -9386,10 +9405,12 @@ export const MessagesApiAxiosParamCreator = function (configuration?: Configurat
          * @param {number} [count] Number of items to return
          * @param {string} [chatId] 
          * @param {boolean} [returnChats] Return the corresponding chats alongside the messages
+         * @param {boolean} [fromMe] Fetch only messages sent by me/or the other party. If not specified, fetches both
+         * @param {MessagesSearchRangeParameter} [range] Fetch messages only within this range. If not specified, fetches all messages
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        messagesSearch: async (q: string, accountId?: Array<string>, page?: number, count?: number, chatId?: string, returnChats?: boolean, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        messagesSearch: async (q: string, accountId?: Array<string>, page?: number, count?: number, chatId?: string, returnChats?: boolean, fromMe?: boolean, range?: MessagesSearchRangeParameter, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'q' is not null or undefined
             assertParamExists('messagesSearch', 'q', q)
             const localVarPath = `/messages/search`;
@@ -9430,6 +9451,14 @@ export const MessagesApiAxiosParamCreator = function (configuration?: Configurat
 
             if (returnChats !== undefined) {
                 localVarQueryParameter['returnChats'] = returnChats;
+            }
+
+            if (fromMe !== undefined) {
+                localVarQueryParameter['fromMe'] = fromMe;
+            }
+
+            if (range !== undefined) {
+                localVarQueryParameter['range'] = range;
             }
 
 
@@ -9575,11 +9604,13 @@ export const MessagesApiFp = function(configuration?: Configuration) {
          * @param {number} [count] Number of items to return
          * @param {string} [chatId] 
          * @param {boolean} [returnChats] Return the corresponding chats alongside the messages
+         * @param {boolean} [fromMe] Fetch only messages sent by me/or the other party. If not specified, fetches both
+         * @param {MessagesSearchRangeParameter} [range] Fetch messages only within this range. If not specified, fetches all messages
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async messagesSearch(q: string, accountId?: Array<string>, page?: number, count?: number, chatId?: string, returnChats?: boolean, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MessagesSearch200Response>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.messagesSearch(q, accountId, page, count, chatId, returnChats, options);
+        async messagesSearch(q: string, accountId?: Array<string>, page?: number, count?: number, chatId?: string, returnChats?: boolean, fromMe?: boolean, range?: MessagesSearchRangeParameter, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MessagesSearch200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.messagesSearch(q, accountId, page, count, chatId, returnChats, fromMe, range, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
     }
@@ -9678,7 +9709,7 @@ export const MessagesApiFactory = function (configuration?: Configuration, baseP
          * @throws {RequiredError}
          */
         messagesSearch(requestParameters: MessagesApiMessagesSearchRequest, options?: AxiosRequestConfig): AxiosPromise<MessagesSearch200Response> {
-            return localVarFp.messagesSearch(requestParameters.q, requestParameters.accountId, requestParameters.page, requestParameters.count, requestParameters.chatId, requestParameters.returnChats, options).then((request) => request(axios, basePath));
+            return localVarFp.messagesSearch(requestParameters.q, requestParameters.accountId, requestParameters.page, requestParameters.count, requestParameters.chatId, requestParameters.returnChats, requestParameters.fromMe, requestParameters.range, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -10031,6 +10062,20 @@ export interface MessagesApiMessagesSearchRequest {
      * @memberof MessagesApiMessagesSearch
      */
     readonly returnChats?: boolean
+
+    /**
+     * Fetch only messages sent by me/or the other party. If not specified, fetches both
+     * @type {boolean}
+     * @memberof MessagesApiMessagesSearch
+     */
+    readonly fromMe?: boolean
+
+    /**
+     * Fetch messages only within this range. If not specified, fetches all messages
+     * @type {MessagesSearchRangeParameter}
+     * @memberof MessagesApiMessagesSearch
+     */
+    readonly range?: MessagesSearchRangeParameter
 }
 
 /**
@@ -10143,7 +10188,7 @@ export class MessagesApi extends BaseAPI {
      * @memberof MessagesApi
      */
     public messagesSearch(requestParameters: MessagesApiMessagesSearchRequest, options?: AxiosRequestConfig) {
-        return MessagesApiFp(this.configuration).messagesSearch(requestParameters.q, requestParameters.accountId, requestParameters.page, requestParameters.count, requestParameters.chatId, requestParameters.returnChats, options).then((request) => request(this.axios, this.basePath));
+        return MessagesApiFp(this.configuration).messagesSearch(requestParameters.q, requestParameters.accountId, requestParameters.page, requestParameters.count, requestParameters.chatId, requestParameters.returnChats, requestParameters.fromMe, requestParameters.range, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
