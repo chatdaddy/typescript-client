@@ -222,7 +222,8 @@ export const AccountInsertDataTypeEnum = {
     Wa: 'wa',
     WaBusinessApi: 'wa-business-api',
     Mock: 'mock',
-    Tiktok: 'tiktok'
+    Tiktok: 'tiktok',
+    Messenger: 'messenger'
 } as const;
 
 export type AccountInsertDataTypeEnum = typeof AccountInsertDataTypeEnum[keyof typeof AccountInsertDataTypeEnum];
@@ -531,7 +532,8 @@ export const AccountUpdateDataTypeEnum = {
     Wa: 'wa',
     WaBusinessApi: 'wa-business-api',
     Mock: 'mock',
-    Tiktok: 'tiktok'
+    Tiktok: 'tiktok',
+    Messenger: 'messenger'
 } as const;
 
 export type AccountUpdateDataTypeEnum = typeof AccountUpdateDataTypeEnum[keyof typeof AccountUpdateDataTypeEnum];

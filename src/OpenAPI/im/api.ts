@@ -265,6 +265,56 @@ export type AccountCredentialsAlibabaV2TypeEnum = typeof AccountCredentialsAliba
 /**
  * 
  * @export
+ * @interface AccountCredentialsMeta
+ */
+export interface AccountCredentialsMeta {
+    /**
+     * 
+     * @type {string}
+     * @memberof AccountCredentialsMeta
+     */
+    'type': AccountCredentialsMetaTypeEnum;
+    /**
+     * Page ID of the Facebook page
+     * @type {string}
+     * @memberof AccountCredentialsMeta
+     */
+    'pageId': string;
+    /**
+     * App ID of the Meta app
+     * @type {string}
+     * @memberof AccountCredentialsMeta
+     */
+    'appId': string;
+    /**
+     * Page access token of the Facebook page
+     * @type {string}
+     * @memberof AccountCredentialsMeta
+     */
+    'pageAccessToken': string;
+    /**
+     * App secret of the Meta app
+     * @type {string}
+     * @memberof AccountCredentialsMeta
+     */
+    'appSecret': string;
+    /**
+     * Secret for webhook
+     * @type {string}
+     * @memberof AccountCredentialsMeta
+     */
+    'verifyToken': string;
+}
+
+export const AccountCredentialsMetaTypeEnum = {
+    Messenger: 'messenger'
+} as const;
+
+export type AccountCredentialsMetaTypeEnum = typeof AccountCredentialsMetaTypeEnum[keyof typeof AccountCredentialsMetaTypeEnum];
+
+/**
+ * 
+ * @export
  * @interface AccountCredentialsTikTok
  */
 export interface AccountCredentialsTikTok {
@@ -414,7 +464,8 @@ export const AccountType = {
     Wa: 'wa',
     WaBusinessApi: 'wa-business-api',
     Mock: 'mock',
-    Tiktok: 'tiktok'
+    Tiktok: 'tiktok',
+    Messenger: 'messenger'
 } as const;
 
 export type AccountType = typeof AccountType[keyof typeof AccountType];
@@ -547,7 +598,7 @@ export interface AccountsPatchRequest {
  * @type AccountsPatchRequestCredentials
  * @export
  */
-export type AccountsPatchRequestCredentials = AccountCredentialsAlibaba | AccountCredentialsAlibabaV2 | AccountCredentialsTikTok;
+export type AccountsPatchRequestCredentials = AccountCredentialsAlibaba | AccountCredentialsAlibabaV2 | AccountCredentialsMeta | AccountCredentialsTikTok;
 
 /**
  * 
@@ -1747,6 +1798,31 @@ export interface ContactsPostContactsInner {
      * @memberof ContactsPostContactsInner
      */
     'assignee'?: string | null;
+}
+/**
+ * 
+ * @export
+ * @interface EntryItems
+ */
+export interface EntryItems {
+    /**
+     * 
+     * @type {string}
+     * @memberof EntryItems
+     */
+    'id'?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof EntryItems
+     */
+    'time'?: number;
+    /**
+     * 
+     * @type {Array<MessagingItems>}
+     * @memberof EntryItems
+     */
+    'messaging'?: Array<MessagingItems>;
 }
 /**
  * 
@@ -3150,6 +3226,137 @@ export interface MessagesSearchRangeParameter {
 /**
  * 
  * @export
+ * @interface MessagingItems
+ */
+export interface MessagingItems {
+    /**
+     * 
+     * @type {MessagingItemsSender}
+     * @memberof MessagingItems
+     */
+    'sender'?: MessagingItemsSender;
+    /**
+     * 
+     * @type {MessagingItemsSender}
+     * @memberof MessagingItems
+     */
+    'recipient'?: MessagingItemsSender;
+    /**
+     * 
+     * @type {number}
+     * @memberof MessagingItems
+     */
+    'timestamp'?: number;
+    /**
+     * 
+     * @type {MessagingItemsMessage}
+     * @memberof MessagingItems
+     */
+    'message'?: MessagingItemsMessage;
+}
+/**
+ * 
+ * @export
+ * @interface MessagingItemsMessage
+ */
+export interface MessagingItemsMessage {
+    /**
+     * 
+     * @type {string}
+     * @memberof MessagingItemsMessage
+     */
+    'mid'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof MessagingItemsMessage
+     */
+    'text'?: string;
+}
+/**
+ * 
+ * @export
+ * @interface MessagingItemsSender
+ */
+export interface MessagingItemsSender {
+    /**
+     * 
+     * @type {string}
+     * @memberof MessagingItemsSender
+     */
+    'id'?: string;
+}
+/**
+ * 
+ * @export
+ * @interface MetaStateInfo
+ */
+export interface MetaStateInfo {
+    /**
+     * 
+     * @type {string}
+     * @memberof MetaStateInfo
+     */
+    'role'?: string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof MetaStateInfo
+     */
+    'businessVerified'?: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof MetaStateInfo
+     */
+    'businessName'?: string;
+}
+/**
+ * 
+ * @export
+ * @interface MetaUser
+ */
+export interface MetaUser {
+    /**
+     * Page scoped ID of the user
+     * @type {string}
+     * @memberof MetaUser
+     */
+    'psid': string;
+    /**
+     * First name of the user
+     * @type {string}
+     * @memberof MetaUser
+     */
+    'firstName': string;
+    /**
+     * Last name of the user
+     * @type {string}
+     * @memberof MetaUser
+     */
+    'lastName'?: string;
+    /**
+     * Locale of the user
+     * @type {string}
+     * @memberof MetaUser
+     */
+    'locale'?: string;
+    /**
+     * Timezone of the user
+     * @type {string}
+     * @memberof MetaUser
+     */
+    'timezone'?: string;
+    /**
+     * Gender of the user
+     * @type {string}
+     * @memberof MetaUser
+     */
+    'gender'?: string;
+}
+/**
+ * 
+ * @export
  * @interface MetadataQuery
  */
 export interface MetadataQuery {
@@ -4470,6 +4677,25 @@ export interface WASyncStateInfo {
      * @memberof WASyncStateInfo
      */
     'messages'?: WASyncData;
+}
+/**
+ * 
+ * @export
+ * @interface WebhookMessengerPostRequest
+ */
+export interface WebhookMessengerPostRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof WebhookMessengerPostRequest
+     */
+    'object'?: string;
+    /**
+     * 
+     * @type {Array<EntryItems>}
+     * @memberof WebhookMessengerPostRequest
+     */
+    'entry'?: Array<EntryItems>;
 }
 
 /**
@@ -11451,6 +11677,158 @@ export class ProductCategoriesApi extends BaseAPI {
 
 
 /**
+ * ProfileValidationApi - axios parameter creator
+ * @export
+ */
+export const ProfileValidationApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @summary Configure various profile settings
+         * @param {string} verifyToken 
+         * @param {'webhook' | 'profile' | 'personas' | 'nlp' | 'domains' | 'private-reply' | 'all'} mode 
+         * @param {string} accountId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        profileMessengerPost: async (verifyToken: string, mode: 'webhook' | 'profile' | 'personas' | 'nlp' | 'domains' | 'private-reply' | 'all', accountId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'verifyToken' is not null or undefined
+            assertParamExists('profileMessengerPost', 'verifyToken', verifyToken)
+            // verify required parameter 'mode' is not null or undefined
+            assertParamExists('profileMessengerPost', 'mode', mode)
+            // verify required parameter 'accountId' is not null or undefined
+            assertParamExists('profileMessengerPost', 'accountId', accountId)
+            const localVarPath = `/messenger/profile-validation`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (verifyToken !== undefined) {
+                localVarQueryParameter['verify_token'] = verifyToken;
+            }
+
+            if (mode !== undefined) {
+                localVarQueryParameter['mode'] = mode;
+            }
+
+            if (accountId !== undefined) {
+                localVarQueryParameter['accountId'] = accountId;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * ProfileValidationApi - functional programming interface
+ * @export
+ */
+export const ProfileValidationApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = ProfileValidationApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * 
+         * @summary Configure various profile settings
+         * @param {string} verifyToken 
+         * @param {'webhook' | 'profile' | 'personas' | 'nlp' | 'domains' | 'private-reply' | 'all'} mode 
+         * @param {string} accountId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async profileMessengerPost(verifyToken: string, mode: 'webhook' | 'profile' | 'personas' | 'nlp' | 'domains' | 'private-reply' | 'all', accountId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.profileMessengerPost(verifyToken, mode, accountId, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+    }
+};
+
+/**
+ * ProfileValidationApi - factory interface
+ * @export
+ */
+export const ProfileValidationApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = ProfileValidationApiFp(configuration)
+    return {
+        /**
+         * 
+         * @summary Configure various profile settings
+         * @param {ProfileValidationApiProfileMessengerPostRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        profileMessengerPost(requestParameters: ProfileValidationApiProfileMessengerPostRequest, options?: AxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.profileMessengerPost(requestParameters.verifyToken, requestParameters.mode, requestParameters.accountId, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * Request parameters for profileMessengerPost operation in ProfileValidationApi.
+ * @export
+ * @interface ProfileValidationApiProfileMessengerPostRequest
+ */
+export interface ProfileValidationApiProfileMessengerPostRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof ProfileValidationApiProfileMessengerPost
+     */
+    readonly verifyToken: string
+
+    /**
+     * 
+     * @type {'webhook' | 'profile' | 'personas' | 'nlp' | 'domains' | 'private-reply' | 'all'}
+     * @memberof ProfileValidationApiProfileMessengerPost
+     */
+    readonly mode: 'webhook' | 'profile' | 'personas' | 'nlp' | 'domains' | 'private-reply' | 'all'
+
+    /**
+     * 
+     * @type {string}
+     * @memberof ProfileValidationApiProfileMessengerPost
+     */
+    readonly accountId: string
+}
+
+/**
+ * ProfileValidationApi - object-oriented interface
+ * @export
+ * @class ProfileValidationApi
+ * @extends {BaseAPI}
+ */
+export class ProfileValidationApi extends BaseAPI {
+    /**
+     * 
+     * @summary Configure various profile settings
+     * @param {ProfileValidationApiProfileMessengerPostRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ProfileValidationApi
+     */
+    public profileMessengerPost(requestParameters: ProfileValidationApiProfileMessengerPostRequest, options?: AxiosRequestConfig) {
+        return ProfileValidationApiFp(this.configuration).profileMessengerPost(requestParameters.verifyToken, requestParameters.mode, requestParameters.accountId, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+/**
  * TagsApi - axios parameter creator
  * @export
  */
@@ -12269,6 +12647,252 @@ export class TemplatesApi extends BaseAPI {
      */
     public templatesSubmitForReview(requestParameters: TemplatesApiTemplatesSubmitForReviewRequest, options?: AxiosRequestConfig) {
         return TemplatesApiFp(this.configuration).templatesSubmitForReview(requestParameters.accountId, requestParameters.templatesSubmitForReviewRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+/**
+ * WebhookApi - axios parameter creator
+ * @export
+ */
+export const WebhookApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @summary Verify and handle messaging webhook subscription
+         * @param {string} hubMode The mode parameter from the webhook request
+         * @param {string} hubVerifyToken The verify_token parameter from the webhook request
+         * @param {string} hubChallenge The challenge parameter from the webhook request
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        webhookMessengerGet: async (hubMode: string, hubVerifyToken: string, hubChallenge: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'hubMode' is not null or undefined
+            assertParamExists('webhookMessengerGet', 'hubMode', hubMode)
+            // verify required parameter 'hubVerifyToken' is not null or undefined
+            assertParamExists('webhookMessengerGet', 'hubVerifyToken', hubVerifyToken)
+            // verify required parameter 'hubChallenge' is not null or undefined
+            assertParamExists('webhookMessengerGet', 'hubChallenge', hubChallenge)
+            const localVarPath = `/messenger/webhook`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (hubMode !== undefined) {
+                localVarQueryParameter['hub.mode'] = hubMode;
+            }
+
+            if (hubVerifyToken !== undefined) {
+                localVarQueryParameter['hub.verify_token'] = hubVerifyToken;
+            }
+
+            if (hubChallenge !== undefined) {
+                localVarQueryParameter['hub.challenge'] = hubChallenge;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Receive a message from the platform
+         * @param {string} [accountId] 
+         * @param {WebhookMessengerPostRequest} [webhookMessengerPostRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        webhookMessengerPost: async (accountId?: string, webhookMessengerPostRequest?: WebhookMessengerPostRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/messenger/webhook`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (accountId !== undefined) {
+                localVarQueryParameter['accountId'] = accountId;
+            }
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(webhookMessengerPostRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * WebhookApi - functional programming interface
+ * @export
+ */
+export const WebhookApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = WebhookApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * 
+         * @summary Verify and handle messaging webhook subscription
+         * @param {string} hubMode The mode parameter from the webhook request
+         * @param {string} hubVerifyToken The verify_token parameter from the webhook request
+         * @param {string} hubChallenge The challenge parameter from the webhook request
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async webhookMessengerGet(hubMode: string, hubVerifyToken: string, hubChallenge: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<string>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.webhookMessengerGet(hubMode, hubVerifyToken, hubChallenge, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary Receive a message from the platform
+         * @param {string} [accountId] 
+         * @param {WebhookMessengerPostRequest} [webhookMessengerPostRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async webhookMessengerPost(accountId?: string, webhookMessengerPostRequest?: WebhookMessengerPostRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AccountsLogout200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.webhookMessengerPost(accountId, webhookMessengerPostRequest, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+    }
+};
+
+/**
+ * WebhookApi - factory interface
+ * @export
+ */
+export const WebhookApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = WebhookApiFp(configuration)
+    return {
+        /**
+         * 
+         * @summary Verify and handle messaging webhook subscription
+         * @param {WebhookApiWebhookMessengerGetRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        webhookMessengerGet(requestParameters: WebhookApiWebhookMessengerGetRequest, options?: AxiosRequestConfig): AxiosPromise<string> {
+            return localVarFp.webhookMessengerGet(requestParameters.hubMode, requestParameters.hubVerifyToken, requestParameters.hubChallenge, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Receive a message from the platform
+         * @param {WebhookApiWebhookMessengerPostRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        webhookMessengerPost(requestParameters: WebhookApiWebhookMessengerPostRequest = {}, options?: AxiosRequestConfig): AxiosPromise<AccountsLogout200Response> {
+            return localVarFp.webhookMessengerPost(requestParameters.accountId, requestParameters.webhookMessengerPostRequest, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * Request parameters for webhookMessengerGet operation in WebhookApi.
+ * @export
+ * @interface WebhookApiWebhookMessengerGetRequest
+ */
+export interface WebhookApiWebhookMessengerGetRequest {
+    /**
+     * The mode parameter from the webhook request
+     * @type {string}
+     * @memberof WebhookApiWebhookMessengerGet
+     */
+    readonly hubMode: string
+
+    /**
+     * The verify_token parameter from the webhook request
+     * @type {string}
+     * @memberof WebhookApiWebhookMessengerGet
+     */
+    readonly hubVerifyToken: string
+
+    /**
+     * The challenge parameter from the webhook request
+     * @type {string}
+     * @memberof WebhookApiWebhookMessengerGet
+     */
+    readonly hubChallenge: string
+}
+
+/**
+ * Request parameters for webhookMessengerPost operation in WebhookApi.
+ * @export
+ * @interface WebhookApiWebhookMessengerPostRequest
+ */
+export interface WebhookApiWebhookMessengerPostRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof WebhookApiWebhookMessengerPost
+     */
+    readonly accountId?: string
+
+    /**
+     * 
+     * @type {WebhookMessengerPostRequest}
+     * @memberof WebhookApiWebhookMessengerPost
+     */
+    readonly webhookMessengerPostRequest?: WebhookMessengerPostRequest
+}
+
+/**
+ * WebhookApi - object-oriented interface
+ * @export
+ * @class WebhookApi
+ * @extends {BaseAPI}
+ */
+export class WebhookApi extends BaseAPI {
+    /**
+     * 
+     * @summary Verify and handle messaging webhook subscription
+     * @param {WebhookApiWebhookMessengerGetRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof WebhookApi
+     */
+    public webhookMessengerGet(requestParameters: WebhookApiWebhookMessengerGetRequest, options?: AxiosRequestConfig) {
+        return WebhookApiFp(this.configuration).webhookMessengerGet(requestParameters.hubMode, requestParameters.hubVerifyToken, requestParameters.hubChallenge, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Receive a message from the platform
+     * @param {WebhookApiWebhookMessengerPostRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof WebhookApi
+     */
+    public webhookMessengerPost(requestParameters: WebhookApiWebhookMessengerPostRequest = {}, options?: AxiosRequestConfig) {
+        return WebhookApiFp(this.configuration).webhookMessengerPost(requestParameters.accountId, requestParameters.webhookMessengerPostRequest, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
