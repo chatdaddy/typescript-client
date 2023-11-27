@@ -639,6 +639,12 @@ export interface EventTrigger {
      */
     'delay'?: EventTriggerCreateDelay;
     /**
+     * 
+     * @type {ScheduleOptions}
+     * @memberof EventTrigger
+     */
+    'scheduleOptions'?: ScheduleOptions | null;
+    /**
      * an array of usersIds to notify users when an event is created
      * @type {Array<string>}
      * @memberof EventTrigger
@@ -735,6 +741,12 @@ export interface EventTriggerCreate {
      * @memberof EventTriggerCreate
      */
     'delay'?: EventTriggerCreateDelay;
+    /**
+     * 
+     * @type {ScheduleOptions}
+     * @memberof EventTriggerCreate
+     */
+    'scheduleOptions'?: ScheduleOptions | null;
     /**
      * an array of usersIds to notify users when an event is created
      * @type {Array<string>}
@@ -1622,6 +1634,25 @@ export interface PostTracking {
      * @memberof PostTracking
      */
     'autoPayment'?: TrackingAutoPaymentConfig | null;
+}
+/**
+ * 
+ * @export
+ * @interface ScheduleOptions
+ */
+export interface ScheduleOptions {
+    /**
+     * the order parameter to use for the schedule
+     * @type {string}
+     * @memberof ScheduleOptions
+     */
+    'parameter'?: string;
+    /**
+     * the time to schedule message before or after the parameter in seconds. Negative value means before the parameter date
+     * @type {number}
+     * @memberof ScheduleOptions
+     */
+    'delaySeconds'?: number;
 }
 /**
  * Authentication details for the payment system to create a payment integration

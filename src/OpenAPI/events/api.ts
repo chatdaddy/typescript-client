@@ -7166,6 +7166,12 @@ export interface TrackingInsertDataEventsInner {
      */
     'delay'?: TrackingInsertDataEventsInnerAllOf1Delay;
     /**
+     * 
+     * @type {TrackingInsertDataEventsInnerAllOf1ScheduleOptions}
+     * @memberof TrackingInsertDataEventsInner
+     */
+    'scheduleOptions'?: TrackingInsertDataEventsInnerAllOf1ScheduleOptions | null;
+    /**
      * an array of usersIds to notify users when an event is created
      * @type {Array<string>}
      * @memberof TrackingInsertDataEventsInner
@@ -7227,6 +7233,12 @@ export interface TrackingInsertDataEventsInnerAllOf1 {
      * @memberof TrackingInsertDataEventsInnerAllOf1
      */
     'delay'?: TrackingInsertDataEventsInnerAllOf1Delay;
+    /**
+     * 
+     * @type {TrackingInsertDataEventsInnerAllOf1ScheduleOptions}
+     * @memberof TrackingInsertDataEventsInnerAllOf1
+     */
+    'scheduleOptions'?: TrackingInsertDataEventsInnerAllOf1ScheduleOptions | null;
     /**
      * an array of usersIds to notify users when an event is created
      * @type {Array<string>}
@@ -7302,6 +7314,25 @@ export const TrackingInsertDataEventsInnerAllOf1DelayTypeEnum = {
 
 export type TrackingInsertDataEventsInnerAllOf1DelayTypeEnum = typeof TrackingInsertDataEventsInnerAllOf1DelayTypeEnum[keyof typeof TrackingInsertDataEventsInnerAllOf1DelayTypeEnum];
 
+/**
+ * 
+ * @export
+ * @interface TrackingInsertDataEventsInnerAllOf1ScheduleOptions
+ */
+export interface TrackingInsertDataEventsInnerAllOf1ScheduleOptions {
+    /**
+     * the order parameter to use for the schedule
+     * @type {string}
+     * @memberof TrackingInsertDataEventsInnerAllOf1ScheduleOptions
+     */
+    'parameter'?: string;
+    /**
+     * the time to schedule message before or after the parameter in seconds. Negative value means before the parameter date
+     * @type {number}
+     * @memberof TrackingInsertDataEventsInnerAllOf1ScheduleOptions
+     */
+    'delaySeconds'?: number;
+}
 /**
  * @type TrackingInsertDataOverridePhoneNumber
  * @export
