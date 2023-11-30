@@ -3670,10 +3670,10 @@ export interface MultiMessageCompose {
     'compose'?: MessageCompose;
     /**
      * 
-     * @type {Array<MessageCompose>}
+     * @type {Array<MessageComposeWChatID>}
      * @memberof MultiMessageCompose
      */
-    'recipients': Array<MessageCompose>;
+    'recipients': Array<MessageComposeWChatID>;
 }
 /**
  * 
