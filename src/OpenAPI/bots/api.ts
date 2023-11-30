@@ -1489,6 +1489,50 @@ export interface BotTriggersPatchRequest {
 /**
  * 
  * @export
+ * @interface BotsBulkFire200Response
+ */
+export interface BotsBulkFire200Response {
+    /**
+     * 
+     * @type {Array<ActionFireRecord>}
+     * @memberof BotsBulkFire200Response
+     */
+    'records': Array<ActionFireRecord>;
+}
+/**
+ * 
+ * @export
+ * @interface BotsBulkFireRequest
+ */
+export interface BotsBulkFireRequest {
+    /**
+     * Which account to use
+     * @type {string}
+     * @memberof BotsBulkFireRequest
+     */
+    'accountId'?: string;
+    /**
+     * List of recipients to send the message to
+     * @type {Array<Recipient>}
+     * @memberof BotsBulkFireRequest
+     */
+    'recipients': Array<Recipient>;
+    /**
+     * 
+     * @type {MessageSendOptions}
+     * @memberof BotsBulkFireRequest
+     */
+    'messageSendOptions'?: MessageSendOptions;
+    /**
+     * 
+     * @type {{ [key: string]: any; }}
+     * @memberof BotsBulkFireRequest
+     */
+    'parameters'?: { [key: string]: any; };
+}
+/**
+ * 
+ * @export
  * @interface BotsCreateRequest
  */
 export interface BotsCreateRequest {
@@ -1536,12 +1580,6 @@ export interface BotsFireRequest {
      * @memberof BotsFireRequest
      */
     'toContact': string;
-    /**
-     * List of recipients to send the message to
-     * @type {Array<Recipient>}
-     * @memberof BotsFireRequest
-     */
-    'recipients'?: Array<Recipient>;
     /**
      * 
      * @type {MessageSendOptions}
@@ -3224,6 +3262,48 @@ export class BotTriggersApi extends BaseAPI {
 export const BotsApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
+         * Fires the starting action ID
+         * @summary Initiates a bot sequence onto 1 or more contacts.
+         * @param {string} id 
+         * @param {BotsBulkFireRequest} [botsBulkFireRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        botsBulkFire: async (id: string, botsBulkFireRequest?: BotsBulkFireRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('botsBulkFire', 'id', id)
+            const localVarPath = `/bots/{id}/bulk-fire`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["MESSAGES_SEND_TO_ALL"], configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(botsBulkFireRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * 
          * @summary Creates new bot
          * @param {BotsCreateRequest} [botsCreateRequest] 
@@ -3667,6 +3747,18 @@ export const BotsApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = BotsApiAxiosParamCreator(configuration)
     return {
         /**
+         * Fires the starting action ID
+         * @summary Initiates a bot sequence onto 1 or more contacts.
+         * @param {string} id 
+         * @param {BotsBulkFireRequest} [botsBulkFireRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async botsBulkFire(id: string, botsBulkFireRequest?: BotsBulkFireRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BotsBulkFire200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.botsBulkFire(id, botsBulkFireRequest, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
          * 
          * @summary Creates new bot
          * @param {BotsCreateRequest} [botsCreateRequest] 
@@ -3794,6 +3886,16 @@ export const BotsApiFactory = function (configuration?: Configuration, basePath?
     const localVarFp = BotsApiFp(configuration)
     return {
         /**
+         * Fires the starting action ID
+         * @summary Initiates a bot sequence onto 1 or more contacts.
+         * @param {BotsApiBotsBulkFireRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        botsBulkFire(requestParameters: BotsApiBotsBulkFireRequest, options?: AxiosRequestConfig): AxiosPromise<BotsBulkFire200Response> {
+            return localVarFp.botsBulkFire(requestParameters.id, requestParameters.botsBulkFireRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
          * 
          * @summary Creates new bot
          * @param {BotsApiBotsCreateRequest} requestParameters Request parameters.
@@ -3885,6 +3987,27 @@ export const BotsApiFactory = function (configuration?: Configuration, basePath?
         },
     };
 };
+
+/**
+ * Request parameters for botsBulkFire operation in BotsApi.
+ * @export
+ * @interface BotsApiBotsBulkFireRequest
+ */
+export interface BotsApiBotsBulkFireRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof BotsApiBotsBulkFire
+     */
+    readonly id: string
+
+    /**
+     * 
+     * @type {BotsBulkFireRequest}
+     * @memberof BotsApiBotsBulkFire
+     */
+    readonly botsBulkFireRequest?: BotsBulkFireRequest
+}
 
 /**
  * Request parameters for botsCreate operation in BotsApi.
@@ -4145,6 +4268,18 @@ export interface BotsApiExternalTemplateStatusUpdateRequest {
  * @extends {BaseAPI}
  */
 export class BotsApi extends BaseAPI {
+    /**
+     * Fires the starting action ID
+     * @summary Initiates a bot sequence onto 1 or more contacts.
+     * @param {BotsApiBotsBulkFireRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof BotsApi
+     */
+    public botsBulkFire(requestParameters: BotsApiBotsBulkFireRequest, options?: AxiosRequestConfig) {
+        return BotsApiFp(this.configuration).botsBulkFire(requestParameters.id, requestParameters.botsBulkFireRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
     /**
      * 
      * @summary Creates new bot
