@@ -246,7 +246,7 @@ export interface ActionFireRecord {
      */
     'status'?: ActionFireRecordStatusEnum;
     /**
-     * 
+     * ID of the contact
      * @type {string}
      * @memberof ActionFireRecord
      */
@@ -1531,11 +1531,17 @@ export interface BotsFireRequest {
      */
     'accountId'?: string;
     /**
-     * Contact action is being fired to
+     * ID of the contact
      * @type {string}
      * @memberof BotsFireRequest
      */
     'toContact': string;
+    /**
+     * List of recipients to send the message to
+     * @type {Array<Recipient>}
+     * @memberof BotsFireRequest
+     */
+    'recipients'?: Array<Recipient>;
     /**
      * 
      * @type {MessageSendOptions}
@@ -2140,6 +2146,25 @@ export interface Position {
      * @memberof Position
      */
     'y': number;
+}
+/**
+ * Options provided here will override the global options provided in the botsFire request
+ * @export
+ * @interface Recipient
+ */
+export interface Recipient {
+    /**
+     * ID of the contact
+     * @type {string}
+     * @memberof Recipient
+     */
+    'id': string;
+    /**
+     * 
+     * @type {MessageSendOptions}
+     * @memberof Recipient
+     */
+    'sendOptions'?: MessageSendOptions;
 }
 /**
  * 

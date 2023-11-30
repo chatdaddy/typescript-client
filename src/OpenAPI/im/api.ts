@@ -2189,7 +2189,7 @@ export interface Message {
      * @type {string}
      * @memberof Message
      */
-    'text': string | null;
+    'text'?: string | null;
     /**
      * 
      * @type {QuotedMessage}
@@ -2606,7 +2606,7 @@ export interface MessageCompose {
      * @type {string}
      * @memberof MessageCompose
      */
-    'text': string | null;
+    'text'?: string | null;
     /**
      * 
      * @type {QuotedMessage}
@@ -2749,6 +2749,154 @@ export interface MessageComposeAllOfSender {
 /**
  * 
  * @export
+ * @interface MessageComposeWChatID
+ */
+export interface MessageComposeWChatID {
+    /**
+     * Specify the message Id -- can be used as an idempotency key. Ensures, that two messages with the same ID will never be sent twice 
+     * @type {string}
+     * @memberof MessageComposeWChatID
+     */
+    'id'?: string;
+    /**
+     * Set the status of the message, use to create notes
+     * @type {string}
+     * @memberof MessageComposeWChatID
+     */
+    'status'?: MessageComposeWChatIDStatusEnum;
+    /**
+     * An ISO formatted timestamp
+     * @type {string}
+     * @memberof MessageComposeWChatID
+     */
+    'timestamp'?: string;
+    /**
+     * 
+     * @type {MiscOptions}
+     * @memberof MessageComposeWChatID
+     */
+    'miscOptions'?: MiscOptions;
+    /**
+     * parameters to replace in text
+     * @type {{ [key: string]: any; }}
+     * @memberof MessageComposeWChatID
+     */
+    'parameters'?: { [key: string]: any; };
+    /**
+     * 
+     * @type {MessageComposeAllOfSender}
+     * @memberof MessageComposeWChatID
+     */
+    'sender'?: MessageComposeAllOfSender;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof MessageComposeWChatID
+     */
+    'mentions'?: Array<string>;
+    /**
+     * 
+     * @type {string}
+     * @memberof MessageComposeWChatID
+     */
+    'text'?: string | null;
+    /**
+     * 
+     * @type {QuotedMessage}
+     * @memberof MessageComposeWChatID
+     */
+    'quoted'?: QuotedMessage | null;
+    /**
+     * True, if the message was deleted
+     * @type {boolean}
+     * @memberof MessageComposeWChatID
+     */
+    'deleted'?: boolean;
+    /**
+     * 
+     * @type {MessageContentAction}
+     * @memberof MessageComposeWChatID
+     */
+    'action'?: MessageContentAction | null;
+    /**
+     * 
+     * @type {Array<MessageAttachment>}
+     * @memberof MessageComposeWChatID
+     */
+    'attachments'?: Array<MessageAttachment>;
+    /**
+     * 
+     * @type {Array<MessageButton>}
+     * @memberof MessageComposeWChatID
+     */
+    'buttons'?: Array<MessageButton> | null;
+    /**
+     * 
+     * @type {Poll}
+     * @memberof MessageComposeWChatID
+     */
+    'poll'?: Poll;
+    /**
+     * 
+     * @type {ListMessage}
+     * @memberof MessageComposeWChatID
+     */
+    'list'?: ListMessage;
+    /**
+     * 
+     * @type {Array<MessageProduct>}
+     * @memberof MessageComposeWChatID
+     */
+    'products'?: Array<MessageProduct> | null;
+    /**
+     * 
+     * @type {MessageContentOrder}
+     * @memberof MessageComposeWChatID
+     */
+    'order'?: MessageContentOrder | null;
+    /**
+     * 
+     * @type {MessageLinkPreview}
+     * @memberof MessageComposeWChatID
+     */
+    'linkPreview'?: MessageLinkPreview;
+    /**
+     * 
+     * @type {Array<MessageReaction>}
+     * @memberof MessageComposeWChatID
+     */
+    'reactions'?: Array<MessageReaction> | null;
+    /**
+     * ID for the contact/chat on the platform
+     * @type {string}
+     * @memberof MessageComposeWChatID
+     */
+    'chatId': string;
+}
+
+export const MessageComposeWChatIDStatusEnum = {
+    Note: 'note',
+    Pending: 'pending'
+} as const;
+
+export type MessageComposeWChatIDStatusEnum = typeof MessageComposeWChatIDStatusEnum[keyof typeof MessageComposeWChatIDStatusEnum];
+
+/**
+ * 
+ * @export
+ * @interface MessageComposeWChatIDAllOf
+ */
+export interface MessageComposeWChatIDAllOf {
+    /**
+     * ID for the contact/chat on the platform
+     * @type {string}
+     * @memberof MessageComposeWChatIDAllOf
+     */
+    'chatId': string;
+}
+/**
+ * 
+ * @export
  * @interface MessageContent
  */
 export interface MessageContent {
@@ -2763,7 +2911,7 @@ export interface MessageContent {
      * @type {string}
      * @memberof MessageContent
      */
-    'text': string | null;
+    'text'?: string | null;
     /**
      * 
      * @type {QuotedMessage}
@@ -3501,6 +3649,25 @@ export interface ModelError {
      * @memberof ModelError
      */
     'data'?: object;
+}
+/**
+ * Use to send 1 or more messages in a single request. You can override the default compose options for each message by passing in the compose options in the recipient object
+ * @export
+ * @interface MultiMessageCompose
+ */
+export interface MultiMessageCompose {
+    /**
+     * 
+     * @type {MessageCompose}
+     * @memberof MultiMessageCompose
+     */
+    'compose'?: MessageCompose;
+    /**
+     * 
+     * @type {Array<MessageCompose>}
+     * @memberof MultiMessageCompose
+     */
+    'recipients'?: Array<MessageCompose>;
 }
 /**
  * 
@@ -9698,6 +9865,54 @@ export const MessagesApiAxiosParamCreator = function (configuration?: Configurat
                 options: localVarRequestOptions,
             };
         },
+        /**
+         * Send a message with text and/or attachments. The `text` property can be used as a [mustache](https://mustache.github.io) template which automatically prefills data from the contact\'s details including **custom fields**. Some examples:   1. `{\"text\": \"Hello there {{name}}\"}` will automatically pre-fill the contact\'s name (if present)   2. `{\"text\": \"Hello {{name}} your number is {{phoneNumber}}\"}` will automatically pre-fill the contact\'s name & phone number   3. `{\"text\": \"Hello {{name}} your pet name is {{pet name}}\"}` will automatically pre-fill `petName` if the contact has such a custom field
+         * @summary Send a message to one or more chats
+         * @param {string} [accountId] The account to use to send the message. Pass as the literal \&quot;random\&quot; to use a random account 
+         * @param {boolean} [requireOpenAccount] Only sends the message if the account is open, returns 428 otherwise
+         * @param {MultiMessageCompose} [multiMessageCompose] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        messagesSend: async (accountId?: string, requireOpenAccount?: boolean, multiMessageCompose?: MultiMessageCompose, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/messages`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["MESSAGES_SEND_TO_ALL", "MESSAGES_SEND_TO_ASSIGNED"], configuration)
+
+            if (accountId !== undefined) {
+                localVarQueryParameter['accountId'] = accountId;
+            }
+
+            if (requireOpenAccount !== undefined) {
+                localVarQueryParameter['requireOpenAccount'] = requireOpenAccount;
+            }
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(multiMessageCompose, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
     }
 };
 
@@ -9839,6 +10054,19 @@ export const MessagesApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.messagesSearch(q, accountId, page, count, chatId, returnChats, fromMe, range, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
+        /**
+         * Send a message with text and/or attachments. The `text` property can be used as a [mustache](https://mustache.github.io) template which automatically prefills data from the contact\'s details including **custom fields**. Some examples:   1. `{\"text\": \"Hello there {{name}}\"}` will automatically pre-fill the contact\'s name (if present)   2. `{\"text\": \"Hello {{name}} your number is {{phoneNumber}}\"}` will automatically pre-fill the contact\'s name & phone number   3. `{\"text\": \"Hello {{name}} your pet name is {{pet name}}\"}` will automatically pre-fill `petName` if the contact has such a custom field
+         * @summary Send a message to one or more chats
+         * @param {string} [accountId] The account to use to send the message. Pass as the literal \&quot;random\&quot; to use a random account 
+         * @param {boolean} [requireOpenAccount] Only sends the message if the account is open, returns 428 otherwise
+         * @param {MultiMessageCompose} [multiMessageCompose] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async messagesSend(accountId?: string, requireOpenAccount?: boolean, multiMessageCompose?: MultiMessageCompose, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<Message>>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.messagesSend(accountId, requireOpenAccount, multiMessageCompose, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
     }
 };
 
@@ -9936,6 +10164,16 @@ export const MessagesApiFactory = function (configuration?: Configuration, baseP
          */
         messagesSearch(requestParameters: MessagesApiMessagesSearchRequest, options?: AxiosRequestConfig): AxiosPromise<MessagesSearch200Response> {
             return localVarFp.messagesSearch(requestParameters.q, requestParameters.accountId, requestParameters.page, requestParameters.count, requestParameters.chatId, requestParameters.returnChats, requestParameters.fromMe, requestParameters.range, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Send a message with text and/or attachments. The `text` property can be used as a [mustache](https://mustache.github.io) template which automatically prefills data from the contact\'s details including **custom fields**. Some examples:   1. `{\"text\": \"Hello there {{name}}\"}` will automatically pre-fill the contact\'s name (if present)   2. `{\"text\": \"Hello {{name}} your number is {{phoneNumber}}\"}` will automatically pre-fill the contact\'s name & phone number   3. `{\"text\": \"Hello {{name}} your pet name is {{pet name}}\"}` will automatically pre-fill `petName` if the contact has such a custom field
+         * @summary Send a message to one or more chats
+         * @param {MessagesApiMessagesSendRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        messagesSend(requestParameters: MessagesApiMessagesSendRequest = {}, options?: AxiosRequestConfig): AxiosPromise<Array<Message>> {
+            return localVarFp.messagesSend(requestParameters.accountId, requestParameters.requireOpenAccount, requestParameters.multiMessageCompose, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -10305,6 +10543,34 @@ export interface MessagesApiMessagesSearchRequest {
 }
 
 /**
+ * Request parameters for messagesSend operation in MessagesApi.
+ * @export
+ * @interface MessagesApiMessagesSendRequest
+ */
+export interface MessagesApiMessagesSendRequest {
+    /**
+     * The account to use to send the message. Pass as the literal \&quot;random\&quot; to use a random account 
+     * @type {string}
+     * @memberof MessagesApiMessagesSend
+     */
+    readonly accountId?: string
+
+    /**
+     * Only sends the message if the account is open, returns 428 otherwise
+     * @type {boolean}
+     * @memberof MessagesApiMessagesSend
+     */
+    readonly requireOpenAccount?: boolean
+
+    /**
+     * 
+     * @type {MultiMessageCompose}
+     * @memberof MessagesApiMessagesSend
+     */
+    readonly multiMessageCompose?: MultiMessageCompose
+}
+
+/**
  * MessagesApi - object-oriented interface
  * @export
  * @class MessagesApi
@@ -10415,6 +10681,18 @@ export class MessagesApi extends BaseAPI {
      */
     public messagesSearch(requestParameters: MessagesApiMessagesSearchRequest, options?: AxiosRequestConfig) {
         return MessagesApiFp(this.configuration).messagesSearch(requestParameters.q, requestParameters.accountId, requestParameters.page, requestParameters.count, requestParameters.chatId, requestParameters.returnChats, requestParameters.fromMe, requestParameters.range, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Send a message with text and/or attachments. The `text` property can be used as a [mustache](https://mustache.github.io) template which automatically prefills data from the contact\'s details including **custom fields**. Some examples:   1. `{\"text\": \"Hello there {{name}}\"}` will automatically pre-fill the contact\'s name (if present)   2. `{\"text\": \"Hello {{name}} your number is {{phoneNumber}}\"}` will automatically pre-fill the contact\'s name & phone number   3. `{\"text\": \"Hello {{name}} your pet name is {{pet name}}\"}` will automatically pre-fill `petName` if the contact has such a custom field
+     * @summary Send a message to one or more chats
+     * @param {MessagesApiMessagesSendRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof MessagesApi
+     */
+    public messagesSend(requestParameters: MessagesApiMessagesSendRequest = {}, options?: AxiosRequestConfig) {
+        return MessagesApiFp(this.configuration).messagesSend(requestParameters.accountId, requestParameters.requireOpenAccount, requestParameters.multiMessageCompose, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

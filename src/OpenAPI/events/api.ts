@@ -3999,7 +3999,7 @@ export interface MessageInsertData {
      * @type {string}
      * @memberof MessageInsertData
      */
-    'text': string | null;
+    'text'?: string | null;
     /**
      * 
      * @type {MessageInsertDataQuoted}
