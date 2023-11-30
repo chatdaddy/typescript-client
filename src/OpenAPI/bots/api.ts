@@ -2154,6 +2154,12 @@ export interface Position {
  */
 export interface Recipient {
     /**
+     * ID of the account to send from
+     * @type {string}
+     * @memberof Recipient
+     */
+    'accountId'?: string;
+    /**
      * ID of the contact
      * @type {string}
      * @memberof Recipient
