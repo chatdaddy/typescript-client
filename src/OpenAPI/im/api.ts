@@ -3673,7 +3673,7 @@ export interface MultiMessageCompose {
      * @type {Array<MessageCompose>}
      * @memberof MultiMessageCompose
      */
-    'recipients'?: Array<MessageCompose>;
+    'recipients': Array<MessageCompose>;
 }
 /**
  * 
