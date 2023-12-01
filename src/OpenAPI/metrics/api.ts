@@ -238,6 +238,25 @@ export interface DashboardSchemaItem {
 /**
  * 
  * @export
+ * @interface DashboardUpdate
+ */
+export interface DashboardUpdate {
+    /**
+     * 
+     * @type {string}
+     * @memberof DashboardUpdate
+     */
+    'name'?: string;
+    /**
+     * 
+     * @type {DashboardSchema}
+     * @memberof DashboardUpdate
+     */
+    'schema'?: DashboardSchema;
+}
+/**
+ * 
+ * @export
  * @interface DashboardWithData
  */
 export interface DashboardWithData {
@@ -1303,11 +1322,11 @@ export const DashboardApiAxiosParamCreator = function (configuration?: Configura
          * 
          * @summary Update a dashboard metadata
          * @param {string} id 
-         * @param {DashboardCreate} [dashboardCreate] 
+         * @param {DashboardUpdate} [dashboardUpdate] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        updateDashboardMetadata: async (id: string, dashboardCreate?: DashboardCreate, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        updateDashboardMetadata: async (id: string, dashboardUpdate?: DashboardUpdate, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
             assertParamExists('updateDashboardMetadata', 'id', id)
             const localVarPath = `/dashboard/metadatas/{id}`
@@ -1334,7 +1353,7 @@ export const DashboardApiAxiosParamCreator = function (configuration?: Configura
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(dashboardCreate, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(dashboardUpdate, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -1417,12 +1436,12 @@ export const DashboardApiFp = function(configuration?: Configuration) {
          * 
          * @summary Update a dashboard metadata
          * @param {string} id 
-         * @param {DashboardCreate} [dashboardCreate] 
+         * @param {DashboardUpdate} [dashboardUpdate] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async updateDashboardMetadata(id: string, dashboardCreate?: DashboardCreate, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.updateDashboardMetadata(id, dashboardCreate, options);
+        async updateDashboardMetadata(id: string, dashboardUpdate?: DashboardUpdate, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.updateDashboardMetadata(id, dashboardUpdate, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
     }
@@ -1492,7 +1511,7 @@ export const DashboardApiFactory = function (configuration?: Configuration, base
          * @throws {RequiredError}
          */
         updateDashboardMetadata(requestParameters: DashboardApiUpdateDashboardMetadataRequest, options?: AxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.updateDashboardMetadata(requestParameters.id, requestParameters.dashboardCreate, options).then((request) => request(axios, basePath));
+            return localVarFp.updateDashboardMetadata(requestParameters.id, requestParameters.dashboardUpdate, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -1624,10 +1643,10 @@ export interface DashboardApiUpdateDashboardMetadataRequest {
 
     /**
      * 
-     * @type {DashboardCreate}
+     * @type {DashboardUpdate}
      * @memberof DashboardApiUpdateDashboardMetadata
      */
-    readonly dashboardCreate?: DashboardCreate
+    readonly dashboardUpdate?: DashboardUpdate
 }
 
 /**
@@ -1705,7 +1724,7 @@ export class DashboardApi extends BaseAPI {
      * @memberof DashboardApi
      */
     public updateDashboardMetadata(requestParameters: DashboardApiUpdateDashboardMetadataRequest, options?: AxiosRequestConfig) {
-        return DashboardApiFp(this.configuration).updateDashboardMetadata(requestParameters.id, requestParameters.dashboardCreate, options).then((request) => request(this.axios, this.basePath));
+        return DashboardApiFp(this.configuration).updateDashboardMetadata(requestParameters.id, requestParameters.dashboardUpdate, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
