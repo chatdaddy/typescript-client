@@ -1506,7 +1506,7 @@ export interface BotsBulkFire200Response {
  */
 export interface BotsBulkFireRequest {
     /**
-     * Which account to use
+     * Which account to use. If not specified here, it must be specified in each recipient
      * @type {string}
      * @memberof BotsBulkFireRequest
      */

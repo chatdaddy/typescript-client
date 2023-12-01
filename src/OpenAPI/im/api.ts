@@ -9893,13 +9893,15 @@ export const MessagesApiAxiosParamCreator = function (configuration?: Configurat
         /**
          * Send a message with text and/or attachments. The `text` property can be used as a [mustache](https://mustache.github.io) template which automatically prefills data from the contact\'s details including **custom fields**. Some examples:   1. `{\"text\": \"Hello there {{name}}\"}` will automatically pre-fill the contact\'s name (if present)   2. `{\"text\": \"Hello {{name}} your number is {{phoneNumber}}\"}` will automatically pre-fill the contact\'s name & phone number   3. `{\"text\": \"Hello {{name}} your pet name is {{pet name}}\"}` will automatically pre-fill `petName` if the contact has such a custom field
          * @summary Send a message to one or more chats
-         * @param {string} [accountId] The account to use to send the message. Pass as the literal \&quot;random\&quot; to use a random account 
+         * @param {string} accountId The account to use to send the message.
          * @param {boolean} [requireOpenAccount] Only sends the message if the account is open, returns 428 otherwise
          * @param {MultiMessageCompose} [multiMessageCompose] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        messagesSend: async (accountId?: string, requireOpenAccount?: boolean, multiMessageCompose?: MultiMessageCompose, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        messagesSend: async (accountId: string, requireOpenAccount?: boolean, multiMessageCompose?: MultiMessageCompose, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'accountId' is not null or undefined
+            assertParamExists('messagesSend', 'accountId', accountId)
             const localVarPath = `/messages`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -10082,13 +10084,13 @@ export const MessagesApiFp = function(configuration?: Configuration) {
         /**
          * Send a message with text and/or attachments. The `text` property can be used as a [mustache](https://mustache.github.io) template which automatically prefills data from the contact\'s details including **custom fields**. Some examples:   1. `{\"text\": \"Hello there {{name}}\"}` will automatically pre-fill the contact\'s name (if present)   2. `{\"text\": \"Hello {{name}} your number is {{phoneNumber}}\"}` will automatically pre-fill the contact\'s name & phone number   3. `{\"text\": \"Hello {{name}} your pet name is {{pet name}}\"}` will automatically pre-fill `petName` if the contact has such a custom field
          * @summary Send a message to one or more chats
-         * @param {string} [accountId] The account to use to send the message. Pass as the literal \&quot;random\&quot; to use a random account 
+         * @param {string} accountId The account to use to send the message.
          * @param {boolean} [requireOpenAccount] Only sends the message if the account is open, returns 428 otherwise
          * @param {MultiMessageCompose} [multiMessageCompose] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async messagesSend(accountId?: string, requireOpenAccount?: boolean, multiMessageCompose?: MultiMessageCompose, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<Message>>> {
+        async messagesSend(accountId: string, requireOpenAccount?: boolean, multiMessageCompose?: MultiMessageCompose, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<Message>>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.messagesSend(accountId, requireOpenAccount, multiMessageCompose, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -10197,7 +10199,7 @@ export const MessagesApiFactory = function (configuration?: Configuration, baseP
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        messagesSend(requestParameters: MessagesApiMessagesSendRequest = {}, options?: AxiosRequestConfig): AxiosPromise<Array<Message>> {
+        messagesSend(requestParameters: MessagesApiMessagesSendRequest, options?: AxiosRequestConfig): AxiosPromise<Array<Message>> {
             return localVarFp.messagesSend(requestParameters.accountId, requestParameters.requireOpenAccount, requestParameters.multiMessageCompose, options).then((request) => request(axios, basePath));
         },
     };
@@ -10574,11 +10576,11 @@ export interface MessagesApiMessagesSearchRequest {
  */
 export interface MessagesApiMessagesSendRequest {
     /**
-     * The account to use to send the message. Pass as the literal \&quot;random\&quot; to use a random account 
+     * The account to use to send the message.
      * @type {string}
      * @memberof MessagesApiMessagesSend
      */
-    readonly accountId?: string
+    readonly accountId: string
 
     /**
      * Only sends the message if the account is open, returns 428 otherwise
@@ -10716,7 +10718,7 @@ export class MessagesApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof MessagesApi
      */
-    public messagesSend(requestParameters: MessagesApiMessagesSendRequest = {}, options?: AxiosRequestConfig) {
+    public messagesSend(requestParameters: MessagesApiMessagesSendRequest, options?: AxiosRequestConfig) {
         return MessagesApiFp(this.configuration).messagesSend(requestParameters.accountId, requestParameters.requireOpenAccount, requestParameters.multiMessageCompose, options).then((request) => request(this.axios, this.basePath));
     }
 }
