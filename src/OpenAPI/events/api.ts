@@ -661,6 +661,12 @@ export interface ActionExecuteData {
      * @memberof ActionExecuteData
      */
     'isFinal'?: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof ActionExecuteData
+     */
+    'previousActionId'?: string;
 }
 
 export const ActionExecuteDataStatusEnum = {
@@ -1948,6 +1954,12 @@ export interface BotInsertDataStartTriggersInnerInstancesInnerRecordsInner {
      * @memberof BotInsertDataStartTriggersInnerInstancesInnerRecordsInner
      */
     'isFinal'?: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof BotInsertDataStartTriggersInnerInstancesInnerRecordsInner
+     */
+    'previousActionId'?: string;
 }
 
 export const BotInsertDataStartTriggersInnerInstancesInnerRecordsInnerStatusEnum = {

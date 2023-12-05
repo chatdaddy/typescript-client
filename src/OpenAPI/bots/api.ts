@@ -212,6 +212,31 @@ export interface ActionContentTagsInner {
 /**
  * 
  * @export
+ * @interface ActionExecuteCount
+ */
+export interface ActionExecuteCount {
+    /**
+     * ID of the action
+     * @type {string}
+     * @memberof ActionExecuteCount
+     */
+    'actionId': string;
+    /**
+     * ID of the previous action triggered before this action
+     * @type {string}
+     * @memberof ActionExecuteCount
+     */
+    'previousActionId': string;
+    /**
+     * Number of time this action is sent out to contacts
+     * @type {number}
+     * @memberof ActionExecuteCount
+     */
+    'count': number;
+}
+/**
+ * 
+ * @export
  * @interface ActionFireRecord
  */
 export interface ActionFireRecord {
@@ -299,6 +324,12 @@ export interface ActionFireRecord {
      * @memberof ActionFireRecord
      */
     'isFinal'?: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof ActionFireRecord
+     */
+    'previousActionId'?: string;
 }
 
 export const ActionFireRecordStatusEnum = {
@@ -1485,6 +1516,19 @@ export interface BotTriggersPatchRequest {
      * @memberof BotTriggersPatchRequest
      */
     'botTriggers': Array<BotTrigger>;
+}
+/**
+ * 
+ * @export
+ * @interface BotsAnalyticsGet200Response
+ */
+export interface BotsAnalyticsGet200Response {
+    /**
+     * 
+     * @type {Array<ActionExecuteCount>}
+     * @memberof BotsAnalyticsGet200Response
+     */
+    'counts': Array<ActionExecuteCount>;
 }
 /**
  * 
@@ -2690,6 +2734,129 @@ export class ActionsApi extends BaseAPI {
      */
     public actionsGptGenerate(requestParameters: ActionsApiActionsGptGenerateRequest = {}, options?: AxiosRequestConfig) {
         return ActionsApiFp(this.configuration).actionsGptGenerate(requestParameters.actionsGptGenerateRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+/**
+ * BotAnalyticsApi - axios parameter creator
+ * @export
+ */
+export const BotAnalyticsApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * This endpoint fetches analytics for a bot based on provided botId parameters
+         * @summary Get analytics for a bot
+         * @param {string} botId The ID of the bot
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        botsAnalyticsGet: async (botId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'botId' is not null or undefined
+            assertParamExists('botsAnalyticsGet', 'botId', botId)
+            const localVarPath = `/bot/analytics/{botId}`
+                .replace(`{${"botId"}}`, encodeURIComponent(String(botId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["TEMPLATES_READ"], configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * BotAnalyticsApi - functional programming interface
+ * @export
+ */
+export const BotAnalyticsApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = BotAnalyticsApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * This endpoint fetches analytics for a bot based on provided botId parameters
+         * @summary Get analytics for a bot
+         * @param {string} botId The ID of the bot
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async botsAnalyticsGet(botId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BotsAnalyticsGet200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.botsAnalyticsGet(botId, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+    }
+};
+
+/**
+ * BotAnalyticsApi - factory interface
+ * @export
+ */
+export const BotAnalyticsApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = BotAnalyticsApiFp(configuration)
+    return {
+        /**
+         * This endpoint fetches analytics for a bot based on provided botId parameters
+         * @summary Get analytics for a bot
+         * @param {BotAnalyticsApiBotsAnalyticsGetRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        botsAnalyticsGet(requestParameters: BotAnalyticsApiBotsAnalyticsGetRequest, options?: AxiosRequestConfig): AxiosPromise<BotsAnalyticsGet200Response> {
+            return localVarFp.botsAnalyticsGet(requestParameters.botId, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * Request parameters for botsAnalyticsGet operation in BotAnalyticsApi.
+ * @export
+ * @interface BotAnalyticsApiBotsAnalyticsGetRequest
+ */
+export interface BotAnalyticsApiBotsAnalyticsGetRequest {
+    /**
+     * The ID of the bot
+     * @type {string}
+     * @memberof BotAnalyticsApiBotsAnalyticsGet
+     */
+    readonly botId: string
+}
+
+/**
+ * BotAnalyticsApi - object-oriented interface
+ * @export
+ * @class BotAnalyticsApi
+ * @extends {BaseAPI}
+ */
+export class BotAnalyticsApi extends BaseAPI {
+    /**
+     * This endpoint fetches analytics for a bot based on provided botId parameters
+     * @summary Get analytics for a bot
+     * @param {BotAnalyticsApiBotsAnalyticsGetRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof BotAnalyticsApi
+     */
+    public botsAnalyticsGet(requestParameters: BotAnalyticsApiBotsAnalyticsGetRequest, options?: AxiosRequestConfig) {
+        return BotAnalyticsApiFp(this.configuration).botsAnalyticsGet(requestParameters.botId, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
