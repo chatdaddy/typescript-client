@@ -112,7 +112,7 @@ function setFlattenedQueryParams(urlSearchParams: URLSearchParams, parameter: an
  * @export
  */
 export function setSearchParams(url: URL, obj: any) {
-	url.search = stringify(obj)
+	url.search = stringify(obj, { arrayFormat: 'brackets' })
 }
 
 /**
