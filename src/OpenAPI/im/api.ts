@@ -4334,6 +4334,19 @@ export type ProductSyncStatus = typeof ProductSyncStatus[keyof typeof ProductSyn
 /**
  * 
  * @export
+ * @interface ProfileMessengerPostRequest
+ */
+export interface ProfileMessengerPostRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof ProfileMessengerPostRequest
+     */
+    'pageId': string;
+}
+/**
+ * 
+ * @export
  * @interface QuotedMessage
  */
 export interface QuotedMessage {
@@ -11996,20 +12009,16 @@ export const ProfileValidationApiAxiosParamCreator = function (configuration?: C
         /**
          * 
          * @summary Configure various profile settings
-         * @param {string} verifyToken 
-         * @param {'webhook' | 'profile' | 'personas' | 'nlp' | 'domains' | 'private-reply' | 'all'} mode 
          * @param {string} accountId 
+         * @param {ProfileMessengerPostRequest} [profileMessengerPostRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        profileMessengerPost: async (verifyToken: string, mode: 'webhook' | 'profile' | 'personas' | 'nlp' | 'domains' | 'private-reply' | 'all', accountId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'verifyToken' is not null or undefined
-            assertParamExists('profileMessengerPost', 'verifyToken', verifyToken)
-            // verify required parameter 'mode' is not null or undefined
-            assertParamExists('profileMessengerPost', 'mode', mode)
+        profileMessengerPost: async (accountId: string, profileMessengerPostRequest?: ProfileMessengerPostRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'accountId' is not null or undefined
             assertParamExists('profileMessengerPost', 'accountId', accountId)
-            const localVarPath = `/messenger/profile-validation`;
+            const localVarPath = `/messenger/profile-validation/{accountId}`
+                .replace(`{${"accountId"}}`, encodeURIComponent(String(accountId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -12021,23 +12030,14 @@ export const ProfileValidationApiAxiosParamCreator = function (configuration?: C
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
-            if (verifyToken !== undefined) {
-                localVarQueryParameter['verify_token'] = verifyToken;
-            }
-
-            if (mode !== undefined) {
-                localVarQueryParameter['mode'] = mode;
-            }
-
-            if (accountId !== undefined) {
-                localVarQueryParameter['accountId'] = accountId;
-            }
-
 
     
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(profileMessengerPostRequest, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -12057,14 +12057,13 @@ export const ProfileValidationApiFp = function(configuration?: Configuration) {
         /**
          * 
          * @summary Configure various profile settings
-         * @param {string} verifyToken 
-         * @param {'webhook' | 'profile' | 'personas' | 'nlp' | 'domains' | 'private-reply' | 'all'} mode 
          * @param {string} accountId 
+         * @param {ProfileMessengerPostRequest} [profileMessengerPostRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async profileMessengerPost(verifyToken: string, mode: 'webhook' | 'profile' | 'personas' | 'nlp' | 'domains' | 'private-reply' | 'all', accountId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.profileMessengerPost(verifyToken, mode, accountId, options);
+        async profileMessengerPost(accountId: string, profileMessengerPostRequest?: ProfileMessengerPostRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.profileMessengerPost(accountId, profileMessengerPostRequest, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
     }
@@ -12085,7 +12084,7 @@ export const ProfileValidationApiFactory = function (configuration?: Configurati
          * @throws {RequiredError}
          */
         profileMessengerPost(requestParameters: ProfileValidationApiProfileMessengerPostRequest, options?: AxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.profileMessengerPost(requestParameters.verifyToken, requestParameters.mode, requestParameters.accountId, options).then((request) => request(axios, basePath));
+            return localVarFp.profileMessengerPost(requestParameters.accountId, requestParameters.profileMessengerPostRequest, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -12101,21 +12100,14 @@ export interface ProfileValidationApiProfileMessengerPostRequest {
      * @type {string}
      * @memberof ProfileValidationApiProfileMessengerPost
      */
-    readonly verifyToken: string
-
-    /**
-     * 
-     * @type {'webhook' | 'profile' | 'personas' | 'nlp' | 'domains' | 'private-reply' | 'all'}
-     * @memberof ProfileValidationApiProfileMessengerPost
-     */
-    readonly mode: 'webhook' | 'profile' | 'personas' | 'nlp' | 'domains' | 'private-reply' | 'all'
-
-    /**
-     * 
-     * @type {string}
-     * @memberof ProfileValidationApiProfileMessengerPost
-     */
     readonly accountId: string
+
+    /**
+     * 
+     * @type {ProfileMessengerPostRequest}
+     * @memberof ProfileValidationApiProfileMessengerPost
+     */
+    readonly profileMessengerPostRequest?: ProfileMessengerPostRequest
 }
 
 /**
@@ -12134,7 +12126,7 @@ export class ProfileValidationApi extends BaseAPI {
      * @memberof ProfileValidationApi
      */
     public profileMessengerPost(requestParameters: ProfileValidationApiProfileMessengerPostRequest, options?: AxiosRequestConfig) {
-        return ProfileValidationApiFp(this.configuration).profileMessengerPost(requestParameters.verifyToken, requestParameters.mode, requestParameters.accountId, options).then((request) => request(this.axios, this.basePath));
+        return ProfileValidationApiFp(this.configuration).profileMessengerPost(requestParameters.accountId, requestParameters.profileMessengerPostRequest, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
