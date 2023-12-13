@@ -5262,12 +5262,11 @@ export const FormsApiAxiosParamCreator = function (configuration?: Configuration
          * @param {string} actionId 
          * @param {number} [count] 
          * @param {string} [before] 
-         * @param {string} [q] 
          * @param {Array<string>} [ids] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        formSubmissionsGet: async (botId: string, actionId: string, count?: number, before?: string, q?: string, ids?: Array<string>, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        formSubmissionsGet: async (botId: string, actionId: string, count?: number, before?: string, ids?: Array<string>, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'botId' is not null or undefined
             assertParamExists('formSubmissionsGet', 'botId', botId)
             // verify required parameter 'actionId' is not null or undefined
@@ -5296,10 +5295,6 @@ export const FormsApiAxiosParamCreator = function (configuration?: Configuration
 
             if (before !== undefined) {
                 localVarQueryParameter['before'] = before;
-            }
-
-            if (q !== undefined) {
-                localVarQueryParameter['q'] = q;
             }
 
             if (ids) {
@@ -5395,13 +5390,12 @@ export const FormsApiFp = function(configuration?: Configuration) {
          * @param {string} actionId 
          * @param {number} [count] 
          * @param {string} [before] 
-         * @param {string} [q] 
          * @param {Array<string>} [ids] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async formSubmissionsGet(botId: string, actionId: string, count?: number, before?: string, q?: string, ids?: Array<string>, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<FormSubmissionsGet200Response>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.formSubmissionsGet(botId, actionId, count, before, q, ids, options);
+        async formSubmissionsGet(botId: string, actionId: string, count?: number, before?: string, ids?: Array<string>, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<FormSubmissionsGet200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.formSubmissionsGet(botId, actionId, count, before, ids, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -5454,7 +5448,7 @@ export const FormsApiFactory = function (configuration?: Configuration, basePath
          * @throws {RequiredError}
          */
         formSubmissionsGet(requestParameters: FormsApiFormSubmissionsGetRequest, options?: AxiosRequestConfig): AxiosPromise<FormSubmissionsGet200Response> {
-            return localVarFp.formSubmissionsGet(requestParameters.botId, requestParameters.actionId, requestParameters.count, requestParameters.before, requestParameters.q, requestParameters.ids, options).then((request) => request(axios, basePath));
+            return localVarFp.formSubmissionsGet(requestParameters.botId, requestParameters.actionId, requestParameters.count, requestParameters.before, requestParameters.ids, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -5540,13 +5534,6 @@ export interface FormsApiFormSubmissionsGetRequest {
 
     /**
      * 
-     * @type {string}
-     * @memberof FormsApiFormSubmissionsGet
-     */
-    readonly q?: string
-
-    /**
-     * 
      * @type {Array<string>}
      * @memberof FormsApiFormSubmissionsGet
      */
@@ -5614,7 +5601,7 @@ export class FormsApi extends BaseAPI {
      * @memberof FormsApi
      */
     public formSubmissionsGet(requestParameters: FormsApiFormSubmissionsGetRequest, options?: AxiosRequestConfig) {
-        return FormsApiFp(this.configuration).formSubmissionsGet(requestParameters.botId, requestParameters.actionId, requestParameters.count, requestParameters.before, requestParameters.q, requestParameters.ids, options).then((request) => request(this.axios, this.basePath));
+        return FormsApiFp(this.configuration).formSubmissionsGet(requestParameters.botId, requestParameters.actionId, requestParameters.count, requestParameters.before, requestParameters.ids, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -6053,12 +6040,13 @@ export const StoreApiAxiosParamCreator = function (configuration?: Configuration
          * @summary Get options in the store
          * @param {number} [count] 
          * @param {string} [before] 
+         * @param {string} [q] 
          * @param {string} [language] 
          * @param {Array<string>} [categoryKeyValue] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        storeGet: async (count?: number, before?: string, language?: string, categoryKeyValue?: Array<string>, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        storeGet: async (count?: number, before?: string, q?: string, language?: string, categoryKeyValue?: Array<string>, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/store`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -6077,6 +6065,10 @@ export const StoreApiAxiosParamCreator = function (configuration?: Configuration
 
             if (before !== undefined) {
                 localVarQueryParameter['before'] = before;
+            }
+
+            if (q !== undefined) {
+                localVarQueryParameter['q'] = q;
             }
 
             if (language !== undefined) {
@@ -6124,13 +6116,14 @@ export const StoreApiFp = function(configuration?: Configuration) {
          * @summary Get options in the store
          * @param {number} [count] 
          * @param {string} [before] 
+         * @param {string} [q] 
          * @param {string} [language] 
          * @param {Array<string>} [categoryKeyValue] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async storeGet(count?: number, before?: string, language?: string, categoryKeyValue?: Array<string>, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<StoreGet200Response>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.storeGet(count, before, language, categoryKeyValue, options);
+        async storeGet(count?: number, before?: string, q?: string, language?: string, categoryKeyValue?: Array<string>, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<StoreGet200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.storeGet(count, before, q, language, categoryKeyValue, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
     }
@@ -6161,7 +6154,7 @@ export const StoreApiFactory = function (configuration?: Configuration, basePath
          * @throws {RequiredError}
          */
         storeGet(requestParameters: StoreApiStoreGetRequest = {}, options?: AxiosRequestConfig): AxiosPromise<StoreGet200Response> {
-            return localVarFp.storeGet(requestParameters.count, requestParameters.before, requestParameters.language, requestParameters.categoryKeyValue, options).then((request) => request(axios, basePath));
+            return localVarFp.storeGet(requestParameters.count, requestParameters.before, requestParameters.q, requestParameters.language, requestParameters.categoryKeyValue, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -6199,6 +6192,13 @@ export interface StoreApiStoreGetRequest {
      * @memberof StoreApiStoreGet
      */
     readonly before?: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof StoreApiStoreGet
+     */
+    readonly q?: string
 
     /**
      * 
@@ -6243,7 +6243,7 @@ export class StoreApi extends BaseAPI {
      * @memberof StoreApi
      */
     public storeGet(requestParameters: StoreApiStoreGetRequest = {}, options?: AxiosRequestConfig) {
-        return StoreApiFp(this.configuration).storeGet(requestParameters.count, requestParameters.before, requestParameters.language, requestParameters.categoryKeyValue, options).then((request) => request(this.axios, this.basePath));
+        return StoreApiFp(this.configuration).storeGet(requestParameters.count, requestParameters.before, requestParameters.q, requestParameters.language, requestParameters.categoryKeyValue, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
