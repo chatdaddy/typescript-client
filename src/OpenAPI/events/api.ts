@@ -894,6 +894,12 @@ export interface BotInsertDataActionsInner {
      * @type {string}
      * @memberof BotInsertDataActionsInner
      */
+    'formActionId'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof BotInsertDataActionsInner
+     */
     'botId'?: string;
     /**
      * Name of the template
@@ -901,6 +907,12 @@ export interface BotInsertDataActionsInner {
      * @memberof BotInsertDataActionsInner
      */
     'name': string;
+    /**
+     * If true, this action is treated as a form
+     * @type {boolean}
+     * @memberof BotInsertDataActionsInner
+     */
+    'isForm'?: boolean;
     /**
      * 
      * @type {BotInsertDataActionsInnerAllOf1Message}
@@ -943,6 +955,12 @@ export interface BotInsertDataActionsInner {
      * @memberof BotInsertDataActionsInner
      */
     'remove'?: boolean;
+    /**
+     * 
+     * @type {BotInsertDataActionsInnerAllOf1FormRef}
+     * @memberof BotInsertDataActionsInner
+     */
+    'formRef'?: BotInsertDataActionsInnerAllOf1FormRef;
 }
 /**
  * 
@@ -980,6 +998,12 @@ export interface BotInsertDataActionsInnerAllOf1 {
      * @type {string}
      * @memberof BotInsertDataActionsInnerAllOf1
      */
+    'formActionId'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof BotInsertDataActionsInnerAllOf1
+     */
     'botId'?: string;
     /**
      * Name of the template
@@ -987,6 +1011,12 @@ export interface BotInsertDataActionsInnerAllOf1 {
      * @memberof BotInsertDataActionsInnerAllOf1
      */
     'name'?: string;
+    /**
+     * If true, this action is treated as a form
+     * @type {boolean}
+     * @memberof BotInsertDataActionsInnerAllOf1
+     */
+    'isForm'?: boolean;
     /**
      * 
      * @type {BotInsertDataActionsInnerAllOf1Message}
@@ -1029,6 +1059,50 @@ export interface BotInsertDataActionsInnerAllOf1 {
      * @memberof BotInsertDataActionsInnerAllOf1
      */
     'remove'?: boolean;
+    /**
+     * 
+     * @type {BotInsertDataActionsInnerAllOf1FormRef}
+     * @memberof BotInsertDataActionsInnerAllOf1
+     */
+    'formRef'?: BotInsertDataActionsInnerAllOf1FormRef;
+}
+/**
+ * 
+ * @export
+ * @interface BotInsertDataActionsInnerAllOf1FormRef
+ */
+export interface BotInsertDataActionsInnerAllOf1FormRef {
+    /**
+     * 
+     * @type {BotInsertDataActionsInnerAllOf1MessageButtonsInnerNextActionDefaultActionAllOf}
+     * @memberof BotInsertDataActionsInnerAllOf1FormRef
+     */
+    'target': BotInsertDataActionsInnerAllOf1MessageButtonsInnerNextActionDefaultActionAllOf;
+    /**
+     * 
+     * @type {BotInsertDataActionsInnerAllOf1FormRefActions}
+     * @memberof BotInsertDataActionsInnerAllOf1FormRef
+     */
+    'actions'?: BotInsertDataActionsInnerAllOf1FormRefActions;
+}
+/**
+ * 
+ * @export
+ * @interface BotInsertDataActionsInnerAllOf1FormRefActions
+ */
+export interface BotInsertDataActionsInnerAllOf1FormRefActions {
+    /**
+     * 
+     * @type {BotInsertDataActionsInnerAllOf1MessageButtonsInnerNextAction}
+     * @memberof BotInsertDataActionsInnerAllOf1FormRefActions
+     */
+    'onSubmit'?: BotInsertDataActionsInnerAllOf1MessageButtonsInnerNextAction;
+    /**
+     * 
+     * @type {BotInsertDataActionsInnerAllOf1MessageButtonsInnerNextAction}
+     * @memberof BotInsertDataActionsInnerAllOf1FormRefActions
+     */
+    'onAbandon'?: BotInsertDataActionsInnerAllOf1MessageButtonsInnerNextAction;
 }
 /**
  * 
