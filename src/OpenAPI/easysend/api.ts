@@ -1638,6 +1638,67 @@ export interface PostTracking {
 /**
  * 
  * @export
+ * @interface ProductAccountSync
+ */
+export interface ProductAccountSync {
+    /**
+     * Specify IM account to use
+     * @type {string}
+     * @memberof ProductAccountSync
+     */
+    'accountId': string | null;
+    /**
+     * 
+     * @type {ProductSyncStatus}
+     * @memberof ProductAccountSync
+     */
+    'ProductSyncStatus'?: ProductSyncStatus;
+    /**
+     * An ISO formatted timestamp
+     * @type {string}
+     * @memberof ProductAccountSync
+     */
+    'lastSyncDate': string;
+    /**
+     * Id of the team member that syncs the product from chatdaddy->WhatsApp
+     * @type {string}
+     * @memberof ProductAccountSync
+     */
+    'syncedBy': string;
+}
+
+
+/**
+ * 
+ * @export
+ * @interface ProductImageUrl
+ */
+export interface ProductImageUrl {
+    /**
+     * 
+     * @type {string}
+     * @memberof ProductImageUrl
+     */
+    'url': string;
+}
+/**
+ * 
+ * @export
+ * @enum {string}
+ */
+
+export const ProductSyncStatus = {
+    Synced: 'synced',
+    Failed: 'failed',
+    Syncing: 'syncing'
+} as const;
+
+export type ProductSyncStatus = typeof ProductSyncStatus[keyof typeof ProductSyncStatus];
+
+
+/**
+ * 
+ * @export
  * @interface ScheduleOptions
  */
 export interface ScheduleOptions {
@@ -2010,6 +2071,325 @@ export interface ShopMetadataPostRequest {
      * @memberof ShopMetadataPostRequest
      */
     'shopMetadata'?: Array<ShopMetadataModel>;
+}
+/**
+ * Product model for Waha Shop
+ * @export
+ * @interface ShopProduct
+ */
+export interface ShopProduct {
+    /**
+     * 
+     * @type {string}
+     * @memberof ShopProduct
+     */
+    'name': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ShopProduct
+     */
+    'retailerId'?: string | null;
+    /**
+     * 
+     * @type {Array<ProductAccountSync>}
+     * @memberof ShopProduct
+     */
+    'accountSyncStatuses'?: Array<ProductAccountSync>;
+    /**
+     * 
+     * @type {ShopProductCategory}
+     * @memberof ShopProduct
+     */
+    'category'?: ShopProductCategory;
+    /**
+     * 
+     * @type {string}
+     * @memberof ShopProduct
+     */
+    'description': string;
+    /**
+     * 
+     * @type {number}
+     * @memberof ShopProduct
+     */
+    'price': number | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof ShopProduct
+     */
+    'currency'?: string | null;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof ShopProduct
+     */
+    'isHidden': boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof ShopProduct
+     */
+    'id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ShopProduct
+     */
+    'teamId': string;
+    /**
+     * 
+     * @type {Array<ProductImageUrl>}
+     * @memberof ShopProduct
+     */
+    'imageUrls': Array<ProductImageUrl>;
+    /**
+     * An ISO formatted timestamp
+     * @type {string}
+     * @memberof ShopProduct
+     */
+    'createdAt': string;
+    /**
+     * An ISO formatted timestamp
+     * @type {string}
+     * @memberof ShopProduct
+     */
+    'updatedAt': string;
+}
+/**
+ * 
+ * @export
+ * @interface ShopProductCategoriesGet200Response
+ */
+export interface ShopProductCategoriesGet200Response {
+    /**
+     * 
+     * @type {Array<ShopProductCategory>}
+     * @memberof ShopProductCategoriesGet200Response
+     */
+    'categories': Array<ShopProductCategory>;
+}
+/**
+ * 
+ * @export
+ * @interface ShopProductCategoriesPostRequest
+ */
+export interface ShopProductCategoriesPostRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof ShopProductCategoriesPostRequest
+     */
+    'name': string;
+}
+/**
+ * 
+ * @export
+ * @interface ShopProductCategory
+ */
+export interface ShopProductCategory {
+    /**
+     * 
+     * @type {string}
+     * @memberof ShopProductCategory
+     */
+    'id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ShopProductCategory
+     */
+    'name': string;
+    /**
+     * 
+     * @type {number}
+     * @memberof ShopProductCategory
+     */
+    'productCount': number;
+    /**
+     * 
+     * @type {string}
+     * @memberof ShopProductCategory
+     */
+    'teamId': string;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof ShopProductCategory
+     */
+    'productId'?: Array<string> | null;
+    /**
+     * 
+     * @type {Array<ShopProduct>}
+     * @memberof ShopProductCategory
+     */
+    'products'?: Array<ShopProduct> | null;
+}
+/**
+ * 
+ * @export
+ * @interface ShopProductCreate
+ */
+export interface ShopProductCreate {
+    /**
+     * 
+     * @type {Array<ShopProductCreateItem>}
+     * @memberof ShopProductCreate
+     */
+    'products': Array<ShopProductCreateItem>;
+}
+/**
+ * 
+ * @export
+ * @interface ShopProductCreateItem
+ */
+export interface ShopProductCreateItem {
+    [key: string]: any;
+
+    /**
+     * 
+     * @type {string}
+     * @memberof ShopProductCreateItem
+     */
+    'name': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ShopProductCreateItem
+     */
+    'retailerId'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof ShopProductCreateItem
+     */
+    'url'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ShopProductCreateItem
+     */
+    'description': string;
+    /**
+     * 
+     * @type {number}
+     * @memberof ShopProductCreateItem
+     */
+    'price': number;
+    /**
+     * 
+     * @type {string}
+     * @memberof ShopProductCreateItem
+     */
+    'currency': string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof ShopProductCreateItem
+     */
+    'isHidden': boolean;
+    /**
+     * 
+     * @type {ShopProductCategory}
+     * @memberof ShopProductCreateItem
+     */
+    'category'?: ShopProductCategory;
+    /**
+     * 
+     * @type {Array<ProductImageUrl>}
+     * @memberof ShopProductCreateItem
+     */
+    'imageUrls': Array<ProductImageUrl>;
+}
+/**
+ * 
+ * @export
+ * @interface ShopProductUpdate
+ */
+export interface ShopProductUpdate {
+    [key: string]: any;
+
+    /**
+     * 
+     * @type {string}
+     * @memberof ShopProductUpdate
+     */
+    'name'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ShopProductUpdate
+     */
+    'description'?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof ShopProductUpdate
+     */
+    'price'?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof ShopProductUpdate
+     */
+    'currency'?: string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof ShopProductUpdate
+     */
+    'isHidden'?: boolean;
+    /**
+     * 
+     * @type {ShopProductCategory}
+     * @memberof ShopProductUpdate
+     */
+    'category'?: ShopProductCategory;
+    /**
+     * 
+     * @type {Array<ProductImageUrl>}
+     * @memberof ShopProductUpdate
+     */
+    'imageUrls'?: Array<ProductImageUrl>;
+}
+/**
+ * 
+ * @export
+ * @interface ShopProductsGet200Response
+ */
+export interface ShopProductsGet200Response {
+    /**
+     * 
+     * @type {Array<ShopProduct>}
+     * @memberof ShopProductsGet200Response
+     */
+    'items': Array<ShopProduct>;
+    /**
+     * Cursor to use to fetch next page of results
+     * @type {string}
+     * @memberof ShopProductsGet200Response
+     */
+    'nextPageCursor'?: string;
+    /**
+     * total products present with these filters. Only returned if returnTotalCount is true
+     * @type {number}
+     * @memberof ShopProductsGet200Response
+     */
+    'totalCount'?: number;
+}
+/**
+ * 
+ * @export
+ * @interface ShopProductsPost200Response
+ */
+export interface ShopProductsPost200Response {
+    /**
+     * 
+     * @type {Array<ShopProduct>}
+     * @memberof ShopProductsPost200Response
+     */
+    'items': Array<ShopProduct>;
 }
 /**
  * 
@@ -3988,6 +4368,140 @@ export class PaymentSystemsApi extends BaseAPI {
 
 
 /**
+ * ProductApi - axios parameter creator
+ * @export
+ */
+export const ProductApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * Trigger sync of the specified products on ChatDaddy with WhatsApp
+         * @param {string} accountId Account ID to sync products from/to
+         * @param {string} id Product id to sync with WhatsApp.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        shopProductsSync: async (accountId: string, id: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'accountId' is not null or undefined
+            assertParamExists('shopProductsSync', 'accountId', accountId)
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('shopProductsSync', 'id', id)
+            const localVarPath = `/shop-products/sync/{id}`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["PRODUCTS_UPDATE"], configuration)
+
+            if (accountId !== undefined) {
+                localVarQueryParameter['accountId'] = accountId;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * ProductApi - functional programming interface
+ * @export
+ */
+export const ProductApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = ProductApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * Trigger sync of the specified products on ChatDaddy with WhatsApp
+         * @param {string} accountId Account ID to sync products from/to
+         * @param {string} id Product id to sync with WhatsApp.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async shopProductsSync(accountId: string, id: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SuccessResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.shopProductsSync(accountId, id, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+    }
+};
+
+/**
+ * ProductApi - factory interface
+ * @export
+ */
+export const ProductApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = ProductApiFp(configuration)
+    return {
+        /**
+         * Trigger sync of the specified products on ChatDaddy with WhatsApp
+         * @param {ProductApiShopProductsSyncRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        shopProductsSync(requestParameters: ProductApiShopProductsSyncRequest, options?: AxiosRequestConfig): AxiosPromise<SuccessResponse> {
+            return localVarFp.shopProductsSync(requestParameters.accountId, requestParameters.id, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * Request parameters for shopProductsSync operation in ProductApi.
+ * @export
+ * @interface ProductApiShopProductsSyncRequest
+ */
+export interface ProductApiShopProductsSyncRequest {
+    /**
+     * Account ID to sync products from/to
+     * @type {string}
+     * @memberof ProductApiShopProductsSync
+     */
+    readonly accountId: string
+
+    /**
+     * Product id to sync with WhatsApp.
+     * @type {string}
+     * @memberof ProductApiShopProductsSync
+     */
+    readonly id: string
+}
+
+/**
+ * ProductApi - object-oriented interface
+ * @export
+ * @class ProductApi
+ * @extends {BaseAPI}
+ */
+export class ProductApi extends BaseAPI {
+    /**
+     * Trigger sync of the specified products on ChatDaddy with WhatsApp
+     * @param {ProductApiShopProductsSyncRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ProductApi
+     */
+    public shopProductsSync(requestParameters: ProductApiShopProductsSyncRequest, options?: AxiosRequestConfig) {
+        return ProductApiFp(this.configuration).shopProductsSync(requestParameters.accountId, requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+/**
  * ServicesApi - axios parameter creator
  * @export
  */
@@ -4633,6 +5147,887 @@ export class ShopMetadataApi extends BaseAPI {
      */
     public shopMetadataPost(requestParameters: ShopMetadataApiShopMetadataPostRequest = {}, options?: AxiosRequestConfig) {
         return ShopMetadataApiFp(this.configuration).shopMetadataPost(requestParameters.shopMetadataPostRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+/**
+ * ShopProductCategoriesApi - axios parameter creator
+ * @export
+ */
+export const ShopProductCategoriesApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @param {string} id Id of the category to delete
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        shopProductCategoriesDelete: async (id: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('shopProductCategoriesDelete', 'id', id)
+            const localVarPath = `/product-categories/{id}`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["PRODUCTS_DELETE"], configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Get all the product categories
+         * @param {Array<string>} [id] Ids of the category to fetch
+         * @param {boolean} [allProduct] If true then api return details of all products associated with the category
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        shopProductCategoriesGet: async (id?: Array<string>, allProduct?: boolean, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/product-categories`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["PRODUCTS_GET"], configuration)
+
+            if (id) {
+                localVarQueryParameter['id'] = id;
+            }
+
+            if (allProduct !== undefined) {
+                localVarQueryParameter['allProduct'] = allProduct;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Create a category for products
+         * @param {ShopProductCategoriesPostRequest} [shopProductCategoriesPostRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        shopProductCategoriesPost: async (shopProductCategoriesPostRequest?: ShopProductCategoriesPostRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/product-categories`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["PRODUCTS_CREATE"], configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(shopProductCategoriesPostRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {string} id Id of the category to delete
+         * @param {ShopProductCategoriesPostRequest} [shopProductCategoriesPostRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        shopProductCategoriesUpdate: async (id: string, shopProductCategoriesPostRequest?: ShopProductCategoriesPostRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('shopProductCategoriesUpdate', 'id', id)
+            const localVarPath = `/product-categories/{id}`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PATCH', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["PRODUCTS_UPDATE"], configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(shopProductCategoriesPostRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * ShopProductCategoriesApi - functional programming interface
+ * @export
+ */
+export const ShopProductCategoriesApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = ShopProductCategoriesApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * 
+         * @param {string} id Id of the category to delete
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async shopProductCategoriesDelete(id: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SuccessResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.shopProductCategoriesDelete(id, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary Get all the product categories
+         * @param {Array<string>} [id] Ids of the category to fetch
+         * @param {boolean} [allProduct] If true then api return details of all products associated with the category
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async shopProductCategoriesGet(id?: Array<string>, allProduct?: boolean, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ShopProductCategoriesGet200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.shopProductCategoriesGet(id, allProduct, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary Create a category for products
+         * @param {ShopProductCategoriesPostRequest} [shopProductCategoriesPostRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async shopProductCategoriesPost(shopProductCategoriesPostRequest?: ShopProductCategoriesPostRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ShopProductCategory>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.shopProductCategoriesPost(shopProductCategoriesPostRequest, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @param {string} id Id of the category to delete
+         * @param {ShopProductCategoriesPostRequest} [shopProductCategoriesPostRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async shopProductCategoriesUpdate(id: string, shopProductCategoriesPostRequest?: ShopProductCategoriesPostRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ShopProductCategory>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.shopProductCategoriesUpdate(id, shopProductCategoriesPostRequest, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+    }
+};
+
+/**
+ * ShopProductCategoriesApi - factory interface
+ * @export
+ */
+export const ShopProductCategoriesApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = ShopProductCategoriesApiFp(configuration)
+    return {
+        /**
+         * 
+         * @param {ShopProductCategoriesApiShopProductCategoriesDeleteRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        shopProductCategoriesDelete(requestParameters: ShopProductCategoriesApiShopProductCategoriesDeleteRequest, options?: AxiosRequestConfig): AxiosPromise<SuccessResponse> {
+            return localVarFp.shopProductCategoriesDelete(requestParameters.id, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Get all the product categories
+         * @param {ShopProductCategoriesApiShopProductCategoriesGetRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        shopProductCategoriesGet(requestParameters: ShopProductCategoriesApiShopProductCategoriesGetRequest = {}, options?: AxiosRequestConfig): AxiosPromise<ShopProductCategoriesGet200Response> {
+            return localVarFp.shopProductCategoriesGet(requestParameters.id, requestParameters.allProduct, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Create a category for products
+         * @param {ShopProductCategoriesApiShopProductCategoriesPostRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        shopProductCategoriesPost(requestParameters: ShopProductCategoriesApiShopProductCategoriesPostRequest = {}, options?: AxiosRequestConfig): AxiosPromise<ShopProductCategory> {
+            return localVarFp.shopProductCategoriesPost(requestParameters.shopProductCategoriesPostRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {ShopProductCategoriesApiShopProductCategoriesUpdateRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        shopProductCategoriesUpdate(requestParameters: ShopProductCategoriesApiShopProductCategoriesUpdateRequest, options?: AxiosRequestConfig): AxiosPromise<ShopProductCategory> {
+            return localVarFp.shopProductCategoriesUpdate(requestParameters.id, requestParameters.shopProductCategoriesPostRequest, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * Request parameters for shopProductCategoriesDelete operation in ShopProductCategoriesApi.
+ * @export
+ * @interface ShopProductCategoriesApiShopProductCategoriesDeleteRequest
+ */
+export interface ShopProductCategoriesApiShopProductCategoriesDeleteRequest {
+    /**
+     * Id of the category to delete
+     * @type {string}
+     * @memberof ShopProductCategoriesApiShopProductCategoriesDelete
+     */
+    readonly id: string
+}
+
+/**
+ * Request parameters for shopProductCategoriesGet operation in ShopProductCategoriesApi.
+ * @export
+ * @interface ShopProductCategoriesApiShopProductCategoriesGetRequest
+ */
+export interface ShopProductCategoriesApiShopProductCategoriesGetRequest {
+    /**
+     * Ids of the category to fetch
+     * @type {Array<string>}
+     * @memberof ShopProductCategoriesApiShopProductCategoriesGet
+     */
+    readonly id?: Array<string>
+
+    /**
+     * If true then api return details of all products associated with the category
+     * @type {boolean}
+     * @memberof ShopProductCategoriesApiShopProductCategoriesGet
+     */
+    readonly allProduct?: boolean
+}
+
+/**
+ * Request parameters for shopProductCategoriesPost operation in ShopProductCategoriesApi.
+ * @export
+ * @interface ShopProductCategoriesApiShopProductCategoriesPostRequest
+ */
+export interface ShopProductCategoriesApiShopProductCategoriesPostRequest {
+    /**
+     * 
+     * @type {ShopProductCategoriesPostRequest}
+     * @memberof ShopProductCategoriesApiShopProductCategoriesPost
+     */
+    readonly shopProductCategoriesPostRequest?: ShopProductCategoriesPostRequest
+}
+
+/**
+ * Request parameters for shopProductCategoriesUpdate operation in ShopProductCategoriesApi.
+ * @export
+ * @interface ShopProductCategoriesApiShopProductCategoriesUpdateRequest
+ */
+export interface ShopProductCategoriesApiShopProductCategoriesUpdateRequest {
+    /**
+     * Id of the category to delete
+     * @type {string}
+     * @memberof ShopProductCategoriesApiShopProductCategoriesUpdate
+     */
+    readonly id: string
+
+    /**
+     * 
+     * @type {ShopProductCategoriesPostRequest}
+     * @memberof ShopProductCategoriesApiShopProductCategoriesUpdate
+     */
+    readonly shopProductCategoriesPostRequest?: ShopProductCategoriesPostRequest
+}
+
+/**
+ * ShopProductCategoriesApi - object-oriented interface
+ * @export
+ * @class ShopProductCategoriesApi
+ * @extends {BaseAPI}
+ */
+export class ShopProductCategoriesApi extends BaseAPI {
+    /**
+     * 
+     * @param {ShopProductCategoriesApiShopProductCategoriesDeleteRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ShopProductCategoriesApi
+     */
+    public shopProductCategoriesDelete(requestParameters: ShopProductCategoriesApiShopProductCategoriesDeleteRequest, options?: AxiosRequestConfig) {
+        return ShopProductCategoriesApiFp(this.configuration).shopProductCategoriesDelete(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Get all the product categories
+     * @param {ShopProductCategoriesApiShopProductCategoriesGetRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ShopProductCategoriesApi
+     */
+    public shopProductCategoriesGet(requestParameters: ShopProductCategoriesApiShopProductCategoriesGetRequest = {}, options?: AxiosRequestConfig) {
+        return ShopProductCategoriesApiFp(this.configuration).shopProductCategoriesGet(requestParameters.id, requestParameters.allProduct, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Create a category for products
+     * @param {ShopProductCategoriesApiShopProductCategoriesPostRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ShopProductCategoriesApi
+     */
+    public shopProductCategoriesPost(requestParameters: ShopProductCategoriesApiShopProductCategoriesPostRequest = {}, options?: AxiosRequestConfig) {
+        return ShopProductCategoriesApiFp(this.configuration).shopProductCategoriesPost(requestParameters.shopProductCategoriesPostRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {ShopProductCategoriesApiShopProductCategoriesUpdateRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ShopProductCategoriesApi
+     */
+    public shopProductCategoriesUpdate(requestParameters: ShopProductCategoriesApiShopProductCategoriesUpdateRequest, options?: AxiosRequestConfig) {
+        return ShopProductCategoriesApiFp(this.configuration).shopProductCategoriesUpdate(requestParameters.id, requestParameters.shopProductCategoriesPostRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+/**
+ * ShopProductsApi - axios parameter creator
+ * @export
+ */
+export const ShopProductsApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @summary Delete Products
+         * @param {Array<string>} id Ids of the products that needs to be deleted
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        shopProductDelete: async (id: Array<string>, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('shopProductDelete', 'id', id)
+            const localVarPath = `/shop-products`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["PRODUCTS_DELETE"], configuration)
+
+            if (id) {
+                localVarQueryParameter['id'] = id;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Update shop product
+         * @param {string} id Id of the product to update
+         * @param {{ [key: string]: any; }} [requestBody] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        shopProductUpdate: async (id: string, requestBody?: { [key: string]: any; }, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('shopProductUpdate', 'id', id)
+            const localVarPath = `/shop-products/{id}`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PATCH', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["PRODUCTS_UPDATE"], configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(requestBody, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Get all products for a team
+         * @param {Array<string>} [category] Filter based on categories
+         * @param {Array<string>} [id] 
+         * @param {string} [cursor] 
+         * @param {string} [q] Search items by this string
+         * @param {number} [count] Number of items to return
+         * @param {boolean} [returnTotalCount] 
+         * @param {'name' | 'updatedAt'} [sortBy] 
+         * @param {'ASC' | 'DESC'} [order] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        shopProductsGet: async (category?: Array<string>, id?: Array<string>, cursor?: string, q?: string, count?: number, returnTotalCount?: boolean, sortBy?: 'name' | 'updatedAt', order?: 'ASC' | 'DESC', options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/shop-products`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["PRODUCTS_GET"], configuration)
+
+            if (category) {
+                localVarQueryParameter['category'] = category;
+            }
+
+            if (id) {
+                localVarQueryParameter['id'] = id;
+            }
+
+            if (cursor !== undefined) {
+                localVarQueryParameter['cursor'] = cursor;
+            }
+
+            if (q !== undefined) {
+                localVarQueryParameter['q'] = q;
+            }
+
+            if (count !== undefined) {
+                localVarQueryParameter['count'] = count;
+            }
+
+            if (returnTotalCount !== undefined) {
+                localVarQueryParameter['returnTotalCount'] = returnTotalCount;
+            }
+
+            if (sortBy !== undefined) {
+                localVarQueryParameter['sortBy'] = sortBy;
+            }
+
+            if (order !== undefined) {
+                localVarQueryParameter['order'] = order;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Create a Product
+         * @param {ShopProductCreate} [shopProductCreate] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        shopProductsPost: async (shopProductCreate?: ShopProductCreate, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/shop-products`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["PRODUCTS_CREATE"], configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(shopProductCreate, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * ShopProductsApi - functional programming interface
+ * @export
+ */
+export const ShopProductsApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = ShopProductsApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * 
+         * @summary Delete Products
+         * @param {Array<string>} id Ids of the products that needs to be deleted
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async shopProductDelete(id: Array<string>, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SuccessResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.shopProductDelete(id, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary Update shop product
+         * @param {string} id Id of the product to update
+         * @param {{ [key: string]: any; }} [requestBody] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async shopProductUpdate(id: string, requestBody?: { [key: string]: any; }, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ShopProduct>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.shopProductUpdate(id, requestBody, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary Get all products for a team
+         * @param {Array<string>} [category] Filter based on categories
+         * @param {Array<string>} [id] 
+         * @param {string} [cursor] 
+         * @param {string} [q] Search items by this string
+         * @param {number} [count] Number of items to return
+         * @param {boolean} [returnTotalCount] 
+         * @param {'name' | 'updatedAt'} [sortBy] 
+         * @param {'ASC' | 'DESC'} [order] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async shopProductsGet(category?: Array<string>, id?: Array<string>, cursor?: string, q?: string, count?: number, returnTotalCount?: boolean, sortBy?: 'name' | 'updatedAt', order?: 'ASC' | 'DESC', options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ShopProductsGet200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.shopProductsGet(category, id, cursor, q, count, returnTotalCount, sortBy, order, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary Create a Product
+         * @param {ShopProductCreate} [shopProductCreate] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async shopProductsPost(shopProductCreate?: ShopProductCreate, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ShopProductsPost200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.shopProductsPost(shopProductCreate, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+    }
+};
+
+/**
+ * ShopProductsApi - factory interface
+ * @export
+ */
+export const ShopProductsApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = ShopProductsApiFp(configuration)
+    return {
+        /**
+         * 
+         * @summary Delete Products
+         * @param {ShopProductsApiShopProductDeleteRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        shopProductDelete(requestParameters: ShopProductsApiShopProductDeleteRequest, options?: AxiosRequestConfig): AxiosPromise<SuccessResponse> {
+            return localVarFp.shopProductDelete(requestParameters.id, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Update shop product
+         * @param {ShopProductsApiShopProductUpdateRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        shopProductUpdate(requestParameters: ShopProductsApiShopProductUpdateRequest, options?: AxiosRequestConfig): AxiosPromise<ShopProduct> {
+            return localVarFp.shopProductUpdate(requestParameters.id, requestParameters.requestBody, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Get all products for a team
+         * @param {ShopProductsApiShopProductsGetRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        shopProductsGet(requestParameters: ShopProductsApiShopProductsGetRequest = {}, options?: AxiosRequestConfig): AxiosPromise<ShopProductsGet200Response> {
+            return localVarFp.shopProductsGet(requestParameters.category, requestParameters.id, requestParameters.cursor, requestParameters.q, requestParameters.count, requestParameters.returnTotalCount, requestParameters.sortBy, requestParameters.order, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Create a Product
+         * @param {ShopProductsApiShopProductsPostRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        shopProductsPost(requestParameters: ShopProductsApiShopProductsPostRequest = {}, options?: AxiosRequestConfig): AxiosPromise<ShopProductsPost200Response> {
+            return localVarFp.shopProductsPost(requestParameters.shopProductCreate, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * Request parameters for shopProductDelete operation in ShopProductsApi.
+ * @export
+ * @interface ShopProductsApiShopProductDeleteRequest
+ */
+export interface ShopProductsApiShopProductDeleteRequest {
+    /**
+     * Ids of the products that needs to be deleted
+     * @type {Array<string>}
+     * @memberof ShopProductsApiShopProductDelete
+     */
+    readonly id: Array<string>
+}
+
+/**
+ * Request parameters for shopProductUpdate operation in ShopProductsApi.
+ * @export
+ * @interface ShopProductsApiShopProductUpdateRequest
+ */
+export interface ShopProductsApiShopProductUpdateRequest {
+    /**
+     * Id of the product to update
+     * @type {string}
+     * @memberof ShopProductsApiShopProductUpdate
+     */
+    readonly id: string
+
+    /**
+     * 
+     * @type {{ [key: string]: any; }}
+     * @memberof ShopProductsApiShopProductUpdate
+     */
+    readonly requestBody?: { [key: string]: any; }
+}
+
+/**
+ * Request parameters for shopProductsGet operation in ShopProductsApi.
+ * @export
+ * @interface ShopProductsApiShopProductsGetRequest
+ */
+export interface ShopProductsApiShopProductsGetRequest {
+    /**
+     * Filter based on categories
+     * @type {Array<string>}
+     * @memberof ShopProductsApiShopProductsGet
+     */
+    readonly category?: Array<string>
+
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof ShopProductsApiShopProductsGet
+     */
+    readonly id?: Array<string>
+
+    /**
+     * 
+     * @type {string}
+     * @memberof ShopProductsApiShopProductsGet
+     */
+    readonly cursor?: string
+
+    /**
+     * Search items by this string
+     * @type {string}
+     * @memberof ShopProductsApiShopProductsGet
+     */
+    readonly q?: string
+
+    /**
+     * Number of items to return
+     * @type {number}
+     * @memberof ShopProductsApiShopProductsGet
+     */
+    readonly count?: number
+
+    /**
+     * 
+     * @type {boolean}
+     * @memberof ShopProductsApiShopProductsGet
+     */
+    readonly returnTotalCount?: boolean
+
+    /**
+     * 
+     * @type {'name' | 'updatedAt'}
+     * @memberof ShopProductsApiShopProductsGet
+     */
+    readonly sortBy?: 'name' | 'updatedAt'
+
+    /**
+     * 
+     * @type {'ASC' | 'DESC'}
+     * @memberof ShopProductsApiShopProductsGet
+     */
+    readonly order?: 'ASC' | 'DESC'
+}
+
+/**
+ * Request parameters for shopProductsPost operation in ShopProductsApi.
+ * @export
+ * @interface ShopProductsApiShopProductsPostRequest
+ */
+export interface ShopProductsApiShopProductsPostRequest {
+    /**
+     * 
+     * @type {ShopProductCreate}
+     * @memberof ShopProductsApiShopProductsPost
+     */
+    readonly shopProductCreate?: ShopProductCreate
+}
+
+/**
+ * ShopProductsApi - object-oriented interface
+ * @export
+ * @class ShopProductsApi
+ * @extends {BaseAPI}
+ */
+export class ShopProductsApi extends BaseAPI {
+    /**
+     * 
+     * @summary Delete Products
+     * @param {ShopProductsApiShopProductDeleteRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ShopProductsApi
+     */
+    public shopProductDelete(requestParameters: ShopProductsApiShopProductDeleteRequest, options?: AxiosRequestConfig) {
+        return ShopProductsApiFp(this.configuration).shopProductDelete(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Update shop product
+     * @param {ShopProductsApiShopProductUpdateRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ShopProductsApi
+     */
+    public shopProductUpdate(requestParameters: ShopProductsApiShopProductUpdateRequest, options?: AxiosRequestConfig) {
+        return ShopProductsApiFp(this.configuration).shopProductUpdate(requestParameters.id, requestParameters.requestBody, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Get all products for a team
+     * @param {ShopProductsApiShopProductsGetRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ShopProductsApi
+     */
+    public shopProductsGet(requestParameters: ShopProductsApiShopProductsGetRequest = {}, options?: AxiosRequestConfig) {
+        return ShopProductsApiFp(this.configuration).shopProductsGet(requestParameters.category, requestParameters.id, requestParameters.cursor, requestParameters.q, requestParameters.count, requestParameters.returnTotalCount, requestParameters.sortBy, requestParameters.order, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Create a Product
+     * @param {ShopProductsApiShopProductsPostRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ShopProductsApi
+     */
+    public shopProductsPost(requestParameters: ShopProductsApiShopProductsPostRequest = {}, options?: AxiosRequestConfig) {
+        return ShopProductsApiFp(this.configuration).shopProductsPost(requestParameters.shopProductCreate, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

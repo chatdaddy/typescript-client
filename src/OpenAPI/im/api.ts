@@ -4321,14 +4321,14 @@ export type ProductCategoryPatchRequestProductsInnerTypeEnum = typeof ProductCat
  * @enum {string}
  */
 
-export const ProductSyncStatus = {
+const ProductSyncStatus = {
     Synced: 'synced',
     PendingCreate: 'pendingCreate',
     PendingUpdate: 'pendingUpdate',
     PendingDelete: 'pendingDelete'
 } as const;
 
-export type ProductSyncStatus = typeof ProductSyncStatus[keyof typeof ProductSyncStatus];
+type ProductSyncStatus = typeof ProductSyncStatus[keyof typeof ProductSyncStatus];
 
 
 /**
@@ -10747,7 +10747,7 @@ export class MessagesApi extends BaseAPI {
  * ProductApi - axios parameter creator
  * @export
  */
-export const ProductApiAxiosParamCreator = function (configuration?: Configuration) {
+const ProductApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
          * 
@@ -11090,7 +11090,7 @@ export const ProductApiAxiosParamCreator = function (configuration?: Configurati
  * ProductApi - functional programming interface
  * @export
  */
-export const ProductApiFp = function(configuration?: Configuration) {
+const ProductApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = ProductApiAxiosParamCreator(configuration)
     return {
         /**
@@ -11186,7 +11186,7 @@ export const ProductApiFp = function(configuration?: Configuration) {
  * ProductApi - factory interface
  * @export
  */
-export const ProductApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+const ProductApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
     const localVarFp = ProductApiFp(configuration)
     return {
         /**

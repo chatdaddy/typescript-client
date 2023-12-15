@@ -665,7 +665,7 @@ interface ServiceModel {
  * @export
  * @interface ShopProduct
  */
-export interface ShopProduct {
+interface ShopProduct {
     /**
      * 
      * @type {string}
