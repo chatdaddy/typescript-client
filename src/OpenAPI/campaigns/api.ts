@@ -394,6 +394,12 @@ export interface CampaignMetadata {
      */
     'scheduledAt'?: string | null;
     /**
+     * 
+     * @type {string}
+     * @memberof CampaignMetadata
+     */
+    'nextScheduledAt'?: string | null;
+    /**
      * Should the message be randomized before sending
      * @type {boolean}
      * @memberof CampaignMetadata
@@ -667,24 +673,11 @@ export type NullType = typeof NullType[keyof typeof NullType];
 
 
 /**
- * 
+ * @type NullableActivationTimeRange
  * @export
- * @interface NullableActivationTimeRange
  */
-export interface NullableActivationTimeRange {
-    /**
-     * 
-     * @type {string}
-     * @memberof NullableActivationTimeRange
-     */
-    'startTime': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof NullableActivationTimeRange
-     */
-    'endTime': string;
-}
+export type NullableActivationTimeRange = ActivationTimeRange | NullType;
+
 /**
  * The response received from botsFire which it receives from WhatsApp. It contains either an error message or is of type \"Message\" of the IM service 
  * @export
