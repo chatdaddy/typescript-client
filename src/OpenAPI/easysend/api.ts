@@ -4368,140 +4368,6 @@ export class PaymentSystemsApi extends BaseAPI {
 
 
 /**
- * ProductApi - axios parameter creator
- * @export
- */
-export const ProductApiAxiosParamCreator = function (configuration?: Configuration) {
-    return {
-        /**
-         * Trigger sync of the specified products on ChatDaddy with WhatsApp
-         * @param {string} accountId Account ID to sync products from/to
-         * @param {string} id Product id to sync with WhatsApp.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        shopProductsSync: async (accountId: string, id: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'accountId' is not null or undefined
-            assertParamExists('shopProductsSync', 'accountId', accountId)
-            // verify required parameter 'id' is not null or undefined
-            assertParamExists('shopProductsSync', 'id', id)
-            const localVarPath = `/shop-products/sync/{id}`
-                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication chatdaddy required
-            // oauth required
-            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["PRODUCTS_UPDATE"], configuration)
-
-            if (accountId !== undefined) {
-                localVarQueryParameter['accountId'] = accountId;
-            }
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-    }
-};
-
-/**
- * ProductApi - functional programming interface
- * @export
- */
-export const ProductApiFp = function(configuration?: Configuration) {
-    const localVarAxiosParamCreator = ProductApiAxiosParamCreator(configuration)
-    return {
-        /**
-         * Trigger sync of the specified products on ChatDaddy with WhatsApp
-         * @param {string} accountId Account ID to sync products from/to
-         * @param {string} id Product id to sync with WhatsApp.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async shopProductsSync(accountId: string, id: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SuccessResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.shopProductsSync(accountId, id, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-    }
-};
-
-/**
- * ProductApi - factory interface
- * @export
- */
-export const ProductApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
-    const localVarFp = ProductApiFp(configuration)
-    return {
-        /**
-         * Trigger sync of the specified products on ChatDaddy with WhatsApp
-         * @param {ProductApiShopProductsSyncRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        shopProductsSync(requestParameters: ProductApiShopProductsSyncRequest, options?: AxiosRequestConfig): AxiosPromise<SuccessResponse> {
-            return localVarFp.shopProductsSync(requestParameters.accountId, requestParameters.id, options).then((request) => request(axios, basePath));
-        },
-    };
-};
-
-/**
- * Request parameters for shopProductsSync operation in ProductApi.
- * @export
- * @interface ProductApiShopProductsSyncRequest
- */
-export interface ProductApiShopProductsSyncRequest {
-    /**
-     * Account ID to sync products from/to
-     * @type {string}
-     * @memberof ProductApiShopProductsSync
-     */
-    readonly accountId: string
-
-    /**
-     * Product id to sync with WhatsApp.
-     * @type {string}
-     * @memberof ProductApiShopProductsSync
-     */
-    readonly id: string
-}
-
-/**
- * ProductApi - object-oriented interface
- * @export
- * @class ProductApi
- * @extends {BaseAPI}
- */
-export class ProductApi extends BaseAPI {
-    /**
-     * Trigger sync of the specified products on ChatDaddy with WhatsApp
-     * @param {ProductApiShopProductsSyncRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof ProductApi
-     */
-    public shopProductsSync(requestParameters: ProductApiShopProductsSyncRequest, options?: AxiosRequestConfig) {
-        return ProductApiFp(this.configuration).shopProductsSync(requestParameters.accountId, requestParameters.id, options).then((request) => request(this.axios, this.basePath));
-    }
-}
-
-
-/**
  * ServicesApi - axios parameter creator
  * @export
  */
@@ -5748,6 +5614,50 @@ export const ShopProductsApiAxiosParamCreator = function (configuration?: Config
                 options: localVarRequestOptions,
             };
         },
+        /**
+         * Trigger sync of the specified products on ChatDaddy with WhatsApp
+         * @param {string} accountId Account ID to sync products from/to
+         * @param {string} id Product id to sync with WhatsApp.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        shopProductsSync: async (accountId: string, id: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'accountId' is not null or undefined
+            assertParamExists('shopProductsSync', 'accountId', accountId)
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('shopProductsSync', 'id', id)
+            const localVarPath = `/shop-products/sync/{id}`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["PRODUCTS_UPDATE"], configuration)
+
+            if (accountId !== undefined) {
+                localVarQueryParameter['accountId'] = accountId;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
     }
 };
 
@@ -5810,6 +5720,17 @@ export const ShopProductsApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.shopProductsPost(shopProductCreate, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
+        /**
+         * Trigger sync of the specified products on ChatDaddy with WhatsApp
+         * @param {string} accountId Account ID to sync products from/to
+         * @param {string} id Product id to sync with WhatsApp.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async shopProductsSync(accountId: string, id: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SuccessResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.shopProductsSync(accountId, id, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
     }
 };
 
@@ -5859,6 +5780,15 @@ export const ShopProductsApiFactory = function (configuration?: Configuration, b
          */
         shopProductsPost(requestParameters: ShopProductsApiShopProductsPostRequest = {}, options?: AxiosRequestConfig): AxiosPromise<ShopProductsPost200Response> {
             return localVarFp.shopProductsPost(requestParameters.shopProductCreate, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Trigger sync of the specified products on ChatDaddy with WhatsApp
+         * @param {ShopProductsApiShopProductsSyncRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        shopProductsSync(requestParameters: ShopProductsApiShopProductsSyncRequest, options?: AxiosRequestConfig): AxiosPromise<SuccessResponse> {
+            return localVarFp.shopProductsSync(requestParameters.accountId, requestParameters.id, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -5976,6 +5906,27 @@ export interface ShopProductsApiShopProductsPostRequest {
 }
 
 /**
+ * Request parameters for shopProductsSync operation in ShopProductsApi.
+ * @export
+ * @interface ShopProductsApiShopProductsSyncRequest
+ */
+export interface ShopProductsApiShopProductsSyncRequest {
+    /**
+     * Account ID to sync products from/to
+     * @type {string}
+     * @memberof ShopProductsApiShopProductsSync
+     */
+    readonly accountId: string
+
+    /**
+     * Product id to sync with WhatsApp.
+     * @type {string}
+     * @memberof ShopProductsApiShopProductsSync
+     */
+    readonly id: string
+}
+
+/**
  * ShopProductsApi - object-oriented interface
  * @export
  * @class ShopProductsApi
@@ -6028,6 +5979,17 @@ export class ShopProductsApi extends BaseAPI {
      */
     public shopProductsPost(requestParameters: ShopProductsApiShopProductsPostRequest = {}, options?: AxiosRequestConfig) {
         return ShopProductsApiFp(this.configuration).shopProductsPost(requestParameters.shopProductCreate, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Trigger sync of the specified products on ChatDaddy with WhatsApp
+     * @param {ShopProductsApiShopProductsSyncRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ShopProductsApi
+     */
+    public shopProductsSync(requestParameters: ShopProductsApiShopProductsSyncRequest, options?: AxiosRequestConfig) {
+        return ShopProductsApiFp(this.configuration).shopProductsSync(requestParameters.accountId, requestParameters.id, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

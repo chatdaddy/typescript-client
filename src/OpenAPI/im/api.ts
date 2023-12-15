@@ -10747,7 +10747,7 @@ export class MessagesApi extends BaseAPI {
  * ProductApi - axios parameter creator
  * @export
  */
-const ProductApiAxiosParamCreator = function (configuration?: Configuration) {
+export const ProductApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
          * 
@@ -11090,7 +11090,7 @@ const ProductApiAxiosParamCreator = function (configuration?: Configuration) {
  * ProductApi - functional programming interface
  * @export
  */
-const ProductApiFp = function(configuration?: Configuration) {
+export const ProductApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = ProductApiAxiosParamCreator(configuration)
     return {
         /**
@@ -11186,7 +11186,7 @@ const ProductApiFp = function(configuration?: Configuration) {
  * ProductApi - factory interface
  * @export
  */
-const ProductApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+export const ProductApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
     const localVarFp = ProductApiFp(configuration)
     return {
         /**
