@@ -173,93 +173,6 @@ export const CampaignAsyncGet200ResponseStatusEnum = {
 export type CampaignAsyncGet200ResponseStatusEnum = typeof CampaignAsyncGet200ResponseStatusEnum[keyof typeof CampaignAsyncGet200ResponseStatusEnum];
 
 /**
- * Filters to select contacts for the campaign
- * @export
- * @interface CampaignContactFilters
- */
-export interface CampaignContactFilters {
-    /**
-     * Get contacts who fall in either of these tags
-     * @type {Array<string>}
-     * @memberof CampaignContactFilters
-     */
-    'tags'?: Array<string>;
-    /**
-     * Get contacts who do not fall in either of these tags
-     * @type {Array<string>}
-     * @memberof CampaignContactFilters
-     */
-    'notTags'?: Array<string>;
-    /**
-     * Get contacts assigned to this user
-     * @type {Array<string>}
-     * @memberof CampaignContactFilters
-     */
-    'assignee'?: Array<string>;
-    /**
-     * Get contacts not assigned to this user
-     * @type {Array<string>}
-     * @memberof CampaignContactFilters
-     */
-    'notAssignee'?: Array<string>;
-    /**
-     * Get contacts who have sent at least this many messages
-     * @type {number}
-     * @memberof CampaignContactFilters
-     */
-    'minMessagesSent'?: number;
-    /**
-     * Get contacts who have sent at most this many messages
-     * @type {number}
-     * @memberof CampaignContactFilters
-     */
-    'maxMessagesSent'?: number;
-    /**
-     * Get contacts who have received at least this many messages
-     * @type {number}
-     * @memberof CampaignContactFilters
-     */
-    'minMessagesRecv'?: number;
-    /**
-     * Get contacts who have received at most this many messages
-     * @type {number}
-     * @memberof CampaignContactFilters
-     */
-    'maxMessagesRecv'?: number;
-    /**
-     * only get contacts of type
-     * @type {string}
-     * @memberof CampaignContactFilters
-     */
-    'type'?: CampaignContactFiltersTypeEnum;
-    /**
-     * Get contacts of these accounts
-     * @type {Array<string>}
-     * @memberof CampaignContactFilters
-     */
-    'accountId'?: Array<string>;
-    /**
-     * Get these contact ids
-     * @type {Array<string>}
-     * @memberof CampaignContactFilters
-     */
-    'contacts'?: Array<string>;
-    /**
-     * Do not get these contactIds
-     * @type {Array<string>}
-     * @memberof CampaignContactFilters
-     */
-    'notContacts'?: Array<string>;
-}
-
-export const CampaignContactFiltersTypeEnum = {
-    Group: 'group',
-    Individual: 'individual'
-} as const;
-
-export type CampaignContactFiltersTypeEnum = typeof CampaignContactFiltersTypeEnum[keyof typeof CampaignContactFiltersTypeEnum];
-
-/**
  * 
  * @export
  * @interface CampaignCreateAsync
@@ -325,19 +238,19 @@ export interface CampaignCreateAsync {
      * @type {string}
      * @memberof CampaignCreateAsync
      */
-    'recipientDataUrl': string;
+    'recipientDataUrl'?: string;
     /**
      * 
-     * @type {ActivationTimeRange}
+     * @type {NullableActivationTimeRange}
      * @memberof CampaignCreateAsync
      */
-    'activationTimeRange'?: ActivationTimeRange;
+    'activationTimeRange'?: NullableActivationTimeRange;
     /**
-     * 
-     * @type {CampaignContactFilters}
+     * Contact filter query
+     * @type {{ [key: string]: any; }}
      * @memberof CampaignCreateAsync
      */
-    'contactFilters'?: CampaignContactFilters;
+    'contactFilters'?: { [key: string]: any; };
 }
 /**
  * 
@@ -439,16 +352,16 @@ export interface CampaignEdit {
     'removeJids'?: Array<string>;
     /**
      * 
-     * @type {ActivationTimeRange}
+     * @type {NullableActivationTimeRange}
      * @memberof CampaignEdit
      */
-    'activationTimeRange'?: ActivationTimeRange;
+    'activationTimeRange'?: NullableActivationTimeRange;
     /**
-     * 
-     * @type {CampaignContactFilters}
+     * Contact filter query
+     * @type {{ [key: string]: any; }}
      * @memberof CampaignEdit
      */
-    'contactFilters'?: CampaignContactFilters;
+    'contactFilters'?: { [key: string]: any; };
 }
 /**
  * 
@@ -536,11 +449,11 @@ export interface CampaignMetadata {
      */
     'accountIds'?: Array<string> | null;
     /**
-     * 
-     * @type {CampaignContactFilters}
+     * Contact filter query
+     * @type {{ [key: string]: any; }}
      * @memberof CampaignMetadata
      */
-    'contactFilters'?: CampaignContactFilters;
+    'contactFilters'?: { [key: string]: any; };
     /**
      * 
      * @type {CampaignMetadataCounts}
@@ -740,6 +653,38 @@ export const CampaignState = {
 export type CampaignState = typeof CampaignState[keyof typeof CampaignState];
 
 
+/**
+ * for adding nullability to a ref
+ * @export
+ * @enum {string}
+ */
+
+export const NullType = {
+    Null: null as null
+} as const;
+
+export type NullType = typeof NullType[keyof typeof NullType];
+
+
+/**
+ * 
+ * @export
+ * @interface NullableActivationTimeRange
+ */
+export interface NullableActivationTimeRange {
+    /**
+     * 
+     * @type {string}
+     * @memberof NullableActivationTimeRange
+     */
+    'startTime': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof NullableActivationTimeRange
+     */
+    'endTime': string;
+}
 /**
  * The response received from botsFire which it receives from WhatsApp. It contains either an error message or is of type \"Message\" of the IM service 
  * @export
