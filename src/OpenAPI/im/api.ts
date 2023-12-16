@@ -1015,6 +1015,25 @@ export interface AlibabaCamsSync200Response {
     'account': Account;
 }
 /**
+ * Override with new cust space ID & phone number
+ * @export
+ * @interface AlibabaCamsSyncRequest
+ */
+export interface AlibabaCamsSyncRequest {
+    /**
+     * WABA customer space ID
+     * @type {string}
+     * @memberof AlibabaCamsSyncRequest
+     */
+    'custSpaceId'?: string;
+    /**
+     * Phone number to connect to the account. No formatting, just digits with country code.
+     * @type {string}
+     * @memberof AlibabaCamsSyncRequest
+     */
+    'phoneNumber'?: string;
+}
+/**
  * @type AnyContactID
  * @export
  */
@@ -5998,10 +6017,11 @@ export const AlibabaCamsApiAxiosParamCreator = function (configuration?: Configu
          * 
          * @summary Sync the account state with Alibaba CAMS
          * @param {string} accountId 
+         * @param {AlibabaCamsSyncRequest} [alibabaCamsSyncRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        alibabaCamsSync: async (accountId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        alibabaCamsSync: async (accountId: string, alibabaCamsSyncRequest?: AlibabaCamsSyncRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'accountId' is not null or undefined
             assertParamExists('alibabaCamsSync', 'accountId', accountId)
             const localVarPath = `/alibaba-cams/sync/{accountId}`
@@ -6023,9 +6043,12 @@ export const AlibabaCamsApiAxiosParamCreator = function (configuration?: Configu
 
 
     
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(alibabaCamsSyncRequest, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -6134,11 +6157,12 @@ export const AlibabaCamsApiFp = function(configuration?: Configuration) {
          * 
          * @summary Sync the account state with Alibaba CAMS
          * @param {string} accountId 
+         * @param {AlibabaCamsSyncRequest} [alibabaCamsSyncRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async alibabaCamsSync(accountId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AlibabaCamsSync200Response>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.alibabaCamsSync(accountId, options);
+        async alibabaCamsSync(accountId: string, alibabaCamsSyncRequest?: AlibabaCamsSyncRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AlibabaCamsSync200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.alibabaCamsSync(accountId, alibabaCamsSyncRequest, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -6211,7 +6235,7 @@ export const AlibabaCamsApiFactory = function (configuration?: Configuration, ba
          * @throws {RequiredError}
          */
         alibabaCamsSync(requestParameters: AlibabaCamsApiAlibabaCamsSyncRequest, options?: AxiosRequestConfig): AxiosPromise<AlibabaCamsSync200Response> {
-            return localVarFp.alibabaCamsSync(requestParameters.accountId, options).then((request) => request(axios, basePath));
+            return localVarFp.alibabaCamsSync(requestParameters.accountId, requestParameters.alibabaCamsSyncRequest, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -6301,6 +6325,13 @@ export interface AlibabaCamsApiAlibabaCamsSyncRequest {
      * @memberof AlibabaCamsApiAlibabaCamsSync
      */
     readonly accountId: string
+
+    /**
+     * 
+     * @type {AlibabaCamsSyncRequest}
+     * @memberof AlibabaCamsApiAlibabaCamsSync
+     */
+    readonly alibabaCamsSyncRequest?: AlibabaCamsSyncRequest
 }
 
 /**
@@ -6394,7 +6425,7 @@ export class AlibabaCamsApi extends BaseAPI {
      * @memberof AlibabaCamsApi
      */
     public alibabaCamsSync(requestParameters: AlibabaCamsApiAlibabaCamsSyncRequest, options?: AxiosRequestConfig) {
-        return AlibabaCamsApiFp(this.configuration).alibabaCamsSync(requestParameters.accountId, options).then((request) => request(this.axios, this.basePath));
+        return AlibabaCamsApiFp(this.configuration).alibabaCamsSync(requestParameters.accountId, requestParameters.alibabaCamsSyncRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
