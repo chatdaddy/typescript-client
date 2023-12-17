@@ -2451,6 +2451,12 @@ export interface Recipient {
      * @memberof Recipient
      */
     'sendOptions'?: MessageSendOptions;
+    /**
+     * parameters to replace in text
+     * @type {{ [key: string]: any; }}
+     * @memberof Recipient
+     */
+    'parameters'?: { [key: string]: any; };
 }
 /**
  * 
