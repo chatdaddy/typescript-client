@@ -47,87 +47,6 @@ export interface ActivationTimeRange {
 /**
  * 
  * @export
- * @interface Campaign
- */
-export interface Campaign {
-    /**
-     * ID of the campaign
-     * @type {string}
-     * @memberof Campaign
-     */
-    'id': string;
-    /**
-     * Name of the campaign
-     * @type {string}
-     * @memberof Campaign
-     */
-    'name': string;
-    /**
-     * Time interval between each message sent in seconds
-     * @type {number}
-     * @memberof Campaign
-     */
-    'sendInterval': number;
-    /**
-     * The template to send out
-     * @type {string}
-     * @memberof Campaign
-     */
-    'messageTemplate': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof Campaign
-     */
-    'scheduledAt'?: string | null;
-    /**
-     * Should the message be randomized before sending
-     * @type {boolean}
-     * @memberof Campaign
-     */
-    'randomizeMessage': boolean;
-    /**
-     * Should typing indicator & read receipt be sent
-     * @type {boolean}
-     * @memberof Campaign
-     */
-    'sendTyping'?: boolean;
-    /**
-     * 
-     * @type {CampaignState}
-     * @memberof Campaign
-     */
-    'state': CampaignState;
-    /**
-     * When the campaign was created
-     * @type {string}
-     * @memberof Campaign
-     */
-    'createdAt': string;
-    /**
-     * Team ID of the campaign
-     * @type {string}
-     * @memberof Campaign
-     */
-    'teamId': string;
-    /**
-     * 
-     * @type {Array<CampaignRecipients>}
-     * @memberof Campaign
-     */
-    'recipients': Array<CampaignRecipients>;
-    /**
-     * 
-     * @type {ActivationTimeRange}
-     * @memberof Campaign
-     */
-    'activationTimeRange'?: ActivationTimeRange;
-}
-
-
-/**
- * 
- * @export
  * @interface CampaignAsyncCreate200Response
  */
 export interface CampaignAsyncCreate200Response {
@@ -234,12 +153,6 @@ export interface CampaignCreateAsync {
      */
     'accountIds'?: Array<string> | null;
     /**
-     * Link to the JSON file containing the recipients data
-     * @type {string}
-     * @memberof CampaignCreateAsync
-     */
-    'recipientDataUrl'?: string;
-    /**
      * 
      * @type {NullableActivationTimeRange}
      * @memberof CampaignCreateAsync
@@ -326,30 +239,6 @@ export interface CampaignEdit {
      * @memberof CampaignEdit
      */
     'accountIds'?: Array<string> | null;
-    /**
-     * Tags to add
-     * @type {Array<string>}
-     * @memberof CampaignEdit
-     */
-    'addTags'?: Array<string>;
-    /**
-     * Tags to remove
-     * @type {Array<string>}
-     * @memberof CampaignEdit
-     */
-    'removeTags'?: Array<string>;
-    /**
-     * recipient jids to add
-     * @type {Array<string>}
-     * @memberof CampaignEdit
-     */
-    'addJids'?: Array<string>;
-    /**
-     * recipient jids to remove
-     * @type {Array<string>}
-     * @memberof CampaignEdit
-     */
-    'removeJids'?: Array<string>;
     /**
      * 
      * @type {NullableActivationTimeRange}
@@ -513,31 +402,6 @@ export interface CampaignMetadataCounts {
     'delivered'?: number;
 }
 /**
- * Model for the file containing the JSON data
- * @export
- * @interface CampaignRecipientData
- */
-export interface CampaignRecipientData {
-    /**
-     * The tags/segments based on which the broadcast can occur
-     * @type {Array<string>}
-     * @memberof CampaignRecipientData
-     */
-    'recipientTags': Array<string>;
-    /**
-     * The tags/segments based on which the broadcast can occur
-     * @type {Array<string>}
-     * @memberof CampaignRecipientData
-     */
-    'excludedRecipientTags'?: Array<string>;
-    /**
-     * The extra recipient jids
-     * @type {Array<string>}
-     * @memberof CampaignRecipientData
-     */
-    'recipientJids': Array<string>;
-}
-/**
  * Current state of the recipient
  * @export
  * @enum {string}
@@ -610,7 +474,7 @@ export interface CampaignRecipientsResponse {
      * @type {Array<CampaignRecipients>}
      * @memberof CampaignRecipientsResponse
      */
-    'recipients'?: Array<CampaignRecipients>;
+    'recipients': Array<CampaignRecipients>;
     /**
      * Cursor to fetch next page of campaign recipients
      * @type {string}
@@ -629,7 +493,7 @@ export interface CampaignRetreivalResponse {
      * @type {Array<CampaignMetadata>}
      * @memberof CampaignRetreivalResponse
      */
-    'campaigns'?: Array<CampaignMetadata>;
+    'campaigns': Array<CampaignMetadata>;
     /**
      * Cursor to fetch next page of campaigns
      * @type {string}
@@ -1144,7 +1008,7 @@ export const CampaignsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async campaignPatch(id: string, campaignEdit?: CampaignEdit, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Campaign>> {
+        async campaignPatch(id: string, campaignEdit?: CampaignEdit, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.campaignPatch(id, campaignEdit, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -1235,7 +1099,7 @@ export const CampaignsApiFactory = function (configuration?: Configuration, base
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        campaignPatch(requestParameters: CampaignsApiCampaignPatchRequest, options?: AxiosRequestConfig): AxiosPromise<Campaign> {
+        campaignPatch(requestParameters: CampaignsApiCampaignPatchRequest, options?: AxiosRequestConfig): AxiosPromise<void> {
             return localVarFp.campaignPatch(requestParameters.id, requestParameters.campaignEdit, options).then((request) => request(axios, basePath));
         },
         /**
