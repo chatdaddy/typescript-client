@@ -2613,12 +2613,6 @@ export interface SubmitFormRequest {
      * @memberof SubmitFormRequest
      */
     'fields': { [key: string]: any; };
-    /**
-     * If true, the form will be submitted permanently
-     * @type {boolean}
-     * @memberof SubmitFormRequest
-     */
-    'submitPermanent'?: boolean;
 }
 /**
  * 
@@ -5413,11 +5407,12 @@ export const FormsApiAxiosParamCreator = function (configuration?: Configuration
          * 
          * @summary Submit a form
          * @param {string} submissionId 
+         * @param {boolean} [permanent] If true, the form will be submitted permanently
          * @param {SubmitFormRequest} [submitFormRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        submitForm: async (submissionId: string, submitFormRequest?: SubmitFormRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        submitForm: async (submissionId: string, permanent?: boolean, submitFormRequest?: SubmitFormRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'submissionId' is not null or undefined
             assertParamExists('submitForm', 'submissionId', submissionId)
             const localVarPath = `/form-submission/{submissionId}/submit`
@@ -5432,6 +5427,10 @@ export const FormsApiAxiosParamCreator = function (configuration?: Configuration
             const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
+
+            if (permanent !== undefined) {
+                localVarQueryParameter['permanent'] = permanent;
+            }
 
 
     
@@ -5510,12 +5509,13 @@ export const FormsApiFp = function(configuration?: Configuration) {
          * 
          * @summary Submit a form
          * @param {string} submissionId 
+         * @param {boolean} [permanent] If true, the form will be submitted permanently
          * @param {SubmitFormRequest} [submitFormRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async submitForm(submissionId: string, submitFormRequest?: SubmitFormRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.submitForm(submissionId, submitFormRequest, options);
+        async submitForm(submissionId: string, permanent?: boolean, submitFormRequest?: SubmitFormRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.submitForm(submissionId, permanent, submitFormRequest, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
     }
@@ -5576,7 +5576,7 @@ export const FormsApiFactory = function (configuration?: Configuration, basePath
          * @throws {RequiredError}
          */
         submitForm(requestParameters: FormsApiSubmitFormRequest, options?: AxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.submitForm(requestParameters.submissionId, requestParameters.submitFormRequest, options).then((request) => request(axios, basePath));
+            return localVarFp.submitForm(requestParameters.submissionId, requestParameters.permanent, requestParameters.submitFormRequest, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -5686,6 +5686,13 @@ export interface FormsApiSubmitFormRequest {
     readonly submissionId: string
 
     /**
+     * If true, the form will be submitted permanently
+     * @type {boolean}
+     * @memberof FormsApiSubmitForm
+     */
+    readonly permanent?: boolean
+
+    /**
      * 
      * @type {SubmitFormRequest}
      * @memberof FormsApiSubmitForm
@@ -5757,7 +5764,7 @@ export class FormsApi extends BaseAPI {
      * @memberof FormsApi
      */
     public submitForm(requestParameters: FormsApiSubmitFormRequest, options?: AxiosRequestConfig) {
-        return FormsApiFp(this.configuration).submitForm(requestParameters.submissionId, requestParameters.submitFormRequest, options).then((request) => request(this.axios, this.basePath));
+        return FormsApiFp(this.configuration).submitForm(requestParameters.submissionId, requestParameters.permanent, requestParameters.submitFormRequest, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
