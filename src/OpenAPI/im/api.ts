@@ -280,30 +280,6 @@ export interface AccountCredentialsMeta {
      * @memberof AccountCredentialsMeta
      */
     'pageId': string;
-    /**
-     * App ID of the Meta app
-     * @type {string}
-     * @memberof AccountCredentialsMeta
-     */
-    'appId': string;
-    /**
-     * Page access token of the Facebook page
-     * @type {string}
-     * @memberof AccountCredentialsMeta
-     */
-    'pageAccessToken': string;
-    /**
-     * App secret of the Meta app
-     * @type {string}
-     * @memberof AccountCredentialsMeta
-     */
-    'appSecret': string;
-    /**
-     * Secret for webhook
-     * @type {string}
-     * @memberof AccountCredentialsMeta
-     */
-    'verifyToken': string;
 }
 
 export const AccountCredentialsMetaTypeEnum = {
