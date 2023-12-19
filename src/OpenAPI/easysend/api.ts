@@ -2097,6 +2097,12 @@ export interface ShopProduct {
      */
     'accountSyncStatuses'?: Array<ProductAccountSync>;
     /**
+     * Specify category id
+     * @type {string}
+     * @memberof ShopProduct
+     */
+    'CategoryId'?: string;
+    /**
      * 
      * @type {ShopProductCategory}
      * @memberof ShopProduct
@@ -5233,7 +5239,7 @@ export const ShopProductCategoriesApiFp = function(configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async shopProductCategoriesUpdate(id: string, shopProductCategoriesPostRequest?: ShopProductCategoriesPostRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ShopProductCategory>> {
+        async shopProductCategoriesUpdate(id: string, shopProductCategoriesPostRequest?: ShopProductCategoriesPostRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SuccessResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.shopProductCategoriesUpdate(id, shopProductCategoriesPostRequest, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -5282,7 +5288,7 @@ export const ShopProductCategoriesApiFactory = function (configuration?: Configu
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        shopProductCategoriesUpdate(requestParameters: ShopProductCategoriesApiShopProductCategoriesUpdateRequest, options?: AxiosRequestConfig): AxiosPromise<ShopProductCategory> {
+        shopProductCategoriesUpdate(requestParameters: ShopProductCategoriesApiShopProductCategoriesUpdateRequest, options?: AxiosRequestConfig): AxiosPromise<SuccessResponse> {
             return localVarFp.shopProductCategoriesUpdate(requestParameters.id, requestParameters.shopProductCategoriesPostRequest, options).then((request) => request(axios, basePath));
         },
     };
