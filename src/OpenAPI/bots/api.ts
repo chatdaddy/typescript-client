@@ -1904,15 +1904,21 @@ export interface FormActions {
 /**
  * 
  * @export
- * @interface FormActionsGet200Response
+ * @interface FormDataGet200Response
  */
-export interface FormActionsGet200Response {
+export interface FormDataGet200Response {
     /**
      * 
      * @type {Array<Action>}
-     * @memberof FormActionsGet200Response
+     * @memberof FormDataGet200Response
      */
     'actions': Array<Action>;
+    /**
+     * 
+     * @type {FormSubmission}
+     * @memberof FormDataGet200Response
+     */
+    'submission': FormSubmission;
 }
 /**
  * 
@@ -5228,15 +5234,15 @@ export const FormsApiAxiosParamCreator = function (configuration?: Configuration
     return {
         /**
          * 
-         * @summary Get form actions
+         * @summary Get form actions and submission data
          * @param {string} submissionId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        formActionsGet: async (submissionId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        formDataGet: async (submissionId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'submissionId' is not null or undefined
-            assertParamExists('formActionsGet', 'submissionId', submissionId)
-            const localVarPath = `/form-actions/{submissionId}`
+            assertParamExists('formDataGet', 'submissionId', submissionId)
+            const localVarPath = `/form-data/{submissionId}`
                 .replace(`{${"submissionId"}}`, encodeURIComponent(String(submissionId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -5447,13 +5453,13 @@ export const FormsApiFp = function(configuration?: Configuration) {
     return {
         /**
          * 
-         * @summary Get form actions
+         * @summary Get form actions and submission data
          * @param {string} submissionId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async formActionsGet(submissionId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<FormActionsGet200Response>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.formActionsGet(submissionId, options);
+        async formDataGet(submissionId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<FormDataGet200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.formDataGet(submissionId, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -5518,13 +5524,13 @@ export const FormsApiFactory = function (configuration?: Configuration, basePath
     return {
         /**
          * 
-         * @summary Get form actions
-         * @param {FormsApiFormActionsGetRequest} requestParameters Request parameters.
+         * @summary Get form actions and submission data
+         * @param {FormsApiFormDataGetRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        formActionsGet(requestParameters: FormsApiFormActionsGetRequest, options?: AxiosRequestConfig): AxiosPromise<FormActionsGet200Response> {
-            return localVarFp.formActionsGet(requestParameters.submissionId, options).then((request) => request(axios, basePath));
+        formDataGet(requestParameters: FormsApiFormDataGetRequest, options?: AxiosRequestConfig): AxiosPromise<FormDataGet200Response> {
+            return localVarFp.formDataGet(requestParameters.submissionId, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -5570,15 +5576,15 @@ export const FormsApiFactory = function (configuration?: Configuration, basePath
 };
 
 /**
- * Request parameters for formActionsGet operation in FormsApi.
+ * Request parameters for formDataGet operation in FormsApi.
  * @export
- * @interface FormsApiFormActionsGetRequest
+ * @interface FormsApiFormDataGetRequest
  */
-export interface FormsApiFormActionsGetRequest {
+export interface FormsApiFormDataGetRequest {
     /**
      * 
      * @type {string}
-     * @memberof FormsApiFormActionsGet
+     * @memberof FormsApiFormDataGet
      */
     readonly submissionId: string
 }
@@ -5690,14 +5696,14 @@ export interface FormsApiSubmitFormRequest {
 export class FormsApi extends BaseAPI {
     /**
      * 
-     * @summary Get form actions
-     * @param {FormsApiFormActionsGetRequest} requestParameters Request parameters.
+     * @summary Get form actions and submission data
+     * @param {FormsApiFormDataGetRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof FormsApi
      */
-    public formActionsGet(requestParameters: FormsApiFormActionsGetRequest, options?: AxiosRequestConfig) {
-        return FormsApiFp(this.configuration).formActionsGet(requestParameters.submissionId, options).then((request) => request(this.axios, this.basePath));
+    public formDataGet(requestParameters: FormsApiFormDataGetRequest, options?: AxiosRequestConfig) {
+        return FormsApiFp(this.configuration).formDataGet(requestParameters.submissionId, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
