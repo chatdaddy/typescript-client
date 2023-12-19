@@ -2613,6 +2613,12 @@ export interface SubmitFormRequest {
      * @memberof SubmitFormRequest
      */
     'fields': { [key: string]: any; };
+    /**
+     * If true, the form will be submitted permanently
+     * @type {boolean}
+     * @memberof SubmitFormRequest
+     */
+    'submitPermanent'?: boolean;
 }
 /**
  * 
