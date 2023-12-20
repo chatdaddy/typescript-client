@@ -812,6 +812,12 @@ export interface BotInsertData {
     'folderId'?: string | null;
     /**
      * 
+     * @type {boolean}
+     * @memberof BotInsertData
+     */
+    'isForm'?: boolean;
+    /**
+     * 
      * @type {{ [key: string]: BotInsertDataExternalTemplateValue; }}
      * @memberof BotInsertData
      */
@@ -894,12 +900,6 @@ export interface BotInsertDataActionsInner {
      * @type {string}
      * @memberof BotInsertDataActionsInner
      */
-    'formActionId'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof BotInsertDataActionsInner
-     */
     'botId'?: string;
     /**
      * Name of the template
@@ -907,12 +907,6 @@ export interface BotInsertDataActionsInner {
      * @memberof BotInsertDataActionsInner
      */
     'name': string;
-    /**
-     * If true, this action is treated as a form
-     * @type {boolean}
-     * @memberof BotInsertDataActionsInner
-     */
-    'isForm'?: boolean;
     /**
      * 
      * @type {BotInsertDataActionsInnerAllOf1Message}
@@ -998,12 +992,6 @@ export interface BotInsertDataActionsInnerAllOf1 {
      * @type {string}
      * @memberof BotInsertDataActionsInnerAllOf1
      */
-    'formActionId'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof BotInsertDataActionsInnerAllOf1
-     */
     'botId'?: string;
     /**
      * Name of the template
@@ -1011,12 +999,6 @@ export interface BotInsertDataActionsInnerAllOf1 {
      * @memberof BotInsertDataActionsInnerAllOf1
      */
     'name'?: string;
-    /**
-     * If true, this action is treated as a form
-     * @type {boolean}
-     * @memberof BotInsertDataActionsInnerAllOf1
-     */
-    'isForm'?: boolean;
     /**
      * 
      * @type {BotInsertDataActionsInnerAllOf1Message}
@@ -1074,10 +1056,10 @@ export interface BotInsertDataActionsInnerAllOf1 {
 export interface BotInsertDataActionsInnerAllOf1FormRef {
     /**
      * 
-     * @type {BotInsertDataActionsInnerAllOf1MessageButtonsInnerNextActionDefaultActionAllOf}
+     * @type {string}
      * @memberof BotInsertDataActionsInnerAllOf1FormRef
      */
-    'target': BotInsertDataActionsInnerAllOf1MessageButtonsInnerNextActionDefaultActionAllOf;
+    'id': string;
     /**
      * 
      * @type {BotInsertDataActionsInnerAllOf1FormRefActions}
@@ -2476,6 +2458,12 @@ export interface BotUpdateData {
      * @memberof BotUpdateData
      */
     'folderId'?: string | null;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof BotUpdateData
+     */
+    'isForm'?: boolean;
     /**
      * 
      * @type {{ [key: string]: BotInsertDataExternalTemplateValue; }}

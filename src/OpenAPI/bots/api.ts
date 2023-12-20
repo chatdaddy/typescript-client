@@ -50,12 +50,6 @@ export interface Action {
      */
     'id': string;
     /**
-     * 
-     * @type {string}
-     * @memberof Action
-     */
-    'formActionId'?: string;
-    /**
      * ID of the bot sequence
      * @type {string}
      * @memberof Action
@@ -67,12 +61,6 @@ export interface Action {
      * @memberof Action
      */
     'name': string;
-    /**
-     * If true, this action is treated as a form
-     * @type {boolean}
-     * @memberof Action
-     */
-    'isForm'?: boolean;
     /**
      * 
      * @type {MessageObj}
@@ -154,12 +142,6 @@ export interface ActionContent {
      */
     'id'?: string;
     /**
-     * 
-     * @type {string}
-     * @memberof ActionContent
-     */
-    'formActionId'?: string;
-    /**
      * ID of the bot sequence
      * @type {string}
      * @memberof ActionContent
@@ -171,12 +153,6 @@ export interface ActionContent {
      * @memberof ActionContent
      */
     'name'?: string;
-    /**
-     * If true, this action is treated as a form
-     * @type {boolean}
-     * @memberof ActionContent
-     */
-    'isForm'?: boolean;
     /**
      * 
      * @type {MessageObj}
@@ -519,6 +495,12 @@ export interface Bot {
      * @memberof Bot
      */
     'folderId'?: string | null;
+    /**
+     * If true, this bot is treated as a form
+     * @type {boolean}
+     * @memberof Bot
+     */
+    'isForm'?: boolean;
     /**
      * 
      * @type {{ [key: string]: ExternalTemplateProvider; }}
@@ -1919,6 +1901,12 @@ export interface FormDataGet200Response {
      * @memberof FormDataGet200Response
      */
     'submission': FormSubmission;
+    /**
+     * 
+     * @type {Bot}
+     * @memberof FormDataGet200Response
+     */
+    'form'?: Bot;
 }
 /**
  * 
@@ -1927,11 +1915,11 @@ export interface FormDataGet200Response {
  */
 export interface FormRef {
     /**
-     * 
-     * @type {ActionTarget}
+     * ID of the bot sequence
+     * @type {string}
      * @memberof FormRef
      */
-    'target': ActionTarget;
+    'id': string;
     /**
      * 
      * @type {FormActions}
@@ -1952,11 +1940,11 @@ export interface FormSubmission {
      */
     'id': string;
     /**
-     * 
+     * ID of the bot sequence
      * @type {string}
      * @memberof FormSubmission
      */
-    'formActionId': string;
+    'triggeredBotId'?: string;
     /**
      * ID of the bot sequence
      * @type {string}
@@ -2732,12 +2720,10 @@ export const ActionsApiAxiosParamCreator = function (configuration?: Configurati
          * @param {string} [before] 
          * @param {string} [q] 
          * @param {string} [botId] 
-         * @param {boolean} [isForm] 
-         * @param {string} [formActionId] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        actionsGet: async (count?: number, before?: string, q?: string, botId?: string, isForm?: boolean, formActionId?: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        actionsGet: async (count?: number, before?: string, q?: string, botId?: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/actions`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -2768,14 +2754,6 @@ export const ActionsApiAxiosParamCreator = function (configuration?: Configurati
 
             if (botId !== undefined) {
                 localVarQueryParameter['botId'] = botId;
-            }
-
-            if (isForm !== undefined) {
-                localVarQueryParameter['isForm'] = isForm;
-            }
-
-            if (formActionId !== undefined) {
-                localVarQueryParameter['formActionId'] = formActionId;
             }
 
 
@@ -2844,13 +2822,11 @@ export const ActionsApiFp = function(configuration?: Configuration) {
          * @param {string} [before] 
          * @param {string} [q] 
          * @param {string} [botId] 
-         * @param {boolean} [isForm] 
-         * @param {string} [formActionId] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async actionsGet(count?: number, before?: string, q?: string, botId?: string, isForm?: boolean, formActionId?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ActionsGet200Response>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.actionsGet(count, before, q, botId, isForm, formActionId, options);
+        async actionsGet(count?: number, before?: string, q?: string, botId?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ActionsGet200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.actionsGet(count, before, q, botId, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -2882,7 +2858,7 @@ export const ActionsApiFactory = function (configuration?: Configuration, basePa
          * @throws {RequiredError}
          */
         actionsGet(requestParameters: ActionsApiActionsGetRequest = {}, options?: AxiosRequestConfig): AxiosPromise<ActionsGet200Response> {
-            return localVarFp.actionsGet(requestParameters.count, requestParameters.before, requestParameters.q, requestParameters.botId, requestParameters.isForm, requestParameters.formActionId, options).then((request) => request(axios, basePath));
+            return localVarFp.actionsGet(requestParameters.count, requestParameters.before, requestParameters.q, requestParameters.botId, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -2930,20 +2906,6 @@ export interface ActionsApiActionsGetRequest {
      * @memberof ActionsApiActionsGet
      */
     readonly botId?: string
-
-    /**
-     * 
-     * @type {boolean}
-     * @memberof ActionsApiActionsGet
-     */
-    readonly isForm?: boolean
-
-    /**
-     * 
-     * @type {string}
-     * @memberof ActionsApiActionsGet
-     */
-    readonly formActionId?: string
 }
 
 /**
@@ -2976,7 +2938,7 @@ export class ActionsApi extends BaseAPI {
      * @memberof ActionsApi
      */
     public actionsGet(requestParameters: ActionsApiActionsGetRequest = {}, options?: AxiosRequestConfig) {
-        return ActionsApiFp(this.configuration).actionsGet(requestParameters.count, requestParameters.before, requestParameters.q, requestParameters.botId, requestParameters.isForm, requestParameters.formActionId, options).then((request) => request(this.axios, this.basePath));
+        return ActionsApiFp(this.configuration).actionsGet(requestParameters.count, requestParameters.before, requestParameters.q, requestParameters.botId, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -3998,6 +3960,7 @@ export const BotsApiAxiosParamCreator = function (configuration?: Configuration)
          * 
          * @summary Get list of bots
          * @param {string} [q] 
+         * @param {boolean} [isForm] If true, only bots that are a form will be returned. If false, only bots are not forms will be returned
          * @param {string} [before] 
          * @param {number} [count] 
          * @param {Array<string>} [id] 
@@ -4010,7 +3973,7 @@ export const BotsApiAxiosParamCreator = function (configuration?: Configuration)
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        botsGets: async (q?: string, before?: string, count?: number, id?: Array<string>, sortBy?: 'name' | 'updatedAt', order?: 'ASC' | 'DESC', folderId?: string, language?: string, industry?: string, returnTotalCount?: boolean, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        botsGets: async (q?: string, isForm?: boolean, before?: string, count?: number, id?: Array<string>, sortBy?: 'name' | 'updatedAt', order?: 'ASC' | 'DESC', folderId?: string, language?: string, industry?: string, returnTotalCount?: boolean, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/bots`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -4029,6 +3992,10 @@ export const BotsApiAxiosParamCreator = function (configuration?: Configuration)
 
             if (q !== undefined) {
                 localVarQueryParameter['q'] = q;
+            }
+
+            if (isForm !== undefined) {
+                localVarQueryParameter['isForm'] = isForm;
             }
 
             if (before !== undefined) {
@@ -4258,6 +4225,7 @@ export const BotsApiFp = function(configuration?: Configuration) {
          * 
          * @summary Get list of bots
          * @param {string} [q] 
+         * @param {boolean} [isForm] If true, only bots that are a form will be returned. If false, only bots are not forms will be returned
          * @param {string} [before] 
          * @param {number} [count] 
          * @param {Array<string>} [id] 
@@ -4270,8 +4238,8 @@ export const BotsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async botsGets(q?: string, before?: string, count?: number, id?: Array<string>, sortBy?: 'name' | 'updatedAt', order?: 'ASC' | 'DESC', folderId?: string, language?: string, industry?: string, returnTotalCount?: boolean, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BotsGets200Response>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.botsGets(q, before, count, id, sortBy, order, folderId, language, industry, returnTotalCount, options);
+        async botsGets(q?: string, isForm?: boolean, before?: string, count?: number, id?: Array<string>, sortBy?: 'name' | 'updatedAt', order?: 'ASC' | 'DESC', folderId?: string, language?: string, industry?: string, returnTotalCount?: boolean, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BotsGets200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.botsGets(q, isForm, before, count, id, sortBy, order, folderId, language, industry, returnTotalCount, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -4385,7 +4353,7 @@ export const BotsApiFactory = function (configuration?: Configuration, basePath?
          * @throws {RequiredError}
          */
         botsGets(requestParameters: BotsApiBotsGetsRequest = {}, options?: AxiosRequestConfig): AxiosPromise<BotsGets200Response> {
-            return localVarFp.botsGets(requestParameters.q, requestParameters.before, requestParameters.count, requestParameters.id, requestParameters.sortBy, requestParameters.order, requestParameters.folderId, requestParameters.language, requestParameters.industry, requestParameters.returnTotalCount, options).then((request) => request(axios, basePath));
+            return localVarFp.botsGets(requestParameters.q, requestParameters.isForm, requestParameters.before, requestParameters.count, requestParameters.id, requestParameters.sortBy, requestParameters.order, requestParameters.folderId, requestParameters.language, requestParameters.industry, requestParameters.returnTotalCount, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -4583,6 +4551,13 @@ export interface BotsApiBotsGetsRequest {
      * @memberof BotsApiBotsGets
      */
     readonly q?: string
+
+    /**
+     * If true, only bots that are a form will be returned. If false, only bots are not forms will be returned
+     * @type {boolean}
+     * @memberof BotsApiBotsGets
+     */
+    readonly isForm?: boolean
 
     /**
      * 
@@ -4783,7 +4758,7 @@ export class BotsApi extends BaseAPI {
      * @memberof BotsApi
      */
     public botsGets(requestParameters: BotsApiBotsGetsRequest = {}, options?: AxiosRequestConfig) {
-        return BotsApiFp(this.configuration).botsGets(requestParameters.q, requestParameters.before, requestParameters.count, requestParameters.id, requestParameters.sortBy, requestParameters.order, requestParameters.folderId, requestParameters.language, requestParameters.industry, requestParameters.returnTotalCount, options).then((request) => request(this.axios, this.basePath));
+        return BotsApiFp(this.configuration).botsGets(requestParameters.q, requestParameters.isForm, requestParameters.before, requestParameters.count, requestParameters.id, requestParameters.sortBy, requestParameters.order, requestParameters.folderId, requestParameters.language, requestParameters.industry, requestParameters.returnTotalCount, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -5356,21 +5331,18 @@ export const FormsApiAxiosParamCreator = function (configuration?: Configuration
          * 
          * @summary Get form submissions
          * @param {string} botId 
-         * @param {string} actionId 
          * @param {number} [count] 
          * @param {string} [before] 
          * @param {Array<string>} [ids] 
+         * @param {string} [triggeredBotId] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        formSubmissionsGet: async (botId: string, actionId: string, count?: number, before?: string, ids?: Array<string>, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        formSubmissionsGet: async (botId: string, count?: number, before?: string, ids?: Array<string>, triggeredBotId?: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'botId' is not null or undefined
             assertParamExists('formSubmissionsGet', 'botId', botId)
-            // verify required parameter 'actionId' is not null or undefined
-            assertParamExists('formSubmissionsGet', 'actionId', actionId)
-            const localVarPath = `/form-submissions/{botId}/{actionId}`
-                .replace(`{${"botId"}}`, encodeURIComponent(String(botId)))
-                .replace(`{${"actionId"}}`, encodeURIComponent(String(actionId)));
+            const localVarPath = `/form-submissions/{botId}`
+                .replace(`{${"botId"}}`, encodeURIComponent(String(botId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -5396,6 +5368,10 @@ export const FormsApiAxiosParamCreator = function (configuration?: Configuration
 
             if (ids) {
                 localVarQueryParameter['ids'] = ids;
+            }
+
+            if (triggeredBotId !== undefined) {
+                localVarQueryParameter['triggeredBotId'] = triggeredBotId;
             }
 
 
@@ -5495,15 +5471,15 @@ export const FormsApiFp = function(configuration?: Configuration) {
          * 
          * @summary Get form submissions
          * @param {string} botId 
-         * @param {string} actionId 
          * @param {number} [count] 
          * @param {string} [before] 
          * @param {Array<string>} [ids] 
+         * @param {string} [triggeredBotId] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async formSubmissionsGet(botId: string, actionId: string, count?: number, before?: string, ids?: Array<string>, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<FormSubmissionsGet200Response>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.formSubmissionsGet(botId, actionId, count, before, ids, options);
+        async formSubmissionsGet(botId: string, count?: number, before?: string, ids?: Array<string>, triggeredBotId?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<FormSubmissionsGet200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.formSubmissionsGet(botId, count, before, ids, triggeredBotId, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -5566,7 +5542,7 @@ export const FormsApiFactory = function (configuration?: Configuration, basePath
          * @throws {RequiredError}
          */
         formSubmissionsGet(requestParameters: FormsApiFormSubmissionsGetRequest, options?: AxiosRequestConfig): AxiosPromise<FormSubmissionsGet200Response> {
-            return localVarFp.formSubmissionsGet(requestParameters.botId, requestParameters.actionId, requestParameters.count, requestParameters.before, requestParameters.ids, options).then((request) => request(axios, basePath));
+            return localVarFp.formSubmissionsGet(requestParameters.botId, requestParameters.count, requestParameters.before, requestParameters.ids, requestParameters.triggeredBotId, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -5645,13 +5621,6 @@ export interface FormsApiFormSubmissionsGetRequest {
 
     /**
      * 
-     * @type {string}
-     * @memberof FormsApiFormSubmissionsGet
-     */
-    readonly actionId: string
-
-    /**
-     * 
      * @type {number}
      * @memberof FormsApiFormSubmissionsGet
      */
@@ -5670,6 +5639,13 @@ export interface FormsApiFormSubmissionsGetRequest {
      * @memberof FormsApiFormSubmissionsGet
      */
     readonly ids?: Array<string>
+
+    /**
+     * 
+     * @type {string}
+     * @memberof FormsApiFormSubmissionsGet
+     */
+    readonly triggeredBotId?: string
 }
 
 /**
@@ -5745,7 +5721,7 @@ export class FormsApi extends BaseAPI {
      * @memberof FormsApi
      */
     public formSubmissionsGet(requestParameters: FormsApiFormSubmissionsGetRequest, options?: AxiosRequestConfig) {
-        return FormsApiFp(this.configuration).formSubmissionsGet(requestParameters.botId, requestParameters.actionId, requestParameters.count, requestParameters.before, requestParameters.ids, options).then((request) => request(this.axios, this.basePath));
+        return FormsApiFp(this.configuration).formSubmissionsGet(requestParameters.botId, requestParameters.count, requestParameters.before, requestParameters.ids, requestParameters.triggeredBotId, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
