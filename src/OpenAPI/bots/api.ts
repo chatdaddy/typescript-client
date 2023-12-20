@@ -1610,6 +1610,12 @@ export interface BotsCreateRequest {
      * @memberof BotsCreateRequest
      */
     'name'?: string;
+    /**
+     * If true, the bot will be a form. If false, the bot will not be a form
+     * @type {boolean}
+     * @memberof BotsCreateRequest
+     */
+    'isForm'?: boolean;
 }
 /**
  * 
@@ -1950,7 +1956,7 @@ export interface FormSubmission {
      * @type {string}
      * @memberof FormSubmission
      */
-    'botId'?: string;
+    'botId': string;
     /**
      * ID of the bot sequence
      * @type {string}
