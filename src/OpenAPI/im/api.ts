@@ -12037,6 +12037,10 @@ export const ProfileValidationApiAxiosParamCreator = function (configuration?: C
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["ACCOUNT_PATCH"], configuration)
+
 
     
             localVarHeaderParameter['Content-Type'] = 'application/json';
