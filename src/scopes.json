@@ -482,19 +482,6 @@
     ],
     "group": "Messages Access"
   },
-  "MESSAGES_SCHEDULE": {
-    "number": 60,
-    "description": "Allow the scheduling of Messages",
-    "features": [
-      "team-inbox"
-    ],
-    "roles": [
-      "admin",
-      "agent",
-      "editor"
-    ],
-    "group": "Messages Access"
-  },
   "MESSAGES_DELETE": {
     "number": 61,
     "description": "Allow the deletion of Messages",

@@ -929,7 +929,6 @@ export const Scope = {
     ChatsDelete: 'CHATS_DELETE',
     MessagesSendToAssigned: 'MESSAGES_SEND_TO_ASSIGNED',
     MessagesSendToAll: 'MESSAGES_SEND_TO_ALL',
-    MessagesSchedule: 'MESSAGES_SCHEDULE',
     MessagesDelete: 'MESSAGES_DELETE',
     GroupsCreate: 'GROUPS_CREATE',
     GroupsUpdate: 'GROUPS_UPDATE',
