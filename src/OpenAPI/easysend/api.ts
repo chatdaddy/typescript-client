@@ -2101,7 +2101,7 @@ export interface ShopProduct {
      * @type {string}
      * @memberof ShopProduct
      */
-    'CategoryId'?: string;
+    'categoryId'?: string;
     /**
      * 
      * @type {ShopProductCategory}
