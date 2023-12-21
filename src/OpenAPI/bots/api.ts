@@ -1708,19 +1708,6 @@ export interface BotsGets200Response {
 /**
  * 
  * @export
- * @interface D
- */
-export interface D {
-    /**
-     * 
-     * @type {{ [key: string]: any; }}
-     * @memberof D
-     */
-    'fields'?: { [key: string]: any; };
-}
-/**
- * 
- * @export
  * @interface ExternalTemplateProvider
  */
 export interface ExternalTemplateProvider {
@@ -2024,6 +2011,19 @@ export interface FormSubmission {
      * @memberof FormSubmission
      */
     'sourceActionId'?: string;
+}
+/**
+ * 
+ * @export
+ * @interface FormSubmissionUpdate
+ */
+export interface FormSubmissionUpdate {
+    /**
+     * 
+     * @type {{ [key: string]: any; }}
+     * @memberof FormSubmissionUpdate
+     */
+    'fields'?: { [key: string]: any; };
 }
 /**
  * 
@@ -5302,11 +5302,11 @@ export const FormsApiAxiosParamCreator = function (configuration?: Configuration
          * 
          * @summary Update a form submission
          * @param {string} submissionId 
-         * @param {D} [d] 
+         * @param {FormSubmissionUpdate} [formSubmissionUpdate] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        formSubmissionUpdate: async (submissionId: string, d?: D, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        formSubmissionUpdate: async (submissionId: string, formSubmissionUpdate?: FormSubmissionUpdate, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'submissionId' is not null or undefined
             assertParamExists('formSubmissionUpdate', 'submissionId', submissionId)
             const localVarPath = `/form-submission/{submissionId}`
@@ -5333,7 +5333,7 @@ export const FormsApiAxiosParamCreator = function (configuration?: Configuration
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(d, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(formSubmissionUpdate, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -5473,12 +5473,12 @@ export const FormsApiFp = function(configuration?: Configuration) {
          * 
          * @summary Update a form submission
          * @param {string} submissionId 
-         * @param {D} [d] 
+         * @param {FormSubmissionUpdate} [formSubmissionUpdate] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async formSubmissionUpdate(submissionId: string, d?: D, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.formSubmissionUpdate(submissionId, d, options);
+        async formSubmissionUpdate(submissionId: string, formSubmissionUpdate?: FormSubmissionUpdate, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.formSubmissionUpdate(submissionId, formSubmissionUpdate, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -5546,7 +5546,7 @@ export const FormsApiFactory = function (configuration?: Configuration, basePath
          * @throws {RequiredError}
          */
         formSubmissionUpdate(requestParameters: FormsApiFormSubmissionUpdateRequest, options?: AxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.formSubmissionUpdate(requestParameters.submissionId, requestParameters.d, options).then((request) => request(axios, basePath));
+            return localVarFp.formSubmissionUpdate(requestParameters.submissionId, requestParameters.formSubmissionUpdate, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -5621,10 +5621,10 @@ export interface FormsApiFormSubmissionUpdateRequest {
 
     /**
      * 
-     * @type {D}
+     * @type {FormSubmissionUpdate}
      * @memberof FormsApiFormSubmissionUpdate
      */
-    readonly d?: D
+    readonly formSubmissionUpdate?: FormSubmissionUpdate
 }
 
 /**
@@ -5730,7 +5730,7 @@ export class FormsApi extends BaseAPI {
      * @memberof FormsApi
      */
     public formSubmissionUpdate(requestParameters: FormsApiFormSubmissionUpdateRequest, options?: AxiosRequestConfig) {
-        return FormsApiFp(this.configuration).formSubmissionUpdate(requestParameters.submissionId, requestParameters.d, options).then((request) => request(this.axios, this.basePath));
+        return FormsApiFp(this.configuration).formSubmissionUpdate(requestParameters.submissionId, requestParameters.formSubmissionUpdate, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
