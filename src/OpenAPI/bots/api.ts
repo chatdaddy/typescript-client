@@ -1708,6 +1708,19 @@ export interface BotsGets200Response {
 /**
  * 
  * @export
+ * @interface D
+ */
+export interface D {
+    /**
+     * 
+     * @type {{ [key: string]: any; }}
+     * @memberof D
+     */
+    'fields'?: { [key: string]: any; };
+}
+/**
+ * 
+ * @export
  * @interface ExternalTemplateProvider
  */
 export interface ExternalTemplateProvider {
@@ -2011,19 +2024,6 @@ export interface FormSubmission {
      * @memberof FormSubmission
      */
     'sourceActionId'?: string;
-}
-/**
- * 
- * @export
- * @interface FormSubmissionUpdate
- */
-export interface FormSubmissionUpdate {
-    /**
-     * 
-     * @type {{ [key: string]: any; }}
-     * @memberof FormSubmissionUpdate
-     */
-    'fields'?: { [key: string]: any; };
 }
 /**
  * 
@@ -5255,16 +5255,19 @@ export const FormsApiAxiosParamCreator = function (configuration?: Configuration
         },
         /**
          * 
-         * @summary Delete a form submission
-         * @param {string} submissionId 
+         * @summary Delete form submissions
+         * @param {string} botId 
+         * @param {Array<string>} ids 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        formSubmissionDelete: async (submissionId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'submissionId' is not null or undefined
-            assertParamExists('formSubmissionDelete', 'submissionId', submissionId)
-            const localVarPath = `/form-submission/{submissionId}`
-                .replace(`{${"submissionId"}}`, encodeURIComponent(String(submissionId)));
+        formSubmissionDelete: async (botId: string, ids: Array<string>, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'botId' is not null or undefined
+            assertParamExists('formSubmissionDelete', 'botId', botId)
+            // verify required parameter 'ids' is not null or undefined
+            assertParamExists('formSubmissionDelete', 'ids', ids)
+            const localVarPath = `/form-submissions/{botId}`
+                .replace(`{${"botId"}}`, encodeURIComponent(String(botId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -5279,6 +5282,10 @@ export const FormsApiAxiosParamCreator = function (configuration?: Configuration
             // authentication chatdaddy required
             // oauth required
             await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["TEMPLATES_DELETE"], configuration)
+
+            if (ids) {
+                localVarQueryParameter['ids'] = ids;
+            }
 
 
     
@@ -5295,11 +5302,11 @@ export const FormsApiAxiosParamCreator = function (configuration?: Configuration
          * 
          * @summary Update a form submission
          * @param {string} submissionId 
-         * @param {FormSubmissionUpdate} [formSubmissionUpdate] 
+         * @param {D} [d] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        formSubmissionUpdate: async (submissionId: string, formSubmissionUpdate?: FormSubmissionUpdate, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        formSubmissionUpdate: async (submissionId: string, d?: D, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'submissionId' is not null or undefined
             assertParamExists('formSubmissionUpdate', 'submissionId', submissionId)
             const localVarPath = `/form-submission/{submissionId}`
@@ -5326,7 +5333,7 @@ export const FormsApiAxiosParamCreator = function (configuration?: Configuration
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(formSubmissionUpdate, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(d, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -5452,25 +5459,26 @@ export const FormsApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
-         * @summary Delete a form submission
-         * @param {string} submissionId 
+         * @summary Delete form submissions
+         * @param {string} botId 
+         * @param {Array<string>} ids 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async formSubmissionDelete(submissionId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.formSubmissionDelete(submissionId, options);
+        async formSubmissionDelete(botId: string, ids: Array<string>, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.formSubmissionDelete(botId, ids, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
          * 
          * @summary Update a form submission
          * @param {string} submissionId 
-         * @param {FormSubmissionUpdate} [formSubmissionUpdate] 
+         * @param {D} [d] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async formSubmissionUpdate(submissionId: string, formSubmissionUpdate?: FormSubmissionUpdate, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.formSubmissionUpdate(submissionId, formSubmissionUpdate, options);
+        async formSubmissionUpdate(submissionId: string, d?: D, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.formSubmissionUpdate(submissionId, d, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -5522,13 +5530,13 @@ export const FormsApiFactory = function (configuration?: Configuration, basePath
         },
         /**
          * 
-         * @summary Delete a form submission
+         * @summary Delete form submissions
          * @param {FormsApiFormSubmissionDeleteRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
         formSubmissionDelete(requestParameters: FormsApiFormSubmissionDeleteRequest, options?: AxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.formSubmissionDelete(requestParameters.submissionId, options).then((request) => request(axios, basePath));
+            return localVarFp.formSubmissionDelete(requestParameters.botId, requestParameters.ids, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -5538,7 +5546,7 @@ export const FormsApiFactory = function (configuration?: Configuration, basePath
          * @throws {RequiredError}
          */
         formSubmissionUpdate(requestParameters: FormsApiFormSubmissionUpdateRequest, options?: AxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.formSubmissionUpdate(requestParameters.submissionId, requestParameters.formSubmissionUpdate, options).then((request) => request(axios, basePath));
+            return localVarFp.formSubmissionUpdate(requestParameters.submissionId, requestParameters.d, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -5588,7 +5596,14 @@ export interface FormsApiFormSubmissionDeleteRequest {
      * @type {string}
      * @memberof FormsApiFormSubmissionDelete
      */
-    readonly submissionId: string
+    readonly botId: string
+
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof FormsApiFormSubmissionDelete
+     */
+    readonly ids: Array<string>
 }
 
 /**
@@ -5606,10 +5621,10 @@ export interface FormsApiFormSubmissionUpdateRequest {
 
     /**
      * 
-     * @type {FormSubmissionUpdate}
+     * @type {D}
      * @memberof FormsApiFormSubmissionUpdate
      */
-    readonly formSubmissionUpdate?: FormSubmissionUpdate
+    readonly d?: D
 }
 
 /**
@@ -5696,14 +5711,14 @@ export class FormsApi extends BaseAPI {
 
     /**
      * 
-     * @summary Delete a form submission
+     * @summary Delete form submissions
      * @param {FormsApiFormSubmissionDeleteRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof FormsApi
      */
     public formSubmissionDelete(requestParameters: FormsApiFormSubmissionDeleteRequest, options?: AxiosRequestConfig) {
-        return FormsApiFp(this.configuration).formSubmissionDelete(requestParameters.submissionId, options).then((request) => request(this.axios, this.basePath));
+        return FormsApiFp(this.configuration).formSubmissionDelete(requestParameters.botId, requestParameters.ids, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -5715,7 +5730,7 @@ export class FormsApi extends BaseAPI {
      * @memberof FormsApi
      */
     public formSubmissionUpdate(requestParameters: FormsApiFormSubmissionUpdateRequest, options?: AxiosRequestConfig) {
-        return FormsApiFp(this.configuration).formSubmissionUpdate(requestParameters.submissionId, requestParameters.formSubmissionUpdate, options).then((request) => request(this.axios, this.basePath));
+        return FormsApiFp(this.configuration).formSubmissionUpdate(requestParameters.submissionId, requestParameters.d, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
