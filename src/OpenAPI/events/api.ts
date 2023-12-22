@@ -302,6 +302,12 @@ export interface AccountInsertDataSettings {
      * @memberof AccountInsertDataSettings
      */
     'keepDeletedMessages'?: AccountInsertDataSettingsKeepDeletedMessages;
+    /**
+     * 
+     * @type {string}
+     * @memberof AccountInsertDataSettings
+     */
+    'geoLocation'?: string;
 }
 /**
  * 

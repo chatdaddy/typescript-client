@@ -381,6 +381,12 @@ export interface AccountSettings {
      * @memberof AccountSettings
      */
     'keepDeletedMessages'?: KeepDeletedMessagesSettings;
+    /**
+     * Provide a geo location from where all traffic will be routed. Only relevant for non-webhook account types. Leave undefined to use the default geo location.
+     * @type {string}
+     * @memberof AccountSettings
+     */
+    'geoLocation'?: string;
 }
 /**
  * All new chats will be auto asssigned if one of the option is enabled and select any Assignee
@@ -600,6 +606,12 @@ export interface AccountsPostRequest {
      * @memberof AccountsPostRequest
      */
     'nickname'?: string;
+    /**
+     * 
+     * @type {AccountSettings}
+     * @memberof AccountsPostRequest
+     */
+    'settings'?: AccountSettings;
 }
 
 
