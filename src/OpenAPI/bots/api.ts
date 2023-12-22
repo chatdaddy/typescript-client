@@ -109,6 +109,12 @@ export interface Action {
      * @memberof Action
      */
     'formRef'?: FormRef;
+    /**
+     * 
+     * @type {FormActionMetadata}
+     * @memberof Action
+     */
+    'formActionMetadata'?: FormActionMetadata;
 }
 /**
  * 
@@ -201,6 +207,12 @@ export interface ActionContent {
      * @memberof ActionContent
      */
     'formRef'?: FormRef;
+    /**
+     * 
+     * @type {FormActionMetadata}
+     * @memberof ActionContent
+     */
+    'formActionMetadata'?: FormActionMetadata;
 }
 /**
  * 
@@ -1870,6 +1882,44 @@ export interface FolderUpdateRequestBotIdsInner {
      */
     'remove'?: boolean;
 }
+/**
+ * 
+ * @export
+ * @interface FormActionMetadata
+ */
+export interface FormActionMetadata {
+    /**
+     * If true, the field is required
+     * @type {boolean}
+     * @memberof FormActionMetadata
+     */
+    'required'?: boolean;
+    /**
+     * Type of the field
+     * @type {string}
+     * @memberof FormActionMetadata
+     */
+    'type'?: FormActionMetadataTypeEnum;
+    /**
+     * Index of the field
+     * @type {number}
+     * @memberof FormActionMetadata
+     */
+    'index'?: number;
+}
+
+export const FormActionMetadataTypeEnum = {
+    Text: 'text',
+    Number: 'number',
+    Date: 'date',
+    Select: 'select',
+    Multiselect: 'multiselect',
+    Rating: 'rating',
+    Nps: 'nps'
+} as const;
+
+export type FormActionMetadataTypeEnum = typeof FormActionMetadataTypeEnum[keyof typeof FormActionMetadataTypeEnum];
+
 /**
  * 
  * @export

@@ -961,6 +961,12 @@ export interface BotInsertDataActionsInner {
      * @memberof BotInsertDataActionsInner
      */
     'formRef'?: BotInsertDataActionsInnerAllOf1FormRef;
+    /**
+     * 
+     * @type {BotInsertDataActionsInnerAllOf1FormActionMetadata}
+     * @memberof BotInsertDataActionsInner
+     */
+    'formActionMetadata'?: BotInsertDataActionsInnerAllOf1FormActionMetadata;
 }
 /**
  * 
@@ -1053,7 +1059,51 @@ export interface BotInsertDataActionsInnerAllOf1 {
      * @memberof BotInsertDataActionsInnerAllOf1
      */
     'formRef'?: BotInsertDataActionsInnerAllOf1FormRef;
+    /**
+     * 
+     * @type {BotInsertDataActionsInnerAllOf1FormActionMetadata}
+     * @memberof BotInsertDataActionsInnerAllOf1
+     */
+    'formActionMetadata'?: BotInsertDataActionsInnerAllOf1FormActionMetadata;
 }
+/**
+ * 
+ * @export
+ * @interface BotInsertDataActionsInnerAllOf1FormActionMetadata
+ */
+export interface BotInsertDataActionsInnerAllOf1FormActionMetadata {
+    /**
+     * If true, the field is required
+     * @type {boolean}
+     * @memberof BotInsertDataActionsInnerAllOf1FormActionMetadata
+     */
+    'required'?: boolean;
+    /**
+     * Type of the field
+     * @type {string}
+     * @memberof BotInsertDataActionsInnerAllOf1FormActionMetadata
+     */
+    'type'?: BotInsertDataActionsInnerAllOf1FormActionMetadataTypeEnum;
+    /**
+     * Index of the field
+     * @type {number}
+     * @memberof BotInsertDataActionsInnerAllOf1FormActionMetadata
+     */
+    'index'?: number;
+}
+
+export const BotInsertDataActionsInnerAllOf1FormActionMetadataTypeEnum = {
+    Text: 'text',
+    Number: 'number',
+    Date: 'date',
+    Select: 'select',
+    Multiselect: 'multiselect',
+    Rating: 'rating',
+    Nps: 'nps'
+} as const;
+
+export type BotInsertDataActionsInnerAllOf1FormActionMetadataTypeEnum = typeof BotInsertDataActionsInnerAllOf1FormActionMetadataTypeEnum[keyof typeof BotInsertDataActionsInnerAllOf1FormActionMetadataTypeEnum];
+
 /**
  * 
  * @export
