@@ -280,6 +280,12 @@ export interface AccountCredentialsMeta {
      * @memberof AccountCredentialsMeta
      */
     'pageId': string;
+    /**
+     * Page access token of the Facebook page
+     * @type {string}
+     * @memberof AccountCredentialsMeta
+     */
+    'pageAccessToken': string;
 }
 
 export const AccountCredentialsMetaTypeEnum = {
@@ -4350,6 +4356,12 @@ export interface ProfileMessengerPostRequest {
      * @memberof ProfileMessengerPostRequest
      */
     'pageId': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ProfileMessengerPostRequest
+     */
+    'pageAccessToken': string;
 }
 /**
  * 
