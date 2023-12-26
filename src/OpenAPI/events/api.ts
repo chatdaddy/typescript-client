@@ -706,6 +706,50 @@ export interface ActionExecuteDataMessagesInner {
 /**
  * 
  * @export
+ * @interface AlarmPost200Response
+ */
+export interface AlarmPost200Response {
+    /**
+     * 
+     * @type {boolean}
+     * @memberof AlarmPost200Response
+     */
+    'success': boolean;
+}
+/**
+ * 
+ * @export
+ * @interface AlarmPostRequest
+ */
+export interface AlarmPostRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof AlarmPostRequest
+     */
+    'title': string;
+    /**
+     * The message to send
+     * @type {string}
+     * @memberof AlarmPostRequest
+     */
+    'message': string;
+    /**
+     * If severe, will mention @all
+     * @type {boolean}
+     * @memberof AlarmPostRequest
+     */
+    'isSevere'?: boolean;
+    /**
+     * Any additional parameters to send
+     * @type {{ [key: string]: any; }}
+     * @memberof AlarmPostRequest
+     */
+    'parameters'?: { [key: string]: any; };
+}
+/**
+ * 
+ * @export
  * @interface BotDelete
  */
 export interface BotDelete {
@@ -8237,6 +8281,129 @@ export const UserUpdateDataCreatedByMethodEnum = {
 } as const;
 
 export type UserUpdateDataCreatedByMethodEnum = typeof UserUpdateDataCreatedByMethodEnum[keyof typeof UserUpdateDataCreatedByMethodEnum];
+
+
+/**
+ * AlarmsApi - axios parameter creator
+ * @export
+ */
+export const AlarmsApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @summary Send an alarm to the system
+         * @param {AlarmPostRequest} [alarmPostRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        alarmPost: async (alarmPostRequest?: AlarmPostRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/alarm`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["ADMIN_PANEL_ACCESS"], configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(alarmPostRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * AlarmsApi - functional programming interface
+ * @export
+ */
+export const AlarmsApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = AlarmsApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * 
+         * @summary Send an alarm to the system
+         * @param {AlarmPostRequest} [alarmPostRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async alarmPost(alarmPostRequest?: AlarmPostRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AlarmPost200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.alarmPost(alarmPostRequest, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+    }
+};
+
+/**
+ * AlarmsApi - factory interface
+ * @export
+ */
+export const AlarmsApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = AlarmsApiFp(configuration)
+    return {
+        /**
+         * 
+         * @summary Send an alarm to the system
+         * @param {AlarmsApiAlarmPostRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        alarmPost(requestParameters: AlarmsApiAlarmPostRequest = {}, options?: AxiosRequestConfig): AxiosPromise<AlarmPost200Response> {
+            return localVarFp.alarmPost(requestParameters.alarmPostRequest, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * Request parameters for alarmPost operation in AlarmsApi.
+ * @export
+ * @interface AlarmsApiAlarmPostRequest
+ */
+export interface AlarmsApiAlarmPostRequest {
+    /**
+     * 
+     * @type {AlarmPostRequest}
+     * @memberof AlarmsApiAlarmPost
+     */
+    readonly alarmPostRequest?: AlarmPostRequest
+}
+
+/**
+ * AlarmsApi - object-oriented interface
+ * @export
+ * @class AlarmsApi
+ * @extends {BaseAPI}
+ */
+export class AlarmsApi extends BaseAPI {
+    /**
+     * 
+     * @summary Send an alarm to the system
+     * @param {AlarmsApiAlarmPostRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AlarmsApi
+     */
+    public alarmPost(requestParameters: AlarmsApiAlarmPostRequest = {}, options?: AxiosRequestConfig) {
+        return AlarmsApiFp(this.configuration).alarmPost(requestParameters.alarmPostRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+}
 
 
 /**
