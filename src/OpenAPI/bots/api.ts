@@ -5286,11 +5286,10 @@ export const FormsApiAxiosParamCreator = function (configuration?: Configuration
          * 
          * @summary Get form actions and submission data
          * @param {string} submissionId 
-         * @param {string} [lastActionId] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        formDataGet: async (submissionId: string, lastActionId?: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        formDataGet: async (submissionId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'submissionId' is not null or undefined
             assertParamExists('formDataGet', 'submissionId', submissionId)
             const localVarPath = `/form-data/{submissionId}`
@@ -5305,10 +5304,6 @@ export const FormsApiAxiosParamCreator = function (configuration?: Configuration
             const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
-
-            if (lastActionId !== undefined) {
-                localVarQueryParameter['lastActionId'] = lastActionId;
-            }
 
 
     
@@ -5513,12 +5508,11 @@ export const FormsApiFp = function(configuration?: Configuration) {
          * 
          * @summary Get form actions and submission data
          * @param {string} submissionId 
-         * @param {string} [lastActionId] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async formDataGet(submissionId: string, lastActionId?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<FormDataGet200Response>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.formDataGet(submissionId, lastActionId, options);
+        async formDataGet(submissionId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<FormDataGet200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.formDataGet(submissionId, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -5589,7 +5583,7 @@ export const FormsApiFactory = function (configuration?: Configuration, basePath
          * @throws {RequiredError}
          */
         formDataGet(requestParameters: FormsApiFormDataGetRequest, options?: AxiosRequestConfig): AxiosPromise<FormDataGet200Response> {
-            return localVarFp.formDataGet(requestParameters.submissionId, requestParameters.lastActionId, options).then((request) => request(axios, basePath));
+            return localVarFp.formDataGet(requestParameters.submissionId, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -5646,13 +5640,6 @@ export interface FormsApiFormDataGetRequest {
      * @memberof FormsApiFormDataGet
      */
     readonly submissionId: string
-
-    /**
-     * 
-     * @type {string}
-     * @memberof FormsApiFormDataGet
-     */
-    readonly lastActionId?: string
 }
 
 /**
@@ -5769,7 +5756,7 @@ export class FormsApi extends BaseAPI {
      * @memberof FormsApi
      */
     public formDataGet(requestParameters: FormsApiFormDataGetRequest, options?: AxiosRequestConfig) {
-        return FormsApiFp(this.configuration).formDataGet(requestParameters.submissionId, requestParameters.lastActionId, options).then((request) => request(this.axios, this.basePath));
+        return FormsApiFp(this.configuration).formDataGet(requestParameters.submissionId, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
