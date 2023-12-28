@@ -1963,6 +1963,12 @@ export interface FormDataGet200Response {
      * @memberof FormDataGet200Response
      */
     'description'?: string;
+    /**
+     * 
+     * @type {FormSubmission}
+     * @memberof FormDataGet200Response
+     */
+    'submission': FormSubmission;
 }
 /**
  * 
