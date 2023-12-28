@@ -1952,17 +1952,17 @@ export interface FormDataGet200Response {
      */
     'actions': Array<Action>;
     /**
-     * 
-     * @type {FormSubmission}
+     * Name of the form
+     * @type {string}
      * @memberof FormDataGet200Response
      */
-    'submission': FormSubmission;
+    'name'?: string;
     /**
-     * 
-     * @type {Bot}
+     * Description of the form
+     * @type {string}
      * @memberof FormDataGet200Response
      */
-    'form'?: Bot;
+    'description'?: string;
 }
 /**
  * 
@@ -2049,6 +2049,12 @@ export interface FormSubmission {
      * @memberof FormSubmission
      */
     'fields'?: { [key: string]: any; };
+    /**
+     * 
+     * @type {string}
+     * @memberof FormSubmission
+     */
+    'lastSubmittedActionId'?: string;
     /**
      * 
      * @type {FormSubmissionSource}
