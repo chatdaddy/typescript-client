@@ -659,7 +659,7 @@
       "viewer",
       "admin"
     ],
-    "group": "Shop & Product"
+    "group": null
   },
   "PRODUCTS_CREATE": {
     "number": 83,
