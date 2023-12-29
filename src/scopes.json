@@ -414,7 +414,7 @@
       "admin",
       "editor"
     ],
-    "group": "Team Access"
+    "group": null
   },
   "CHATS_ACCESS_ALL": {
     "number": 55,
