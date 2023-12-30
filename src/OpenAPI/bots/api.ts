@@ -484,6 +484,12 @@ export interface Bot {
      */
     'teamId': string;
     /**
+     * ID of the bot sequence
+     * @type {string}
+     * @memberof Bot
+     */
+    'defaultAccountId'?: string;
+    /**
      * 
      * @type {string}
      * @memberof Bot

@@ -841,6 +841,12 @@ export interface BotInsertData {
      * @type {string}
      * @memberof BotInsertData
      */
+    'defaultAccountId'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof BotInsertData
+     */
     'startingActionId'?: string | null;
     /**
      * 
@@ -2534,6 +2540,12 @@ export interface BotUpdateData {
      * @memberof BotUpdateData
      */
     'teamId'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof BotUpdateData
+     */
+    'defaultAccountId'?: string;
     /**
      * 
      * @type {string}
