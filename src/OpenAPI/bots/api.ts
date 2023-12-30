@@ -2071,6 +2071,38 @@ export interface FormSubmission {
 /**
  * 
  * @export
+ * @interface FormSubmissionCreate200Response
+ */
+export interface FormSubmissionCreate200Response {
+    /**
+     * ID of the submission
+     * @type {string}
+     * @memberof FormSubmissionCreate200Response
+     */
+    'submissionId': string;
+}
+/**
+ * 
+ * @export
+ * @interface FormSubmissionCreateRequest
+ */
+export interface FormSubmissionCreateRequest {
+    /**
+     * Phone number of the submitter
+     * @type {string}
+     * @memberof FormSubmissionCreateRequest
+     */
+    'phoneNumber'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof FormSubmissionCreateRequest
+     */
+    'captchaToken': string;
+}
+/**
+ * 
+ * @export
  * @interface FormSubmissionSource
  */
 export interface FormSubmissionSource {
@@ -5324,6 +5356,44 @@ export const FormsApiAxiosParamCreator = function (configuration?: Configuration
         },
         /**
          * 
+         * @summary Create form submissions
+         * @param {string} botId 
+         * @param {FormSubmissionCreateRequest} [formSubmissionCreateRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        formSubmissionCreate: async (botId: string, formSubmissionCreateRequest?: FormSubmissionCreateRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'botId' is not null or undefined
+            assertParamExists('formSubmissionCreate', 'botId', botId)
+            const localVarPath = `/form-submissions/{botId}`
+                .replace(`{${"botId"}}`, encodeURIComponent(String(botId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(formSubmissionCreateRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
          * @summary Delete form submissions
          * @param {string} botId 
          * @param {Array<string>} ids 
@@ -5523,6 +5593,18 @@ export const FormsApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
+         * @summary Create form submissions
+         * @param {string} botId 
+         * @param {FormSubmissionCreateRequest} [formSubmissionCreateRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async formSubmissionCreate(botId: string, formSubmissionCreateRequest?: FormSubmissionCreateRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<FormSubmissionCreate200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.formSubmissionCreate(botId, formSubmissionCreateRequest, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
          * @summary Delete form submissions
          * @param {string} botId 
          * @param {Array<string>} ids 
@@ -5593,6 +5675,16 @@ export const FormsApiFactory = function (configuration?: Configuration, basePath
         },
         /**
          * 
+         * @summary Create form submissions
+         * @param {FormsApiFormSubmissionCreateRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        formSubmissionCreate(requestParameters: FormsApiFormSubmissionCreateRequest, options?: AxiosRequestConfig): AxiosPromise<FormSubmissionCreate200Response> {
+            return localVarFp.formSubmissionCreate(requestParameters.botId, requestParameters.formSubmissionCreateRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
          * @summary Delete form submissions
          * @param {FormsApiFormSubmissionDeleteRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -5646,6 +5738,27 @@ export interface FormsApiFormDataGetRequest {
      * @memberof FormsApiFormDataGet
      */
     readonly submissionId: string
+}
+
+/**
+ * Request parameters for formSubmissionCreate operation in FormsApi.
+ * @export
+ * @interface FormsApiFormSubmissionCreateRequest
+ */
+export interface FormsApiFormSubmissionCreateRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof FormsApiFormSubmissionCreate
+     */
+    readonly botId: string
+
+    /**
+     * 
+     * @type {FormSubmissionCreateRequest}
+     * @memberof FormsApiFormSubmissionCreate
+     */
+    readonly formSubmissionCreateRequest?: FormSubmissionCreateRequest
 }
 
 /**
@@ -5763,6 +5876,18 @@ export class FormsApi extends BaseAPI {
      */
     public formDataGet(requestParameters: FormsApiFormDataGetRequest, options?: AxiosRequestConfig) {
         return FormsApiFp(this.configuration).formDataGet(requestParameters.submissionId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Create form submissions
+     * @param {FormsApiFormSubmissionCreateRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof FormsApi
+     */
+    public formSubmissionCreate(requestParameters: FormsApiFormSubmissionCreateRequest, options?: AxiosRequestConfig) {
+        return FormsApiFp(this.configuration).formSubmissionCreate(requestParameters.botId, requestParameters.formSubmissionCreateRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
