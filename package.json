@@ -30,7 +30,6 @@
     "prepare": "tsc"
   },
   "dependencies": {
-    "@hapi/boom": "^10.0.1",
     "axios-retry": "^3.5.1",
     "qs": "^6.11.2"
   }
