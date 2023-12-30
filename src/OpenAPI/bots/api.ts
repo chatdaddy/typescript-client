@@ -2092,7 +2092,7 @@ export interface FormSubmissionCreateRequest {
      * @type {string}
      * @memberof FormSubmissionCreateRequest
      */
-    'phoneNumber'?: string;
+    'phoneNumber': string;
     /**
      * 
      * @type {string}
