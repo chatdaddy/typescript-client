@@ -948,6 +948,12 @@ export interface BotPatch {
      */
     'startTriggers'?: Array<BotTrigger>;
     /**
+     * ID of the bot sequence
+     * @type {string}
+     * @memberof BotPatch
+     */
+    'defaultAccountId'?: string;
+    /**
      * List of actions to edit/add. Do not specify the ID to add a new action
      * @type {Array<ActionContent>}
      * @memberof BotPatch
@@ -1921,7 +1927,8 @@ export const FormActionMetadataTypeEnum = {
     Select: 'select',
     Multiselect: 'multiselect',
     Rating: 'rating',
-    Nps: 'nps'
+    Nps: 'nps',
+    Time: 'time'
 } as const;
 
 export type FormActionMetadataTypeEnum = typeof FormActionMetadataTypeEnum[keyof typeof FormActionMetadataTypeEnum];

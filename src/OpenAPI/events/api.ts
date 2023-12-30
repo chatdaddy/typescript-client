@@ -1149,7 +1149,8 @@ export const BotInsertDataActionsInnerAllOf1FormActionMetadataTypeEnum = {
     Select: 'select',
     Multiselect: 'multiselect',
     Rating: 'rating',
-    Nps: 'nps'
+    Nps: 'nps',
+    Time: 'time'
 } as const;
 
 export type BotInsertDataActionsInnerAllOf1FormActionMetadataTypeEnum = typeof BotInsertDataActionsInnerAllOf1FormActionMetadataTypeEnum[keyof typeof BotInsertDataActionsInnerAllOf1FormActionMetadataTypeEnum];
