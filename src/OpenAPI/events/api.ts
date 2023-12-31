@@ -1000,12 +1000,6 @@ export interface BotInsertDataActionsInner {
      */
     'position'?: BotInsertDataActionsInnerAllOf1MessageButtonsInnerPosition;
     /**
-     * 
-     * @type {BotInsertDataActionsInnerAllOf1MessageButtonsInnerNextAction}
-     * @memberof BotInsertDataActionsInner
-     */
-    'nextAction'?: BotInsertDataActionsInnerAllOf1MessageButtonsInnerNextAction;
-    /**
      * send in to remove the action
      * @type {boolean}
      * @memberof BotInsertDataActionsInner
@@ -1103,12 +1097,6 @@ export interface BotInsertDataActionsInnerAllOf1 {
      * @memberof BotInsertDataActionsInnerAllOf1
      */
     'position'?: BotInsertDataActionsInnerAllOf1MessageButtonsInnerPosition;
-    /**
-     * 
-     * @type {BotInsertDataActionsInnerAllOf1MessageButtonsInnerNextAction}
-     * @memberof BotInsertDataActionsInnerAllOf1
-     */
-    'nextAction'?: BotInsertDataActionsInnerAllOf1MessageButtonsInnerNextAction;
     /**
      * send in to remove the action
      * @type {boolean}
