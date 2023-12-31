@@ -1000,6 +1000,12 @@ export interface BotInsertDataActionsInner {
      */
     'position'?: BotInsertDataActionsInnerAllOf1MessageButtonsInnerPosition;
     /**
+     * 
+     * @type {BotInsertDataActionsInnerAllOf1MessageButtonsInnerNextAction}
+     * @memberof BotInsertDataActionsInner
+     */
+    'nextAction'?: BotInsertDataActionsInnerAllOf1MessageButtonsInnerNextAction;
+    /**
      * send in to remove the action
      * @type {boolean}
      * @memberof BotInsertDataActionsInner
@@ -1097,6 +1103,12 @@ export interface BotInsertDataActionsInnerAllOf1 {
      * @memberof BotInsertDataActionsInnerAllOf1
      */
     'position'?: BotInsertDataActionsInnerAllOf1MessageButtonsInnerPosition;
+    /**
+     * 
+     * @type {BotInsertDataActionsInnerAllOf1MessageButtonsInnerNextAction}
+     * @memberof BotInsertDataActionsInnerAllOf1
+     */
+    'nextAction'?: BotInsertDataActionsInnerAllOf1MessageButtonsInnerNextAction;
     /**
      * send in to remove the action
      * @type {boolean}
@@ -1403,6 +1415,12 @@ export interface BotInsertDataActionsInnerAllOf1MessageButtonsInnerNextActionDef
      * @memberof BotInsertDataActionsInnerAllOf1MessageButtonsInnerNextActionDefaultAction
      */
     'triggerBotId'?: string;
+    /**
+     * 
+     * @type {BotInsertDataActionsInnerAllOf1MessageButtonsInnerPosition}
+     * @memberof BotInsertDataActionsInnerAllOf1MessageButtonsInnerNextActionDefaultAction
+     */
+    'position'?: BotInsertDataActionsInnerAllOf1MessageButtonsInnerPosition;
 }
 /**
  * 
@@ -1422,6 +1440,12 @@ export interface BotInsertDataActionsInnerAllOf1MessageButtonsInnerNextActionDef
      * @memberof BotInsertDataActionsInnerAllOf1MessageButtonsInnerNextActionDefaultActionAllOf
      */
     'triggerBotId'?: string;
+    /**
+     * 
+     * @type {BotInsertDataActionsInnerAllOf1MessageButtonsInnerPosition}
+     * @memberof BotInsertDataActionsInnerAllOf1MessageButtonsInnerNextActionDefaultActionAllOf
+     */
+    'position'?: BotInsertDataActionsInnerAllOf1MessageButtonsInnerPosition;
 }
 /**
  * 
@@ -1474,6 +1498,12 @@ export interface BotInsertDataActionsInnerAllOf1MessageButtonsInnerNextActionGro
      * @memberof BotInsertDataActionsInnerAllOf1MessageButtonsInnerNextActionGroupsInnerTarget
      */
     'triggerBotId'?: string;
+    /**
+     * 
+     * @type {BotInsertDataActionsInnerAllOf1MessageButtonsInnerPosition}
+     * @memberof BotInsertDataActionsInnerAllOf1MessageButtonsInnerNextActionGroupsInnerTarget
+     */
+    'position'?: BotInsertDataActionsInnerAllOf1MessageButtonsInnerPosition;
 }
 /**
  * 

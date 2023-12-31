@@ -98,6 +98,12 @@ export interface Action {
      */
     'position'?: Position;
     /**
+     * 
+     * @type {NextAction}
+     * @memberof Action
+     */
+    'nextAction'?: NextAction;
+    /**
      * send in to remove the action
      * @type {boolean}
      * @memberof Action
@@ -195,6 +201,12 @@ export interface ActionContent {
      * @memberof ActionContent
      */
     'position'?: Position;
+    /**
+     * 
+     * @type {NextAction}
+     * @memberof ActionContent
+     */
+    'nextAction'?: NextAction;
     /**
      * send in to remove the action
      * @type {boolean}
@@ -383,6 +395,12 @@ export interface ActionTarget {
      * @memberof ActionTarget
      */
     'triggerBotId'?: string;
+    /**
+     * 
+     * @type {Position}
+     * @memberof ActionTarget
+     */
+    'position'?: Position;
 }
 /**
  * 
@@ -2475,6 +2493,12 @@ export interface NextActionDefaultAction {
      * @memberof NextActionDefaultAction
      */
     'triggerBotId'?: string;
+    /**
+     * 
+     * @type {Position}
+     * @memberof NextActionDefaultAction
+     */
+    'position'?: Position;
 }
 /**
  * 
@@ -2527,6 +2551,12 @@ export interface NextActionGroupsInnerTarget {
      * @memberof NextActionGroupsInnerTarget
      */
     'triggerBotId'?: string;
+    /**
+     * 
+     * @type {Position}
+     * @memberof NextActionGroupsInnerTarget
+     */
+    'position'?: Position;
 }
 /**
  * position in x-y coordinate space
