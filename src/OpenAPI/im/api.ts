@@ -9895,7 +9895,7 @@ export const MessagesApiAxiosParamCreator = function (configuration?: Configurat
 
             // authentication chatdaddy required
             // oauth required
-            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", [], configuration)
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["MESSAGES_SEARCH"], configuration)
 
             if (accountId) {
                 localVarQueryParameter['accountId'] = accountId;
