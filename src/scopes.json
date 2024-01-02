@@ -772,5 +772,18 @@
       "editor"
     ],
     "group": "Chat Access"
+  },
+    "MESSAGES_SEARCH": {
+    "number": 93,
+    "description": "Allow the access to Search all Messages",
+    "features": [
+      "team-inbox"
+    ],
+    "roles": [
+      "admin",
+      "agent",
+      "editor"
+    ],
+    "group": "Messages Access"
   }
 }

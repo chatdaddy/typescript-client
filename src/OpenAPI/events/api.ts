@@ -6450,7 +6450,8 @@ export const TeamInsertDataScopesEnum = {
     PaymentRecordsWrite: 'PAYMENT_RECORDS_WRITE',
     MetricsGet: 'METRICS_GET',
     AccountsReadAssigned: 'ACCOUNTS_READ_ASSIGNED',
-    AutocompleteGet: 'AUTOCOMPLETE_GET'
+    AutocompleteGet: 'AUTOCOMPLETE_GET',
+    MessagesSearch: 'MESSAGES_SEARCH'
 } as const;
 
 export type TeamInsertDataScopesEnum = typeof TeamInsertDataScopesEnum[keyof typeof TeamInsertDataScopesEnum];
@@ -6818,7 +6819,8 @@ export const TeamUpdateDataScopesEnum = {
     PaymentRecordsWrite: 'PAYMENT_RECORDS_WRITE',
     MetricsGet: 'METRICS_GET',
     AccountsReadAssigned: 'ACCOUNTS_READ_ASSIGNED',
-    AutocompleteGet: 'AUTOCOMPLETE_GET'
+    AutocompleteGet: 'AUTOCOMPLETE_GET',
+    MessagesSearch: 'MESSAGES_SEARCH'
 } as const;
 
 export type TeamUpdateDataScopesEnum = typeof TeamUpdateDataScopesEnum[keyof typeof TeamUpdateDataScopesEnum];
@@ -6998,7 +7000,8 @@ export const TeammemberInsertDataScopesEnum = {
     PaymentRecordsWrite: 'PAYMENT_RECORDS_WRITE',
     MetricsGet: 'METRICS_GET',
     AccountsReadAssigned: 'ACCOUNTS_READ_ASSIGNED',
-    AutocompleteGet: 'AUTOCOMPLETE_GET'
+    AutocompleteGet: 'AUTOCOMPLETE_GET',
+    MessagesSearch: 'MESSAGES_SEARCH'
 } as const;
 
 export type TeammemberInsertDataScopesEnum = typeof TeammemberInsertDataScopesEnum[keyof typeof TeammemberInsertDataScopesEnum];
@@ -7133,7 +7136,8 @@ export const TeammemberUpdateDataScopesEnum = {
     PaymentRecordsWrite: 'PAYMENT_RECORDS_WRITE',
     MetricsGet: 'METRICS_GET',
     AccountsReadAssigned: 'ACCOUNTS_READ_ASSIGNED',
-    AutocompleteGet: 'AUTOCOMPLETE_GET'
+    AutocompleteGet: 'AUTOCOMPLETE_GET',
+    MessagesSearch: 'MESSAGES_SEARCH'
 } as const;
 
 export type TeammemberUpdateDataScopesEnum = typeof TeammemberUpdateDataScopesEnum[keyof typeof TeammemberUpdateDataScopesEnum];

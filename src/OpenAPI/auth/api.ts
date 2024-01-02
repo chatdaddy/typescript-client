@@ -954,7 +954,8 @@ export const Scope = {
     PaymentRecordsWrite: 'PAYMENT_RECORDS_WRITE',
     MetricsGet: 'METRICS_GET',
     AccountsReadAssigned: 'ACCOUNTS_READ_ASSIGNED',
-    AutocompleteGet: 'AUTOCOMPLETE_GET'
+    AutocompleteGet: 'AUTOCOMPLETE_GET',
+    MessagesSearch: 'MESSAGES_SEARCH'
 } as const;
 
 export type Scope = typeof Scope[keyof typeof Scope];
