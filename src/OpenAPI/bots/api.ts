@@ -1000,7 +1000,7 @@ export interface BotPatch {
      * @type {string}
      * @memberof BotPatch
      */
-    'folderId'?: string;
+    'folderId'?: string | null;
 }
 /**
  * 
