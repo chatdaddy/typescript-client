@@ -3426,6 +3426,12 @@ export interface MessagingItems {
      * @memberof MessagingItems
      */
     'message'?: MessagingItemsMessage;
+    /**
+     * 
+     * @type {MessagingItemsPostback}
+     * @memberof MessagingItems
+     */
+    'postback'?: MessagingItemsPostback;
 }
 /**
  * 
@@ -3445,6 +3451,31 @@ export interface MessagingItemsMessage {
      * @memberof MessagingItemsMessage
      */
     'text'?: string;
+}
+/**
+ * 
+ * @export
+ * @interface MessagingItemsPostback
+ */
+export interface MessagingItemsPostback {
+    /**
+     * 
+     * @type {string}
+     * @memberof MessagingItemsPostback
+     */
+    'mid'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof MessagingItemsPostback
+     */
+    'title'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof MessagingItemsPostback
+     */
+    'payload'?: string;
 }
 /**
  * 
