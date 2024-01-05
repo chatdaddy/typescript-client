@@ -955,7 +955,8 @@ export const Scope = {
     MetricsGet: 'METRICS_GET',
     AccountsReadAssigned: 'ACCOUNTS_READ_ASSIGNED',
     AutocompleteGet: 'AUTOCOMPLETE_GET',
-    MessagesSearch: 'MESSAGES_SEARCH'
+    MessagesSearch: 'MESSAGES_SEARCH',
+    WidgetEdit: 'WIDGET_EDIT'
 } as const;
 
 export type Scope = typeof Scope[keyof typeof Scope];

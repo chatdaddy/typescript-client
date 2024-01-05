@@ -365,7 +365,8 @@ export const Feature = {
     Broadcast: 'broadcast',
     MessageFlows: 'message-flows',
     Shop: 'shop',
-    Autocomplete: 'autocomplete'
+    Autocomplete: 'autocomplete',
+    Widget: 'widget'
 } as const;
 
 export type Feature = typeof Feature[keyof typeof Feature];

@@ -726,7 +726,7 @@
     ],
     "group": "Payment Records"
   },
-  "PAYMENT_RECORDS_WRITE": { 
+  "PAYMENT_RECORDS_WRITE": {
     "number": 89,
     "description": "Write payments records",
     "features": [
@@ -785,5 +785,18 @@
       "editor"
     ],
     "group": "Messages Access"
+  },
+  "WIDGET_EDIT": {
+    "number": 94,
+    "description": "Allow access to edit the widget",
+    "features": [
+      "widget"
+    ],
+    "roles": [
+      "admin",
+      "agent",
+      "editor"
+    ],
+    "group": "Widget Access"
   }
 }

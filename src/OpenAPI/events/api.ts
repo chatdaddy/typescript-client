@@ -6451,7 +6451,8 @@ export const TeamInsertDataScopesEnum = {
     MetricsGet: 'METRICS_GET',
     AccountsReadAssigned: 'ACCOUNTS_READ_ASSIGNED',
     AutocompleteGet: 'AUTOCOMPLETE_GET',
-    MessagesSearch: 'MESSAGES_SEARCH'
+    MessagesSearch: 'MESSAGES_SEARCH',
+    WidgetEdit: 'WIDGET_EDIT'
 } as const;
 
 export type TeamInsertDataScopesEnum = typeof TeamInsertDataScopesEnum[keyof typeof TeamInsertDataScopesEnum];
@@ -6820,7 +6821,8 @@ export const TeamUpdateDataScopesEnum = {
     MetricsGet: 'METRICS_GET',
     AccountsReadAssigned: 'ACCOUNTS_READ_ASSIGNED',
     AutocompleteGet: 'AUTOCOMPLETE_GET',
-    MessagesSearch: 'MESSAGES_SEARCH'
+    MessagesSearch: 'MESSAGES_SEARCH',
+    WidgetEdit: 'WIDGET_EDIT'
 } as const;
 
 export type TeamUpdateDataScopesEnum = typeof TeamUpdateDataScopesEnum[keyof typeof TeamUpdateDataScopesEnum];
@@ -7001,7 +7003,8 @@ export const TeammemberInsertDataScopesEnum = {
     MetricsGet: 'METRICS_GET',
     AccountsReadAssigned: 'ACCOUNTS_READ_ASSIGNED',
     AutocompleteGet: 'AUTOCOMPLETE_GET',
-    MessagesSearch: 'MESSAGES_SEARCH'
+    MessagesSearch: 'MESSAGES_SEARCH',
+    WidgetEdit: 'WIDGET_EDIT'
 } as const;
 
 export type TeammemberInsertDataScopesEnum = typeof TeammemberInsertDataScopesEnum[keyof typeof TeammemberInsertDataScopesEnum];
@@ -7137,7 +7140,8 @@ export const TeammemberUpdateDataScopesEnum = {
     MetricsGet: 'METRICS_GET',
     AccountsReadAssigned: 'ACCOUNTS_READ_ASSIGNED',
     AutocompleteGet: 'AUTOCOMPLETE_GET',
-    MessagesSearch: 'MESSAGES_SEARCH'
+    MessagesSearch: 'MESSAGES_SEARCH',
+    WidgetEdit: 'WIDGET_EDIT'
 } as const;
 
 export type TeammemberUpdateDataScopesEnum = typeof TeammemberUpdateDataScopesEnum[keyof typeof TeammemberUpdateDataScopesEnum];
