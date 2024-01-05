@@ -1,3 +1,5 @@
+import type { EventName, EventWebhookData } from "../OpenAPI"
+
 export type SimpleOrder = {
     items: SimpleOrderItem[]
     remarks?: string
@@ -61,3 +63,9 @@ export type OrderPaymentIntegration = {
     id: string
     name: string
 }
+
+/**
+ * Type of data expected for a particular event
+ * @example 'message-insert' => MessageInsertData
+ */
+export type EventData<E extends EventName> = Extract<EventWebhookData, { event: E }>['data'][number]
