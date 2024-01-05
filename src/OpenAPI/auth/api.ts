@@ -750,7 +750,7 @@ export interface OptionalWidgetCTAParams {
      * @type {string}
      * @memberof OptionalWidgetCTAParams
      */
-    'waLink'?: string;
+    'CTALink'?: string;
 }
 /**
  * 
