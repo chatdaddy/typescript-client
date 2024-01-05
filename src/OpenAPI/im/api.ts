@@ -2228,6 +2228,12 @@ export interface Message {
      */
     'deleted'?: boolean;
     /**
+     * True, if the message failed to decrypt
+     * @type {boolean}
+     * @memberof Message
+     */
+    'failDecryption'?: boolean;
+    /**
      * 
      * @type {MessageContentAction}
      * @memberof Message
@@ -2645,6 +2651,12 @@ export interface MessageCompose {
      */
     'deleted'?: boolean;
     /**
+     * True, if the message failed to decrypt
+     * @type {boolean}
+     * @memberof MessageCompose
+     */
+    'failDecryption'?: boolean;
+    /**
      * 
      * @type {MessageContentAction}
      * @memberof MessageCompose
@@ -2838,6 +2850,12 @@ export interface MessageComposeWChatID {
      */
     'deleted'?: boolean;
     /**
+     * True, if the message failed to decrypt
+     * @type {boolean}
+     * @memberof MessageComposeWChatID
+     */
+    'failDecryption'?: boolean;
+    /**
      * 
      * @type {MessageContentAction}
      * @memberof MessageComposeWChatID
@@ -2949,6 +2967,12 @@ export interface MessageContent {
      * @memberof MessageContent
      */
     'deleted'?: boolean;
+    /**
+     * True, if the message failed to decrypt
+     * @type {boolean}
+     * @memberof MessageContent
+     */
+    'failDecryption'?: boolean;
     /**
      * 
      * @type {MessageContentAction}

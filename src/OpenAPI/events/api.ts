@@ -4219,6 +4219,12 @@ export interface MessageInsertData {
     'deleted'?: boolean;
     /**
      * 
+     * @type {boolean}
+     * @memberof MessageInsertData
+     */
+    'failDecryption'?: boolean;
+    /**
+     * 
      * @type {MessageInsertDataAction}
      * @memberof MessageInsertData
      */
@@ -5133,6 +5139,12 @@ export interface MessageUpdateData {
      * @memberof MessageUpdateData
      */
     'deleted'?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof MessageUpdateData
+     */
+    'failDecryption'?: boolean;
     /**
      * 
      * @type {MessageInsertDataAction}

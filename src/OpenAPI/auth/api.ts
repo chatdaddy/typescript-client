@@ -671,6 +671,164 @@ export type OnboardingStepID = typeof OnboardingStepID[keyof typeof OnboardingSt
 /**
  * 
  * @export
+ * @interface OptionalWidgetButtonParams
+ */
+export interface OptionalWidgetButtonParams {
+    /**
+     * 
+     * @type {string}
+     * @memberof OptionalWidgetButtonParams
+     */
+    'buttonIcon'?: OptionalWidgetButtonParamsButtonIconEnum;
+    /**
+     * 
+     * @type {string}
+     * @memberof OptionalWidgetButtonParams
+     */
+    'buttonText'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof OptionalWidgetButtonParams
+     */
+    'buttonBackgroundColor'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof OptionalWidgetButtonParams
+     */
+    'buttonTextAndIconColor'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof OptionalWidgetButtonParams
+     */
+    'buttonPosition'?: OptionalWidgetButtonParamsButtonPositionEnum;
+}
+
+export const OptionalWidgetButtonParamsButtonIconEnum = {
+    Wa: 'wa',
+    Headset: 'headset',
+    Message: 'message',
+    ChatBubble: 'chatBubble'
+} as const;
+
+export type OptionalWidgetButtonParamsButtonIconEnum = typeof OptionalWidgetButtonParamsButtonIconEnum[keyof typeof OptionalWidgetButtonParamsButtonIconEnum];
+export const OptionalWidgetButtonParamsButtonPositionEnum = {
+    Left: 'left',
+    Right: 'right'
+} as const;
+
+export type OptionalWidgetButtonParamsButtonPositionEnum = typeof OptionalWidgetButtonParamsButtonPositionEnum[keyof typeof OptionalWidgetButtonParamsButtonPositionEnum];
+
+/**
+ * 
+ * @export
+ * @interface OptionalWidgetCTAParams
+ */
+export interface OptionalWidgetCTAParams {
+    /**
+     * 
+     * @type {string}
+     * @memberof OptionalWidgetCTAParams
+     */
+    'widgetCTAButtonText'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof OptionalWidgetCTAParams
+     */
+    'widgetCTAContentColor'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof OptionalWidgetCTAParams
+     */
+    'widgetCTABackgroundColor'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof OptionalWidgetCTAParams
+     */
+    'waLink'?: string;
+}
+/**
+ * 
+ * @export
+ * @interface OptionalWidgetConfigParams
+ */
+export interface OptionalWidgetConfigParams {
+    /**
+     * 
+     * @type {OptionalWidgetButtonParams}
+     * @memberof OptionalWidgetConfigParams
+     */
+    'widgetButtonParams'?: OptionalWidgetButtonParams;
+    /**
+     * 
+     * @type {OptionalWidgetDialogParams}
+     * @memberof OptionalWidgetConfigParams
+     */
+    'widgetDialogParams'?: OptionalWidgetDialogParams;
+    /**
+     * 
+     * @type {OptionalWidgetCTAParams}
+     * @memberof OptionalWidgetConfigParams
+     */
+    'widgetCTAParams'?: OptionalWidgetCTAParams;
+}
+/**
+ * 
+ * @export
+ * @interface OptionalWidgetDialogParams
+ */
+export interface OptionalWidgetDialogParams {
+    /**
+     * 
+     * @type {string}
+     * @memberof OptionalWidgetDialogParams
+     */
+    'widgetBrandName'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof OptionalWidgetDialogParams
+     */
+    'widgetHeaderCaption'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof OptionalWidgetDialogParams
+     */
+    'widgetBrandIconUrl'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof OptionalWidgetDialogParams
+     */
+    'widgetWelcomeMessage'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof OptionalWidgetDialogParams
+     */
+    'widgetPrefilledTextMessage'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof OptionalWidgetDialogParams
+     */
+    'widgetHeaderContentColor'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof OptionalWidgetDialogParams
+     */
+    'widgetHeaderBackgroundColor'?: string;
+}
+/**
+ * 
+ * @export
  * @interface OtpPostRequest
  */
 export interface OtpPostRequest {
@@ -1698,6 +1856,232 @@ export interface WebPushSubscription {
      * @memberof WebPushSubscription
      */
     'p256dhKey': string;
+}
+/**
+ * 
+ * @export
+ * @interface WidgetButtonParams
+ */
+export interface WidgetButtonParams {
+    /**
+     * 
+     * @type {string}
+     * @memberof WidgetButtonParams
+     */
+    'buttonIcon': WidgetButtonParamsButtonIconEnum;
+    /**
+     * 
+     * @type {string}
+     * @memberof WidgetButtonParams
+     */
+    'buttonText': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof WidgetButtonParams
+     */
+    'buttonBackgroundColor': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof WidgetButtonParams
+     */
+    'buttonTextAndIconColor': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof WidgetButtonParams
+     */
+    'buttonPosition': WidgetButtonParamsButtonPositionEnum;
+}
+
+export const WidgetButtonParamsButtonIconEnum = {
+    Wa: 'wa',
+    Headset: 'headset',
+    Message: 'message',
+    ChatBubble: 'chatBubble'
+} as const;
+
+export type WidgetButtonParamsButtonIconEnum = typeof WidgetButtonParamsButtonIconEnum[keyof typeof WidgetButtonParamsButtonIconEnum];
+export const WidgetButtonParamsButtonPositionEnum = {
+    Left: 'left',
+    Right: 'right'
+} as const;
+
+export type WidgetButtonParamsButtonPositionEnum = typeof WidgetButtonParamsButtonPositionEnum[keyof typeof WidgetButtonParamsButtonPositionEnum];
+
+/**
+ * 
+ * @export
+ * @interface WidgetCTAParams
+ */
+export interface WidgetCTAParams {
+    /**
+     * 
+     * @type {string}
+     * @memberof WidgetCTAParams
+     */
+    'widgetCTAButtonText': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof WidgetCTAParams
+     */
+    'widgetCTAContentColor': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof WidgetCTAParams
+     */
+    'widgetCTABackgroundColor': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof WidgetCTAParams
+     */
+    'CTALink': string;
+}
+/**
+ * 
+ * @export
+ * @interface WidgetConfig
+ */
+export interface WidgetConfig {
+    /**
+     * 
+     * @type {WidgetButtonParams}
+     * @memberof WidgetConfig
+     */
+    'widgetButtonParams': WidgetButtonParams;
+    /**
+     * 
+     * @type {WidgetDialogParams}
+     * @memberof WidgetConfig
+     */
+    'widgetDialogParams': WidgetDialogParams;
+    /**
+     * 
+     * @type {WidgetCTAParams}
+     * @memberof WidgetConfig
+     */
+    'widgetCTAParams': WidgetCTAParams;
+    /**
+     * 
+     * @type {string}
+     * @memberof WidgetConfig
+     */
+    'teamId': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof WidgetConfig
+     */
+    'createdAt': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof WidgetConfig
+     */
+    'updatedAt': string;
+}
+/**
+ * 
+ * @export
+ * @interface WidgetConfigAllOf
+ */
+export interface WidgetConfigAllOf {
+    /**
+     * 
+     * @type {string}
+     * @memberof WidgetConfigAllOf
+     */
+    'teamId': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof WidgetConfigAllOf
+     */
+    'createdAt': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof WidgetConfigAllOf
+     */
+    'updatedAt': string;
+}
+/**
+ * 
+ * @export
+ * @interface WidgetConfigParams
+ */
+export interface WidgetConfigParams {
+    /**
+     * 
+     * @type {WidgetButtonParams}
+     * @memberof WidgetConfigParams
+     */
+    'widgetButtonParams': WidgetButtonParams;
+    /**
+     * 
+     * @type {WidgetDialogParams}
+     * @memberof WidgetConfigParams
+     */
+    'widgetDialogParams': WidgetDialogParams;
+    /**
+     * 
+     * @type {WidgetCTAParams}
+     * @memberof WidgetConfigParams
+     */
+    'widgetCTAParams': WidgetCTAParams;
+}
+/**
+ * 
+ * @export
+ * @interface WidgetDialogParams
+ */
+export interface WidgetDialogParams {
+    /**
+     * 
+     * @type {string}
+     * @memberof WidgetDialogParams
+     */
+    'widgetBrandName': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof WidgetDialogParams
+     */
+    'widgetHeaderCaption': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof WidgetDialogParams
+     */
+    'widgetBrandIconUrl': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof WidgetDialogParams
+     */
+    'widgetWelcomeMessage': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof WidgetDialogParams
+     */
+    'widgetPrefilledTextMessage': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof WidgetDialogParams
+     */
+    'widgetHeaderContentColor': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof WidgetDialogParams
+     */
+    'widgetHeaderBackgroundColor': string;
 }
 
 /**
@@ -3866,6 +4250,291 @@ export class UsersApi extends BaseAPI {
      */
     public usersPost(requestParameters: UsersApiUsersPostRequest = {}, options?: AxiosRequestConfig) {
         return UsersApiFp(this.configuration).usersPost(requestParameters.userCreate, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+/**
+ * WidgetConfigApi - axios parameter creator
+ * @export
+ */
+export const WidgetConfigApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @summary Get widget config for a team id
+         * @param {string} teamId teamId
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        widgetGet: async (teamId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'teamId' is not null or undefined
+            assertParamExists('widgetGet', 'teamId', teamId)
+            const localVarPath = `/widget/{teamId}`
+                .replace(`{${"teamId"}}`, encodeURIComponent(String(teamId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {OptionalWidgetConfigParams} [optionalWidgetConfigParams] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        widgetPatch: async (optionalWidgetConfigParams?: OptionalWidgetConfigParams, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/widget`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PATCH', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["WIDGET_EDIT"], configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(optionalWidgetConfigParams, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Create widget config
+         * @param {WidgetConfigParams} [widgetConfigParams] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        widgetPost: async (widgetConfigParams?: WidgetConfigParams, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/widget`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["WIDGET_EDIT"], configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(widgetConfigParams, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * WidgetConfigApi - functional programming interface
+ * @export
+ */
+export const WidgetConfigApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = WidgetConfigApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * 
+         * @summary Get widget config for a team id
+         * @param {string} teamId teamId
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async widgetGet(teamId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<WidgetConfig>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.widgetGet(teamId, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @param {OptionalWidgetConfigParams} [optionalWidgetConfigParams] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async widgetPatch(optionalWidgetConfigParams?: OptionalWidgetConfigParams, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TeamsPatch200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.widgetPatch(optionalWidgetConfigParams, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary Create widget config
+         * @param {WidgetConfigParams} [widgetConfigParams] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async widgetPost(widgetConfigParams?: WidgetConfigParams, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<WidgetConfig>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.widgetPost(widgetConfigParams, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+    }
+};
+
+/**
+ * WidgetConfigApi - factory interface
+ * @export
+ */
+export const WidgetConfigApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = WidgetConfigApiFp(configuration)
+    return {
+        /**
+         * 
+         * @summary Get widget config for a team id
+         * @param {WidgetConfigApiWidgetGetRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        widgetGet(requestParameters: WidgetConfigApiWidgetGetRequest, options?: AxiosRequestConfig): AxiosPromise<WidgetConfig> {
+            return localVarFp.widgetGet(requestParameters.teamId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {WidgetConfigApiWidgetPatchRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        widgetPatch(requestParameters: WidgetConfigApiWidgetPatchRequest = {}, options?: AxiosRequestConfig): AxiosPromise<TeamsPatch200Response> {
+            return localVarFp.widgetPatch(requestParameters.optionalWidgetConfigParams, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Create widget config
+         * @param {WidgetConfigApiWidgetPostRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        widgetPost(requestParameters: WidgetConfigApiWidgetPostRequest = {}, options?: AxiosRequestConfig): AxiosPromise<WidgetConfig> {
+            return localVarFp.widgetPost(requestParameters.widgetConfigParams, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * Request parameters for widgetGet operation in WidgetConfigApi.
+ * @export
+ * @interface WidgetConfigApiWidgetGetRequest
+ */
+export interface WidgetConfigApiWidgetGetRequest {
+    /**
+     * teamId
+     * @type {string}
+     * @memberof WidgetConfigApiWidgetGet
+     */
+    readonly teamId: string
+}
+
+/**
+ * Request parameters for widgetPatch operation in WidgetConfigApi.
+ * @export
+ * @interface WidgetConfigApiWidgetPatchRequest
+ */
+export interface WidgetConfigApiWidgetPatchRequest {
+    /**
+     * 
+     * @type {OptionalWidgetConfigParams}
+     * @memberof WidgetConfigApiWidgetPatch
+     */
+    readonly optionalWidgetConfigParams?: OptionalWidgetConfigParams
+}
+
+/**
+ * Request parameters for widgetPost operation in WidgetConfigApi.
+ * @export
+ * @interface WidgetConfigApiWidgetPostRequest
+ */
+export interface WidgetConfigApiWidgetPostRequest {
+    /**
+     * 
+     * @type {WidgetConfigParams}
+     * @memberof WidgetConfigApiWidgetPost
+     */
+    readonly widgetConfigParams?: WidgetConfigParams
+}
+
+/**
+ * WidgetConfigApi - object-oriented interface
+ * @export
+ * @class WidgetConfigApi
+ * @extends {BaseAPI}
+ */
+export class WidgetConfigApi extends BaseAPI {
+    /**
+     * 
+     * @summary Get widget config for a team id
+     * @param {WidgetConfigApiWidgetGetRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof WidgetConfigApi
+     */
+    public widgetGet(requestParameters: WidgetConfigApiWidgetGetRequest, options?: AxiosRequestConfig) {
+        return WidgetConfigApiFp(this.configuration).widgetGet(requestParameters.teamId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {WidgetConfigApiWidgetPatchRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof WidgetConfigApi
+     */
+    public widgetPatch(requestParameters: WidgetConfigApiWidgetPatchRequest = {}, options?: AxiosRequestConfig) {
+        return WidgetConfigApiFp(this.configuration).widgetPatch(requestParameters.optionalWidgetConfigParams, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Create widget config
+     * @param {WidgetConfigApiWidgetPostRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof WidgetConfigApi
+     */
+    public widgetPost(requestParameters: WidgetConfigApiWidgetPostRequest = {}, options?: AxiosRequestConfig) {
+        return WidgetConfigApiFp(this.configuration).widgetPost(requestParameters.widgetConfigParams, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
