@@ -212,6 +212,47 @@ export interface AutoChargeProductsPrepare200Response {
 /**
  * 
  * @export
+ * @interface AutoRenewalGet200Response
+ */
+export interface AutoRenewalGet200Response {
+    /**
+     * 
+     * @type {CustomerAutoRenewal}
+     * @memberof AutoRenewalGet200Response
+     */
+    'item'?: CustomerAutoRenewal;
+}
+/**
+ * 
+ * @export
+ * @enum {string}
+ */
+
+export const AutoRenewalPeriod = {
+    Quarter: 'quarter',
+    Year: 'year'
+} as const;
+
+export type AutoRenewalPeriod = typeof AutoRenewalPeriod[keyof typeof AutoRenewalPeriod];
+
+
+/**
+ * paymentUrl: return a payment url for user to pay direct: charge the user\'s card directly, only works   if the user has a card on file
+ * @export
+ * @enum {string}
+ */
+
+export const BillingMethod = {
+    PaymentUrl: 'paymentUrl',
+    Direct: 'direct'
+} as const;
+
+export type BillingMethod = typeof BillingMethod[keyof typeof BillingMethod];
+
+
+/**
+ * 
+ * @export
  * @enum {string}
  */
 
@@ -242,6 +283,21 @@ export interface BillingSessionPost200Response {
      * @memberof BillingSessionPost200Response
      */
     'url': string;
+}
+/**
+ * 
+ * @export
+ * @interface CanConsumeCredits200Response
+ */
+export interface CanConsumeCredits200Response {
+    [key: string]: any;
+
+    /**
+     * 
+     * @type {boolean}
+     * @memberof CanConsumeCredits200Response
+     */
+    'canConsume': boolean;
 }
 /**
  * 
@@ -350,6 +406,874 @@ export interface CouponsPost200Response {
     'code': string;
 }
 /**
+ * 
+ * @export
+ * @interface CreditAutoRenewalUpdate
+ */
+export interface CreditAutoRenewalUpdate {
+    /**
+     * 
+     * @type {AutoRenewalPeriod}
+     * @memberof CreditAutoRenewalUpdate
+     */
+    'period': AutoRenewalPeriod;
+    /**
+     * 
+     * @type {CreditUnitsPurchaseOpts}
+     * @memberof CreditAutoRenewalUpdate
+     */
+    'units': CreditUnitsPurchaseOpts;
+    /**
+     * 
+     * @type {MiscBillingOptions}
+     * @memberof CreditAutoRenewalUpdate
+     */
+    'options'?: MiscBillingOptions;
+}
+
+
+/**
+ * @type CreditBalanceEffectType
+ * All the ways a team\'s credit balance can be affected.
+ * @export
+ */
+export type CreditBalanceEffectType = CreditConsumptionType | CreditGainType | RecurringCreditConsumptionType;
+
+/**
+ * 
+ * @export
+ * @interface CreditConsumptionCreate
+ */
+export interface CreditConsumptionCreate {
+    /**
+     * 
+     * @type {CreditConsumptionType}
+     * @memberof CreditConsumptionCreate
+     */
+    'type': CreditConsumptionType;
+    /**
+     * An ISO formatted timestamp
+     * @type {string}
+     * @memberof CreditConsumptionCreate
+     */
+    'createdAt'?: string;
+    /**
+     * The ID of the object that was consumed. (createdAt, objectId) will be enforced to be unique.
+     * @type {string}
+     * @memberof CreditConsumptionCreate
+     */
+    'objectId': string;
+    /**
+     * The ID of a team
+     * @type {string}
+     * @memberof CreditConsumptionCreate
+     */
+    'teamId': string;
+    /**
+     * Multiplier for the number of units to consume of this consumption type. For eg. if multiplier is 2, and each consumption of this type consumes 5 units, then 10 units will be consumed.
+     * @type {number}
+     * @memberof CreditConsumptionCreate
+     */
+    'multiplier'?: number;
+    /**
+     * 
+     * @type {{ [key: string]: any; }}
+     * @memberof CreditConsumptionCreate
+     */
+    'metadata'?: { [key: string]: any; };
+}
+
+
+/**
+ * 
+ * @export
+ * @interface CreditConsumptionPostRequest
+ */
+export interface CreditConsumptionPostRequest {
+    /**
+     * ID of a customer. All credits are linked to a customer. Multiple teams can be linked to the same customer & thus share credits.
+     * @type {string}
+     * @memberof CreditConsumptionPostRequest
+     */
+    'customerId': string;
+    /**
+     * 
+     * @type {Array<CreditConsumptionCreate>}
+     * @memberof CreditConsumptionPostRequest
+     */
+    'items': Array<CreditConsumptionCreate>;
+}
+/**
+ * 
+ * @export
+ * @interface CreditConsumptionRecordData
+ */
+export interface CreditConsumptionRecordData {
+    /**
+     * 
+     * @type {CreditConsumptionRecordDataType}
+     * @memberof CreditConsumptionRecordData
+     */
+    'type': CreditConsumptionRecordDataType;
+    /**
+     * 
+     * @type {string}
+     * @memberof CreditConsumptionRecordData
+     */
+    'teamId'?: string;
+    /**
+     * ID of a recurring credit consumption
+     * @type {string}
+     * @memberof CreditConsumptionRecordData
+     */
+    'recurringConsumptionId'?: string;
+}
+/**
+ * @type CreditConsumptionRecordDataType
+ * @export
+ */
+export type CreditConsumptionRecordDataType = CreditConsumptionType | RecurringCreditConsumptionType;
+
+/**
+ * 
+ * @export
+ * @interface CreditConsumptionTier
+ */
+export interface CreditConsumptionTier {
+    /**
+     * Cost per unit of consumption
+     * @type {number}
+     * @memberof CreditConsumptionTier
+     */
+    'perUnitCost': number;
+    /**
+     * Maximum number of items that can be consumed before the next tier is used. This limit is inclusive as well. Undefined means no cap.
+     * @type {number}
+     * @memberof CreditConsumptionTier
+     */
+    'maxItems'?: number;
+}
+/**
+ * Enum of all the types of single-use credit consumption. This is used to track the usage of credits. Category of consumptions are separated by a slash.
+ * @export
+ * @enum {string}
+ */
+
+export const CreditConsumptionType = {
+    MessageSentRegular: 'message_sent/regular',
+    MessageSentNotification: 'message_sent/notification',
+    MessageSentKeywordreply: 'message_sent/keywordreply',
+    MessageSentBroadcast: 'message_sent/broadcast',
+    MessageSentMsgFlow: 'message_sent/msg_flow',
+    MessageSentAiChatbot: 'message_sent/ai_chatbot',
+    IntegrationNotification: 'integration/notification',
+    IntegrationPayment: 'integration/payment',
+    Broadcast: 'broadcast',
+    MsgFlow: 'msg_flow',
+    KeywordReply: 'keyword_reply',
+    Tag: 'tag',
+    CustomField: 'custom_field',
+    Dashboard: 'dashboard',
+    Product: 'product',
+    AiChatbot: 'ai_chatbot',
+    Consultation1h: 'consultation/1h',
+    AdminDiscretionary: 'admin/discretionary',
+    AdminRefund: 'admin/refund',
+    AdminExpiredCreditGain: 'admin/expired_credit_gain'
+} as const;
+
+export type CreditConsumptionType = typeof CreditConsumptionType[keyof typeof CreditConsumptionType];
+
+
+/**
+ * 
+ * @export
+ * @interface CreditCustomer
+ */
+export interface CreditCustomer {
+    /**
+     * ID of a customer. All credits are linked to a customer. Multiple teams can be linked to the same customer & thus share credits.
+     * @type {string}
+     * @memberof CreditCustomer
+     */
+    'id': string;
+    /**
+     * Total number of units available for consumption
+     * @type {number}
+     * @memberof CreditCustomer
+     */
+    'unitsAvailable': number;
+    /**
+     * Number of units consumed per period.
+     * @type {number}
+     * @memberof CreditCustomer
+     */
+    'recurringConsumptionUnits': number;
+    /**
+     * List of features that have been unlocked.
+     * @type {Array<CreditUnlockType>}
+     * @memberof CreditCustomer
+     */
+    'unlockedFeatures': Array<CreditUnlockType>;
+}
+/**
+ * 
+ * @export
+ * @interface CreditCustomerPost
+ */
+export interface CreditCustomerPost {
+    /**
+     * 
+     * @type {StripeCustomerCreate}
+     * @memberof CreditCustomerPost
+     */
+    'stripeCustomer': StripeCustomerCreate;
+    /**
+     * The referral code to use for this customer. This is only used if the customer is new.
+     * @type {string}
+     * @memberof CreditCustomerPost
+     */
+    'referralCode'?: string;
+    /**
+     * The partnership to use for this customer. This is only used if the customer is new.
+     * @type {string}
+     * @memberof CreditCustomerPost
+     */
+    'partnership'?: string;
+}
+/**
+ * 
+ * @export
+ * @interface CreditGain
+ */
+export interface CreditGain {
+    /**
+     * ID of a credit gain
+     * @type {string}
+     * @memberof CreditGain
+     */
+    'id': string;
+    /**
+     * 
+     * @type {CreditGainType}
+     * @memberof CreditGain
+     */
+    'type': CreditGainType;
+    /**
+     * Number of units gained
+     * @type {number}
+     * @memberof CreditGain
+     */
+    'units': number;
+    /**
+     * Number of units left in this gain. Credits are consumed bottom up, i.e. credits from the oldest gain are consumed first.
+     * @type {number}
+     * @memberof CreditGain
+     */
+    'unitsLeft': number;
+    /**
+     * 
+     * @type {CreditGainStatus}
+     * @memberof CreditGain
+     */
+    'status': CreditGainStatus;
+    /**
+     * An ISO formatted timestamp
+     * @type {string}
+     * @memberof CreditGain
+     */
+    'createdAt': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof CreditGain
+     */
+    'expiresAt'?: string;
+    /**
+     * The ID of a user
+     * @type {string}
+     * @memberof CreditGain
+     */
+    'doneBy': string;
+    /**
+     * 
+     * @type {{ [key: string]: any; }}
+     * @memberof CreditGain
+     */
+    'metadata'?: { [key: string]: any; };
+    /**
+     * 
+     * @type {StripeMetadata}
+     * @memberof CreditGain
+     */
+    'stripe'?: StripeMetadata;
+    /**
+     * 
+     * @type {FloatAmountWithCurrency}
+     * @memberof CreditGain
+     */
+    'amountPaid': FloatAmountWithCurrency;
+}
+
+
+/**
+ * 
+ * @export
+ * @interface CreditGainCreate
+ */
+export interface CreditGainCreate {
+    /**
+     * ID of a customer. All credits are linked to a customer. Multiple teams can be linked to the same customer & thus share credits.
+     * @type {string}
+     * @memberof CreditGainCreate
+     */
+    'customerId': string;
+    /**
+     * Number of units gained
+     * @type {number}
+     * @memberof CreditGainCreate
+     */
+    'units': number;
+    /**
+     * 
+     * @type {{ [key: string]: any; }}
+     * @memberof CreditGainCreate
+     */
+    'metadata'?: { [key: string]: any; };
+}
+/**
+ * 
+ * @export
+ * @interface CreditGainRecordData
+ */
+export interface CreditGainRecordData {
+    /**
+     * 
+     * @type {CreditGainType}
+     * @memberof CreditGainRecordData
+     */
+    'type': CreditGainType;
+    /**
+     * 
+     * @type {CreditGainRecordDataGain}
+     * @memberof CreditGainRecordData
+     */
+    'gain'?: CreditGainRecordDataGain;
+}
+
+
+/**
+ * 
+ * @export
+ * @interface CreditGainRecordDataGain
+ */
+export interface CreditGainRecordDataGain {
+    /**
+     * 
+     * @type {StripeMetadata}
+     * @memberof CreditGainRecordDataGain
+     */
+    'stripe'?: StripeMetadata;
+}
+/**
+ * 
+ * @export
+ * @enum {string}
+ */
+
+export const CreditGainStatus = {
+    Paid: 'paid',
+    PendingPayment: 'pending_payment',
+    Expired: 'expired'
+} as const;
+
+export type CreditGainStatus = typeof CreditGainStatus[keyof typeof CreditGainStatus];
+
+
+/**
+ * Different ways to categorise credits being added to the team\'s account.
+ * @export
+ * @enum {string}
+ */
+
+export const CreditGainType = {
+    AutoRenewal: 'auto_renewal',
+    TopUp: 'top_up',
+    Bonus: 'bonus'
+} as const;
+
+export type CreditGainType = typeof CreditGainType[keyof typeof CreditGainType];
+
+
+/**
+ * 
+ * @export
+ * @interface CreditGainsGet200Response
+ */
+export interface CreditGainsGet200Response {
+    /**
+     * 
+     * @type {Array<CreditGain>}
+     * @memberof CreditGainsGet200Response
+     */
+    'items': Array<CreditGain>;
+    /**
+     * 
+     * @type {string}
+     * @memberof CreditGainsGet200Response
+     */
+    'nextPageCursor'?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof CreditGainsGet200Response
+     */
+    'total'?: number;
+}
+/**
+ * @type CreditPreference
+ * @export
+ */
+export type CreditPreference = MiscPreference | PurchaseTierPreference | RecurringConsumptionPreference | SingleConsumptionPreference | StripePreference | UnlockPreference;
+
+/**
+ * A tier of credits that can be purchased. Credits can only be purchased in multiples of the step size. The tier is to be used exactly as is for top-up purchases, and must be  multiplied by the number of months for recurring purchases.
+ * @export
+ * @interface CreditPurchaseTier
+ */
+export interface CreditPurchaseTier {
+    /**
+     * Step size for the tier. This is the minimum number of credits that can be purchased at once in this tier. This will increase with tier
+     * @type {number}
+     * @memberof CreditPurchaseTier
+     */
+    'step': number;
+    /**
+     * Maximum number of units to purchase. This limit is inclusive. Undefined means no cap. If cap is 100 & if the user purchases 101 credits, they\'ll move to the next tier.
+     * @type {number}
+     * @memberof CreditPurchaseTier
+     */
+    'maxUnits'?: number;
+}
+/**
+ * 
+ * @export
+ * @interface CreditStripePrice
+ */
+export interface CreditStripePrice {
+    /**
+     * Cost per credit in terms of fiat currency.
+     * @type {number}
+     * @memberof CreditStripePrice
+     */
+    'costPerCredit': number;
+    /**
+     * ISO country code for currency
+     * @type {string}
+     * @memberof CreditStripePrice
+     */
+    'currency': string;
+    /**
+     * 
+     * @type {CreditStripePricePriceIds}
+     * @memberof CreditStripePrice
+     */
+    'priceIds': CreditStripePricePriceIds;
+}
+/**
+ * 
+ * @export
+ * @interface CreditStripePricePriceIds
+ */
+export interface CreditStripePricePriceIds {
+    /**
+     * The ID of the price in Stripe. This is used to identify the price in Stripe. For credit billing, ensure that the price ID has the following prefixs for the respective billing types: - recurring: auto_renew_credit - top_up: top_up_credit - bonus: bonus_credit
+     * @type {string}
+     * @memberof CreditStripePricePriceIds
+     */
+    'quarter': string;
+    /**
+     * The ID of the price in Stripe. This is used to identify the price in Stripe. For credit billing, ensure that the price ID has the following prefixs for the respective billing types: - recurring: auto_renew_credit - top_up: top_up_credit - bonus: bonus_credit
+     * @type {string}
+     * @memberof CreditStripePricePriceIds
+     */
+    'year': string;
+    /**
+     * The ID of the price in Stripe. This is used to identify the price in Stripe. For credit billing, ensure that the price ID has the following prefixs for the respective billing types: - recurring: auto_renew_credit - top_up: top_up_credit - bonus: bonus_credit
+     * @type {string}
+     * @memberof CreditStripePricePriceIds
+     */
+    'oneTime': string;
+}
+/**
+ * 
+ * @export
+ * @interface CreditTopUpOptions
+ */
+export interface CreditTopUpOptions {
+    /**
+     * 
+     * @type {CreditUnitsPurchaseOpts}
+     * @memberof CreditTopUpOptions
+     */
+    'units': CreditUnitsPurchaseOpts;
+    /**
+     * 
+     * @type {MiscBillingOptions}
+     * @memberof CreditTopUpOptions
+     */
+    'options'?: MiscBillingOptions;
+}
+/**
+ * 
+ * @export
+ * @interface CreditTransactionBase
+ */
+export interface CreditTransactionBase {
+    /**
+     * ID of a credit consumption. IDs are chronological.
+     * @type {string}
+     * @memberof CreditTransactionBase
+     */
+    'id': string;
+    /**
+     * Number of units consumed/credited. Positive for credit, negative for consumption.
+     * @type {number}
+     * @memberof CreditTransactionBase
+     */
+    'units': number;
+    /**
+     * The ID of a user
+     * @type {string}
+     * @memberof CreditTransactionBase
+     */
+    'doneBy': string;
+    /**
+     * An ISO formatted timestamp
+     * @type {string}
+     * @memberof CreditTransactionBase
+     */
+    'createdAt': string;
+    /**
+     * The ID of the object that was consumed, or the ID of the gain that created this tx record. (createdAt, objectId) will be enforced to be unique.
+     * @type {string}
+     * @memberof CreditTransactionBase
+     */
+    'objectId': string;
+    /**
+     * 
+     * @type {{ [key: string]: any; }}
+     * @memberof CreditTransactionBase
+     */
+    'metadata'?: { [key: string]: any; };
+}
+/**
+ * A record of a credit transaction. This could be a gain or a consumption record & is immutable.
+ * @export
+ * @interface CreditTransactionRecord
+ */
+export interface CreditTransactionRecord {
+    /**
+     * ID of a credit consumption. IDs are chronological.
+     * @type {string}
+     * @memberof CreditTransactionRecord
+     */
+    'id': string;
+    /**
+     * Number of units consumed/credited. Positive for credit, negative for consumption.
+     * @type {number}
+     * @memberof CreditTransactionRecord
+     */
+    'units': number;
+    /**
+     * The ID of a user
+     * @type {string}
+     * @memberof CreditTransactionRecord
+     */
+    'doneBy': string;
+    /**
+     * An ISO formatted timestamp
+     * @type {string}
+     * @memberof CreditTransactionRecord
+     */
+    'createdAt': string;
+    /**
+     * The ID of the object that was consumed, or the ID of the gain that created this tx record. (createdAt, objectId) will be enforced to be unique.
+     * @type {string}
+     * @memberof CreditTransactionRecord
+     */
+    'objectId': string;
+    /**
+     * 
+     * @type {{ [key: string]: any; }}
+     * @memberof CreditTransactionRecord
+     */
+    'metadata'?: { [key: string]: any; };
+    /**
+     * 
+     * @type {CreditConsumptionRecordDataType}
+     * @memberof CreditTransactionRecord
+     */
+    'type': CreditConsumptionRecordDataType;
+    /**
+     * 
+     * @type {CreditGainRecordDataGain}
+     * @memberof CreditTransactionRecord
+     */
+    'gain'?: CreditGainRecordDataGain;
+    /**
+     * 
+     * @type {string}
+     * @memberof CreditTransactionRecord
+     */
+    'teamId'?: string;
+    /**
+     * ID of a recurring credit consumption
+     * @type {string}
+     * @memberof CreditTransactionRecord
+     */
+    'recurringConsumptionId'?: string;
+}
+/**
+ * 
+ * @export
+ * @interface CreditTxsGet200Response
+ */
+export interface CreditTxsGet200Response {
+    /**
+     * 
+     * @type {Array<CreditTransactionRecord>}
+     * @memberof CreditTxsGet200Response
+     */
+    'items': Array<CreditTransactionRecord>;
+    /**
+     * 
+     * @type {string}
+     * @memberof CreditTxsGet200Response
+     */
+    'nextPageCursor'?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof CreditTxsGet200Response
+     */
+    'total'?: number;
+}
+/**
+ * Options for purchasing credits. The total units are computed as the maxUnits of the previous tier from the specified tier, plus the step size of the specified tier multiplied by the number of steps specified. Essentially:   totalUnits = prev(maxUnits) + current(step) * steps
+ * @export
+ * @interface CreditUnitsPurchaseOpts
+ */
+export interface CreditUnitsPurchaseOpts {
+    /**
+     * 
+     * @type {string}
+     * @memberof CreditUnitsPurchaseOpts
+     */
+    'tier': string;
+    /**
+     * 
+     * @type {number}
+     * @memberof CreditUnitsPurchaseOpts
+     */
+    'steps': number;
+}
+/**
+ * 
+ * @export
+ * @interface CreditUnlockMetadata
+ */
+export interface CreditUnlockMetadata {
+    /**
+     * Minimum number of auto renewing credits required to unlock this feature. Period of consumption is not considered.
+     * @type {number}
+     * @memberof CreditUnlockMetadata
+     */
+    'minRecurringCredits': number;
+}
+/**
+ * Enum of all the types of credit unlocks. These are unlocked at a certain auto-renewal credit threshhold.
+ * @export
+ * @enum {string}
+ */
+
+export const CreditUnlockType = {
+    MsgFlow: 'export/msg_flow',
+    Contacts: 'export/contacts',
+    Tags: 'export/tags',
+    CustomFields: 'export/custom_fields',
+    Products: 'export/products'
+} as const;
+
+export type CreditUnlockType = typeof CreditUnlockType[keyof typeof CreditUnlockType];
+
+
+/**
+ * 
+ * @export
+ * @interface CreditsCustomerPost200Response
+ */
+export interface CreditsCustomerPost200Response {
+    /**
+     * ID of a customer. All credits are linked to a customer. Multiple teams can be linked to the same customer & thus share credits.
+     * @type {string}
+     * @memberof CreditsCustomerPost200Response
+     */
+    'id': string;
+}
+/**
+ * 
+ * @export
+ * @interface CreditsMetadata
+ */
+export interface CreditsMetadata {
+    /**
+     * 
+     * @type {Array<SingleConsumptionPreference>}
+     * @memberof CreditsMetadata
+     */
+    'singleConsumptions': Array<SingleConsumptionPreference>;
+    /**
+     * 
+     * @type {Array<RecurringConsumptionPreference>}
+     * @memberof CreditsMetadata
+     */
+    'recurringConsumptions': Array<RecurringConsumptionPreference>;
+    /**
+     * 
+     * @type {Array<UnlockPreference>}
+     * @memberof CreditsMetadata
+     */
+    'unlocks': Array<UnlockPreference>;
+    /**
+     * 
+     * @type {Array<PurchaseTierPreference>}
+     * @memberof CreditsMetadata
+     */
+    'tiers': Array<PurchaseTierPreference>;
+    /**
+     * 
+     * @type {CreditsMetadataCreditDollarPrices}
+     * @memberof CreditsMetadata
+     */
+    'creditDollarPrices': CreditsMetadataCreditDollarPrices;
+}
+/**
+ * Per unit prices for each credit in terms of fiat currency.
+ * @export
+ * @interface CreditsMetadataCreditDollarPrices
+ */
+export interface CreditsMetadataCreditDollarPrices {
+    /**
+     * 
+     * @type {number}
+     * @memberof CreditsMetadataCreditDollarPrices
+     */
+    'autoRenewal': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof CreditsMetadataCreditDollarPrices
+     */
+    'topUp': number;
+    /**
+     * ISO country code for currency
+     * @type {string}
+     * @memberof CreditsMetadataCreditDollarPrices
+     */
+    'currency': string;
+}
+/**
+ * 
+ * @export
+ * @interface CreditsPreferencesGet200Response
+ */
+export interface CreditsPreferencesGet200Response {
+    /**
+     * 
+     * @type {Array<CreditPreference>}
+     * @memberof CreditsPreferencesGet200Response
+     */
+    'items': Array<CreditPreference>;
+}
+/**
+ * 
+ * @export
+ * @interface CustomerAutoRenewal
+ */
+export interface CustomerAutoRenewal {
+    /**
+     * The ID of the subscription that was created for this credit transaction.
+     * @type {string}
+     * @memberof CustomerAutoRenewal
+     */
+    'subscriptionId': string;
+    /**
+     * Number of units consumed per period
+     * @type {number}
+     * @memberof CustomerAutoRenewal
+     */
+    'units': number;
+    /**
+     * Number of bonus units
+     * @type {number}
+     * @memberof CustomerAutoRenewal
+     */
+    'bonusUnits': number;
+    /**
+     * 
+     * @type {AutoRenewalPeriod}
+     * @memberof CustomerAutoRenewal
+     */
+    'period': AutoRenewalPeriod;
+    /**
+     * An ISO formatted timestamp
+     * @type {string}
+     * @memberof CustomerAutoRenewal
+     */
+    'createdAt': string;
+    /**
+     * An ISO formatted timestamp
+     * @type {string}
+     * @memberof CustomerAutoRenewal
+     */
+    'nextChargeAt': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof CustomerAutoRenewal
+     */
+    'status': CustomerAutoRenewalStatusEnum;
+}
+
+export const CustomerAutoRenewalStatusEnum = {
+    Active: 'active',
+    Cancelled: 'cancelled',
+    Overdue: 'overdue'
+} as const;
+
+export type CustomerAutoRenewalStatusEnum = typeof CustomerAutoRenewalStatusEnum[keyof typeof CustomerAutoRenewalStatusEnum];
+
+/**
+ * 
+ * @export
+ * @interface DateRange
+ */
+interface DateRange {
+    /**
+     * An ISO formatted timestamp
+     * @type {string}
+     * @memberof DateRange
+     */
+    'from': string;
+    /**
+     * An ISO formatted timestamp
+     * @type {string}
+     * @memberof DateRange
+     */
+    'to': string;
+}
+/**
  * List of features
  * @export
  * @enum {string}
@@ -365,8 +1289,7 @@ export const Feature = {
     Broadcast: 'broadcast',
     MessageFlows: 'message-flows',
     Shop: 'shop',
-    Autocomplete: 'autocomplete',
-    Widget: 'widget'
+    Autocomplete: 'autocomplete'
 } as const;
 
 export type Feature = typeof Feature[keyof typeof Feature];
@@ -378,6 +1301,25 @@ export type Feature = typeof Feature[keyof typeof Feature];
  */
 export type FeatureConfig = Array<Feature> | string;
 
+/**
+ * 
+ * @export
+ * @interface FloatAmountWithCurrency
+ */
+export interface FloatAmountWithCurrency {
+    /**
+     * The amount in dollar value
+     * @type {number}
+     * @memberof FloatAmountWithCurrency
+     */
+    'amount': number;
+    /**
+     * ISO country code for currency in lowercase
+     * @type {string}
+     * @memberof FloatAmountWithCurrency
+     */
+    'currency': string;
+}
 /**
  * 
  * @export
@@ -446,6 +1388,71 @@ export type LimitedItem = typeof LimitedItem[keyof typeof LimitedItem];
 
 
 /**
+ * 
+ * @export
+ * @interface MiscBillingOptions
+ */
+export interface MiscBillingOptions {
+    /**
+     * The promotion code to use for this purchase.
+     * @type {string}
+     * @memberof MiscBillingOptions
+     */
+    'promotionCode'?: string;
+}
+/**
+ * 
+ * @export
+ * @interface MiscPreference
+ */
+export interface MiscPreference {
+    /**
+     * 
+     * @type {string}
+     * @memberof MiscPreference
+     */
+    'category': MiscPreferenceCategoryEnum;
+    /**
+     * 
+     * @type {string}
+     * @memberof MiscPreference
+     */
+    'key': MiscPreferenceKeyEnum;
+    /**
+     * 
+     * @type {MiscPreferenceData}
+     * @memberof MiscPreference
+     */
+    'data': MiscPreferenceData;
+}
+
+export const MiscPreferenceCategoryEnum = {
+    Misc: 'misc'
+} as const;
+
+export type MiscPreferenceCategoryEnum = typeof MiscPreferenceCategoryEnum[keyof typeof MiscPreferenceCategoryEnum];
+export const MiscPreferenceKeyEnum = {
+    NewSignupCredits: 'newSignupCredits',
+    ExpiryIntervalMonths: 'expiryIntervalMonths',
+    YearlyBonusCreditsPercentage: 'yearlyBonusCreditsPercentage'
+} as const;
+
+export type MiscPreferenceKeyEnum = typeof MiscPreferenceKeyEnum[keyof typeof MiscPreferenceKeyEnum];
+
+/**
+ * 
+ * @export
+ * @interface MiscPreferenceData
+ */
+export interface MiscPreferenceData {
+    /**
+     * 
+     * @type {number}
+     * @memberof MiscPreferenceData
+     */
+    'amount': number;
+}
+/**
  * Object which stores referral code details
  * @export
  * @interface PartnerReferral
@@ -505,6 +1512,12 @@ export interface PartnerReferral {
      * @memberof PartnerReferral
      */
     'createdAt': string;
+    /**
+     * number of credits to be given when the referral code is used
+     * @type {number}
+     * @memberof PartnerReferral
+     */
+    'credits'?: number;
 }
 /**
  * options to generate partnerReferral
@@ -536,6 +1549,12 @@ export interface PartnerReferralCreateOptions {
      * @memberof PartnerReferralCreateOptions
      */
     'includeInReferralCode'?: string;
+    /**
+     * number of credits to be given when the referral code is used
+     * @type {number}
+     * @memberof PartnerReferralCreateOptions
+     */
+    'credits'?: number;
 }
 /**
  * 
@@ -605,6 +1624,19 @@ export interface PaymentData {
      * @memberof PaymentData
      */
     'createdAt'?: string;
+}
+/**
+ * 
+ * @export
+ * @interface PaymentRequest
+ */
+export interface PaymentRequest {
+    /**
+     * URL to pay for the credits. If empty, the payment has already been made.
+     * @type {string}
+     * @memberof PaymentRequest
+     */
+    'paymentUrl': string;
 }
 /**
  * 
@@ -747,6 +1779,278 @@ export interface ProductsSelectionInner {
 /**
  * 
  * @export
+ * @interface PurchaseTierPreference
+ */
+export interface PurchaseTierPreference {
+    /**
+     * 
+     * @type {string}
+     * @memberof PurchaseTierPreference
+     */
+    'category': PurchaseTierPreferenceCategoryEnum;
+    /**
+     * Unique string to identify the tier
+     * @type {string}
+     * @memberof PurchaseTierPreference
+     */
+    'key': string;
+    /**
+     * 
+     * @type {CreditPurchaseTier}
+     * @memberof PurchaseTierPreference
+     */
+    'data': CreditPurchaseTier;
+}
+
+export const PurchaseTierPreferenceCategoryEnum = {
+    Tier: 'tier'
+} as const;
+
+export type PurchaseTierPreferenceCategoryEnum = typeof PurchaseTierPreferenceCategoryEnum[keyof typeof PurchaseTierPreferenceCategoryEnum];
+
+/**
+ * 
+ * @export
+ * @interface RecurringConsumptionMetadata
+ */
+export interface RecurringConsumptionMetadata {
+    /**
+     * 
+     * @type {Array<CreditConsumptionTier>}
+     * @memberof RecurringConsumptionMetadata
+     */
+    'tiers': Array<CreditConsumptionTier>;
+}
+/**
+ * 
+ * @export
+ * @interface RecurringConsumptionPreference
+ */
+export interface RecurringConsumptionPreference {
+    /**
+     * 
+     * @type {string}
+     * @memberof RecurringConsumptionPreference
+     */
+    'category': RecurringConsumptionPreferenceCategoryEnum;
+    /**
+     * 
+     * @type {RecurringCreditConsumptionType}
+     * @memberof RecurringConsumptionPreference
+     */
+    'key': RecurringCreditConsumptionType;
+    /**
+     * 
+     * @type {RecurringConsumptionMetadata}
+     * @memberof RecurringConsumptionPreference
+     */
+    'data': RecurringConsumptionMetadata;
+}
+
+export const RecurringConsumptionPreferenceCategoryEnum = {
+    RecurringConsumption: 'recurring_consumption'
+} as const;
+
+export type RecurringConsumptionPreferenceCategoryEnum = typeof RecurringConsumptionPreferenceCategoryEnum[keyof typeof RecurringConsumptionPreferenceCategoryEnum];
+
+/**
+ * A recurring credit consumption is a credit consumption that is automatically renewed every month
+ * @export
+ * @interface RecurringCreditConsumption
+ */
+export interface RecurringCreditConsumption {
+    /**
+     * ID of a recurring credit consumption
+     * @type {string}
+     * @memberof RecurringCreditConsumption
+     */
+    'id': string;
+    /**
+     * 
+     * @type {RecurringCreditConsumptionType}
+     * @memberof RecurringCreditConsumption
+     */
+    'type': RecurringCreditConsumptionType;
+    /**
+     * Number of units to consume at the next charge
+     * @type {number}
+     * @memberof RecurringCreditConsumption
+     */
+    'nextChargeUnits': number;
+    /**
+     * An ISO formatted timestamp
+     * @type {string}
+     * @memberof RecurringCreditConsumption
+     */
+    'createdAt': string;
+    /**
+     * An ISO formatted timestamp
+     * @type {string}
+     * @memberof RecurringCreditConsumption
+     */
+    'cancelledAt'?: string | null;
+    /**
+     * An ISO formatted timestamp
+     * @type {string}
+     * @memberof RecurringCreditConsumption
+     */
+    'nextChargeAt': string;
+    /**
+     * The ID of a user
+     * @type {string}
+     * @memberof RecurringCreditConsumption
+     */
+    'doneBy': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof RecurringCreditConsumption
+     */
+    'teamId'?: string;
+    /**
+     * The ID of the object that was consumed. (createdAt, objectId) will be enforced to be unique.
+     * @type {string}
+     * @memberof RecurringCreditConsumption
+     */
+    'objectId': string;
+    /**
+     * 
+     * @type {{ [key: string]: any; }}
+     * @memberof RecurringCreditConsumption
+     */
+    'metadata'?: { [key: string]: any; };
+}
+
+
+/**
+ * 
+ * @export
+ * @interface RecurringCreditConsumptionCreate
+ */
+export interface RecurringCreditConsumptionCreate {
+    /**
+     * 
+     * @type {RecurringCreditConsumptionType}
+     * @memberof RecurringCreditConsumptionCreate
+     */
+    'type': RecurringCreditConsumptionType;
+    /**
+     * An ISO formatted timestamp
+     * @type {string}
+     * @memberof RecurringCreditConsumptionCreate
+     */
+    'createdAt'?: string;
+    /**
+     * The ID of a team
+     * @type {string}
+     * @memberof RecurringCreditConsumptionCreate
+     */
+    'teamId': string;
+    /**
+     * The ID of the object that was consumed. (createdAt, objectId) will be enforced to be unique.
+     * @type {string}
+     * @memberof RecurringCreditConsumptionCreate
+     */
+    'objectId': string;
+    /**
+     * 
+     * @type {{ [key: string]: any; }}
+     * @memberof RecurringCreditConsumptionCreate
+     */
+    'metadata'?: { [key: string]: any; };
+}
+
+
+/**
+ * Enum of all the types of recurring credit consumption. Category of consumptions are separated by a slash.
+ * @export
+ * @enum {string}
+ */
+
+export const RecurringCreditConsumptionType = {
+    ChannelWa: 'channel/wa',
+    ChannelTiktok: 'channel/tiktok',
+    ChannelMessenger: 'channel/messenger',
+    ChannelWaBusinessApi: 'channel/wa-business-api',
+    User: 'user'
+} as const;
+
+export type RecurringCreditConsumptionType = typeof RecurringCreditConsumptionType[keyof typeof RecurringCreditConsumptionType];
+
+
+/**
+ * 
+ * @export
+ * @interface RecurringCreditsGet200Response
+ */
+export interface RecurringCreditsGet200Response {
+    /**
+     * 
+     * @type {Array<RecurringCreditConsumption>}
+     * @memberof RecurringCreditsGet200Response
+     */
+    'items': Array<RecurringCreditConsumption>;
+    /**
+     * 
+     * @type {string}
+     * @memberof RecurringCreditsGet200Response
+     */
+    'nextPageCursor'?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof RecurringCreditsGet200Response
+     */
+    'total'?: number;
+}
+/**
+ * 
+ * @export
+ * @interface SingleConsumptionMetadata
+ */
+export interface SingleConsumptionMetadata {
+    /**
+     * Cost of the consumption
+     * @type {number}
+     * @memberof SingleConsumptionMetadata
+     */
+    'perUnitCost': number;
+}
+/**
+ * 
+ * @export
+ * @interface SingleConsumptionPreference
+ */
+export interface SingleConsumptionPreference {
+    /**
+     * 
+     * @type {string}
+     * @memberof SingleConsumptionPreference
+     */
+    'category': SingleConsumptionPreferenceCategoryEnum;
+    /**
+     * 
+     * @type {CreditConsumptionType}
+     * @memberof SingleConsumptionPreference
+     */
+    'key': CreditConsumptionType;
+    /**
+     * 
+     * @type {SingleConsumptionMetadata}
+     * @memberof SingleConsumptionPreference
+     */
+    'data': SingleConsumptionMetadata;
+}
+
+export const SingleConsumptionPreferenceCategoryEnum = {
+    SingleConsumption: 'single_consumption'
+} as const;
+
+export type SingleConsumptionPreferenceCategoryEnum = typeof SingleConsumptionPreferenceCategoryEnum[keyof typeof SingleConsumptionPreferenceCategoryEnum];
+
+/**
+ * 
+ * @export
  * @interface StripeCheckout200Response
  */
 export interface StripeCheckout200Response {
@@ -807,6 +2111,70 @@ export interface StripeCustomerCreateOneOf1 {
      */
     'phoneNumber'?: string;
 }
+/**
+ * 
+ * @export
+ * @interface StripeMetadata
+ */
+export interface StripeMetadata {
+    /**
+     * The URL of the invoice that was created for this credit transaction.
+     * @type {string}
+     * @memberof StripeMetadata
+     */
+    'invoiceUrl': string;
+    /**
+     * The ID of the line item that was created for this credit transaction.
+     * @type {string}
+     * @memberof StripeMetadata
+     */
+    'lineItemId': string;
+    /**
+     * Fraction of the total amount that was paid for this credit transaction. Anything less than 1 means that some or all of the amount is refunded/due.
+     * @type {number}
+     * @memberof StripeMetadata
+     */
+    'paidFraction': number;
+}
+/**
+ * 
+ * @export
+ * @interface StripePreference
+ */
+export interface StripePreference {
+    /**
+     * 
+     * @type {string}
+     * @memberof StripePreference
+     */
+    'category': StripePreferenceCategoryEnum;
+    /**
+     * 
+     * @type {string}
+     * @memberof StripePreference
+     */
+    'key': StripePreferenceKeyEnum;
+    /**
+     * 
+     * @type {CreditStripePrice}
+     * @memberof StripePreference
+     */
+    'data': CreditStripePrice;
+}
+
+export const StripePreferenceCategoryEnum = {
+    Stripe: 'stripe'
+} as const;
+
+export type StripePreferenceCategoryEnum = typeof StripePreferenceCategoryEnum[keyof typeof StripePreferenceCategoryEnum];
+export const StripePreferenceKeyEnum = {
+    AutoRenewal: 'autoRenewal',
+    TopUp: 'topUp',
+    Bonus: 'bonus'
+} as const;
+
+export type StripePreferenceKeyEnum = typeof StripePreferenceKeyEnum[keyof typeof StripePreferenceKeyEnum];
+
 /**
  * 
  * @export
@@ -1254,6 +2622,38 @@ export interface TeamDetailUpdate {
      */
     'usage'?: LimitationMap;
 }
+/**
+ * 
+ * @export
+ * @interface UnlockPreference
+ */
+export interface UnlockPreference {
+    /**
+     * 
+     * @type {string}
+     * @memberof UnlockPreference
+     */
+    'category': UnlockPreferenceCategoryEnum;
+    /**
+     * 
+     * @type {CreditUnlockType}
+     * @memberof UnlockPreference
+     */
+    'key': CreditUnlockType;
+    /**
+     * 
+     * @type {CreditUnlockMetadata}
+     * @memberof UnlockPreference
+     */
+    'data': CreditUnlockMetadata;
+}
+
+export const UnlockPreferenceCategoryEnum = {
+    Unlock: 'unlock'
+} as const;
+
+export type UnlockPreferenceCategoryEnum = typeof UnlockPreferenceCategoryEnum[keyof typeof UnlockPreferenceCategoryEnum];
+
 
 /**
  * AutoChargeProductsApi - axios parameter creator
@@ -1655,6 +3055,1564 @@ export class CouponCodesApi extends BaseAPI {
      */
     public couponsPost(requestParameters: CouponCodesApiCouponsPostRequest = {}, options?: AxiosRequestConfig) {
         return CouponCodesApiFp(this.configuration).couponsPost(requestParameters.couponCodeCreateOptions, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+/**
+ * CreditsApi - axios parameter creator
+ * @export
+ */
+export const CreditsApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @summary Get auto-renewal details
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        autoRenewalGet: async (options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v2/credits/auto-renewal`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["PAYMENTS_READ"], configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Create/update the auto-renewal credit sub
+         * @param {BillingMethod} [method] 
+         * @param {CreditAutoRenewalUpdate} [creditAutoRenewalUpdate] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        autoRenewalPost: async (method?: BillingMethod, creditAutoRenewalUpdate?: CreditAutoRenewalUpdate, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v2/credits/auto-renewal`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["PAYMENTS_UPDATE"], configuration)
+
+            if (method !== undefined) {
+                localVarQueryParameter['method'] = method;
+            }
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(creditAutoRenewalUpdate, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Check if the team can consume the given quantity of credits
+         * @param {CreditConsumptionType} type The type of consumption
+         * @param {number} quantity The number of times to consume the given type
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        canConsumeCredits: async (type: CreditConsumptionType, quantity: number, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'type' is not null or undefined
+            assertParamExists('canConsumeCredits', 'type', type)
+            // verify required parameter 'quantity' is not null or undefined
+            assertParamExists('canConsumeCredits', 'quantity', quantity)
+            const localVarPath = `/v2/credits/can-consume/{type}`
+                .replace(`{${"type"}}`, encodeURIComponent(String(type)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["PAYMENTS_READ"], configuration)
+
+            if (quantity !== undefined) {
+                localVarQueryParameter['quantity'] = quantity;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Check if the team can consume the given quantity of credits
+         * @param {RecurringCreditConsumptionType} type The type of consumption
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        canConsumeRecurringCredits: async (type: RecurringCreditConsumptionType, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'type' is not null or undefined
+            assertParamExists('canConsumeRecurringCredits', 'type', type)
+            const localVarPath = `/v2/credits/can-consume-recurring/{type}`
+                .replace(`{${"type"}}`, encodeURIComponent(String(type)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["PAYMENTS_READ"], configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Create a new single use credit consumption record
+         * @param {CreditConsumptionPostRequest} [creditConsumptionPostRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        creditConsumptionPost: async (creditConsumptionPostRequest?: CreditConsumptionPostRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v2/credits/consumption`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["ADMIN_PANEL_ACCESS"], configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(creditConsumptionPostRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Get list of gains your team has received
+         * @param {string} [customerId] Filter by customerId.
+         * @param {number} [count] 
+         * @param {string} [cursor] 
+         * @param {Array<CreditGainType>} [type] 
+         * @param {DateRange} [createdAt] 
+         * @param {CreditGainStatus} [status] 
+         * @param {boolean} [returnTotal] Return total number of consumptions
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        creditGainsGet: async (customerId?: string, count?: number, cursor?: string, type?: Array<CreditGainType>, createdAt?: DateRange, status?: CreditGainStatus, returnTotal?: boolean, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v2/credits/gains`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["PAYMENTS_READ"], configuration)
+
+            if (customerId !== undefined) {
+                localVarQueryParameter['customerId'] = customerId;
+            }
+
+            if (count !== undefined) {
+                localVarQueryParameter['count'] = count;
+            }
+
+            if (cursor !== undefined) {
+                localVarQueryParameter['cursor'] = cursor;
+            }
+
+            if (type) {
+                localVarQueryParameter['type'] = type;
+            }
+
+            if (createdAt !== undefined) {
+                localVarQueryParameter['createdAt'] = createdAt;
+            }
+
+            if (status !== undefined) {
+                localVarQueryParameter['status'] = status;
+            }
+
+            if (returnTotal !== undefined) {
+                localVarQueryParameter['returnTotal'] = returnTotal;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Create a new credit gain
+         * @param {CreditGainCreate} [creditGainCreate] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        creditGainsPost: async (creditGainCreate?: CreditGainCreate, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v2/credits/gains`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["ADMIN_PANEL_ACCESS"], configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(creditGainCreate, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Get transaction history
+         * @param {string} [teamId] Filter by teamId
+         * @param {number} [count] 
+         * @param {string} [cursor] 
+         * @param {Array<CreditBalanceEffectType>} [type] 
+         * @param {'gain' | 'consume'} [effectType] 
+         * @param {Array<string>} [id] 
+         * @param {DateRange} [createdAt] 
+         * @param {boolean} [returnTotal] Return total number of consumptions
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        creditTxsGet: async (teamId?: string, count?: number, cursor?: string, type?: Array<CreditBalanceEffectType>, effectType?: 'gain' | 'consume', id?: Array<string>, createdAt?: DateRange, returnTotal?: boolean, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v2/credits/consumption`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["PAYMENTS_READ"], configuration)
+
+            if (teamId !== undefined) {
+                localVarQueryParameter['teamId'] = teamId;
+            }
+
+            if (count !== undefined) {
+                localVarQueryParameter['count'] = count;
+            }
+
+            if (cursor !== undefined) {
+                localVarQueryParameter['cursor'] = cursor;
+            }
+
+            if (type) {
+                localVarQueryParameter['type'] = type;
+            }
+
+            if (effectType !== undefined) {
+                localVarQueryParameter['effectType'] = effectType;
+            }
+
+            if (id) {
+                localVarQueryParameter['id'] = id;
+            }
+
+            if (createdAt !== undefined) {
+                localVarQueryParameter['createdAt'] = createdAt;
+            }
+
+            if (returnTotal !== undefined) {
+                localVarQueryParameter['returnTotal'] = returnTotal;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Get the customer\'s credit details
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        creditsCustomerGet: async (options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v2/credits/customer`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", [], configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Create a new customer, or link the team to an existing customer
+         * @param {CreditCustomerPost} [creditCustomerPost] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        creditsCustomerPost: async (creditCustomerPost?: CreditCustomerPost, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v2/credits/customer`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["ADMIN_PANEL_ACCESS"], configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(creditCustomerPost, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Refreshes the customer\'s subscription & any other purchased items
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        creditsCustomerRefresh: async (options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v2/credits/customer/refresh`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["PAYMENTS_UPDATE"], configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Get metadata for credit consumptions and unlocks
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        creditsMetadataGet: async (options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v2/credits/metadata`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", [], configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Get the system credit preferences
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        creditsPreferencesGet: async (options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v2/credits/preferences`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["ADMIN_PANEL_ACCESS"], configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Updates the given credit preferences
+         * @param {CreditsPreferencesGet200Response} [creditsPreferencesGet200Response] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        creditsPreferencesPost: async (creditsPreferencesGet200Response?: CreditsPreferencesGet200Response, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v2/credits/preferences`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["ADMIN_PANEL_ACCESS"], configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(creditsPreferencesGet200Response, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Get recurring credit consumptions
+         * @param {string} [teamId] Filter by teamId
+         * @param {number} [count] 
+         * @param {string} [cursor] 
+         * @param {RecurringCreditConsumptionType} [type] 
+         * @param {boolean} [returnTotal] Return total number of consumptions
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        recurringCreditsGet: async (teamId?: string, count?: number, cursor?: string, type?: RecurringCreditConsumptionType, returnTotal?: boolean, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v2/credits/recurring`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["PAYMENTS_READ"], configuration)
+
+            if (teamId !== undefined) {
+                localVarQueryParameter['teamId'] = teamId;
+            }
+
+            if (count !== undefined) {
+                localVarQueryParameter['count'] = count;
+            }
+
+            if (cursor !== undefined) {
+                localVarQueryParameter['cursor'] = cursor;
+            }
+
+            if (type !== undefined) {
+                localVarQueryParameter['type'] = type;
+            }
+
+            if (returnTotal !== undefined) {
+                localVarQueryParameter['returnTotal'] = returnTotal;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Top up credits
+         * @param {BillingMethod} [method] 
+         * @param {CreditTopUpOptions} [creditTopUpOptions] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        topUpCreditsPost: async (method?: BillingMethod, creditTopUpOptions?: CreditTopUpOptions, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v2/credits/topup`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["PAYMENTS_UPDATE"], configuration)
+
+            if (method !== undefined) {
+                localVarQueryParameter['method'] = method;
+            }
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(creditTopUpOptions, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * CreditsApi - functional programming interface
+ * @export
+ */
+export const CreditsApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = CreditsApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * 
+         * @summary Get auto-renewal details
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async autoRenewalGet(options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AutoRenewalGet200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.autoRenewalGet(options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary Create/update the auto-renewal credit sub
+         * @param {BillingMethod} [method] 
+         * @param {CreditAutoRenewalUpdate} [creditAutoRenewalUpdate] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async autoRenewalPost(method?: BillingMethod, creditAutoRenewalUpdate?: CreditAutoRenewalUpdate, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PaymentRequest>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.autoRenewalPost(method, creditAutoRenewalUpdate, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary Check if the team can consume the given quantity of credits
+         * @param {CreditConsumptionType} type The type of consumption
+         * @param {number} quantity The number of times to consume the given type
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async canConsumeCredits(type: CreditConsumptionType, quantity: number, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CanConsumeCredits200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.canConsumeCredits(type, quantity, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary Check if the team can consume the given quantity of credits
+         * @param {RecurringCreditConsumptionType} type The type of consumption
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async canConsumeRecurringCredits(type: RecurringCreditConsumptionType, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CanConsumeCredits200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.canConsumeRecurringCredits(type, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary Create a new single use credit consumption record
+         * @param {CreditConsumptionPostRequest} [creditConsumptionPostRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async creditConsumptionPost(creditConsumptionPostRequest?: CreditConsumptionPostRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<CreditTransactionRecord>>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.creditConsumptionPost(creditConsumptionPostRequest, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary Get list of gains your team has received
+         * @param {string} [customerId] Filter by customerId.
+         * @param {number} [count] 
+         * @param {string} [cursor] 
+         * @param {Array<CreditGainType>} [type] 
+         * @param {DateRange} [createdAt] 
+         * @param {CreditGainStatus} [status] 
+         * @param {boolean} [returnTotal] Return total number of consumptions
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async creditGainsGet(customerId?: string, count?: number, cursor?: string, type?: Array<CreditGainType>, createdAt?: DateRange, status?: CreditGainStatus, returnTotal?: boolean, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CreditGainsGet200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.creditGainsGet(customerId, count, cursor, type, createdAt, status, returnTotal, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary Create a new credit gain
+         * @param {CreditGainCreate} [creditGainCreate] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async creditGainsPost(creditGainCreate?: CreditGainCreate, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CreditGain>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.creditGainsPost(creditGainCreate, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary Get transaction history
+         * @param {string} [teamId] Filter by teamId
+         * @param {number} [count] 
+         * @param {string} [cursor] 
+         * @param {Array<CreditBalanceEffectType>} [type] 
+         * @param {'gain' | 'consume'} [effectType] 
+         * @param {Array<string>} [id] 
+         * @param {DateRange} [createdAt] 
+         * @param {boolean} [returnTotal] Return total number of consumptions
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async creditTxsGet(teamId?: string, count?: number, cursor?: string, type?: Array<CreditBalanceEffectType>, effectType?: 'gain' | 'consume', id?: Array<string>, createdAt?: DateRange, returnTotal?: boolean, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CreditTxsGet200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.creditTxsGet(teamId, count, cursor, type, effectType, id, createdAt, returnTotal, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary Get the customer\'s credit details
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async creditsCustomerGet(options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CreditCustomer>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.creditsCustomerGet(options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary Create a new customer, or link the team to an existing customer
+         * @param {CreditCustomerPost} [creditCustomerPost] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async creditsCustomerPost(creditCustomerPost?: CreditCustomerPost, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CreditsCustomerPost200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.creditsCustomerPost(creditCustomerPost, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary Refreshes the customer\'s subscription & any other purchased items
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async creditsCustomerRefresh(options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.creditsCustomerRefresh(options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary Get metadata for credit consumptions and unlocks
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async creditsMetadataGet(options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CreditsMetadata>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.creditsMetadataGet(options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary Get the system credit preferences
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async creditsPreferencesGet(options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CreditsPreferencesGet200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.creditsPreferencesGet(options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary Updates the given credit preferences
+         * @param {CreditsPreferencesGet200Response} [creditsPreferencesGet200Response] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async creditsPreferencesPost(creditsPreferencesGet200Response?: CreditsPreferencesGet200Response, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.creditsPreferencesPost(creditsPreferencesGet200Response, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary Get recurring credit consumptions
+         * @param {string} [teamId] Filter by teamId
+         * @param {number} [count] 
+         * @param {string} [cursor] 
+         * @param {RecurringCreditConsumptionType} [type] 
+         * @param {boolean} [returnTotal] Return total number of consumptions
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async recurringCreditsGet(teamId?: string, count?: number, cursor?: string, type?: RecurringCreditConsumptionType, returnTotal?: boolean, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<RecurringCreditsGet200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.recurringCreditsGet(teamId, count, cursor, type, returnTotal, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary Top up credits
+         * @param {BillingMethod} [method] 
+         * @param {CreditTopUpOptions} [creditTopUpOptions] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async topUpCreditsPost(method?: BillingMethod, creditTopUpOptions?: CreditTopUpOptions, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PaymentRequest>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.topUpCreditsPost(method, creditTopUpOptions, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+    }
+};
+
+/**
+ * CreditsApi - factory interface
+ * @export
+ */
+export const CreditsApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = CreditsApiFp(configuration)
+    return {
+        /**
+         * 
+         * @summary Get auto-renewal details
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        autoRenewalGet(options?: AxiosRequestConfig): AxiosPromise<AutoRenewalGet200Response> {
+            return localVarFp.autoRenewalGet(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Create/update the auto-renewal credit sub
+         * @param {CreditsApiAutoRenewalPostRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        autoRenewalPost(requestParameters: CreditsApiAutoRenewalPostRequest = {}, options?: AxiosRequestConfig): AxiosPromise<PaymentRequest> {
+            return localVarFp.autoRenewalPost(requestParameters.method, requestParameters.creditAutoRenewalUpdate, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Check if the team can consume the given quantity of credits
+         * @param {CreditsApiCanConsumeCreditsRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        canConsumeCredits(requestParameters: CreditsApiCanConsumeCreditsRequest, options?: AxiosRequestConfig): AxiosPromise<CanConsumeCredits200Response> {
+            return localVarFp.canConsumeCredits(requestParameters.type, requestParameters.quantity, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Check if the team can consume the given quantity of credits
+         * @param {CreditsApiCanConsumeRecurringCreditsRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        canConsumeRecurringCredits(requestParameters: CreditsApiCanConsumeRecurringCreditsRequest, options?: AxiosRequestConfig): AxiosPromise<CanConsumeCredits200Response> {
+            return localVarFp.canConsumeRecurringCredits(requestParameters.type, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Create a new single use credit consumption record
+         * @param {CreditsApiCreditConsumptionPostRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        creditConsumptionPost(requestParameters: CreditsApiCreditConsumptionPostRequest = {}, options?: AxiosRequestConfig): AxiosPromise<Array<CreditTransactionRecord>> {
+            return localVarFp.creditConsumptionPost(requestParameters.creditConsumptionPostRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Get list of gains your team has received
+         * @param {CreditsApiCreditGainsGetRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        creditGainsGet(requestParameters: CreditsApiCreditGainsGetRequest = {}, options?: AxiosRequestConfig): AxiosPromise<CreditGainsGet200Response> {
+            return localVarFp.creditGainsGet(requestParameters.customerId, requestParameters.count, requestParameters.cursor, requestParameters.type, requestParameters.createdAt, requestParameters.status, requestParameters.returnTotal, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Create a new credit gain
+         * @param {CreditsApiCreditGainsPostRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        creditGainsPost(requestParameters: CreditsApiCreditGainsPostRequest = {}, options?: AxiosRequestConfig): AxiosPromise<CreditGain> {
+            return localVarFp.creditGainsPost(requestParameters.creditGainCreate, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Get transaction history
+         * @param {CreditsApiCreditTxsGetRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        creditTxsGet(requestParameters: CreditsApiCreditTxsGetRequest = {}, options?: AxiosRequestConfig): AxiosPromise<CreditTxsGet200Response> {
+            return localVarFp.creditTxsGet(requestParameters.teamId, requestParameters.count, requestParameters.cursor, requestParameters.type, requestParameters.effectType, requestParameters.id, requestParameters.createdAt, requestParameters.returnTotal, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Get the customer\'s credit details
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        creditsCustomerGet(options?: AxiosRequestConfig): AxiosPromise<CreditCustomer> {
+            return localVarFp.creditsCustomerGet(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Create a new customer, or link the team to an existing customer
+         * @param {CreditsApiCreditsCustomerPostRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        creditsCustomerPost(requestParameters: CreditsApiCreditsCustomerPostRequest = {}, options?: AxiosRequestConfig): AxiosPromise<CreditsCustomerPost200Response> {
+            return localVarFp.creditsCustomerPost(requestParameters.creditCustomerPost, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Refreshes the customer\'s subscription & any other purchased items
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        creditsCustomerRefresh(options?: AxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.creditsCustomerRefresh(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Get metadata for credit consumptions and unlocks
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        creditsMetadataGet(options?: AxiosRequestConfig): AxiosPromise<CreditsMetadata> {
+            return localVarFp.creditsMetadataGet(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Get the system credit preferences
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        creditsPreferencesGet(options?: AxiosRequestConfig): AxiosPromise<CreditsPreferencesGet200Response> {
+            return localVarFp.creditsPreferencesGet(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Updates the given credit preferences
+         * @param {CreditsApiCreditsPreferencesPostRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        creditsPreferencesPost(requestParameters: CreditsApiCreditsPreferencesPostRequest = {}, options?: AxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.creditsPreferencesPost(requestParameters.creditsPreferencesGet200Response, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Get recurring credit consumptions
+         * @param {CreditsApiRecurringCreditsGetRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        recurringCreditsGet(requestParameters: CreditsApiRecurringCreditsGetRequest = {}, options?: AxiosRequestConfig): AxiosPromise<RecurringCreditsGet200Response> {
+            return localVarFp.recurringCreditsGet(requestParameters.teamId, requestParameters.count, requestParameters.cursor, requestParameters.type, requestParameters.returnTotal, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Top up credits
+         * @param {CreditsApiTopUpCreditsPostRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        topUpCreditsPost(requestParameters: CreditsApiTopUpCreditsPostRequest = {}, options?: AxiosRequestConfig): AxiosPromise<PaymentRequest> {
+            return localVarFp.topUpCreditsPost(requestParameters.method, requestParameters.creditTopUpOptions, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * Request parameters for autoRenewalPost operation in CreditsApi.
+ * @export
+ * @interface CreditsApiAutoRenewalPostRequest
+ */
+export interface CreditsApiAutoRenewalPostRequest {
+    /**
+     * 
+     * @type {BillingMethod}
+     * @memberof CreditsApiAutoRenewalPost
+     */
+    readonly method?: BillingMethod
+
+    /**
+     * 
+     * @type {CreditAutoRenewalUpdate}
+     * @memberof CreditsApiAutoRenewalPost
+     */
+    readonly creditAutoRenewalUpdate?: CreditAutoRenewalUpdate
+}
+
+/**
+ * Request parameters for canConsumeCredits operation in CreditsApi.
+ * @export
+ * @interface CreditsApiCanConsumeCreditsRequest
+ */
+export interface CreditsApiCanConsumeCreditsRequest {
+    /**
+     * The type of consumption
+     * @type {CreditConsumptionType}
+     * @memberof CreditsApiCanConsumeCredits
+     */
+    readonly type: CreditConsumptionType
+
+    /**
+     * The number of times to consume the given type
+     * @type {number}
+     * @memberof CreditsApiCanConsumeCredits
+     */
+    readonly quantity: number
+}
+
+/**
+ * Request parameters for canConsumeRecurringCredits operation in CreditsApi.
+ * @export
+ * @interface CreditsApiCanConsumeRecurringCreditsRequest
+ */
+export interface CreditsApiCanConsumeRecurringCreditsRequest {
+    /**
+     * The type of consumption
+     * @type {RecurringCreditConsumptionType}
+     * @memberof CreditsApiCanConsumeRecurringCredits
+     */
+    readonly type: RecurringCreditConsumptionType
+}
+
+/**
+ * Request parameters for creditConsumptionPost operation in CreditsApi.
+ * @export
+ * @interface CreditsApiCreditConsumptionPostRequest
+ */
+export interface CreditsApiCreditConsumptionPostRequest {
+    /**
+     * 
+     * @type {CreditConsumptionPostRequest}
+     * @memberof CreditsApiCreditConsumptionPost
+     */
+    readonly creditConsumptionPostRequest?: CreditConsumptionPostRequest
+}
+
+/**
+ * Request parameters for creditGainsGet operation in CreditsApi.
+ * @export
+ * @interface CreditsApiCreditGainsGetRequest
+ */
+export interface CreditsApiCreditGainsGetRequest {
+    /**
+     * Filter by customerId.
+     * @type {string}
+     * @memberof CreditsApiCreditGainsGet
+     */
+    readonly customerId?: string
+
+    /**
+     * 
+     * @type {number}
+     * @memberof CreditsApiCreditGainsGet
+     */
+    readonly count?: number
+
+    /**
+     * 
+     * @type {string}
+     * @memberof CreditsApiCreditGainsGet
+     */
+    readonly cursor?: string
+
+    /**
+     * 
+     * @type {Array<CreditGainType>}
+     * @memberof CreditsApiCreditGainsGet
+     */
+    readonly type?: Array<CreditGainType>
+
+    /**
+     * 
+     * @type {DateRange}
+     * @memberof CreditsApiCreditGainsGet
+     */
+    readonly createdAt?: DateRange
+
+    /**
+     * 
+     * @type {CreditGainStatus}
+     * @memberof CreditsApiCreditGainsGet
+     */
+    readonly status?: CreditGainStatus
+
+    /**
+     * Return total number of consumptions
+     * @type {boolean}
+     * @memberof CreditsApiCreditGainsGet
+     */
+    readonly returnTotal?: boolean
+}
+
+/**
+ * Request parameters for creditGainsPost operation in CreditsApi.
+ * @export
+ * @interface CreditsApiCreditGainsPostRequest
+ */
+export interface CreditsApiCreditGainsPostRequest {
+    /**
+     * 
+     * @type {CreditGainCreate}
+     * @memberof CreditsApiCreditGainsPost
+     */
+    readonly creditGainCreate?: CreditGainCreate
+}
+
+/**
+ * Request parameters for creditTxsGet operation in CreditsApi.
+ * @export
+ * @interface CreditsApiCreditTxsGetRequest
+ */
+export interface CreditsApiCreditTxsGetRequest {
+    /**
+     * Filter by teamId
+     * @type {string}
+     * @memberof CreditsApiCreditTxsGet
+     */
+    readonly teamId?: string
+
+    /**
+     * 
+     * @type {number}
+     * @memberof CreditsApiCreditTxsGet
+     */
+    readonly count?: number
+
+    /**
+     * 
+     * @type {string}
+     * @memberof CreditsApiCreditTxsGet
+     */
+    readonly cursor?: string
+
+    /**
+     * 
+     * @type {Array<CreditBalanceEffectType>}
+     * @memberof CreditsApiCreditTxsGet
+     */
+    readonly type?: Array<CreditBalanceEffectType>
+
+    /**
+     * 
+     * @type {'gain' | 'consume'}
+     * @memberof CreditsApiCreditTxsGet
+     */
+    readonly effectType?: 'gain' | 'consume'
+
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof CreditsApiCreditTxsGet
+     */
+    readonly id?: Array<string>
+
+    /**
+     * 
+     * @type {DateRange}
+     * @memberof CreditsApiCreditTxsGet
+     */
+    readonly createdAt?: DateRange
+
+    /**
+     * Return total number of consumptions
+     * @type {boolean}
+     * @memberof CreditsApiCreditTxsGet
+     */
+    readonly returnTotal?: boolean
+}
+
+/**
+ * Request parameters for creditsCustomerPost operation in CreditsApi.
+ * @export
+ * @interface CreditsApiCreditsCustomerPostRequest
+ */
+export interface CreditsApiCreditsCustomerPostRequest {
+    /**
+     * 
+     * @type {CreditCustomerPost}
+     * @memberof CreditsApiCreditsCustomerPost
+     */
+    readonly creditCustomerPost?: CreditCustomerPost
+}
+
+/**
+ * Request parameters for creditsPreferencesPost operation in CreditsApi.
+ * @export
+ * @interface CreditsApiCreditsPreferencesPostRequest
+ */
+export interface CreditsApiCreditsPreferencesPostRequest {
+    /**
+     * 
+     * @type {CreditsPreferencesGet200Response}
+     * @memberof CreditsApiCreditsPreferencesPost
+     */
+    readonly creditsPreferencesGet200Response?: CreditsPreferencesGet200Response
+}
+
+/**
+ * Request parameters for recurringCreditsGet operation in CreditsApi.
+ * @export
+ * @interface CreditsApiRecurringCreditsGetRequest
+ */
+export interface CreditsApiRecurringCreditsGetRequest {
+    /**
+     * Filter by teamId
+     * @type {string}
+     * @memberof CreditsApiRecurringCreditsGet
+     */
+    readonly teamId?: string
+
+    /**
+     * 
+     * @type {number}
+     * @memberof CreditsApiRecurringCreditsGet
+     */
+    readonly count?: number
+
+    /**
+     * 
+     * @type {string}
+     * @memberof CreditsApiRecurringCreditsGet
+     */
+    readonly cursor?: string
+
+    /**
+     * 
+     * @type {RecurringCreditConsumptionType}
+     * @memberof CreditsApiRecurringCreditsGet
+     */
+    readonly type?: RecurringCreditConsumptionType
+
+    /**
+     * Return total number of consumptions
+     * @type {boolean}
+     * @memberof CreditsApiRecurringCreditsGet
+     */
+    readonly returnTotal?: boolean
+}
+
+/**
+ * Request parameters for topUpCreditsPost operation in CreditsApi.
+ * @export
+ * @interface CreditsApiTopUpCreditsPostRequest
+ */
+export interface CreditsApiTopUpCreditsPostRequest {
+    /**
+     * 
+     * @type {BillingMethod}
+     * @memberof CreditsApiTopUpCreditsPost
+     */
+    readonly method?: BillingMethod
+
+    /**
+     * 
+     * @type {CreditTopUpOptions}
+     * @memberof CreditsApiTopUpCreditsPost
+     */
+    readonly creditTopUpOptions?: CreditTopUpOptions
+}
+
+/**
+ * CreditsApi - object-oriented interface
+ * @export
+ * @class CreditsApi
+ * @extends {BaseAPI}
+ */
+export class CreditsApi extends BaseAPI {
+    /**
+     * 
+     * @summary Get auto-renewal details
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CreditsApi
+     */
+    public autoRenewalGet(options?: AxiosRequestConfig) {
+        return CreditsApiFp(this.configuration).autoRenewalGet(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Create/update the auto-renewal credit sub
+     * @param {CreditsApiAutoRenewalPostRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CreditsApi
+     */
+    public autoRenewalPost(requestParameters: CreditsApiAutoRenewalPostRequest = {}, options?: AxiosRequestConfig) {
+        return CreditsApiFp(this.configuration).autoRenewalPost(requestParameters.method, requestParameters.creditAutoRenewalUpdate, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Check if the team can consume the given quantity of credits
+     * @param {CreditsApiCanConsumeCreditsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CreditsApi
+     */
+    public canConsumeCredits(requestParameters: CreditsApiCanConsumeCreditsRequest, options?: AxiosRequestConfig) {
+        return CreditsApiFp(this.configuration).canConsumeCredits(requestParameters.type, requestParameters.quantity, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Check if the team can consume the given quantity of credits
+     * @param {CreditsApiCanConsumeRecurringCreditsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CreditsApi
+     */
+    public canConsumeRecurringCredits(requestParameters: CreditsApiCanConsumeRecurringCreditsRequest, options?: AxiosRequestConfig) {
+        return CreditsApiFp(this.configuration).canConsumeRecurringCredits(requestParameters.type, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Create a new single use credit consumption record
+     * @param {CreditsApiCreditConsumptionPostRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CreditsApi
+     */
+    public creditConsumptionPost(requestParameters: CreditsApiCreditConsumptionPostRequest = {}, options?: AxiosRequestConfig) {
+        return CreditsApiFp(this.configuration).creditConsumptionPost(requestParameters.creditConsumptionPostRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Get list of gains your team has received
+     * @param {CreditsApiCreditGainsGetRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CreditsApi
+     */
+    public creditGainsGet(requestParameters: CreditsApiCreditGainsGetRequest = {}, options?: AxiosRequestConfig) {
+        return CreditsApiFp(this.configuration).creditGainsGet(requestParameters.customerId, requestParameters.count, requestParameters.cursor, requestParameters.type, requestParameters.createdAt, requestParameters.status, requestParameters.returnTotal, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Create a new credit gain
+     * @param {CreditsApiCreditGainsPostRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CreditsApi
+     */
+    public creditGainsPost(requestParameters: CreditsApiCreditGainsPostRequest = {}, options?: AxiosRequestConfig) {
+        return CreditsApiFp(this.configuration).creditGainsPost(requestParameters.creditGainCreate, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Get transaction history
+     * @param {CreditsApiCreditTxsGetRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CreditsApi
+     */
+    public creditTxsGet(requestParameters: CreditsApiCreditTxsGetRequest = {}, options?: AxiosRequestConfig) {
+        return CreditsApiFp(this.configuration).creditTxsGet(requestParameters.teamId, requestParameters.count, requestParameters.cursor, requestParameters.type, requestParameters.effectType, requestParameters.id, requestParameters.createdAt, requestParameters.returnTotal, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Get the customer\'s credit details
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CreditsApi
+     */
+    public creditsCustomerGet(options?: AxiosRequestConfig) {
+        return CreditsApiFp(this.configuration).creditsCustomerGet(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Create a new customer, or link the team to an existing customer
+     * @param {CreditsApiCreditsCustomerPostRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CreditsApi
+     */
+    public creditsCustomerPost(requestParameters: CreditsApiCreditsCustomerPostRequest = {}, options?: AxiosRequestConfig) {
+        return CreditsApiFp(this.configuration).creditsCustomerPost(requestParameters.creditCustomerPost, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Refreshes the customer\'s subscription & any other purchased items
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CreditsApi
+     */
+    public creditsCustomerRefresh(options?: AxiosRequestConfig) {
+        return CreditsApiFp(this.configuration).creditsCustomerRefresh(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Get metadata for credit consumptions and unlocks
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CreditsApi
+     */
+    public creditsMetadataGet(options?: AxiosRequestConfig) {
+        return CreditsApiFp(this.configuration).creditsMetadataGet(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Get the system credit preferences
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CreditsApi
+     */
+    public creditsPreferencesGet(options?: AxiosRequestConfig) {
+        return CreditsApiFp(this.configuration).creditsPreferencesGet(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Updates the given credit preferences
+     * @param {CreditsApiCreditsPreferencesPostRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CreditsApi
+     */
+    public creditsPreferencesPost(requestParameters: CreditsApiCreditsPreferencesPostRequest = {}, options?: AxiosRequestConfig) {
+        return CreditsApiFp(this.configuration).creditsPreferencesPost(requestParameters.creditsPreferencesGet200Response, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Get recurring credit consumptions
+     * @param {CreditsApiRecurringCreditsGetRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CreditsApi
+     */
+    public recurringCreditsGet(requestParameters: CreditsApiRecurringCreditsGetRequest = {}, options?: AxiosRequestConfig) {
+        return CreditsApiFp(this.configuration).recurringCreditsGet(requestParameters.teamId, requestParameters.count, requestParameters.cursor, requestParameters.type, requestParameters.returnTotal, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Top up credits
+     * @param {CreditsApiTopUpCreditsPostRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CreditsApi
+     */
+    public topUpCreditsPost(requestParameters: CreditsApiTopUpCreditsPostRequest = {}, options?: AxiosRequestConfig) {
+        return CreditsApiFp(this.configuration).topUpCreditsPost(requestParameters.method, requestParameters.creditTopUpOptions, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

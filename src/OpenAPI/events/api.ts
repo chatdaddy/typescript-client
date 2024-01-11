@@ -2653,6 +2653,208 @@ export interface BotUpdateData {
 /**
  * 
  * @export
+ * @interface CampaignInsert
+ */
+export interface CampaignInsert {
+    /**
+     * 
+     * @type {string}
+     * @memberof CampaignInsert
+     */
+    'event': CampaignInsertEventEnum;
+    /**
+     * 
+     * @type {Array<CampaignInsertData>}
+     * @memberof CampaignInsert
+     */
+    'data': Array<CampaignInsertData>;
+}
+
+export const CampaignInsertEventEnum = {
+    CampaignInsert: 'campaign-insert'
+} as const;
+
+export type CampaignInsertEventEnum = typeof CampaignInsertEventEnum[keyof typeof CampaignInsertEventEnum];
+
+/**
+ * 
+ * @export
+ * @interface CampaignInsertData
+ */
+export interface CampaignInsertData {
+    /**
+     * Name of the campaign
+     * @type {string}
+     * @memberof CampaignInsertData
+     */
+    'name': string;
+    /**
+     * Time interval between each message sent in seconds
+     * @type {number}
+     * @memberof CampaignInsertData
+     */
+    'sendInterval': number;
+    /**
+     * The template to send out
+     * @type {string}
+     * @memberof CampaignInsertData
+     */
+    'messageTemplate': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof CampaignInsertData
+     */
+    'scheduledAt'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof CampaignInsertData
+     */
+    'nextScheduledAt'?: string | null;
+    /**
+     * Should the message be randomized before sending
+     * @type {boolean}
+     * @memberof CampaignInsertData
+     */
+    'randomizeMessage'?: boolean;
+    /**
+     * Should typing indicator & read receipt be sent
+     * @type {boolean}
+     * @memberof CampaignInsertData
+     */
+    'sendTyping'?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof CampaignInsertData
+     */
+    'cancelIfReplyReceived'?: boolean;
+    /**
+     * ID of the campaign
+     * @type {string}
+     * @memberof CampaignInsertData
+     */
+    'id': string;
+    /**
+     * Current state of the campaign
+     * @type {string}
+     * @memberof CampaignInsertData
+     */
+    'state': CampaignInsertDataStateEnum;
+    /**
+     * 
+     * @type {string}
+     * @memberof CampaignInsertData
+     */
+    'createdAt': string | null;
+    /**
+     * Team ID of the campaign
+     * @type {string}
+     * @memberof CampaignInsertData
+     */
+    'teamId': string;
+    /**
+     * Specify IM account to use
+     * @type {string}
+     * @memberof CampaignInsertData
+     * @deprecated
+     */
+    'accountId'?: string | null;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof CampaignInsertData
+     */
+    'accountIds'?: Array<string> | null;
+    /**
+     * Contact filter query
+     * @type {{ [key: string]: any; }}
+     * @memberof CampaignInsertData
+     */
+    'contactFilters'?: { [key: string]: any; };
+    /**
+     * 
+     * @type {CampaignInsertDataCounts}
+     * @memberof CampaignInsertData
+     */
+    'counts': CampaignInsertDataCounts;
+    /**
+     * 
+     * @type {CampaignInsertDataActivationTimeRange}
+     * @memberof CampaignInsertData
+     */
+    'activationTimeRange'?: CampaignInsertDataActivationTimeRange;
+}
+
+export const CampaignInsertDataStateEnum = {
+    Inactive: 'inactive',
+    Scheduled: 'scheduled',
+    Progress: 'progress',
+    Completed: 'completed'
+} as const;
+
+export type CampaignInsertDataStateEnum = typeof CampaignInsertDataStateEnum[keyof typeof CampaignInsertDataStateEnum];
+
+/**
+ * 
+ * @export
+ * @interface CampaignInsertDataActivationTimeRange
+ */
+export interface CampaignInsertDataActivationTimeRange {
+    /**
+     * 
+     * @type {string}
+     * @memberof CampaignInsertDataActivationTimeRange
+     */
+    'startTime': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof CampaignInsertDataActivationTimeRange
+     */
+    'endTime': string;
+}
+/**
+ * 
+ * @export
+ * @interface CampaignInsertDataCounts
+ */
+export interface CampaignInsertDataCounts {
+    /**
+     * 
+     * @type {number}
+     * @memberof CampaignInsertDataCounts
+     */
+    'failed'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof CampaignInsertDataCounts
+     */
+    'pending'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof CampaignInsertDataCounts
+     */
+    'pendingWAAck'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof CampaignInsertDataCounts
+     */
+    'sent'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof CampaignInsertDataCounts
+     */
+    'delivered'?: number;
+}
+/**
+ * 
+ * @export
  * @interface ChatDelete
  */
 export interface ChatDelete {
@@ -2996,6 +3198,364 @@ export type ChatUpdateDataTicketStatusEnum = typeof ChatUpdateDataTicketStatusEn
 /**
  * 
  * @export
+ * @interface ChatbotInsert
+ */
+export interface ChatbotInsert {
+    /**
+     * 
+     * @type {string}
+     * @memberof ChatbotInsert
+     */
+    'event': ChatbotInsertEventEnum;
+    /**
+     * 
+     * @type {Array<ChatbotInsertData>}
+     * @memberof ChatbotInsert
+     */
+    'data': Array<ChatbotInsertData>;
+}
+
+export const ChatbotInsertEventEnum = {
+    ChatbotInsert: 'chatbot-insert'
+} as const;
+
+export type ChatbotInsertEventEnum = typeof ChatbotInsertEventEnum[keyof typeof ChatbotInsertEventEnum];
+
+/**
+ * 
+ * @export
+ * @interface ChatbotInsertData
+ */
+export interface ChatbotInsertData {
+    /**
+     * ID of the chatbot
+     * @type {string}
+     * @memberof ChatbotInsertData
+     */
+    'id': string;
+    /**
+     * 
+     * @type {Array<ChatbotInsertDataAllOfDocuments>}
+     * @memberof ChatbotInsertData
+     */
+    'documents'?: Array<ChatbotInsertDataAllOfDocuments>;
+    /**
+     * An ISO formatted timestamp
+     * @type {string}
+     * @memberof ChatbotInsertData
+     */
+    'createdAt': string;
+    /**
+     * An ISO formatted timestamp
+     * @type {string}
+     * @memberof ChatbotInsertData
+     */
+    'updatedAt': string;
+    /**
+     * Current training status of the chatbot
+     * @type {string}
+     * @memberof ChatbotInsertData
+     */
+    'trainingStatus': ChatbotInsertDataTrainingStatusEnum;
+    /**
+     * Progress of training, between 0 and 100
+     * @type {number}
+     * @memberof ChatbotInsertData
+     */
+    'trainingProgress'?: number;
+    /**
+     * 
+     * @type {Array<ChatbotInsertDataAllOfJobs>}
+     * @memberof ChatbotInsertData
+     */
+    'jobs'?: Array<ChatbotInsertDataAllOfJobs>;
+    /**
+     * Name of the chatbot
+     * @type {string}
+     * @memberof ChatbotInsertData
+     */
+    'name': string;
+    /**
+     * Fallback message of the chatbot
+     * @type {string}
+     * @memberof ChatbotInsertData
+     */
+    'fallbackMessage': string;
+    /**
+     * Prompt message of the chatbot
+     * @type {string}
+     * @memberof ChatbotInsertData
+     */
+    'prompt': string;
+    /**
+     * Name of the member to assign to the chatbot
+     * @type {string}
+     * @memberof ChatbotInsertData
+     */
+    'assignedMember': string | null;
+    /**
+     * Name of the channel to deploy to the chatbot
+     * @type {string}
+     * @memberof ChatbotInsertData
+     */
+    'deployedAccount': string | null;
+    /**
+     * Use this chatbot as an AI assistant. Only one chatbot can be used as an AI assistant per team
+     * @type {boolean}
+     * @memberof ChatbotInsertData
+     */
+    'useAsAiAssistant': boolean;
+    /**
+     * Whether the chatbot is enabled to send messages to the deployed account
+     * @type {boolean}
+     * @memberof ChatbotInsertData
+     */
+    'enableAccountDeployment': boolean;
+    /**
+     * Should generated responses include the source of the data
+     * @type {boolean}
+     * @memberof ChatbotInsertData
+     */
+    'includeSourceInResponse': boolean;
+}
+
+export const ChatbotInsertDataTrainingStatusEnum = {
+    Pending: 'pending',
+    Running: 'running',
+    Finished: 'finished',
+    Failed: 'failed',
+    Aborted: 'aborted'
+} as const;
+
+export type ChatbotInsertDataTrainingStatusEnum = typeof ChatbotInsertDataTrainingStatusEnum[keyof typeof ChatbotInsertDataTrainingStatusEnum];
+
+/**
+ * 
+ * @export
+ * @interface ChatbotInsertDataAllOf
+ */
+export interface ChatbotInsertDataAllOf {
+    /**
+     * ID of the chatbot
+     * @type {string}
+     * @memberof ChatbotInsertDataAllOf
+     */
+    'id': string;
+    /**
+     * 
+     * @type {Array<ChatbotInsertDataAllOfDocuments>}
+     * @memberof ChatbotInsertDataAllOf
+     */
+    'documents'?: Array<ChatbotInsertDataAllOfDocuments>;
+    /**
+     * An ISO formatted timestamp
+     * @type {string}
+     * @memberof ChatbotInsertDataAllOf
+     */
+    'createdAt': string;
+    /**
+     * An ISO formatted timestamp
+     * @type {string}
+     * @memberof ChatbotInsertDataAllOf
+     */
+    'updatedAt': string;
+    /**
+     * Current training status of the chatbot
+     * @type {string}
+     * @memberof ChatbotInsertDataAllOf
+     */
+    'trainingStatus': ChatbotInsertDataAllOfTrainingStatusEnum;
+    /**
+     * Progress of training, between 0 and 100
+     * @type {number}
+     * @memberof ChatbotInsertDataAllOf
+     */
+    'trainingProgress'?: number;
+    /**
+     * 
+     * @type {Array<ChatbotInsertDataAllOfJobs>}
+     * @memberof ChatbotInsertDataAllOf
+     */
+    'jobs'?: Array<ChatbotInsertDataAllOfJobs>;
+}
+
+export const ChatbotInsertDataAllOfTrainingStatusEnum = {
+    Pending: 'pending',
+    Running: 'running',
+    Finished: 'finished',
+    Failed: 'failed',
+    Aborted: 'aborted'
+} as const;
+
+export type ChatbotInsertDataAllOfTrainingStatusEnum = typeof ChatbotInsertDataAllOfTrainingStatusEnum[keyof typeof ChatbotInsertDataAllOfTrainingStatusEnum];
+
+/**
+ * 
+ * @export
+ * @interface ChatbotInsertDataAllOf1
+ */
+export interface ChatbotInsertDataAllOf1 {
+    /**
+     * Name of the chatbot
+     * @type {string}
+     * @memberof ChatbotInsertDataAllOf1
+     */
+    'name'?: string;
+    /**
+     * Fallback message of the chatbot
+     * @type {string}
+     * @memberof ChatbotInsertDataAllOf1
+     */
+    'fallbackMessage'?: string;
+    /**
+     * Prompt message of the chatbot
+     * @type {string}
+     * @memberof ChatbotInsertDataAllOf1
+     */
+    'prompt'?: string;
+    /**
+     * Name of the member to assign to the chatbot
+     * @type {string}
+     * @memberof ChatbotInsertDataAllOf1
+     */
+    'assignedMember'?: string | null;
+    /**
+     * Name of the channel to deploy to the chatbot
+     * @type {string}
+     * @memberof ChatbotInsertDataAllOf1
+     */
+    'deployedAccount'?: string | null;
+    /**
+     * Use this chatbot as an AI assistant. Only one chatbot can be used as an AI assistant per team
+     * @type {boolean}
+     * @memberof ChatbotInsertDataAllOf1
+     */
+    'useAsAiAssistant'?: boolean;
+    /**
+     * Whether the chatbot is enabled to send messages to the deployed account
+     * @type {boolean}
+     * @memberof ChatbotInsertDataAllOf1
+     */
+    'enableAccountDeployment'?: boolean;
+    /**
+     * Should generated responses include the source of the data
+     * @type {boolean}
+     * @memberof ChatbotInsertDataAllOf1
+     */
+    'includeSourceInResponse'?: boolean;
+}
+/**
+ * 
+ * @export
+ * @interface ChatbotInsertDataAllOfDocuments
+ */
+export interface ChatbotInsertDataAllOfDocuments {
+    /**
+     * URL of the stored data
+     * @type {string}
+     * @memberof ChatbotInsertDataAllOfDocuments
+     */
+    'link': string;
+    /**
+     * ID of the document
+     * @type {string}
+     * @memberof ChatbotInsertDataAllOfDocuments
+     */
+    'id': string;
+    /**
+     * An ISO formatted timestamp
+     * @type {string}
+     * @memberof ChatbotInsertDataAllOfDocuments
+     */
+    'createdAt': string;
+    /**
+     * An ISO formatted timestamp
+     * @type {string}
+     * @memberof ChatbotInsertDataAllOfDocuments
+     */
+    'deletedAt'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ChatbotInsertDataAllOfDocuments
+     */
+    'fileName'?: string | null;
+    /**
+     * Number of tokens in the document
+     * @type {number}
+     * @memberof ChatbotInsertDataAllOfDocuments
+     */
+    'tokenCount': number;
+}
+/**
+ * 
+ * @export
+ * @interface ChatbotInsertDataAllOfJobs
+ */
+export interface ChatbotInsertDataAllOfJobs {
+    /**
+     * 
+     * @type {string}
+     * @memberof ChatbotInsertDataAllOfJobs
+     */
+    'id': string;
+    /**
+     * - crawl: crawl the URL and extract data - extract: extract data from the URL, expect pdf or docx
+     * @type {string}
+     * @memberof ChatbotInsertDataAllOfJobs
+     */
+    'type': ChatbotInsertDataAllOfJobsTypeEnum;
+    /**
+     * 
+     * @type {string}
+     * @memberof ChatbotInsertDataAllOfJobs
+     */
+    'link': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ChatbotInsertDataAllOfJobs
+     */
+    'fileName'?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof ChatbotInsertDataAllOfJobs
+     */
+    'progress': number;
+    /**
+     * An ISO formatted timestamp
+     * @type {string}
+     * @memberof ChatbotInsertDataAllOfJobs
+     */
+    'createdAt': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ChatbotInsertDataAllOfJobs
+     */
+    'status': ChatbotInsertDataAllOfJobsStatusEnum;
+}
+
+export const ChatbotInsertDataAllOfJobsTypeEnum = {
+    Crawl: 'crawl',
+    Extract: 'extract'
+} as const;
+
+export type ChatbotInsertDataAllOfJobsTypeEnum = typeof ChatbotInsertDataAllOfJobsTypeEnum[keyof typeof ChatbotInsertDataAllOfJobsTypeEnum];
+export const ChatbotInsertDataAllOfJobsStatusEnum = {
+    Pending: 'pending',
+    Running: 'running',
+    Finished: 'finished',
+    Failed: 'failed',
+    Aborted: 'aborted'
+} as const;
+
+export type ChatbotInsertDataAllOfJobsStatusEnum = typeof ChatbotInsertDataAllOfJobsStatusEnum[keyof typeof ChatbotInsertDataAllOfJobsStatusEnum];
+
+/**
+ * 
+ * @export
  * @interface ContactDelete
  */
 export interface ContactDelete {
@@ -3331,6 +3891,142 @@ export type ContactUpdateDataTypeEnum = typeof ContactUpdateDataTypeEnum[keyof t
 /**
  * 
  * @export
+ * @interface CredittransactionrecordInsert
+ */
+export interface CredittransactionrecordInsert {
+    /**
+     * 
+     * @type {string}
+     * @memberof CredittransactionrecordInsert
+     */
+    'event': CredittransactionrecordInsertEventEnum;
+    /**
+     * 
+     * @type {Array<CredittransactionrecordInsertData>}
+     * @memberof CredittransactionrecordInsert
+     */
+    'data': Array<CredittransactionrecordInsertData>;
+}
+
+export const CredittransactionrecordInsertEventEnum = {
+    CredittransactionrecordInsert: 'credittransactionrecord-insert'
+} as const;
+
+export type CredittransactionrecordInsertEventEnum = typeof CredittransactionrecordInsertEventEnum[keyof typeof CredittransactionrecordInsertEventEnum];
+
+/**
+ * A record of a credit transaction. This could be a gain or a consumption record & is immutable.
+ * @export
+ * @interface CredittransactionrecordInsertData
+ */
+export interface CredittransactionrecordInsertData {
+    /**
+     * ID of a credit consumption. IDs are chronological.
+     * @type {string}
+     * @memberof CredittransactionrecordInsertData
+     */
+    'id': string;
+    /**
+     * Number of units consumed/credited. Positive for credit, negative for consumption.
+     * @type {number}
+     * @memberof CredittransactionrecordInsertData
+     */
+    'units': number;
+    /**
+     * The ID of a user
+     * @type {string}
+     * @memberof CredittransactionrecordInsertData
+     */
+    'doneBy': string;
+    /**
+     * An ISO formatted timestamp
+     * @type {string}
+     * @memberof CredittransactionrecordInsertData
+     */
+    'createdAt': string;
+    /**
+     * The ID of the object that was consumed, or the ID of the gain that created this tx record. (createdAt, objectId) will be enforced to be unique.
+     * @type {string}
+     * @memberof CredittransactionrecordInsertData
+     */
+    'objectId': string;
+    /**
+     * 
+     * @type {{ [key: string]: any; }}
+     * @memberof CredittransactionrecordInsertData
+     */
+    'metadata'?: { [key: string]: any; };
+    /**
+     * 
+     * @type {string}
+     * @memberof CredittransactionrecordInsertData
+     */
+    'type': string;
+    /**
+     * 
+     * @type {object}
+     * @memberof CredittransactionrecordInsertData
+     */
+    'gain'?: object;
+    /**
+     * 
+     * @type {string}
+     * @memberof CredittransactionrecordInsertData
+     */
+    'teamId'?: string;
+    /**
+     * ID of a recurring credit consumption
+     * @type {string}
+     * @memberof CredittransactionrecordInsertData
+     */
+    'recurringConsumptionId'?: string;
+}
+/**
+ * 
+ * @export
+ * @interface CredittransactionrecordInsertDataAllOf
+ */
+export interface CredittransactionrecordInsertDataAllOf {
+    /**
+     * ID of a credit consumption. IDs are chronological.
+     * @type {string}
+     * @memberof CredittransactionrecordInsertDataAllOf
+     */
+    'id': string;
+    /**
+     * Number of units consumed/credited. Positive for credit, negative for consumption.
+     * @type {number}
+     * @memberof CredittransactionrecordInsertDataAllOf
+     */
+    'units': number;
+    /**
+     * The ID of a user
+     * @type {string}
+     * @memberof CredittransactionrecordInsertDataAllOf
+     */
+    'doneBy': string;
+    /**
+     * An ISO formatted timestamp
+     * @type {string}
+     * @memberof CredittransactionrecordInsertDataAllOf
+     */
+    'createdAt': string;
+    /**
+     * The ID of the object that was consumed, or the ID of the gain that created this tx record. (createdAt, objectId) will be enforced to be unique.
+     * @type {string}
+     * @memberof CredittransactionrecordInsertDataAllOf
+     */
+    'objectId': string;
+    /**
+     * 
+     * @type {{ [key: string]: any; }}
+     * @memberof CredittransactionrecordInsertDataAllOf
+     */
+    'metadata'?: { [key: string]: any; };
+}
+/**
+ * 
+ * @export
  * @enum {string}
  */
 
@@ -3344,12 +4040,19 @@ export const EventName = {
     UnreadChatsNotification: 'unread-chats-notification',
     MembershipactionInsert: 'membershipaction-insert',
     PushNotification: 'push-notification',
+    CampaignInsert: 'campaign-insert',
+    CredittransactionrecordInsert: 'credittransactionrecord-insert',
+    KeywordbasedactionInsert: 'keywordbasedaction-insert',
+    ChatbotInsert: 'chatbot-insert',
     ContactInsert: 'contact-insert',
     ContactUpdate: 'contact-update',
     ContactDelete: 'contact-delete',
     ChatInsert: 'chat-insert',
     ChatUpdate: 'chat-update',
     ChatDelete: 'chat-delete',
+    TagInsert: 'tag-insert',
+    TagUpdate: 'tag-update',
+    TagDelete: 'tag-delete',
     AccountInsert: 'account-insert',
     AccountUpdate: 'account-update',
     AccountDelete: 'account-delete',
@@ -3467,7 +4170,7 @@ export type EventSubscriptionType = typeof EventSubscriptionType[keyof typeof Ev
  * The request body you\'ll receive in a webhook
  * @export
  */
-export type EventWebhookData = AccountDelete | AccountInsert | AccountUpdate | ActionExecute | BotDelete | BotInsert | BotUpdate | ChatDelete | ChatInsert | ChatUpdate | ContactDelete | ContactInsert | ContactUpdate | FewMessagesLeft | GroupUpdate | MembershipactionInsert | MessageDelete | MessageInsert | MessageUpdate | OrderInsert | PlatformproductDelete | PlatformproductInsert | PlatformproductUpdate | PresenceUpdate | PushNotification | StaleAccountNotification | TeamDelete | TeamInsert | TeamUpdate | TeammemberDelete | TeammemberInsert | TeammemberUpdate | TrackingDelete | TrackingInsert | TrackingUpdate | UnreadChatsNotification | UserDelete | UserInsert | UserUpdate;
+export type EventWebhookData = AccountDelete | AccountInsert | AccountUpdate | ActionExecute | BotDelete | BotInsert | BotUpdate | CampaignInsert | ChatDelete | ChatInsert | ChatUpdate | ChatbotInsert | ContactDelete | ContactInsert | ContactUpdate | CredittransactionrecordInsert | FewMessagesLeft | GroupUpdate | KeywordbasedactionInsert | MembershipactionInsert | MessageDelete | MessageInsert | MessageUpdate | OrderInsert | PlatformproductDelete | PlatformproductInsert | PlatformproductUpdate | PresenceUpdate | PushNotification | StaleAccountNotification | TagDelete | TagInsert | TagUpdate | TeamDelete | TeamInsert | TeamUpdate | TeammemberDelete | TeammemberInsert | TeammemberUpdate | TrackingDelete | TrackingInsert | TrackingUpdate | UnreadChatsNotification | UserDelete | UserInsert | UserUpdate;
 
 /**
  * 
@@ -3872,6 +4575,197 @@ export const GroupUpdateDataParticipantsInnerAdminEnum = {
 
 export type GroupUpdateDataParticipantsInnerAdminEnum = typeof GroupUpdateDataParticipantsInnerAdminEnum[keyof typeof GroupUpdateDataParticipantsInnerAdminEnum];
 
+/**
+ * 
+ * @export
+ * @interface KeywordbasedactionInsert
+ */
+export interface KeywordbasedactionInsert {
+    /**
+     * 
+     * @type {string}
+     * @memberof KeywordbasedactionInsert
+     */
+    'event': KeywordbasedactionInsertEventEnum;
+    /**
+     * 
+     * @type {Array<KeywordbasedactionInsertData>}
+     * @memberof KeywordbasedactionInsert
+     */
+    'data': Array<KeywordbasedactionInsertData>;
+}
+
+export const KeywordbasedactionInsertEventEnum = {
+    KeywordbasedactionInsert: 'keywordbasedaction-insert'
+} as const;
+
+export type KeywordbasedactionInsertEventEnum = typeof KeywordbasedactionInsertEventEnum[keyof typeof KeywordbasedactionInsertEventEnum];
+
+/**
+ * 
+ * @export
+ * @interface KeywordbasedactionInsertData
+ */
+export interface KeywordbasedactionInsertData {
+    /**
+     * Keyword Id (auto incrementing)
+     * @type {number}
+     * @memberof KeywordbasedactionInsertData
+     */
+    'id': number;
+    /**
+     * Team the keyword belongs to
+     * @type {string}
+     * @memberof KeywordbasedactionInsertData
+     */
+    'teamId': string;
+    /**
+     * Accounts the keywords will trigger for
+     * @type {Array<string>}
+     * @memberof KeywordbasedactionInsertData
+     */
+    'accountIds'?: Array<string>;
+    /**
+     * Status of reply service
+     * @type {boolean}
+     * @memberof KeywordbasedactionInsertData
+     */
+    'enabled': boolean;
+    /**
+     * Should typing indicator & read receipt be sent
+     * @type {boolean}
+     * @memberof KeywordbasedactionInsertData
+     */
+    'sendTyping'?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof KeywordbasedactionInsertData
+     */
+    'cancelIfReplyReceived'?: boolean;
+    /**
+     * Toggles whether the keyword reply will trigger for group chats
+     * @type {boolean}
+     * @memberof KeywordbasedactionInsertData
+     */
+    'enableOnGroupChats'?: boolean;
+    /**
+     * Only on the first message in a chat
+     * @type {boolean}
+     * @memberof KeywordbasedactionInsertData
+     */
+    'onlyOnFirstMessage'?: boolean;
+    /**
+     * Type of trigger
+     * @type {string}
+     * @memberof KeywordbasedactionInsertData
+     */
+    'triggerType': KeywordbasedactionInsertDataTriggerTypeEnum;
+    /**
+     * Unique triggering keywords
+     * @type {Array<KeywordbasedactionInsertDataKeywordsInner>}
+     * @memberof KeywordbasedactionInsertData
+     */
+    'keywords': Array<KeywordbasedactionInsertDataKeywordsInner>;
+    /**
+     * Flow ids to be triggered
+     * @type {Array<string>}
+     * @memberof KeywordbasedactionInsertData
+     */
+    'flowIds'?: Array<string>;
+    /**
+     * Timespan before the keyword can be triggered again, measured in seconds
+     * @type {number}
+     * @memberof KeywordbasedactionInsertData
+     */
+    'delay'?: number;
+    /**
+     * 
+     * @type {Array<KeywordbasedactionInsertDataExecutionFramesInner>}
+     * @memberof KeywordbasedactionInsertData
+     */
+    'executionFrames'?: Array<KeywordbasedactionInsertDataExecutionFramesInner>;
+    /**
+     * An ISO formatted timestamp
+     * @type {string}
+     * @memberof KeywordbasedactionInsertData
+     */
+    'createdAt': string;
+    /**
+     * An ISO formatted timestamp
+     * @type {string}
+     * @memberof KeywordbasedactionInsertData
+     */
+    'updatedAt'?: string;
+}
+
+export const KeywordbasedactionInsertDataTriggerTypeEnum = {
+    Contains: 'contains',
+    ContainsPhrase: 'containsPhrase',
+    StartsWith: 'startsWith',
+    KeywordIs: 'keywordIs',
+    DefaultReply: 'defaultReply'
+} as const;
+
+export type KeywordbasedactionInsertDataTriggerTypeEnum = typeof KeywordbasedactionInsertDataTriggerTypeEnum[keyof typeof KeywordbasedactionInsertDataTriggerTypeEnum];
+
+/**
+ * 
+ * @export
+ * @interface KeywordbasedactionInsertDataExecutionFramesInner
+ */
+export interface KeywordbasedactionInsertDataExecutionFramesInner {
+    /**
+     * 
+     * @type {string}
+     * @memberof KeywordbasedactionInsertDataExecutionFramesInner
+     */
+    'day'?: KeywordbasedactionInsertDataExecutionFramesInnerDayEnum;
+    /**
+     * 
+     * @type {string}
+     * @memberof KeywordbasedactionInsertDataExecutionFramesInner
+     */
+    'startTime': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof KeywordbasedactionInsertDataExecutionFramesInner
+     */
+    'endTime': string;
+}
+
+export const KeywordbasedactionInsertDataExecutionFramesInnerDayEnum = {
+    Monday: 'Monday',
+    Tuesday: 'Tuesday',
+    Wednesday: 'Wednesday',
+    Thursday: 'Thursday',
+    Friday: 'Friday',
+    Saturday: 'Saturday',
+    Sunday: 'Sunday'
+} as const;
+
+export type KeywordbasedactionInsertDataExecutionFramesInnerDayEnum = typeof KeywordbasedactionInsertDataExecutionFramesInnerDayEnum[keyof typeof KeywordbasedactionInsertDataExecutionFramesInnerDayEnum];
+
+/**
+ * 
+ * @export
+ * @interface KeywordbasedactionInsertDataKeywordsInner
+ */
+export interface KeywordbasedactionInsertDataKeywordsInner {
+    /**
+     * 
+     * @type {string}
+     * @memberof KeywordbasedactionInsertDataKeywordsInner
+     */
+    'text'?: string;
+    /**
+     * An ISO formatted timestamp
+     * @type {string}
+     * @memberof KeywordbasedactionInsertDataKeywordsInner
+     */
+    'createdAt'?: string;
+}
 /**
  * 
  * @export
@@ -6250,6 +7144,214 @@ export interface SubscriptionsGet200Response {
      * @memberof SubscriptionsGet200Response
      */
     'subscriptions': Array<EventSubscription>;
+}
+/**
+ * 
+ * @export
+ * @interface TagDelete
+ */
+export interface TagDelete {
+    /**
+     * 
+     * @type {string}
+     * @memberof TagDelete
+     */
+    'event': TagDeleteEventEnum;
+    /**
+     * 
+     * @type {Array<TagDeleteData>}
+     * @memberof TagDelete
+     */
+    'data': Array<TagDeleteData>;
+}
+
+export const TagDeleteEventEnum = {
+    TagDelete: 'tag-delete'
+} as const;
+
+export type TagDeleteEventEnum = typeof TagDeleteEventEnum[keyof typeof TagDeleteEventEnum];
+
+/**
+ * 
+ * @export
+ * @interface TagDeleteData
+ */
+export interface TagDeleteData {
+    /**
+     * 
+     * @type {string}
+     * @memberof TagDeleteData
+     */
+    'name': string;
+}
+/**
+ * 
+ * @export
+ * @interface TagInsert
+ */
+export interface TagInsert {
+    /**
+     * 
+     * @type {string}
+     * @memberof TagInsert
+     */
+    'event': TagInsertEventEnum;
+    /**
+     * 
+     * @type {Array<TagInsertData>}
+     * @memberof TagInsert
+     */
+    'data': Array<TagInsertData>;
+}
+
+export const TagInsertEventEnum = {
+    TagInsert: 'tag-insert'
+} as const;
+
+export type TagInsertEventEnum = typeof TagInsertEventEnum[keyof typeof TagInsertEventEnum];
+
+/**
+ * 
+ * @export
+ * @interface TagInsertData
+ */
+export interface TagInsertData {
+    /**
+     * 
+     * @type {string}
+     * @memberof TagInsertData
+     */
+    'name': string;
+    /**
+     * 
+     * @type {object}
+     * @memberof TagInsertData
+     */
+    'filters'?: object | null;
+    /**
+     * 
+     * @type {TagInsertDataValidation}
+     * @memberof TagInsertData
+     */
+    'validation'?: TagInsertDataValidation;
+}
+/**
+ * @type TagInsertDataValidation
+ * @export
+ */
+export type TagInsertDataValidation = TagInsertDataValidationOneOf | TagInsertDataValidationOneOf1;
+
+/**
+ * 
+ * @export
+ * @interface TagInsertDataValidationOneOf
+ */
+export interface TagInsertDataValidationOneOf {
+    /**
+     * 
+     * @type {string}
+     * @memberof TagInsertDataValidationOneOf
+     */
+    'type'?: TagInsertDataValidationOneOfTypeEnum;
+    /**
+     * 
+     * @type {string}
+     * @memberof TagInsertDataValidationOneOf
+     */
+    'format'?: TagInsertDataValidationOneOfFormatEnum;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof TagInsertDataValidationOneOf
+     */
+    'enum'?: Array<string>;
+}
+
+export const TagInsertDataValidationOneOfTypeEnum = {
+    String: 'string'
+} as const;
+
+export type TagInsertDataValidationOneOfTypeEnum = typeof TagInsertDataValidationOneOfTypeEnum[keyof typeof TagInsertDataValidationOneOfTypeEnum];
+export const TagInsertDataValidationOneOfFormatEnum = {
+    Email: 'email',
+    Phone: 'phone',
+    Uri: 'uri'
+} as const;
+
+export type TagInsertDataValidationOneOfFormatEnum = typeof TagInsertDataValidationOneOfFormatEnum[keyof typeof TagInsertDataValidationOneOfFormatEnum];
+
+/**
+ * 
+ * @export
+ * @interface TagInsertDataValidationOneOf1
+ */
+export interface TagInsertDataValidationOneOf1 {
+    /**
+     * 
+     * @type {string}
+     * @memberof TagInsertDataValidationOneOf1
+     */
+    'type'?: TagInsertDataValidationOneOf1TypeEnum;
+}
+
+export const TagInsertDataValidationOneOf1TypeEnum = {
+    Number: 'number',
+    Integer: 'integer',
+    Boolean: 'boolean'
+} as const;
+
+export type TagInsertDataValidationOneOf1TypeEnum = typeof TagInsertDataValidationOneOf1TypeEnum[keyof typeof TagInsertDataValidationOneOf1TypeEnum];
+
+/**
+ * 
+ * @export
+ * @interface TagUpdate
+ */
+export interface TagUpdate {
+    /**
+     * 
+     * @type {string}
+     * @memberof TagUpdate
+     */
+    'event': TagUpdateEventEnum;
+    /**
+     * 
+     * @type {Array<TagUpdateData>}
+     * @memberof TagUpdate
+     */
+    'data': Array<TagUpdateData>;
+}
+
+export const TagUpdateEventEnum = {
+    TagUpdate: 'tag-update'
+} as const;
+
+export type TagUpdateEventEnum = typeof TagUpdateEventEnum[keyof typeof TagUpdateEventEnum];
+
+/**
+ * 
+ * @export
+ * @interface TagUpdateData
+ */
+export interface TagUpdateData {
+    /**
+     * 
+     * @type {string}
+     * @memberof TagUpdateData
+     */
+    'name': string;
+    /**
+     * 
+     * @type {object}
+     * @memberof TagUpdateData
+     */
+    'filters'?: object | null;
+    /**
+     * 
+     * @type {TagInsertDataValidation}
+     * @memberof TagUpdateData
+     */
+    'validation'?: TagInsertDataValidation;
 }
 /**
  * 
