@@ -58,6 +58,94 @@ export interface AccountNotificationPreferenceAccountsInner {
     'id': string;
 }
 /**
+ * 
+ * @export
+ * @interface ApiToken
+ */
+export interface ApiToken {
+    /**
+     * The reason for the token
+     * @type {string}
+     * @memberof ApiToken
+     */
+    'reason': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ApiToken
+     */
+    'token': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ApiToken
+     */
+    'createdAt': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ApiToken
+     */
+    'userId': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ApiToken
+     */
+    'teamId': string;
+    /**
+     * 
+     * @type {Array<Scope>}
+     * @memberof ApiToken
+     */
+    'scopes': Array<Scope>;
+}
+/**
+ * 
+ * @export
+ * @interface ApiTokenGet200Response
+ */
+export interface ApiTokenGet200Response {
+    /**
+     * 
+     * @type {Array<ApiToken>}
+     * @memberof ApiTokenGet200Response
+     */
+    'tokens': Array<ApiToken>;
+}
+/**
+ * 
+ * @export
+ * @interface ApiTokenPostRequest
+ */
+export interface ApiTokenPostRequest {
+    /**
+     * The reason for generating the token
+     * @type {string}
+     * @memberof ApiTokenPostRequest
+     */
+    'reason': string;
+    /**
+     * 
+     * @type {Array<Scope>}
+     * @memberof ApiTokenPostRequest
+     */
+    'scopes': Array<Scope>;
+}
+/**
+ * 
+ * @export
+ * @interface ApiTokenValidatePostRequest
+ */
+export interface ApiTokenValidatePostRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof ApiTokenValidatePostRequest
+     */
+    'token': string;
+}
+/**
  * @type AuthRequest
  * @export
  */
@@ -2083,6 +2171,362 @@ export interface WidgetDialogParams {
      */
     'widgetHeaderBackgroundColor': string;
 }
+
+/**
+ * APITokensApi - axios parameter creator
+ * @export
+ */
+export const APITokensApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @summary Delete an API token
+         * @param {Array<string>} tokens 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiTokenDelete: async (tokens: Array<string>, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'tokens' is not null or undefined
+            assertParamExists('apiTokenDelete', 'tokens', tokens)
+            const localVarPath = `/api-token`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", [], configuration)
+
+            if (tokens) {
+                localVarQueryParameter['tokens'] = tokens;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Fetch API tokens
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiTokenGet: async (options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/api-token`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", [], configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Generate an API token
+         * @param {ApiTokenPostRequest} [apiTokenPostRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiTokenPost: async (apiTokenPostRequest?: ApiTokenPostRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/api-token`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", [], configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(apiTokenPostRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Validate an API token
+         * @param {ApiTokenValidatePostRequest} [apiTokenValidatePostRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiTokenValidatePost: async (apiTokenValidatePostRequest?: ApiTokenValidatePostRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/api-token/validate`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(apiTokenValidatePostRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * APITokensApi - functional programming interface
+ * @export
+ */
+export const APITokensApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = APITokensApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * 
+         * @summary Delete an API token
+         * @param {Array<string>} tokens 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async apiTokenDelete(tokens: Array<string>, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.apiTokenDelete(tokens, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary Fetch API tokens
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async apiTokenGet(options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ApiTokenGet200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.apiTokenGet(options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary Generate an API token
+         * @param {ApiTokenPostRequest} [apiTokenPostRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async apiTokenPost(apiTokenPostRequest?: ApiTokenPostRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ApiToken>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.apiTokenPost(apiTokenPostRequest, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary Validate an API token
+         * @param {ApiTokenValidatePostRequest} [apiTokenValidatePostRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async apiTokenValidatePost(apiTokenValidatePostRequest?: ApiTokenValidatePostRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<JWT>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.apiTokenValidatePost(apiTokenValidatePostRequest, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+    }
+};
+
+/**
+ * APITokensApi - factory interface
+ * @export
+ */
+export const APITokensApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = APITokensApiFp(configuration)
+    return {
+        /**
+         * 
+         * @summary Delete an API token
+         * @param {APITokensApiApiTokenDeleteRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiTokenDelete(requestParameters: APITokensApiApiTokenDeleteRequest, options?: AxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.apiTokenDelete(requestParameters.tokens, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Fetch API tokens
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiTokenGet(options?: AxiosRequestConfig): AxiosPromise<ApiTokenGet200Response> {
+            return localVarFp.apiTokenGet(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Generate an API token
+         * @param {APITokensApiApiTokenPostRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiTokenPost(requestParameters: APITokensApiApiTokenPostRequest = {}, options?: AxiosRequestConfig): AxiosPromise<ApiToken> {
+            return localVarFp.apiTokenPost(requestParameters.apiTokenPostRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Validate an API token
+         * @param {APITokensApiApiTokenValidatePostRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiTokenValidatePost(requestParameters: APITokensApiApiTokenValidatePostRequest = {}, options?: AxiosRequestConfig): AxiosPromise<JWT> {
+            return localVarFp.apiTokenValidatePost(requestParameters.apiTokenValidatePostRequest, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * Request parameters for apiTokenDelete operation in APITokensApi.
+ * @export
+ * @interface APITokensApiApiTokenDeleteRequest
+ */
+export interface APITokensApiApiTokenDeleteRequest {
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof APITokensApiApiTokenDelete
+     */
+    readonly tokens: Array<string>
+}
+
+/**
+ * Request parameters for apiTokenPost operation in APITokensApi.
+ * @export
+ * @interface APITokensApiApiTokenPostRequest
+ */
+export interface APITokensApiApiTokenPostRequest {
+    /**
+     * 
+     * @type {ApiTokenPostRequest}
+     * @memberof APITokensApiApiTokenPost
+     */
+    readonly apiTokenPostRequest?: ApiTokenPostRequest
+}
+
+/**
+ * Request parameters for apiTokenValidatePost operation in APITokensApi.
+ * @export
+ * @interface APITokensApiApiTokenValidatePostRequest
+ */
+export interface APITokensApiApiTokenValidatePostRequest {
+    /**
+     * 
+     * @type {ApiTokenValidatePostRequest}
+     * @memberof APITokensApiApiTokenValidatePost
+     */
+    readonly apiTokenValidatePostRequest?: ApiTokenValidatePostRequest
+}
+
+/**
+ * APITokensApi - object-oriented interface
+ * @export
+ * @class APITokensApi
+ * @extends {BaseAPI}
+ */
+export class APITokensApi extends BaseAPI {
+    /**
+     * 
+     * @summary Delete an API token
+     * @param {APITokensApiApiTokenDeleteRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof APITokensApi
+     */
+    public apiTokenDelete(requestParameters: APITokensApiApiTokenDeleteRequest, options?: AxiosRequestConfig) {
+        return APITokensApiFp(this.configuration).apiTokenDelete(requestParameters.tokens, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Fetch API tokens
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof APITokensApi
+     */
+    public apiTokenGet(options?: AxiosRequestConfig) {
+        return APITokensApiFp(this.configuration).apiTokenGet(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Generate an API token
+     * @param {APITokensApiApiTokenPostRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof APITokensApi
+     */
+    public apiTokenPost(requestParameters: APITokensApiApiTokenPostRequest = {}, options?: AxiosRequestConfig) {
+        return APITokensApiFp(this.configuration).apiTokenPost(requestParameters.apiTokenPostRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Validate an API token
+     * @param {APITokensApiApiTokenValidatePostRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof APITokensApi
+     */
+    public apiTokenValidatePost(requestParameters: APITokensApiApiTokenValidatePostRequest = {}, options?: AxiosRequestConfig) {
+        return APITokensApiFp(this.configuration).apiTokenValidatePost(requestParameters.apiTokenValidatePostRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
 
 /**
  * InviteLinksApi - axios parameter creator
