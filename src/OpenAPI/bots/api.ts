@@ -3809,7 +3809,7 @@ export const BotsApiAxiosParamCreator = function (configuration?: Configuration)
 
             // authentication chatdaddy required
             // oauth required
-            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["MESSAGES_SEND_TO_ALL"], configuration)
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["MESSAGES_SEND_TO_ALL", "MESSAGES_SEND_TO_ASSIGNED"], configuration)
 
 
     
@@ -4029,7 +4029,7 @@ export const BotsApiAxiosParamCreator = function (configuration?: Configuration)
 
             // authentication chatdaddy required
             // oauth required
-            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["MESSAGES_SEND_TO_ALL"], configuration)
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["MESSAGES_SEND_TO_ALL", "MESSAGES_SEND_TO_ASSIGNED"], configuration)
 
 
     
