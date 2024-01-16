@@ -158,6 +158,12 @@ export type AuthRequest = PasswordAuthRequest | RefreshTokenLoginRequest;
  */
 export interface BoutirTokenRequest {
     /**
+     * Id of the invite link to use
+     * @type {string}
+     * @memberof BoutirTokenRequest
+     */
+    'inviteLinkId'?: string;
+    /**
      * 
      * @type {string}
      * @memberof BoutirTokenRequest
@@ -281,74 +287,23 @@ export interface ExternalTokenPostResponseAllOf {
     'created'?: boolean;
 }
 /**
- * 
+ * @type ExternalTokenRequest
  * @export
- * @interface ExternalTokenRequest
  */
-export interface ExternalTokenRequest {
-    /**
-     * Id of the invite link to use
-     * @type {string}
-     * @memberof ExternalTokenRequest
-     */
-    'inviteLinkId'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ExternalTokenRequest
-     */
-    'type': ExternalTokenRequestTypeEnum;
-    /**
-     * 
-     * @type {string}
-     * @memberof ExternalTokenRequest
-     */
-    'username': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ExternalTokenRequest
-     */
-    'password': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ExternalTokenRequest
-     */
-    'referralCode'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ExternalTokenRequest
-     */
-    'idToken': string;
-}
+export type ExternalTokenRequest = BoutirTokenRequest | FirebaseTokenRequest;
 
-export const ExternalTokenRequestTypeEnum = {
-    Firebase: 'firebase'
-} as const;
-
-export type ExternalTokenRequestTypeEnum = typeof ExternalTokenRequestTypeEnum[keyof typeof ExternalTokenRequestTypeEnum];
-
-/**
- * 
- * @export
- * @interface ExternalTokenRequestAllOf
- */
-export interface ExternalTokenRequestAllOf {
-    /**
-     * Id of the invite link to use
-     * @type {string}
-     * @memberof ExternalTokenRequestAllOf
-     */
-    'inviteLinkId'?: string;
-}
 /**
  * Login with Firebase
  * @export
  * @interface FirebaseTokenRequest
  */
 export interface FirebaseTokenRequest {
+    /**
+     * Id of the invite link to use
+     * @type {string}
+     * @memberof FirebaseTokenRequest
+     */
+    'inviteLinkId'?: string;
     /**
      * 
      * @type {string}
