@@ -203,6 +203,40 @@ export interface ConfirmOtp200Response {
     'success'?: boolean;
 }
 /**
+ * @type EitherRoleOrScopes
+ * @export
+ */
+export type EitherRoleOrScopes = EitherRoleOrScopesOneOf | EitherRoleOrScopesOneOf1;
+
+/**
+ * 
+ * @export
+ * @interface EitherRoleOrScopesOneOf
+ */
+export interface EitherRoleOrScopesOneOf {
+    /**
+     * 
+     * @type {Array<Scope>}
+     * @memberof EitherRoleOrScopesOneOf
+     */
+    'scopes': Array<Scope>;
+}
+/**
+ * 
+ * @export
+ * @interface EitherRoleOrScopesOneOf1
+ */
+export interface EitherRoleOrScopesOneOf1 {
+    /**
+     * 
+     * @type {TeamMemberRole}
+     * @memberof EitherRoleOrScopesOneOf1
+     */
+    'role': TeamMemberRole;
+}
+
+
+/**
  * 
  * @export
  * @interface ExternalTokenPostResponse
@@ -247,11 +281,68 @@ export interface ExternalTokenPostResponseAllOf {
     'created'?: boolean;
 }
 /**
- * @type ExternalTokenRequest
+ * 
  * @export
+ * @interface ExternalTokenRequest
  */
-export type ExternalTokenRequest = BoutirTokenRequest | FirebaseTokenRequest;
+export interface ExternalTokenRequest {
+    /**
+     * Id of the invite link to use
+     * @type {string}
+     * @memberof ExternalTokenRequest
+     */
+    'inviteLinkId'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ExternalTokenRequest
+     */
+    'type': ExternalTokenRequestTypeEnum;
+    /**
+     * 
+     * @type {string}
+     * @memberof ExternalTokenRequest
+     */
+    'username': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ExternalTokenRequest
+     */
+    'password': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ExternalTokenRequest
+     */
+    'referralCode'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ExternalTokenRequest
+     */
+    'idToken': string;
+}
 
+export const ExternalTokenRequestTypeEnum = {
+    Firebase: 'firebase'
+} as const;
+
+export type ExternalTokenRequestTypeEnum = typeof ExternalTokenRequestTypeEnum[keyof typeof ExternalTokenRequestTypeEnum];
+
+/**
+ * 
+ * @export
+ * @interface ExternalTokenRequestAllOf
+ */
+export interface ExternalTokenRequestAllOf {
+    /**
+     * Id of the invite link to use
+     * @type {string}
+     * @memberof ExternalTokenRequestAllOf
+     */
+    'inviteLinkId'?: string;
+}
 /**
  * Login with Firebase
  * @export
@@ -328,24 +419,19 @@ export interface InviteLink {
     'scopes': Array<Scope>;
     /**
      * 
+     * @type {TeamMemberRole}
+     * @memberof InviteLink
+     */
+    'role'?: TeamMemberRole;
+    /**
+     * 
      * @type {Team}
      * @memberof InviteLink
      */
     'team'?: Team;
 }
-/**
- * 
- * @export
- * @interface InviteLinksPostRequest
- */
-export interface InviteLinksPostRequest {
-    /**
-     * 
-     * @type {Array<Scope>}
-     * @memberof InviteLinksPostRequest
-     */
-    'scopes': Array<Scope>;
-}
+
+
 /**
  * 
  * @export
@@ -1360,7 +1446,31 @@ export interface TeamMember {
      * @memberof TeamMember
      */
     'scopes': Array<Scope>;
+    /**
+     * 
+     * @type {TeamMemberRole}
+     * @memberof TeamMember
+     */
+    'role'?: TeamMemberRole;
 }
+
+
+/**
+ * 
+ * @export
+ * @enum {string}
+ */
+
+export const TeamMemberRole = {
+    Viewer: 'viewer',
+    Editor: 'editor',
+    Admin: 'admin',
+    Agent: 'agent'
+} as const;
+
+export type TeamMemberRole = typeof TeamMemberRole[keyof typeof TeamMemberRole];
+
+
 /**
  * 
  * @export
@@ -1455,18 +1565,26 @@ export interface TeamPatchRequestMembersInner {
      */
     'id': string;
     /**
+     * If set to true, will delete the team member
+     * @type {boolean}
+     * @memberof TeamPatchRequestMembersInner
+     */
+    'delete'?: boolean;
+    /**
      * 
      * @type {Array<Scope>}
      * @memberof TeamPatchRequestMembersInner
      */
     'scopes'?: Array<Scope>;
     /**
-     * If set to true, will delete the team member
-     * @type {boolean}
+     * 
+     * @type {TeamMemberRole}
      * @memberof TeamPatchRequestMembersInner
      */
-    'delete'?: boolean;
+    'role'?: TeamMemberRole;
 }
+
+
 /**
  * 
  * @export
@@ -1747,6 +1865,12 @@ export interface UserCreate {
      * @memberof UserCreate
      */
     'referralCode'?: string;
+    /**
+     * Id of the invite link to use
+     * @type {string}
+     * @memberof UserCreate
+     */
+    'inviteLinkId'?: string;
 }
 /**
  * 
@@ -2575,11 +2699,11 @@ export const InviteLinksApiAxiosParamCreator = function (configuration?: Configu
         /**
          * To generate an invite link for a specific set of scopes, you must also have the same set of scopes. Eg. you cannot generate a link which gives access to `MESSAGE_SEND` when you don\'t have access to `MESSAGE_SEND` yourself. This is done for obvious security concerns. 
          * @summary Create an invite link for the team
-         * @param {InviteLinksPostRequest} [inviteLinksPostRequest] 
+         * @param {EitherRoleOrScopes} [eitherRoleOrScopes] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        inviteLinksPost: async (inviteLinksPostRequest?: InviteLinksPostRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        inviteLinksPost: async (eitherRoleOrScopes?: EitherRoleOrScopes, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/invite-links`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -2603,7 +2727,7 @@ export const InviteLinksApiAxiosParamCreator = function (configuration?: Configu
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(inviteLinksPostRequest, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(eitherRoleOrScopes, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -2634,12 +2758,12 @@ export const InviteLinksApiFp = function(configuration?: Configuration) {
         /**
          * To generate an invite link for a specific set of scopes, you must also have the same set of scopes. Eg. you cannot generate a link which gives access to `MESSAGE_SEND` when you don\'t have access to `MESSAGE_SEND` yourself. This is done for obvious security concerns. 
          * @summary Create an invite link for the team
-         * @param {InviteLinksPostRequest} [inviteLinksPostRequest] 
+         * @param {EitherRoleOrScopes} [eitherRoleOrScopes] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async inviteLinksPost(inviteLinksPostRequest?: InviteLinksPostRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<InviteLink>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.inviteLinksPost(inviteLinksPostRequest, options);
+        async inviteLinksPost(eitherRoleOrScopes?: EitherRoleOrScopes, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<InviteLink>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.inviteLinksPost(eitherRoleOrScopes, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
     }
@@ -2670,7 +2794,7 @@ export const InviteLinksApiFactory = function (configuration?: Configuration, ba
          * @throws {RequiredError}
          */
         inviteLinksPost(requestParameters: InviteLinksApiInviteLinksPostRequest = {}, options?: AxiosRequestConfig): AxiosPromise<InviteLink> {
-            return localVarFp.inviteLinksPost(requestParameters.inviteLinksPostRequest, options).then((request) => request(axios, basePath));
+            return localVarFp.inviteLinksPost(requestParameters.eitherRoleOrScopes, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -2697,10 +2821,10 @@ export interface InviteLinksApiInviteLinksGetRequest {
 export interface InviteLinksApiInviteLinksPostRequest {
     /**
      * 
-     * @type {InviteLinksPostRequest}
+     * @type {EitherRoleOrScopes}
      * @memberof InviteLinksApiInviteLinksPost
      */
-    readonly inviteLinksPostRequest?: InviteLinksPostRequest
+    readonly eitherRoleOrScopes?: EitherRoleOrScopes
 }
 
 /**
@@ -2731,7 +2855,7 @@ export class InviteLinksApi extends BaseAPI {
      * @memberof InviteLinksApi
      */
     public inviteLinksPost(requestParameters: InviteLinksApiInviteLinksPostRequest = {}, options?: AxiosRequestConfig) {
-        return InviteLinksApiFp(this.configuration).inviteLinksPost(requestParameters.inviteLinksPostRequest, options).then((request) => request(this.axios, this.basePath));
+        return InviteLinksApiFp(this.configuration).inviteLinksPost(requestParameters.eitherRoleOrScopes, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
@@ -3596,7 +3720,7 @@ export const TeamsApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
-         * - If you want to update/delete members -- ensure you have the `TEAMMEMBERS_UPDATE` scope - If you want to delete invite links -- ensure you have the `TEAMLINKS_UPDATE` scope - Also you cannot delete/update yourself in the team. If you attempt to do so, a 400 will be returned 
+         * - If you want to update/delete members -- ensure you have the `TEAMMEMBERS_UPDATE` scope - If you want to delete invite links -- ensure you have the `TEAMLINKS_UPDATE` scope - Also you cannot delete/update yourself in the team. If you attempt to do so, a 400 will be returned - If scopes and role are both specified, scopes will be ignored 
          * @summary Update the team the access token is for
          * @param {TeamPatchRequest} [teamPatchRequest] 
          * @param {*} [options] Override http request option.
@@ -3704,7 +3828,7 @@ export const TeamsApiFp = function(configuration?: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
-         * - If you want to update/delete members -- ensure you have the `TEAMMEMBERS_UPDATE` scope - If you want to delete invite links -- ensure you have the `TEAMLINKS_UPDATE` scope - Also you cannot delete/update yourself in the team. If you attempt to do so, a 400 will be returned 
+         * - If you want to update/delete members -- ensure you have the `TEAMMEMBERS_UPDATE` scope - If you want to delete invite links -- ensure you have the `TEAMLINKS_UPDATE` scope - Also you cannot delete/update yourself in the team. If you attempt to do so, a 400 will be returned - If scopes and role are both specified, scopes will be ignored 
          * @summary Update the team the access token is for
          * @param {TeamPatchRequest} [teamPatchRequest] 
          * @param {*} [options] Override http request option.
@@ -3765,7 +3889,7 @@ export const TeamsApiFactory = function (configuration?: Configuration, basePath
             return localVarFp.teamsJoinInvite(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
-         * - If you want to update/delete members -- ensure you have the `TEAMMEMBERS_UPDATE` scope - If you want to delete invite links -- ensure you have the `TEAMLINKS_UPDATE` scope - Also you cannot delete/update yourself in the team. If you attempt to do so, a 400 will be returned 
+         * - If you want to update/delete members -- ensure you have the `TEAMMEMBERS_UPDATE` scope - If you want to delete invite links -- ensure you have the `TEAMLINKS_UPDATE` scope - Also you cannot delete/update yourself in the team. If you attempt to do so, a 400 will be returned - If scopes and role are both specified, scopes will be ignored 
          * @summary Update the team the access token is for
          * @param {TeamsApiTeamsPatchRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -4015,7 +4139,7 @@ export class TeamsApi extends BaseAPI {
     }
 
     /**
-     * - If you want to update/delete members -- ensure you have the `TEAMMEMBERS_UPDATE` scope - If you want to delete invite links -- ensure you have the `TEAMLINKS_UPDATE` scope - Also you cannot delete/update yourself in the team. If you attempt to do so, a 400 will be returned 
+     * - If you want to update/delete members -- ensure you have the `TEAMMEMBERS_UPDATE` scope - If you want to delete invite links -- ensure you have the `TEAMLINKS_UPDATE` scope - Also you cannot delete/update yourself in the team. If you attempt to do so, a 400 will be returned - If scopes and role are both specified, scopes will be ignored 
      * @summary Update the team the access token is for
      * @param {TeamsApiTeamsPatchRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.

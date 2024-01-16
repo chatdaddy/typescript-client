@@ -8048,6 +8048,12 @@ export interface TeammemberInsertData {
      * @memberof TeammemberInsertData
      */
     'scopes': Array<TeammemberInsertDataScopesEnum>;
+    /**
+     * 
+     * @type {string}
+     * @memberof TeammemberInsertData
+     */
+    'role'?: TeammemberInsertDataRoleEnum;
 }
 
 export const TeammemberInsertDataScopesEnum = {
@@ -8122,6 +8128,14 @@ export const TeammemberInsertDataScopesEnum = {
 } as const;
 
 export type TeammemberInsertDataScopesEnum = typeof TeammemberInsertDataScopesEnum[keyof typeof TeammemberInsertDataScopesEnum];
+export const TeammemberInsertDataRoleEnum = {
+    Viewer: 'viewer',
+    Editor: 'editor',
+    Admin: 'admin',
+    Agent: 'agent'
+} as const;
+
+export type TeammemberInsertDataRoleEnum = typeof TeammemberInsertDataRoleEnum[keyof typeof TeammemberInsertDataRoleEnum];
 
 /**
  * 
@@ -8185,6 +8199,12 @@ export interface TeammemberUpdateData {
      * @memberof TeammemberUpdateData
      */
     'scopes'?: Array<TeammemberUpdateDataScopesEnum>;
+    /**
+     * 
+     * @type {string}
+     * @memberof TeammemberUpdateData
+     */
+    'role'?: TeammemberUpdateDataRoleEnum;
 }
 
 export const TeammemberUpdateDataScopesEnum = {
@@ -8259,6 +8279,14 @@ export const TeammemberUpdateDataScopesEnum = {
 } as const;
 
 export type TeammemberUpdateDataScopesEnum = typeof TeammemberUpdateDataScopesEnum[keyof typeof TeammemberUpdateDataScopesEnum];
+export const TeammemberUpdateDataRoleEnum = {
+    Viewer: 'viewer',
+    Editor: 'editor',
+    Admin: 'admin',
+    Agent: 'agent'
+} as const;
+
+export type TeammemberUpdateDataRoleEnum = typeof TeammemberUpdateDataRoleEnum[keyof typeof TeammemberUpdateDataRoleEnum];
 
 /**
  * 
