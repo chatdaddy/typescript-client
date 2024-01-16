@@ -918,6 +918,18 @@ export interface BotNote {
     'title': string;
     /**
      * 
+     * @type {number}
+     * @memberof BotNote
+     */
+    'height'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof BotNote
+     */
+    'width'?: number;
+    /**
+     * 
      * @type {Position}
      * @memberof BotNote
      */

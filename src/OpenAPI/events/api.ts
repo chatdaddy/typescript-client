@@ -1865,6 +1865,18 @@ export interface BotInsertDataNotesInner {
     'title': string;
     /**
      * 
+     * @type {number}
+     * @memberof BotInsertDataNotesInner
+     */
+    'height'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof BotInsertDataNotesInner
+     */
+    'width'?: number;
+    /**
+     * 
      * @type {BotInsertDataActionsInnerAllOf1MessageButtonsInnerPosition}
      * @memberof BotInsertDataNotesInner
      */
