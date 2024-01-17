@@ -368,6 +368,161 @@ export type ActionFireRecordStatusEnum = typeof ActionFireRecordStatusEnum[keyof
 /**
  * 
  * @export
+ * @interface ActionInteraction
+ */
+export interface ActionInteraction extends ActionInteractionBase {
+    /**
+     * An ISO formatted timestamp
+     * @type {string}
+     * @memberof ActionInteraction
+     */
+    'doneAt': string;
+}
+
+
+/**
+ * 
+ * @export
+ * @interface ActionInteractionAllOf
+ */
+export interface ActionInteractionAllOf {
+    /**
+     * An ISO formatted timestamp
+     * @type {string}
+     * @memberof ActionInteractionAllOf
+     */
+    'doneAt': string;
+}
+/**
+ * @type ActionInteractionBase
+ * Stores minimal information about an action that was fired, and what interaction was further made with it
+ * @export
+ */
+export type ActionInteractionBase = { type: 'ActionInteraction' } & ActionInteraction;
+
+/**
+ * Action was simply sent out, no further interaction recorded
+ * @export
+ * @interface ActionInteractionBaseOneOf
+ */
+export interface ActionInteractionBaseOneOf {
+    /**
+     * 
+     * @type {string}
+     * @memberof ActionInteractionBaseOneOf
+     */
+    'type': ActionInteractionBaseOneOfTypeEnum;
+}
+
+export const ActionInteractionBaseOneOfTypeEnum = {
+    Sent: 'sent'
+} as const;
+
+export type ActionInteractionBaseOneOfTypeEnum = typeof ActionInteractionBaseOneOfTypeEnum[keyof typeof ActionInteractionBaseOneOfTypeEnum];
+
+/**
+ * Action was sent out and a button/list item was clicked
+ * @export
+ * @interface ActionInteractionBaseOneOf1
+ */
+export interface ActionInteractionBaseOneOf1 {
+    /**
+     * 
+     * @type {string}
+     * @memberof ActionInteractionBaseOneOf1
+     */
+    'type': ActionInteractionBaseOneOf1TypeEnum;
+    /**
+     * Text of the button or list item that was clicked
+     * @type {string}
+     * @memberof ActionInteractionBaseOneOf1
+     */
+    'text': string;
+}
+
+export const ActionInteractionBaseOneOf1TypeEnum = {
+    Click: 'click'
+} as const;
+
+export type ActionInteractionBaseOneOf1TypeEnum = typeof ActionInteractionBaseOneOf1TypeEnum[keyof typeof ActionInteractionBaseOneOf1TypeEnum];
+
+/**
+ * Action was sent out and a user input was submitted
+ * @export
+ * @interface ActionInteractionBaseOneOf2
+ */
+export interface ActionInteractionBaseOneOf2 {
+    /**
+     * 
+     * @type {string}
+     * @memberof ActionInteractionBaseOneOf2
+     */
+    'type': ActionInteractionBaseOneOf2TypeEnum;
+    /**
+     * 
+     * @type {ActionInteractionBaseOneOf2Content}
+     * @memberof ActionInteractionBaseOneOf2
+     */
+    'content': ActionInteractionBaseOneOf2Content;
+}
+
+export const ActionInteractionBaseOneOf2TypeEnum = {
+    UserInput: 'user_input'
+} as const;
+
+export type ActionInteractionBaseOneOf2TypeEnum = typeof ActionInteractionBaseOneOf2TypeEnum[keyof typeof ActionInteractionBaseOneOf2TypeEnum];
+
+/**
+ * Content of the user input that was submitted
+ * @export
+ * @interface ActionInteractionBaseOneOf2Content
+ */
+export interface ActionInteractionBaseOneOf2Content {
+    /**
+     * Text of the user input
+     * @type {string}
+     * @memberof ActionInteractionBaseOneOf2Content
+     */
+    'text'?: string;
+    /**
+     * Attachments of the user input
+     * @type {Array<IMMessageAttachment>}
+     * @memberof ActionInteractionBaseOneOf2Content
+     */
+    'attachments'?: Array<IMMessageAttachment>;
+}
+/**
+ * 
+ * @export
+ * @interface ActionInteractionQueryValue
+ */
+export interface ActionInteractionQueryValue {
+    /**
+     * 
+     * @type {string}
+     * @memberof ActionInteractionQueryValue
+     */
+    'type': ActionInteractionQueryValueTypeEnum;
+    /**
+     * 
+     * @type {string}
+     * @memberof ActionInteractionQueryValue
+     */
+    'text'?: string;
+}
+
+export const ActionInteractionQueryValueTypeEnum = {
+    Exists: 'exists',
+    Sent: 'sent',
+    Click: 'click',
+    UserInput: 'user_input'
+} as const;
+
+export type ActionInteractionQueryValueTypeEnum = typeof ActionInteractionQueryValueTypeEnum[keyof typeof ActionInteractionQueryValueTypeEnum];
+
+/**
+ * 
+ * @export
  * @interface ActionTarget
  */
 export interface ActionTarget {
@@ -652,6 +807,75 @@ export interface BotData {
      */
     'notes': Array<BotNote>;
 }
+/**
+ * Stores the record for whenever a bot is fired.
+ * @export
+ * @interface BotFireRecord
+ */
+export interface BotFireRecord {
+    /**
+     * 
+     * @type {string}
+     * @memberof BotFireRecord
+     */
+    'id': string;
+    /**
+     * ID of the contact
+     * @type {string}
+     * @memberof BotFireRecord
+     */
+    'contactId': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof BotFireRecord
+     */
+    'accountId': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof BotFireRecord
+     */
+    'botId': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof BotFireRecord
+     */
+    'status': BotFireRecordStatusEnum;
+    /**
+     * ID of the user who fired the bot.
+     * @type {string}
+     * @memberof BotFireRecord
+     */
+    'createdBy': string;
+    /**
+     * An ISO formatted timestamp
+     * @type {string}
+     * @memberof BotFireRecord
+     */
+    'createdAt': string;
+    /**
+     * An ISO formatted timestamp
+     * @type {string}
+     * @memberof BotFireRecord
+     */
+    'updatedAt': string;
+    /**
+     * Map of all actions sent & interacted with during this instance. Keyed by action ID
+     * @type {{ [key: string]: ActionInteraction; }}
+     * @memberof BotFireRecord
+     */
+    'interactions': { [key: string]: ActionInteraction; };
+}
+
+export const BotFireRecordStatusEnum = {
+    Running: 'running',
+    Completed: 'completed'
+} as const;
+
+export type BotFireRecordStatusEnum = typeof BotFireRecordStatusEnum[keyof typeof BotFireRecordStatusEnum];
+
 /**
  * 
  * @export
@@ -1148,25 +1372,25 @@ export interface BotTriggerInstance {
      * @type {string}
      * @memberof BotTriggerInstance
      */
-    'id'?: string;
+    'id': string;
     /**
      * 
      * @type {{ [key: string]: any; }}
      * @memberof BotTriggerInstance
      */
-    'payload'?: { [key: string]: any; };
+    'payload': { [key: string]: any; };
     /**
      * An ISO formatted timestamp
      * @type {string}
      * @memberof BotTriggerInstance
      */
-    'startedAt'?: string;
+    'startedAt': string;
     /**
      * 
      * @type {string}
      * @memberof BotTriggerInstance
      */
-    'status'?: BotTriggerInstanceStatusEnum;
+    'status': BotTriggerInstanceStatusEnum;
     /**
      * 
      * @type {string}
@@ -1706,25 +1930,6 @@ export interface BotsFireRequest {
 /**
  * 
  * @export
- * @interface BotsGetRecord200Response
- */
-export interface BotsGetRecord200Response {
-    /**
-     * 
-     * @type {Array<ActionFireRecord>}
-     * @memberof BotsGetRecord200Response
-     */
-    'records': Array<ActionFireRecord>;
-    /**
-     * Name of the last record fetched
-     * @type {string}
-     * @memberof BotsGetRecord200Response
-     */
-    'cursor'?: string;
-}
-/**
- * 
- * @export
  * @interface BotsGets200Response
  */
 export interface BotsGets200Response {
@@ -2181,6 +2386,50 @@ export interface FormSubmissionsGet200Response {
      * @memberof FormSubmissionsGet200Response
      */
     'cursor'?: string;
+}
+/**
+ * 
+ * @export
+ * @interface GetActionFireRecords200Response
+ */
+export interface GetActionFireRecords200Response {
+    /**
+     * 
+     * @type {Array<ActionFireRecord>}
+     * @memberof GetActionFireRecords200Response
+     */
+    'records': Array<ActionFireRecord>;
+    /**
+     * Name of the last record fetched
+     * @type {string}
+     * @memberof GetActionFireRecords200Response
+     */
+    'cursor'?: string;
+}
+/**
+ * 
+ * @export
+ * @interface GetBotFireRecords200Response
+ */
+export interface GetBotFireRecords200Response {
+    /**
+     * 
+     * @type {Array<BotFireRecord>}
+     * @memberof GetBotFireRecords200Response
+     */
+    'items': Array<BotFireRecord>;
+    /**
+     * 
+     * @type {string}
+     * @memberof GetBotFireRecords200Response
+     */
+    'nextPageCursor'?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof GetBotFireRecords200Response
+     */
+    'total'?: number;
 }
 /**
  * 
@@ -3229,6 +3478,181 @@ export class BotAnalyticsApi extends BaseAPI {
 
 
 /**
+ * BotRecordsApi - axios parameter creator
+ * @export
+ */
+export const BotRecordsApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * This endpoint fetches records for a bot based on provided botId parameters
+         * @summary Get records for a bot
+         * @param {string} botId The ID of the bot
+         * @param {number} [count] 
+         * @param {string} [cursor] 
+         * @param {{ [key: string]: ActionInteractionQueryValue; }} [interactions] 
+         * @param {boolean} [returnTotal] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getBotFireRecords: async (botId: string, count?: number, cursor?: string, interactions?: { [key: string]: ActionInteractionQueryValue; }, returnTotal?: boolean, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'botId' is not null or undefined
+            assertParamExists('getBotFireRecords', 'botId', botId)
+            const localVarPath = `/bot/{botId}/records`
+                .replace(`{${"botId"}}`, encodeURIComponent(String(botId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["TEMPLATES_READ"], configuration)
+
+            if (count !== undefined) {
+                localVarQueryParameter['count'] = count;
+            }
+
+            if (cursor !== undefined) {
+                localVarQueryParameter['cursor'] = cursor;
+            }
+
+            if (interactions !== undefined) {
+                localVarQueryParameter['interactions'] = interactions;
+            }
+
+            if (returnTotal !== undefined) {
+                localVarQueryParameter['returnTotal'] = returnTotal;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * BotRecordsApi - functional programming interface
+ * @export
+ */
+export const BotRecordsApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = BotRecordsApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * This endpoint fetches records for a bot based on provided botId parameters
+         * @summary Get records for a bot
+         * @param {string} botId The ID of the bot
+         * @param {number} [count] 
+         * @param {string} [cursor] 
+         * @param {{ [key: string]: ActionInteractionQueryValue; }} [interactions] 
+         * @param {boolean} [returnTotal] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getBotFireRecords(botId: string, count?: number, cursor?: string, interactions?: { [key: string]: ActionInteractionQueryValue; }, returnTotal?: boolean, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetBotFireRecords200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getBotFireRecords(botId, count, cursor, interactions, returnTotal, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+    }
+};
+
+/**
+ * BotRecordsApi - factory interface
+ * @export
+ */
+export const BotRecordsApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = BotRecordsApiFp(configuration)
+    return {
+        /**
+         * This endpoint fetches records for a bot based on provided botId parameters
+         * @summary Get records for a bot
+         * @param {BotRecordsApiGetBotFireRecordsRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getBotFireRecords(requestParameters: BotRecordsApiGetBotFireRecordsRequest, options?: AxiosRequestConfig): AxiosPromise<GetBotFireRecords200Response> {
+            return localVarFp.getBotFireRecords(requestParameters.botId, requestParameters.count, requestParameters.cursor, requestParameters.interactions, requestParameters.returnTotal, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * Request parameters for getBotFireRecords operation in BotRecordsApi.
+ * @export
+ * @interface BotRecordsApiGetBotFireRecordsRequest
+ */
+export interface BotRecordsApiGetBotFireRecordsRequest {
+    /**
+     * The ID of the bot
+     * @type {string}
+     * @memberof BotRecordsApiGetBotFireRecords
+     */
+    readonly botId: string
+
+    /**
+     * 
+     * @type {number}
+     * @memberof BotRecordsApiGetBotFireRecords
+     */
+    readonly count?: number
+
+    /**
+     * 
+     * @type {string}
+     * @memberof BotRecordsApiGetBotFireRecords
+     */
+    readonly cursor?: string
+
+    /**
+     * 
+     * @type {{ [key: string]: ActionInteractionQueryValue; }}
+     * @memberof BotRecordsApiGetBotFireRecords
+     */
+    readonly interactions?: { [key: string]: ActionInteractionQueryValue; }
+
+    /**
+     * 
+     * @type {boolean}
+     * @memberof BotRecordsApiGetBotFireRecords
+     */
+    readonly returnTotal?: boolean
+}
+
+/**
+ * BotRecordsApi - object-oriented interface
+ * @export
+ * @class BotRecordsApi
+ * @extends {BaseAPI}
+ */
+export class BotRecordsApi extends BaseAPI {
+    /**
+     * This endpoint fetches records for a bot based on provided botId parameters
+     * @summary Get records for a bot
+     * @param {BotRecordsApiGetBotFireRecordsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof BotRecordsApi
+     */
+    public getBotFireRecords(requestParameters: BotRecordsApiGetBotFireRecordsRequest, options?: AxiosRequestConfig) {
+        return BotRecordsApiFp(this.configuration).getBotFireRecords(requestParameters.botId, requestParameters.count, requestParameters.cursor, requestParameters.interactions, requestParameters.returnTotal, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+/**
  * BotTriggersApi - axios parameter creator
  * @export
  */
@@ -4059,55 +4483,6 @@ export const BotsApiAxiosParamCreator = function (configuration?: Configuration)
         },
         /**
          * 
-         * @summary Returns list of execution records
-         * @param {number} [count] 
-         * @param {number} [beforeId] 
-         * @param {string} [botId] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        botsGetRecord: async (count?: number, beforeId?: number, botId?: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/bots/record`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication chatdaddy required
-            // oauth required
-            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["TEMPLATES_READ"], configuration)
-
-            if (count !== undefined) {
-                localVarQueryParameter['count'] = count;
-            }
-
-            if (beforeId !== undefined) {
-                localVarQueryParameter['beforeId'] = beforeId;
-            }
-
-            if (botId !== undefined) {
-                localVarQueryParameter['botId'] = botId;
-            }
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
          * @summary Get list of bots
          * @param {string} [q] 
          * @param {boolean} [isForm] If true, only bots that are a form will be returned. If false, only bots are not forms will be returned
@@ -4275,6 +4650,55 @@ export const BotsApiAxiosParamCreator = function (configuration?: Configuration)
                 options: localVarRequestOptions,
             };
         },
+        /**
+         * 
+         * @summary Returns list of action fire records
+         * @param {number} [count] 
+         * @param {number} [beforeId] 
+         * @param {string} [botId] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getActionFireRecords: async (count?: number, beforeId?: number, botId?: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/actions/records`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["TEMPLATES_READ"], configuration)
+
+            if (count !== undefined) {
+                localVarQueryParameter['count'] = count;
+            }
+
+            if (beforeId !== undefined) {
+                localVarQueryParameter['beforeId'] = beforeId;
+            }
+
+            if (botId !== undefined) {
+                localVarQueryParameter['botId'] = botId;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
     }
 };
 
@@ -4360,19 +4784,6 @@ export const BotsApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
-         * @summary Returns list of execution records
-         * @param {number} [count] 
-         * @param {number} [beforeId] 
-         * @param {string} [botId] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async botsGetRecord(count?: number, beforeId?: number, botId?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BotsGetRecord200Response>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.botsGetRecord(count, beforeId, botId, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-        /**
-         * 
          * @summary Get list of bots
          * @param {string} [q] 
          * @param {boolean} [isForm] If true, only bots that are a form will be returned. If false, only bots are not forms will be returned
@@ -4413,6 +4824,19 @@ export const BotsApiFp = function(configuration?: Configuration) {
          */
         async externalTemplateStatusUpdate(templateStatusUpdateRequest?: TemplateStatusUpdateRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.externalTemplateStatusUpdate(templateStatusUpdateRequest, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary Returns list of action fire records
+         * @param {number} [count] 
+         * @param {number} [beforeId] 
+         * @param {string} [botId] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getActionFireRecords(count?: number, beforeId?: number, botId?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetActionFireRecords200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getActionFireRecords(count, beforeId, botId, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
     }
@@ -4487,16 +4911,6 @@ export const BotsApiFactory = function (configuration?: Configuration, basePath?
         },
         /**
          * 
-         * @summary Returns list of execution records
-         * @param {BotsApiBotsGetRecordRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        botsGetRecord(requestParameters: BotsApiBotsGetRecordRequest = {}, options?: AxiosRequestConfig): AxiosPromise<BotsGetRecord200Response> {
-            return localVarFp.botsGetRecord(requestParameters.count, requestParameters.beforeId, requestParameters.botId, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
          * @summary Get list of bots
          * @param {BotsApiBotsGetsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -4524,6 +4938,16 @@ export const BotsApiFactory = function (configuration?: Configuration, basePath?
          */
         externalTemplateStatusUpdate(requestParameters: BotsApiExternalTemplateStatusUpdateRequest = {}, options?: AxiosRequestConfig): AxiosPromise<void> {
             return localVarFp.externalTemplateStatusUpdate(requestParameters.templateStatusUpdateRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Returns list of action fire records
+         * @param {BotsApiGetActionFireRecordsRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getActionFireRecords(requestParameters: BotsApiGetActionFireRecordsRequest = {}, options?: AxiosRequestConfig): AxiosPromise<GetActionFireRecords200Response> {
+            return localVarFp.getActionFireRecords(requestParameters.count, requestParameters.beforeId, requestParameters.botId, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -4662,34 +5086,6 @@ export interface BotsApiBotsFireRequest {
 }
 
 /**
- * Request parameters for botsGetRecord operation in BotsApi.
- * @export
- * @interface BotsApiBotsGetRecordRequest
- */
-export interface BotsApiBotsGetRecordRequest {
-    /**
-     * 
-     * @type {number}
-     * @memberof BotsApiBotsGetRecord
-     */
-    readonly count?: number
-
-    /**
-     * 
-     * @type {number}
-     * @memberof BotsApiBotsGetRecord
-     */
-    readonly beforeId?: number
-
-    /**
-     * 
-     * @type {string}
-     * @memberof BotsApiBotsGetRecord
-     */
-    readonly botId?: string
-}
-
-/**
  * Request parameters for botsGets operation in BotsApi.
  * @export
  * @interface BotsApiBotsGetsRequest
@@ -4809,6 +5205,34 @@ export interface BotsApiExternalTemplateStatusUpdateRequest {
 }
 
 /**
+ * Request parameters for getActionFireRecords operation in BotsApi.
+ * @export
+ * @interface BotsApiGetActionFireRecordsRequest
+ */
+export interface BotsApiGetActionFireRecordsRequest {
+    /**
+     * 
+     * @type {number}
+     * @memberof BotsApiGetActionFireRecords
+     */
+    readonly count?: number
+
+    /**
+     * 
+     * @type {number}
+     * @memberof BotsApiGetActionFireRecords
+     */
+    readonly beforeId?: number
+
+    /**
+     * 
+     * @type {string}
+     * @memberof BotsApiGetActionFireRecords
+     */
+    readonly botId?: string
+}
+
+/**
  * BotsApi - object-oriented interface
  * @export
  * @class BotsApi
@@ -4889,18 +5313,6 @@ export class BotsApi extends BaseAPI {
 
     /**
      * 
-     * @summary Returns list of execution records
-     * @param {BotsApiBotsGetRecordRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof BotsApi
-     */
-    public botsGetRecord(requestParameters: BotsApiBotsGetRecordRequest = {}, options?: AxiosRequestConfig) {
-        return BotsApiFp(this.configuration).botsGetRecord(requestParameters.count, requestParameters.beforeId, requestParameters.botId, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
      * @summary Get list of bots
      * @param {BotsApiBotsGetsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -4933,6 +5345,18 @@ export class BotsApi extends BaseAPI {
      */
     public externalTemplateStatusUpdate(requestParameters: BotsApiExternalTemplateStatusUpdateRequest = {}, options?: AxiosRequestConfig) {
         return BotsApiFp(this.configuration).externalTemplateStatusUpdate(requestParameters.templateStatusUpdateRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Returns list of action fire records
+     * @param {BotsApiGetActionFireRecordsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof BotsApi
+     */
+    public getActionFireRecords(requestParameters: BotsApiGetActionFireRecordsRequest = {}, options?: AxiosRequestConfig) {
+        return BotsApiFp(this.configuration).getActionFireRecords(requestParameters.count, requestParameters.beforeId, requestParameters.botId, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

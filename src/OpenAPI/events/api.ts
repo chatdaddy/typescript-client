@@ -2015,25 +2015,25 @@ export interface BotInsertDataStartTriggersInnerInstancesInner {
      * @type {string}
      * @memberof BotInsertDataStartTriggersInnerInstancesInner
      */
-    'id'?: string;
+    'id': string;
     /**
      * 
      * @type {{ [key: string]: any; }}
      * @memberof BotInsertDataStartTriggersInnerInstancesInner
      */
-    'payload'?: { [key: string]: any; };
+    'payload': { [key: string]: any; };
     /**
      * 
      * @type {string}
      * @memberof BotInsertDataStartTriggersInnerInstancesInner
      */
-    'startedAt'?: string;
+    'startedAt': string;
     /**
      * 
      * @type {string}
      * @memberof BotInsertDataStartTriggersInnerInstancesInner
      */
-    'status'?: BotInsertDataStartTriggersInnerInstancesInnerStatusEnum;
+    'status': BotInsertDataStartTriggersInnerInstancesInnerStatusEnum;
     /**
      * 
      * @type {string}
