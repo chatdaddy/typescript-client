@@ -722,6 +722,9 @@
       "shop"
     ],
     "roles": [
+      "admin",
+      "editor",
+      "agent",
       "viewer"
     ],
     "group": "Payment Records"
@@ -733,7 +736,9 @@
       "shop"
     ],
     "roles": [
-      "agent"
+      "agent",
+      "editor",
+      "admin"
     ],
     "group": "Payment Records"
   },
@@ -744,7 +749,10 @@
       "audience"
     ],
     "roles": [
-      "viewer"
+      "viewer",
+      "admin",
+      "agent",
+      "editor"
     ],
     "group": "Dashboard & Metrics"
   },
