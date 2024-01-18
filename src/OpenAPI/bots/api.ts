@@ -366,131 +366,205 @@ export const ActionFireRecordStatusEnum = {
 export type ActionFireRecordStatusEnum = typeof ActionFireRecordStatusEnum[keyof typeof ActionFireRecordStatusEnum];
 
 /**
- * 
+ * @type ActionInteraction
  * @export
- * @interface ActionInteraction
  */
-export interface ActionInteraction extends ActionInteractionBase {
-    /**
-     * An ISO formatted timestamp
-     * @type {string}
-     * @memberof ActionInteraction
-     */
-    'doneAt': string;
-}
-
+export type ActionInteraction = ActionInteractionOneOf | ActionInteractionOneOf1 | ActionInteractionOneOf2;
 
 /**
  * 
  * @export
- * @interface ActionInteractionAllOf
+ * @interface ActionInteractionBase
  */
-export interface ActionInteractionAllOf {
+export interface ActionInteractionBase {
     /**
      * An ISO formatted timestamp
      * @type {string}
-     * @memberof ActionInteractionAllOf
+     * @memberof ActionInteractionBase
      */
     'doneAt': string;
 }
 /**
- * @type ActionInteractionBase
- * Stores minimal information about an action that was fired, and what interaction was further made with it
+ * 
  * @export
+ * @interface ActionInteractionOneOf
  */
-export type ActionInteractionBase = { type: 'ActionInteraction' } & ActionInteraction;
-
-/**
- * Action was simply sent out, no further interaction recorded
- * @export
- * @interface ActionInteractionBaseOneOf
- */
-export interface ActionInteractionBaseOneOf {
+export interface ActionInteractionOneOf {
+    /**
+     * An ISO formatted timestamp
+     * @type {string}
+     * @memberof ActionInteractionOneOf
+     */
+    'doneAt': string;
     /**
      * 
      * @type {string}
-     * @memberof ActionInteractionBaseOneOf
+     * @memberof ActionInteractionOneOf
      */
-    'type': ActionInteractionBaseOneOfTypeEnum;
+    'type': ActionInteractionOneOfTypeEnum;
 }
 
-export const ActionInteractionBaseOneOfTypeEnum = {
+export const ActionInteractionOneOfTypeEnum = {
     Sent: 'sent'
 } as const;
 
-export type ActionInteractionBaseOneOfTypeEnum = typeof ActionInteractionBaseOneOfTypeEnum[keyof typeof ActionInteractionBaseOneOfTypeEnum];
+export type ActionInteractionOneOfTypeEnum = typeof ActionInteractionOneOfTypeEnum[keyof typeof ActionInteractionOneOfTypeEnum];
 
 /**
- * Action was sent out and a button/list item was clicked
+ * 
  * @export
- * @interface ActionInteractionBaseOneOf1
+ * @interface ActionInteractionOneOf1
  */
-export interface ActionInteractionBaseOneOf1 {
+export interface ActionInteractionOneOf1 {
+    /**
+     * An ISO formatted timestamp
+     * @type {string}
+     * @memberof ActionInteractionOneOf1
+     */
+    'doneAt': string;
     /**
      * 
      * @type {string}
-     * @memberof ActionInteractionBaseOneOf1
+     * @memberof ActionInteractionOneOf1
      */
-    'type': ActionInteractionBaseOneOf1TypeEnum;
+    'type': ActionInteractionOneOf1TypeEnum;
     /**
      * Text of the button or list item that was clicked
      * @type {string}
-     * @memberof ActionInteractionBaseOneOf1
+     * @memberof ActionInteractionOneOf1
      */
     'text': string;
 }
 
-export const ActionInteractionBaseOneOf1TypeEnum = {
+export const ActionInteractionOneOf1TypeEnum = {
     Click: 'click'
 } as const;
 
-export type ActionInteractionBaseOneOf1TypeEnum = typeof ActionInteractionBaseOneOf1TypeEnum[keyof typeof ActionInteractionBaseOneOf1TypeEnum];
+export type ActionInteractionOneOf1TypeEnum = typeof ActionInteractionOneOf1TypeEnum[keyof typeof ActionInteractionOneOf1TypeEnum];
+
+/**
+ * Action was sent out and a button/list item was clicked
+ * @export
+ * @interface ActionInteractionOneOf1AllOf
+ */
+export interface ActionInteractionOneOf1AllOf {
+    /**
+     * 
+     * @type {string}
+     * @memberof ActionInteractionOneOf1AllOf
+     */
+    'type': ActionInteractionOneOf1AllOfTypeEnum;
+    /**
+     * Text of the button or list item that was clicked
+     * @type {string}
+     * @memberof ActionInteractionOneOf1AllOf
+     */
+    'text': string;
+}
+
+export const ActionInteractionOneOf1AllOfTypeEnum = {
+    Click: 'click'
+} as const;
+
+export type ActionInteractionOneOf1AllOfTypeEnum = typeof ActionInteractionOneOf1AllOfTypeEnum[keyof typeof ActionInteractionOneOf1AllOfTypeEnum];
+
+/**
+ * 
+ * @export
+ * @interface ActionInteractionOneOf2
+ */
+export interface ActionInteractionOneOf2 {
+    /**
+     * An ISO formatted timestamp
+     * @type {string}
+     * @memberof ActionInteractionOneOf2
+     */
+    'doneAt': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ActionInteractionOneOf2
+     */
+    'type': ActionInteractionOneOf2TypeEnum;
+    /**
+     * 
+     * @type {ActionInteractionOneOf2AllOfContent}
+     * @memberof ActionInteractionOneOf2
+     */
+    'content': ActionInteractionOneOf2AllOfContent;
+}
+
+export const ActionInteractionOneOf2TypeEnum = {
+    UserInput: 'user_input'
+} as const;
+
+export type ActionInteractionOneOf2TypeEnum = typeof ActionInteractionOneOf2TypeEnum[keyof typeof ActionInteractionOneOf2TypeEnum];
 
 /**
  * Action was sent out and a user input was submitted
  * @export
- * @interface ActionInteractionBaseOneOf2
+ * @interface ActionInteractionOneOf2AllOf
  */
-export interface ActionInteractionBaseOneOf2 {
+export interface ActionInteractionOneOf2AllOf {
     /**
      * 
      * @type {string}
-     * @memberof ActionInteractionBaseOneOf2
+     * @memberof ActionInteractionOneOf2AllOf
      */
-    'type': ActionInteractionBaseOneOf2TypeEnum;
+    'type': ActionInteractionOneOf2AllOfTypeEnum;
     /**
      * 
-     * @type {ActionInteractionBaseOneOf2Content}
-     * @memberof ActionInteractionBaseOneOf2
+     * @type {ActionInteractionOneOf2AllOfContent}
+     * @memberof ActionInteractionOneOf2AllOf
      */
-    'content': ActionInteractionBaseOneOf2Content;
+    'content': ActionInteractionOneOf2AllOfContent;
 }
 
-export const ActionInteractionBaseOneOf2TypeEnum = {
+export const ActionInteractionOneOf2AllOfTypeEnum = {
     UserInput: 'user_input'
 } as const;
 
-export type ActionInteractionBaseOneOf2TypeEnum = typeof ActionInteractionBaseOneOf2TypeEnum[keyof typeof ActionInteractionBaseOneOf2TypeEnum];
+export type ActionInteractionOneOf2AllOfTypeEnum = typeof ActionInteractionOneOf2AllOfTypeEnum[keyof typeof ActionInteractionOneOf2AllOfTypeEnum];
 
 /**
  * Content of the user input that was submitted
  * @export
- * @interface ActionInteractionBaseOneOf2Content
+ * @interface ActionInteractionOneOf2AllOfContent
  */
-export interface ActionInteractionBaseOneOf2Content {
+export interface ActionInteractionOneOf2AllOfContent {
     /**
      * Text of the user input
      * @type {string}
-     * @memberof ActionInteractionBaseOneOf2Content
+     * @memberof ActionInteractionOneOf2AllOfContent
      */
     'text'?: string;
     /**
      * Attachments of the user input
      * @type {Array<IMMessageAttachment>}
-     * @memberof ActionInteractionBaseOneOf2Content
+     * @memberof ActionInteractionOneOf2AllOfContent
      */
     'attachments'?: Array<IMMessageAttachment>;
 }
+/**
+ * Action was simply sent out, no further interaction recorded
+ * @export
+ * @interface ActionInteractionOneOfAllOf
+ */
+export interface ActionInteractionOneOfAllOf {
+    /**
+     * 
+     * @type {string}
+     * @memberof ActionInteractionOneOfAllOf
+     */
+    'type': ActionInteractionOneOfAllOfTypeEnum;
+}
+
+export const ActionInteractionOneOfAllOfTypeEnum = {
+    Sent: 'sent'
+} as const;
+
+export type ActionInteractionOneOfAllOfTypeEnum = typeof ActionInteractionOneOfAllOfTypeEnum[keyof typeof ActionInteractionOneOfAllOfTypeEnum];
+
 /**
  * 
  * @export
