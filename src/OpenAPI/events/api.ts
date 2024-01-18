@@ -1877,6 +1877,12 @@ export interface BotInsertDataNotesInner {
     'width'?: number;
     /**
      * 
+     * @type {Array<BotInsertDataNotesInnerTargetsInner>}
+     * @memberof BotInsertDataNotesInner
+     */
+    'targets'?: Array<BotInsertDataNotesInnerTargetsInner>;
+    /**
+     * 
      * @type {BotInsertDataActionsInnerAllOf1MessageButtonsInnerPosition}
      * @memberof BotInsertDataNotesInner
      */
@@ -1887,6 +1893,31 @@ export interface BotInsertDataNotesInner {
      * @memberof BotInsertDataNotesInner
      */
     'remove'?: boolean;
+}
+/**
+ * 
+ * @export
+ * @interface BotInsertDataNotesInnerTargetsInner
+ */
+export interface BotInsertDataNotesInnerTargetsInner {
+    /**
+     * 
+     * @type {string}
+     * @memberof BotInsertDataNotesInnerTargetsInner
+     */
+    'target': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof BotInsertDataNotesInnerTargetsInner
+     */
+    'sourceHandle': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof BotInsertDataNotesInnerTargetsInner
+     */
+    'targetHandle': string;
 }
 /**
  * 

@@ -1228,6 +1228,12 @@ export interface BotNote {
     'width'?: number;
     /**
      * 
+     * @type {Array<BotNoteTargetsInner>}
+     * @memberof BotNote
+     */
+    'targets'?: Array<BotNoteTargetsInner>;
+    /**
+     * 
      * @type {Position}
      * @memberof BotNote
      */
@@ -1238,6 +1244,31 @@ export interface BotNote {
      * @memberof BotNote
      */
     'remove'?: boolean;
+}
+/**
+ * 
+ * @export
+ * @interface BotNoteTargetsInner
+ */
+export interface BotNoteTargetsInner {
+    /**
+     * 
+     * @type {string}
+     * @memberof BotNoteTargetsInner
+     */
+    'target': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof BotNoteTargetsInner
+     */
+    'sourceHandle': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof BotNoteTargetsInner
+     */
+    'targetHandle': string;
 }
 /**
  * 
