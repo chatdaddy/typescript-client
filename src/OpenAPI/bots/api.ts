@@ -2671,6 +2671,25 @@ export type IMMessageSenderContextTypeEnum = typeof IMMessageSenderContextTypeEn
 /**
  * 
  * @export
+ * @interface IMUniqueContactID
+ */
+export interface IMUniqueContactID {
+    /**
+     * ID of the contact
+     * @type {string}
+     * @memberof IMUniqueContactID
+     */
+    'id': string;
+    /**
+     * ID of the account
+     * @type {string}
+     * @memberof IMUniqueContactID
+     */
+    'accountId': string;
+}
+/**
+ * 
+ * @export
  * @interface MessageObj
  */
 export interface MessageObj {
@@ -3597,7 +3616,8 @@ export const BotRecordsApiAxiosParamCreator = function (configuration?: Configur
         /**
          * This endpoint fetches records for a bot based on provided botId parameters
          * @summary Get records for a bot
-         * @param {string} botId The ID of the bot
+         * @param {string} [botId] The ID of the bot
+         * @param {Array<IMUniqueContactID>} [contacts] 
          * @param {number} [count] 
          * @param {string} [cursor] 
          * @param {{ [key: string]: ActionInteractionQueryValue; }} [interactions] 
@@ -3605,11 +3625,8 @@ export const BotRecordsApiAxiosParamCreator = function (configuration?: Configur
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getBotFireRecords: async (botId: string, count?: number, cursor?: string, interactions?: { [key: string]: ActionInteractionQueryValue; }, returnTotal?: boolean, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'botId' is not null or undefined
-            assertParamExists('getBotFireRecords', 'botId', botId)
-            const localVarPath = `/bot/{botId}/records`
-                .replace(`{${"botId"}}`, encodeURIComponent(String(botId)));
+        getBotFireRecords: async (botId?: string, contacts?: Array<IMUniqueContactID>, count?: number, cursor?: string, interactions?: { [key: string]: ActionInteractionQueryValue; }, returnTotal?: boolean, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/bot/records`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -3624,6 +3641,14 @@ export const BotRecordsApiAxiosParamCreator = function (configuration?: Configur
             // authentication chatdaddy required
             // oauth required
             await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["TEMPLATES_READ"], configuration)
+
+            if (botId !== undefined) {
+                localVarQueryParameter['botId'] = botId;
+            }
+
+            if (contacts) {
+                localVarQueryParameter['contacts'] = contacts;
+            }
 
             if (count !== undefined) {
                 localVarQueryParameter['count'] = count;
@@ -3665,7 +3690,8 @@ export const BotRecordsApiFp = function(configuration?: Configuration) {
         /**
          * This endpoint fetches records for a bot based on provided botId parameters
          * @summary Get records for a bot
-         * @param {string} botId The ID of the bot
+         * @param {string} [botId] The ID of the bot
+         * @param {Array<IMUniqueContactID>} [contacts] 
          * @param {number} [count] 
          * @param {string} [cursor] 
          * @param {{ [key: string]: ActionInteractionQueryValue; }} [interactions] 
@@ -3673,8 +3699,8 @@ export const BotRecordsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getBotFireRecords(botId: string, count?: number, cursor?: string, interactions?: { [key: string]: ActionInteractionQueryValue; }, returnTotal?: boolean, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetBotFireRecords200Response>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getBotFireRecords(botId, count, cursor, interactions, returnTotal, options);
+        async getBotFireRecords(botId?: string, contacts?: Array<IMUniqueContactID>, count?: number, cursor?: string, interactions?: { [key: string]: ActionInteractionQueryValue; }, returnTotal?: boolean, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetBotFireRecords200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getBotFireRecords(botId, contacts, count, cursor, interactions, returnTotal, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
     }
@@ -3694,8 +3720,8 @@ export const BotRecordsApiFactory = function (configuration?: Configuration, bas
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getBotFireRecords(requestParameters: BotRecordsApiGetBotFireRecordsRequest, options?: AxiosRequestConfig): AxiosPromise<GetBotFireRecords200Response> {
-            return localVarFp.getBotFireRecords(requestParameters.botId, requestParameters.count, requestParameters.cursor, requestParameters.interactions, requestParameters.returnTotal, options).then((request) => request(axios, basePath));
+        getBotFireRecords(requestParameters: BotRecordsApiGetBotFireRecordsRequest = {}, options?: AxiosRequestConfig): AxiosPromise<GetBotFireRecords200Response> {
+            return localVarFp.getBotFireRecords(requestParameters.botId, requestParameters.contacts, requestParameters.count, requestParameters.cursor, requestParameters.interactions, requestParameters.returnTotal, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -3711,7 +3737,14 @@ export interface BotRecordsApiGetBotFireRecordsRequest {
      * @type {string}
      * @memberof BotRecordsApiGetBotFireRecords
      */
-    readonly botId: string
+    readonly botId?: string
+
+    /**
+     * 
+     * @type {Array<IMUniqueContactID>}
+     * @memberof BotRecordsApiGetBotFireRecords
+     */
+    readonly contacts?: Array<IMUniqueContactID>
 
     /**
      * 
@@ -3757,8 +3790,8 @@ export class BotRecordsApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof BotRecordsApi
      */
-    public getBotFireRecords(requestParameters: BotRecordsApiGetBotFireRecordsRequest, options?: AxiosRequestConfig) {
-        return BotRecordsApiFp(this.configuration).getBotFireRecords(requestParameters.botId, requestParameters.count, requestParameters.cursor, requestParameters.interactions, requestParameters.returnTotal, options).then((request) => request(this.axios, this.basePath));
+    public getBotFireRecords(requestParameters: BotRecordsApiGetBotFireRecordsRequest = {}, options?: AxiosRequestConfig) {
+        return BotRecordsApiFp(this.configuration).getBotFireRecords(requestParameters.botId, requestParameters.contacts, requestParameters.count, requestParameters.cursor, requestParameters.interactions, requestParameters.returnTotal, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
