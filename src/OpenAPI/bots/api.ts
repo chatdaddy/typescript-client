@@ -1269,6 +1269,12 @@ export interface BotNoteTargetsInner {
      * @memberof BotNoteTargetsInner
      */
     'targetHandle': string;
+    /**
+     * 
+     * @type {{ [key: string]: any; }}
+     * @memberof BotNoteTargetsInner
+     */
+    'edgeStyles'?: { [key: string]: any; };
 }
 /**
  * 

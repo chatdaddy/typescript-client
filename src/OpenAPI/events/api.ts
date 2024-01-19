@@ -1918,6 +1918,12 @@ export interface BotInsertDataNotesInnerTargetsInner {
      * @memberof BotInsertDataNotesInnerTargetsInner
      */
     'targetHandle': string;
+    /**
+     * 
+     * @type {{ [key: string]: any; }}
+     * @memberof BotInsertDataNotesInnerTargetsInner
+     */
+    'edgeStyles'?: { [key: string]: any; };
 }
 /**
  * 
