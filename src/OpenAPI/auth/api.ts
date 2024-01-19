@@ -1015,6 +1015,38 @@ export interface OtpTokenPostRequest {
 /**
  * 
  * @export
+ * @interface PartnerAdminGet200Response
+ */
+export interface PartnerAdminGet200Response {
+    /**
+     * 
+     * @type {Array<PartnerAdminGet200ResponseTeamsInner>}
+     * @memberof PartnerAdminGet200Response
+     */
+    'teams': Array<PartnerAdminGet200ResponseTeamsInner>;
+}
+/**
+ * 
+ * @export
+ * @interface PartnerAdminGet200ResponseTeamsInner
+ */
+export interface PartnerAdminGet200ResponseTeamsInner {
+    /**
+     * 
+     * @type {string}
+     * @memberof PartnerAdminGet200ResponseTeamsInner
+     */
+    'id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof PartnerAdminGet200ResponseTeamsInner
+     */
+    'partnerAdmin': string;
+}
+/**
+ * 
+ * @export
  * @interface PartnerTeamPatchRequest
  */
 export interface PartnerTeamPatchRequest {
@@ -3439,6 +3471,40 @@ export const TeamsApiAxiosParamCreator = function (configuration?: Configuration
     return {
         /**
          * 
+         * @summary Fetch partner admin teamIds
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        partnerAdminGet: async (options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/teams/partner-admin`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["ADMIN_PANEL_ACCESS"], configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
          * @summary Upgrade the team to \'partner\' if partner is specified, else, downgrade partner status
          * @param {string} teamId the teamId of the team to be upgraded/downgraded
          * @param {PartnerTeamPatchRequest} [partnerTeamPatchRequest] 
@@ -3724,6 +3790,16 @@ export const TeamsApiFp = function(configuration?: Configuration) {
     return {
         /**
          * 
+         * @summary Fetch partner admin teamIds
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async partnerAdminGet(options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PartnerAdminGet200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.partnerAdminGet(options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
          * @summary Upgrade the team to \'partner\' if partner is specified, else, downgrade partner status
          * @param {string} teamId the teamId of the team to be upgraded/downgraded
          * @param {PartnerTeamPatchRequest} [partnerTeamPatchRequest] 
@@ -3803,6 +3879,15 @@ export const TeamsApiFp = function(configuration?: Configuration) {
 export const TeamsApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
     const localVarFp = TeamsApiFp(configuration)
     return {
+        /**
+         * 
+         * @summary Fetch partner admin teamIds
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        partnerAdminGet(options?: AxiosRequestConfig): AxiosPromise<PartnerAdminGet200Response> {
+            return localVarFp.partnerAdminGet(options).then((request) => request(axios, basePath));
+        },
         /**
          * 
          * @summary Upgrade the team to \'partner\' if partner is specified, else, downgrade partner status
@@ -4045,6 +4130,17 @@ export interface TeamsApiTeamsPatchRequest {
  * @extends {BaseAPI}
  */
 export class TeamsApi extends BaseAPI {
+    /**
+     * 
+     * @summary Fetch partner admin teamIds
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof TeamsApi
+     */
+    public partnerAdminGet(options?: AxiosRequestConfig) {
+        return TeamsApiFp(this.configuration).partnerAdminGet(options).then((request) => request(this.axios, this.basePath));
+    }
+
     /**
      * 
      * @summary Upgrade the team to \'partner\' if partner is specified, else, downgrade partner status
