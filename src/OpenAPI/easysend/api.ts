@@ -2500,6 +2500,18 @@ export interface TrackServiceModel {
      * @memberof TrackServiceModel
      */
     'autoPayment'?: TrackingAutoPaymentConfig | null;
+    /**
+     * An ISO formatted timestamp
+     * @type {string}
+     * @memberof TrackServiceModel
+     */
+    'createdAt': string;
+    /**
+     * An ISO formatted timestamp
+     * @type {string}
+     * @memberof TrackServiceModel
+     */
+    'updatedAt': string;
 }
 /**
  * 

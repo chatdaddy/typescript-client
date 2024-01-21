@@ -8492,6 +8492,18 @@ export interface TrackingInsertData {
      * @memberof TrackingInsertData
      */
     'autoPayment'?: TrackingInsertDataAutoPayment | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof TrackingInsertData
+     */
+    'createdAt': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof TrackingInsertData
+     */
+    'updatedAt': string;
 }
 /**
  * 
@@ -8883,6 +8895,18 @@ export interface TrackingUpdateData {
      * @memberof TrackingUpdateData
      */
     'autoPayment'?: TrackingInsertDataAutoPayment | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof TrackingUpdateData
+     */
+    'createdAt'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof TrackingUpdateData
+     */
+    'updatedAt'?: string;
 }
 /**
  * 
