@@ -1234,6 +1234,18 @@ export interface BotNote {
     'targets'?: Array<BotNoteTargetsInner>;
     /**
      * 
+     * @type {string}
+     * @memberof BotNote
+     */
+    'color'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof BotNote
+     */
+    'shapeType'?: string;
+    /**
+     * 
      * @type {Position}
      * @memberof BotNote
      */

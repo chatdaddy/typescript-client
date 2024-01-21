@@ -1883,6 +1883,18 @@ export interface BotInsertDataNotesInner {
     'targets'?: Array<BotInsertDataNotesInnerTargetsInner>;
     /**
      * 
+     * @type {string}
+     * @memberof BotInsertDataNotesInner
+     */
+    'color'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof BotInsertDataNotesInner
+     */
+    'shapeType'?: string;
+    /**
+     * 
      * @type {BotInsertDataActionsInnerAllOf1MessageButtonsInnerPosition}
      * @memberof BotInsertDataNotesInner
      */
