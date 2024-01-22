@@ -1237,13 +1237,19 @@ export interface BotNote {
      * @type {string}
      * @memberof BotNote
      */
-    'color'?: string;
+    'color'?: string | null;
     /**
      * 
      * @type {string}
      * @memberof BotNote
      */
-    'shapeType'?: string;
+    'fillColor'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof BotNote
+     */
+    'shapeType'?: string | null;
     /**
      * 
      * @type {Position}

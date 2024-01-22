@@ -1886,13 +1886,19 @@ export interface BotInsertDataNotesInner {
      * @type {string}
      * @memberof BotInsertDataNotesInner
      */
-    'color'?: string;
+    'color'?: string | null;
     /**
      * 
      * @type {string}
      * @memberof BotInsertDataNotesInner
      */
-    'shapeType'?: string;
+    'fillColor'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof BotInsertDataNotesInner
+     */
+    'shapeType'?: string | null;
     /**
      * 
      * @type {BotInsertDataActionsInnerAllOf1MessageButtonsInnerPosition}
