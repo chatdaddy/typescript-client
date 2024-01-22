@@ -1880,7 +1880,7 @@ export interface BotInsertDataNotesInner {
      * @type {Array<BotInsertDataNotesInnerTargetsInner>}
      * @memberof BotInsertDataNotesInner
      */
-    'targets'?: Array<BotInsertDataNotesInnerTargetsInner>;
+    'targets'?: Array<BotInsertDataNotesInnerTargetsInner> | null;
     /**
      * 
      * @type {string}

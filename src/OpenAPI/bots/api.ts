@@ -1231,7 +1231,7 @@ export interface BotNote {
      * @type {Array<BotNoteTargetsInner>}
      * @memberof BotNote
      */
-    'targets'?: Array<BotNoteTargetsInner>;
+    'targets'?: Array<BotNoteTargetsInner> | null;
     /**
      * 
      * @type {string}
