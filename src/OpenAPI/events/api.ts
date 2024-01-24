@@ -7553,6 +7553,12 @@ export interface TeamInsertData {
     'partnerAdmin'?: string | null;
     /**
      * 
+     * @type {string}
+     * @memberof TeamInsertData
+     */
+    'zapierToken'?: string | null;
+    /**
+     * 
      * @type {Array<TeamInsertDataOnboardingStepsDoneInner>}
      * @memberof TeamInsertData
      */
@@ -7921,6 +7927,12 @@ export interface TeamUpdateData {
      * @memberof TeamUpdateData
      */
     'partnerAdmin'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof TeamUpdateData
+     */
+    'zapierToken'?: string | null;
     /**
      * 
      * @type {Array<TeamInsertDataOnboardingStepsDoneInner>}

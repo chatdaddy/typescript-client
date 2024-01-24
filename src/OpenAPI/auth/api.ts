@@ -1373,6 +1373,12 @@ export interface Team {
      */
     'partnerAdmin'?: string | null;
     /**
+     * The team will be the admin team of a Chatdaddy partner if this property is not null.
+     * @type {string}
+     * @memberof Team
+     */
+    'zapierToken'?: string | null;
+    /**
      * 
      * @type {Array<OnboardingStep>}
      * @memberof Team
