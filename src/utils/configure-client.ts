@@ -24,8 +24,15 @@ axiosRetry(
 				&& axiosRetry.isRetryableError(err)
 			)
 			|| err.response?.status === TOO_MANY_REQUESTS
+			|| isGatewayError(err.response?.status)
 		}
 	}
 )
+
+function isGatewayError(errCode: number | undefined) {
+	return errCode === 502
+		|| errCode === 503
+		|| errCode === 504
+}
 
 BaseAPI.DEFAULT_AXIOS = CLIENT_AXIOS
