@@ -5180,8 +5180,7 @@ export const ZapierApiAxiosParamCreator = function (configuration?: Configuratio
         zapierTokenUpdatePost: async (token: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'token' is not null or undefined
             assertParamExists('zapierTokenUpdatePost', 'token', token)
-            const localVarPath = `/zapier-token-update/#access_token={token}`
-                .replace(`{${"token"}}`, encodeURIComponent(String(token)));
+            const localVarPath = `/zapier-token-update`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -5192,6 +5191,14 @@ export const ZapierApiAxiosParamCreator = function (configuration?: Configuratio
             const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["TEAM_UPDATE"], configuration)
+
+            if (token !== undefined) {
+                localVarQueryParameter['token'] = token;
+            }
 
 
     
@@ -5221,7 +5228,7 @@ export const ZapierApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async zapierTokenUpdatePost(token: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async zapierTokenUpdatePost(token: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TeamsPatch200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.zapierTokenUpdatePost(token, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -5242,7 +5249,7 @@ export const ZapierApiFactory = function (configuration?: Configuration, basePat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        zapierTokenUpdatePost(requestParameters: ZapierApiZapierTokenUpdatePostRequest, options?: AxiosRequestConfig): AxiosPromise<void> {
+        zapierTokenUpdatePost(requestParameters: ZapierApiZapierTokenUpdatePostRequest, options?: AxiosRequestConfig): AxiosPromise<TeamsPatch200Response> {
             return localVarFp.zapierTokenUpdatePost(requestParameters.token, options).then((request) => request(axios, basePath));
         },
     };
