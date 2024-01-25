@@ -5173,11 +5173,15 @@ export const ZapierApiAxiosParamCreator = function (configuration?: Configuratio
         /**
          * 
          * @summary Redirect endpoint for Zapier to post the token to and then updates team with said token
+         * @param {string} token the token to update
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        zapierTokenUpdatePost: async (options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/zapier-token-update`;
+        zapierTokenUpdatePost: async (token: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'token' is not null or undefined
+            assertParamExists('zapierTokenUpdatePost', 'token', token)
+            const localVarPath = `/zapier-token-update/#access_token={token}`
+                .replace(`{${"token"}}`, encodeURIComponent(String(token)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -5213,11 +5217,12 @@ export const ZapierApiFp = function(configuration?: Configuration) {
         /**
          * 
          * @summary Redirect endpoint for Zapier to post the token to and then updates team with said token
+         * @param {string} token the token to update
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async zapierTokenUpdatePost(options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.zapierTokenUpdatePost(options);
+        async zapierTokenUpdatePost(token: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.zapierTokenUpdatePost(token, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
     }
@@ -5233,14 +5238,29 @@ export const ZapierApiFactory = function (configuration?: Configuration, basePat
         /**
          * 
          * @summary Redirect endpoint for Zapier to post the token to and then updates team with said token
+         * @param {ZapierApiZapierTokenUpdatePostRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        zapierTokenUpdatePost(options?: AxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.zapierTokenUpdatePost(options).then((request) => request(axios, basePath));
+        zapierTokenUpdatePost(requestParameters: ZapierApiZapierTokenUpdatePostRequest, options?: AxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.zapierTokenUpdatePost(requestParameters.token, options).then((request) => request(axios, basePath));
         },
     };
 };
+
+/**
+ * Request parameters for zapierTokenUpdatePost operation in ZapierApi.
+ * @export
+ * @interface ZapierApiZapierTokenUpdatePostRequest
+ */
+export interface ZapierApiZapierTokenUpdatePostRequest {
+    /**
+     * the token to update
+     * @type {string}
+     * @memberof ZapierApiZapierTokenUpdatePost
+     */
+    readonly token: string
+}
 
 /**
  * ZapierApi - object-oriented interface
@@ -5252,12 +5272,13 @@ export class ZapierApi extends BaseAPI {
     /**
      * 
      * @summary Redirect endpoint for Zapier to post the token to and then updates team with said token
+     * @param {ZapierApiZapierTokenUpdatePostRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof ZapierApi
      */
-    public zapierTokenUpdatePost(options?: AxiosRequestConfig) {
-        return ZapierApiFp(this.configuration).zapierTokenUpdatePost(options).then((request) => request(this.axios, this.basePath));
+    public zapierTokenUpdatePost(requestParameters: ZapierApiZapierTokenUpdatePostRequest, options?: AxiosRequestConfig) {
+        return ZapierApiFp(this.configuration).zapierTokenUpdatePost(requestParameters.token, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
