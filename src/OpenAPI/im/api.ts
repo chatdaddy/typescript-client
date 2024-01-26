@@ -4418,6 +4418,12 @@ export interface ProfileMessengerPostRequest {
      * @memberof ProfileMessengerPostRequest
      */
     'pageAccessToken': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ProfileMessengerPostRequest
+     */
+    'userAccessToken': string;
 }
 /**
  * 
