@@ -2780,6 +2780,12 @@ export interface CampaignInsertData {
      */
     'nextScheduledAt'?: string | null;
     /**
+     * 
+     * @type {string}
+     * @memberof CampaignInsertData
+     */
+    'completedAt'?: string | null;
+    /**
      * Should the message be randomized before sending
      * @type {boolean}
      * @memberof CampaignInsertData

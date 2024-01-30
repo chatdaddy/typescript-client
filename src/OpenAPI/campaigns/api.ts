@@ -289,6 +289,12 @@ export interface CampaignMetadata {
      */
     'nextScheduledAt'?: string | null;
     /**
+     * 
+     * @type {string}
+     * @memberof CampaignMetadata
+     */
+    'completedAt'?: string | null;
+    /**
      * Should the message be randomized before sending
      * @type {boolean}
      * @memberof CampaignMetadata
