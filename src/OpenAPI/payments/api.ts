@@ -1,4 +1,4 @@
-const BASE_PATH = "https://25u5hq78w6.execute-api.ap-east-1.amazonaws.com/v1".replace(/\/+$/, "");
+const BASE_PATH = "https://api-payments.chatdaddy.tech".replace(/\/+$/, "");
 
 /* tslint:disable */
 /* eslint-disable */
