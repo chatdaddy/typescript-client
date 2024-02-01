@@ -4591,6 +4591,12 @@ export interface TagsGet200Response {
      * @memberof TagsGet200Response
      */
     'tags': Array<Tag>;
+    /**
+     * next page cursor, if it exists
+     * @type {string}
+     * @memberof TagsGet200Response
+     */
+    'nextPageCursor'?: string;
 }
 /**
  * 
@@ -12280,12 +12286,12 @@ export const TagsApiAxiosParamCreator = function (configuration?: Configuration)
          * @summary Get all the tags
          * @param {string} [q] Search items by this string
          * @param {number} [count] Number of items to return
-         * @param {number} [page] Page number to paginate through results
+         * @param {string} [page] 
          * @param {boolean} [isCustomField] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        tagsGet: async (q?: string, count?: number, page?: number, isCustomField?: boolean, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        tagsGet: async (q?: string, count?: number, page?: string, isCustomField?: boolean, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/tags`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -12440,12 +12446,12 @@ export const TagsApiFp = function(configuration?: Configuration) {
          * @summary Get all the tags
          * @param {string} [q] Search items by this string
          * @param {number} [count] Number of items to return
-         * @param {number} [page] Page number to paginate through results
+         * @param {string} [page] 
          * @param {boolean} [isCustomField] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async tagsGet(q?: string, count?: number, page?: number, isCustomField?: boolean, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TagsGet200Response>> {
+        async tagsGet(q?: string, count?: number, page?: string, isCustomField?: boolean, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TagsGet200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.tagsGet(q, count, page, isCustomField, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -12558,11 +12564,11 @@ export interface TagsApiTagsGetRequest {
     readonly count?: number
 
     /**
-     * Page number to paginate through results
-     * @type {number}
+     * 
+     * @type {string}
      * @memberof TagsApiTagsGet
      */
-    readonly page?: number
+    readonly page?: string
 
     /**
      * 
