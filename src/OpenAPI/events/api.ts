@@ -1901,6 +1901,12 @@ export interface BotInsertDataNotesInner {
     'shapeType'?: string | null;
     /**
      * 
+     * @type {{ [key: string]: any; }}
+     * @memberof BotInsertDataNotesInner
+     */
+    'textStyles'?: { [key: string]: any; };
+    /**
+     * 
      * @type {BotInsertDataActionsInnerAllOf1MessageButtonsInnerPosition}
      * @memberof BotInsertDataNotesInner
      */

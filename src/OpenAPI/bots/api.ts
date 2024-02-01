@@ -1252,6 +1252,12 @@ export interface BotNote {
     'shapeType'?: string | null;
     /**
      * 
+     * @type {{ [key: string]: any; }}
+     * @memberof BotNote
+     */
+    'textStyles'?: { [key: string]: any; };
+    /**
+     * 
      * @type {Position}
      * @memberof BotNote
      */
