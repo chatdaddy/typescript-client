@@ -1243,7 +1243,7 @@ export interface BotNote {
      * @type {number}
      * @memberof BotNote
      */
-    'zIndex'?: number;
+    'zIndex'?: number | null;
     /**
      * 
      * @type {string}

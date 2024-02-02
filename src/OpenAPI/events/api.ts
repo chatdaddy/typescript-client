@@ -1892,7 +1892,7 @@ export interface BotInsertDataNotesInner {
      * @type {number}
      * @memberof BotInsertDataNotesInner
      */
-    'zIndex'?: number;
+    'zIndex'?: number | null;
     /**
      * 
      * @type {string}
