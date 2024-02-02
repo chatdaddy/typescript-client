@@ -1889,6 +1889,12 @@ export interface BotInsertDataNotesInner {
     'color'?: string | null;
     /**
      * 
+     * @type {number}
+     * @memberof BotInsertDataNotesInner
+     */
+    'zIndex'?: number;
+    /**
+     * 
      * @type {string}
      * @memberof BotInsertDataNotesInner
      */

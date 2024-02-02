@@ -1240,6 +1240,12 @@ export interface BotNote {
     'color'?: string | null;
     /**
      * 
+     * @type {number}
+     * @memberof BotNote
+     */
+    'zIndex'?: number;
+    /**
+     * 
      * @type {string}
      * @memberof BotNote
      */
