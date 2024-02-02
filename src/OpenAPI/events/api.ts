@@ -1910,7 +1910,7 @@ export interface BotInsertDataNotesInner {
      * @type {{ [key: string]: any; }}
      * @memberof BotInsertDataNotesInner
      */
-    'textStyles'?: { [key: string]: any; };
+    'textStyles'?: { [key: string]: any; } | null;
     /**
      * 
      * @type {BotInsertDataActionsInnerAllOf1MessageButtonsInnerPosition}

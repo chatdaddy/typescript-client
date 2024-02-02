@@ -1261,7 +1261,7 @@ export interface BotNote {
      * @type {{ [key: string]: any; }}
      * @memberof BotNote
      */
-    'textStyles'?: { [key: string]: any; };
+    'textStyles'?: { [key: string]: any; } | null;
     /**
      * 
      * @type {Position}
