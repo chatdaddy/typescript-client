@@ -84,25 +84,25 @@ export interface Action {
      * @type {Array<string>}
      * @memberof Action
      */
-    'notifyUsers'?: Array<string>;
+    'notifyUsers'?: Array<string> | null;
     /**
      * 
      * @type {Array<string>}
      * @memberof Action
      */
-    'webhooks'?: Array<string>;
+    'webhooks'?: Array<string> | null;
     /**
      * 
      * @type {Position}
      * @memberof Action
      */
-    'position'?: Position;
+    'position'?: Position | null;
     /**
      * 
      * @type {Position}
      * @memberof Action
      */
-    'actionPosition'?: Position;
+    'actionPosition'?: Position | null;
     /**
      * send in to remove the action
      * @type {boolean}
@@ -114,13 +114,13 @@ export interface Action {
      * @type {FormRef}
      * @memberof Action
      */
-    'formRef'?: FormRef;
+    'formRef'?: FormRef | null;
     /**
      * 
      * @type {FormActionMetadata}
      * @memberof Action
      */
-    'formActionMetadata'?: FormActionMetadata;
+    'formActionMetadata'?: FormActionMetadata | null;
 }
 /**
  * 
@@ -188,25 +188,25 @@ export interface ActionContent {
      * @type {Array<string>}
      * @memberof ActionContent
      */
-    'notifyUsers'?: Array<string>;
+    'notifyUsers'?: Array<string> | null;
     /**
      * 
      * @type {Array<string>}
      * @memberof ActionContent
      */
-    'webhooks'?: Array<string>;
+    'webhooks'?: Array<string> | null;
     /**
      * 
      * @type {Position}
      * @memberof ActionContent
      */
-    'position'?: Position;
+    'position'?: Position | null;
     /**
      * 
      * @type {Position}
      * @memberof ActionContent
      */
-    'actionPosition'?: Position;
+    'actionPosition'?: Position | null;
     /**
      * send in to remove the action
      * @type {boolean}
@@ -218,13 +218,13 @@ export interface ActionContent {
      * @type {FormRef}
      * @memberof ActionContent
      */
-    'formRef'?: FormRef;
+    'formRef'?: FormRef | null;
     /**
      * 
      * @type {FormActionMetadata}
      * @memberof ActionContent
      */
-    'formActionMetadata'?: FormActionMetadata;
+    'formActionMetadata'?: FormActionMetadata | null;
 }
 /**
  * 
@@ -629,7 +629,7 @@ export interface ActionTarget {
      * @type {Position}
      * @memberof ActionTarget
      */
-    'position'?: Position;
+    'position'?: Position | null;
 }
 /**
  * 
@@ -1004,7 +1004,7 @@ export interface BotMessageButton {
      * @type {Position}
      * @memberof BotMessageButton
      */
-    'position'?: Position;
+    'position'?: Position | null;
     /**
      * 
      * @type {NextAction}
@@ -1054,7 +1054,7 @@ export interface BotMessageDelay {
      * @type {Position}
      * @memberof BotMessageDelay
      */
-    'position'?: Position;
+    'position'?: Position | null;
     /**
      * 
      * @type {NextAction}
@@ -1104,7 +1104,7 @@ export interface BotMessageInput {
      * @type {Position}
      * @memberof BotMessageInput
      */
-    'position'?: Position;
+    'position'?: Position | null;
 }
 /**
  * 
@@ -1150,7 +1150,7 @@ export interface BotMessageList {
      * @type {Position}
      * @memberof BotMessageList
      */
-    'position'?: Position;
+    'position'?: Position | null;
 }
 /**
  * 
@@ -1279,7 +1279,7 @@ export interface BotNote {
      * @type {Position}
      * @memberof BotNote
      */
-    'position': Position;
+    'position': Position | null;
     /**
      * send in to remove the note
      * @type {boolean}
@@ -2900,7 +2900,7 @@ export interface NextAction {
      * @type {Position}
      * @memberof NextAction
      */
-    'position'?: Position;
+    'position'?: Position | null;
 }
 /**
  * Fired if all validations failed or no validations are provided
@@ -2925,7 +2925,7 @@ export interface NextActionDefaultAction {
      * @type {Position}
      * @memberof NextActionDefaultAction
      */
-    'position'?: Position;
+    'position'?: Position | null;
 }
 /**
  * 
@@ -2983,7 +2983,7 @@ export interface NextActionGroupsInnerTarget {
      * @type {Position}
      * @memberof NextActionGroupsInnerTarget
      */
-    'position'?: Position;
+    'position'?: Position | null;
 }
 /**
  * position in x-y coordinate space

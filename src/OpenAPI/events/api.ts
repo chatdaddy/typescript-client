@@ -986,25 +986,25 @@ export interface BotInsertDataActionsInner {
      * @type {Array<string>}
      * @memberof BotInsertDataActionsInner
      */
-    'notifyUsers'?: Array<string>;
+    'notifyUsers'?: Array<string> | null;
     /**
      * 
      * @type {Array<string>}
      * @memberof BotInsertDataActionsInner
      */
-    'webhooks'?: Array<string>;
+    'webhooks'?: Array<string> | null;
     /**
      * 
      * @type {BotInsertDataActionsInnerAllOf1MessageButtonsInnerPosition}
      * @memberof BotInsertDataActionsInner
      */
-    'position'?: BotInsertDataActionsInnerAllOf1MessageButtonsInnerPosition;
+    'position'?: BotInsertDataActionsInnerAllOf1MessageButtonsInnerPosition | null;
     /**
      * 
      * @type {BotInsertDataActionsInnerAllOf1MessageButtonsInnerPosition}
      * @memberof BotInsertDataActionsInner
      */
-    'actionPosition'?: BotInsertDataActionsInnerAllOf1MessageButtonsInnerPosition;
+    'actionPosition'?: BotInsertDataActionsInnerAllOf1MessageButtonsInnerPosition | null;
     /**
      * send in to remove the action
      * @type {boolean}
@@ -1016,13 +1016,13 @@ export interface BotInsertDataActionsInner {
      * @type {BotInsertDataActionsInnerAllOf1FormRef}
      * @memberof BotInsertDataActionsInner
      */
-    'formRef'?: BotInsertDataActionsInnerAllOf1FormRef;
+    'formRef'?: BotInsertDataActionsInnerAllOf1FormRef | null;
     /**
      * 
      * @type {BotInsertDataActionsInnerAllOf1FormActionMetadata}
      * @memberof BotInsertDataActionsInner
      */
-    'formActionMetadata'?: BotInsertDataActionsInnerAllOf1FormActionMetadata;
+    'formActionMetadata'?: BotInsertDataActionsInnerAllOf1FormActionMetadata | null;
 }
 /**
  * 
@@ -1090,25 +1090,25 @@ export interface BotInsertDataActionsInnerAllOf1 {
      * @type {Array<string>}
      * @memberof BotInsertDataActionsInnerAllOf1
      */
-    'notifyUsers'?: Array<string>;
+    'notifyUsers'?: Array<string> | null;
     /**
      * 
      * @type {Array<string>}
      * @memberof BotInsertDataActionsInnerAllOf1
      */
-    'webhooks'?: Array<string>;
+    'webhooks'?: Array<string> | null;
     /**
      * 
      * @type {BotInsertDataActionsInnerAllOf1MessageButtonsInnerPosition}
      * @memberof BotInsertDataActionsInnerAllOf1
      */
-    'position'?: BotInsertDataActionsInnerAllOf1MessageButtonsInnerPosition;
+    'position'?: BotInsertDataActionsInnerAllOf1MessageButtonsInnerPosition | null;
     /**
      * 
      * @type {BotInsertDataActionsInnerAllOf1MessageButtonsInnerPosition}
      * @memberof BotInsertDataActionsInnerAllOf1
      */
-    'actionPosition'?: BotInsertDataActionsInnerAllOf1MessageButtonsInnerPosition;
+    'actionPosition'?: BotInsertDataActionsInnerAllOf1MessageButtonsInnerPosition | null;
     /**
      * send in to remove the action
      * @type {boolean}
@@ -1120,13 +1120,13 @@ export interface BotInsertDataActionsInnerAllOf1 {
      * @type {BotInsertDataActionsInnerAllOf1FormRef}
      * @memberof BotInsertDataActionsInnerAllOf1
      */
-    'formRef'?: BotInsertDataActionsInnerAllOf1FormRef;
+    'formRef'?: BotInsertDataActionsInnerAllOf1FormRef | null;
     /**
      * 
      * @type {BotInsertDataActionsInnerAllOf1FormActionMetadata}
      * @memberof BotInsertDataActionsInnerAllOf1
      */
-    'formActionMetadata'?: BotInsertDataActionsInnerAllOf1FormActionMetadata;
+    'formActionMetadata'?: BotInsertDataActionsInnerAllOf1FormActionMetadata | null;
 }
 /**
  * 
@@ -1364,7 +1364,7 @@ export interface BotInsertDataActionsInnerAllOf1MessageButtonsInner {
      * @type {BotInsertDataActionsInnerAllOf1MessageButtonsInnerPosition}
      * @memberof BotInsertDataActionsInnerAllOf1MessageButtonsInner
      */
-    'position'?: BotInsertDataActionsInnerAllOf1MessageButtonsInnerPosition;
+    'position'?: BotInsertDataActionsInnerAllOf1MessageButtonsInnerPosition | null;
     /**
      * 
      * @type {BotInsertDataActionsInnerAllOf1MessageButtonsInnerNextAction}
@@ -1395,7 +1395,7 @@ export interface BotInsertDataActionsInnerAllOf1MessageButtonsInnerNextAction {
      * @type {BotInsertDataActionsInnerAllOf1MessageButtonsInnerPosition}
      * @memberof BotInsertDataActionsInnerAllOf1MessageButtonsInnerNextAction
      */
-    'position'?: BotInsertDataActionsInnerAllOf1MessageButtonsInnerPosition;
+    'position'?: BotInsertDataActionsInnerAllOf1MessageButtonsInnerPosition | null;
 }
 /**
  * Fired if all validations failed or no validations are provided
@@ -1420,7 +1420,7 @@ export interface BotInsertDataActionsInnerAllOf1MessageButtonsInnerNextActionDef
      * @type {BotInsertDataActionsInnerAllOf1MessageButtonsInnerPosition}
      * @memberof BotInsertDataActionsInnerAllOf1MessageButtonsInnerNextActionDefaultAction
      */
-    'position'?: BotInsertDataActionsInnerAllOf1MessageButtonsInnerPosition;
+    'position'?: BotInsertDataActionsInnerAllOf1MessageButtonsInnerPosition | null;
 }
 /**
  * 
@@ -1445,7 +1445,7 @@ export interface BotInsertDataActionsInnerAllOf1MessageButtonsInnerNextActionDef
      * @type {BotInsertDataActionsInnerAllOf1MessageButtonsInnerPosition}
      * @memberof BotInsertDataActionsInnerAllOf1MessageButtonsInnerNextActionDefaultActionAllOf
      */
-    'position'?: BotInsertDataActionsInnerAllOf1MessageButtonsInnerPosition;
+    'position'?: BotInsertDataActionsInnerAllOf1MessageButtonsInnerPosition | null;
 }
 /**
  * 
@@ -1503,7 +1503,7 @@ export interface BotInsertDataActionsInnerAllOf1MessageButtonsInnerNextActionGro
      * @type {BotInsertDataActionsInnerAllOf1MessageButtonsInnerPosition}
      * @memberof BotInsertDataActionsInnerAllOf1MessageButtonsInnerNextActionGroupsInnerTarget
      */
-    'position'?: BotInsertDataActionsInnerAllOf1MessageButtonsInnerPosition;
+    'position'?: BotInsertDataActionsInnerAllOf1MessageButtonsInnerPosition | null;
 }
 /**
  * 
@@ -1613,7 +1613,7 @@ export interface BotInsertDataActionsInnerAllOf1MessageDelaysInner {
      * @type {BotInsertDataActionsInnerAllOf1MessageButtonsInnerPosition}
      * @memberof BotInsertDataActionsInnerAllOf1MessageDelaysInner
      */
-    'position'?: BotInsertDataActionsInnerAllOf1MessageButtonsInnerPosition;
+    'position'?: BotInsertDataActionsInnerAllOf1MessageButtonsInnerPosition | null;
     /**
      * 
      * @type {BotInsertDataActionsInnerAllOf1MessageButtonsInnerNextAction}
@@ -1663,7 +1663,7 @@ export interface BotInsertDataActionsInnerAllOf1MessageInput {
      * @type {BotInsertDataActionsInnerAllOf1MessageButtonsInnerPosition}
      * @memberof BotInsertDataActionsInnerAllOf1MessageInput
      */
-    'position'?: BotInsertDataActionsInnerAllOf1MessageButtonsInnerPosition;
+    'position'?: BotInsertDataActionsInnerAllOf1MessageButtonsInnerPosition | null;
 }
 /**
  * 
@@ -1709,7 +1709,7 @@ export interface BotInsertDataActionsInnerAllOf1MessageList {
      * @type {BotInsertDataActionsInnerAllOf1MessageButtonsInnerPosition}
      * @memberof BotInsertDataActionsInnerAllOf1MessageList
      */
-    'position'?: BotInsertDataActionsInnerAllOf1MessageButtonsInnerPosition;
+    'position'?: BotInsertDataActionsInnerAllOf1MessageButtonsInnerPosition | null;
 }
 /**
  * 
@@ -1928,7 +1928,7 @@ export interface BotInsertDataNotesInner {
      * @type {BotInsertDataActionsInnerAllOf1MessageButtonsInnerPosition}
      * @memberof BotInsertDataNotesInner
      */
-    'position': BotInsertDataActionsInnerAllOf1MessageButtonsInnerPosition;
+    'position': BotInsertDataActionsInnerAllOf1MessageButtonsInnerPosition | null;
     /**
      * 
      * @type {boolean}
