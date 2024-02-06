@@ -98,6 +98,12 @@ export interface Action {
      */
     'position'?: Position;
     /**
+     * 
+     * @type {Position}
+     * @memberof Action
+     */
+    'actionPosition'?: Position;
+    /**
      * send in to remove the action
      * @type {boolean}
      * @memberof Action
@@ -195,6 +201,12 @@ export interface ActionContent {
      * @memberof ActionContent
      */
     'position'?: Position;
+    /**
+     * 
+     * @type {Position}
+     * @memberof ActionContent
+     */
+    'actionPosition'?: Position;
     /**
      * send in to remove the action
      * @type {boolean}
