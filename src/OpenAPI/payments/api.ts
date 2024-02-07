@@ -212,19 +212,6 @@ export interface AutoChargeProductsPrepare200Response {
 /**
  * 
  * @export
- * @interface AutoRenewalGet200Response
- */
-export interface AutoRenewalGet200Response {
-    /**
-     * 
-     * @type {CustomerAutoRenewal}
-     * @memberof AutoRenewalGet200Response
-     */
-    'item'?: CustomerAutoRenewal;
-}
-/**
- * 
- * @export
  * @enum {string}
  */
 
@@ -600,6 +587,12 @@ export interface CreditCustomer {
      * @memberof CreditCustomer
      */
     'unlockedFeatures': Array<CreditUnlockType>;
+    /**
+     * 
+     * @type {CustomerAutoRenewal}
+     * @memberof CreditCustomer
+     */
+    'autoRenewal'?: CustomerAutoRenewal;
 }
 /**
  * 
@@ -3073,40 +3066,6 @@ export const CreditsApiAxiosParamCreator = function (configuration?: Configurati
     return {
         /**
          * 
-         * @summary Get auto-renewal details
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        autoRenewalGet: async (options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/v2/credits/auto-renewal`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication chatdaddy required
-            // oauth required
-            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["PAYMENTS_READ"], configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
          * @summary Create/update the auto-renewal credit sub
          * @param {BillingMethod} [method] 
          * @param {CreditAutoRenewalUpdate} [creditAutoRenewalUpdate] 
@@ -3469,10 +3428,11 @@ export const CreditsApiAxiosParamCreator = function (configuration?: Configurati
         /**
          * 
          * @summary Get the customer\'s credit details
+         * @param {boolean} [returnAutoRenewal] Return the auto-renewal subscription details. PAYMENTS_READ scope is required.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        creditsCustomerGet: async (options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        creditsCustomerGet: async (returnAutoRenewal?: boolean, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v2/credits/customer`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -3488,6 +3448,10 @@ export const CreditsApiAxiosParamCreator = function (configuration?: Configurati
             // authentication chatdaddy required
             // oauth required
             await setOAuthToObject(localVarHeaderParameter, "chatdaddy", [], configuration)
+
+            if (returnAutoRenewal !== undefined) {
+                localVarQueryParameter['returnAutoRenewal'] = returnAutoRenewal;
+            }
 
 
     
@@ -3788,16 +3752,6 @@ export const CreditsApiFp = function(configuration?: Configuration) {
     return {
         /**
          * 
-         * @summary Get auto-renewal details
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async autoRenewalGet(options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AutoRenewalGet200Response>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.autoRenewalGet(options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-        /**
-         * 
          * @summary Create/update the auto-renewal credit sub
          * @param {BillingMethod} [method] 
          * @param {CreditAutoRenewalUpdate} [creditAutoRenewalUpdate] 
@@ -3893,11 +3847,12 @@ export const CreditsApiFp = function(configuration?: Configuration) {
         /**
          * 
          * @summary Get the customer\'s credit details
+         * @param {boolean} [returnAutoRenewal] Return the auto-renewal subscription details. PAYMENTS_READ scope is required.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async creditsCustomerGet(options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CreditCustomer>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.creditsCustomerGet(options);
+        async creditsCustomerGet(returnAutoRenewal?: boolean, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CreditCustomer>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.creditsCustomerGet(returnAutoRenewal, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -3991,15 +3946,6 @@ export const CreditsApiFactory = function (configuration?: Configuration, basePa
     return {
         /**
          * 
-         * @summary Get auto-renewal details
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        autoRenewalGet(options?: AxiosRequestConfig): AxiosPromise<AutoRenewalGet200Response> {
-            return localVarFp.autoRenewalGet(options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
          * @summary Create/update the auto-renewal credit sub
          * @param {CreditsApiAutoRenewalPostRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -4071,11 +4017,12 @@ export const CreditsApiFactory = function (configuration?: Configuration, basePa
         /**
          * 
          * @summary Get the customer\'s credit details
+         * @param {CreditsApiCreditsCustomerGetRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        creditsCustomerGet(options?: AxiosRequestConfig): AxiosPromise<CreditCustomer> {
-            return localVarFp.creditsCustomerGet(options).then((request) => request(axios, basePath));
+        creditsCustomerGet(requestParameters: CreditsApiCreditsCustomerGetRequest = {}, options?: AxiosRequestConfig): AxiosPromise<CreditCustomer> {
+            return localVarFp.creditsCustomerGet(requestParameters.returnAutoRenewal, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -4365,6 +4312,20 @@ export interface CreditsApiCreditTxsGetRequest {
 }
 
 /**
+ * Request parameters for creditsCustomerGet operation in CreditsApi.
+ * @export
+ * @interface CreditsApiCreditsCustomerGetRequest
+ */
+export interface CreditsApiCreditsCustomerGetRequest {
+    /**
+     * Return the auto-renewal subscription details. PAYMENTS_READ scope is required.
+     * @type {boolean}
+     * @memberof CreditsApiCreditsCustomerGet
+     */
+    readonly returnAutoRenewal?: boolean
+}
+
+/**
  * Request parameters for creditsCustomerPost operation in CreditsApi.
  * @export
  * @interface CreditsApiCreditsCustomerPostRequest
@@ -4464,17 +4425,6 @@ export interface CreditsApiTopUpCreditsPostRequest {
 export class CreditsApi extends BaseAPI {
     /**
      * 
-     * @summary Get auto-renewal details
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof CreditsApi
-     */
-    public autoRenewalGet(options?: AxiosRequestConfig) {
-        return CreditsApiFp(this.configuration).autoRenewalGet(options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
      * @summary Create/update the auto-renewal credit sub
      * @param {CreditsApiAutoRenewalPostRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -4560,12 +4510,13 @@ export class CreditsApi extends BaseAPI {
     /**
      * 
      * @summary Get the customer\'s credit details
+     * @param {CreditsApiCreditsCustomerGetRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof CreditsApi
      */
-    public creditsCustomerGet(options?: AxiosRequestConfig) {
-        return CreditsApiFp(this.configuration).creditsCustomerGet(options).then((request) => request(this.axios, this.basePath));
+    public creditsCustomerGet(requestParameters: CreditsApiCreditsCustomerGetRequest = {}, options?: AxiosRequestConfig) {
+        return CreditsApiFp(this.configuration).creditsCustomerGet(requestParameters.returnAutoRenewal, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
