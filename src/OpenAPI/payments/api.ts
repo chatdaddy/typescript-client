@@ -414,6 +414,19 @@ export type CreditBalanceEffectType = CreditConsumptionType | CreditGainType | R
 /**
  * 
  * @export
+ * @interface CreditCanConsumeResponse
+ */
+export interface CreditCanConsumeResponse {
+    /**
+     * 
+     * @type {Array<CreditUnlockType>}
+     * @memberof CreditCanConsumeResponse
+     */
+    'unlocks': Array<CreditUnlockType>;
+}
+/**
+ * 
+ * @export
  * @interface CreditConsumptionCreate
  */
 export interface CreditConsumptionCreate {
@@ -1076,11 +1089,12 @@ export interface CreditUnlockMetadata {
  */
 
 export const CreditUnlockType = {
-    MsgFlow: 'export/msg_flow',
-    Contacts: 'export/contacts',
-    Tags: 'export/tags',
-    CustomFields: 'export/custom_fields',
-    Products: 'export/products'
+    ExportMsgFlow: 'export/msg_flow',
+    ExportContacts: 'export/contacts',
+    ExportTags: 'export/tags',
+    ExportCustomFields: 'export/custom_fields',
+    ExportProducts: 'export/products',
+    RemoveMarketingMessage: 'remove_marketing_message'
 } as const;
 
 export type CreditUnlockType = typeof CreditUnlockType[keyof typeof CreditUnlockType];
@@ -3771,7 +3785,7 @@ export const CreditsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async canConsumeCredits(type: CreditConsumptionType, quantity: number, legacyOpts?: LegacyCanConsumeOpts, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async canConsumeCredits(type: CreditConsumptionType, quantity: number, legacyOpts?: LegacyCanConsumeOpts, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CreditCanConsumeResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.canConsumeCredits(type, quantity, legacyOpts, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -3783,7 +3797,7 @@ export const CreditsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async canConsumeRecurringCredits(type: RecurringCreditConsumptionType, legacyOpts?: LegacyCanConsumeOpts, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async canConsumeRecurringCredits(type: RecurringCreditConsumptionType, legacyOpts?: LegacyCanConsumeOpts, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CreditCanConsumeResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.canConsumeRecurringCredits(type, legacyOpts, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -3961,7 +3975,7 @@ export const CreditsApiFactory = function (configuration?: Configuration, basePa
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        canConsumeCredits(requestParameters: CreditsApiCanConsumeCreditsRequest, options?: AxiosRequestConfig): AxiosPromise<void> {
+        canConsumeCredits(requestParameters: CreditsApiCanConsumeCreditsRequest, options?: AxiosRequestConfig): AxiosPromise<CreditCanConsumeResponse> {
             return localVarFp.canConsumeCredits(requestParameters.type, requestParameters.quantity, requestParameters.legacyOpts, options).then((request) => request(axios, basePath));
         },
         /**
@@ -3971,7 +3985,7 @@ export const CreditsApiFactory = function (configuration?: Configuration, basePa
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        canConsumeRecurringCredits(requestParameters: CreditsApiCanConsumeRecurringCreditsRequest, options?: AxiosRequestConfig): AxiosPromise<void> {
+        canConsumeRecurringCredits(requestParameters: CreditsApiCanConsumeRecurringCreditsRequest, options?: AxiosRequestConfig): AxiosPromise<CreditCanConsumeResponse> {
             return localVarFp.canConsumeRecurringCredits(requestParameters.type, requestParameters.legacyOpts, options).then((request) => request(axios, basePath));
         },
         /**
