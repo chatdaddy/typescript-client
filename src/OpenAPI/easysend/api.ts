@@ -881,7 +881,7 @@ export interface OrderDataModel {
      * @type {string}
      * @memberof OrderDataModel
      */
-    'deliveryDate'?: string;
+    'deliveryDate'?: string | null;
     /**
      * 
      * @type {string}
@@ -1133,6 +1133,12 @@ export interface PaymentIntegration {
      * @memberof PaymentIntegration
      */
     'createdAt': string;
+    /**
+     * The user who created the payment integration. This is the user who authorized the payment integration
+     * @type {string}
+     * @memberof PaymentIntegration
+     */
+    'createdBy': string;
     /**
      * An ISO formatted timestamp
      * @type {string}
@@ -1658,7 +1664,7 @@ export interface ProductAccountSync {
      * @type {string}
      * @memberof ProductAccountSync
      */
-    'lastSyncDate': string;
+    'lastSyncDate': string | null;
     /**
      * Id of the team member that syncs the product from chatdaddy->WhatsApp
      * @type {string}
@@ -2104,10 +2110,10 @@ export interface ShopProduct {
     'categoryId'?: string;
     /**
      * 
-     * @type {ShopProductCategory}
+     * @type {ShopProductCategoryBase}
      * @memberof ShopProduct
      */
-    'category'?: ShopProductCategory;
+    'category'?: ShopProductCategoryBase;
     /**
      * 
      * @type {string}
@@ -2162,6 +2168,12 @@ export interface ShopProduct {
      * @memberof ShopProduct
      */
     'updatedAt': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ShopProduct
+     */
+    'createdBy': string;
 }
 /**
  * 
@@ -2231,6 +2243,56 @@ export interface ShopProductCategory {
      * @memberof ShopProductCategory
      */
     'products'?: Array<ShopProduct> | null;
+}
+/**
+ * 
+ * @export
+ * @interface ShopProductCategoryAllOf
+ */
+export interface ShopProductCategoryAllOf {
+    /**
+     * 
+     * @type {Array<ShopProduct>}
+     * @memberof ShopProductCategoryAllOf
+     */
+    'products'?: Array<ShopProduct> | null;
+}
+/**
+ * 
+ * @export
+ * @interface ShopProductCategoryBase
+ */
+export interface ShopProductCategoryBase {
+    /**
+     * 
+     * @type {string}
+     * @memberof ShopProductCategoryBase
+     */
+    'id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ShopProductCategoryBase
+     */
+    'name': string;
+    /**
+     * 
+     * @type {number}
+     * @memberof ShopProductCategoryBase
+     */
+    'productCount': number;
+    /**
+     * 
+     * @type {string}
+     * @memberof ShopProductCategoryBase
+     */
+    'teamId': string;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof ShopProductCategoryBase
+     */
+    'productId'?: Array<string> | null;
 }
 /**
  * 
@@ -2463,7 +2525,7 @@ export interface TrackServiceModel {
      * @type {string}
      * @memberof TrackServiceModel
      */
-    'lastActivity': string;
+    'lastActivity': string | null;
     /**
      * number of times tracking has received an event
      * @type {number}
@@ -2506,6 +2568,12 @@ export interface TrackServiceModel {
      * @memberof TrackServiceModel
      */
     'createdAt': string;
+    /**
+     * The user who created the tracking
+     * @type {string}
+     * @memberof TrackServiceModel
+     */
+    'createdBy': string;
     /**
      * An ISO formatted timestamp
      * @type {string}

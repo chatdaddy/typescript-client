@@ -807,13 +807,19 @@ export interface Bot {
      * @type {string}
      * @memberof Bot
      */
-    'createdAt'?: string;
+    'createdAt': string;
     /**
      * An ISO formatted timestamp
      * @type {string}
      * @memberof Bot
      */
-    'updatedAt'?: string;
+    'updatedAt': string;
+    /**
+     * ID of the user who created the bot
+     * @type {string}
+     * @memberof Bot
+     */
+    'createdBy': string;
     /**
      * Slugs which is generated and shared with other to view the message flow
      * @type {Array<SharedSlug>}

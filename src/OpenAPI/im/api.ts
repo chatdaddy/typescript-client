@@ -80,6 +80,12 @@ export interface Account {
      */
     'createdAt': string;
     /**
+     * The user ID of the user on ChatDaddy
+     * @type {string}
+     * @memberof Account
+     */
+    'createdBy'?: string;
+    /**
      * An ISO formatted timestamp
      * @type {string}
      * @memberof Account
@@ -4486,6 +4492,18 @@ export interface Tag {
      * @memberof Tag
      */
     'validation'?: TagFieldValidation;
+    /**
+     * An ISO formatted timestamp
+     * @type {string}
+     * @memberof Tag
+     */
+    'createdAt': string;
+    /**
+     * The user ID of the user on ChatDaddy
+     * @type {string}
+     * @memberof Tag
+     */
+    'createdBy': string;
 }
 /**
  * @type TagFieldValidation

@@ -912,6 +912,12 @@ export interface KeywordBasedAction {
      * @memberof KeywordBasedAction
      */
     'updatedAt'?: string;
+    /**
+     * User who created the keyword
+     * @type {string}
+     * @memberof KeywordBasedAction
+     */
+    'createdBy': string;
 }
 
 

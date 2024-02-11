@@ -149,6 +149,12 @@ export interface AccountInsertData {
      * @type {string}
      * @memberof AccountInsertData
      */
+    'createdBy'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof AccountInsertData
+     */
     'updatedAt': string;
     /**
      * 
@@ -460,6 +466,12 @@ export interface AccountUpdateData {
      * @memberof AccountUpdateData
      */
     'createdAt'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof AccountUpdateData
+     */
+    'createdBy'?: string;
     /**
      * 
      * @type {string}
@@ -913,13 +925,19 @@ export interface BotInsertData {
      * @type {string}
      * @memberof BotInsertData
      */
-    'createdAt'?: string;
+    'createdAt': string;
     /**
      * 
      * @type {string}
      * @memberof BotInsertData
      */
-    'updatedAt'?: string;
+    'updatedAt': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof BotInsertData
+     */
+    'createdBy': string;
     /**
      * 
      * @type {Array<BotInsertDataSharedSlugsInner>}
@@ -2736,6 +2754,12 @@ export interface BotUpdateData {
     'updatedAt'?: string;
     /**
      * 
+     * @type {string}
+     * @memberof BotUpdateData
+     */
+    'createdBy'?: string;
+    /**
+     * 
      * @type {Array<BotInsertDataSharedSlugsInner>}
      * @memberof BotUpdateData
      */
@@ -2796,19 +2820,19 @@ export interface CampaignInsertData {
      * @type {string}
      * @memberof CampaignInsertData
      */
-    'scheduledAt'?: string | null;
+    'scheduledAt'?: string;
     /**
      * 
      * @type {string}
      * @memberof CampaignInsertData
      */
-    'nextScheduledAt'?: string | null;
+    'nextScheduledAt'?: string;
     /**
      * 
      * @type {string}
      * @memberof CampaignInsertData
      */
-    'completedAt'?: string | null;
+    'completedAt'?: string;
     /**
      * Should the message be randomized before sending
      * @type {boolean}
@@ -2844,7 +2868,13 @@ export interface CampaignInsertData {
      * @type {string}
      * @memberof CampaignInsertData
      */
-    'createdAt': string | null;
+    'createdAt': string;
+    /**
+     * User who created the campaign
+     * @type {string}
+     * @memberof CampaignInsertData
+     */
+    'createdBy': string;
     /**
      * Team ID of the campaign
      * @type {string}
@@ -4124,6 +4154,279 @@ export interface CredittransactionrecordInsertDataAllOf {
 /**
  * 
  * @export
+ * @interface DashboardwithdataInsert
+ */
+export interface DashboardwithdataInsert {
+    /**
+     * 
+     * @type {string}
+     * @memberof DashboardwithdataInsert
+     */
+    'event': DashboardwithdataInsertEventEnum;
+    /**
+     * 
+     * @type {Array<DashboardwithdataInsertData>}
+     * @memberof DashboardwithdataInsert
+     */
+    'data': Array<DashboardwithdataInsertData>;
+}
+
+export const DashboardwithdataInsertEventEnum = {
+    DashboardwithdataInsert: 'dashboardwithdata-insert'
+} as const;
+
+export type DashboardwithdataInsertEventEnum = typeof DashboardwithdataInsertEventEnum[keyof typeof DashboardwithdataInsertEventEnum];
+
+/**
+ * 
+ * @export
+ * @interface DashboardwithdataInsertData
+ */
+export interface DashboardwithdataInsertData {
+    /**
+     * 
+     * @type {string}
+     * @memberof DashboardwithdataInsertData
+     */
+    'id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof DashboardwithdataInsertData
+     */
+    'name': string;
+    /**
+     * An ISO formatted timestamp
+     * @type {string}
+     * @memberof DashboardwithdataInsertData
+     */
+    'createdAt': string;
+    /**
+     * An ISO formatted timestamp
+     * @type {string}
+     * @memberof DashboardwithdataInsertData
+     */
+    'updatedAt': string;
+    /**
+     * 
+     * @type {DashboardwithdataInsertDataAllOfSchema}
+     * @memberof DashboardwithdataInsertData
+     */
+    'schema': DashboardwithdataInsertDataAllOfSchema;
+    /**
+     * 
+     * @type {Array<DashboardwithdataInsertDataAllOf1Data>}
+     * @memberof DashboardwithdataInsertData
+     */
+    'data': Array<DashboardwithdataInsertDataAllOf1Data>;
+}
+/**
+ * 
+ * @export
+ * @interface DashboardwithdataInsertDataAllOf
+ */
+export interface DashboardwithdataInsertDataAllOf {
+    /**
+     * 
+     * @type {string}
+     * @memberof DashboardwithdataInsertDataAllOf
+     */
+    'id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof DashboardwithdataInsertDataAllOf
+     */
+    'name': string;
+    /**
+     * An ISO formatted timestamp
+     * @type {string}
+     * @memberof DashboardwithdataInsertDataAllOf
+     */
+    'createdAt': string;
+    /**
+     * An ISO formatted timestamp
+     * @type {string}
+     * @memberof DashboardwithdataInsertDataAllOf
+     */
+    'updatedAt': string;
+    /**
+     * 
+     * @type {DashboardwithdataInsertDataAllOfSchema}
+     * @memberof DashboardwithdataInsertDataAllOf
+     */
+    'schema': DashboardwithdataInsertDataAllOfSchema;
+}
+/**
+ * 
+ * @export
+ * @interface DashboardwithdataInsertDataAllOf1
+ */
+export interface DashboardwithdataInsertDataAllOf1 {
+    /**
+     * 
+     * @type {Array<DashboardwithdataInsertDataAllOf1Data>}
+     * @memberof DashboardwithdataInsertDataAllOf1
+     */
+    'data': Array<DashboardwithdataInsertDataAllOf1Data>;
+}
+/**
+ * 
+ * @export
+ * @interface DashboardwithdataInsertDataAllOf1Data
+ */
+export interface DashboardwithdataInsertDataAllOf1Data {
+    /**
+     * 
+     * @type {Array<DashboardwithdataInsertDataAllOf1Metrics>}
+     * @memberof DashboardwithdataInsertDataAllOf1Data
+     */
+    'metrics': Array<DashboardwithdataInsertDataAllOf1Metrics>;
+    /**
+     * 
+     * @type {Array<DashboardwithdataInsertDataAllOf1Metrics>}
+     * @memberof DashboardwithdataInsertDataAllOf1Data
+     */
+    'previousMetrics'?: Array<DashboardwithdataInsertDataAllOf1Metrics>;
+    /**
+     * 
+     * @type {string}
+     * @memberof DashboardwithdataInsertDataAllOf1Data
+     */
+    'type': DashboardwithdataInsertDataAllOf1DataTypeEnum;
+    /**
+     * 
+     * @type {string}
+     * @memberof DashboardwithdataInsertDataAllOf1Data
+     */
+    'dataAggregate': DashboardwithdataInsertDataAllOf1DataDataAggregateEnum;
+    /**
+     * 
+     * @type {string}
+     * @memberof DashboardwithdataInsertDataAllOf1Data
+     */
+    'key'?: string;
+}
+
+export const DashboardwithdataInsertDataAllOf1DataTypeEnum = {
+    MessagesSentByUser: 'messages-sent-by-user',
+    MessagesSentByAccount: 'messages-sent-by-account',
+    MessagesRecvByChat: 'messages-recv-by-chat',
+    AvgResponseTimeByUser: 'avg-response-time-by-user',
+    MessageReplyRateByUser: 'message-reply-rate-by-user',
+    TasksAddedByUser: 'tasks-added-by-user',
+    TasksSolvedByUser: 'tasks-solved-by-user',
+    TasksAddedByChat: 'tasks-added-by-chat',
+    ContactsTaggedByTag: 'contacts-tagged-by-tag',
+    MessageFlowsSentByFlowId: 'message-flows-sent-by-flow-id',
+    MessageFlowsCompletedByFlowId: 'message-flows-completed-by-flow-id',
+    MessageFlowClickRateByFlowId: 'message-flow-click-rate-by-flow-id',
+    PaymentRecvByPhone: 'payment-recv-by-phone',
+    OrdersRecvByPhone: 'orders-recv-by-phone',
+    NewChats: 'new-chats'
+} as const;
+
+export type DashboardwithdataInsertDataAllOf1DataTypeEnum = typeof DashboardwithdataInsertDataAllOf1DataTypeEnum[keyof typeof DashboardwithdataInsertDataAllOf1DataTypeEnum];
+export const DashboardwithdataInsertDataAllOf1DataDataAggregateEnum = {
+    Avg: 'avg',
+    Sum: 'sum'
+} as const;
+
+export type DashboardwithdataInsertDataAllOf1DataDataAggregateEnum = typeof DashboardwithdataInsertDataAllOf1DataDataAggregateEnum[keyof typeof DashboardwithdataInsertDataAllOf1DataDataAggregateEnum];
+
+/**
+ * 
+ * @export
+ * @interface DashboardwithdataInsertDataAllOf1Metrics
+ */
+export interface DashboardwithdataInsertDataAllOf1Metrics {
+    /**
+     * An ISO formatted timestamp
+     * @type {string}
+     * @memberof DashboardwithdataInsertDataAllOf1Metrics
+     */
+    'timestamp': string;
+    /**
+     * 
+     * @type {number}
+     * @memberof DashboardwithdataInsertDataAllOf1Metrics
+     */
+    'value': number;
+}
+/**
+ * 
+ * @export
+ * @interface DashboardwithdataInsertDataAllOfSchema
+ */
+export interface DashboardwithdataInsertDataAllOfSchema {
+    /**
+     * 
+     * @type {boolean}
+     * @memberof DashboardwithdataInsertDataAllOfSchema
+     */
+    'includePreviousPeriod'?: boolean;
+    /**
+     * 
+     * @type {Array<DashboardwithdataInsertDataAllOfSchemaItems>}
+     * @memberof DashboardwithdataInsertDataAllOfSchema
+     */
+    'items': Array<DashboardwithdataInsertDataAllOfSchemaItems>;
+}
+/**
+ * 
+ * @export
+ * @interface DashboardwithdataInsertDataAllOfSchemaItems
+ */
+export interface DashboardwithdataInsertDataAllOfSchemaItems {
+    /**
+     * 
+     * @type {string}
+     * @memberof DashboardwithdataInsertDataAllOfSchemaItems
+     */
+    'metric': DashboardwithdataInsertDataAllOfSchemaItemsMetricEnum;
+    /**
+     * 
+     * @type {string}
+     * @memberof DashboardwithdataInsertDataAllOfSchemaItems
+     */
+    'aggregate': DashboardwithdataInsertDataAllOfSchemaItemsAggregateEnum;
+    /**
+     * 
+     * @type {string}
+     * @memberof DashboardwithdataInsertDataAllOfSchemaItems
+     */
+    'key'?: string;
+}
+
+export const DashboardwithdataInsertDataAllOfSchemaItemsMetricEnum = {
+    MessagesSentByUser: 'messages-sent-by-user',
+    MessagesSentByAccount: 'messages-sent-by-account',
+    MessagesRecvByChat: 'messages-recv-by-chat',
+    AvgResponseTimeByUser: 'avg-response-time-by-user',
+    MessageReplyRateByUser: 'message-reply-rate-by-user',
+    TasksAddedByUser: 'tasks-added-by-user',
+    TasksSolvedByUser: 'tasks-solved-by-user',
+    TasksAddedByChat: 'tasks-added-by-chat',
+    ContactsTaggedByTag: 'contacts-tagged-by-tag',
+    MessageFlowsSentByFlowId: 'message-flows-sent-by-flow-id',
+    MessageFlowsCompletedByFlowId: 'message-flows-completed-by-flow-id',
+    MessageFlowClickRateByFlowId: 'message-flow-click-rate-by-flow-id',
+    PaymentRecvByPhone: 'payment-recv-by-phone',
+    OrdersRecvByPhone: 'orders-recv-by-phone',
+    NewChats: 'new-chats'
+} as const;
+
+export type DashboardwithdataInsertDataAllOfSchemaItemsMetricEnum = typeof DashboardwithdataInsertDataAllOfSchemaItemsMetricEnum[keyof typeof DashboardwithdataInsertDataAllOfSchemaItemsMetricEnum];
+export const DashboardwithdataInsertDataAllOfSchemaItemsAggregateEnum = {
+    Avg: 'avg',
+    Sum: 'sum'
+} as const;
+
+export type DashboardwithdataInsertDataAllOfSchemaItemsAggregateEnum = typeof DashboardwithdataInsertDataAllOfSchemaItemsAggregateEnum[keyof typeof DashboardwithdataInsertDataAllOfSchemaItemsAggregateEnum];
+
+/**
+ * 
+ * @export
  * @enum {string}
  */
 
@@ -4141,6 +4444,9 @@ export const EventName = {
     CredittransactionrecordInsert: 'credittransactionrecord-insert',
     KeywordbasedactionInsert: 'keywordbasedaction-insert',
     ChatbotInsert: 'chatbot-insert',
+    PaymentintegrationInsert: 'paymentintegration-insert',
+    DashboardwithdataInsert: 'dashboardwithdata-insert',
+    ShopproductInsert: 'shopproduct-insert',
     ContactInsert: 'contact-insert',
     ContactUpdate: 'contact-update',
     ContactDelete: 'contact-delete',
@@ -4267,7 +4573,7 @@ export type EventSubscriptionType = typeof EventSubscriptionType[keyof typeof Ev
  * The request body you\'ll receive in a webhook
  * @export
  */
-export type EventWebhookData = AccountDelete | AccountInsert | AccountUpdate | ActionExecute | BotDelete | BotInsert | BotUpdate | CampaignInsert | ChatDelete | ChatInsert | ChatUpdate | ChatbotInsert | ContactDelete | ContactInsert | ContactUpdate | CredittransactionrecordInsert | FewMessagesLeft | GroupUpdate | KeywordbasedactionInsert | MembershipactionInsert | MessageDelete | MessageInsert | MessageUpdate | OrderInsert | PlatformproductDelete | PlatformproductInsert | PlatformproductUpdate | PresenceUpdate | PushNotification | StaleAccountNotification | TagDelete | TagInsert | TagUpdate | TeamDelete | TeamInsert | TeamUpdate | TeammemberDelete | TeammemberInsert | TeammemberUpdate | TrackingDelete | TrackingInsert | TrackingUpdate | UnreadChatsNotification | UserDelete | UserInsert | UserUpdate;
+export type EventWebhookData = AccountDelete | AccountInsert | AccountUpdate | ActionExecute | BotDelete | BotInsert | BotUpdate | CampaignInsert | ChatDelete | ChatInsert | ChatUpdate | ChatbotInsert | ContactDelete | ContactInsert | ContactUpdate | CredittransactionrecordInsert | DashboardwithdataInsert | FewMessagesLeft | GroupUpdate | KeywordbasedactionInsert | MembershipactionInsert | MessageDelete | MessageInsert | MessageUpdate | OrderInsert | PaymentintegrationInsert | PlatformproductDelete | PlatformproductInsert | PlatformproductUpdate | PresenceUpdate | PushNotification | ShopproductInsert | StaleAccountNotification | TagDelete | TagInsert | TagUpdate | TeamDelete | TeamInsert | TeamUpdate | TeammemberDelete | TeammemberInsert | TeammemberUpdate | TrackingDelete | TrackingInsert | TrackingUpdate | UnreadChatsNotification | UserDelete | UserInsert | UserUpdate;
 
 /**
  * 
@@ -4633,7 +4939,7 @@ export interface GroupUpdateDataOwnerTagsInnerAllOf1AddedMetadata {
      */
     'doneAt': string;
     /**
-     * The user ID of the user on ChatDaddy
+     * 
      * @type {string}
      * @memberof GroupUpdateDataOwnerTagsInnerAllOf1AddedMetadata
      */
@@ -4794,6 +5100,12 @@ export interface KeywordbasedactionInsertData {
      * @memberof KeywordbasedactionInsertData
      */
     'updatedAt'?: string;
+    /**
+     * User who created the keyword
+     * @type {string}
+     * @memberof KeywordbasedactionInsertData
+     */
+    'createdBy': string;
 }
 
 export const KeywordbasedactionInsertDataTriggerTypeEnum = {
@@ -6341,6 +6653,93 @@ export interface OrderInsertDataWaResponse {
 /**
  * 
  * @export
+ * @interface PaymentintegrationInsert
+ */
+export interface PaymentintegrationInsert {
+    /**
+     * 
+     * @type {string}
+     * @memberof PaymentintegrationInsert
+     */
+    'event': PaymentintegrationInsertEventEnum;
+    /**
+     * 
+     * @type {Array<PaymentintegrationInsertData>}
+     * @memberof PaymentintegrationInsert
+     */
+    'data': Array<PaymentintegrationInsertData>;
+}
+
+export const PaymentintegrationInsertEventEnum = {
+    PaymentintegrationInsert: 'paymentintegration-insert'
+} as const;
+
+export type PaymentintegrationInsertEventEnum = typeof PaymentintegrationInsertEventEnum[keyof typeof PaymentintegrationInsertEventEnum];
+
+/**
+ * 
+ * @export
+ * @interface PaymentintegrationInsertData
+ */
+export interface PaymentintegrationInsertData {
+    /**
+     * 
+     * @type {string}
+     * @memberof PaymentintegrationInsertData
+     */
+    'id': string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof PaymentintegrationInsertData
+     */
+    'enabled': boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof PaymentintegrationInsertData
+     */
+    'teamId': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof PaymentintegrationInsertData
+     */
+    'createdAt': string;
+    /**
+     * The user who created the payment integration. This is the user who authorized the payment integration
+     * @type {string}
+     * @memberof PaymentintegrationInsertData
+     */
+    'createdBy': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof PaymentintegrationInsertData
+     */
+    'updatedAt': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof PaymentintegrationInsertData
+     */
+    'paymentSystemId': string;
+    /**
+     * URL of the QR code image
+     * @type {string}
+     * @memberof PaymentintegrationInsertData
+     */
+    'qrCodeUrl'?: string;
+    /**
+     * Secret key for the payment system
+     * @type {string}
+     * @memberof PaymentintegrationInsertData
+     */
+    'secret'?: string;
+}
+/**
+ * 
+ * @export
  * @interface PlatformproductDelete
  */
 export interface PlatformproductDelete {
@@ -7180,6 +7579,219 @@ export interface PushNotificationData {
 /**
  * 
  * @export
+ * @interface ShopproductInsert
+ */
+export interface ShopproductInsert {
+    /**
+     * 
+     * @type {string}
+     * @memberof ShopproductInsert
+     */
+    'event': ShopproductInsertEventEnum;
+    /**
+     * 
+     * @type {Array<ShopproductInsertData>}
+     * @memberof ShopproductInsert
+     */
+    'data': Array<ShopproductInsertData>;
+}
+
+export const ShopproductInsertEventEnum = {
+    ShopproductInsert: 'shopproduct-insert'
+} as const;
+
+export type ShopproductInsertEventEnum = typeof ShopproductInsertEventEnum[keyof typeof ShopproductInsertEventEnum];
+
+/**
+ * Product model for Waha Shop
+ * @export
+ * @interface ShopproductInsertData
+ */
+export interface ShopproductInsertData {
+    /**
+     * 
+     * @type {string}
+     * @memberof ShopproductInsertData
+     */
+    'name': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ShopproductInsertData
+     */
+    'retailerId'?: string | null;
+    /**
+     * 
+     * @type {Array<ShopproductInsertDataAccountSyncStatusesInner>}
+     * @memberof ShopproductInsertData
+     */
+    'accountSyncStatuses'?: Array<ShopproductInsertDataAccountSyncStatusesInner>;
+    /**
+     * Specify category id
+     * @type {string}
+     * @memberof ShopproductInsertData
+     */
+    'categoryId'?: string;
+    /**
+     * 
+     * @type {ShopproductInsertDataCategory}
+     * @memberof ShopproductInsertData
+     */
+    'category'?: ShopproductInsertDataCategory;
+    /**
+     * 
+     * @type {string}
+     * @memberof ShopproductInsertData
+     */
+    'description': string;
+    /**
+     * 
+     * @type {number}
+     * @memberof ShopproductInsertData
+     */
+    'price': number | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof ShopproductInsertData
+     */
+    'currency'?: string | null;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof ShopproductInsertData
+     */
+    'isHidden': boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof ShopproductInsertData
+     */
+    'id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ShopproductInsertData
+     */
+    'teamId': string;
+    /**
+     * 
+     * @type {Array<ShopproductInsertDataImageUrlsInner>}
+     * @memberof ShopproductInsertData
+     */
+    'imageUrls': Array<ShopproductInsertDataImageUrlsInner>;
+    /**
+     * 
+     * @type {string}
+     * @memberof ShopproductInsertData
+     */
+    'createdAt': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ShopproductInsertData
+     */
+    'updatedAt': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ShopproductInsertData
+     */
+    'createdBy': string;
+}
+/**
+ * 
+ * @export
+ * @interface ShopproductInsertDataAccountSyncStatusesInner
+ */
+export interface ShopproductInsertDataAccountSyncStatusesInner {
+    /**
+     * 
+     * @type {string}
+     * @memberof ShopproductInsertDataAccountSyncStatusesInner
+     */
+    'accountId': string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof ShopproductInsertDataAccountSyncStatusesInner
+     */
+    'ProductSyncStatus'?: ShopproductInsertDataAccountSyncStatusesInnerProductSyncStatusEnum;
+    /**
+     * 
+     * @type {string}
+     * @memberof ShopproductInsertDataAccountSyncStatusesInner
+     */
+    'lastSyncDate': string | null;
+    /**
+     * Id of the team member that syncs the product from chatdaddy->WhatsApp
+     * @type {string}
+     * @memberof ShopproductInsertDataAccountSyncStatusesInner
+     */
+    'syncedBy': string;
+}
+
+export const ShopproductInsertDataAccountSyncStatusesInnerProductSyncStatusEnum = {
+    Synced: 'synced',
+    Failed: 'failed',
+    Syncing: 'syncing'
+} as const;
+
+export type ShopproductInsertDataAccountSyncStatusesInnerProductSyncStatusEnum = typeof ShopproductInsertDataAccountSyncStatusesInnerProductSyncStatusEnum[keyof typeof ShopproductInsertDataAccountSyncStatusesInnerProductSyncStatusEnum];
+
+/**
+ * 
+ * @export
+ * @interface ShopproductInsertDataCategory
+ */
+export interface ShopproductInsertDataCategory {
+    /**
+     * 
+     * @type {string}
+     * @memberof ShopproductInsertDataCategory
+     */
+    'id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ShopproductInsertDataCategory
+     */
+    'name': string;
+    /**
+     * 
+     * @type {number}
+     * @memberof ShopproductInsertDataCategory
+     */
+    'productCount': number;
+    /**
+     * 
+     * @type {string}
+     * @memberof ShopproductInsertDataCategory
+     */
+    'teamId': string;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof ShopproductInsertDataCategory
+     */
+    'productId'?: Array<string> | null;
+}
+/**
+ * 
+ * @export
+ * @interface ShopproductInsertDataImageUrlsInner
+ */
+export interface ShopproductInsertDataImageUrlsInner {
+    /**
+     * 
+     * @type {string}
+     * @memberof ShopproductInsertDataImageUrlsInner
+     */
+    'url': string;
+}
+/**
+ * 
+ * @export
  * @interface StaleAccountNotification
  */
 export interface StaleAccountNotification {
@@ -7331,6 +7943,18 @@ export interface TagInsertData {
      * @memberof TagInsertData
      */
     'validation'?: TagInsertDataValidation;
+    /**
+     * 
+     * @type {string}
+     * @memberof TagInsertData
+     */
+    'createdAt': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof TagInsertData
+     */
+    'createdBy': string;
 }
 /**
  * @type TagInsertDataValidation
@@ -7449,6 +8073,18 @@ export interface TagUpdateData {
      * @memberof TagUpdateData
      */
     'validation'?: TagInsertDataValidation;
+    /**
+     * 
+     * @type {string}
+     * @memberof TagUpdateData
+     */
+    'createdAt'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof TagUpdateData
+     */
+    'createdBy'?: string;
 }
 /**
  * 
@@ -8515,7 +9151,7 @@ export interface TrackingInsertData {
      * @type {string}
      * @memberof TrackingInsertData
      */
-    'lastActivity': string;
+    'lastActivity': string | null;
     /**
      * 
      * @type {number}
@@ -8558,6 +9194,12 @@ export interface TrackingInsertData {
      * @memberof TrackingInsertData
      */
     'createdAt': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof TrackingInsertData
+     */
+    'createdBy': string;
     /**
      * 
      * @type {string}
@@ -8918,7 +9560,7 @@ export interface TrackingUpdateData {
      * @type {string}
      * @memberof TrackingUpdateData
      */
-    'lastActivity'?: string;
+    'lastActivity'?: string | null;
     /**
      * 
      * @type {number}
@@ -8961,6 +9603,12 @@ export interface TrackingUpdateData {
      * @memberof TrackingUpdateData
      */
     'createdAt'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof TrackingUpdateData
+     */
+    'createdBy'?: string;
     /**
      * 
      * @type {string}

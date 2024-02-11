@@ -120,7 +120,7 @@ export interface CampaignCreateAsync {
      * @type {string}
      * @memberof CampaignCreateAsync
      */
-    'scheduledAt'?: string | null;
+    'scheduledAt'?: string;
     /**
      * Should the message be randomized before sending. Recommended to prevent bans
      * @type {boolean}
@@ -207,7 +207,7 @@ export interface CampaignEdit {
      * @type {string}
      * @memberof CampaignEdit
      */
-    'scheduledAt'?: string | null;
+    'scheduledAt'?: string;
     /**
      * Should the message be randomized before sending
      * @type {boolean}
@@ -281,19 +281,19 @@ export interface CampaignMetadata {
      * @type {string}
      * @memberof CampaignMetadata
      */
-    'scheduledAt'?: string | null;
+    'scheduledAt'?: string;
     /**
      * 
      * @type {string}
      * @memberof CampaignMetadata
      */
-    'nextScheduledAt'?: string | null;
+    'nextScheduledAt'?: string;
     /**
      * 
      * @type {string}
      * @memberof CampaignMetadata
      */
-    'completedAt'?: string | null;
+    'completedAt'?: string;
     /**
      * Should the message be randomized before sending
      * @type {boolean}
@@ -329,7 +329,13 @@ export interface CampaignMetadata {
      * @type {string}
      * @memberof CampaignMetadata
      */
-    'createdAt': string | null;
+    'createdAt': string;
+    /**
+     * User who created the campaign
+     * @type {string}
+     * @memberof CampaignMetadata
+     */
+    'createdBy': string;
     /**
      * Team ID of the campaign
      * @type {string}
@@ -459,7 +465,7 @@ export interface CampaignRecipients {
      * @type {string}
      * @memberof CampaignRecipients
      */
-    'sentAt'?: string | null;
+    'sentAt'?: string;
     /**
      * 
      * @type {WaResponse}
