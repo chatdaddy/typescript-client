@@ -2820,19 +2820,19 @@ export interface CampaignInsertData {
      * @type {string}
      * @memberof CampaignInsertData
      */
-    'scheduledAt'?: string;
+    'scheduledAt'?: string | null;
     /**
      * 
      * @type {string}
      * @memberof CampaignInsertData
      */
-    'nextScheduledAt'?: string;
+    'nextScheduledAt'?: string | null;
     /**
      * 
      * @type {string}
      * @memberof CampaignInsertData
      */
-    'completedAt'?: string;
+    'completedAt'?: string | null;
     /**
      * Should the message be randomized before sending
      * @type {boolean}

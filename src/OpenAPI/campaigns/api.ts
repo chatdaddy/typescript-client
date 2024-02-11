@@ -120,7 +120,7 @@ export interface CampaignCreateAsync {
      * @type {string}
      * @memberof CampaignCreateAsync
      */
-    'scheduledAt'?: string;
+    'scheduledAt'?: string | null;
     /**
      * Should the message be randomized before sending. Recommended to prevent bans
      * @type {boolean}
@@ -207,7 +207,7 @@ export interface CampaignEdit {
      * @type {string}
      * @memberof CampaignEdit
      */
-    'scheduledAt'?: string;
+    'scheduledAt'?: string | null;
     /**
      * Should the message be randomized before sending
      * @type {boolean}
@@ -281,19 +281,19 @@ export interface CampaignMetadata {
      * @type {string}
      * @memberof CampaignMetadata
      */
-    'scheduledAt'?: string;
+    'scheduledAt'?: string | null;
     /**
      * 
      * @type {string}
      * @memberof CampaignMetadata
      */
-    'nextScheduledAt'?: string;
+    'nextScheduledAt'?: string | null;
     /**
      * 
      * @type {string}
      * @memberof CampaignMetadata
      */
-    'completedAt'?: string;
+    'completedAt'?: string | null;
     /**
      * Should the message be randomized before sending
      * @type {boolean}
