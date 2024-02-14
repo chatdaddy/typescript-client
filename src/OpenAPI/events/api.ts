@@ -1550,6 +1550,7 @@ export interface BotInsertDataActionsInnerAllOf1MessageButtonsInnerNextActionGro
 }
 
 export const BotInsertDataActionsInnerAllOf1MessageButtonsInnerNextActionGroupsInnerValidationInnerOperatorEnum = {
+    NotEmpty: 'notEmpty',
     Equals: 'equals',
     NotEquals: 'notEquals',
     GreaterThan: 'greaterThan',

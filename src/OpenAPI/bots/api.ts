@@ -854,6 +854,7 @@ export interface BotCondition {
 }
 
 export const BotConditionOperatorEnum = {
+    NotEmpty: 'notEmpty',
     Equals: 'equals',
     NotEquals: 'notEquals',
     GreaterThan: 'greaterThan',
