@@ -2364,12 +2364,6 @@ export interface FormDataGet200Response {
      * @memberof FormDataGet200Response
      */
     'submission': FormSubmission;
-    /**
-     * True when there are no more questions and the form can be fully submitted
-     * @type {boolean}
-     * @memberof FormDataGet200Response
-     */
-    'isFinal'?: boolean;
 }
 /**
  * 
