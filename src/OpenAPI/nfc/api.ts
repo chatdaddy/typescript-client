@@ -133,6 +133,93 @@ export type CouponCampaignShowAsEnum = typeof CouponCampaignShowAsEnum[keyof typ
 /**
  * 
  * @export
+ * @interface CouponCampaignCreate
+ */
+export interface CouponCampaignCreate {
+    /**
+     * The team ID
+     * @type {string}
+     * @memberof CouponCampaignCreate
+     */
+    'teamId': string;
+    /**
+     * The URL of the QR Code
+     * @type {Array<CouponCode>}
+     * @memberof CouponCampaignCreate
+     */
+    'couponCodes'?: Array<CouponCode>;
+    /**
+     * The date and time the codes expire
+     * @type {string}
+     * @memberof CouponCampaignCreate
+     */
+    'expiresAt'?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof CouponCampaignCreate
+     */
+    'scannedAmount'?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof CouponCampaignCreate
+     */
+    'backgroundColor'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof CouponCampaignCreate
+     */
+    'title'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof CouponCampaignCreate
+     */
+    'couponProfileImage'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof CouponCampaignCreate
+     */
+    'mainImage'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof CouponCampaignCreate
+     */
+    'description'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof CouponCampaignCreate
+     */
+    'showAs'?: CouponCampaignCreateShowAsEnum;
+    /**
+     * 
+     * @type {string}
+     * @memberof CouponCampaignCreate
+     */
+    'terms'?: string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof CouponCampaignCreate
+     */
+    'showSerial'?: boolean;
+}
+
+export const CouponCampaignCreateShowAsEnum = {
+    Qr: 'qr',
+    Barcode: 'barcode'
+} as const;
+
+export type CouponCampaignCreateShowAsEnum = typeof CouponCampaignCreateShowAsEnum[keyof typeof CouponCampaignCreateShowAsEnum];
+
+/**
+ * 
+ * @export
  * @interface CouponCode
  */
 export interface CouponCode {
@@ -378,13 +465,13 @@ export const CouponCampaignApiAxiosParamCreator = function (configuration?: Conf
         /**
          * 
          * @summary Creates CouponCampaign
-         * @param {CouponCampaign} couponCampaign CouponCampaign to create
+         * @param {CouponCampaignCreate} couponCampaignCreate CouponCampaign to create
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        createCouponCampaign: async (couponCampaign: CouponCampaign, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'couponCampaign' is not null or undefined
-            assertParamExists('createCouponCampaign', 'couponCampaign', couponCampaign)
+        createCouponCampaign: async (couponCampaignCreate: CouponCampaignCreate, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'couponCampaignCreate' is not null or undefined
+            assertParamExists('createCouponCampaign', 'couponCampaignCreate', couponCampaignCreate)
             const localVarPath = `/coupon-campaign`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -408,7 +495,7 @@ export const CouponCampaignApiAxiosParamCreator = function (configuration?: Conf
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(couponCampaign, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(couponCampaignCreate, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -634,12 +721,12 @@ export const CouponCampaignApiFp = function(configuration?: Configuration) {
         /**
          * 
          * @summary Creates CouponCampaign
-         * @param {CouponCampaign} couponCampaign CouponCampaign to create
+         * @param {CouponCampaignCreate} couponCampaignCreate CouponCampaign to create
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async createCouponCampaign(couponCampaign: CouponCampaign, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CouponCampaign>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.createCouponCampaign(couponCampaign, options);
+        async createCouponCampaign(couponCampaignCreate: CouponCampaignCreate, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CouponCampaign>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.createCouponCampaign(couponCampaignCreate, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -718,7 +805,7 @@ export const CouponCampaignApiFactory = function (configuration?: Configuration,
          * @throws {RequiredError}
          */
         createCouponCampaign(requestParameters: CouponCampaignApiCreateCouponCampaignRequest, options?: AxiosRequestConfig): AxiosPromise<CouponCampaign> {
-            return localVarFp.createCouponCampaign(requestParameters.couponCampaign, options).then((request) => request(axios, basePath));
+            return localVarFp.createCouponCampaign(requestParameters.couponCampaignCreate, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -781,10 +868,10 @@ export const CouponCampaignApiFactory = function (configuration?: Configuration,
 export interface CouponCampaignApiCreateCouponCampaignRequest {
     /**
      * CouponCampaign to create
-     * @type {CouponCampaign}
+     * @type {CouponCampaignCreate}
      * @memberof CouponCampaignApiCreateCouponCampaign
      */
-    readonly couponCampaign: CouponCampaign
+    readonly couponCampaignCreate: CouponCampaignCreate
 }
 
 /**
@@ -894,7 +981,7 @@ export class CouponCampaignApi extends BaseAPI {
      * @memberof CouponCampaignApi
      */
     public createCouponCampaign(requestParameters: CouponCampaignApiCreateCouponCampaignRequest, options?: AxiosRequestConfig) {
-        return CouponCampaignApiFp(this.configuration).createCouponCampaign(requestParameters.couponCampaign, options).then((request) => request(this.axios, this.basePath));
+        return CouponCampaignApiFp(this.configuration).createCouponCampaign(requestParameters.couponCampaignCreate, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
