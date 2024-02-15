@@ -273,13 +273,13 @@ export interface GetCouponCampaigns200Response {
      * @type {Array<CouponCampaign>}
      * @memberof GetCouponCampaigns200Response
      */
-    'couponCampaigns'?: Array<CouponCampaign>;
+    'couponCampaigns': Array<CouponCampaign>;
     /**
      * The total amount of CouponCampaigns
      * @type {number}
      * @memberof GetCouponCampaigns200Response
      */
-    'total'?: number;
+    'total': number;
     /**
      * The cursor for the next page
      * @type {string}
