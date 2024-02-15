@@ -806,5 +806,54 @@
       "editor"
     ],
     "group": "Widget Access"
+  },
+  "COUPON_READ": {
+    "number": 95,
+    "description": "Allow the reading of coupon campaigns",
+    "features": [
+      "coupon"
+    ],
+    "roles": [
+      "admin",
+      "editor",
+      "viewer"
+    ],
+    "group": "Coupon Access"
+  },
+  "COUPON_CREATE": {
+    "number": 96,
+    "description": "Allow the writing of coupon campaigns",
+    "features": [
+      "coupon"
+    ],
+    "roles": [
+      "admin",
+      "editor"
+    ],
+    "group": "Coupon Access"
+  },
+  "COUPON_DELETE": {
+    "number": 97,
+    "description": "Allow the deletion of coupon campaigns",
+    "features": [
+      "coupon"
+    ],
+    "roles": [
+      "admin",
+      "editor"
+    ],
+    "group": "Coupon Access"
+  },
+  "COUPON_UPDATE": {
+    "number": 98,
+    "description": "Allow the updating of coupon campaigns",
+    "features": [
+      "coupon"
+    ],
+    "roles": [
+      "admin",
+      "editor"
+    ],
+    "group": "Coupon Access"
   }
 }

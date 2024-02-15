@@ -1275,7 +1275,11 @@ export const Scope = {
     AccountsReadAssigned: 'ACCOUNTS_READ_ASSIGNED',
     AutocompleteGet: 'AUTOCOMPLETE_GET',
     MessagesSearch: 'MESSAGES_SEARCH',
-    WidgetEdit: 'WIDGET_EDIT'
+    WidgetEdit: 'WIDGET_EDIT',
+    CouponRead: 'COUPON_READ',
+    CouponCreate: 'COUPON_CREATE',
+    CouponDelete: 'COUPON_DELETE',
+    CouponUpdate: 'COUPON_UPDATE'
 } as const;
 
 export type Scope = typeof Scope[keyof typeof Scope];

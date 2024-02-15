@@ -8306,7 +8306,11 @@ export const TeamInsertDataScopesEnum = {
     AccountsReadAssigned: 'ACCOUNTS_READ_ASSIGNED',
     AutocompleteGet: 'AUTOCOMPLETE_GET',
     MessagesSearch: 'MESSAGES_SEARCH',
-    WidgetEdit: 'WIDGET_EDIT'
+    WidgetEdit: 'WIDGET_EDIT',
+    CouponRead: 'COUPON_READ',
+    CouponCreate: 'COUPON_CREATE',
+    CouponDelete: 'COUPON_DELETE',
+    CouponUpdate: 'COUPON_UPDATE'
 } as const;
 
 export type TeamInsertDataScopesEnum = typeof TeamInsertDataScopesEnum[keyof typeof TeamInsertDataScopesEnum];
@@ -8682,7 +8686,11 @@ export const TeamUpdateDataScopesEnum = {
     AccountsReadAssigned: 'ACCOUNTS_READ_ASSIGNED',
     AutocompleteGet: 'AUTOCOMPLETE_GET',
     MessagesSearch: 'MESSAGES_SEARCH',
-    WidgetEdit: 'WIDGET_EDIT'
+    WidgetEdit: 'WIDGET_EDIT',
+    CouponRead: 'COUPON_READ',
+    CouponCreate: 'COUPON_CREATE',
+    CouponDelete: 'COUPON_DELETE',
+    CouponUpdate: 'COUPON_UPDATE'
 } as const;
 
 export type TeamUpdateDataScopesEnum = typeof TeamUpdateDataScopesEnum[keyof typeof TeamUpdateDataScopesEnum];
@@ -8870,7 +8878,11 @@ export const TeammemberInsertDataScopesEnum = {
     AccountsReadAssigned: 'ACCOUNTS_READ_ASSIGNED',
     AutocompleteGet: 'AUTOCOMPLETE_GET',
     MessagesSearch: 'MESSAGES_SEARCH',
-    WidgetEdit: 'WIDGET_EDIT'
+    WidgetEdit: 'WIDGET_EDIT',
+    CouponRead: 'COUPON_READ',
+    CouponCreate: 'COUPON_CREATE',
+    CouponDelete: 'COUPON_DELETE',
+    CouponUpdate: 'COUPON_UPDATE'
 } as const;
 
 export type TeammemberInsertDataScopesEnum = typeof TeammemberInsertDataScopesEnum[keyof typeof TeammemberInsertDataScopesEnum];
@@ -9021,7 +9033,11 @@ export const TeammemberUpdateDataScopesEnum = {
     AccountsReadAssigned: 'ACCOUNTS_READ_ASSIGNED',
     AutocompleteGet: 'AUTOCOMPLETE_GET',
     MessagesSearch: 'MESSAGES_SEARCH',
-    WidgetEdit: 'WIDGET_EDIT'
+    WidgetEdit: 'WIDGET_EDIT',
+    CouponRead: 'COUPON_READ',
+    CouponCreate: 'COUPON_CREATE',
+    CouponDelete: 'COUPON_DELETE',
+    CouponUpdate: 'COUPON_UPDATE'
 } as const;
 
 export type TeammemberUpdateDataScopesEnum = typeof TeammemberUpdateDataScopesEnum[keyof typeof TeammemberUpdateDataScopesEnum];

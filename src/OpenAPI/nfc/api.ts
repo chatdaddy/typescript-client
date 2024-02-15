@@ -63,6 +63,12 @@ export interface CouponCampaign {
     'scannedAmount'?: number | null;
     /**
      * 
+     * @type {number}
+     * @memberof CouponCampaign
+     */
+    'couponCount'?: number | null;
+    /**
+     * 
      * @type {string}
      * @memberof CouponCampaign
      */
@@ -160,6 +166,12 @@ export interface CouponCampaignCreate {
      * @memberof CouponCampaignCreate
      */
     'scannedAmount'?: number | null;
+    /**
+     * 
+     * @type {number}
+     * @memberof CouponCampaignCreate
+     */
+    'couponCount'?: number | null;
     /**
      * 
      * @type {string}
@@ -445,6 +457,25 @@ export interface QRCodeUpdate {
 /**
  * 
  * @export
+ * @interface RedeemCouponRequest
+ */
+export interface RedeemCouponRequest {
+    /**
+     * The coupon code to redeem
+     * @type {string}
+     * @memberof RedeemCouponRequest
+     */
+    'couponCode'?: string;
+    /**
+     * The contact ID to redeem
+     * @type {string}
+     * @memberof RedeemCouponRequest
+     */
+    'contactId'?: string;
+}
+/**
+ * 
+ * @export
  * @interface UpdateQrCodesRequest
  */
 export interface UpdateQrCodesRequest {
@@ -486,7 +517,7 @@ export const CouponCampaignApiAxiosParamCreator = function (configuration?: Conf
 
             // authentication chatdaddy required
             // oauth required
-            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", [], configuration)
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["COUPON_CREATE"], configuration)
 
 
     
@@ -526,7 +557,7 @@ export const CouponCampaignApiAxiosParamCreator = function (configuration?: Conf
 
             // authentication chatdaddy required
             // oauth required
-            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", [], configuration)
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["COUPON_DELETE"], configuration)
 
             if (ids) {
                 localVarQueryParameter['ids'] = ids;
@@ -568,7 +599,7 @@ export const CouponCampaignApiAxiosParamCreator = function (configuration?: Conf
 
             // authentication chatdaddy required
             // oauth required
-            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", [], configuration)
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["COUPON_READ"], configuration)
 
 
     
@@ -605,7 +636,7 @@ export const CouponCampaignApiAxiosParamCreator = function (configuration?: Conf
 
             // authentication chatdaddy required
             // oauth required
-            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", [], configuration)
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["COUPON_READ"], configuration)
 
             if (q !== undefined) {
                 localVarQueryParameter['q'] = q;
@@ -666,6 +697,46 @@ export const CouponCampaignApiAxiosParamCreator = function (configuration?: Conf
         },
         /**
          * 
+         * @summary Redeem a Coupon
+         * @param {string} couponId The ID of the Coupon to redeem
+         * @param {RedeemCouponRequest} redeemCouponRequest Coupon to redeem
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        redeemCoupon: async (couponId: string, redeemCouponRequest: RedeemCouponRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'couponId' is not null or undefined
+            assertParamExists('redeemCoupon', 'couponId', couponId)
+            // verify required parameter 'redeemCouponRequest' is not null or undefined
+            assertParamExists('redeemCoupon', 'redeemCouponRequest', redeemCouponRequest)
+            const localVarPath = `/coupon-redeem/{couponId}`
+                .replace(`{${"couponId"}}`, encodeURIComponent(String(couponId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(redeemCouponRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
          * @summary Update a CouponCampaign
          * @param {string} id The ID of the CouponCampaign to retrieve
          * @param {CouponCampaign} couponCampaign CouponCampaign to update
@@ -692,7 +763,7 @@ export const CouponCampaignApiAxiosParamCreator = function (configuration?: Conf
 
             // authentication chatdaddy required
             // oauth required
-            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", [], configuration)
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["COUPON_UPDATE"], configuration)
 
 
     
@@ -777,6 +848,18 @@ export const CouponCampaignApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
+         * @summary Redeem a Coupon
+         * @param {string} couponId The ID of the Coupon to redeem
+         * @param {RedeemCouponRequest} redeemCouponRequest Coupon to redeem
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async redeemCoupon(couponId: string, redeemCouponRequest: RedeemCouponRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.redeemCoupon(couponId, redeemCouponRequest, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
          * @summary Update a CouponCampaign
          * @param {string} id The ID of the CouponCampaign to retrieve
          * @param {CouponCampaign} couponCampaign CouponCampaign to update
@@ -846,6 +929,16 @@ export const CouponCampaignApiFactory = function (configuration?: Configuration,
          */
         getCouponData(requestParameters: CouponCampaignApiGetCouponDataRequest, options?: AxiosRequestConfig): AxiosPromise<GetCouponData200Response> {
             return localVarFp.getCouponData(requestParameters.couponId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Redeem a Coupon
+         * @param {CouponCampaignApiRedeemCouponRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        redeemCoupon(requestParameters: CouponCampaignApiRedeemCouponRequest, options?: AxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.redeemCoupon(requestParameters.couponId, requestParameters.redeemCouponRequest, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -945,6 +1038,27 @@ export interface CouponCampaignApiGetCouponDataRequest {
 }
 
 /**
+ * Request parameters for redeemCoupon operation in CouponCampaignApi.
+ * @export
+ * @interface CouponCampaignApiRedeemCouponRequest
+ */
+export interface CouponCampaignApiRedeemCouponRequest {
+    /**
+     * The ID of the Coupon to redeem
+     * @type {string}
+     * @memberof CouponCampaignApiRedeemCoupon
+     */
+    readonly couponId: string
+
+    /**
+     * Coupon to redeem
+     * @type {RedeemCouponRequest}
+     * @memberof CouponCampaignApiRedeemCoupon
+     */
+    readonly redeemCouponRequest: RedeemCouponRequest
+}
+
+/**
  * Request parameters for updateCouponCampaign operation in CouponCampaignApi.
  * @export
  * @interface CouponCampaignApiUpdateCouponCampaignRequest
@@ -1030,6 +1144,18 @@ export class CouponCampaignApi extends BaseAPI {
      */
     public getCouponData(requestParameters: CouponCampaignApiGetCouponDataRequest, options?: AxiosRequestConfig) {
         return CouponCampaignApiFp(this.configuration).getCouponData(requestParameters.couponId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Redeem a Coupon
+     * @param {CouponCampaignApiRedeemCouponRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CouponCampaignApi
+     */
+    public redeemCoupon(requestParameters: CouponCampaignApiRedeemCouponRequest, options?: AxiosRequestConfig) {
+        return CouponCampaignApiFp(this.configuration).redeemCoupon(requestParameters.couponId, requestParameters.redeemCouponRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
