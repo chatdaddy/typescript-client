@@ -503,7 +503,7 @@ export const CouponCampaignApiAxiosParamCreator = function (configuration?: Conf
         createCouponCampaign: async (couponCampaignCreate: CouponCampaignCreate, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'couponCampaignCreate' is not null or undefined
             assertParamExists('createCouponCampaign', 'couponCampaignCreate', couponCampaignCreate)
-            const localVarPath = `/coupon-campaign`;
+            const localVarPath = `/coupon-campaigns`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -543,7 +543,7 @@ export const CouponCampaignApiAxiosParamCreator = function (configuration?: Conf
         deleteCouponCampaigns: async (ids: Array<string>, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'ids' is not null or undefined
             assertParamExists('deleteCouponCampaigns', 'ids', ids)
-            const localVarPath = `/coupon-campaign`;
+            const localVarPath = `/coupon-campaigns`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -622,7 +622,7 @@ export const CouponCampaignApiAxiosParamCreator = function (configuration?: Conf
          * @throws {RequiredError}
          */
         getCouponCampaigns: async (q?: string, count?: number, cursor?: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/coupon-campaign`;
+            const localVarPath = `/coupon-campaigns`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
