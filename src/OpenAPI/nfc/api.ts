@@ -48,49 +48,49 @@ export interface CouponCampaign {
      * @type {Array<CouponCode>}
      * @memberof CouponCampaign
      */
-    'couponCodes'?: Array<CouponCode>;
+    'couponCodes'?: Array<CouponCode> | null;
     /**
      * The date and time the codes expire
      * @type {string}
      * @memberof CouponCampaign
      */
-    'expiresAt'?: string;
+    'expiresAt'?: string | null;
     /**
      * 
      * @type {number}
      * @memberof CouponCampaign
      */
-    'scannedAmount'?: number;
+    'scannedAmount'?: number | null;
     /**
      * 
      * @type {string}
      * @memberof CouponCampaign
      */
-    'backgroundColor'?: string;
+    'backgroundColor'?: string | null;
     /**
      * 
      * @type {string}
      * @memberof CouponCampaign
      */
-    'title'?: string;
+    'title'?: string | null;
     /**
      * 
      * @type {string}
      * @memberof CouponCampaign
      */
-    'couponProfileImage'?: string;
+    'couponProfileImage'?: string | null;
     /**
      * 
      * @type {string}
      * @memberof CouponCampaign
      */
-    'mainImage'?: string;
+    'mainImage'?: string | null;
     /**
      * 
      * @type {string}
      * @memberof CouponCampaign
      */
-    'description'?: string;
+    'description'?: string | null;
     /**
      * 
      * @type {string}
@@ -102,13 +102,13 @@ export interface CouponCampaign {
      * @type {string}
      * @memberof CouponCampaign
      */
-    'terms'?: string;
+    'terms'?: string | null;
     /**
      * 
      * @type {boolean}
      * @memberof CouponCampaign
      */
-    'showSerial'?: boolean;
+    'showSerial'?: boolean | null;
     /**
      * 
      * @type {string}
@@ -147,49 +147,49 @@ export interface CouponCampaignCreate {
      * @type {Array<CouponCode>}
      * @memberof CouponCampaignCreate
      */
-    'couponCodes'?: Array<CouponCode>;
+    'couponCodes'?: Array<CouponCode> | null;
     /**
      * The date and time the codes expire
      * @type {string}
      * @memberof CouponCampaignCreate
      */
-    'expiresAt'?: string;
+    'expiresAt'?: string | null;
     /**
      * 
      * @type {number}
      * @memberof CouponCampaignCreate
      */
-    'scannedAmount'?: number;
+    'scannedAmount'?: number | null;
     /**
      * 
      * @type {string}
      * @memberof CouponCampaignCreate
      */
-    'backgroundColor'?: string;
+    'backgroundColor'?: string | null;
     /**
      * 
      * @type {string}
      * @memberof CouponCampaignCreate
      */
-    'title'?: string;
+    'title'?: string | null;
     /**
      * 
      * @type {string}
      * @memberof CouponCampaignCreate
      */
-    'couponProfileImage'?: string;
+    'couponProfileImage'?: string | null;
     /**
      * 
      * @type {string}
      * @memberof CouponCampaignCreate
      */
-    'mainImage'?: string;
+    'mainImage'?: string | null;
     /**
      * 
      * @type {string}
      * @memberof CouponCampaignCreate
      */
-    'description'?: string;
+    'description'?: string | null;
     /**
      * 
      * @type {string}
@@ -201,13 +201,13 @@ export interface CouponCampaignCreate {
      * @type {string}
      * @memberof CouponCampaignCreate
      */
-    'terms'?: string;
+    'terms'?: string | null;
     /**
      * 
      * @type {boolean}
      * @memberof CouponCampaignCreate
      */
-    'showSerial'?: boolean;
+    'showSerial'?: boolean | null;
 }
 
 export const CouponCampaignCreateShowAsEnum = {
