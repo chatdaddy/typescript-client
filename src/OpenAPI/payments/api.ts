@@ -224,20 +224,6 @@ export type AutoRenewalPeriod = typeof AutoRenewalPeriod[keyof typeof AutoRenewa
 
 
 /**
- * paymentUrl: return a payment url for user to pay direct: charge the user\'s card directly, only works   if the user has a card on file
- * @export
- * @enum {string}
- */
-
-export const BillingMethod = {
-    PaymentUrl: 'paymentUrl',
-    Direct: 'direct'
-} as const;
-
-export type BillingMethod = typeof BillingMethod[keyof typeof BillingMethod];
-
-
-/**
  * 
  * @export
  * @enum {string}
@@ -619,6 +605,12 @@ export interface CreditCustomerPost {
      * @memberof CreditCustomerPost
      */
     'stripeCustomer': StripeCustomerCreate;
+    /**
+     * Stripe account ID to use to create the customer. This is only used if the customer is new.
+     * @type {string}
+     * @memberof CreditCustomerPost
+     */
+    'stripeAccountId'?: string;
     /**
      * The referral code to use for this customer. This is only used if the customer is new.
      * @type {string}
@@ -3081,12 +3073,11 @@ export const CreditsApiAxiosParamCreator = function (configuration?: Configurati
         /**
          * 
          * @summary Create/update the auto-renewal credit sub
-         * @param {BillingMethod} [method] 
          * @param {CreditAutoRenewalUpdate} [creditAutoRenewalUpdate] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        autoRenewalPost: async (method?: BillingMethod, creditAutoRenewalUpdate?: CreditAutoRenewalUpdate, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        autoRenewalPost: async (creditAutoRenewalUpdate?: CreditAutoRenewalUpdate, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v2/credits/auto-renewal`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -3102,10 +3093,6 @@ export const CreditsApiAxiosParamCreator = function (configuration?: Configurati
             // authentication chatdaddy required
             // oauth required
             await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["PAYMENTS_UPDATE"], configuration)
-
-            if (method !== undefined) {
-                localVarQueryParameter['method'] = method;
-            }
 
 
     
@@ -3714,12 +3701,11 @@ export const CreditsApiAxiosParamCreator = function (configuration?: Configurati
         /**
          * 
          * @summary Top up credits
-         * @param {BillingMethod} [method] 
          * @param {CreditTopUpOptions} [creditTopUpOptions] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        topUpCreditsPost: async (method?: BillingMethod, creditTopUpOptions?: CreditTopUpOptions, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        topUpCreditsPost: async (creditTopUpOptions?: CreditTopUpOptions, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v2/credits/topup`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -3735,10 +3721,6 @@ export const CreditsApiAxiosParamCreator = function (configuration?: Configurati
             // authentication chatdaddy required
             // oauth required
             await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["PAYMENTS_UPDATE"], configuration)
-
-            if (method !== undefined) {
-                localVarQueryParameter['method'] = method;
-            }
 
 
     
@@ -3767,13 +3749,12 @@ export const CreditsApiFp = function(configuration?: Configuration) {
         /**
          * 
          * @summary Create/update the auto-renewal credit sub
-         * @param {BillingMethod} [method] 
          * @param {CreditAutoRenewalUpdate} [creditAutoRenewalUpdate] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async autoRenewalPost(method?: BillingMethod, creditAutoRenewalUpdate?: CreditAutoRenewalUpdate, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PaymentRequest>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.autoRenewalPost(method, creditAutoRenewalUpdate, options);
+        async autoRenewalPost(creditAutoRenewalUpdate?: CreditAutoRenewalUpdate, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PaymentRequest>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.autoRenewalPost(creditAutoRenewalUpdate, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -3939,13 +3920,12 @@ export const CreditsApiFp = function(configuration?: Configuration) {
         /**
          * 
          * @summary Top up credits
-         * @param {BillingMethod} [method] 
          * @param {CreditTopUpOptions} [creditTopUpOptions] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async topUpCreditsPost(method?: BillingMethod, creditTopUpOptions?: CreditTopUpOptions, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PaymentRequest>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.topUpCreditsPost(method, creditTopUpOptions, options);
+        async topUpCreditsPost(creditTopUpOptions?: CreditTopUpOptions, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PaymentRequest>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.topUpCreditsPost(creditTopUpOptions, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
     }
@@ -3966,7 +3946,7 @@ export const CreditsApiFactory = function (configuration?: Configuration, basePa
          * @throws {RequiredError}
          */
         autoRenewalPost(requestParameters: CreditsApiAutoRenewalPostRequest = {}, options?: AxiosRequestConfig): AxiosPromise<PaymentRequest> {
-            return localVarFp.autoRenewalPost(requestParameters.method, requestParameters.creditAutoRenewalUpdate, options).then((request) => request(axios, basePath));
+            return localVarFp.autoRenewalPost(requestParameters.creditAutoRenewalUpdate, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -4103,7 +4083,7 @@ export const CreditsApiFactory = function (configuration?: Configuration, basePa
          * @throws {RequiredError}
          */
         topUpCreditsPost(requestParameters: CreditsApiTopUpCreditsPostRequest = {}, options?: AxiosRequestConfig): AxiosPromise<PaymentRequest> {
-            return localVarFp.topUpCreditsPost(requestParameters.method, requestParameters.creditTopUpOptions, options).then((request) => request(axios, basePath));
+            return localVarFp.topUpCreditsPost(requestParameters.creditTopUpOptions, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -4114,13 +4094,6 @@ export const CreditsApiFactory = function (configuration?: Configuration, basePa
  * @interface CreditsApiAutoRenewalPostRequest
  */
 export interface CreditsApiAutoRenewalPostRequest {
-    /**
-     * 
-     * @type {BillingMethod}
-     * @memberof CreditsApiAutoRenewalPost
-     */
-    readonly method?: BillingMethod
-
     /**
      * 
      * @type {CreditAutoRenewalUpdate}
@@ -4417,13 +4390,6 @@ export interface CreditsApiRecurringCreditsGetRequest {
 export interface CreditsApiTopUpCreditsPostRequest {
     /**
      * 
-     * @type {BillingMethod}
-     * @memberof CreditsApiTopUpCreditsPost
-     */
-    readonly method?: BillingMethod
-
-    /**
-     * 
      * @type {CreditTopUpOptions}
      * @memberof CreditsApiTopUpCreditsPost
      */
@@ -4446,7 +4412,7 @@ export class CreditsApi extends BaseAPI {
      * @memberof CreditsApi
      */
     public autoRenewalPost(requestParameters: CreditsApiAutoRenewalPostRequest = {}, options?: AxiosRequestConfig) {
-        return CreditsApiFp(this.configuration).autoRenewalPost(requestParameters.method, requestParameters.creditAutoRenewalUpdate, options).then((request) => request(this.axios, this.basePath));
+        return CreditsApiFp(this.configuration).autoRenewalPost(requestParameters.creditAutoRenewalUpdate, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -4611,7 +4577,7 @@ export class CreditsApi extends BaseAPI {
      * @memberof CreditsApi
      */
     public topUpCreditsPost(requestParameters: CreditsApiTopUpCreditsPostRequest = {}, options?: AxiosRequestConfig) {
-        return CreditsApiFp(this.configuration).topUpCreditsPost(requestParameters.method, requestParameters.creditTopUpOptions, options).then((request) => request(this.axios, this.basePath));
+        return CreditsApiFp(this.configuration).topUpCreditsPost(requestParameters.creditTopUpOptions, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
