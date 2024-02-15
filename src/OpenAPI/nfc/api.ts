@@ -38,6 +38,12 @@ export interface CouponCampaign {
      */
     'id': string;
     /**
+     * The team ID
+     * @type {string}
+     * @memberof CouponCampaign
+     */
+    'teamId'?: string;
+    /**
      * The URL of the QR Code
      * @type {Array<CouponCode>}
      * @memberof CouponCampaign
