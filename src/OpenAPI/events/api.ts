@@ -8193,6 +8193,12 @@ export interface TeamInsertData {
      * @type {string}
      * @memberof TeamInsertData
      */
+    'region': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof TeamInsertData
+     */
     'name': string;
     /**
      * 
@@ -8568,6 +8574,12 @@ export interface TeamUpdateData {
      * @memberof TeamUpdateData
      */
     'creator'?: TeamInsertDataCreator;
+    /**
+     * 
+     * @type {string}
+     * @memberof TeamUpdateData
+     */
+    'region'?: string;
     /**
      * 
      * @type {string}

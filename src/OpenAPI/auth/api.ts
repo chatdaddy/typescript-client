@@ -437,6 +437,12 @@ export interface JWTUser {
      */
     'teamId': string;
     /**
+     * The ISO country code of the team
+     * @type {string}
+     * @memberof JWTUser
+     */
+    'teamRegion'?: string;
+    /**
      * 
      * @type {string}
      * @memberof JWTUser
@@ -454,6 +460,12 @@ export interface JWTUser {
      * @memberof JWTUser
      */
     'emailAddress'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof JWTUser
+     */
+    'partnership'?: string;
 }
 /**
  * 
@@ -1335,6 +1347,12 @@ export interface Team {
      */
     'creator'?: User;
     /**
+     * The ISO country code of the team
+     * @type {string}
+     * @memberof Team
+     */
+    'region': string;
+    /**
      * 
      * @type {string}
      * @memberof Team
@@ -1874,6 +1892,12 @@ export interface UserCreate {
      * @memberof UserCreate
      */
     'inviteLinkId'?: string;
+    /**
+     * The ISO country code of the team
+     * @type {string}
+     * @memberof UserCreate
+     */
+    'region'?: string;
 }
 /**
  * 
