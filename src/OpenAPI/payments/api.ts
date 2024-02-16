@@ -316,6 +316,22 @@ export interface CheckoutCreateOptionsCallbackUrls {
 /**
  * 
  * @export
+ * @enum {string}
+ */
+
+export const CountryTier = {
+    Tier1: 'tier1',
+    Tier2: 'tier2',
+    Tier3: 'tier3',
+    Tier4: 'tier4'
+} as const;
+
+export type CountryTier = typeof CountryTier[keyof typeof CountryTier];
+
+
+/**
+ * 
+ * @export
  * @interface CouponCodeCreateOptions
  */
 export interface CouponCodeCreateOptions {
@@ -592,6 +608,102 @@ export interface CreditCustomer {
      * @memberof CreditCustomer
      */
     'autoRenewal'?: CustomerAutoRenewal;
+    /**
+     * 
+     * @type {CountryTier}
+     * @memberof CreditCustomer
+     */
+    'tier': CountryTier;
+    /**
+     * The partnership to use for this customer. This is only used if the customer is new.
+     * @type {string}
+     * @memberof CreditCustomer
+     */
+    'partnership'?: string;
+    /**
+     * Region from which the customer is from.
+     * @type {string}
+     * @memberof CreditCustomer
+     */
+    'region': string;
+    /**
+     * ID of the Stripe account that was created for this customer.
+     * @type {string}
+     * @memberof CreditCustomer
+     */
+    'stripeAccountId'?: string;
+}
+
+
+/**
+ * 
+ * @export
+ * @interface CreditCustomerAllOf
+ */
+export interface CreditCustomerAllOf {
+    /**
+     * ID of a customer. All credits are linked to a customer. Multiple teams can be linked to the same customer & thus share credits.
+     * @type {string}
+     * @memberof CreditCustomerAllOf
+     */
+    'id': string;
+    /**
+     * Total number of units available for consumption
+     * @type {number}
+     * @memberof CreditCustomerAllOf
+     */
+    'unitsAvailable': number;
+    /**
+     * Number of units consumed per period.
+     * @type {number}
+     * @memberof CreditCustomerAllOf
+     */
+    'recurringConsumptionUnits': number;
+    /**
+     * List of features that have been unlocked.
+     * @type {Array<CreditUnlockType>}
+     * @memberof CreditCustomerAllOf
+     */
+    'unlockedFeatures': Array<CreditUnlockType>;
+    /**
+     * 
+     * @type {CustomerAutoRenewal}
+     * @memberof CreditCustomerAllOf
+     */
+    'autoRenewal'?: CustomerAutoRenewal;
+    /**
+     * 
+     * @type {CountryTier}
+     * @memberof CreditCustomerAllOf
+     */
+    'tier': CountryTier;
+}
+
+
+/**
+ * 
+ * @export
+ * @interface CreditCustomerMetadata
+ */
+export interface CreditCustomerMetadata {
+    /**
+     * The partnership to use for this customer. This is only used if the customer is new.
+     * @type {string}
+     * @memberof CreditCustomerMetadata
+     */
+    'partnership'?: string;
+    /**
+     * Region from which the customer is from.
+     * @type {string}
+     * @memberof CreditCustomerMetadata
+     */
+    'region': string;
+    /**
+     * ID of the Stripe account that was created for this customer.
+     * @type {string}
+     * @memberof CreditCustomerMetadata
+     */
+    'stripeAccountId'?: string;
 }
 /**
  * 
@@ -606,23 +718,17 @@ export interface CreditCustomerPost {
      */
     'stripeCustomer': StripeCustomerCreate;
     /**
-     * Stripe account ID to use to create the customer. This is only used if the customer is new.
-     * @type {string}
+     * 
+     * @type {CreditCustomerMetadata}
      * @memberof CreditCustomerPost
      */
-    'stripeAccountId'?: string;
+    'metadata': CreditCustomerMetadata;
     /**
      * The referral code to use for this customer. This is only used if the customer is new.
      * @type {string}
      * @memberof CreditCustomerPost
      */
     'referralCode'?: string;
-    /**
-     * The partnership to use for this customer. This is only used if the customer is new.
-     * @type {string}
-     * @memberof CreditCustomerPost
-     */
-    'partnership'?: string;
 }
 /**
  * 
@@ -837,6 +943,31 @@ export interface CreditPurchaseTier {
      * @memberof CreditPurchaseTier
      */
     'maxUnits'?: number;
+}
+/**
+ * Use this to define the price of credits for different regions. On the client, use whichever key is sent back from the server.
+ * @export
+ * @interface CreditRegionSpecificPriceMap
+ */
+export interface CreditRegionSpecificPriceMap {
+    /**
+     * 
+     * @type {CreditStripePrice}
+     * @memberof CreditRegionSpecificPriceMap
+     */
+    'tier1'?: CreditStripePrice;
+    /**
+     * 
+     * @type {CreditStripePrice}
+     * @memberof CreditRegionSpecificPriceMap
+     */
+    'tier2'?: CreditStripePrice;
+    /**
+     * 
+     * @type {CreditStripePrice}
+     * @memberof CreditRegionSpecificPriceMap
+     */
+    'tier3'?: CreditStripePrice;
 }
 /**
  * 
@@ -1108,75 +1239,26 @@ export interface CreditsCustomerPost200Response {
 /**
  * 
  * @export
- * @interface CreditsMetadata
+ * @interface CreditsPreferences
  */
-export interface CreditsMetadata {
+export interface CreditsPreferences {
     /**
      * 
-     * @type {Array<SingleConsumptionPreference>}
-     * @memberof CreditsMetadata
+     * @type {Array<CreditPreference>}
+     * @memberof CreditsPreferences
      */
-    'singleConsumptions': Array<SingleConsumptionPreference>;
-    /**
-     * 
-     * @type {Array<RecurringConsumptionPreference>}
-     * @memberof CreditsMetadata
-     */
-    'recurringConsumptions': Array<RecurringConsumptionPreference>;
-    /**
-     * 
-     * @type {Array<UnlockPreference>}
-     * @memberof CreditsMetadata
-     */
-    'unlocks': Array<UnlockPreference>;
-    /**
-     * 
-     * @type {Array<PurchaseTierPreference>}
-     * @memberof CreditsMetadata
-     */
-    'tiers': Array<PurchaseTierPreference>;
-    /**
-     * 
-     * @type {CreditsMetadataCreditDollarPrices}
-     * @memberof CreditsMetadata
-     */
-    'creditDollarPrices': CreditsMetadataCreditDollarPrices;
-}
-/**
- * Per unit prices for each credit in terms of fiat currency.
- * @export
- * @interface CreditsMetadataCreditDollarPrices
- */
-export interface CreditsMetadataCreditDollarPrices {
-    /**
-     * 
-     * @type {number}
-     * @memberof CreditsMetadataCreditDollarPrices
-     */
-    'autoRenewal': number;
-    /**
-     * 
-     * @type {number}
-     * @memberof CreditsMetadataCreditDollarPrices
-     */
-    'topUp': number;
-    /**
-     * ISO country code for currency
-     * @type {string}
-     * @memberof CreditsMetadataCreditDollarPrices
-     */
-    'currency': string;
+    'items': Array<CreditPreference>;
 }
 /**
  * 
  * @export
- * @interface CreditsPreferencesGet200Response
+ * @interface CreditsPreferencesPostRequest
  */
-export interface CreditsPreferencesGet200Response {
+export interface CreditsPreferencesPostRequest {
     /**
      * 
      * @type {Array<CreditPreference>}
-     * @memberof CreditsPreferencesGet200Response
+     * @memberof CreditsPreferencesPostRequest
      */
     'items': Array<CreditPreference>;
 }
@@ -2161,10 +2243,10 @@ export interface StripePreference {
     'key': StripePreferenceKeyEnum;
     /**
      * 
-     * @type {CreditStripePrice}
+     * @type {CreditRegionSpecificPriceMap}
      * @memberof StripePreference
      */
-    'data': CreditStripePrice;
+    'data': CreditRegionSpecificPriceMap;
 }
 
 export const StripePreferenceCategoryEnum = {
@@ -3540,11 +3622,12 @@ export const CreditsApiAxiosParamCreator = function (configuration?: Configurati
         /**
          * 
          * @summary Get metadata for credit consumptions and unlocks
+         * @param {string} [region] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        creditsMetadataGet: async (options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/v2/credits/metadata`;
+        creditsPreferencesGet: async (region?: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v2/credits/preferences`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -3555,6 +3638,10 @@ export const CreditsApiAxiosParamCreator = function (configuration?: Configurati
             const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
+
+            if (region !== undefined) {
+                localVarQueryParameter['region'] = region;
+            }
 
 
     
@@ -3573,8 +3660,8 @@ export const CreditsApiAxiosParamCreator = function (configuration?: Configurati
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        creditsPreferencesGet: async (options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/v2/credits/preferences`;
+        creditsPreferencesGetAdmin: async (options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v2/credits/preferences/admin`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -3604,12 +3691,12 @@ export const CreditsApiAxiosParamCreator = function (configuration?: Configurati
         /**
          * 
          * @summary Updates the given credit preferences
-         * @param {CreditsPreferencesGet200Response} [creditsPreferencesGet200Response] 
+         * @param {CreditsPreferencesPostRequest} [creditsPreferencesPostRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        creditsPreferencesPost: async (creditsPreferencesGet200Response?: CreditsPreferencesGet200Response, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/v2/credits/preferences`;
+        creditsPreferencesPost: async (creditsPreferencesPostRequest?: CreditsPreferencesPostRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v2/credits/preferences/admin`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -3632,7 +3719,7 @@ export const CreditsApiAxiosParamCreator = function (configuration?: Configurati
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(creditsPreferencesGet200Response, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(creditsPreferencesPostRequest, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -3874,11 +3961,12 @@ export const CreditsApiFp = function(configuration?: Configuration) {
         /**
          * 
          * @summary Get metadata for credit consumptions and unlocks
+         * @param {string} [region] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async creditsMetadataGet(options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CreditsMetadata>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.creditsMetadataGet(options);
+        async creditsPreferencesGet(region?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CreditsPreferences>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.creditsPreferencesGet(region, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -3887,19 +3975,19 @@ export const CreditsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async creditsPreferencesGet(options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CreditsPreferencesGet200Response>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.creditsPreferencesGet(options);
+        async creditsPreferencesGetAdmin(options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CreditsPreferences>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.creditsPreferencesGetAdmin(options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
          * 
          * @summary Updates the given credit preferences
-         * @param {CreditsPreferencesGet200Response} [creditsPreferencesGet200Response] 
+         * @param {CreditsPreferencesPostRequest} [creditsPreferencesPostRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async creditsPreferencesPost(creditsPreferencesGet200Response?: CreditsPreferencesGet200Response, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.creditsPreferencesPost(creditsPreferencesGet200Response, options);
+        async creditsPreferencesPost(creditsPreferencesPostRequest?: CreditsPreferencesPostRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.creditsPreferencesPost(creditsPreferencesPostRequest, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -4040,11 +4128,12 @@ export const CreditsApiFactory = function (configuration?: Configuration, basePa
         /**
          * 
          * @summary Get metadata for credit consumptions and unlocks
+         * @param {CreditsApiCreditsPreferencesGetRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        creditsMetadataGet(options?: AxiosRequestConfig): AxiosPromise<CreditsMetadata> {
-            return localVarFp.creditsMetadataGet(options).then((request) => request(axios, basePath));
+        creditsPreferencesGet(requestParameters: CreditsApiCreditsPreferencesGetRequest = {}, options?: AxiosRequestConfig): AxiosPromise<CreditsPreferences> {
+            return localVarFp.creditsPreferencesGet(requestParameters.region, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -4052,8 +4141,8 @@ export const CreditsApiFactory = function (configuration?: Configuration, basePa
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        creditsPreferencesGet(options?: AxiosRequestConfig): AxiosPromise<CreditsPreferencesGet200Response> {
-            return localVarFp.creditsPreferencesGet(options).then((request) => request(axios, basePath));
+        creditsPreferencesGetAdmin(options?: AxiosRequestConfig): AxiosPromise<CreditsPreferences> {
+            return localVarFp.creditsPreferencesGetAdmin(options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -4063,7 +4152,7 @@ export const CreditsApiFactory = function (configuration?: Configuration, basePa
          * @throws {RequiredError}
          */
         creditsPreferencesPost(requestParameters: CreditsApiCreditsPreferencesPostRequest = {}, options?: AxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.creditsPreferencesPost(requestParameters.creditsPreferencesGet200Response, options).then((request) => request(axios, basePath));
+            return localVarFp.creditsPreferencesPost(requestParameters.creditsPreferencesPostRequest, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -4327,6 +4416,20 @@ export interface CreditsApiCreditsCustomerPostRequest {
 }
 
 /**
+ * Request parameters for creditsPreferencesGet operation in CreditsApi.
+ * @export
+ * @interface CreditsApiCreditsPreferencesGetRequest
+ */
+export interface CreditsApiCreditsPreferencesGetRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof CreditsApiCreditsPreferencesGet
+     */
+    readonly region?: string
+}
+
+/**
  * Request parameters for creditsPreferencesPost operation in CreditsApi.
  * @export
  * @interface CreditsApiCreditsPreferencesPostRequest
@@ -4334,10 +4437,10 @@ export interface CreditsApiCreditsCustomerPostRequest {
 export interface CreditsApiCreditsPreferencesPostRequest {
     /**
      * 
-     * @type {CreditsPreferencesGet200Response}
+     * @type {CreditsPreferencesPostRequest}
      * @memberof CreditsApiCreditsPreferencesPost
      */
-    readonly creditsPreferencesGet200Response?: CreditsPreferencesGet200Response
+    readonly creditsPreferencesPostRequest?: CreditsPreferencesPostRequest
 }
 
 /**
@@ -4525,12 +4628,13 @@ export class CreditsApi extends BaseAPI {
     /**
      * 
      * @summary Get metadata for credit consumptions and unlocks
+     * @param {CreditsApiCreditsPreferencesGetRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof CreditsApi
      */
-    public creditsMetadataGet(options?: AxiosRequestConfig) {
-        return CreditsApiFp(this.configuration).creditsMetadataGet(options).then((request) => request(this.axios, this.basePath));
+    public creditsPreferencesGet(requestParameters: CreditsApiCreditsPreferencesGetRequest = {}, options?: AxiosRequestConfig) {
+        return CreditsApiFp(this.configuration).creditsPreferencesGet(requestParameters.region, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -4540,8 +4644,8 @@ export class CreditsApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof CreditsApi
      */
-    public creditsPreferencesGet(options?: AxiosRequestConfig) {
-        return CreditsApiFp(this.configuration).creditsPreferencesGet(options).then((request) => request(this.axios, this.basePath));
+    public creditsPreferencesGetAdmin(options?: AxiosRequestConfig) {
+        return CreditsApiFp(this.configuration).creditsPreferencesGetAdmin(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -4553,7 +4657,7 @@ export class CreditsApi extends BaseAPI {
      * @memberof CreditsApi
      */
     public creditsPreferencesPost(requestParameters: CreditsApiCreditsPreferencesPostRequest = {}, options?: AxiosRequestConfig) {
-        return CreditsApiFp(this.configuration).creditsPreferencesPost(requestParameters.creditsPreferencesGet200Response, options).then((request) => request(this.axios, this.basePath));
+        return CreditsApiFp(this.configuration).creditsPreferencesPost(requestParameters.creditsPreferencesPostRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
