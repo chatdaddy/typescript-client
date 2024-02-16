@@ -964,7 +964,7 @@ export const CouponCampaignApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async redeemCoupon(couponId: string, redeemCouponRequest: RedeemCouponRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async redeemCoupon(couponId: string, redeemCouponRequest: RedeemCouponRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CouponCode>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.redeemCoupon(couponId, redeemCouponRequest, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -1057,7 +1057,7 @@ export const CouponCampaignApiFactory = function (configuration?: Configuration,
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        redeemCoupon(requestParameters: CouponCampaignApiRedeemCouponRequest, options?: AxiosRequestConfig): AxiosPromise<void> {
+        redeemCoupon(requestParameters: CouponCampaignApiRedeemCouponRequest, options?: AxiosRequestConfig): AxiosPromise<CouponCode> {
             return localVarFp.redeemCoupon(requestParameters.couponId, requestParameters.redeemCouponRequest, options).then((request) => request(axios, basePath));
         },
         /**
