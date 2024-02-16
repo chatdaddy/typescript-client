@@ -247,6 +247,24 @@ export interface CouponCode {
      * @memberof CouponCode
      */
     'campaignId'?: string;
+    /**
+     * The contact ID
+     * @type {string}
+     * @memberof CouponCode
+     */
+    'contactId'?: string;
+    /**
+     * The coupon has been redeemed
+     * @type {boolean}
+     * @memberof CouponCode
+     */
+    'redeemed'?: boolean;
+    /**
+     * The date and time the coupon was redeemed
+     * @type {string}
+     * @memberof CouponCode
+     */
+    'redeemedAt'?: string;
 }
 /**
  * 
