@@ -271,6 +271,38 @@ export type AccountCredentialsAlibabaV2TypeEnum = typeof AccountCredentialsAliba
 /**
  * 
  * @export
+ * @interface AccountCredentialsMail
+ */
+export interface AccountCredentialsMail {
+    /**
+     * 
+     * @type {string}
+     * @memberof AccountCredentialsMail
+     */
+    'type': AccountCredentialsMailTypeEnum;
+    /**
+     * Email address of the account
+     * @type {string}
+     * @memberof AccountCredentialsMail
+     */
+    'emailAddress': string;
+    /**
+     * Unique Id of the sender
+     * @type {number}
+     * @memberof AccountCredentialsMail
+     */
+    'senderId': number;
+}
+
+export const AccountCredentialsMailTypeEnum = {
+    Mail: 'mail'
+} as const;
+
+export type AccountCredentialsMailTypeEnum = typeof AccountCredentialsMailTypeEnum[keyof typeof AccountCredentialsMailTypeEnum];
+
+/**
+ * 
+ * @export
  * @interface AccountCredentialsMeta
  */
 export interface AccountCredentialsMeta {
@@ -459,7 +491,8 @@ export const AccountType = {
     WaBusinessApi: 'wa-business-api',
     Mock: 'mock',
     Tiktok: 'tiktok',
-    Messenger: 'messenger'
+    Messenger: 'messenger',
+    Mail: 'mail'
 } as const;
 
 export type AccountType = typeof AccountType[keyof typeof AccountType];
@@ -592,7 +625,7 @@ export interface AccountsPatchRequest {
  * @type AccountsPatchRequestCredentials
  * @export
  */
-export type AccountsPatchRequestCredentials = AccountCredentialsAlibaba | AccountCredentialsAlibabaV2 | AccountCredentialsMeta | AccountCredentialsTikTok;
+export type AccountsPatchRequestCredentials = AccountCredentialsAlibaba | AccountCredentialsAlibabaV2 | AccountCredentialsMail | AccountCredentialsMeta | AccountCredentialsTikTok;
 
 /**
  * 
@@ -2117,6 +2150,32 @@ export interface ListMessageSection {
 /**
  * 
  * @export
+ * @interface MailRegisterPostRequest
+ */
+export interface MailRegisterPostRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof MailRegisterPostRequest
+     */
+    'email': string;
+}
+/**
+ * 
+ * @export
+ * @interface MailStateInfo
+ */
+export interface MailStateInfo {
+    /**
+     * 
+     * @type {boolean}
+     * @memberof MailStateInfo
+     */
+    'senderVerified'?: boolean;
+}
+/**
+ * 
+ * @export
  * @interface Message
  */
 export interface Message {
@@ -2216,6 +2275,12 @@ export interface Message {
      * @memberof Message
      */
     'mentions'?: Array<string>;
+    /**
+     * The subject of the message
+     * @type {string}
+     * @memberof Message
+     */
+    'subject'?: string;
     /**
      * 
      * @type {string}
@@ -2640,6 +2705,12 @@ export interface MessageCompose {
      */
     'mentions'?: Array<string>;
     /**
+     * The subject of the message
+     * @type {string}
+     * @memberof MessageCompose
+     */
+    'subject'?: string;
+    /**
      * 
      * @type {string}
      * @memberof MessageCompose
@@ -2839,6 +2910,12 @@ export interface MessageComposeWChatID {
      */
     'mentions'?: Array<string>;
     /**
+     * The subject of the message
+     * @type {string}
+     * @memberof MessageComposeWChatID
+     */
+    'subject'?: string;
+    /**
      * 
      * @type {string}
      * @memberof MessageComposeWChatID
@@ -2956,6 +3033,12 @@ export interface MessageContent {
      * @memberof MessageContent
      */
     'mentions'?: Array<string>;
+    /**
+     * The subject of the message
+     * @type {string}
+     * @memberof MessageContent
+     */
+    'subject'?: string;
     /**
      * 
      * @type {string}
@@ -9514,6 +9597,141 @@ export class GroupsApi extends BaseAPI {
      */
     public groupsPost(requestParameters: GroupsApiGroupsPostRequest, options?: AxiosRequestConfig) {
         return GroupsApiFp(this.configuration).groupsPost(requestParameters.accountId, requestParameters.groupCreate, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+/**
+ * MailApi - axios parameter creator
+ * @export
+ */
+export const MailApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @summary Register an email sender
+         * @param {string} accountId 
+         * @param {MailRegisterPostRequest} [mailRegisterPostRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        mailRegisterPost: async (accountId: string, mailRegisterPostRequest?: MailRegisterPostRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'accountId' is not null or undefined
+            assertParamExists('mailRegisterPost', 'accountId', accountId)
+            const localVarPath = `/mail/register/{accountId}`
+                .replace(`{${"accountId"}}`, encodeURIComponent(String(accountId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["ACCOUNT_PATCH"], configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(mailRegisterPostRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * MailApi - functional programming interface
+ * @export
+ */
+export const MailApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = MailApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * 
+         * @summary Register an email sender
+         * @param {string} accountId 
+         * @param {MailRegisterPostRequest} [mailRegisterPostRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async mailRegisterPost(accountId: string, mailRegisterPostRequest?: MailRegisterPostRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AccountsLogout200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.mailRegisterPost(accountId, mailRegisterPostRequest, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+    }
+};
+
+/**
+ * MailApi - factory interface
+ * @export
+ */
+export const MailApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = MailApiFp(configuration)
+    return {
+        /**
+         * 
+         * @summary Register an email sender
+         * @param {MailApiMailRegisterPostRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        mailRegisterPost(requestParameters: MailApiMailRegisterPostRequest, options?: AxiosRequestConfig): AxiosPromise<AccountsLogout200Response> {
+            return localVarFp.mailRegisterPost(requestParameters.accountId, requestParameters.mailRegisterPostRequest, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * Request parameters for mailRegisterPost operation in MailApi.
+ * @export
+ * @interface MailApiMailRegisterPostRequest
+ */
+export interface MailApiMailRegisterPostRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof MailApiMailRegisterPost
+     */
+    readonly accountId: string
+
+    /**
+     * 
+     * @type {MailRegisterPostRequest}
+     * @memberof MailApiMailRegisterPost
+     */
+    readonly mailRegisterPostRequest?: MailRegisterPostRequest
+}
+
+/**
+ * MailApi - object-oriented interface
+ * @export
+ * @class MailApi
+ * @extends {BaseAPI}
+ */
+export class MailApi extends BaseAPI {
+    /**
+     * 
+     * @summary Register an email sender
+     * @param {MailApiMailRegisterPostRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof MailApi
+     */
+    public mailRegisterPost(requestParameters: MailApiMailRegisterPostRequest, options?: AxiosRequestConfig) {
+        return MailApiFp(this.configuration).mailRegisterPost(requestParameters.accountId, requestParameters.mailRegisterPostRequest, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

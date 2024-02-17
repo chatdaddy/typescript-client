@@ -229,7 +229,8 @@ export const AccountInsertDataTypeEnum = {
     WaBusinessApi: 'wa-business-api',
     Mock: 'mock',
     Tiktok: 'tiktok',
-    Messenger: 'messenger'
+    Messenger: 'messenger',
+    Mail: 'mail'
 } as const;
 
 export type AccountInsertDataTypeEnum = typeof AccountInsertDataTypeEnum[keyof typeof AccountInsertDataTypeEnum];
@@ -551,7 +552,8 @@ export const AccountUpdateDataTypeEnum = {
     WaBusinessApi: 'wa-business-api',
     Mock: 'mock',
     Tiktok: 'tiktok',
-    Messenger: 'messenger'
+    Messenger: 'messenger',
+    Mail: 'mail'
 } as const;
 
 export type AccountUpdateDataTypeEnum = typeof AccountUpdateDataTypeEnum[keyof typeof AccountUpdateDataTypeEnum];
@@ -5508,6 +5510,12 @@ export interface MessageInsertData {
      * @type {string}
      * @memberof MessageInsertData
      */
+    'subject'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof MessageInsertData
+     */
     'text'?: string | null;
     /**
      * 
@@ -6425,6 +6433,12 @@ export interface MessageUpdateData {
      * @memberof MessageUpdateData
      */
     'mentions'?: Array<string>;
+    /**
+     * 
+     * @type {string}
+     * @memberof MessageUpdateData
+     */
+    'subject'?: string;
     /**
      * 
      * @type {string}

@@ -2059,6 +2059,7 @@ export const RecurringCreditConsumptionType = {
     ChannelTiktok: 'channel/tiktok',
     ChannelMessenger: 'channel/messenger',
     ChannelWaBusinessApi: 'channel/wa-business-api',
+    ChannelMail: 'channel/mail',
     User: 'user'
 } as const;
 
