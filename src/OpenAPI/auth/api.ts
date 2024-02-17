@@ -437,12 +437,6 @@ export interface JWTUser {
      */
     'teamId': string;
     /**
-     * The ISO country code of the team
-     * @type {string}
-     * @memberof JWTUser
-     */
-    'teamRegion'?: string;
-    /**
      * 
      * @type {string}
      * @memberof JWTUser
@@ -466,6 +460,12 @@ export interface JWTUser {
      * @memberof JWTUser
      */
     'partnership'?: string;
+    /**
+     * Partner admin string if the user is a partner admin
+     * @type {string}
+     * @memberof JWTUser
+     */
+    'partnerAdmin'?: string;
 }
 /**
  * 
