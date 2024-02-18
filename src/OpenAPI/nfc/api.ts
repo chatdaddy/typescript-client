@@ -630,7 +630,7 @@ export const CouponCampaignApiAxiosParamCreator = function (configuration?: Conf
             assertParamExists('getCoupon', 'campaignId', campaignId)
             // verify required parameter 'contactId' is not null or undefined
             assertParamExists('getCoupon', 'contactId', contactId)
-            const localVarPath = `/coupon-campaign/{campaignId}/coupon/`
+            const localVarPath = `/coupon-campaign/{campaignId}/coupon`
                 .replace(`{${"campaignId"}}`, encodeURIComponent(String(campaignId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
