@@ -295,6 +295,19 @@ export interface CreateQrCodesRequest {
 /**
  * 
  * @export
+ * @interface DeleteCouponCampaignsRequest
+ */
+export interface DeleteCouponCampaignsRequest {
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof DeleteCouponCampaignsRequest
+     */
+    'ids': Array<string>;
+}
+/**
+ * 
+ * @export
  * @interface GetCouponCampaigns200Response
  */
 export interface GetCouponCampaigns200Response {
@@ -579,13 +592,13 @@ export const CouponCampaignApiAxiosParamCreator = function (configuration?: Conf
         /**
          * 
          * @summary Deletes CouponCampaigns
-         * @param {Array<string>} ids The IDs of the CouponCampaigns to delete
+         * @param {DeleteCouponCampaignsRequest} deleteCouponCampaignsRequest CouponCampaigns to delete
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteCouponCampaigns: async (ids: Array<string>, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'ids' is not null or undefined
-            assertParamExists('deleteCouponCampaigns', 'ids', ids)
+        deleteCouponCampaigns: async (deleteCouponCampaignsRequest: DeleteCouponCampaignsRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'deleteCouponCampaignsRequest' is not null or undefined
+            assertParamExists('deleteCouponCampaigns', 'deleteCouponCampaignsRequest', deleteCouponCampaignsRequest)
             const localVarPath = `/coupon-campaigns`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -602,15 +615,14 @@ export const CouponCampaignApiAxiosParamCreator = function (configuration?: Conf
             // oauth required
             await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["COUPON_DELETE"], configuration)
 
-            if (ids) {
-                localVarQueryParameter['ids'] = ids;
-            }
-
 
     
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(deleteCouponCampaignsRequest, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -940,12 +952,12 @@ export const CouponCampaignApiFp = function(configuration?: Configuration) {
         /**
          * 
          * @summary Deletes CouponCampaigns
-         * @param {Array<string>} ids The IDs of the CouponCampaigns to delete
+         * @param {DeleteCouponCampaignsRequest} deleteCouponCampaignsRequest CouponCampaigns to delete
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteCouponCampaigns(ids: Array<string>, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteCouponCampaigns(ids, options);
+        async deleteCouponCampaigns(deleteCouponCampaignsRequest: DeleteCouponCampaignsRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteCouponCampaigns(deleteCouponCampaignsRequest, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -1061,7 +1073,7 @@ export const CouponCampaignApiFactory = function (configuration?: Configuration,
          * @throws {RequiredError}
          */
         deleteCouponCampaigns(requestParameters: CouponCampaignApiDeleteCouponCampaignsRequest, options?: AxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.deleteCouponCampaigns(requestParameters.ids, options).then((request) => request(axios, basePath));
+            return localVarFp.deleteCouponCampaigns(requestParameters.deleteCouponCampaignsRequest, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -1157,11 +1169,11 @@ export interface CouponCampaignApiCreateCouponCampaignRequest {
  */
 export interface CouponCampaignApiDeleteCouponCampaignsRequest {
     /**
-     * The IDs of the CouponCampaigns to delete
-     * @type {Array<string>}
+     * CouponCampaigns to delete
+     * @type {DeleteCouponCampaignsRequest}
      * @memberof CouponCampaignApiDeleteCouponCampaigns
      */
-    readonly ids: Array<string>
+    readonly deleteCouponCampaignsRequest: DeleteCouponCampaignsRequest
 }
 
 /**
@@ -1346,7 +1358,7 @@ export class CouponCampaignApi extends BaseAPI {
      * @memberof CouponCampaignApi
      */
     public deleteCouponCampaigns(requestParameters: CouponCampaignApiDeleteCouponCampaignsRequest, options?: AxiosRequestConfig) {
-        return CouponCampaignApiFp(this.configuration).deleteCouponCampaigns(requestParameters.ids, options).then((request) => request(this.axios, this.basePath));
+        return CouponCampaignApiFp(this.configuration).deleteCouponCampaigns(requestParameters.deleteCouponCampaignsRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
