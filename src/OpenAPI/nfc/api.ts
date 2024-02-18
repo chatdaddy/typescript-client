@@ -619,6 +619,47 @@ export const CouponCampaignApiAxiosParamCreator = function (configuration?: Conf
         },
         /**
          * 
+         * @summary Get a Coupon
+         * @param {string} campaignId The ID of the CouponCampaign to retrieve
+         * @param {string} contactId The ID of the Contact to set on the coupon
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getCoupon: async (campaignId: string, contactId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'campaignId' is not null or undefined
+            assertParamExists('getCoupon', 'campaignId', campaignId)
+            // verify required parameter 'contactId' is not null or undefined
+            assertParamExists('getCoupon', 'contactId', contactId)
+            const localVarPath = `/coupon-campaign/{campaignId}/coupon/`
+                .replace(`{${"campaignId"}}`, encodeURIComponent(String(campaignId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (contactId !== undefined) {
+                localVarQueryParameter['contactId'] = contactId;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
          * @summary Get a CouponCampaign
          * @param {string} id The ID of the CouponCampaign to retrieve
          * @param {*} [options] Override http request option.
@@ -909,6 +950,18 @@ export const CouponCampaignApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
+         * @summary Get a Coupon
+         * @param {string} campaignId The ID of the CouponCampaign to retrieve
+         * @param {string} contactId The ID of the Contact to set on the coupon
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getCoupon(campaignId: string, contactId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CouponCode>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getCoupon(campaignId, contactId, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
          * @summary Get a CouponCampaign
          * @param {string} id The ID of the CouponCampaign to retrieve
          * @param {*} [options] Override http request option.
@@ -1012,6 +1065,16 @@ export const CouponCampaignApiFactory = function (configuration?: Configuration,
         },
         /**
          * 
+         * @summary Get a Coupon
+         * @param {CouponCampaignApiGetCouponRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getCoupon(requestParameters: CouponCampaignApiGetCouponRequest, options?: AxiosRequestConfig): AxiosPromise<CouponCode> {
+            return localVarFp.getCoupon(requestParameters.campaignId, requestParameters.contactId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
          * @summary Get a CouponCampaign
          * @param {CouponCampaignApiGetCouponCampaignRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -1099,6 +1162,27 @@ export interface CouponCampaignApiDeleteCouponCampaignsRequest {
      * @memberof CouponCampaignApiDeleteCouponCampaigns
      */
     readonly ids: Array<string>
+}
+
+/**
+ * Request parameters for getCoupon operation in CouponCampaignApi.
+ * @export
+ * @interface CouponCampaignApiGetCouponRequest
+ */
+export interface CouponCampaignApiGetCouponRequest {
+    /**
+     * The ID of the CouponCampaign to retrieve
+     * @type {string}
+     * @memberof CouponCampaignApiGetCoupon
+     */
+    readonly campaignId: string
+
+    /**
+     * The ID of the Contact to set on the coupon
+     * @type {string}
+     * @memberof CouponCampaignApiGetCoupon
+     */
+    readonly contactId: string
 }
 
 /**
@@ -1263,6 +1347,18 @@ export class CouponCampaignApi extends BaseAPI {
      */
     public deleteCouponCampaigns(requestParameters: CouponCampaignApiDeleteCouponCampaignsRequest, options?: AxiosRequestConfig) {
         return CouponCampaignApiFp(this.configuration).deleteCouponCampaigns(requestParameters.ids, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Get a Coupon
+     * @param {CouponCampaignApiGetCouponRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CouponCampaignApi
+     */
+    public getCoupon(requestParameters: CouponCampaignApiGetCouponRequest, options?: AxiosRequestConfig) {
+        return CouponCampaignApiFp(this.configuration).getCoupon(requestParameters.campaignId, requestParameters.contactId, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
