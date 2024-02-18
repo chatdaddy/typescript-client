@@ -252,7 +252,7 @@ export interface CouponCode {
      * @type {string}
      * @memberof CouponCode
      */
-    'contactId'?: string;
+    'contactId'?: string | null;
     /**
      * The coupon has been redeemed
      * @type {boolean}
@@ -264,7 +264,7 @@ export interface CouponCode {
      * @type {string}
      * @memberof CouponCode
      */
-    'redeemedAt'?: string;
+    'redeemedAt'?: string | null;
 }
 /**
  * 
