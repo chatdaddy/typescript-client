@@ -1182,6 +1182,18 @@ export interface PaymentLink {
      * @memberof PaymentLink
      */
     'url': string;
+    /**
+     * The payment order reference is explicitly for pocket pay
+     * @type {string}
+     * @memberof PaymentLink
+     */
+    'paymentOrderRef'?: string;
+    /**
+     * The payment order id is explicitly for pocket pay
+     * @type {string}
+     * @memberof PaymentLink
+     */
+    'paymentOrderId'?: string;
 }
 /**
  * 
