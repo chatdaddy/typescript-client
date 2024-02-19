@@ -371,25 +371,6 @@ export interface GetCouponData200Response {
 /**
  * 
  * @export
- * @interface GetCouponRequest
- */
-export interface GetCouponRequest {
-    /**
-     * The contact ID
-     * @type {string}
-     * @memberof GetCouponRequest
-     */
-    'contactId'?: string;
-    /**
-     * The captcha token
-     * @type {string}
-     * @memberof GetCouponRequest
-     */
-    'captchaToken'?: string;
-}
-/**
- * 
- * @export
  * @interface GetCoupons200Response
  */
 export interface GetCoupons200Response {
@@ -705,15 +686,18 @@ export const CouponCampaignApiAxiosParamCreator = function (configuration?: Conf
          * 
          * @summary Get a Coupon
          * @param {string} campaignId The ID of the CouponCampaign to retrieve
-         * @param {GetCouponRequest} getCouponRequest 
+         * @param {string} contactId The contact ID
+         * @param {string} captchaToken The captcha token
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getCoupon: async (campaignId: string, getCouponRequest: GetCouponRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getCoupon: async (campaignId: string, contactId: string, captchaToken: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'campaignId' is not null or undefined
             assertParamExists('getCoupon', 'campaignId', campaignId)
-            // verify required parameter 'getCouponRequest' is not null or undefined
-            assertParamExists('getCoupon', 'getCouponRequest', getCouponRequest)
+            // verify required parameter 'contactId' is not null or undefined
+            assertParamExists('getCoupon', 'contactId', contactId)
+            // verify required parameter 'captchaToken' is not null or undefined
+            assertParamExists('getCoupon', 'captchaToken', captchaToken)
             const localVarPath = `/coupon-campaign/{campaignId}/coupon`
                 .replace(`{${"campaignId"}}`, encodeURIComponent(String(campaignId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -727,14 +711,19 @@ export const CouponCampaignApiAxiosParamCreator = function (configuration?: Conf
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
+            if (contactId !== undefined) {
+                localVarQueryParameter['contactId'] = contactId;
+            }
+
+            if (captchaToken !== undefined) {
+                localVarQueryParameter['captchaToken'] = captchaToken;
+            }
+
 
     
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(getCouponRequest, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -1046,12 +1035,13 @@ export const CouponCampaignApiFp = function(configuration?: Configuration) {
          * 
          * @summary Get a Coupon
          * @param {string} campaignId The ID of the CouponCampaign to retrieve
-         * @param {GetCouponRequest} getCouponRequest 
+         * @param {string} contactId The contact ID
+         * @param {string} captchaToken The captcha token
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getCoupon(campaignId: string, getCouponRequest: GetCouponRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CouponCode>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getCoupon(campaignId, getCouponRequest, options);
+        async getCoupon(campaignId: string, contactId: string, captchaToken: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CouponCode>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getCoupon(campaignId, contactId, captchaToken, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -1175,7 +1165,7 @@ export const CouponCampaignApiFactory = function (configuration?: Configuration,
          * @throws {RequiredError}
          */
         getCoupon(requestParameters: CouponCampaignApiGetCouponRequest, options?: AxiosRequestConfig): AxiosPromise<CouponCode> {
-            return localVarFp.getCoupon(requestParameters.campaignId, requestParameters.getCouponRequest, options).then((request) => request(axios, basePath));
+            return localVarFp.getCoupon(requestParameters.campaignId, requestParameters.contactId, requestParameters.captchaToken, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -1296,11 +1286,18 @@ export interface CouponCampaignApiGetCouponRequest {
     readonly campaignId: string
 
     /**
-     * 
-     * @type {GetCouponRequest}
+     * The contact ID
+     * @type {string}
      * @memberof CouponCampaignApiGetCoupon
      */
-    readonly getCouponRequest: GetCouponRequest
+    readonly contactId: string
+
+    /**
+     * The captcha token
+     * @type {string}
+     * @memberof CouponCampaignApiGetCoupon
+     */
+    readonly captchaToken: string
 }
 
 /**
@@ -1488,7 +1485,7 @@ export class CouponCampaignApi extends BaseAPI {
      * @memberof CouponCampaignApi
      */
     public getCoupon(requestParameters: CouponCampaignApiGetCouponRequest, options?: AxiosRequestConfig) {
-        return CouponCampaignApiFp(this.configuration).getCoupon(requestParameters.campaignId, requestParameters.getCouponRequest, options).then((request) => request(this.axios, this.basePath));
+        return CouponCampaignApiFp(this.configuration).getCoupon(requestParameters.campaignId, requestParameters.contactId, requestParameters.captchaToken, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
