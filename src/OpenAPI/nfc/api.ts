@@ -50,6 +50,12 @@ export interface CouponCampaign {
      */
     'couponCodes'?: Array<CouponCode> | null;
     /**
+     * 
+     * @type {CouponCampaignRedemptionRules}
+     * @memberof CouponCampaign
+     */
+    'redemptionRules'?: CouponCampaignRedemptionRules;
+    /**
      * The date and time the codes expire
      * @type {string}
      * @memberof CouponCampaign
@@ -229,6 +235,25 @@ export const CouponCampaignCreateShowAsEnum = {
 
 export type CouponCampaignCreateShowAsEnum = typeof CouponCampaignCreateShowAsEnum[keyof typeof CouponCampaignCreateShowAsEnum];
 
+/**
+ * 
+ * @export
+ * @interface CouponCampaignRedemptionRules
+ */
+export interface CouponCampaignRedemptionRules {
+    /**
+     * 
+     * @type {boolean}
+     * @memberof CouponCampaignRedemptionRules
+     */
+    'enabled'?: boolean;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof CouponCampaignRedemptionRules
+     */
+    'specificContactIds'?: Array<string> | null;
+}
 /**
  * 
  * @export
