@@ -630,6 +630,12 @@ export interface NotificationPreferences {
      * @memberof NotificationPreferences
      */
     'payments'?: SimpleNotificationPreference;
+    /**
+     * 
+     * @type {SimpleNotificationPreference}
+     * @memberof NotificationPreferences
+     */
+    'creditsLevelNotification'?: SimpleNotificationPreference;
 }
 /**
  * @type NotificationResult

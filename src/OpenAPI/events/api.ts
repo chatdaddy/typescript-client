@@ -10020,6 +10020,12 @@ export interface UserInsertDataNotificationPreferences {
      * @memberof UserInsertDataNotificationPreferences
      */
     'payments'?: UserInsertDataNotificationPreferencesContactAssignedToMe;
+    /**
+     * 
+     * @type {UserInsertDataNotificationPreferencesContactAssignedToMe}
+     * @memberof UserInsertDataNotificationPreferences
+     */
+    'creditsLevelNotification'?: UserInsertDataNotificationPreferencesContactAssignedToMe;
 }
 /**
  * 
