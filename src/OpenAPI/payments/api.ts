@@ -615,6 +615,12 @@ export interface CreditCustomer {
      */
     'tier': CountryTier;
     /**
+     * 
+     * @type {CreditLevelStatus}
+     * @memberof CreditCustomer
+     */
+    'creditLevelStatus'?: CreditLevelStatus | null;
+    /**
      * The partnership to use for this customer. This is only used if the customer is new.
      * @type {string}
      * @memberof CreditCustomer
@@ -677,6 +683,12 @@ export interface CreditCustomerAllOf {
      * @memberof CreditCustomerAllOf
      */
     'tier': CountryTier;
+    /**
+     * 
+     * @type {CreditLevelStatus}
+     * @memberof CreditCustomerAllOf
+     */
+    'creditLevelStatus'?: CreditLevelStatus | null;
 }
 
 
@@ -920,10 +932,24 @@ export interface CreditGainsGet200Response {
     'total'?: number;
 }
 /**
+ * 
+ * @export
+ * @enum {string}
+ */
+
+export const CreditLevelStatus = {
+    Danger: 'danger',
+    Warning: 'warning'
+} as const;
+
+export type CreditLevelStatus = typeof CreditLevelStatus[keyof typeof CreditLevelStatus];
+
+
+/**
  * @type CreditPreference
  * @export
  */
-export type CreditPreference = MiscPreference | PurchaseTierPreference | RecurringConsumptionPreference | SingleConsumptionPreference | StripePreference | UnlockPreference;
+export type CreditPreference = MiscPreference | NotificationPreference | PurchaseTierPreference | RecurringConsumptionPreference | SingleConsumptionPreference | StripePreference | UnlockPreference;
 
 /**
  * A tier of credits that can be purchased. Credits can only be purchased in multiples of the step size. The tier is to be used exactly as is for top-up purchases, and must be  multiplied by the number of months for recurring purchases.
@@ -1538,6 +1564,63 @@ export interface MiscPreferenceData {
      * @memberof MiscPreferenceData
      */
     'amount': number;
+}
+/**
+ * 
+ * @export
+ * @interface NotificationPreference
+ */
+export interface NotificationPreference {
+    /**
+     * 
+     * @type {string}
+     * @memberof NotificationPreference
+     */
+    'category': NotificationPreferenceCategoryEnum;
+    /**
+     * 
+     * @type {string}
+     * @memberof NotificationPreference
+     */
+    'key': NotificationPreferenceKeyEnum;
+    /**
+     * 
+     * @type {NotificationPreferenceData}
+     * @memberof NotificationPreference
+     */
+    'data': NotificationPreferenceData;
+}
+
+export const NotificationPreferenceCategoryEnum = {
+    Notification: 'notification'
+} as const;
+
+export type NotificationPreferenceCategoryEnum = typeof NotificationPreferenceCategoryEnum[keyof typeof NotificationPreferenceCategoryEnum];
+export const NotificationPreferenceKeyEnum = {
+    Subscribed: 'subscribed',
+    Unsubscribed: 'unsubscribed'
+} as const;
+
+export type NotificationPreferenceKeyEnum = typeof NotificationPreferenceKeyEnum[keyof typeof NotificationPreferenceKeyEnum];
+
+/**
+ * Map describing threshholds for notifications. The threshhold for subscribed users is in % of their recurring credits. The threshhold for unsubscribed users is in absolute credits.
+ * @export
+ * @interface NotificationPreferenceData
+ */
+export interface NotificationPreferenceData {
+    /**
+     * 
+     * @type {number}
+     * @memberof NotificationPreferenceData
+     */
+    'danger': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof NotificationPreferenceData
+     */
+    'warning': number;
 }
 /**
  * Object which stores referral code details

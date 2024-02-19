@@ -4157,6 +4157,71 @@ export interface CredittransactionrecordInsertDataAllOf {
 /**
  * 
  * @export
+ * @interface CustomerCreditsLevelUpdate
+ */
+export interface CustomerCreditsLevelUpdate {
+    /**
+     * 
+     * @type {string}
+     * @memberof CustomerCreditsLevelUpdate
+     */
+    'event': CustomerCreditsLevelUpdateEventEnum;
+    /**
+     * 
+     * @type {Array<CustomerCreditsLevelUpdateData>}
+     * @memberof CustomerCreditsLevelUpdate
+     */
+    'data': Array<CustomerCreditsLevelUpdateData>;
+}
+
+export const CustomerCreditsLevelUpdateEventEnum = {
+    CustomerCreditsLevelUpdate: 'customer-credits-level-update'
+} as const;
+
+export type CustomerCreditsLevelUpdateEventEnum = typeof CustomerCreditsLevelUpdateEventEnum[keyof typeof CustomerCreditsLevelUpdateEventEnum];
+
+/**
+ * 
+ * @export
+ * @interface CustomerCreditsLevelUpdateData
+ */
+export interface CustomerCreditsLevelUpdateData {
+    /**
+     * 
+     * @type {string}
+     * @memberof CustomerCreditsLevelUpdateData
+     */
+    'teamId': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof CustomerCreditsLevelUpdateData
+     */
+    'id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof CustomerCreditsLevelUpdateData
+     */
+    'creditLevelStatus': CustomerCreditsLevelUpdateDataCreditLevelStatusEnum;
+    /**
+     * 
+     * @type {number}
+     * @memberof CustomerCreditsLevelUpdateData
+     */
+    'unitsAvailable': number;
+}
+
+export const CustomerCreditsLevelUpdateDataCreditLevelStatusEnum = {
+    Danger: 'danger',
+    Warning: 'warning'
+} as const;
+
+export type CustomerCreditsLevelUpdateDataCreditLevelStatusEnum = typeof CustomerCreditsLevelUpdateDataCreditLevelStatusEnum[keyof typeof CustomerCreditsLevelUpdateDataCreditLevelStatusEnum];
+
+/**
+ * 
+ * @export
  * @interface DashboardwithdataInsert
  */
 export interface DashboardwithdataInsert {
@@ -4440,7 +4505,7 @@ export const EventName = {
     ActionExecute: 'action-execute',
     FewMessagesLeft: 'few-messages-left',
     StaleAccountNotification: 'stale-account-notification',
-    UnreadChatsNotification: 'unread-chats-notification',
+    CustomerCreditsLevelUpdate: 'customer-credits-level-update',
     MembershipactionInsert: 'membershipaction-insert',
     PushNotification: 'push-notification',
     CampaignInsert: 'campaign-insert',
@@ -4576,7 +4641,7 @@ export type EventSubscriptionType = typeof EventSubscriptionType[keyof typeof Ev
  * The request body you\'ll receive in a webhook
  * @export
  */
-export type EventWebhookData = AccountDelete | AccountInsert | AccountUpdate | ActionExecute | BotDelete | BotInsert | BotUpdate | CampaignInsert | ChatDelete | ChatInsert | ChatUpdate | ChatbotInsert | ContactDelete | ContactInsert | ContactUpdate | CredittransactionrecordInsert | DashboardwithdataInsert | FewMessagesLeft | GroupUpdate | KeywordbasedactionInsert | MembershipactionInsert | MessageDelete | MessageInsert | MessageUpdate | OrderInsert | PaymentintegrationInsert | PlatformproductDelete | PlatformproductInsert | PlatformproductUpdate | PresenceUpdate | PushNotification | ShopproductInsert | StaleAccountNotification | TagDelete | TagInsert | TagUpdate | TeamDelete | TeamInsert | TeamUpdate | TeammemberDelete | TeammemberInsert | TeammemberUpdate | TrackingDelete | TrackingInsert | TrackingUpdate | UnreadChatsNotification | UserDelete | UserInsert | UserUpdate;
+export type EventWebhookData = AccountDelete | AccountInsert | AccountUpdate | ActionExecute | BotDelete | BotInsert | BotUpdate | CampaignInsert | ChatDelete | ChatInsert | ChatUpdate | ChatbotInsert | ContactDelete | ContactInsert | ContactUpdate | CredittransactionrecordInsert | CustomerCreditsLevelUpdate | DashboardwithdataInsert | FewMessagesLeft | GroupUpdate | KeywordbasedactionInsert | MembershipactionInsert | MessageDelete | MessageInsert | MessageUpdate | OrderInsert | PaymentintegrationInsert | PlatformproductDelete | PlatformproductInsert | PlatformproductUpdate | PresenceUpdate | PushNotification | ShopproductInsert | StaleAccountNotification | TagDelete | TagInsert | TagUpdate | TeamDelete | TeamInsert | TeamUpdate | TeammemberDelete | TeammemberInsert | TeammemberUpdate | TrackingDelete | TrackingInsert | TrackingUpdate | UserDelete | UserInsert | UserUpdate;
 
 /**
  * 
@@ -9659,32 +9724,6 @@ export interface TrackingUpdateData {
      */
     'updatedAt'?: string;
 }
-/**
- * 
- * @export
- * @interface UnreadChatsNotification
- */
-export interface UnreadChatsNotification {
-    /**
-     * 
-     * @type {string}
-     * @memberof UnreadChatsNotification
-     */
-    'event': UnreadChatsNotificationEventEnum;
-    /**
-     * 
-     * @type {Array<UnreadChatsNotificationData>}
-     * @memberof UnreadChatsNotification
-     */
-    'data': Array<UnreadChatsNotificationData>;
-}
-
-export const UnreadChatsNotificationEventEnum = {
-    UnreadChatsNotification: 'unread-chats-notification'
-} as const;
-
-export type UnreadChatsNotificationEventEnum = typeof UnreadChatsNotificationEventEnum[keyof typeof UnreadChatsNotificationEventEnum];
-
 /**
  * 
  * @export
