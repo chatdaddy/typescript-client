@@ -236,11 +236,17 @@ export type CouponCampaignCreateShowAsEnum = typeof CouponCampaignCreateShowAsEn
  */
 export interface CouponCode {
     /**
-     * The ID of the QR Code
+     * The ID of the Coupon Code
      * @type {string}
      * @memberof CouponCode
      */
     'id': string;
+    /**
+     * The coupon code
+     * @type {string}
+     * @memberof CouponCode
+     */
+    'code'?: string;
     /**
      * The campaign ID
      * @type {string}
