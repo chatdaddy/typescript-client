@@ -314,6 +314,19 @@ export interface DeleteCouponCampaignsRequest {
 /**
  * 
  * @export
+ * @interface GetCampaignData200Response
+ */
+export interface GetCampaignData200Response {
+    /**
+     * 
+     * @type {CouponCampaign}
+     * @memberof GetCampaignData200Response
+     */
+    'couponCampaign'?: CouponCampaign;
+}
+/**
+ * 
+ * @export
  * @interface GetCouponCampaigns200Response
  */
 export interface GetCouponCampaigns200Response {
@@ -629,6 +642,40 @@ export const CouponCampaignApiAxiosParamCreator = function (configuration?: Conf
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
             localVarRequestOptions.data = serializeDataIfNeeded(deleteCouponCampaignsRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Get a CampaignData
+         * @param {string} campaignId The ID of the CampaignData to retrieve
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getCampaignData: async (campaignId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'campaignId' is not null or undefined
+            assertParamExists('getCampaignData', 'campaignId', campaignId)
+            const localVarPath = `/campaign-data/{campaignId}`
+                .replace(`{${"campaignId"}}`, encodeURIComponent(String(campaignId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -968,6 +1015,17 @@ export const CouponCampaignApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
+         * @summary Get a CampaignData
+         * @param {string} campaignId The ID of the CampaignData to retrieve
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getCampaignData(campaignId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetCampaignData200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getCampaignData(campaignId, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
          * @summary Get a Coupon
          * @param {string} campaignId The ID of the CouponCampaign to retrieve
          * @param {string} contactId The ID of the Contact to set on the coupon
@@ -1083,6 +1141,16 @@ export const CouponCampaignApiFactory = function (configuration?: Configuration,
         },
         /**
          * 
+         * @summary Get a CampaignData
+         * @param {CouponCampaignApiGetCampaignDataRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getCampaignData(requestParameters: CouponCampaignApiGetCampaignDataRequest, options?: AxiosRequestConfig): AxiosPromise<GetCampaignData200Response> {
+            return localVarFp.getCampaignData(requestParameters.campaignId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
          * @summary Get a Coupon
          * @param {CouponCampaignApiGetCouponRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -1180,6 +1248,20 @@ export interface CouponCampaignApiDeleteCouponCampaignsRequest {
      * @memberof CouponCampaignApiDeleteCouponCampaigns
      */
     readonly deleteCouponCampaignsRequest: DeleteCouponCampaignsRequest
+}
+
+/**
+ * Request parameters for getCampaignData operation in CouponCampaignApi.
+ * @export
+ * @interface CouponCampaignApiGetCampaignDataRequest
+ */
+export interface CouponCampaignApiGetCampaignDataRequest {
+    /**
+     * The ID of the CampaignData to retrieve
+     * @type {string}
+     * @memberof CouponCampaignApiGetCampaignData
+     */
+    readonly campaignId: string
 }
 
 /**
@@ -1365,6 +1447,18 @@ export class CouponCampaignApi extends BaseAPI {
      */
     public deleteCouponCampaigns(requestParameters: CouponCampaignApiDeleteCouponCampaignsRequest, options?: AxiosRequestConfig) {
         return CouponCampaignApiFp(this.configuration).deleteCouponCampaigns(requestParameters.deleteCouponCampaignsRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Get a CampaignData
+     * @param {CouponCampaignApiGetCampaignDataRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CouponCampaignApi
+     */
+    public getCampaignData(requestParameters: CouponCampaignApiGetCampaignDataRequest, options?: AxiosRequestConfig) {
+        return CouponCampaignApiFp(this.configuration).getCampaignData(requestParameters.campaignId, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
