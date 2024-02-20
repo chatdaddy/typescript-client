@@ -7236,3 +7236,137 @@ export class StoreApi extends BaseAPI {
 }
 
 
+/**
+ * VisitURLApi - axios parameter creator
+ * @export
+ */
+export const VisitURLApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @summary Visit a URL
+         * @param {string} actionFireRecordId 
+         * @param {string} url 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        visitUrl: async (actionFireRecordId: string, url: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'actionFireRecordId' is not null or undefined
+            assertParamExists('visitUrl', 'actionFireRecordId', actionFireRecordId)
+            // verify required parameter 'url' is not null or undefined
+            assertParamExists('visitUrl', 'url', url)
+            const localVarPath = `/visit/{actionFireRecordId}`
+                .replace(`{${"actionFireRecordId"}}`, encodeURIComponent(String(actionFireRecordId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (url !== undefined) {
+                localVarQueryParameter['url'] = url;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * VisitURLApi - functional programming interface
+ * @export
+ */
+export const VisitURLApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = VisitURLApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * 
+         * @summary Visit a URL
+         * @param {string} actionFireRecordId 
+         * @param {string} url 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async visitUrl(actionFireRecordId: string, url: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.visitUrl(actionFireRecordId, url, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+    }
+};
+
+/**
+ * VisitURLApi - factory interface
+ * @export
+ */
+export const VisitURLApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = VisitURLApiFp(configuration)
+    return {
+        /**
+         * 
+         * @summary Visit a URL
+         * @param {VisitURLApiVisitUrlRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        visitUrl(requestParameters: VisitURLApiVisitUrlRequest, options?: AxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.visitUrl(requestParameters.actionFireRecordId, requestParameters.url, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * Request parameters for visitUrl operation in VisitURLApi.
+ * @export
+ * @interface VisitURLApiVisitUrlRequest
+ */
+export interface VisitURLApiVisitUrlRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof VisitURLApiVisitUrl
+     */
+    readonly actionFireRecordId: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof VisitURLApiVisitUrl
+     */
+    readonly url: string
+}
+
+/**
+ * VisitURLApi - object-oriented interface
+ * @export
+ * @class VisitURLApi
+ * @extends {BaseAPI}
+ */
+export class VisitURLApi extends BaseAPI {
+    /**
+     * 
+     * @summary Visit a URL
+     * @param {VisitURLApiVisitUrlRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof VisitURLApi
+     */
+    public visitUrl(requestParameters: VisitURLApiVisitUrlRequest, options?: AxiosRequestConfig) {
+        return VisitURLApiFp(this.configuration).visitUrl(requestParameters.actionFireRecordId, requestParameters.url, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
