@@ -2228,6 +2228,12 @@ export interface WidgetConfig {
      * @memberof WidgetConfig
      */
     'updatedAt': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof WidgetConfig
+     */
+    'configUrl': string;
 }
 /**
  * 
@@ -2253,6 +2259,12 @@ export interface WidgetConfigAllOf {
      * @memberof WidgetConfigAllOf
      */
     'updatedAt': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof WidgetConfigAllOf
+     */
+    'configUrl': string;
 }
 /**
  * 
