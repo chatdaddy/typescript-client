@@ -2233,7 +2233,7 @@ export interface WidgetConfig {
      * @type {string}
      * @memberof WidgetConfig
      */
-    'configUrl'?: string;
+    'configUrl': string;
 }
 /**
  * 
@@ -2264,7 +2264,7 @@ export interface WidgetConfigAllOf {
      * @type {string}
      * @memberof WidgetConfigAllOf
      */
-    'configUrl'?: string;
+    'configUrl': string;
 }
 /**
  * 
