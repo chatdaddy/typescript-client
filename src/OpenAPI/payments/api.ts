@@ -2239,6 +2239,51 @@ export interface StripeCheckout200Response {
     'url': string;
 }
 /**
+ * 
+ * @export
+ * @interface StripeCouponData
+ */
+export interface StripeCouponData {
+    /**
+     * The ID of the coupon
+     * @type {string}
+     * @memberof StripeCouponData
+     */
+    'id': string;
+    /**
+     * 
+     * @type {FloatAmountWithCurrency}
+     * @memberof StripeCouponData
+     */
+    'amountOff'?: FloatAmountWithCurrency;
+    /**
+     * The percentage off the coupon provides
+     * @type {number}
+     * @memberof StripeCouponData
+     */
+    'percentageOff'?: number;
+    /**
+     * 
+     * @type {FloatAmountWithCurrency}
+     * @memberof StripeCouponData
+     */
+    'minAmount'?: FloatAmountWithCurrency;
+    /**
+     * The duration the coupon is valid for. Can be one of forever, once, or repeating.
+     * @type {string}
+     * @memberof StripeCouponData
+     */
+    'duration': StripeCouponDataDurationEnum;
+}
+
+export const StripeCouponDataDurationEnum = {
+    Forever: 'forever',
+    Once: 'once'
+} as const;
+
+export type StripeCouponDataDurationEnum = typeof StripeCouponDataDurationEnum[keyof typeof StripeCouponDataDurationEnum];
+
+/**
  * @type StripeCustomerCreate
  * @export
  */
@@ -3118,6 +3163,47 @@ export class AutoChargeProductsApi extends BaseAPI {
 export const CouponCodesApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
+         * 
+         * @summary Get and verify coupon data from Stripe
+         * @param {string} code 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        couponsGet: async (code: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'code' is not null or undefined
+            assertParamExists('couponsGet', 'code', code)
+            const localVarPath = `/coupons`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", [], configuration)
+
+            if (code !== undefined) {
+                localVarQueryParameter['code'] = code;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * Generate a coupon code
          * @param {CouponCodeCreateOptions} [couponCodeCreateOptions] 
          * @param {*} [options] Override http request option.
@@ -3165,6 +3251,17 @@ export const CouponCodesApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = CouponCodesApiAxiosParamCreator(configuration)
     return {
         /**
+         * 
+         * @summary Get and verify coupon data from Stripe
+         * @param {string} code 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async couponsGet(code: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<StripeCouponData>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.couponsGet(code, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
          * Generate a coupon code
          * @param {CouponCodeCreateOptions} [couponCodeCreateOptions] 
          * @param {*} [options] Override http request option.
@@ -3185,6 +3282,16 @@ export const CouponCodesApiFactory = function (configuration?: Configuration, ba
     const localVarFp = CouponCodesApiFp(configuration)
     return {
         /**
+         * 
+         * @summary Get and verify coupon data from Stripe
+         * @param {CouponCodesApiCouponsGetRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        couponsGet(requestParameters: CouponCodesApiCouponsGetRequest, options?: AxiosRequestConfig): AxiosPromise<StripeCouponData> {
+            return localVarFp.couponsGet(requestParameters.code, options).then((request) => request(axios, basePath));
+        },
+        /**
          * Generate a coupon code
          * @param {CouponCodesApiCouponsPostRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -3195,6 +3302,20 @@ export const CouponCodesApiFactory = function (configuration?: Configuration, ba
         },
     };
 };
+
+/**
+ * Request parameters for couponsGet operation in CouponCodesApi.
+ * @export
+ * @interface CouponCodesApiCouponsGetRequest
+ */
+export interface CouponCodesApiCouponsGetRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof CouponCodesApiCouponsGet
+     */
+    readonly code: string
+}
 
 /**
  * Request parameters for couponsPost operation in CouponCodesApi.
@@ -3217,6 +3338,18 @@ export interface CouponCodesApiCouponsPostRequest {
  * @extends {BaseAPI}
  */
 export class CouponCodesApi extends BaseAPI {
+    /**
+     * 
+     * @summary Get and verify coupon data from Stripe
+     * @param {CouponCodesApiCouponsGetRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CouponCodesApi
+     */
+    public couponsGet(requestParameters: CouponCodesApiCouponsGetRequest, options?: AxiosRequestConfig) {
+        return CouponCodesApiFp(this.configuration).couponsGet(requestParameters.code, options).then((request) => request(this.axios, this.basePath));
+    }
+
     /**
      * Generate a coupon code
      * @param {CouponCodesApiCouponsPostRequest} requestParameters Request parameters.
