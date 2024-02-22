@@ -1205,6 +1205,12 @@ export interface BotInsertDataActionsInnerAllOf1FormRef {
      * @memberof BotInsertDataActionsInnerAllOf1FormRef
      */
     'actions'?: BotInsertDataActionsInnerAllOf1FormRefActions;
+    /**
+     * 
+     * @type {BotInsertDataActionsInnerAllOf1MessageButtonsInnerPosition}
+     * @memberof BotInsertDataActionsInnerAllOf1FormRef
+     */
+    'position'?: BotInsertDataActionsInnerAllOf1MessageButtonsInnerPosition | null;
 }
 /**
  * 

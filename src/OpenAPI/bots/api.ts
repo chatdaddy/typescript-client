@@ -2384,6 +2384,12 @@ export interface FormRef {
      * @memberof FormRef
      */
     'actions'?: FormActions;
+    /**
+     * 
+     * @type {Position}
+     * @memberof FormRef
+     */
+    'position'?: Position | null;
 }
 /**
  * 
