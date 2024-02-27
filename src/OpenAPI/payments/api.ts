@@ -971,31 +971,6 @@ export interface CreditPurchaseTier {
     'maxUnits'?: number;
 }
 /**
- * Use this to define the price of credits for different regions. On the client, use whichever key is sent back from the server.
- * @export
- * @interface CreditRegionSpecificPriceMap
- */
-export interface CreditRegionSpecificPriceMap {
-    /**
-     * 
-     * @type {CreditStripePrice}
-     * @memberof CreditRegionSpecificPriceMap
-     */
-    'tier1'?: CreditStripePrice;
-    /**
-     * 
-     * @type {CreditStripePrice}
-     * @memberof CreditRegionSpecificPriceMap
-     */
-    'tier2'?: CreditStripePrice;
-    /**
-     * 
-     * @type {CreditStripePrice}
-     * @memberof CreditRegionSpecificPriceMap
-     */
-    'tier3'?: CreditStripePrice;
-}
-/**
  * 
  * @export
  * @interface CreditStripePrice
@@ -2175,6 +2150,31 @@ export interface RecurringCreditsGet200Response {
     'total'?: number;
 }
 /**
+ * Use this to define the price of credits for different regions. On the client, use whichever key is sent back from the server.
+ * @export
+ * @interface RegionSpecificSingleConsumptionMetadata
+ */
+export interface RegionSpecificSingleConsumptionMetadata {
+    /**
+     * 
+     * @type {SingleConsumptionMetadata}
+     * @memberof RegionSpecificSingleConsumptionMetadata
+     */
+    'tier1'?: SingleConsumptionMetadata;
+    /**
+     * 
+     * @type {SingleConsumptionMetadata}
+     * @memberof RegionSpecificSingleConsumptionMetadata
+     */
+    'tier2'?: SingleConsumptionMetadata;
+    /**
+     * 
+     * @type {SingleConsumptionMetadata}
+     * @memberof RegionSpecificSingleConsumptionMetadata
+     */
+    'tier3'?: SingleConsumptionMetadata;
+}
+/**
  * 
  * @export
  * @interface SingleConsumptionMetadata
@@ -2207,10 +2207,10 @@ export interface SingleConsumptionPreference {
     'key': CreditConsumptionType;
     /**
      * 
-     * @type {SingleConsumptionMetadata}
+     * @type {SomeSingleConsumptionMetadata}
      * @memberof SingleConsumptionPreference
      */
-    'data': SingleConsumptionMetadata;
+    'data': SomeSingleConsumptionMetadata;
 }
 
 export const SingleConsumptionPreferenceCategoryEnum = {
@@ -2218,6 +2218,12 @@ export const SingleConsumptionPreferenceCategoryEnum = {
 } as const;
 
 export type SingleConsumptionPreferenceCategoryEnum = typeof SingleConsumptionPreferenceCategoryEnum[keyof typeof SingleConsumptionPreferenceCategoryEnum];
+
+/**
+ * @type SomeSingleConsumptionMetadata
+ * @export
+ */
+export type SomeSingleConsumptionMetadata = RegionSpecificSingleConsumptionMetadata | SingleConsumptionMetadata;
 
 /**
  * 
@@ -2372,10 +2378,10 @@ export interface StripePreference {
     'key': StripePreferenceKeyEnum;
     /**
      * 
-     * @type {CreditRegionSpecificPriceMap}
+     * @type {CreditStripePrice}
      * @memberof StripePreference
      */
-    'data': CreditRegionSpecificPriceMap;
+    'data': CreditStripePrice;
 }
 
 export const StripePreferenceCategoryEnum = {
