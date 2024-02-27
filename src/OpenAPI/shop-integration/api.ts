@@ -68,6 +68,12 @@ interface AddServiceModel {
      */
     'supportsProducts'?: boolean;
     /**
+     * If true, then it will allow additional parameters for condition
+     * @type {boolean}
+     * @memberof AddServiceModel
+     */
+    'allowAdditionalParamsForCondition'?: boolean;
+    /**
      * 
      * @type {{ [key: string]: AddServiceModelParametersValue; }}
      * @memberof AddServiceModel
@@ -642,6 +648,12 @@ interface ServiceModel {
      */
     'supportsProducts'?: boolean;
     /**
+     * If true, then it will allow additional parameters for condition
+     * @type {boolean}
+     * @memberof ServiceModel
+     */
+    'allowAdditionalParamsForCondition'?: boolean;
+    /**
      * 
      * @type {{ [key: string]: AddServiceModelParametersValue; }}
      * @memberof ServiceModel
@@ -849,6 +861,12 @@ export interface ShopServiceSchema {
      * @memberof ShopServiceSchema
      */
     'supportsProducts'?: boolean;
+    /**
+     * If true, then it will allow additional parameters for condition
+     * @type {boolean}
+     * @memberof ShopServiceSchema
+     */
+    'allowAdditionalParamsForCondition'?: boolean;
     /**
      * 
      * @type {{ [key: string]: AddServiceModelParametersValue; }}
