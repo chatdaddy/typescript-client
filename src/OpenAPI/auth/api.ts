@@ -1868,6 +1868,12 @@ export interface UserCreate {
      */
     'emailAddress'?: string | null;
     /**
+     * If the user is a credit customer, then set this field. Only applicable for admin create.
+     * @type {string}
+     * @memberof UserCreate
+     */
+    'creditCustomer'?: UserCreateCreditCustomerEnum;
+    /**
      * 
      * @type {TeamMetadata}
      * @memberof UserCreate
@@ -1905,6 +1911,14 @@ export interface UserCreate {
      */
     'region'?: string;
 }
+
+export const UserCreateCreditCustomerEnum = {
+    Production: 'production',
+    TestMode: 'test_mode'
+} as const;
+
+export type UserCreateCreditCustomerEnum = typeof UserCreateCreditCustomerEnum[keyof typeof UserCreateCreditCustomerEnum];
+
 /**
  * 
  * @export
