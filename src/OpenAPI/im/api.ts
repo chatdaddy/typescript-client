@@ -1903,25 +1903,10 @@ export interface GetChatHistory200Response {
     'requestId': string;
 }
 /**
- * 
+ * @type GroupAction
  * @export
- * @interface GroupAction
  */
-export interface GroupAction {
-    /**
-     * 
-     * @type {GroupActionType}
-     * @memberof GroupAction
-     */
-    'action': GroupActionType;
-    /**
-     * 
-     * @type {Array<string>}
-     * @memberof GroupAction
-     */
-    'participants': Array<string>;
-}
-
+export type GroupAction = GroupMetadataAction | GroupParticipantsAction;
 
 /**
  * 
@@ -2022,6 +2007,32 @@ export interface GroupMetadata {
 /**
  * 
  * @export
+ * @interface GroupMetadataAction
+ */
+export interface GroupMetadataAction {
+    /**
+     * 
+     * @type {string}
+     * @memberof GroupMetadataAction
+     */
+    'action': GroupMetadataActionActionEnum;
+    /**
+     * 
+     * @type {string}
+     * @memberof GroupMetadataAction
+     */
+    'value': string;
+}
+
+export const GroupMetadataActionActionEnum = {
+    UpdateDescription: 'update_description'
+} as const;
+
+export type GroupMetadataActionActionEnum = typeof GroupMetadataActionActionEnum[keyof typeof GroupMetadataActionActionEnum];
+
+/**
+ * 
+ * @export
  * @interface GroupParticipant
  */
 export interface GroupParticipant {
@@ -2051,6 +2062,27 @@ export const GroupParticipantAdminEnum = {
 } as const;
 
 export type GroupParticipantAdminEnum = typeof GroupParticipantAdminEnum[keyof typeof GroupParticipantAdminEnum];
+
+/**
+ * 
+ * @export
+ * @interface GroupParticipantsAction
+ */
+export interface GroupParticipantsAction {
+    /**
+     * 
+     * @type {GroupActionType}
+     * @memberof GroupParticipantsAction
+     */
+    'action': GroupActionType;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof GroupParticipantsAction
+     */
+    'participants': Array<string>;
+}
+
 
 /**
  * 
