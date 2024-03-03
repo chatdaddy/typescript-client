@@ -2405,11 +2405,48 @@ export interface BotInsertDataStartTriggersInnerOptionsMiscOptionsQuoted {
 export interface BotInsertDataStartTriggersInnerOptionsMiscOptionsSender {
     /**
      * 
-     * @type {MessageInsertDataSenderContext}
+     * @type {BotInsertDataStartTriggersInnerOptionsMiscOptionsSenderContext}
      * @memberof BotInsertDataStartTriggersInnerOptionsMiscOptionsSender
      */
-    'context': MessageInsertDataSenderContext;
+    'context': BotInsertDataStartTriggersInnerOptionsMiscOptionsSenderContext;
 }
+/**
+ * 
+ * @export
+ * @interface BotInsertDataStartTriggersInnerOptionsMiscOptionsSenderContext
+ */
+export interface BotInsertDataStartTriggersInnerOptionsMiscOptionsSenderContext {
+    /**
+     * 
+     * @type {string}
+     * @memberof BotInsertDataStartTriggersInnerOptionsMiscOptionsSenderContext
+     */
+    'type': BotInsertDataStartTriggersInnerOptionsMiscOptionsSenderContextTypeEnum;
+    /**
+     * 
+     * @type {string}
+     * @memberof BotInsertDataStartTriggersInnerOptionsMiscOptionsSenderContext
+     */
+    'objectId': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof BotInsertDataStartTriggersInnerOptionsMiscOptionsSenderContext
+     */
+    'objectName'?: string;
+}
+
+export const BotInsertDataStartTriggersInnerOptionsMiscOptionsSenderContextTypeEnum = {
+    KeywordReply: 'keyword-reply',
+    DefaultReply: 'default-reply',
+    Campaigns: 'campaigns',
+    Notifications: 'notifications',
+    Bot: 'bot',
+    AiChatbot: 'ai-chatbot'
+} as const;
+
+export type BotInsertDataStartTriggersInnerOptionsMiscOptionsSenderContextTypeEnum = typeof BotInsertDataStartTriggersInnerOptionsMiscOptionsSenderContextTypeEnum[keyof typeof BotInsertDataStartTriggersInnerOptionsMiscOptionsSenderContextTypeEnum];
+
 /**
  * @type BotInsertDataStartTriggersInnerTarget
  * @export
@@ -6371,7 +6408,8 @@ export const MessageInsertDataSenderContextTypeEnum = {
     Campaigns: 'campaigns',
     Notifications: 'notifications',
     Bot: 'bot',
-    AiChatbot: 'ai-chatbot'
+    AiChatbot: 'ai-chatbot',
+    Trigger: 'trigger'
 } as const;
 
 export type MessageInsertDataSenderContextTypeEnum = typeof MessageInsertDataSenderContextTypeEnum[keyof typeof MessageInsertDataSenderContextTypeEnum];

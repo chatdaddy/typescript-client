@@ -3405,7 +3405,8 @@ export const MessageSenderContextTypeEnum = {
     Campaigns: 'campaigns',
     Notifications: 'notifications',
     Bot: 'bot',
-    AiChatbot: 'ai-chatbot'
+    AiChatbot: 'ai-chatbot',
+    Trigger: 'trigger'
 } as const;
 
 export type MessageSenderContextTypeEnum = typeof MessageSenderContextTypeEnum[keyof typeof MessageSenderContextTypeEnum];
