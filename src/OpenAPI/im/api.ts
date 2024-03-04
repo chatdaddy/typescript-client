@@ -853,10 +853,10 @@ export interface AlibabaCAMSWebhookMessageItem {
     'ErrorDescription'?: string;
     /**
      * 
-     * @type {number}
+     * @type {AlibabaCAMSWebhookMessageItemErrorCode}
      * @memberof AlibabaCAMSWebhookMessageItem
      */
-    'ErrorCode'?: number;
+    'ErrorCode'?: AlibabaCAMSWebhookMessageItemErrorCode;
 }
 
 export const AlibabaCAMSWebhookMessageItemTypeEnum = {
@@ -909,6 +909,12 @@ export interface AlibabaCAMSWebhookMessageItemContext {
      */
     'id': string;
 }
+/**
+ * @type AlibabaCAMSWebhookMessageItemErrorCode
+ * @export
+ */
+export type AlibabaCAMSWebhookMessageItemErrorCode = number | string;
+
 /**
  * 
  * @export
