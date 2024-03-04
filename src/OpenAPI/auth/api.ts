@@ -1226,7 +1226,6 @@ export interface ResetPassword {
  */
 
 export const Scope = {
-    WaState: 'WA_STATE',
     ContactsReadAssigned: 'CONTACTS_READ_ASSIGNED',
     ContactsReadAll: 'CONTACTS_READ_ALL',
     ContactsExportButton: 'CONTACTS_EXPORT_BUTTON',

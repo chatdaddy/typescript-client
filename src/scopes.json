@@ -1,16 +1,4 @@
 {
-  "WA_STATE": {
-    "number": 0,
-    "description": "Open, close, logout from your WA account",
-    "features": [
-      "team-inbox"
-    ],
-    "roles": [
-      "admin",
-      "editor"
-    ],
-    "group": "WhatsApp Access"
-  },
   "CONTACTS_READ_ASSIGNED": {
     "number": 2,
     "description": "Read Assigned contacts",
@@ -621,7 +609,7 @@
   },
   "WA_LIVE_EVENTS": {
     "number": 80,
-    "description": "Can this person receive live events of this account",
+    "description": "Can this person receive live events on this team",
     "features": [
       "team-inbox"
     ],
@@ -631,7 +619,7 @@
       "agent",
       "editor"
     ],
-    "group": "WhatsApp Access"
+    "group": "Live Events Access"
   },
   "CHATDADDY_HOOK": {
     "number": 65,

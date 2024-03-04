@@ -8368,7 +8368,6 @@ export interface TeamInsertData {
 }
 
 export const TeamInsertDataScopesEnum = {
-    WaState: 'WA_STATE',
     ContactsReadAssigned: 'CONTACTS_READ_ASSIGNED',
     ContactsReadAll: 'CONTACTS_READ_ALL',
     ContactsExportButton: 'CONTACTS_EXPORT_BUTTON',
@@ -8754,7 +8753,6 @@ export interface TeamUpdateData {
 }
 
 export const TeamUpdateDataScopesEnum = {
-    WaState: 'WA_STATE',
     ContactsReadAssigned: 'CONTACTS_READ_ASSIGNED',
     ContactsReadAll: 'CONTACTS_READ_ALL',
     ContactsExportButton: 'CONTACTS_EXPORT_BUTTON',
@@ -8946,7 +8944,6 @@ export interface TeammemberInsertData {
 }
 
 export const TeammemberInsertDataScopesEnum = {
-    WaState: 'WA_STATE',
     ContactsReadAssigned: 'CONTACTS_READ_ASSIGNED',
     ContactsReadAll: 'CONTACTS_READ_ALL',
     ContactsExportButton: 'CONTACTS_EXPORT_BUTTON',
@@ -9101,7 +9098,6 @@ export interface TeammemberUpdateData {
 }
 
 export const TeammemberUpdateDataScopesEnum = {
-    WaState: 'WA_STATE',
     ContactsReadAssigned: 'CONTACTS_READ_ASSIGNED',
     ContactsReadAll: 'CONTACTS_READ_ALL',
     ContactsExportButton: 'CONTACTS_EXPORT_BUTTON',
