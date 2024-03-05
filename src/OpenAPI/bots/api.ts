@@ -121,7 +121,27 @@ export interface Action {
      * @memberof Action
      */
     'formActionMetadata'?: FormActionMetadata | null;
+    /**
+     * Type of the message being sent
+     * @type {string}
+     * @memberof Action
+     */
+    'messageType'?: ActionMessageTypeEnum;
+    /**
+     * Account ID of the sender
+     * @type {string}
+     * @memberof Action
+     */
+    'accountId'?: string;
 }
+
+export const ActionMessageTypeEnum = {
+    Message: 'message',
+    Email: 'email'
+} as const;
+
+export type ActionMessageTypeEnum = typeof ActionMessageTypeEnum[keyof typeof ActionMessageTypeEnum];
+
 /**
  * 
  * @export
@@ -225,7 +245,27 @@ export interface ActionContent {
      * @memberof ActionContent
      */
     'formActionMetadata'?: FormActionMetadata | null;
+    /**
+     * Type of the message being sent
+     * @type {string}
+     * @memberof ActionContent
+     */
+    'messageType'?: ActionContentMessageTypeEnum;
+    /**
+     * Account ID of the sender
+     * @type {string}
+     * @memberof ActionContent
+     */
+    'accountId'?: string;
 }
+
+export const ActionContentMessageTypeEnum = {
+    Message: 'message',
+    Email: 'email'
+} as const;
+
+export type ActionContentMessageTypeEnum = typeof ActionContentMessageTypeEnum[keyof typeof ActionContentMessageTypeEnum];
+
 /**
  * 
  * @export
@@ -2802,6 +2842,12 @@ export interface MessageObj {
      * @memberof MessageObj
      */
     'products'?: Array<IMMessageProduct>;
+    /**
+     * the subject of the message, if applicable
+     * @type {string}
+     * @memberof MessageObj
+     */
+    'subject'?: string;
 }
 /**
  * Optional parameters to send a message
