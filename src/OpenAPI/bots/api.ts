@@ -26,6 +26,70 @@ import type { RequestArgs } from '../base';
 import { COLLECTION_FORMATS, BaseAPI, RequiredError } from '../base';
 
 /**
+ * @type AccountIDSelector
+ * @export
+ */
+export type AccountIDSelector = AccountIDSelectorOneOf | AccountIDSelectorOneOf1;
+
+/**
+ * Specify the exact accountID. Specify an array to round robin between the accounts
+ * @export
+ * @interface AccountIDSelectorOneOf
+ */
+export interface AccountIDSelectorOneOf {
+    /**
+     * 
+     * @type {string}
+     * @memberof AccountIDSelectorOneOf
+     */
+    'type': AccountIDSelectorOneOfTypeEnum;
+    /**
+     * 
+     * @type {AccountIDSelectorOneOfValue}
+     * @memberof AccountIDSelectorOneOf
+     */
+    'value': AccountIDSelectorOneOfValue;
+}
+
+export const AccountIDSelectorOneOfTypeEnum = {
+    Exact: 'exact'
+} as const;
+
+export type AccountIDSelectorOneOfTypeEnum = typeof AccountIDSelectorOneOfTypeEnum[keyof typeof AccountIDSelectorOneOfTypeEnum];
+
+/**
+ * 
+ * @export
+ * @interface AccountIDSelectorOneOf1
+ */
+export interface AccountIDSelectorOneOf1 {
+    /**
+     * 
+     * @type {string}
+     * @memberof AccountIDSelectorOneOf1
+     */
+    'type': AccountIDSelectorOneOf1TypeEnum;
+    /**
+     * 
+     * @type {string}
+     * @memberof AccountIDSelectorOneOf1
+     */
+    'value': string;
+}
+
+export const AccountIDSelectorOneOf1TypeEnum = {
+    PropertyPath: 'propertyPath'
+} as const;
+
+export type AccountIDSelectorOneOf1TypeEnum = typeof AccountIDSelectorOneOf1TypeEnum[keyof typeof AccountIDSelectorOneOf1TypeEnum];
+
+/**
+ * @type AccountIDSelectorOneOfValue
+ * @export
+ */
+export type AccountIDSelectorOneOfValue = Array<string> | string;
+
+/**
  * 
  * @export
  * @interface Action
@@ -121,27 +185,7 @@ export interface Action {
      * @memberof Action
      */
     'formActionMetadata'?: FormActionMetadata | null;
-    /**
-     * Type of the message being sent
-     * @type {string}
-     * @memberof Action
-     */
-    'messageType'?: ActionMessageTypeEnum;
-    /**
-     * Account ID of the sender
-     * @type {string}
-     * @memberof Action
-     */
-    'accountId'?: string;
 }
-
-export const ActionMessageTypeEnum = {
-    Message: 'message',
-    Email: 'email'
-} as const;
-
-export type ActionMessageTypeEnum = typeof ActionMessageTypeEnum[keyof typeof ActionMessageTypeEnum];
-
 /**
  * 
  * @export
@@ -245,27 +289,7 @@ export interface ActionContent {
      * @memberof ActionContent
      */
     'formActionMetadata'?: FormActionMetadata | null;
-    /**
-     * Type of the message being sent
-     * @type {string}
-     * @memberof ActionContent
-     */
-    'messageType'?: ActionContentMessageTypeEnum;
-    /**
-     * Account ID of the sender
-     * @type {string}
-     * @memberof ActionContent
-     */
-    'accountId'?: string;
 }
-
-export const ActionContentMessageTypeEnum = {
-    Message: 'message',
-    Email: 'email'
-} as const;
-
-export type ActionContentMessageTypeEnum = typeof ActionContentMessageTypeEnum[keyof typeof ActionContentMessageTypeEnum];
-
 /**
  * 
  * @export
@@ -334,12 +358,6 @@ export interface ActionFireRecord {
      * @memberof ActionFireRecord
      */
     'botId': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ActionFireRecord
-     */
-    'instanceId'?: string;
     /**
      * 
      * @type {string}
@@ -421,7 +439,7 @@ export type ActionFireRecordStatusEnum = typeof ActionFireRecordStatusEnum[keyof
  * @type ActionInteraction
  * @export
  */
-export type ActionInteraction = ActionInteractionOneOf | ActionInteractionOneOf1 | ActionInteractionOneOf2;
+export type ActionInteraction = ActionInteractionOneOf | ActionInteractionOneOf1 | ActionInteractionOneOf2 | ActionInteractionOneOf3;
 
 /**
  * 
@@ -454,10 +472,16 @@ export interface ActionInteractionOneOf {
      * @memberof ActionInteractionOneOf
      */
     'type': ActionInteractionOneOfTypeEnum;
+    /**
+     * Error message
+     * @type {string}
+     * @memberof ActionInteractionOneOf
+     */
+    'message'?: string;
 }
 
 export const ActionInteractionOneOfTypeEnum = {
-    Sent: 'sent'
+    Error: 'error'
 } as const;
 
 export type ActionInteractionOneOfTypeEnum = typeof ActionInteractionOneOfTypeEnum[keyof typeof ActionInteractionOneOfTypeEnum];
@@ -480,22 +504,17 @@ export interface ActionInteractionOneOf1 {
      * @memberof ActionInteractionOneOf1
      */
     'type': ActionInteractionOneOf1TypeEnum;
-    /**
-     * Text of the button or list item that was clicked
-     * @type {string}
-     * @memberof ActionInteractionOneOf1
-     */
-    'text': string;
 }
 
 export const ActionInteractionOneOf1TypeEnum = {
-    Click: 'click'
+    Sent: 'sent',
+    Delivered: 'delivered'
 } as const;
 
 export type ActionInteractionOneOf1TypeEnum = typeof ActionInteractionOneOf1TypeEnum[keyof typeof ActionInteractionOneOf1TypeEnum];
 
 /**
- * Action was sent out and a button/list item was clicked
+ * Action was simply sent out, no further interaction recorded
  * @export
  * @interface ActionInteractionOneOf1AllOf
  */
@@ -506,16 +525,11 @@ export interface ActionInteractionOneOf1AllOf {
      * @memberof ActionInteractionOneOf1AllOf
      */
     'type': ActionInteractionOneOf1AllOfTypeEnum;
-    /**
-     * Text of the button or list item that was clicked
-     * @type {string}
-     * @memberof ActionInteractionOneOf1AllOf
-     */
-    'text': string;
 }
 
 export const ActionInteractionOneOf1AllOfTypeEnum = {
-    Click: 'click'
+    Sent: 'sent',
+    Delivered: 'delivered'
 } as const;
 
 export type ActionInteractionOneOf1AllOfTypeEnum = typeof ActionInteractionOneOf1AllOfTypeEnum[keyof typeof ActionInteractionOneOf1AllOfTypeEnum];
@@ -539,21 +553,21 @@ export interface ActionInteractionOneOf2 {
      */
     'type': ActionInteractionOneOf2TypeEnum;
     /**
-     * 
-     * @type {ActionInteractionOneOf2AllOfContent}
+     * Text of the button or list item that was clicked
+     * @type {string}
      * @memberof ActionInteractionOneOf2
      */
-    'content': ActionInteractionOneOf2AllOfContent;
+    'text': string;
 }
 
 export const ActionInteractionOneOf2TypeEnum = {
-    UserInput: 'user_input'
+    Click: 'click'
 } as const;
 
 export type ActionInteractionOneOf2TypeEnum = typeof ActionInteractionOneOf2TypeEnum[keyof typeof ActionInteractionOneOf2TypeEnum];
 
 /**
- * Action was sent out and a user input was submitted
+ * Action was sent out and a button/list item was clicked
  * @export
  * @interface ActionInteractionOneOf2AllOf
  */
@@ -565,35 +579,93 @@ export interface ActionInteractionOneOf2AllOf {
      */
     'type': ActionInteractionOneOf2AllOfTypeEnum;
     /**
-     * 
-     * @type {ActionInteractionOneOf2AllOfContent}
+     * Text of the button or list item that was clicked
+     * @type {string}
      * @memberof ActionInteractionOneOf2AllOf
      */
-    'content': ActionInteractionOneOf2AllOfContent;
+    'text': string;
 }
 
 export const ActionInteractionOneOf2AllOfTypeEnum = {
-    UserInput: 'user_input'
+    Click: 'click'
 } as const;
 
 export type ActionInteractionOneOf2AllOfTypeEnum = typeof ActionInteractionOneOf2AllOfTypeEnum[keyof typeof ActionInteractionOneOf2AllOfTypeEnum];
 
 /**
+ * 
+ * @export
+ * @interface ActionInteractionOneOf3
+ */
+export interface ActionInteractionOneOf3 {
+    /**
+     * An ISO formatted timestamp
+     * @type {string}
+     * @memberof ActionInteractionOneOf3
+     */
+    'doneAt': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ActionInteractionOneOf3
+     */
+    'type': ActionInteractionOneOf3TypeEnum;
+    /**
+     * 
+     * @type {ActionInteractionOneOf3AllOfContent}
+     * @memberof ActionInteractionOneOf3
+     */
+    'content': ActionInteractionOneOf3AllOfContent;
+}
+
+export const ActionInteractionOneOf3TypeEnum = {
+    UserInput: 'user_input'
+} as const;
+
+export type ActionInteractionOneOf3TypeEnum = typeof ActionInteractionOneOf3TypeEnum[keyof typeof ActionInteractionOneOf3TypeEnum];
+
+/**
+ * Action was sent out and a user input was submitted
+ * @export
+ * @interface ActionInteractionOneOf3AllOf
+ */
+export interface ActionInteractionOneOf3AllOf {
+    /**
+     * 
+     * @type {string}
+     * @memberof ActionInteractionOneOf3AllOf
+     */
+    'type': ActionInteractionOneOf3AllOfTypeEnum;
+    /**
+     * 
+     * @type {ActionInteractionOneOf3AllOfContent}
+     * @memberof ActionInteractionOneOf3AllOf
+     */
+    'content': ActionInteractionOneOf3AllOfContent;
+}
+
+export const ActionInteractionOneOf3AllOfTypeEnum = {
+    UserInput: 'user_input'
+} as const;
+
+export type ActionInteractionOneOf3AllOfTypeEnum = typeof ActionInteractionOneOf3AllOfTypeEnum[keyof typeof ActionInteractionOneOf3AllOfTypeEnum];
+
+/**
  * Content of the user input that was submitted
  * @export
- * @interface ActionInteractionOneOf2AllOfContent
+ * @interface ActionInteractionOneOf3AllOfContent
  */
-export interface ActionInteractionOneOf2AllOfContent {
+export interface ActionInteractionOneOf3AllOfContent {
     /**
      * Text of the user input
      * @type {string}
-     * @memberof ActionInteractionOneOf2AllOfContent
+     * @memberof ActionInteractionOneOf3AllOfContent
      */
     'text'?: string;
     /**
      * Attachments of the user input
      * @type {Array<IMMessageAttachment>}
-     * @memberof ActionInteractionOneOf2AllOfContent
+     * @memberof ActionInteractionOneOf3AllOfContent
      */
     'attachments'?: Array<IMMessageAttachment>;
 }
@@ -609,10 +681,16 @@ export interface ActionInteractionOneOfAllOf {
      * @memberof ActionInteractionOneOfAllOf
      */
     'type': ActionInteractionOneOfAllOfTypeEnum;
+    /**
+     * Error message
+     * @type {string}
+     * @memberof ActionInteractionOneOfAllOf
+     */
+    'message'?: string;
 }
 
 export const ActionInteractionOneOfAllOfTypeEnum = {
-    Sent: 'sent'
+    Error: 'error'
 } as const;
 
 export type ActionInteractionOneOfAllOfTypeEnum = typeof ActionInteractionOneOfAllOfTypeEnum[keyof typeof ActionInteractionOneOfAllOfTypeEnum];
@@ -790,12 +868,6 @@ export interface Bot {
     'actions'?: Array<Action>;
     /**
      * 
-     * @type {Array<BotTrigger>}
-     * @memberof Bot
-     */
-    'startTriggers'?: Array<BotTrigger>;
-    /**
-     * 
      * @type {string}
      * @memberof Bot
      */
@@ -870,50 +942,35 @@ export interface Bot {
 /**
  * 
  * @export
- * @interface BotCondition
+ * @interface BotBoolCondition
  */
-export interface BotCondition {
+export interface BotBoolCondition {
     /**
      * 
      * @type {string}
-     * @memberof BotCondition
+     * @memberof BotBoolCondition
      */
     'propertyPath': string;
     /**
      * 
-     * @type {Array<BotConditionValuesInner>}
-     * @memberof BotCondition
-     */
-    'values': Array<BotConditionValuesInner>;
-    /**
-     * 
      * @type {string}
-     * @memberof BotCondition
+     * @memberof BotBoolCondition
      */
-    'operator': BotConditionOperatorEnum;
+    'operator': BotBoolConditionOperatorEnum;
 }
 
-export const BotConditionOperatorEnum = {
-    NotEmpty: 'notEmpty',
-    Equals: 'equals',
-    NotEquals: 'notEquals',
-    GreaterThan: 'greaterThan',
-    LessThan: 'lessThan',
-    GreaterThanOrEquals: 'greaterThanOrEquals',
-    LessThanOrEquals: 'lessThanOrEquals',
-    Contains: 'contains',
-    NotContains: 'notContains',
-    StartsWith: 'startsWith',
-    EndsWith: 'endsWith'
+export const BotBoolConditionOperatorEnum = {
+    IsTrue: 'isTrue',
+    IsFalse: 'isFalse'
 } as const;
 
-export type BotConditionOperatorEnum = typeof BotConditionOperatorEnum[keyof typeof BotConditionOperatorEnum];
+export type BotBoolConditionOperatorEnum = typeof BotBoolConditionOperatorEnum[keyof typeof BotBoolConditionOperatorEnum];
 
 /**
- * @type BotConditionValuesInner
+ * @type BotCondition
  * @export
  */
-export type BotConditionValuesInner = number | string;
+export type BotCondition = BotBoolCondition | BotEqualityCondition | BotLegacyCondition | BotNumericalCondition | BotTextCondition | BotTimeCondition;
 
 /**
  * 
@@ -940,6 +997,45 @@ export interface BotData {
      */
     'notes': Array<BotNote>;
 }
+/**
+ * 
+ * @export
+ * @interface BotEqualityCondition
+ */
+export interface BotEqualityCondition {
+    /**
+     * 
+     * @type {string}
+     * @memberof BotEqualityCondition
+     */
+    'propertyPath': string;
+    /**
+     * 
+     * @type {BotEqualityConditionValue}
+     * @memberof BotEqualityCondition
+     */
+    'value': BotEqualityConditionValue;
+    /**
+     * 
+     * @type {string}
+     * @memberof BotEqualityCondition
+     */
+    'operator': BotEqualityConditionOperatorEnum;
+}
+
+export const BotEqualityConditionOperatorEnum = {
+    Equals: 'equals',
+    NotEquals: 'notEquals'
+} as const;
+
+export type BotEqualityConditionOperatorEnum = typeof BotEqualityConditionOperatorEnum[keyof typeof BotEqualityConditionOperatorEnum];
+
+/**
+ * @type BotEqualityConditionValue
+ * @export
+ */
+export type BotEqualityConditionValue = Array<string> | number | string;
+
 /**
  * Stores the record for whenever a bot is fired.
  * @export
@@ -1000,14 +1096,75 @@ export interface BotFireRecord {
      * @memberof BotFireRecord
      */
     'interactions': { [key: string]: ActionInteraction; };
+    /**
+     * 
+     * @type {string}
+     * @memberof BotFireRecord
+     */
+    'instanceId'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof BotFireRecord
+     */
+    'scheduledActionId'?: string;
 }
 
 export const BotFireRecordStatusEnum = {
+    Scheduled: 'scheduled',
     Running: 'running',
     Completed: 'completed'
 } as const;
 
 export type BotFireRecordStatusEnum = typeof BotFireRecordStatusEnum[keyof typeof BotFireRecordStatusEnum];
+
+/**
+ * 
+ * @export
+ * @interface BotLegacyCondition
+ */
+export interface BotLegacyCondition {
+    /**
+     * 
+     * @type {string}
+     * @memberof BotLegacyCondition
+     */
+    'propertyPath': string;
+    /**
+     * 
+     * @type {Array<BotLegacyConditionValuesInner>}
+     * @memberof BotLegacyCondition
+     */
+    'values': Array<BotLegacyConditionValuesInner>;
+    /**
+     * 
+     * @type {string}
+     * @memberof BotLegacyCondition
+     */
+    'operator': BotLegacyConditionOperatorEnum;
+}
+
+export const BotLegacyConditionOperatorEnum = {
+    NotEmpty: 'notEmpty',
+    Equals: 'equals',
+    NotEquals: 'notEquals',
+    GreaterThan: 'greaterThan',
+    LessThan: 'lessThan',
+    GreaterThanOrEquals: 'greaterThanOrEquals',
+    LessThanOrEquals: 'lessThanOrEquals',
+    Contains: 'contains',
+    NotContains: 'notContains',
+    StartsWith: 'startsWith',
+    EndsWith: 'endsWith'
+} as const;
+
+export type BotLegacyConditionOperatorEnum = typeof BotLegacyConditionOperatorEnum[keyof typeof BotLegacyConditionOperatorEnum];
+
+/**
+ * @type BotLegacyConditionValuesInner
+ * @export
+ */
+export type BotLegacyConditionValuesInner = number | string;
 
 /**
  * 
@@ -1368,6 +1525,41 @@ export interface BotNoteTargetsInner {
 /**
  * 
  * @export
+ * @interface BotNumericalCondition
+ */
+export interface BotNumericalCondition {
+    /**
+     * 
+     * @type {string}
+     * @memberof BotNumericalCondition
+     */
+    'propertyPath': string;
+    /**
+     * 
+     * @type {number}
+     * @memberof BotNumericalCondition
+     */
+    'value': number;
+    /**
+     * 
+     * @type {string}
+     * @memberof BotNumericalCondition
+     */
+    'operator': BotNumericalConditionOperatorEnum;
+}
+
+export const BotNumericalConditionOperatorEnum = {
+    GreaterThan: 'greaterThan',
+    LessThan: 'lessThan',
+    GreaterThanOrEquals: 'greaterThanOrEquals',
+    LessThanOrEquals: 'lessThanOrEquals'
+} as const;
+
+export type BotNumericalConditionOperatorEnum = typeof BotNumericalConditionOperatorEnum[keyof typeof BotNumericalConditionOperatorEnum];
+
+/**
+ * 
+ * @export
  * @interface BotPatch
  */
 export interface BotPatch {
@@ -1384,19 +1576,13 @@ export interface BotPatch {
      */
     'startingActionId'?: string;
     /**
-     * 
-     * @type {Array<BotTrigger>}
-     * @memberof BotPatch
-     */
-    'startTriggers'?: Array<BotTrigger>;
-    /**
      * ID of the bot sequence
      * @type {string}
      * @memberof BotPatch
      */
     'defaultAccountId'?: string;
     /**
-     * List of actions to edit/add. Do not specify the ID to add a new action
+     * List of actions to upsert. Do not specify the ID to add a new action
      * @type {Array<ActionContent>}
      * @memberof BotPatch
      */
@@ -1407,6 +1593,12 @@ export interface BotPatch {
      * @memberof BotPatch
      */
     'notes'?: Array<BotNote>;
+    /**
+     * 
+     * @type {Array<TriggerUpsert>}
+     * @memberof BotPatch
+     */
+    'triggers'?: Array<TriggerUpsert>;
     /**
      * 
      * @type {string}
@@ -1460,6 +1652,75 @@ export interface BotShareRequest {
 /**
  * 
  * @export
+ * @interface BotTextCondition
+ */
+export interface BotTextCondition {
+    /**
+     * 
+     * @type {string}
+     * @memberof BotTextCondition
+     */
+    'propertyPath': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof BotTextCondition
+     */
+    'value': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof BotTextCondition
+     */
+    'operator': BotTextConditionOperatorEnum;
+}
+
+export const BotTextConditionOperatorEnum = {
+    NotEmpty: 'notEmpty',
+    Contains: 'contains',
+    NotContains: 'notContains',
+    StartsWith: 'startsWith',
+    EndsWith: 'endsWith',
+    ContainsPhrase: 'containsPhrase'
+} as const;
+
+export type BotTextConditionOperatorEnum = typeof BotTextConditionOperatorEnum[keyof typeof BotTextConditionOperatorEnum];
+
+/**
+ * 
+ * @export
+ * @interface BotTimeCondition
+ */
+export interface BotTimeCondition {
+    /**
+     * 
+     * @type {string}
+     * @memberof BotTimeCondition
+     */
+    'propertyPath': string;
+    /**
+     * 
+     * @type {TimePeriodDescriptor}
+     * @memberof BotTimeCondition
+     */
+    'value': TimePeriodDescriptor;
+    /**
+     * 
+     * @type {string}
+     * @memberof BotTimeCondition
+     */
+    'operator': BotTimeConditionOperatorEnum;
+}
+
+export const BotTimeConditionOperatorEnum = {
+    Timestamp: 'timestamp'
+} as const;
+
+export type BotTimeConditionOperatorEnum = typeof BotTimeConditionOperatorEnum[keyof typeof BotTimeConditionOperatorEnum];
+
+/**
+ * 
+ * @export
  * @interface BotTrigger
  */
 export interface BotTrigger {
@@ -1471,52 +1732,28 @@ export interface BotTrigger {
     'id': string;
     /**
      * 
+     * @type {boolean}
+     * @memberof BotTrigger
+     */
+    'enabled': boolean;
+    /**
+     * 
      * @type {string}
      * @memberof BotTrigger
      */
     'name': string;
     /**
-     * 
-     * @type {string}
-     * @memberof BotTrigger
-     */
-    'accountId': string;
-    /**
-     * 
+     * ID of the bot sequence
      * @type {string}
      * @memberof BotTrigger
      */
     'botId': string;
     /**
      * 
-     * @type {boolean}
+     * @type {NextAction}
      * @memberof BotTrigger
      */
-    'enabled': boolean;
-    /**
-     * Time interval between each message sent in seconds
-     * @type {number}
-     * @memberof BotTrigger
-     */
-    'sendInterval'?: number;
-    /**
-     * 
-     * @type {Array<BotCondition>}
-     * @memberof BotTrigger
-     */
-    'conditions'?: Array<BotCondition>;
-    /**
-     * Additional context for the triggering of the bot. 
-     * @type {{ [key: string]: any; }}
-     * @memberof BotTrigger
-     */
-    'context'?: { [key: string]: any; };
-    /**
-     * 
-     * @type {BotTriggerMethod}
-     * @memberof BotTrigger
-     */
-    'method': BotTriggerMethod;
+    'action': NextAction;
     /**
      * 
      * @type {BotTriggerTarget}
@@ -1525,10 +1762,10 @@ export interface BotTrigger {
     'target': BotTriggerTarget;
     /**
      * 
-     * @type {BotTriggerSendOptions}
+     * @type {BotTriggerOptions}
      * @memberof BotTrigger
      */
-    'options'?: BotTriggerSendOptions;
+    'options': BotTriggerOptions;
     /**
      * An ISO formatted timestamp
      * @type {string}
@@ -1540,13 +1777,62 @@ export interface BotTrigger {
      * @type {number}
      * @memberof BotTrigger
      */
-    'triggered'?: number;
+    'triggered': number;
     /**
-     * 
-     * @type {Array<BotTriggerInstance>}
+     * An ISO formatted timestamp
+     * @type {string}
      * @memberof BotTrigger
      */
-    'instances'?: Array<BotTriggerInstance>;
+    'createdAt': string;
+    /**
+     * An ISO formatted timestamp
+     * @type {string}
+     * @memberof BotTrigger
+     */
+    'updatedAt': string;
+    /**
+     * 
+     * @type {TriggerMethod}
+     * @memberof BotTrigger
+     */
+    'method': TriggerMethod;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof BotTrigger
+     */
+    'remove'?: boolean;
+}
+/**
+ * 
+ * @export
+ * @interface BotTriggerAllOf
+ */
+export interface BotTriggerAllOf {
+    /**
+     * An ISO formatted timestamp
+     * @type {string}
+     * @memberof BotTriggerAllOf
+     */
+    'lastTriggered'?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof BotTriggerAllOf
+     */
+    'triggered': number;
+    /**
+     * An ISO formatted timestamp
+     * @type {string}
+     * @memberof BotTriggerAllOf
+     */
+    'createdAt': string;
+    /**
+     * An ISO formatted timestamp
+     * @type {string}
+     * @memberof BotTriggerAllOf
+     */
+    'updatedAt': string;
 }
 /**
  * 
@@ -1574,17 +1860,11 @@ export interface BotTriggerInstance {
      */
     'id': string;
     /**
-     * 
-     * @type {{ [key: string]: any; }}
-     * @memberof BotTriggerInstance
-     */
-    'payload': { [key: string]: any; };
-    /**
      * An ISO formatted timestamp
      * @type {string}
      * @memberof BotTriggerInstance
      */
-    'startedAt': string;
+    'createdAt': string;
     /**
      * 
      * @type {string}
@@ -1593,23 +1873,34 @@ export interface BotTriggerInstance {
     'status': BotTriggerInstanceStatusEnum;
     /**
      * 
+     * @type {InstanceFirstActionStatusCounts}
+     * @memberof BotTriggerInstance
+     */
+    'firstActionCounts': InstanceFirstActionStatusCounts;
+    /**
+     * 
      * @type {string}
      * @memberof BotTriggerInstance
      */
-    'triggerId'?: string;
+    'triggerId': string;
     /**
-     * 
-     * @type {Array<ActionFireRecord>}
+     * An ISO formatted timestamp
+     * @type {string}
      * @memberof BotTriggerInstance
      */
-    'records'?: Array<ActionFireRecord>;
+    'nextScheduledAt'?: string;
+    /**
+     * An ISO formatted timestamp
+     * @type {string}
+     * @memberof BotTriggerInstance
+     */
+    'completedAt'?: string;
 }
 
 export const BotTriggerInstanceStatusEnum = {
-    Pending: 'pending',
     Running: 'running',
     Completed: 'completed',
-    Cancelled: 'cancelled'
+    Stopped: 'stopped'
 } as const;
 
 export type BotTriggerInstanceStatusEnum = typeof BotTriggerInstanceStatusEnum[keyof typeof BotTriggerInstanceStatusEnum];
@@ -1617,56 +1908,34 @@ export type BotTriggerInstanceStatusEnum = typeof BotTriggerInstanceStatusEnum[k
 /**
  * 
  * @export
- * @interface BotTriggerInstancesGet200Response
+ * @interface BotTriggerOptions
  */
-export interface BotTriggerInstancesGet200Response {
+export interface BotTriggerOptions {
     /**
      * 
-     * @type {Array<BotTriggerInstance>}
-     * @memberof BotTriggerInstancesGet200Response
+     * @type {TriggerDelay}
+     * @memberof BotTriggerOptions
      */
-    'instances': Array<BotTriggerInstance>;
+    'delay'?: TriggerDelay;
     /**
-     * Cursor to use to fetch next page of results
-     * @type {string}
-     * @memberof BotTriggerInstancesGet200Response
+     * 
+     * @type {MessageSendOptions}
+     * @memberof BotTriggerOptions
      */
-    'cursor'?: string;
+    'sendOptions'?: MessageSendOptions;
+    /**
+     * The interval in seconds between each message being sent.
+     * @type {number}
+     * @memberof BotTriggerOptions
+     */
+    'sendIntervalS'?: number;
+    /**
+     * 
+     * @type {TimePeriodDescriptor}
+     * @memberof BotTriggerOptions
+     */
+    'sendTimeRange'?: TimePeriodDescriptor;
 }
-/**
- * 
- * @export
- * @interface BotTriggerMethod
- */
-export interface BotTriggerMethod {
-    /**
-     * 
-     * @type {string}
-     * @memberof BotTriggerMethod
-     */
-    'type': BotTriggerMethodTypeEnum;
-    /**
-     * 
-     * @type {string}
-     * @memberof BotTriggerMethod
-     */
-    'value'?: string;
-    /**
-     * An ISO formatted timestamp
-     * @type {string}
-     * @memberof BotTriggerMethod
-     */
-    'nextExecutionDate'?: string;
-}
-
-export const BotTriggerMethodTypeEnum = {
-    Webhook: 'webhook',
-    Timestamp: 'timestamp',
-    Event: 'event'
-} as const;
-
-export type BotTriggerMethodTypeEnum = typeof BotTriggerMethodTypeEnum[keyof typeof BotTriggerMethodTypeEnum];
-
 /**
  * 
  * @export
@@ -1675,10 +1944,10 @@ export type BotTriggerMethodTypeEnum = typeof BotTriggerMethodTypeEnum[keyof typ
 export interface BotTriggerPayload {
     /**
      * 
-     * @type {BotTriggerPayloadContact}
+     * @type {{ [key: string]: any; }}
      * @memberof BotTriggerPayload
      */
-    'contact': BotTriggerPayloadContact;
+    'contact'?: { [key: string]: any; };
     /**
      * The data that is being sent to the bot. The data has the following properties
      * @type {{ [key: string]: any; }}
@@ -1693,314 +1962,11 @@ export interface BotTriggerPayload {
     'context': BotTriggerContext;
 }
 /**
- * The contact that the message is being sent to. The contact properties such as the following and more. check IM service for full contact object
- * @export
- * @interface BotTriggerPayloadContact
- */
-export interface BotTriggerPayloadContact {
-    [key: string]: any;
-
-    /**
-     * ID of the contact
-     * @type {string}
-     * @memberof BotTriggerPayloadContact
-     */
-    'id': string;
-    /**
-     * ID of the account
-     * @type {string}
-     * @memberof BotTriggerPayloadContact
-     */
-    'accountId': string;
-    /**
-     * Name of the contact
-     * @type {string}
-     * @memberof BotTriggerPayloadContact
-     */
-    'name'?: string;
-    /**
-     * Type of the contact
-     * @type {string}
-     * @memberof BotTriggerPayloadContact
-     */
-    'type'?: BotTriggerPayloadContactTypeEnum;
-    /**
-     * Tags on the contact
-     * @type {Array<string>}
-     * @memberof BotTriggerPayloadContact
-     */
-    'tags'?: Array<string>;
-}
-
-export const BotTriggerPayloadContactTypeEnum = {
-    Individual: 'individual',
-    Group: 'group'
-} as const;
-
-export type BotTriggerPayloadContactTypeEnum = typeof BotTriggerPayloadContactTypeEnum[keyof typeof BotTriggerPayloadContactTypeEnum];
-
-/**
- * 
- * @export
- * @interface BotTriggerSendOptions
- */
-export interface BotTriggerSendOptions {
-    /**
-     * 
-     * @type {MessageSendOptions}
-     * @memberof BotTriggerSendOptions
-     */
-    'miscOptions'?: MessageSendOptions;
-    /**
-     * parameters to replace in text
-     * @type {{ [key: string]: any; }}
-     * @memberof BotTriggerSendOptions
-     */
-    'parameters'?: { [key: string]: any; };
-}
-/**
  * @type BotTriggerTarget
  * @export
  */
-export type BotTriggerTarget = BotTriggerTargetOneOf | BotTriggerTargetOneOf1;
+export type BotTriggerTarget = ContactsQueryTarget | PropertyPathTarget;
 
-/**
- * 
- * @export
- * @interface BotTriggerTargetOneOf
- */
-export interface BotTriggerTargetOneOf {
-    /**
-     * 
-     * @type {string}
-     * @memberof BotTriggerTargetOneOf
-     */
-    'type': BotTriggerTargetOneOfTypeEnum;
-    /**
-     * Path of the property to access in the payload. Payload has the following properties 1. \'contact.*\' to access a property of the contact being sent to. Find structure of contact here 2. \'data.*\' to access a property of the event data 3. \'context.*\' to access a property of the context (note: probably add context schema to openapi spec?)
-     * @type {string}
-     * @memberof BotTriggerTargetOneOf
-     */
-    'propertyPath': string;
-    /**
-     * 
-     * @type {BotTriggerTargetOneOfAccountId}
-     * @memberof BotTriggerTargetOneOf
-     */
-    'accountId': BotTriggerTargetOneOfAccountId;
-}
-
-export const BotTriggerTargetOneOfTypeEnum = {
-    PropertyPath: 'propertyPath'
-} as const;
-
-export type BotTriggerTargetOneOfTypeEnum = typeof BotTriggerTargetOneOfTypeEnum[keyof typeof BotTriggerTargetOneOfTypeEnum];
-
-/**
- * 
- * @export
- * @interface BotTriggerTargetOneOf1
- */
-export interface BotTriggerTargetOneOf1 {
-    /**
-     * 
-     * @type {string}
-     * @memberof BotTriggerTargetOneOf1
-     */
-    'type': BotTriggerTargetOneOf1TypeEnum;
-    /**
-     * 
-     * @type {BotTriggerTargetQuery}
-     * @memberof BotTriggerTargetOneOf1
-     */
-    'query': BotTriggerTargetQuery;
-    /**
-     * 
-     * @type {BotTriggerTargetOneOf1AccountId}
-     * @memberof BotTriggerTargetOneOf1
-     */
-    'accountId': BotTriggerTargetOneOf1AccountId;
-}
-
-export const BotTriggerTargetOneOf1TypeEnum = {
-    Fetch: 'fetch'
-} as const;
-
-export type BotTriggerTargetOneOf1TypeEnum = typeof BotTriggerTargetOneOf1TypeEnum[keyof typeof BotTriggerTargetOneOf1TypeEnum];
-
-/**
- * 
- * @export
- * @interface BotTriggerTargetOneOf1AccountId
- */
-export interface BotTriggerTargetOneOf1AccountId {
-    /**
-     * 
-     * @type {string}
-     * @memberof BotTriggerTargetOneOf1AccountId
-     */
-    'type': BotTriggerTargetOneOf1AccountIdTypeEnum;
-    /**
-     * the property name to extract `accountId` from of the contact, or the exact ID of the account
-     * @type {string}
-     * @memberof BotTriggerTargetOneOf1AccountId
-     */
-    'value': string;
-}
-
-export const BotTriggerTargetOneOf1AccountIdTypeEnum = {
-    PropertyPath: 'propertyPath',
-    Exact: 'exact'
-} as const;
-
-export type BotTriggerTargetOneOf1AccountIdTypeEnum = typeof BotTriggerTargetOneOf1AccountIdTypeEnum[keyof typeof BotTriggerTargetOneOf1AccountIdTypeEnum];
-
-/**
- * 
- * @export
- * @interface BotTriggerTargetOneOfAccountId
- */
-export interface BotTriggerTargetOneOfAccountId {
-    /**
-     * 
-     * @type {string}
-     * @memberof BotTriggerTargetOneOfAccountId
-     */
-    'type': BotTriggerTargetOneOfAccountIdTypeEnum;
-    /**
-     * the property name to extract `accountId` from, or the exact ID of the account
-     * @type {string}
-     * @memberof BotTriggerTargetOneOfAccountId
-     */
-    'value': string;
-}
-
-export const BotTriggerTargetOneOfAccountIdTypeEnum = {
-    PropertyPath: 'propertyPath',
-    Exact: 'exact'
-} as const;
-
-export type BotTriggerTargetOneOfAccountIdTypeEnum = typeof BotTriggerTargetOneOfAccountIdTypeEnum[keyof typeof BotTriggerTargetOneOfAccountIdTypeEnum];
-
-/**
- * 
- * @export
- * @interface BotTriggerTargetQuery
- */
-export interface BotTriggerTargetQuery {
-    /**
-     * 
-     * @type {Array<string>}
-     * @memberof BotTriggerTargetQuery
-     */
-    'tags'?: Array<string>;
-    /**
-     * 
-     * @type {Array<string>}
-     * @memberof BotTriggerTargetQuery
-     */
-    'notTags'?: Array<string>;
-    /**
-     * 
-     * @type {string}
-     * @memberof BotTriggerTargetQuery
-     */
-    'q'?: string | null;
-    /**
-     * 
-     * @type {number}
-     * @memberof BotTriggerTargetQuery
-     */
-    'minMessagesSent'?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof BotTriggerTargetQuery
-     */
-    'maxMessagesSent'?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof BotTriggerTargetQuery
-     */
-    'minMessagesRecv'?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof BotTriggerTargetQuery
-     */
-    'maxMessagesRecv'?: number;
-    /**
-     * 
-     * @type {Array<string>}
-     * @memberof BotTriggerTargetQuery
-     */
-    'assignee'?: Array<string>;
-    /**
-     * 
-     * @type {Array<string>}
-     * @memberof BotTriggerTargetQuery
-     */
-    'notAssignee'?: Array<string>;
-    /**
-     * 
-     * @type {string}
-     * @memberof BotTriggerTargetQuery
-     */
-    'type'?: BotTriggerTargetQueryTypeEnum;
-    /**
-     * 
-     * @type {Array<string>}
-     * @memberof BotTriggerTargetQuery
-     */
-    'contacts'?: Array<string>;
-    /**
-     * 
-     * @type {Array<string>}
-     * @memberof BotTriggerTargetQuery
-     */
-    'notContacts'?: Array<string>;
-    /**
-     * 
-     * @type {Array<string>}
-     * @memberof BotTriggerTargetQuery
-     */
-    'accountId'?: Array<string>;
-}
-
-export const BotTriggerTargetQueryTypeEnum = {
-    Individual: 'individual',
-    Group: 'group'
-} as const;
-
-export type BotTriggerTargetQueryTypeEnum = typeof BotTriggerTargetQueryTypeEnum[keyof typeof BotTriggerTargetQueryTypeEnum];
-
-/**
- * 
- * @export
- * @interface BotTriggerWebhookRequest
- */
-export interface BotTriggerWebhookRequest {
-    /**
-     * Data to be sent to the webhook
-     * @type {{ [key: string]: any; }}
-     * @memberof BotTriggerWebhookRequest
-     */
-    'data'?: { [key: string]: any; };
-}
-/**
- * 
- * @export
- * @interface BotTriggersPatchRequest
- */
-export interface BotTriggersPatchRequest {
-    /**
-     * 
-     * @type {Array<BotTrigger>}
-     * @memberof BotTriggersPatchRequest
-     */
-    'botTriggers': Array<BotTrigger>;
-}
 /**
  * 
  * @export
@@ -2152,6 +2118,57 @@ export interface BotsGets200Response {
      */
     'totalCount'?: number;
 }
+/**
+ * 
+ * @export
+ * @interface ContactsQueryTarget
+ */
+export interface ContactsQueryTarget {
+    /**
+     * 
+     * @type {string}
+     * @memberof ContactsQueryTarget
+     */
+    'type': ContactsQueryTargetTypeEnum;
+    /**
+     * 
+     * @type {{ [key: string]: any; }}
+     * @memberof ContactsQueryTarget
+     */
+    'query': { [key: string]: any; };
+    /**
+     * 
+     * @type {AccountIDSelector}
+     * @memberof ContactsQueryTarget
+     */
+    'accountId'?: AccountIDSelector;
+}
+
+export const ContactsQueryTargetTypeEnum = {
+    Query: 'query'
+} as const;
+
+export type ContactsQueryTargetTypeEnum = typeof ContactsQueryTargetTypeEnum[keyof typeof ContactsQueryTargetTypeEnum];
+
+/**
+ * 
+ * @export
+ * @enum {string}
+ */
+
+export const DayOfWeek = {
+    Monday: 'Monday',
+    Tuesday: 'Tuesday',
+    Wednesday: 'Wednesday',
+    Thursday: 'Thursday',
+    Friday: 'Friday',
+    Saturday: 'Saturday',
+    Sunday: 'Sunday'
+} as const;
+
+export type DayOfWeek = typeof DayOfWeek[keyof typeof DayOfWeek];
+
+
 /**
  * 
  * @export
@@ -2646,6 +2663,25 @@ export type GetBotFireRecordsContactsParameter = Array<IMUniqueContactID> | IMUn
 /**
  * 
  * @export
+ * @interface GetTriggerInstances200Response
+ */
+export interface GetTriggerInstances200Response {
+    /**
+     * 
+     * @type {Array<BotTriggerInstance>}
+     * @memberof GetTriggerInstances200Response
+     */
+    'items': Array<BotTriggerInstance>;
+    /**
+     * Cursor to use to fetch next page of results
+     * @type {string}
+     * @memberof GetTriggerInstances200Response
+     */
+    'nextPageCursor'?: string;
+}
+/**
+ * 
+ * @export
  * @interface IMMessageAttachment
  */
 export interface IMMessageAttachment {
@@ -2764,7 +2800,8 @@ export const IMMessageSenderContextTypeEnum = {
     Campaigns: 'campaigns',
     Notifications: 'notifications',
     Bot: 'bot',
-    AiChatbot: 'ai-chatbot'
+    AiChatbot: 'ai-chatbot',
+    Trigger: 'trigger'
 } as const;
 
 export type IMMessageSenderContextTypeEnum = typeof IMMessageSenderContextTypeEnum[keyof typeof IMMessageSenderContextTypeEnum];
@@ -2787,6 +2824,88 @@ export interface IMUniqueContactID {
      * @memberof IMUniqueContactID
      */
     'accountId': string;
+}
+/**
+ * Describes how many contacts are in each status for the first action sent in a trigger instance
+ * @export
+ * @interface InstanceFirstActionStatusCounts
+ */
+export interface InstanceFirstActionStatusCounts {
+    /**
+     * 
+     * @type {number}
+     * @memberof InstanceFirstActionStatusCounts
+     */
+    'scheduled'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof InstanceFirstActionStatusCounts
+     */
+    'sent'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof InstanceFirstActionStatusCounts
+     */
+    'delivered'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof InstanceFirstActionStatusCounts
+     */
+    'error'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof InstanceFirstActionStatusCounts
+     */
+    'click'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof InstanceFirstActionStatusCounts
+     */
+    'user_input'?: number;
+}
+/**
+ * 
+ * @export
+ * @interface InternalEventTriggerMethod
+ */
+export interface InternalEventTriggerMethod {
+    /**
+     * 
+     * @type {string}
+     * @memberof InternalEventTriggerMethod
+     */
+    'type': InternalEventTriggerMethodTypeEnum;
+    /**
+     * 
+     * @type {InternalEventTriggerMethodData}
+     * @memberof InternalEventTriggerMethod
+     */
+    'data': InternalEventTriggerMethodData;
+}
+
+export const InternalEventTriggerMethodTypeEnum = {
+    InternalEvent: 'internal_event'
+} as const;
+
+export type InternalEventTriggerMethodTypeEnum = typeof InternalEventTriggerMethodTypeEnum[keyof typeof InternalEventTriggerMethodTypeEnum];
+
+/**
+ * 
+ * @export
+ * @interface InternalEventTriggerMethodData
+ */
+export interface InternalEventTriggerMethodData {
+    /**
+     * 
+     * @type {string}
+     * @memberof InternalEventTriggerMethodData
+     */
+    'event': string;
 }
 /**
  * 
@@ -2842,12 +2961,6 @@ export interface MessageObj {
      * @memberof MessageObj
      */
     'products'?: Array<IMMessageProduct>;
-    /**
-     * the subject of the message, if applicable
-     * @type {string}
-     * @memberof MessageObj
-     */
-    'subject'?: string;
 }
 /**
  * Optional parameters to send a message
@@ -3063,6 +3176,65 @@ export interface Position {
      */
     'y': number;
 }
+/**
+ * 
+ * @export
+ * @interface PropertyPathTarget
+ */
+export interface PropertyPathTarget {
+    /**
+     * 
+     * @type {string}
+     * @memberof PropertyPathTarget
+     */
+    'type': PropertyPathTargetTypeEnum;
+    /**
+     * Path of the property to access in the payload data. Use dot notation for nested properties. Please note, this is inside the `data` object of the payload, so avoid the `data.` prefix.
+     * @type {string}
+     * @memberof PropertyPathTarget
+     */
+    'propertyPath': string;
+    /**
+     * 
+     * @type {AccountIDSelector}
+     * @memberof PropertyPathTarget
+     */
+    'accountId'?: AccountIDSelector;
+}
+
+export const PropertyPathTargetTypeEnum = {
+    PropertyPath: 'propertyPath'
+} as const;
+
+export type PropertyPathTargetTypeEnum = typeof PropertyPathTargetTypeEnum[keyof typeof PropertyPathTargetTypeEnum];
+
+/**
+ * Provide either a property path to extract from the payload /payload data or an exact value
+ * @export
+ * @interface PropertyPathValue
+ */
+export interface PropertyPathValue {
+    /**
+     * 
+     * @type {string}
+     * @memberof PropertyPathValue
+     */
+    'type': PropertyPathValueTypeEnum;
+    /**
+     * 
+     * @type {string}
+     * @memberof PropertyPathValue
+     */
+    'value': string;
+}
+
+export const PropertyPathValueTypeEnum = {
+    PropertyPath: 'propertyPath',
+    Exact: 'exact'
+} as const;
+
+export type PropertyPathValueTypeEnum = typeof PropertyPathValueTypeEnum[keyof typeof PropertyPathValueTypeEnum];
+
 /**
  * Options provided here will override the global options provided in the botsFire request
  * @export
@@ -3342,6 +3514,256 @@ export const TemplateStatusUpdateRequestTemplatesInnerStatusEnum = {
 
 export type TemplateStatusUpdateRequestTemplatesInnerStatusEnum = typeof TemplateStatusUpdateRequestTemplatesInnerStatusEnum[keyof typeof TemplateStatusUpdateRequestTemplatesInnerStatusEnum];
 
+/**
+ * 
+ * @export
+ * @interface TimePeriodDescriptor
+ */
+export interface TimePeriodDescriptor {
+    /**
+     * 
+     * @type {Array<DayOfWeek>}
+     * @memberof TimePeriodDescriptor
+     */
+    'days'?: Array<DayOfWeek>;
+    /**
+     * 
+     * @type {string}
+     * @memberof TimePeriodDescriptor
+     */
+    'startTime': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof TimePeriodDescriptor
+     */
+    'endTime': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof TimePeriodDescriptor
+     */
+    'timezone': string;
+}
+/**
+ * 
+ * @export
+ * @interface TimestampedTriggerMethod
+ */
+export interface TimestampedTriggerMethod {
+    /**
+     * 
+     * @type {string}
+     * @memberof TimestampedTriggerMethod
+     */
+    'type': TimestampedTriggerMethodTypeEnum;
+    /**
+     * 
+     * @type {TimestampedTriggerMethodData}
+     * @memberof TimestampedTriggerMethod
+     */
+    'data': TimestampedTriggerMethodData;
+}
+
+export const TimestampedTriggerMethodTypeEnum = {
+    Timestamp: 'timestamp'
+} as const;
+
+export type TimestampedTriggerMethodTypeEnum = typeof TimestampedTriggerMethodTypeEnum[keyof typeof TimestampedTriggerMethodTypeEnum];
+
+/**
+ * 
+ * @export
+ * @interface TimestampedTriggerMethodData
+ */
+export interface TimestampedTriggerMethodData {
+    /**
+     * An ISO formatted timestamp
+     * @type {string}
+     * @memberof TimestampedTriggerMethodData
+     */
+    'startDate': string;
+    /**
+     * 
+     * @type {TimestampedTriggerMethodDataRecurring}
+     * @memberof TimestampedTriggerMethodData
+     */
+    'recurring'?: TimestampedTriggerMethodDataRecurring;
+    /**
+     * An ISO formatted timestamp
+     * @type {string}
+     * @memberof TimestampedTriggerMethodData
+     */
+    'nextExecutionDate'?: string;
+}
+/**
+ * 
+ * @export
+ * @interface TimestampedTriggerMethodDataRecurring
+ */
+export interface TimestampedTriggerMethodDataRecurring {
+    /**
+     * 
+     * @type {number}
+     * @memberof TimestampedTriggerMethodDataRecurring
+     */
+    'intervalMinutes': number;
+    /**
+     * An ISO formatted timestamp
+     * @type {string}
+     * @memberof TimestampedTriggerMethodDataRecurring
+     */
+    'endDate'?: string;
+}
+/**
+ * @type TriggerDelay
+ * @export
+ */
+export type TriggerDelay = TriggerDelayOneOf | TriggerDelayOneOf1;
+
+/**
+ * 
+ * @export
+ * @interface TriggerDelayOneOf
+ */
+export interface TriggerDelayOneOf {
+    /**
+     * 
+     * @type {string}
+     * @memberof TriggerDelayOneOf
+     */
+    'type': TriggerDelayOneOfTypeEnum;
+    /**
+     * The delay in seconds before the action is triggered
+     * @type {number}
+     * @memberof TriggerDelayOneOf
+     */
+    'value': number;
+}
+
+export const TriggerDelayOneOfTypeEnum = {
+    DelaySeconds: 'delay_seconds'
+} as const;
+
+export type TriggerDelayOneOfTypeEnum = typeof TriggerDelayOneOfTypeEnum[keyof typeof TriggerDelayOneOfTypeEnum];
+
+/**
+ * 
+ * @export
+ * @interface TriggerDelayOneOf1
+ */
+export interface TriggerDelayOneOf1 {
+    /**
+     * 
+     * @type {string}
+     * @memberof TriggerDelayOneOf1
+     */
+    'type': TriggerDelayOneOf1TypeEnum;
+    /**
+     * 
+     * @type {PropertyPathValue}
+     * @memberof TriggerDelayOneOf1
+     */
+    'value': PropertyPathValue;
+}
+
+export const TriggerDelayOneOf1TypeEnum = {
+    Timestamp: 'timestamp'
+} as const;
+
+export type TriggerDelayOneOf1TypeEnum = typeof TriggerDelayOneOf1TypeEnum[keyof typeof TriggerDelayOneOf1TypeEnum];
+
+/**
+ * @type TriggerMethod
+ * @export
+ */
+export type TriggerMethod = InternalEventTriggerMethod | TimestampedTriggerMethod;
+
+/**
+ * 
+ * @export
+ * @interface TriggerUpsert
+ */
+export interface TriggerUpsert {
+    /**
+     * 
+     * @type {string}
+     * @memberof TriggerUpsert
+     */
+    'id'?: string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof TriggerUpsert
+     */
+    'enabled'?: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof TriggerUpsert
+     */
+    'name'?: string;
+    /**
+     * ID of the bot sequence
+     * @type {string}
+     * @memberof TriggerUpsert
+     */
+    'botId'?: string;
+    /**
+     * 
+     * @type {NextAction}
+     * @memberof TriggerUpsert
+     */
+    'action'?: NextAction;
+    /**
+     * 
+     * @type {BotTriggerTarget}
+     * @memberof TriggerUpsert
+     */
+    'target'?: BotTriggerTarget;
+    /**
+     * 
+     * @type {BotTriggerOptions}
+     * @memberof TriggerUpsert
+     */
+    'options'?: BotTriggerOptions;
+    /**
+     * An ISO formatted timestamp
+     * @type {string}
+     * @memberof TriggerUpsert
+     */
+    'lastTriggered'?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof TriggerUpsert
+     */
+    'triggered'?: number;
+    /**
+     * An ISO formatted timestamp
+     * @type {string}
+     * @memberof TriggerUpsert
+     */
+    'createdAt'?: string;
+    /**
+     * An ISO formatted timestamp
+     * @type {string}
+     * @memberof TriggerUpsert
+     */
+    'updatedAt'?: string;
+    /**
+     * 
+     * @type {TriggerMethod}
+     * @memberof TriggerUpsert
+     */
+    'method'?: TriggerMethod;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof TriggerUpsert
+     */
+    'remove'?: boolean;
+}
 
 /**
  * ActionsApi - axios parameter creator
@@ -3729,10 +4151,12 @@ export const BotRecordsApiAxiosParamCreator = function (configuration?: Configur
          * @param {string} [cursor] 
          * @param {{ [key: string]: ActionInteractionQueryValue; }} [interactions] 
          * @param {boolean} [returnTotal] 
+         * @param {string} [instanceId] 
+         * @param {string} [triggerId] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getBotFireRecords: async (botId?: string, contacts?: GetBotFireRecordsContactsParameter, count?: number, cursor?: string, interactions?: { [key: string]: ActionInteractionQueryValue; }, returnTotal?: boolean, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getBotFireRecords: async (botId?: string, contacts?: GetBotFireRecordsContactsParameter, count?: number, cursor?: string, interactions?: { [key: string]: ActionInteractionQueryValue; }, returnTotal?: boolean, instanceId?: string, triggerId?: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/bot/records`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -3773,6 +4197,14 @@ export const BotRecordsApiAxiosParamCreator = function (configuration?: Configur
                 localVarQueryParameter['returnTotal'] = returnTotal;
             }
 
+            if (instanceId !== undefined) {
+                localVarQueryParameter['instanceId'] = instanceId;
+            }
+
+            if (triggerId !== undefined) {
+                localVarQueryParameter['triggerId'] = triggerId;
+            }
+
 
     
             setSearchParams(localVarUrlObj, localVarQueryParameter);
@@ -3803,11 +4235,13 @@ export const BotRecordsApiFp = function(configuration?: Configuration) {
          * @param {string} [cursor] 
          * @param {{ [key: string]: ActionInteractionQueryValue; }} [interactions] 
          * @param {boolean} [returnTotal] 
+         * @param {string} [instanceId] 
+         * @param {string} [triggerId] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getBotFireRecords(botId?: string, contacts?: GetBotFireRecordsContactsParameter, count?: number, cursor?: string, interactions?: { [key: string]: ActionInteractionQueryValue; }, returnTotal?: boolean, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetBotFireRecords200Response>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getBotFireRecords(botId, contacts, count, cursor, interactions, returnTotal, options);
+        async getBotFireRecords(botId?: string, contacts?: GetBotFireRecordsContactsParameter, count?: number, cursor?: string, interactions?: { [key: string]: ActionInteractionQueryValue; }, returnTotal?: boolean, instanceId?: string, triggerId?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetBotFireRecords200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getBotFireRecords(botId, contacts, count, cursor, interactions, returnTotal, instanceId, triggerId, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
     }
@@ -3828,7 +4262,7 @@ export const BotRecordsApiFactory = function (configuration?: Configuration, bas
          * @throws {RequiredError}
          */
         getBotFireRecords(requestParameters: BotRecordsApiGetBotFireRecordsRequest = {}, options?: AxiosRequestConfig): AxiosPromise<GetBotFireRecords200Response> {
-            return localVarFp.getBotFireRecords(requestParameters.botId, requestParameters.contacts, requestParameters.count, requestParameters.cursor, requestParameters.interactions, requestParameters.returnTotal, options).then((request) => request(axios, basePath));
+            return localVarFp.getBotFireRecords(requestParameters.botId, requestParameters.contacts, requestParameters.count, requestParameters.cursor, requestParameters.interactions, requestParameters.returnTotal, requestParameters.instanceId, requestParameters.triggerId, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -3880,6 +4314,20 @@ export interface BotRecordsApiGetBotFireRecordsRequest {
      * @memberof BotRecordsApiGetBotFireRecords
      */
     readonly returnTotal?: boolean
+
+    /**
+     * 
+     * @type {string}
+     * @memberof BotRecordsApiGetBotFireRecords
+     */
+    readonly instanceId?: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof BotRecordsApiGetBotFireRecords
+     */
+    readonly triggerId?: string
 }
 
 /**
@@ -3898,7 +4346,7 @@ export class BotRecordsApi extends BaseAPI {
      * @memberof BotRecordsApi
      */
     public getBotFireRecords(requestParameters: BotRecordsApiGetBotFireRecordsRequest = {}, options?: AxiosRequestConfig) {
-        return BotRecordsApiFp(this.configuration).getBotFireRecords(requestParameters.botId, requestParameters.contacts, requestParameters.count, requestParameters.cursor, requestParameters.interactions, requestParameters.returnTotal, options).then((request) => request(this.axios, this.basePath));
+        return BotRecordsApiFp(this.configuration).getBotFireRecords(requestParameters.botId, requestParameters.contacts, requestParameters.count, requestParameters.cursor, requestParameters.interactions, requestParameters.returnTotal, requestParameters.instanceId, requestParameters.triggerId, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
@@ -3911,64 +4359,16 @@ export const BotTriggersApiAxiosParamCreator = function (configuration?: Configu
     return {
         /**
          * 
-         * @summary Cancel a bot trigger instance
-         * @param {string} triggerId 
-         * @param {string} botId 
-         * @param {string} instanceId 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        botTriggerCancelInstance: async (triggerId: string, botId: string, instanceId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'triggerId' is not null or undefined
-            assertParamExists('botTriggerCancelInstance', 'triggerId', triggerId)
-            // verify required parameter 'botId' is not null or undefined
-            assertParamExists('botTriggerCancelInstance', 'botId', botId)
-            // verify required parameter 'instanceId' is not null or undefined
-            assertParamExists('botTriggerCancelInstance', 'instanceId', instanceId)
-            const localVarPath = `/bot-triggers/cancel-instance/{botId}/{triggerId}/{instanceId}`
-                .replace(`{${"triggerId"}}`, encodeURIComponent(String(triggerId)))
-                .replace(`{${"botId"}}`, encodeURIComponent(String(botId)))
-                .replace(`{${"instanceId"}}`, encodeURIComponent(String(instanceId)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication chatdaddy required
-            // oauth required
-            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["TEMPLATES_UPDATE"], configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
          * @summary Get all instances of a bot trigger
-         * @param {string} triggerId 
+         * @param {string} [triggerId] 
          * @param {number} [count] 
-         * @param {string} [before] 
+         * @param {string} [cursor] 
+         * @param {string} [id] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        botTriggerInstancesGet: async (triggerId: string, count?: number, before?: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'triggerId' is not null or undefined
-            assertParamExists('botTriggerInstancesGet', 'triggerId', triggerId)
-            const localVarPath = `/bot-trigger-instances/{triggerId}`
-                .replace(`{${"triggerId"}}`, encodeURIComponent(String(triggerId)));
+        getTriggerInstances: async (triggerId?: string, count?: number, cursor?: string, id?: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/trigger-instances`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -3984,12 +4384,20 @@ export const BotTriggersApiAxiosParamCreator = function (configuration?: Configu
             // oauth required
             await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["TEMPLATES_READ"], configuration)
 
+            if (triggerId !== undefined) {
+                localVarQueryParameter['triggerId'] = triggerId;
+            }
+
             if (count !== undefined) {
                 localVarQueryParameter['count'] = count;
             }
 
-            if (before !== undefined) {
-                localVarQueryParameter['before'] = before;
+            if (cursor !== undefined) {
+                localVarQueryParameter['cursor'] = cursor;
+            }
+
+            if (id !== undefined) {
+                localVarQueryParameter['id'] = id;
             }
 
 
@@ -4005,24 +4413,16 @@ export const BotTriggersApiAxiosParamCreator = function (configuration?: Configu
         },
         /**
          * 
-         * @summary Start a bot trigger instance
-         * @param {string} triggerId 
-         * @param {string} botId 
-         * @param {string} instanceId 
+         * @summary Stops a bot trigger instance
+         * @param {string} id 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        botTriggerStartInstance: async (triggerId: string, botId: string, instanceId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'triggerId' is not null or undefined
-            assertParamExists('botTriggerStartInstance', 'triggerId', triggerId)
-            // verify required parameter 'botId' is not null or undefined
-            assertParamExists('botTriggerStartInstance', 'botId', botId)
-            // verify required parameter 'instanceId' is not null or undefined
-            assertParamExists('botTriggerStartInstance', 'instanceId', instanceId)
-            const localVarPath = `/bot-triggers/start-instance/{botId}/{triggerId}/{instanceId}`
-                .replace(`{${"triggerId"}}`, encodeURIComponent(String(triggerId)))
-                .replace(`{${"botId"}}`, encodeURIComponent(String(botId)))
-                .replace(`{${"instanceId"}}`, encodeURIComponent(String(instanceId)));
+        stopTriggerInstance: async (id: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('stopTriggerInstance', 'id', id)
+            const localVarPath = `/trigger-instances/{id}/stop`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -4043,90 +4443,6 @@ export const BotTriggersApiAxiosParamCreator = function (configuration?: Configu
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @summary Fire a bot trigger via webhook
-         * @param {string} triggerId 
-         * @param {string} botId 
-         * @param {BotTriggerWebhookRequest} [botTriggerWebhookRequest] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        botTriggerWebhook: async (triggerId: string, botId: string, botTriggerWebhookRequest?: BotTriggerWebhookRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'triggerId' is not null or undefined
-            assertParamExists('botTriggerWebhook', 'triggerId', triggerId)
-            // verify required parameter 'botId' is not null or undefined
-            assertParamExists('botTriggerWebhook', 'botId', botId)
-            const localVarPath = `/bot-triggers/webhook/{botId}/{triggerId}`
-                .replace(`{${"triggerId"}}`, encodeURIComponent(String(triggerId)))
-                .replace(`{${"botId"}}`, encodeURIComponent(String(botId)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication chatdaddy required
-            // oauth required
-            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["TEMPLATES_READ"], configuration)
-
-
-    
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(botTriggerWebhookRequest, localVarRequestOptions, configuration)
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @summary Update a bot trigger
-         * @param {BotTriggersPatchRequest} [botTriggersPatchRequest] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        botTriggersPatch: async (botTriggersPatchRequest?: BotTriggersPatchRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/bot-triggers`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'PATCH', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication chatdaddy required
-            // oauth required
-            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["TEMPLATES_UPDATE"], configuration)
-
-
-    
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(botTriggersPatchRequest, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -4145,65 +4461,27 @@ export const BotTriggersApiFp = function(configuration?: Configuration) {
     return {
         /**
          * 
-         * @summary Cancel a bot trigger instance
-         * @param {string} triggerId 
-         * @param {string} botId 
-         * @param {string} instanceId 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async botTriggerCancelInstance(triggerId: string, botId: string, instanceId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.botTriggerCancelInstance(triggerId, botId, instanceId, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-        /**
-         * 
          * @summary Get all instances of a bot trigger
-         * @param {string} triggerId 
+         * @param {string} [triggerId] 
          * @param {number} [count] 
-         * @param {string} [before] 
+         * @param {string} [cursor] 
+         * @param {string} [id] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async botTriggerInstancesGet(triggerId: string, count?: number, before?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BotTriggerInstancesGet200Response>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.botTriggerInstancesGet(triggerId, count, before, options);
+        async getTriggerInstances(triggerId?: string, count?: number, cursor?: string, id?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetTriggerInstances200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getTriggerInstances(triggerId, count, cursor, id, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
          * 
-         * @summary Start a bot trigger instance
-         * @param {string} triggerId 
-         * @param {string} botId 
-         * @param {string} instanceId 
+         * @summary Stops a bot trigger instance
+         * @param {string} id 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async botTriggerStartInstance(triggerId: string, botId: string, instanceId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.botTriggerStartInstance(triggerId, botId, instanceId, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-        /**
-         * 
-         * @summary Fire a bot trigger via webhook
-         * @param {string} triggerId 
-         * @param {string} botId 
-         * @param {BotTriggerWebhookRequest} [botTriggerWebhookRequest] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async botTriggerWebhook(triggerId: string, botId: string, botTriggerWebhookRequest?: BotTriggerWebhookRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.botTriggerWebhook(triggerId, botId, botTriggerWebhookRequest, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-        /**
-         * 
-         * @summary Update a bot trigger
-         * @param {BotTriggersPatchRequest} [botTriggersPatchRequest] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async botTriggersPatch(botTriggersPatchRequest?: BotTriggersPatchRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.botTriggersPatch(botTriggersPatchRequest, options);
+        async stopTriggerInstance(id: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.stopTriggerInstance(id, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
     }
@@ -4218,181 +4496,74 @@ export const BotTriggersApiFactory = function (configuration?: Configuration, ba
     return {
         /**
          * 
-         * @summary Cancel a bot trigger instance
-         * @param {BotTriggersApiBotTriggerCancelInstanceRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        botTriggerCancelInstance(requestParameters: BotTriggersApiBotTriggerCancelInstanceRequest, options?: AxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.botTriggerCancelInstance(requestParameters.triggerId, requestParameters.botId, requestParameters.instanceId, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
          * @summary Get all instances of a bot trigger
-         * @param {BotTriggersApiBotTriggerInstancesGetRequest} requestParameters Request parameters.
+         * @param {BotTriggersApiGetTriggerInstancesRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        botTriggerInstancesGet(requestParameters: BotTriggersApiBotTriggerInstancesGetRequest, options?: AxiosRequestConfig): AxiosPromise<BotTriggerInstancesGet200Response> {
-            return localVarFp.botTriggerInstancesGet(requestParameters.triggerId, requestParameters.count, requestParameters.before, options).then((request) => request(axios, basePath));
+        getTriggerInstances(requestParameters: BotTriggersApiGetTriggerInstancesRequest = {}, options?: AxiosRequestConfig): AxiosPromise<GetTriggerInstances200Response> {
+            return localVarFp.getTriggerInstances(requestParameters.triggerId, requestParameters.count, requestParameters.cursor, requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
          * 
-         * @summary Start a bot trigger instance
-         * @param {BotTriggersApiBotTriggerStartInstanceRequest} requestParameters Request parameters.
+         * @summary Stops a bot trigger instance
+         * @param {BotTriggersApiStopTriggerInstanceRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        botTriggerStartInstance(requestParameters: BotTriggersApiBotTriggerStartInstanceRequest, options?: AxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.botTriggerStartInstance(requestParameters.triggerId, requestParameters.botId, requestParameters.instanceId, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
-         * @summary Fire a bot trigger via webhook
-         * @param {BotTriggersApiBotTriggerWebhookRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        botTriggerWebhook(requestParameters: BotTriggersApiBotTriggerWebhookRequest, options?: AxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.botTriggerWebhook(requestParameters.triggerId, requestParameters.botId, requestParameters.botTriggerWebhookRequest, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
-         * @summary Update a bot trigger
-         * @param {BotTriggersApiBotTriggersPatchRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        botTriggersPatch(requestParameters: BotTriggersApiBotTriggersPatchRequest = {}, options?: AxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.botTriggersPatch(requestParameters.botTriggersPatchRequest, options).then((request) => request(axios, basePath));
+        stopTriggerInstance(requestParameters: BotTriggersApiStopTriggerInstanceRequest, options?: AxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.stopTriggerInstance(requestParameters.id, options).then((request) => request(axios, basePath));
         },
     };
 };
 
 /**
- * Request parameters for botTriggerCancelInstance operation in BotTriggersApi.
+ * Request parameters for getTriggerInstances operation in BotTriggersApi.
  * @export
- * @interface BotTriggersApiBotTriggerCancelInstanceRequest
+ * @interface BotTriggersApiGetTriggerInstancesRequest
  */
-export interface BotTriggersApiBotTriggerCancelInstanceRequest {
+export interface BotTriggersApiGetTriggerInstancesRequest {
     /**
      * 
      * @type {string}
-     * @memberof BotTriggersApiBotTriggerCancelInstance
+     * @memberof BotTriggersApiGetTriggerInstances
      */
-    readonly triggerId: string
-
-    /**
-     * 
-     * @type {string}
-     * @memberof BotTriggersApiBotTriggerCancelInstance
-     */
-    readonly botId: string
-
-    /**
-     * 
-     * @type {string}
-     * @memberof BotTriggersApiBotTriggerCancelInstance
-     */
-    readonly instanceId: string
-}
-
-/**
- * Request parameters for botTriggerInstancesGet operation in BotTriggersApi.
- * @export
- * @interface BotTriggersApiBotTriggerInstancesGetRequest
- */
-export interface BotTriggersApiBotTriggerInstancesGetRequest {
-    /**
-     * 
-     * @type {string}
-     * @memberof BotTriggersApiBotTriggerInstancesGet
-     */
-    readonly triggerId: string
+    readonly triggerId?: string
 
     /**
      * 
      * @type {number}
-     * @memberof BotTriggersApiBotTriggerInstancesGet
+     * @memberof BotTriggersApiGetTriggerInstances
      */
     readonly count?: number
 
     /**
      * 
      * @type {string}
-     * @memberof BotTriggersApiBotTriggerInstancesGet
+     * @memberof BotTriggersApiGetTriggerInstances
      */
-    readonly before?: string
+    readonly cursor?: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof BotTriggersApiGetTriggerInstances
+     */
+    readonly id?: string
 }
 
 /**
- * Request parameters for botTriggerStartInstance operation in BotTriggersApi.
+ * Request parameters for stopTriggerInstance operation in BotTriggersApi.
  * @export
- * @interface BotTriggersApiBotTriggerStartInstanceRequest
+ * @interface BotTriggersApiStopTriggerInstanceRequest
  */
-export interface BotTriggersApiBotTriggerStartInstanceRequest {
+export interface BotTriggersApiStopTriggerInstanceRequest {
     /**
      * 
      * @type {string}
-     * @memberof BotTriggersApiBotTriggerStartInstance
+     * @memberof BotTriggersApiStopTriggerInstance
      */
-    readonly triggerId: string
-
-    /**
-     * 
-     * @type {string}
-     * @memberof BotTriggersApiBotTriggerStartInstance
-     */
-    readonly botId: string
-
-    /**
-     * 
-     * @type {string}
-     * @memberof BotTriggersApiBotTriggerStartInstance
-     */
-    readonly instanceId: string
-}
-
-/**
- * Request parameters for botTriggerWebhook operation in BotTriggersApi.
- * @export
- * @interface BotTriggersApiBotTriggerWebhookRequest
- */
-export interface BotTriggersApiBotTriggerWebhookRequest {
-    /**
-     * 
-     * @type {string}
-     * @memberof BotTriggersApiBotTriggerWebhook
-     */
-    readonly triggerId: string
-
-    /**
-     * 
-     * @type {string}
-     * @memberof BotTriggersApiBotTriggerWebhook
-     */
-    readonly botId: string
-
-    /**
-     * 
-     * @type {BotTriggerWebhookRequest}
-     * @memberof BotTriggersApiBotTriggerWebhook
-     */
-    readonly botTriggerWebhookRequest?: BotTriggerWebhookRequest
-}
-
-/**
- * Request parameters for botTriggersPatch operation in BotTriggersApi.
- * @export
- * @interface BotTriggersApiBotTriggersPatchRequest
- */
-export interface BotTriggersApiBotTriggersPatchRequest {
-    /**
-     * 
-     * @type {BotTriggersPatchRequest}
-     * @memberof BotTriggersApiBotTriggersPatch
-     */
-    readonly botTriggersPatchRequest?: BotTriggersPatchRequest
+    readonly id: string
 }
 
 /**
@@ -4404,62 +4575,26 @@ export interface BotTriggersApiBotTriggersPatchRequest {
 export class BotTriggersApi extends BaseAPI {
     /**
      * 
-     * @summary Cancel a bot trigger instance
-     * @param {BotTriggersApiBotTriggerCancelInstanceRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof BotTriggersApi
-     */
-    public botTriggerCancelInstance(requestParameters: BotTriggersApiBotTriggerCancelInstanceRequest, options?: AxiosRequestConfig) {
-        return BotTriggersApiFp(this.configuration).botTriggerCancelInstance(requestParameters.triggerId, requestParameters.botId, requestParameters.instanceId, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
      * @summary Get all instances of a bot trigger
-     * @param {BotTriggersApiBotTriggerInstancesGetRequest} requestParameters Request parameters.
+     * @param {BotTriggersApiGetTriggerInstancesRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof BotTriggersApi
      */
-    public botTriggerInstancesGet(requestParameters: BotTriggersApiBotTriggerInstancesGetRequest, options?: AxiosRequestConfig) {
-        return BotTriggersApiFp(this.configuration).botTriggerInstancesGet(requestParameters.triggerId, requestParameters.count, requestParameters.before, options).then((request) => request(this.axios, this.basePath));
+    public getTriggerInstances(requestParameters: BotTriggersApiGetTriggerInstancesRequest = {}, options?: AxiosRequestConfig) {
+        return BotTriggersApiFp(this.configuration).getTriggerInstances(requestParameters.triggerId, requestParameters.count, requestParameters.cursor, requestParameters.id, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * 
-     * @summary Start a bot trigger instance
-     * @param {BotTriggersApiBotTriggerStartInstanceRequest} requestParameters Request parameters.
+     * @summary Stops a bot trigger instance
+     * @param {BotTriggersApiStopTriggerInstanceRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof BotTriggersApi
      */
-    public botTriggerStartInstance(requestParameters: BotTriggersApiBotTriggerStartInstanceRequest, options?: AxiosRequestConfig) {
-        return BotTriggersApiFp(this.configuration).botTriggerStartInstance(requestParameters.triggerId, requestParameters.botId, requestParameters.instanceId, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
-     * @summary Fire a bot trigger via webhook
-     * @param {BotTriggersApiBotTriggerWebhookRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof BotTriggersApi
-     */
-    public botTriggerWebhook(requestParameters: BotTriggersApiBotTriggerWebhookRequest, options?: AxiosRequestConfig) {
-        return BotTriggersApiFp(this.configuration).botTriggerWebhook(requestParameters.triggerId, requestParameters.botId, requestParameters.botTriggerWebhookRequest, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
-     * @summary Update a bot trigger
-     * @param {BotTriggersApiBotTriggersPatchRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof BotTriggersApi
-     */
-    public botTriggersPatch(requestParameters: BotTriggersApiBotTriggersPatchRequest = {}, options?: AxiosRequestConfig) {
-        return BotTriggersApiFp(this.configuration).botTriggersPatch(requestParameters.botTriggersPatchRequest, options).then((request) => request(this.axios, this.basePath));
+    public stopTriggerInstance(requestParameters: BotTriggersApiStopTriggerInstanceRequest, options?: AxiosRequestConfig) {
+        return BotTriggersApiFp(this.configuration).stopTriggerInstance(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

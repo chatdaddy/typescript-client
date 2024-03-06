@@ -620,15 +620,9 @@ export interface ActionExecuteData {
      * @type {string}
      * @memberof ActionExecuteData
      */
-    'instanceId'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ActionExecuteData
-     */
     'status'?: ActionExecuteDataStatusEnum;
     /**
-     * 
+     * ID of the contact
      * @type {string}
      * @memberof ActionExecuteData
      */
@@ -870,12 +864,6 @@ export interface BotInsertData {
     'actions'?: Array<BotInsertDataActionsInner>;
     /**
      * 
-     * @type {Array<BotInsertDataStartTriggersInner>}
-     * @memberof BotInsertData
-     */
-    'startTriggers'?: Array<BotInsertDataStartTriggersInner>;
-    /**
-     * 
      * @type {string}
      * @memberof BotInsertData
      */
@@ -1043,27 +1031,7 @@ export interface BotInsertDataActionsInner {
      * @memberof BotInsertDataActionsInner
      */
     'formActionMetadata'?: BotInsertDataActionsInnerAllOf1FormActionMetadata | null;
-    /**
-     * Type of the message being sent
-     * @type {string}
-     * @memberof BotInsertDataActionsInner
-     */
-    'messageType'?: BotInsertDataActionsInnerMessageTypeEnum;
-    /**
-     * Account ID of the sender
-     * @type {string}
-     * @memberof BotInsertDataActionsInner
-     */
-    'accountId'?: string;
 }
-
-export const BotInsertDataActionsInnerMessageTypeEnum = {
-    Message: 'message',
-    Email: 'email'
-} as const;
-
-export type BotInsertDataActionsInnerMessageTypeEnum = typeof BotInsertDataActionsInnerMessageTypeEnum[keyof typeof BotInsertDataActionsInnerMessageTypeEnum];
-
 /**
  * 
  * @export
@@ -1167,27 +1135,7 @@ export interface BotInsertDataActionsInnerAllOf1 {
      * @memberof BotInsertDataActionsInnerAllOf1
      */
     'formActionMetadata'?: BotInsertDataActionsInnerAllOf1FormActionMetadata | null;
-    /**
-     * Type of the message being sent
-     * @type {string}
-     * @memberof BotInsertDataActionsInnerAllOf1
-     */
-    'messageType'?: BotInsertDataActionsInnerAllOf1MessageTypeEnum;
-    /**
-     * Account ID of the sender
-     * @type {string}
-     * @memberof BotInsertDataActionsInnerAllOf1
-     */
-    'accountId'?: string;
 }
-
-export const BotInsertDataActionsInnerAllOf1MessageTypeEnum = {
-    Message: 'message',
-    Email: 'email'
-} as const;
-
-export type BotInsertDataActionsInnerAllOf1MessageTypeEnum = typeof BotInsertDataActionsInnerAllOf1MessageTypeEnum[keyof typeof BotInsertDataActionsInnerAllOf1MessageTypeEnum];
-
 /**
  * 
  * @export
@@ -1325,12 +1273,6 @@ export interface BotInsertDataActionsInnerAllOf1Message {
      * @memberof BotInsertDataActionsInnerAllOf1Message
      */
     'products'?: Array<BotInsertDataActionsInnerAllOf1MessageProductsInner>;
-    /**
-     * the subject of the message, if applicable
-     * @type {string}
-     * @memberof BotInsertDataActionsInnerAllOf1Message
-     */
-    'subject'?: string;
 }
 /**
  * 
@@ -1578,32 +1520,213 @@ export interface BotInsertDataActionsInnerAllOf1MessageButtonsInnerNextActionGro
     'position'?: BotInsertDataActionsInnerAllOf1MessageButtonsInnerPosition | null;
 }
 /**
+ * @type BotInsertDataActionsInnerAllOf1MessageButtonsInnerNextActionGroupsInnerValidationInner
+ * @export
+ */
+export type BotInsertDataActionsInnerAllOf1MessageButtonsInnerNextActionGroupsInnerValidationInner = BotInsertDataActionsInnerAllOf1MessageButtonsInnerNextActionGroupsInnerValidationInnerOneOf | BotInsertDataActionsInnerAllOf1MessageButtonsInnerNextActionGroupsInnerValidationInnerOneOf1 | BotInsertDataActionsInnerAllOf1MessageButtonsInnerNextActionGroupsInnerValidationInnerOneOf2 | BotInsertDataActionsInnerAllOf1MessageButtonsInnerNextActionGroupsInnerValidationInnerOneOf3 | BotInsertDataActionsInnerAllOf1MessageButtonsInnerNextActionGroupsInnerValidationInnerOneOf4 | BotInsertDataActionsInnerAllOf1MessageButtonsInnerNextActionGroupsInnerValidationInnerOneOf5;
+
+/**
  * 
  * @export
- * @interface BotInsertDataActionsInnerAllOf1MessageButtonsInnerNextActionGroupsInnerValidationInner
+ * @interface BotInsertDataActionsInnerAllOf1MessageButtonsInnerNextActionGroupsInnerValidationInnerOneOf
  */
-export interface BotInsertDataActionsInnerAllOf1MessageButtonsInnerNextActionGroupsInnerValidationInner {
+export interface BotInsertDataActionsInnerAllOf1MessageButtonsInnerNextActionGroupsInnerValidationInnerOneOf {
     /**
      * 
      * @type {string}
-     * @memberof BotInsertDataActionsInnerAllOf1MessageButtonsInnerNextActionGroupsInnerValidationInner
+     * @memberof BotInsertDataActionsInnerAllOf1MessageButtonsInnerNextActionGroupsInnerValidationInnerOneOf
      */
     'propertyPath': string;
     /**
      * 
-     * @type {Array<BotInsertDataActionsInnerAllOf1MessageButtonsInnerNextActionGroupsInnerValidationInnerValuesInner>}
-     * @memberof BotInsertDataActionsInnerAllOf1MessageButtonsInnerNextActionGroupsInnerValidationInner
+     * @type {number}
+     * @memberof BotInsertDataActionsInnerAllOf1MessageButtonsInnerNextActionGroupsInnerValidationInnerOneOf
      */
-    'values': Array<BotInsertDataActionsInnerAllOf1MessageButtonsInnerNextActionGroupsInnerValidationInnerValuesInner>;
+    'value': number;
     /**
      * 
      * @type {string}
-     * @memberof BotInsertDataActionsInnerAllOf1MessageButtonsInnerNextActionGroupsInnerValidationInner
+     * @memberof BotInsertDataActionsInnerAllOf1MessageButtonsInnerNextActionGroupsInnerValidationInnerOneOf
      */
-    'operator': BotInsertDataActionsInnerAllOf1MessageButtonsInnerNextActionGroupsInnerValidationInnerOperatorEnum;
+    'operator': BotInsertDataActionsInnerAllOf1MessageButtonsInnerNextActionGroupsInnerValidationInnerOneOfOperatorEnum;
 }
 
-export const BotInsertDataActionsInnerAllOf1MessageButtonsInnerNextActionGroupsInnerValidationInnerOperatorEnum = {
+export const BotInsertDataActionsInnerAllOf1MessageButtonsInnerNextActionGroupsInnerValidationInnerOneOfOperatorEnum = {
+    GreaterThan: 'greaterThan',
+    LessThan: 'lessThan',
+    GreaterThanOrEquals: 'greaterThanOrEquals',
+    LessThanOrEquals: 'lessThanOrEquals'
+} as const;
+
+export type BotInsertDataActionsInnerAllOf1MessageButtonsInnerNextActionGroupsInnerValidationInnerOneOfOperatorEnum = typeof BotInsertDataActionsInnerAllOf1MessageButtonsInnerNextActionGroupsInnerValidationInnerOneOfOperatorEnum[keyof typeof BotInsertDataActionsInnerAllOf1MessageButtonsInnerNextActionGroupsInnerValidationInnerOneOfOperatorEnum];
+
+/**
+ * 
+ * @export
+ * @interface BotInsertDataActionsInnerAllOf1MessageButtonsInnerNextActionGroupsInnerValidationInnerOneOf1
+ */
+export interface BotInsertDataActionsInnerAllOf1MessageButtonsInnerNextActionGroupsInnerValidationInnerOneOf1 {
+    /**
+     * 
+     * @type {string}
+     * @memberof BotInsertDataActionsInnerAllOf1MessageButtonsInnerNextActionGroupsInnerValidationInnerOneOf1
+     */
+    'propertyPath': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof BotInsertDataActionsInnerAllOf1MessageButtonsInnerNextActionGroupsInnerValidationInnerOneOf1
+     */
+    'value': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof BotInsertDataActionsInnerAllOf1MessageButtonsInnerNextActionGroupsInnerValidationInnerOneOf1
+     */
+    'operator': BotInsertDataActionsInnerAllOf1MessageButtonsInnerNextActionGroupsInnerValidationInnerOneOf1OperatorEnum;
+}
+
+export const BotInsertDataActionsInnerAllOf1MessageButtonsInnerNextActionGroupsInnerValidationInnerOneOf1OperatorEnum = {
+    NotEmpty: 'notEmpty',
+    Contains: 'contains',
+    NotContains: 'notContains',
+    StartsWith: 'startsWith',
+    EndsWith: 'endsWith',
+    ContainsPhrase: 'containsPhrase'
+} as const;
+
+export type BotInsertDataActionsInnerAllOf1MessageButtonsInnerNextActionGroupsInnerValidationInnerOneOf1OperatorEnum = typeof BotInsertDataActionsInnerAllOf1MessageButtonsInnerNextActionGroupsInnerValidationInnerOneOf1OperatorEnum[keyof typeof BotInsertDataActionsInnerAllOf1MessageButtonsInnerNextActionGroupsInnerValidationInnerOneOf1OperatorEnum];
+
+/**
+ * 
+ * @export
+ * @interface BotInsertDataActionsInnerAllOf1MessageButtonsInnerNextActionGroupsInnerValidationInnerOneOf2
+ */
+export interface BotInsertDataActionsInnerAllOf1MessageButtonsInnerNextActionGroupsInnerValidationInnerOneOf2 {
+    /**
+     * 
+     * @type {string}
+     * @memberof BotInsertDataActionsInnerAllOf1MessageButtonsInnerNextActionGroupsInnerValidationInnerOneOf2
+     */
+    'propertyPath': string;
+    /**
+     * 
+     * @type {BotInsertDataActionsInnerAllOf1MessageButtonsInnerNextActionGroupsInnerValidationInnerOneOf2Value}
+     * @memberof BotInsertDataActionsInnerAllOf1MessageButtonsInnerNextActionGroupsInnerValidationInnerOneOf2
+     */
+    'value': BotInsertDataActionsInnerAllOf1MessageButtonsInnerNextActionGroupsInnerValidationInnerOneOf2Value;
+    /**
+     * 
+     * @type {string}
+     * @memberof BotInsertDataActionsInnerAllOf1MessageButtonsInnerNextActionGroupsInnerValidationInnerOneOf2
+     */
+    'operator': BotInsertDataActionsInnerAllOf1MessageButtonsInnerNextActionGroupsInnerValidationInnerOneOf2OperatorEnum;
+}
+
+export const BotInsertDataActionsInnerAllOf1MessageButtonsInnerNextActionGroupsInnerValidationInnerOneOf2OperatorEnum = {
+    Timestamp: 'timestamp'
+} as const;
+
+export type BotInsertDataActionsInnerAllOf1MessageButtonsInnerNextActionGroupsInnerValidationInnerOneOf2OperatorEnum = typeof BotInsertDataActionsInnerAllOf1MessageButtonsInnerNextActionGroupsInnerValidationInnerOneOf2OperatorEnum[keyof typeof BotInsertDataActionsInnerAllOf1MessageButtonsInnerNextActionGroupsInnerValidationInnerOneOf2OperatorEnum];
+
+/**
+ * 
+ * @export
+ * @interface BotInsertDataActionsInnerAllOf1MessageButtonsInnerNextActionGroupsInnerValidationInnerOneOf2Value
+ */
+export interface BotInsertDataActionsInnerAllOf1MessageButtonsInnerNextActionGroupsInnerValidationInnerOneOf2Value {
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof BotInsertDataActionsInnerAllOf1MessageButtonsInnerNextActionGroupsInnerValidationInnerOneOf2Value
+     */
+    'days'?: Array<BotInsertDataActionsInnerAllOf1MessageButtonsInnerNextActionGroupsInnerValidationInnerOneOf2ValueDaysEnum>;
+    /**
+     * 
+     * @type {string}
+     * @memberof BotInsertDataActionsInnerAllOf1MessageButtonsInnerNextActionGroupsInnerValidationInnerOneOf2Value
+     */
+    'startTime': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof BotInsertDataActionsInnerAllOf1MessageButtonsInnerNextActionGroupsInnerValidationInnerOneOf2Value
+     */
+    'endTime': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof BotInsertDataActionsInnerAllOf1MessageButtonsInnerNextActionGroupsInnerValidationInnerOneOf2Value
+     */
+    'timezone': string;
+}
+
+export const BotInsertDataActionsInnerAllOf1MessageButtonsInnerNextActionGroupsInnerValidationInnerOneOf2ValueDaysEnum = {
+    Monday: 'Monday',
+    Tuesday: 'Tuesday',
+    Wednesday: 'Wednesday',
+    Thursday: 'Thursday',
+    Friday: 'Friday',
+    Saturday: 'Saturday',
+    Sunday: 'Sunday'
+} as const;
+
+export type BotInsertDataActionsInnerAllOf1MessageButtonsInnerNextActionGroupsInnerValidationInnerOneOf2ValueDaysEnum = typeof BotInsertDataActionsInnerAllOf1MessageButtonsInnerNextActionGroupsInnerValidationInnerOneOf2ValueDaysEnum[keyof typeof BotInsertDataActionsInnerAllOf1MessageButtonsInnerNextActionGroupsInnerValidationInnerOneOf2ValueDaysEnum];
+
+/**
+ * 
+ * @export
+ * @interface BotInsertDataActionsInnerAllOf1MessageButtonsInnerNextActionGroupsInnerValidationInnerOneOf3
+ */
+export interface BotInsertDataActionsInnerAllOf1MessageButtonsInnerNextActionGroupsInnerValidationInnerOneOf3 {
+    /**
+     * 
+     * @type {string}
+     * @memberof BotInsertDataActionsInnerAllOf1MessageButtonsInnerNextActionGroupsInnerValidationInnerOneOf3
+     */
+    'propertyPath': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof BotInsertDataActionsInnerAllOf1MessageButtonsInnerNextActionGroupsInnerValidationInnerOneOf3
+     */
+    'operator': BotInsertDataActionsInnerAllOf1MessageButtonsInnerNextActionGroupsInnerValidationInnerOneOf3OperatorEnum;
+}
+
+export const BotInsertDataActionsInnerAllOf1MessageButtonsInnerNextActionGroupsInnerValidationInnerOneOf3OperatorEnum = {
+    IsTrue: 'isTrue',
+    IsFalse: 'isFalse'
+} as const;
+
+export type BotInsertDataActionsInnerAllOf1MessageButtonsInnerNextActionGroupsInnerValidationInnerOneOf3OperatorEnum = typeof BotInsertDataActionsInnerAllOf1MessageButtonsInnerNextActionGroupsInnerValidationInnerOneOf3OperatorEnum[keyof typeof BotInsertDataActionsInnerAllOf1MessageButtonsInnerNextActionGroupsInnerValidationInnerOneOf3OperatorEnum];
+
+/**
+ * 
+ * @export
+ * @interface BotInsertDataActionsInnerAllOf1MessageButtonsInnerNextActionGroupsInnerValidationInnerOneOf4
+ */
+export interface BotInsertDataActionsInnerAllOf1MessageButtonsInnerNextActionGroupsInnerValidationInnerOneOf4 {
+    /**
+     * 
+     * @type {string}
+     * @memberof BotInsertDataActionsInnerAllOf1MessageButtonsInnerNextActionGroupsInnerValidationInnerOneOf4
+     */
+    'propertyPath': string;
+    /**
+     * 
+     * @type {Array<BotInsertDataActionsInnerAllOf1MessageButtonsInnerNextActionGroupsInnerValidationInnerOneOf4ValuesInner>}
+     * @memberof BotInsertDataActionsInnerAllOf1MessageButtonsInnerNextActionGroupsInnerValidationInnerOneOf4
+     */
+    'values': Array<BotInsertDataActionsInnerAllOf1MessageButtonsInnerNextActionGroupsInnerValidationInnerOneOf4ValuesInner>;
+    /**
+     * 
+     * @type {string}
+     * @memberof BotInsertDataActionsInnerAllOf1MessageButtonsInnerNextActionGroupsInnerValidationInnerOneOf4
+     */
+    'operator': BotInsertDataActionsInnerAllOf1MessageButtonsInnerNextActionGroupsInnerValidationInnerOneOf4OperatorEnum;
+}
+
+export const BotInsertDataActionsInnerAllOf1MessageButtonsInnerNextActionGroupsInnerValidationInnerOneOf4OperatorEnum = {
     NotEmpty: 'notEmpty',
     Equals: 'equals',
     NotEquals: 'notEquals',
@@ -1617,13 +1740,52 @@ export const BotInsertDataActionsInnerAllOf1MessageButtonsInnerNextActionGroupsI
     EndsWith: 'endsWith'
 } as const;
 
-export type BotInsertDataActionsInnerAllOf1MessageButtonsInnerNextActionGroupsInnerValidationInnerOperatorEnum = typeof BotInsertDataActionsInnerAllOf1MessageButtonsInnerNextActionGroupsInnerValidationInnerOperatorEnum[keyof typeof BotInsertDataActionsInnerAllOf1MessageButtonsInnerNextActionGroupsInnerValidationInnerOperatorEnum];
+export type BotInsertDataActionsInnerAllOf1MessageButtonsInnerNextActionGroupsInnerValidationInnerOneOf4OperatorEnum = typeof BotInsertDataActionsInnerAllOf1MessageButtonsInnerNextActionGroupsInnerValidationInnerOneOf4OperatorEnum[keyof typeof BotInsertDataActionsInnerAllOf1MessageButtonsInnerNextActionGroupsInnerValidationInnerOneOf4OperatorEnum];
 
 /**
- * @type BotInsertDataActionsInnerAllOf1MessageButtonsInnerNextActionGroupsInnerValidationInnerValuesInner
+ * @type BotInsertDataActionsInnerAllOf1MessageButtonsInnerNextActionGroupsInnerValidationInnerOneOf4ValuesInner
  * @export
  */
-export type BotInsertDataActionsInnerAllOf1MessageButtonsInnerNextActionGroupsInnerValidationInnerValuesInner = number | string;
+export type BotInsertDataActionsInnerAllOf1MessageButtonsInnerNextActionGroupsInnerValidationInnerOneOf4ValuesInner = number | string;
+
+/**
+ * 
+ * @export
+ * @interface BotInsertDataActionsInnerAllOf1MessageButtonsInnerNextActionGroupsInnerValidationInnerOneOf5
+ */
+export interface BotInsertDataActionsInnerAllOf1MessageButtonsInnerNextActionGroupsInnerValidationInnerOneOf5 {
+    /**
+     * 
+     * @type {string}
+     * @memberof BotInsertDataActionsInnerAllOf1MessageButtonsInnerNextActionGroupsInnerValidationInnerOneOf5
+     */
+    'propertyPath': string;
+    /**
+     * 
+     * @type {BotInsertDataActionsInnerAllOf1MessageButtonsInnerNextActionGroupsInnerValidationInnerOneOf5Value}
+     * @memberof BotInsertDataActionsInnerAllOf1MessageButtonsInnerNextActionGroupsInnerValidationInnerOneOf5
+     */
+    'value': BotInsertDataActionsInnerAllOf1MessageButtonsInnerNextActionGroupsInnerValidationInnerOneOf5Value;
+    /**
+     * 
+     * @type {string}
+     * @memberof BotInsertDataActionsInnerAllOf1MessageButtonsInnerNextActionGroupsInnerValidationInnerOneOf5
+     */
+    'operator': BotInsertDataActionsInnerAllOf1MessageButtonsInnerNextActionGroupsInnerValidationInnerOneOf5OperatorEnum;
+}
+
+export const BotInsertDataActionsInnerAllOf1MessageButtonsInnerNextActionGroupsInnerValidationInnerOneOf5OperatorEnum = {
+    Equals: 'equals',
+    NotEquals: 'notEquals'
+} as const;
+
+export type BotInsertDataActionsInnerAllOf1MessageButtonsInnerNextActionGroupsInnerValidationInnerOneOf5OperatorEnum = typeof BotInsertDataActionsInnerAllOf1MessageButtonsInnerNextActionGroupsInnerValidationInnerOneOf5OperatorEnum[keyof typeof BotInsertDataActionsInnerAllOf1MessageButtonsInnerNextActionGroupsInnerValidationInnerOneOf5OperatorEnum];
+
+/**
+ * @type BotInsertDataActionsInnerAllOf1MessageButtonsInnerNextActionGroupsInnerValidationInnerOneOf5Value
+ * @export
+ */
+export type BotInsertDataActionsInnerAllOf1MessageButtonsInnerNextActionGroupsInnerValidationInnerOneOf5Value = Array<string> | number | string;
 
 /**
  * 
@@ -2068,651 +2230,6 @@ export interface BotInsertDataSharedSlugsInner {
 /**
  * 
  * @export
- * @interface BotInsertDataStartTriggersInner
- */
-export interface BotInsertDataStartTriggersInner {
-    /**
-     * 
-     * @type {string}
-     * @memberof BotInsertDataStartTriggersInner
-     */
-    'id': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof BotInsertDataStartTriggersInner
-     */
-    'name': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof BotInsertDataStartTriggersInner
-     */
-    'accountId': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof BotInsertDataStartTriggersInner
-     */
-    'botId': string;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof BotInsertDataStartTriggersInner
-     */
-    'enabled': boolean;
-    /**
-     * 
-     * @type {number}
-     * @memberof BotInsertDataStartTriggersInner
-     */
-    'sendInterval'?: number;
-    /**
-     * 
-     * @type {Array<BotInsertDataActionsInnerAllOf1MessageButtonsInnerNextActionGroupsInnerValidationInner>}
-     * @memberof BotInsertDataStartTriggersInner
-     */
-    'conditions'?: Array<BotInsertDataActionsInnerAllOf1MessageButtonsInnerNextActionGroupsInnerValidationInner>;
-    /**
-     * 
-     * @type {{ [key: string]: any; }}
-     * @memberof BotInsertDataStartTriggersInner
-     */
-    'context'?: { [key: string]: any; };
-    /**
-     * 
-     * @type {BotInsertDataStartTriggersInnerMethod}
-     * @memberof BotInsertDataStartTriggersInner
-     */
-    'method': BotInsertDataStartTriggersInnerMethod;
-    /**
-     * 
-     * @type {BotInsertDataStartTriggersInnerTarget}
-     * @memberof BotInsertDataStartTriggersInner
-     */
-    'target': BotInsertDataStartTriggersInnerTarget;
-    /**
-     * 
-     * @type {BotInsertDataStartTriggersInnerOptions}
-     * @memberof BotInsertDataStartTriggersInner
-     */
-    'options'?: BotInsertDataStartTriggersInnerOptions;
-    /**
-     * 
-     * @type {string}
-     * @memberof BotInsertDataStartTriggersInner
-     */
-    'lastTriggered'?: string;
-    /**
-     * 
-     * @type {number}
-     * @memberof BotInsertDataStartTriggersInner
-     */
-    'triggered'?: number;
-    /**
-     * 
-     * @type {Array<BotInsertDataStartTriggersInnerInstancesInner>}
-     * @memberof BotInsertDataStartTriggersInner
-     */
-    'instances'?: Array<BotInsertDataStartTriggersInnerInstancesInner>;
-}
-/**
- * 
- * @export
- * @interface BotInsertDataStartTriggersInnerInstancesInner
- */
-export interface BotInsertDataStartTriggersInnerInstancesInner {
-    /**
-     * 
-     * @type {string}
-     * @memberof BotInsertDataStartTriggersInnerInstancesInner
-     */
-    'id': string;
-    /**
-     * 
-     * @type {{ [key: string]: any; }}
-     * @memberof BotInsertDataStartTriggersInnerInstancesInner
-     */
-    'payload': { [key: string]: any; };
-    /**
-     * 
-     * @type {string}
-     * @memberof BotInsertDataStartTriggersInnerInstancesInner
-     */
-    'startedAt': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof BotInsertDataStartTriggersInnerInstancesInner
-     */
-    'status': BotInsertDataStartTriggersInnerInstancesInnerStatusEnum;
-    /**
-     * 
-     * @type {string}
-     * @memberof BotInsertDataStartTriggersInnerInstancesInner
-     */
-    'triggerId'?: string;
-    /**
-     * 
-     * @type {Array<BotInsertDataStartTriggersInnerInstancesInnerRecordsInner>}
-     * @memberof BotInsertDataStartTriggersInnerInstancesInner
-     */
-    'records'?: Array<BotInsertDataStartTriggersInnerInstancesInnerRecordsInner>;
-}
-
-export const BotInsertDataStartTriggersInnerInstancesInnerStatusEnum = {
-    Pending: 'pending',
-    Running: 'running',
-    Completed: 'completed',
-    Cancelled: 'cancelled'
-} as const;
-
-export type BotInsertDataStartTriggersInnerInstancesInnerStatusEnum = typeof BotInsertDataStartTriggersInnerInstancesInnerStatusEnum[keyof typeof BotInsertDataStartTriggersInnerInstancesInnerStatusEnum];
-
-/**
- * 
- * @export
- * @interface BotInsertDataStartTriggersInnerInstancesInnerRecordsInner
- */
-export interface BotInsertDataStartTriggersInnerInstancesInnerRecordsInner {
-    /**
-     * 
-     * @type {number}
-     * @memberof BotInsertDataStartTriggersInnerInstancesInnerRecordsInner
-     */
-    'id': number;
-    /**
-     * 
-     * @type {string}
-     * @memberof BotInsertDataStartTriggersInnerInstancesInnerRecordsInner
-     */
-    'actionId': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof BotInsertDataStartTriggersInnerInstancesInnerRecordsInner
-     */
-    'botId': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof BotInsertDataStartTriggersInnerInstancesInnerRecordsInner
-     */
-    'instanceId'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof BotInsertDataStartTriggersInnerInstancesInnerRecordsInner
-     */
-    'status'?: BotInsertDataStartTriggersInnerInstancesInnerRecordsInnerStatusEnum;
-    /**
-     * 
-     * @type {string}
-     * @memberof BotInsertDataStartTriggersInnerInstancesInnerRecordsInner
-     */
-    'contactId'?: string;
-    /**
-     * 
-     * @type {{ [key: string]: any; }}
-     * @memberof BotInsertDataStartTriggersInnerInstancesInnerRecordsInner
-     */
-    'inputParameters'?: { [key: string]: any; };
-    /**
-     * 
-     * @type {string}
-     * @memberof BotInsertDataStartTriggersInnerInstancesInnerRecordsInner
-     */
-    'accountId'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof BotInsertDataStartTriggersInnerInstancesInnerRecordsInner
-     */
-    'createdAt'?: string;
-    /**
-     * 
-     * @type {Array<ActionExecuteDataMessagesInner>}
-     * @memberof BotInsertDataStartTriggersInnerInstancesInnerRecordsInner
-     */
-    'messages'?: Array<ActionExecuteDataMessagesInner>;
-    /**
-     * 
-     * @type {Array<ActionExecuteDataMessagesInner>}
-     * @memberof BotInsertDataStartTriggersInnerInstancesInnerRecordsInner
-     */
-    'webhooks'?: Array<ActionExecuteDataMessagesInner>;
-    /**
-     * 
-     * @type {ActionExecuteDataMessagesInner}
-     * @memberof BotInsertDataStartTriggersInnerInstancesInnerRecordsInner
-     */
-    'contact'?: ActionExecuteDataMessagesInner;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof BotInsertDataStartTriggersInnerInstancesInnerRecordsInner
-     */
-    'isStart'?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof BotInsertDataStartTriggersInnerInstancesInnerRecordsInner
-     */
-    'isFinal'?: boolean;
-    /**
-     * 
-     * @type {string}
-     * @memberof BotInsertDataStartTriggersInnerInstancesInnerRecordsInner
-     */
-    'previousActionId'?: string;
-}
-
-export const BotInsertDataStartTriggersInnerInstancesInnerRecordsInnerStatusEnum = {
-    Pending: 'pending',
-    Sent: 'sent',
-    Failed: 'failed',
-    Cancelled: 'cancelled'
-} as const;
-
-export type BotInsertDataStartTriggersInnerInstancesInnerRecordsInnerStatusEnum = typeof BotInsertDataStartTriggersInnerInstancesInnerRecordsInnerStatusEnum[keyof typeof BotInsertDataStartTriggersInnerInstancesInnerRecordsInnerStatusEnum];
-
-/**
- * 
- * @export
- * @interface BotInsertDataStartTriggersInnerMethod
- */
-export interface BotInsertDataStartTriggersInnerMethod {
-    /**
-     * 
-     * @type {string}
-     * @memberof BotInsertDataStartTriggersInnerMethod
-     */
-    'type': BotInsertDataStartTriggersInnerMethodTypeEnum;
-    /**
-     * 
-     * @type {string}
-     * @memberof BotInsertDataStartTriggersInnerMethod
-     */
-    'value'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof BotInsertDataStartTriggersInnerMethod
-     */
-    'nextExecutionDate'?: string;
-}
-
-export const BotInsertDataStartTriggersInnerMethodTypeEnum = {
-    Webhook: 'webhook',
-    Timestamp: 'timestamp',
-    Event: 'event'
-} as const;
-
-export type BotInsertDataStartTriggersInnerMethodTypeEnum = typeof BotInsertDataStartTriggersInnerMethodTypeEnum[keyof typeof BotInsertDataStartTriggersInnerMethodTypeEnum];
-
-/**
- * 
- * @export
- * @interface BotInsertDataStartTriggersInnerOptions
- */
-export interface BotInsertDataStartTriggersInnerOptions {
-    /**
-     * 
-     * @type {BotInsertDataStartTriggersInnerOptionsMiscOptions}
-     * @memberof BotInsertDataStartTriggersInnerOptions
-     */
-    'miscOptions'?: BotInsertDataStartTriggersInnerOptionsMiscOptions;
-    /**
-     * 
-     * @type {{ [key: string]: any; }}
-     * @memberof BotInsertDataStartTriggersInnerOptions
-     */
-    'parameters'?: { [key: string]: any; };
-}
-/**
- * 
- * @export
- * @interface BotInsertDataStartTriggersInnerOptionsMiscOptions
- */
-export interface BotInsertDataStartTriggersInnerOptionsMiscOptions {
-    /**
-     * 
-     * @type {string}
-     * @memberof BotInsertDataStartTriggersInnerOptionsMiscOptions
-     */
-    'messageId'?: string;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof BotInsertDataStartTriggersInnerOptionsMiscOptions
-     */
-    'simulateTyping'?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof BotInsertDataStartTriggersInnerOptionsMiscOptions
-     */
-    'requireOpenAccount'?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof BotInsertDataStartTriggersInnerOptionsMiscOptions
-     */
-    'cancelIfReplyReceived'?: boolean;
-    /**
-     * 
-     * @type {string}
-     * @memberof BotInsertDataStartTriggersInnerOptionsMiscOptions
-     */
-    'scheduleAt'?: string;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof BotInsertDataStartTriggersInnerOptionsMiscOptions
-     */
-    'includeMarketingMessage'?: boolean;
-    /**
-     * 
-     * @type {BotInsertDataStartTriggersInnerOptionsMiscOptionsQuoted}
-     * @memberof BotInsertDataStartTriggersInnerOptionsMiscOptions
-     */
-    'quoted'?: BotInsertDataStartTriggersInnerOptionsMiscOptionsQuoted;
-    /**
-     * 
-     * @type {BotInsertDataStartTriggersInnerOptionsMiscOptionsSender}
-     * @memberof BotInsertDataStartTriggersInnerOptionsMiscOptions
-     */
-    'sender'?: BotInsertDataStartTriggersInnerOptionsMiscOptionsSender;
-}
-/**
- * 
- * @export
- * @interface BotInsertDataStartTriggersInnerOptionsMiscOptionsQuoted
- */
-export interface BotInsertDataStartTriggersInnerOptionsMiscOptionsQuoted {
-    /**
-     * 
-     * @type {string}
-     * @memberof BotInsertDataStartTriggersInnerOptionsMiscOptionsQuoted
-     */
-    'chatId': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof BotInsertDataStartTriggersInnerOptionsMiscOptionsQuoted
-     */
-    'id': string;
-}
-/**
- * 
- * @export
- * @interface BotInsertDataStartTriggersInnerOptionsMiscOptionsSender
- */
-export interface BotInsertDataStartTriggersInnerOptionsMiscOptionsSender {
-    /**
-     * 
-     * @type {BotInsertDataStartTriggersInnerOptionsMiscOptionsSenderContext}
-     * @memberof BotInsertDataStartTriggersInnerOptionsMiscOptionsSender
-     */
-    'context': BotInsertDataStartTriggersInnerOptionsMiscOptionsSenderContext;
-}
-/**
- * 
- * @export
- * @interface BotInsertDataStartTriggersInnerOptionsMiscOptionsSenderContext
- */
-export interface BotInsertDataStartTriggersInnerOptionsMiscOptionsSenderContext {
-    /**
-     * 
-     * @type {string}
-     * @memberof BotInsertDataStartTriggersInnerOptionsMiscOptionsSenderContext
-     */
-    'type': BotInsertDataStartTriggersInnerOptionsMiscOptionsSenderContextTypeEnum;
-    /**
-     * 
-     * @type {string}
-     * @memberof BotInsertDataStartTriggersInnerOptionsMiscOptionsSenderContext
-     */
-    'objectId': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof BotInsertDataStartTriggersInnerOptionsMiscOptionsSenderContext
-     */
-    'objectName'?: string;
-}
-
-export const BotInsertDataStartTriggersInnerOptionsMiscOptionsSenderContextTypeEnum = {
-    KeywordReply: 'keyword-reply',
-    DefaultReply: 'default-reply',
-    Campaigns: 'campaigns',
-    Notifications: 'notifications',
-    Bot: 'bot',
-    AiChatbot: 'ai-chatbot'
-} as const;
-
-export type BotInsertDataStartTriggersInnerOptionsMiscOptionsSenderContextTypeEnum = typeof BotInsertDataStartTriggersInnerOptionsMiscOptionsSenderContextTypeEnum[keyof typeof BotInsertDataStartTriggersInnerOptionsMiscOptionsSenderContextTypeEnum];
-
-/**
- * @type BotInsertDataStartTriggersInnerTarget
- * @export
- */
-export type BotInsertDataStartTriggersInnerTarget = BotInsertDataStartTriggersInnerTargetOneOf | BotInsertDataStartTriggersInnerTargetOneOf1;
-
-/**
- * 
- * @export
- * @interface BotInsertDataStartTriggersInnerTargetOneOf
- */
-export interface BotInsertDataStartTriggersInnerTargetOneOf {
-    /**
-     * 
-     * @type {string}
-     * @memberof BotInsertDataStartTriggersInnerTargetOneOf
-     */
-    'type': BotInsertDataStartTriggersInnerTargetOneOfTypeEnum;
-    /**
-     * Path of the property to access in the payload. Payload has the following properties 1. \'contact.*\' to access a property of the contact being sent to. Find structure of contact here 2. \'data.*\' to access a property of the event data 3. \'context.*\' to access a property of the context (note: probably add context schema to openapi spec?)
-     * @type {string}
-     * @memberof BotInsertDataStartTriggersInnerTargetOneOf
-     */
-    'propertyPath': string;
-    /**
-     * 
-     * @type {BotInsertDataStartTriggersInnerTargetOneOfAccountId}
-     * @memberof BotInsertDataStartTriggersInnerTargetOneOf
-     */
-    'accountId': BotInsertDataStartTriggersInnerTargetOneOfAccountId;
-}
-
-export const BotInsertDataStartTriggersInnerTargetOneOfTypeEnum = {
-    PropertyPath: 'propertyPath'
-} as const;
-
-export type BotInsertDataStartTriggersInnerTargetOneOfTypeEnum = typeof BotInsertDataStartTriggersInnerTargetOneOfTypeEnum[keyof typeof BotInsertDataStartTriggersInnerTargetOneOfTypeEnum];
-
-/**
- * 
- * @export
- * @interface BotInsertDataStartTriggersInnerTargetOneOf1
- */
-export interface BotInsertDataStartTriggersInnerTargetOneOf1 {
-    /**
-     * 
-     * @type {string}
-     * @memberof BotInsertDataStartTriggersInnerTargetOneOf1
-     */
-    'type': BotInsertDataStartTriggersInnerTargetOneOf1TypeEnum;
-    /**
-     * 
-     * @type {BotInsertDataStartTriggersInnerTargetOneOf1Query}
-     * @memberof BotInsertDataStartTriggersInnerTargetOneOf1
-     */
-    'query': BotInsertDataStartTriggersInnerTargetOneOf1Query;
-    /**
-     * 
-     * @type {BotInsertDataStartTriggersInnerTargetOneOf1AccountId}
-     * @memberof BotInsertDataStartTriggersInnerTargetOneOf1
-     */
-    'accountId': BotInsertDataStartTriggersInnerTargetOneOf1AccountId;
-}
-
-export const BotInsertDataStartTriggersInnerTargetOneOf1TypeEnum = {
-    Fetch: 'fetch'
-} as const;
-
-export type BotInsertDataStartTriggersInnerTargetOneOf1TypeEnum = typeof BotInsertDataStartTriggersInnerTargetOneOf1TypeEnum[keyof typeof BotInsertDataStartTriggersInnerTargetOneOf1TypeEnum];
-
-/**
- * 
- * @export
- * @interface BotInsertDataStartTriggersInnerTargetOneOf1AccountId
- */
-export interface BotInsertDataStartTriggersInnerTargetOneOf1AccountId {
-    /**
-     * 
-     * @type {string}
-     * @memberof BotInsertDataStartTriggersInnerTargetOneOf1AccountId
-     */
-    'type': BotInsertDataStartTriggersInnerTargetOneOf1AccountIdTypeEnum;
-    /**
-     * the property name to extract `accountId` from of the contact, or the exact ID of the account
-     * @type {string}
-     * @memberof BotInsertDataStartTriggersInnerTargetOneOf1AccountId
-     */
-    'value': string;
-}
-
-export const BotInsertDataStartTriggersInnerTargetOneOf1AccountIdTypeEnum = {
-    PropertyPath: 'propertyPath',
-    Exact: 'exact'
-} as const;
-
-export type BotInsertDataStartTriggersInnerTargetOneOf1AccountIdTypeEnum = typeof BotInsertDataStartTriggersInnerTargetOneOf1AccountIdTypeEnum[keyof typeof BotInsertDataStartTriggersInnerTargetOneOf1AccountIdTypeEnum];
-
-/**
- * 
- * @export
- * @interface BotInsertDataStartTriggersInnerTargetOneOf1Query
- */
-export interface BotInsertDataStartTriggersInnerTargetOneOf1Query {
-    /**
-     * 
-     * @type {Array<string>}
-     * @memberof BotInsertDataStartTriggersInnerTargetOneOf1Query
-     */
-    'tags'?: Array<string>;
-    /**
-     * 
-     * @type {Array<string>}
-     * @memberof BotInsertDataStartTriggersInnerTargetOneOf1Query
-     */
-    'notTags'?: Array<string>;
-    /**
-     * 
-     * @type {string}
-     * @memberof BotInsertDataStartTriggersInnerTargetOneOf1Query
-     */
-    'q'?: string | null;
-    /**
-     * 
-     * @type {number}
-     * @memberof BotInsertDataStartTriggersInnerTargetOneOf1Query
-     */
-    'minMessagesSent'?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof BotInsertDataStartTriggersInnerTargetOneOf1Query
-     */
-    'maxMessagesSent'?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof BotInsertDataStartTriggersInnerTargetOneOf1Query
-     */
-    'minMessagesRecv'?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof BotInsertDataStartTriggersInnerTargetOneOf1Query
-     */
-    'maxMessagesRecv'?: number;
-    /**
-     * 
-     * @type {Array<string>}
-     * @memberof BotInsertDataStartTriggersInnerTargetOneOf1Query
-     */
-    'assignee'?: Array<string>;
-    /**
-     * 
-     * @type {Array<string>}
-     * @memberof BotInsertDataStartTriggersInnerTargetOneOf1Query
-     */
-    'notAssignee'?: Array<string>;
-    /**
-     * 
-     * @type {string}
-     * @memberof BotInsertDataStartTriggersInnerTargetOneOf1Query
-     */
-    'type'?: BotInsertDataStartTriggersInnerTargetOneOf1QueryTypeEnum;
-    /**
-     * 
-     * @type {Array<string>}
-     * @memberof BotInsertDataStartTriggersInnerTargetOneOf1Query
-     */
-    'contacts'?: Array<string>;
-    /**
-     * 
-     * @type {Array<string>}
-     * @memberof BotInsertDataStartTriggersInnerTargetOneOf1Query
-     */
-    'notContacts'?: Array<string>;
-    /**
-     * 
-     * @type {Array<string>}
-     * @memberof BotInsertDataStartTriggersInnerTargetOneOf1Query
-     */
-    'accountId'?: Array<string>;
-}
-
-export const BotInsertDataStartTriggersInnerTargetOneOf1QueryTypeEnum = {
-    Individual: 'individual',
-    Group: 'group'
-} as const;
-
-export type BotInsertDataStartTriggersInnerTargetOneOf1QueryTypeEnum = typeof BotInsertDataStartTriggersInnerTargetOneOf1QueryTypeEnum[keyof typeof BotInsertDataStartTriggersInnerTargetOneOf1QueryTypeEnum];
-
-/**
- * 
- * @export
- * @interface BotInsertDataStartTriggersInnerTargetOneOfAccountId
- */
-export interface BotInsertDataStartTriggersInnerTargetOneOfAccountId {
-    /**
-     * 
-     * @type {string}
-     * @memberof BotInsertDataStartTriggersInnerTargetOneOfAccountId
-     */
-    'type': BotInsertDataStartTriggersInnerTargetOneOfAccountIdTypeEnum;
-    /**
-     * the property name to extract `accountId` from, or the exact ID of the account
-     * @type {string}
-     * @memberof BotInsertDataStartTriggersInnerTargetOneOfAccountId
-     */
-    'value': string;
-}
-
-export const BotInsertDataStartTriggersInnerTargetOneOfAccountIdTypeEnum = {
-    PropertyPath: 'propertyPath',
-    Exact: 'exact'
-} as const;
-
-export type BotInsertDataStartTriggersInnerTargetOneOfAccountIdTypeEnum = typeof BotInsertDataStartTriggersInnerTargetOneOfAccountIdTypeEnum[keyof typeof BotInsertDataStartTriggersInnerTargetOneOfAccountIdTypeEnum];
-
-/**
- * 
- * @export
  * @interface BotUpdate
  */
 export interface BotUpdate {
@@ -2778,12 +2295,6 @@ export interface BotUpdateData {
      * @memberof BotUpdateData
      */
     'actions'?: Array<BotInsertDataActionsInner>;
-    /**
-     * 
-     * @type {Array<BotInsertDataStartTriggersInner>}
-     * @memberof BotUpdateData
-     */
-    'startTriggers'?: Array<BotInsertDataStartTriggersInner>;
     /**
      * 
      * @type {string}
