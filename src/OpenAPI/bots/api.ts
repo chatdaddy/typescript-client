@@ -185,6 +185,12 @@ export interface Action {
      * @memberof Action
      */
     'formActionMetadata'?: FormActionMetadata | null;
+    /**
+     * 
+     * @type {ActionContentZapierAction}
+     * @memberof Action
+     */
+    'zapierAction'?: ActionContentZapierAction | null;
 }
 /**
  * 
@@ -289,6 +295,12 @@ export interface ActionContent {
      * @memberof ActionContent
      */
     'formActionMetadata'?: FormActionMetadata | null;
+    /**
+     * 
+     * @type {ActionContentZapierAction}
+     * @memberof ActionContent
+     */
+    'zapierAction'?: ActionContentZapierAction | null;
 }
 /**
  * 
@@ -308,6 +320,25 @@ export interface ActionContentTagsInner {
      * @memberof ActionContentTagsInner
      */
     'remove'?: boolean;
+}
+/**
+ * 
+ * @export
+ * @interface ActionContentZapierAction
+ */
+export interface ActionContentZapierAction {
+    /**
+     * 
+     * @type {string}
+     * @memberof ActionContentZapierAction
+     */
+    'editZapPopupURL'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ActionContentZapierAction
+     */
+    'zapId'?: string;
 }
 /**
  * 

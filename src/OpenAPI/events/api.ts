@@ -1031,6 +1031,12 @@ export interface BotInsertDataActionsInner {
      * @memberof BotInsertDataActionsInner
      */
     'formActionMetadata'?: BotInsertDataActionsInnerAllOf1FormActionMetadata | null;
+    /**
+     * 
+     * @type {BotInsertDataActionsInnerAllOf1ZapierAction}
+     * @memberof BotInsertDataActionsInner
+     */
+    'zapierAction'?: BotInsertDataActionsInnerAllOf1ZapierAction | null;
 }
 /**
  * 
@@ -1135,6 +1141,12 @@ export interface BotInsertDataActionsInnerAllOf1 {
      * @memberof BotInsertDataActionsInnerAllOf1
      */
     'formActionMetadata'?: BotInsertDataActionsInnerAllOf1FormActionMetadata | null;
+    /**
+     * 
+     * @type {BotInsertDataActionsInnerAllOf1ZapierAction}
+     * @memberof BotInsertDataActionsInnerAllOf1
+     */
+    'zapierAction'?: BotInsertDataActionsInnerAllOf1ZapierAction | null;
 }
 /**
  * 
@@ -2027,6 +2039,25 @@ export interface BotInsertDataActionsInnerAllOf1TagsInner {
      * @memberof BotInsertDataActionsInnerAllOf1TagsInner
      */
     'remove'?: boolean;
+}
+/**
+ * 
+ * @export
+ * @interface BotInsertDataActionsInnerAllOf1ZapierAction
+ */
+export interface BotInsertDataActionsInnerAllOf1ZapierAction {
+    /**
+     * 
+     * @type {string}
+     * @memberof BotInsertDataActionsInnerAllOf1ZapierAction
+     */
+    'editZapPopupURL'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof BotInsertDataActionsInnerAllOf1ZapierAction
+     */
+    'zapId'?: string;
 }
 /**
  * 
