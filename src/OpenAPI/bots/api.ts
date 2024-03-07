@@ -2447,17 +2447,11 @@ export interface FormDataGet200Response {
      */
     'actions': Array<Action>;
     /**
-     * Name of the form
-     * @type {string}
+     * 
+     * @type {Bot}
      * @memberof FormDataGet200Response
      */
-    'name'?: string;
-    /**
-     * Description of the form
-     * @type {string}
-     * @memberof FormDataGet200Response
-     */
-    'description'?: string;
+    'form'?: Bot;
     /**
      * 
      * @type {FormSubmission}
