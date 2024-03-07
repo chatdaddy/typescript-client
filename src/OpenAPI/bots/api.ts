@@ -734,10 +734,10 @@ export type ActionInteractionOneOfAllOfTypeEnum = typeof ActionInteractionOneOfA
 export interface ActionInteractionQueryValue {
     /**
      * 
-     * @type {string}
+     * @type {ActionInteractionType}
      * @memberof ActionInteractionQueryValue
      */
-    'type': ActionInteractionQueryValueTypeEnum;
+    'type': ActionInteractionType;
     /**
      * 
      * @type {string}
@@ -746,14 +746,24 @@ export interface ActionInteractionQueryValue {
     'text'?: string;
 }
 
-export const ActionInteractionQueryValueTypeEnum = {
-    Exists: 'exists',
+
+/**
+ * 
+ * @export
+ * @enum {string}
+ */
+
+export const ActionInteractionType = {
     Sent: 'sent',
+    Delivered: 'delivered',
     Click: 'click',
-    UserInput: 'user_input'
+    UserInput: 'user_input',
+    Error: 'error',
+    Scheduled: 'scheduled'
 } as const;
 
-export type ActionInteractionQueryValueTypeEnum = typeof ActionInteractionQueryValueTypeEnum[keyof typeof ActionInteractionQueryValueTypeEnum];
+export type ActionInteractionType = typeof ActionInteractionType[keyof typeof ActionInteractionType];
+
 
 /**
  * 
@@ -2857,7 +2867,7 @@ export interface IMUniqueContactID {
     'accountId': string;
 }
 /**
- * Describes how many contacts are in each status for the first action sent in a trigger instance
+ * Describes how many contacts are in each status for the first action sent in a trigger instance. Keyed by ActionInteractionType
  * @export
  * @interface InstanceFirstActionStatusCounts
  */
