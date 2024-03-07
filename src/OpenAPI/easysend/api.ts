@@ -513,6 +513,12 @@ export interface EasysendDataModel {
      */
     'phoneNumber': NullablePhoneNumber;
     /**
+     * The recipientId to use when phone number is not applicable. Including this will override phone number
+     * @type {string}
+     * @memberof EasysendDataModel
+     */
+    'recipientId'?: string;
+    /**
      * 
      * @type {EasysendDataModelWaResponse}
      * @memberof EasysendDataModel

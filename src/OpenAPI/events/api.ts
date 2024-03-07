@@ -6285,6 +6285,12 @@ export interface OrderInsertData {
      */
     'phoneNumber': OrderInsertDataPhoneNumber;
     /**
+     * The recipientId to use when phone number is not applicable. Including this will override phone number
+     * @type {string}
+     * @memberof OrderInsertData
+     */
+    'recipientId'?: string;
+    /**
      * 
      * @type {OrderInsertDataWaResponse}
      * @memberof OrderInsertData
