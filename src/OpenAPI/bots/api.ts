@@ -759,7 +759,8 @@ export const ActionInteractionType = {
     Click: 'click',
     UserInput: 'user_input',
     Error: 'error',
-    Scheduled: 'scheduled'
+    Scheduled: 'scheduled',
+    Exists: 'exists'
 } as const;
 
 export type ActionInteractionType = typeof ActionInteractionType[keyof typeof ActionInteractionType];
