@@ -460,7 +460,7 @@ export interface DataResend200Response {
  * @export
  * @interface DataType
  */
-export interface DataType {
+interface DataType {
     /**
      * 
      * @type {string}
@@ -1120,7 +1120,7 @@ export interface PatchPaymentIntegrationRequest {
  * @export
  * @interface PaymentIntegration
  */
-export interface PaymentIntegration {
+interface PaymentIntegration {
     /**
      * 
      * @type {string}
@@ -1519,7 +1519,7 @@ export interface PaymentRecordsGet200Response {
  * @export
  * @interface PaymentSystem
  */
-export interface PaymentSystem {
+interface PaymentSystem {
     /**
      * 
      * @type {string}
@@ -1570,19 +1570,19 @@ export interface PaymentSystem {
     'logoImageUrl'?: string;
 }
 
-export const PaymentSystemTypeEnum = {
+const PaymentSystemTypeEnum = {
     Qr: 'qr',
     Url: 'url'
 } as const;
 
-export type PaymentSystemTypeEnum = typeof PaymentSystemTypeEnum[keyof typeof PaymentSystemTypeEnum];
+type PaymentSystemTypeEnum = typeof PaymentSystemTypeEnum[keyof typeof PaymentSystemTypeEnum];
 
 /**
  * 
  * @export
  * @interface PaymentSystemAuth
  */
-export interface PaymentSystemAuth {
+interface PaymentSystemAuth {
     /**
      * URL to redirect user to in order to authorize the payment system integration
      * @type {string}

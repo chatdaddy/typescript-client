@@ -1,4 +1,5 @@
 export * from './configuration'
+export * from './appstore/api'
 export * from './auth/api'
 export * from './bots/api'
 export * from './campaigns/api'

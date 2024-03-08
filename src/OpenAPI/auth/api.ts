@@ -1225,7 +1225,7 @@ export interface ResetPassword {
  * @enum {string}
  */
 
-export const Scope = {
+const Scope = {
     ContactsReadAssigned: 'CONTACTS_READ_ASSIGNED',
     ContactsReadAll: 'CONTACTS_READ_ALL',
     ContactsExportButton: 'CONTACTS_EXPORT_BUTTON',
@@ -1299,7 +1299,7 @@ export const Scope = {
     CouponUpdate: 'COUPON_UPDATE'
 } as const;
 
-export type Scope = typeof Scope[keyof typeof Scope];
+type Scope = typeof Scope[keyof typeof Scope];
 
 
 /**
