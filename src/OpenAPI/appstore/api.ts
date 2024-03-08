@@ -442,10 +442,10 @@ export interface ListingCreate {
     'type': ListingCreateTypeEnum;
     /**
      * 
-     * @type {ListingCreateData}
+     * @type {ListingData}
      * @memberof ListingCreate
      */
-    'data': ListingCreateData;
+    'data': ListingData;
 }
 
 export const ListingCreateTypeEnum = {
@@ -455,12 +455,6 @@ export const ListingCreateTypeEnum = {
 } as const;
 
 export type ListingCreateTypeEnum = typeof ListingCreateTypeEnum[keyof typeof ListingCreateTypeEnum];
-
-/**
- * @type ListingCreateData
- * @export
- */
-export type ListingCreateData = Extension | PaymentIntegration | PublishedMessageFlow;
 
 /**
  * @type ListingData
