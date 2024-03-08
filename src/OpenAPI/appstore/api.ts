@@ -351,7 +351,19 @@ export interface Listing {
      * @type {Array<string>}
      * @memberof Listing
      */
-    'icons': Array<string>;
+    'icons'?: Array<string>;
+    /**
+     * 
+     * @type {string}
+     * @memberof Listing
+     */
+    'imageUrl'?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof Listing
+     */
+    'totalInstalls'?: number;
     /**
      * 
      * @type {string}
@@ -375,7 +387,7 @@ export interface Listing {
      * @type {ListingData}
      * @memberof Listing
      */
-    'data'?: ListingData;
+    'data': ListingData;
 }
 
 export const ListingTypeEnum = {
@@ -409,7 +421,19 @@ export interface ListingCreate {
      * @type {Array<string>}
      * @memberof ListingCreate
      */
-    'icons': Array<string>;
+    'icons'?: Array<string>;
+    /**
+     * 
+     * @type {string}
+     * @memberof ListingCreate
+     */
+    'imageUrl'?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof ListingCreate
+     */
+    'totalInstalls'?: number;
     /**
      * 
      * @type {string}
@@ -418,10 +442,10 @@ export interface ListingCreate {
     'type': ListingCreateTypeEnum;
     /**
      * 
-     * @type {ListingData}
+     * @type {ListingCreateData}
      * @memberof ListingCreate
      */
-    'data'?: ListingData;
+    'data': ListingCreateData;
 }
 
 export const ListingCreateTypeEnum = {
@@ -431,6 +455,12 @@ export const ListingCreateTypeEnum = {
 } as const;
 
 export type ListingCreateTypeEnum = typeof ListingCreateTypeEnum[keyof typeof ListingCreateTypeEnum];
+
+/**
+ * @type ListingCreateData
+ * @export
+ */
+export type ListingCreateData = Extension | PaymentIntegration | PublishedMessageFlow;
 
 /**
  * @type ListingData
@@ -474,6 +504,18 @@ export interface ListingUpdate {
      * @memberof ListingUpdate
      */
     'icons'?: Array<string>;
+    /**
+     * 
+     * @type {string}
+     * @memberof ListingUpdate
+     */
+    'imageUrl'?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof ListingUpdate
+     */
+    'totalInstalls'?: number;
     /**
      * 
      * @type {string}
@@ -650,7 +692,7 @@ export interface PublishedMessageFlow {
      * @type {string}
      * @memberof PublishedMessageFlow
      */
-    'id': string;
+    'botId': string;
     /**
      * 
      * @type {string}
@@ -664,35 +706,11 @@ export interface PublishedMessageFlow {
      */
     'url'?: string;
     /**
-     * 
-     * @type {number}
-     * @memberof PublishedMessageFlow
-     */
-    'totalInstalls'?: number;
-    /**
-     * 
-     * @type {string}
-     * @memberof PublishedMessageFlow
-     */
-    'name'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof PublishedMessageFlow
-     */
-    'description'?: string;
-    /**
      * An ISO formatted timestamp
      * @type {string}
      * @memberof PublishedMessageFlow
      */
-    'createdAt'?: string;
-    /**
-     * An ISO formatted timestamp
-     * @type {string}
-     * @memberof PublishedMessageFlow
-     */
-    'lastPublishedAt'?: string;
+    'publishedAt'?: string;
 }
 /**
  * 
