@@ -319,6 +319,19 @@ export interface GetListings200Response {
 /**
  * 
  * @export
+ * @interface InstallListingRequest
+ */
+export interface InstallListingRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof InstallListingRequest
+     */
+    'listingId': string;
+}
+/**
+ * 
+ * @export
  * @interface Listing
  */
 export interface Listing {
@@ -364,6 +377,18 @@ export interface Listing {
      * @memberof Listing
      */
     'totalInstalls'?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof Listing
+     */
+    'language'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Listing
+     */
+    'industry'?: string;
     /**
      * 
      * @type {string}
@@ -440,12 +465,6 @@ export interface ListingCreate {
      * @memberof ListingCreate
      */
     'language'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ListingCreate
-     */
-    'country'?: string;
     /**
      * 
      * @type {string}
@@ -540,12 +559,6 @@ export interface ListingUpdate {
      * @memberof ListingUpdate
      */
     'language'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ListingUpdate
-     */
-    'country'?: string;
     /**
      * 
      * @type {string}
@@ -1388,12 +1401,11 @@ export const ListingsApiAxiosParamCreator = function (configuration?: Configurat
          * @param {'extension' | 'paymentIntegration' | 'messageFlow'} [type] The type to get extensions from
          * @param {Array<string>} [ids] The ids to get extensions from
          * @param {string} [language] The language to get extensions from
-         * @param {string} [country] The country to get extensions from
          * @param {string} [industry] The industry to get extensions from
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getListings: async (count?: number, cursor?: number, teamId?: string, type?: 'extension' | 'paymentIntegration' | 'messageFlow', ids?: Array<string>, language?: string, country?: string, industry?: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getListings: async (count?: number, cursor?: number, teamId?: string, type?: 'extension' | 'paymentIntegration' | 'messageFlow', ids?: Array<string>, language?: string, industry?: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/listings`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -1434,10 +1446,6 @@ export const ListingsApiAxiosParamCreator = function (configuration?: Configurat
                 localVarQueryParameter['language'] = language;
             }
 
-            if (country !== undefined) {
-                localVarQueryParameter['country'] = country;
-            }
-
             if (industry !== undefined) {
                 localVarQueryParameter['industry'] = industry;
             }
@@ -1447,6 +1455,46 @@ export const ListingsApiAxiosParamCreator = function (configuration?: Configurat
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Install a listing
+         * @param {InstallListingRequest} installListingRequest The listing to install
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        installListing: async (installListingRequest: InstallListingRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'installListingRequest' is not null or undefined
+            assertParamExists('installListing', 'installListingRequest', installListingRequest)
+            const localVarPath = `/install-listing`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", [], configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(installListingRequest, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -1538,13 +1586,23 @@ export const ListingsApiFp = function(configuration?: Configuration) {
          * @param {'extension' | 'paymentIntegration' | 'messageFlow'} [type] The type to get extensions from
          * @param {Array<string>} [ids] The ids to get extensions from
          * @param {string} [language] The language to get extensions from
-         * @param {string} [country] The country to get extensions from
          * @param {string} [industry] The industry to get extensions from
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getListings(count?: number, cursor?: number, teamId?: string, type?: 'extension' | 'paymentIntegration' | 'messageFlow', ids?: Array<string>, language?: string, country?: string, industry?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetListings200Response>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getListings(count, cursor, teamId, type, ids, language, country, industry, options);
+        async getListings(count?: number, cursor?: number, teamId?: string, type?: 'extension' | 'paymentIntegration' | 'messageFlow', ids?: Array<string>, language?: string, industry?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetListings200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getListings(count, cursor, teamId, type, ids, language, industry, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary Install a listing
+         * @param {InstallListingRequest} installListingRequest The listing to install
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async installListing(installListingRequest: InstallListingRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.installListing(installListingRequest, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -1597,7 +1655,17 @@ export const ListingsApiFactory = function (configuration?: Configuration, baseP
          * @throws {RequiredError}
          */
         getListings(requestParameters: ListingsApiGetListingsRequest = {}, options?: AxiosRequestConfig): AxiosPromise<GetListings200Response> {
-            return localVarFp.getListings(requestParameters.count, requestParameters.cursor, requestParameters.teamId, requestParameters.type, requestParameters.ids, requestParameters.language, requestParameters.country, requestParameters.industry, options).then((request) => request(axios, basePath));
+            return localVarFp.getListings(requestParameters.count, requestParameters.cursor, requestParameters.teamId, requestParameters.type, requestParameters.ids, requestParameters.language, requestParameters.industry, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Install a listing
+         * @param {ListingsApiInstallListingRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        installListing(requestParameters: ListingsApiInstallListingRequest, options?: AxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.installListing(requestParameters.installListingRequest, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -1689,18 +1757,25 @@ export interface ListingsApiGetListingsRequest {
     readonly language?: string
 
     /**
-     * The country to get extensions from
-     * @type {string}
-     * @memberof ListingsApiGetListings
-     */
-    readonly country?: string
-
-    /**
      * The industry to get extensions from
      * @type {string}
      * @memberof ListingsApiGetListings
      */
     readonly industry?: string
+}
+
+/**
+ * Request parameters for installListing operation in ListingsApi.
+ * @export
+ * @interface ListingsApiInstallListingRequest
+ */
+export interface ListingsApiInstallListingRequest {
+    /**
+     * The listing to install
+     * @type {InstallListingRequest}
+     * @memberof ListingsApiInstallListing
+     */
+    readonly installListingRequest: InstallListingRequest
 }
 
 /**
@@ -1764,7 +1839,19 @@ export class ListingsApi extends BaseAPI {
      * @memberof ListingsApi
      */
     public getListings(requestParameters: ListingsApiGetListingsRequest = {}, options?: AxiosRequestConfig) {
-        return ListingsApiFp(this.configuration).getListings(requestParameters.count, requestParameters.cursor, requestParameters.teamId, requestParameters.type, requestParameters.ids, requestParameters.language, requestParameters.country, requestParameters.industry, options).then((request) => request(this.axios, this.basePath));
+        return ListingsApiFp(this.configuration).getListings(requestParameters.count, requestParameters.cursor, requestParameters.teamId, requestParameters.type, requestParameters.ids, requestParameters.language, requestParameters.industry, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Install a listing
+     * @param {ListingsApiInstallListingRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ListingsApi
+     */
+    public installListing(requestParameters: ListingsApiInstallListingRequest, options?: AxiosRequestConfig) {
+        return ListingsApiFp(this.configuration).installListing(requestParameters.installListingRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
