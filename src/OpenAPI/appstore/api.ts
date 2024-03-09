@@ -439,6 +439,24 @@ export interface ListingCreate {
      * @type {string}
      * @memberof ListingCreate
      */
+    'language'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ListingCreate
+     */
+    'country'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ListingCreate
+     */
+    'industry'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ListingCreate
+     */
     'type': ListingCreateTypeEnum;
     /**
      * 
@@ -516,6 +534,24 @@ export interface ListingUpdate {
      * @memberof ListingUpdate
      */
     'createdAt'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ListingUpdate
+     */
+    'language'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ListingUpdate
+     */
+    'country'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ListingUpdate
+     */
+    'industry'?: string;
     /**
      * 
      * @type {string}
@@ -1351,10 +1387,13 @@ export const ListingsApiAxiosParamCreator = function (configuration?: Configurat
          * @param {string} [teamId] The teamId to get extensions from
          * @param {'extension' | 'paymentIntegration' | 'messageFlow'} [type] The type to get extensions from
          * @param {Array<string>} [ids] The ids to get extensions from
+         * @param {string} [language] The language to get extensions from
+         * @param {string} [country] The country to get extensions from
+         * @param {string} [industry] The industry to get extensions from
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getListings: async (count?: number, cursor?: number, teamId?: string, type?: 'extension' | 'paymentIntegration' | 'messageFlow', ids?: Array<string>, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getListings: async (count?: number, cursor?: number, teamId?: string, type?: 'extension' | 'paymentIntegration' | 'messageFlow', ids?: Array<string>, language?: string, country?: string, industry?: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/listings`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -1389,6 +1428,18 @@ export const ListingsApiAxiosParamCreator = function (configuration?: Configurat
 
             if (ids) {
                 localVarQueryParameter['ids'] = ids;
+            }
+
+            if (language !== undefined) {
+                localVarQueryParameter['language'] = language;
+            }
+
+            if (country !== undefined) {
+                localVarQueryParameter['country'] = country;
+            }
+
+            if (industry !== undefined) {
+                localVarQueryParameter['industry'] = industry;
             }
 
 
@@ -1486,11 +1537,14 @@ export const ListingsApiFp = function(configuration?: Configuration) {
          * @param {string} [teamId] The teamId to get extensions from
          * @param {'extension' | 'paymentIntegration' | 'messageFlow'} [type] The type to get extensions from
          * @param {Array<string>} [ids] The ids to get extensions from
+         * @param {string} [language] The language to get extensions from
+         * @param {string} [country] The country to get extensions from
+         * @param {string} [industry] The industry to get extensions from
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getListings(count?: number, cursor?: number, teamId?: string, type?: 'extension' | 'paymentIntegration' | 'messageFlow', ids?: Array<string>, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetListings200Response>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getListings(count, cursor, teamId, type, ids, options);
+        async getListings(count?: number, cursor?: number, teamId?: string, type?: 'extension' | 'paymentIntegration' | 'messageFlow', ids?: Array<string>, language?: string, country?: string, industry?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetListings200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getListings(count, cursor, teamId, type, ids, language, country, industry, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -1543,7 +1597,7 @@ export const ListingsApiFactory = function (configuration?: Configuration, baseP
          * @throws {RequiredError}
          */
         getListings(requestParameters: ListingsApiGetListingsRequest = {}, options?: AxiosRequestConfig): AxiosPromise<GetListings200Response> {
-            return localVarFp.getListings(requestParameters.count, requestParameters.cursor, requestParameters.teamId, requestParameters.type, requestParameters.ids, options).then((request) => request(axios, basePath));
+            return localVarFp.getListings(requestParameters.count, requestParameters.cursor, requestParameters.teamId, requestParameters.type, requestParameters.ids, requestParameters.language, requestParameters.country, requestParameters.industry, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -1626,6 +1680,27 @@ export interface ListingsApiGetListingsRequest {
      * @memberof ListingsApiGetListings
      */
     readonly ids?: Array<string>
+
+    /**
+     * The language to get extensions from
+     * @type {string}
+     * @memberof ListingsApiGetListings
+     */
+    readonly language?: string
+
+    /**
+     * The country to get extensions from
+     * @type {string}
+     * @memberof ListingsApiGetListings
+     */
+    readonly country?: string
+
+    /**
+     * The industry to get extensions from
+     * @type {string}
+     * @memberof ListingsApiGetListings
+     */
+    readonly industry?: string
 }
 
 /**
@@ -1689,7 +1764,7 @@ export class ListingsApi extends BaseAPI {
      * @memberof ListingsApi
      */
     public getListings(requestParameters: ListingsApiGetListingsRequest = {}, options?: AxiosRequestConfig) {
-        return ListingsApiFp(this.configuration).getListings(requestParameters.count, requestParameters.cursor, requestParameters.teamId, requestParameters.type, requestParameters.ids, options).then((request) => request(this.axios, this.basePath));
+        return ListingsApiFp(this.configuration).getListings(requestParameters.count, requestParameters.cursor, requestParameters.teamId, requestParameters.type, requestParameters.ids, requestParameters.language, requestParameters.country, requestParameters.industry, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
