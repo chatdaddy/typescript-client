@@ -2161,6 +2161,89 @@ export interface BotsGets200Response {
     'totalCount'?: number;
 }
 /**
+ * Data structure that gives information to the frontend on how to render conditions for a property of a data object that has caused a Trigger to fire.
+ * @export
+ * @interface ConditionableProperty
+ */
+export interface ConditionableProperty {
+    /**
+     * 
+     * @type {string}
+     * @memberof ConditionableProperty
+     */
+    'propertyPath': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ConditionableProperty
+     */
+    'type': ConditionablePropertyTypeEnum;
+    /**
+     * 
+     * @type {string}
+     * @memberof ConditionableProperty
+     */
+    'title': string;
+    /**
+     * 
+     * @type {Array<ConditionalPropertyOption>}
+     * @memberof ConditionableProperty
+     */
+    'options'?: Array<ConditionalPropertyOption>;
+}
+
+export const ConditionablePropertyTypeEnum = {
+    String: 'string',
+    Number: 'number',
+    Boolean: 'boolean',
+    Channel: 'channel',
+    Tag: 'tag',
+    Timestamp: 'timestamp',
+    CountryCode: 'country_code',
+    TeamMember: 'team_member'
+} as const;
+
+export type ConditionablePropertyTypeEnum = typeof ConditionablePropertyTypeEnum[keyof typeof ConditionablePropertyTypeEnum];
+
+/**
+ * Define a list of conditionable properties that are only made available to the user if the \"displayConditions\" are met
+ * @export
+ * @interface ConditionablePropertyGroup
+ */
+export interface ConditionablePropertyGroup {
+    /**
+     * 
+     * @type {Array<ConditionableProperty>}
+     * @memberof ConditionablePropertyGroup
+     */
+    'properties': Array<ConditionableProperty>;
+    /**
+     * Define under which conditions this group\'s conditions should be displayed to the user. Conditions will be applied to the Trigger itself. The conditions are ANDed together
+     * @type {Array<BotCondition>}
+     * @memberof ConditionablePropertyGroup
+     */
+    'displayConditions': Array<BotCondition>;
+}
+/**
+ * 
+ * @export
+ * @interface ConditionalPropertyOption
+ */
+export interface ConditionalPropertyOption {
+    /**
+     * Stringified value of the option.
+     * @type {string}
+     * @memberof ConditionalPropertyOption
+     */
+    'valueStr': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ConditionalPropertyOption
+     */
+    'label': string;
+}
+/**
  * 
  * @export
  * @interface ContactsQueryTarget
@@ -2942,6 +3025,49 @@ export interface InternalEventTriggerMethodData {
      * @memberof InternalEventTriggerMethodData
      */
     'event': string;
+    /**
+     * Useful for \'order-insert\' event, to specify the service type of the integration. This\'ll help distinguish which conditions to display in the UI
+     * @type {string}
+     * @memberof InternalEventTriggerMethodData
+     */
+    'serviceType'?: string;
+}
+/**
+ * 
+ * @export
+ * @interface InternalEventUIConfig
+ */
+export interface InternalEventUIConfig {
+    /**
+     * 
+     * @type {string}
+     * @memberof InternalEventUIConfig
+     */
+    'event': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof InternalEventUIConfig
+     */
+    'title': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof InternalEventUIConfig
+     */
+    'description': string;
+    /**
+     * 
+     * @type {TriggersUIConfig}
+     * @memberof InternalEventUIConfig
+     */
+    'config': TriggersUIConfig;
+    /**
+     * Define under which conditions this group\'s conditions should be displayed to the user. Conditions will be applied to the Trigger itself. The conditions are ANDed together
+     * @type {Array<BotCondition>}
+     * @memberof InternalEventUIConfig
+     */
+    'displayConditions'?: Array<BotCondition>;
 }
 /**
  * 
@@ -3213,7 +3339,7 @@ export interface Position {
     'y': number;
 }
 /**
- * 
+ * Target a property in the payload data. Use dot notation for nested properties. Please note, this is inside the `data` object of the payload, so avoid the `data.` prefix.
  * @export
  * @interface PropertyPathTarget
  */
@@ -3799,6 +3925,75 @@ export interface TriggerUpsert {
      * @memberof TriggerUpsert
      */
     'remove'?: boolean;
+}
+/**
+ * 
+ * @export
+ * @interface TriggersDisplayConfiguration
+ */
+export interface TriggersDisplayConfiguration {
+    /**
+     * 
+     * @type {TriggersUIConfig}
+     * @memberof TriggersDisplayConfiguration
+     */
+    'contact': TriggersUIConfig;
+    /**
+     * 
+     * @type {TriggersUIConfig}
+     * @memberof TriggersDisplayConfiguration
+     */
+    'context': TriggersUIConfig;
+    /**
+     * 
+     * @type {Array<InternalEventUIConfig>}
+     * @memberof TriggersDisplayConfiguration
+     */
+    'internalEventConfigs': Array<InternalEventUIConfig>;
+}
+/**
+ * 
+ * @export
+ * @interface TriggersUIConfig
+ */
+export interface TriggersUIConfig {
+    /**
+     * 
+     * @type {TriggersUIConfigDefaults}
+     * @memberof TriggersUIConfig
+     */
+    'defaults'?: TriggersUIConfigDefaults;
+    /**
+     * 
+     * @type {Array<TriggersUIConfigConditionablePropertiesInner>}
+     * @memberof TriggersUIConfig
+     */
+    'conditionableProperties': Array<TriggersUIConfigConditionablePropertiesInner>;
+}
+/**
+ * @type TriggersUIConfigConditionablePropertiesInner
+ * @export
+ */
+export type TriggersUIConfigConditionablePropertiesInner = ConditionableProperty | ConditionablePropertyGroup;
+
+/**
+ * Default values for the triggers. These values will be used when creating a new trigger
+ * @export
+ * @interface TriggersUIConfigDefaults
+ */
+export interface TriggersUIConfigDefaults {
+    /**
+     * 
+     * @type {BotTriggerTarget}
+     * @memberof TriggersUIConfigDefaults
+     */
+    'target'?: BotTriggerTarget;
+    /**
+     * 
+     * @type {BotTriggerOptions}
+     * @memberof TriggersUIConfigDefaults
+     */
+    'options'?: BotTriggerOptions;
 }
 
 /**
@@ -4395,6 +4590,40 @@ export const BotTriggersApiAxiosParamCreator = function (configuration?: Configu
     return {
         /**
          * 
+         * @summary Get trigger display configuration
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getDisplayConfiguration: async (options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/triggers/display-configuration`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", [], configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
          * @summary Get all instances of a bot trigger
          * @param {string} [triggerId] 
          * @param {number} [count] 
@@ -4497,6 +4726,16 @@ export const BotTriggersApiFp = function(configuration?: Configuration) {
     return {
         /**
          * 
+         * @summary Get trigger display configuration
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getDisplayConfiguration(options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TriggersDisplayConfiguration>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getDisplayConfiguration(options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
          * @summary Get all instances of a bot trigger
          * @param {string} [triggerId] 
          * @param {number} [count] 
@@ -4530,6 +4769,15 @@ export const BotTriggersApiFp = function(configuration?: Configuration) {
 export const BotTriggersApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
     const localVarFp = BotTriggersApiFp(configuration)
     return {
+        /**
+         * 
+         * @summary Get trigger display configuration
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getDisplayConfiguration(options?: AxiosRequestConfig): AxiosPromise<TriggersDisplayConfiguration> {
+            return localVarFp.getDisplayConfiguration(options).then((request) => request(axios, basePath));
+        },
         /**
          * 
          * @summary Get all instances of a bot trigger
@@ -4609,6 +4857,17 @@ export interface BotTriggersApiStopTriggerInstanceRequest {
  * @extends {BaseAPI}
  */
 export class BotTriggersApi extends BaseAPI {
+    /**
+     * 
+     * @summary Get trigger display configuration
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof BotTriggersApi
+     */
+    public getDisplayConfiguration(options?: AxiosRequestConfig) {
+        return BotTriggersApiFp(this.configuration).getDisplayConfiguration(options).then((request) => request(this.axios, this.basePath));
+    }
+
     /**
      * 
      * @summary Get all instances of a bot trigger
