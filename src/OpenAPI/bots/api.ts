@@ -4607,10 +4607,6 @@ export const BotTriggersApiAxiosParamCreator = function (configuration?: Configu
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
-            // authentication chatdaddy required
-            // oauth required
-            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", [], configuration)
-
 
     
             setSearchParams(localVarUrlObj, localVarQueryParameter);
