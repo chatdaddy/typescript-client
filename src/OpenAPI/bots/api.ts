@@ -2190,6 +2190,12 @@ export interface ConditionableProperty {
      * @memberof ConditionableProperty
      */
     'options'?: Array<ConditionalPropertyOption>;
+    /**
+     * 
+     * @type {DisplayIcon}
+     * @memberof ConditionableProperty
+     */
+    'icon'?: DisplayIcon;
 }
 
 export const ConditionablePropertyTypeEnum = {
@@ -2294,6 +2300,25 @@ export const DayOfWeek = {
 export type DayOfWeek = typeof DayOfWeek[keyof typeof DayOfWeek];
 
 
+/**
+ * 
+ * @export
+ * @interface DisplayIcon
+ */
+export interface DisplayIcon {
+    /**
+     * Material symbol name
+     * @type {string}
+     * @memberof DisplayIcon
+     */
+    'name': string;
+    /**
+     * Color name, hex code or theme color
+     * @type {string}
+     * @memberof DisplayIcon
+     */
+    'color'?: string;
+}
 /**
  * 
  * @export
