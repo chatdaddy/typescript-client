@@ -1032,12 +1032,32 @@ export interface BotInsertDataActionsInner {
      */
     'formActionMetadata'?: BotInsertDataActionsInnerAllOf1FormActionMetadata | null;
     /**
+     * Type of the message being sent
+     * @type {string}
+     * @memberof BotInsertDataActionsInner
+     */
+    'messageType'?: BotInsertDataActionsInnerMessageTypeEnum;
+    /**
+     * Account ID of the sender
+     * @type {string}
+     * @memberof BotInsertDataActionsInner
+     */
+    'accountId'?: string;
+    /**
      * 
      * @type {BotInsertDataActionsInnerAllOf1ZapierAction}
      * @memberof BotInsertDataActionsInner
      */
     'zapierAction'?: BotInsertDataActionsInnerAllOf1ZapierAction | null;
 }
+
+export const BotInsertDataActionsInnerMessageTypeEnum = {
+    Message: 'message',
+    Email: 'email'
+} as const;
+
+export type BotInsertDataActionsInnerMessageTypeEnum = typeof BotInsertDataActionsInnerMessageTypeEnum[keyof typeof BotInsertDataActionsInnerMessageTypeEnum];
+
 /**
  * 
  * @export
@@ -1142,12 +1162,32 @@ export interface BotInsertDataActionsInnerAllOf1 {
      */
     'formActionMetadata'?: BotInsertDataActionsInnerAllOf1FormActionMetadata | null;
     /**
+     * Type of the message being sent
+     * @type {string}
+     * @memberof BotInsertDataActionsInnerAllOf1
+     */
+    'messageType'?: BotInsertDataActionsInnerAllOf1MessageTypeEnum;
+    /**
+     * Account ID of the sender
+     * @type {string}
+     * @memberof BotInsertDataActionsInnerAllOf1
+     */
+    'accountId'?: string;
+    /**
      * 
      * @type {BotInsertDataActionsInnerAllOf1ZapierAction}
      * @memberof BotInsertDataActionsInnerAllOf1
      */
     'zapierAction'?: BotInsertDataActionsInnerAllOf1ZapierAction | null;
 }
+
+export const BotInsertDataActionsInnerAllOf1MessageTypeEnum = {
+    Message: 'message',
+    Email: 'email'
+} as const;
+
+export type BotInsertDataActionsInnerAllOf1MessageTypeEnum = typeof BotInsertDataActionsInnerAllOf1MessageTypeEnum[keyof typeof BotInsertDataActionsInnerAllOf1MessageTypeEnum];
+
 /**
  * 
  * @export
@@ -1285,6 +1325,12 @@ export interface BotInsertDataActionsInnerAllOf1Message {
      * @memberof BotInsertDataActionsInnerAllOf1Message
      */
     'products'?: Array<BotInsertDataActionsInnerAllOf1MessageProductsInner>;
+    /**
+     * the subject of the message, if applicable
+     * @type {string}
+     * @memberof BotInsertDataActionsInnerAllOf1Message
+     */
+    'subject'?: string;
 }
 /**
  * 
