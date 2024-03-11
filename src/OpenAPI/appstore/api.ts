@@ -106,10 +106,10 @@ export interface Extension {
     'updatedAt'?: string;
     /**
      * 
-     * @type {Array<Scope>}
+     * @type {Array<string>}
      * @memberof Extension
      */
-    'permissions'?: Array<Scope>;
+    'permissions'?: Array<string>;
 }
 
 export const ExtensionLocationEnum = {
@@ -755,85 +755,6 @@ export interface PublishedMessageFlow {
      */
     'publishedAt'?: string;
 }
-/**
- * 
- * @export
- * @enum {string}
- */
-
-export const Scope = {
-    WaState: 'WA_STATE',
-    ContactsReadAssigned: 'CONTACTS_READ_ASSIGNED',
-    ContactsReadAll: 'CONTACTS_READ_ALL',
-    ContactsExportButton: 'CONTACTS_EXPORT_BUTTON',
-    ContactsCreate: 'CONTACTS_CREATE',
-    ContactsDelete: 'CONTACTS_DELETE',
-    ContactsUpdate: 'CONTACTS_UPDATE',
-    CampaignsRead: 'CAMPAIGNS_READ',
-    CampaignsCreate: 'CAMPAIGNS_CREATE',
-    CampaignsDelete: 'CAMPAIGNS_DELETE',
-    CampaignsUpdate: 'CAMPAIGNS_UPDATE',
-    KeywordRead: 'KEYWORD_READ',
-    KeywordCreate: 'KEYWORD_CREATE',
-    KeywordDelete: 'KEYWORD_DELETE',
-    KeywordUpdate: 'KEYWORD_UPDATE',
-    TemplatesRead: 'TEMPLATES_READ',
-    TemplatesCreate: 'TEMPLATES_CREATE',
-    TemplatesDelete: 'TEMPLATES_DELETE',
-    TemplatesUpdate: 'TEMPLATES_UPDATE',
-    TagsRead: 'TAGS_READ',
-    TagsCreate: 'TAGS_CREATE',
-    TagsDelete: 'TAGS_DELETE',
-    TokensRead: 'TOKENS_READ',
-    TokensDelete: 'TOKENS_DELETE',
-    UsersPatch: 'USERS_PATCH',
-    TeamUpdate: 'TEAM_UPDATE',
-    AccountCreate: 'ACCOUNT_CREATE',
-    AccountRead: 'ACCOUNT_READ',
-    AccountDelete: 'ACCOUNT_DELETE',
-    AccountPatch: 'ACCOUNT_PATCH',
-    TeamlinkCreate: 'TEAMLINK_CREATE',
-    TeamlinkRead: 'TEAMLINK_READ',
-    TeammembersUpdate: 'TEAMMEMBERS_UPDATE',
-    TeammembersRead: 'TEAMMEMBERS_READ',
-    TeamNotify: 'TEAM_NOTIFY',
-    ChatsAccessAll: 'CHATS_ACCESS_ALL',
-    ChatsAccessAssigned: 'CHATS_ACCESS_ASSIGNED',
-    ChatsDelete: 'CHATS_DELETE',
-    MessagesSendToAssigned: 'MESSAGES_SEND_TO_ASSIGNED',
-    MessagesSendToAll: 'MESSAGES_SEND_TO_ALL',
-    MessagesSchedule: 'MESSAGES_SCHEDULE',
-    MessagesDelete: 'MESSAGES_DELETE',
-    GroupsCreate: 'GROUPS_CREATE',
-    GroupsUpdate: 'GROUPS_UPDATE',
-    Notes: 'NOTES',
-    NotificationRead: 'NOTIFICATION_READ',
-    NotificationCreate: 'NOTIFICATION_CREATE',
-    NotificationUpdate: 'NOTIFICATION_UPDATE',
-    NotificationDelete: 'NOTIFICATION_DELETE',
-    IntegrationsUpdate: 'INTEGRATIONS_UPDATE',
-    AdminPanelAccess: 'ADMIN_PANEL_ACCESS',
-    PaymentsRead: 'PAYMENTS_READ',
-    PaymentsUpdate: 'PAYMENTS_UPDATE',
-    WaLiveEvents: 'WA_LIVE_EVENTS',
-    ChatdaddyHook: 'CHATDADDY_HOOK',
-    PartnerAdminPanelAccess: 'PARTNER_ADMIN_PANEL_ACCESS',
-    ProductsGet: 'PRODUCTS_GET',
-    ProductsCreate: 'PRODUCTS_CREATE',
-    ProductsUpdate: 'PRODUCTS_UPDATE',
-    ProductsDelete: 'PRODUCTS_DELETE',
-    PaymentIntegrationRead: 'PAYMENT_INTEGRATION_READ',
-    PaymentIntegrationWrite: 'PAYMENT_INTEGRATION_WRITE',
-    PaymentRecordsRead: 'PAYMENT_RECORDS_READ',
-    PaymentRecordsWrite: 'PAYMENT_RECORDS_WRITE',
-    MetricsGet: 'METRICS_GET',
-    AccountsReadAssigned: 'ACCOUNTS_READ_ASSIGNED',
-    AutocompleteGet: 'AUTOCOMPLETE_GET'
-} as const;
-
-export type Scope = typeof Scope[keyof typeof Scope];
-
-
 
 /**
  * ExtensionsApi - axios parameter creator
