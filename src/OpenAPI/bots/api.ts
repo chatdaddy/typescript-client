@@ -769,6 +769,63 @@ export type ActionInteractionType = typeof ActionInteractionType[keyof typeof Ac
 /**
  * 
  * @export
+ * @interface ActionNode
+ */
+export interface ActionNode {
+    /**
+     * 
+     * @type {string}
+     * @memberof ActionNode
+     */
+    'type': ActionNodeTypeEnum;
+    /**
+     * 
+     * @type {Action}
+     * @memberof ActionNode
+     */
+    'data': Action;
+    /**
+     * 
+     * @type {ActionNodeHandle}
+     * @memberof ActionNode
+     */
+    'handle': ActionNodeHandle;
+    /**
+     * send in to remove the action
+     * @type {boolean}
+     * @memberof ActionNode
+     */
+    'remove'?: boolean;
+}
+
+export const ActionNodeTypeEnum = {
+    Action: 'action'
+} as const;
+
+export type ActionNodeTypeEnum = typeof ActionNodeTypeEnum[keyof typeof ActionNodeTypeEnum];
+
+/**
+ * 
+ * @export
+ * @interface ActionNodeHandle
+ */
+export interface ActionNodeHandle {
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof ActionNodeHandle
+     */
+    'delay': Array<string>;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof ActionNodeHandle
+     */
+    'userInput': Array<string>;
+}
+/**
+ * 
+ * @export
  * @interface ActionTarget
  */
 export interface ActionTarget {
@@ -1536,6 +1593,38 @@ export interface BotNote {
 /**
  * 
  * @export
+ * @interface BotNoteNode
+ */
+export interface BotNoteNode {
+    /**
+     * 
+     * @type {string}
+     * @memberof BotNoteNode
+     */
+    'type': BotNoteNodeTypeEnum;
+    /**
+     * 
+     * @type {BotNote}
+     * @memberof BotNoteNode
+     */
+    'data': BotNote;
+    /**
+     * send in to remove the note
+     * @type {boolean}
+     * @memberof BotNoteNode
+     */
+    'remove'?: boolean;
+}
+
+export const BotNoteNodeTypeEnum = {
+    Note: 'note'
+} as const;
+
+export type BotNoteNodeTypeEnum = typeof BotNoteNodeTypeEnum[keyof typeof BotNoteNodeTypeEnum];
+
+/**
+ * 
+ * @export
  * @interface BotNoteTargetsInner
  */
 export interface BotNoteTargetsInner {
@@ -1691,6 +1780,62 @@ export interface BotShareRequest {
      */
     'editable'?: boolean;
 }
+/**
+ * 
+ * @export
+ * @interface BotTargetNode
+ */
+export interface BotTargetNode {
+    /**
+     * 
+     * @type {string}
+     * @memberof BotTargetNode
+     */
+    'type': BotTargetNodeTypeEnum;
+    /**
+     * 
+     * @type {ActionTarget}
+     * @memberof BotTargetNode
+     */
+    'data': ActionTarget;
+    /**
+     * 
+     * @type {Action}
+     * @memberof BotTargetNode
+     */
+    'sourceAction': Action;
+    /**
+     * 
+     * @type {number}
+     * @memberof BotTargetNode
+     */
+    'sourceIndex': number;
+    /**
+     * 
+     * @type {ConditionSourceType}
+     * @memberof BotTargetNode
+     */
+    'sourceType'?: ConditionSourceType;
+    /**
+     * 
+     * @type {ConditionSource}
+     * @memberof BotTargetNode
+     */
+    'conditionSource'?: ConditionSource;
+    /**
+     * send in to remove the bot target
+     * @type {boolean}
+     * @memberof BotTargetNode
+     */
+    'remove'?: boolean;
+}
+
+export const BotTargetNodeTypeEnum = {
+    BotTarget: 'botTarget'
+} as const;
+
+export type BotTargetNodeTypeEnum = typeof BotTargetNodeTypeEnum[keyof typeof BotTargetNodeTypeEnum];
+
 /**
  * 
  * @export
@@ -2161,6 +2306,124 @@ export interface BotsGets200Response {
     'totalCount'?: number;
 }
 /**
+ * 
+ * @export
+ * @interface ConditionNode
+ */
+export interface ConditionNode {
+    /**
+     * 
+     * @type {string}
+     * @memberof ConditionNode
+     */
+    'type': ConditionNodeTypeEnum;
+    /**
+     * 
+     * @type {NextAction}
+     * @memberof ConditionNode
+     */
+    'data': NextAction;
+    /**
+     * 
+     * @type {ConditionNodeHandle}
+     * @memberof ConditionNode
+     */
+    'handle': ConditionNodeHandle;
+    /**
+     * 
+     * @type {ConditionSourceType}
+     * @memberof ConditionNode
+     */
+    'sourceType': ConditionSourceType;
+    /**
+     * 
+     * @type {Action}
+     * @memberof ConditionNode
+     */
+    'sourceAction': Action;
+    /**
+     * 
+     * @type {number}
+     * @memberof ConditionNode
+     */
+    'sourceIndex': number;
+    /**
+     * send in to remove the condition
+     * @type {boolean}
+     * @memberof ConditionNode
+     */
+    'remove'?: boolean;
+}
+
+export const ConditionNodeTypeEnum = {
+    Condition: 'condition'
+} as const;
+
+export type ConditionNodeTypeEnum = typeof ConditionNodeTypeEnum[keyof typeof ConditionNodeTypeEnum];
+
+/**
+ * 
+ * @export
+ * @interface ConditionNodeHandle
+ */
+export interface ConditionNodeHandle {
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof ConditionNodeHandle
+     */
+    'default': Array<string>;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof ConditionNodeHandle
+     */
+    'group': Array<string>;
+}
+/**
+ * 
+ * @export
+ * @interface ConditionSource
+ */
+export interface ConditionSource {
+    /**
+     * 
+     * @type {string}
+     * @memberof ConditionSource
+     */
+    'target': ConditionSourceTargetEnum;
+    /**
+     * 
+     * @type {number}
+     * @memberof ConditionSource
+     */
+    'index': number;
+}
+
+export const ConditionSourceTargetEnum = {
+    Default: 'default',
+    Group: 'group'
+} as const;
+
+export type ConditionSourceTargetEnum = typeof ConditionSourceTargetEnum[keyof typeof ConditionSourceTargetEnum];
+
+/**
+ * 
+ * @export
+ * @enum {string}
+ */
+
+export const ConditionSourceType = {
+    Button: 'button',
+    Input: 'input',
+    Delay: 'delay',
+    List: 'list'
+} as const;
+
+export type ConditionSourceType = typeof ConditionSourceType[keyof typeof ConditionSourceType];
+
+
+/**
  * Data structure that gives information to the frontend on how to render conditions for a property of a data object that has caused a Trigger to fire.
  * @export
  * @interface ConditionableProperty
@@ -2303,6 +2566,56 @@ export type DayOfWeek = typeof DayOfWeek[keyof typeof DayOfWeek];
 /**
  * 
  * @export
+ * @interface DelayNode
+ */
+export interface DelayNode {
+    /**
+     * 
+     * @type {string}
+     * @memberof DelayNode
+     */
+    'type': DelayNodeTypeEnum;
+    /**
+     * 
+     * @type {BotMessageDelay}
+     * @memberof DelayNode
+     */
+    'data': BotMessageDelay;
+    /**
+     * 
+     * @type {string}
+     * @memberof DelayNode
+     */
+    'handle': string;
+    /**
+     * 
+     * @type {Action}
+     * @memberof DelayNode
+     */
+    'sourceAction': Action;
+    /**
+     * 
+     * @type {number}
+     * @memberof DelayNode
+     */
+    'sourceIndex': number;
+    /**
+     * send in to remove the delay
+     * @type {boolean}
+     * @memberof DelayNode
+     */
+    'remove'?: boolean;
+}
+
+export const DelayNodeTypeEnum = {
+    Delay: 'delay'
+} as const;
+
+export type DelayNodeTypeEnum = typeof DelayNodeTypeEnum[keyof typeof DelayNodeTypeEnum];
+
+/**
+ * 
+ * @export
  * @interface DisplayIcon
  */
 export interface DisplayIcon {
@@ -2318,6 +2631,69 @@ export interface DisplayIcon {
      * @memberof DisplayIcon
      */
     'color'?: string;
+}
+/**
+ * 
+ * @export
+ * @interface EmailNode
+ */
+export interface EmailNode {
+    /**
+     * 
+     * @type {string}
+     * @memberof EmailNode
+     */
+    'type': EmailNodeTypeEnum;
+    /**
+     * 
+     * @type {Action}
+     * @memberof EmailNode
+     */
+    'data': Action;
+    /**
+     * 
+     * @type {EmailNodeHandle}
+     * @memberof EmailNode
+     */
+    'handle': EmailNodeHandle;
+    /**
+     * send in to remove the email
+     * @type {boolean}
+     * @memberof EmailNode
+     */
+    'remove'?: boolean;
+}
+
+export const EmailNodeTypeEnum = {
+    Email: 'email'
+} as const;
+
+export type EmailNodeTypeEnum = typeof EmailNodeTypeEnum[keyof typeof EmailNodeTypeEnum];
+
+/**
+ * 
+ * @export
+ * @interface EmailNodeHandle
+ */
+export interface EmailNodeHandle {
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof EmailNodeHandle
+     */
+    'delay': Array<string>;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof EmailNodeHandle
+     */
+    'action': Array<string>;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof EmailNodeHandle
+     */
+    'userInput': Array<string>;
 }
 /**
  * 
@@ -3097,6 +3473,82 @@ export interface InternalEventUIConfig {
 /**
  * 
  * @export
+ * @interface MessageNode
+ */
+export interface MessageNode {
+    /**
+     * 
+     * @type {string}
+     * @memberof MessageNode
+     */
+    'type': MessageNodeTypeEnum;
+    /**
+     * 
+     * @type {Action}
+     * @memberof MessageNode
+     */
+    'data': Action;
+    /**
+     * 
+     * @type {MessageNodeHandle}
+     * @memberof MessageNode
+     */
+    'handle': MessageNodeHandle;
+    /**
+     * send in to remove the message
+     * @type {boolean}
+     * @memberof MessageNode
+     */
+    'remove'?: boolean;
+}
+
+export const MessageNodeTypeEnum = {
+    Message: 'message',
+    Email: 'email'
+} as const;
+
+export type MessageNodeTypeEnum = typeof MessageNodeTypeEnum[keyof typeof MessageNodeTypeEnum];
+
+/**
+ * 
+ * @export
+ * @interface MessageNodeHandle
+ */
+export interface MessageNodeHandle {
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof MessageNodeHandle
+     */
+    'button': Array<string>;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof MessageNodeHandle
+     */
+    'delay': Array<string>;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof MessageNodeHandle
+     */
+    'list': Array<string>;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof MessageNodeHandle
+     */
+    'action': Array<string>;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof MessageNodeHandle
+     */
+    'userInput': Array<string>;
+}
+/**
+ * 
+ * @export
  * @interface MessageObj
  */
 export interface MessageObj {
@@ -3341,6 +3793,75 @@ export interface NextActionGroupsInnerTarget {
      * 
      * @type {Position}
      * @memberof NextActionGroupsInnerTarget
+     */
+    'position'?: Position | null;
+}
+/**
+ * @type NodeData
+ * @export
+ */
+export type NodeData = ActionNode | BotNoteNode | BotTargetNode | ConditionNode | DelayNode | EmailNode | MessageNode | PhoneNumberNode | UrlNode | UserInputNode;
+
+/**
+ * 
+ * @export
+ * @interface PhoneNumberNode
+ */
+export interface PhoneNumberNode {
+    /**
+     * 
+     * @type {string}
+     * @memberof PhoneNumberNode
+     */
+    'type': PhoneNumberNodeTypeEnum;
+    /**
+     * 
+     * @type {PhoneNumberNodeData}
+     * @memberof PhoneNumberNode
+     */
+    'data': PhoneNumberNodeData;
+    /**
+     * 
+     * @type {Action}
+     * @memberof PhoneNumberNode
+     */
+    'sourceAction': Action;
+    /**
+     * 
+     * @type {number}
+     * @memberof PhoneNumberNode
+     */
+    'sourceIndex': number;
+    /**
+     * send in to remove the phone number
+     * @type {boolean}
+     * @memberof PhoneNumberNode
+     */
+    'remove'?: boolean;
+}
+
+export const PhoneNumberNodeTypeEnum = {
+    PhoneNumber: 'phoneNumber'
+} as const;
+
+export type PhoneNumberNodeTypeEnum = typeof PhoneNumberNodeTypeEnum[keyof typeof PhoneNumberNodeTypeEnum];
+
+/**
+ * 
+ * @export
+ * @interface PhoneNumberNodeData
+ */
+export interface PhoneNumberNodeData {
+    /**
+     * Phone number to call
+     * @type {string}
+     * @memberof PhoneNumberNodeData
+     */
+    'phoneNumber': string;
+    /**
+     * 
+     * @type {Position}
+     * @memberof PhoneNumberNodeData
      */
     'position'?: Position | null;
 }
@@ -4020,6 +4541,119 @@ export interface TriggersUIConfigDefaults {
      */
     'options'?: BotTriggerOptions;
 }
+/**
+ * 
+ * @export
+ * @interface UrlNode
+ */
+export interface UrlNode {
+    /**
+     * 
+     * @type {string}
+     * @memberof UrlNode
+     */
+    'type': UrlNodeTypeEnum;
+    /**
+     * 
+     * @type {UrlNodeData}
+     * @memberof UrlNode
+     */
+    'data': UrlNodeData;
+    /**
+     * 
+     * @type {Action}
+     * @memberof UrlNode
+     */
+    'sourceAction': Action;
+    /**
+     * 
+     * @type {number}
+     * @memberof UrlNode
+     */
+    'sourceIndex': number;
+    /**
+     * send in to remove the url
+     * @type {boolean}
+     * @memberof UrlNode
+     */
+    'remove'?: boolean;
+}
+
+export const UrlNodeTypeEnum = {
+    Url: 'url'
+} as const;
+
+export type UrlNodeTypeEnum = typeof UrlNodeTypeEnum[keyof typeof UrlNodeTypeEnum];
+
+/**
+ * 
+ * @export
+ * @interface UrlNodeData
+ */
+export interface UrlNodeData {
+    /**
+     * 
+     * @type {string}
+     * @memberof UrlNodeData
+     */
+    'url': string;
+    /**
+     * 
+     * @type {Position}
+     * @memberof UrlNodeData
+     */
+    'position'?: Position | null;
+}
+/**
+ * 
+ * @export
+ * @interface UserInputNode
+ */
+export interface UserInputNode {
+    /**
+     * 
+     * @type {string}
+     * @memberof UserInputNode
+     */
+    'type': UserInputNodeTypeEnum;
+    /**
+     * 
+     * @type {BotMessageInput}
+     * @memberof UserInputNode
+     */
+    'data': BotMessageInput;
+    /**
+     * 
+     * @type {string}
+     * @memberof UserInputNode
+     */
+    'handle': string;
+    /**
+     * 
+     * @type {Action}
+     * @memberof UserInputNode
+     */
+    'sourceAction': Action;
+    /**
+     * 
+     * @type {number}
+     * @memberof UserInputNode
+     */
+    'sourceIndex': number;
+    /**
+     * send in to remove the user input
+     * @type {boolean}
+     * @memberof UserInputNode
+     */
+    'remove'?: boolean;
+}
+
+export const UserInputNodeTypeEnum = {
+    UserInput: 'userInput'
+} as const;
+
+export type UserInputNodeTypeEnum = typeof UserInputNodeTypeEnum[keyof typeof UserInputNodeTypeEnum];
+
 
 /**
  * ActionsApi - axios parameter creator

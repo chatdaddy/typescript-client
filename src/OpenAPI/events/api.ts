@@ -2261,6 +2261,666 @@ export interface BotInsertDataSharedSlugsInner {
 /**
  * 
  * @export
+ * @interface BotNodeEvent
+ */
+export interface BotNodeEvent {
+    /**
+     * 
+     * @type {string}
+     * @memberof BotNodeEvent
+     */
+    'event': BotNodeEventEventEnum;
+    /**
+     * 
+     * @type {Array<BotNodeEventData>}
+     * @memberof BotNodeEvent
+     */
+    'data': Array<BotNodeEventData>;
+}
+
+export const BotNodeEventEventEnum = {
+    BotNodeEvent: 'bot-node-event'
+} as const;
+
+export type BotNodeEventEventEnum = typeof BotNodeEventEventEnum[keyof typeof BotNodeEventEventEnum];
+
+/**
+ * @type BotNodeEventData
+ * @export
+ */
+export type BotNodeEventData = BotNodeEventDataOneOf | BotNodeEventDataOneOf1 | BotNodeEventDataOneOf2 | BotNodeEventDataOneOf3 | BotNodeEventDataOneOf4 | BotNodeEventDataOneOf5 | BotNodeEventDataOneOf6 | BotNodeEventDataOneOf7 | BotNodeEventDataOneOf8 | BotNodeEventDataOneOf9;
+
+/**
+ * 
+ * @export
+ * @interface BotNodeEventDataOneOf
+ */
+export interface BotNodeEventDataOneOf {
+    /**
+     * 
+     * @type {string}
+     * @memberof BotNodeEventDataOneOf
+     */
+    'type': BotNodeEventDataOneOfTypeEnum;
+    /**
+     * 
+     * @type {BotInsertDataActionsInner}
+     * @memberof BotNodeEventDataOneOf
+     */
+    'data': BotInsertDataActionsInner;
+    /**
+     * 
+     * @type {BotNodeEventDataOneOfHandle}
+     * @memberof BotNodeEventDataOneOf
+     */
+    'handle': BotNodeEventDataOneOfHandle;
+    /**
+     * send in to remove the message
+     * @type {boolean}
+     * @memberof BotNodeEventDataOneOf
+     */
+    'remove'?: boolean;
+}
+
+export const BotNodeEventDataOneOfTypeEnum = {
+    Message: 'message',
+    Email: 'email'
+} as const;
+
+export type BotNodeEventDataOneOfTypeEnum = typeof BotNodeEventDataOneOfTypeEnum[keyof typeof BotNodeEventDataOneOfTypeEnum];
+
+/**
+ * 
+ * @export
+ * @interface BotNodeEventDataOneOf1
+ */
+export interface BotNodeEventDataOneOf1 {
+    /**
+     * 
+     * @type {string}
+     * @memberof BotNodeEventDataOneOf1
+     */
+    'type': BotNodeEventDataOneOf1TypeEnum;
+    /**
+     * 
+     * @type {BotInsertDataActionsInner}
+     * @memberof BotNodeEventDataOneOf1
+     */
+    'data': BotInsertDataActionsInner;
+    /**
+     * 
+     * @type {BotNodeEventDataOneOf1Handle}
+     * @memberof BotNodeEventDataOneOf1
+     */
+    'handle': BotNodeEventDataOneOf1Handle;
+    /**
+     * send in to remove the email
+     * @type {boolean}
+     * @memberof BotNodeEventDataOneOf1
+     */
+    'remove'?: boolean;
+}
+
+export const BotNodeEventDataOneOf1TypeEnum = {
+    Email: 'email'
+} as const;
+
+export type BotNodeEventDataOneOf1TypeEnum = typeof BotNodeEventDataOneOf1TypeEnum[keyof typeof BotNodeEventDataOneOf1TypeEnum];
+
+/**
+ * 
+ * @export
+ * @interface BotNodeEventDataOneOf1Handle
+ */
+export interface BotNodeEventDataOneOf1Handle {
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof BotNodeEventDataOneOf1Handle
+     */
+    'delay': Array<string>;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof BotNodeEventDataOneOf1Handle
+     */
+    'action': Array<string>;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof BotNodeEventDataOneOf1Handle
+     */
+    'userInput': Array<string>;
+}
+/**
+ * 
+ * @export
+ * @interface BotNodeEventDataOneOf2
+ */
+export interface BotNodeEventDataOneOf2 {
+    /**
+     * 
+     * @type {string}
+     * @memberof BotNodeEventDataOneOf2
+     */
+    'type': BotNodeEventDataOneOf2TypeEnum;
+    /**
+     * 
+     * @type {BotInsertDataActionsInner}
+     * @memberof BotNodeEventDataOneOf2
+     */
+    'data': BotInsertDataActionsInner;
+    /**
+     * 
+     * @type {BotNodeEventDataOneOf2Handle}
+     * @memberof BotNodeEventDataOneOf2
+     */
+    'handle': BotNodeEventDataOneOf2Handle;
+    /**
+     * send in to remove the action
+     * @type {boolean}
+     * @memberof BotNodeEventDataOneOf2
+     */
+    'remove'?: boolean;
+}
+
+export const BotNodeEventDataOneOf2TypeEnum = {
+    Action: 'action'
+} as const;
+
+export type BotNodeEventDataOneOf2TypeEnum = typeof BotNodeEventDataOneOf2TypeEnum[keyof typeof BotNodeEventDataOneOf2TypeEnum];
+
+/**
+ * 
+ * @export
+ * @interface BotNodeEventDataOneOf2Handle
+ */
+export interface BotNodeEventDataOneOf2Handle {
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof BotNodeEventDataOneOf2Handle
+     */
+    'delay': Array<string>;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof BotNodeEventDataOneOf2Handle
+     */
+    'userInput': Array<string>;
+}
+/**
+ * 
+ * @export
+ * @interface BotNodeEventDataOneOf3
+ */
+export interface BotNodeEventDataOneOf3 {
+    /**
+     * 
+     * @type {string}
+     * @memberof BotNodeEventDataOneOf3
+     */
+    'type': BotNodeEventDataOneOf3TypeEnum;
+    /**
+     * 
+     * @type {BotInsertDataActionsInnerAllOf1MessageInput}
+     * @memberof BotNodeEventDataOneOf3
+     */
+    'data': BotInsertDataActionsInnerAllOf1MessageInput;
+    /**
+     * 
+     * @type {string}
+     * @memberof BotNodeEventDataOneOf3
+     */
+    'handle': string;
+    /**
+     * 
+     * @type {BotInsertDataActionsInner}
+     * @memberof BotNodeEventDataOneOf3
+     */
+    'sourceAction': BotInsertDataActionsInner;
+    /**
+     * 
+     * @type {number}
+     * @memberof BotNodeEventDataOneOf3
+     */
+    'sourceIndex': number;
+    /**
+     * send in to remove the user input
+     * @type {boolean}
+     * @memberof BotNodeEventDataOneOf3
+     */
+    'remove'?: boolean;
+}
+
+export const BotNodeEventDataOneOf3TypeEnum = {
+    UserInput: 'userInput'
+} as const;
+
+export type BotNodeEventDataOneOf3TypeEnum = typeof BotNodeEventDataOneOf3TypeEnum[keyof typeof BotNodeEventDataOneOf3TypeEnum];
+
+/**
+ * 
+ * @export
+ * @interface BotNodeEventDataOneOf4
+ */
+export interface BotNodeEventDataOneOf4 {
+    /**
+     * 
+     * @type {string}
+     * @memberof BotNodeEventDataOneOf4
+     */
+    'type': BotNodeEventDataOneOf4TypeEnum;
+    /**
+     * 
+     * @type {BotInsertDataActionsInnerAllOf1MessageDelaysInner}
+     * @memberof BotNodeEventDataOneOf4
+     */
+    'data': BotInsertDataActionsInnerAllOf1MessageDelaysInner;
+    /**
+     * 
+     * @type {string}
+     * @memberof BotNodeEventDataOneOf4
+     */
+    'handle': string;
+    /**
+     * 
+     * @type {BotInsertDataActionsInner}
+     * @memberof BotNodeEventDataOneOf4
+     */
+    'sourceAction': BotInsertDataActionsInner;
+    /**
+     * 
+     * @type {number}
+     * @memberof BotNodeEventDataOneOf4
+     */
+    'sourceIndex': number;
+    /**
+     * send in to remove the delay
+     * @type {boolean}
+     * @memberof BotNodeEventDataOneOf4
+     */
+    'remove'?: boolean;
+}
+
+export const BotNodeEventDataOneOf4TypeEnum = {
+    Delay: 'delay'
+} as const;
+
+export type BotNodeEventDataOneOf4TypeEnum = typeof BotNodeEventDataOneOf4TypeEnum[keyof typeof BotNodeEventDataOneOf4TypeEnum];
+
+/**
+ * 
+ * @export
+ * @interface BotNodeEventDataOneOf5
+ */
+export interface BotNodeEventDataOneOf5 {
+    /**
+     * 
+     * @type {string}
+     * @memberof BotNodeEventDataOneOf5
+     */
+    'type': BotNodeEventDataOneOf5TypeEnum;
+    /**
+     * 
+     * @type {BotInsertDataActionsInnerAllOf1MessageButtonsInnerNextAction}
+     * @memberof BotNodeEventDataOneOf5
+     */
+    'data': BotInsertDataActionsInnerAllOf1MessageButtonsInnerNextAction;
+    /**
+     * 
+     * @type {BotNodeEventDataOneOf5Handle}
+     * @memberof BotNodeEventDataOneOf5
+     */
+    'handle': BotNodeEventDataOneOf5Handle;
+    /**
+     * 
+     * @type {string}
+     * @memberof BotNodeEventDataOneOf5
+     */
+    'sourceType': BotNodeEventDataOneOf5SourceTypeEnum;
+    /**
+     * 
+     * @type {BotInsertDataActionsInner}
+     * @memberof BotNodeEventDataOneOf5
+     */
+    'sourceAction': BotInsertDataActionsInner;
+    /**
+     * 
+     * @type {number}
+     * @memberof BotNodeEventDataOneOf5
+     */
+    'sourceIndex': number;
+    /**
+     * send in to remove the condition
+     * @type {boolean}
+     * @memberof BotNodeEventDataOneOf5
+     */
+    'remove'?: boolean;
+}
+
+export const BotNodeEventDataOneOf5TypeEnum = {
+    Condition: 'condition'
+} as const;
+
+export type BotNodeEventDataOneOf5TypeEnum = typeof BotNodeEventDataOneOf5TypeEnum[keyof typeof BotNodeEventDataOneOf5TypeEnum];
+export const BotNodeEventDataOneOf5SourceTypeEnum = {
+    Button: 'button',
+    Input: 'input',
+    Delay: 'delay',
+    List: 'list'
+} as const;
+
+export type BotNodeEventDataOneOf5SourceTypeEnum = typeof BotNodeEventDataOneOf5SourceTypeEnum[keyof typeof BotNodeEventDataOneOf5SourceTypeEnum];
+
+/**
+ * 
+ * @export
+ * @interface BotNodeEventDataOneOf5Handle
+ */
+export interface BotNodeEventDataOneOf5Handle {
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof BotNodeEventDataOneOf5Handle
+     */
+    'default': Array<string>;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof BotNodeEventDataOneOf5Handle
+     */
+    'group': Array<string>;
+}
+/**
+ * 
+ * @export
+ * @interface BotNodeEventDataOneOf6
+ */
+export interface BotNodeEventDataOneOf6 {
+    /**
+     * 
+     * @type {string}
+     * @memberof BotNodeEventDataOneOf6
+     */
+    'type': BotNodeEventDataOneOf6TypeEnum;
+    /**
+     * 
+     * @type {BotNodeEventDataOneOf6Data}
+     * @memberof BotNodeEventDataOneOf6
+     */
+    'data': BotNodeEventDataOneOf6Data;
+    /**
+     * 
+     * @type {BotInsertDataActionsInner}
+     * @memberof BotNodeEventDataOneOf6
+     */
+    'sourceAction': BotInsertDataActionsInner;
+    /**
+     * 
+     * @type {number}
+     * @memberof BotNodeEventDataOneOf6
+     */
+    'sourceIndex': number;
+    /**
+     * send in to remove the url
+     * @type {boolean}
+     * @memberof BotNodeEventDataOneOf6
+     */
+    'remove'?: boolean;
+}
+
+export const BotNodeEventDataOneOf6TypeEnum = {
+    Url: 'url'
+} as const;
+
+export type BotNodeEventDataOneOf6TypeEnum = typeof BotNodeEventDataOneOf6TypeEnum[keyof typeof BotNodeEventDataOneOf6TypeEnum];
+
+/**
+ * 
+ * @export
+ * @interface BotNodeEventDataOneOf6Data
+ */
+export interface BotNodeEventDataOneOf6Data {
+    /**
+     * 
+     * @type {string}
+     * @memberof BotNodeEventDataOneOf6Data
+     */
+    'url': string;
+    /**
+     * 
+     * @type {BotInsertDataActionsInnerAllOf1MessageButtonsInnerPosition}
+     * @memberof BotNodeEventDataOneOf6Data
+     */
+    'position'?: BotInsertDataActionsInnerAllOf1MessageButtonsInnerPosition | null;
+}
+/**
+ * 
+ * @export
+ * @interface BotNodeEventDataOneOf7
+ */
+export interface BotNodeEventDataOneOf7 {
+    /**
+     * 
+     * @type {string}
+     * @memberof BotNodeEventDataOneOf7
+     */
+    'type': BotNodeEventDataOneOf7TypeEnum;
+    /**
+     * 
+     * @type {BotNodeEventDataOneOf7Data}
+     * @memberof BotNodeEventDataOneOf7
+     */
+    'data': BotNodeEventDataOneOf7Data;
+    /**
+     * 
+     * @type {BotInsertDataActionsInner}
+     * @memberof BotNodeEventDataOneOf7
+     */
+    'sourceAction': BotInsertDataActionsInner;
+    /**
+     * 
+     * @type {number}
+     * @memberof BotNodeEventDataOneOf7
+     */
+    'sourceIndex': number;
+    /**
+     * send in to remove the phone number
+     * @type {boolean}
+     * @memberof BotNodeEventDataOneOf7
+     */
+    'remove'?: boolean;
+}
+
+export const BotNodeEventDataOneOf7TypeEnum = {
+    PhoneNumber: 'phoneNumber'
+} as const;
+
+export type BotNodeEventDataOneOf7TypeEnum = typeof BotNodeEventDataOneOf7TypeEnum[keyof typeof BotNodeEventDataOneOf7TypeEnum];
+
+/**
+ * 
+ * @export
+ * @interface BotNodeEventDataOneOf7Data
+ */
+export interface BotNodeEventDataOneOf7Data {
+    /**
+     * Phone number to call
+     * @type {string}
+     * @memberof BotNodeEventDataOneOf7Data
+     */
+    'phoneNumber': string;
+    /**
+     * 
+     * @type {BotInsertDataActionsInnerAllOf1MessageButtonsInnerPosition}
+     * @memberof BotNodeEventDataOneOf7Data
+     */
+    'position'?: BotInsertDataActionsInnerAllOf1MessageButtonsInnerPosition | null;
+}
+/**
+ * 
+ * @export
+ * @interface BotNodeEventDataOneOf8
+ */
+export interface BotNodeEventDataOneOf8 {
+    /**
+     * 
+     * @type {string}
+     * @memberof BotNodeEventDataOneOf8
+     */
+    'type': BotNodeEventDataOneOf8TypeEnum;
+    /**
+     * 
+     * @type {BotInsertDataActionsInnerAllOf1MessageButtonsInnerNextActionDefaultActionAllOf}
+     * @memberof BotNodeEventDataOneOf8
+     */
+    'data': BotInsertDataActionsInnerAllOf1MessageButtonsInnerNextActionDefaultActionAllOf;
+    /**
+     * 
+     * @type {BotInsertDataActionsInner}
+     * @memberof BotNodeEventDataOneOf8
+     */
+    'sourceAction': BotInsertDataActionsInner;
+    /**
+     * 
+     * @type {number}
+     * @memberof BotNodeEventDataOneOf8
+     */
+    'sourceIndex': number;
+    /**
+     * 
+     * @type {string}
+     * @memberof BotNodeEventDataOneOf8
+     */
+    'sourceType'?: BotNodeEventDataOneOf8SourceTypeEnum;
+    /**
+     * 
+     * @type {BotNodeEventDataOneOf8ConditionSource}
+     * @memberof BotNodeEventDataOneOf8
+     */
+    'conditionSource'?: BotNodeEventDataOneOf8ConditionSource;
+    /**
+     * send in to remove the bot target
+     * @type {boolean}
+     * @memberof BotNodeEventDataOneOf8
+     */
+    'remove'?: boolean;
+}
+
+export const BotNodeEventDataOneOf8TypeEnum = {
+    BotTarget: 'botTarget'
+} as const;
+
+export type BotNodeEventDataOneOf8TypeEnum = typeof BotNodeEventDataOneOf8TypeEnum[keyof typeof BotNodeEventDataOneOf8TypeEnum];
+export const BotNodeEventDataOneOf8SourceTypeEnum = {
+    Button: 'button',
+    Input: 'input',
+    Delay: 'delay',
+    List: 'list'
+} as const;
+
+export type BotNodeEventDataOneOf8SourceTypeEnum = typeof BotNodeEventDataOneOf8SourceTypeEnum[keyof typeof BotNodeEventDataOneOf8SourceTypeEnum];
+
+/**
+ * 
+ * @export
+ * @interface BotNodeEventDataOneOf8ConditionSource
+ */
+export interface BotNodeEventDataOneOf8ConditionSource {
+    /**
+     * 
+     * @type {string}
+     * @memberof BotNodeEventDataOneOf8ConditionSource
+     */
+    'target': BotNodeEventDataOneOf8ConditionSourceTargetEnum;
+    /**
+     * 
+     * @type {number}
+     * @memberof BotNodeEventDataOneOf8ConditionSource
+     */
+    'index': number;
+}
+
+export const BotNodeEventDataOneOf8ConditionSourceTargetEnum = {
+    Default: 'default',
+    Group: 'group'
+} as const;
+
+export type BotNodeEventDataOneOf8ConditionSourceTargetEnum = typeof BotNodeEventDataOneOf8ConditionSourceTargetEnum[keyof typeof BotNodeEventDataOneOf8ConditionSourceTargetEnum];
+
+/**
+ * 
+ * @export
+ * @interface BotNodeEventDataOneOf9
+ */
+export interface BotNodeEventDataOneOf9 {
+    /**
+     * 
+     * @type {string}
+     * @memberof BotNodeEventDataOneOf9
+     */
+    'type': BotNodeEventDataOneOf9TypeEnum;
+    /**
+     * 
+     * @type {BotInsertDataNotesInner}
+     * @memberof BotNodeEventDataOneOf9
+     */
+    'data': BotInsertDataNotesInner;
+    /**
+     * send in to remove the note
+     * @type {boolean}
+     * @memberof BotNodeEventDataOneOf9
+     */
+    'remove'?: boolean;
+}
+
+export const BotNodeEventDataOneOf9TypeEnum = {
+    Note: 'note'
+} as const;
+
+export type BotNodeEventDataOneOf9TypeEnum = typeof BotNodeEventDataOneOf9TypeEnum[keyof typeof BotNodeEventDataOneOf9TypeEnum];
+
+/**
+ * 
+ * @export
+ * @interface BotNodeEventDataOneOfHandle
+ */
+export interface BotNodeEventDataOneOfHandle {
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof BotNodeEventDataOneOfHandle
+     */
+    'button': Array<string>;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof BotNodeEventDataOneOfHandle
+     */
+    'delay': Array<string>;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof BotNodeEventDataOneOfHandle
+     */
+    'list': Array<string>;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof BotNodeEventDataOneOfHandle
+     */
+    'action': Array<string>;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof BotNodeEventDataOneOfHandle
+     */
+    'userInput': Array<string>;
+}
+/**
+ * 
+ * @export
  * @interface BotUpdate
  */
 export interface BotUpdate {
@@ -4146,6 +4806,7 @@ export const EventName = {
     PaymentintegrationInsert: 'paymentintegration-insert',
     DashboardwithdataInsert: 'dashboardwithdata-insert',
     ShopproductInsert: 'shopproduct-insert',
+    BotNodeEvent: 'bot-node-event',
     ContactInsert: 'contact-insert',
     ContactUpdate: 'contact-update',
     ContactDelete: 'contact-delete',
@@ -4272,7 +4933,7 @@ export type EventSubscriptionType = typeof EventSubscriptionType[keyof typeof Ev
  * The request body you\'ll receive in a webhook
  * @export
  */
-export type EventWebhookData = AccountDelete | AccountInsert | AccountUpdate | ActionExecute | BotDelete | BotInsert | BotUpdate | CampaignInsert | ChatDelete | ChatInsert | ChatUpdate | ChatbotInsert | ContactDelete | ContactInsert | ContactUpdate | CredittransactionrecordInsert | CustomerCreditsLevelUpdate | DashboardwithdataInsert | FewMessagesLeft | GroupUpdate | KeywordbasedactionInsert | MembershipactionInsert | MessageDelete | MessageInsert | MessageUpdate | OrderInsert | PaymentintegrationInsert | PlatformproductDelete | PlatformproductInsert | PlatformproductUpdate | PresenceUpdate | PushNotification | ShopproductInsert | StaleAccountNotification | TagDelete | TagInsert | TagUpdate | TeamDelete | TeamInsert | TeamUpdate | TeammemberDelete | TeammemberInsert | TeammemberUpdate | TrackingDelete | TrackingInsert | TrackingUpdate | UserDelete | UserInsert | UserUpdate;
+export type EventWebhookData = AccountDelete | AccountInsert | AccountUpdate | ActionExecute | BotDelete | BotInsert | BotNodeEvent | BotUpdate | CampaignInsert | ChatDelete | ChatInsert | ChatUpdate | ChatbotInsert | ContactDelete | ContactInsert | ContactUpdate | CredittransactionrecordInsert | CustomerCreditsLevelUpdate | DashboardwithdataInsert | FewMessagesLeft | GroupUpdate | KeywordbasedactionInsert | MembershipactionInsert | MessageDelete | MessageInsert | MessageUpdate | OrderInsert | PaymentintegrationInsert | PlatformproductDelete | PlatformproductInsert | PlatformproductUpdate | PresenceUpdate | PushNotification | ShopproductInsert | StaleAccountNotification | TagDelete | TagInsert | TagUpdate | TeamDelete | TeamInsert | TeamUpdate | TeammemberDelete | TeammemberInsert | TeammemberUpdate | TrackingDelete | TrackingInsert | TrackingUpdate | UserDelete | UserInsert | UserUpdate;
 
 /**
  * 
