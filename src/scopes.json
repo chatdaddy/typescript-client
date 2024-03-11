@@ -10,7 +10,7 @@
       "agent",
       "editor"
     ],
-    "group": "Contacts Access"
+    "group": "Contact"
   },
   "CONTACTS_READ_ALL": {
     "number": 3,
@@ -24,7 +24,7 @@
       "editor",
       "viewer"
     ],
-    "group": "Contacts Access"
+    "group": "Contact"
   },
   "CONTACTS_EXPORT_BUTTON": {
     "number": 26,
@@ -36,11 +36,11 @@
       "admin",
       "editor"
     ],
-    "group": "Contacts Access"
+    "group": "Contact"
   },
   "CONTACTS_CREATE": {
     "number": 4,
-    "description": "Allow the creation of contacts",
+    "description": "Create contacts",
     "features": [
       "audience"
     ],
@@ -48,11 +48,11 @@
       "admin",
       "editor"
     ],
-    "group": "Contacts Access"
+    "group": "Contact"
   },
   "CONTACTS_DELETE": {
     "number": 5,
-    "description": "Allow the deletion of contacts",
+    "description": "Delete contacts",
     "features": [
       "audience"
     ],
@@ -60,11 +60,11 @@
       "admin",
       "editor"
     ],
-    "group": "Contacts Access"
+    "group": "Contact"
   },
   "CONTACTS_UPDATE": {
     "number": 6,
-    "description": "Allow the updating of contacts",
+    "description": "Update contacts",
     "features": [
       "audience"
     ],
@@ -72,11 +72,11 @@
       "admin",
       "editor"
     ],
-    "group": "Contacts Access"
+    "group": "Contact"
   },
   "CAMPAIGNS_READ": {
     "number": 7,
-    "description": "Allow the reading of Broadcast Campaigns",
+    "description": "Read",
     "features": [
       "broadcast"
     ],
@@ -85,11 +85,11 @@
       "editor",
       "viewer"
     ],
-    "group": "Broadcast Access"
+    "group": "Broadcast"
   },
   "CAMPAIGNS_CREATE": {
     "number": 8,
-    "description": "Allow the creation of Broadcast Campaigns",
+    "description": "Create",
     "features": [
       "broadcast"
     ],
@@ -97,11 +97,11 @@
       "admin",
       "editor"
     ],
-    "group": "Broadcast Access"
+    "group": "Broadcast"
   },
   "CAMPAIGNS_DELETE": {
     "number": 9,
-    "description": "Allow the deletion of Broadcast Campaigns",
+    "description": "Delete",
     "features": [
       "broadcast"
     ],
@@ -109,11 +109,11 @@
       "admin",
       "editor"
     ],
-    "group": "Broadcast Access"
+    "group": "Broadcast"
   },
   "CAMPAIGNS_UPDATE": {
     "number": 10,
-    "description": "Allow the updating of Broadcast Campaigns",
+    "description": "Update",
     "features": [
       "broadcast"
     ],
@@ -121,11 +121,11 @@
       "admin",
       "editor"
     ],
-    "group": "Broadcast Access"
+    "group": "Broadcast"
   },
   "KEYWORD_READ": {
     "number": 11,
-    "description": "Allow the reading of Automated Keyword Replies",
+    "description": "Read",
     "features": [
       "keyword-reply"
     ],
@@ -134,11 +134,11 @@
       "editor",
       "viewer"
     ],
-    "group": "Keyword Reply Access"
+    "group": "Keyword Reply"
   },
   "KEYWORD_CREATE": {
     "number": 12,
-    "description": "Allow the creation of Automated Keyword Replies",
+    "description": "Create",
     "features": [
       "keyword-reply"
     ],
@@ -146,11 +146,11 @@
       "admin",
       "editor"
     ],
-    "group": "Keyword Reply Access"
+    "group": "Keyword Reply"
   },
   "KEYWORD_DELETE": {
     "number": 13,
-    "description": "Allow the deletion of Automated Keyword Replies",
+    "description": "Delete",
     "features": [
       "keyword-reply"
     ],
@@ -158,11 +158,11 @@
       "admin",
       "editor"
     ],
-    "group": "Keyword Reply Access"
+    "group": "Keyword Reply"
   },
   "KEYWORD_UPDATE": {
     "number": 14,
-    "description": "Allow the updating of Automated Keyword Replies",
+    "description": "Update",
     "features": [
       "keyword-reply"
     ],
@@ -170,11 +170,11 @@
       "admin",
       "editor"
     ],
-    "group": "Keyword Reply Access"
+    "group": "Keyword Reply"
   },
   "TEMPLATES_READ": {
     "number": 15,
-    "description": "Allow the reading of Message Flows",
+    "description": "Read",
     "features": [
       "message-flows"
     ],
@@ -183,11 +183,11 @@
       "editor",
       "viewer"
     ],
-    "group": "Message Flow Access"
+    "group": "Message Flow"
   },
   "TEMPLATES_CREATE": {
     "number": 16,
-    "description": "Allow the creation of Message Flows",
+    "description": "Create",
     "features": [
       "message-flows"
     ],
@@ -195,11 +195,11 @@
       "admin",
       "editor"
     ],
-    "group": "Message Flow Access"
+    "group": "Message Flow"
   },
   "TEMPLATES_DELETE": {
     "number": 17,
-    "description": "Allow the deletion of Message Flows",
+    "description": "Delete",
     "features": [
       "message-flows"
     ],
@@ -207,11 +207,11 @@
       "admin",
       "editor"
     ],
-    "group": "Message Flow Access"
+    "group": "Message Flow"
   },
   "TEMPLATES_UPDATE": {
     "number": 18,
-    "description": "Allow the updating of Message Flows",
+    "description": "Update",
     "features": [
       "message-flows"
     ],
@@ -219,11 +219,11 @@
       "admin",
       "editor"
     ],
-    "group": "Message Flow Access"
+    "group": "Message Flow"
   },
   "TAGS_READ": {
     "number": 19,
-    "description": "Can read tags",
+    "description": "Read",
     "features": [
       "audience"
     ],
@@ -232,11 +232,11 @@
       "editor",
       "viewer"
     ],
-    "group": "Tags Access"
+    "group": "Tags"
   },
   "TAGS_CREATE": {
     "number": 20,
-    "description": "Allow the creation of Tags",
+    "description": "Create",
     "features": [
       "audience"
     ],
@@ -244,11 +244,11 @@
       "admin",
       "editor"
     ],
-    "group": "Tags Access"
+    "group": "Tags"
   },
   "TAGS_DELETE": {
     "number": 21,
-    "description": "Allow the deletion of Tags",
+    "description": "Delete",
     "features": [
       "audience"
     ],
@@ -256,7 +256,7 @@
       "admin",
       "editor"
     ],
-    "group": "Tags Access"
+    "group": "Tags"
   },
   "TOKENS_READ": {
     "number": 22,
@@ -304,11 +304,11 @@
     "roles": [
       "admin"
     ],
-    "group": "Team Access"
+    "group": "Team"
   },
   "ACCOUNT_CREATE": {
     "number": 30,
-    "description": "Add an additional Channel",
+    "description": "Add a Channel",
     "features": [
       "team-inbox"
     ],
@@ -344,7 +344,8 @@
   },
   "ACCOUNT_PATCH": {
     "number": 30,
-    "description": "Update an existing Channel (open, close, logout etc)",
+    "description": "Update a Channel ",
+    "subtext": "Connect, disconnect, change advanced settings for a channel",
     "features": [
       "team-inbox"
     ],
@@ -362,7 +363,7 @@
     "roles": [
       "admin"
     ],
-    "group": "Team Access"
+    "group": "Team"
   },
   "TEAMLINK_READ": {
     "number": 39,
@@ -371,7 +372,7 @@
     "roles": [
       "admin"
     ],
-    "group": "Team Access"
+    "group": "Team"
   },
   "TEAMMEMBERS_UPDATE": {
     "number": 30,
@@ -380,7 +381,7 @@
     "roles": [
       "admin"
     ],
-    "group": "Team Access"
+    "group": "Team"
   },
   "TEAMMEMBERS_READ": {
     "number": 40,
@@ -392,21 +393,21 @@
       "viewer",
       "agent"
     ],
-    "group": "Team Access"
+    "group": "Team"
   },
   "TEAM_NOTIFY": {
     "number": 52,
-    "description": "Allow the notifying of Teams",
+    "description": "Notify Teams",
     "features": [],
     "roles": [
       "admin",
       "editor"
     ],
-    "group": null
+    "group": "Team"
   },
   "CHATS_ACCESS_ALL": {
     "number": 55,
-    "description": "Allow the access of All Chats",
+    "description": "Access to all Chats",
     "features": [
       "team-inbox"
     ],
@@ -416,11 +417,11 @@
       "editor",
       "viewer"
     ],
-    "group": "Chat Access"
+    "group": "Chat"
   },
   "CHATS_ACCESS_ASSIGNED": {
     "number": 56,
-    "description": "Allow the access of assigned Chats",
+    "description": "Access to assigned Chats",
     "features": [
       "team-inbox"
     ],
@@ -429,11 +430,11 @@
       "agent",
       "editor"
     ],
-    "group": "Chat Access"
+    "group": "Chat"
   },
   "CHATS_DELETE": {
     "number": 57,
-    "description": "Allow the deletion of Chats",
+    "description": "Delete Chats",
     "features": [
       "team-inbox"
     ],
@@ -442,7 +443,7 @@
       "agent",
       "editor"
     ],
-    "group": "Chat Access"
+    "group": "Chat"
   },
   "MESSAGES_SEND_TO_ASSIGNED": {
     "number": 58,
@@ -455,11 +456,11 @@
       "agent",
       "editor"
     ],
-    "group": "Messages Access"
+    "group": "Messages"
   },
   "MESSAGES_SEND_TO_ALL": {
     "number": 59,
-    "description": "Allow the access of Messages to All",
+    "description": "Access to Messages to All",
     "features": [
       "team-inbox"
     ],
@@ -468,11 +469,11 @@
       "agent",
       "editor"
     ],
-    "group": "Messages Access"
+    "group": "Messages"
   },
   "MESSAGES_DELETE": {
     "number": 61,
-    "description": "Allow the deletion of Messages",
+    "description": "Delete Messages",
     "features": [
       "team-inbox"
     ],
@@ -481,11 +482,11 @@
       "agent",
       "editor"
     ],
-    "group": "Messages Access"
+    "group": "Messages"
   },
   "GROUPS_CREATE": {
     "number": 62,
-    "description": "Allow the creating of Groups",
+    "description": "Create",
     "features": [
       "team-inbox"
     ],
@@ -494,11 +495,11 @@
       "agent",
       "editor"
     ],
-    "group": "Groups Access"
+    "group": "Groups"
   },
   "GROUPS_UPDATE": {
     "number": 63,
-    "description": "Allow the updating of Groups",
+    "description": "Update",
     "features": [
       "team-inbox"
     ],
@@ -507,11 +508,11 @@
       "agent",
       "editor"
     ],
-    "group": "Groups Access"
+    "group": "Groups"
   },
   "NOTES": {
     "number": 64,
-    "description": "Allow the usage of Notes",
+    "description": "Use Notes",
     "features": [
       "team-inbox"
     ],
@@ -520,11 +521,11 @@
       "agent",
       "editor"
     ],
-    "group": "Notes Access"
+    "group": "Notes"
   },
   "NOTIFICATION_READ": {
     "number": 66,
-    "description": "Allow the reading of Notifications",
+    "description": "Read",
     "features": [
       "notifications"
     ],
@@ -533,11 +534,11 @@
       "editor",
       "viewer"
     ],
-    "group": "Notifications Access"
+    "group": "Notification"
   },
   "NOTIFICATION_CREATE": {
     "number": 67,
-    "description": "Allow the creation of Notifications",
+    "description": "Create",
     "features": [
       "notifications"
     ],
@@ -545,11 +546,11 @@
       "admin",
       "editor"
     ],
-    "group": "Notifications Access"
+    "group": "Notification"
   },
   "NOTIFICATION_UPDATE": {
     "number": 68,
-    "description": "Allow the updating of Notifications",
+    "description": "Update",
     "features": [
       "notifications"
     ],
@@ -557,11 +558,11 @@
       "admin",
       "editor"
     ],
-    "group": "Notifications Access"
+    "group": "Notification"
   },
   "NOTIFICATION_DELETE": {
     "number": 69,
-    "description": "Allow the deletion of Notifications",
+    "description": "Delete",
     "features": [
       "notifications"
     ],
@@ -569,7 +570,7 @@
       "admin",
       "editor"
     ],
-    "group": "Notifications Access"
+    "group": "Notification"
   },
   "INTEGRATIONS_UPDATE": {
     "number": 71,
@@ -647,7 +648,7 @@
       "viewer",
       "admin"
     ],
-    "group": null
+    "group": "Shop and Product"
   },
   "PRODUCTS_CREATE": {
     "number": 83,
@@ -659,7 +660,7 @@
       "admin",
       "editor"
     ],
-    "group": "Shop & Product"
+    "group": "Shop and Product"
   },
   "PRODUCTS_UPDATE": {
     "number": 84,
@@ -671,7 +672,7 @@
       "admin",
       "editor"
     ],
-    "group": "Shop & Product"
+    "group": "Shop and Product"
   },
   "PRODUCTS_DELETE": {
     "number": 85,
@@ -683,11 +684,11 @@
       "admin",
       "editor"
     ],
-    "group": "Shop & Product"
+    "group": "Shop and Product"
   },
   "PAYMENT_INTEGRATION_READ": {
     "number": 86,
-    "description": "Read payment integrations",
+    "description": "Read",
     "features": [
       "shop"
     ],
@@ -696,7 +697,7 @@
   },
   "PAYMENT_INTEGRATION_WRITE": {
     "number": 87,
-    "description": "Write payment integrations",
+    "description": "Write",
     "features": [
       "shop"
     ],
@@ -705,7 +706,7 @@
   },
   "PAYMENT_RECORDS_READ": {
     "number": 88,
-    "description": "Read payments records",
+    "description": "Read",
     "features": [
       "shop"
     ],
@@ -719,7 +720,7 @@
   },
   "PAYMENT_RECORDS_WRITE": {
     "number": 89,
-    "description": "Write payments records",
+    "description": "Write",
     "features": [
       "shop"
     ],
@@ -742,7 +743,7 @@
       "agent",
       "editor"
     ],
-    "group": "Dashboard & Metrics"
+    "group": "Dashboard and Metrics"
   },
   "ACCOUNTS_READ_ASSIGNED": {
     "number": 91,
@@ -754,7 +755,7 @@
       "agent",
       "editor"
     ],
-    "group": "Channel Access"
+    "group": "Channel"
   },
   "AUTOCOMPLETE_GET": {
     "number": 92,
@@ -767,7 +768,7 @@
       "agent",
       "editor"
     ],
-    "group": "Chat Access"
+    "group": "Chat"
   },
     "MESSAGES_SEARCH": {
     "number": 93,
@@ -780,7 +781,7 @@
       "agent",
       "editor"
     ],
-    "group": "Messages Access"
+    "group": "Messages"
   },
   "WIDGET_EDIT": {
     "number": 94,
