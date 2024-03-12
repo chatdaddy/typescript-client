@@ -409,6 +409,12 @@ export interface Listing {
     'type': ListingTypeEnum;
     /**
      * 
+     * @type {string}
+     * @memberof Listing
+     */
+    'publishedState'?: ListingPublishedStateEnum;
+    /**
+     * 
      * @type {ListingData}
      * @memberof Listing
      */
@@ -422,6 +428,12 @@ export const ListingTypeEnum = {
 } as const;
 
 export type ListingTypeEnum = typeof ListingTypeEnum[keyof typeof ListingTypeEnum];
+export const ListingPublishedStateEnum = {
+    Delisted: 'delisted',
+    Published: 'published'
+} as const;
+
+export type ListingPublishedStateEnum = typeof ListingPublishedStateEnum[keyof typeof ListingPublishedStateEnum];
 
 /**
  * 
@@ -479,6 +491,12 @@ export interface ListingCreate {
     'type': ListingCreateTypeEnum;
     /**
      * 
+     * @type {string}
+     * @memberof ListingCreate
+     */
+    'publishedState'?: ListingCreatePublishedStateEnum;
+    /**
+     * 
      * @type {ListingData}
      * @memberof ListingCreate
      */
@@ -492,6 +510,12 @@ export const ListingCreateTypeEnum = {
 } as const;
 
 export type ListingCreateTypeEnum = typeof ListingCreateTypeEnum[keyof typeof ListingCreateTypeEnum];
+export const ListingCreatePublishedStateEnum = {
+    Delisted: 'delisted',
+    Published: 'published'
+} as const;
+
+export type ListingCreatePublishedStateEnum = typeof ListingCreatePublishedStateEnum[keyof typeof ListingCreatePublishedStateEnum];
 
 /**
  * @type ListingData
@@ -579,6 +603,12 @@ export interface ListingUpdate {
     'type'?: ListingUpdateTypeEnum;
     /**
      * 
+     * @type {string}
+     * @memberof ListingUpdate
+     */
+    'publishedState'?: ListingUpdatePublishedStateEnum;
+    /**
+     * 
      * @type {ListingData}
      * @memberof ListingUpdate
      */
@@ -592,6 +622,12 @@ export const ListingUpdateTypeEnum = {
 } as const;
 
 export type ListingUpdateTypeEnum = typeof ListingUpdateTypeEnum[keyof typeof ListingUpdateTypeEnum];
+export const ListingUpdatePublishedStateEnum = {
+    Delisted: 'delisted',
+    Published: 'published'
+} as const;
+
+export type ListingUpdatePublishedStateEnum = typeof ListingUpdatePublishedStateEnum[keyof typeof ListingUpdatePublishedStateEnum];
 
 /**
  * 
