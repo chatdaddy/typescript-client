@@ -1084,13 +1084,13 @@ export interface OverridePhoneModelOneOf {
     'exact': number;
 }
 /**
- * Override with a field from the data
+ * 
  * @export
  * @interface OverridePhoneModelOneOf1
  */
 export interface OverridePhoneModelOneOf1 {
     /**
-     * 
+     * Override with a field from the data
      * @type {string}
      * @memberof OverridePhoneModelOneOf1
      */
@@ -1665,6 +1665,12 @@ export interface PostTracking {
      */
     'overridePhoneNumber'?: OverridePhoneModel;
     /**
+     * 
+     * @type {RecipientIdOptions}
+     * @memberof PostTracking
+     */
+    'recipientIdOptions'?: RecipientIdOptions;
+    /**
      * Specify IM account to use
      * @type {string}
      * @memberof PostTracking
@@ -1737,6 +1743,27 @@ export const ProductSyncStatus = {
 
 export type ProductSyncStatus = typeof ProductSyncStatus[keyof typeof ProductSyncStatus];
 
+
+/**
+ * 
+ * @export
+ * @interface RecipientIdOptions
+ */
+export interface RecipientIdOptions {
+    /**
+     * The format of the recipient ID. Defaults to `phone_number` if not specified. Set to `opaque` if you want to send the recipient ID as is with no additional formating.
+     * @type {string}
+     * @memberof RecipientIdOptions
+     */
+    'format': RecipientIdOptionsFormatEnum;
+}
+
+export const RecipientIdOptionsFormatEnum = {
+    PhoneNumber: 'phone_number',
+    Opaque: 'opaque'
+} as const;
+
+export type RecipientIdOptionsFormatEnum = typeof RecipientIdOptionsFormatEnum[keyof typeof RecipientIdOptionsFormatEnum];
 
 /**
  * 
@@ -2587,6 +2614,12 @@ export interface TrackServiceModel {
      */
     'overridePhoneNumber'?: OverridePhoneModel;
     /**
+     * 
+     * @type {RecipientIdOptions}
+     * @memberof TrackServiceModel
+     */
+    'recipientIdOptions'?: RecipientIdOptions;
+    /**
      * Specify IM account to use
      * @type {string}
      * @memberof TrackServiceModel
@@ -2787,6 +2820,12 @@ export interface UpdateTracking {
      * @memberof UpdateTracking
      */
     'overridePhoneNumber'?: OverridePhoneModel;
+    /**
+     * 
+     * @type {RecipientIdOptions}
+     * @memberof UpdateTracking
+     */
+    'recipientIdOptions'?: RecipientIdOptions;
     /**
      * 
      * @type {{ [key: string]: any; }}

@@ -9621,6 +9621,12 @@ export interface TrackingInsertData {
     'overridePhoneNumber'?: TrackingInsertDataOverridePhoneNumber;
     /**
      * 
+     * @type {TrackingInsertDataRecipientIdOptions}
+     * @memberof TrackingInsertData
+     */
+    'recipientIdOptions'?: TrackingInsertDataRecipientIdOptions;
+    /**
+     * 
      * @type {string}
      * @memberof TrackingInsertData
      */
@@ -9918,18 +9924,39 @@ export interface TrackingInsertDataOverridePhoneNumberOneOf {
     'exact': number;
 }
 /**
- * Override with a field from the data
+ * 
  * @export
  * @interface TrackingInsertDataOverridePhoneNumberOneOf1
  */
 export interface TrackingInsertDataOverridePhoneNumberOneOf1 {
     /**
-     * 
+     * Override with a field from the data
      * @type {string}
      * @memberof TrackingInsertDataOverridePhoneNumberOneOf1
      */
     'field': string;
 }
+/**
+ * 
+ * @export
+ * @interface TrackingInsertDataRecipientIdOptions
+ */
+export interface TrackingInsertDataRecipientIdOptions {
+    /**
+     * 
+     * @type {string}
+     * @memberof TrackingInsertDataRecipientIdOptions
+     */
+    'format': TrackingInsertDataRecipientIdOptionsFormatEnum;
+}
+
+export const TrackingInsertDataRecipientIdOptionsFormatEnum = {
+    PhoneNumber: 'phone_number',
+    Opaque: 'opaque'
+} as const;
+
+export type TrackingInsertDataRecipientIdOptionsFormatEnum = typeof TrackingInsertDataRecipientIdOptionsFormatEnum[keyof typeof TrackingInsertDataRecipientIdOptionsFormatEnum];
+
 /**
  * 
  * @export
@@ -10028,6 +10055,12 @@ export interface TrackingUpdateData {
      * @memberof TrackingUpdateData
      */
     'overridePhoneNumber'?: TrackingInsertDataOverridePhoneNumber;
+    /**
+     * 
+     * @type {TrackingInsertDataRecipientIdOptions}
+     * @memberof TrackingUpdateData
+     */
+    'recipientIdOptions'?: TrackingInsertDataRecipientIdOptions;
     /**
      * 
      * @type {string}
