@@ -157,6 +157,12 @@ export interface Action {
     'webhooks'?: Array<string> | null;
     /**
      * 
+     * @type {Array<WebhookItem>}
+     * @memberof Action
+     */
+    'httpRequest'?: Array<WebhookItem> | null;
+    /**
+     * 
      * @type {Position}
      * @memberof Action
      */
@@ -285,6 +291,12 @@ export interface ActionContent {
      * @memberof ActionContent
      */
     'webhooks'?: Array<string> | null;
+    /**
+     * 
+     * @type {Array<WebhookItem>}
+     * @memberof ActionContent
+     */
+    'httpRequest'?: Array<WebhookItem> | null;
     /**
      * 
      * @type {Position}
@@ -4732,6 +4744,45 @@ export const UserInputNodeTypeEnum = {
 } as const;
 
 export type UserInputNodeTypeEnum = typeof UserInputNodeTypeEnum[keyof typeof UserInputNodeTypeEnum];
+
+/**
+ * 
+ * @export
+ * @interface WebhookItem
+ */
+export interface WebhookItem {
+    /**
+     * 
+     * @type {string}
+     * @memberof WebhookItem
+     */
+    'method': WebhookItemMethodEnum;
+    /**
+     * 
+     * @type {string}
+     * @memberof WebhookItem
+     */
+    'url': string;
+    /**
+     * 
+     * @type {{ [key: string]: string; }}
+     * @memberof WebhookItem
+     */
+    'headers': { [key: string]: string; };
+    /**
+     * 
+     * @type {string}
+     * @memberof WebhookItem
+     */
+    'body'?: string;
+}
+
+export const WebhookItemMethodEnum = {
+    Get: 'GET',
+    Post: 'POST'
+} as const;
+
+export type WebhookItemMethodEnum = typeof WebhookItemMethodEnum[keyof typeof WebhookItemMethodEnum];
 
 
 /**

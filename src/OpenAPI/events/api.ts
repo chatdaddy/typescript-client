@@ -1003,6 +1003,12 @@ export interface BotInsertDataActionsInner {
     'webhooks'?: Array<string> | null;
     /**
      * 
+     * @type {Array<BotInsertDataActionsInnerAllOf1HttpRequestInner>}
+     * @memberof BotInsertDataActionsInner
+     */
+    'httpRequest'?: Array<BotInsertDataActionsInnerAllOf1HttpRequestInner> | null;
+    /**
+     * 
      * @type {BotInsertDataActionsInnerAllOf1MessageButtonsInnerPosition}
      * @memberof BotInsertDataActionsInner
      */
@@ -1131,6 +1137,12 @@ export interface BotInsertDataActionsInnerAllOf1 {
      * @memberof BotInsertDataActionsInnerAllOf1
      */
     'webhooks'?: Array<string> | null;
+    /**
+     * 
+     * @type {Array<BotInsertDataActionsInnerAllOf1HttpRequestInner>}
+     * @memberof BotInsertDataActionsInnerAllOf1
+     */
+    'httpRequest'?: Array<BotInsertDataActionsInnerAllOf1HttpRequestInner> | null;
     /**
      * 
      * @type {BotInsertDataActionsInnerAllOf1MessageButtonsInnerPosition}
@@ -1271,6 +1283,45 @@ export interface BotInsertDataActionsInnerAllOf1FormRefActions {
      */
     'onAbandon'?: BotInsertDataActionsInnerAllOf1MessageButtonsInnerNextAction;
 }
+/**
+ * 
+ * @export
+ * @interface BotInsertDataActionsInnerAllOf1HttpRequestInner
+ */
+export interface BotInsertDataActionsInnerAllOf1HttpRequestInner {
+    /**
+     * 
+     * @type {string}
+     * @memberof BotInsertDataActionsInnerAllOf1HttpRequestInner
+     */
+    'method': BotInsertDataActionsInnerAllOf1HttpRequestInnerMethodEnum;
+    /**
+     * 
+     * @type {string}
+     * @memberof BotInsertDataActionsInnerAllOf1HttpRequestInner
+     */
+    'url': string;
+    /**
+     * 
+     * @type {{ [key: string]: string; }}
+     * @memberof BotInsertDataActionsInnerAllOf1HttpRequestInner
+     */
+    'headers': { [key: string]: string; };
+    /**
+     * 
+     * @type {string}
+     * @memberof BotInsertDataActionsInnerAllOf1HttpRequestInner
+     */
+    'body'?: string;
+}
+
+export const BotInsertDataActionsInnerAllOf1HttpRequestInnerMethodEnum = {
+    Get: 'GET',
+    Post: 'POST'
+} as const;
+
+export type BotInsertDataActionsInnerAllOf1HttpRequestInnerMethodEnum = typeof BotInsertDataActionsInnerAllOf1HttpRequestInnerMethodEnum[keyof typeof BotInsertDataActionsInnerAllOf1HttpRequestInnerMethodEnum];
+
 /**
  * 
  * @export
