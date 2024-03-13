@@ -2,7 +2,7 @@ import { OrderMessage, OrderSerialiseContext, SimpleOrder, SimpleOrderItem } fro
 
 const DETECTION_TXT = 'Ordering from WhatsApp Shop:'
 const ORDER_DETAILS_START = 'My Order Details:'
-const REMARKS_LABEL = 'Total:'
+const REMARKS_LABEL = 'Remarks:'
 const MAX_UQ_PRODUCTS_IN_ORDER = 20
 const PAYMENT_GATEWAY_ID_LABEL = '🆔 Payment Gateway ID:'
 const SHIPPING_METHOD_LABEL = '🚛 Shipping Method:'
@@ -87,9 +87,9 @@ export function checkAndParseOrderMessage(txt: string): SimpleOrder {
     // Extract remarks if present
     const totalLineIndex = lines.findIndex((line) => line.trim().startsWith(REMARKS_LABEL))
     if (totalLineIndex !== -1) {
-        const remarksLine = lines[totalLineIndex + 1]
+        const remarksLine = lines[totalLineIndex]
         if (remarksLine.trim()) {
-            remarks = remarksLine
+            remarks = remarksLine.split(':')[1]
         }
     }
 
@@ -194,7 +194,7 @@ export function serialiseOrderMessage(order: OrderMessage, context: OrderSeriali
                 : 0)
     ).toFixed(2)
 
-    const remarksContent = order.remarks ? `Remarks: ${order.remarks}` : ''
+    const remarksContent = order.remarks ? `${REMARKS_LABEL} ${order.remarks}` : ''
 
     const lines = [`${DETECTION_TXT}\n`]
 
