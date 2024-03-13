@@ -1581,7 +1581,7 @@ export interface BotInsertDataActionsInnerAllOf1MessageButtonsInnerNextActionGro
  * @type BotInsertDataActionsInnerAllOf1MessageButtonsInnerNextActionGroupsInnerValidationInner
  * @export
  */
-export type BotInsertDataActionsInnerAllOf1MessageButtonsInnerNextActionGroupsInnerValidationInner = BotInsertDataActionsInnerAllOf1MessageButtonsInnerNextActionGroupsInnerValidationInnerOneOf | BotInsertDataActionsInnerAllOf1MessageButtonsInnerNextActionGroupsInnerValidationInnerOneOf1 | BotInsertDataActionsInnerAllOf1MessageButtonsInnerNextActionGroupsInnerValidationInnerOneOf2 | BotInsertDataActionsInnerAllOf1MessageButtonsInnerNextActionGroupsInnerValidationInnerOneOf3 | BotInsertDataActionsInnerAllOf1MessageButtonsInnerNextActionGroupsInnerValidationInnerOneOf4 | BotInsertDataActionsInnerAllOf1MessageButtonsInnerNextActionGroupsInnerValidationInnerOneOf5;
+export type BotInsertDataActionsInnerAllOf1MessageButtonsInnerNextActionGroupsInnerValidationInner = BotInsertDataActionsInnerAllOf1MessageButtonsInnerNextActionGroupsInnerValidationInnerOneOf | BotInsertDataActionsInnerAllOf1MessageButtonsInnerNextActionGroupsInnerValidationInnerOneOf1 | BotInsertDataActionsInnerAllOf1MessageButtonsInnerNextActionGroupsInnerValidationInnerOneOf2 | BotInsertDataActionsInnerAllOf1MessageButtonsInnerNextActionGroupsInnerValidationInnerOneOf3 | BotInsertDataActionsInnerAllOf1MessageButtonsInnerNextActionGroupsInnerValidationInnerOneOf4 | BotInsertDataActionsInnerAllOf1MessageButtonsInnerNextActionGroupsInnerValidationInnerOneOf5 | BotInsertDataActionsInnerAllOf1MessageButtonsInnerNextActionGroupsInnerValidationInnerOneOf6;
 
 /**
  * 
@@ -1844,6 +1844,39 @@ export type BotInsertDataActionsInnerAllOf1MessageButtonsInnerNextActionGroupsIn
  * @export
  */
 export type BotInsertDataActionsInnerAllOf1MessageButtonsInnerNextActionGroupsInnerValidationInnerOneOf5Value = Array<string> | number | string;
+
+/**
+ * 
+ * @export
+ * @interface BotInsertDataActionsInnerAllOf1MessageButtonsInnerNextActionGroupsInnerValidationInnerOneOf6
+ */
+export interface BotInsertDataActionsInnerAllOf1MessageButtonsInnerNextActionGroupsInnerValidationInnerOneOf6 {
+    /**
+     * 
+     * @type {string}
+     * @memberof BotInsertDataActionsInnerAllOf1MessageButtonsInnerNextActionGroupsInnerValidationInnerOneOf6
+     */
+    'propertyPath': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof BotInsertDataActionsInnerAllOf1MessageButtonsInnerNextActionGroupsInnerValidationInnerOneOf6
+     */
+    'value': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof BotInsertDataActionsInnerAllOf1MessageButtonsInnerNextActionGroupsInnerValidationInnerOneOf6
+     */
+    'operator': BotInsertDataActionsInnerAllOf1MessageButtonsInnerNextActionGroupsInnerValidationInnerOneOf6OperatorEnum;
+}
+
+export const BotInsertDataActionsInnerAllOf1MessageButtonsInnerNextActionGroupsInnerValidationInnerOneOf6OperatorEnum = {
+    TimestampGreaterThan: 'timestampGreaterThan',
+    TimestampLessThan: 'timestampLessThan'
+} as const;
+
+export type BotInsertDataActionsInnerAllOf1MessageButtonsInnerNextActionGroupsInnerValidationInnerOneOf6OperatorEnum = typeof BotInsertDataActionsInnerAllOf1MessageButtonsInnerNextActionGroupsInnerValidationInnerOneOf6OperatorEnum[keyof typeof BotInsertDataActionsInnerAllOf1MessageButtonsInnerNextActionGroupsInnerValidationInnerOneOf6OperatorEnum];
 
 /**
  * 

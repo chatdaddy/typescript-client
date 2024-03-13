@@ -1109,7 +1109,7 @@ export type BotBoolConditionOperatorEnum = typeof BotBoolConditionOperatorEnum[k
  * @type BotCondition
  * @export
  */
-export type BotCondition = BotBoolCondition | BotEqualityCondition | BotLegacyCondition | BotNumericalCondition | BotTextCondition | BotTimeCondition;
+export type BotCondition = BotBoolCondition | BotEqualityCondition | BotLegacyCondition | BotNumericalCondition | BotTextCondition | BotTimeCondition | BotTimestampCondition;
 
 /**
  * 
@@ -1944,6 +1944,39 @@ export const BotTimeConditionOperatorEnum = {
 } as const;
 
 export type BotTimeConditionOperatorEnum = typeof BotTimeConditionOperatorEnum[keyof typeof BotTimeConditionOperatorEnum];
+
+/**
+ * 
+ * @export
+ * @interface BotTimestampCondition
+ */
+export interface BotTimestampCondition {
+    /**
+     * 
+     * @type {string}
+     * @memberof BotTimestampCondition
+     */
+    'propertyPath': string;
+    /**
+     * An ISO formatted timestamp
+     * @type {string}
+     * @memberof BotTimestampCondition
+     */
+    'value': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof BotTimestampCondition
+     */
+    'operator': BotTimestampConditionOperatorEnum;
+}
+
+export const BotTimestampConditionOperatorEnum = {
+    TimestampGreaterThan: 'timestampGreaterThan',
+    TimestampLessThan: 'timestampLessThan'
+} as const;
+
+export type BotTimestampConditionOperatorEnum = typeof BotTimestampConditionOperatorEnum[keyof typeof BotTimestampConditionOperatorEnum];
 
 /**
  * 
