@@ -855,13 +855,13 @@ export interface ActionNodeHandle {
      * @type {Array<string>}
      * @memberof ActionNodeHandle
      */
-    'delay': Array<string>;
+    'delay'?: Array<string>;
     /**
      * 
      * @type {Array<string>}
      * @memberof ActionNodeHandle
      */
-    'userInput': Array<string>;
+    'userInput'?: Array<string>;
 }
 /**
  * 
@@ -2412,13 +2412,13 @@ export interface ConditionNodeHandle {
      * @type {Array<string>}
      * @memberof ConditionNodeHandle
      */
-    'default': Array<string>;
+    'default'?: Array<string>;
     /**
      * 
      * @type {Array<string>}
      * @memberof ConditionNodeHandle
      */
-    'group': Array<string>;
+    'group'?: Array<string>;
 }
 /**
  * 
@@ -2721,19 +2721,19 @@ export interface EmailNodeHandle {
      * @type {Array<string>}
      * @memberof EmailNodeHandle
      */
-    'delay': Array<string>;
+    'delay'?: Array<string>;
     /**
      * 
      * @type {Array<string>}
      * @memberof EmailNodeHandle
      */
-    'action': Array<string>;
+    'action'?: Array<string>;
     /**
      * 
      * @type {Array<string>}
      * @memberof EmailNodeHandle
      */
-    'userInput': Array<string>;
+    'userInput'?: Array<string>;
 }
 /**
  * 
@@ -3560,31 +3560,31 @@ export interface MessageNodeHandle {
      * @type {Array<string>}
      * @memberof MessageNodeHandle
      */
-    'button': Array<string>;
+    'button'?: Array<string>;
     /**
      * 
      * @type {Array<string>}
      * @memberof MessageNodeHandle
      */
-    'delay': Array<string>;
+    'delay'?: Array<string>;
     /**
      * 
      * @type {Array<string>}
      * @memberof MessageNodeHandle
      */
-    'list': Array<string>;
+    'list'?: Array<string>;
     /**
      * 
      * @type {Array<string>}
      * @memberof MessageNodeHandle
      */
-    'action': Array<string>;
+    'action'?: Array<string>;
     /**
      * 
      * @type {Array<string>}
      * @memberof MessageNodeHandle
      */
-    'userInput': Array<string>;
+    'userInput'?: Array<string>;
 }
 /**
  * 

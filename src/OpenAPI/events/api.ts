@@ -2424,19 +2424,19 @@ export interface BotNodeEventDataOneOf1Handle {
      * @type {Array<string>}
      * @memberof BotNodeEventDataOneOf1Handle
      */
-    'delay': Array<string>;
+    'delay'?: Array<string>;
     /**
      * 
      * @type {Array<string>}
      * @memberof BotNodeEventDataOneOf1Handle
      */
-    'action': Array<string>;
+    'action'?: Array<string>;
     /**
      * 
      * @type {Array<string>}
      * @memberof BotNodeEventDataOneOf1Handle
      */
-    'userInput': Array<string>;
+    'userInput'?: Array<string>;
 }
 /**
  * 
@@ -2487,13 +2487,13 @@ export interface BotNodeEventDataOneOf2Handle {
      * @type {Array<string>}
      * @memberof BotNodeEventDataOneOf2Handle
      */
-    'delay': Array<string>;
+    'delay'?: Array<string>;
     /**
      * 
      * @type {Array<string>}
      * @memberof BotNodeEventDataOneOf2Handle
      */
-    'userInput': Array<string>;
+    'userInput'?: Array<string>;
 }
 /**
  * 
@@ -2670,13 +2670,13 @@ export interface BotNodeEventDataOneOf5Handle {
      * @type {Array<string>}
      * @memberof BotNodeEventDataOneOf5Handle
      */
-    'default': Array<string>;
+    'default'?: Array<string>;
     /**
      * 
      * @type {Array<string>}
      * @memberof BotNodeEventDataOneOf5Handle
      */
-    'group': Array<string>;
+    'group'?: Array<string>;
 }
 /**
  * 
@@ -2938,31 +2938,31 @@ export interface BotNodeEventDataOneOfHandle {
      * @type {Array<string>}
      * @memberof BotNodeEventDataOneOfHandle
      */
-    'button': Array<string>;
+    'button'?: Array<string>;
     /**
      * 
      * @type {Array<string>}
      * @memberof BotNodeEventDataOneOfHandle
      */
-    'delay': Array<string>;
+    'delay'?: Array<string>;
     /**
      * 
      * @type {Array<string>}
      * @memberof BotNodeEventDataOneOfHandle
      */
-    'list': Array<string>;
+    'list'?: Array<string>;
     /**
      * 
      * @type {Array<string>}
      * @memberof BotNodeEventDataOneOfHandle
      */
-    'action': Array<string>;
+    'action'?: Array<string>;
     /**
      * 
      * @type {Array<string>}
      * @memberof BotNodeEventDataOneOfHandle
      */
-    'userInput': Array<string>;
+    'userInput'?: Array<string>;
 }
 /**
  * 
