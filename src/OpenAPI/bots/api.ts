@@ -153,6 +153,7 @@ export interface Action {
      * 
      * @type {Array<string>}
      * @memberof Action
+     * @deprecated
      */
     'webhooks'?: Array<string> | null;
     /**
@@ -289,6 +290,7 @@ export interface ActionContent {
      * 
      * @type {Array<string>}
      * @memberof ActionContent
+     * @deprecated
      */
     'webhooks'?: Array<string> | null;
     /**

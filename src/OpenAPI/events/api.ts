@@ -999,6 +999,7 @@ export interface BotInsertDataActionsInner {
      * 
      * @type {Array<string>}
      * @memberof BotInsertDataActionsInner
+     * @deprecated
      */
     'webhooks'?: Array<string> | null;
     /**
@@ -1135,6 +1136,7 @@ export interface BotInsertDataActionsInnerAllOf1 {
      * 
      * @type {Array<string>}
      * @memberof BotInsertDataActionsInnerAllOf1
+     * @deprecated
      */
     'webhooks'?: Array<string> | null;
     /**
