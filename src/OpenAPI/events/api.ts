@@ -2455,8 +2455,7 @@ export interface BotNodeEventDataOneOf {
 }
 
 export const BotNodeEventDataOneOfTypeEnum = {
-    Message: 'message',
-    Email: 'email'
+    Message: 'message'
 } as const;
 
 export type BotNodeEventDataOneOfTypeEnum = typeof BotNodeEventDataOneOfTypeEnum[keyof typeof BotNodeEventDataOneOfTypeEnum];

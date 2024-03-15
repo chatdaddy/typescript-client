@@ -3590,8 +3590,7 @@ export interface MessageNode {
 }
 
 export const MessageNodeTypeEnum = {
-    Message: 'message',
-    Email: 'email'
+    Message: 'message'
 } as const;
 
 export type MessageNodeTypeEnum = typeof MessageNodeTypeEnum[keyof typeof MessageNodeTypeEnum];
