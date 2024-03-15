@@ -4215,6 +4215,12 @@ export interface SubmitFormRequest {
      * @memberof SubmitFormRequest
      */
     'fields': { [key: string]: any; };
+    /**
+     * 
+     * @type {boolean}
+     * @memberof SubmitFormRequest
+     */
+    'finalizeSubmission'?: boolean;
 }
 /**
  * 
