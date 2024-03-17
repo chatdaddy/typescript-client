@@ -1986,10 +1986,10 @@ export interface RecurringConsumptionPreference {
     'key': RecurringCreditConsumptionType;
     /**
      * 
-     * @type {RecurringConsumptionMetadata}
+     * @type {SomeRecurringConsumptionMetadata}
      * @memberof RecurringConsumptionPreference
      */
-    'data': RecurringConsumptionMetadata;
+    'data': SomeRecurringConsumptionMetadata;
 }
 
 export const RecurringConsumptionPreferenceCategoryEnum = {
@@ -2150,7 +2150,32 @@ export interface RecurringCreditsGet200Response {
     'total'?: number;
 }
 /**
- * Use this to define the price of credits for different regions. On the client, use whichever key is sent back from the server.
+ * Use this to define the price of credits for different regions.
+ * @export
+ * @interface RegionSpecificRecurringConsumptionMetadata
+ */
+export interface RegionSpecificRecurringConsumptionMetadata {
+    /**
+     * 
+     * @type {RecurringConsumptionMetadata}
+     * @memberof RegionSpecificRecurringConsumptionMetadata
+     */
+    'tier1'?: RecurringConsumptionMetadata;
+    /**
+     * 
+     * @type {RecurringConsumptionMetadata}
+     * @memberof RegionSpecificRecurringConsumptionMetadata
+     */
+    'tier2'?: RecurringConsumptionMetadata;
+    /**
+     * 
+     * @type {RecurringConsumptionMetadata}
+     * @memberof RegionSpecificRecurringConsumptionMetadata
+     */
+    'tier3'?: RecurringConsumptionMetadata;
+}
+/**
+ * Use this to define the price of credits for different regions.
  * @export
  * @interface RegionSpecificSingleConsumptionMetadata
  */
@@ -2218,6 +2243,12 @@ export const SingleConsumptionPreferenceCategoryEnum = {
 } as const;
 
 export type SingleConsumptionPreferenceCategoryEnum = typeof SingleConsumptionPreferenceCategoryEnum[keyof typeof SingleConsumptionPreferenceCategoryEnum];
+
+/**
+ * @type SomeRecurringConsumptionMetadata
+ * @export
+ */
+export type SomeRecurringConsumptionMetadata = RecurringConsumptionMetadata | RegionSpecificRecurringConsumptionMetadata;
 
 /**
  * @type SomeSingleConsumptionMetadata
