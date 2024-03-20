@@ -7556,12 +7556,13 @@ export const ContactsApiAxiosParamCreator = function (configuration?: Configurat
         /**
          * Eg. provide a phone number to check whether the user is registered on WhatsApp
          * @summary Check a given user exists on the IM platform
-         * @param {'whatsapp'} type which account type to check from
-         * @param {string} [phoneNumber] check for the given phone number
+         * @param {'whatsapp' | 'tiktok'} type which account type to check from
+         * @param {string} [phoneNumber] Phone number to check
+         * @param {string} [idString] ID or username to check
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        contactsCheckExists: async (type: 'whatsapp', phoneNumber?: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        contactsCheckExists: async (type: 'whatsapp' | 'tiktok', phoneNumber?: string, idString?: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'type' is not null or undefined
             assertParamExists('contactsCheckExists', 'type', type)
             const localVarPath = `/contacts/exists`;
@@ -7586,6 +7587,10 @@ export const ContactsApiAxiosParamCreator = function (configuration?: Configurat
 
             if (phoneNumber !== undefined) {
                 localVarQueryParameter['phoneNumber'] = phoneNumber;
+            }
+
+            if (idString !== undefined) {
+                localVarQueryParameter['idString'] = idString;
             }
 
 
@@ -8090,13 +8095,14 @@ export const ContactsApiFp = function(configuration?: Configuration) {
         /**
          * Eg. provide a phone number to check whether the user is registered on WhatsApp
          * @summary Check a given user exists on the IM platform
-         * @param {'whatsapp'} type which account type to check from
-         * @param {string} [phoneNumber] check for the given phone number
+         * @param {'whatsapp' | 'tiktok'} type which account type to check from
+         * @param {string} [phoneNumber] Phone number to check
+         * @param {string} [idString] ID or username to check
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async contactsCheckExists(type: 'whatsapp', phoneNumber?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ContactsCheckExists200Response>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.contactsCheckExists(type, phoneNumber, options);
+        async contactsCheckExists(type: 'whatsapp' | 'tiktok', phoneNumber?: string, idString?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ContactsCheckExists200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.contactsCheckExists(type, phoneNumber, idString, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -8227,7 +8233,7 @@ export const ContactsApiFactory = function (configuration?: Configuration, baseP
          * @throws {RequiredError}
          */
         contactsCheckExists(requestParameters: ContactsApiContactsCheckExistsRequest, options?: AxiosRequestConfig): AxiosPromise<ContactsCheckExists200Response> {
-            return localVarFp.contactsCheckExists(requestParameters.type, requestParameters.phoneNumber, options).then((request) => request(axios, basePath));
+            return localVarFp.contactsCheckExists(requestParameters.type, requestParameters.phoneNumber, requestParameters.idString, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -8290,17 +8296,24 @@ export const ContactsApiFactory = function (configuration?: Configuration, baseP
 export interface ContactsApiContactsCheckExistsRequest {
     /**
      * which account type to check from
-     * @type {'whatsapp'}
+     * @type {'whatsapp' | 'tiktok'}
      * @memberof ContactsApiContactsCheckExists
      */
-    readonly type: 'whatsapp'
+    readonly type: 'whatsapp' | 'tiktok'
 
     /**
-     * check for the given phone number
+     * Phone number to check
      * @type {string}
      * @memberof ContactsApiContactsCheckExists
      */
     readonly phoneNumber?: string
+
+    /**
+     * ID or username to check
+     * @type {string}
+     * @memberof ContactsApiContactsCheckExists
+     */
+    readonly idString?: string
 }
 
 /**
@@ -8774,7 +8787,7 @@ export class ContactsApi extends BaseAPI {
      * @memberof ContactsApi
      */
     public contactsCheckExists(requestParameters: ContactsApiContactsCheckExistsRequest, options?: AxiosRequestConfig) {
-        return ContactsApiFp(this.configuration).contactsCheckExists(requestParameters.type, requestParameters.phoneNumber, options).then((request) => request(this.axios, this.basePath));
+        return ContactsApiFp(this.configuration).contactsCheckExists(requestParameters.type, requestParameters.phoneNumber, requestParameters.idString, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
