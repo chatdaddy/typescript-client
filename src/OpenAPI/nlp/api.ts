@@ -28,6 +28,34 @@ import { COLLECTION_FORMATS, BaseAPI, RequiredError } from '../base';
 /**
  * 
  * @export
+ * @interface AutocompleteCalendarEvent200Response
+ */
+export interface AutocompleteCalendarEvent200Response {
+    [key: string]: any;
+
+    /**
+     * describes the data extracted from the message
+     * @type {object}
+     * @memberof AutocompleteCalendarEvent200Response
+     */
+    'text': object;
+}
+/**
+ * 
+ * @export
+ * @interface AutocompleteCalendarEventRequest
+ */
+export interface AutocompleteCalendarEventRequest {
+    /**
+     * message to extract calendar event data from
+     * @type {string}
+     * @memberof AutocompleteCalendarEventRequest
+     */
+    'text': string;
+}
+/**
+ * 
+ * @export
  * @interface AutocompleteInbox200Response
  */
 export interface AutocompleteInbox200Response {
@@ -1288,6 +1316,44 @@ export const AutocompleteApiAxiosParamCreator = function (configuration?: Config
     return {
         /**
          * 
+         * @summary Extract calendar event information from message
+         * @param {AutocompleteCalendarEventRequest} [autocompleteCalendarEventRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        autocompleteCalendarEvent: async (autocompleteCalendarEventRequest?: AutocompleteCalendarEventRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/autocomplete/calendar-event`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["AUTOCOMPLETE_GET"], configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(autocompleteCalendarEventRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
          * @summary Returns autocomplete suggestions for a chat
          * @param {string} accountId 
          * @param {string} chatId 
@@ -1384,6 +1450,17 @@ export const AutocompleteApiFp = function(configuration?: Configuration) {
     return {
         /**
          * 
+         * @summary Extract calendar event information from message
+         * @param {AutocompleteCalendarEventRequest} [autocompleteCalendarEventRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async autocompleteCalendarEvent(autocompleteCalendarEventRequest?: AutocompleteCalendarEventRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AutocompleteCalendarEvent200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.autocompleteCalendarEvent(autocompleteCalendarEventRequest, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
          * @summary Returns autocomplete suggestions for a chat
          * @param {string} accountId 
          * @param {string} chatId 
@@ -1418,6 +1495,16 @@ export const AutocompleteApiFactory = function (configuration?: Configuration, b
     return {
         /**
          * 
+         * @summary Extract calendar event information from message
+         * @param {AutocompleteApiAutocompleteCalendarEventRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        autocompleteCalendarEvent(requestParameters: AutocompleteApiAutocompleteCalendarEventRequest = {}, options?: AxiosRequestConfig): AxiosPromise<AutocompleteCalendarEvent200Response> {
+            return localVarFp.autocompleteCalendarEvent(requestParameters.autocompleteCalendarEventRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
          * @summary Returns autocomplete suggestions for a chat
          * @param {AutocompleteApiAutocompleteInboxRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -1438,6 +1525,20 @@ export const AutocompleteApiFactory = function (configuration?: Configuration, b
         },
     };
 };
+
+/**
+ * Request parameters for autocompleteCalendarEvent operation in AutocompleteApi.
+ * @export
+ * @interface AutocompleteApiAutocompleteCalendarEventRequest
+ */
+export interface AutocompleteApiAutocompleteCalendarEventRequest {
+    /**
+     * 
+     * @type {AutocompleteCalendarEventRequest}
+     * @memberof AutocompleteApiAutocompleteCalendarEvent
+     */
+    readonly autocompleteCalendarEventRequest?: AutocompleteCalendarEventRequest
+}
 
 /**
  * Request parameters for autocompleteInbox operation in AutocompleteApi.
@@ -1488,6 +1589,18 @@ export interface AutocompleteApiAutocompleteModifyRequest {
  * @extends {BaseAPI}
  */
 export class AutocompleteApi extends BaseAPI {
+    /**
+     * 
+     * @summary Extract calendar event information from message
+     * @param {AutocompleteApiAutocompleteCalendarEventRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AutocompleteApi
+     */
+    public autocompleteCalendarEvent(requestParameters: AutocompleteApiAutocompleteCalendarEventRequest = {}, options?: AxiosRequestConfig) {
+        return AutocompleteApiFp(this.configuration).autocompleteCalendarEvent(requestParameters.autocompleteCalendarEventRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
     /**
      * 
      * @summary Returns autocomplete suggestions for a chat
