@@ -2002,7 +2002,20 @@ export interface UserPatch {
      * @memberof UserPatch
      */
     'partnership'?: string | null;
+    /**
+     * If the user should be made a credit customer. Once set, it cannot be unset.
+     * @type {string}
+     * @memberof UserPatch
+     */
+    'creditCustomer'?: UserPatchCreditCustomerEnum;
 }
+
+export const UserPatchCreditCustomerEnum = {
+    Production: 'production'
+} as const;
+
+export type UserPatchCreditCustomerEnum = typeof UserPatchCreditCustomerEnum[keyof typeof UserPatchCreditCustomerEnum];
+
 /**
  * 
  * @export
