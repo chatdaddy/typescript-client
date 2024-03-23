@@ -547,12 +547,11 @@ export interface CreditConsumptionTier {
  */
 
 export const CreditConsumptionType = {
-    MessageSentRegular: 'message_sent/regular',
-    MessageSentNotification: 'message_sent/notification',
-    MessageSentKeywordreply: 'message_sent/keywordreply',
-    MessageSentBroadcast: 'message_sent/broadcast',
-    MessageSentMsgFlow: 'message_sent/msg_flow',
-    MessageSentAiChatbot: 'message_sent/ai_chatbot',
+    MessageSentWa: 'message_sent/wa',
+    MessageSentTiktok: 'message_sent/tiktok',
+    MessageSentWaBusinessApi: 'message_sent/wa-business-api',
+    MessageSentMessenger: 'message_sent/messenger',
+    MessageSentMail: 'message_sent/mail',
     IntegrationNotification: 'integration/notification',
     IntegrationPayment: 'integration/payment',
     Broadcast: 'broadcast',
