@@ -692,7 +692,10 @@
     "features": [
       "shop"
     ],
-    "roles": [],
+    "roles": [
+      "admin",
+      "editor"
+    ],
     "group": "Payment Integrations"
   },
   "PAYMENT_INTEGRATION_WRITE": {
@@ -701,7 +704,10 @@
     "features": [
       "shop"
     ],
-    "roles": [],
+    "roles": [
+      "admin",
+      "editor"
+    ],
     "group": "Payment Integrations"
   },
   "PAYMENT_RECORDS_READ": {
