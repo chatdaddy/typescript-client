@@ -447,7 +447,7 @@
   },
   "MESSAGES_SEND_TO_ASSIGNED": {
     "number": 58,
-    "description": "Allow the sending of Messages to Assigned",
+    "description": "Send Messages to Assigned",
     "features": [
       "team-inbox"
     ],
@@ -778,7 +778,7 @@
   },
     "MESSAGES_SEARCH": {
     "number": 93,
-    "description": "Allow the access to Search all Messages",
+    "description": "Search all Messages",
     "features": [
       "team-inbox"
     ],
@@ -791,7 +791,7 @@
   },
   "WIDGET_EDIT": {
     "number": 94,
-    "description": "Allow access to edit the widget",
+    "description": "Edit the widget",
     "features": [],
     "roles": [
       "admin",
@@ -802,7 +802,7 @@
   },
   "COUPON_READ": {
     "number": 95,
-    "description": "Allow the reading of coupon campaigns",
+    "description": "Read coupon campaigns",
     "features": [],
     "roles": [
       "admin",
@@ -813,7 +813,7 @@
   },
   "COUPON_CREATE": {
     "number": 96,
-    "description": "Allow the writing of coupon campaigns",
+    "description": "Write coupon campaigns",
     "features": [],
     "roles": [
       "admin",
@@ -823,7 +823,7 @@
   },
   "COUPON_DELETE": {
     "number": 97,
-    "description": "Allow the deletion of coupon campaigns",
+    "description": "Delete coupon campaigns",
     "features": [],
     "roles": [
       "admin",
@@ -833,7 +833,7 @@
   },
   "COUPON_UPDATE": {
     "number": 98,
-    "description": "Allow the updating of coupon campaigns",
+    "description": "Update coupon campaigns",
     "features": [],
     "roles": [
       "admin",
