@@ -1442,7 +1442,8 @@ export const BotInsertDataActionsInnerAllOf1MessageAttachmentsInnerTypeEnum = {
     Sticker: 'sticker',
     Audio: 'audio',
     Document: 'document',
-    Location: 'location'
+    Location: 'location',
+    Form: 'form'
 } as const;
 
 export type BotInsertDataActionsInnerAllOf1MessageAttachmentsInnerTypeEnum = typeof BotInsertDataActionsInnerAllOf1MessageAttachmentsInnerTypeEnum[keyof typeof BotInsertDataActionsInnerAllOf1MessageAttachmentsInnerTypeEnum];
@@ -6185,7 +6186,8 @@ export const MessageInsertDataAttachmentsInnerTypeEnum = {
     Sticker: 'sticker',
     Audio: 'audio',
     Document: 'document',
-    Location: 'location'
+    Location: 'location',
+    Form: 'form'
 } as const;
 
 export type MessageInsertDataAttachmentsInnerTypeEnum = typeof MessageInsertDataAttachmentsInnerTypeEnum[keyof typeof MessageInsertDataAttachmentsInnerTypeEnum];
