@@ -315,7 +315,7 @@
     "roles": [
       "admin"
     ],
-    "group": "Accounts Access"
+    "group": "Channels"
   },
   "ACCOUNT_READ": {
     "number": 31,
@@ -329,7 +329,7 @@
       "viewer",
       "agent"
     ],
-    "group": "Accounts Access"
+    "group": "Channels"
   },
   "ACCOUNT_DELETE": {
     "number": 32,
@@ -340,7 +340,7 @@
     "roles": [
       "admin"
     ],
-    "group": "Accounts Access"
+    "group": "Channels"
   },
   "ACCOUNT_PATCH": {
     "number": 30,
@@ -354,7 +354,7 @@
       "editor",
       "agent"
     ],
-    "group": "Accounts Access"
+    "group": "Channels"
   },
   "TEAMLINK_CREATE": {
     "number": 38,
