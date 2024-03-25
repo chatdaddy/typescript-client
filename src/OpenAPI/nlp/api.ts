@@ -171,6 +171,43 @@ export interface AutocompleteSuggestion {
 /**
  * 
  * @export
+ * @interface ChatThread
+ */
+export interface ChatThread {
+    /**
+     * 
+     * @type {string}
+     * @memberof ChatThread
+     */
+    'id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ChatThread
+     */
+    'threadId': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ChatThread
+     */
+    'accountId': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ChatThread
+     */
+    'chatId': string;
+    /**
+     * An ISO formatted timestamp
+     * @type {string}
+     * @memberof ChatThread
+     */
+    'createdAt'?: string;
+}
+/**
+ * 
+ * @export
  * @interface Chatbot
  */
 export interface Chatbot {
