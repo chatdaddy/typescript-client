@@ -761,7 +761,7 @@
       "agent",
       "editor"
     ],
-    "group": "Channel"
+    "group": "Channels"
   },
   "AUTOCOMPLETE_GET": {
     "number": 92,
