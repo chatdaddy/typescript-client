@@ -663,6 +663,38 @@ export interface AccountsPostRequest {
 /**
  * 
  * @export
+ * @interface AlibabCAMSQuotedContext
+ */
+export interface AlibabCAMSQuotedContext {
+    /**
+     * The user ID of the person that sent it
+     * @type {string}
+     * @memberof AlibabCAMSQuotedContext
+     */
+    'from': string;
+    /**
+     * The ID of the message that was replied to
+     * @type {string}
+     * @memberof AlibabCAMSQuotedContext
+     */
+    'id': string;
+}
+/**
+ * 
+ * @export
+ * @interface AlibabaCAMSForwardedContext
+ */
+export interface AlibabaCAMSForwardedContext {
+    /**
+     * 
+     * @type {boolean}
+     * @memberof AlibabaCAMSForwardedContext
+     */
+    'forwarded': boolean;
+}
+/**
+ * 
+ * @export
  * @interface AlibabaCAMSISVTerms
  */
 export interface AlibabaCAMSISVTerms {
@@ -891,24 +923,11 @@ export const AlibabaCAMSWebhookMessageItemStatusEnum = {
 export type AlibabaCAMSWebhookMessageItemStatusEnum = typeof AlibabaCAMSWebhookMessageItemStatusEnum[keyof typeof AlibabaCAMSWebhookMessageItemStatusEnum];
 
 /**
- * 
+ * @type AlibabaCAMSWebhookMessageItemContext
  * @export
- * @interface AlibabaCAMSWebhookMessageItemContext
  */
-export interface AlibabaCAMSWebhookMessageItemContext {
-    /**
-     * The user ID of the person that sent it
-     * @type {string}
-     * @memberof AlibabaCAMSWebhookMessageItemContext
-     */
-    'from': string;
-    /**
-     * The ID of the message that was replied to
-     * @type {string}
-     * @memberof AlibabaCAMSWebhookMessageItemContext
-     */
-    'id': string;
-}
+export type AlibabaCAMSWebhookMessageItemContext = AlibabCAMSQuotedContext | AlibabaCAMSForwardedContext;
+
 /**
  * @type AlibabaCAMSWebhookMessageItemErrorCode
  * @export
