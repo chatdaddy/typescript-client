@@ -89,6 +89,12 @@ export interface GetMemberships200Response {
      * @memberof GetMemberships200Response
      */
     'cursor'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof GetMemberships200Response
+     */
+    'total'?: number;
 }
 /**
  * 
