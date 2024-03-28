@@ -1448,8 +1448,7 @@ export const BotInsertDataActionsInnerAllOf1MessageAttachmentsInnerTypeEnum = {
     Sticker: 'sticker',
     Audio: 'audio',
     Document: 'document',
-    Location: 'location',
-    Form: 'form'
+    Location: 'location'
 } as const;
 
 export type BotInsertDataActionsInnerAllOf1MessageAttachmentsInnerTypeEnum = typeof BotInsertDataActionsInnerAllOf1MessageAttachmentsInnerTypeEnum[keyof typeof BotInsertDataActionsInnerAllOf1MessageAttachmentsInnerTypeEnum];

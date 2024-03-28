@@ -3356,8 +3356,7 @@ export const IMMessageAttachmentType = {
     Sticker: 'sticker',
     Audio: 'audio',
     Document: 'document',
-    Location: 'location',
-    Form: 'form'
+    Location: 'location'
 } as const;
 
 export type IMMessageAttachmentType = typeof IMMessageAttachmentType[keyof typeof IMMessageAttachmentType];
