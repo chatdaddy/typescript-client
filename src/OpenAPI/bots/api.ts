@@ -2971,6 +2971,12 @@ export interface FormActionMetadata {
      * @memberof FormActionMetadata
      */
     'index'?: number;
+    /**
+     * Custom field to save the value to
+     * @type {string}
+     * @memberof FormActionMetadata
+     */
+    'saveToCustomField'?: string;
 }
 
 export const FormActionMetadataTypeEnum = {

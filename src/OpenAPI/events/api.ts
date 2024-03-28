@@ -1226,6 +1226,12 @@ export interface BotInsertDataActionsInnerAllOf1FormActionMetadata {
      * @memberof BotInsertDataActionsInnerAllOf1FormActionMetadata
      */
     'index'?: number;
+    /**
+     * Custom field to save the value to
+     * @type {string}
+     * @memberof BotInsertDataActionsInnerAllOf1FormActionMetadata
+     */
+    'saveToCustomField'?: string;
 }
 
 export const BotInsertDataActionsInnerAllOf1FormActionMetadataTypeEnum = {
