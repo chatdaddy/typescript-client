@@ -5313,7 +5313,7 @@ export const AccountApiAxiosParamCreator = function (configuration?: Configurati
 
             // authentication chatdaddy required
             // oauth required
-            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["ACCOUNT_READ", "ACCOUNTS_READ_ASSIGNED"], configuration)
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["ACCOUNT_READ"], configuration)
 
             if (q !== undefined) {
                 localVarQueryParameter['q'] = q;

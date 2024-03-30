@@ -755,13 +755,7 @@
     "number": 91,
     "description": "Access to read assigned channels",
     "features": [],
-    "roles": [
-      "viewer",
-      "admin",
-      "agent",
-      "editor"
-    ],
-    "group": "Channels"
+    "roles": []
   },
   "AUTOCOMPLETE_GET": {
     "number": 92,
