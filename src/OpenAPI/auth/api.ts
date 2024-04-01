@@ -1553,11 +1553,11 @@ export interface TeamPatchRequest {
      */
     'inviteLinks'?: Array<TeamPatchRequestInviteLinksInner>;
     /**
-     * Auth token for Zapier
-     * @type {string}
+     * 
+     * @type {object}
      * @memberof TeamPatchRequest
      */
-    'zapierToken'?: string | null;
+    'zapierToken'?: object;
 }
 /**
  * 
