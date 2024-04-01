@@ -2676,8 +2676,7 @@ export const MessageAttachmentType = {
     Sticker: 'sticker',
     Audio: 'audio',
     Document: 'document',
-    Location: 'location',
-    Form: 'form'
+    Location: 'location'
 } as const;
 
 export type MessageAttachmentType = typeof MessageAttachmentType[keyof typeof MessageAttachmentType];

@@ -6191,8 +6191,7 @@ export const MessageInsertDataAttachmentsInnerTypeEnum = {
     Sticker: 'sticker',
     Audio: 'audio',
     Document: 'document',
-    Location: 'location',
-    Form: 'form'
+    Location: 'location'
 } as const;
 
 export type MessageInsertDataAttachmentsInnerTypeEnum = typeof MessageInsertDataAttachmentsInnerTypeEnum[keyof typeof MessageInsertDataAttachmentsInnerTypeEnum];
