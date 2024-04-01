@@ -2117,6 +2117,7 @@ export const RecurringCreditConsumptionType = {
     ChannelMessenger: 'channel/messenger',
     ChannelWaBusinessApi: 'channel/wa-business-api',
     ChannelMail: 'channel/mail',
+    ChannelSms: 'channel/sms',
     User: 'user'
 } as const;
 

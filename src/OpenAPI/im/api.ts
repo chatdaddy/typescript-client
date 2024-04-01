@@ -335,6 +335,32 @@ export type AccountCredentialsMetaTypeEnum = typeof AccountCredentialsMetaTypeEn
 /**
  * 
  * @export
+ * @interface AccountCredentialsSms
+ */
+export interface AccountCredentialsSms {
+    /**
+     * 
+     * @type {string}
+     * @memberof AccountCredentialsSms
+     */
+    'type': AccountCredentialsSmsTypeEnum;
+    /**
+     * Phone number of the account
+     * @type {string}
+     * @memberof AccountCredentialsSms
+     */
+    'phoneNumber': string;
+}
+
+export const AccountCredentialsSmsTypeEnum = {
+    Sms: 'sms'
+} as const;
+
+export type AccountCredentialsSmsTypeEnum = typeof AccountCredentialsSmsTypeEnum[keyof typeof AccountCredentialsSmsTypeEnum];
+
+/**
+ * 
+ * @export
  * @interface AccountCredentialsTikTok
  */
 export interface AccountCredentialsTikTok {
@@ -492,7 +518,8 @@ export const AccountType = {
     Mock: 'mock',
     Tiktok: 'tiktok',
     Messenger: 'messenger',
-    Mail: 'mail'
+    Mail: 'mail',
+    Sms: 'sms'
 } as const;
 
 export type AccountType = typeof AccountType[keyof typeof AccountType];
@@ -625,7 +652,7 @@ export interface AccountsPatchRequest {
  * @type AccountsPatchRequestCredentials
  * @export
  */
-export type AccountsPatchRequestCredentials = AccountCredentialsAlibaba | AccountCredentialsAlibabaV2 | AccountCredentialsMail | AccountCredentialsMeta | AccountCredentialsTikTok;
+export type AccountsPatchRequestCredentials = AccountCredentialsAlibaba | AccountCredentialsAlibabaV2 | AccountCredentialsMail | AccountCredentialsMeta | AccountCredentialsSms | AccountCredentialsTikTok;
 
 /**
  * 
@@ -4608,6 +4635,19 @@ export interface QuotedMessage {
      * @memberof QuotedMessage
      */
     'jpegThumbnail'?: string | null;
+}
+/**
+ * 
+ * @export
+ * @interface SmsStateInfo
+ */
+export interface SmsStateInfo {
+    /**
+     * 
+     * @type {boolean}
+     * @memberof SmsStateInfo
+     */
+    'senderVerified'?: boolean;
 }
 /**
  * 

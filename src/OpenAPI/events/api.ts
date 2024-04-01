@@ -230,7 +230,8 @@ export const AccountInsertDataTypeEnum = {
     Mock: 'mock',
     Tiktok: 'tiktok',
     Messenger: 'messenger',
-    Mail: 'mail'
+    Mail: 'mail',
+    Sms: 'sms'
 } as const;
 
 export type AccountInsertDataTypeEnum = typeof AccountInsertDataTypeEnum[keyof typeof AccountInsertDataTypeEnum];
@@ -553,7 +554,8 @@ export const AccountUpdateDataTypeEnum = {
     Mock: 'mock',
     Tiktok: 'tiktok',
     Messenger: 'messenger',
-    Mail: 'mail'
+    Mail: 'mail',
+    Sms: 'sms'
 } as const;
 
 export type AccountUpdateDataTypeEnum = typeof AccountUpdateDataTypeEnum[keyof typeof AccountUpdateDataTypeEnum];
