@@ -3222,6 +3222,12 @@ export interface FormSubmissionsGet200Response {
      * @memberof FormSubmissionsGet200Response
      */
     'cursor'?: string;
+    /**
+     * total submissions present with these filters.
+     * @type {number}
+     * @memberof FormSubmissionsGet200Response
+     */
+    'total'?: number;
 }
 /**
  * 
