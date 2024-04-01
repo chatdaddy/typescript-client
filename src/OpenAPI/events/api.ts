@@ -8741,10 +8741,10 @@ export interface TeamInsertData {
     'partnerAdmin'?: string | null;
     /**
      * 
-     * @type {object}
+     * @type {TeamInsertDataZapierToken}
      * @memberof TeamInsertData
      */
-    'zapierToken'?: object | null;
+    'zapierToken'?: TeamInsertDataZapierToken | null;
     /**
      * 
      * @type {Array<TeamInsertDataOnboardingStepsDoneInner>}
@@ -9029,6 +9029,25 @@ export type TeamInsertDataOnboardingStepsDoneInnerIdEnum = typeof TeamInsertData
 /**
  * 
  * @export
+ * @interface TeamInsertDataZapierToken
+ */
+export interface TeamInsertDataZapierToken {
+    /**
+     * 
+     * @type {string}
+     * @memberof TeamInsertDataZapierToken
+     */
+    'token': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof TeamInsertDataZapierToken
+     */
+    'expiresAt': string;
+}
+/**
+ * 
+ * @export
  * @interface TeamUpdate
  */
 export interface TeamUpdate {
@@ -9126,10 +9145,10 @@ export interface TeamUpdateData {
     'partnerAdmin'?: string | null;
     /**
      * 
-     * @type {object}
+     * @type {TeamInsertDataZapierToken}
      * @memberof TeamUpdateData
      */
-    'zapierToken'?: object | null;
+    'zapierToken'?: TeamInsertDataZapierToken | null;
     /**
      * 
      * @type {Array<TeamInsertDataOnboardingStepsDoneInner>}

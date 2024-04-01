@@ -1401,10 +1401,10 @@ export interface Team {
     'partnerAdmin'?: string | null;
     /**
      * 
-     * @type {object}
+     * @type {TeamZapierToken}
      * @memberof Team
      */
-    'zapierToken'?: object | null;
+    'zapierToken'?: TeamZapierToken | null;
     /**
      * 
      * @type {Array<OnboardingStep>}
@@ -1554,10 +1554,10 @@ export interface TeamPatchRequest {
     'inviteLinks'?: Array<TeamPatchRequestInviteLinksInner>;
     /**
      * 
-     * @type {object}
+     * @type {TeamZapierToken}
      * @memberof TeamPatchRequest
      */
-    'zapierToken'?: object;
+    'zapierToken'?: TeamZapierToken | null;
 }
 /**
  * 
@@ -1611,6 +1611,25 @@ export interface TeamPatchRequestMembersInner {
 }
 
 
+/**
+ * 
+ * @export
+ * @interface TeamZapierToken
+ */
+export interface TeamZapierToken {
+    /**
+     * 
+     * @type {string}
+     * @memberof TeamZapierToken
+     */
+    'token': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof TeamZapierToken
+     */
+    'expiresAt': string;
+}
 /**
  * 
  * @export
