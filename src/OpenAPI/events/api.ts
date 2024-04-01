@@ -8742,10 +8742,10 @@ export interface TeamInsertData {
     'partnerAdmin'?: string | null;
     /**
      * 
-     * @type {string}
+     * @type {object}
      * @memberof TeamInsertData
      */
-    'zapierToken'?: string | null;
+    'zapierToken'?: object | null;
     /**
      * 
      * @type {Array<TeamInsertDataOnboardingStepsDoneInner>}
@@ -9127,10 +9127,10 @@ export interface TeamUpdateData {
     'partnerAdmin'?: string | null;
     /**
      * 
-     * @type {string}
+     * @type {object}
      * @memberof TeamUpdateData
      */
-    'zapierToken'?: string | null;
+    'zapierToken'?: object | null;
     /**
      * 
      * @type {Array<TeamInsertDataOnboardingStepsDoneInner>}

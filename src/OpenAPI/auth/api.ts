@@ -1400,11 +1400,11 @@ export interface Team {
      */
     'partnerAdmin'?: string | null;
     /**
-     * The team will be the admin team of a Chatdaddy partner if this property is not null.
-     * @type {string}
+     * 
+     * @type {object}
      * @memberof Team
      */
-    'zapierToken'?: string | null;
+    'zapierToken'?: object | null;
     /**
      * 
      * @type {Array<OnboardingStep>}
