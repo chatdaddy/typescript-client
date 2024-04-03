@@ -2076,6 +2076,12 @@ export interface BotTrigger {
      * @memberof BotTrigger
      */
     'remove'?: boolean;
+    /**
+     * 
+     * @type {Position}
+     * @memberof BotTrigger
+     */
+    'position'?: Position | null;
 }
 /**
  * 
@@ -2083,6 +2089,12 @@ export interface BotTrigger {
  * @interface BotTriggerAllOf
  */
 export interface BotTriggerAllOf {
+    /**
+     * 
+     * @type {Position}
+     * @memberof BotTriggerAllOf
+     */
+    'position'?: Position | null;
     /**
      * An ISO formatted timestamp
      * @type {string}
@@ -3556,6 +3568,12 @@ export interface InternalEventUIConfig {
      * @memberof InternalEventUIConfig
      */
     'description': string;
+    /**
+     * 
+     * @type {DisplayIcon}
+     * @memberof InternalEventUIConfig
+     */
+    'icon'?: DisplayIcon;
     /**
      * 
      * @type {TriggersUIConfig}
