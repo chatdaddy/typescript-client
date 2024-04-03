@@ -345,11 +345,11 @@ export interface AccountCredentialsSms {
      */
     'type': AccountCredentialsSmsTypeEnum;
     /**
-     * Phone number of the account
+     * Sender Id to be displayed
      * @type {string}
      * @memberof AccountCredentialsSms
      */
-    'phoneNumber': string;
+    'senderId': string;
 }
 
 export const AccountCredentialsSmsTypeEnum = {
@@ -4635,6 +4635,19 @@ export interface QuotedMessage {
      * @memberof QuotedMessage
      */
     'jpegThumbnail'?: string | null;
+}
+/**
+ * 
+ * @export
+ * @interface SmsSenderIdPostRequest
+ */
+export interface SmsSenderIdPostRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof SmsSenderIdPostRequest
+     */
+    'senderId': string;
 }
 /**
  * 
@@ -12577,6 +12590,141 @@ export class ProfileValidationApi extends BaseAPI {
      */
     public profileMessengerPost(requestParameters: ProfileValidationApiProfileMessengerPostRequest, options?: AxiosRequestConfig) {
         return ProfileValidationApiFp(this.configuration).profileMessengerPost(requestParameters.accountId, requestParameters.profileMessengerPostRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+/**
+ * SMSApi - axios parameter creator
+ * @export
+ */
+export const SMSApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @summary Set sender Id for sms channel
+         * @param {string} accountId 
+         * @param {SmsSenderIdPostRequest} [smsSenderIdPostRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        smsSenderIdPost: async (accountId: string, smsSenderIdPostRequest?: SmsSenderIdPostRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'accountId' is not null or undefined
+            assertParamExists('smsSenderIdPost', 'accountId', accountId)
+            const localVarPath = `/sms/sender-id/{accountId}`
+                .replace(`{${"accountId"}}`, encodeURIComponent(String(accountId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["ACCOUNT_PATCH"], configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(smsSenderIdPostRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * SMSApi - functional programming interface
+ * @export
+ */
+export const SMSApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = SMSApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * 
+         * @summary Set sender Id for sms channel
+         * @param {string} accountId 
+         * @param {SmsSenderIdPostRequest} [smsSenderIdPostRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async smsSenderIdPost(accountId: string, smsSenderIdPostRequest?: SmsSenderIdPostRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.smsSenderIdPost(accountId, smsSenderIdPostRequest, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+    }
+};
+
+/**
+ * SMSApi - factory interface
+ * @export
+ */
+export const SMSApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = SMSApiFp(configuration)
+    return {
+        /**
+         * 
+         * @summary Set sender Id for sms channel
+         * @param {SMSApiSmsSenderIdPostRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        smsSenderIdPost(requestParameters: SMSApiSmsSenderIdPostRequest, options?: AxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.smsSenderIdPost(requestParameters.accountId, requestParameters.smsSenderIdPostRequest, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * Request parameters for smsSenderIdPost operation in SMSApi.
+ * @export
+ * @interface SMSApiSmsSenderIdPostRequest
+ */
+export interface SMSApiSmsSenderIdPostRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof SMSApiSmsSenderIdPost
+     */
+    readonly accountId: string
+
+    /**
+     * 
+     * @type {SmsSenderIdPostRequest}
+     * @memberof SMSApiSmsSenderIdPost
+     */
+    readonly smsSenderIdPostRequest?: SmsSenderIdPostRequest
+}
+
+/**
+ * SMSApi - object-oriented interface
+ * @export
+ * @class SMSApi
+ * @extends {BaseAPI}
+ */
+export class SMSApi extends BaseAPI {
+    /**
+     * 
+     * @summary Set sender Id for sms channel
+     * @param {SMSApiSmsSenderIdPostRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof SMSApi
+     */
+    public smsSenderIdPost(requestParameters: SMSApiSmsSenderIdPostRequest, options?: AxiosRequestConfig) {
+        return SMSApiFp(this.configuration).smsSenderIdPost(requestParameters.accountId, requestParameters.smsSenderIdPostRequest, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
