@@ -2390,39 +2390,39 @@ export interface BotInsertDataSharedSlugsInner {
      * @type {boolean}
      * @memberof BotInsertDataSharedSlugsInner
      */
-    'editable'?: boolean;
+    'editable': boolean;
     /**
      * 
      * @type {string}
      * @memberof BotInsertDataSharedSlugsInner
      */
-    'userId': string;
-}
-/**
- * 
- * @export
- * @interface BotNodeEvent
- */
-export interface BotNodeEvent {
+    'sharedBy': string;
     /**
      * 
      * @type {string}
-     * @memberof BotNodeEvent
+     * @memberof BotInsertDataSharedSlugsInner
      */
-    'event': BotNodeEventEventEnum;
+    'userIdentity'?: string | null;
     /**
      * 
-     * @type {Array<BotNodeEventData>}
-     * @memberof BotNodeEvent
+     * @type {string}
+     * @memberof BotInsertDataSharedSlugsInner
      */
-    'data': Array<BotNodeEventData>;
+    'userIdentityType'?: BotInsertDataSharedSlugsInnerUserIdentityTypeEnum;
+    /**
+     * 
+     * @type {string}
+     * @memberof BotInsertDataSharedSlugsInner
+     */
+    'createdAt': string;
 }
 
-export const BotNodeEventEventEnum = {
-    BotNodeEvent: 'bot-node-event'
+export const BotInsertDataSharedSlugsInnerUserIdentityTypeEnum = {
+    Email: 'email',
+    Phone: 'phone'
 } as const;
 
-export type BotNodeEventEventEnum = typeof BotNodeEventEventEnum[keyof typeof BotNodeEventEventEnum];
+export type BotInsertDataSharedSlugsInnerUserIdentityTypeEnum = typeof BotInsertDataSharedSlugsInnerUserIdentityTypeEnum[keyof typeof BotInsertDataSharedSlugsInnerUserIdentityTypeEnum];
 
 /**
  * @type BotNodeEventData
@@ -4945,7 +4945,6 @@ export const EventName = {
     PaymentintegrationInsert: 'paymentintegration-insert',
     DashboardwithdataInsert: 'dashboardwithdata-insert',
     ShopproductInsert: 'shopproduct-insert',
-    BotNodeEvent: 'bot-node-event',
     ContactInsert: 'contact-insert',
     ContactUpdate: 'contact-update',
     ContactDelete: 'contact-delete',
@@ -5072,7 +5071,7 @@ export type EventSubscriptionType = typeof EventSubscriptionType[keyof typeof Ev
  * The request body you\'ll receive in a webhook
  * @export
  */
-export type EventWebhookData = AccountDelete | AccountInsert | AccountUpdate | ActionExecute | BotDelete | BotInsert | BotNodeEvent | BotUpdate | CampaignInsert | ChatDelete | ChatInsert | ChatUpdate | ChatbotInsert | ContactDelete | ContactInsert | ContactUpdate | CredittransactionrecordInsert | CustomerCreditsLevelUpdate | DashboardwithdataInsert | FewMessagesLeft | GroupUpdate | KeywordbasedactionInsert | MembershipactionInsert | MessageDelete | MessageInsert | MessageUpdate | OrderInsert | PaymentintegrationInsert | PlatformproductDelete | PlatformproductInsert | PlatformproductUpdate | PresenceUpdate | PushNotification | ShopproductInsert | StaleAccountNotification | TagDelete | TagInsert | TagUpdate | TeamDelete | TeamInsert | TeamUpdate | TeammemberDelete | TeammemberInsert | TeammemberUpdate | TrackingDelete | TrackingInsert | TrackingUpdate | UserDelete | UserInsert | UserUpdate;
+export type EventWebhookData = AccountDelete | AccountInsert | AccountUpdate | ActionExecute | BotDelete | BotInsert | BotUpdate | CampaignInsert | ChatDelete | ChatInsert | ChatUpdate | ChatbotInsert | ContactDelete | ContactInsert | ContactUpdate | CredittransactionrecordInsert | CustomerCreditsLevelUpdate | DashboardwithdataInsert | FewMessagesLeft | GroupUpdate | KeywordbasedactionInsert | MembershipactionInsert | MessageDelete | MessageInsert | MessageUpdate | OrderInsert | PaymentintegrationInsert | PlatformproductDelete | PlatformproductInsert | PlatformproductUpdate | PresenceUpdate | PushNotification | ShopproductInsert | StaleAccountNotification | TagDelete | TagInsert | TagUpdate | TeamDelete | TeamInsert | TeamUpdate | TeammemberDelete | TeammemberInsert | TeammemberUpdate | TrackingDelete | TrackingInsert | TrackingUpdate | UserDelete | UserInsert | UserUpdate;
 
 /**
  * 

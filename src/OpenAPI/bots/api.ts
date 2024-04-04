@@ -823,63 +823,6 @@ export type ActionInteractionType = typeof ActionInteractionType[keyof typeof Ac
 /**
  * 
  * @export
- * @interface ActionNode
- */
-export interface ActionNode {
-    /**
-     * 
-     * @type {string}
-     * @memberof ActionNode
-     */
-    'type': ActionNodeTypeEnum;
-    /**
-     * 
-     * @type {Action}
-     * @memberof ActionNode
-     */
-    'data': Action;
-    /**
-     * 
-     * @type {ActionNodeHandle}
-     * @memberof ActionNode
-     */
-    'handle': ActionNodeHandle;
-    /**
-     * send in to remove the action
-     * @type {boolean}
-     * @memberof ActionNode
-     */
-    'remove'?: boolean;
-}
-
-export const ActionNodeTypeEnum = {
-    Action: 'action'
-} as const;
-
-export type ActionNodeTypeEnum = typeof ActionNodeTypeEnum[keyof typeof ActionNodeTypeEnum];
-
-/**
- * 
- * @export
- * @interface ActionNodeHandle
- */
-export interface ActionNodeHandle {
-    /**
-     * 
-     * @type {Array<string>}
-     * @memberof ActionNodeHandle
-     */
-    'delay'?: Array<string>;
-    /**
-     * 
-     * @type {Array<string>}
-     * @memberof ActionNodeHandle
-     */
-    'userInput'?: Array<string>;
-}
-/**
- * 
- * @export
  * @interface ActionTarget
  */
 export interface ActionTarget {
@@ -1647,38 +1590,6 @@ export interface BotNote {
 /**
  * 
  * @export
- * @interface BotNoteNode
- */
-export interface BotNoteNode {
-    /**
-     * 
-     * @type {string}
-     * @memberof BotNoteNode
-     */
-    'type': BotNoteNodeTypeEnum;
-    /**
-     * 
-     * @type {BotNote}
-     * @memberof BotNoteNode
-     */
-    'data': BotNote;
-    /**
-     * send in to remove the note
-     * @type {boolean}
-     * @memberof BotNoteNode
-     */
-    'remove'?: boolean;
-}
-
-export const BotNoteNodeTypeEnum = {
-    Note: 'note'
-} as const;
-
-export type BotNoteNodeTypeEnum = typeof BotNoteNodeTypeEnum[keyof typeof BotNoteNodeTypeEnum];
-
-/**
- * 
- * @export
  * @interface BotNoteTargetsInner
  */
 export interface BotNoteTargetsInner {
@@ -1818,6 +1729,19 @@ export interface BotPatch {
 /**
  * 
  * @export
+ * @interface BotSharePatchRequest
+ */
+export interface BotSharePatchRequest {
+    /**
+     * If true, the slug can be edited. If false, the slug cannot be edited
+     * @type {boolean}
+     * @memberof BotSharePatchRequest
+     */
+    'editable': boolean;
+}
+/**
+ * 
+ * @export
  * @interface BotShareRequest
  */
 export interface BotShareRequest {
@@ -1828,67 +1752,25 @@ export interface BotShareRequest {
      */
     'botId': string;
     /**
-     * 
+     * If true, the slug can be edited. If false, the slug cannot be edited
      * @type {boolean}
      * @memberof BotShareRequest
      */
-    'editable'?: boolean;
-}
-/**
- * 
- * @export
- * @interface BotTargetNode
- */
-export interface BotTargetNode {
+    'editable': boolean;
     /**
-     * 
+     * Identity of the user to whom the slug was shared like email/phone. Will be null if type is public
      * @type {string}
-     * @memberof BotTargetNode
+     * @memberof BotShareRequest
      */
-    'type': BotTargetNodeTypeEnum;
+    'userIdentity'?: string;
     /**
      * 
-     * @type {ActionTarget}
-     * @memberof BotTargetNode
+     * @type {UserIdentityType}
+     * @memberof BotShareRequest
      */
-    'data': ActionTarget;
-    /**
-     * 
-     * @type {Action}
-     * @memberof BotTargetNode
-     */
-    'sourceAction': Action;
-    /**
-     * 
-     * @type {number}
-     * @memberof BotTargetNode
-     */
-    'sourceIndex': number;
-    /**
-     * 
-     * @type {ConditionSourceType}
-     * @memberof BotTargetNode
-     */
-    'sourceType'?: ConditionSourceType;
-    /**
-     * 
-     * @type {ConditionSource}
-     * @memberof BotTargetNode
-     */
-    'conditionSource'?: ConditionSource;
-    /**
-     * send in to remove the bot target
-     * @type {boolean}
-     * @memberof BotTargetNode
-     */
-    'remove'?: boolean;
+    'userIdentityType'?: UserIdentityType;
 }
 
-export const BotTargetNodeTypeEnum = {
-    BotTarget: 'botTarget'
-} as const;
-
-export type BotTargetNodeTypeEnum = typeof BotTargetNodeTypeEnum[keyof typeof BotTargetNodeTypeEnum];
 
 /**
  * 
@@ -2405,124 +2287,6 @@ export interface BotsGets200Response {
     'totalCount'?: number;
 }
 /**
- * 
- * @export
- * @interface ConditionNode
- */
-export interface ConditionNode {
-    /**
-     * 
-     * @type {string}
-     * @memberof ConditionNode
-     */
-    'type': ConditionNodeTypeEnum;
-    /**
-     * 
-     * @type {NextAction}
-     * @memberof ConditionNode
-     */
-    'data': NextAction;
-    /**
-     * 
-     * @type {ConditionNodeHandle}
-     * @memberof ConditionNode
-     */
-    'handle': ConditionNodeHandle;
-    /**
-     * 
-     * @type {ConditionSourceType}
-     * @memberof ConditionNode
-     */
-    'sourceType': ConditionSourceType;
-    /**
-     * 
-     * @type {Action}
-     * @memberof ConditionNode
-     */
-    'sourceAction': Action;
-    /**
-     * 
-     * @type {number}
-     * @memberof ConditionNode
-     */
-    'sourceIndex': number;
-    /**
-     * send in to remove the condition
-     * @type {boolean}
-     * @memberof ConditionNode
-     */
-    'remove'?: boolean;
-}
-
-export const ConditionNodeTypeEnum = {
-    Condition: 'condition'
-} as const;
-
-export type ConditionNodeTypeEnum = typeof ConditionNodeTypeEnum[keyof typeof ConditionNodeTypeEnum];
-
-/**
- * 
- * @export
- * @interface ConditionNodeHandle
- */
-export interface ConditionNodeHandle {
-    /**
-     * 
-     * @type {Array<string>}
-     * @memberof ConditionNodeHandle
-     */
-    'default'?: Array<string>;
-    /**
-     * 
-     * @type {Array<string>}
-     * @memberof ConditionNodeHandle
-     */
-    'group'?: Array<string>;
-}
-/**
- * 
- * @export
- * @interface ConditionSource
- */
-export interface ConditionSource {
-    /**
-     * 
-     * @type {string}
-     * @memberof ConditionSource
-     */
-    'target': ConditionSourceTargetEnum;
-    /**
-     * 
-     * @type {number}
-     * @memberof ConditionSource
-     */
-    'index': number;
-}
-
-export const ConditionSourceTargetEnum = {
-    Default: 'default',
-    Group: 'group'
-} as const;
-
-export type ConditionSourceTargetEnum = typeof ConditionSourceTargetEnum[keyof typeof ConditionSourceTargetEnum];
-
-/**
- * 
- * @export
- * @enum {string}
- */
-
-export const ConditionSourceType = {
-    Button: 'button',
-    Input: 'input',
-    Delay: 'delay',
-    List: 'list'
-} as const;
-
-export type ConditionSourceType = typeof ConditionSourceType[keyof typeof ConditionSourceType];
-
-
-/**
  * Data structure that gives information to the frontend on how to render conditions for a property of a data object that has caused a Trigger to fire.
  * @export
  * @interface ConditionableProperty
@@ -2665,56 +2429,6 @@ export type DayOfWeek = typeof DayOfWeek[keyof typeof DayOfWeek];
 /**
  * 
  * @export
- * @interface DelayNode
- */
-export interface DelayNode {
-    /**
-     * 
-     * @type {string}
-     * @memberof DelayNode
-     */
-    'type': DelayNodeTypeEnum;
-    /**
-     * 
-     * @type {BotMessageDelay}
-     * @memberof DelayNode
-     */
-    'data': BotMessageDelay;
-    /**
-     * 
-     * @type {string}
-     * @memberof DelayNode
-     */
-    'handle': string;
-    /**
-     * 
-     * @type {Action}
-     * @memberof DelayNode
-     */
-    'sourceAction': Action;
-    /**
-     * 
-     * @type {number}
-     * @memberof DelayNode
-     */
-    'sourceIndex': number;
-    /**
-     * send in to remove the delay
-     * @type {boolean}
-     * @memberof DelayNode
-     */
-    'remove'?: boolean;
-}
-
-export const DelayNodeTypeEnum = {
-    Delay: 'delay'
-} as const;
-
-export type DelayNodeTypeEnum = typeof DelayNodeTypeEnum[keyof typeof DelayNodeTypeEnum];
-
-/**
- * 
- * @export
  * @interface DisplayIcon
  */
 export interface DisplayIcon {
@@ -2730,69 +2444,6 @@ export interface DisplayIcon {
      * @memberof DisplayIcon
      */
     'color'?: string;
-}
-/**
- * 
- * @export
- * @interface EmailNode
- */
-export interface EmailNode {
-    /**
-     * 
-     * @type {string}
-     * @memberof EmailNode
-     */
-    'type': EmailNodeTypeEnum;
-    /**
-     * 
-     * @type {Action}
-     * @memberof EmailNode
-     */
-    'data': Action;
-    /**
-     * 
-     * @type {EmailNodeHandle}
-     * @memberof EmailNode
-     */
-    'handle': EmailNodeHandle;
-    /**
-     * send in to remove the email
-     * @type {boolean}
-     * @memberof EmailNode
-     */
-    'remove'?: boolean;
-}
-
-export const EmailNodeTypeEnum = {
-    Email: 'email'
-} as const;
-
-export type EmailNodeTypeEnum = typeof EmailNodeTypeEnum[keyof typeof EmailNodeTypeEnum];
-
-/**
- * 
- * @export
- * @interface EmailNodeHandle
- */
-export interface EmailNodeHandle {
-    /**
-     * 
-     * @type {Array<string>}
-     * @memberof EmailNodeHandle
-     */
-    'delay'?: Array<string>;
-    /**
-     * 
-     * @type {Array<string>}
-     * @memberof EmailNodeHandle
-     */
-    'action'?: Array<string>;
-    /**
-     * 
-     * @type {Array<string>}
-     * @memberof EmailNodeHandle
-     */
-    'userInput'?: Array<string>;
 }
 /**
  * 
@@ -3590,81 +3241,6 @@ export interface InternalEventUIConfig {
 /**
  * 
  * @export
- * @interface MessageNode
- */
-export interface MessageNode {
-    /**
-     * 
-     * @type {string}
-     * @memberof MessageNode
-     */
-    'type': MessageNodeTypeEnum;
-    /**
-     * 
-     * @type {Action}
-     * @memberof MessageNode
-     */
-    'data': Action;
-    /**
-     * 
-     * @type {MessageNodeHandle}
-     * @memberof MessageNode
-     */
-    'handle': MessageNodeHandle;
-    /**
-     * send in to remove the message
-     * @type {boolean}
-     * @memberof MessageNode
-     */
-    'remove'?: boolean;
-}
-
-export const MessageNodeTypeEnum = {
-    Message: 'message'
-} as const;
-
-export type MessageNodeTypeEnum = typeof MessageNodeTypeEnum[keyof typeof MessageNodeTypeEnum];
-
-/**
- * 
- * @export
- * @interface MessageNodeHandle
- */
-export interface MessageNodeHandle {
-    /**
-     * 
-     * @type {Array<string>}
-     * @memberof MessageNodeHandle
-     */
-    'button'?: Array<string>;
-    /**
-     * 
-     * @type {Array<string>}
-     * @memberof MessageNodeHandle
-     */
-    'delay'?: Array<string>;
-    /**
-     * 
-     * @type {Array<string>}
-     * @memberof MessageNodeHandle
-     */
-    'list'?: Array<string>;
-    /**
-     * 
-     * @type {Array<string>}
-     * @memberof MessageNodeHandle
-     */
-    'action'?: Array<string>;
-    /**
-     * 
-     * @type {Array<string>}
-     * @memberof MessageNodeHandle
-     */
-    'userInput'?: Array<string>;
-}
-/**
- * 
- * @export
  * @interface MessageObj
  */
 export interface MessageObj {
@@ -3919,73 +3495,17 @@ export interface NextActionGroupsInnerTarget {
     'position'?: Position | null;
 }
 /**
- * @type NodeData
- * @export
- */
-export type NodeData = ActionNode | BotNoteNode | BotTargetNode | ConditionNode | DelayNode | EmailNode | MessageNode | PhoneNumberNode | UrlNode | UserInputNode;
-
-/**
  * 
  * @export
- * @interface PhoneNumberNode
+ * @interface PatchBotBySlugRequest
  */
-export interface PhoneNumberNode {
+export interface PatchBotBySlugRequest {
     /**
      * 
-     * @type {string}
-     * @memberof PhoneNumberNode
+     * @type {BotPatch}
+     * @memberof PatchBotBySlugRequest
      */
-    'type': PhoneNumberNodeTypeEnum;
-    /**
-     * 
-     * @type {PhoneNumberNodeData}
-     * @memberof PhoneNumberNode
-     */
-    'data': PhoneNumberNodeData;
-    /**
-     * 
-     * @type {Action}
-     * @memberof PhoneNumberNode
-     */
-    'sourceAction': Action;
-    /**
-     * 
-     * @type {number}
-     * @memberof PhoneNumberNode
-     */
-    'sourceIndex': number;
-    /**
-     * send in to remove the phone number
-     * @type {boolean}
-     * @memberof PhoneNumberNode
-     */
-    'remove'?: boolean;
-}
-
-export const PhoneNumberNodeTypeEnum = {
-    PhoneNumber: 'phoneNumber'
-} as const;
-
-export type PhoneNumberNodeTypeEnum = typeof PhoneNumberNodeTypeEnum[keyof typeof PhoneNumberNodeTypeEnum];
-
-/**
- * 
- * @export
- * @interface PhoneNumberNodeData
- */
-export interface PhoneNumberNodeData {
-    /**
-     * Phone number to call
-     * @type {string}
-     * @memberof PhoneNumberNodeData
-     */
-    'phoneNumber': string;
-    /**
-     * 
-     * @type {Position}
-     * @memberof PhoneNumberNodeData
-     */
-    'position'?: Position | null;
+    'patchData': BotPatch;
 }
 /**
  * position in x-y coordinate space
@@ -4132,14 +3652,34 @@ export interface SharedSlug {
      * @type {boolean}
      * @memberof SharedSlug
      */
-    'editable'?: boolean;
+    'editable': boolean;
     /**
-     * 
+     * ID of the user who shared the slug
      * @type {string}
      * @memberof SharedSlug
      */
-    'userId': string;
+    'sharedBy': string;
+    /**
+     * Identity of the user to whom the slug was shared like email/phone. Will be null if type is public
+     * @type {string}
+     * @memberof SharedSlug
+     */
+    'userIdentity'?: string | null;
+    /**
+     * 
+     * @type {UserIdentityType}
+     * @memberof SharedSlug
+     */
+    'userIdentityType'?: UserIdentityType;
+    /**
+     * An ISO formatted timestamp
+     * @type {string}
+     * @memberof SharedSlug
+     */
+    'createdAt': string;
 }
+
+
 /**
  * 
  * @export
@@ -4670,117 +4210,18 @@ export interface TriggersUIConfigDefaults {
     'options'?: BotTriggerOptions;
 }
 /**
- * 
+ * Type of the user identity to whom the slug was shared like email/phone. Will be null if type is public
  * @export
- * @interface UrlNode
+ * @enum {string}
  */
-export interface UrlNode {
-    /**
-     * 
-     * @type {string}
-     * @memberof UrlNode
-     */
-    'type': UrlNodeTypeEnum;
-    /**
-     * 
-     * @type {UrlNodeData}
-     * @memberof UrlNode
-     */
-    'data': UrlNodeData;
-    /**
-     * 
-     * @type {Action}
-     * @memberof UrlNode
-     */
-    'sourceAction': Action;
-    /**
-     * 
-     * @type {number}
-     * @memberof UrlNode
-     */
-    'sourceIndex': number;
-    /**
-     * send in to remove the url
-     * @type {boolean}
-     * @memberof UrlNode
-     */
-    'remove'?: boolean;
-}
 
-export const UrlNodeTypeEnum = {
-    Url: 'url'
+export const UserIdentityType = {
+    Email: 'email',
+    Phone: 'phone'
 } as const;
 
-export type UrlNodeTypeEnum = typeof UrlNodeTypeEnum[keyof typeof UrlNodeTypeEnum];
+export type UserIdentityType = typeof UserIdentityType[keyof typeof UserIdentityType];
 
-/**
- * 
- * @export
- * @interface UrlNodeData
- */
-export interface UrlNodeData {
-    /**
-     * 
-     * @type {string}
-     * @memberof UrlNodeData
-     */
-    'url': string;
-    /**
-     * 
-     * @type {Position}
-     * @memberof UrlNodeData
-     */
-    'position'?: Position | null;
-}
-/**
- * 
- * @export
- * @interface UserInputNode
- */
-export interface UserInputNode {
-    /**
-     * 
-     * @type {string}
-     * @memberof UserInputNode
-     */
-    'type': UserInputNodeTypeEnum;
-    /**
-     * 
-     * @type {BotMessageInput}
-     * @memberof UserInputNode
-     */
-    'data': BotMessageInput;
-    /**
-     * 
-     * @type {string}
-     * @memberof UserInputNode
-     */
-    'handle': string;
-    /**
-     * 
-     * @type {Action}
-     * @memberof UserInputNode
-     */
-    'sourceAction': Action;
-    /**
-     * 
-     * @type {number}
-     * @memberof UserInputNode
-     */
-    'sourceIndex': number;
-    /**
-     * send in to remove the user input
-     * @type {boolean}
-     * @memberof UserInputNode
-     */
-    'remove'?: boolean;
-}
-
-export const UserInputNodeTypeEnum = {
-    UserInput: 'userInput'
-} as const;
-
-export type UserInputNodeTypeEnum = typeof UserInputNodeTypeEnum[keyof typeof UserInputNodeTypeEnum];
 
 /**
  * 
@@ -7955,6 +7396,51 @@ export const ShareBotApiAxiosParamCreator = function (configuration?: Configurat
             };
         },
         /**
+         * 
+         * @summary Update a slug
+         * @param {string} slug 
+         * @param {BotSharePatchRequest} [botSharePatchRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        botSharePatch: async (slug: string, botSharePatchRequest?: BotSharePatchRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'slug' is not null or undefined
+            assertParamExists('botSharePatch', 'slug', slug)
+            const localVarPath = `/bot/share`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PATCH', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["TEMPLATES_UPDATE"], configuration)
+
+            if (slug !== undefined) {
+                localVarQueryParameter['slug'] = slug;
+            }
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(botSharePatchRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * This endpoint fetches bot data based on provided slug parameters
          * @summary Retrieves bot data including triggers, notes and actions
          * @param {string} slug The shared sulg of the bot
@@ -8024,6 +7510,44 @@ export const ShareBotApiAxiosParamCreator = function (configuration?: Configurat
         },
         /**
          * 
+         * @summary Update a bot by slug
+         * @param {string} slug The shared slug of the bot
+         * @param {PatchBotBySlugRequest} [patchBotBySlugRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        patchBotBySlug: async (slug: string, patchBotBySlugRequest?: PatchBotBySlugRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'slug' is not null or undefined
+            assertParamExists('patchBotBySlug', 'slug', slug)
+            const localVarPath = `/bot/share/{slug}`
+                .replace(`{${"slug"}}`, encodeURIComponent(String(slug)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PATCH', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(patchBotBySlugRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
          * @summary Deletes list of slugs
          * @param {Array<string>} slugs 
          * @param {*} [options] Override http request option.
@@ -8085,6 +7609,18 @@ export const ShareBotApiFp = function(configuration?: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
+         * 
+         * @summary Update a slug
+         * @param {string} slug 
+         * @param {BotSharePatchRequest} [botSharePatchRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async botSharePatch(slug: string, botSharePatchRequest?: BotSharePatchRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.botSharePatch(slug, botSharePatchRequest, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
          * This endpoint fetches bot data based on provided slug parameters
          * @summary Retrieves bot data including triggers, notes and actions
          * @param {string} slug The shared sulg of the bot
@@ -8104,6 +7640,18 @@ export const ShareBotApiFp = function(configuration?: Configuration) {
          */
         async getShareBot(slug: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Bot>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getShareBot(slug, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary Update a bot by slug
+         * @param {string} slug The shared slug of the bot
+         * @param {PatchBotBySlugRequest} [patchBotBySlugRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async patchBotBySlug(slug: string, patchBotBySlugRequest?: PatchBotBySlugRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.patchBotBySlug(slug, patchBotBySlugRequest, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -8138,6 +7686,16 @@ export const ShareBotApiFactory = function (configuration?: Configuration, baseP
             return localVarFp.botShare(requestParameters.botShareRequest, options).then((request) => request(axios, basePath));
         },
         /**
+         * 
+         * @summary Update a slug
+         * @param {ShareBotApiBotSharePatchRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        botSharePatch(requestParameters: ShareBotApiBotSharePatchRequest, options?: AxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.botSharePatch(requestParameters.slug, requestParameters.botSharePatchRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
          * This endpoint fetches bot data based on provided slug parameters
          * @summary Retrieves bot data including triggers, notes and actions
          * @param {ShareBotApiBotsDataGetBySlugRequest} requestParameters Request parameters.
@@ -8156,6 +7714,16 @@ export const ShareBotApiFactory = function (configuration?: Configuration, baseP
          */
         getShareBot(requestParameters: ShareBotApiGetShareBotRequest, options?: AxiosRequestConfig): AxiosPromise<Bot> {
             return localVarFp.getShareBot(requestParameters.slug, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Update a bot by slug
+         * @param {ShareBotApiPatchBotBySlugRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        patchBotBySlug(requestParameters: ShareBotApiPatchBotBySlugRequest, options?: AxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.patchBotBySlug(requestParameters.slug, requestParameters.patchBotBySlugRequest, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -8185,6 +7753,27 @@ export interface ShareBotApiBotShareRequest {
 }
 
 /**
+ * Request parameters for botSharePatch operation in ShareBotApi.
+ * @export
+ * @interface ShareBotApiBotSharePatchRequest
+ */
+export interface ShareBotApiBotSharePatchRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof ShareBotApiBotSharePatch
+     */
+    readonly slug: string
+
+    /**
+     * 
+     * @type {BotSharePatchRequest}
+     * @memberof ShareBotApiBotSharePatch
+     */
+    readonly botSharePatchRequest?: BotSharePatchRequest
+}
+
+/**
  * Request parameters for botsDataGetBySlug operation in ShareBotApi.
  * @export
  * @interface ShareBotApiBotsDataGetBySlugRequest
@@ -8210,6 +7799,27 @@ export interface ShareBotApiGetShareBotRequest {
      * @memberof ShareBotApiGetShareBot
      */
     readonly slug: string
+}
+
+/**
+ * Request parameters for patchBotBySlug operation in ShareBotApi.
+ * @export
+ * @interface ShareBotApiPatchBotBySlugRequest
+ */
+export interface ShareBotApiPatchBotBySlugRequest {
+    /**
+     * The shared slug of the bot
+     * @type {string}
+     * @memberof ShareBotApiPatchBotBySlug
+     */
+    readonly slug: string
+
+    /**
+     * 
+     * @type {PatchBotBySlugRequest}
+     * @memberof ShareBotApiPatchBotBySlug
+     */
+    readonly patchBotBySlugRequest?: PatchBotBySlugRequest
 }
 
 /**
@@ -8246,6 +7856,18 @@ export class ShareBotApi extends BaseAPI {
     }
 
     /**
+     * 
+     * @summary Update a slug
+     * @param {ShareBotApiBotSharePatchRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ShareBotApi
+     */
+    public botSharePatch(requestParameters: ShareBotApiBotSharePatchRequest, options?: AxiosRequestConfig) {
+        return ShareBotApiFp(this.configuration).botSharePatch(requestParameters.slug, requestParameters.botSharePatchRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
      * This endpoint fetches bot data based on provided slug parameters
      * @summary Retrieves bot data including triggers, notes and actions
      * @param {ShareBotApiBotsDataGetBySlugRequest} requestParameters Request parameters.
@@ -8267,6 +7889,18 @@ export class ShareBotApi extends BaseAPI {
      */
     public getShareBot(requestParameters: ShareBotApiGetShareBotRequest, options?: AxiosRequestConfig) {
         return ShareBotApiFp(this.configuration).getShareBot(requestParameters.slug, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Update a bot by slug
+     * @param {ShareBotApiPatchBotBySlugRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ShareBotApi
+     */
+    public patchBotBySlug(requestParameters: ShareBotApiPatchBotBySlugRequest, options?: AxiosRequestConfig) {
+        return ShareBotApiFp(this.configuration).patchBotBySlug(requestParameters.slug, requestParameters.patchBotBySlugRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
