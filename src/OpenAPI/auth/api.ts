@@ -3342,11 +3342,12 @@ export const OTPApiAxiosParamCreator = function (configuration?: Configuration) 
         /**
          * 
          * @summary Generate an OTP
+         * @param {'sms' | 'whatsapp'} [channel] 
          * @param {OtpPostRequest} [otpPostRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        otpPost: async (otpPostRequest?: OtpPostRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        otpPost: async (channel?: 'sms' | 'whatsapp', otpPostRequest?: OtpPostRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/otp`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -3358,6 +3359,10 @@ export const OTPApiAxiosParamCreator = function (configuration?: Configuration) 
             const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
+
+            if (channel !== undefined) {
+                localVarQueryParameter['channel'] = channel;
+            }
 
 
     
@@ -3433,12 +3438,13 @@ export const OTPApiFp = function(configuration?: Configuration) {
         /**
          * 
          * @summary Generate an OTP
+         * @param {'sms' | 'whatsapp'} [channel] 
          * @param {OtpPostRequest} [otpPostRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async otpPost(otpPostRequest?: OtpPostRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<OTP>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.otpPost(otpPostRequest, options);
+        async otpPost(channel?: 'sms' | 'whatsapp', otpPostRequest?: OtpPostRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<OTP>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.otpPost(channel, otpPostRequest, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -3479,7 +3485,7 @@ export const OTPApiFactory = function (configuration?: Configuration, basePath?:
          * @throws {RequiredError}
          */
         otpPost(requestParameters: OTPApiOtpPostRequest = {}, options?: AxiosRequestConfig): AxiosPromise<OTP> {
-            return localVarFp.otpPost(requestParameters.otpPostRequest, options).then((request) => request(axios, basePath));
+            return localVarFp.otpPost(requestParameters.channel, requestParameters.otpPostRequest, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -3500,6 +3506,13 @@ export const OTPApiFactory = function (configuration?: Configuration, basePath?:
  * @interface OTPApiOtpPostRequest
  */
 export interface OTPApiOtpPostRequest {
+    /**
+     * 
+     * @type {'sms' | 'whatsapp'}
+     * @memberof OTPApiOtpPost
+     */
+    readonly channel?: 'sms' | 'whatsapp'
+
     /**
      * 
      * @type {OtpPostRequest}
@@ -3549,7 +3562,7 @@ export class OTPApi extends BaseAPI {
      * @memberof OTPApi
      */
     public otpPost(requestParameters: OTPApiOtpPostRequest = {}, options?: AxiosRequestConfig) {
-        return OTPApiFp(this.configuration).otpPost(requestParameters.otpPostRequest, options).then((request) => request(this.axios, this.basePath));
+        return OTPApiFp(this.configuration).otpPost(requestParameters.channel, requestParameters.otpPostRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
