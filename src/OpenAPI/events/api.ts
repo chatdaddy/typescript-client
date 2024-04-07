@@ -4264,6 +4264,12 @@ export interface ContactInsertData {
     'tags': Array<GroupUpdateDataOwnerTagsInner>;
     /**
      * 
+     * @type {Array<GroupUpdateDataOwnerTicketsInner>}
+     * @memberof ContactInsertData
+     */
+    'tickets'?: Array<GroupUpdateDataOwnerTicketsInner>;
+    /**
+     * 
      * @type {string}
      * @memberof ContactInsertData
      */
@@ -4407,6 +4413,12 @@ export interface ContactUpdateData {
      * @memberof ContactUpdateData
      */
     'tags'?: Array<GroupUpdateDataOwnerTagsInner>;
+    /**
+     * 
+     * @type {Array<GroupUpdateDataOwnerTicketsInner>}
+     * @memberof ContactUpdateData
+     */
+    'tickets'?: Array<GroupUpdateDataOwnerTicketsInner>;
     /**
      * 
      * @type {string}
@@ -4583,6 +4595,238 @@ export interface CredittransactionrecordInsertDataAllOf {
      * @memberof CredittransactionrecordInsertDataAllOf
      */
     'metadata'?: { [key: string]: any; };
+}
+/**
+ * 
+ * @export
+ * @interface CrmTicketDelete
+ */
+export interface CrmTicketDelete {
+    /**
+     * 
+     * @type {string}
+     * @memberof CrmTicketDelete
+     */
+    'event': CrmTicketDeleteEventEnum;
+    /**
+     * 
+     * @type {Array<CrmTicketDeleteData>}
+     * @memberof CrmTicketDelete
+     */
+    'data': Array<CrmTicketDeleteData>;
+}
+
+export const CrmTicketDeleteEventEnum = {
+    CrmTicketDelete: 'crm-ticket-delete'
+} as const;
+
+export type CrmTicketDeleteEventEnum = typeof CrmTicketDeleteEventEnum[keyof typeof CrmTicketDeleteEventEnum];
+
+/**
+ * 
+ * @export
+ * @interface CrmTicketDeleteData
+ */
+export interface CrmTicketDeleteData {
+    /**
+     * 
+     * @type {string}
+     * @memberof CrmTicketDeleteData
+     */
+    'id': string;
+}
+/**
+ * 
+ * @export
+ * @interface CrmTicketInsert
+ */
+export interface CrmTicketInsert {
+    /**
+     * 
+     * @type {string}
+     * @memberof CrmTicketInsert
+     */
+    'event': CrmTicketInsertEventEnum;
+    /**
+     * 
+     * @type {Array<CrmTicketInsertData>}
+     * @memberof CrmTicketInsert
+     */
+    'data': Array<CrmTicketInsertData>;
+}
+
+export const CrmTicketInsertEventEnum = {
+    CrmTicketInsert: 'crm-ticket-insert'
+} as const;
+
+export type CrmTicketInsertEventEnum = typeof CrmTicketInsertEventEnum[keyof typeof CrmTicketInsertEventEnum];
+
+/**
+ * 
+ * @export
+ * @interface CrmTicketInsertData
+ */
+export interface CrmTicketInsertData {
+    /**
+     * 
+     * @type {string}
+     * @memberof CrmTicketInsertData
+     */
+    'id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof CrmTicketInsertData
+     */
+    'boardId': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof CrmTicketInsertData
+     */
+    'stageId': string;
+    /**
+     * 
+     * @type {number}
+     * @memberof CrmTicketInsertData
+     */
+    'order': number;
+    /**
+     * 
+     * @type {string}
+     * @memberof CrmTicketInsertData
+     */
+    'title': string;
+    /**
+     * 
+     * @type {CrmTicketInsertDataContactId}
+     * @memberof CrmTicketInsertData
+     */
+    'contactId': CrmTicketInsertDataContactId;
+    /**
+     * 
+     * @type {GroupUpdateDataOwnerTagsInnerAllOf1AddedMetadata}
+     * @memberof CrmTicketInsertData
+     */
+    'createMetadata': GroupUpdateDataOwnerTagsInnerAllOf1AddedMetadata;
+    /**
+     * 
+     * @type {GroupUpdateDataOwnerTagsInnerAllOf1AddedMetadata}
+     * @memberof CrmTicketInsertData
+     */
+    'updateMetadata': GroupUpdateDataOwnerTagsInnerAllOf1AddedMetadata;
+    /**
+     * 
+     * @type {GroupUpdateDataOwnerTagsInnerAllOf1AddedMetadata}
+     * @memberof CrmTicketInsertData
+     */
+    'resolvedMetadata'?: GroupUpdateDataOwnerTagsInnerAllOf1AddedMetadata;
+}
+/**
+ * 
+ * @export
+ * @interface CrmTicketInsertDataContactId
+ */
+export interface CrmTicketInsertDataContactId {
+    /**
+     * 
+     * @type {string}
+     * @memberof CrmTicketInsertDataContactId
+     */
+    'id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof CrmTicketInsertDataContactId
+     */
+    'accountId': string;
+}
+/**
+ * 
+ * @export
+ * @interface CrmTicketUpdate
+ */
+export interface CrmTicketUpdate {
+    /**
+     * 
+     * @type {string}
+     * @memberof CrmTicketUpdate
+     */
+    'event': CrmTicketUpdateEventEnum;
+    /**
+     * 
+     * @type {Array<CrmTicketUpdateData>}
+     * @memberof CrmTicketUpdate
+     */
+    'data': Array<CrmTicketUpdateData>;
+}
+
+export const CrmTicketUpdateEventEnum = {
+    CrmTicketUpdate: 'crm-ticket-update'
+} as const;
+
+export type CrmTicketUpdateEventEnum = typeof CrmTicketUpdateEventEnum[keyof typeof CrmTicketUpdateEventEnum];
+
+/**
+ * 
+ * @export
+ * @interface CrmTicketUpdateData
+ */
+export interface CrmTicketUpdateData {
+    /**
+     * 
+     * @type {string}
+     * @memberof CrmTicketUpdateData
+     */
+    'id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof CrmTicketUpdateData
+     */
+    'boardId'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof CrmTicketUpdateData
+     */
+    'stageId'?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof CrmTicketUpdateData
+     */
+    'order'?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof CrmTicketUpdateData
+     */
+    'title'?: string;
+    /**
+     * 
+     * @type {CrmTicketInsertDataContactId}
+     * @memberof CrmTicketUpdateData
+     */
+    'contactId'?: CrmTicketInsertDataContactId;
+    /**
+     * 
+     * @type {GroupUpdateDataOwnerTagsInnerAllOf1AddedMetadata}
+     * @memberof CrmTicketUpdateData
+     */
+    'createMetadata'?: GroupUpdateDataOwnerTagsInnerAllOf1AddedMetadata;
+    /**
+     * 
+     * @type {GroupUpdateDataOwnerTagsInnerAllOf1AddedMetadata}
+     * @memberof CrmTicketUpdateData
+     */
+    'updateMetadata'?: GroupUpdateDataOwnerTagsInnerAllOf1AddedMetadata;
+    /**
+     * 
+     * @type {GroupUpdateDataOwnerTagsInnerAllOf1AddedMetadata}
+     * @memberof CrmTicketUpdateData
+     */
+    'resolvedMetadata'?: GroupUpdateDataOwnerTagsInnerAllOf1AddedMetadata;
 }
 /**
  * 
@@ -4977,7 +5221,10 @@ export const EventName = {
     TrackingDelete: 'tracking-delete',
     BotInsert: 'bot-insert',
     BotUpdate: 'bot-update',
-    BotDelete: 'bot-delete'
+    BotDelete: 'bot-delete',
+    CrmTicketInsert: 'crm-ticket-insert',
+    CrmTicketUpdate: 'crm-ticket-update',
+    CrmTicketDelete: 'crm-ticket-delete'
 } as const;
 
 export type EventName = typeof EventName[keyof typeof EventName];
@@ -5071,7 +5318,7 @@ export type EventSubscriptionType = typeof EventSubscriptionType[keyof typeof Ev
  * The request body you\'ll receive in a webhook
  * @export
  */
-export type EventWebhookData = AccountDelete | AccountInsert | AccountUpdate | ActionExecute | BotDelete | BotInsert | BotUpdate | CampaignInsert | ChatDelete | ChatInsert | ChatUpdate | ChatbotInsert | ContactDelete | ContactInsert | ContactUpdate | CredittransactionrecordInsert | CustomerCreditsLevelUpdate | DashboardwithdataInsert | FewMessagesLeft | GroupUpdate | KeywordbasedactionInsert | MembershipactionInsert | MessageDelete | MessageInsert | MessageUpdate | OrderInsert | PaymentintegrationInsert | PlatformproductDelete | PlatformproductInsert | PlatformproductUpdate | PresenceUpdate | PushNotification | ShopproductInsert | StaleAccountNotification | TagDelete | TagInsert | TagUpdate | TeamDelete | TeamInsert | TeamUpdate | TeammemberDelete | TeammemberInsert | TeammemberUpdate | TrackingDelete | TrackingInsert | TrackingUpdate | UserDelete | UserInsert | UserUpdate;
+export type EventWebhookData = AccountDelete | AccountInsert | AccountUpdate | ActionExecute | BotDelete | BotInsert | BotUpdate | CampaignInsert | ChatDelete | ChatInsert | ChatUpdate | ChatbotInsert | ContactDelete | ContactInsert | ContactUpdate | CredittransactionrecordInsert | CrmTicketDelete | CrmTicketInsert | CrmTicketUpdate | CustomerCreditsLevelUpdate | DashboardwithdataInsert | FewMessagesLeft | GroupUpdate | KeywordbasedactionInsert | MembershipactionInsert | MessageDelete | MessageInsert | MessageUpdate | OrderInsert | PaymentintegrationInsert | PlatformproductDelete | PlatformproductInsert | PlatformproductUpdate | PresenceUpdate | PushNotification | ShopproductInsert | StaleAccountNotification | TagDelete | TagInsert | TagUpdate | TeamDelete | TeamInsert | TeamUpdate | TeammemberDelete | TeammemberInsert | TeammemberUpdate | TrackingDelete | TrackingInsert | TrackingUpdate | UserDelete | UserInsert | UserUpdate;
 
 /**
  * 
@@ -5279,6 +5526,12 @@ export interface GroupUpdateDataOwner {
     'tags': Array<GroupUpdateDataOwnerTagsInner>;
     /**
      * 
+     * @type {Array<GroupUpdateDataOwnerTicketsInner>}
+     * @memberof GroupUpdateDataOwner
+     */
+    'tickets'?: Array<GroupUpdateDataOwnerTicketsInner>;
+    /**
+     * 
      * @type {string}
      * @memberof GroupUpdateDataOwner
      */
@@ -5442,6 +5695,31 @@ export interface GroupUpdateDataOwnerTagsInnerAllOf1AddedMetadata {
      * @memberof GroupUpdateDataOwnerTagsInnerAllOf1AddedMetadata
      */
     'doneBy': string;
+}
+/**
+ * 
+ * @export
+ * @interface GroupUpdateDataOwnerTicketsInner
+ */
+export interface GroupUpdateDataOwnerTicketsInner {
+    /**
+     * 
+     * @type {string}
+     * @memberof GroupUpdateDataOwnerTicketsInner
+     */
+    'boardId': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof GroupUpdateDataOwnerTicketsInner
+     */
+    'stageId': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof GroupUpdateDataOwnerTicketsInner
+     */
+    'id': string;
 }
 /**
  * 
