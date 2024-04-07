@@ -2177,12 +2177,6 @@ export interface CrmBoardStage {
      * @memberof CrmBoardStage
      */
     'color': string;
-    /**
-     * Order of a ticket
-     * @type {number}
-     * @memberof CrmBoardStage
-     */
-    'order': number;
 }
 /**
  * 
