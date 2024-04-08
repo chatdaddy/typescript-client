@@ -440,6 +440,12 @@ export interface AccountSettings {
      */
     'sendButtonsAsPoll'?: boolean;
     /**
+     * Should story receiving/sending be enabled for the account. Only applicable for regular WhatsApp accounts.
+     * @type {boolean}
+     * @memberof AccountSettings
+     */
+    'enableStories'?: boolean;
+    /**
      * Should products be synced to WhatsApp automatically.
      * @type {boolean}
      * @memberof AccountSettings

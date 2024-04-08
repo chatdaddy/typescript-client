@@ -303,6 +303,12 @@ export interface AccountInsertDataSettings {
      * @type {boolean}
      * @memberof AccountInsertDataSettings
      */
+    'enableStories'?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof AccountInsertDataSettings
+     */
     'autoSyncProductsToPlatform'?: boolean;
     /**
      * 
