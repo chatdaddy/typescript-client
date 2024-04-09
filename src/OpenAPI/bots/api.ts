@@ -1972,12 +1972,6 @@ export interface BotTrigger {
  */
 export interface BotTriggerAllOf {
     /**
-     * 
-     * @type {Position}
-     * @memberof BotTriggerAllOf
-     */
-    'position'?: Position | null;
-    /**
      * An ISO formatted timestamp
      * @type {string}
      * @memberof BotTriggerAllOf
@@ -4140,6 +4134,12 @@ export interface TriggerUpsert {
      * @memberof TriggerUpsert
      */
     'remove'?: boolean;
+    /**
+     * 
+     * @type {Position}
+     * @memberof TriggerUpsert
+     */
+    'position'?: Position | null;
 }
 /**
  * 
