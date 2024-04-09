@@ -2332,7 +2332,8 @@ export const ConditionablePropertyTypeEnum = {
     Tag: 'tag',
     Timestamp: 'timestamp',
     CountryCode: 'country_code',
-    TeamMember: 'team_member'
+    TeamMember: 'team_member',
+    Chat: 'chat'
 } as const;
 
 export type ConditionablePropertyTypeEnum = typeof ConditionablePropertyTypeEnum[keyof typeof ConditionablePropertyTypeEnum];
