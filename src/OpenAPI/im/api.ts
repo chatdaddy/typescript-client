@@ -525,7 +525,8 @@ export const AccountType = {
     Tiktok: 'tiktok',
     Messenger: 'messenger',
     Mail: 'mail',
-    Sms: 'sms'
+    Sms: 'sms',
+    Instagram: 'instagram'
 } as const;
 
 export type AccountType = typeof AccountType[keyof typeof AccountType];
