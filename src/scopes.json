@@ -834,5 +834,17 @@
       "editor"
     ],
     "group": "Coupon Access"
+  },
+  "TEAMMEMBERS_READ_CONTACT_DETAILS": {
+    "number": 99,
+    "description": "Read contact details of members in your team",
+    "features": [],
+    "roles": [
+      "admin",
+      "editor",
+      "viewer",
+      "agent"
+    ],
+    "group": "Team"
   }
 }

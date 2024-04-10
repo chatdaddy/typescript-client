@@ -9117,7 +9117,8 @@ export const TeamInsertDataScopesEnum = {
     CouponRead: 'COUPON_READ',
     CouponCreate: 'COUPON_CREATE',
     CouponDelete: 'COUPON_DELETE',
-    CouponUpdate: 'COUPON_UPDATE'
+    CouponUpdate: 'COUPON_UPDATE',
+    TeammembersReadContactDetails: 'TEAMMEMBERS_READ_CONTACT_DETAILS'
 } as const;
 
 export type TeamInsertDataScopesEnum = typeof TeamInsertDataScopesEnum[keyof typeof TeamInsertDataScopesEnum];
@@ -9521,7 +9522,8 @@ export const TeamUpdateDataScopesEnum = {
     CouponRead: 'COUPON_READ',
     CouponCreate: 'COUPON_CREATE',
     CouponDelete: 'COUPON_DELETE',
-    CouponUpdate: 'COUPON_UPDATE'
+    CouponUpdate: 'COUPON_UPDATE',
+    TeammembersReadContactDetails: 'TEAMMEMBERS_READ_CONTACT_DETAILS'
 } as const;
 
 export type TeamUpdateDataScopesEnum = typeof TeamUpdateDataScopesEnum[keyof typeof TeamUpdateDataScopesEnum];
@@ -9712,7 +9714,8 @@ export const TeammemberInsertDataScopesEnum = {
     CouponRead: 'COUPON_READ',
     CouponCreate: 'COUPON_CREATE',
     CouponDelete: 'COUPON_DELETE',
-    CouponUpdate: 'COUPON_UPDATE'
+    CouponUpdate: 'COUPON_UPDATE',
+    TeammembersReadContactDetails: 'TEAMMEMBERS_READ_CONTACT_DETAILS'
 } as const;
 
 export type TeammemberInsertDataScopesEnum = typeof TeammemberInsertDataScopesEnum[keyof typeof TeammemberInsertDataScopesEnum];
@@ -9866,7 +9869,8 @@ export const TeammemberUpdateDataScopesEnum = {
     CouponRead: 'COUPON_READ',
     CouponCreate: 'COUPON_CREATE',
     CouponDelete: 'COUPON_DELETE',
-    CouponUpdate: 'COUPON_UPDATE'
+    CouponUpdate: 'COUPON_UPDATE',
+    TeammembersReadContactDetails: 'TEAMMEMBERS_READ_CONTACT_DETAILS'
 } as const;
 
 export type TeammemberUpdateDataScopesEnum = typeof TeammemberUpdateDataScopesEnum[keyof typeof TeammemberUpdateDataScopesEnum];
