@@ -2097,6 +2097,12 @@ export interface BotTriggerOptions {
      * @memberof BotTriggerOptions
      */
     'sendTimeRange'?: TimePeriodDescriptor;
+    /**
+     * 
+     * @type {ThrottleOptions}
+     * @memberof BotTriggerOptions
+     */
+    'perContactThrottle'?: ThrottleOptions;
 }
 /**
  * 
@@ -3885,6 +3891,25 @@ export const TemplateStatusUpdateRequestTemplatesInnerStatusEnum = {
 
 export type TemplateStatusUpdateRequestTemplatesInnerStatusEnum = typeof TemplateStatusUpdateRequestTemplatesInnerStatusEnum[keyof typeof TemplateStatusUpdateRequestTemplatesInnerStatusEnum];
 
+/**
+ * Options to throttle the number of messages sent in a time period. By default, for per contact throttling -- the minimum is 1 trigger per 30 seconds
+ * @export
+ * @interface ThrottleOptions
+ */
+export interface ThrottleOptions {
+    /**
+     * The maximum number of messages that can be sent in the time period
+     * @type {number}
+     * @memberof ThrottleOptions
+     */
+    'maximum': number;
+    /**
+     * The time period in seconds in which the maximum number of messages can be sent
+     * @type {number}
+     * @memberof ThrottleOptions
+     */
+    'intervalS': number;
+}
 /**
  * 
  * @export
