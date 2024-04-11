@@ -5114,7 +5114,21 @@ export interface ProfileMessengerPostRequest {
      * @memberof ProfileMessengerPostRequest
      */
     'userAccessToken': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ProfileMessengerPostRequest
+     */
+    'type'?: ProfileMessengerPostRequestTypeEnum;
 }
+
+export const ProfileMessengerPostRequestTypeEnum = {
+    Messenger: 'messenger',
+    Instagram: 'instagram'
+} as const;
+
+export type ProfileMessengerPostRequestTypeEnum = typeof ProfileMessengerPostRequestTypeEnum[keyof typeof ProfileMessengerPostRequestTypeEnum];
+
 /**
  * 
  * @export
