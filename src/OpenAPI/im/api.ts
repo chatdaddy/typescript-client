@@ -3999,6 +3999,12 @@ export type MessageStatus = typeof MessageStatus[keyof typeof MessageStatus];
 
 
 /**
+ * @type MessagesForwardToChatIdParameter
+ * @export
+ */
+export type MessagesForwardToChatIdParameter = AnyContactID | Array<AnyContactID>;
+
+/**
  * 
  * @export
  * @interface MessagesGet200Response
@@ -4377,6 +4383,12 @@ export interface MiscOptions {
  * @interface MiscOptionsForwarded
  */
 export interface MiscOptionsForwarded {
+    /**
+     * Unique identifier for an account.  The account ID is constructed from the first 21 characters of the team ID, prefixed by \"acc\" and suffixed by 4 random hex characters. This helps uniquely identify each account as well as establish a connection between the account\'s team by embedding the partial team ID in it.
+     * @type {string}
+     * @memberof MiscOptionsForwarded
+     */
+    'accountId'?: string;
     /**
      * ID for the contact/chat on the platform
      * @type {string}
@@ -11373,11 +11385,11 @@ export const MessagesApiAxiosParamCreator = function (configuration?: Configurat
          * @param {string} accountId 
          * @param {string} chatId 
          * @param {string} id 
-         * @param {Array<string>} toChatId 
+         * @param {MessagesForwardToChatIdParameter} toChatId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        messagesForward: async (accountId: string, chatId: string, id: string, toChatId: Array<string>, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        messagesForward: async (accountId: string, chatId: string, id: string, toChatId: MessagesForwardToChatIdParameter, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'accountId' is not null or undefined
             assertParamExists('messagesForward', 'accountId', accountId)
             // verify required parameter 'chatId' is not null or undefined
@@ -11405,7 +11417,7 @@ export const MessagesApiAxiosParamCreator = function (configuration?: Configurat
             // oauth required
             await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["MESSAGES_SEND_TO_ALL"], configuration)
 
-            if (toChatId) {
+            if (toChatId !== undefined) {
                 localVarQueryParameter['toChatId'] = toChatId;
             }
 
@@ -11867,11 +11879,11 @@ export const MessagesApiFp = function(configuration?: Configuration) {
          * @param {string} accountId 
          * @param {string} chatId 
          * @param {string} id 
-         * @param {Array<string>} toChatId 
+         * @param {MessagesForwardToChatIdParameter} toChatId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async messagesForward(accountId: string, chatId: string, id: string, toChatId: Array<string>, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<Message>>> {
+        async messagesForward(accountId: string, chatId: string, id: string, toChatId: MessagesForwardToChatIdParameter, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<Message>>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.messagesForward(accountId, chatId, id, toChatId, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -12176,10 +12188,10 @@ export interface MessagesApiMessagesForwardRequest {
 
     /**
      * 
-     * @type {Array<string>}
+     * @type {MessagesForwardToChatIdParameter}
      * @memberof MessagesApiMessagesForward
      */
-    readonly toChatId: Array<string>
+    readonly toChatId: MessagesForwardToChatIdParameter
 }
 
 /**

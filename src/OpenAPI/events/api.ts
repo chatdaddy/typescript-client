@@ -6774,6 +6774,12 @@ export interface MessageInsertDataMiscOptionsForwarded {
      * @type {string}
      * @memberof MessageInsertDataMiscOptionsForwarded
      */
+    'accountId'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof MessageInsertDataMiscOptionsForwarded
+     */
     'chatId': string;
     /**
      * 
