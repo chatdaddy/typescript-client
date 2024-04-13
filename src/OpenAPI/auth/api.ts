@@ -93,25 +93,25 @@ export interface AnnouncementMetadata {
      * @type {string}
      * @memberof AnnouncementMetadata
      */
-    'id': string;
+    'id'?: string;
     /**
      * 
      * @type {string}
      * @memberof AnnouncementMetadata
      */
-    'createdAt': string;
+    'createdAt'?: string;
     /**
      * 
      * @type {string}
      * @memberof AnnouncementMetadata
      */
-    'updatedAt': string;
+    'updatedAt'?: string;
     /**
      * User who created the Announcement
      * @type {string}
      * @memberof AnnouncementMetadata
      */
-    'createdBy': string;
+    'createdBy'?: string;
     /**
      * Category of the Announcement
      * @type {string}
@@ -141,7 +141,7 @@ export interface AnnouncementMetadata {
      * @type {Array<AnnouncementButtonAction>}
      * @memberof AnnouncementMetadata
      */
-    'actionButtons': Array<AnnouncementButtonAction>;
+    'actionButtons'?: Array<AnnouncementButtonAction>;
     /**
      * URL of the cover image for the announcement
      * @type {string}
@@ -153,7 +153,7 @@ export interface AnnouncementMetadata {
      * @type {string}
      * @memberof AnnouncementMetadata
      */
-    'markdownText'?: string;
+    'markdownText': string;
     /**
      * Specifies how often the announcement should be repeated
      * @type {string}
@@ -3000,13 +3000,13 @@ export const AnnouncementsApiAxiosParamCreator = function (configuration?: Confi
         /**
          * 
          * @summary Deletes list of announcements
-         * @param {Array<string>} id 
+         * @param {Array<string>} ids 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        announcementDelete: async (id: Array<string>, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'id' is not null or undefined
-            assertParamExists('announcementDelete', 'id', id)
+        announcementDelete: async (ids: Array<string>, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'ids' is not null or undefined
+            assertParamExists('announcementDelete', 'ids', ids)
             const localVarPath = `/announcements`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -3019,8 +3019,8 @@ export const AnnouncementsApiAxiosParamCreator = function (configuration?: Confi
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
-            if (id) {
-                localVarQueryParameter['id'] = id;
+            if (ids) {
+                localVarQueryParameter['ids'] = ids;
             }
 
 
@@ -3092,9 +3092,9 @@ export const AnnouncementsApiAxiosParamCreator = function (configuration?: Confi
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        announcementsPatch: async (id: string, announcementPatch?: AnnouncementPatch, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        announcementPatch: async (id: string, announcementPatch?: AnnouncementPatch, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
-            assertParamExists('announcementsPatch', 'id', id)
+            assertParamExists('announcementPatch', 'id', id)
             const localVarPath = `/announcements/{id}`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -3146,12 +3146,12 @@ export const AnnouncementsApiFp = function(configuration?: Configuration) {
         /**
          * 
          * @summary Deletes list of announcements
-         * @param {Array<string>} id 
+         * @param {Array<string>} ids 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async announcementDelete(id: Array<string>, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.announcementDelete(id, options);
+        async announcementDelete(ids: Array<string>, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.announcementDelete(ids, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -3176,8 +3176,8 @@ export const AnnouncementsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async announcementsPatch(id: string, announcementPatch?: AnnouncementPatch, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.announcementsPatch(id, announcementPatch, options);
+        async announcementPatch(id: string, announcementPatch?: AnnouncementPatch, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.announcementPatch(id, announcementPatch, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
     }
@@ -3208,7 +3208,7 @@ export const AnnouncementsApiFactory = function (configuration?: Configuration, 
          * @throws {RequiredError}
          */
         announcementDelete(requestParameters: AnnouncementsApiAnnouncementDeleteRequest, options?: AxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.announcementDelete(requestParameters.id, options).then((request) => request(axios, basePath));
+            return localVarFp.announcementDelete(requestParameters.ids, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -3223,12 +3223,12 @@ export const AnnouncementsApiFactory = function (configuration?: Configuration, 
         /**
          * 
          * @summary Update an announcement
-         * @param {AnnouncementsApiAnnouncementsPatchRequest} requestParameters Request parameters.
+         * @param {AnnouncementsApiAnnouncementPatchRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        announcementsPatch(requestParameters: AnnouncementsApiAnnouncementsPatchRequest, options?: AxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.announcementsPatch(requestParameters.id, requestParameters.announcementPatch, options).then((request) => request(axios, basePath));
+        announcementPatch(requestParameters: AnnouncementsApiAnnouncementPatchRequest, options?: AxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.announcementPatch(requestParameters.id, requestParameters.announcementPatch, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -3258,7 +3258,7 @@ export interface AnnouncementsApiAnnouncementDeleteRequest {
      * @type {Array<string>}
      * @memberof AnnouncementsApiAnnouncementDelete
      */
-    readonly id: Array<string>
+    readonly ids: Array<string>
 }
 
 /**
@@ -3297,22 +3297,22 @@ export interface AnnouncementsApiAnnouncementGetRequest {
 }
 
 /**
- * Request parameters for announcementsPatch operation in AnnouncementsApi.
+ * Request parameters for announcementPatch operation in AnnouncementsApi.
  * @export
- * @interface AnnouncementsApiAnnouncementsPatchRequest
+ * @interface AnnouncementsApiAnnouncementPatchRequest
  */
-export interface AnnouncementsApiAnnouncementsPatchRequest {
+export interface AnnouncementsApiAnnouncementPatchRequest {
     /**
      * 
      * @type {string}
-     * @memberof AnnouncementsApiAnnouncementsPatch
+     * @memberof AnnouncementsApiAnnouncementPatch
      */
     readonly id: string
 
     /**
      * 
      * @type {AnnouncementPatch}
-     * @memberof AnnouncementsApiAnnouncementsPatch
+     * @memberof AnnouncementsApiAnnouncementPatch
      */
     readonly announcementPatch?: AnnouncementPatch
 }
@@ -3345,7 +3345,7 @@ export class AnnouncementsApi extends BaseAPI {
      * @memberof AnnouncementsApi
      */
     public announcementDelete(requestParameters: AnnouncementsApiAnnouncementDeleteRequest, options?: AxiosRequestConfig) {
-        return AnnouncementsApiFp(this.configuration).announcementDelete(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+        return AnnouncementsApiFp(this.configuration).announcementDelete(requestParameters.ids, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -3363,13 +3363,13 @@ export class AnnouncementsApi extends BaseAPI {
     /**
      * 
      * @summary Update an announcement
-     * @param {AnnouncementsApiAnnouncementsPatchRequest} requestParameters Request parameters.
+     * @param {AnnouncementsApiAnnouncementPatchRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AnnouncementsApi
      */
-    public announcementsPatch(requestParameters: AnnouncementsApiAnnouncementsPatchRequest, options?: AxiosRequestConfig) {
-        return AnnouncementsApiFp(this.configuration).announcementsPatch(requestParameters.id, requestParameters.announcementPatch, options).then((request) => request(this.axios, this.basePath));
+    public announcementPatch(requestParameters: AnnouncementsApiAnnouncementPatchRequest, options?: AxiosRequestConfig) {
+        return AnnouncementsApiFp(this.configuration).announcementPatch(requestParameters.id, requestParameters.announcementPatch, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
