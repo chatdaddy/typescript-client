@@ -60,6 +60,220 @@ export interface AccountNotificationPreferenceAccountsInner {
 /**
  * 
  * @export
+ * @interface AnnouncementButtonAction
+ */
+export interface AnnouncementButtonAction {
+    /**
+     * Text displayed on the button
+     * @type {string}
+     * @memberof AnnouncementButtonAction
+     */
+    'text': string;
+    /**
+     * URL to navigate to when the button is clicked
+     * @type {string}
+     * @memberof AnnouncementButtonAction
+     */
+    'url'?: string;
+    /**
+     * Indicates if the URL should be opened in a new tab/window
+     * @type {boolean}
+     * @memberof AnnouncementButtonAction
+     */
+    'openInNewTab'?: boolean;
+}
+/**
+ * 
+ * @export
+ * @interface AnnouncementMetadata
+ */
+export interface AnnouncementMetadata {
+    /**
+     * ID of the Announcement
+     * @type {string}
+     * @memberof AnnouncementMetadata
+     */
+    'id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof AnnouncementMetadata
+     */
+    'createdAt': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof AnnouncementMetadata
+     */
+    'updatedAt': string;
+    /**
+     * User who created the Announcement
+     * @type {string}
+     * @memberof AnnouncementMetadata
+     */
+    'createdBy': string;
+    /**
+     * Category of the Announcement
+     * @type {string}
+     * @memberof AnnouncementMetadata
+     */
+    'category': string;
+    /**
+     * Title of the Announcement
+     * @type {string}
+     * @memberof AnnouncementMetadata
+     */
+    'title': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof AnnouncementMetadata
+     */
+    'publishedAt': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof AnnouncementMetadata
+     */
+    'expiresAt'?: string;
+    /**
+     * 
+     * @type {Array<AnnouncementButtonAction>}
+     * @memberof AnnouncementMetadata
+     */
+    'actionButtons': Array<AnnouncementButtonAction>;
+    /**
+     * URL of the cover image for the announcement
+     * @type {string}
+     * @memberof AnnouncementMetadata
+     */
+    'coverImage'?: string;
+    /**
+     * Announcement body as markdown
+     * @type {string}
+     * @memberof AnnouncementMetadata
+     */
+    'markdownText'?: string;
+    /**
+     * Specifies how often the announcement should be repeated
+     * @type {string}
+     * @memberof AnnouncementMetadata
+     */
+    'repeatOption'?: AnnouncementMetadataRepeatOptionEnum;
+    /**
+     * array of string URLs for URL filtering.
+     * @type {Array<string>}
+     * @memberof AnnouncementMetadata
+     */
+    'filteredUrls'?: Array<string>;
+}
+
+export const AnnouncementMetadataRepeatOptionEnum = {
+    EveryVisit: 'every-visit',
+    1xPerDay: '1x-per-day',
+    1xPerWeek: '1x-per-week'
+} as const;
+
+export type AnnouncementMetadataRepeatOptionEnum = typeof AnnouncementMetadataRepeatOptionEnum[keyof typeof AnnouncementMetadataRepeatOptionEnum];
+
+/**
+ * 
+ * @export
+ * @interface AnnouncementPatch
+ */
+export interface AnnouncementPatch {
+    /**
+     * Category of the Announcement
+     * @type {string}
+     * @memberof AnnouncementPatch
+     */
+    'category'?: string;
+    /**
+     * Title of the Announcement
+     * @type {string}
+     * @memberof AnnouncementPatch
+     */
+    'title'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof AnnouncementPatch
+     */
+    'publishedAt'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof AnnouncementPatch
+     */
+    'expiresAt'?: string;
+    /**
+     * 
+     * @type {Array<AnnouncementButtonAction>}
+     * @memberof AnnouncementPatch
+     */
+    'actionButtons'?: Array<AnnouncementButtonAction>;
+    /**
+     * URL of the cover image for the announcement
+     * @type {string}
+     * @memberof AnnouncementPatch
+     */
+    'coverImage'?: string;
+    /**
+     * Announcement body as markdown
+     * @type {string}
+     * @memberof AnnouncementPatch
+     */
+    'markdownText'?: string;
+    /**
+     * Specifies how often the announcement should be repeated
+     * @type {string}
+     * @memberof AnnouncementPatch
+     */
+    'repeatOption'?: AnnouncementPatchRepeatOptionEnum;
+    /**
+     * array of string URLs for URL filtering.
+     * @type {Array<string>}
+     * @memberof AnnouncementPatch
+     */
+    'filteredUrls'?: Array<string>;
+}
+
+export const AnnouncementPatchRepeatOptionEnum = {
+    EveryVisit: 'every-visit',
+    1xPerDay: '1x-per-day',
+    1xPerWeek: '1x-per-week'
+} as const;
+
+export type AnnouncementPatchRepeatOptionEnum = typeof AnnouncementPatchRepeatOptionEnum[keyof typeof AnnouncementPatchRepeatOptionEnum];
+
+/**
+ * 
+ * @export
+ * @interface AnnouncementRetrievalResponse
+ */
+export interface AnnouncementRetrievalResponse {
+    /**
+     * 
+     * @type {Array<AnnouncementMetadata>}
+     * @memberof AnnouncementRetrievalResponse
+     */
+    'announcements': Array<AnnouncementMetadata>;
+    /**
+     * Cursor to fetch next page of announcements
+     * @type {string}
+     * @memberof AnnouncementRetrievalResponse
+     */
+    'cursor'?: string;
+    /**
+     * total announcements present with these filters. Only returned if returnTotalCount is true
+     * @type {number}
+     * @memberof AnnouncementRetrievalResponse
+     */
+    'totalCount'?: number;
+}
+/**
+ * 
+ * @export
  * @interface ApiToken
  */
 export interface ApiToken {
@@ -2739,6 +2953,423 @@ export class APITokensApi extends BaseAPI {
      */
     public apiTokenValidatePost(requestParameters: APITokensApiApiTokenValidatePostRequest = {}, options?: AxiosRequestConfig) {
         return APITokensApiFp(this.configuration).apiTokenValidatePost(requestParameters.apiTokenValidatePostRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+/**
+ * AnnouncementsApi - axios parameter creator
+ * @export
+ */
+export const AnnouncementsApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @summary Creates new announcement
+         * @param {AnnouncementMetadata} [announcementMetadata] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        announcementCreate: async (announcementMetadata?: AnnouncementMetadata, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/announcements`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(announcementMetadata, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Deletes list of announcements
+         * @param {Array<string>} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        announcementDelete: async (id: Array<string>, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('announcementDelete', 'id', id)
+            const localVarPath = `/announcements`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (id) {
+                localVarQueryParameter['id'] = id;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Get list of announcements
+         * @param {number} [count] Number of announcements to fetch
+         * @param {string} [before] Announcements to fetch before
+         * @param {string} [q] Search by category, title etc.
+         * @param {boolean} [returnTotalCount] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        announcementGet: async (count?: number, before?: string, q?: string, returnTotalCount?: boolean, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/announcements`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (count !== undefined) {
+                localVarQueryParameter['count'] = count;
+            }
+
+            if (before !== undefined) {
+                localVarQueryParameter['before'] = before;
+            }
+
+            if (q !== undefined) {
+                localVarQueryParameter['q'] = q;
+            }
+
+            if (returnTotalCount !== undefined) {
+                localVarQueryParameter['returnTotalCount'] = returnTotalCount;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Update an announcement
+         * @param {string} id 
+         * @param {AnnouncementPatch} [announcementPatch] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        announcementsPatch: async (id: string, announcementPatch?: AnnouncementPatch, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('announcementsPatch', 'id', id)
+            const localVarPath = `/announcements/{id}`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PATCH', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(announcementPatch, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * AnnouncementsApi - functional programming interface
+ * @export
+ */
+export const AnnouncementsApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = AnnouncementsApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * 
+         * @summary Creates new announcement
+         * @param {AnnouncementMetadata} [announcementMetadata] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async announcementCreate(announcementMetadata?: AnnouncementMetadata, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AnnouncementMetadata>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.announcementCreate(announcementMetadata, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary Deletes list of announcements
+         * @param {Array<string>} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async announcementDelete(id: Array<string>, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.announcementDelete(id, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary Get list of announcements
+         * @param {number} [count] Number of announcements to fetch
+         * @param {string} [before] Announcements to fetch before
+         * @param {string} [q] Search by category, title etc.
+         * @param {boolean} [returnTotalCount] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async announcementGet(count?: number, before?: string, q?: string, returnTotalCount?: boolean, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AnnouncementRetrievalResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.announcementGet(count, before, q, returnTotalCount, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary Update an announcement
+         * @param {string} id 
+         * @param {AnnouncementPatch} [announcementPatch] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async announcementsPatch(id: string, announcementPatch?: AnnouncementPatch, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.announcementsPatch(id, announcementPatch, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+    }
+};
+
+/**
+ * AnnouncementsApi - factory interface
+ * @export
+ */
+export const AnnouncementsApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = AnnouncementsApiFp(configuration)
+    return {
+        /**
+         * 
+         * @summary Creates new announcement
+         * @param {AnnouncementsApiAnnouncementCreateRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        announcementCreate(requestParameters: AnnouncementsApiAnnouncementCreateRequest = {}, options?: AxiosRequestConfig): AxiosPromise<AnnouncementMetadata> {
+            return localVarFp.announcementCreate(requestParameters.announcementMetadata, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Deletes list of announcements
+         * @param {AnnouncementsApiAnnouncementDeleteRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        announcementDelete(requestParameters: AnnouncementsApiAnnouncementDeleteRequest, options?: AxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.announcementDelete(requestParameters.id, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Get list of announcements
+         * @param {AnnouncementsApiAnnouncementGetRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        announcementGet(requestParameters: AnnouncementsApiAnnouncementGetRequest = {}, options?: AxiosRequestConfig): AxiosPromise<AnnouncementRetrievalResponse> {
+            return localVarFp.announcementGet(requestParameters.count, requestParameters.before, requestParameters.q, requestParameters.returnTotalCount, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Update an announcement
+         * @param {AnnouncementsApiAnnouncementsPatchRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        announcementsPatch(requestParameters: AnnouncementsApiAnnouncementsPatchRequest, options?: AxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.announcementsPatch(requestParameters.id, requestParameters.announcementPatch, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * Request parameters for announcementCreate operation in AnnouncementsApi.
+ * @export
+ * @interface AnnouncementsApiAnnouncementCreateRequest
+ */
+export interface AnnouncementsApiAnnouncementCreateRequest {
+    /**
+     * 
+     * @type {AnnouncementMetadata}
+     * @memberof AnnouncementsApiAnnouncementCreate
+     */
+    readonly announcementMetadata?: AnnouncementMetadata
+}
+
+/**
+ * Request parameters for announcementDelete operation in AnnouncementsApi.
+ * @export
+ * @interface AnnouncementsApiAnnouncementDeleteRequest
+ */
+export interface AnnouncementsApiAnnouncementDeleteRequest {
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof AnnouncementsApiAnnouncementDelete
+     */
+    readonly id: Array<string>
+}
+
+/**
+ * Request parameters for announcementGet operation in AnnouncementsApi.
+ * @export
+ * @interface AnnouncementsApiAnnouncementGetRequest
+ */
+export interface AnnouncementsApiAnnouncementGetRequest {
+    /**
+     * Number of announcements to fetch
+     * @type {number}
+     * @memberof AnnouncementsApiAnnouncementGet
+     */
+    readonly count?: number
+
+    /**
+     * Announcements to fetch before
+     * @type {string}
+     * @memberof AnnouncementsApiAnnouncementGet
+     */
+    readonly before?: string
+
+    /**
+     * Search by category, title etc.
+     * @type {string}
+     * @memberof AnnouncementsApiAnnouncementGet
+     */
+    readonly q?: string
+
+    /**
+     * 
+     * @type {boolean}
+     * @memberof AnnouncementsApiAnnouncementGet
+     */
+    readonly returnTotalCount?: boolean
+}
+
+/**
+ * Request parameters for announcementsPatch operation in AnnouncementsApi.
+ * @export
+ * @interface AnnouncementsApiAnnouncementsPatchRequest
+ */
+export interface AnnouncementsApiAnnouncementsPatchRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof AnnouncementsApiAnnouncementsPatch
+     */
+    readonly id: string
+
+    /**
+     * 
+     * @type {AnnouncementPatch}
+     * @memberof AnnouncementsApiAnnouncementsPatch
+     */
+    readonly announcementPatch?: AnnouncementPatch
+}
+
+/**
+ * AnnouncementsApi - object-oriented interface
+ * @export
+ * @class AnnouncementsApi
+ * @extends {BaseAPI}
+ */
+export class AnnouncementsApi extends BaseAPI {
+    /**
+     * 
+     * @summary Creates new announcement
+     * @param {AnnouncementsApiAnnouncementCreateRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AnnouncementsApi
+     */
+    public announcementCreate(requestParameters: AnnouncementsApiAnnouncementCreateRequest = {}, options?: AxiosRequestConfig) {
+        return AnnouncementsApiFp(this.configuration).announcementCreate(requestParameters.announcementMetadata, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Deletes list of announcements
+     * @param {AnnouncementsApiAnnouncementDeleteRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AnnouncementsApi
+     */
+    public announcementDelete(requestParameters: AnnouncementsApiAnnouncementDeleteRequest, options?: AxiosRequestConfig) {
+        return AnnouncementsApiFp(this.configuration).announcementDelete(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Get list of announcements
+     * @param {AnnouncementsApiAnnouncementGetRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AnnouncementsApi
+     */
+    public announcementGet(requestParameters: AnnouncementsApiAnnouncementGetRequest = {}, options?: AxiosRequestConfig) {
+        return AnnouncementsApiFp(this.configuration).announcementGet(requestParameters.count, requestParameters.before, requestParameters.q, requestParameters.returnTotalCount, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Update an announcement
+     * @param {AnnouncementsApiAnnouncementsPatchRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AnnouncementsApi
+     */
+    public announcementsPatch(requestParameters: AnnouncementsApiAnnouncementsPatchRequest, options?: AxiosRequestConfig) {
+        return AnnouncementsApiFp(this.configuration).announcementsPatch(requestParameters.id, requestParameters.announcementPatch, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
