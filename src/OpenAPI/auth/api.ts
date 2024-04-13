@@ -170,8 +170,8 @@ export interface AnnouncementMetadata {
 
 export const AnnouncementMetadataRepeatOptionEnum = {
     EveryVisit: 'every-visit',
-    1xPerDay: '1x-per-day',
-    1xPerWeek: '1x-per-week'
+    OncePerDay: 'once-per-day',
+    OncePerWeek: 'once-per-week'
 } as const;
 
 export type AnnouncementMetadataRepeatOptionEnum = typeof AnnouncementMetadataRepeatOptionEnum[keyof typeof AnnouncementMetadataRepeatOptionEnum];
@@ -240,8 +240,8 @@ export interface AnnouncementPatch {
 
 export const AnnouncementPatchRepeatOptionEnum = {
     EveryVisit: 'every-visit',
-    1xPerDay: '1x-per-day',
-    1xPerWeek: '1x-per-week'
+    OncePerDay: 'once-per-day',
+    OncePerWeek: 'once-per-week'
 } as const;
 
 export type AnnouncementPatchRepeatOptionEnum = typeof AnnouncementPatchRepeatOptionEnum[keyof typeof AnnouncementPatchRepeatOptionEnum];
