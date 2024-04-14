@@ -108,6 +108,12 @@ export interface Action {
      */
     'updatedAt': string;
     /**
+     * Map from channel to external template provider status. Channel is the key and the value is the status of the template on the provider.
+     * @type {{ [key: string]: ExternalTemplateProvider; }}
+     * @memberof Action
+     */
+    'externalTemplate'?: { [key: string]: ExternalTemplateProvider; };
+    /**
      * 
      * @type {string}
      * @memberof Action
@@ -237,6 +243,12 @@ export interface ActionAllOf {
      * @memberof ActionAllOf
      */
     'updatedAt': string;
+    /**
+     * Map from channel to external template provider status. Channel is the key and the value is the status of the template on the provider.
+     * @type {{ [key: string]: ExternalTemplateProvider; }}
+     * @memberof ActionAllOf
+     */
+    'externalTemplate'?: { [key: string]: ExternalTemplateProvider; };
 }
 /**
  * 
@@ -419,6 +431,31 @@ export interface ActionExecuteCount {
      */
     'count': number;
 }
+/**
+ * 
+ * @export
+ * @interface ActionExternalTemplateCommand
+ */
+export interface ActionExternalTemplateCommand {
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof ActionExternalTemplateCommand
+     */
+    'actionIds': Array<string>;
+    /**
+     * 
+     * @type {ActionExternalTemplateCommandCommand}
+     * @memberof ActionExternalTemplateCommand
+     */
+    'command': ActionExternalTemplateCommandCommand;
+}
+/**
+ * @type ActionExternalTemplateCommandCommand
+ * @export
+ */
+export type ActionExternalTemplateCommandCommand = LinkExternalTemplateCommand | SubmitForReviewExternalTemplateCommand | UnlinkExternalTemplateCommand;
+
 /**
  * 
  * @export
@@ -976,10 +1013,16 @@ export interface Bot {
     'isForm'?: boolean;
     /**
      * 
-     * @type {{ [key: string]: ExternalTemplateProvider; }}
+     * @type {BotExternalTemplateStatus}
      * @memberof Bot
      */
-    'externalTemplate'?: { [key: string]: ExternalTemplateProvider; };
+    'externalTemplateStatus'?: BotExternalTemplateStatus;
+    /**
+     * 
+     * @type {any}
+     * @memberof Bot
+     */
+    'externalTemplate'?: any;
     /**
      * URL of the thumbnail image
      * @type {string}
@@ -1131,6 +1174,13 @@ export type BotEqualityConditionOperatorEnum = typeof BotEqualityConditionOperat
  * @export
  */
 export type BotEqualityConditionValue = Array<string> | number | string;
+
+/**
+ * @type BotExternalTemplateStatus
+ * Status of the external template on the provider. If all actions belong to a particular status then this reflects that status. Otherwise, it\'ll be set to \"mixed\"
+ * @export
+ */
+export type BotExternalTemplateStatus = ExternalTemplateStatus | string;
 
 /**
  * Stores the record for whenever a bot is fired.
@@ -2228,7 +2278,7 @@ export interface BotsExternalTemplateCommand200Response {
      * @type {ExternalTemplateProvider}
      * @memberof BotsExternalTemplateCommand200Response
      */
-    'config'?: ExternalTemplateProvider;
+    'config': ExternalTemplateProvider;
 }
 /**
  * 
@@ -2457,7 +2507,7 @@ export interface ExternalTemplateProvider {
      * @type {string}
      * @memberof ExternalTemplateProvider
      */
-    'id'?: string;
+    'id': string;
     /**
      * 
      * @type {string}
@@ -2471,11 +2521,11 @@ export interface ExternalTemplateProvider {
      */
     'language'?: string;
     /**
-     * Status of the template on the provider
-     * @type {string}
+     * 
+     * @type {ExternalTemplateStatus}
      * @memberof ExternalTemplateProvider
      */
-    'status': ExternalTemplateProviderStatusEnum;
+    'status': ExternalTemplateStatus;
     /**
      * Details of the rejection, if rejected
      * @type {string}
@@ -2488,15 +2538,41 @@ export interface ExternalTemplateProvider {
      * @memberof ExternalTemplateProvider
      */
     'submittedBy': string;
+    /**
+     * An ISO formatted timestamp
+     * @type {string}
+     * @memberof ExternalTemplateProvider
+     */
+    'submittedAt': string;
+    /**
+     * An ISO formatted timestamp
+     * @type {string}
+     * @memberof ExternalTemplateProvider
+     */
+    'updatedAt': string;
+    /**
+     * If true, the template status is stale due to the message having been updated
+     * @type {boolean}
+     * @memberof ExternalTemplateProvider
+     */
+    'isStale'?: boolean;
 }
 
-export const ExternalTemplateProviderStatusEnum = {
+
+/**
+ * Status of the template on the provider
+ * @export
+ * @enum {string}
+ */
+
+export const ExternalTemplateStatus = {
     Pending: 'pending',
     Approved: 'approved',
     Rejected: 'rejected'
 } as const;
 
-export type ExternalTemplateProviderStatusEnum = typeof ExternalTemplateProviderStatusEnum[keyof typeof ExternalTemplateProviderStatusEnum];
+export type ExternalTemplateStatus = typeof ExternalTemplateStatus[keyof typeof ExternalTemplateStatus];
+
 
 /**
  * 
@@ -3242,6 +3318,44 @@ export interface InternalEventUIConfig {
 /**
  * 
  * @export
+ * @interface LinkExternalTemplateCommand
+ */
+export interface LinkExternalTemplateCommand {
+    /**
+     * 
+     * @type {string}
+     * @memberof LinkExternalTemplateCommand
+     */
+    'type': LinkExternalTemplateCommandTypeEnum;
+    /**
+     * ID of the external template
+     * @type {string}
+     * @memberof LinkExternalTemplateCommand
+     */
+    'templateId': string;
+    /**
+     * Language of the template
+     * @type {string}
+     * @memberof LinkExternalTemplateCommand
+     */
+    'language'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof LinkExternalTemplateCommand
+     */
+    'category': string;
+}
+
+export const LinkExternalTemplateCommandTypeEnum = {
+    Link: 'link'
+} as const;
+
+export type LinkExternalTemplateCommandTypeEnum = typeof LinkExternalTemplateCommandTypeEnum[keyof typeof LinkExternalTemplateCommandTypeEnum];
+
+/**
+ * 
+ * @export
  * @interface MessageObj
  */
 export interface MessageObj {
@@ -3777,6 +3891,38 @@ export interface StoreGet200Response {
 /**
  * 
  * @export
+ * @interface SubmitForReviewExternalTemplateCommand
+ */
+export interface SubmitForReviewExternalTemplateCommand {
+    /**
+     * 
+     * @type {string}
+     * @memberof SubmitForReviewExternalTemplateCommand
+     */
+    'type': SubmitForReviewExternalTemplateCommandTypeEnum;
+    /**
+     * 
+     * @type {string}
+     * @memberof SubmitForReviewExternalTemplateCommand
+     */
+    'category': string;
+    /**
+     * Language of the template
+     * @type {string}
+     * @memberof SubmitForReviewExternalTemplateCommand
+     */
+    'language': string;
+}
+
+export const SubmitForReviewExternalTemplateCommandTypeEnum = {
+    SubmitForReview: 'submit-for-review'
+} as const;
+
+export type SubmitForReviewExternalTemplateCommandTypeEnum = typeof SubmitForReviewExternalTemplateCommandTypeEnum[keyof typeof SubmitForReviewExternalTemplateCommandTypeEnum];
+
+/**
+ * 
+ * @export
  * @interface SubmitFormRequest
  */
 export interface SubmitFormRequest {
@@ -4236,6 +4382,26 @@ export interface TriggersUIConfigDefaults {
     'options'?: BotTriggerOptions;
 }
 /**
+ * 
+ * @export
+ * @interface UnlinkExternalTemplateCommand
+ */
+export interface UnlinkExternalTemplateCommand {
+    /**
+     * 
+     * @type {string}
+     * @memberof UnlinkExternalTemplateCommand
+     */
+    'type': UnlinkExternalTemplateCommandTypeEnum;
+}
+
+export const UnlinkExternalTemplateCommandTypeEnum = {
+    Unlink: 'unlink'
+} as const;
+
+export type UnlinkExternalTemplateCommandTypeEnum = typeof UnlinkExternalTemplateCommandTypeEnum[keyof typeof UnlinkExternalTemplateCommandTypeEnum];
+
+/**
  * Type of the user identity to whom the slug was shared like email/phone. Will be null if type is public
  * @export
  * @enum {string}
@@ -4295,6 +4461,52 @@ export type WebhookItemMethodEnum = typeof WebhookItemMethodEnum[keyof typeof We
  */
 export const ActionsApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
+        /**
+         * Either submit for review, unlink from the external template provider or link with an existing template ID
+         * @summary Execute a command to update the status for the external template
+         * @param {string} botId 
+         * @param {string} accountId 
+         * @param {ActionExternalTemplateCommand} [actionExternalTemplateCommand] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        actionExternalTemplateCommand: async (botId: string, accountId: string, actionExternalTemplateCommand?: ActionExternalTemplateCommand, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'botId' is not null or undefined
+            assertParamExists('actionExternalTemplateCommand', 'botId', botId)
+            // verify required parameter 'accountId' is not null or undefined
+            assertParamExists('actionExternalTemplateCommand', 'accountId', accountId)
+            const localVarPath = `/actions/{botId}/execute-external-template-cmd/{accountId}`
+                .replace(`{${"botId"}}`, encodeURIComponent(String(botId)))
+                .replace(`{${"accountId"}}`, encodeURIComponent(String(accountId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["TEMPLATES_UPDATE"], configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(actionExternalTemplateCommand, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
         /**
          * 
          * @summary Gets all actions related to account/team
@@ -4398,6 +4610,19 @@ export const ActionsApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = ActionsApiAxiosParamCreator(configuration)
     return {
         /**
+         * Either submit for review, unlink from the external template provider or link with an existing template ID
+         * @summary Execute a command to update the status for the external template
+         * @param {string} botId 
+         * @param {string} accountId 
+         * @param {ActionExternalTemplateCommand} [actionExternalTemplateCommand] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async actionExternalTemplateCommand(botId: string, accountId: string, actionExternalTemplateCommand?: ActionExternalTemplateCommand, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<Action>>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.actionExternalTemplateCommand(botId, accountId, actionExternalTemplateCommand, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
          * 
          * @summary Gets all actions related to account/team
          * @param {number} [count] 
@@ -4433,6 +4658,16 @@ export const ActionsApiFactory = function (configuration?: Configuration, basePa
     const localVarFp = ActionsApiFp(configuration)
     return {
         /**
+         * Either submit for review, unlink from the external template provider or link with an existing template ID
+         * @summary Execute a command to update the status for the external template
+         * @param {ActionsApiActionExternalTemplateCommandRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        actionExternalTemplateCommand(requestParameters: ActionsApiActionExternalTemplateCommandRequest, options?: AxiosRequestConfig): AxiosPromise<Array<Action>> {
+            return localVarFp.actionExternalTemplateCommand(requestParameters.botId, requestParameters.accountId, requestParameters.actionExternalTemplateCommand, options).then((request) => request(axios, basePath));
+        },
+        /**
          * 
          * @summary Gets all actions related to account/team
          * @param {ActionsApiActionsGetRequest} requestParameters Request parameters.
@@ -4454,6 +4689,34 @@ export const ActionsApiFactory = function (configuration?: Configuration, basePa
         },
     };
 };
+
+/**
+ * Request parameters for actionExternalTemplateCommand operation in ActionsApi.
+ * @export
+ * @interface ActionsApiActionExternalTemplateCommandRequest
+ */
+export interface ActionsApiActionExternalTemplateCommandRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof ActionsApiActionExternalTemplateCommand
+     */
+    readonly botId: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof ActionsApiActionExternalTemplateCommand
+     */
+    readonly accountId: string
+
+    /**
+     * 
+     * @type {ActionExternalTemplateCommand}
+     * @memberof ActionsApiActionExternalTemplateCommand
+     */
+    readonly actionExternalTemplateCommand?: ActionExternalTemplateCommand
+}
 
 /**
  * Request parameters for actionsGet operation in ActionsApi.
@@ -4511,6 +4774,18 @@ export interface ActionsApiActionsGptGenerateRequest {
  * @extends {BaseAPI}
  */
 export class ActionsApi extends BaseAPI {
+    /**
+     * Either submit for review, unlink from the external template provider or link with an existing template ID
+     * @summary Execute a command to update the status for the external template
+     * @param {ActionsApiActionExternalTemplateCommandRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApi
+     */
+    public actionExternalTemplateCommand(requestParameters: ActionsApiActionExternalTemplateCommandRequest, options?: AxiosRequestConfig) {
+        return ActionsApiFp(this.configuration).actionExternalTemplateCommand(requestParameters.botId, requestParameters.accountId, requestParameters.actionExternalTemplateCommand, options).then((request) => request(this.axios, this.basePath));
+    }
+
     /**
      * 
      * @summary Gets all actions related to account/team
@@ -5349,7 +5624,7 @@ export const BotsApiAxiosParamCreator = function (configuration?: Configuration)
             };
         },
         /**
-         * Either submit for review, unlink from the external template provider or link with an existing template ID
+         * Either submit for review, unlink from the external template provider or link with an existing template ID. Note: this is deprecated, use \"actionExternalTemplateCommand\" instead
          * @summary Execute a command to update the status for the external template
          * @param {string} id 
          * @param {string} accountId 
@@ -5358,6 +5633,7 @@ export const BotsApiAxiosParamCreator = function (configuration?: Configuration)
          * @param {string} [category] 
          * @param {string} [templateId] The external ID of the template to link with, only valid for the \&quot;link\&quot; command
          * @param {*} [options] Override http request option.
+         * @deprecated
          * @throws {RequiredError}
          */
         botsExternalTemplateCommand: async (id: string, accountId: string, command: TemplateCommand, language?: string, category?: string, templateId?: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
@@ -5725,7 +6001,7 @@ export const BotsApiFp = function(configuration?: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
-         * Either submit for review, unlink from the external template provider or link with an existing template ID
+         * Either submit for review, unlink from the external template provider or link with an existing template ID. Note: this is deprecated, use \"actionExternalTemplateCommand\" instead
          * @summary Execute a command to update the status for the external template
          * @param {string} id 
          * @param {string} accountId 
@@ -5734,6 +6010,7 @@ export const BotsApiFp = function(configuration?: Configuration) {
          * @param {string} [category] 
          * @param {string} [templateId] The external ID of the template to link with, only valid for the \&quot;link\&quot; command
          * @param {*} [options] Override http request option.
+         * @deprecated
          * @throws {RequiredError}
          */
         async botsExternalTemplateCommand(id: string, accountId: string, command: TemplateCommand, language?: string, category?: string, templateId?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BotsExternalTemplateCommand200Response>> {
@@ -5860,10 +6137,11 @@ export const BotsApiFactory = function (configuration?: Configuration, basePath?
             return localVarFp.botsDeletes(requestParameters.bots, options).then((request) => request(axios, basePath));
         },
         /**
-         * Either submit for review, unlink from the external template provider or link with an existing template ID
+         * Either submit for review, unlink from the external template provider or link with an existing template ID. Note: this is deprecated, use \"actionExternalTemplateCommand\" instead
          * @summary Execute a command to update the status for the external template
          * @param {BotsApiBotsExternalTemplateCommandRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
+         * @deprecated
          * @throws {RequiredError}
          */
         botsExternalTemplateCommand(requestParameters: BotsApiBotsExternalTemplateCommandRequest, options?: AxiosRequestConfig): AxiosPromise<BotsExternalTemplateCommand200Response> {
@@ -6258,10 +6536,11 @@ export class BotsApi extends BaseAPI {
     }
 
     /**
-     * Either submit for review, unlink from the external template provider or link with an existing template ID
+     * Either submit for review, unlink from the external template provider or link with an existing template ID. Note: this is deprecated, use \"actionExternalTemplateCommand\" instead
      * @summary Execute a command to update the status for the external template
      * @param {BotsApiBotsExternalTemplateCommandRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
+     * @deprecated
      * @throws {RequiredError}
      * @memberof BotsApi
      */

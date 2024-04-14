@@ -886,10 +886,16 @@ export interface BotInsertData {
     'isForm'?: boolean;
     /**
      * 
-     * @type {{ [key: string]: BotInsertDataExternalTemplateValue; }}
+     * @type {BotInsertDataExternalTemplateStatus}
      * @memberof BotInsertData
      */
-    'externalTemplate'?: { [key: string]: BotInsertDataExternalTemplateValue; };
+    'externalTemplateStatus'?: BotInsertDataExternalTemplateStatus;
+    /**
+     * 
+     * @type {any}
+     * @memberof BotInsertData
+     */
+    'externalTemplate'?: any;
     /**
      * 
      * @type {string}
@@ -963,6 +969,12 @@ export interface BotInsertDataActionsInner {
      * @memberof BotInsertDataActionsInner
      */
     'updatedAt': string;
+    /**
+     * Map from channel to external template provider status. Channel is the key and the value is the status of the template on the provider.
+     * @type {{ [key: string]: BotInsertDataActionsInnerAllOfExternalTemplateValue; }}
+     * @memberof BotInsertDataActionsInner
+     */
+    'externalTemplate'?: { [key: string]: BotInsertDataActionsInnerAllOfExternalTemplateValue; };
     /**
      * 
      * @type {string}
@@ -1093,6 +1105,12 @@ export interface BotInsertDataActionsInnerAllOf {
      * @memberof BotInsertDataActionsInnerAllOf
      */
     'updatedAt': string;
+    /**
+     * Map from channel to external template provider status. Channel is the key and the value is the status of the template on the provider.
+     * @type {{ [key: string]: BotInsertDataActionsInnerAllOfExternalTemplateValue; }}
+     * @memberof BotInsertDataActionsInnerAllOf
+     */
+    'externalTemplate'?: { [key: string]: BotInsertDataActionsInnerAllOfExternalTemplateValue; };
 }
 /**
  * 
@@ -2210,54 +2228,78 @@ export interface BotInsertDataActionsInnerAllOf1ZapierAction {
 /**
  * 
  * @export
- * @interface BotInsertDataExternalTemplateValue
+ * @interface BotInsertDataActionsInnerAllOfExternalTemplateValue
  */
-export interface BotInsertDataExternalTemplateValue {
+export interface BotInsertDataActionsInnerAllOfExternalTemplateValue {
     /**
      * ID of the template on the provider
      * @type {string}
-     * @memberof BotInsertDataExternalTemplateValue
+     * @memberof BotInsertDataActionsInnerAllOfExternalTemplateValue
      */
-    'id'?: string;
+    'id': string;
     /**
      * 
      * @type {string}
-     * @memberof BotInsertDataExternalTemplateValue
+     * @memberof BotInsertDataActionsInnerAllOfExternalTemplateValue
      */
     'category': string;
     /**
      * Language of the template
      * @type {string}
-     * @memberof BotInsertDataExternalTemplateValue
+     * @memberof BotInsertDataActionsInnerAllOfExternalTemplateValue
      */
     'language'?: string;
     /**
      * Status of the template on the provider
      * @type {string}
-     * @memberof BotInsertDataExternalTemplateValue
+     * @memberof BotInsertDataActionsInnerAllOfExternalTemplateValue
      */
-    'status': BotInsertDataExternalTemplateValueStatusEnum;
+    'status': BotInsertDataActionsInnerAllOfExternalTemplateValueStatusEnum;
     /**
      * Details of the rejection, if rejected
      * @type {string}
-     * @memberof BotInsertDataExternalTemplateValue
+     * @memberof BotInsertDataActionsInnerAllOfExternalTemplateValue
      */
     'rejectionDetails'?: string;
     /**
      * ID of the user who submitted the template
      * @type {string}
-     * @memberof BotInsertDataExternalTemplateValue
+     * @memberof BotInsertDataActionsInnerAllOfExternalTemplateValue
      */
     'submittedBy': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof BotInsertDataActionsInnerAllOfExternalTemplateValue
+     */
+    'submittedAt': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof BotInsertDataActionsInnerAllOfExternalTemplateValue
+     */
+    'updatedAt': string;
+    /**
+     * If true, the template status is stale due to the message having been updated
+     * @type {boolean}
+     * @memberof BotInsertDataActionsInnerAllOfExternalTemplateValue
+     */
+    'isStale'?: boolean;
 }
 
-export const BotInsertDataExternalTemplateValueStatusEnum = {
+export const BotInsertDataActionsInnerAllOfExternalTemplateValueStatusEnum = {
     Pending: 'pending',
     Approved: 'approved',
     Rejected: 'rejected'
 } as const;
 
-export type BotInsertDataExternalTemplateValueStatusEnum = typeof BotInsertDataExternalTemplateValueStatusEnum[keyof typeof BotInsertDataExternalTemplateValueStatusEnum];
+export type BotInsertDataActionsInnerAllOfExternalTemplateValueStatusEnum = typeof BotInsertDataActionsInnerAllOfExternalTemplateValueStatusEnum[keyof typeof BotInsertDataActionsInnerAllOfExternalTemplateValueStatusEnum];
+
+/**
+ * @type BotInsertDataExternalTemplateStatus
+ * @export
+ */
+export type BotInsertDataExternalTemplateStatus = string;
 
 /**
  * 
@@ -2452,10 +2494,10 @@ export interface BotNodeEventDataOneOf {
     'type': BotNodeEventDataOneOfTypeEnum;
     /**
      * 
-     * @type {BotInsertDataActionsInner}
+     * @type {BotNodeEventDataOneOfData}
      * @memberof BotNodeEventDataOneOf
      */
-    'data': BotInsertDataActionsInner;
+    'data': BotNodeEventDataOneOfData;
     /**
      * 
      * @type {BotNodeEventDataOneOfHandle}
@@ -2490,10 +2532,10 @@ export interface BotNodeEventDataOneOf1 {
     'type': BotNodeEventDataOneOf1TypeEnum;
     /**
      * 
-     * @type {BotInsertDataActionsInner}
+     * @type {BotNodeEventDataOneOfData}
      * @memberof BotNodeEventDataOneOf1
      */
-    'data': BotInsertDataActionsInner;
+    'data': BotNodeEventDataOneOfData;
     /**
      * 
      * @type {BotNodeEventDataOneOf1Handle}
@@ -2553,10 +2595,10 @@ export interface BotNodeEventDataOneOf2 {
     'type': BotNodeEventDataOneOf2TypeEnum;
     /**
      * 
-     * @type {BotInsertDataActionsInner}
+     * @type {BotNodeEventDataOneOfData}
      * @memberof BotNodeEventDataOneOf2
      */
-    'data': BotInsertDataActionsInner;
+    'data': BotNodeEventDataOneOfData;
     /**
      * 
      * @type {BotNodeEventDataOneOf2Handle}
@@ -2622,10 +2664,10 @@ export interface BotNodeEventDataOneOf3 {
     'handle': string;
     /**
      * 
-     * @type {BotInsertDataActionsInner}
+     * @type {BotNodeEventDataOneOfData}
      * @memberof BotNodeEventDataOneOf3
      */
-    'sourceAction': BotInsertDataActionsInner;
+    'sourceAction': BotNodeEventDataOneOfData;
     /**
      * 
      * @type {number}
@@ -2672,10 +2714,10 @@ export interface BotNodeEventDataOneOf4 {
     'handle': string;
     /**
      * 
-     * @type {BotInsertDataActionsInner}
+     * @type {BotNodeEventDataOneOfData}
      * @memberof BotNodeEventDataOneOf4
      */
-    'sourceAction': BotInsertDataActionsInner;
+    'sourceAction': BotNodeEventDataOneOfData;
     /**
      * 
      * @type {number}
@@ -2728,10 +2770,10 @@ export interface BotNodeEventDataOneOf5 {
     'sourceType': BotNodeEventDataOneOf5SourceTypeEnum;
     /**
      * 
-     * @type {BotInsertDataActionsInner}
+     * @type {BotNodeEventDataOneOfData}
      * @memberof BotNodeEventDataOneOf5
      */
-    'sourceAction': BotInsertDataActionsInner;
+    'sourceAction': BotNodeEventDataOneOfData;
     /**
      * 
      * @type {number}
@@ -2799,10 +2841,10 @@ export interface BotNodeEventDataOneOf6 {
     'data': BotNodeEventDataOneOf6Data;
     /**
      * 
-     * @type {BotInsertDataActionsInner}
+     * @type {BotNodeEventDataOneOfData}
      * @memberof BotNodeEventDataOneOf6
      */
-    'sourceAction': BotInsertDataActionsInner;
+    'sourceAction': BotNodeEventDataOneOfData;
     /**
      * 
      * @type {number}
@@ -2862,10 +2904,10 @@ export interface BotNodeEventDataOneOf7 {
     'data': BotNodeEventDataOneOf7Data;
     /**
      * 
-     * @type {BotInsertDataActionsInner}
+     * @type {BotNodeEventDataOneOfData}
      * @memberof BotNodeEventDataOneOf7
      */
-    'sourceAction': BotInsertDataActionsInner;
+    'sourceAction': BotNodeEventDataOneOfData;
     /**
      * 
      * @type {number}
@@ -2925,10 +2967,10 @@ export interface BotNodeEventDataOneOf8 {
     'data': BotInsertDataActionsInnerAllOf1MessageButtonsInnerNextActionDefaultActionAllOf;
     /**
      * 
-     * @type {BotInsertDataActionsInner}
+     * @type {BotNodeEventDataOneOfData}
      * @memberof BotNodeEventDataOneOf8
      */
-    'sourceAction': BotInsertDataActionsInner;
+    'sourceAction': BotNodeEventDataOneOfData;
     /**
      * 
      * @type {number}
@@ -3028,6 +3070,155 @@ export const BotNodeEventDataOneOf9TypeEnum = {
 
 export type BotNodeEventDataOneOf9TypeEnum = typeof BotNodeEventDataOneOf9TypeEnum[keyof typeof BotNodeEventDataOneOf9TypeEnum];
 
+/**
+ * 
+ * @export
+ * @interface BotNodeEventDataOneOfData
+ */
+export interface BotNodeEventDataOneOfData {
+    /**
+     * 
+     * @type {string}
+     * @memberof BotNodeEventDataOneOfData
+     */
+    'createdAt': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof BotNodeEventDataOneOfData
+     */
+    'updatedAt': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof BotNodeEventDataOneOfData
+     */
+    'id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof BotNodeEventDataOneOfData
+     */
+    'botId'?: string;
+    /**
+     * Name of the template
+     * @type {string}
+     * @memberof BotNodeEventDataOneOfData
+     */
+    'name': string;
+    /**
+     * 
+     * @type {BotInsertDataActionsInnerAllOf1Message}
+     * @memberof BotNodeEventDataOneOfData
+     */
+    'message'?: BotInsertDataActionsInnerAllOf1Message | null;
+    /**
+     * set the assignee on the contact
+     * @type {string}
+     * @memberof BotNodeEventDataOneOfData
+     */
+    'assignee'?: string | null;
+    /**
+     * Tags to set on this contact.
+     * @type {Array<BotInsertDataActionsInnerAllOf1TagsInner>}
+     * @memberof BotNodeEventDataOneOfData
+     */
+    'tags'?: Array<BotInsertDataActionsInnerAllOf1TagsInner> | null;
+    /**
+     * Array of UserId
+     * @type {Array<string>}
+     * @memberof BotNodeEventDataOneOfData
+     */
+    'notifyUsers'?: Array<string> | null;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof BotNodeEventDataOneOfData
+     * @deprecated
+     */
+    'webhooks'?: Array<string> | null;
+    /**
+     * 
+     * @type {Array<BotInsertDataActionsInnerAllOf1HttpRequestInner>}
+     * @memberof BotNodeEventDataOneOfData
+     */
+    'httpRequest'?: Array<BotInsertDataActionsInnerAllOf1HttpRequestInner> | null;
+    /**
+     * 
+     * @type {BotInsertDataActionsInnerAllOf1MessageButtonsInnerPosition}
+     * @memberof BotNodeEventDataOneOfData
+     */
+    'position'?: BotInsertDataActionsInnerAllOf1MessageButtonsInnerPosition | null;
+    /**
+     * 
+     * @type {BotInsertDataActionsInnerAllOf1MessageButtonsInnerPosition}
+     * @memberof BotNodeEventDataOneOfData
+     */
+    'actionPosition'?: BotInsertDataActionsInnerAllOf1MessageButtonsInnerPosition | null;
+    /**
+     * send in to remove the action
+     * @type {boolean}
+     * @memberof BotNodeEventDataOneOfData
+     */
+    'remove'?: boolean;
+    /**
+     * 
+     * @type {BotInsertDataActionsInnerAllOf1FormRef}
+     * @memberof BotNodeEventDataOneOfData
+     */
+    'formRef'?: BotInsertDataActionsInnerAllOf1FormRef | null;
+    /**
+     * 
+     * @type {BotInsertDataActionsInnerAllOf1FormActionMetadata}
+     * @memberof BotNodeEventDataOneOfData
+     */
+    'formActionMetadata'?: BotInsertDataActionsInnerAllOf1FormActionMetadata | null;
+    /**
+     * Type of the message being sent
+     * @type {string}
+     * @memberof BotNodeEventDataOneOfData
+     */
+    'messageType'?: BotNodeEventDataOneOfDataMessageTypeEnum;
+    /**
+     * Account ID of the sender
+     * @type {string}
+     * @memberof BotNodeEventDataOneOfData
+     */
+    'accountId'?: string;
+    /**
+     * 
+     * @type {BotInsertDataActionsInnerAllOf1ZapierAction}
+     * @memberof BotNodeEventDataOneOfData
+     */
+    'zapierAction'?: BotInsertDataActionsInnerAllOf1ZapierAction | null;
+}
+
+export const BotNodeEventDataOneOfDataMessageTypeEnum = {
+    Message: 'message',
+    Email: 'email'
+} as const;
+
+export type BotNodeEventDataOneOfDataMessageTypeEnum = typeof BotNodeEventDataOneOfDataMessageTypeEnum[keyof typeof BotNodeEventDataOneOfDataMessageTypeEnum];
+
+/**
+ * 
+ * @export
+ * @interface BotNodeEventDataOneOfDataAllOf
+ */
+export interface BotNodeEventDataOneOfDataAllOf {
+    /**
+     * 
+     * @type {string}
+     * @memberof BotNodeEventDataOneOfDataAllOf
+     */
+    'createdAt': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof BotNodeEventDataOneOfDataAllOf
+     */
+    'updatedAt': string;
+}
 /**
  * 
  * @export
@@ -3147,10 +3338,16 @@ export interface BotUpdateData {
     'isForm'?: boolean;
     /**
      * 
-     * @type {{ [key: string]: BotInsertDataExternalTemplateValue; }}
+     * @type {BotInsertDataExternalTemplateStatus}
      * @memberof BotUpdateData
      */
-    'externalTemplate'?: { [key: string]: BotInsertDataExternalTemplateValue; };
+    'externalTemplateStatus'?: BotInsertDataExternalTemplateStatus;
+    /**
+     * 
+     * @type {any}
+     * @memberof BotUpdateData
+     */
+    'externalTemplate'?: any;
     /**
      * 
      * @type {string}
