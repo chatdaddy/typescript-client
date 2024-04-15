@@ -880,6 +880,18 @@ export interface KeywordActionExecutionRecord {
      * @memberof KeywordActionExecutionRecord
      */
     'timestamp': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof KeywordActionExecutionRecord
+     */
+    'messageId': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof KeywordActionExecutionRecord
+     */
+    'accountId'?: string;
 }
 /**
  * 
