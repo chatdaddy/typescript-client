@@ -300,6 +300,25 @@ export interface GetExtensions200Response {
 /**
  * 
  * @export
+ * @interface GetInstalledExtensions200Response
+ */
+export interface GetInstalledExtensions200Response {
+    /**
+     * 
+     * @type {Array<InstalledExtension>}
+     * @memberof GetInstalledExtensions200Response
+     */
+    'items': Array<InstalledExtension>;
+    /**
+     * 
+     * @type {number}
+     * @memberof GetInstalledExtensions200Response
+     */
+    'cursor'?: number;
+}
+/**
+ * 
+ * @export
  * @interface GetListings200Response
  */
 export interface GetListings200Response {
@@ -319,6 +338,19 @@ export interface GetListings200Response {
 /**
  * 
  * @export
+ * @interface InstallExtensionRequest
+ */
+export interface InstallExtensionRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof InstallExtensionRequest
+     */
+    'extensionId': string;
+}
+/**
+ * 
+ * @export
  * @interface InstallListingRequest
  */
 export interface InstallListingRequest {
@@ -328,6 +360,37 @@ export interface InstallListingRequest {
      * @memberof InstallListingRequest
      */
     'listingId': string;
+}
+/**
+ * 
+ * @export
+ * @interface InstalledExtension
+ */
+export interface InstalledExtension {
+    /**
+     * 
+     * @type {string}
+     * @memberof InstalledExtension
+     */
+    'id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof InstalledExtension
+     */
+    'teamId': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof InstalledExtension
+     */
+    'extensionId': string;
+    /**
+     * 
+     * @type {{ [key: string]: any; }}
+     * @memberof InstalledExtension
+     */
+    'metadata'?: { [key: string]: any; };
 }
 /**
  * 
@@ -1261,6 +1324,331 @@ export class ExtensionsApi extends BaseAPI {
      */
     public updateExtension(requestParameters: ExtensionsApiUpdateExtensionRequest, options?: AxiosRequestConfig) {
         return ExtensionsApiFp(this.configuration).updateExtension(requestParameters.id, requestParameters.extensionUpdate, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+/**
+ * InstalledExtensionsApi - axios parameter creator
+ * @export
+ */
+export const InstalledExtensionsApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @summary Get installed extensions
+         * @param {number} [count] The number of installed extensions to get
+         * @param {number} [cursor] The cursor to get installed extensions from
+         * @param {string} [extensionId] The extensionId to get installed extensions from
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getInstalledExtensions: async (count?: number, cursor?: number, extensionId?: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/installed-extensions`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", [], configuration)
+
+            if (count !== undefined) {
+                localVarQueryParameter['count'] = count;
+            }
+
+            if (cursor !== undefined) {
+                localVarQueryParameter['cursor'] = cursor;
+            }
+
+            if (extensionId !== undefined) {
+                localVarQueryParameter['extensionId'] = extensionId;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Install an extension
+         * @param {InstallExtensionRequest} installExtensionRequest The extension to install
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        installExtension: async (installExtensionRequest: InstallExtensionRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'installExtensionRequest' is not null or undefined
+            assertParamExists('installExtension', 'installExtensionRequest', installExtensionRequest)
+            const localVarPath = `/installed-extensions`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", [], configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(installExtensionRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Uninstall an extension
+         * @param {string} extensionId The extensionId to uninstall
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        uninstallExtension: async (extensionId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'extensionId' is not null or undefined
+            assertParamExists('uninstallExtension', 'extensionId', extensionId)
+            const localVarPath = `/installed-extensions`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", [], configuration)
+
+            if (extensionId !== undefined) {
+                localVarQueryParameter['extensionId'] = extensionId;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * InstalledExtensionsApi - functional programming interface
+ * @export
+ */
+export const InstalledExtensionsApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = InstalledExtensionsApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * 
+         * @summary Get installed extensions
+         * @param {number} [count] The number of installed extensions to get
+         * @param {number} [cursor] The cursor to get installed extensions from
+         * @param {string} [extensionId] The extensionId to get installed extensions from
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getInstalledExtensions(count?: number, cursor?: number, extensionId?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetInstalledExtensions200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getInstalledExtensions(count, cursor, extensionId, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary Install an extension
+         * @param {InstallExtensionRequest} installExtensionRequest The extension to install
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async installExtension(installExtensionRequest: InstallExtensionRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.installExtension(installExtensionRequest, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary Uninstall an extension
+         * @param {string} extensionId The extensionId to uninstall
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async uninstallExtension(extensionId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.uninstallExtension(extensionId, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+    }
+};
+
+/**
+ * InstalledExtensionsApi - factory interface
+ * @export
+ */
+export const InstalledExtensionsApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = InstalledExtensionsApiFp(configuration)
+    return {
+        /**
+         * 
+         * @summary Get installed extensions
+         * @param {InstalledExtensionsApiGetInstalledExtensionsRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getInstalledExtensions(requestParameters: InstalledExtensionsApiGetInstalledExtensionsRequest = {}, options?: AxiosRequestConfig): AxiosPromise<GetInstalledExtensions200Response> {
+            return localVarFp.getInstalledExtensions(requestParameters.count, requestParameters.cursor, requestParameters.extensionId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Install an extension
+         * @param {InstalledExtensionsApiInstallExtensionRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        installExtension(requestParameters: InstalledExtensionsApiInstallExtensionRequest, options?: AxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.installExtension(requestParameters.installExtensionRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Uninstall an extension
+         * @param {InstalledExtensionsApiUninstallExtensionRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        uninstallExtension(requestParameters: InstalledExtensionsApiUninstallExtensionRequest, options?: AxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.uninstallExtension(requestParameters.extensionId, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * Request parameters for getInstalledExtensions operation in InstalledExtensionsApi.
+ * @export
+ * @interface InstalledExtensionsApiGetInstalledExtensionsRequest
+ */
+export interface InstalledExtensionsApiGetInstalledExtensionsRequest {
+    /**
+     * The number of installed extensions to get
+     * @type {number}
+     * @memberof InstalledExtensionsApiGetInstalledExtensions
+     */
+    readonly count?: number
+
+    /**
+     * The cursor to get installed extensions from
+     * @type {number}
+     * @memberof InstalledExtensionsApiGetInstalledExtensions
+     */
+    readonly cursor?: number
+
+    /**
+     * The extensionId to get installed extensions from
+     * @type {string}
+     * @memberof InstalledExtensionsApiGetInstalledExtensions
+     */
+    readonly extensionId?: string
+}
+
+/**
+ * Request parameters for installExtension operation in InstalledExtensionsApi.
+ * @export
+ * @interface InstalledExtensionsApiInstallExtensionRequest
+ */
+export interface InstalledExtensionsApiInstallExtensionRequest {
+    /**
+     * The extension to install
+     * @type {InstallExtensionRequest}
+     * @memberof InstalledExtensionsApiInstallExtension
+     */
+    readonly installExtensionRequest: InstallExtensionRequest
+}
+
+/**
+ * Request parameters for uninstallExtension operation in InstalledExtensionsApi.
+ * @export
+ * @interface InstalledExtensionsApiUninstallExtensionRequest
+ */
+export interface InstalledExtensionsApiUninstallExtensionRequest {
+    /**
+     * The extensionId to uninstall
+     * @type {string}
+     * @memberof InstalledExtensionsApiUninstallExtension
+     */
+    readonly extensionId: string
+}
+
+/**
+ * InstalledExtensionsApi - object-oriented interface
+ * @export
+ * @class InstalledExtensionsApi
+ * @extends {BaseAPI}
+ */
+export class InstalledExtensionsApi extends BaseAPI {
+    /**
+     * 
+     * @summary Get installed extensions
+     * @param {InstalledExtensionsApiGetInstalledExtensionsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof InstalledExtensionsApi
+     */
+    public getInstalledExtensions(requestParameters: InstalledExtensionsApiGetInstalledExtensionsRequest = {}, options?: AxiosRequestConfig) {
+        return InstalledExtensionsApiFp(this.configuration).getInstalledExtensions(requestParameters.count, requestParameters.cursor, requestParameters.extensionId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Install an extension
+     * @param {InstalledExtensionsApiInstallExtensionRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof InstalledExtensionsApi
+     */
+    public installExtension(requestParameters: InstalledExtensionsApiInstallExtensionRequest, options?: AxiosRequestConfig) {
+        return InstalledExtensionsApiFp(this.configuration).installExtension(requestParameters.installExtensionRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Uninstall an extension
+     * @param {InstalledExtensionsApiUninstallExtensionRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof InstalledExtensionsApi
+     */
+    public uninstallExtension(requestParameters: InstalledExtensionsApiUninstallExtensionRequest, options?: AxiosRequestConfig) {
+        return InstalledExtensionsApiFp(this.configuration).uninstallExtension(requestParameters.extensionId, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
