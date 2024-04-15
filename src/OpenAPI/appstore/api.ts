@@ -311,10 +311,16 @@ export interface GetInstalledExtensions200Response {
     'items': Array<InstalledExtension>;
     /**
      * 
+     * @type {string}
+     * @memberof GetInstalledExtensions200Response
+     */
+    'cursor'?: string;
+    /**
+     * 
      * @type {number}
      * @memberof GetInstalledExtensions200Response
      */
-    'cursor'?: number;
+    'totalDataCount'?: number;
 }
 /**
  * 
