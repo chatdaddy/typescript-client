@@ -837,7 +837,8 @@
   },
   "TEAMMEMBERS_READ_CONTACT_DETAILS": {
     "number": 99,
-    "description": "Read contact details of members in your team",
+    "description": "Read Contact PII",
+    "subtext": "Read phone numbers, emails & usernames of your contacts",
     "features": [],
     "roles": [
       "admin",
