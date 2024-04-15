@@ -95,6 +95,12 @@ export interface AnnouncementMetadata {
      */
     'id'?: string;
     /**
+     * The partnership the announcement belongs to
+     * @type {string}
+     * @memberof AnnouncementMetadata
+     */
+    'partnership'?: string;
+    /**
      * 
      * @type {string}
      * @memberof AnnouncementMetadata
@@ -182,6 +188,12 @@ export type AnnouncementMetadataRepeatOptionEnum = typeof AnnouncementMetadataRe
  * @interface AnnouncementPatch
  */
 export interface AnnouncementPatch {
+    /**
+     * 
+     * @type {string}
+     * @memberof AnnouncementPatch
+     */
+    'partnership'?: string | null;
     /**
      * Category of the Announcement
      * @type {string}
@@ -3040,11 +3052,12 @@ export const AnnouncementsApiAxiosParamCreator = function (configuration?: Confi
          * @param {number} [count] Number of announcements to fetch
          * @param {string} [before] Announcements to fetch before
          * @param {string} [q] Search by category, title etc.
+         * @param {string} [partnership] Search by partnership
          * @param {boolean} [returnTotalCount] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        announcementGet: async (count?: number, before?: string, q?: string, returnTotalCount?: boolean, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        announcementGet: async (count?: number, before?: string, q?: string, partnership?: string, returnTotalCount?: boolean, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/announcements`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -3067,6 +3080,10 @@ export const AnnouncementsApiAxiosParamCreator = function (configuration?: Confi
 
             if (q !== undefined) {
                 localVarQueryParameter['q'] = q;
+            }
+
+            if (partnership !== undefined) {
+                localVarQueryParameter['partnership'] = partnership;
             }
 
             if (returnTotalCount !== undefined) {
@@ -3160,12 +3177,13 @@ export const AnnouncementsApiFp = function(configuration?: Configuration) {
          * @param {number} [count] Number of announcements to fetch
          * @param {string} [before] Announcements to fetch before
          * @param {string} [q] Search by category, title etc.
+         * @param {string} [partnership] Search by partnership
          * @param {boolean} [returnTotalCount] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async announcementGet(count?: number, before?: string, q?: string, returnTotalCount?: boolean, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AnnouncementRetrievalResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.announcementGet(count, before, q, returnTotalCount, options);
+        async announcementGet(count?: number, before?: string, q?: string, partnership?: string, returnTotalCount?: boolean, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AnnouncementRetrievalResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.announcementGet(count, before, q, partnership, returnTotalCount, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -3218,7 +3236,7 @@ export const AnnouncementsApiFactory = function (configuration?: Configuration, 
          * @throws {RequiredError}
          */
         announcementGet(requestParameters: AnnouncementsApiAnnouncementGetRequest = {}, options?: AxiosRequestConfig): AxiosPromise<AnnouncementRetrievalResponse> {
-            return localVarFp.announcementGet(requestParameters.count, requestParameters.before, requestParameters.q, requestParameters.returnTotalCount, options).then((request) => request(axios, basePath));
+            return localVarFp.announcementGet(requestParameters.count, requestParameters.before, requestParameters.q, requestParameters.partnership, requestParameters.returnTotalCount, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -3289,6 +3307,13 @@ export interface AnnouncementsApiAnnouncementGetRequest {
     readonly q?: string
 
     /**
+     * Search by partnership
+     * @type {string}
+     * @memberof AnnouncementsApiAnnouncementGet
+     */
+    readonly partnership?: string
+
+    /**
      * 
      * @type {boolean}
      * @memberof AnnouncementsApiAnnouncementGet
@@ -3357,7 +3382,7 @@ export class AnnouncementsApi extends BaseAPI {
      * @memberof AnnouncementsApi
      */
     public announcementGet(requestParameters: AnnouncementsApiAnnouncementGetRequest = {}, options?: AxiosRequestConfig) {
-        return AnnouncementsApiFp(this.configuration).announcementGet(requestParameters.count, requestParameters.before, requestParameters.q, requestParameters.returnTotalCount, options).then((request) => request(this.axios, this.basePath));
+        return AnnouncementsApiFp(this.configuration).announcementGet(requestParameters.count, requestParameters.before, requestParameters.q, requestParameters.partnership, requestParameters.returnTotalCount, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
