@@ -67,6 +67,18 @@ export interface Extension {
      * @type {string}
      * @memberof Extension
      */
+    'imageUrl': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Extension
+     */
+    'description': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Extension
+     */
     'iframeUrl': string;
     /**
      * 
@@ -156,6 +168,18 @@ export interface ExtensionCreate {
     'iframeUrl': string;
     /**
      * 
+     * @type {string}
+     * @memberof ExtensionCreate
+     */
+    'imageUrl': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ExtensionCreate
+     */
+    'description': string;
+    /**
+     * 
      * @type {Array<string>}
      * @memberof ExtensionCreate
      */
@@ -210,6 +234,18 @@ export interface ExtensionUpdate {
      * @memberof ExtensionUpdate
      */
     'id'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ExtensionUpdate
+     */
+    'imageUrl'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ExtensionUpdate
+     */
+    'description'?: string;
     /**
      * 
      * @type {string}
@@ -949,6 +985,7 @@ export const ExtensionsApiAxiosParamCreator = function (configuration?: Configur
          * 
          * @summary Get extensions
          * @param {number} [count] The number of extensions to get
+         * @param {string} [q] The query to get extensions from
          * @param {number} [cursor] The cursor to get extensions from
          * @param {string} [teamId] The teamId to get extensions from
          * @param {'inbox' | 'crm' | 'navbar' | 'backend'} [location] The location to get extensions from
@@ -958,7 +995,7 @@ export const ExtensionsApiAxiosParamCreator = function (configuration?: Configur
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getExtensions: async (count?: number, cursor?: number, teamId?: string, location?: 'inbox' | 'crm' | 'navbar' | 'backend', type?: 'section' | 'appButtonModal' | 'appButton' | 'appPage', publishedState?: 'private' | 'underReview' | 'published', ids?: Array<string>, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getExtensions: async (count?: number, q?: string, cursor?: number, teamId?: string, location?: 'inbox' | 'crm' | 'navbar' | 'backend', type?: 'section' | 'appButtonModal' | 'appButton' | 'appPage', publishedState?: 'private' | 'underReview' | 'published', ids?: Array<string>, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/extensions`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -977,6 +1014,10 @@ export const ExtensionsApiAxiosParamCreator = function (configuration?: Configur
 
             if (count !== undefined) {
                 localVarQueryParameter['count'] = count;
+            }
+
+            if (q !== undefined) {
+                localVarQueryParameter['q'] = q;
             }
 
             if (cursor !== undefined) {
@@ -1094,6 +1135,7 @@ export const ExtensionsApiFp = function(configuration?: Configuration) {
          * 
          * @summary Get extensions
          * @param {number} [count] The number of extensions to get
+         * @param {string} [q] The query to get extensions from
          * @param {number} [cursor] The cursor to get extensions from
          * @param {string} [teamId] The teamId to get extensions from
          * @param {'inbox' | 'crm' | 'navbar' | 'backend'} [location] The location to get extensions from
@@ -1103,8 +1145,8 @@ export const ExtensionsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getExtensions(count?: number, cursor?: number, teamId?: string, location?: 'inbox' | 'crm' | 'navbar' | 'backend', type?: 'section' | 'appButtonModal' | 'appButton' | 'appPage', publishedState?: 'private' | 'underReview' | 'published', ids?: Array<string>, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetExtensions200Response>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getExtensions(count, cursor, teamId, location, type, publishedState, ids, options);
+        async getExtensions(count?: number, q?: string, cursor?: number, teamId?: string, location?: 'inbox' | 'crm' | 'navbar' | 'backend', type?: 'section' | 'appButtonModal' | 'appButton' | 'appPage', publishedState?: 'private' | 'underReview' | 'published', ids?: Array<string>, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetExtensions200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getExtensions(count, q, cursor, teamId, location, type, publishedState, ids, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -1157,7 +1199,7 @@ export const ExtensionsApiFactory = function (configuration?: Configuration, bas
          * @throws {RequiredError}
          */
         getExtensions(requestParameters: ExtensionsApiGetExtensionsRequest = {}, options?: AxiosRequestConfig): AxiosPromise<GetExtensions200Response> {
-            return localVarFp.getExtensions(requestParameters.count, requestParameters.cursor, requestParameters.teamId, requestParameters.location, requestParameters.type, requestParameters.publishedState, requestParameters.ids, options).then((request) => request(axios, basePath));
+            return localVarFp.getExtensions(requestParameters.count, requestParameters.q, requestParameters.cursor, requestParameters.teamId, requestParameters.location, requestParameters.type, requestParameters.publishedState, requestParameters.ids, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -1212,6 +1254,13 @@ export interface ExtensionsApiGetExtensionsRequest {
      * @memberof ExtensionsApiGetExtensions
      */
     readonly count?: number
+
+    /**
+     * The query to get extensions from
+     * @type {string}
+     * @memberof ExtensionsApiGetExtensions
+     */
+    readonly q?: string
 
     /**
      * The cursor to get extensions from
@@ -1317,7 +1366,7 @@ export class ExtensionsApi extends BaseAPI {
      * @memberof ExtensionsApi
      */
     public getExtensions(requestParameters: ExtensionsApiGetExtensionsRequest = {}, options?: AxiosRequestConfig) {
-        return ExtensionsApiFp(this.configuration).getExtensions(requestParameters.count, requestParameters.cursor, requestParameters.teamId, requestParameters.location, requestParameters.type, requestParameters.publishedState, requestParameters.ids, options).then((request) => request(this.axios, this.basePath));
+        return ExtensionsApiFp(this.configuration).getExtensions(requestParameters.count, requestParameters.q, requestParameters.cursor, requestParameters.teamId, requestParameters.location, requestParameters.type, requestParameters.publishedState, requestParameters.ids, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
