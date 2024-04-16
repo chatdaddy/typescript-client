@@ -141,7 +141,7 @@ export interface AnnouncementMetadata {
      * @type {string}
      * @memberof AnnouncementMetadata
      */
-    'expiresAt'?: string;
+    'expiresAt'?: string | null;
     /**
      * 
      * @type {Array<AnnouncementButtonAction>}
@@ -153,7 +153,7 @@ export interface AnnouncementMetadata {
      * @type {string}
      * @memberof AnnouncementMetadata
      */
-    'coverImage'?: string;
+    'coverImage'?: string | null;
     /**
      * Announcement body as markdown
      * @type {string}
@@ -171,7 +171,7 @@ export interface AnnouncementMetadata {
      * @type {Array<string>}
      * @memberof AnnouncementMetadata
      */
-    'filteredUrls'?: Array<string>;
+    'filteredUrls'?: Array<string> | null;
 }
 
 export const AnnouncementMetadataRepeatOptionEnum = {
@@ -217,7 +217,7 @@ export interface AnnouncementPatch {
      * @type {string}
      * @memberof AnnouncementPatch
      */
-    'expiresAt'?: string;
+    'expiresAt'?: string | null;
     /**
      * 
      * @type {Array<AnnouncementButtonAction>}
@@ -229,7 +229,7 @@ export interface AnnouncementPatch {
      * @type {string}
      * @memberof AnnouncementPatch
      */
-    'coverImage'?: string;
+    'coverImage'?: string | null;
     /**
      * Announcement body as markdown
      * @type {string}
@@ -247,13 +247,14 @@ export interface AnnouncementPatch {
      * @type {Array<string>}
      * @memberof AnnouncementPatch
      */
-    'filteredUrls'?: Array<string>;
+    'filteredUrls'?: Array<string> | null;
 }
 
 export const AnnouncementPatchRepeatOptionEnum = {
     EveryVisit: 'every-visit',
     OncePerDay: 'once-per-day',
-    OncePerWeek: 'once-per-week'
+    OncePerWeek: 'once-per-week',
+    Null: null as null
 } as const;
 
 export type AnnouncementPatchRepeatOptionEnum = typeof AnnouncementPatchRepeatOptionEnum[keyof typeof AnnouncementPatchRepeatOptionEnum];
@@ -2995,6 +2996,10 @@ export const AnnouncementsApiAxiosParamCreator = function (configuration?: Confi
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", [], configuration)
+
 
     
             localVarHeaderParameter['Content-Type'] = 'application/json';
@@ -3030,6 +3035,10 @@ export const AnnouncementsApiAxiosParamCreator = function (configuration?: Confi
             const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", [], configuration)
 
             if (ids) {
                 localVarQueryParameter['ids'] = ids;
@@ -3069,6 +3078,10 @@ export const AnnouncementsApiAxiosParamCreator = function (configuration?: Confi
             const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", [], configuration)
 
             if (count !== undefined) {
                 localVarQueryParameter['count'] = count;
@@ -3124,6 +3137,10 @@ export const AnnouncementsApiAxiosParamCreator = function (configuration?: Confi
             const localVarRequestOptions = { method: 'PATCH', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", [], configuration)
 
 
     
