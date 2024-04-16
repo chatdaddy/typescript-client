@@ -1847,7 +1847,8 @@ export const ContactType = {
     Individual: 'individual',
     Group: 'group',
     Channel: 'channel',
-    Broadcast: 'broadcast'
+    Broadcast: 'broadcast',
+    Post: 'post'
 } as const;
 
 export type ContactType = typeof ContactType[keyof typeof ContactType];
@@ -5560,6 +5561,12 @@ export interface TikTokStateInfo {
      * @memberof TikTokStateInfo
      */
     'lastSyncCursor'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof TikTokStateInfo
+     */
+    'latestNotificationCursor'?: string;
     /**
      * An ISO formatted timestamp
      * @type {string}
