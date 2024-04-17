@@ -28,6 +28,37 @@ import { COLLECTION_FORMATS, BaseAPI, RequiredError } from '../base';
 /**
  * 
  * @export
+ * @enum {string}
+ */
+
+export const AppLocation = {
+    Inbox: 'inbox',
+    Crm: 'crm',
+    Navbar: 'navbar',
+    Backend: 'backend'
+} as const;
+
+export type AppLocation = typeof AppLocation[keyof typeof AppLocation];
+
+
+/**
+ * 
+ * @export
+ * @enum {string}
+ */
+
+export const AppType = {
+    Extension: 'extension',
+    PaymentIntegration: 'paymentIntegration',
+    MessageFlow: 'messageFlow'
+} as const;
+
+export type AppType = typeof AppType[keyof typeof AppType];
+
+
+/**
+ * 
+ * @export
  * @interface DataType
  */
 export interface DataType {
@@ -82,16 +113,22 @@ export interface Extension {
     'iframeUrl': string;
     /**
      * 
-     * @type {Array<string>}
+     * @type {Array<AppLocation>}
      * @memberof Extension
      */
-    'location': Array<ExtensionLocationEnum>;
+    'location': Array<AppLocation>;
     /**
      * 
-     * @type {string}
+     * @type {ExtensionType}
      * @memberof Extension
      */
-    'type': ExtensionTypeEnum;
+    'type': ExtensionType;
+    /**
+     * 
+     * @type {HTTPRequestOptions}
+     * @memberof Extension
+     */
+    'httpRequestOptions'?: HTTPRequestOptions;
     /**
      * 
      * @type {string}
@@ -124,22 +161,6 @@ export interface Extension {
     'permissions'?: Array<string>;
 }
 
-export const ExtensionLocationEnum = {
-    Inbox: 'inbox',
-    Crm: 'crm',
-    Navbar: 'navbar',
-    Backend: 'backend'
-} as const;
-
-export type ExtensionLocationEnum = typeof ExtensionLocationEnum[keyof typeof ExtensionLocationEnum];
-export const ExtensionTypeEnum = {
-    Section: 'section',
-    AppButtonModal: 'appButtonModal',
-    AppButton: 'appButton',
-    AppPage: 'appPage'
-} as const;
-
-export type ExtensionTypeEnum = typeof ExtensionTypeEnum[keyof typeof ExtensionTypeEnum];
 export const ExtensionPublishedStateEnum = {
     Private: 'private',
     UnderReview: 'underReview',
@@ -180,16 +201,22 @@ export interface ExtensionCreate {
     'description': string;
     /**
      * 
-     * @type {Array<string>}
+     * @type {Array<AppLocation>}
      * @memberof ExtensionCreate
      */
-    'location': Array<ExtensionCreateLocationEnum>;
+    'location': Array<AppLocation>;
     /**
      * 
-     * @type {string}
+     * @type {HTTPRequestOptions}
      * @memberof ExtensionCreate
      */
-    'type': ExtensionCreateTypeEnum;
+    'httpRequestOptions'?: HTTPRequestOptions;
+    /**
+     * 
+     * @type {ExtensionType}
+     * @memberof ExtensionCreate
+     */
+    'type': ExtensionType;
     /**
      * 
      * @type {string}
@@ -198,22 +225,6 @@ export interface ExtensionCreate {
     'publishedState': ExtensionCreatePublishedStateEnum;
 }
 
-export const ExtensionCreateLocationEnum = {
-    Inbox: 'inbox',
-    Crm: 'crm',
-    Navbar: 'navbar',
-    Backend: 'backend'
-} as const;
-
-export type ExtensionCreateLocationEnum = typeof ExtensionCreateLocationEnum[keyof typeof ExtensionCreateLocationEnum];
-export const ExtensionCreateTypeEnum = {
-    Section: 'section',
-    AppButtonModal: 'appButtonModal',
-    AppButton: 'appButton',
-    AppPage: 'appPage'
-} as const;
-
-export type ExtensionCreateTypeEnum = typeof ExtensionCreateTypeEnum[keyof typeof ExtensionCreateTypeEnum];
 export const ExtensionCreatePublishedStateEnum = {
     Private: 'private',
     UnderReview: 'underReview',
@@ -221,6 +232,23 @@ export const ExtensionCreatePublishedStateEnum = {
 } as const;
 
 export type ExtensionCreatePublishedStateEnum = typeof ExtensionCreatePublishedStateEnum[keyof typeof ExtensionCreatePublishedStateEnum];
+
+/**
+ * 
+ * @export
+ * @enum {string}
+ */
+
+export const ExtensionType = {
+    Section: 'section',
+    AppButtonModal: 'appButtonModal',
+    AppButton: 'appButton',
+    AppPage: 'appPage',
+    ApiButton: 'apiButton'
+} as const;
+
+export type ExtensionType = typeof ExtensionType[keyof typeof ExtensionType];
+
 
 /**
  * 
@@ -266,16 +294,22 @@ export interface ExtensionUpdate {
     'iframeUrl'?: string;
     /**
      * 
-     * @type {Array<string>}
+     * @type {Array<AppLocation>}
      * @memberof ExtensionUpdate
      */
-    'location'?: Array<ExtensionUpdateLocationEnum>;
+    'location'?: Array<AppLocation>;
     /**
      * 
-     * @type {string}
+     * @type {ExtensionType}
      * @memberof ExtensionUpdate
      */
-    'type'?: ExtensionUpdateTypeEnum;
+    'type'?: ExtensionType;
+    /**
+     * 
+     * @type {HTTPRequestOptions}
+     * @memberof ExtensionUpdate
+     */
+    'httpRequestOptions'?: HTTPRequestOptions;
     /**
      * 
      * @type {string}
@@ -290,22 +324,6 @@ export interface ExtensionUpdate {
     'publishedAt'?: string;
 }
 
-export const ExtensionUpdateLocationEnum = {
-    Inbox: 'inbox',
-    Crm: 'crm',
-    Navbar: 'navbar',
-    Backend: 'backend'
-} as const;
-
-export type ExtensionUpdateLocationEnum = typeof ExtensionUpdateLocationEnum[keyof typeof ExtensionUpdateLocationEnum];
-export const ExtensionUpdateTypeEnum = {
-    Section: 'section',
-    AppButtonModal: 'appButtonModal',
-    AppButton: 'appButton',
-    AppPage: 'appPage'
-} as const;
-
-export type ExtensionUpdateTypeEnum = typeof ExtensionUpdateTypeEnum[keyof typeof ExtensionUpdateTypeEnum];
 export const ExtensionUpdatePublishedStateEnum = {
     Private: 'private',
     UnderReview: 'underReview',
@@ -377,6 +395,42 @@ export interface GetListings200Response {
      */
     'cursor'?: number;
 }
+/**
+ * 
+ * @export
+ * @interface HTTPRequestOptions
+ */
+export interface HTTPRequestOptions {
+    /**
+     * 
+     * @type {string}
+     * @memberof HTTPRequestOptions
+     */
+    'method': HTTPRequestOptionsMethodEnum;
+    /**
+     * 
+     * @type {{ [key: string]: string; }}
+     * @memberof HTTPRequestOptions
+     */
+    'headers': { [key: string]: string; };
+    /**
+     * 
+     * @type {string}
+     * @memberof HTTPRequestOptions
+     */
+    'body': string;
+}
+
+export const HTTPRequestOptionsMethodEnum = {
+    Get: 'GET',
+    Post: 'POST',
+    Put: 'PUT',
+    Delete: 'DELETE',
+    Patch: 'PATCH'
+} as const;
+
+export type HTTPRequestOptionsMethodEnum = typeof HTTPRequestOptionsMethodEnum[keyof typeof HTTPRequestOptionsMethodEnum];
+
 /**
  * 
  * @export
@@ -508,10 +562,10 @@ export interface Listing {
     'updatedAt'?: string;
     /**
      * 
-     * @type {string}
+     * @type {AppType}
      * @memberof Listing
      */
-    'type': ListingTypeEnum;
+    'type': AppType;
     /**
      * 
      * @type {string}
@@ -526,13 +580,6 @@ export interface Listing {
     'data': ListingData;
 }
 
-export const ListingTypeEnum = {
-    Extension: 'extension',
-    PaymentIntegration: 'paymentIntegration',
-    MessageFlow: 'messageFlow'
-} as const;
-
-export type ListingTypeEnum = typeof ListingTypeEnum[keyof typeof ListingTypeEnum];
 export const ListingPublishedStateEnum = {
     Delisted: 'delisted',
     Published: 'published'
@@ -590,10 +637,10 @@ export interface ListingCreate {
     'industry'?: string;
     /**
      * 
-     * @type {string}
+     * @type {AppType}
      * @memberof ListingCreate
      */
-    'type': ListingCreateTypeEnum;
+    'type': AppType;
     /**
      * 
      * @type {string}
@@ -608,13 +655,6 @@ export interface ListingCreate {
     'data': ListingData;
 }
 
-export const ListingCreateTypeEnum = {
-    Extension: 'extension',
-    PaymentIntegration: 'paymentIntegration',
-    MessageFlow: 'messageFlow'
-} as const;
-
-export type ListingCreateTypeEnum = typeof ListingCreateTypeEnum[keyof typeof ListingCreateTypeEnum];
 export const ListingCreatePublishedStateEnum = {
     Delisted: 'delisted',
     Published: 'published'
@@ -702,10 +742,10 @@ export interface ListingUpdate {
     'updatedAt'?: string;
     /**
      * 
-     * @type {string}
+     * @type {AppType}
      * @memberof ListingUpdate
      */
-    'type'?: ListingUpdateTypeEnum;
+    'type'?: AppType;
     /**
      * 
      * @type {string}
@@ -720,13 +760,6 @@ export interface ListingUpdate {
     'data'?: ListingData;
 }
 
-export const ListingUpdateTypeEnum = {
-    Extension: 'extension',
-    PaymentIntegration: 'paymentIntegration',
-    MessageFlow: 'messageFlow'
-} as const;
-
-export type ListingUpdateTypeEnum = typeof ListingUpdateTypeEnum[keyof typeof ListingUpdateTypeEnum];
 export const ListingUpdatePublishedStateEnum = {
     Delisted: 'delisted',
     Published: 'published'
