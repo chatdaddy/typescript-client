@@ -177,7 +177,8 @@ export interface AnnouncementMetadata {
 export const AnnouncementMetadataRepeatOptionEnum = {
     EveryVisit: 'every-visit',
     OncePerDay: 'once-per-day',
-    OncePerWeek: 'once-per-week'
+    OncePerWeek: 'once-per-week',
+    Null: null as null
 } as const;
 
 export type AnnouncementMetadataRepeatOptionEnum = typeof AnnouncementMetadataRepeatOptionEnum[keyof typeof AnnouncementMetadataRepeatOptionEnum];
