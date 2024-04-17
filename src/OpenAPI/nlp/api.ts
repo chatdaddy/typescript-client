@@ -1540,10 +1540,11 @@ export const AutocompleteApiAxiosParamCreator = function (configuration?: Config
          * @summary OAuth callback
          * @param {string} code 
          * @param {string} state 
+         * @param {string} [scope] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        oauthCallback: async (code: string, state: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        oauthCallback: async (code: string, state: string, scope?: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'code' is not null or undefined
             assertParamExists('oauthCallback', 'code', code)
             // verify required parameter 'state' is not null or undefined
@@ -1566,6 +1567,10 @@ export const AutocompleteApiAxiosParamCreator = function (configuration?: Config
 
             if (state !== undefined) {
                 localVarQueryParameter['state'] = state;
+            }
+
+            if (scope !== undefined) {
+                localVarQueryParameter['scope'] = scope;
             }
 
 
@@ -1629,11 +1634,12 @@ export const AutocompleteApiFp = function(configuration?: Configuration) {
          * @summary OAuth callback
          * @param {string} code 
          * @param {string} state 
+         * @param {string} [scope] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async oauthCallback(code: string, state: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<OauthCallback200Response>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.oauthCallback(code, state, options);
+        async oauthCallback(code: string, state: string, scope?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<OauthCallback200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.oauthCallback(code, state, scope, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
     }
@@ -1684,7 +1690,7 @@ export const AutocompleteApiFactory = function (configuration?: Configuration, b
          * @throws {RequiredError}
          */
         oauthCallback(requestParameters: AutocompleteApiOauthCallbackRequest, options?: AxiosRequestConfig): AxiosPromise<OauthCallback200Response> {
-            return localVarFp.oauthCallback(requestParameters.code, requestParameters.state, options).then((request) => request(axios, basePath));
+            return localVarFp.oauthCallback(requestParameters.code, requestParameters.state, requestParameters.scope, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -1764,6 +1770,13 @@ export interface AutocompleteApiOauthCallbackRequest {
      * @memberof AutocompleteApiOauthCallback
      */
     readonly state: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof AutocompleteApiOauthCallback
+     */
+    readonly scope?: string
 }
 
 /**
@@ -1818,7 +1831,7 @@ export class AutocompleteApi extends BaseAPI {
      * @memberof AutocompleteApi
      */
     public oauthCallback(requestParameters: AutocompleteApiOauthCallbackRequest, options?: AxiosRequestConfig) {
-        return AutocompleteApiFp(this.configuration).oauthCallback(requestParameters.code, requestParameters.state, options).then((request) => request(this.axios, this.basePath));
+        return AutocompleteApiFp(this.configuration).oauthCallback(requestParameters.code, requestParameters.state, requestParameters.scope, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
