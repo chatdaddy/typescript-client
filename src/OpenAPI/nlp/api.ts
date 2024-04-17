@@ -28,21 +28,6 @@ import { COLLECTION_FORMATS, BaseAPI, RequiredError } from '../base';
 /**
  * 
  * @export
- * @interface AutocompleteCalendarEvent200Response
- */
-export interface AutocompleteCalendarEvent200Response {
-    [key: string]: any;
-
-    /**
-     * describes the data extracted from the message
-     * @type {object}
-     * @memberof AutocompleteCalendarEvent200Response
-     */
-    'text': object;
-}
-/**
- * 
- * @export
  * @interface AutocompleteCalendarEventRequest
  */
 export interface AutocompleteCalendarEventRequest {
@@ -167,6 +152,37 @@ export interface AutocompleteSuggestion {
      * @memberof AutocompleteSuggestion
      */
     'text': string;
+}
+/**
+ * 
+ * @export
+ * @interface CalendarEvent
+ */
+export interface CalendarEvent {
+    /**
+     * Title of the event
+     * @type {string}
+     * @memberof CalendarEvent
+     */
+    'eventName': string;
+    /**
+     * Time of the event
+     * @type {string}
+     * @memberof CalendarEvent
+     */
+    'time': string;
+    /**
+     * Date of the event
+     * @type {string}
+     * @memberof CalendarEvent
+     */
+    'date': string;
+    /**
+     * duration of the event
+     * @type {string}
+     * @memberof CalendarEvent
+     */
+    'duration': string;
 }
 /**
  * 
@@ -410,6 +426,25 @@ export interface ChatbotMessageResponse {
      * @memberof ChatbotMessageResponse
      */
     'sources': Array<string>;
+}
+/**
+ * 
+ * @export
+ * @interface ContactToken
+ */
+export interface ContactToken {
+    /**
+     * ID of the contact
+     * @type {string}
+     * @memberof ContactToken
+     */
+    'contactId': string;
+    /**
+     * Access token for the contact
+     * @type {string}
+     * @memberof ContactToken
+     */
+    'accessToken': string;
 }
 /**
  * 
@@ -1001,6 +1036,19 @@ export interface KeywordBasedAction {
 /**
  * 
  * @export
+ * @interface OauthCallback200Response
+ */
+export interface OauthCallback200Response {
+    /**
+     * 
+     * @type {string}
+     * @memberof OauthCallback200Response
+     */
+    'accessToken'?: string;
+}
+/**
+ * 
+ * @export
  * @interface StartJobRequest
  */
 export interface StartJobRequest {
@@ -1487,6 +1535,50 @@ export const AutocompleteApiAxiosParamCreator = function (configuration?: Config
                 options: localVarRequestOptions,
             };
         },
+        /**
+         * 
+         * @summary OAuth callback
+         * @param {string} code 
+         * @param {string} state 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        oauthCallback: async (code: string, state: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'code' is not null or undefined
+            assertParamExists('oauthCallback', 'code', code)
+            // verify required parameter 'state' is not null or undefined
+            assertParamExists('oauthCallback', 'state', state)
+            const localVarPath = `/oauth/callback`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (code !== undefined) {
+                localVarQueryParameter['code'] = code;
+            }
+
+            if (state !== undefined) {
+                localVarQueryParameter['state'] = state;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
     }
 };
 
@@ -1504,7 +1596,7 @@ export const AutocompleteApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async autocompleteCalendarEvent(autocompleteCalendarEventRequest?: AutocompleteCalendarEventRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AutocompleteCalendarEvent200Response>> {
+        async autocompleteCalendarEvent(autocompleteCalendarEventRequest?: AutocompleteCalendarEventRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CalendarEvent>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.autocompleteCalendarEvent(autocompleteCalendarEventRequest, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -1532,6 +1624,18 @@ export const AutocompleteApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.autocompleteModify(modifier, autocompleteModifyRequest, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
+        /**
+         * 
+         * @summary OAuth callback
+         * @param {string} code 
+         * @param {string} state 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async oauthCallback(code: string, state: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<OauthCallback200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.oauthCallback(code, state, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
     }
 };
 
@@ -1549,7 +1653,7 @@ export const AutocompleteApiFactory = function (configuration?: Configuration, b
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        autocompleteCalendarEvent(requestParameters: AutocompleteApiAutocompleteCalendarEventRequest = {}, options?: AxiosRequestConfig): AxiosPromise<AutocompleteCalendarEvent200Response> {
+        autocompleteCalendarEvent(requestParameters: AutocompleteApiAutocompleteCalendarEventRequest = {}, options?: AxiosRequestConfig): AxiosPromise<CalendarEvent> {
             return localVarFp.autocompleteCalendarEvent(requestParameters.autocompleteCalendarEventRequest, options).then((request) => request(axios, basePath));
         },
         /**
@@ -1571,6 +1675,16 @@ export const AutocompleteApiFactory = function (configuration?: Configuration, b
          */
         autocompleteModify(requestParameters: AutocompleteApiAutocompleteModifyRequest, options?: AxiosRequestConfig): AxiosPromise<AutocompleteModify200Response> {
             return localVarFp.autocompleteModify(requestParameters.modifier, requestParameters.autocompleteModifyRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary OAuth callback
+         * @param {AutocompleteApiOauthCallbackRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        oauthCallback(requestParameters: AutocompleteApiOauthCallbackRequest, options?: AxiosRequestConfig): AxiosPromise<OauthCallback200Response> {
+            return localVarFp.oauthCallback(requestParameters.code, requestParameters.state, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -1632,6 +1746,27 @@ export interface AutocompleteApiAutocompleteModifyRequest {
 }
 
 /**
+ * Request parameters for oauthCallback operation in AutocompleteApi.
+ * @export
+ * @interface AutocompleteApiOauthCallbackRequest
+ */
+export interface AutocompleteApiOauthCallbackRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof AutocompleteApiOauthCallback
+     */
+    readonly code: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof AutocompleteApiOauthCallback
+     */
+    readonly state: string
+}
+
+/**
  * AutocompleteApi - object-oriented interface
  * @export
  * @class AutocompleteApi
@@ -1672,6 +1807,18 @@ export class AutocompleteApi extends BaseAPI {
      */
     public autocompleteModify(requestParameters: AutocompleteApiAutocompleteModifyRequest, options?: AxiosRequestConfig) {
         return AutocompleteApiFp(this.configuration).autocompleteModify(requestParameters.modifier, requestParameters.autocompleteModifyRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary OAuth callback
+     * @param {AutocompleteApiOauthCallbackRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AutocompleteApi
+     */
+    public oauthCallback(requestParameters: AutocompleteApiOauthCallbackRequest, options?: AxiosRequestConfig) {
+        return AutocompleteApiFp(this.configuration).oauthCallback(requestParameters.code, requestParameters.state, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
