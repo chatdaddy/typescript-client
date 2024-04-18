@@ -2107,6 +2107,12 @@ export interface BotTriggerInstance {
      * @memberof BotTriggerInstance
      */
     'completedAt'?: string;
+    /**
+     * 
+     * @type {BotTrigger}
+     * @memberof BotTriggerInstance
+     */
+    'trigger'?: BotTrigger;
 }
 
 export const BotTriggerInstanceStatusEnum = {
@@ -3037,6 +3043,12 @@ export interface GetTriggerInstances200Response {
      * @memberof GetTriggerInstances200Response
      */
     'nextPageCursor'?: string;
+    /**
+     * total bots present with these filters. Only returned if returnTotalCount is true
+     * @type {number}
+     * @memberof GetTriggerInstances200Response
+     */
+    'totalCount'?: number;
 }
 /**
  * 
@@ -5193,10 +5205,11 @@ export const BotTriggersApiAxiosParamCreator = function (configuration?: Configu
          * @param {number} [count] 
          * @param {string} [cursor] 
          * @param {string} [id] 
+         * @param {boolean} [returnTotalCount] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getTriggerInstances: async (triggerId?: string, count?: number, cursor?: string, id?: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getTriggerInstances: async (triggerId?: string, count?: number, cursor?: string, id?: string, returnTotalCount?: boolean, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/trigger-instances`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -5227,6 +5240,10 @@ export const BotTriggersApiAxiosParamCreator = function (configuration?: Configu
 
             if (id !== undefined) {
                 localVarQueryParameter['id'] = id;
+            }
+
+            if (returnTotalCount !== undefined) {
+                localVarQueryParameter['returnTotalCount'] = returnTotalCount;
             }
 
 
@@ -5305,11 +5322,12 @@ export const BotTriggersApiFp = function(configuration?: Configuration) {
          * @param {number} [count] 
          * @param {string} [cursor] 
          * @param {string} [id] 
+         * @param {boolean} [returnTotalCount] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getTriggerInstances(triggerId?: string, count?: number, cursor?: string, id?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetTriggerInstances200Response>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getTriggerInstances(triggerId, count, cursor, id, options);
+        async getTriggerInstances(triggerId?: string, count?: number, cursor?: string, id?: string, returnTotalCount?: boolean, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetTriggerInstances200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getTriggerInstances(triggerId, count, cursor, id, returnTotalCount, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -5350,7 +5368,7 @@ export const BotTriggersApiFactory = function (configuration?: Configuration, ba
          * @throws {RequiredError}
          */
         getTriggerInstances(requestParameters: BotTriggersApiGetTriggerInstancesRequest = {}, options?: AxiosRequestConfig): AxiosPromise<GetTriggerInstances200Response> {
-            return localVarFp.getTriggerInstances(requestParameters.triggerId, requestParameters.count, requestParameters.cursor, requestParameters.id, options).then((request) => request(axios, basePath));
+            return localVarFp.getTriggerInstances(requestParameters.triggerId, requestParameters.count, requestParameters.cursor, requestParameters.id, requestParameters.returnTotalCount, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -5398,6 +5416,13 @@ export interface BotTriggersApiGetTriggerInstancesRequest {
      * @memberof BotTriggersApiGetTriggerInstances
      */
     readonly id?: string
+
+    /**
+     * 
+     * @type {boolean}
+     * @memberof BotTriggersApiGetTriggerInstances
+     */
+    readonly returnTotalCount?: boolean
 }
 
 /**
@@ -5441,7 +5466,7 @@ export class BotTriggersApi extends BaseAPI {
      * @memberof BotTriggersApi
      */
     public getTriggerInstances(requestParameters: BotTriggersApiGetTriggerInstancesRequest = {}, options?: AxiosRequestConfig) {
-        return BotTriggersApiFp(this.configuration).getTriggerInstances(requestParameters.triggerId, requestParameters.count, requestParameters.cursor, requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+        return BotTriggersApiFp(this.configuration).getTriggerInstances(requestParameters.triggerId, requestParameters.count, requestParameters.cursor, requestParameters.id, requestParameters.returnTotalCount, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
