@@ -382,6 +382,19 @@ export interface CouponsPost200Response {
 /**
  * 
  * @export
+ * @interface CreditAmountObj
+ */
+export interface CreditAmountObj {
+    /**
+     * 
+     * @type {number}
+     * @memberof CreditAmountObj
+     */
+    'amount': number;
+}
+/**
+ * 
+ * @export
  * @interface CreditAutoRenewalUpdate
  */
 export interface CreditAutoRenewalUpdate {
@@ -612,7 +625,7 @@ export interface CreditCustomer {
      * @type {CountryTier}
      * @memberof CreditCustomer
      */
-    'tier': CountryTier;
+    'tier'?: CountryTier;
     /**
      * 
      * @type {CreditLevelStatus}
@@ -681,7 +694,7 @@ export interface CreditCustomerAllOf {
      * @type {CountryTier}
      * @memberof CreditCustomerAllOf
      */
-    'tier': CountryTier;
+    'tier'?: CountryTier;
     /**
      * 
      * @type {CreditLevelStatus}
@@ -1507,10 +1520,16 @@ export interface MiscPreference {
     'key': MiscPreferenceKeyEnum;
     /**
      * 
-     * @type {MiscPreferenceData}
+     * @type {CreditAmountObj}
      * @memberof MiscPreference
      */
-    'data': MiscPreferenceData;
+    'data': CreditAmountObj;
+    /**
+     * 
+     * @type {CountryTier}
+     * @memberof MiscPreference
+     */
+    'tier'?: CountryTier;
 }
 
 export const MiscPreferenceCategoryEnum = {
@@ -1526,19 +1545,6 @@ export const MiscPreferenceKeyEnum = {
 
 export type MiscPreferenceKeyEnum = typeof MiscPreferenceKeyEnum[keyof typeof MiscPreferenceKeyEnum];
 
-/**
- * 
- * @export
- * @interface MiscPreferenceData
- */
-export interface MiscPreferenceData {
-    /**
-     * 
-     * @type {number}
-     * @memberof MiscPreferenceData
-     */
-    'amount': number;
-}
 /**
  * 
  * @export
@@ -1940,6 +1946,12 @@ export interface PurchaseTierPreference {
     'key': string;
     /**
      * 
+     * @type {CountryTier}
+     * @memberof PurchaseTierPreference
+     */
+    'tier'?: CountryTier;
+    /**
+     * 
      * @type {CreditPurchaseTier}
      * @memberof PurchaseTierPreference
      */
@@ -1985,10 +1997,16 @@ export interface RecurringConsumptionPreference {
     'key': RecurringCreditConsumptionType;
     /**
      * 
-     * @type {SomeRecurringConsumptionMetadata}
+     * @type {CountryTier}
      * @memberof RecurringConsumptionPreference
      */
-    'data': SomeRecurringConsumptionMetadata;
+    'tier'?: CountryTier;
+    /**
+     * 
+     * @type {RecurringConsumptionMetadata}
+     * @memberof RecurringConsumptionPreference
+     */
+    'data': RecurringConsumptionMetadata;
 }
 
 export const RecurringConsumptionPreferenceCategoryEnum = {
@@ -2150,56 +2168,6 @@ export interface RecurringCreditsGet200Response {
     'total'?: number;
 }
 /**
- * Use this to define the price of credits for different regions.
- * @export
- * @interface RegionSpecificRecurringConsumptionMetadata
- */
-export interface RegionSpecificRecurringConsumptionMetadata {
-    /**
-     * 
-     * @type {RecurringConsumptionMetadata}
-     * @memberof RegionSpecificRecurringConsumptionMetadata
-     */
-    'tier1'?: RecurringConsumptionMetadata;
-    /**
-     * 
-     * @type {RecurringConsumptionMetadata}
-     * @memberof RegionSpecificRecurringConsumptionMetadata
-     */
-    'tier2'?: RecurringConsumptionMetadata;
-    /**
-     * 
-     * @type {RecurringConsumptionMetadata}
-     * @memberof RegionSpecificRecurringConsumptionMetadata
-     */
-    'tier3'?: RecurringConsumptionMetadata;
-}
-/**
- * Use this to define the price of credits for different regions.
- * @export
- * @interface RegionSpecificSingleConsumptionMetadata
- */
-export interface RegionSpecificSingleConsumptionMetadata {
-    /**
-     * 
-     * @type {SingleConsumptionMetadata}
-     * @memberof RegionSpecificSingleConsumptionMetadata
-     */
-    'tier1'?: SingleConsumptionMetadata;
-    /**
-     * 
-     * @type {SingleConsumptionMetadata}
-     * @memberof RegionSpecificSingleConsumptionMetadata
-     */
-    'tier2'?: SingleConsumptionMetadata;
-    /**
-     * 
-     * @type {SingleConsumptionMetadata}
-     * @memberof RegionSpecificSingleConsumptionMetadata
-     */
-    'tier3'?: SingleConsumptionMetadata;
-}
-/**
  * 
  * @export
  * @interface SingleConsumptionMetadata
@@ -2232,10 +2200,16 @@ export interface SingleConsumptionPreference {
     'key': CreditConsumptionType;
     /**
      * 
-     * @type {SomeSingleConsumptionMetadata}
+     * @type {CountryTier}
      * @memberof SingleConsumptionPreference
      */
-    'data': SomeSingleConsumptionMetadata;
+    'tier'?: CountryTier;
+    /**
+     * 
+     * @type {SingleConsumptionMetadata}
+     * @memberof SingleConsumptionPreference
+     */
+    'data': SingleConsumptionMetadata;
 }
 
 export const SingleConsumptionPreferenceCategoryEnum = {
@@ -2243,18 +2217,6 @@ export const SingleConsumptionPreferenceCategoryEnum = {
 } as const;
 
 export type SingleConsumptionPreferenceCategoryEnum = typeof SingleConsumptionPreferenceCategoryEnum[keyof typeof SingleConsumptionPreferenceCategoryEnum];
-
-/**
- * @type SomeRecurringConsumptionMetadata
- * @export
- */
-export type SomeRecurringConsumptionMetadata = RecurringConsumptionMetadata | RegionSpecificRecurringConsumptionMetadata;
-
-/**
- * @type SomeSingleConsumptionMetadata
- * @export
- */
-export type SomeSingleConsumptionMetadata = RegionSpecificSingleConsumptionMetadata | SingleConsumptionMetadata;
 
 /**
  * 
@@ -2893,6 +2855,12 @@ export interface UnlockPreference {
      * @memberof UnlockPreference
      */
     'key': CreditUnlockType;
+    /**
+     * 
+     * @type {CountryTier}
+     * @memberof UnlockPreference
+     */
+    'tier'?: CountryTier;
     /**
      * 
      * @type {CreditUnlockMetadata}
