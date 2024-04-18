@@ -430,7 +430,7 @@ export interface HTTPRequestOptions {
      * @type {string}
      * @memberof HTTPRequestOptions
      */
-    'url'?: string;
+    'url': string;
     /**
      * 
      * @type {{ [key: string]: string; }}
