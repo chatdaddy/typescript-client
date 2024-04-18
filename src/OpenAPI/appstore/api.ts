@@ -131,6 +131,12 @@ export interface Extension {
     'httpRequestOptions'?: HTTPRequestOptions;
     /**
      * 
+     * @type {{ [key: string]: any; }}
+     * @memberof Extension
+     */
+    'variables'?: { [key: string]: any; };
+    /**
+     * 
      * @type {string}
      * @memberof Extension
      */
@@ -217,6 +223,12 @@ export interface ExtensionCreate {
      * @memberof ExtensionCreate
      */
     'type': ExtensionType;
+    /**
+     * 
+     * @type {{ [key: string]: any; }}
+     * @memberof ExtensionCreate
+     */
+    'variables'?: { [key: string]: any; };
     /**
      * 
      * @type {string}
@@ -310,6 +322,12 @@ export interface ExtensionUpdate {
      * @memberof ExtensionUpdate
      */
     'httpRequestOptions'?: HTTPRequestOptions;
+    /**
+     * 
+     * @type {{ [key: string]: any; }}
+     * @memberof ExtensionUpdate
+     */
+    'variables'?: { [key: string]: any; };
     /**
      * 
      * @type {string}
@@ -443,6 +461,12 @@ export interface InstallExtensionRequest {
      * @memberof InstallExtensionRequest
      */
     'extensionId': string;
+    /**
+     * 
+     * @type {{ [key: string]: any; }}
+     * @memberof InstallExtensionRequest
+     */
+    'variables'?: { [key: string]: any; };
 }
 /**
  * 
@@ -486,7 +510,7 @@ export interface InstalledExtension {
      * @type {{ [key: string]: any; }}
      * @memberof InstalledExtension
      */
-    'metadata'?: { [key: string]: any; };
+    'variables'?: { [key: string]: any; };
 }
 /**
  * 
@@ -928,6 +952,25 @@ export interface PublishedMessageFlow {
      * @memberof PublishedMessageFlow
      */
     'publishedAt'?: string;
+}
+/**
+ * 
+ * @export
+ * @interface UpdateInstalledExtensionRequest
+ */
+export interface UpdateInstalledExtensionRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof UpdateInstalledExtensionRequest
+     */
+    'installedId': string;
+    /**
+     * 
+     * @type {{ [key: string]: any; }}
+     * @memberof UpdateInstalledExtensionRequest
+     */
+    'variables'?: { [key: string]: any; };
 }
 
 /**
@@ -1552,6 +1595,46 @@ export const InstalledExtensionsApiAxiosParamCreator = function (configuration?:
                 options: localVarRequestOptions,
             };
         },
+        /**
+         * 
+         * @summary Update an installed extension
+         * @param {UpdateInstalledExtensionRequest} updateInstalledExtensionRequest The installed extension to update
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        updateInstalledExtension: async (updateInstalledExtensionRequest: UpdateInstalledExtensionRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'updateInstalledExtensionRequest' is not null or undefined
+            assertParamExists('updateInstalledExtension', 'updateInstalledExtensionRequest', updateInstalledExtensionRequest)
+            const localVarPath = `/installed-extensions`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PATCH', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", [], configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(updateInstalledExtensionRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
     }
 };
 
@@ -1597,6 +1680,17 @@ export const InstalledExtensionsApiFp = function(configuration?: Configuration) 
             const localVarAxiosArgs = await localVarAxiosParamCreator.uninstallExtension(extensionId, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
+        /**
+         * 
+         * @summary Update an installed extension
+         * @param {UpdateInstalledExtensionRequest} updateInstalledExtensionRequest The installed extension to update
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async updateInstalledExtension(updateInstalledExtensionRequest: UpdateInstalledExtensionRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.updateInstalledExtension(updateInstalledExtensionRequest, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
     }
 };
 
@@ -1636,6 +1730,16 @@ export const InstalledExtensionsApiFactory = function (configuration?: Configura
          */
         uninstallExtension(requestParameters: InstalledExtensionsApiUninstallExtensionRequest, options?: AxiosRequestConfig): AxiosPromise<void> {
             return localVarFp.uninstallExtension(requestParameters.extensionId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Update an installed extension
+         * @param {InstalledExtensionsApiUpdateInstalledExtensionRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        updateInstalledExtension(requestParameters: InstalledExtensionsApiUpdateInstalledExtensionRequest, options?: AxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.updateInstalledExtension(requestParameters.updateInstalledExtensionRequest, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -1697,6 +1801,20 @@ export interface InstalledExtensionsApiUninstallExtensionRequest {
 }
 
 /**
+ * Request parameters for updateInstalledExtension operation in InstalledExtensionsApi.
+ * @export
+ * @interface InstalledExtensionsApiUpdateInstalledExtensionRequest
+ */
+export interface InstalledExtensionsApiUpdateInstalledExtensionRequest {
+    /**
+     * The installed extension to update
+     * @type {UpdateInstalledExtensionRequest}
+     * @memberof InstalledExtensionsApiUpdateInstalledExtension
+     */
+    readonly updateInstalledExtensionRequest: UpdateInstalledExtensionRequest
+}
+
+/**
  * InstalledExtensionsApi - object-oriented interface
  * @export
  * @class InstalledExtensionsApi
@@ -1737,6 +1855,18 @@ export class InstalledExtensionsApi extends BaseAPI {
      */
     public uninstallExtension(requestParameters: InstalledExtensionsApiUninstallExtensionRequest, options?: AxiosRequestConfig) {
         return InstalledExtensionsApiFp(this.configuration).uninstallExtension(requestParameters.extensionId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Update an installed extension
+     * @param {InstalledExtensionsApiUpdateInstalledExtensionRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof InstalledExtensionsApi
+     */
+    public updateInstalledExtension(requestParameters: InstalledExtensionsApiUpdateInstalledExtensionRequest, options?: AxiosRequestConfig) {
+        return InstalledExtensionsApiFp(this.configuration).updateInstalledExtension(requestParameters.updateInstalledExtensionRequest, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
