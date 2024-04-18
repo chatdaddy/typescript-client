@@ -2061,6 +2061,18 @@ export interface CrmBoard {
      */
     'stages': Array<CrmBoardStage>;
     /**
+     * Minimum response time after the ticket was created, in seconds
+     * @type {number}
+     * @memberof CrmBoard
+     */
+    'minResponseTime'?: number;
+    /**
+     * After the ticket created, within this time, the ticket should be closed, in seconds
+     * @type {number}
+     * @memberof CrmBoard
+     */
+    'minCloseTime'?: number;
+    /**
      * 
      * @type {Array<CrmBoardCustomField>}
      * @memberof CrmBoard
@@ -2124,6 +2136,18 @@ export interface CrmBoardPatch {
      */
     'name'?: string;
     /**
+     * Minimum response time after the ticket was created, in seconds
+     * @type {number}
+     * @memberof CrmBoardPatch
+     */
+    'minResponseTime'?: number;
+    /**
+     * After the ticket created, within this time, the ticket should be closed, in seconds
+     * @type {number}
+     * @memberof CrmBoardPatch
+     */
+    'minCloseTime'?: number;
+    /**
      * 
      * @type {Array<CrmBoardStagePatch>}
      * @memberof CrmBoardPatch
@@ -2154,6 +2178,18 @@ export interface CrmBoardPost {
      * @memberof CrmBoardPost
      */
     'name': string;
+    /**
+     * Minimum response time after the ticket was created, in seconds
+     * @type {number}
+     * @memberof CrmBoardPost
+     */
+    'minResponseTime'?: number;
+    /**
+     * After the ticket created, within this time, the ticket should be closed, in seconds
+     * @type {number}
+     * @memberof CrmBoardPost
+     */
+    'minCloseTime'?: number;
     /**
      * 
      * @type {Array<CrmBoardStagePost>}
