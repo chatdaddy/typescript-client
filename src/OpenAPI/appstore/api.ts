@@ -427,6 +427,12 @@ export interface HTTPRequestOptions {
     'method': HTTPRequestOptionsMethodEnum;
     /**
      * 
+     * @type {string}
+     * @memberof HTTPRequestOptions
+     */
+    'url'?: string;
+    /**
+     * 
      * @type {{ [key: string]: string; }}
      * @memberof HTTPRequestOptions
      */
