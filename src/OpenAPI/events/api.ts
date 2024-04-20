@@ -2527,7 +2527,7 @@ export type BotInsertDataSharedSlugsInnerUserIdentityTypeEnum = typeof BotInsert
  * @type BotNodeEventData
  * @export
  */
-export type BotNodeEventData = BotNodeEventDataOneOf | BotNodeEventDataOneOf1 | BotNodeEventDataOneOf2 | BotNodeEventDataOneOf3 | BotNodeEventDataOneOf4 | BotNodeEventDataOneOf5 | BotNodeEventDataOneOf6 | BotNodeEventDataOneOf7 | BotNodeEventDataOneOf8 | BotNodeEventDataOneOf9;
+export type BotNodeEventData = { type: 'BotNodeEventData_oneOf' } & BotNodeEventDataOneOf | { type: 'BotNodeEventData_oneOf_1' } & BotNodeEventDataOneOf1 | { type: 'BotNodeEventData_oneOf_2' } & BotNodeEventDataOneOf2 | { type: 'BotNodeEventData_oneOf_3' } & BotNodeEventDataOneOf3 | { type: 'BotNodeEventData_oneOf_4' } & BotNodeEventDataOneOf4 | { type: 'BotNodeEventData_oneOf_5' } & BotNodeEventDataOneOf5 | { type: 'BotNodeEventData_oneOf_6' } & BotNodeEventDataOneOf6 | { type: 'BotNodeEventData_oneOf_7' } & BotNodeEventDataOneOf7 | { type: 'BotNodeEventData_oneOf_8' } & BotNodeEventDataOneOf8 | { type: 'BotNodeEventData_oneOf_9' } & BotNodeEventDataOneOf9;
 
 /**
  * 
@@ -5692,7 +5692,7 @@ export type EventSubscriptionType = typeof EventSubscriptionType[keyof typeof Ev
  * The request body you\'ll receive in a webhook
  * @export
  */
-export type EventWebhookData = AccountDelete | AccountInsert | AccountUpdate | ActionExecute | BotDelete | BotInsert | BotUpdate | CampaignInsert | ChatDelete | ChatInsert | ChatUpdate | ChatbotInsert | ContactDelete | ContactInsert | ContactUpdate | CredittransactionrecordInsert | CrmTicketDelete | CrmTicketInsert | CrmTicketUpdate | CustomerCreditsLevelUpdate | DashboardwithdataInsert | FewMessagesLeft | GroupUpdate | KeywordbasedactionInsert | MembershipactionInsert | MessageDelete | MessageInsert | MessageUpdate | OrderInsert | PaymentintegrationInsert | PlatformproductDelete | PlatformproductInsert | PlatformproductUpdate | PresenceUpdate | PushNotification | ShopproductInsert | StaleAccountNotification | TagDelete | TagInsert | TagUpdate | TeamDelete | TeamInsert | TeamUpdate | TeammemberDelete | TeammemberInsert | TeammemberUpdate | TrackingDelete | TrackingInsert | TrackingUpdate | UserDelete | UserInsert | UserUpdate;
+export type EventWebhookData = { event: 'account_delete' } & AccountDelete | { event: 'account_insert' } & AccountInsert | { event: 'account_update' } & AccountUpdate | { event: 'action_execute' } & ActionExecute | { event: 'bot_delete' } & BotDelete | { event: 'bot_insert' } & BotInsert | { event: 'bot_update' } & BotUpdate | { event: 'campaign_insert' } & CampaignInsert | { event: 'chat_delete' } & ChatDelete | { event: 'chat_insert' } & ChatInsert | { event: 'chat_update' } & ChatUpdate | { event: 'chatbot_insert' } & ChatbotInsert | { event: 'contact_delete' } & ContactDelete | { event: 'contact_insert' } & ContactInsert | { event: 'contact_update' } & ContactUpdate | { event: 'credittransactionrecord_insert' } & CredittransactionrecordInsert | { event: 'crm_ticket_delete' } & CrmTicketDelete | { event: 'crm_ticket_insert' } & CrmTicketInsert | { event: 'crm_ticket_update' } & CrmTicketUpdate | { event: 'customer_credits_level_update' } & CustomerCreditsLevelUpdate | { event: 'dashboardwithdata_insert' } & DashboardwithdataInsert | { event: 'few_messages_left' } & FewMessagesLeft | { event: 'group_update' } & GroupUpdate | { event: 'keywordbasedaction_insert' } & KeywordbasedactionInsert | { event: 'membershipaction_insert' } & MembershipactionInsert | { event: 'message_delete' } & MessageDelete | { event: 'message_insert' } & MessageInsert | { event: 'message_update' } & MessageUpdate | { event: 'order_insert' } & OrderInsert | { event: 'paymentintegration_insert' } & PaymentintegrationInsert | { event: 'platformproduct_delete' } & PlatformproductDelete | { event: 'platformproduct_insert' } & PlatformproductInsert | { event: 'platformproduct_update' } & PlatformproductUpdate | { event: 'presence_update' } & PresenceUpdate | { event: 'push_notification' } & PushNotification | { event: 'shopproduct_insert' } & ShopproductInsert | { event: 'stale_account_notification' } & StaleAccountNotification | { event: 'tag_delete' } & TagDelete | { event: 'tag_insert' } & TagInsert | { event: 'tag_update' } & TagUpdate | { event: 'team_delete' } & TeamDelete | { event: 'team_insert' } & TeamInsert | { event: 'team_update' } & TeamUpdate | { event: 'teammember_delete' } & TeammemberDelete | { event: 'teammember_insert' } & TeammemberInsert | { event: 'teammember_update' } & TeammemberUpdate | { event: 'tracking_delete' } & TrackingDelete | { event: 'tracking_insert' } & TrackingInsert | { event: 'tracking_update' } & TrackingUpdate | { event: 'user_delete' } & UserDelete | { event: 'user_insert' } & UserInsert | { event: 'user_update' } & UserUpdate;
 
 /**
  * 
@@ -9136,7 +9136,7 @@ export interface TagInsertData {
  * @type TagInsertDataValidation
  * @export
  */
-export type TagInsertDataValidation = TagInsertDataValidationOneOf | TagInsertDataValidationOneOf1;
+export type TagInsertDataValidation = { type: 'TagInsertData_validation_oneOf' } & TagInsertDataValidationOneOf | { type: 'TagInsertData_validation_oneOf_1' } & TagInsertDataValidationOneOf1;
 
 /**
  * 

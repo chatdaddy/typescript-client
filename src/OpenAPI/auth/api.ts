@@ -377,7 +377,7 @@ export interface ApiTokenValidatePostRequest {
  * @type AuthRequest
  * @export
  */
-export type AuthRequest = PasswordAuthRequest | RefreshTokenLoginRequest;
+export type AuthRequest = { phoneNumber: 'PasswordAuthRequest' } & PasswordAuthRequest | { phoneNumber: 'RefreshTokenLoginRequest' } & RefreshTokenLoginRequest;
 
 /**
  * Login with Boutir
@@ -518,7 +518,7 @@ export interface ExternalTokenPostResponseAllOf {
  * @type ExternalTokenRequest
  * @export
  */
-export type ExternalTokenRequest = BoutirTokenRequest | FirebaseTokenRequest;
+export type ExternalTokenRequest = { type: 'BoutirTokenRequest' } & BoutirTokenRequest | { type: 'FirebaseTokenRequest' } & FirebaseTokenRequest;
 
 /**
  * Login with Firebase

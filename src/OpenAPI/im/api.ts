@@ -536,7 +536,7 @@ export type AccountType = typeof AccountType[keyof typeof AccountType];
  * @type AccountWaChangeLoginMode
  * @export
  */
-export type AccountWaChangeLoginMode = AccountWaChangeLoginModeOneOf | AccountWaChangeLoginModeOneOf1;
+export type AccountWaChangeLoginMode = { type: 'AccountWaChangeLoginMode_oneOf' } & AccountWaChangeLoginModeOneOf | { type: 'AccountWaChangeLoginMode_oneOf_1' } & AccountWaChangeLoginModeOneOf1;
 
 /**
  * 
@@ -819,7 +819,7 @@ export type AlibabaCAMSStateInfoStatusEnum = typeof AlibabaCAMSStateInfoStatusEn
  * @type AlibabaCAMSWebhookItem
  * @export
  */
-export type AlibabaCAMSWebhookItem = AlibabaCAMSWebhookMessageItem | AlibabaCAMSWebhookTemplateItem;
+export type AlibabaCAMSWebhookItem = { Type: 'AlibabaCAMSWebhookMessageItem' } & AlibabaCAMSWebhookMessageItem | { Type: 'AlibabaCAMSWebhookTemplateItem' } & AlibabaCAMSWebhookTemplateItem;
 
 /**
  * 
@@ -2511,7 +2511,7 @@ export interface GetTickets200Response {
  * @type GroupAction
  * @export
  */
-export type GroupAction = GroupMetadataAction | GroupParticipantsAction;
+export type GroupAction = { action: 'GroupMetadataAction' } & GroupMetadataAction | { action: 'GroupParticipantsAction' } & GroupParticipantsAction;
 
 /**
  * 
@@ -5282,7 +5282,7 @@ export interface Tag {
  * @type TagFieldValidation
  * @export
  */
-export type TagFieldValidation = TagFieldValidationOneOf | TagFieldValidationOneOf1;
+export type TagFieldValidation = { type: 'TagFieldValidation_oneOf' } & TagFieldValidationOneOf | { type: 'TagFieldValidation_oneOf_1' } & TagFieldValidationOneOf1;
 
 /**
  * 
