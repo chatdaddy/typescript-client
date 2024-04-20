@@ -32,10 +32,9 @@ import { COLLECTION_FORMATS, BaseAPI, RequiredError } from '../base';
  */
 
 export const AppLocation = {
-    Inbox: 'inbox',
+    Profile: 'profile',
     Crm: 'crm',
-    Navbar: 'navbar',
-    Backend: 'backend'
+    Navbar: 'navbar'
 } as const;
 
 export type AppLocation = typeof AppLocation[keyof typeof AppLocation];
