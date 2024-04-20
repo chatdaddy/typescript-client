@@ -29,7 +29,7 @@ import { COLLECTION_FORMATS, BaseAPI, RequiredError } from '../base';
  * @type AccountIDSelector
  * @export
  */
-export type AccountIDSelector = { type: 'AccountIDSelector_oneOf' } & AccountIDSelectorOneOf | { type: 'AccountIDSelector_oneOf_1' } & AccountIDSelectorOneOf1;
+export type AccountIDSelector = AccountIDSelectorOneOf | AccountIDSelectorOneOf1;
 
 /**
  * Specify the exact accountID. Specify an array to round robin between the accounts
@@ -509,7 +509,7 @@ export interface ActionExternalTemplateCommand {
  * @type ActionExternalTemplateCommandCommand
  * @export
  */
-export type ActionExternalTemplateCommandCommand = { command: 'LinkExternalTemplateCommand' } & LinkExternalTemplateCommand | { command: 'SubmitForReviewExternalTemplateCommand' } & SubmitForReviewExternalTemplateCommand | { command: 'UnlinkExternalTemplateCommand' } & UnlinkExternalTemplateCommand;
+export type ActionExternalTemplateCommandCommand = LinkExternalTemplateCommand | SubmitForReviewExternalTemplateCommand | UnlinkExternalTemplateCommand;
 
 /**
  * 
@@ -622,7 +622,7 @@ export type ActionFireRecordStatusEnum = typeof ActionFireRecordStatusEnum[keyof
  * @type ActionInteraction
  * @export
  */
-export type ActionInteraction = { type: 'ActionInteraction_oneOf' } & ActionInteractionOneOf | { type: 'ActionInteraction_oneOf_1' } & ActionInteractionOneOf1 | { type: 'ActionInteraction_oneOf_2' } & ActionInteractionOneOf2 | { type: 'ActionInteraction_oneOf_3' } & ActionInteractionOneOf3;
+export type ActionInteraction = ActionInteractionOneOf | ActionInteractionOneOf1 | ActionInteractionOneOf2 | ActionInteractionOneOf3;
 
 /**
  * 
@@ -2281,7 +2281,7 @@ export interface BotTriggerPayload {
  * @type BotTriggerTarget
  * @export
  */
-export type BotTriggerTarget = { type: 'ContactsQueryTarget' } & ContactsQueryTarget | { type: 'PropertyPathTarget' } & PropertyPathTarget;
+export type BotTriggerTarget = ContactsQueryTarget | PropertyPathTarget;
 
 /**
  * 
@@ -2619,7 +2619,7 @@ export type DataProperty = DataPropertyDescriptor & {
  * @type DataPropertyDescriptor
  * @export
  */
-export type DataPropertyDescriptor = { type: 'DataPropertyDescriptor_oneOf' } & DataPropertyDescriptorOneOf | { type: 'DataPropertyDescriptor_oneOf_1' } & DataPropertyDescriptorOneOf1 | { type: 'SimplePropertyDescriptor' } & SimplePropertyDescriptor;
+export type DataPropertyDescriptor = SimplePropertyDescriptor | DataPropertyDescriptorOneOf | DataPropertyDescriptorOneOf1;
 
 /**
  * Describe a list
@@ -4446,7 +4446,7 @@ export interface TimestampedTriggerMethodDataRecurring {
  * @type TriggerDelay
  * @export
  */
-export type TriggerDelay = { type: 'TriggerDelay_oneOf' } & TriggerDelayOneOf | { type: 'TriggerDelay_oneOf_1' } & TriggerDelayOneOf1;
+export type TriggerDelay = TriggerDelayOneOf | TriggerDelayOneOf1;
 
 /**
  * 

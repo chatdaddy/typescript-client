@@ -961,7 +961,7 @@ export type CreditLevelStatus = typeof CreditLevelStatus[keyof typeof CreditLeve
  * @type CreditPreference
  * @export
  */
-export type CreditPreference = { category: 'MiscPreference' } & MiscPreference | { category: 'NotificationPreference' } & NotificationPreference | { category: 'PurchaseTierPreference' } & PurchaseTierPreference | { category: 'RecurringConsumptionPreference' } & RecurringConsumptionPreference | { category: 'SingleConsumptionPreference' } & SingleConsumptionPreference | { category: 'StripePreference' } & StripePreference | { category: 'UnlockPreference' } & UnlockPreference;
+export type CreditPreference = MiscPreference | NotificationPreference | PurchaseTierPreference | RecurringConsumptionPreference | SingleConsumptionPreference | StripePreference | UnlockPreference;
 
 /**
  * A tier of credits that can be purchased. Credits can only be purchased in multiples of the step size. The tier is to be used exactly as is for top-up purchases, and must be  multiplied by the number of months for recurring purchases.
