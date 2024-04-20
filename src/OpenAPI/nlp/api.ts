@@ -426,6 +426,12 @@ export interface ChatbotMessageResponse {
      * @memberof ChatbotMessageResponse
      */
     'sources': Array<string>;
+    /**
+     * Is the response a fallback message
+     * @type {boolean}
+     * @memberof ChatbotMessageResponse
+     */
+    'isFallback': boolean;
 }
 /**
  * 

@@ -216,6 +216,12 @@ export interface Action {
      * @memberof Action
      */
     'zapierAction'?: ActionContentZapierAction | null;
+    /**
+     * 
+     * @type {AppAction}
+     * @memberof Action
+     */
+    'app'?: AppAction;
 }
 
 export const ActionMessageTypeEnum = {
@@ -249,6 +255,49 @@ export interface ActionAllOf {
      * @memberof ActionAllOf
      */
     'externalTemplate'?: { [key: string]: ExternalTemplateProvider; };
+}
+/**
+ * 
+ * @export
+ * @interface ActionAppConfig
+ */
+export interface ActionAppConfig {
+    /**
+     * 
+     * @type {string}
+     * @memberof ActionAppConfig
+     */
+    'id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ActionAppConfig
+     */
+    'title': string;
+    /**
+     * If true, the app requires an integration to be set up before it can be used
+     * @type {boolean}
+     * @memberof ActionAppConfig
+     */
+    'requiresIntegration'?: boolean;
+    /**
+     * 
+     * @type {DisplayIcon}
+     * @memberof ActionAppConfig
+     */
+    'icon'?: DisplayIcon;
+    /**
+     * 
+     * @type {Array<DataProperty>}
+     * @memberof ActionAppConfig
+     */
+    'inputProperties': Array<DataProperty>;
+    /**
+     * 
+     * @type {Array<ConditionableProperty>}
+     * @memberof ActionAppConfig
+     */
+    'outputProperties': Array<ConditionableProperty>;
 }
 /**
  * 
@@ -359,6 +408,12 @@ export interface ActionContent {
      * @memberof ActionContent
      */
     'zapierAction'?: ActionContentZapierAction | null;
+    /**
+     * 
+     * @type {AppAction}
+     * @memberof ActionContent
+     */
+    'app'?: AppAction;
 }
 
 export const ActionContentMessageTypeEnum = {
@@ -528,6 +583,12 @@ export interface ActionFireRecord {
      * @memberof ActionFireRecord
      */
     'contact'?: ServiceResponse;
+    /**
+     * 
+     * @type {ServiceResponse}
+     * @memberof ActionFireRecord
+     */
+    'app'?: ServiceResponse;
     /**
      * 
      * @type {boolean}
@@ -956,6 +1017,37 @@ export interface ActionsGptGenerateRequest {
      * @memberof ActionsGptGenerateRequest
      */
     'amount'?: number;
+}
+/**
+ * 
+ * @export
+ * @interface AppAction
+ */
+export interface AppAction {
+    /**
+     * 
+     * @type {string}
+     * @memberof AppAction
+     */
+    'appId': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof AppAction
+     */
+    'integrationId'?: string;
+    /**
+     * 
+     * @type {{ [key: string]: any; }}
+     * @memberof AppAction
+     */
+    'input': { [key: string]: any; };
+    /**
+     * 
+     * @type {NextAction}
+     * @memberof AppAction
+     */
+    'nextAction'?: NextAction;
 }
 /**
  * 
@@ -2359,13 +2451,25 @@ export interface ConditionableProperty {
      * @type {string}
      * @memberof ConditionableProperty
      */
-    'type': ConditionablePropertyTypeEnum;
+    'title': string;
     /**
      * 
-     * @type {string}
+     * @type {DisplayIcon}
      * @memberof ConditionableProperty
      */
-    'title': string;
+    'icon'?: DisplayIcon;
+    /**
+     * Is the property always expected to be present.
+     * @type {boolean}
+     * @memberof ConditionableProperty
+     */
+    'required'?: boolean;
+    /**
+     * 
+     * @type {ConditionablePropertyType}
+     * @memberof ConditionableProperty
+     */
+    'type': ConditionablePropertyType;
     /**
      * 
      * @type {Array<ConditionalPropertyOption>}
@@ -2373,26 +2477,13 @@ export interface ConditionableProperty {
      */
     'options'?: Array<ConditionalPropertyOption>;
     /**
-     * 
-     * @type {DisplayIcon}
+     * Format of the property.  Only valid for string type. For example, \'date-time\' for timestamp properties
+     * @type {string}
      * @memberof ConditionableProperty
      */
-    'icon'?: DisplayIcon;
+    'format'?: string;
 }
 
-export const ConditionablePropertyTypeEnum = {
-    String: 'string',
-    Number: 'number',
-    Boolean: 'boolean',
-    Channel: 'channel',
-    Tag: 'tag',
-    Timestamp: 'timestamp',
-    CountryCode: 'country_code',
-    TeamMember: 'team_member',
-    Chat: 'chat'
-} as const;
-
-export type ConditionablePropertyTypeEnum = typeof ConditionablePropertyTypeEnum[keyof typeof ConditionablePropertyTypeEnum];
 
 /**
  * Define a list of conditionable properties that are only made available to the user if the \"displayConditions\" are met
@@ -2413,6 +2504,33 @@ export interface ConditionablePropertyGroup {
      */
     'displayConditions': Array<BotCondition>;
 }
+/**
+ * @type ConditionablePropertyListInner
+ * @export
+ */
+export type ConditionablePropertyListInner = ConditionableProperty | ConditionablePropertyGroup;
+
+/**
+ * 
+ * @export
+ * @enum {string}
+ */
+
+export const ConditionablePropertyType = {
+    String: 'string',
+    Number: 'number',
+    Boolean: 'boolean',
+    Channel: 'channel',
+    Tag: 'tag',
+    Timestamp: 'timestamp',
+    CountryCode: 'country_code',
+    TeamMember: 'team_member',
+    Chat: 'chat'
+} as const;
+
+export type ConditionablePropertyType = typeof ConditionablePropertyType[keyof typeof ConditionablePropertyType];
+
+
 /**
  * 
  * @export
@@ -2463,6 +2581,103 @@ export const ContactsQueryTargetTypeEnum = {
 } as const;
 
 export type ContactsQueryTargetTypeEnum = typeof ContactsQueryTargetTypeEnum[keyof typeof ContactsQueryTargetTypeEnum];
+
+/**
+ * Describe a simple string/number/boolean type or a list or a map.
+ * @export
+ * @interface DataProperty
+ */
+export interface DataProperty extends DataPropertyDescriptor {
+    /**
+     * 
+     * @type {string}
+     * @memberof DataProperty
+     */
+    'propertyPath': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof DataProperty
+     */
+    'title': string;
+    /**
+     * 
+     * @type {DisplayIcon}
+     * @memberof DataProperty
+     */
+    'icon'?: DisplayIcon;
+    /**
+     * Is the property always expected to be present.
+     * @type {boolean}
+     * @memberof DataProperty
+     */
+    'required'?: boolean;
+}
+
+
+/**
+ * @type DataPropertyDescriptor
+ * @export
+ */
+export type DataPropertyDescriptor = { type: 'DataProperty' } & DataProperty;
+
+/**
+ * Describe a list
+ * @export
+ * @interface DataPropertyDescriptorOneOf
+ */
+export interface DataPropertyDescriptorOneOf {
+    /**
+     * 
+     * @type {string}
+     * @memberof DataPropertyDescriptorOneOf
+     */
+    'type': DataPropertyDescriptorOneOfTypeEnum;
+    /**
+     * 
+     * @type {DataPropertyDescriptor}
+     * @memberof DataPropertyDescriptorOneOf
+     */
+    'items': DataPropertyDescriptor;
+}
+
+export const DataPropertyDescriptorOneOfTypeEnum = {
+    Array: 'array'
+} as const;
+
+export type DataPropertyDescriptorOneOfTypeEnum = typeof DataPropertyDescriptorOneOfTypeEnum[keyof typeof DataPropertyDescriptorOneOfTypeEnum];
+
+/**
+ * Describe a map
+ * @export
+ * @interface DataPropertyDescriptorOneOf1
+ */
+export interface DataPropertyDescriptorOneOf1 {
+    /**
+     * 
+     * @type {string}
+     * @memberof DataPropertyDescriptorOneOf1
+     */
+    'type': DataPropertyDescriptorOneOf1TypeEnum;
+    /**
+     * 
+     * @type {Array<DataProperty>}
+     * @memberof DataPropertyDescriptorOneOf1
+     */
+    'properties': Array<DataProperty>;
+    /**
+     * 
+     * @type {DataPropertyDescriptor}
+     * @memberof DataPropertyDescriptorOneOf1
+     */
+    'additionalProperties'?: DataPropertyDescriptor;
+}
+
+export const DataPropertyDescriptorOneOf1TypeEnum = {
+    Map: 'map'
+} as const;
+
+export type DataPropertyDescriptorOneOf1TypeEnum = typeof DataPropertyDescriptorOneOf1TypeEnum[keyof typeof DataPropertyDescriptorOneOf1TypeEnum];
 
 /**
  * 
@@ -3654,6 +3869,37 @@ export interface Position {
     'y': number;
 }
 /**
+ * 
+ * @export
+ * @interface PropertyMetadata
+ */
+export interface PropertyMetadata {
+    /**
+     * 
+     * @type {string}
+     * @memberof PropertyMetadata
+     */
+    'propertyPath': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof PropertyMetadata
+     */
+    'title': string;
+    /**
+     * 
+     * @type {DisplayIcon}
+     * @memberof PropertyMetadata
+     */
+    'icon'?: DisplayIcon;
+    /**
+     * Is the property always expected to be present.
+     * @type {boolean}
+     * @memberof PropertyMetadata
+     */
+    'required'?: boolean;
+}
+/**
  * Target a property in the payload data. Use dot notation for nested properties. Please note, this is inside the `data` object of the payload, so avoid the `data.` prefix.
  * @export
  * @interface PropertyPathTarget
@@ -3737,7 +3983,7 @@ export interface Recipient {
      */
     'sendOptions'?: MessageSendOptions;
     /**
-     * parameters to replace in text
+     * Parameters to replace in text. These can also be used to build conditions, as they\'ll be set on the \"data\" property of the payload. Internally, an app will set the parameters of a recipient with its output 
      * @type {{ [key: string]: any; }}
      * @memberof Recipient
      */
@@ -3804,6 +4050,33 @@ export interface SharedSlug {
      * @memberof SharedSlug
      */
     'createdAt': string;
+}
+
+
+/**
+ * Simple string/number/boolean type
+ * @export
+ * @interface SimplePropertyDescriptor
+ */
+export interface SimplePropertyDescriptor {
+    /**
+     * 
+     * @type {ConditionablePropertyType}
+     * @memberof SimplePropertyDescriptor
+     */
+    'type': ConditionablePropertyType;
+    /**
+     * 
+     * @type {Array<ConditionalPropertyOption>}
+     * @memberof SimplePropertyDescriptor
+     */
+    'options'?: Array<ConditionalPropertyOption>;
+    /**
+     * Format of the property.  Only valid for string type. For example, \'date-time\' for timestamp properties
+     * @type {string}
+     * @memberof SimplePropertyDescriptor
+     */
+    'format'?: string;
 }
 
 
@@ -4348,6 +4621,12 @@ export interface TriggersDisplayConfiguration {
      * @memberof TriggersDisplayConfiguration
      */
     'internalEventConfigs': Array<InternalEventUIConfig>;
+    /**
+     * 
+     * @type {Array<ActionAppConfig>}
+     * @memberof TriggersDisplayConfiguration
+     */
+    'actionApps'?: Array<ActionAppConfig>;
 }
 /**
  * 
@@ -4363,17 +4642,11 @@ export interface TriggersUIConfig {
     'defaults'?: TriggersUIConfigDefaults;
     /**
      * 
-     * @type {Array<TriggersUIConfigConditionablePropertiesInner>}
+     * @type {Array<ConditionablePropertyListInner>}
      * @memberof TriggersUIConfig
      */
-    'conditionableProperties': Array<TriggersUIConfigConditionablePropertiesInner>;
+    'conditionableProperties': Array<ConditionablePropertyListInner>;
 }
-/**
- * @type TriggersUIConfigConditionablePropertiesInner
- * @export
- */
-export type TriggersUIConfigConditionablePropertiesInner = ConditionableProperty | ConditionablePropertyGroup;
-
 /**
  * Default values for the triggers. These values will be used when creating a new trigger
  * @export

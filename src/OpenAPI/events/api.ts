@@ -675,6 +675,12 @@ export interface ActionExecuteData {
     'contact'?: ActionExecuteDataMessagesInner;
     /**
      * 
+     * @type {ActionExecuteDataMessagesInner}
+     * @memberof ActionExecuteData
+     */
+    'app'?: ActionExecuteDataMessagesInner;
+    /**
+     * 
      * @type {boolean}
      * @memberof ActionExecuteData
      */
@@ -1078,6 +1084,12 @@ export interface BotInsertDataActionsInner {
      * @memberof BotInsertDataActionsInner
      */
     'zapierAction'?: BotInsertDataActionsInnerAllOf1ZapierAction | null;
+    /**
+     * 
+     * @type {BotInsertDataActionsInnerAllOf1App}
+     * @memberof BotInsertDataActionsInner
+     */
+    'app'?: BotInsertDataActionsInnerAllOf1App;
 }
 
 export const BotInsertDataActionsInnerMessageTypeEnum = {
@@ -1221,6 +1233,12 @@ export interface BotInsertDataActionsInnerAllOf1 {
      * @memberof BotInsertDataActionsInnerAllOf1
      */
     'zapierAction'?: BotInsertDataActionsInnerAllOf1ZapierAction | null;
+    /**
+     * 
+     * @type {BotInsertDataActionsInnerAllOf1App}
+     * @memberof BotInsertDataActionsInnerAllOf1
+     */
+    'app'?: BotInsertDataActionsInnerAllOf1App;
 }
 
 export const BotInsertDataActionsInnerAllOf1MessageTypeEnum = {
@@ -1230,6 +1248,37 @@ export const BotInsertDataActionsInnerAllOf1MessageTypeEnum = {
 
 export type BotInsertDataActionsInnerAllOf1MessageTypeEnum = typeof BotInsertDataActionsInnerAllOf1MessageTypeEnum[keyof typeof BotInsertDataActionsInnerAllOf1MessageTypeEnum];
 
+/**
+ * 
+ * @export
+ * @interface BotInsertDataActionsInnerAllOf1App
+ */
+export interface BotInsertDataActionsInnerAllOf1App {
+    /**
+     * 
+     * @type {string}
+     * @memberof BotInsertDataActionsInnerAllOf1App
+     */
+    'appId': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof BotInsertDataActionsInnerAllOf1App
+     */
+    'integrationId'?: string;
+    /**
+     * 
+     * @type {{ [key: string]: any; }}
+     * @memberof BotInsertDataActionsInnerAllOf1App
+     */
+    'input': { [key: string]: any; };
+    /**
+     * 
+     * @type {BotInsertDataActionsInnerAllOf1MessageButtonsInnerNextAction}
+     * @memberof BotInsertDataActionsInnerAllOf1App
+     */
+    'nextAction'?: BotInsertDataActionsInnerAllOf1MessageButtonsInnerNextAction;
+}
 /**
  * 
  * @export
@@ -3219,6 +3268,124 @@ export interface BotNodeEventDataOneOfDataAllOf {
      */
     'updatedAt': string;
 }
+/**
+ * 
+ * @export
+ * @interface BotNodeEventDataOneOfDataAllOf1
+ */
+export interface BotNodeEventDataOneOfDataAllOf1 {
+    /**
+     * 
+     * @type {string}
+     * @memberof BotNodeEventDataOneOfDataAllOf1
+     */
+    'id'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof BotNodeEventDataOneOfDataAllOf1
+     */
+    'botId'?: string;
+    /**
+     * Name of the template
+     * @type {string}
+     * @memberof BotNodeEventDataOneOfDataAllOf1
+     */
+    'name'?: string;
+    /**
+     * 
+     * @type {BotInsertDataActionsInnerAllOf1Message}
+     * @memberof BotNodeEventDataOneOfDataAllOf1
+     */
+    'message'?: BotInsertDataActionsInnerAllOf1Message | null;
+    /**
+     * set the assignee on the contact
+     * @type {string}
+     * @memberof BotNodeEventDataOneOfDataAllOf1
+     */
+    'assignee'?: string | null;
+    /**
+     * Tags to set on this contact.
+     * @type {Array<BotInsertDataActionsInnerAllOf1TagsInner>}
+     * @memberof BotNodeEventDataOneOfDataAllOf1
+     */
+    'tags'?: Array<BotInsertDataActionsInnerAllOf1TagsInner> | null;
+    /**
+     * Array of UserId
+     * @type {Array<string>}
+     * @memberof BotNodeEventDataOneOfDataAllOf1
+     */
+    'notifyUsers'?: Array<string> | null;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof BotNodeEventDataOneOfDataAllOf1
+     * @deprecated
+     */
+    'webhooks'?: Array<string> | null;
+    /**
+     * 
+     * @type {Array<BotInsertDataActionsInnerAllOf1HttpRequestInner>}
+     * @memberof BotNodeEventDataOneOfDataAllOf1
+     */
+    'httpRequest'?: Array<BotInsertDataActionsInnerAllOf1HttpRequestInner> | null;
+    /**
+     * 
+     * @type {BotInsertDataActionsInnerAllOf1MessageButtonsInnerPosition}
+     * @memberof BotNodeEventDataOneOfDataAllOf1
+     */
+    'position'?: BotInsertDataActionsInnerAllOf1MessageButtonsInnerPosition | null;
+    /**
+     * 
+     * @type {BotInsertDataActionsInnerAllOf1MessageButtonsInnerPosition}
+     * @memberof BotNodeEventDataOneOfDataAllOf1
+     */
+    'actionPosition'?: BotInsertDataActionsInnerAllOf1MessageButtonsInnerPosition | null;
+    /**
+     * send in to remove the action
+     * @type {boolean}
+     * @memberof BotNodeEventDataOneOfDataAllOf1
+     */
+    'remove'?: boolean;
+    /**
+     * 
+     * @type {BotInsertDataActionsInnerAllOf1FormRef}
+     * @memberof BotNodeEventDataOneOfDataAllOf1
+     */
+    'formRef'?: BotInsertDataActionsInnerAllOf1FormRef | null;
+    /**
+     * 
+     * @type {BotInsertDataActionsInnerAllOf1FormActionMetadata}
+     * @memberof BotNodeEventDataOneOfDataAllOf1
+     */
+    'formActionMetadata'?: BotInsertDataActionsInnerAllOf1FormActionMetadata | null;
+    /**
+     * Type of the message being sent
+     * @type {string}
+     * @memberof BotNodeEventDataOneOfDataAllOf1
+     */
+    'messageType'?: BotNodeEventDataOneOfDataAllOf1MessageTypeEnum;
+    /**
+     * Account ID of the sender
+     * @type {string}
+     * @memberof BotNodeEventDataOneOfDataAllOf1
+     */
+    'accountId'?: string;
+    /**
+     * 
+     * @type {BotInsertDataActionsInnerAllOf1ZapierAction}
+     * @memberof BotNodeEventDataOneOfDataAllOf1
+     */
+    'zapierAction'?: BotInsertDataActionsInnerAllOf1ZapierAction | null;
+}
+
+export const BotNodeEventDataOneOfDataAllOf1MessageTypeEnum = {
+    Message: 'message',
+    Email: 'email'
+} as const;
+
+export type BotNodeEventDataOneOfDataAllOf1MessageTypeEnum = typeof BotNodeEventDataOneOfDataAllOf1MessageTypeEnum[keyof typeof BotNodeEventDataOneOfDataAllOf1MessageTypeEnum];
+
 /**
  * 
  * @export
