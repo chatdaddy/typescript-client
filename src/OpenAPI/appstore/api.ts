@@ -1069,14 +1069,14 @@ export const ExtensionsApiAxiosParamCreator = function (configuration?: Configur
          * @param {string} [q] The query to get extensions from
          * @param {number} [cursor] The cursor to get extensions from
          * @param {string} [teamId] The teamId to get extensions from
-         * @param {'inbox' | 'crm' | 'navbar' | 'backend'} [location] The location to get extensions from
-         * @param {'section' | 'appButtonModal' | 'appButton' | 'appPage'} [type] The type to get extensions from
+         * @param {AppLocation} [location] The location to get extensions from
+         * @param {ExtensionType} [type] The type to get extensions from
          * @param {'private' | 'underReview' | 'published'} [publishedState] The publishedState to get extensions from
          * @param {Array<string>} [ids] The ids to get extensions from
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getExtensions: async (count?: number, q?: string, cursor?: number, teamId?: string, location?: 'inbox' | 'crm' | 'navbar' | 'backend', type?: 'section' | 'appButtonModal' | 'appButton' | 'appPage', publishedState?: 'private' | 'underReview' | 'published', ids?: Array<string>, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getExtensions: async (count?: number, q?: string, cursor?: number, teamId?: string, location?: AppLocation, type?: ExtensionType, publishedState?: 'private' | 'underReview' | 'published', ids?: Array<string>, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/extensions`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -1219,14 +1219,14 @@ export const ExtensionsApiFp = function(configuration?: Configuration) {
          * @param {string} [q] The query to get extensions from
          * @param {number} [cursor] The cursor to get extensions from
          * @param {string} [teamId] The teamId to get extensions from
-         * @param {'inbox' | 'crm' | 'navbar' | 'backend'} [location] The location to get extensions from
-         * @param {'section' | 'appButtonModal' | 'appButton' | 'appPage'} [type] The type to get extensions from
+         * @param {AppLocation} [location] The location to get extensions from
+         * @param {ExtensionType} [type] The type to get extensions from
          * @param {'private' | 'underReview' | 'published'} [publishedState] The publishedState to get extensions from
          * @param {Array<string>} [ids] The ids to get extensions from
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getExtensions(count?: number, q?: string, cursor?: number, teamId?: string, location?: 'inbox' | 'crm' | 'navbar' | 'backend', type?: 'section' | 'appButtonModal' | 'appButton' | 'appPage', publishedState?: 'private' | 'underReview' | 'published', ids?: Array<string>, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetExtensions200Response>> {
+        async getExtensions(count?: number, q?: string, cursor?: number, teamId?: string, location?: AppLocation, type?: ExtensionType, publishedState?: 'private' | 'underReview' | 'published', ids?: Array<string>, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetExtensions200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getExtensions(count, q, cursor, teamId, location, type, publishedState, ids, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -1359,17 +1359,17 @@ export interface ExtensionsApiGetExtensionsRequest {
 
     /**
      * The location to get extensions from
-     * @type {'inbox' | 'crm' | 'navbar' | 'backend'}
+     * @type {AppLocation}
      * @memberof ExtensionsApiGetExtensions
      */
-    readonly location?: 'inbox' | 'crm' | 'navbar' | 'backend'
+    readonly location?: AppLocation
 
     /**
      * The type to get extensions from
-     * @type {'section' | 'appButtonModal' | 'appButton' | 'appPage'}
+     * @type {ExtensionType}
      * @memberof ExtensionsApiGetExtensions
      */
-    readonly type?: 'section' | 'appButtonModal' | 'appButton' | 'appPage'
+    readonly type?: ExtensionType
 
     /**
      * The publishedState to get extensions from
