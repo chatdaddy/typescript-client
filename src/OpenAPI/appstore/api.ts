@@ -462,10 +462,10 @@ export type HTTPRequestOptionsMethodEnum = typeof HTTPRequestOptionsMethodEnum[k
 export interface InstallExtensionRequest {
     /**
      * 
-     * @type {string}
+     * @type {number}
      * @memberof InstallExtensionRequest
      */
-    'extensionId': string;
+    'extensionId': number;
     /**
      * 
      * @type {{ [key: string]: any; }}
@@ -506,10 +506,10 @@ export interface InstalledExtension {
     'teamId': string;
     /**
      * 
-     * @type {string}
+     * @type {number}
      * @memberof InstalledExtension
      */
-    'extensionId': string;
+    'extensionId': number;
     /**
      * 
      * @type {{ [key: string]: any; }}
@@ -1966,7 +1966,7 @@ export const ListingsApiAxiosParamCreator = function (configuration?: Configurat
          * @param {number} [count] The number of extensions to get
          * @param {number} [cursor] The cursor to get extensions from
          * @param {string} [teamId] The teamId to get extensions from
-         * @param {'extension' | 'paymentIntegration' | 'messageFlow'} [type] The type to get extensions from
+         * @param {AppType} [type] The type to get extensions from
          * @param {Array<string>} [ids] The ids to get extensions from
          * @param {string} [language] The language to get extensions from
          * @param {string} [industry] The industry to get extensions from
@@ -1975,7 +1975,7 @@ export const ListingsApiAxiosParamCreator = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getListings: async (count?: number, cursor?: number, teamId?: string, type?: 'extension' | 'paymentIntegration' | 'messageFlow', ids?: Array<string>, language?: string, industry?: string, q?: string, publishedState?: 'delisted' | 'published' | 'underReview', options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getListings: async (count?: number, cursor?: number, teamId?: string, type?: AppType, ids?: Array<string>, language?: string, industry?: string, q?: string, publishedState?: 'delisted' | 'published' | 'underReview', options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/listings`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -2161,7 +2161,7 @@ export const ListingsApiFp = function(configuration?: Configuration) {
          * @param {number} [count] The number of extensions to get
          * @param {number} [cursor] The cursor to get extensions from
          * @param {string} [teamId] The teamId to get extensions from
-         * @param {'extension' | 'paymentIntegration' | 'messageFlow'} [type] The type to get extensions from
+         * @param {AppType} [type] The type to get extensions from
          * @param {Array<string>} [ids] The ids to get extensions from
          * @param {string} [language] The language to get extensions from
          * @param {string} [industry] The industry to get extensions from
@@ -2170,7 +2170,7 @@ export const ListingsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getListings(count?: number, cursor?: number, teamId?: string, type?: 'extension' | 'paymentIntegration' | 'messageFlow', ids?: Array<string>, language?: string, industry?: string, q?: string, publishedState?: 'delisted' | 'published' | 'underReview', options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetListings200Response>> {
+        async getListings(count?: number, cursor?: number, teamId?: string, type?: AppType, ids?: Array<string>, language?: string, industry?: string, q?: string, publishedState?: 'delisted' | 'published' | 'underReview', options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetListings200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getListings(count, cursor, teamId, type, ids, language, industry, q, publishedState, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -2317,10 +2317,10 @@ export interface ListingsApiGetListingsRequest {
 
     /**
      * The type to get extensions from
-     * @type {'extension' | 'paymentIntegration' | 'messageFlow'}
+     * @type {AppType}
      * @memberof ListingsApiGetListings
      */
-    readonly type?: 'extension' | 'paymentIntegration' | 'messageFlow'
+    readonly type?: AppType
 
     /**
      * The ids to get extensions from
