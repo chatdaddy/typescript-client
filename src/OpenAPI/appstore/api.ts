@@ -516,6 +516,12 @@ export interface InstalledExtension {
      * @memberof InstalledExtension
      */
     'variables'?: { [key: string]: any; };
+    /**
+     * 
+     * @type {Extension}
+     * @memberof InstalledExtension
+     */
+    'extension'?: Extension;
 }
 /**
  * 
