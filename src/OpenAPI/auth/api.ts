@@ -3062,12 +3062,14 @@ export const AnnouncementsApiAxiosParamCreator = function (configuration?: Confi
          * @param {number} [count] Number of announcements to fetch
          * @param {string} [before] Announcements to fetch before
          * @param {string} [q] Search by category, title etc.
+         * @param {string} [publishedAt] Optional filter to retrieve announcements published on or before a specific date and time. If provided, only announcements published on or before the given timestamp will be returned. 
+         * @param {string} [expiresAt] Optional filter to retrieve announcements that are valid until a specific date and time. - If set to a specific timestamp, only announcements that expire on or after the given timestamp will be returned. - If set to &#x60;null&#x60;, only announcements with no expiration date will be returned. 
          * @param {string} [partnership] Search by partnership
          * @param {boolean} [returnTotalCount] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        announcementGet: async (count?: number, before?: string, q?: string, partnership?: string, returnTotalCount?: boolean, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        announcementGet: async (count?: number, before?: string, q?: string, publishedAt?: string, expiresAt?: string, partnership?: string, returnTotalCount?: boolean, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/announcements`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -3094,6 +3096,18 @@ export const AnnouncementsApiAxiosParamCreator = function (configuration?: Confi
 
             if (q !== undefined) {
                 localVarQueryParameter['q'] = q;
+            }
+
+            if (publishedAt !== undefined) {
+                localVarQueryParameter['publishedAt'] = (publishedAt as any instanceof Date) ?
+                    (publishedAt as any).toISOString() :
+                    publishedAt;
+            }
+
+            if (expiresAt !== undefined) {
+                localVarQueryParameter['expiresAt'] = (expiresAt as any instanceof Date) ?
+                    (expiresAt as any).toISOString() :
+                    expiresAt;
             }
 
             if (partnership !== undefined) {
@@ -3195,13 +3209,15 @@ export const AnnouncementsApiFp = function(configuration?: Configuration) {
          * @param {number} [count] Number of announcements to fetch
          * @param {string} [before] Announcements to fetch before
          * @param {string} [q] Search by category, title etc.
+         * @param {string} [publishedAt] Optional filter to retrieve announcements published on or before a specific date and time. If provided, only announcements published on or before the given timestamp will be returned. 
+         * @param {string} [expiresAt] Optional filter to retrieve announcements that are valid until a specific date and time. - If set to a specific timestamp, only announcements that expire on or after the given timestamp will be returned. - If set to &#x60;null&#x60;, only announcements with no expiration date will be returned. 
          * @param {string} [partnership] Search by partnership
          * @param {boolean} [returnTotalCount] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async announcementGet(count?: number, before?: string, q?: string, partnership?: string, returnTotalCount?: boolean, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AnnouncementRetrievalResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.announcementGet(count, before, q, partnership, returnTotalCount, options);
+        async announcementGet(count?: number, before?: string, q?: string, publishedAt?: string, expiresAt?: string, partnership?: string, returnTotalCount?: boolean, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AnnouncementRetrievalResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.announcementGet(count, before, q, publishedAt, expiresAt, partnership, returnTotalCount, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -3254,7 +3270,7 @@ export const AnnouncementsApiFactory = function (configuration?: Configuration, 
          * @throws {RequiredError}
          */
         announcementGet(requestParameters: AnnouncementsApiAnnouncementGetRequest = {}, options?: AxiosRequestConfig): AxiosPromise<AnnouncementRetrievalResponse> {
-            return localVarFp.announcementGet(requestParameters.count, requestParameters.before, requestParameters.q, requestParameters.partnership, requestParameters.returnTotalCount, options).then((request) => request(axios, basePath));
+            return localVarFp.announcementGet(requestParameters.count, requestParameters.before, requestParameters.q, requestParameters.publishedAt, requestParameters.expiresAt, requestParameters.partnership, requestParameters.returnTotalCount, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -3323,6 +3339,20 @@ export interface AnnouncementsApiAnnouncementGetRequest {
      * @memberof AnnouncementsApiAnnouncementGet
      */
     readonly q?: string
+
+    /**
+     * Optional filter to retrieve announcements published on or before a specific date and time. If provided, only announcements published on or before the given timestamp will be returned. 
+     * @type {string}
+     * @memberof AnnouncementsApiAnnouncementGet
+     */
+    readonly publishedAt?: string
+
+    /**
+     * Optional filter to retrieve announcements that are valid until a specific date and time. - If set to a specific timestamp, only announcements that expire on or after the given timestamp will be returned. - If set to &#x60;null&#x60;, only announcements with no expiration date will be returned. 
+     * @type {string}
+     * @memberof AnnouncementsApiAnnouncementGet
+     */
+    readonly expiresAt?: string
 
     /**
      * Search by partnership
@@ -3400,7 +3430,7 @@ export class AnnouncementsApi extends BaseAPI {
      * @memberof AnnouncementsApi
      */
     public announcementGet(requestParameters: AnnouncementsApiAnnouncementGetRequest = {}, options?: AxiosRequestConfig) {
-        return AnnouncementsApiFp(this.configuration).announcementGet(requestParameters.count, requestParameters.before, requestParameters.q, requestParameters.partnership, requestParameters.returnTotalCount, options).then((request) => request(this.axios, this.basePath));
+        return AnnouncementsApiFp(this.configuration).announcementGet(requestParameters.count, requestParameters.before, requestParameters.q, requestParameters.publishedAt, requestParameters.expiresAt, requestParameters.partnership, requestParameters.returnTotalCount, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
