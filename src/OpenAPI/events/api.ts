@@ -289,6 +289,12 @@ export interface AccountInsertDataSettings {
     'nativeChatActionSync'?: boolean;
     /**
      * 
+     * @type {boolean}
+     * @memberof AccountInsertDataSettings
+     */
+    'unArchiveOnNewMessage'?: boolean;
+    /**
+     * 
      * @type {AccountInsertDataSettingsNewChatsAssignee}
      * @memberof AccountInsertDataSettings
      */
@@ -9115,6 +9121,12 @@ export interface TagInsertData {
     'filters'?: object | null;
     /**
      * 
+     * @type {string}
+     * @memberof TagInsertData
+     */
+    'color'?: string;
+    /**
+     * 
      * @type {TagInsertDataValidation}
      * @memberof TagInsertData
      */
@@ -9243,6 +9255,12 @@ export interface TagUpdateData {
      * @memberof TagUpdateData
      */
     'filters'?: object | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof TagUpdateData
+     */
+    'color'?: string;
     /**
      * 
      * @type {TagInsertDataValidation}
