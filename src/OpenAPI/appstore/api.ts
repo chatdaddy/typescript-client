@@ -1124,7 +1124,7 @@ export const ExtensionsApiAxiosParamCreator = function (configuration?: Configur
             }
 
             if (publishedState) {
-                localVarQueryParameter['publishedState'] = publishedState;
+                localVarQueryParameter['publishedState[]'] = publishedState;
             }
 
             if (ids) {
