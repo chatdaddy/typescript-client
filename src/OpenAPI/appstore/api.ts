@@ -1077,12 +1077,12 @@ export const ExtensionsApiAxiosParamCreator = function (configuration?: Configur
          * @param {string} [teamId] The teamId to get extensions from
          * @param {AppLocation} [location] The location to get extensions from
          * @param {ExtensionType} [type] The type to get extensions from
-         * @param {'private' | 'underReview' | 'published'} [publishedState] The publishedState to get extensions from
+         * @param {Array<'private' | 'underReview' | 'published'>} [publishedState] The publishedStates to get extensions from
          * @param {Array<string>} [ids] The ids to get extensions from
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getExtensions: async (count?: number, q?: string, cursor?: number, teamId?: string, location?: AppLocation, type?: ExtensionType, publishedState?: 'private' | 'underReview' | 'published', ids?: Array<string>, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getExtensions: async (count?: number, q?: string, cursor?: number, teamId?: string, location?: AppLocation, type?: ExtensionType, publishedState?: Array<'private' | 'underReview' | 'published'>, ids?: Array<string>, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/extensions`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -1123,7 +1123,7 @@ export const ExtensionsApiAxiosParamCreator = function (configuration?: Configur
                 localVarQueryParameter['type'] = type;
             }
 
-            if (publishedState !== undefined) {
+            if (publishedState) {
                 localVarQueryParameter['publishedState'] = publishedState;
             }
 
@@ -1227,12 +1227,12 @@ export const ExtensionsApiFp = function(configuration?: Configuration) {
          * @param {string} [teamId] The teamId to get extensions from
          * @param {AppLocation} [location] The location to get extensions from
          * @param {ExtensionType} [type] The type to get extensions from
-         * @param {'private' | 'underReview' | 'published'} [publishedState] The publishedState to get extensions from
+         * @param {Array<'private' | 'underReview' | 'published'>} [publishedState] The publishedStates to get extensions from
          * @param {Array<string>} [ids] The ids to get extensions from
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getExtensions(count?: number, q?: string, cursor?: number, teamId?: string, location?: AppLocation, type?: ExtensionType, publishedState?: 'private' | 'underReview' | 'published', ids?: Array<string>, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetExtensions200Response>> {
+        async getExtensions(count?: number, q?: string, cursor?: number, teamId?: string, location?: AppLocation, type?: ExtensionType, publishedState?: Array<'private' | 'underReview' | 'published'>, ids?: Array<string>, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetExtensions200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getExtensions(count, q, cursor, teamId, location, type, publishedState, ids, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -1378,11 +1378,11 @@ export interface ExtensionsApiGetExtensionsRequest {
     readonly type?: ExtensionType
 
     /**
-     * The publishedState to get extensions from
-     * @type {'private' | 'underReview' | 'published'}
+     * The publishedStates to get extensions from
+     * @type {Array<'private' | 'underReview' | 'published'>}
      * @memberof ExtensionsApiGetExtensions
      */
-    readonly publishedState?: 'private' | 'underReview' | 'published'
+    readonly publishedState?: Array<'private' | 'underReview' | 'published'>
 
     /**
      * The ids to get extensions from
