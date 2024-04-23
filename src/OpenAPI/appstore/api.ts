@@ -1077,7 +1077,7 @@ export const ExtensionsApiAxiosParamCreator = function (configuration?: Configur
          * @param {string} [teamId] The teamId to get extensions from
          * @param {AppLocation} [location] The location to get extensions from
          * @param {ExtensionType} [type] The type to get extensions from
-         * @param {Array<'private' | 'underReview' | 'published'>} [publishedState] The publishedStates to get extensions from
+         * @param {Array<'private' | 'underReview' | 'published'>} [publishedState] The publishedState of the extension
          * @param {Array<string>} [ids] The ids to get extensions from
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1124,7 +1124,7 @@ export const ExtensionsApiAxiosParamCreator = function (configuration?: Configur
             }
 
             if (publishedState) {
-                localVarQueryParameter['publishedState[]'] = publishedState;
+                localVarQueryParameter['publishedState'] = publishedState;
             }
 
             if (ids) {
@@ -1227,7 +1227,7 @@ export const ExtensionsApiFp = function(configuration?: Configuration) {
          * @param {string} [teamId] The teamId to get extensions from
          * @param {AppLocation} [location] The location to get extensions from
          * @param {ExtensionType} [type] The type to get extensions from
-         * @param {Array<'private' | 'underReview' | 'published'>} [publishedState] The publishedStates to get extensions from
+         * @param {Array<'private' | 'underReview' | 'published'>} [publishedState] The publishedState of the extension
          * @param {Array<string>} [ids] The ids to get extensions from
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1378,7 +1378,7 @@ export interface ExtensionsApiGetExtensionsRequest {
     readonly type?: ExtensionType
 
     /**
-     * The publishedStates to get extensions from
+     * The publishedState of the extension
      * @type {Array<'private' | 'underReview' | 'published'>}
      * @memberof ExtensionsApiGetExtensions
      */
