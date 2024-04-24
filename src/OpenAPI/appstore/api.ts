@@ -1592,11 +1592,11 @@ export const InstalledExtensionsApiAxiosParamCreator = function (configuration?:
         /**
          * 
          * @summary Uninstall an extension
-         * @param {string} extensionId The extensionId to uninstall
+         * @param {number} extensionId The extensionId to uninstall
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        uninstallExtension: async (extensionId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        uninstallExtension: async (extensionId: number, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'extensionId' is not null or undefined
             assertParamExists('uninstallExtension', 'extensionId', extensionId)
             const localVarPath = `/installed-extensions`;
@@ -1707,11 +1707,11 @@ export const InstalledExtensionsApiFp = function(configuration?: Configuration) 
         /**
          * 
          * @summary Uninstall an extension
-         * @param {string} extensionId The extensionId to uninstall
+         * @param {number} extensionId The extensionId to uninstall
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async uninstallExtension(extensionId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async uninstallExtension(extensionId: number, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.uninstallExtension(extensionId, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -1829,10 +1829,10 @@ export interface InstalledExtensionsApiInstallExtensionRequest {
 export interface InstalledExtensionsApiUninstallExtensionRequest {
     /**
      * The extensionId to uninstall
-     * @type {string}
+     * @type {number}
      * @memberof InstalledExtensionsApiUninstallExtension
      */
-    readonly extensionId: string
+    readonly extensionId: number
 }
 
 /**
@@ -1955,11 +1955,11 @@ export const ListingsApiAxiosParamCreator = function (configuration?: Configurat
         /**
          * 
          * @summary Delete a listing
-         * @param {number} id The id of the listing to delete
+         * @param {string} id The id of the listing to delete
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteListing: async (id: number, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        deleteListing: async (id: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
             assertParamExists('deleteListing', 'id', id)
             const localVarPath = `/listing/{id}`
@@ -2177,11 +2177,11 @@ export const ListingsApiFp = function(configuration?: Configuration) {
         /**
          * 
          * @summary Delete a listing
-         * @param {number} id The id of the listing to delete
+         * @param {string} id The id of the listing to delete
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteListing(id: number, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async deleteListing(id: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.deleteListing(id, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -2312,10 +2312,10 @@ export interface ListingsApiCreateListingRequest {
 export interface ListingsApiDeleteListingRequest {
     /**
      * The id of the listing to delete
-     * @type {number}
+     * @type {string}
      * @memberof ListingsApiDeleteListing
      */
-    readonly id: number
+    readonly id: string
 }
 
 /**
