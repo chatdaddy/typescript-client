@@ -2187,7 +2187,7 @@ export const ListingsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async installListing(installListingRequest: InstallListingRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async installListing(installListingRequest: InstallListingRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<InstalledExtension>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.installListing(installListingRequest, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -2250,7 +2250,7 @@ export const ListingsApiFactory = function (configuration?: Configuration, baseP
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        installListing(requestParameters: ListingsApiInstallListingRequest, options?: AxiosRequestConfig): AxiosPromise<void> {
+        installListing(requestParameters: ListingsApiInstallListingRequest, options?: AxiosRequestConfig): AxiosPromise<InstalledExtension> {
             return localVarFp.installListing(requestParameters.installListingRequest, options).then((request) => request(axios, basePath));
         },
         /**
