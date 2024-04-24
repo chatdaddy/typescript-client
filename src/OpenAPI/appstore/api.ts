@@ -457,25 +457,6 @@ export type HTTPRequestOptionsMethodEnum = typeof HTTPRequestOptionsMethodEnum[k
 /**
  * 
  * @export
- * @interface InstallExtensionRequest
- */
-export interface InstallExtensionRequest {
-    /**
-     * 
-     * @type {number}
-     * @memberof InstallExtensionRequest
-     */
-    'extensionId': number;
-    /**
-     * 
-     * @type {{ [key: string]: any; }}
-     * @memberof InstallExtensionRequest
-     */
-    'variables'?: { [key: string]: any; };
-}
-/**
- * 
- * @export
  * @interface InstallListingRequest
  */
 export interface InstallListingRequest {
@@ -506,6 +487,12 @@ export interface InstalledExtension {
     'teamId': string;
     /**
      * 
+     * @type {string}
+     * @memberof InstalledExtension
+     */
+    'nickname'?: string;
+    /**
+     * 
      * @type {number}
      * @memberof InstalledExtension
      */
@@ -522,6 +509,56 @@ export interface InstalledExtension {
      * @memberof InstalledExtension
      */
     'extension'?: Extension;
+}
+/**
+ * 
+ * @export
+ * @interface InstalledExtensionCreate
+ */
+export interface InstalledExtensionCreate {
+    /**
+     * 
+     * @type {string}
+     * @memberof InstalledExtensionCreate
+     */
+    'nickname'?: string;
+    /**
+     * 
+     * @type {{ [key: string]: any; }}
+     * @memberof InstalledExtensionCreate
+     */
+    'variables'?: { [key: string]: any; };
+    /**
+     * 
+     * @type {number}
+     * @memberof InstalledExtensionCreate
+     */
+    'extensionId': number;
+    /**
+     * 
+     * @type {string}
+     * @memberof InstalledExtensionCreate
+     */
+    'teamId': string;
+}
+/**
+ * 
+ * @export
+ * @interface InstalledExtensionUpdate
+ */
+export interface InstalledExtensionUpdate {
+    /**
+     * 
+     * @type {string}
+     * @memberof InstalledExtensionUpdate
+     */
+    'nickname'?: string;
+    /**
+     * 
+     * @type {{ [key: string]: any; }}
+     * @memberof InstalledExtensionUpdate
+     */
+    'variables'?: { [key: string]: any; };
 }
 /**
  * 
@@ -963,25 +1000,6 @@ export interface PublishedMessageFlow {
      * @memberof PublishedMessageFlow
      */
     'publishedAt'?: string;
-}
-/**
- * 
- * @export
- * @interface UpdateInstalledExtensionRequest
- */
-export interface UpdateInstalledExtensionRequest {
-    /**
-     * 
-     * @type {string}
-     * @memberof UpdateInstalledExtensionRequest
-     */
-    'installedId': string;
-    /**
-     * 
-     * @type {{ [key: string]: any; }}
-     * @memberof UpdateInstalledExtensionRequest
-     */
-    'variables'?: { [key: string]: any; };
 }
 
 /**
@@ -1528,13 +1546,13 @@ export const InstalledExtensionsApiAxiosParamCreator = function (configuration?:
         /**
          * 
          * @summary Install an extension
-         * @param {InstallExtensionRequest} installExtensionRequest The extension to install
+         * @param {InstalledExtensionCreate} installedExtensionCreate The extension to install
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        installExtension: async (installExtensionRequest: InstallExtensionRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'installExtensionRequest' is not null or undefined
-            assertParamExists('installExtension', 'installExtensionRequest', installExtensionRequest)
+        installExtension: async (installedExtensionCreate: InstalledExtensionCreate, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'installedExtensionCreate' is not null or undefined
+            assertParamExists('installExtension', 'installedExtensionCreate', installedExtensionCreate)
             const localVarPath = `/installed-extensions`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -1558,7 +1576,7 @@ export const InstalledExtensionsApiAxiosParamCreator = function (configuration?:
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(installExtensionRequest, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(installedExtensionCreate, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -1609,13 +1627,13 @@ export const InstalledExtensionsApiAxiosParamCreator = function (configuration?:
         /**
          * 
          * @summary Update an installed extension
-         * @param {UpdateInstalledExtensionRequest} updateInstalledExtensionRequest The installed extension to update
+         * @param {InstalledExtensionUpdate} installedExtensionUpdate The installed extension to update
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        updateInstalledExtension: async (updateInstalledExtensionRequest: UpdateInstalledExtensionRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'updateInstalledExtensionRequest' is not null or undefined
-            assertParamExists('updateInstalledExtension', 'updateInstalledExtensionRequest', updateInstalledExtensionRequest)
+        updateInstalledExtension: async (installedExtensionUpdate: InstalledExtensionUpdate, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'installedExtensionUpdate' is not null or undefined
+            assertParamExists('updateInstalledExtension', 'installedExtensionUpdate', installedExtensionUpdate)
             const localVarPath = `/installed-extensions`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -1639,7 +1657,7 @@ export const InstalledExtensionsApiAxiosParamCreator = function (configuration?:
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(updateInstalledExtensionRequest, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(installedExtensionUpdate, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -1672,12 +1690,12 @@ export const InstalledExtensionsApiFp = function(configuration?: Configuration) 
         /**
          * 
          * @summary Install an extension
-         * @param {InstallExtensionRequest} installExtensionRequest The extension to install
+         * @param {InstalledExtensionCreate} installedExtensionCreate The extension to install
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async installExtension(installExtensionRequest: InstallExtensionRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.installExtension(installExtensionRequest, options);
+        async installExtension(installedExtensionCreate: InstalledExtensionCreate, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<InstalledExtension>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.installExtension(installedExtensionCreate, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -1694,12 +1712,12 @@ export const InstalledExtensionsApiFp = function(configuration?: Configuration) 
         /**
          * 
          * @summary Update an installed extension
-         * @param {UpdateInstalledExtensionRequest} updateInstalledExtensionRequest The installed extension to update
+         * @param {InstalledExtensionUpdate} installedExtensionUpdate The installed extension to update
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async updateInstalledExtension(updateInstalledExtensionRequest: UpdateInstalledExtensionRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.updateInstalledExtension(updateInstalledExtensionRequest, options);
+        async updateInstalledExtension(installedExtensionUpdate: InstalledExtensionUpdate, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.updateInstalledExtension(installedExtensionUpdate, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
     }
@@ -1729,8 +1747,8 @@ export const InstalledExtensionsApiFactory = function (configuration?: Configura
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        installExtension(requestParameters: InstalledExtensionsApiInstallExtensionRequest, options?: AxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.installExtension(requestParameters.installExtensionRequest, options).then((request) => request(axios, basePath));
+        installExtension(requestParameters: InstalledExtensionsApiInstallExtensionRequest, options?: AxiosRequestConfig): AxiosPromise<InstalledExtension> {
+            return localVarFp.installExtension(requestParameters.installedExtensionCreate, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -1750,7 +1768,7 @@ export const InstalledExtensionsApiFactory = function (configuration?: Configura
          * @throws {RequiredError}
          */
         updateInstalledExtension(requestParameters: InstalledExtensionsApiUpdateInstalledExtensionRequest, options?: AxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.updateInstalledExtension(requestParameters.updateInstalledExtensionRequest, options).then((request) => request(axios, basePath));
+            return localVarFp.updateInstalledExtension(requestParameters.installedExtensionUpdate, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -1791,10 +1809,10 @@ export interface InstalledExtensionsApiGetInstalledExtensionsRequest {
 export interface InstalledExtensionsApiInstallExtensionRequest {
     /**
      * The extension to install
-     * @type {InstallExtensionRequest}
+     * @type {InstalledExtensionCreate}
      * @memberof InstalledExtensionsApiInstallExtension
      */
-    readonly installExtensionRequest: InstallExtensionRequest
+    readonly installedExtensionCreate: InstalledExtensionCreate
 }
 
 /**
@@ -1819,10 +1837,10 @@ export interface InstalledExtensionsApiUninstallExtensionRequest {
 export interface InstalledExtensionsApiUpdateInstalledExtensionRequest {
     /**
      * The installed extension to update
-     * @type {UpdateInstalledExtensionRequest}
+     * @type {InstalledExtensionUpdate}
      * @memberof InstalledExtensionsApiUpdateInstalledExtension
      */
-    readonly updateInstalledExtensionRequest: UpdateInstalledExtensionRequest
+    readonly installedExtensionUpdate: InstalledExtensionUpdate
 }
 
 /**
@@ -1853,7 +1871,7 @@ export class InstalledExtensionsApi extends BaseAPI {
      * @memberof InstalledExtensionsApi
      */
     public installExtension(requestParameters: InstalledExtensionsApiInstallExtensionRequest, options?: AxiosRequestConfig) {
-        return InstalledExtensionsApiFp(this.configuration).installExtension(requestParameters.installExtensionRequest, options).then((request) => request(this.axios, this.basePath));
+        return InstalledExtensionsApiFp(this.configuration).installExtension(requestParameters.installedExtensionCreate, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -1877,7 +1895,7 @@ export class InstalledExtensionsApi extends BaseAPI {
      * @memberof InstalledExtensionsApi
      */
     public updateInstalledExtension(requestParameters: InstalledExtensionsApiUpdateInstalledExtensionRequest, options?: AxiosRequestConfig) {
-        return InstalledExtensionsApiFp(this.configuration).updateInstalledExtension(requestParameters.updateInstalledExtensionRequest, options).then((request) => request(this.axios, this.basePath));
+        return InstalledExtensionsApiFp(this.configuration).updateInstalledExtension(requestParameters.installedExtensionUpdate, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
@@ -2187,7 +2205,7 @@ export const ListingsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async installListing(installListingRequest: InstallListingRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<InstalledExtension>> {
+        async installListing(installListingRequest: InstallListingRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.installListing(installListingRequest, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -2250,7 +2268,7 @@ export const ListingsApiFactory = function (configuration?: Configuration, baseP
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        installListing(requestParameters: ListingsApiInstallListingRequest, options?: AxiosRequestConfig): AxiosPromise<InstalledExtension> {
+        installListing(requestParameters: ListingsApiInstallListingRequest, options?: AxiosRequestConfig): AxiosPromise<void> {
             return localVarFp.installListing(requestParameters.installListingRequest, options).then((request) => request(axios, basePath));
         },
         /**
