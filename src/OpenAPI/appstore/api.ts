@@ -76,10 +76,10 @@ export interface DataType {
 export interface Extension {
     /**
      * 
-     * @type {string}
+     * @type {number}
      * @memberof Extension
      */
-    'id': string;
+    'id': number;
     /**
      * 
      * @type {string}
@@ -269,10 +269,10 @@ export type ExtensionType = typeof ExtensionType[keyof typeof ExtensionType];
 export interface ExtensionUpdate {
     /**
      * 
-     * @type {string}
+     * @type {number}
      * @memberof ExtensionUpdate
      */
-    'id'?: string;
+    'id'?: number;
     /**
      * 
      * @type {string}
@@ -475,10 +475,10 @@ export interface InstallListingRequest {
 export interface InstalledExtension {
     /**
      * 
-     * @type {string}
+     * @type {number}
      * @memberof InstalledExtension
      */
-    'id': string;
+    'id': number;
     /**
      * 
      * @type {string}
@@ -549,10 +549,10 @@ export interface InstalledExtensionCreate {
 export interface InstalledExtensionUpdate {
     /**
      * 
-     * @type {string}
+     * @type {number}
      * @memberof InstalledExtensionUpdate
      */
-    'installedId'?: string;
+    'installedId'?: number;
     /**
      * 
      * @type {string}
@@ -1057,11 +1057,11 @@ export const ExtensionsApiAxiosParamCreator = function (configuration?: Configur
         /**
          * 
          * @summary Delete an extension
-         * @param {string} id The id of the extension to delete
+         * @param {number} id The id of the extension to delete
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteExtension: async (id: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        deleteExtension: async (id: number, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
             assertParamExists('deleteExtension', 'id', id)
             const localVarPath = `/extensions/{id}`
@@ -1102,11 +1102,11 @@ export const ExtensionsApiAxiosParamCreator = function (configuration?: Configur
          * @param {AppLocation} [location] The location to get extensions from
          * @param {ExtensionType} [type] The type to get extensions from
          * @param {Array<'private' | 'underReview' | 'published'>} [publishedState] The publishedState of the extension
-         * @param {Array<string>} [ids] The ids to get extensions from
+         * @param {Array<number>} [ids] The ids to get extensions from
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getExtensions: async (count?: number, q?: string, cursor?: number, teamId?: string, location?: AppLocation, type?: ExtensionType, publishedState?: Array<'private' | 'underReview' | 'published'>, ids?: Array<string>, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getExtensions: async (count?: number, q?: string, cursor?: number, teamId?: string, location?: AppLocation, type?: ExtensionType, publishedState?: Array<'private' | 'underReview' | 'published'>, ids?: Array<number>, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/extensions`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -1169,12 +1169,12 @@ export const ExtensionsApiAxiosParamCreator = function (configuration?: Configur
         /**
          * 
          * @summary Update an extension
-         * @param {string} id The id of the extension to update
+         * @param {number} id The id of the extension to update
          * @param {ExtensionUpdate} extensionUpdate The extension to update
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        updateExtension: async (id: string, extensionUpdate: ExtensionUpdate, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        updateExtension: async (id: number, extensionUpdate: ExtensionUpdate, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
             assertParamExists('updateExtension', 'id', id)
             // verify required parameter 'extensionUpdate' is not null or undefined
@@ -1234,11 +1234,11 @@ export const ExtensionsApiFp = function(configuration?: Configuration) {
         /**
          * 
          * @summary Delete an extension
-         * @param {string} id The id of the extension to delete
+         * @param {number} id The id of the extension to delete
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteExtension(id: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async deleteExtension(id: number, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.deleteExtension(id, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -1252,23 +1252,23 @@ export const ExtensionsApiFp = function(configuration?: Configuration) {
          * @param {AppLocation} [location] The location to get extensions from
          * @param {ExtensionType} [type] The type to get extensions from
          * @param {Array<'private' | 'underReview' | 'published'>} [publishedState] The publishedState of the extension
-         * @param {Array<string>} [ids] The ids to get extensions from
+         * @param {Array<number>} [ids] The ids to get extensions from
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getExtensions(count?: number, q?: string, cursor?: number, teamId?: string, location?: AppLocation, type?: ExtensionType, publishedState?: Array<'private' | 'underReview' | 'published'>, ids?: Array<string>, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetExtensions200Response>> {
+        async getExtensions(count?: number, q?: string, cursor?: number, teamId?: string, location?: AppLocation, type?: ExtensionType, publishedState?: Array<'private' | 'underReview' | 'published'>, ids?: Array<number>, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetExtensions200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getExtensions(count, q, cursor, teamId, location, type, publishedState, ids, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
          * 
          * @summary Update an extension
-         * @param {string} id The id of the extension to update
+         * @param {number} id The id of the extension to update
          * @param {ExtensionUpdate} extensionUpdate The extension to update
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async updateExtension(id: string, extensionUpdate: ExtensionUpdate, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Extension>> {
+        async updateExtension(id: number, extensionUpdate: ExtensionUpdate, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Extension>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.updateExtension(id, extensionUpdate, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -1347,10 +1347,10 @@ export interface ExtensionsApiCreateExtensionRequest {
 export interface ExtensionsApiDeleteExtensionRequest {
     /**
      * The id of the extension to delete
-     * @type {string}
+     * @type {number}
      * @memberof ExtensionsApiDeleteExtension
      */
-    readonly id: string
+    readonly id: number
 }
 
 /**
@@ -1410,10 +1410,10 @@ export interface ExtensionsApiGetExtensionsRequest {
 
     /**
      * The ids to get extensions from
-     * @type {Array<string>}
+     * @type {Array<number>}
      * @memberof ExtensionsApiGetExtensions
      */
-    readonly ids?: Array<string>
+    readonly ids?: Array<number>
 }
 
 /**
@@ -1424,10 +1424,10 @@ export interface ExtensionsApiGetExtensionsRequest {
 export interface ExtensionsApiUpdateExtensionRequest {
     /**
      * The id of the extension to update
-     * @type {string}
+     * @type {number}
      * @memberof ExtensionsApiUpdateExtension
      */
-    readonly id: string
+    readonly id: number
 
     /**
      * The extension to update
@@ -1505,11 +1505,11 @@ export const InstalledExtensionsApiAxiosParamCreator = function (configuration?:
          * @summary Get installed extensions
          * @param {number} [count] The number of installed extensions to get
          * @param {number} [cursor] The cursor to get installed extensions from
-         * @param {string} [extensionId] The extensionId to get installed extensions from
+         * @param {number} [extensionId] The extensionId to get installed extensions from
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getInstalledExtensions: async (count?: number, cursor?: number, extensionId?: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getInstalledExtensions: async (count?: number, cursor?: number, extensionId?: number, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/installed-extensions`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -1685,11 +1685,11 @@ export const InstalledExtensionsApiFp = function(configuration?: Configuration) 
          * @summary Get installed extensions
          * @param {number} [count] The number of installed extensions to get
          * @param {number} [cursor] The cursor to get installed extensions from
-         * @param {string} [extensionId] The extensionId to get installed extensions from
+         * @param {number} [extensionId] The extensionId to get installed extensions from
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getInstalledExtensions(count?: number, cursor?: number, extensionId?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetInstalledExtensions200Response>> {
+        async getInstalledExtensions(count?: number, cursor?: number, extensionId?: number, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetInstalledExtensions200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getInstalledExtensions(count, cursor, extensionId, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -1801,10 +1801,10 @@ export interface InstalledExtensionsApiGetInstalledExtensionsRequest {
 
     /**
      * The extensionId to get installed extensions from
-     * @type {string}
+     * @type {number}
      * @memberof InstalledExtensionsApiGetInstalledExtensions
      */
-    readonly extensionId?: string
+    readonly extensionId?: number
 }
 
 /**
