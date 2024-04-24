@@ -534,12 +534,6 @@ export interface InstalledExtensionCreate {
      * @memberof InstalledExtensionCreate
      */
     'extensionId': number;
-    /**
-     * 
-     * @type {string}
-     * @memberof InstalledExtensionCreate
-     */
-    'teamId': string;
 }
 /**
  * 
