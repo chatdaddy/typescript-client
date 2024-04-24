@@ -1955,11 +1955,11 @@ export const ListingsApiAxiosParamCreator = function (configuration?: Configurat
         /**
          * 
          * @summary Delete a listing
-         * @param {string} id The id of the listing to delete
+         * @param {number} id The id of the listing to delete
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteListing: async (id: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        deleteListing: async (id: number, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
             assertParamExists('deleteListing', 'id', id)
             const localVarPath = `/listing/{id}`
@@ -2177,11 +2177,11 @@ export const ListingsApiFp = function(configuration?: Configuration) {
         /**
          * 
          * @summary Delete a listing
-         * @param {string} id The id of the listing to delete
+         * @param {number} id The id of the listing to delete
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteListing(id: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async deleteListing(id: number, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.deleteListing(id, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -2312,10 +2312,10 @@ export interface ListingsApiCreateListingRequest {
 export interface ListingsApiDeleteListingRequest {
     /**
      * The id of the listing to delete
-     * @type {string}
+     * @type {number}
      * @memberof ListingsApiDeleteListing
      */
-    readonly id: string
+    readonly id: number
 }
 
 /**
