@@ -552,6 +552,12 @@ export interface InstalledExtensionUpdate {
      * @type {string}
      * @memberof InstalledExtensionUpdate
      */
+    'installedId'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof InstalledExtensionUpdate
+     */
     'nickname'?: string;
     /**
      * 
