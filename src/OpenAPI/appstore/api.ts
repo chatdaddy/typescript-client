@@ -1716,7 +1716,7 @@ export const InstalledExtensionsApiFp = function(configuration?: Configuration) 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async updateInstalledExtension(installedExtensionUpdate: InstalledExtensionUpdate, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async updateInstalledExtension(installedExtensionUpdate: InstalledExtensionUpdate, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<InstalledExtension>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.updateInstalledExtension(installedExtensionUpdate, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -1767,7 +1767,7 @@ export const InstalledExtensionsApiFactory = function (configuration?: Configura
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        updateInstalledExtension(requestParameters: InstalledExtensionsApiUpdateInstalledExtensionRequest, options?: AxiosRequestConfig): AxiosPromise<void> {
+        updateInstalledExtension(requestParameters: InstalledExtensionsApiUpdateInstalledExtensionRequest, options?: AxiosRequestConfig): AxiosPromise<InstalledExtension> {
             return localVarFp.updateInstalledExtension(requestParameters.installedExtensionUpdate, options).then((request) => request(axios, basePath));
         },
     };
