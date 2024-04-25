@@ -2314,6 +2314,12 @@ export interface CrmBoardStagePost {
      * @memberof CrmBoardStagePost
      */
     'color': string;
+    /**
+     * Order of a ticket
+     * @type {number}
+     * @memberof CrmBoardStagePost
+     */
+    'index'?: number;
 }
 /**
  * 
@@ -4069,6 +4075,25 @@ export interface MessagesGet200Response {
 /**
  * 
  * @export
+ * @interface MessagesGetRangeParameter
+ */
+export interface MessagesGetRangeParameter {
+    /**
+     * An ISO formatted timestamp
+     * @type {string}
+     * @memberof MessagesGetRangeParameter
+     */
+    'start': string;
+    /**
+     * An ISO formatted timestamp
+     * @type {string}
+     * @memberof MessagesGetRangeParameter
+     */
+    'end': string;
+}
+/**
+ * 
+ * @export
  * @interface MessagesPatchPendingRequest
  */
 export interface MessagesPatchPendingRequest {
@@ -4140,25 +4165,6 @@ export interface MessagesSearch200Response {
      * @memberof MessagesSearch200Response
      */
     'chats'?: Array<Chat>;
-}
-/**
- * 
- * @export
- * @interface MessagesSearchRangeParameter
- */
-export interface MessagesSearchRangeParameter {
-    /**
-     * An ISO formatted timestamp
-     * @type {string}
-     * @memberof MessagesSearchRangeParameter
-     */
-    'start': string;
-    /**
-     * An ISO formatted timestamp
-     * @type {string}
-     * @memberof MessagesSearchRangeParameter
-     */
-    'end': string;
 }
 /**
  * 
@@ -11511,6 +11517,7 @@ export const MessagesApiAxiosParamCreator = function (configuration?: Configurat
          * @summary Fetch messages of the chat
          * @param {string} accountId 
          * @param {string} chatId 
+         * @param {MessagesGetRangeParameter} [range] Fetch messages only within this range. If not specified, fetches all messages
          * @param {string} [beforeId] Get messages before this message ID
          * @param {number} [count] Number of items to return
          * @param {boolean} [forceReload] Deletes all cached messages for this chat &amp; fetches messages again from the original API source
@@ -11522,7 +11529,7 @@ export const MessagesApiAxiosParamCreator = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        messagesGet: async (accountId: string, chatId: string, beforeId?: string, count?: number, forceReload?: boolean, fetchFromPlatform?: boolean, status?: 'note' | 'pending' | 'error', fromMe?: boolean, attachmentType?: Array<MessageAttachmentType>, includeCursorMessage?: boolean, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        messagesGet: async (accountId: string, chatId: string, range?: MessagesGetRangeParameter, beforeId?: string, count?: number, forceReload?: boolean, fetchFromPlatform?: boolean, status?: 'note' | 'pending' | 'error', fromMe?: boolean, attachmentType?: Array<MessageAttachmentType>, includeCursorMessage?: boolean, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'accountId' is not null or undefined
             assertParamExists('messagesGet', 'accountId', accountId)
             // verify required parameter 'chatId' is not null or undefined
@@ -11544,6 +11551,10 @@ export const MessagesApiAxiosParamCreator = function (configuration?: Configurat
             // authentication chatdaddy required
             // oauth required
             await setOAuthToObject(localVarHeaderParameter, "chatdaddy", [], configuration)
+
+            if (range !== undefined) {
+                localVarQueryParameter['range'] = range;
+            }
 
             if (beforeId !== undefined) {
                 localVarQueryParameter['beforeId'] = beforeId;
@@ -11791,16 +11802,16 @@ export const MessagesApiAxiosParamCreator = function (configuration?: Configurat
          * @summary Search messages
          * @param {string} q The search query
          * @param {Array<string>} [accountId] Get contacts only belonging to this account
+         * @param {MessagesGetRangeParameter} [range] Fetch messages only within this range. If not specified, fetches all messages
          * @param {number} [page] Page number to paginate through results
          * @param {number} [count] Number of items to return
          * @param {string} [chatId] 
          * @param {boolean} [returnChats] Return the corresponding chats alongside the messages
          * @param {boolean} [fromMe] Fetch only messages sent by me/or the other party. If not specified, fetches both
-         * @param {MessagesSearchRangeParameter} [range] Fetch messages only within this range. If not specified, fetches all messages
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        messagesSearch: async (q: string, accountId?: Array<string>, page?: number, count?: number, chatId?: string, returnChats?: boolean, fromMe?: boolean, range?: MessagesSearchRangeParameter, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        messagesSearch: async (q: string, accountId?: Array<string>, range?: MessagesGetRangeParameter, page?: number, count?: number, chatId?: string, returnChats?: boolean, fromMe?: boolean, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'q' is not null or undefined
             assertParamExists('messagesSearch', 'q', q)
             const localVarPath = `/messages/search`;
@@ -11821,6 +11832,10 @@ export const MessagesApiAxiosParamCreator = function (configuration?: Configurat
 
             if (accountId) {
                 localVarQueryParameter['accountId'] = accountId;
+            }
+
+            if (range !== undefined) {
+                localVarQueryParameter['range'] = range;
             }
 
             if (q !== undefined) {
@@ -11845,10 +11860,6 @@ export const MessagesApiAxiosParamCreator = function (configuration?: Configurat
 
             if (fromMe !== undefined) {
                 localVarQueryParameter['fromMe'] = fromMe;
-            }
-
-            if (range !== undefined) {
-                localVarQueryParameter['range'] = range;
             }
 
 
@@ -11966,6 +11977,7 @@ export const MessagesApiFp = function(configuration?: Configuration) {
          * @summary Fetch messages of the chat
          * @param {string} accountId 
          * @param {string} chatId 
+         * @param {MessagesGetRangeParameter} [range] Fetch messages only within this range. If not specified, fetches all messages
          * @param {string} [beforeId] Get messages before this message ID
          * @param {number} [count] Number of items to return
          * @param {boolean} [forceReload] Deletes all cached messages for this chat &amp; fetches messages again from the original API source
@@ -11977,8 +11989,8 @@ export const MessagesApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async messagesGet(accountId: string, chatId: string, beforeId?: string, count?: number, forceReload?: boolean, fetchFromPlatform?: boolean, status?: 'note' | 'pending' | 'error', fromMe?: boolean, attachmentType?: Array<MessageAttachmentType>, includeCursorMessage?: boolean, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MessagesGet200Response>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.messagesGet(accountId, chatId, beforeId, count, forceReload, fetchFromPlatform, status, fromMe, attachmentType, includeCursorMessage, options);
+        async messagesGet(accountId: string, chatId: string, range?: MessagesGetRangeParameter, beforeId?: string, count?: number, forceReload?: boolean, fetchFromPlatform?: boolean, status?: 'note' | 'pending' | 'error', fromMe?: boolean, attachmentType?: Array<MessageAttachmentType>, includeCursorMessage?: boolean, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MessagesGet200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.messagesGet(accountId, chatId, range, beforeId, count, forceReload, fetchFromPlatform, status, fromMe, attachmentType, includeCursorMessage, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -12040,17 +12052,17 @@ export const MessagesApiFp = function(configuration?: Configuration) {
          * @summary Search messages
          * @param {string} q The search query
          * @param {Array<string>} [accountId] Get contacts only belonging to this account
+         * @param {MessagesGetRangeParameter} [range] Fetch messages only within this range. If not specified, fetches all messages
          * @param {number} [page] Page number to paginate through results
          * @param {number} [count] Number of items to return
          * @param {string} [chatId] 
          * @param {boolean} [returnChats] Return the corresponding chats alongside the messages
          * @param {boolean} [fromMe] Fetch only messages sent by me/or the other party. If not specified, fetches both
-         * @param {MessagesSearchRangeParameter} [range] Fetch messages only within this range. If not specified, fetches all messages
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async messagesSearch(q: string, accountId?: Array<string>, page?: number, count?: number, chatId?: string, returnChats?: boolean, fromMe?: boolean, range?: MessagesSearchRangeParameter, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MessagesSearch200Response>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.messagesSearch(q, accountId, page, count, chatId, returnChats, fromMe, range, options);
+        async messagesSearch(q: string, accountId?: Array<string>, range?: MessagesGetRangeParameter, page?: number, count?: number, chatId?: string, returnChats?: boolean, fromMe?: boolean, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MessagesSearch200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.messagesSearch(q, accountId, range, page, count, chatId, returnChats, fromMe, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -12113,7 +12125,7 @@ export const MessagesApiFactory = function (configuration?: Configuration, baseP
          * @throws {RequiredError}
          */
         messagesGet(requestParameters: MessagesApiMessagesGetRequest, options?: AxiosRequestConfig): AxiosPromise<MessagesGet200Response> {
-            return localVarFp.messagesGet(requestParameters.accountId, requestParameters.chatId, requestParameters.beforeId, requestParameters.count, requestParameters.forceReload, requestParameters.fetchFromPlatform, requestParameters.status, requestParameters.fromMe, requestParameters.attachmentType, requestParameters.includeCursorMessage, options).then((request) => request(axios, basePath));
+            return localVarFp.messagesGet(requestParameters.accountId, requestParameters.chatId, requestParameters.range, requestParameters.beforeId, requestParameters.count, requestParameters.forceReload, requestParameters.fetchFromPlatform, requestParameters.status, requestParameters.fromMe, requestParameters.attachmentType, requestParameters.includeCursorMessage, options).then((request) => request(axios, basePath));
         },
         /**
          * Can reschedule a message, update the content of a note or mark it as resolved 
@@ -12162,7 +12174,7 @@ export const MessagesApiFactory = function (configuration?: Configuration, baseP
          * @throws {RequiredError}
          */
         messagesSearch(requestParameters: MessagesApiMessagesSearchRequest, options?: AxiosRequestConfig): AxiosPromise<MessagesSearch200Response> {
-            return localVarFp.messagesSearch(requestParameters.q, requestParameters.accountId, requestParameters.page, requestParameters.count, requestParameters.chatId, requestParameters.returnChats, requestParameters.fromMe, requestParameters.range, options).then((request) => request(axios, basePath));
+            return localVarFp.messagesSearch(requestParameters.q, requestParameters.accountId, requestParameters.range, requestParameters.page, requestParameters.count, requestParameters.chatId, requestParameters.returnChats, requestParameters.fromMe, options).then((request) => request(axios, basePath));
         },
         /**
          * Send a message with text and/or attachments. The `text` property can be used as a [mustache](https://mustache.github.io) template which automatically prefills data from the contact\'s details including **custom fields**. Some examples:   1. `{\"text\": \"Hello there {{name}}\"}` will automatically pre-fill the contact\'s name (if present)   2. `{\"text\": \"Hello {{name}} your number is {{phoneNumber}}\"}` will automatically pre-fill the contact\'s name & phone number   3. `{\"text\": \"Hello {{name}} your pet name is {{pet name}}\"}` will automatically pre-fill `petName` if the contact has such a custom field
@@ -12287,6 +12299,13 @@ export interface MessagesApiMessagesGetRequest {
      * @memberof MessagesApiMessagesGet
      */
     readonly chatId: string
+
+    /**
+     * Fetch messages only within this range. If not specified, fetches all messages
+     * @type {MessagesGetRangeParameter}
+     * @memberof MessagesApiMessagesGet
+     */
+    readonly range?: MessagesGetRangeParameter
 
     /**
      * Get messages before this message ID
@@ -12499,6 +12518,13 @@ export interface MessagesApiMessagesSearchRequest {
     readonly accountId?: Array<string>
 
     /**
+     * Fetch messages only within this range. If not specified, fetches all messages
+     * @type {MessagesGetRangeParameter}
+     * @memberof MessagesApiMessagesSearch
+     */
+    readonly range?: MessagesGetRangeParameter
+
+    /**
      * Page number to paginate through results
      * @type {number}
      * @memberof MessagesApiMessagesSearch
@@ -12532,13 +12558,6 @@ export interface MessagesApiMessagesSearchRequest {
      * @memberof MessagesApiMessagesSearch
      */
     readonly fromMe?: boolean
-
-    /**
-     * Fetch messages only within this range. If not specified, fetches all messages
-     * @type {MessagesSearchRangeParameter}
-     * @memberof MessagesApiMessagesSearch
-     */
-    readonly range?: MessagesSearchRangeParameter
 }
 
 /**
@@ -12620,7 +12639,7 @@ export class MessagesApi extends BaseAPI {
      * @memberof MessagesApi
      */
     public messagesGet(requestParameters: MessagesApiMessagesGetRequest, options?: AxiosRequestConfig) {
-        return MessagesApiFp(this.configuration).messagesGet(requestParameters.accountId, requestParameters.chatId, requestParameters.beforeId, requestParameters.count, requestParameters.forceReload, requestParameters.fetchFromPlatform, requestParameters.status, requestParameters.fromMe, requestParameters.attachmentType, requestParameters.includeCursorMessage, options).then((request) => request(this.axios, this.basePath));
+        return MessagesApiFp(this.configuration).messagesGet(requestParameters.accountId, requestParameters.chatId, requestParameters.range, requestParameters.beforeId, requestParameters.count, requestParameters.forceReload, requestParameters.fetchFromPlatform, requestParameters.status, requestParameters.fromMe, requestParameters.attachmentType, requestParameters.includeCursorMessage, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -12679,7 +12698,7 @@ export class MessagesApi extends BaseAPI {
      * @memberof MessagesApi
      */
     public messagesSearch(requestParameters: MessagesApiMessagesSearchRequest, options?: AxiosRequestConfig) {
-        return MessagesApiFp(this.configuration).messagesSearch(requestParameters.q, requestParameters.accountId, requestParameters.page, requestParameters.count, requestParameters.chatId, requestParameters.returnChats, requestParameters.fromMe, requestParameters.range, options).then((request) => request(this.axios, this.basePath));
+        return MessagesApiFp(this.configuration).messagesSearch(requestParameters.q, requestParameters.accountId, requestParameters.range, requestParameters.page, requestParameters.count, requestParameters.chatId, requestParameters.returnChats, requestParameters.fromMe, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
