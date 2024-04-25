@@ -113,11 +113,17 @@ export interface AnnouncementMetadata {
      */
     'updatedAt'?: string;
     /**
-     * User who created the Announcement
-     * @type {string}
+     * 
+     * @type {AnnouncementUser}
      * @memberof AnnouncementMetadata
      */
-    'createdBy'?: string;
+    'createdBy'?: AnnouncementUser;
+    /**
+     * 
+     * @type {AnnouncementUser}
+     * @memberof AnnouncementMetadata
+     */
+    'updatedBy'?: AnnouncementUser;
     /**
      * Category of the Announcement
      * @type {string}
@@ -284,6 +290,25 @@ export interface AnnouncementRetrievalResponse {
      * @memberof AnnouncementRetrievalResponse
      */
     'totalCount'?: number;
+}
+/**
+ * 
+ * @export
+ * @interface AnnouncementUser
+ */
+export interface AnnouncementUser {
+    /**
+     * 
+     * @type {string}
+     * @memberof AnnouncementUser
+     */
+    'id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof AnnouncementUser
+     */
+    'fullName': string;
 }
 /**
  * 
@@ -2980,11 +3005,11 @@ export const AnnouncementsApiAxiosParamCreator = function (configuration?: Confi
         /**
          * 
          * @summary Creates new announcement
-         * @param {AnnouncementMetadata} [announcementMetadata] 
+         * @param {AnnouncementPatch} [announcementPatch] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        announcementCreate: async (announcementMetadata?: AnnouncementMetadata, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        announcementCreate: async (announcementPatch?: AnnouncementPatch, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/announcements`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -3008,7 +3033,7 @@ export const AnnouncementsApiAxiosParamCreator = function (configuration?: Confi
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(announcementMetadata, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(announcementPatch, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -3184,12 +3209,12 @@ export const AnnouncementsApiFp = function(configuration?: Configuration) {
         /**
          * 
          * @summary Creates new announcement
-         * @param {AnnouncementMetadata} [announcementMetadata] 
+         * @param {AnnouncementPatch} [announcementPatch] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async announcementCreate(announcementMetadata?: AnnouncementMetadata, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AnnouncementMetadata>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.announcementCreate(announcementMetadata, options);
+        async announcementCreate(announcementPatch?: AnnouncementPatch, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AnnouncementMetadata>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.announcementCreate(announcementPatch, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -3250,7 +3275,7 @@ export const AnnouncementsApiFactory = function (configuration?: Configuration, 
          * @throws {RequiredError}
          */
         announcementCreate(requestParameters: AnnouncementsApiAnnouncementCreateRequest = {}, options?: AxiosRequestConfig): AxiosPromise<AnnouncementMetadata> {
-            return localVarFp.announcementCreate(requestParameters.announcementMetadata, options).then((request) => request(axios, basePath));
+            return localVarFp.announcementCreate(requestParameters.announcementPatch, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -3293,10 +3318,10 @@ export const AnnouncementsApiFactory = function (configuration?: Configuration, 
 export interface AnnouncementsApiAnnouncementCreateRequest {
     /**
      * 
-     * @type {AnnouncementMetadata}
+     * @type {AnnouncementPatch}
      * @memberof AnnouncementsApiAnnouncementCreate
      */
-    readonly announcementMetadata?: AnnouncementMetadata
+    readonly announcementPatch?: AnnouncementPatch
 }
 
 /**
@@ -3406,7 +3431,7 @@ export class AnnouncementsApi extends BaseAPI {
      * @memberof AnnouncementsApi
      */
     public announcementCreate(requestParameters: AnnouncementsApiAnnouncementCreateRequest = {}, options?: AxiosRequestConfig) {
-        return AnnouncementsApiFp(this.configuration).announcementCreate(requestParameters.announcementMetadata, options).then((request) => request(this.axios, this.basePath));
+        return AnnouncementsApiFp(this.configuration).announcementCreate(requestParameters.announcementPatch, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
