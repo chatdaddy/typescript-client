@@ -11518,6 +11518,7 @@ export const MessagesApiAxiosParamCreator = function (configuration?: Configurat
          * @param {string} accountId 
          * @param {string} chatId 
          * @param {MessagesGetRangeParameter} [range] Fetch messages only within this range. If not specified, fetches all messages
+         * @param {boolean} [action] Fetch actions of the messages
          * @param {string} [beforeId] Get messages before this message ID
          * @param {number} [count] Number of items to return
          * @param {boolean} [forceReload] Deletes all cached messages for this chat &amp; fetches messages again from the original API source
@@ -11529,7 +11530,7 @@ export const MessagesApiAxiosParamCreator = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        messagesGet: async (accountId: string, chatId: string, range?: MessagesGetRangeParameter, beforeId?: string, count?: number, forceReload?: boolean, fetchFromPlatform?: boolean, status?: 'note' | 'pending' | 'error', fromMe?: boolean, attachmentType?: Array<MessageAttachmentType>, includeCursorMessage?: boolean, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        messagesGet: async (accountId: string, chatId: string, range?: MessagesGetRangeParameter, action?: boolean, beforeId?: string, count?: number, forceReload?: boolean, fetchFromPlatform?: boolean, status?: 'note' | 'pending' | 'error', fromMe?: boolean, attachmentType?: Array<MessageAttachmentType>, includeCursorMessage?: boolean, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'accountId' is not null or undefined
             assertParamExists('messagesGet', 'accountId', accountId)
             // verify required parameter 'chatId' is not null or undefined
@@ -11554,6 +11555,10 @@ export const MessagesApiAxiosParamCreator = function (configuration?: Configurat
 
             if (range !== undefined) {
                 localVarQueryParameter['range'] = range;
+            }
+
+            if (action !== undefined) {
+                localVarQueryParameter['action'] = action;
             }
 
             if (beforeId !== undefined) {
@@ -11978,6 +11983,7 @@ export const MessagesApiFp = function(configuration?: Configuration) {
          * @param {string} accountId 
          * @param {string} chatId 
          * @param {MessagesGetRangeParameter} [range] Fetch messages only within this range. If not specified, fetches all messages
+         * @param {boolean} [action] Fetch actions of the messages
          * @param {string} [beforeId] Get messages before this message ID
          * @param {number} [count] Number of items to return
          * @param {boolean} [forceReload] Deletes all cached messages for this chat &amp; fetches messages again from the original API source
@@ -11989,8 +11995,8 @@ export const MessagesApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async messagesGet(accountId: string, chatId: string, range?: MessagesGetRangeParameter, beforeId?: string, count?: number, forceReload?: boolean, fetchFromPlatform?: boolean, status?: 'note' | 'pending' | 'error', fromMe?: boolean, attachmentType?: Array<MessageAttachmentType>, includeCursorMessage?: boolean, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MessagesGet200Response>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.messagesGet(accountId, chatId, range, beforeId, count, forceReload, fetchFromPlatform, status, fromMe, attachmentType, includeCursorMessage, options);
+        async messagesGet(accountId: string, chatId: string, range?: MessagesGetRangeParameter, action?: boolean, beforeId?: string, count?: number, forceReload?: boolean, fetchFromPlatform?: boolean, status?: 'note' | 'pending' | 'error', fromMe?: boolean, attachmentType?: Array<MessageAttachmentType>, includeCursorMessage?: boolean, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MessagesGet200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.messagesGet(accountId, chatId, range, action, beforeId, count, forceReload, fetchFromPlatform, status, fromMe, attachmentType, includeCursorMessage, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -12125,7 +12131,7 @@ export const MessagesApiFactory = function (configuration?: Configuration, baseP
          * @throws {RequiredError}
          */
         messagesGet(requestParameters: MessagesApiMessagesGetRequest, options?: AxiosRequestConfig): AxiosPromise<MessagesGet200Response> {
-            return localVarFp.messagesGet(requestParameters.accountId, requestParameters.chatId, requestParameters.range, requestParameters.beforeId, requestParameters.count, requestParameters.forceReload, requestParameters.fetchFromPlatform, requestParameters.status, requestParameters.fromMe, requestParameters.attachmentType, requestParameters.includeCursorMessage, options).then((request) => request(axios, basePath));
+            return localVarFp.messagesGet(requestParameters.accountId, requestParameters.chatId, requestParameters.range, requestParameters.action, requestParameters.beforeId, requestParameters.count, requestParameters.forceReload, requestParameters.fetchFromPlatform, requestParameters.status, requestParameters.fromMe, requestParameters.attachmentType, requestParameters.includeCursorMessage, options).then((request) => request(axios, basePath));
         },
         /**
          * Can reschedule a message, update the content of a note or mark it as resolved 
@@ -12306,6 +12312,13 @@ export interface MessagesApiMessagesGetRequest {
      * @memberof MessagesApiMessagesGet
      */
     readonly range?: MessagesGetRangeParameter
+
+    /**
+     * Fetch actions of the messages
+     * @type {boolean}
+     * @memberof MessagesApiMessagesGet
+     */
+    readonly action?: boolean
 
     /**
      * Get messages before this message ID
@@ -12639,7 +12652,7 @@ export class MessagesApi extends BaseAPI {
      * @memberof MessagesApi
      */
     public messagesGet(requestParameters: MessagesApiMessagesGetRequest, options?: AxiosRequestConfig) {
-        return MessagesApiFp(this.configuration).messagesGet(requestParameters.accountId, requestParameters.chatId, requestParameters.range, requestParameters.beforeId, requestParameters.count, requestParameters.forceReload, requestParameters.fetchFromPlatform, requestParameters.status, requestParameters.fromMe, requestParameters.attachmentType, requestParameters.includeCursorMessage, options).then((request) => request(this.axios, this.basePath));
+        return MessagesApiFp(this.configuration).messagesGet(requestParameters.accountId, requestParameters.chatId, requestParameters.range, requestParameters.action, requestParameters.beforeId, requestParameters.count, requestParameters.forceReload, requestParameters.fetchFromPlatform, requestParameters.status, requestParameters.fromMe, requestParameters.attachmentType, requestParameters.includeCursorMessage, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
