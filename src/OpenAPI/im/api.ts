@@ -11518,7 +11518,7 @@ export const MessagesApiAxiosParamCreator = function (configuration?: Configurat
          * @param {string} accountId 
          * @param {string} chatId 
          * @param {MessagesGetRangeParameter} [range] Fetch messages only within this range. If not specified, fetches all messages
-         * @param {boolean} [action] Fetch actions of the messages
+         * @param {boolean} [action] Filter messages based on actions
          * @param {string} [beforeId] Get messages before this message ID
          * @param {number} [count] Number of items to return
          * @param {boolean} [forceReload] Deletes all cached messages for this chat &amp; fetches messages again from the original API source
@@ -11983,7 +11983,7 @@ export const MessagesApiFp = function(configuration?: Configuration) {
          * @param {string} accountId 
          * @param {string} chatId 
          * @param {MessagesGetRangeParameter} [range] Fetch messages only within this range. If not specified, fetches all messages
-         * @param {boolean} [action] Fetch actions of the messages
+         * @param {boolean} [action] Filter messages based on actions
          * @param {string} [beforeId] Get messages before this message ID
          * @param {number} [count] Number of items to return
          * @param {boolean} [forceReload] Deletes all cached messages for this chat &amp; fetches messages again from the original API source
@@ -12314,7 +12314,7 @@ export interface MessagesApiMessagesGetRequest {
     readonly range?: MessagesGetRangeParameter
 
     /**
-     * Fetch actions of the messages
+     * Filter messages based on actions
      * @type {boolean}
      * @memberof MessagesApiMessagesGet
      */
