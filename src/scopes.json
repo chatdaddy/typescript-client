@@ -200,7 +200,7 @@
       "viewer"
     ],
     "section":"automation",
-    "group": "Message Flow"
+    "group": "Message Flows"
   },
   "TEMPLATES_CREATE": {
     "number": 16,
@@ -213,7 +213,7 @@
       "editor"
     ],
     "section":"automation",
-    "group": "Message Flow"
+    "group": "Message Flows"
   },
   "TEMPLATES_DELETE": {
     "number": 17,
@@ -226,7 +226,7 @@
       "editor"
     ],
     "section":"automation",
-    "group": "Message Flow"
+    "group": "Message Flows"
   },
   "TEMPLATES_UPDATE": {
     "number": 18,
@@ -239,7 +239,7 @@
       "editor"
     ],
     "section":"automation",
-    "group": "Message Flow"
+    "group": "Message Flows"
   },
   "TAGS_READ": {
     "number": 19,
@@ -652,8 +652,8 @@
     "roles": [
       "admin"
     ],
-    "section":"shop",
-    "group": "Payments"
+    "section":"settings",
+    "group": "Billing"
   },
   "PAYMENTS_UPDATE": {
     "number": 79,
@@ -662,8 +662,8 @@
     "roles": [
       "admin"
     ],
-    "section":"shop",
-    "group": "Payments"
+    "section":"settings",
+    "group": "Billing"
   },
   "WA_LIVE_EVENTS": {
     "number": 80,
@@ -818,7 +818,7 @@
       "editor"
     ],
     "section":"analytics",
-    "group": "Dashboard and Metrics"
+    "group": "View Analytics"
   },
   "ACCOUNTS_READ_ASSIGNED": {
     "number": 91,
@@ -864,7 +864,7 @@
       "editor"
     ],
     "section":"tools",
-    "group": "Widget Access"
+    "group": "Edit Widget Builder"
   },
   "COUPON_READ": {
     "number": 95,
@@ -876,7 +876,7 @@
       "viewer"
     ],
     "section":"crm",
-    "group": "Coupon Access"
+    "group": "Coupon Campaign"
   },
   "COUPON_CREATE": {
     "number": 96,
@@ -887,7 +887,7 @@
       "editor"
     ],
     "section":"crm",
-    "group": "Coupon Access"
+    "group": "Coupon Campaign"
   },
   "COUPON_DELETE": {
     "number": 97,
@@ -898,7 +898,7 @@
       "editor"
     ],
     "section":"crm",
-    "group": "Coupon Access"
+    "group": "Coupon Campaign"
   },
   "COUPON_UPDATE": {
     "number": 98,
@@ -909,11 +909,11 @@
       "editor"
     ],
     "section":"crm",
-    "group": "Coupon Access"
+    "group": "Coupon Campaign"
   },
   "TEAMMEMBERS_READ_CONTACT_DETAILS": {
     "number": 99,
-    "description": "Read Contact PII",
+    "description": "Access Contact's Personal Information",
     "subtext": "Read phone numbers, emails & usernames of your contacts",
     "features": [],
     "roles": [
