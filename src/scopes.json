@@ -709,7 +709,7 @@
       "admin"
     ],
     "section":"shop",
-    "group": "Shop and Product"
+    "group": "Product"
   },
   "PRODUCTS_CREATE": {
     "number": 83,
@@ -722,7 +722,7 @@
       "editor"
     ],
     "section":"shop",
-    "group": "Shop and Product"
+    "group": "Product"
   },
   "PRODUCTS_UPDATE": {
     "number": 84,
@@ -735,7 +735,7 @@
       "editor"
     ],
     "section":"shop",
-    "group": "Shop and Product"
+    "group": "Product"
   },
   "PRODUCTS_DELETE": {
     "number": 85,
@@ -748,7 +748,7 @@
       "editor"
     ],
     "section":"shop",
-    "group": "Shop and Product"
+    "group": "Product"
   },
   "PAYMENT_INTEGRATION_READ": {
     "number": 86,
@@ -761,7 +761,7 @@
       "editor"
     ],
     "section":"shop",
-    "group": "Payment Integrations"
+    "group": "Payment"
   },
   "PAYMENT_INTEGRATION_WRITE": {
     "number": 87,
@@ -774,7 +774,7 @@
       "editor"
     ],
     "section":"shop",
-    "group": "Payment Integrations"
+    "group": "Payment"
   },
   "PAYMENT_RECORDS_READ": {
     "number": 88,
@@ -789,7 +789,7 @@
       "viewer"
     ],
     "section":"shop",
-    "group": "Payment Records"
+    "group": "Payment"
   },
   "PAYMENT_RECORDS_WRITE": {
     "number": 89,
@@ -803,7 +803,7 @@
       "admin"
     ],
     "section":"shop",
-    "group": "Payment Records"
+    "group": "Payment"
   },
   "METRICS_GET": {
     "number": 90,
@@ -913,7 +913,7 @@
   },
   "TEAMMEMBERS_READ_CONTACT_DETAILS": {
     "number": 99,
-    "description": "Access Contact's Personal Information",
+    "description": "Access Contact's Personal I",
     "subtext": "Read phone numbers, emails & usernames of your contacts",
     "features": [],
     "roles": [
