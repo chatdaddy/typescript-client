@@ -10,12 +10,14 @@
       "agent",
       "editor"
     ],
+    "hidden": true,
     "section":"crm",
     "group": "Contact"
   },
   "CONTACTS_READ_ALL": {
     "number": 3,
     "description": "Read All contacts",
+    "subtext": "(If Unchecked, then only assigned contacts will be accessible)",
     "features": [
       "audience"
     ],
@@ -290,7 +292,7 @@
       "viewer",
       "editor"
     ],
-    "section":"appstoreAndApi",
+    "section":null,
     "group": null
   },
   "TOKENS_DELETE": {
@@ -304,7 +306,7 @@
       "viewer",
       "editor"
     ],
-    "section":"appstoreAndApi",
+    "section":null,
     "group": null
   },
   "USERS_PATCH": {
@@ -372,7 +374,7 @@
   },
   "ACCOUNT_PATCH": {
     "number": 30,
-    "description": "Update a Channel ",
+    "description": "Update a Channel",
     "subtext": "Connect, disconnect, change advanced settings for a channel",
     "features": [
       "team-inbox"
@@ -442,6 +444,7 @@
   "CHATS_ACCESS_ALL": {
     "number": 55,
     "description": "Access to all Chats",
+    "subtext":"(If Unchecked, then only assigned chats will be accessible)",
     "features": [
       "team-inbox"
     ],
@@ -465,6 +468,7 @@
       "agent",
       "editor"
     ],
+    "hidden": true,
     "section":"inbox",
     "group": "Chat"
   },
@@ -493,12 +497,14 @@
       "agent",
       "editor"
     ],
+    "hidden": true,
     "section":"inbox",
     "group": "Messages"
   },
   "MESSAGES_SEND_TO_ALL": {
     "number": 59,
     "description": "Access to Messages to All",
+    "subtext":"(If Unchecked, then only assigned messages will be accessible)",
     "features": [
       "team-inbox"
     ],
@@ -661,7 +667,7 @@
   },
   "WA_LIVE_EVENTS": {
     "number": 80,
-    "description": "Can this person receive live events on this team",
+    "description": "Receive Live Events on this Team",
     "features": [
       "team-inbox"
     ],
