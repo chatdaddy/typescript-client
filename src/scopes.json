@@ -577,7 +577,7 @@
       "editor",
       "viewer"
     ],
-    "section":"shops",
+    "section":"shop",
     "group": "Notification"
   },
   "NOTIFICATION_CREATE": {
@@ -590,7 +590,7 @@
       "admin",
       "editor"
     ],
-    "section":"shops",
+    "section":"shop",
     "group": "Notification"
   },
   "NOTIFICATION_UPDATE": {
@@ -603,7 +603,7 @@
       "admin",
       "editor"
     ],
-    "section":"shops",
+    "section":"shop",
     "group": "Notification"
   },
   "NOTIFICATION_DELETE": {
@@ -616,7 +616,7 @@
       "admin",
       "editor"
     ],
-    "section":"shops",
+    "section":"shop",
     "group": "Notification"
   },
   "INTEGRATIONS_UPDATE": {
@@ -628,7 +628,7 @@
     "roles": [
       "admin"
     ],
-    "section":"shops",
+    "section":"shop",
     "group": "api"
   },
   "ADMIN_PANEL_ACCESS": {
@@ -646,7 +646,7 @@
     "roles": [
       "admin"
     ],
-    "section":"shops",
+    "section":"shop",
     "group": "Payments"
   },
   "PAYMENTS_UPDATE": {
@@ -656,7 +656,7 @@
     "roles": [
       "admin"
     ],
-    "section":"shops",
+    "section":"shop",
     "group": "Payments"
   },
   "WA_LIVE_EVENTS": {
@@ -702,7 +702,7 @@
       "viewer",
       "admin"
     ],
-    "section":"shops",
+    "section":"shop",
     "group": "Shop and Product"
   },
   "PRODUCTS_CREATE": {
@@ -715,7 +715,7 @@
       "admin",
       "editor"
     ],
-    "section":"shops",
+    "section":"shop",
     "group": "Shop and Product"
   },
   "PRODUCTS_UPDATE": {
@@ -728,7 +728,7 @@
       "admin",
       "editor"
     ],
-    "section":"shops",
+    "section":"shop",
     "group": "Shop and Product"
   },
   "PRODUCTS_DELETE": {
@@ -741,7 +741,7 @@
       "admin",
       "editor"
     ],
-    "section":"shops",
+    "section":"shop",
     "group": "Shop and Product"
   },
   "PAYMENT_INTEGRATION_READ": {
@@ -754,7 +754,7 @@
       "admin",
       "editor"
     ],
-    "section":"shops",
+    "section":"shop",
     "group": "Payment Integrations"
   },
   "PAYMENT_INTEGRATION_WRITE": {
@@ -767,7 +767,7 @@
       "admin",
       "editor"
     ],
-    "section":"shops",
+    "section":"shop",
     "group": "Payment Integrations"
   },
   "PAYMENT_RECORDS_READ": {
@@ -782,7 +782,7 @@
       "agent",
       "viewer"
     ],
-    "section":"shops",
+    "section":"shop",
     "group": "Payment Records"
   },
   "PAYMENT_RECORDS_WRITE": {
@@ -796,7 +796,7 @@
       "editor",
       "admin"
     ],
-    "section":"shops",
+    "section":"shop",
     "group": "Payment Records"
   },
   "METRICS_GET": {
