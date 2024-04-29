@@ -290,7 +290,7 @@
       "viewer",
       "editor"
     ],
-    "section":"api",
+    "section":"appstoreAndApi",
     "group": null
   },
   "TOKENS_DELETE": {
@@ -304,7 +304,7 @@
       "viewer",
       "editor"
     ],
-    "section":"api",
+    "section":"appstoreAndApi",
     "group": null
   },
   "USERS_PATCH": {
@@ -628,8 +628,8 @@
     "roles": [
       "admin"
     ],
-    "section":"shop",
-    "group": "api"
+    "section":"appstoreAndApi",
+    "group": "API"
   },
   "ADMIN_PANEL_ACCESS": {
     "number": 72,
@@ -671,7 +671,7 @@
       "agent",
       "editor"
     ],
-    "section":"api",
+    "section":"appstoreAndApi",
     "group": "Live Events Access"
   },
   "CHATDADDY_HOOK": {
@@ -681,8 +681,8 @@
     "roles": [
       "admin"
     ],
-    "section":"api",
-    "group": "api"
+    "section":"appstoreAndApi",
+    "group": "API"
   },
   "PARTNER_ADMIN_PANEL_ACCESS": {
     "number": 81,
