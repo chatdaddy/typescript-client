@@ -10,6 +10,7 @@
       "agent",
       "editor"
     ],
+    "section":"CRM",
     "group": "Contact"
   },
   "CONTACTS_READ_ALL": {
@@ -24,6 +25,7 @@
       "editor",
       "viewer"
     ],
+    "section":"CRM",
     "group": "Contact"
   },
   "CONTACTS_EXPORT_BUTTON": {
@@ -36,6 +38,7 @@
       "admin",
       "editor"
     ],
+    "section":"CRM",
     "group": "Contact"
   },
   "CONTACTS_CREATE": {
@@ -48,6 +51,7 @@
       "admin",
       "editor"
     ],
+    "section":"CRM",
     "group": "Contact"
   },
   "CONTACTS_DELETE": {
@@ -60,6 +64,7 @@
       "admin",
       "editor"
     ],
+    "section":"",
     "group": "Contact"
   },
   "CONTACTS_UPDATE": {
@@ -72,6 +77,7 @@
       "admin",
       "editor"
     ],
+    "section":"CRM",
     "group": "Contact"
   },
   "CAMPAIGNS_READ": {
@@ -85,6 +91,7 @@
       "editor",
       "viewer"
     ],
+    "section":"Automation",
     "group": "Broadcast"
   },
   "CAMPAIGNS_CREATE": {
@@ -97,6 +104,7 @@
       "admin",
       "editor"
     ],
+    "section":"Automation",
     "group": "Broadcast"
   },
   "CAMPAIGNS_DELETE": {
@@ -109,6 +117,7 @@
       "admin",
       "editor"
     ],
+    "section":"Automation",
     "group": "Broadcast"
   },
   "CAMPAIGNS_UPDATE": {
@@ -121,6 +130,7 @@
       "admin",
       "editor"
     ],
+    "section":"Automation",
     "group": "Broadcast"
   },
   "KEYWORD_READ": {
@@ -134,6 +144,7 @@
       "editor",
       "viewer"
     ],
+    "section":"Automation",
     "group": "Keyword Reply"
   },
   "KEYWORD_CREATE": {
@@ -146,6 +157,7 @@
       "admin",
       "editor"
     ],
+    "section":"Automation",
     "group": "Keyword Reply"
   },
   "KEYWORD_DELETE": {
@@ -158,6 +170,7 @@
       "admin",
       "editor"
     ],
+    "section":"Automation",
     "group": "Keyword Reply"
   },
   "KEYWORD_UPDATE": {
@@ -170,6 +183,7 @@
       "admin",
       "editor"
     ],
+    "section":"Automation",
     "group": "Keyword Reply"
   },
   "TEMPLATES_READ": {
@@ -183,6 +197,7 @@
       "editor",
       "viewer"
     ],
+    "section":"Automation",
     "group": "Message Flow"
   },
   "TEMPLATES_CREATE": {
@@ -195,6 +210,7 @@
       "admin",
       "editor"
     ],
+    "section":"Automation",
     "group": "Message Flow"
   },
   "TEMPLATES_DELETE": {
@@ -207,6 +223,7 @@
       "admin",
       "editor"
     ],
+    "section":"Automation",
     "group": "Message Flow"
   },
   "TEMPLATES_UPDATE": {
@@ -219,6 +236,7 @@
       "admin",
       "editor"
     ],
+    "section":"Automation",
     "group": "Message Flow"
   },
   "TAGS_READ": {
@@ -232,6 +250,7 @@
       "editor",
       "viewer"
     ],
+    "section":"CRM",
     "group": "Tags"
   },
   "TAGS_CREATE": {
@@ -244,6 +263,7 @@
       "admin",
       "editor"
     ],
+    "section":"CRM",
     "group": "Tags"
   },
   "TAGS_DELETE": {
@@ -256,6 +276,7 @@
       "admin",
       "editor"
     ],
+    "section":"CRM",
     "group": "Tags"
   },
   "TOKENS_READ": {
@@ -269,6 +290,7 @@
       "viewer",
       "editor"
     ],
+    "section":"API",
     "group": null
   },
   "TOKENS_DELETE": {
@@ -282,6 +304,7 @@
       "viewer",
       "editor"
     ],
+    "section":"API",
     "group": null
   },
   "USERS_PATCH": {
@@ -295,6 +318,7 @@
       "viewer",
       "editor"
     ],
+    "section":"Settings",
     "group": null
   },
   "TEAM_UPDATE": {
@@ -304,6 +328,7 @@
     "roles": [
       "admin"
     ],
+    "section":"Settings",
     "group": "Team"
   },
   "ACCOUNT_CREATE": {
@@ -315,6 +340,7 @@
     "roles": [
       "admin"
     ],
+    "section":"Inbox",
     "group": "Channels"
   },
   "ACCOUNT_READ": {
@@ -329,6 +355,7 @@
       "viewer",
       "agent"
     ],
+    "section":"Inbox",
     "group": "Channels"
   },
   "ACCOUNT_DELETE": {
@@ -340,6 +367,7 @@
     "roles": [
       "admin"
     ],
+    "section":"Inbox",
     "group": "Channels"
   },
   "ACCOUNT_PATCH": {
@@ -354,6 +382,7 @@
       "editor",
       "agent"
     ],
+    "section":"Inbox",
     "group": "Channels"
   },
   "TEAMLINK_CREATE": {
@@ -363,6 +392,7 @@
     "roles": [
       "admin"
     ],
+    "section":"Settings", 
     "group": "Team"
   },
   "TEAMLINK_READ": {
@@ -372,6 +402,7 @@
     "roles": [
       "admin"
     ],
+    "section":"Settings",
     "group": "Team"
   },
   "TEAMMEMBERS_UPDATE": {
@@ -381,6 +412,7 @@
     "roles": [
       "admin"
     ],
+    "section":"Settings",
     "group": "Team"
   },
   "TEAMMEMBERS_READ": {
@@ -393,6 +425,7 @@
       "viewer",
       "agent"
     ],
+    "section":"Settings",
     "group": "Team"
   },
   "TEAM_NOTIFY": {
@@ -403,6 +436,7 @@
       "admin",
       "editor"
     ],
+    "section":"Settings",
     "group": "Team"
   },
   "CHATS_ACCESS_ALL": {
@@ -417,6 +451,7 @@
       "editor",
       "viewer"
     ],
+    "section":"Inbox",
     "group": "Chat"
   },
   "CHATS_ACCESS_ASSIGNED": {
@@ -430,6 +465,7 @@
       "agent",
       "editor"
     ],
+    "section":"Inbox",
     "group": "Chat"
   },
   "CHATS_DELETE": {
@@ -443,6 +479,7 @@
       "agent",
       "editor"
     ],
+    "section":"Inbox",
     "group": "Chat"
   },
   "MESSAGES_SEND_TO_ASSIGNED": {
@@ -456,6 +493,7 @@
       "agent",
       "editor"
     ],
+    "section":"Inbox",
     "group": "Messages"
   },
   "MESSAGES_SEND_TO_ALL": {
@@ -469,6 +507,7 @@
       "agent",
       "editor"
     ],
+    "section":"Inbox",
     "group": "Messages"
   },
   "MESSAGES_DELETE": {
@@ -482,6 +521,7 @@
       "agent",
       "editor"
     ],
+    "section":"Inbox",
     "group": "Messages"
   },
   "GROUPS_CREATE": {
@@ -495,6 +535,7 @@
       "agent",
       "editor"
     ],
+    "section":"Inbox",
     "group": "Groups"
   },
   "GROUPS_UPDATE": {
@@ -508,6 +549,7 @@
       "agent",
       "editor"
     ],
+    "section":"Inbox",
     "group": "Groups"
   },
   "NOTES": {
@@ -521,6 +563,7 @@
       "agent",
       "editor"
     ],
+    "section":"Inbox",
     "group": "Notes"
   },
   "NOTIFICATION_READ": {
@@ -534,6 +577,7 @@
       "editor",
       "viewer"
     ],
+    "section":"Shops",
     "group": "Notification"
   },
   "NOTIFICATION_CREATE": {
@@ -546,6 +590,7 @@
       "admin",
       "editor"
     ],
+    "section":"Shops",
     "group": "Notification"
   },
   "NOTIFICATION_UPDATE": {
@@ -558,6 +603,7 @@
       "admin",
       "editor"
     ],
+    "section":"Shops",
     "group": "Notification"
   },
   "NOTIFICATION_DELETE": {
@@ -570,6 +616,7 @@
       "admin",
       "editor"
     ],
+    "section":"Shops",
     "group": "Notification"
   },
   "INTEGRATIONS_UPDATE": {
@@ -581,6 +628,7 @@
     "roles": [
       "admin"
     ],
+    "section":"Shops",
     "group": "API"
   },
   "ADMIN_PANEL_ACCESS": {
@@ -588,6 +636,7 @@
     "description": "Access admin level functionality",
     "features": [],
     "roles": [],
+    "section": null,
     "group": null
   },
   "PAYMENTS_READ": {
@@ -597,6 +646,7 @@
     "roles": [
       "admin"
     ],
+    "section":"Shops",
     "group": "Payments"
   },
   "PAYMENTS_UPDATE": {
@@ -606,6 +656,7 @@
     "roles": [
       "admin"
     ],
+    "section":"Shops",
     "group": "Payments"
   },
   "WA_LIVE_EVENTS": {
@@ -620,6 +671,7 @@
       "agent",
       "editor"
     ],
+    "section":"API",
     "group": "Live Events Access"
   },
   "CHATDADDY_HOOK": {
@@ -629,6 +681,7 @@
     "roles": [
       "admin"
     ],
+    "section":"API",
     "group": "API"
   },
   "PARTNER_ADMIN_PANEL_ACCESS": {
@@ -636,6 +689,7 @@
     "description": "Admin access to all users/teams created using a referral code",
     "features": [],
     "roles": [],
+    "section":null,
     "group": null
   },
   "PRODUCTS_GET": {
@@ -648,6 +702,7 @@
       "viewer",
       "admin"
     ],
+    "section":"Shops",
     "group": "Shop and Product"
   },
   "PRODUCTS_CREATE": {
@@ -660,6 +715,7 @@
       "admin",
       "editor"
     ],
+    "section":"Shops",
     "group": "Shop and Product"
   },
   "PRODUCTS_UPDATE": {
@@ -672,6 +728,7 @@
       "admin",
       "editor"
     ],
+    "section":"Shops",
     "group": "Shop and Product"
   },
   "PRODUCTS_DELETE": {
@@ -684,6 +741,7 @@
       "admin",
       "editor"
     ],
+    "section":"Shops",
     "group": "Shop and Product"
   },
   "PAYMENT_INTEGRATION_READ": {
@@ -696,6 +754,7 @@
       "admin",
       "editor"
     ],
+    "section":"Shops",
     "group": "Payment Integrations"
   },
   "PAYMENT_INTEGRATION_WRITE": {
@@ -708,6 +767,7 @@
       "admin",
       "editor"
     ],
+    "section":"Shops",
     "group": "Payment Integrations"
   },
   "PAYMENT_RECORDS_READ": {
@@ -722,6 +782,7 @@
       "agent",
       "viewer"
     ],
+    "section":"Shops",
     "group": "Payment Records"
   },
   "PAYMENT_RECORDS_WRITE": {
@@ -735,6 +796,7 @@
       "editor",
       "admin"
     ],
+    "section":"Shops",
     "group": "Payment Records"
   },
   "METRICS_GET": {
@@ -749,6 +811,7 @@
       "agent",
       "editor"
     ],
+    "section":"Analytics",
     "group": "Dashboard and Metrics"
   },
   "ACCOUNTS_READ_ASSIGNED": {
@@ -768,6 +831,7 @@
       "agent",
       "editor"
     ],
+    "section":"Inbox",
     "group": "Chat"
   },
     "MESSAGES_SEARCH": {
@@ -781,6 +845,7 @@
       "agent",
       "editor"
     ],
+    "section":"Inbox",
     "group": "Messages"
   },
   "WIDGET_EDIT": {
@@ -792,6 +857,7 @@
       "agent",
       "editor"
     ],
+    "section":"Tools",
     "group": "Widget Access"
   },
   "COUPON_READ": {
@@ -803,6 +869,7 @@
       "editor",
       "viewer"
     ],
+    "section":"CRM",
     "group": "Coupon Access"
   },
   "COUPON_CREATE": {
@@ -813,6 +880,7 @@
       "admin",
       "editor"
     ],
+    "section":"CRM",
     "group": "Coupon Access"
   },
   "COUPON_DELETE": {
@@ -823,6 +891,7 @@
       "admin",
       "editor"
     ],
+    "section":"CRM",
     "group": "Coupon Access"
   },
   "COUPON_UPDATE": {
@@ -833,6 +902,7 @@
       "admin",
       "editor"
     ],
+    "section":"CRM",
     "group": "Coupon Access"
   },
   "TEAMMEMBERS_READ_CONTACT_DETAILS": {
@@ -846,6 +916,7 @@
       "viewer",
       "agent"
     ],
+    "section":"Settings",
     "group": "Team"
   }
 }
