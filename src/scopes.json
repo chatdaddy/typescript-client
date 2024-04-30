@@ -647,7 +647,7 @@
   },
   "PAYMENTS_READ": {
     "number": 78,
-    "description": "Read payments",
+    "description": "Read Billing History",
     "features": [],
     "roles": [
       "admin"
