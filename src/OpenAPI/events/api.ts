@@ -9435,6 +9435,12 @@ export interface TeamInsertData {
      * @memberof TeamInsertData
      */
     'onboardingScore'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof TeamInsertData
+     */
+    'connectedChannelCount'?: number;
 }
 
 export const TeamInsertDataScopesEnum = {
@@ -9840,6 +9846,12 @@ export interface TeamUpdateData {
      * @memberof TeamUpdateData
      */
     'onboardingScore'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof TeamUpdateData
+     */
+    'connectedChannelCount'?: number;
 }
 
 export const TeamUpdateDataScopesEnum = {

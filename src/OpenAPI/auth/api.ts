@@ -1671,6 +1671,12 @@ export interface Team {
      * @memberof Team
      */
     'onboardingScore'?: number;
+    /**
+     * The total connected channels in the team.
+     * @type {number}
+     * @memberof Team
+     */
+    'connectedChannelCount'?: number;
 }
 /**
  * 
