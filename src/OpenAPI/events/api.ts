@@ -5311,6 +5311,12 @@ export interface CrmTicketInsertData {
     'stageId': string;
     /**
      * 
+     * @type {string}
+     * @memberof CrmTicketInsertData
+     */
+    'prevStageId'?: string;
+    /**
+     * 
      * @type {number}
      * @memberof CrmTicketInsertData
      */
@@ -5415,6 +5421,12 @@ export interface CrmTicketUpdateData {
      * @memberof CrmTicketUpdateData
      */
     'stageId'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof CrmTicketUpdateData
+     */
+    'prevStageId'?: string;
     /**
      * 
      * @type {number}

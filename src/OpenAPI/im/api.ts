@@ -2346,6 +2346,12 @@ export interface CrmTicket {
      */
     'stageId': string;
     /**
+     * ID of a stage
+     * @type {string}
+     * @memberof CrmTicket
+     */
+    'prevStageId'?: string;
+    /**
      * Order of a ticket
      * @type {number}
      * @memberof CrmTicket
