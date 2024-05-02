@@ -1455,55 +1455,11 @@ export interface BotMessageButton {
     'nextAction'?: NextAction;
 }
 /**
- * 
+ * @type BotMessageDelay
  * @export
- * @interface BotMessageDelay
  */
-export interface BotMessageDelay {
-    /**
-     * Time delays on second
-     * @type {number}
-     * @memberof BotMessageDelay
-     */
-    'timeDelaySec': number;
-    /**
-     * Use \"nextAction\" instead
-     * @type {string}
-     * @memberof BotMessageDelay
-     * @deprecated
-     */
-    'triggerActionId'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof BotMessageDelay
-     */
-    'triggerBotId'?: string | null;
-    /**
-     * Simulate typing
-     * @type {boolean}
-     * @memberof BotMessageDelay
-     */
-    'simulateTyping'?: boolean;
-    /**
-     * If true, the message will be cancelled if a reply is received
-     * @type {boolean}
-     * @memberof BotMessageDelay
-     */
-    'cancelIfReplyReceived'?: boolean;
-    /**
-     * 
-     * @type {Position}
-     * @memberof BotMessageDelay
-     */
-    'position'?: Position | null;
-    /**
-     * 
-     * @type {NextAction}
-     * @memberof BotMessageDelay
-     */
-    'nextAction'?: NextAction;
-}
+export type BotMessageDelay = LegacyBotMessageDelay | SecondsBotMessageDelay | TimestampBotMessageDelay;
+
 /**
  * 
  * @export
@@ -3566,6 +3522,56 @@ export interface InternalEventUIConfig {
 /**
  * 
  * @export
+ * @interface LegacyBotMessageDelay
+ */
+export interface LegacyBotMessageDelay {
+    /**
+     * Time delays on second
+     * @type {number}
+     * @memberof LegacyBotMessageDelay
+     */
+    'timeDelaySec': number;
+    /**
+     * 
+     * @type {Position}
+     * @memberof LegacyBotMessageDelay
+     */
+    'position'?: Position | null;
+    /**
+     * Use \"nextAction\" instead
+     * @type {string}
+     * @memberof LegacyBotMessageDelay
+     * @deprecated
+     */
+    'triggerActionId'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof LegacyBotMessageDelay
+     */
+    'triggerBotId'?: string | null;
+    /**
+     * Simulate typing
+     * @type {boolean}
+     * @memberof LegacyBotMessageDelay
+     */
+    'simulateTyping'?: boolean;
+    /**
+     * If true, the message will be cancelled if a reply is received
+     * @type {boolean}
+     * @memberof LegacyBotMessageDelay
+     */
+    'cancelIfReplyReceived'?: boolean;
+    /**
+     * 
+     * @type {NextAction}
+     * @memberof LegacyBotMessageDelay
+     */
+    'nextAction'?: NextAction;
+}
+/**
+ * 
+ * @export
  * @interface LinkExternalTemplateCommand
  */
 export interface LinkExternalTemplateCommand {
@@ -4013,6 +4019,56 @@ export interface Recipient {
 /**
  * 
  * @export
+ * @interface SecondsBotMessageDelay
+ */
+export interface SecondsBotMessageDelay {
+    /**
+     * 
+     * @type {string}
+     * @memberof SecondsBotMessageDelay
+     */
+    'type': SecondsBotMessageDelayTypeEnum;
+    /**
+     * Delay in seconds
+     * @type {number}
+     * @memberof SecondsBotMessageDelay
+     */
+    'value': number;
+    /**
+     * 
+     * @type {Position}
+     * @memberof SecondsBotMessageDelay
+     */
+    'position'?: Position | null;
+    /**
+     * Simulate typing
+     * @type {boolean}
+     * @memberof SecondsBotMessageDelay
+     */
+    'simulateTyping'?: boolean;
+    /**
+     * If true, the message will be cancelled if a reply is received
+     * @type {boolean}
+     * @memberof SecondsBotMessageDelay
+     */
+    'cancelIfReplyReceived'?: boolean;
+    /**
+     * 
+     * @type {NextAction}
+     * @memberof SecondsBotMessageDelay
+     */
+    'nextAction'?: NextAction;
+}
+
+export const SecondsBotMessageDelayTypeEnum = {
+    DelaySeconds: 'delay_seconds'
+} as const;
+
+export type SecondsBotMessageDelayTypeEnum = typeof SecondsBotMessageDelayTypeEnum[keyof typeof SecondsBotMessageDelayTypeEnum];
+
+/**
+ * 
+ * @export
  * @interface ServiceResponse
  */
 export interface ServiceResponse {
@@ -4396,6 +4452,56 @@ export interface TimePeriodDescriptor {
 /**
  * 
  * @export
+ * @interface TimestampBotMessageDelay
+ */
+export interface TimestampBotMessageDelay {
+    /**
+     * 
+     * @type {string}
+     * @memberof TimestampBotMessageDelay
+     */
+    'type': TimestampBotMessageDelayTypeEnum;
+    /**
+     * 
+     * @type {PropertyPathValue}
+     * @memberof TimestampBotMessageDelay
+     */
+    'value': PropertyPathValue;
+    /**
+     * 
+     * @type {Position}
+     * @memberof TimestampBotMessageDelay
+     */
+    'position'?: Position | null;
+    /**
+     * Simulate typing
+     * @type {boolean}
+     * @memberof TimestampBotMessageDelay
+     */
+    'simulateTyping'?: boolean;
+    /**
+     * If true, the message will be cancelled if a reply is received
+     * @type {boolean}
+     * @memberof TimestampBotMessageDelay
+     */
+    'cancelIfReplyReceived'?: boolean;
+    /**
+     * 
+     * @type {NextAction}
+     * @memberof TimestampBotMessageDelay
+     */
+    'nextAction'?: NextAction;
+}
+
+export const TimestampBotMessageDelayTypeEnum = {
+    Timestamp: 'timestamp'
+} as const;
+
+export type TimestampBotMessageDelayTypeEnum = typeof TimestampBotMessageDelayTypeEnum[keyof typeof TimestampBotMessageDelayTypeEnum];
+
+/**
+ * 
+ * @export
  * @interface TimestampedTriggerMethod
  */
 export interface TimestampedTriggerMethod {
@@ -4487,6 +4593,12 @@ export interface TriggerDelayOneOf {
      * @memberof TriggerDelayOneOf
      */
     'value': number;
+    /**
+     * 
+     * @type {Position}
+     * @memberof TriggerDelayOneOf
+     */
+    'position'?: Position | null;
 }
 
 export const TriggerDelayOneOfTypeEnum = {
@@ -4496,7 +4608,7 @@ export const TriggerDelayOneOfTypeEnum = {
 export type TriggerDelayOneOfTypeEnum = typeof TriggerDelayOneOfTypeEnum[keyof typeof TriggerDelayOneOfTypeEnum];
 
 /**
- * 
+ * Specify a property path to extract the delay from the payload data, or an exact timestamp value. The property path is relative to the \"payload data\".
  * @export
  * @interface TriggerDelayOneOf1
  */
@@ -4513,6 +4625,12 @@ export interface TriggerDelayOneOf1 {
      * @memberof TriggerDelayOneOf1
      */
     'value': PropertyPathValue;
+    /**
+     * 
+     * @type {Position}
+     * @memberof TriggerDelayOneOf1
+     */
+    'position'?: Position | null;
 }
 
 export const TriggerDelayOneOf1TypeEnum = {

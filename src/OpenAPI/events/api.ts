@@ -2040,55 +2040,188 @@ export interface BotInsertDataActionsInnerAllOf1MessageButtonsInnerPosition {
     'y': number;
 }
 /**
+ * @type BotInsertDataActionsInnerAllOf1MessageDelaysInner
+ * @export
+ */
+export type BotInsertDataActionsInnerAllOf1MessageDelaysInner = BotInsertDataActionsInnerAllOf1MessageDelaysInnerOneOf | BotInsertDataActionsInnerAllOf1MessageDelaysInnerOneOf1 | BotInsertDataActionsInnerAllOf1MessageDelaysInnerOneOf2;
+
+/**
  * 
  * @export
- * @interface BotInsertDataActionsInnerAllOf1MessageDelaysInner
+ * @interface BotInsertDataActionsInnerAllOf1MessageDelaysInnerOneOf
  */
-export interface BotInsertDataActionsInnerAllOf1MessageDelaysInner {
+export interface BotInsertDataActionsInnerAllOf1MessageDelaysInnerOneOf {
     /**
      * Time delays on second
      * @type {number}
-     * @memberof BotInsertDataActionsInnerAllOf1MessageDelaysInner
+     * @memberof BotInsertDataActionsInnerAllOf1MessageDelaysInnerOneOf
      */
     'timeDelaySec': number;
     /**
+     * 
+     * @type {BotInsertDataActionsInnerAllOf1MessageButtonsInnerPosition}
+     * @memberof BotInsertDataActionsInnerAllOf1MessageDelaysInnerOneOf
+     */
+    'position'?: BotInsertDataActionsInnerAllOf1MessageButtonsInnerPosition | null;
+    /**
      * Use \"nextAction\" instead
      * @type {string}
-     * @memberof BotInsertDataActionsInnerAllOf1MessageDelaysInner
+     * @memberof BotInsertDataActionsInnerAllOf1MessageDelaysInnerOneOf
      * @deprecated
      */
     'triggerActionId'?: string;
     /**
      * 
      * @type {string}
-     * @memberof BotInsertDataActionsInnerAllOf1MessageDelaysInner
+     * @memberof BotInsertDataActionsInnerAllOf1MessageDelaysInnerOneOf
      */
     'triggerBotId'?: string | null;
     /**
      * Simulate typing
      * @type {boolean}
-     * @memberof BotInsertDataActionsInnerAllOf1MessageDelaysInner
+     * @memberof BotInsertDataActionsInnerAllOf1MessageDelaysInnerOneOf
      */
     'simulateTyping'?: boolean;
     /**
      * If true, the message will be cancelled if a reply is received
      * @type {boolean}
-     * @memberof BotInsertDataActionsInnerAllOf1MessageDelaysInner
+     * @memberof BotInsertDataActionsInnerAllOf1MessageDelaysInnerOneOf
      */
     'cancelIfReplyReceived'?: boolean;
     /**
      * 
-     * @type {BotInsertDataActionsInnerAllOf1MessageButtonsInnerPosition}
-     * @memberof BotInsertDataActionsInnerAllOf1MessageDelaysInner
-     */
-    'position'?: BotInsertDataActionsInnerAllOf1MessageButtonsInnerPosition | null;
-    /**
-     * 
      * @type {BotInsertDataActionsInnerAllOf1MessageButtonsInnerNextAction}
-     * @memberof BotInsertDataActionsInnerAllOf1MessageDelaysInner
+     * @memberof BotInsertDataActionsInnerAllOf1MessageDelaysInnerOneOf
      */
     'nextAction'?: BotInsertDataActionsInnerAllOf1MessageButtonsInnerNextAction;
 }
+/**
+ * 
+ * @export
+ * @interface BotInsertDataActionsInnerAllOf1MessageDelaysInnerOneOf1
+ */
+export interface BotInsertDataActionsInnerAllOf1MessageDelaysInnerOneOf1 {
+    /**
+     * 
+     * @type {string}
+     * @memberof BotInsertDataActionsInnerAllOf1MessageDelaysInnerOneOf1
+     */
+    'type': BotInsertDataActionsInnerAllOf1MessageDelaysInnerOneOf1TypeEnum;
+    /**
+     * 
+     * @type {BotInsertDataActionsInnerAllOf1MessageDelaysInnerOneOf1Value}
+     * @memberof BotInsertDataActionsInnerAllOf1MessageDelaysInnerOneOf1
+     */
+    'value': BotInsertDataActionsInnerAllOf1MessageDelaysInnerOneOf1Value;
+    /**
+     * 
+     * @type {BotInsertDataActionsInnerAllOf1MessageButtonsInnerPosition}
+     * @memberof BotInsertDataActionsInnerAllOf1MessageDelaysInnerOneOf1
+     */
+    'position'?: BotInsertDataActionsInnerAllOf1MessageButtonsInnerPosition | null;
+    /**
+     * Simulate typing
+     * @type {boolean}
+     * @memberof BotInsertDataActionsInnerAllOf1MessageDelaysInnerOneOf1
+     */
+    'simulateTyping'?: boolean;
+    /**
+     * If true, the message will be cancelled if a reply is received
+     * @type {boolean}
+     * @memberof BotInsertDataActionsInnerAllOf1MessageDelaysInnerOneOf1
+     */
+    'cancelIfReplyReceived'?: boolean;
+    /**
+     * 
+     * @type {BotInsertDataActionsInnerAllOf1MessageButtonsInnerNextAction}
+     * @memberof BotInsertDataActionsInnerAllOf1MessageDelaysInnerOneOf1
+     */
+    'nextAction'?: BotInsertDataActionsInnerAllOf1MessageButtonsInnerNextAction;
+}
+
+export const BotInsertDataActionsInnerAllOf1MessageDelaysInnerOneOf1TypeEnum = {
+    Timestamp: 'timestamp'
+} as const;
+
+export type BotInsertDataActionsInnerAllOf1MessageDelaysInnerOneOf1TypeEnum = typeof BotInsertDataActionsInnerAllOf1MessageDelaysInnerOneOf1TypeEnum[keyof typeof BotInsertDataActionsInnerAllOf1MessageDelaysInnerOneOf1TypeEnum];
+
+/**
+ * Provide either a property path to extract from the payload /payload data or an exact value
+ * @export
+ * @interface BotInsertDataActionsInnerAllOf1MessageDelaysInnerOneOf1Value
+ */
+export interface BotInsertDataActionsInnerAllOf1MessageDelaysInnerOneOf1Value {
+    /**
+     * 
+     * @type {string}
+     * @memberof BotInsertDataActionsInnerAllOf1MessageDelaysInnerOneOf1Value
+     */
+    'type': BotInsertDataActionsInnerAllOf1MessageDelaysInnerOneOf1ValueTypeEnum;
+    /**
+     * 
+     * @type {string}
+     * @memberof BotInsertDataActionsInnerAllOf1MessageDelaysInnerOneOf1Value
+     */
+    'value': string;
+}
+
+export const BotInsertDataActionsInnerAllOf1MessageDelaysInnerOneOf1ValueTypeEnum = {
+    PropertyPath: 'propertyPath',
+    Exact: 'exact'
+} as const;
+
+export type BotInsertDataActionsInnerAllOf1MessageDelaysInnerOneOf1ValueTypeEnum = typeof BotInsertDataActionsInnerAllOf1MessageDelaysInnerOneOf1ValueTypeEnum[keyof typeof BotInsertDataActionsInnerAllOf1MessageDelaysInnerOneOf1ValueTypeEnum];
+
+/**
+ * 
+ * @export
+ * @interface BotInsertDataActionsInnerAllOf1MessageDelaysInnerOneOf2
+ */
+export interface BotInsertDataActionsInnerAllOf1MessageDelaysInnerOneOf2 {
+    /**
+     * 
+     * @type {string}
+     * @memberof BotInsertDataActionsInnerAllOf1MessageDelaysInnerOneOf2
+     */
+    'type': BotInsertDataActionsInnerAllOf1MessageDelaysInnerOneOf2TypeEnum;
+    /**
+     * Delay in seconds
+     * @type {number}
+     * @memberof BotInsertDataActionsInnerAllOf1MessageDelaysInnerOneOf2
+     */
+    'value': number;
+    /**
+     * 
+     * @type {BotInsertDataActionsInnerAllOf1MessageButtonsInnerPosition}
+     * @memberof BotInsertDataActionsInnerAllOf1MessageDelaysInnerOneOf2
+     */
+    'position'?: BotInsertDataActionsInnerAllOf1MessageButtonsInnerPosition | null;
+    /**
+     * Simulate typing
+     * @type {boolean}
+     * @memberof BotInsertDataActionsInnerAllOf1MessageDelaysInnerOneOf2
+     */
+    'simulateTyping'?: boolean;
+    /**
+     * If true, the message will be cancelled if a reply is received
+     * @type {boolean}
+     * @memberof BotInsertDataActionsInnerAllOf1MessageDelaysInnerOneOf2
+     */
+    'cancelIfReplyReceived'?: boolean;
+    /**
+     * 
+     * @type {BotInsertDataActionsInnerAllOf1MessageButtonsInnerNextAction}
+     * @memberof BotInsertDataActionsInnerAllOf1MessageDelaysInnerOneOf2
+     */
+    'nextAction'?: BotInsertDataActionsInnerAllOf1MessageButtonsInnerNextAction;
+}
+
+export const BotInsertDataActionsInnerAllOf1MessageDelaysInnerOneOf2TypeEnum = {
+    DelaySeconds: 'delay_seconds'
+} as const;
+
+export type BotInsertDataActionsInnerAllOf1MessageDelaysInnerOneOf2TypeEnum = typeof BotInsertDataActionsInnerAllOf1MessageDelaysInnerOneOf2TypeEnum[keyof typeof BotInsertDataActionsInnerAllOf1MessageDelaysInnerOneOf2TypeEnum];
+
 /**
  * 
  * @export
@@ -2757,10 +2890,10 @@ export interface BotNodeEventDataOneOf4 {
     'type': BotNodeEventDataOneOf4TypeEnum;
     /**
      * 
-     * @type {BotInsertDataActionsInnerAllOf1MessageDelaysInner}
+     * @type {BotNodeEventDataOneOfDataAllOf1MessageDelaysInner}
      * @memberof BotNodeEventDataOneOf4
      */
-    'data': BotInsertDataActionsInnerAllOf1MessageDelaysInner;
+    'data': BotNodeEventDataOneOfDataAllOf1MessageDelaysInner;
     /**
      * 
      * @type {string}
@@ -3163,10 +3296,10 @@ export interface BotNodeEventDataOneOfData {
     'name': string;
     /**
      * 
-     * @type {BotInsertDataActionsInnerAllOf1Message}
+     * @type {BotNodeEventDataOneOfDataAllOf1Message}
      * @memberof BotNodeEventDataOneOfData
      */
-    'message'?: BotInsertDataActionsInnerAllOf1Message | null;
+    'message'?: BotNodeEventDataOneOfDataAllOf1Message | null;
     /**
      * set the assignee on the contact
      * @type {string}
@@ -3300,10 +3433,10 @@ export interface BotNodeEventDataOneOfDataAllOf1 {
     'name'?: string;
     /**
      * 
-     * @type {BotInsertDataActionsInnerAllOf1Message}
+     * @type {BotNodeEventDataOneOfDataAllOf1Message}
      * @memberof BotNodeEventDataOneOfDataAllOf1
      */
-    'message'?: BotInsertDataActionsInnerAllOf1Message | null;
+    'message'?: BotNodeEventDataOneOfDataAllOf1Message | null;
     /**
      * set the assignee on the contact
      * @type {string}
@@ -3392,6 +3525,117 @@ export const BotNodeEventDataOneOfDataAllOf1MessageTypeEnum = {
 
 export type BotNodeEventDataOneOfDataAllOf1MessageTypeEnum = typeof BotNodeEventDataOneOfDataAllOf1MessageTypeEnum[keyof typeof BotNodeEventDataOneOfDataAllOf1MessageTypeEnum];
 
+/**
+ * 
+ * @export
+ * @interface BotNodeEventDataOneOfDataAllOf1Message
+ */
+export interface BotNodeEventDataOneOfDataAllOf1Message {
+    /**
+     * the template message itself
+     * @type {string}
+     * @memberof BotNodeEventDataOneOfDataAllOf1Message
+     */
+    'text': string | null;
+    /**
+     * array of attachments for the template
+     * @type {Array<BotInsertDataActionsInnerAllOf1MessageAttachmentsInner>}
+     * @memberof BotNodeEventDataOneOfDataAllOf1Message
+     */
+    'attachments'?: Array<BotInsertDataActionsInnerAllOf1MessageAttachmentsInner>;
+    /**
+     * 
+     * @type {Array<BotInsertDataActionsInnerAllOf1MessageButtonsInner>}
+     * @memberof BotNodeEventDataOneOfDataAllOf1Message
+     */
+    'buttons'?: Array<BotInsertDataActionsInnerAllOf1MessageButtonsInner>;
+    /**
+     * 
+     * @type {Array<BotNodeEventDataOneOfDataAllOf1MessageDelaysInner>}
+     * @memberof BotNodeEventDataOneOfDataAllOf1Message
+     */
+    'delays'?: Array<BotNodeEventDataOneOfDataAllOf1MessageDelaysInner>;
+    /**
+     * 
+     * @type {BotInsertDataActionsInnerAllOf1MessageInput}
+     * @memberof BotNodeEventDataOneOfDataAllOf1Message
+     */
+    'input'?: BotInsertDataActionsInnerAllOf1MessageInput;
+    /**
+     * 
+     * @type {BotInsertDataActionsInnerAllOf1MessageList}
+     * @memberof BotNodeEventDataOneOfDataAllOf1Message
+     */
+    'list'?: BotInsertDataActionsInnerAllOf1MessageList;
+    /**
+     * 
+     * @type {string}
+     * @memberof BotNodeEventDataOneOfDataAllOf1Message
+     */
+    'quoted'?: string;
+    /**
+     * 
+     * @type {Array<BotInsertDataActionsInnerAllOf1MessageProductsInner>}
+     * @memberof BotNodeEventDataOneOfDataAllOf1Message
+     */
+    'products'?: Array<BotInsertDataActionsInnerAllOf1MessageProductsInner>;
+    /**
+     * the subject of the message, if applicable
+     * @type {string}
+     * @memberof BotNodeEventDataOneOfDataAllOf1Message
+     */
+    'subject'?: string;
+}
+/**
+ * 
+ * @export
+ * @interface BotNodeEventDataOneOfDataAllOf1MessageDelaysInner
+ */
+export interface BotNodeEventDataOneOfDataAllOf1MessageDelaysInner {
+    /**
+     * Time delays on second
+     * @type {number}
+     * @memberof BotNodeEventDataOneOfDataAllOf1MessageDelaysInner
+     */
+    'timeDelaySec': number;
+    /**
+     * Use \"nextAction\" instead
+     * @type {string}
+     * @memberof BotNodeEventDataOneOfDataAllOf1MessageDelaysInner
+     * @deprecated
+     */
+    'triggerActionId'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof BotNodeEventDataOneOfDataAllOf1MessageDelaysInner
+     */
+    'triggerBotId'?: string | null;
+    /**
+     * Simulate typing
+     * @type {boolean}
+     * @memberof BotNodeEventDataOneOfDataAllOf1MessageDelaysInner
+     */
+    'simulateTyping'?: boolean;
+    /**
+     * If true, the message will be cancelled if a reply is received
+     * @type {boolean}
+     * @memberof BotNodeEventDataOneOfDataAllOf1MessageDelaysInner
+     */
+    'cancelIfReplyReceived'?: boolean;
+    /**
+     * 
+     * @type {BotInsertDataActionsInnerAllOf1MessageButtonsInnerPosition}
+     * @memberof BotNodeEventDataOneOfDataAllOf1MessageDelaysInner
+     */
+    'position'?: BotInsertDataActionsInnerAllOf1MessageButtonsInnerPosition | null;
+    /**
+     * 
+     * @type {BotInsertDataActionsInnerAllOf1MessageButtonsInnerNextAction}
+     * @memberof BotNodeEventDataOneOfDataAllOf1MessageDelaysInner
+     */
+    'nextAction'?: BotInsertDataActionsInnerAllOf1MessageButtonsInnerNextAction;
+}
 /**
  * 
  * @export
