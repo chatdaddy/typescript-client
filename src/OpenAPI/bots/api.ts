@@ -1611,7 +1611,7 @@ export interface BotNote {
      * @type {string}
      * @memberof BotNote
      */
-    'type'?: BotNoteTypeEnum;
+    'noteType'?: BotNoteNoteTypeEnum;
     /**
      * 
      * @type {Array<IMMessageAttachment>}
@@ -1692,13 +1692,13 @@ export interface BotNote {
     'remove'?: boolean;
 }
 
-export const BotNoteTypeEnum = {
+export const BotNoteNoteTypeEnum = {
     Text: 'text',
     Image: 'image',
     Shape: 'shape'
 } as const;
 
-export type BotNoteTypeEnum = typeof BotNoteTypeEnum[keyof typeof BotNoteTypeEnum];
+export type BotNoteNoteTypeEnum = typeof BotNoteNoteTypeEnum[keyof typeof BotNoteNoteTypeEnum];
 
 /**
  * 

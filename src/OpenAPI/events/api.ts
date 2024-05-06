@@ -2520,7 +2520,7 @@ export interface BotInsertDataNotesInner {
      * @type {string}
      * @memberof BotInsertDataNotesInner
      */
-    'type'?: BotInsertDataNotesInnerTypeEnum;
+    'noteType'?: BotInsertDataNotesInnerNoteTypeEnum;
     /**
      * 
      * @type {Array<BotInsertDataActionsInnerAllOf1MessageAttachmentsInner>}
@@ -2601,13 +2601,13 @@ export interface BotInsertDataNotesInner {
     'remove'?: boolean;
 }
 
-export const BotInsertDataNotesInnerTypeEnum = {
+export const BotInsertDataNotesInnerNoteTypeEnum = {
     Text: 'text',
     Image: 'image',
     Shape: 'shape'
 } as const;
 
-export type BotInsertDataNotesInnerTypeEnum = typeof BotInsertDataNotesInnerTypeEnum[keyof typeof BotInsertDataNotesInnerTypeEnum];
+export type BotInsertDataNotesInnerNoteTypeEnum = typeof BotInsertDataNotesInnerNoteTypeEnum[keyof typeof BotInsertDataNotesInnerNoteTypeEnum];
 
 /**
  * 
