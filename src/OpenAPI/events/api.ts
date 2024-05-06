@@ -776,7 +776,21 @@ export interface AlarmPostRequest {
      * @memberof AlarmPostRequest
      */
     'parameters'?: { [key: string]: any; };
+    /**
+     * 
+     * @type {string}
+     * @memberof AlarmPostRequest
+     */
+    'channel'?: AlarmPostRequestChannelEnum;
 }
+
+export const AlarmPostRequestChannelEnum = {
+    TechAlarm: 'tech_alarm',
+    CustomerAlert: 'customer_alert'
+} as const;
+
+export type AlarmPostRequestChannelEnum = typeof AlarmPostRequestChannelEnum[keyof typeof AlarmPostRequestChannelEnum];
+
 /**
  * 
  * @export
