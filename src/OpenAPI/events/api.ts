@@ -2517,6 +2517,12 @@ export interface BotInsertDataNotesInner {
     'id'?: string;
     /**
      * 
+     * @type {string}
+     * @memberof BotInsertDataNotesInner
+     */
+    'type'?: BotInsertDataNotesInnerTypeEnum;
+    /**
+     * 
      * @type {Array<BotInsertDataActionsInnerAllOf1MessageAttachmentsInner>}
      * @memberof BotInsertDataNotesInner
      */
@@ -2594,6 +2600,15 @@ export interface BotInsertDataNotesInner {
      */
     'remove'?: boolean;
 }
+
+export const BotInsertDataNotesInnerTypeEnum = {
+    Text: 'text',
+    Image: 'image',
+    Shape: 'shape'
+} as const;
+
+export type BotInsertDataNotesInnerTypeEnum = typeof BotInsertDataNotesInnerTypeEnum[keyof typeof BotInsertDataNotesInnerTypeEnum];
+
 /**
  * 
  * @export
@@ -3254,10 +3269,10 @@ export interface BotNodeEventDataOneOf9 {
     'type': BotNodeEventDataOneOf9TypeEnum;
     /**
      * 
-     * @type {BotInsertDataNotesInner}
+     * @type {BotNodeEventDataOneOf9Data}
      * @memberof BotNodeEventDataOneOf9
      */
-    'data': BotInsertDataNotesInner;
+    'data': BotNodeEventDataOneOf9Data;
     /**
      * send in to remove the note
      * @type {boolean}
@@ -3272,6 +3287,97 @@ export const BotNodeEventDataOneOf9TypeEnum = {
 
 export type BotNodeEventDataOneOf9TypeEnum = typeof BotNodeEventDataOneOf9TypeEnum[keyof typeof BotNodeEventDataOneOf9TypeEnum];
 
+/**
+ * 
+ * @export
+ * @interface BotNodeEventDataOneOf9Data
+ */
+export interface BotNodeEventDataOneOf9Data {
+    /**
+     * 
+     * @type {string}
+     * @memberof BotNodeEventDataOneOf9Data
+     */
+    'id'?: string;
+    /**
+     * 
+     * @type {Array<BotInsertDataActionsInnerAllOf1MessageAttachmentsInner>}
+     * @memberof BotNodeEventDataOneOf9Data
+     */
+    'attachments'?: Array<BotInsertDataActionsInnerAllOf1MessageAttachmentsInner>;
+    /**
+     * 
+     * @type {string}
+     * @memberof BotNodeEventDataOneOf9Data
+     */
+    'text'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof BotNodeEventDataOneOf9Data
+     */
+    'title': string;
+    /**
+     * 
+     * @type {number}
+     * @memberof BotNodeEventDataOneOf9Data
+     */
+    'height'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof BotNodeEventDataOneOf9Data
+     */
+    'width'?: number;
+    /**
+     * 
+     * @type {Array<BotInsertDataNotesInnerTargetsInner>}
+     * @memberof BotNodeEventDataOneOf9Data
+     */
+    'targets'?: Array<BotInsertDataNotesInnerTargetsInner> | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof BotNodeEventDataOneOf9Data
+     */
+    'color'?: string | null;
+    /**
+     * 
+     * @type {number}
+     * @memberof BotNodeEventDataOneOf9Data
+     */
+    'zIndex'?: number | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof BotNodeEventDataOneOf9Data
+     */
+    'fillColor'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof BotNodeEventDataOneOf9Data
+     */
+    'shapeType'?: string | null;
+    /**
+     * 
+     * @type {{ [key: string]: any; }}
+     * @memberof BotNodeEventDataOneOf9Data
+     */
+    'textStyles'?: { [key: string]: any; } | null;
+    /**
+     * 
+     * @type {BotInsertDataActionsInnerAllOf1MessageButtonsInnerPosition}
+     * @memberof BotNodeEventDataOneOf9Data
+     */
+    'position': BotInsertDataActionsInnerAllOf1MessageButtonsInnerPosition | null;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof BotNodeEventDataOneOf9Data
+     */
+    'remove'?: boolean;
+}
 /**
  * 
  * @export
