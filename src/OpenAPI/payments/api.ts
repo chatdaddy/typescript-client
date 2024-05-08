@@ -567,13 +567,6 @@ export const CreditConsumptionType = {
     MessageSentMail: 'message_sent/mail',
     IntegrationNotification: 'integration/notification',
     IntegrationPayment: 'integration/payment',
-    Broadcast: 'broadcast',
-    MsgFlow: 'msg_flow',
-    KeywordReply: 'keyword_reply',
-    Tag: 'tag',
-    CustomField: 'custom_field',
-    Dashboard: 'dashboard',
-    Product: 'product',
     AiChatbot: 'ai_chatbot',
     Consultation1h: 'consultation/1h',
     AdminDiscretionary: 'admin/discretionary',
@@ -2136,6 +2129,7 @@ export const RecurringCreditConsumptionType = {
     ChannelWaBusinessApi: 'channel/wa-business-api',
     ChannelMail: 'channel/mail',
     ChannelSms: 'channel/sms',
+    ConsultationSupportPlan: 'consultation/support_plan',
     User: 'user'
 } as const;
 
