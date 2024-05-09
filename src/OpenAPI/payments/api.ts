@@ -626,6 +626,12 @@ export interface CreditCustomer {
      */
     'creditLevelStatus'?: CreditLevelStatus | null;
     /**
+     * 
+     * @type {RecurringCreditConsumption}
+     * @memberof CreditCustomer
+     */
+    'supportPlan'?: RecurringCreditConsumption;
+    /**
      * The partnership to use for this customer. This is only used if the customer is new.
      * @type {string}
      * @memberof CreditCustomer
@@ -694,6 +700,12 @@ export interface CreditCustomerAllOf {
      * @memberof CreditCustomerAllOf
      */
     'creditLevelStatus'?: CreditLevelStatus | null;
+    /**
+     * 
+     * @type {RecurringCreditConsumption}
+     * @memberof CreditCustomerAllOf
+     */
+    'supportPlan'?: RecurringCreditConsumption;
 }
 
 
@@ -1492,6 +1504,12 @@ export interface MiscBillingOptions {
      * @memberof MiscBillingOptions
      */
     'promotionCode'?: string;
+    /**
+     * Doesn\'t attempt to automatically charge the customer and always returns a payment link.
+     * @type {boolean}
+     * @memberof MiscBillingOptions
+     */
+    'alwaysReturnLink'?: boolean;
 }
 /**
  * 
@@ -3728,10 +3746,11 @@ export const CreditsApiAxiosParamCreator = function (configuration?: Configurati
          * 
          * @summary Get the customer\'s credit details
          * @param {boolean} [returnAutoRenewal] Return the auto-renewal subscription details. PAYMENTS_READ scope is required.
+         * @param {boolean} [returnSupportPlan] Return the support plan details.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        creditsCustomerGet: async (returnAutoRenewal?: boolean, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        creditsCustomerGet: async (returnAutoRenewal?: boolean, returnSupportPlan?: boolean, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v2/credits/customer`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -3750,6 +3769,10 @@ export const CreditsApiAxiosParamCreator = function (configuration?: Configurati
 
             if (returnAutoRenewal !== undefined) {
                 localVarQueryParameter['returnAutoRenewal'] = returnAutoRenewal;
+            }
+
+            if (returnSupportPlan !== undefined) {
+                localVarQueryParameter['returnSupportPlan'] = returnSupportPlan;
             }
 
 
@@ -4003,6 +4026,82 @@ export const CreditsApiAxiosParamCreator = function (configuration?: Configurati
         },
         /**
          * 
+         * @summary Create a new recurring credit consumption record
+         * @param {RecurringCreditConsumptionCreate} [recurringCreditConsumptionCreate] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        startRecurringConsumption: async (recurringCreditConsumptionCreate?: RecurringCreditConsumptionCreate, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v2/credits/recurring`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["PAYMENTS_UPDATE"], configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(recurringCreditConsumptionCreate, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Stop a recurring credit consumption
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        stopRecurringConsumption: async (id: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('stopRecurringConsumption', 'id', id)
+            const localVarPath = `/v2/credits/recurring/{id}`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["PAYMENTS_UPDATE"], configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
          * @summary Top up credits
          * @param {CreditTopUpOptions} [creditTopUpOptions] 
          * @param {*} [options] Override http request option.
@@ -4146,11 +4245,12 @@ export const CreditsApiFp = function(configuration?: Configuration) {
          * 
          * @summary Get the customer\'s credit details
          * @param {boolean} [returnAutoRenewal] Return the auto-renewal subscription details. PAYMENTS_READ scope is required.
+         * @param {boolean} [returnSupportPlan] Return the support plan details.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async creditsCustomerGet(returnAutoRenewal?: boolean, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CreditCustomer>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.creditsCustomerGet(returnAutoRenewal, options);
+        async creditsCustomerGet(returnAutoRenewal?: boolean, returnSupportPlan?: boolean, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CreditCustomer>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.creditsCustomerGet(returnAutoRenewal, returnSupportPlan, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -4219,6 +4319,28 @@ export const CreditsApiFp = function(configuration?: Configuration) {
          */
         async recurringCreditsGet(teamId?: string, count?: number, cursor?: string, type?: RecurringCreditConsumptionType, returnTotal?: boolean, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<RecurringCreditsGet200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.recurringCreditsGet(teamId, count, cursor, type, returnTotal, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary Create a new recurring credit consumption record
+         * @param {RecurringCreditConsumptionCreate} [recurringCreditConsumptionCreate] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async startRecurringConsumption(recurringCreditConsumptionCreate?: RecurringCreditConsumptionCreate, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<RecurringCreditConsumption>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.startRecurringConsumption(recurringCreditConsumptionCreate, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary Stop a recurring credit consumption
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async stopRecurringConsumption(id: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.stopRecurringConsumption(id, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -4320,7 +4442,7 @@ export const CreditsApiFactory = function (configuration?: Configuration, basePa
          * @throws {RequiredError}
          */
         creditsCustomerGet(requestParameters: CreditsApiCreditsCustomerGetRequest = {}, options?: AxiosRequestConfig): AxiosPromise<CreditCustomer> {
-            return localVarFp.creditsCustomerGet(requestParameters.returnAutoRenewal, options).then((request) => request(axios, basePath));
+            return localVarFp.creditsCustomerGet(requestParameters.returnAutoRenewal, requestParameters.returnSupportPlan, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -4379,6 +4501,26 @@ export const CreditsApiFactory = function (configuration?: Configuration, basePa
          */
         recurringCreditsGet(requestParameters: CreditsApiRecurringCreditsGetRequest = {}, options?: AxiosRequestConfig): AxiosPromise<RecurringCreditsGet200Response> {
             return localVarFp.recurringCreditsGet(requestParameters.teamId, requestParameters.count, requestParameters.cursor, requestParameters.type, requestParameters.returnTotal, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Create a new recurring credit consumption record
+         * @param {CreditsApiStartRecurringConsumptionRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        startRecurringConsumption(requestParameters: CreditsApiStartRecurringConsumptionRequest = {}, options?: AxiosRequestConfig): AxiosPromise<RecurringCreditConsumption> {
+            return localVarFp.startRecurringConsumption(requestParameters.recurringCreditConsumptionCreate, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Stop a recurring credit consumption
+         * @param {CreditsApiStopRecurringConsumptionRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        stopRecurringConsumption(requestParameters: CreditsApiStopRecurringConsumptionRequest, options?: AxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.stopRecurringConsumption(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -4615,6 +4757,13 @@ export interface CreditsApiCreditsCustomerGetRequest {
      * @memberof CreditsApiCreditsCustomerGet
      */
     readonly returnAutoRenewal?: boolean
+
+    /**
+     * Return the support plan details.
+     * @type {boolean}
+     * @memberof CreditsApiCreditsCustomerGet
+     */
+    readonly returnSupportPlan?: boolean
 }
 
 /**
@@ -4699,6 +4848,34 @@ export interface CreditsApiRecurringCreditsGetRequest {
      * @memberof CreditsApiRecurringCreditsGet
      */
     readonly returnTotal?: boolean
+}
+
+/**
+ * Request parameters for startRecurringConsumption operation in CreditsApi.
+ * @export
+ * @interface CreditsApiStartRecurringConsumptionRequest
+ */
+export interface CreditsApiStartRecurringConsumptionRequest {
+    /**
+     * 
+     * @type {RecurringCreditConsumptionCreate}
+     * @memberof CreditsApiStartRecurringConsumption
+     */
+    readonly recurringCreditConsumptionCreate?: RecurringCreditConsumptionCreate
+}
+
+/**
+ * Request parameters for stopRecurringConsumption operation in CreditsApi.
+ * @export
+ * @interface CreditsApiStopRecurringConsumptionRequest
+ */
+export interface CreditsApiStopRecurringConsumptionRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof CreditsApiStopRecurringConsumption
+     */
+    readonly id: string
 }
 
 /**
@@ -4815,7 +4992,7 @@ export class CreditsApi extends BaseAPI {
      * @memberof CreditsApi
      */
     public creditsCustomerGet(requestParameters: CreditsApiCreditsCustomerGetRequest = {}, options?: AxiosRequestConfig) {
-        return CreditsApiFp(this.configuration).creditsCustomerGet(requestParameters.returnAutoRenewal, options).then((request) => request(this.axios, this.basePath));
+        return CreditsApiFp(this.configuration).creditsCustomerGet(requestParameters.returnAutoRenewal, requestParameters.returnSupportPlan, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -4886,6 +5063,30 @@ export class CreditsApi extends BaseAPI {
      */
     public recurringCreditsGet(requestParameters: CreditsApiRecurringCreditsGetRequest = {}, options?: AxiosRequestConfig) {
         return CreditsApiFp(this.configuration).recurringCreditsGet(requestParameters.teamId, requestParameters.count, requestParameters.cursor, requestParameters.type, requestParameters.returnTotal, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Create a new recurring credit consumption record
+     * @param {CreditsApiStartRecurringConsumptionRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CreditsApi
+     */
+    public startRecurringConsumption(requestParameters: CreditsApiStartRecurringConsumptionRequest = {}, options?: AxiosRequestConfig) {
+        return CreditsApiFp(this.configuration).startRecurringConsumption(requestParameters.recurringCreditConsumptionCreate, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Stop a recurring credit consumption
+     * @param {CreditsApiStopRecurringConsumptionRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CreditsApi
+     */
+    public stopRecurringConsumption(requestParameters: CreditsApiStopRecurringConsumptionRequest, options?: AxiosRequestConfig) {
+        return CreditsApiFp(this.configuration).stopRecurringConsumption(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
