@@ -7465,6 +7465,12 @@ export interface MessageInsertDataMiscOptions {
     'templateParams'?: { [key: string]: string; };
     /**
      * 
+     * @type {string}
+     * @memberof MessageInsertDataMiscOptions
+     */
+    'templateType'?: string;
+    /**
+     * 
      * @type {boolean}
      * @memberof MessageInsertDataMiscOptions
      */

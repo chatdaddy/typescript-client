@@ -4384,6 +4384,12 @@ export interface MiscOptions {
      */
     'templateParams'?: { [key: string]: string; };
     /**
+     * WA Business template type. Populated automatically on sending of a template message
+     * @type {string}
+     * @memberof MiscOptions
+     */
+    'templateType'?: string;
+    /**
      * Emulate typing behaviour before send
      * @type {boolean}
      * @memberof MiscOptions
