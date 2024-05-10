@@ -562,9 +562,9 @@ export interface CreditConsumptionTier {
 export const CreditConsumptionType = {
     MessageSentWa: 'message_sent/wa',
     MessageSentTiktok: 'message_sent/tiktok',
-    MessageSentWaBusinessApi: 'message_sent/wa-business-api',
     MessageSentMessenger: 'message_sent/messenger',
     MessageSentMail: 'message_sent/mail',
+    ConversationWaBusinessApi: 'conversation/wa-business-api',
     IntegrationNotification: 'integration/notification',
     IntegrationPayment: 'integration/payment',
     AiChatbot: 'ai_chatbot',
@@ -1356,6 +1356,19 @@ interface DateRange {
      * @memberof DateRange
      */
     'to': string;
+}
+/**
+ * 
+ * @export
+ * @interface DefinedSingleConsumptionMetadata
+ */
+export interface DefinedSingleConsumptionMetadata {
+    /**
+     * Cost of the consumption
+     * @type {number}
+     * @memberof DefinedSingleConsumptionMetadata
+     */
+    'perUnitCost': number;
 }
 /**
  * List of features
@@ -2180,18 +2193,11 @@ export interface RecurringCreditsGet200Response {
     'total'?: number;
 }
 /**
- * 
+ * @type SingleConsumptionMetadata
  * @export
- * @interface SingleConsumptionMetadata
  */
-export interface SingleConsumptionMetadata {
-    /**
-     * Cost of the consumption
-     * @type {number}
-     * @memberof SingleConsumptionMetadata
-     */
-    'perUnitCost': number;
-}
+export type SingleConsumptionMetadata = DefinedSingleConsumptionMetadata | VariableSingleConsumptionMetadata;
+
 /**
  * 
  * @export
@@ -2887,6 +2893,63 @@ export const UnlockPreferenceCategoryEnum = {
 
 export type UnlockPreferenceCategoryEnum = typeof UnlockPreferenceCategoryEnum[keyof typeof UnlockPreferenceCategoryEnum];
 
+/**
+ * 
+ * @export
+ * @interface VariableSingleConsumptionMetadata
+ */
+export interface VariableSingleConsumptionMetadata {
+    /**
+     * 
+     * @type {string}
+     * @memberof VariableSingleConsumptionMetadata
+     */
+    'type': VariableSingleConsumptionMetadataTypeEnum;
+    /**
+     * Some data used to configure the correct price of the consumption
+     * @type {{ [key: string]: any; }}
+     * @memberof VariableSingleConsumptionMetadata
+     */
+    'data': { [key: string]: any; };
+}
+
+export const VariableSingleConsumptionMetadataTypeEnum = {
+    Custom: 'custom'
+} as const;
+
+export type VariableSingleConsumptionMetadataTypeEnum = typeof VariableSingleConsumptionMetadataTypeEnum[keyof typeof VariableSingleConsumptionMetadataTypeEnum];
+
+/**
+ * Pricing of each item in credits
+ * @export
+ * @interface WabaPricingData
+ */
+export interface WabaPricingData {
+    /**
+     * 
+     * @type {number}
+     * @memberof WabaPricingData
+     */
+    'authentication'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof WabaPricingData
+     */
+    'service'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof WabaPricingData
+     */
+    'marketing'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof WabaPricingData
+     */
+    'utility'?: number;
+}
 
 /**
  * AutoChargeProductsApi - axios parameter creator
