@@ -7031,6 +7031,12 @@ export interface MessageInsertData {
     'miscOptions'?: MessageInsertDataMiscOptions;
     /**
      * 
+     * @type {MessageInsertDataConversationMetadata}
+     * @memberof MessageInsertData
+     */
+    'conversationMetadata'?: MessageInsertDataConversationMetadata;
+    /**
+     * 
      * @type {Array<string>}
      * @memberof MessageInsertData
      */
@@ -7311,6 +7317,31 @@ export interface MessageInsertDataButtonsInner {
 /**
  * 
  * @export
+ * @interface MessageInsertDataConversationMetadata
+ */
+export interface MessageInsertDataConversationMetadata {
+    /**
+     * 
+     * @type {string}
+     * @memberof MessageInsertDataConversationMetadata
+     */
+    'id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof MessageInsertDataConversationMetadata
+     */
+    'createdAt'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof MessageInsertDataConversationMetadata
+     */
+    'type': string;
+}
+/**
+ * 
+ * @export
  * @interface MessageInsertDataError
  */
 export interface MessageInsertDataError {
@@ -7463,12 +7494,6 @@ export interface MessageInsertDataMiscOptions {
      * @memberof MessageInsertDataMiscOptions
      */
     'templateParams'?: { [key: string]: string; };
-    /**
-     * 
-     * @type {string}
-     * @memberof MessageInsertDataMiscOptions
-     */
-    'templateType'?: string;
     /**
      * 
      * @type {boolean}
@@ -7970,6 +7995,12 @@ export interface MessageUpdateData {
      * @memberof MessageUpdateData
      */
     'miscOptions'?: MessageInsertDataMiscOptions;
+    /**
+     * 
+     * @type {MessageInsertDataConversationMetadata}
+     * @memberof MessageUpdateData
+     */
+    'conversationMetadata'?: MessageInsertDataConversationMetadata;
     /**
      * 
      * @type {Array<string>}

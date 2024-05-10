@@ -929,6 +929,12 @@ export interface AlibabaCAMSWebhookMessageItem {
      * @memberof AlibabaCAMSWebhookMessageItem
      */
     'ErrorCode'?: AlibabaCAMSWebhookMessageItemErrorCode;
+    /**
+     * Unix timestamp in MS
+     * @type {number}
+     * @memberof AlibabaCAMSWebhookMessageItem
+     */
+    'ConversionExpirationTime'?: number;
 }
 
 export const AlibabaCAMSWebhookMessageItemTypeEnum = {
@@ -2926,6 +2932,12 @@ export interface Message {
     'miscOptions'?: MiscOptions;
     /**
      * 
+     * @type {WABAConversationMetadata}
+     * @memberof Message
+     */
+    'conversationMetadata'?: WABAConversationMetadata;
+    /**
+     * 
      * @type {Array<string>}
      * @memberof Message
      */
@@ -3113,6 +3125,12 @@ export interface MessageAllOf {
      * @memberof MessageAllOf
      */
     'miscOptions'?: MiscOptions;
+    /**
+     * 
+     * @type {WABAConversationMetadata}
+     * @memberof MessageAllOf
+     */
+    'conversationMetadata'?: WABAConversationMetadata;
 }
 
 
@@ -4383,12 +4401,6 @@ export interface MiscOptions {
      * @memberof MiscOptions
      */
     'templateParams'?: { [key: string]: string; };
-    /**
-     * WA Business template type. Populated automatically on sending of a template message
-     * @type {string}
-     * @memberof MiscOptions
-     */
-    'templateType'?: string;
     /**
      * Emulate typing behaviour before send
      * @type {boolean}
@@ -5696,6 +5708,31 @@ export interface UpsertMetadata {
      * @memberof UpsertMetadata
      */
     'doneBy': string;
+}
+/**
+ * Metadata about a WABA conversation. This is set on the message when a new conversation is created.
+ * @export
+ * @interface WABAConversationMetadata
+ */
+export interface WABAConversationMetadata {
+    /**
+     * ID of the conversation
+     * @type {string}
+     * @memberof WABAConversationMetadata
+     */
+    'id': string;
+    /**
+     * An ISO formatted timestamp
+     * @type {string}
+     * @memberof WABAConversationMetadata
+     */
+    'createdAt'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof WABAConversationMetadata
+     */
+    'type': string;
 }
 /**
  * 
