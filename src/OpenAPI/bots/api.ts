@@ -2148,6 +2148,12 @@ export interface BotTriggerInstance {
     'status': BotTriggerInstanceStatusEnum;
     /**
      * 
+     * @type {{ [key: string]: any; }}
+     * @memberof BotTriggerInstance
+     */
+    'data': { [key: string]: any; };
+    /**
+     * 
      * @type {InstanceFirstActionStatusCounts}
      * @memberof BotTriggerInstance
      */
