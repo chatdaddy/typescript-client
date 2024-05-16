@@ -1487,6 +1487,12 @@ export interface BotInsertDataActionsInnerAllOf1Message {
      * @memberof BotInsertDataActionsInnerAllOf1Message
      */
     'subject'?: string;
+    /**
+     * 
+     * @type {BotInsertDataActionsInnerAllOf1MessageDefaultSendOptions}
+     * @memberof BotInsertDataActionsInnerAllOf1Message
+     */
+    'defaultSendOptions'?: BotInsertDataActionsInnerAllOf1MessageDefaultSendOptions;
 }
 /**
  * 
@@ -2052,6 +2058,25 @@ export interface BotInsertDataActionsInnerAllOf1MessageButtonsInnerPosition {
      * @memberof BotInsertDataActionsInnerAllOf1MessageButtonsInnerPosition
      */
     'y': number;
+}
+/**
+ * Minimal default send options for the message
+ * @export
+ * @interface BotInsertDataActionsInnerAllOf1MessageDefaultSendOptions
+ */
+export interface BotInsertDataActionsInnerAllOf1MessageDefaultSendOptions {
+    /**
+     * 
+     * @type {boolean}
+     * @memberof BotInsertDataActionsInnerAllOf1MessageDefaultSendOptions
+     */
+    'simulateTyping'?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof BotInsertDataActionsInnerAllOf1MessageDefaultSendOptions
+     */
+    'cancelIfReplyReceived'?: boolean;
 }
 /**
  * @type BotInsertDataActionsInnerAllOf1MessageDelaysInner

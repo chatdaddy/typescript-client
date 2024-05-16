@@ -3688,6 +3688,12 @@ export interface MessageObj {
      * @memberof MessageObj
      */
     'subject'?: string;
+    /**
+     * 
+     * @type {MinMessageSendOptions}
+     * @memberof MessageObj
+     */
+    'defaultSendOptions'?: MinMessageSendOptions;
 }
 /**
  * Optional parameters to send a message
@@ -3775,6 +3781,25 @@ export interface MessageSendOptionsSender {
      * @memberof MessageSendOptionsSender
      */
     'context': IMMessageSenderContext;
+}
+/**
+ * Minimal default send options for the message
+ * @export
+ * @interface MinMessageSendOptions
+ */
+export interface MinMessageSendOptions {
+    /**
+     * 
+     * @type {boolean}
+     * @memberof MinMessageSendOptions
+     */
+    'simulateTyping'?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof MinMessageSendOptions
+     */
+    'cancelIfReplyReceived'?: boolean;
 }
 /**
  * Specify the next action to be fired
