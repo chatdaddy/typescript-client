@@ -1848,6 +1848,12 @@ export interface ContactTicket {
      * @memberof ContactTicket
      */
     'id': string;
+    /**
+     * 
+     * @type {UpsertMetadata}
+     * @memberof ContactTicket
+     */
+    'createMetadata'?: UpsertMetadata;
 }
 /**
  * 

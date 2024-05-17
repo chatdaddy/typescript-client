@@ -6502,6 +6502,12 @@ export interface GroupUpdateDataOwnerTicketsInner {
      * @memberof GroupUpdateDataOwnerTicketsInner
      */
     'id': string;
+    /**
+     * 
+     * @type {GroupUpdateDataOwnerTagsInnerAllOf1AddedMetadata}
+     * @memberof GroupUpdateDataOwnerTicketsInner
+     */
+    'createMetadata'?: GroupUpdateDataOwnerTagsInnerAllOf1AddedMetadata;
 }
 /**
  * 
