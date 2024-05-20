@@ -2212,6 +2212,25 @@ export interface BotTriggerInstanceTrigger {
      * @memberof BotTriggerInstanceTrigger
      */
     'name'?: string;
+    /**
+     * 
+     * @type {BotTriggerInstanceTriggerBot}
+     * @memberof BotTriggerInstanceTrigger
+     */
+    'bot'?: BotTriggerInstanceTriggerBot;
+}
+/**
+ * 
+ * @export
+ * @interface BotTriggerInstanceTriggerBot
+ */
+export interface BotTriggerInstanceTriggerBot {
+    /**
+     * 
+     * @type {string}
+     * @memberof BotTriggerInstanceTriggerBot
+     */
+    'name': string;
 }
 /**
  * 
