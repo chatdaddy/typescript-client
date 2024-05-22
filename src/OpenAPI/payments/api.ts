@@ -2372,6 +2372,62 @@ export interface StripeMetadata {
 /**
  * 
  * @export
+ * @interface StripePaymentIntent
+ */
+export interface StripePaymentIntent {
+    /**
+     * 
+     * @type {string}
+     * @memberof StripePaymentIntent
+     */
+    'id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof StripePaymentIntent
+     */
+    'customer'?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof StripePaymentIntent
+     */
+    'amount': number;
+    /**
+     * 
+     * @type {string}
+     * @memberof StripePaymentIntent
+     */
+    'description'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof StripePaymentIntent
+     */
+    'status'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof StripePaymentIntent
+     */
+    'created'?: string;
+}
+/**
+ * 
+ * @export
+ * @interface StripePaymentIntentsGet200Response
+ */
+export interface StripePaymentIntentsGet200Response {
+    /**
+     * 
+     * @type {Array<StripePaymentIntent>}
+     * @memberof StripePaymentIntentsGet200Response
+     */
+    'paymentIntents': Array<StripePaymentIntent>;
+}
+/**
+ * 
+ * @export
  * @interface StripePreference
  */
 export interface StripePreference {
@@ -6017,6 +6073,45 @@ export const StripeApiAxiosParamCreator = function (configuration?: Configuratio
             };
         },
         /**
+         * 
+         * @summary Create a payment intent
+         * @param {string} [stripeCustomerId] The stripe customer ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        stripePaymentIntentsGet: async (stripeCustomerId?: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/stripe/payment-intents`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["ADMIN_PANEL_ACCESS"], configuration)
+
+            if (stripeCustomerId !== undefined) {
+                localVarQueryParameter['stripeCustomerId'] = stripeCustomerId;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * Use results from here to attach prices to products.
          * @summary Get prices from Stripe
          * @param {number} [count] 
@@ -6110,6 +6205,17 @@ export const StripeApiFp = function(configuration?: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
+         * 
+         * @summary Create a payment intent
+         * @param {string} [stripeCustomerId] The stripe customer ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async stripePaymentIntentsGet(stripeCustomerId?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<StripePaymentIntentsGet200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.stripePaymentIntentsGet(stripeCustomerId, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
          * Use results from here to attach prices to products.
          * @summary Get prices from Stripe
          * @param {number} [count] 
@@ -6161,6 +6267,16 @@ export const StripeApiFactory = function (configuration?: Configuration, basePat
          */
         stripeHook(requestParameters: StripeApiStripeHookRequest, options?: AxiosRequestConfig): AxiosPromise<void> {
             return localVarFp.stripeHook(requestParameters.secret, requestParameters.requestBody, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Create a payment intent
+         * @param {StripeApiStripePaymentIntentsGetRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        stripePaymentIntentsGet(requestParameters: StripeApiStripePaymentIntentsGetRequest = {}, options?: AxiosRequestConfig): AxiosPromise<StripePaymentIntentsGet200Response> {
+            return localVarFp.stripePaymentIntentsGet(requestParameters.stripeCustomerId, options).then((request) => request(axios, basePath));
         },
         /**
          * Use results from here to attach prices to products.
@@ -6222,6 +6338,20 @@ export interface StripeApiStripeHookRequest {
      * @memberof StripeApiStripeHook
      */
     readonly requestBody?: { [key: string]: any; }
+}
+
+/**
+ * Request parameters for stripePaymentIntentsGet operation in StripeApi.
+ * @export
+ * @interface StripeApiStripePaymentIntentsGetRequest
+ */
+export interface StripeApiStripePaymentIntentsGetRequest {
+    /**
+     * The stripe customer ID
+     * @type {string}
+     * @memberof StripeApiStripePaymentIntentsGet
+     */
+    readonly stripeCustomerId?: string
 }
 
 /**
@@ -6293,6 +6423,18 @@ export class StripeApi extends BaseAPI {
      */
     public stripeHook(requestParameters: StripeApiStripeHookRequest, options?: AxiosRequestConfig) {
         return StripeApiFp(this.configuration).stripeHook(requestParameters.secret, requestParameters.requestBody, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Create a payment intent
+     * @param {StripeApiStripePaymentIntentsGetRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof StripeApi
+     */
+    public stripePaymentIntentsGet(requestParameters: StripeApiStripePaymentIntentsGetRequest = {}, options?: AxiosRequestConfig) {
+        return StripeApiFp(this.configuration).stripePaymentIntentsGet(requestParameters.stripeCustomerId, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
