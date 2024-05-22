@@ -2407,10 +2407,10 @@ export interface StripePaymentIntent {
     'status'?: string;
     /**
      * 
-     * @type {string}
+     * @type {number}
      * @memberof StripePaymentIntent
      */
-    'created'?: string;
+    'created'?: number;
 }
 /**
  * 
