@@ -1099,6 +1099,12 @@ export interface AlibabaCamsRegisterRequest {
      * @memberof AlibabaCamsRegisterRequest
      */
     'selectedPhoneNumber': string;
+    /**
+     * Token from embedded sign up
+     * @type {string}
+     * @memberof AlibabaCamsRegisterRequest
+     */
+    'token'?: string;
 }
 /**
  * 
