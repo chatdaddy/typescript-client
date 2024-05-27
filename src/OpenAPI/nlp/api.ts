@@ -1415,7 +1415,7 @@ export class AudioTranscriptionApi extends BaseAPI {
  * AutocompleteApi - axios parameter creator
  * @export
  */
-const AutocompleteApiAxiosParamCreator = function (configuration?: Configuration) {
+export const AutocompleteApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
          * 
@@ -1597,7 +1597,7 @@ const AutocompleteApiAxiosParamCreator = function (configuration?: Configuration
  * AutocompleteApi - functional programming interface
  * @export
  */
-const AutocompleteApiFp = function(configuration?: Configuration) {
+export const AutocompleteApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = AutocompleteApiAxiosParamCreator(configuration)
     return {
         /**
@@ -1655,7 +1655,7 @@ const AutocompleteApiFp = function(configuration?: Configuration) {
  * AutocompleteApi - factory interface
  * @export
  */
-const AutocompleteApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+export const AutocompleteApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
     const localVarFp = AutocompleteApiFp(configuration)
     return {
         /**
@@ -1706,7 +1706,7 @@ const AutocompleteApiFactory = function (configuration?: Configuration, basePath
  * @export
  * @interface AutocompleteApiAutocompleteCalendarEventRequest
  */
-interface AutocompleteApiAutocompleteCalendarEventRequest {
+export interface AutocompleteApiAutocompleteCalendarEventRequest {
     /**
      * 
      * @type {AutocompleteCalendarEventRequest}
@@ -1762,7 +1762,7 @@ export interface AutocompleteApiAutocompleteModifyRequest {
  * @export
  * @interface AutocompleteApiOauthCallbackRequest
  */
-interface AutocompleteApiOauthCallbackRequest {
+export interface AutocompleteApiOauthCallbackRequest {
     /**
      * 
      * @type {string}

@@ -191,10 +191,222 @@ export interface OauthCallback200Response {
 }
 
 /**
- * AutocompleteApi - axios parameter creator
+ * CustomBotApi - axios parameter creator
  * @export
  */
-export const AutocompleteApiAxiosParamCreator = function (configuration?: Configuration) {
+export const CustomBotApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @summary Add a custom AI bot
+         * @param {string} accountId 
+         * @param {BotAddPostRequest} [botAddPostRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        botAddPost: async (accountId: string, botAddPostRequest?: BotAddPostRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'accountId' is not null or undefined
+            assertParamExists('botAddPost', 'accountId', accountId)
+            const localVarPath = `/bot/add/{accountId}`
+                .replace(`{${"accountId"}}`, encodeURIComponent(String(accountId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(botAddPostRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Get all bots for an account
+         * @param {string} accountId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        botsGet: async (accountId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'accountId' is not null or undefined
+            assertParamExists('botsGet', 'accountId', accountId)
+            const localVarPath = `/bots/{accountId}`
+                .replace(`{${"accountId"}}`, encodeURIComponent(String(accountId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * CustomBotApi - functional programming interface
+ * @export
+ */
+export const CustomBotApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = CustomBotApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * 
+         * @summary Add a custom AI bot
+         * @param {string} accountId 
+         * @param {BotAddPostRequest} [botAddPostRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async botAddPost(accountId: string, botAddPostRequest?: BotAddPostRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BotAddPost200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.botAddPost(accountId, botAddPostRequest, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary Get all bots for an account
+         * @param {string} accountId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async botsGet(accountId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BotsGet200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.botsGet(accountId, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+    }
+};
+
+/**
+ * CustomBotApi - factory interface
+ * @export
+ */
+export const CustomBotApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = CustomBotApiFp(configuration)
+    return {
+        /**
+         * 
+         * @summary Add a custom AI bot
+         * @param {CustomBotApiBotAddPostRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        botAddPost(requestParameters: CustomBotApiBotAddPostRequest, options?: AxiosRequestConfig): AxiosPromise<BotAddPost200Response> {
+            return localVarFp.botAddPost(requestParameters.accountId, requestParameters.botAddPostRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Get all bots for an account
+         * @param {CustomBotApiBotsGetRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        botsGet(requestParameters: CustomBotApiBotsGetRequest, options?: AxiosRequestConfig): AxiosPromise<BotsGet200Response> {
+            return localVarFp.botsGet(requestParameters.accountId, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * Request parameters for botAddPost operation in CustomBotApi.
+ * @export
+ * @interface CustomBotApiBotAddPostRequest
+ */
+export interface CustomBotApiBotAddPostRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof CustomBotApiBotAddPost
+     */
+    readonly accountId: string
+
+    /**
+     * 
+     * @type {BotAddPostRequest}
+     * @memberof CustomBotApiBotAddPost
+     */
+    readonly botAddPostRequest?: BotAddPostRequest
+}
+
+/**
+ * Request parameters for botsGet operation in CustomBotApi.
+ * @export
+ * @interface CustomBotApiBotsGetRequest
+ */
+export interface CustomBotApiBotsGetRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof CustomBotApiBotsGet
+     */
+    readonly accountId: string
+}
+
+/**
+ * CustomBotApi - object-oriented interface
+ * @export
+ * @class CustomBotApi
+ * @extends {BaseAPI}
+ */
+export class CustomBotApi extends BaseAPI {
+    /**
+     * 
+     * @summary Add a custom AI bot
+     * @param {CustomBotApiBotAddPostRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CustomBotApi
+     */
+    public botAddPost(requestParameters: CustomBotApiBotAddPostRequest, options?: AxiosRequestConfig) {
+        return CustomBotApiFp(this.configuration).botAddPost(requestParameters.accountId, requestParameters.botAddPostRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Get all bots for an account
+     * @param {CustomBotApiBotsGetRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CustomBotApi
+     */
+    public botsGet(requestParameters: CustomBotApiBotsGetRequest, options?: AxiosRequestConfig) {
+        return CustomBotApiFp(this.configuration).botsGet(requestParameters.accountId, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+/**
+ * ScheduleApi - axios parameter creator
+ * @export
+ */
+export const ScheduleApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
          * 
@@ -287,11 +499,11 @@ export const AutocompleteApiAxiosParamCreator = function (configuration?: Config
 };
 
 /**
- * AutocompleteApi - functional programming interface
+ * ScheduleApi - functional programming interface
  * @export
  */
-export const AutocompleteApiFp = function(configuration?: Configuration) {
-    const localVarAxiosParamCreator = AutocompleteApiAxiosParamCreator(configuration)
+export const ScheduleApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = ScheduleApiAxiosParamCreator(configuration)
     return {
         /**
          * 
@@ -321,318 +533,106 @@ export const AutocompleteApiFp = function(configuration?: Configuration) {
 };
 
 /**
- * AutocompleteApi - factory interface
+ * ScheduleApi - factory interface
  * @export
  */
-export const AutocompleteApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
-    const localVarFp = AutocompleteApiFp(configuration)
+export const ScheduleApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = ScheduleApiFp(configuration)
     return {
         /**
          * 
          * @summary Extract calendar event information from message
-         * @param {AutocompleteApiAutocompleteCalendarEventRequest} requestParameters Request parameters.
+         * @param {ScheduleApiAutocompleteCalendarEventRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        autocompleteCalendarEvent(requestParameters: AutocompleteApiAutocompleteCalendarEventRequest = {}, options?: AxiosRequestConfig): AxiosPromise<CalendarEvent> {
+        autocompleteCalendarEvent(requestParameters: ScheduleApiAutocompleteCalendarEventRequest = {}, options?: AxiosRequestConfig): AxiosPromise<CalendarEvent> {
             return localVarFp.autocompleteCalendarEvent(requestParameters.autocompleteCalendarEventRequest, options).then((request) => request(axios, basePath));
         },
         /**
          * 
          * @summary OAuth callback
-         * @param {AutocompleteApiOauthCallbackRequest} requestParameters Request parameters.
+         * @param {ScheduleApiOauthCallbackRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        oauthCallback(requestParameters: AutocompleteApiOauthCallbackRequest, options?: AxiosRequestConfig): AxiosPromise<OauthCallback200Response> {
+        oauthCallback(requestParameters: ScheduleApiOauthCallbackRequest, options?: AxiosRequestConfig): AxiosPromise<OauthCallback200Response> {
             return localVarFp.oauthCallback(requestParameters.code, requestParameters.state, requestParameters.scope, options).then((request) => request(axios, basePath));
         },
     };
 };
 
 /**
- * Request parameters for autocompleteCalendarEvent operation in AutocompleteApi.
+ * Request parameters for autocompleteCalendarEvent operation in ScheduleApi.
  * @export
- * @interface AutocompleteApiAutocompleteCalendarEventRequest
+ * @interface ScheduleApiAutocompleteCalendarEventRequest
  */
-export interface AutocompleteApiAutocompleteCalendarEventRequest {
+export interface ScheduleApiAutocompleteCalendarEventRequest {
     /**
      * 
      * @type {AutocompleteCalendarEventRequest}
-     * @memberof AutocompleteApiAutocompleteCalendarEvent
+     * @memberof ScheduleApiAutocompleteCalendarEvent
      */
     readonly autocompleteCalendarEventRequest?: AutocompleteCalendarEventRequest
 }
 
 /**
- * Request parameters for oauthCallback operation in AutocompleteApi.
+ * Request parameters for oauthCallback operation in ScheduleApi.
  * @export
- * @interface AutocompleteApiOauthCallbackRequest
+ * @interface ScheduleApiOauthCallbackRequest
  */
-export interface AutocompleteApiOauthCallbackRequest {
+export interface ScheduleApiOauthCallbackRequest {
     /**
      * 
      * @type {string}
-     * @memberof AutocompleteApiOauthCallback
+     * @memberof ScheduleApiOauthCallback
      */
     readonly code: string
 
     /**
      * 
      * @type {string}
-     * @memberof AutocompleteApiOauthCallback
+     * @memberof ScheduleApiOauthCallback
      */
     readonly state: string
 
     /**
      * 
      * @type {string}
-     * @memberof AutocompleteApiOauthCallback
+     * @memberof ScheduleApiOauthCallback
      */
     readonly scope?: string
 }
 
 /**
- * AutocompleteApi - object-oriented interface
+ * ScheduleApi - object-oriented interface
  * @export
- * @class AutocompleteApi
+ * @class ScheduleApi
  * @extends {BaseAPI}
  */
-export class AutocompleteApi extends BaseAPI {
+export class ScheduleApi extends BaseAPI {
     /**
      * 
      * @summary Extract calendar event information from message
-     * @param {AutocompleteApiAutocompleteCalendarEventRequest} requestParameters Request parameters.
+     * @param {ScheduleApiAutocompleteCalendarEventRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof AutocompleteApi
+     * @memberof ScheduleApi
      */
-    public autocompleteCalendarEvent(requestParameters: AutocompleteApiAutocompleteCalendarEventRequest = {}, options?: AxiosRequestConfig) {
-        return AutocompleteApiFp(this.configuration).autocompleteCalendarEvent(requestParameters.autocompleteCalendarEventRequest, options).then((request) => request(this.axios, this.basePath));
+    public autocompleteCalendarEvent(requestParameters: ScheduleApiAutocompleteCalendarEventRequest = {}, options?: AxiosRequestConfig) {
+        return ScheduleApiFp(this.configuration).autocompleteCalendarEvent(requestParameters.autocompleteCalendarEventRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * 
      * @summary OAuth callback
-     * @param {AutocompleteApiOauthCallbackRequest} requestParameters Request parameters.
+     * @param {ScheduleApiOauthCallbackRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof AutocompleteApi
+     * @memberof ScheduleApi
      */
-    public oauthCallback(requestParameters: AutocompleteApiOauthCallbackRequest, options?: AxiosRequestConfig) {
-        return AutocompleteApiFp(this.configuration).oauthCallback(requestParameters.code, requestParameters.state, requestParameters.scope, options).then((request) => request(this.axios, this.basePath));
-    }
-}
-
-
-/**
- * BotApi - axios parameter creator
- * @export
- */
-export const BotApiAxiosParamCreator = function (configuration?: Configuration) {
-    return {
-        /**
-         * 
-         * @summary Add a custom AI bot
-         * @param {string} accountId 
-         * @param {BotAddPostRequest} [botAddPostRequest] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        botAddPost: async (accountId: string, botAddPostRequest?: BotAddPostRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'accountId' is not null or undefined
-            assertParamExists('botAddPost', 'accountId', accountId)
-            const localVarPath = `/bot/add/{accountId}`
-                .replace(`{${"accountId"}}`, encodeURIComponent(String(accountId)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-
-    
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(botAddPostRequest, localVarRequestOptions, configuration)
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @summary Get all bots for an account
-         * @param {string} accountId 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        botsGet: async (accountId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'accountId' is not null or undefined
-            assertParamExists('botsGet', 'accountId', accountId)
-            const localVarPath = `/bots/{accountId}`
-                .replace(`{${"accountId"}}`, encodeURIComponent(String(accountId)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-    }
-};
-
-/**
- * BotApi - functional programming interface
- * @export
- */
-export const BotApiFp = function(configuration?: Configuration) {
-    const localVarAxiosParamCreator = BotApiAxiosParamCreator(configuration)
-    return {
-        /**
-         * 
-         * @summary Add a custom AI bot
-         * @param {string} accountId 
-         * @param {BotAddPostRequest} [botAddPostRequest] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async botAddPost(accountId: string, botAddPostRequest?: BotAddPostRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BotAddPost200Response>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.botAddPost(accountId, botAddPostRequest, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-        /**
-         * 
-         * @summary Get all bots for an account
-         * @param {string} accountId 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async botsGet(accountId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BotsGet200Response>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.botsGet(accountId, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-    }
-};
-
-/**
- * BotApi - factory interface
- * @export
- */
-export const BotApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
-    const localVarFp = BotApiFp(configuration)
-    return {
-        /**
-         * 
-         * @summary Add a custom AI bot
-         * @param {BotApiBotAddPostRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        botAddPost(requestParameters: BotApiBotAddPostRequest, options?: AxiosRequestConfig): AxiosPromise<BotAddPost200Response> {
-            return localVarFp.botAddPost(requestParameters.accountId, requestParameters.botAddPostRequest, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
-         * @summary Get all bots for an account
-         * @param {BotApiBotsGetRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        botsGet(requestParameters: BotApiBotsGetRequest, options?: AxiosRequestConfig): AxiosPromise<BotsGet200Response> {
-            return localVarFp.botsGet(requestParameters.accountId, options).then((request) => request(axios, basePath));
-        },
-    };
-};
-
-/**
- * Request parameters for botAddPost operation in BotApi.
- * @export
- * @interface BotApiBotAddPostRequest
- */
-export interface BotApiBotAddPostRequest {
-    /**
-     * 
-     * @type {string}
-     * @memberof BotApiBotAddPost
-     */
-    readonly accountId: string
-
-    /**
-     * 
-     * @type {BotAddPostRequest}
-     * @memberof BotApiBotAddPost
-     */
-    readonly botAddPostRequest?: BotAddPostRequest
-}
-
-/**
- * Request parameters for botsGet operation in BotApi.
- * @export
- * @interface BotApiBotsGetRequest
- */
-export interface BotApiBotsGetRequest {
-    /**
-     * 
-     * @type {string}
-     * @memberof BotApiBotsGet
-     */
-    readonly accountId: string
-}
-
-/**
- * BotApi - object-oriented interface
- * @export
- * @class BotApi
- * @extends {BaseAPI}
- */
-export class BotApi extends BaseAPI {
-    /**
-     * 
-     * @summary Add a custom AI bot
-     * @param {BotApiBotAddPostRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof BotApi
-     */
-    public botAddPost(requestParameters: BotApiBotAddPostRequest, options?: AxiosRequestConfig) {
-        return BotApiFp(this.configuration).botAddPost(requestParameters.accountId, requestParameters.botAddPostRequest, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
-     * @summary Get all bots for an account
-     * @param {BotApiBotsGetRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof BotApi
-     */
-    public botsGet(requestParameters: BotApiBotsGetRequest, options?: AxiosRequestConfig) {
-        return BotApiFp(this.configuration).botsGet(requestParameters.accountId, options).then((request) => request(this.axios, this.basePath));
+    public oauthCallback(requestParameters: ScheduleApiOauthCallbackRequest, options?: AxiosRequestConfig) {
+        return ScheduleApiFp(this.configuration).oauthCallback(requestParameters.code, requestParameters.state, requestParameters.scope, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
