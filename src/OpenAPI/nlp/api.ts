@@ -30,7 +30,7 @@ import { COLLECTION_FORMATS, BaseAPI, RequiredError } from '../base';
  * @export
  * @interface AutocompleteCalendarEventRequest
  */
-export interface AutocompleteCalendarEventRequest {
+interface AutocompleteCalendarEventRequest {
     /**
      * message to extract calendar event data from
      * @type {string}
@@ -158,7 +158,7 @@ export interface AutocompleteSuggestion {
  * @export
  * @interface CalendarEvent
  */
-export interface CalendarEvent {
+interface CalendarEvent {
     /**
      * Title of the event
      * @type {string}
@@ -438,7 +438,7 @@ export interface ChatbotMessageResponse {
  * @export
  * @interface ContactToken
  */
-export interface ContactToken {
+interface ContactToken {
     /**
      * ID of the contact
      * @type {string}
@@ -1044,7 +1044,7 @@ export interface KeywordBasedAction {
  * @export
  * @interface OauthCallback200Response
  */
-export interface OauthCallback200Response {
+interface OauthCallback200Response {
     /**
      * 
      * @type {string}
@@ -1415,7 +1415,7 @@ export class AudioTranscriptionApi extends BaseAPI {
  * AutocompleteApi - axios parameter creator
  * @export
  */
-export const AutocompleteApiAxiosParamCreator = function (configuration?: Configuration) {
+const AutocompleteApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
          * 
@@ -1597,7 +1597,7 @@ export const AutocompleteApiAxiosParamCreator = function (configuration?: Config
  * AutocompleteApi - functional programming interface
  * @export
  */
-export const AutocompleteApiFp = function(configuration?: Configuration) {
+const AutocompleteApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = AutocompleteApiAxiosParamCreator(configuration)
     return {
         /**
@@ -1655,7 +1655,7 @@ export const AutocompleteApiFp = function(configuration?: Configuration) {
  * AutocompleteApi - factory interface
  * @export
  */
-export const AutocompleteApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+const AutocompleteApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
     const localVarFp = AutocompleteApiFp(configuration)
     return {
         /**
@@ -1706,7 +1706,7 @@ export const AutocompleteApiFactory = function (configuration?: Configuration, b
  * @export
  * @interface AutocompleteApiAutocompleteCalendarEventRequest
  */
-export interface AutocompleteApiAutocompleteCalendarEventRequest {
+interface AutocompleteApiAutocompleteCalendarEventRequest {
     /**
      * 
      * @type {AutocompleteCalendarEventRequest}
@@ -1762,7 +1762,7 @@ export interface AutocompleteApiAutocompleteModifyRequest {
  * @export
  * @interface AutocompleteApiOauthCallbackRequest
  */
-export interface AutocompleteApiOauthCallbackRequest {
+interface AutocompleteApiOauthCallbackRequest {
     /**
      * 
      * @type {string}
