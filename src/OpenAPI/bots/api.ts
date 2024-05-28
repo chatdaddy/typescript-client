@@ -1458,7 +1458,7 @@ export interface BotMessageButton {
  * @type BotMessageDelay
  * @export
  */
-export type BotMessageDelay = LegacyBotMessageDelay | SecondsBotMessageDelay | TimestampBotMessageDelay;
+export type BotMessageDelay = LegacyBotMessageDelay | SecondsBotMessageDelay | TimestampBotMessageDelay | WeekdayBotMessageDelay;
 
 /**
  * 
@@ -4638,7 +4638,7 @@ export interface TimestampedTriggerMethodDataRecurring {
  * @type TriggerDelay
  * @export
  */
-export type TriggerDelay = TriggerDelayOneOf | TriggerDelayOneOf1;
+export type TriggerDelay = TriggerDelayOneOf | TriggerDelayOneOf1 | TriggerDelayOneOf2;
 
 /**
  * 
@@ -4703,6 +4703,32 @@ export const TriggerDelayOneOf1TypeEnum = {
 } as const;
 
 export type TriggerDelayOneOf1TypeEnum = typeof TriggerDelayOneOf1TypeEnum[keyof typeof TriggerDelayOneOf1TypeEnum];
+
+/**
+ * Specify a weekday with time to set the delay to that particualar days
+ * @export
+ * @interface TriggerDelayOneOf2
+ */
+export interface TriggerDelayOneOf2 {
+    /**
+     * 
+     * @type {string}
+     * @memberof TriggerDelayOneOf2
+     */
+    'type': TriggerDelayOneOf2TypeEnum;
+    /**
+     * 
+     * @type {WeekdayDelayValue}
+     * @memberof TriggerDelayOneOf2
+     */
+    'value': WeekdayDelayValue;
+}
+
+export const TriggerDelayOneOf2TypeEnum = {
+    Weekday: 'weekday'
+} as const;
+
+export type TriggerDelayOneOf2TypeEnum = typeof TriggerDelayOneOf2TypeEnum[keyof typeof TriggerDelayOneOf2TypeEnum];
 
 /**
  * @type TriggerMethod
@@ -4942,6 +4968,77 @@ export const WebhookItemMethodEnum = {
 } as const;
 
 export type WebhookItemMethodEnum = typeof WebhookItemMethodEnum[keyof typeof WebhookItemMethodEnum];
+
+/**
+ * 
+ * @export
+ * @interface WeekdayBotMessageDelay
+ */
+export interface WeekdayBotMessageDelay {
+    /**
+     * 
+     * @type {string}
+     * @memberof WeekdayBotMessageDelay
+     */
+    'type': WeekdayBotMessageDelayTypeEnum;
+    /**
+     * 
+     * @type {WeekdayDelayValue}
+     * @memberof WeekdayBotMessageDelay
+     */
+    'value': WeekdayDelayValue;
+    /**
+     * 
+     * @type {Position}
+     * @memberof WeekdayBotMessageDelay
+     */
+    'position'?: Position | null;
+    /**
+     * Simulate typing
+     * @type {boolean}
+     * @memberof WeekdayBotMessageDelay
+     */
+    'simulateTyping'?: boolean;
+    /**
+     * If true, the message will be cancelled if a reply is received
+     * @type {boolean}
+     * @memberof WeekdayBotMessageDelay
+     */
+    'cancelIfReplyReceived'?: boolean;
+    /**
+     * 
+     * @type {NextAction}
+     * @memberof WeekdayBotMessageDelay
+     */
+    'nextAction'?: NextAction;
+}
+
+export const WeekdayBotMessageDelayTypeEnum = {
+    Weekday: 'weekday'
+} as const;
+
+export type WeekdayBotMessageDelayTypeEnum = typeof WeekdayBotMessageDelayTypeEnum[keyof typeof WeekdayBotMessageDelayTypeEnum];
+
+/**
+ * Provide a weekday value with time to set the delay
+ * @export
+ * @interface WeekdayDelayValue
+ */
+export interface WeekdayDelayValue {
+    /**
+     * 
+     * @type {DayOfWeek}
+     * @memberof WeekdayDelayValue
+     */
+    'day': DayOfWeek;
+    /**
+     * 
+     * @type {string}
+     * @memberof WeekdayDelayValue
+     */
+    'time': string;
+}
+
 
 
 /**

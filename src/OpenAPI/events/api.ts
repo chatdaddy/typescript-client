@@ -2082,7 +2082,7 @@ export interface BotInsertDataActionsInnerAllOf1MessageDefaultSendOptions {
  * @type BotInsertDataActionsInnerAllOf1MessageDelaysInner
  * @export
  */
-export type BotInsertDataActionsInnerAllOf1MessageDelaysInner = BotInsertDataActionsInnerAllOf1MessageDelaysInnerOneOf | BotInsertDataActionsInnerAllOf1MessageDelaysInnerOneOf1 | BotInsertDataActionsInnerAllOf1MessageDelaysInnerOneOf2;
+export type BotInsertDataActionsInnerAllOf1MessageDelaysInner = BotInsertDataActionsInnerAllOf1MessageDelaysInnerOneOf | BotInsertDataActionsInnerAllOf1MessageDelaysInnerOneOf1 | BotInsertDataActionsInnerAllOf1MessageDelaysInnerOneOf2 | BotInsertDataActionsInnerAllOf1MessageDelaysInnerOneOf3;
 
 /**
  * 
@@ -2260,6 +2260,88 @@ export const BotInsertDataActionsInnerAllOf1MessageDelaysInnerOneOf2TypeEnum = {
 } as const;
 
 export type BotInsertDataActionsInnerAllOf1MessageDelaysInnerOneOf2TypeEnum = typeof BotInsertDataActionsInnerAllOf1MessageDelaysInnerOneOf2TypeEnum[keyof typeof BotInsertDataActionsInnerAllOf1MessageDelaysInnerOneOf2TypeEnum];
+
+/**
+ * 
+ * @export
+ * @interface BotInsertDataActionsInnerAllOf1MessageDelaysInnerOneOf3
+ */
+export interface BotInsertDataActionsInnerAllOf1MessageDelaysInnerOneOf3 {
+    /**
+     * 
+     * @type {string}
+     * @memberof BotInsertDataActionsInnerAllOf1MessageDelaysInnerOneOf3
+     */
+    'type': BotInsertDataActionsInnerAllOf1MessageDelaysInnerOneOf3TypeEnum;
+    /**
+     * 
+     * @type {BotInsertDataActionsInnerAllOf1MessageDelaysInnerOneOf3Value}
+     * @memberof BotInsertDataActionsInnerAllOf1MessageDelaysInnerOneOf3
+     */
+    'value': BotInsertDataActionsInnerAllOf1MessageDelaysInnerOneOf3Value;
+    /**
+     * 
+     * @type {BotInsertDataActionsInnerAllOf1MessageButtonsInnerPosition}
+     * @memberof BotInsertDataActionsInnerAllOf1MessageDelaysInnerOneOf3
+     */
+    'position'?: BotInsertDataActionsInnerAllOf1MessageButtonsInnerPosition | null;
+    /**
+     * Simulate typing
+     * @type {boolean}
+     * @memberof BotInsertDataActionsInnerAllOf1MessageDelaysInnerOneOf3
+     */
+    'simulateTyping'?: boolean;
+    /**
+     * If true, the message will be cancelled if a reply is received
+     * @type {boolean}
+     * @memberof BotInsertDataActionsInnerAllOf1MessageDelaysInnerOneOf3
+     */
+    'cancelIfReplyReceived'?: boolean;
+    /**
+     * 
+     * @type {BotInsertDataActionsInnerAllOf1MessageButtonsInnerNextAction}
+     * @memberof BotInsertDataActionsInnerAllOf1MessageDelaysInnerOneOf3
+     */
+    'nextAction'?: BotInsertDataActionsInnerAllOf1MessageButtonsInnerNextAction;
+}
+
+export const BotInsertDataActionsInnerAllOf1MessageDelaysInnerOneOf3TypeEnum = {
+    Weekday: 'weekday'
+} as const;
+
+export type BotInsertDataActionsInnerAllOf1MessageDelaysInnerOneOf3TypeEnum = typeof BotInsertDataActionsInnerAllOf1MessageDelaysInnerOneOf3TypeEnum[keyof typeof BotInsertDataActionsInnerAllOf1MessageDelaysInnerOneOf3TypeEnum];
+
+/**
+ * Provide a weekday value with time to set the delay
+ * @export
+ * @interface BotInsertDataActionsInnerAllOf1MessageDelaysInnerOneOf3Value
+ */
+export interface BotInsertDataActionsInnerAllOf1MessageDelaysInnerOneOf3Value {
+    /**
+     * 
+     * @type {string}
+     * @memberof BotInsertDataActionsInnerAllOf1MessageDelaysInnerOneOf3Value
+     */
+    'day': BotInsertDataActionsInnerAllOf1MessageDelaysInnerOneOf3ValueDayEnum;
+    /**
+     * 
+     * @type {string}
+     * @memberof BotInsertDataActionsInnerAllOf1MessageDelaysInnerOneOf3Value
+     */
+    'time': string;
+}
+
+export const BotInsertDataActionsInnerAllOf1MessageDelaysInnerOneOf3ValueDayEnum = {
+    Monday: 'Monday',
+    Tuesday: 'Tuesday',
+    Wednesday: 'Wednesday',
+    Thursday: 'Thursday',
+    Friday: 'Friday',
+    Saturday: 'Saturday',
+    Sunday: 'Sunday'
+} as const;
+
+export type BotInsertDataActionsInnerAllOf1MessageDelaysInnerOneOf3ValueDayEnum = typeof BotInsertDataActionsInnerAllOf1MessageDelaysInnerOneOf3ValueDayEnum[keyof typeof BotInsertDataActionsInnerAllOf1MessageDelaysInnerOneOf3ValueDayEnum];
 
 /**
  * 
