@@ -236,16 +236,12 @@ export const CustomBotApiAxiosParamCreator = function (configuration?: Configura
         },
         /**
          * 
-         * @summary Get all bots for an account
-         * @param {string} accountId 
+         * @summary Get all custom bots
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        botsGet: async (accountId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'accountId' is not null or undefined
-            assertParamExists('botsGet', 'accountId', accountId)
-            const localVarPath = `/bots/{accountId}`
-                .replace(`{${"accountId"}}`, encodeURIComponent(String(accountId)));
+        botsGet: async (options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/bots`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -292,13 +288,12 @@ export const CustomBotApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
-         * @summary Get all bots for an account
-         * @param {string} accountId 
+         * @summary Get all custom bots
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async botsGet(accountId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BotsGet200Response>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.botsGet(accountId, options);
+        async botsGet(options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BotsGet200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.botsGet(options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
     }
@@ -323,13 +318,12 @@ export const CustomBotApiFactory = function (configuration?: Configuration, base
         },
         /**
          * 
-         * @summary Get all bots for an account
-         * @param {CustomBotApiBotsGetRequest} requestParameters Request parameters.
+         * @summary Get all custom bots
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        botsGet(requestParameters: CustomBotApiBotsGetRequest, options?: AxiosRequestConfig): AxiosPromise<BotsGet200Response> {
-            return localVarFp.botsGet(requestParameters.accountId, options).then((request) => request(axios, basePath));
+        botsGet(options?: AxiosRequestConfig): AxiosPromise<BotsGet200Response> {
+            return localVarFp.botsGet(options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -356,20 +350,6 @@ export interface CustomBotApiBotAddPostRequest {
 }
 
 /**
- * Request parameters for botsGet operation in CustomBotApi.
- * @export
- * @interface CustomBotApiBotsGetRequest
- */
-export interface CustomBotApiBotsGetRequest {
-    /**
-     * 
-     * @type {string}
-     * @memberof CustomBotApiBotsGet
-     */
-    readonly accountId: string
-}
-
-/**
  * CustomBotApi - object-oriented interface
  * @export
  * @class CustomBotApi
@@ -390,14 +370,13 @@ export class CustomBotApi extends BaseAPI {
 
     /**
      * 
-     * @summary Get all bots for an account
-     * @param {CustomBotApiBotsGetRequest} requestParameters Request parameters.
+     * @summary Get all custom bots
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof CustomBotApi
      */
-    public botsGet(requestParameters: CustomBotApiBotsGetRequest, options?: AxiosRequestConfig) {
-        return CustomBotApiFp(this.configuration).botsGet(requestParameters.accountId, options).then((request) => request(this.axios, this.basePath));
+    public botsGet(options?: AxiosRequestConfig) {
+        return CustomBotApiFp(this.configuration).botsGet(options).then((request) => request(this.axios, this.basePath));
     }
 }
 
