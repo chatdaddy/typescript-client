@@ -79,6 +79,19 @@ export interface BotAddPostRequest {
 /**
  * 
  * @export
+ * @interface BotMessagePostRequest
+ */
+export interface BotMessagePostRequest {
+    /**
+     * Message to send to the bot
+     * @type {string}
+     * @memberof BotMessagePostRequest
+     */
+    'message': string;
+}
+/**
+ * 
+ * @export
  * @interface BotsGet200Response
  */
 export interface BotsGet200Response {
@@ -281,6 +294,48 @@ export const CustomBotApiAxiosParamCreator = function (configuration?: Configura
         },
         /**
          * 
+         * @summary Send a message to a custom bot
+         * @param {string} botId 
+         * @param {BotMessagePostRequest} [botMessagePostRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        botMessagePost: async (botId: string, botMessagePostRequest?: BotMessagePostRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'botId' is not null or undefined
+            assertParamExists('botMessagePost', 'botId', botId)
+            const localVarPath = `/bots/{botId}/message`
+                .replace(`{${"botId"}}`, encodeURIComponent(String(botId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", [], configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(botMessagePostRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
          * @summary Get all custom bots
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -348,6 +403,18 @@ export const CustomBotApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
+         * @summary Send a message to a custom bot
+         * @param {string} botId 
+         * @param {BotMessagePostRequest} [botMessagePostRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async botMessagePost(botId: string, botMessagePostRequest?: BotMessagePostRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BotAddPost200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.botMessagePost(botId, botMessagePostRequest, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
          * @summary Get all custom bots
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -385,6 +452,16 @@ export const CustomBotApiFactory = function (configuration?: Configuration, base
          */
         botDelete(requestParameters: CustomBotApiBotDeleteRequest, options?: AxiosRequestConfig): AxiosPromise<BotAddPost200Response> {
             return localVarFp.botDelete(requestParameters.botId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Send a message to a custom bot
+         * @param {CustomBotApiBotMessagePostRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        botMessagePost(requestParameters: CustomBotApiBotMessagePostRequest, options?: AxiosRequestConfig): AxiosPromise<BotAddPost200Response> {
+            return localVarFp.botMessagePost(requestParameters.botId, requestParameters.botMessagePostRequest, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -434,6 +511,27 @@ export interface CustomBotApiBotDeleteRequest {
 }
 
 /**
+ * Request parameters for botMessagePost operation in CustomBotApi.
+ * @export
+ * @interface CustomBotApiBotMessagePostRequest
+ */
+export interface CustomBotApiBotMessagePostRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof CustomBotApiBotMessagePost
+     */
+    readonly botId: string
+
+    /**
+     * 
+     * @type {BotMessagePostRequest}
+     * @memberof CustomBotApiBotMessagePost
+     */
+    readonly botMessagePostRequest?: BotMessagePostRequest
+}
+
+/**
  * CustomBotApi - object-oriented interface
  * @export
  * @class CustomBotApi
@@ -462,6 +560,18 @@ export class CustomBotApi extends BaseAPI {
      */
     public botDelete(requestParameters: CustomBotApiBotDeleteRequest, options?: AxiosRequestConfig) {
         return CustomBotApiFp(this.configuration).botDelete(requestParameters.botId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Send a message to a custom bot
+     * @param {CustomBotApiBotMessagePostRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CustomBotApi
+     */
+    public botMessagePost(requestParameters: CustomBotApiBotMessagePostRequest, options?: AxiosRequestConfig) {
+        return CustomBotApiFp(this.configuration).botMessagePost(requestParameters.botId, requestParameters.botMessagePostRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
