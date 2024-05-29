@@ -79,6 +79,19 @@ export interface BotAddPostRequest {
 /**
  * 
  * @export
+ * @interface BotMessagePost200Response
+ */
+export interface BotMessagePost200Response {
+    /**
+     * 
+     * @type {string}
+     * @memberof BotMessagePost200Response
+     */
+    'message'?: string;
+}
+/**
+ * 
+ * @export
  * @interface BotMessagePostRequest
  */
 export interface BotMessagePostRequest {
@@ -409,7 +422,7 @@ export const CustomBotApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async botMessagePost(botId: string, botMessagePostRequest?: BotMessagePostRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BotAddPost200Response>> {
+        async botMessagePost(botId: string, botMessagePostRequest?: BotMessagePostRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BotMessagePost200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.botMessagePost(botId, botMessagePostRequest, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -460,7 +473,7 @@ export const CustomBotApiFactory = function (configuration?: Configuration, base
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        botMessagePost(requestParameters: CustomBotApiBotMessagePostRequest, options?: AxiosRequestConfig): AxiosPromise<BotAddPost200Response> {
+        botMessagePost(requestParameters: CustomBotApiBotMessagePostRequest, options?: AxiosRequestConfig): AxiosPromise<BotMessagePost200Response> {
             return localVarFp.botMessagePost(requestParameters.botId, requestParameters.botMessagePostRequest, options).then((request) => request(axios, basePath));
         },
         /**
