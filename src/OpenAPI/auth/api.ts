@@ -1572,6 +1572,58 @@ export interface SimpleNotificationPreference {
 /**
  * 
  * @export
+ * @interface SubUserCreate
+ */
+export interface SubUserCreate {
+    /**
+     * 
+     * @type {string}
+     * @memberof SubUserCreate
+     */
+    'fullName': string;
+    /**
+     * Will only contain numbers, no + sign, brackets etc.
+     * @type {number}
+     * @memberof SubUserCreate
+     */
+    'phoneNumber': number;
+    /**
+     * Plaintext password pls
+     * @type {string}
+     * @memberof SubUserCreate
+     */
+    'password': string;
+    /**
+     * 
+     * @type {TeamMemberRole}
+     * @memberof SubUserCreate
+     */
+    'role': TeamMemberRole;
+}
+
+
+/**
+ * 
+ * @export
+ * @interface SubUserPatchRequest
+ */
+export interface SubUserPatchRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof SubUserPatchRequest
+     */
+    'password': string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof SubUserPatchRequest
+     */
+    'logout'?: boolean;
+}
+/**
+ * 
+ * @export
  * @interface Team
  */
 export interface Team {
@@ -2208,7 +2260,8 @@ export const UserCreateMethod = {
     Otp: 'otp',
     Boutir: 'boutir',
     InstantReg: 'instant-reg',
-    Firebase: 'firebase'
+    Firebase: 'firebase',
+    TeamMember: 'team-member'
 } as const;
 
 export type UserCreateMethod = typeof UserCreateMethod[keyof typeof UserCreateMethod];
@@ -4311,6 +4364,311 @@ export class OTPApi extends BaseAPI {
      */
     public otpTokenPost(requestParameters: OTPApiOtpTokenPostRequest = {}, options?: AxiosRequestConfig) {
         return OTPApiFp(this.configuration).otpTokenPost(requestParameters.otpTokenPostRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+/**
+ * SubUserApi - axios parameter creator
+ * @export
+ */
+export const SubUserApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @summary Delete a sub user
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        subUserDelete: async (id: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('subUserDelete', 'id', id)
+            const localVarPath = `/sub-user/{id}`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["TEAMMEMBERS_UPDATE"], configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Update a sub user
+         * @param {string} id 
+         * @param {SubUserPatchRequest} [subUserPatchRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        subUserPatch: async (id: string, subUserPatchRequest?: SubUserPatchRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('subUserPatch', 'id', id)
+            const localVarPath = `/sub-user/{id}`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PATCH', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["TEAMMEMBERS_UPDATE"], configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(subUserPatchRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Create a sub user
+         * @param {SubUserCreate} [subUserCreate] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        subUserPost: async (subUserCreate?: SubUserCreate, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/sub-user`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["TEAMMEMBERS_UPDATE"], configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(subUserCreate, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * SubUserApi - functional programming interface
+ * @export
+ */
+export const SubUserApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = SubUserApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * 
+         * @summary Delete a sub user
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async subUserDelete(id: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.subUserDelete(id, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary Update a sub user
+         * @param {string} id 
+         * @param {SubUserPatchRequest} [subUserPatchRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async subUserPatch(id: string, subUserPatchRequest?: SubUserPatchRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.subUserPatch(id, subUserPatchRequest, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary Create a sub user
+         * @param {SubUserCreate} [subUserCreate] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async subUserPost(subUserCreate?: SubUserCreate, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<User>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.subUserPost(subUserCreate, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+    }
+};
+
+/**
+ * SubUserApi - factory interface
+ * @export
+ */
+export const SubUserApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = SubUserApiFp(configuration)
+    return {
+        /**
+         * 
+         * @summary Delete a sub user
+         * @param {SubUserApiSubUserDeleteRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        subUserDelete(requestParameters: SubUserApiSubUserDeleteRequest, options?: AxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.subUserDelete(requestParameters.id, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Update a sub user
+         * @param {SubUserApiSubUserPatchRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        subUserPatch(requestParameters: SubUserApiSubUserPatchRequest, options?: AxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.subUserPatch(requestParameters.id, requestParameters.subUserPatchRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Create a sub user
+         * @param {SubUserApiSubUserPostRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        subUserPost(requestParameters: SubUserApiSubUserPostRequest = {}, options?: AxiosRequestConfig): AxiosPromise<User> {
+            return localVarFp.subUserPost(requestParameters.subUserCreate, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * Request parameters for subUserDelete operation in SubUserApi.
+ * @export
+ * @interface SubUserApiSubUserDeleteRequest
+ */
+export interface SubUserApiSubUserDeleteRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof SubUserApiSubUserDelete
+     */
+    readonly id: string
+}
+
+/**
+ * Request parameters for subUserPatch operation in SubUserApi.
+ * @export
+ * @interface SubUserApiSubUserPatchRequest
+ */
+export interface SubUserApiSubUserPatchRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof SubUserApiSubUserPatch
+     */
+    readonly id: string
+
+    /**
+     * 
+     * @type {SubUserPatchRequest}
+     * @memberof SubUserApiSubUserPatch
+     */
+    readonly subUserPatchRequest?: SubUserPatchRequest
+}
+
+/**
+ * Request parameters for subUserPost operation in SubUserApi.
+ * @export
+ * @interface SubUserApiSubUserPostRequest
+ */
+export interface SubUserApiSubUserPostRequest {
+    /**
+     * 
+     * @type {SubUserCreate}
+     * @memberof SubUserApiSubUserPost
+     */
+    readonly subUserCreate?: SubUserCreate
+}
+
+/**
+ * SubUserApi - object-oriented interface
+ * @export
+ * @class SubUserApi
+ * @extends {BaseAPI}
+ */
+export class SubUserApi extends BaseAPI {
+    /**
+     * 
+     * @summary Delete a sub user
+     * @param {SubUserApiSubUserDeleteRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof SubUserApi
+     */
+    public subUserDelete(requestParameters: SubUserApiSubUserDeleteRequest, options?: AxiosRequestConfig) {
+        return SubUserApiFp(this.configuration).subUserDelete(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Update a sub user
+     * @param {SubUserApiSubUserPatchRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof SubUserApi
+     */
+    public subUserPatch(requestParameters: SubUserApiSubUserPatchRequest, options?: AxiosRequestConfig) {
+        return SubUserApiFp(this.configuration).subUserPatch(requestParameters.id, requestParameters.subUserPatchRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Create a sub user
+     * @param {SubUserApiSubUserPostRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof SubUserApi
+     */
+    public subUserPost(requestParameters: SubUserApiSubUserPostRequest = {}, options?: AxiosRequestConfig) {
+        return SubUserApiFp(this.configuration).subUserPost(requestParameters.subUserCreate, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

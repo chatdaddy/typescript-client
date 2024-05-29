@@ -10150,7 +10150,8 @@ export const TeamInsertDataCreatorCreatedByMethodEnum = {
     Otp: 'otp',
     Boutir: 'boutir',
     InstantReg: 'instant-reg',
-    Firebase: 'firebase'
+    Firebase: 'firebase',
+    TeamMember: 'team-member'
 } as const;
 
 export type TeamInsertDataCreatorCreatedByMethodEnum = typeof TeamInsertDataCreatorCreatedByMethodEnum[keyof typeof TeamInsertDataCreatorCreatedByMethodEnum];
@@ -11653,7 +11654,8 @@ export const UserInsertDataCreatedByMethodEnum = {
     Otp: 'otp',
     Boutir: 'boutir',
     InstantReg: 'instant-reg',
-    Firebase: 'firebase'
+    Firebase: 'firebase',
+    TeamMember: 'team-member'
 } as const;
 
 export type UserInsertDataCreatedByMethodEnum = typeof UserInsertDataCreatedByMethodEnum[keyof typeof UserInsertDataCreatedByMethodEnum];
@@ -12031,7 +12033,8 @@ export const UserUpdateDataCreatedByMethodEnum = {
     Otp: 'otp',
     Boutir: 'boutir',
     InstantReg: 'instant-reg',
-    Firebase: 'firebase'
+    Firebase: 'firebase',
+    TeamMember: 'team-member'
 } as const;
 
 export type UserUpdateDataCreatedByMethodEnum = typeof UserUpdateDataCreatedByMethodEnum[keyof typeof UserUpdateDataCreatedByMethodEnum];
