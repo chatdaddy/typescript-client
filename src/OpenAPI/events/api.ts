@@ -612,7 +612,7 @@ export type ActionExecuteEventEnum = typeof ActionExecuteEventEnum[keyof typeof 
  * @export
  * @interface ActionExecuteData
  */
-export interface ActionExecuteData {
+interface ActionExecuteData {
     /**
      * 
      * @type {number}
@@ -705,21 +705,21 @@ export interface ActionExecuteData {
     'previousActionId'?: string;
 }
 
-export const ActionExecuteDataStatusEnum = {
+const ActionExecuteDataStatusEnum = {
     Pending: 'pending',
     Sent: 'sent',
     Failed: 'failed',
     Cancelled: 'cancelled'
 } as const;
 
-export type ActionExecuteDataStatusEnum = typeof ActionExecuteDataStatusEnum[keyof typeof ActionExecuteDataStatusEnum];
+type ActionExecuteDataStatusEnum = typeof ActionExecuteDataStatusEnum[keyof typeof ActionExecuteDataStatusEnum];
 
 /**
  * 
  * @export
  * @interface ActionExecuteDataMessagesInner
  */
-export interface ActionExecuteDataMessagesInner {
+interface ActionExecuteDataMessagesInner {
     /**
      * 
      * @type {number}

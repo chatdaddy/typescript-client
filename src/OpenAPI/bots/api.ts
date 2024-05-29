@@ -489,6 +489,132 @@ export interface ActionExecuteCount {
 /**
  * 
  * @export
+ * @interface ActionExecuteData
+ */
+export interface ActionExecuteData {
+    /**
+     * 
+     * @type {number}
+     * @memberof ActionExecuteData
+     */
+    'id': number;
+    /**
+     * 
+     * @type {string}
+     * @memberof ActionExecuteData
+     */
+    'actionId': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ActionExecuteData
+     */
+    'botId': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ActionExecuteData
+     */
+    'status'?: ActionExecuteDataStatusEnum;
+    /**
+     * ID of the contact
+     * @type {string}
+     * @memberof ActionExecuteData
+     */
+    'contactId'?: string;
+    /**
+     * 
+     * @type {{ [key: string]: any; }}
+     * @memberof ActionExecuteData
+     */
+    'inputParameters'?: { [key: string]: any; };
+    /**
+     * 
+     * @type {string}
+     * @memberof ActionExecuteData
+     */
+    'accountId'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ActionExecuteData
+     */
+    'createdAt'?: string;
+    /**
+     * 
+     * @type {Array<ActionExecuteDataMessagesInner>}
+     * @memberof ActionExecuteData
+     */
+    'messages'?: Array<ActionExecuteDataMessagesInner>;
+    /**
+     * 
+     * @type {Array<ActionExecuteDataMessagesInner>}
+     * @memberof ActionExecuteData
+     */
+    'webhooks'?: Array<ActionExecuteDataMessagesInner>;
+    /**
+     * 
+     * @type {ActionExecuteDataMessagesInner}
+     * @memberof ActionExecuteData
+     */
+    'contact'?: ActionExecuteDataMessagesInner;
+    /**
+     * 
+     * @type {ActionExecuteDataMessagesInner}
+     * @memberof ActionExecuteData
+     */
+    'app'?: ActionExecuteDataMessagesInner;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof ActionExecuteData
+     */
+    'isStart'?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof ActionExecuteData
+     */
+    'isFinal'?: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof ActionExecuteData
+     */
+    'previousActionId'?: string;
+}
+
+export const ActionExecuteDataStatusEnum = {
+    Pending: 'pending',
+    Sent: 'sent',
+    Failed: 'failed',
+    Cancelled: 'cancelled'
+} as const;
+
+export type ActionExecuteDataStatusEnum = typeof ActionExecuteDataStatusEnum[keyof typeof ActionExecuteDataStatusEnum];
+
+/**
+ * 
+ * @export
+ * @interface ActionExecuteDataMessagesInner
+ */
+export interface ActionExecuteDataMessagesInner {
+    /**
+     * 
+     * @type {number}
+     * @memberof ActionExecuteDataMessagesInner
+     */
+    'statusCode': number;
+    /**
+     * 
+     * @type {{ [key: string]: any; }}
+     * @memberof ActionExecuteDataMessagesInner
+     */
+    'body'?: { [key: string]: any; };
+}
+/**
+ * 
+ * @export
  * @interface ActionExternalTemplateCommand
  */
 export interface ActionExternalTemplateCommand {
@@ -4225,6 +4351,51 @@ export interface SimplePropertyDescriptor {
 /**
  * 
  * @export
+ * @interface SimulateActionExecuteResult200Response
+ */
+export interface SimulateActionExecuteResult200Response {
+    /**
+     * 
+     * @type {string}
+     * @memberof SimulateActionExecuteResult200Response
+     */
+    'event'?: SimulateActionExecuteResult200ResponseEventEnum;
+    /**
+     * 
+     * @type {Array<ActionExecuteData>}
+     * @memberof SimulateActionExecuteResult200Response
+     */
+    'data'?: Array<ActionExecuteData>;
+}
+
+export const SimulateActionExecuteResult200ResponseEventEnum = {
+    ActionExecute: 'action-execute'
+} as const;
+
+export type SimulateActionExecuteResult200ResponseEventEnum = typeof SimulateActionExecuteResult200ResponseEventEnum[keyof typeof SimulateActionExecuteResult200ResponseEventEnum];
+
+/**
+ * 
+ * @export
+ * @interface SimulateActionExecuteResultRequest
+ */
+export interface SimulateActionExecuteResultRequest {
+    /**
+     * ID of the bot sequence
+     * @type {string}
+     * @memberof SimulateActionExecuteResultRequest
+     */
+    'botId': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof SimulateActionExecuteResultRequest
+     */
+    'actionId': string;
+}
+/**
+ * 
+ * @export
  * @interface StoreCreateRequest
  */
 export interface StoreCreateRequest {
@@ -5601,6 +5772,44 @@ export const BotRecordsApiAxiosParamCreator = function (configuration?: Configur
                 options: localVarRequestOptions,
             };
         },
+        /**
+         * This endpoint simulates the result of an action execution based on the provided parameters
+         * @summary Simulate action execute result
+         * @param {SimulateActionExecuteResultRequest} [simulateActionExecuteResultRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        simulateActionExecuteResult: async (simulateActionExecuteResultRequest?: SimulateActionExecuteResultRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/bot/simulate-action-excecute-result`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["TEMPLATES_READ"], configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(simulateActionExecuteResultRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
     }
 };
 
@@ -5629,6 +5838,17 @@ export const BotRecordsApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getBotFireRecords(botId, contacts, count, cursor, interactions, returnTotal, instanceId, triggerId, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
+        /**
+         * This endpoint simulates the result of an action execution based on the provided parameters
+         * @summary Simulate action execute result
+         * @param {SimulateActionExecuteResultRequest} [simulateActionExecuteResultRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async simulateActionExecuteResult(simulateActionExecuteResultRequest?: SimulateActionExecuteResultRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SimulateActionExecuteResult200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.simulateActionExecuteResult(simulateActionExecuteResultRequest, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
     }
 };
 
@@ -5648,6 +5868,16 @@ export const BotRecordsApiFactory = function (configuration?: Configuration, bas
          */
         getBotFireRecords(requestParameters: BotRecordsApiGetBotFireRecordsRequest = {}, options?: AxiosRequestConfig): AxiosPromise<GetBotFireRecords200Response> {
             return localVarFp.getBotFireRecords(requestParameters.botId, requestParameters.contacts, requestParameters.count, requestParameters.cursor, requestParameters.interactions, requestParameters.returnTotal, requestParameters.instanceId, requestParameters.triggerId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * This endpoint simulates the result of an action execution based on the provided parameters
+         * @summary Simulate action execute result
+         * @param {BotRecordsApiSimulateActionExecuteResultRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        simulateActionExecuteResult(requestParameters: BotRecordsApiSimulateActionExecuteResultRequest = {}, options?: AxiosRequestConfig): AxiosPromise<SimulateActionExecuteResult200Response> {
+            return localVarFp.simulateActionExecuteResult(requestParameters.simulateActionExecuteResultRequest, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -5716,6 +5946,20 @@ export interface BotRecordsApiGetBotFireRecordsRequest {
 }
 
 /**
+ * Request parameters for simulateActionExecuteResult operation in BotRecordsApi.
+ * @export
+ * @interface BotRecordsApiSimulateActionExecuteResultRequest
+ */
+export interface BotRecordsApiSimulateActionExecuteResultRequest {
+    /**
+     * 
+     * @type {SimulateActionExecuteResultRequest}
+     * @memberof BotRecordsApiSimulateActionExecuteResult
+     */
+    readonly simulateActionExecuteResultRequest?: SimulateActionExecuteResultRequest
+}
+
+/**
  * BotRecordsApi - object-oriented interface
  * @export
  * @class BotRecordsApi
@@ -5732,6 +5976,18 @@ export class BotRecordsApi extends BaseAPI {
      */
     public getBotFireRecords(requestParameters: BotRecordsApiGetBotFireRecordsRequest = {}, options?: AxiosRequestConfig) {
         return BotRecordsApiFp(this.configuration).getBotFireRecords(requestParameters.botId, requestParameters.contacts, requestParameters.count, requestParameters.cursor, requestParameters.interactions, requestParameters.returnTotal, requestParameters.instanceId, requestParameters.triggerId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * This endpoint simulates the result of an action execution based on the provided parameters
+     * @summary Simulate action execute result
+     * @param {BotRecordsApiSimulateActionExecuteResultRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof BotRecordsApi
+     */
+    public simulateActionExecuteResult(requestParameters: BotRecordsApiSimulateActionExecuteResultRequest = {}, options?: AxiosRequestConfig) {
+        return BotRecordsApiFp(this.configuration).simulateActionExecuteResult(requestParameters.simulateActionExecuteResultRequest, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
