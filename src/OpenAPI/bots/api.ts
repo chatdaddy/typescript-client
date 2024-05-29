@@ -5208,6 +5208,12 @@ export interface WeekdayDelayValue {
      * @memberof WeekdayDelayValue
      */
     'time': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof WeekdayDelayValue
+     */
+    'timezone': string;
 }
 
 

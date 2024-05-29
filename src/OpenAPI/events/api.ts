@@ -2329,6 +2329,12 @@ export interface BotInsertDataActionsInnerAllOf1MessageDelaysInnerOneOf3Value {
      * @memberof BotInsertDataActionsInnerAllOf1MessageDelaysInnerOneOf3Value
      */
     'time': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof BotInsertDataActionsInnerAllOf1MessageDelaysInnerOneOf3Value
+     */
+    'timezone': string;
 }
 
 export const BotInsertDataActionsInnerAllOf1MessageDelaysInnerOneOf3ValueDayEnum = {
