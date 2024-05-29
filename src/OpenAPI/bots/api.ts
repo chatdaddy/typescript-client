@@ -4874,6 +4874,12 @@ export interface TriggerDelayOneOf2 {
      * @memberof TriggerDelayOneOf2
      */
     'value': WeekdayDelayValue;
+    /**
+     * 
+     * @type {Position}
+     * @memberof TriggerDelayOneOf2
+     */
+    'position'?: Position | null;
 }
 
 export const TriggerDelayOneOf2TypeEnum = {
