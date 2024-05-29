@@ -4377,25 +4377,6 @@ export type SimulateActionExecuteResult200ResponseEventEnum = typeof SimulateAct
 /**
  * 
  * @export
- * @interface SimulateActionExecuteResultRequest
- */
-export interface SimulateActionExecuteResultRequest {
-    /**
-     * ID of the bot sequence
-     * @type {string}
-     * @memberof SimulateActionExecuteResultRequest
-     */
-    'botId': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof SimulateActionExecuteResultRequest
-     */
-    'actionId': string;
-}
-/**
- * 
- * @export
  * @interface StoreCreateRequest
  */
 export interface StoreCreateRequest {
@@ -5781,12 +5762,17 @@ export const BotRecordsApiAxiosParamCreator = function (configuration?: Configur
         /**
          * This endpoint simulates the result of an action execution based on the provided parameters
          * @summary Simulate action execute result
-         * @param {SimulateActionExecuteResultRequest} [simulateActionExecuteResultRequest] 
+         * @param {string} botId The ID of the bot
+         * @param {string} actionId The ID of the action
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        simulateActionExecuteResult: async (simulateActionExecuteResultRequest?: SimulateActionExecuteResultRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/bot/simulate-action-excecute-result`;
+        simulateActionExecuteResult: async (botId: string, actionId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'botId' is not null or undefined
+            assertParamExists('simulateActionExecuteResult', 'botId', botId)
+            // verify required parameter 'actionId' is not null or undefined
+            assertParamExists('simulateActionExecuteResult', 'actionId', actionId)
+            const localVarPath = `/bot/simulate-action-execute-result`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -5794,7 +5780,7 @@ export const BotRecordsApiAxiosParamCreator = function (configuration?: Configur
                 baseOptions = configuration.baseOptions;
             }
 
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
@@ -5802,14 +5788,19 @@ export const BotRecordsApiAxiosParamCreator = function (configuration?: Configur
             // oauth required
             await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["TEMPLATES_READ"], configuration)
 
+            if (botId !== undefined) {
+                localVarQueryParameter['botId'] = botId;
+            }
+
+            if (actionId !== undefined) {
+                localVarQueryParameter['actionId'] = actionId;
+            }
+
 
     
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(simulateActionExecuteResultRequest, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -5847,12 +5838,13 @@ export const BotRecordsApiFp = function(configuration?: Configuration) {
         /**
          * This endpoint simulates the result of an action execution based on the provided parameters
          * @summary Simulate action execute result
-         * @param {SimulateActionExecuteResultRequest} [simulateActionExecuteResultRequest] 
+         * @param {string} botId The ID of the bot
+         * @param {string} actionId The ID of the action
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async simulateActionExecuteResult(simulateActionExecuteResultRequest?: SimulateActionExecuteResultRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SimulateActionExecuteResult200Response>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.simulateActionExecuteResult(simulateActionExecuteResultRequest, options);
+        async simulateActionExecuteResult(botId: string, actionId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SimulateActionExecuteResult200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.simulateActionExecuteResult(botId, actionId, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
     }
@@ -5882,8 +5874,8 @@ export const BotRecordsApiFactory = function (configuration?: Configuration, bas
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        simulateActionExecuteResult(requestParameters: BotRecordsApiSimulateActionExecuteResultRequest = {}, options?: AxiosRequestConfig): AxiosPromise<SimulateActionExecuteResult200Response> {
-            return localVarFp.simulateActionExecuteResult(requestParameters.simulateActionExecuteResultRequest, options).then((request) => request(axios, basePath));
+        simulateActionExecuteResult(requestParameters: BotRecordsApiSimulateActionExecuteResultRequest, options?: AxiosRequestConfig): AxiosPromise<SimulateActionExecuteResult200Response> {
+            return localVarFp.simulateActionExecuteResult(requestParameters.botId, requestParameters.actionId, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -5958,11 +5950,18 @@ export interface BotRecordsApiGetBotFireRecordsRequest {
  */
 export interface BotRecordsApiSimulateActionExecuteResultRequest {
     /**
-     * 
-     * @type {SimulateActionExecuteResultRequest}
+     * The ID of the bot
+     * @type {string}
      * @memberof BotRecordsApiSimulateActionExecuteResult
      */
-    readonly simulateActionExecuteResultRequest?: SimulateActionExecuteResultRequest
+    readonly botId: string
+
+    /**
+     * The ID of the action
+     * @type {string}
+     * @memberof BotRecordsApiSimulateActionExecuteResult
+     */
+    readonly actionId: string
 }
 
 /**
@@ -5992,8 +5991,8 @@ export class BotRecordsApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof BotRecordsApi
      */
-    public simulateActionExecuteResult(requestParameters: BotRecordsApiSimulateActionExecuteResultRequest = {}, options?: AxiosRequestConfig) {
-        return BotRecordsApiFp(this.configuration).simulateActionExecuteResult(requestParameters.simulateActionExecuteResultRequest, options).then((request) => request(this.axios, this.basePath));
+    public simulateActionExecuteResult(requestParameters: BotRecordsApiSimulateActionExecuteResultRequest, options?: AxiosRequestConfig) {
+        return BotRecordsApiFp(this.configuration).simulateActionExecuteResult(requestParameters.botId, requestParameters.actionId, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
