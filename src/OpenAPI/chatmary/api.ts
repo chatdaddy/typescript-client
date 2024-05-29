@@ -240,6 +240,47 @@ export const CustomBotApiAxiosParamCreator = function (configuration?: Configura
         },
         /**
          * 
+         * @summary Delete all custom bots
+         * @param {string} botId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        botDelete: async (botId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'botId' is not null or undefined
+            assertParamExists('botDelete', 'botId', botId)
+            const localVarPath = `/bots`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", [], configuration)
+
+            if (botId !== undefined) {
+                localVarQueryParameter['botId'] = botId;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
          * @summary Get all custom bots
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -296,6 +337,17 @@ export const CustomBotApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
+         * @summary Delete all custom bots
+         * @param {string} botId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async botDelete(botId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BotAddPost200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.botDelete(botId, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
          * @summary Get all custom bots
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -323,6 +375,16 @@ export const CustomBotApiFactory = function (configuration?: Configuration, base
          */
         botAddPost(requestParameters: CustomBotApiBotAddPostRequest, options?: AxiosRequestConfig): AxiosPromise<BotAddPost200Response> {
             return localVarFp.botAddPost(requestParameters.accountId, requestParameters.botAddPostRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Delete all custom bots
+         * @param {CustomBotApiBotDeleteRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        botDelete(requestParameters: CustomBotApiBotDeleteRequest, options?: AxiosRequestConfig): AxiosPromise<BotAddPost200Response> {
+            return localVarFp.botDelete(requestParameters.botId, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -358,6 +420,20 @@ export interface CustomBotApiBotAddPostRequest {
 }
 
 /**
+ * Request parameters for botDelete operation in CustomBotApi.
+ * @export
+ * @interface CustomBotApiBotDeleteRequest
+ */
+export interface CustomBotApiBotDeleteRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof CustomBotApiBotDelete
+     */
+    readonly botId: string
+}
+
+/**
  * CustomBotApi - object-oriented interface
  * @export
  * @class CustomBotApi
@@ -374,6 +450,18 @@ export class CustomBotApi extends BaseAPI {
      */
     public botAddPost(requestParameters: CustomBotApiBotAddPostRequest, options?: AxiosRequestConfig) {
         return CustomBotApiFp(this.configuration).botAddPost(requestParameters.accountId, requestParameters.botAddPostRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Delete all custom bots
+     * @param {CustomBotApiBotDeleteRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CustomBotApi
+     */
+    public botDelete(requestParameters: CustomBotApiBotDeleteRequest, options?: AxiosRequestConfig) {
+        return CustomBotApiFp(this.configuration).botDelete(requestParameters.botId, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
