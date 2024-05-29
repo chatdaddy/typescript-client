@@ -9716,7 +9716,8 @@ export type TagInsertDataValidationOneOfTypeEnum = typeof TagInsertDataValidatio
 export const TagInsertDataValidationOneOfFormatEnum = {
     Email: 'email',
     Phone: 'phone',
-    Uri: 'uri'
+    Uri: 'uri',
+    Attachment: 'attachment'
 } as const;
 
 export type TagInsertDataValidationOneOfFormatEnum = typeof TagInsertDataValidationOneOfFormatEnum[keyof typeof TagInsertDataValidationOneOfFormatEnum];

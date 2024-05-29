@@ -5366,7 +5366,8 @@ export type TagFieldValidationOneOfTypeEnum = typeof TagFieldValidationOneOfType
 export const TagFieldValidationOneOfFormatEnum = {
     Email: 'email',
     Phone: 'phone',
-    Uri: 'uri'
+    Uri: 'uri',
+    Attachment: 'attachment'
 } as const;
 
 export type TagFieldValidationOneOfFormatEnum = typeof TagFieldValidationOneOfFormatEnum[keyof typeof TagFieldValidationOneOfFormatEnum];
@@ -5430,6 +5431,12 @@ export interface TagsGet200Response {
      * @memberof TagsGet200Response
      */
     'tags': Array<Tag>;
+    /**
+     * total tags present
+     * @type {number}
+     * @memberof TagsGet200Response
+     */
+    'total'?: number;
     /**
      * next page cursor, if it exists
      * @type {string}
@@ -14363,11 +14370,12 @@ export const TagsApiAxiosParamCreator = function (configuration?: Configuration)
          * @param {string} [q] Search items by this string
          * @param {number} [count] Number of items to return
          * @param {string} [page] 
+         * @param {boolean} [returnTotalCount] 
          * @param {boolean} [isCustomField] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        tagsGet: async (q?: string, count?: number, page?: string, isCustomField?: boolean, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        tagsGet: async (q?: string, count?: number, page?: string, returnTotalCount?: boolean, isCustomField?: boolean, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/tags`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -14394,6 +14402,10 @@ export const TagsApiAxiosParamCreator = function (configuration?: Configuration)
 
             if (page !== undefined) {
                 localVarQueryParameter['page'] = page;
+            }
+
+            if (returnTotalCount !== undefined) {
+                localVarQueryParameter['returnTotalCount'] = returnTotalCount;
             }
 
             if (isCustomField !== undefined) {
@@ -14527,12 +14539,13 @@ export const TagsApiFp = function(configuration?: Configuration) {
          * @param {string} [q] Search items by this string
          * @param {number} [count] Number of items to return
          * @param {string} [page] 
+         * @param {boolean} [returnTotalCount] 
          * @param {boolean} [isCustomField] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async tagsGet(q?: string, count?: number, page?: string, isCustomField?: boolean, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TagsGet200Response>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.tagsGet(q, count, page, isCustomField, options);
+        async tagsGet(q?: string, count?: number, page?: string, returnTotalCount?: boolean, isCustomField?: boolean, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TagsGet200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.tagsGet(q, count, page, returnTotalCount, isCustomField, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -14586,7 +14599,7 @@ export const TagsApiFactory = function (configuration?: Configuration, basePath?
          * @throws {RequiredError}
          */
         tagsGet(requestParameters: TagsApiTagsGetRequest = {}, options?: AxiosRequestConfig): AxiosPromise<TagsGet200Response> {
-            return localVarFp.tagsGet(requestParameters.q, requestParameters.count, requestParameters.page, requestParameters.isCustomField, options).then((request) => request(axios, basePath));
+            return localVarFp.tagsGet(requestParameters.q, requestParameters.count, requestParameters.page, requestParameters.returnTotalCount, requestParameters.isCustomField, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -14650,6 +14663,13 @@ export interface TagsApiTagsGetRequest {
      * @memberof TagsApiTagsGet
      */
     readonly page?: string
+
+    /**
+     * 
+     * @type {boolean}
+     * @memberof TagsApiTagsGet
+     */
+    readonly returnTotalCount?: boolean
 
     /**
      * 
@@ -14729,7 +14749,7 @@ export class TagsApi extends BaseAPI {
      * @memberof TagsApi
      */
     public tagsGet(requestParameters: TagsApiTagsGetRequest = {}, options?: AxiosRequestConfig) {
-        return TagsApiFp(this.configuration).tagsGet(requestParameters.q, requestParameters.count, requestParameters.page, requestParameters.isCustomField, options).then((request) => request(this.axios, this.basePath));
+        return TagsApiFp(this.configuration).tagsGet(requestParameters.q, requestParameters.count, requestParameters.page, requestParameters.returnTotalCount, requestParameters.isCustomField, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
