@@ -4414,6 +4414,44 @@ export const SubUserApiAxiosParamCreator = function (configuration?: Configurati
         },
         /**
          * 
+         * @summary Logout a sub user
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        subUserLogout: async (id: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('subUserLogout', 'id', id)
+            const localVarPath = `/sub-user/{id}/logout`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["TEAMMEMBERS_UPDATE"], configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
          * @summary Update a sub user
          * @param {string} id 
          * @param {SubUserPatchRequest} [subUserPatchRequest] 
@@ -4515,6 +4553,17 @@ export const SubUserApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
+         * @summary Logout a sub user
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async subUserLogout(id: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.subUserLogout(id, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
          * @summary Update a sub user
          * @param {string} id 
          * @param {SubUserPatchRequest} [subUserPatchRequest] 
@@ -4558,6 +4607,16 @@ export const SubUserApiFactory = function (configuration?: Configuration, basePa
         },
         /**
          * 
+         * @summary Logout a sub user
+         * @param {SubUserApiSubUserLogoutRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        subUserLogout(requestParameters: SubUserApiSubUserLogoutRequest, options?: AxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.subUserLogout(requestParameters.id, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
          * @summary Update a sub user
          * @param {SubUserApiSubUserPatchRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -4589,6 +4648,20 @@ export interface SubUserApiSubUserDeleteRequest {
      * 
      * @type {string}
      * @memberof SubUserApiSubUserDelete
+     */
+    readonly id: string
+}
+
+/**
+ * Request parameters for subUserLogout operation in SubUserApi.
+ * @export
+ * @interface SubUserApiSubUserLogoutRequest
+ */
+export interface SubUserApiSubUserLogoutRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof SubUserApiSubUserLogout
      */
     readonly id: string
 }
@@ -4645,6 +4718,18 @@ export class SubUserApi extends BaseAPI {
      */
     public subUserDelete(requestParameters: SubUserApiSubUserDeleteRequest, options?: AxiosRequestConfig) {
         return SubUserApiFp(this.configuration).subUserDelete(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Logout a sub user
+     * @param {SubUserApiSubUserLogoutRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof SubUserApi
+     */
+    public subUserLogout(requestParameters: SubUserApiSubUserLogoutRequest, options?: AxiosRequestConfig) {
+        return SubUserApiFp(this.configuration).subUserLogout(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
