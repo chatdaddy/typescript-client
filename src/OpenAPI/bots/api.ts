@@ -487,128 +487,128 @@ export interface ActionExecuteCount {
     'count': number;
 }
 /**
- * 
+ * called ActionExecuteDataType because it will clash with event repos ActionExecuteData if not
  * @export
- * @interface ActionExecuteData
+ * @interface ActionExecuteDataType
  */
-export interface ActionExecuteData {
+export interface ActionExecuteDataType {
     /**
      * 
      * @type {number}
-     * @memberof ActionExecuteData
+     * @memberof ActionExecuteDataType
      */
     'id': number;
     /**
      * 
      * @type {string}
-     * @memberof ActionExecuteData
+     * @memberof ActionExecuteDataType
      */
     'actionId': string;
     /**
      * 
      * @type {string}
-     * @memberof ActionExecuteData
+     * @memberof ActionExecuteDataType
      */
     'botId': string;
     /**
      * 
      * @type {string}
-     * @memberof ActionExecuteData
+     * @memberof ActionExecuteDataType
      */
-    'status'?: ActionExecuteDataStatusEnum;
+    'status'?: ActionExecuteDataTypeStatusEnum;
     /**
      * ID of the contact
      * @type {string}
-     * @memberof ActionExecuteData
+     * @memberof ActionExecuteDataType
      */
     'contactId'?: string;
     /**
      * 
      * @type {{ [key: string]: any; }}
-     * @memberof ActionExecuteData
+     * @memberof ActionExecuteDataType
      */
     'inputParameters'?: { [key: string]: any; };
     /**
      * 
      * @type {string}
-     * @memberof ActionExecuteData
+     * @memberof ActionExecuteDataType
      */
     'accountId'?: string;
     /**
      * 
      * @type {string}
-     * @memberof ActionExecuteData
+     * @memberof ActionExecuteDataType
      */
     'createdAt'?: string;
     /**
      * 
-     * @type {Array<ActionExecuteDataMessagesInner>}
-     * @memberof ActionExecuteData
+     * @type {Array<ActionExecuteDataTypeMessagesInner>}
+     * @memberof ActionExecuteDataType
      */
-    'messages'?: Array<ActionExecuteDataMessagesInner>;
+    'messages'?: Array<ActionExecuteDataTypeMessagesInner>;
     /**
      * 
-     * @type {Array<ActionExecuteDataMessagesInner>}
-     * @memberof ActionExecuteData
+     * @type {Array<ActionExecuteDataTypeMessagesInner>}
+     * @memberof ActionExecuteDataType
      */
-    'webhooks'?: Array<ActionExecuteDataMessagesInner>;
+    'webhooks'?: Array<ActionExecuteDataTypeMessagesInner>;
     /**
      * 
-     * @type {ActionExecuteDataMessagesInner}
-     * @memberof ActionExecuteData
+     * @type {ActionExecuteDataTypeMessagesInner}
+     * @memberof ActionExecuteDataType
      */
-    'contact'?: ActionExecuteDataMessagesInner;
+    'contact'?: ActionExecuteDataTypeMessagesInner;
     /**
      * 
-     * @type {ActionExecuteDataMessagesInner}
-     * @memberof ActionExecuteData
+     * @type {ActionExecuteDataTypeMessagesInner}
+     * @memberof ActionExecuteDataType
      */
-    'app'?: ActionExecuteDataMessagesInner;
+    'app'?: ActionExecuteDataTypeMessagesInner;
     /**
      * 
      * @type {boolean}
-     * @memberof ActionExecuteData
+     * @memberof ActionExecuteDataType
      */
     'isStart'?: boolean;
     /**
      * 
      * @type {boolean}
-     * @memberof ActionExecuteData
+     * @memberof ActionExecuteDataType
      */
     'isFinal'?: boolean;
     /**
      * 
      * @type {string}
-     * @memberof ActionExecuteData
+     * @memberof ActionExecuteDataType
      */
     'previousActionId'?: string;
 }
 
-export const ActionExecuteDataStatusEnum = {
+export const ActionExecuteDataTypeStatusEnum = {
     Pending: 'pending',
     Sent: 'sent',
     Failed: 'failed',
     Cancelled: 'cancelled'
 } as const;
 
-export type ActionExecuteDataStatusEnum = typeof ActionExecuteDataStatusEnum[keyof typeof ActionExecuteDataStatusEnum];
+export type ActionExecuteDataTypeStatusEnum = typeof ActionExecuteDataTypeStatusEnum[keyof typeof ActionExecuteDataTypeStatusEnum];
 
 /**
  * 
  * @export
- * @interface ActionExecuteDataMessagesInner
+ * @interface ActionExecuteDataTypeMessagesInner
  */
-export interface ActionExecuteDataMessagesInner {
+export interface ActionExecuteDataTypeMessagesInner {
     /**
      * 
      * @type {number}
-     * @memberof ActionExecuteDataMessagesInner
+     * @memberof ActionExecuteDataTypeMessagesInner
      */
     'statusCode': number;
     /**
      * 
      * @type {{ [key: string]: any; }}
-     * @memberof ActionExecuteDataMessagesInner
+     * @memberof ActionExecuteDataTypeMessagesInner
      */
     'body'?: { [key: string]: any; };
 }
@@ -4362,10 +4362,10 @@ export interface SimulateActionExecuteResult200Response {
     'event'?: SimulateActionExecuteResult200ResponseEventEnum;
     /**
      * 
-     * @type {Array<ActionExecuteData>}
+     * @type {Array<ActionExecuteDataType>}
      * @memberof SimulateActionExecuteResult200Response
      */
-    'data'?: Array<ActionExecuteData>;
+    'data'?: Array<ActionExecuteDataType>;
 }
 
 export const SimulateActionExecuteResult200ResponseEventEnum = {
