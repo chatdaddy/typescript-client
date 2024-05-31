@@ -1584,8 +1584,9 @@ export interface ModifySupportPlan {
 }
 
 export const ModifySupportPlanTypeEnum = {
-    Lvl1: 'consultation/support_plan_lvl1',
-    Lvl2: 'consultation/support_plan_lvl2'
+    ConsultationSupportPlanLvl1: 'consultation/support_plan_lvl1',
+    ConsultationSupportPlanLvl2: 'consultation/support_plan_lvl2',
+    Null: null as null
 } as const;
 
 export type ModifySupportPlanTypeEnum = typeof ModifySupportPlanTypeEnum[keyof typeof ModifySupportPlanTypeEnum];
