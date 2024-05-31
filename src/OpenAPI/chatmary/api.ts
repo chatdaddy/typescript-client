@@ -149,6 +149,31 @@ export interface CalendarEvent {
 /**
  * 
  * @export
+ * @interface ChatHistory
+ */
+export interface ChatHistory {
+    /**
+     * Role of the user
+     * @type {string}
+     * @memberof ChatHistory
+     */
+    'role': string;
+    /**
+     * Type of the message
+     * @type {string}
+     * @memberof ChatHistory
+     */
+    'type': string;
+    /**
+     * Content of the message
+     * @type {string}
+     * @memberof ChatHistory
+     */
+    'content': string;
+}
+/**
+ * 
+ * @export
  * @interface ContactToken
  */
 export interface ContactToken {
@@ -214,6 +239,12 @@ export interface ConversationIdPostRequest {
      * @memberof ConversationIdPostRequest
      */
     'appName'?: string;
+    /**
+     * 
+     * @type {Array<ChatHistory>}
+     * @memberof ConversationIdPostRequest
+     */
+    'chatHistory'?: Array<ChatHistory>;
 }
 /**
  * 
@@ -245,6 +276,12 @@ export interface ConversationRecord {
      * @memberof ConversationRecord
      */
     'appName'?: string;
+    /**
+     * 
+     * @type {Array<ChatHistory>}
+     * @memberof ConversationRecord
+     */
+    'chatHistory'?: Array<ChatHistory>;
 }
 /**
  * 
