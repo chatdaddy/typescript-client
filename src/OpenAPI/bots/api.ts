@@ -3731,7 +3731,7 @@ export interface LinkExternalTemplateCommand {
      */
     'templateId': string;
     /**
-     * Language of the template
+     * ISO Language code of the template
      * @type {string}
      * @memberof LinkExternalTemplateCommand
      */
