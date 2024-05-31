@@ -2643,7 +2643,9 @@ export const ConditionablePropertyType = {
     Timestamp: 'timestamp',
     CountryCode: 'country_code',
     TeamMember: 'team_member',
-    Chat: 'chat'
+    Chat: 'chat',
+    BoardStage: 'board_stage',
+    Board: 'board'
 } as const;
 
 export type ConditionablePropertyType = typeof ConditionablePropertyType[keyof typeof ConditionablePropertyType];
