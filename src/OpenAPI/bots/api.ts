@@ -2629,31 +2629,6 @@ export interface ConditionableProperty {
 
 
 /**
- * Define a list of conditionable properties that are only made available to the user if the \"displayConditions\" are met
- * @export
- * @interface ConditionablePropertyGroup
- */
-export interface ConditionablePropertyGroup {
-    /**
-     * 
-     * @type {Array<ConditionableProperty>}
-     * @memberof ConditionablePropertyGroup
-     */
-    'properties': Array<ConditionableProperty>;
-    /**
-     * Define under which conditions this group\'s conditions should be displayed to the user. Conditions will be applied to the Trigger itself. The conditions are ANDed together
-     * @type {Array<BotCondition>}
-     * @memberof ConditionablePropertyGroup
-     */
-    'displayConditions': Array<BotCondition>;
-}
-/**
- * @type ConditionablePropertyListInner
- * @export
- */
-export type ConditionablePropertyListInner = ConditionableProperty | ConditionablePropertyGroup;
-
-/**
  * 
  * @export
  * @enum {string}
@@ -5030,10 +5005,10 @@ export interface TriggersUIConfig {
     'defaults'?: TriggersUIConfigDefaults;
     /**
      * 
-     * @type {Array<ConditionablePropertyListInner>}
+     * @type {Array<ConditionableProperty>}
      * @memberof TriggersUIConfig
      */
-    'conditionableProperties': Array<ConditionablePropertyListInner>;
+    'conditionableProperties': Array<ConditionableProperty>;
 }
 /**
  * Default values for the triggers. These values will be used when creating a new trigger
