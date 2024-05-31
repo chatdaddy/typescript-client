@@ -1572,6 +1572,27 @@ export type MiscPreferenceKeyEnum = typeof MiscPreferenceKeyEnum[keyof typeof Mi
 /**
  * 
  * @export
+ * @interface ModifySupportPlan
+ */
+export interface ModifySupportPlan {
+    /**
+     * The type of support plan. This can be either consultation/support_plan or null to remove the support plan.
+     * @type {string}
+     * @memberof ModifySupportPlan
+     */
+    'type': ModifySupportPlanTypeEnum;
+}
+
+export const ModifySupportPlanTypeEnum = {
+    Lvl1: 'consultation/support_plan_lvl1',
+    Lvl2: 'consultation/support_plan_lvl2'
+} as const;
+
+export type ModifySupportPlanTypeEnum = typeof ModifySupportPlanTypeEnum[keyof typeof ModifySupportPlanTypeEnum];
+
+/**
+ * 
+ * @export
  * @interface NotificationPreference
  */
 export interface NotificationPreference {
@@ -2160,7 +2181,8 @@ export const RecurringCreditConsumptionType = {
     ChannelWaBusinessApi: 'channel/wa-business-api',
     ChannelMail: 'channel/mail',
     ChannelSms: 'channel/sms',
-    ConsultationSupportPlan: 'consultation/support_plan',
+    ConsultationSupportPlanLvl1: 'consultation/support_plan_lvl1',
+    ConsultationSupportPlanLvl2: 'consultation/support_plan_lvl2',
     User: 'user'
 } as const;
 
@@ -4086,6 +4108,44 @@ export const CreditsApiAxiosParamCreator = function (configuration?: Configurati
         },
         /**
          * 
+         * @summary Create/update/cancel the support plan
+         * @param {ModifySupportPlan} [modifySupportPlan] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        modifySupportPlan: async (modifySupportPlan?: ModifySupportPlan, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v2/credits/support-plan`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["PAYMENTS_UPDATE"], configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(modifySupportPlan, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
          * @summary Get recurring credit consumptions
          * @param {string} [teamId] Filter by teamId
          * @param {number} [count] 
@@ -4427,6 +4487,17 @@ export const CreditsApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
+         * @summary Create/update/cancel the support plan
+         * @param {ModifySupportPlan} [modifySupportPlan] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async modifySupportPlan(modifySupportPlan?: ModifySupportPlan, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<RecurringCreditConsumption>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.modifySupportPlan(modifySupportPlan, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
          * @summary Get recurring credit consumptions
          * @param {string} [teamId] Filter by teamId
          * @param {number} [count] 
@@ -4610,6 +4681,16 @@ export const CreditsApiFactory = function (configuration?: Configuration, basePa
          */
         creditsPreferencesPost(requestParameters: CreditsApiCreditsPreferencesPostRequest = {}, options?: AxiosRequestConfig): AxiosPromise<void> {
             return localVarFp.creditsPreferencesPost(requestParameters.creditsPreferencesPostRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Create/update/cancel the support plan
+         * @param {CreditsApiModifySupportPlanRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        modifySupportPlan(requestParameters: CreditsApiModifySupportPlanRequest = {}, options?: AxiosRequestConfig): AxiosPromise<RecurringCreditConsumption> {
+            return localVarFp.modifySupportPlan(requestParameters.modifySupportPlan, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -4928,6 +5009,20 @@ export interface CreditsApiCreditsPreferencesPostRequest {
 }
 
 /**
+ * Request parameters for modifySupportPlan operation in CreditsApi.
+ * @export
+ * @interface CreditsApiModifySupportPlanRequest
+ */
+export interface CreditsApiModifySupportPlanRequest {
+    /**
+     * 
+     * @type {ModifySupportPlan}
+     * @memberof CreditsApiModifySupportPlan
+     */
+    readonly modifySupportPlan?: ModifySupportPlan
+}
+
+/**
  * Request parameters for recurringCreditsGet operation in CreditsApi.
  * @export
  * @interface CreditsApiRecurringCreditsGetRequest
@@ -5170,6 +5265,18 @@ export class CreditsApi extends BaseAPI {
      */
     public creditsPreferencesPost(requestParameters: CreditsApiCreditsPreferencesPostRequest = {}, options?: AxiosRequestConfig) {
         return CreditsApiFp(this.configuration).creditsPreferencesPost(requestParameters.creditsPreferencesPostRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Create/update/cancel the support plan
+     * @param {CreditsApiModifySupportPlanRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CreditsApi
+     */
+    public modifySupportPlan(requestParameters: CreditsApiModifySupportPlanRequest = {}, options?: AxiosRequestConfig) {
+        return CreditsApiFp(this.configuration).modifySupportPlan(requestParameters.modifySupportPlan, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
