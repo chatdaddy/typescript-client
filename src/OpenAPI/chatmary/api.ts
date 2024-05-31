@@ -168,6 +168,87 @@ export interface ContactToken {
 /**
  * 
  * @export
+ * @interface ConversationIdGetRequest
+ */
+export interface ConversationIdGetRequest {
+    /**
+     * ID of the bot
+     * @type {string}
+     * @memberof ConversationIdGetRequest
+     */
+    'botId': string;
+    /**
+     * ID of the chat
+     * @type {string}
+     * @memberof ConversationIdGetRequest
+     */
+    'chatId': string;
+}
+/**
+ * 
+ * @export
+ * @interface ConversationIdPostRequest
+ */
+export interface ConversationIdPostRequest {
+    /**
+     * ID of the bot
+     * @type {string}
+     * @memberof ConversationIdPostRequest
+     */
+    'botId': string;
+    /**
+     * ID of the chat
+     * @type {string}
+     * @memberof ConversationIdPostRequest
+     */
+    'chatId': string;
+    /**
+     * ID of the conversation
+     * @type {string}
+     * @memberof ConversationIdPostRequest
+     */
+    'conversationId': string;
+    /**
+     * Name of the app being Used
+     * @type {string}
+     * @memberof ConversationIdPostRequest
+     */
+    'appName'?: string;
+}
+/**
+ * 
+ * @export
+ * @interface ConversationRecord
+ */
+export interface ConversationRecord {
+    /**
+     * ID of the bot
+     * @type {string}
+     * @memberof ConversationRecord
+     */
+    'botId': string;
+    /**
+     * ID of the chat
+     * @type {string}
+     * @memberof ConversationRecord
+     */
+    'chatId': string;
+    /**
+     * ID of the conversation
+     * @type {string}
+     * @memberof ConversationRecord
+     */
+    'conversationId'?: string;
+    /**
+     * Name of the app being Used
+     * @type {string}
+     * @memberof ConversationRecord
+     */
+    'appName'?: string;
+}
+/**
+ * 
+ * @export
  * @interface CustomBot
  */
 export interface CustomBot {
@@ -381,6 +462,82 @@ export const CustomBotApiAxiosParamCreator = function (configuration?: Configura
                 options: localVarRequestOptions,
             };
         },
+        /**
+         * 
+         * @summary Get conversation ID
+         * @param {ConversationIdGetRequest} [conversationIdGetRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        conversationIdGet: async (conversationIdGetRequest?: ConversationIdGetRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/conversationId`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", [], configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(conversationIdGetRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Set conversation ID
+         * @param {ConversationIdPostRequest} [conversationIdPostRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        conversationIdPost: async (conversationIdPostRequest?: ConversationIdPostRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/conversationId`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", [], configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(conversationIdPostRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
     }
 };
 
@@ -436,6 +593,28 @@ export const CustomBotApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.botsGet(options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
+        /**
+         * 
+         * @summary Get conversation ID
+         * @param {ConversationIdGetRequest} [conversationIdGetRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async conversationIdGet(conversationIdGetRequest?: ConversationIdGetRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ConversationRecord>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.conversationIdGet(conversationIdGetRequest, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary Set conversation ID
+         * @param {ConversationIdPostRequest} [conversationIdPostRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async conversationIdPost(conversationIdPostRequest?: ConversationIdPostRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ConversationRecord>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.conversationIdPost(conversationIdPostRequest, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
     }
 };
 
@@ -484,6 +663,26 @@ export const CustomBotApiFactory = function (configuration?: Configuration, base
          */
         botsGet(options?: AxiosRequestConfig): AxiosPromise<BotsGet200Response> {
             return localVarFp.botsGet(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Get conversation ID
+         * @param {CustomBotApiConversationIdGetRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        conversationIdGet(requestParameters: CustomBotApiConversationIdGetRequest = {}, options?: AxiosRequestConfig): AxiosPromise<ConversationRecord> {
+            return localVarFp.conversationIdGet(requestParameters.conversationIdGetRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Set conversation ID
+         * @param {CustomBotApiConversationIdPostRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        conversationIdPost(requestParameters: CustomBotApiConversationIdPostRequest = {}, options?: AxiosRequestConfig): AxiosPromise<ConversationRecord> {
+            return localVarFp.conversationIdPost(requestParameters.conversationIdPostRequest, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -545,6 +744,34 @@ export interface CustomBotApiBotMessagePostRequest {
 }
 
 /**
+ * Request parameters for conversationIdGet operation in CustomBotApi.
+ * @export
+ * @interface CustomBotApiConversationIdGetRequest
+ */
+export interface CustomBotApiConversationIdGetRequest {
+    /**
+     * 
+     * @type {ConversationIdGetRequest}
+     * @memberof CustomBotApiConversationIdGet
+     */
+    readonly conversationIdGetRequest?: ConversationIdGetRequest
+}
+
+/**
+ * Request parameters for conversationIdPost operation in CustomBotApi.
+ * @export
+ * @interface CustomBotApiConversationIdPostRequest
+ */
+export interface CustomBotApiConversationIdPostRequest {
+    /**
+     * 
+     * @type {ConversationIdPostRequest}
+     * @memberof CustomBotApiConversationIdPost
+     */
+    readonly conversationIdPostRequest?: ConversationIdPostRequest
+}
+
+/**
  * CustomBotApi - object-oriented interface
  * @export
  * @class CustomBotApi
@@ -596,6 +823,30 @@ export class CustomBotApi extends BaseAPI {
      */
     public botsGet(options?: AxiosRequestConfig) {
         return CustomBotApiFp(this.configuration).botsGet(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Get conversation ID
+     * @param {CustomBotApiConversationIdGetRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CustomBotApi
+     */
+    public conversationIdGet(requestParameters: CustomBotApiConversationIdGetRequest = {}, options?: AxiosRequestConfig) {
+        return CustomBotApiFp(this.configuration).conversationIdGet(requestParameters.conversationIdGetRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Set conversation ID
+     * @param {CustomBotApiConversationIdPostRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CustomBotApi
+     */
+    public conversationIdPost(requestParameters: CustomBotApiConversationIdPostRequest = {}, options?: AxiosRequestConfig) {
+        return CustomBotApiFp(this.configuration).conversationIdPost(requestParameters.conversationIdPostRequest, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
