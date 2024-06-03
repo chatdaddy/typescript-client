@@ -2544,6 +2544,12 @@ export interface GetTickets200Response {
     'totalCount'?: number;
 }
 /**
+ * @type GetTicketsFieldsParameter
+ * @export
+ */
+export type GetTicketsFieldsParameter = Array<TagFilter> | TagFilter;
+
+/**
  * @type GroupAction
  * @export
  */
@@ -5419,12 +5425,26 @@ export interface TagFilter {
      */
     'value'?: string | null;
     /**
+     * The operator to use for the value
+     * @type {string}
+     * @memberof TagFilter
+     */
+    'operator'?: TagFilterOperatorEnum;
+    /**
      * 
      * @type {MetadataQuery}
      * @memberof TagFilter
      */
     'added'?: MetadataQuery;
 }
+
+export const TagFilterOperatorEnum = {
+    Equals: 'equals',
+    NotEquals: 'notEquals'
+} as const;
+
+export type TagFilterOperatorEnum = typeof TagFilterOperatorEnum[keyof typeof TagFilterOperatorEnum];
+
 /**
  * 
  * @export
@@ -7656,10 +7676,11 @@ export const CRMApiAxiosParamCreator = function (configuration?: Configuration) 
          * @param {UniqueContactID} [contactId] 
          * @param {boolean} [returnTotalCount] 
          * @param {string} [q] Search items by this string
+         * @param {GetTicketsFieldsParameter} [fields] Query custom fields
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getTickets: async (count?: number, page?: string, boardId?: string, stageId?: string, contactId?: UniqueContactID, returnTotalCount?: boolean, q?: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getTickets: async (count?: number, page?: string, boardId?: string, stageId?: string, contactId?: UniqueContactID, returnTotalCount?: boolean, q?: string, fields?: GetTicketsFieldsParameter, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/crm/tickets`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -7702,6 +7723,10 @@ export const CRMApiAxiosParamCreator = function (configuration?: Configuration) 
 
             if (q !== undefined) {
                 localVarQueryParameter['q'] = q;
+            }
+
+            if (fields !== undefined) {
+                localVarQueryParameter['fields'] = fields;
             }
 
 
@@ -7843,11 +7868,12 @@ export const CRMApiFp = function(configuration?: Configuration) {
          * @param {UniqueContactID} [contactId] 
          * @param {boolean} [returnTotalCount] 
          * @param {string} [q] Search items by this string
+         * @param {GetTicketsFieldsParameter} [fields] Query custom fields
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getTickets(count?: number, page?: string, boardId?: string, stageId?: string, contactId?: UniqueContactID, returnTotalCount?: boolean, q?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetTickets200Response>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getTickets(count, page, boardId, stageId, contactId, returnTotalCount, q, options);
+        async getTickets(count?: number, page?: string, boardId?: string, stageId?: string, contactId?: UniqueContactID, returnTotalCount?: boolean, q?: string, fields?: GetTicketsFieldsParameter, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetTickets200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getTickets(count, page, boardId, stageId, contactId, returnTotalCount, q, fields, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -7939,7 +7965,7 @@ export const CRMApiFactory = function (configuration?: Configuration, basePath?:
          * @throws {RequiredError}
          */
         getTickets(requestParameters: CRMApiGetTicketsRequest = {}, options?: AxiosRequestConfig): AxiosPromise<GetTickets200Response> {
-            return localVarFp.getTickets(requestParameters.count, requestParameters.page, requestParameters.boardId, requestParameters.stageId, requestParameters.contactId, requestParameters.returnTotalCount, requestParameters.q, options).then((request) => request(axios, basePath));
+            return localVarFp.getTickets(requestParameters.count, requestParameters.page, requestParameters.boardId, requestParameters.stageId, requestParameters.contactId, requestParameters.returnTotalCount, requestParameters.q, requestParameters.fields, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -8085,6 +8111,13 @@ export interface CRMApiGetTicketsRequest {
      * @memberof CRMApiGetTickets
      */
     readonly q?: string
+
+    /**
+     * Query custom fields
+     * @type {GetTicketsFieldsParameter}
+     * @memberof CRMApiGetTickets
+     */
+    readonly fields?: GetTicketsFieldsParameter
 }
 
 /**
@@ -8195,7 +8228,7 @@ export class CRMApi extends BaseAPI {
      * @memberof CRMApi
      */
     public getTickets(requestParameters: CRMApiGetTicketsRequest = {}, options?: AxiosRequestConfig) {
-        return CRMApiFp(this.configuration).getTickets(requestParameters.count, requestParameters.page, requestParameters.boardId, requestParameters.stageId, requestParameters.contactId, requestParameters.returnTotalCount, requestParameters.q, options).then((request) => request(this.axios, this.basePath));
+        return CRMApiFp(this.configuration).getTickets(requestParameters.count, requestParameters.page, requestParameters.boardId, requestParameters.stageId, requestParameters.contactId, requestParameters.returnTotalCount, requestParameters.q, requestParameters.fields, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
