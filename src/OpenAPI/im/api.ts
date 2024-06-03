@@ -1094,6 +1094,12 @@ export interface AlibabaCamsRegister200Response {
  */
 export interface AlibabaCamsRegisterRequest {
     /**
+     * Id of the latest whatsapp business account
+     * @type {string}
+     * @memberof AlibabaCamsRegisterRequest
+     */
+    'wabaId': string;
+    /**
      * Phone number to connect to the account. No formatting, just digits with country code. If not provided, the first phone number will be used.
      * @type {string}
      * @memberof AlibabaCamsRegisterRequest
