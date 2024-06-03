@@ -2376,7 +2376,7 @@ export interface CrmTicket {
      */
     'order': number;
     /**
-     * Lorem ipsum
+     * Title of the ticket
      * @type {string}
      * @memberof CrmTicket
      */
@@ -2425,7 +2425,7 @@ export interface CrmTicketPatch {
      */
     'stageId'?: string;
     /**
-     * Lorem ipsum
+     * Title of the ticket
      * @type {string}
      * @memberof CrmTicketPatch
      */
@@ -2456,7 +2456,7 @@ export interface CrmTicketPost {
      */
     'stageId'?: string;
     /**
-     * Lorem ipsum
+     * Title of the ticket
      * @type {string}
      * @memberof CrmTicketPost
      */
