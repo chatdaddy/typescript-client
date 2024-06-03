@@ -298,6 +298,12 @@ export interface ActionAppConfig {
      * @memberof ActionAppConfig
      */
     'outputProperties': Array<ConditionableProperty>;
+    /**
+     * Enable the feature for the specified domains. If empty, the feature will be enabled for all domains.
+     * @type {Array<string>}
+     * @memberof ActionAppConfig
+     */
+    'domains'?: Array<string>;
 }
 /**
  * 
@@ -3661,6 +3667,12 @@ export interface InternalEventUIConfig {
      * @memberof InternalEventUIConfig
      */
     'displayConditions'?: Array<BotCondition>;
+    /**
+     * Enable the feature for the specified domains. If empty, the feature will be enabled for all domains.
+     * @type {Array<string>}
+     * @memberof InternalEventUIConfig
+     */
+    'domains'?: Array<string>;
 }
 /**
  * 
