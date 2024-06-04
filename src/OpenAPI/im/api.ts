@@ -2544,12 +2544,6 @@ export interface GetTickets200Response {
     'totalCount'?: number;
 }
 /**
- * @type GetTicketsFieldsParameter
- * @export
- */
-export type GetTicketsFieldsParameter = Array<TagFilter> | TagFilter;
-
-/**
  * @type GroupAction
  * @export
  */
@@ -7676,11 +7670,12 @@ export const CRMApiAxiosParamCreator = function (configuration?: Configuration) 
          * @param {UniqueContactID} [contactId] 
          * @param {boolean} [returnTotalCount] 
          * @param {string} [q] Search items by this string
-         * @param {GetTicketsFieldsParameter} [fields] Query custom fields
+         * @param {ChatsGetTagsParameter} [tags] Get contacts who fall in either of these tags
+         * @param {ChatsGetAssigneeParameter} [assignee] Get contacts assigned to the specified users
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getTickets: async (count?: number, page?: string, boardId?: string, stageId?: string, contactId?: UniqueContactID, returnTotalCount?: boolean, q?: string, fields?: GetTicketsFieldsParameter, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getTickets: async (count?: number, page?: string, boardId?: string, stageId?: string, contactId?: UniqueContactID, returnTotalCount?: boolean, q?: string, tags?: ChatsGetTagsParameter, assignee?: ChatsGetAssigneeParameter, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/crm/tickets`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -7725,8 +7720,12 @@ export const CRMApiAxiosParamCreator = function (configuration?: Configuration) 
                 localVarQueryParameter['q'] = q;
             }
 
-            if (fields !== undefined) {
-                localVarQueryParameter['fields'] = fields;
+            if (tags !== undefined) {
+                localVarQueryParameter['tags'] = tags;
+            }
+
+            if (assignee !== undefined) {
+                localVarQueryParameter['assignee'] = assignee;
             }
 
 
@@ -7868,12 +7867,13 @@ export const CRMApiFp = function(configuration?: Configuration) {
          * @param {UniqueContactID} [contactId] 
          * @param {boolean} [returnTotalCount] 
          * @param {string} [q] Search items by this string
-         * @param {GetTicketsFieldsParameter} [fields] Query custom fields
+         * @param {ChatsGetTagsParameter} [tags] Get contacts who fall in either of these tags
+         * @param {ChatsGetAssigneeParameter} [assignee] Get contacts assigned to the specified users
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getTickets(count?: number, page?: string, boardId?: string, stageId?: string, contactId?: UniqueContactID, returnTotalCount?: boolean, q?: string, fields?: GetTicketsFieldsParameter, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetTickets200Response>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getTickets(count, page, boardId, stageId, contactId, returnTotalCount, q, fields, options);
+        async getTickets(count?: number, page?: string, boardId?: string, stageId?: string, contactId?: UniqueContactID, returnTotalCount?: boolean, q?: string, tags?: ChatsGetTagsParameter, assignee?: ChatsGetAssigneeParameter, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetTickets200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getTickets(count, page, boardId, stageId, contactId, returnTotalCount, q, tags, assignee, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -7965,7 +7965,7 @@ export const CRMApiFactory = function (configuration?: Configuration, basePath?:
          * @throws {RequiredError}
          */
         getTickets(requestParameters: CRMApiGetTicketsRequest = {}, options?: AxiosRequestConfig): AxiosPromise<GetTickets200Response> {
-            return localVarFp.getTickets(requestParameters.count, requestParameters.page, requestParameters.boardId, requestParameters.stageId, requestParameters.contactId, requestParameters.returnTotalCount, requestParameters.q, requestParameters.fields, options).then((request) => request(axios, basePath));
+            return localVarFp.getTickets(requestParameters.count, requestParameters.page, requestParameters.boardId, requestParameters.stageId, requestParameters.contactId, requestParameters.returnTotalCount, requestParameters.q, requestParameters.tags, requestParameters.assignee, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -8113,11 +8113,18 @@ export interface CRMApiGetTicketsRequest {
     readonly q?: string
 
     /**
-     * Query custom fields
-     * @type {GetTicketsFieldsParameter}
+     * Get contacts who fall in either of these tags
+     * @type {ChatsGetTagsParameter}
      * @memberof CRMApiGetTickets
      */
-    readonly fields?: GetTicketsFieldsParameter
+    readonly tags?: ChatsGetTagsParameter
+
+    /**
+     * Get contacts assigned to the specified users
+     * @type {ChatsGetAssigneeParameter}
+     * @memberof CRMApiGetTickets
+     */
+    readonly assignee?: ChatsGetAssigneeParameter
 }
 
 /**
@@ -8228,7 +8235,7 @@ export class CRMApi extends BaseAPI {
      * @memberof CRMApi
      */
     public getTickets(requestParameters: CRMApiGetTicketsRequest = {}, options?: AxiosRequestConfig) {
-        return CRMApiFp(this.configuration).getTickets(requestParameters.count, requestParameters.page, requestParameters.boardId, requestParameters.stageId, requestParameters.contactId, requestParameters.returnTotalCount, requestParameters.q, requestParameters.fields, options).then((request) => request(this.axios, this.basePath));
+        return CRMApiFp(this.configuration).getTickets(requestParameters.count, requestParameters.page, requestParameters.boardId, requestParameters.stageId, requestParameters.contactId, requestParameters.returnTotalCount, requestParameters.q, requestParameters.tags, requestParameters.assignee, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
