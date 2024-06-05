@@ -571,7 +571,8 @@ export const CreditConsumptionType = {
     Consultation1h: 'consultation/1h',
     AdminDiscretionary: 'admin/discretionary',
     AdminRefund: 'admin/refund',
-    AdminExpiredCreditGain: 'admin/expired_credit_gain'
+    AdminExpiredCreditGain: 'admin/expired_credit_gain',
+    ConsultationTraining: 'consultation/training'
 } as const;
 
 export type CreditConsumptionType = typeof CreditConsumptionType[keyof typeof CreditConsumptionType];
