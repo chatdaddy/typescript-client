@@ -1790,6 +1790,25 @@ export interface TeamMember {
 /**
  * 
  * @export
+ * @interface TeamMemberLogout
+ */
+export interface TeamMemberLogout {
+    /**
+     * 
+     * @type {string}
+     * @memberof TeamMemberLogout
+     */
+    'teamId': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof TeamMemberLogout
+     */
+    'userId': string;
+}
+/**
+ * 
+ * @export
  * @enum {string}
  */
 

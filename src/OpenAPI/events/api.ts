@@ -6058,6 +6058,7 @@ export const EventName = {
     PaymentintegrationInsert: 'paymentintegration-insert',
     DashboardwithdataInsert: 'dashboardwithdata-insert',
     ShopproductInsert: 'shopproduct-insert',
+    TeammemberLogout: 'teammember-logout',
     ContactInsert: 'contact-insert',
     ContactUpdate: 'contact-update',
     ContactDelete: 'contact-delete',
@@ -6187,7 +6188,7 @@ export type EventSubscriptionType = typeof EventSubscriptionType[keyof typeof Ev
  * The request body you\'ll receive in a webhook
  * @export
  */
-export type EventWebhookData = AccountDelete | AccountInsert | AccountUpdate | ActionExecute | BotDelete | BotInsert | BotUpdate | CampaignInsert | ChatDelete | ChatInsert | ChatUpdate | ChatbotInsert | ContactDelete | ContactInsert | ContactUpdate | CredittransactionrecordInsert | CrmTicketDelete | CrmTicketInsert | CrmTicketUpdate | CustomerCreditsLevelUpdate | DashboardwithdataInsert | FewMessagesLeft | GroupUpdate | KeywordbasedactionInsert | MembershipactionInsert | MessageDelete | MessageInsert | MessageUpdate | OrderInsert | PaymentintegrationInsert | PlatformproductDelete | PlatformproductInsert | PlatformproductUpdate | PresenceUpdate | PushNotification | ShopproductInsert | StaleAccountNotification | TagDelete | TagInsert | TagUpdate | TeamDelete | TeamInsert | TeamUpdate | TeammemberDelete | TeammemberInsert | TeammemberUpdate | TrackingDelete | TrackingInsert | TrackingUpdate | UserDelete | UserInsert | UserUpdate;
+export type EventWebhookData = AccountDelete | AccountInsert | AccountUpdate | ActionExecute | BotDelete | BotInsert | BotUpdate | CampaignInsert | ChatDelete | ChatInsert | ChatUpdate | ChatbotInsert | ContactDelete | ContactInsert | ContactUpdate | CredittransactionrecordInsert | CrmTicketDelete | CrmTicketInsert | CrmTicketUpdate | CustomerCreditsLevelUpdate | DashboardwithdataInsert | FewMessagesLeft | GroupUpdate | KeywordbasedactionInsert | MembershipactionInsert | MessageDelete | MessageInsert | MessageUpdate | OrderInsert | PaymentintegrationInsert | PlatformproductDelete | PlatformproductInsert | PlatformproductUpdate | PresenceUpdate | PushNotification | ShopproductInsert | StaleAccountNotification | TagDelete | TagInsert | TagUpdate | TeamDelete | TeamInsert | TeamUpdate | TeammemberDelete | TeammemberInsert | TeammemberLogout | TeammemberUpdate | TrackingDelete | TrackingInsert | TrackingUpdate | UserDelete | UserInsert | UserUpdate;
 
 /**
  * 
@@ -10665,6 +10666,51 @@ export const TeammemberInsertDataRoleEnum = {
 
 export type TeammemberInsertDataRoleEnum = typeof TeammemberInsertDataRoleEnum[keyof typeof TeammemberInsertDataRoleEnum];
 
+/**
+ * 
+ * @export
+ * @interface TeammemberLogout
+ */
+export interface TeammemberLogout {
+    /**
+     * 
+     * @type {string}
+     * @memberof TeammemberLogout
+     */
+    'event': TeammemberLogoutEventEnum;
+    /**
+     * 
+     * @type {Array<TeammemberLogoutData>}
+     * @memberof TeammemberLogout
+     */
+    'data': Array<TeammemberLogoutData>;
+}
+
+export const TeammemberLogoutEventEnum = {
+    TeammemberLogout: 'teammember-logout'
+} as const;
+
+export type TeammemberLogoutEventEnum = typeof TeammemberLogoutEventEnum[keyof typeof TeammemberLogoutEventEnum];
+
+/**
+ * 
+ * @export
+ * @interface TeammemberLogoutData
+ */
+export interface TeammemberLogoutData {
+    /**
+     * 
+     * @type {string}
+     * @memberof TeammemberLogoutData
+     */
+    'teamId': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof TeammemberLogoutData
+     */
+    'userId': string;
+}
 /**
  * 
  * @export
