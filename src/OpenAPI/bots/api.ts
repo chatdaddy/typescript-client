@@ -2603,6 +2603,12 @@ export interface ConditionableProperty {
     'title': string;
     /**
      * 
+     * @type {string}
+     * @memberof ConditionableProperty
+     */
+    'description'?: string;
+    /**
+     * 
      * @type {DisplayIcon}
      * @memberof ConditionableProperty
      */
@@ -2646,6 +2652,7 @@ export const ConditionablePropertyType = {
     Boolean: 'boolean',
     Channel: 'channel',
     Tag: 'tag',
+    CustomField: 'custom_field',
     Timestamp: 'timestamp',
     CountryCode: 'country_code',
     TeamMember: 'team_member',
@@ -2726,6 +2733,12 @@ export type DataProperty = DataPropertyDescriptor & {
      * @memberof DataProperty
      */
     'title': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof DataProperty
+     */
+    'description'?: string;
     /**
      * 
      * @type {DisplayIcon}
@@ -4093,6 +4106,12 @@ export interface PropertyMetadata {
      * @memberof PropertyMetadata
      */
     'title': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof PropertyMetadata
+     */
+    'description'?: string;
     /**
      * 
      * @type {DisplayIcon}
