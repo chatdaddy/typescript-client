@@ -5379,7 +5379,8 @@ export const TagFieldValidationOneOfFormatEnum = {
     Email: 'email',
     Phone: 'phone',
     Uri: 'uri',
-    Attachment: 'attachment'
+    Attachment: 'attachment',
+    TeamMember: 'team-member'
 } as const;
 
 export type TagFieldValidationOneOfFormatEnum = typeof TagFieldValidationOneOfFormatEnum[keyof typeof TagFieldValidationOneOfFormatEnum];
