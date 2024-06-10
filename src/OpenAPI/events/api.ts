@@ -2356,11 +2356,11 @@ export type BotInsertDataActionsInnerAllOf1MessageDelaysInnerOneOf3ValueDayEnum 
  */
 export interface BotInsertDataActionsInnerAllOf1MessageInput {
     /**
-     * Name of the input
+     * Name of the input. If not specified, the input received will be forwarded as the key \"value\" in the next action
      * @type {string}
      * @memberof BotInsertDataActionsInnerAllOf1MessageInput
      */
-    'name': string;
+    'name'?: string;
     /**
      * 
      * @type {BotInsertDataActionsInnerAllOf1MessageInputValidation}
@@ -2388,6 +2388,12 @@ export interface BotInsertDataActionsInnerAllOf1MessageInput {
     'nextAction'?: BotInsertDataActionsInnerAllOf1MessageButtonsInnerNextAction;
     /**
      * 
+     * @type {BotInsertDataActionsInnerAllOf1MessageButtonsInnerNextAction}
+     * @memberof BotInsertDataActionsInnerAllOf1MessageInput
+     */
+    'validationFailAction'?: BotInsertDataActionsInnerAllOf1MessageButtonsInnerNextAction;
+    /**
+     * 
      * @type {BotInsertDataActionsInnerAllOf1MessageButtonsInnerPosition}
      * @memberof BotInsertDataActionsInnerAllOf1MessageInput
      */
@@ -2409,7 +2415,10 @@ export interface BotInsertDataActionsInnerAllOf1MessageInputValidation {
 
 export const BotInsertDataActionsInnerAllOf1MessageInputValidationTypeEnum = {
     String: 'string',
-    Integer: 'integer'
+    Integer: 'integer',
+    Boolean: 'boolean',
+    ImageAttachment: 'image_attachment',
+    Attachment: 'attachment'
 } as const;
 
 export type BotInsertDataActionsInnerAllOf1MessageInputValidationTypeEnum = typeof BotInsertDataActionsInnerAllOf1MessageInputValidationTypeEnum[keyof typeof BotInsertDataActionsInnerAllOf1MessageInputValidationTypeEnum];
@@ -2982,10 +2991,10 @@ export interface BotNodeEventDataOneOf3 {
     'type': BotNodeEventDataOneOf3TypeEnum;
     /**
      * 
-     * @type {BotInsertDataActionsInnerAllOf1MessageInput}
+     * @type {BotNodeEventDataOneOfDataAllOf1MessageInput}
      * @memberof BotNodeEventDataOneOf3
      */
-    'data': BotInsertDataActionsInnerAllOf1MessageInput;
+    'data': BotNodeEventDataOneOfDataAllOf1MessageInput;
     /**
      * 
      * @type {string}
@@ -3790,10 +3799,10 @@ export interface BotNodeEventDataOneOfDataAllOf1Message {
     'delays'?: Array<BotNodeEventDataOneOfDataAllOf1MessageDelaysInner>;
     /**
      * 
-     * @type {BotInsertDataActionsInnerAllOf1MessageInput}
+     * @type {BotNodeEventDataOneOfDataAllOf1MessageInput}
      * @memberof BotNodeEventDataOneOfDataAllOf1Message
      */
-    'input'?: BotInsertDataActionsInnerAllOf1MessageInput;
+    'input'?: BotNodeEventDataOneOfDataAllOf1MessageInput;
     /**
      * 
      * @type {BotInsertDataActionsInnerAllOf1MessageList}
@@ -3869,6 +3878,71 @@ export interface BotNodeEventDataOneOfDataAllOf1MessageDelaysInner {
      */
     'nextAction'?: BotInsertDataActionsInnerAllOf1MessageButtonsInnerNextAction;
 }
+/**
+ * 
+ * @export
+ * @interface BotNodeEventDataOneOfDataAllOf1MessageInput
+ */
+export interface BotNodeEventDataOneOfDataAllOf1MessageInput {
+    /**
+     * Name of the input
+     * @type {string}
+     * @memberof BotNodeEventDataOneOfDataAllOf1MessageInput
+     */
+    'name': string;
+    /**
+     * 
+     * @type {BotNodeEventDataOneOfDataAllOf1MessageInputValidation}
+     * @memberof BotNodeEventDataOneOfDataAllOf1MessageInput
+     */
+    'validation'?: BotNodeEventDataOneOfDataAllOf1MessageInputValidation;
+    /**
+     * Use \"nextAction\" instead
+     * @type {string}
+     * @memberof BotNodeEventDataOneOfDataAllOf1MessageInput
+     * @deprecated
+     */
+    'triggerActionId'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof BotNodeEventDataOneOfDataAllOf1MessageInput
+     */
+    'triggerBotId'?: string | null;
+    /**
+     * 
+     * @type {BotInsertDataActionsInnerAllOf1MessageButtonsInnerNextAction}
+     * @memberof BotNodeEventDataOneOfDataAllOf1MessageInput
+     */
+    'nextAction'?: BotInsertDataActionsInnerAllOf1MessageButtonsInnerNextAction;
+    /**
+     * 
+     * @type {BotInsertDataActionsInnerAllOf1MessageButtonsInnerPosition}
+     * @memberof BotNodeEventDataOneOfDataAllOf1MessageInput
+     */
+    'position'?: BotInsertDataActionsInnerAllOf1MessageButtonsInnerPosition | null;
+}
+/**
+ * 
+ * @export
+ * @interface BotNodeEventDataOneOfDataAllOf1MessageInputValidation
+ */
+export interface BotNodeEventDataOneOfDataAllOf1MessageInputValidation {
+    /**
+     * 
+     * @type {string}
+     * @memberof BotNodeEventDataOneOfDataAllOf1MessageInputValidation
+     */
+    'type': BotNodeEventDataOneOfDataAllOf1MessageInputValidationTypeEnum;
+}
+
+export const BotNodeEventDataOneOfDataAllOf1MessageInputValidationTypeEnum = {
+    String: 'string',
+    Integer: 'integer'
+} as const;
+
+export type BotNodeEventDataOneOfDataAllOf1MessageInputValidationTypeEnum = typeof BotNodeEventDataOneOfDataAllOf1MessageInputValidationTypeEnum[keyof typeof BotNodeEventDataOneOfDataAllOf1MessageInputValidationTypeEnum];
+
 /**
  * 
  * @export

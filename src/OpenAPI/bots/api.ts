@@ -1599,11 +1599,11 @@ export type BotMessageDelay = LegacyBotMessageDelay | SecondsBotMessageDelay | T
  */
 export interface BotMessageInput {
     /**
-     * Name of the input
+     * Name of the input. If not specified, the input received will be forwarded as the key \"value\" in the next action
      * @type {string}
      * @memberof BotMessageInput
      */
-    'name': string;
+    'name'?: string;
     /**
      * 
      * @type {BotMessageInputValidation}
@@ -1631,6 +1631,12 @@ export interface BotMessageInput {
     'nextAction'?: NextAction;
     /**
      * 
+     * @type {NextAction}
+     * @memberof BotMessageInput
+     */
+    'validationFailAction'?: NextAction;
+    /**
+     * 
      * @type {Position}
      * @memberof BotMessageInput
      */
@@ -1652,7 +1658,10 @@ export interface BotMessageInputValidation {
 
 export const BotMessageInputValidationTypeEnum = {
     String: 'string',
-    Integer: 'integer'
+    Integer: 'integer',
+    Boolean: 'boolean',
+    ImageAttachment: 'image_attachment',
+    Attachment: 'attachment'
 } as const;
 
 export type BotMessageInputValidationTypeEnum = typeof BotMessageInputValidationTypeEnum[keyof typeof BotMessageInputValidationTypeEnum];
@@ -2641,7 +2650,7 @@ export interface ConditionableProperty {
 
 
 /**
- * 
+ * Type of property. - string, number, boolean: Simple property type - timestamp: timestamp string in ISO format - channel, tag, team_member, chat, board_stage, board:    Reference to another object by ID - custom_field: Object of type { name: string, value: string }
  * @export
  * @enum {string}
  */
@@ -5022,7 +5031,7 @@ export interface TriggersDisplayConfiguration {
      * @type {Array<ActionAppConfig>}
      * @memberof TriggersDisplayConfiguration
      */
-    'actionApps'?: Array<ActionAppConfig>;
+    'actionApps': Array<ActionAppConfig>;
 }
 /**
  * 
