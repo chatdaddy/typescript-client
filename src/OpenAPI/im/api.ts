@@ -4607,6 +4607,19 @@ export interface OrderProduct {
     'quantity': number;
 }
 /**
+ * 
+ * @export
+ * @interface PermanentlyStoreAttachments200Response
+ */
+export interface PermanentlyStoreAttachments200Response {
+    /**
+     * 
+     * @type {Array<MessageAttachment>}
+     * @memberof PermanentlyStoreAttachments200Response
+     */
+    'attachments': Array<MessageAttachment>;
+}
+/**
  * Model for a product on an external platform (eg. WhatsApp)
  * @export
  * @interface PlatformProduct
@@ -12056,6 +12069,52 @@ export const MessagesApiAxiosParamCreator = function (configuration?: Configurat
                 options: localVarRequestOptions,
             };
         },
+        /**
+         * 
+         * @summary Permanently store attachments of a message
+         * @param {string} accountId 
+         * @param {string} chatId 
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        permanentlyStoreAttachments: async (accountId: string, chatId: string, id: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'accountId' is not null or undefined
+            assertParamExists('permanentlyStoreAttachments', 'accountId', accountId)
+            // verify required parameter 'chatId' is not null or undefined
+            assertParamExists('permanentlyStoreAttachments', 'chatId', chatId)
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('permanentlyStoreAttachments', 'id', id)
+            const localVarPath = `/messages/{accountId}/{chatId}/{id}/permanently-store-attachments`
+                .replace(`{${"accountId"}}`, encodeURIComponent(String(accountId)))
+                .replace(`{${"chatId"}}`, encodeURIComponent(String(chatId)))
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", [], configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
     }
 };
 
@@ -12212,6 +12271,19 @@ export const MessagesApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.messagesSend(accountId, requireOpenAccount, multiMessageCompose, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
+        /**
+         * 
+         * @summary Permanently store attachments of a message
+         * @param {string} accountId 
+         * @param {string} chatId 
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async permanentlyStoreAttachments(accountId: string, chatId: string, id: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PermanentlyStoreAttachments200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.permanentlyStoreAttachments(accountId, chatId, id, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
     }
 };
 
@@ -12319,6 +12391,16 @@ export const MessagesApiFactory = function (configuration?: Configuration, baseP
          */
         messagesSend(requestParameters: MessagesApiMessagesSendRequest, options?: AxiosRequestConfig): AxiosPromise<Array<Message>> {
             return localVarFp.messagesSend(requestParameters.accountId, requestParameters.requireOpenAccount, requestParameters.multiMessageCompose, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Permanently store attachments of a message
+         * @param {MessagesApiPermanentlyStoreAttachmentsRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        permanentlyStoreAttachments(requestParameters: MessagesApiPermanentlyStoreAttachmentsRequest, options?: AxiosRequestConfig): AxiosPromise<PermanentlyStoreAttachments200Response> {
+            return localVarFp.permanentlyStoreAttachments(requestParameters.accountId, requestParameters.chatId, requestParameters.id, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -12730,6 +12812,34 @@ export interface MessagesApiMessagesSendRequest {
 }
 
 /**
+ * Request parameters for permanentlyStoreAttachments operation in MessagesApi.
+ * @export
+ * @interface MessagesApiPermanentlyStoreAttachmentsRequest
+ */
+export interface MessagesApiPermanentlyStoreAttachmentsRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof MessagesApiPermanentlyStoreAttachments
+     */
+    readonly accountId: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof MessagesApiPermanentlyStoreAttachments
+     */
+    readonly chatId: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof MessagesApiPermanentlyStoreAttachments
+     */
+    readonly id: string
+}
+
+/**
  * MessagesApi - object-oriented interface
  * @export
  * @class MessagesApi
@@ -12852,6 +12962,18 @@ export class MessagesApi extends BaseAPI {
      */
     public messagesSend(requestParameters: MessagesApiMessagesSendRequest, options?: AxiosRequestConfig) {
         return MessagesApiFp(this.configuration).messagesSend(requestParameters.accountId, requestParameters.requireOpenAccount, requestParameters.multiMessageCompose, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Permanently store attachments of a message
+     * @param {MessagesApiPermanentlyStoreAttachmentsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof MessagesApi
+     */
+    public permanentlyStoreAttachments(requestParameters: MessagesApiPermanentlyStoreAttachmentsRequest, options?: AxiosRequestConfig) {
+        return MessagesApiFp(this.configuration).permanentlyStoreAttachments(requestParameters.accountId, requestParameters.chatId, requestParameters.id, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
