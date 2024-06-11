@@ -5658,6 +5658,12 @@ export interface CrmTicketInsertData {
      * @memberof CrmTicketInsertData
      */
     'resolvedMetadata'?: GroupUpdateDataOwnerTagsInnerAllOf1AddedMetadata;
+    /**
+     * 
+     * @type {CrmTicketInsertDataTimer}
+     * @memberof CrmTicketInsertData
+     */
+    'timer'?: CrmTicketInsertDataTimer;
 }
 /**
  * 
@@ -5678,6 +5684,46 @@ export interface CrmTicketInsertDataContactId {
      */
     'accountId': string;
 }
+/**
+ * 
+ * @export
+ * @interface CrmTicketInsertDataTimer
+ */
+export interface CrmTicketInsertDataTimer {
+    /**
+     * 
+     * @type {GroupUpdateDataOwnerTagsInnerAllOf1AddedMetadata}
+     * @memberof CrmTicketInsertDataTimer
+     */
+    'startMetadata': GroupUpdateDataOwnerTagsInnerAllOf1AddedMetadata;
+    /**
+     * 
+     * @type {GroupUpdateDataOwnerTagsInnerAllOf1AddedMetadata}
+     * @memberof CrmTicketInsertDataTimer
+     */
+    'stopMetadata'?: GroupUpdateDataOwnerTagsInnerAllOf1AddedMetadata;
+    /**
+     * 
+     * @type {string}
+     * @memberof CrmTicketInsertDataTimer
+     */
+    'endsAt': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof CrmTicketInsertDataTimer
+     */
+    'status': CrmTicketInsertDataTimerStatusEnum;
+}
+
+export const CrmTicketInsertDataTimerStatusEnum = {
+    Running: 'running',
+    Stopped: 'stopped',
+    Ended: 'ended'
+} as const;
+
+export type CrmTicketInsertDataTimerStatusEnum = typeof CrmTicketInsertDataTimerStatusEnum[keyof typeof CrmTicketInsertDataTimerStatusEnum];
+
 /**
  * 
  * @export
@@ -5770,6 +5816,12 @@ export interface CrmTicketUpdateData {
      * @memberof CrmTicketUpdateData
      */
     'resolvedMetadata'?: GroupUpdateDataOwnerTagsInnerAllOf1AddedMetadata;
+    /**
+     * 
+     * @type {CrmTicketInsertDataTimer}
+     * @memberof CrmTicketUpdateData
+     */
+    'timer'?: CrmTicketInsertDataTimer;
 }
 /**
  * 
