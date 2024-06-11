@@ -1860,7 +1860,34 @@ export interface ContactTicket {
      * @memberof ContactTicket
      */
     'createMetadata'?: UpsertMetadata;
+    /**
+     * 
+     * @type {ContactTicketTimer}
+     * @memberof ContactTicket
+     */
+    'timer'?: ContactTicketTimer;
 }
+/**
+ * 
+ * @export
+ * @interface ContactTicketTimer
+ */
+export interface ContactTicketTimer {
+    /**
+     * An ISO formatted timestamp
+     * @type {string}
+     * @memberof ContactTicketTimer
+     */
+    'endsAt': string;
+    /**
+     * 
+     * @type {TicketTimerStatus}
+     * @memberof ContactTicketTimer
+     */
+    'status': TicketTimerStatus;
+}
+
+
 /**
  * 
  * @export

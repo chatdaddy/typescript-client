@@ -6723,7 +6723,41 @@ export interface GroupUpdateDataOwnerTicketsInner {
      * @memberof GroupUpdateDataOwnerTicketsInner
      */
     'createMetadata'?: GroupUpdateDataOwnerTagsInnerAllOf1AddedMetadata;
+    /**
+     * 
+     * @type {GroupUpdateDataOwnerTicketsInnerTimer}
+     * @memberof GroupUpdateDataOwnerTicketsInner
+     */
+    'timer'?: GroupUpdateDataOwnerTicketsInnerTimer;
 }
+/**
+ * 
+ * @export
+ * @interface GroupUpdateDataOwnerTicketsInnerTimer
+ */
+export interface GroupUpdateDataOwnerTicketsInnerTimer {
+    /**
+     * 
+     * @type {string}
+     * @memberof GroupUpdateDataOwnerTicketsInnerTimer
+     */
+    'endsAt': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof GroupUpdateDataOwnerTicketsInnerTimer
+     */
+    'status': GroupUpdateDataOwnerTicketsInnerTimerStatusEnum;
+}
+
+export const GroupUpdateDataOwnerTicketsInnerTimerStatusEnum = {
+    Running: 'running',
+    Stopped: 'stopped',
+    Ended: 'ended'
+} as const;
+
+export type GroupUpdateDataOwnerTicketsInnerTimerStatusEnum = typeof GroupUpdateDataOwnerTicketsInnerTimerStatusEnum[keyof typeof GroupUpdateDataOwnerTicketsInnerTimerStatusEnum];
+
 /**
  * 
  * @export
