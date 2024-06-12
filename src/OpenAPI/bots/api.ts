@@ -2650,7 +2650,7 @@ export interface ConditionableProperty {
 
 
 /**
- * Type of property. - string, number, boolean: Simple property type - timestamp: timestamp string in ISO format - channel, tag, team_member, chat, board_stage, board:    Reference to another object by ID - custom_field: Object of type { name: string, value: string }
+ * Type of property. - string, number, boolean: Simple property type - timestamp: timestamp string in ISO format - channel, tag, team_member, chat, board_stage, board, ticket:     Reference to another object by ID - custom_field: Object of type { name: string, value: string } - duration: integer representing seconds 
  * @export
  * @enum {string}
  */
@@ -2667,7 +2667,9 @@ export const ConditionablePropertyType = {
     TeamMember: 'team_member',
     Chat: 'chat',
     BoardStage: 'board_stage',
-    Board: 'board'
+    Board: 'board',
+    Duration: 'duration',
+    Ticket: 'ticket'
 } as const;
 
 export type ConditionablePropertyType = typeof ConditionablePropertyType[keyof typeof ConditionablePropertyType];

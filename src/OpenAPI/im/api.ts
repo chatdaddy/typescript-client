@@ -2506,6 +2506,12 @@ export interface CrmTicketPost {
      * @memberof CrmTicketPost
      */
     'createdAt'?: string;
+    /**
+     * 
+     * @type {TicketTimerCreate}
+     * @memberof CrmTicketPost
+     */
+    'timer'?: TicketTimerCreate;
 }
 /**
  * 
@@ -5332,19 +5338,6 @@ export interface SmsStateInfo {
 /**
  * 
  * @export
- * @interface StartTicketTimerRequest
- */
-export interface StartTicketTimerRequest {
-    /**
-     * Duration in seconds
-     * @type {number}
-     * @memberof StartTicketTimerRequest
-     */
-    'durationS': number;
-}
-/**
- * 
- * @export
  * @interface Tag
  */
 export interface Tag {
@@ -5729,6 +5722,19 @@ export interface TicketTimer {
 }
 
 
+/**
+ * 
+ * @export
+ * @interface TicketTimerCreate
+ */
+export interface TicketTimerCreate {
+    /**
+     * Duration of the timer in seconds
+     * @type {number}
+     * @memberof TicketTimerCreate
+     */
+    'durationS': number;
+}
 /**
  * 
  * @export
@@ -7850,11 +7856,11 @@ export const CRMApiAxiosParamCreator = function (configuration?: Configuration) 
          * 
          * @summary Start a timer for a CRM ticket
          * @param {string} id 
-         * @param {StartTicketTimerRequest} [startTicketTimerRequest] 
+         * @param {TicketTimerCreate} [ticketTimerCreate] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        startTicketTimer: async (id: string, startTicketTimerRequest?: StartTicketTimerRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        startTicketTimer: async (id: string, ticketTimerCreate?: TicketTimerCreate, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
             assertParamExists('startTicketTimer', 'id', id)
             const localVarPath = `/crm/tickets/{id}/timer/start`
@@ -7881,7 +7887,7 @@ export const CRMApiAxiosParamCreator = function (configuration?: Configuration) 
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(startTicketTimerRequest, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(ticketTimerCreate, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -8068,12 +8074,12 @@ export const CRMApiFp = function(configuration?: Configuration) {
          * 
          * @summary Start a timer for a CRM ticket
          * @param {string} id 
-         * @param {StartTicketTimerRequest} [startTicketTimerRequest] 
+         * @param {TicketTimerCreate} [ticketTimerCreate] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async startTicketTimer(id: string, startTicketTimerRequest?: StartTicketTimerRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CrmTicket>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.startTicketTimer(id, startTicketTimerRequest, options);
+        async startTicketTimer(id: string, ticketTimerCreate?: TicketTimerCreate, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CrmTicket>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.startTicketTimer(id, ticketTimerCreate, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -8186,7 +8192,7 @@ export const CRMApiFactory = function (configuration?: Configuration, basePath?:
          * @throws {RequiredError}
          */
         startTicketTimer(requestParameters: CRMApiStartTicketTimerRequest, options?: AxiosRequestConfig): AxiosPromise<CrmTicket> {
-            return localVarFp.startTicketTimer(requestParameters.id, requestParameters.startTicketTimerRequest, options).then((request) => request(axios, basePath));
+            return localVarFp.startTicketTimer(requestParameters.id, requestParameters.ticketTimerCreate, options).then((request) => request(axios, basePath));
         },
         /**
          * If no timer is running, this will return the ticket as is.
@@ -8380,10 +8386,10 @@ export interface CRMApiStartTicketTimerRequest {
 
     /**
      * 
-     * @type {StartTicketTimerRequest}
+     * @type {TicketTimerCreate}
      * @memberof CRMApiStartTicketTimer
      */
-    readonly startTicketTimerRequest?: StartTicketTimerRequest
+    readonly ticketTimerCreate?: TicketTimerCreate
 }
 
 /**
@@ -8520,7 +8526,7 @@ export class CRMApi extends BaseAPI {
      * @memberof CRMApi
      */
     public startTicketTimer(requestParameters: CRMApiStartTicketTimerRequest, options?: AxiosRequestConfig) {
-        return CRMApiFp(this.configuration).startTicketTimer(requestParameters.id, requestParameters.startTicketTimerRequest, options).then((request) => request(this.axios, this.basePath));
+        return CRMApiFp(this.configuration).startTicketTimer(requestParameters.id, requestParameters.ticketTimerCreate, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
