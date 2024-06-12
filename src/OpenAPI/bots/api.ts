@@ -5204,10 +5204,10 @@ export type WeekdayBotMessageDelayTypeEnum = typeof WeekdayBotMessageDelayTypeEn
 export interface WeekdayDelayValue {
     /**
      * 
-     * @type {DayOfWeek}
+     * @type {WeekdayDelayValueDay}
      * @memberof WeekdayDelayValue
      */
-    'day': DayOfWeek;
+    'day': WeekdayDelayValueDay;
     /**
      * 
      * @type {string}
@@ -5221,7 +5221,11 @@ export interface WeekdayDelayValue {
      */
     'timezone': string;
 }
-
+/**
+ * @type WeekdayDelayValueDay
+ * @export
+ */
+export type WeekdayDelayValueDay = DayOfWeek | string;
 
 
 /**

@@ -2319,10 +2319,10 @@ export type BotInsertDataActionsInnerAllOf1MessageDelaysInnerOneOf3TypeEnum = ty
 export interface BotInsertDataActionsInnerAllOf1MessageDelaysInnerOneOf3Value {
     /**
      * 
-     * @type {string}
+     * @type {BotInsertDataActionsInnerAllOf1MessageDelaysInnerOneOf3ValueDay}
      * @memberof BotInsertDataActionsInnerAllOf1MessageDelaysInnerOneOf3Value
      */
-    'day': BotInsertDataActionsInnerAllOf1MessageDelaysInnerOneOf3ValueDayEnum;
+    'day': BotInsertDataActionsInnerAllOf1MessageDelaysInnerOneOf3ValueDay;
     /**
      * 
      * @type {string}
@@ -2336,18 +2336,11 @@ export interface BotInsertDataActionsInnerAllOf1MessageDelaysInnerOneOf3Value {
      */
     'timezone': string;
 }
-
-export const BotInsertDataActionsInnerAllOf1MessageDelaysInnerOneOf3ValueDayEnum = {
-    Monday: 'Monday',
-    Tuesday: 'Tuesday',
-    Wednesday: 'Wednesday',
-    Thursday: 'Thursday',
-    Friday: 'Friday',
-    Saturday: 'Saturday',
-    Sunday: 'Sunday'
-} as const;
-
-export type BotInsertDataActionsInnerAllOf1MessageDelaysInnerOneOf3ValueDayEnum = typeof BotInsertDataActionsInnerAllOf1MessageDelaysInnerOneOf3ValueDayEnum[keyof typeof BotInsertDataActionsInnerAllOf1MessageDelaysInnerOneOf3ValueDayEnum];
+/**
+ * @type BotInsertDataActionsInnerAllOf1MessageDelaysInnerOneOf3ValueDay
+ * @export
+ */
+export type BotInsertDataActionsInnerAllOf1MessageDelaysInnerOneOf3ValueDay = string;
 
 /**
  * 
