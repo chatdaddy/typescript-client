@@ -208,6 +208,12 @@ export interface ConversationIdGetRequest {
      * @memberof ConversationIdGetRequest
      */
     'chatId': string;
+    /**
+     * data to extract input variables from
+     * @type {string}
+     * @memberof ConversationIdGetRequest
+     */
+    'variables'?: string;
 }
 /**
  * 
@@ -282,6 +288,12 @@ export interface ConversationRecord {
      * @memberof ConversationRecord
      */
     'chatHistory'?: Array<ChatHistory>;
+    /**
+     * input variables for context
+     * @type {string}
+     * @memberof ConversationRecord
+     */
+    'inputs'?: string;
 }
 /**
  * 
