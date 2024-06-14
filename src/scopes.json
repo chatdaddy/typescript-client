@@ -752,7 +752,7 @@
   },
   "PAYMENT_INTEGRATION_READ": {
     "number": 86,
-    "description": "Read",
+    "description": "Read Payment Integration Details",
     "features": [
       "shop"
     ],
@@ -765,7 +765,7 @@
   },
   "PAYMENT_INTEGRATION_WRITE": {
     "number": 87,
-    "description": "Write",
+    "description": "Create/Update/Delete Payment Integration",
     "features": [
       "shop"
     ],
@@ -778,7 +778,7 @@
   },
   "PAYMENT_RECORDS_READ": {
     "number": 88,
-    "description": "Read",
+    "description": "Read Payment Records",
     "features": [
       "shop"
     ],
@@ -793,7 +793,7 @@
   },
   "PAYMENT_RECORDS_WRITE": {
     "number": 89,
-    "description": "Write",
+    "description": "Update/Delete Payment Records",
     "features": [
       "shop"
     ],
