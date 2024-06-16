@@ -976,6 +976,12 @@ export interface BotInsertData {
      * @memberof BotInsertData
      */
     'sharedSlugs'?: Array<BotInsertDataSharedSlugsInner>;
+    /**
+     * 
+     * @type {{ [key: string]: any; }}
+     * @memberof BotInsertData
+     */
+    'propertyValues'?: { [key: string]: any; };
 }
 /**
  * 
@@ -4119,6 +4125,12 @@ export interface BotUpdateData {
      * @memberof BotUpdateData
      */
     'sharedSlugs'?: Array<BotInsertDataSharedSlugsInner>;
+    /**
+     * 
+     * @type {{ [key: string]: any; }}
+     * @memberof BotUpdateData
+     */
+    'propertyValues'?: { [key: string]: any; };
 }
 /**
  * 

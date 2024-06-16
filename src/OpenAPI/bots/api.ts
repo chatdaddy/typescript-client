@@ -294,10 +294,10 @@ export interface ActionAppConfig {
     'inputProperties': Array<DataProperty>;
     /**
      * 
-     * @type {Array<ConditionableProperty>}
+     * @type {Array<DataProperty>}
      * @memberof ActionAppConfig
      */
-    'outputProperties': Array<ConditionableProperty>;
+    'outputProperties': Array<DataProperty>;
     /**
      * Enable the feature for the specified domains. If empty, the feature will be enabled for all domains.
      * @type {Array<string>}
@@ -1182,6 +1182,32 @@ export interface AppAction {
     'nextAction'?: NextAction;
 }
 /**
+ * Describe an array
+ * @export
+ * @interface ArrayPropertyDescriptor
+ */
+export interface ArrayPropertyDescriptor {
+    /**
+     * 
+     * @type {string}
+     * @memberof ArrayPropertyDescriptor
+     */
+    'type': ArrayPropertyDescriptorTypeEnum;
+    /**
+     * 
+     * @type {DataPropertyDescriptor}
+     * @memberof ArrayPropertyDescriptor
+     */
+    'items': DataPropertyDescriptor;
+}
+
+export const ArrayPropertyDescriptorTypeEnum = {
+    Array: 'array'
+} as const;
+
+export type ArrayPropertyDescriptorTypeEnum = typeof ArrayPropertyDescriptorTypeEnum[keyof typeof ArrayPropertyDescriptorTypeEnum];
+
+/**
  * 
  * @export
  * @interface Bot
@@ -1301,6 +1327,18 @@ export interface Bot {
      * @memberof Bot
      */
     'sharedSlugs'?: Array<SharedSlug>;
+    /**
+     * Define variables that can be used in the bot. These variables can be used to replace parameters in the bot\'s actions. For any \"board\" type properties, any conditions can use the `board_path_stages` property to get the stages of the board as an array, assuming `board_path` is the property name of the board.
+     * @type {Array<DataProperty>}
+     * @memberof Bot
+     */
+    'properties'?: Array<DataProperty>;
+    /**
+     * 
+     * @type {{ [key: string]: any; }}
+     * @memberof Bot
+     */
+    'propertyValues'?: { [key: string]: any; };
 }
 /**
  * 
@@ -1979,6 +2017,18 @@ export interface BotPatch {
      * @memberof BotPatch
      */
     'folderId'?: string | null;
+    /**
+     * Define variables that can be used in the bot. These variables can be used to replace parameters in the bot\'s actions. For any \"board\" type properties, any conditions can use the `board_path_stages` property to get the stages of the board as an array, assuming `board_path` is the property name of the board.
+     * @type {Array<DataProperty>}
+     * @memberof BotPatch
+     */
+    'properties'?: Array<DataProperty>;
+    /**
+     * Values of the properties defined in the bot. These values can be used to replace parameters in the bot\'s actions. Will be validated against the schema defined in the properties
+     * @type {{ [key: string]: any; }}
+     * @memberof BotPatch
+     */
+    'propertyValues'?: { [key: string]: any; };
 }
 /**
  * 
@@ -2593,89 +2643,6 @@ export interface BotsGets200Response {
     'totalCount'?: number;
 }
 /**
- * Data structure that gives information to the frontend on how to render conditions for a property of a data object that has caused a Trigger to fire.
- * @export
- * @interface ConditionableProperty
- */
-export interface ConditionableProperty {
-    /**
-     * 
-     * @type {string}
-     * @memberof ConditionableProperty
-     */
-    'propertyPath': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ConditionableProperty
-     */
-    'title': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ConditionableProperty
-     */
-    'description'?: string;
-    /**
-     * 
-     * @type {DisplayIcon}
-     * @memberof ConditionableProperty
-     */
-    'icon'?: DisplayIcon;
-    /**
-     * Is the property always expected to be present.
-     * @type {boolean}
-     * @memberof ConditionableProperty
-     */
-    'required'?: boolean;
-    /**
-     * 
-     * @type {ConditionablePropertyType}
-     * @memberof ConditionableProperty
-     */
-    'type': ConditionablePropertyType;
-    /**
-     * 
-     * @type {Array<ConditionalPropertyOption>}
-     * @memberof ConditionableProperty
-     */
-    'options'?: Array<ConditionalPropertyOption>;
-    /**
-     * Format of the property.  Only valid for string type. For example, \'date-time\' for timestamp properties
-     * @type {string}
-     * @memberof ConditionableProperty
-     */
-    'format'?: string;
-}
-
-
-/**
- * Type of property. - string, number, boolean: Simple property type - timestamp: timestamp string in ISO format - channel, tag, team_member, chat, board_stage, board, ticket:     Reference to another object by ID - custom_field: Object of type { name: string, value: string } - duration: integer representing seconds 
- * @export
- * @enum {string}
- */
-
-export const ConditionablePropertyType = {
-    String: 'string',
-    Number: 'number',
-    Boolean: 'boolean',
-    Channel: 'channel',
-    Tag: 'tag',
-    CustomField: 'custom_field',
-    Timestamp: 'timestamp',
-    CountryCode: 'country_code',
-    TeamMember: 'team_member',
-    Chat: 'chat',
-    BoardStage: 'board_stage',
-    Board: 'board',
-    Duration: 'duration',
-    Ticket: 'ticket'
-} as const;
-
-export type ConditionablePropertyType = typeof ConditionablePropertyType[keyof typeof ConditionablePropertyType];
-
-
-/**
  * 
  * @export
  * @interface ConditionalPropertyOption
@@ -2727,107 +2694,16 @@ export const ContactsQueryTargetTypeEnum = {
 export type ContactsQueryTargetTypeEnum = typeof ContactsQueryTargetTypeEnum[keyof typeof ContactsQueryTargetTypeEnum];
 
 /**
- * Describe a simple string/number/boolean type or a list or a map.
+ * Description of a property
  * @export
  * @interface DataProperty
  */
-export type DataProperty = DataPropertyDescriptor & {
-    /**
-     * 
-     * @type {string}
-     * @memberof DataProperty
-     */
-    'propertyPath': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof DataProperty
-     */
-    'title': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof DataProperty
-     */
-    'description'?: string;
-    /**
-     * 
-     * @type {DisplayIcon}
-     * @memberof DataProperty
-     */
-    'icon'?: DisplayIcon;
-    /**
-     * Is the property always expected to be present.
-     * @type {boolean}
-     * @memberof DataProperty
-     */
-    'required'?: boolean;
-}
-
-
+export type DataProperty = DataPropertyDescriptor & PropertyMetadata
 /**
  * @type DataPropertyDescriptor
  * @export
  */
-export type DataPropertyDescriptor = SimplePropertyDescriptor | DataPropertyDescriptorOneOf | DataPropertyDescriptorOneOf1;
-
-/**
- * Describe a list
- * @export
- * @interface DataPropertyDescriptorOneOf
- */
-export interface DataPropertyDescriptorOneOf {
-    /**
-     * 
-     * @type {string}
-     * @memberof DataPropertyDescriptorOneOf
-     */
-    'type': DataPropertyDescriptorOneOfTypeEnum;
-    /**
-     * 
-     * @type {DataPropertyDescriptor}
-     * @memberof DataPropertyDescriptorOneOf
-     */
-    'items': DataPropertyDescriptor;
-}
-
-export const DataPropertyDescriptorOneOfTypeEnum = {
-    Array: 'array'
-} as const;
-
-export type DataPropertyDescriptorOneOfTypeEnum = typeof DataPropertyDescriptorOneOfTypeEnum[keyof typeof DataPropertyDescriptorOneOfTypeEnum];
-
-/**
- * Describe a map
- * @export
- * @interface DataPropertyDescriptorOneOf1
- */
-export interface DataPropertyDescriptorOneOf1 {
-    /**
-     * 
-     * @type {string}
-     * @memberof DataPropertyDescriptorOneOf1
-     */
-    'type': DataPropertyDescriptorOneOf1TypeEnum;
-    /**
-     * 
-     * @type {Array<DataProperty>}
-     * @memberof DataPropertyDescriptorOneOf1
-     */
-    'properties': Array<DataProperty>;
-    /**
-     * 
-     * @type {DataPropertyDescriptor}
-     * @memberof DataPropertyDescriptorOneOf1
-     */
-    'additionalProperties'?: DataPropertyDescriptor;
-}
-
-export const DataPropertyDescriptorOneOf1TypeEnum = {
-    Map: 'map'
-} as const;
-
-export type DataPropertyDescriptorOneOf1TypeEnum = typeof DataPropertyDescriptorOneOf1TypeEnum[keyof typeof DataPropertyDescriptorOneOf1TypeEnum];
+export type DataPropertyDescriptor = SimplePropertyDescriptor | ArrayPropertyDescriptor | MapPropertyDescriptor;
 
 /**
  * 
@@ -3787,6 +3663,38 @@ export const LinkExternalTemplateCommandTypeEnum = {
 export type LinkExternalTemplateCommandTypeEnum = typeof LinkExternalTemplateCommandTypeEnum[keyof typeof LinkExternalTemplateCommandTypeEnum];
 
 /**
+ * Describe a map
+ * @export
+ * @interface MapPropertyDescriptor
+ */
+export interface MapPropertyDescriptor {
+    /**
+     * 
+     * @type {string}
+     * @memberof MapPropertyDescriptor
+     */
+    'type': MapPropertyDescriptorTypeEnum;
+    /**
+     * 
+     * @type {Array<DataProperty>}
+     * @memberof MapPropertyDescriptor
+     */
+    'properties': Array<DataProperty>;
+    /**
+     * 
+     * @type {DataPropertyDescriptor}
+     * @memberof MapPropertyDescriptor
+     */
+    'additionalProperties'?: DataPropertyDescriptor;
+}
+
+export const MapPropertyDescriptorTypeEnum = {
+    Map: 'map'
+} as const;
+
+export type MapPropertyDescriptorTypeEnum = typeof MapPropertyDescriptorTypeEnum[keyof typeof MapPropertyDescriptorTypeEnum];
+
+/**
  * 
  * @export
  * @interface MessageObj
@@ -4348,10 +4256,10 @@ export interface SharedSlug {
 export interface SimplePropertyDescriptor {
     /**
      * 
-     * @type {ConditionablePropertyType}
+     * @type {SimplePropertyType}
      * @memberof SimplePropertyDescriptor
      */
-    'type': ConditionablePropertyType;
+    'type': SimplePropertyType;
     /**
      * 
      * @type {Array<ConditionalPropertyOption>}
@@ -4364,7 +4272,39 @@ export interface SimplePropertyDescriptor {
      * @memberof SimplePropertyDescriptor
      */
     'format'?: string;
+    /**
+     * Minimum number of stages required in the board for the condition to be valid. Only valid for \"board\" type
+     * @type {number}
+     * @memberof SimplePropertyDescriptor
+     */
+    'minimumStages'?: number;
 }
+
+
+/**
+ * Type of property. - string, number, boolean: Simple property type - timestamp: timestamp string in ISO format - channel, tag, team_member, chat, board_stage, board, ticket:     Reference to another object by ID - custom_field: Object of type { name: string, value: string } - duration: integer representing seconds 
+ * @export
+ * @enum {string}
+ */
+
+export const SimplePropertyType = {
+    String: 'string',
+    Number: 'number',
+    Boolean: 'boolean',
+    Channel: 'channel',
+    Tag: 'tag',
+    CustomField: 'custom_field',
+    Timestamp: 'timestamp',
+    CountryCode: 'country_code',
+    TeamMember: 'team_member',
+    Chat: 'chat',
+    BoardStage: 'board_stage',
+    Duration: 'duration',
+    Ticket: 'ticket',
+    Board: 'board'
+} as const;
+
+export type SimplePropertyType = typeof SimplePropertyType[keyof typeof SimplePropertyType];
 
 
 /**
@@ -5049,10 +4989,10 @@ export interface TriggersUIConfig {
     'defaults'?: TriggersUIConfigDefaults;
     /**
      * 
-     * @type {Array<ConditionableProperty>}
+     * @type {Array<DataProperty>}
      * @memberof TriggersUIConfig
      */
-    'conditionableProperties': Array<ConditionableProperty>;
+    'conditionableProperties': Array<DataProperty>;
 }
 /**
  * Default values for the triggers. These values will be used when creating a new trigger
