@@ -2221,30 +2221,6 @@ export interface BotTrigger {
      */
     'options': BotTriggerOptions;
     /**
-     * An ISO formatted timestamp
-     * @type {string}
-     * @memberof BotTrigger
-     */
-    'lastTriggered'?: string;
-    /**
-     * 
-     * @type {number}
-     * @memberof BotTrigger
-     */
-    'triggered': number;
-    /**
-     * An ISO formatted timestamp
-     * @type {string}
-     * @memberof BotTrigger
-     */
-    'createdAt': string;
-    /**
-     * An ISO formatted timestamp
-     * @type {string}
-     * @memberof BotTrigger
-     */
-    'updatedAt': string;
-    /**
      * 
      * @type {TriggerMethod}
      * @memberof BotTrigger
@@ -2268,6 +2244,30 @@ export interface BotTrigger {
      * @memberof BotTrigger
      */
     'botId': string;
+    /**
+     * An ISO formatted timestamp
+     * @type {string}
+     * @memberof BotTrigger
+     */
+    'lastTriggered'?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof BotTrigger
+     */
+    'triggered': number;
+    /**
+     * An ISO formatted timestamp
+     * @type {string}
+     * @memberof BotTrigger
+     */
+    'createdAt': string;
+    /**
+     * An ISO formatted timestamp
+     * @type {string}
+     * @memberof BotTrigger
+     */
+    'updatedAt': string;
 }
 /**
  * 
@@ -4901,30 +4901,6 @@ export interface TriggerUpsert {
      * @memberof TriggerUpsert
      */
     'options'?: BotTriggerOptions;
-    /**
-     * An ISO formatted timestamp
-     * @type {string}
-     * @memberof TriggerUpsert
-     */
-    'lastTriggered'?: string;
-    /**
-     * 
-     * @type {number}
-     * @memberof TriggerUpsert
-     */
-    'triggered'?: number;
-    /**
-     * An ISO formatted timestamp
-     * @type {string}
-     * @memberof TriggerUpsert
-     */
-    'createdAt'?: string;
-    /**
-     * An ISO formatted timestamp
-     * @type {string}
-     * @memberof TriggerUpsert
-     */
-    'updatedAt'?: string;
     /**
      * 
      * @type {TriggerMethod}
