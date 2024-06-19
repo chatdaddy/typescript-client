@@ -43,6 +43,18 @@ export interface Calls {
      * @memberof Calls
      */
     'phoneNumber': string;
+    /**
+     * phone number of the recipient
+     * @type {string}
+     * @memberof Calls
+     */
+    'to'?: string;
+    /**
+     * Id of the call
+     * @type {string}
+     * @memberof Calls
+     */
+    'callId': string;
 }
 /**
  * 
@@ -75,6 +87,62 @@ interface Contact {
      * @memberof Contact
      */
     'phoneNumber': string;
+}
+/**
+ * 
+ * @export
+ * @interface Recording
+ */
+export interface Recording {
+    /**
+     * AccountId of the user making the call
+     * @type {string}
+     * @memberof Recording
+     */
+    'accountSid'?: string;
+    /**
+     * Id of the call
+     * @type {string}
+     * @memberof Recording
+     */
+    'callSid'?: string;
+    /**
+     * Id of the recording
+     * @type {string}
+     * @memberof Recording
+     */
+    'sid'?: string;
+    /**
+     * Date of the recording
+     * @type {string}
+     * @memberof Recording
+     */
+    'dateCreated'?: string;
+    /**
+     * Duration of the recording
+     * @type {string}
+     * @memberof Recording
+     */
+    'duration'?: string;
+    /**
+     * URL of the recording
+     * @type {string}
+     * @memberof Recording
+     */
+    'mediaUrl'?: string;
+}
+/**
+ * 
+ * @export
+ * @interface RecordingsGet200Response
+ */
+export interface RecordingsGet200Response {
+    /**
+     * 
+     * @type {Array<Recording>}
+     * @memberof RecordingsGet200Response
+     */
+    'recordings'?: Array<Recording>;
 }
 /**
  * 
@@ -182,6 +250,40 @@ export const CallsApiAxiosParamCreator = function (configuration?: Configuration
             // authentication chatdaddy required
             // oauth required
             await setOAuthToObject(localVarHeaderParameter, "chatdaddy", [], configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Get the call recordings for the account
+         * @param {string} accountId The account id
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        recordingsGet: async (accountId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'accountId' is not null or undefined
+            assertParamExists('recordingsGet', 'accountId', accountId)
+            const localVarPath = `/recordings/{accountId}`
+                .replace(`{${"accountId"}}`, encodeURIComponent(String(accountId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
 
 
     
@@ -316,6 +418,17 @@ export const CallsApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
+         * @summary Get the call recordings for the account
+         * @param {string} accountId The account id
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async recordingsGet(accountId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<RecordingsGet200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.recordingsGet(accountId, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
          * @summary Get the twilio token
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -365,6 +478,16 @@ export const CallsApiFactory = function (configuration?: Configuration, basePath
          */
         callsGet(requestParameters: CallsApiCallsGetRequest, options?: AxiosRequestConfig): AxiosPromise<CallsGet200Response> {
             return localVarFp.callsGet(requestParameters.accountId, requestParameters.phoneNumber, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Get the call recordings for the account
+         * @param {CallsApiRecordingsGetRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        recordingsGet(requestParameters: CallsApiRecordingsGetRequest, options?: AxiosRequestConfig): AxiosPromise<RecordingsGet200Response> {
+            return localVarFp.recordingsGet(requestParameters.accountId, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -420,6 +543,20 @@ export interface CallsApiCallsGetRequest {
 }
 
 /**
+ * Request parameters for recordingsGet operation in CallsApi.
+ * @export
+ * @interface CallsApiRecordingsGetRequest
+ */
+export interface CallsApiRecordingsGetRequest {
+    /**
+     * The account id
+     * @type {string}
+     * @memberof CallsApiRecordingsGet
+     */
+    readonly accountId: string
+}
+
+/**
  * Request parameters for voiceInboundPost operation in CallsApi.
  * @export
  * @interface CallsApiVoiceInboundPostRequest
@@ -464,6 +601,18 @@ export class CallsApi extends BaseAPI {
      */
     public callsGet(requestParameters: CallsApiCallsGetRequest, options?: AxiosRequestConfig) {
         return CallsApiFp(this.configuration).callsGet(requestParameters.accountId, requestParameters.phoneNumber, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Get the call recordings for the account
+     * @param {CallsApiRecordingsGetRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CallsApi
+     */
+    public recordingsGet(requestParameters: CallsApiRecordingsGetRequest, options?: AxiosRequestConfig) {
+        return CallsApiFp(this.configuration).recordingsGet(requestParameters.accountId, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
