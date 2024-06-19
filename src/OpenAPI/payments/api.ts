@@ -3531,6 +3531,40 @@ export const CreditsApiAxiosParamCreator = function (configuration?: Configurati
     return {
         /**
          * 
+         * @summary Cancel the current auto-renewal credit sub
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        autoRenewalCancel: async (options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v2/credits/auto-renewal`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["PAYMENTS_UPDATE"], configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
          * @summary Create/update the auto-renewal credit sub
          * @param {CreditAutoRenewalUpdate} [creditAutoRenewalUpdate] 
          * @param {*} [options] Override http request option.
@@ -4331,6 +4365,16 @@ export const CreditsApiFp = function(configuration?: Configuration) {
     return {
         /**
          * 
+         * @summary Cancel the current auto-renewal credit sub
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async autoRenewalCancel(options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.autoRenewalCancel(options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
          * @summary Create/update the auto-renewal credit sub
          * @param {CreditAutoRenewalUpdate} [creditAutoRenewalUpdate] 
          * @param {*} [options] Override http request option.
@@ -4556,6 +4600,15 @@ export const CreditsApiFp = function(configuration?: Configuration) {
 export const CreditsApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
     const localVarFp = CreditsApiFp(configuration)
     return {
+        /**
+         * 
+         * @summary Cancel the current auto-renewal credit sub
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        autoRenewalCancel(options?: AxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.autoRenewalCancel(options).then((request) => request(axios, basePath));
+        },
         /**
          * 
          * @summary Create/update the auto-renewal credit sub
@@ -5115,6 +5168,17 @@ export interface CreditsApiTopUpCreditsPostRequest {
  * @extends {BaseAPI}
  */
 export class CreditsApi extends BaseAPI {
+    /**
+     * 
+     * @summary Cancel the current auto-renewal credit sub
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CreditsApi
+     */
+    public autoRenewalCancel(options?: AxiosRequestConfig) {
+        return CreditsApiFp(this.configuration).autoRenewalCancel(options).then((request) => request(this.axios, this.basePath));
+    }
+
     /**
      * 
      * @summary Create/update the auto-renewal credit sub
