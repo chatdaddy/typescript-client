@@ -96,6 +96,12 @@ export type AccountIDSelectorOneOfValue = Array<string> | string;
  */
 export interface Action {
     /**
+     * ID of the bot sequence
+     * @type {string}
+     * @memberof Action
+     */
+    'botId': string;
+    /**
      * An ISO formatted timestamp
      * @type {string}
      * @memberof Action
@@ -119,12 +125,6 @@ export interface Action {
      * @memberof Action
      */
     'id': string;
-    /**
-     * ID of the bot sequence
-     * @type {string}
-     * @memberof Action
-     */
-    'botId'?: string;
     /**
      * Name of the template
      * @type {string}
@@ -238,6 +238,12 @@ export type ActionMessageTypeEnum = typeof ActionMessageTypeEnum[keyof typeof Ac
  */
 export interface ActionAllOf {
     /**
+     * ID of the bot sequence
+     * @type {string}
+     * @memberof ActionAllOf
+     */
+    'botId': string;
+    /**
      * An ISO formatted timestamp
      * @type {string}
      * @memberof ActionAllOf
@@ -317,12 +323,6 @@ export interface ActionContent {
      * @memberof ActionContent
      */
     'id'?: string;
-    /**
-     * ID of the bot sequence
-     * @type {string}
-     * @memberof ActionContent
-     */
-    'botId'?: string;
     /**
      * Name of the template
      * @type {string}
@@ -2203,12 +2203,6 @@ export interface BotTrigger {
      */
     'name': string;
     /**
-     * ID of the bot sequence
-     * @type {string}
-     * @memberof BotTrigger
-     */
-    'botId': string;
-    /**
      * 
      * @type {NextAction}
      * @memberof BotTrigger
@@ -2268,6 +2262,12 @@ export interface BotTrigger {
      * @memberof BotTrigger
      */
     'position'?: Position | null;
+    /**
+     * ID of the bot sequence
+     * @type {string}
+     * @memberof BotTrigger
+     */
+    'botId': string;
 }
 /**
  * 
@@ -2275,6 +2275,12 @@ export interface BotTrigger {
  * @interface BotTriggerAllOf
  */
 export interface BotTriggerAllOf {
+    /**
+     * ID of the bot sequence
+     * @type {string}
+     * @memberof BotTriggerAllOf
+     */
+    'botId': string;
     /**
      * An ISO formatted timestamp
      * @type {string}
@@ -4877,12 +4883,6 @@ export interface TriggerUpsert {
      * @memberof TriggerUpsert
      */
     'name'?: string;
-    /**
-     * ID of the bot sequence
-     * @type {string}
-     * @memberof TriggerUpsert
-     */
-    'botId'?: string;
     /**
      * 
      * @type {NextAction}

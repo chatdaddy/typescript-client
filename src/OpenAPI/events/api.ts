@@ -994,6 +994,12 @@ export interface BotInsertDataActionsInner {
      * @type {string}
      * @memberof BotInsertDataActionsInner
      */
+    'botId': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof BotInsertDataActionsInner
+     */
     'createdAt': string;
     /**
      * 
@@ -1013,12 +1019,6 @@ export interface BotInsertDataActionsInner {
      * @memberof BotInsertDataActionsInner
      */
     'id': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof BotInsertDataActionsInner
-     */
-    'botId'?: string;
     /**
      * Name of the template
      * @type {string}
@@ -1136,6 +1136,12 @@ export interface BotInsertDataActionsInnerAllOf {
      * @type {string}
      * @memberof BotInsertDataActionsInnerAllOf
      */
+    'botId': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof BotInsertDataActionsInnerAllOf
+     */
     'createdAt': string;
     /**
      * 
@@ -1162,12 +1168,6 @@ export interface BotInsertDataActionsInnerAllOf1 {
      * @memberof BotInsertDataActionsInnerAllOf1
      */
     'id'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof BotInsertDataActionsInnerAllOf1
-     */
-    'botId'?: string;
     /**
      * Name of the template
      * @type {string}
