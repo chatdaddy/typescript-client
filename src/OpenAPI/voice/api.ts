@@ -160,38 +160,38 @@ export interface TokenGet200Response {
 /**
  * 
  * @export
- * @interface VeryifyNumberPost200Response
+ * @interface VerifyNumberPost200Response
  */
-export interface VeryifyNumberPost200Response {
+export interface VerifyNumberPost200Response {
     /**
      * 
      * @type {string}
-     * @memberof VeryifyNumberPost200Response
+     * @memberof VerifyNumberPost200Response
      */
     'code'?: string;
     /**
      * 
      * @type {string}
-     * @memberof VeryifyNumberPost200Response
+     * @memberof VerifyNumberPost200Response
      */
     'phoneNumber'?: string;
     /**
      * 
      * @type {string}
-     * @memberof VeryifyNumberPost200Response
+     * @memberof VerifyNumberPost200Response
      */
     'name'?: string;
 }
 /**
  * 
  * @export
- * @interface VeryifyNumberPostRequest
+ * @interface VerifyNumberPostRequest
  */
-export interface VeryifyNumberPostRequest {
+export interface VerifyNumberPostRequest {
     /**
      * The phone number
      * @type {string}
-     * @memberof VeryifyNumberPostRequest
+     * @memberof VerifyNumberPostRequest
      */
     'phoneNumber': string;
 }
@@ -368,14 +368,14 @@ export const CallsApiAxiosParamCreator = function (configuration?: Configuration
          * 
          * @summary Verify the number
          * @param {string} accountId The account id
-         * @param {VeryifyNumberPostRequest} [veryifyNumberPostRequest] 
+         * @param {VerifyNumberPostRequest} [verifyNumberPostRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        veryifyNumberPost: async (accountId: string, veryifyNumberPostRequest?: VeryifyNumberPostRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        verifyNumberPost: async (accountId: string, verifyNumberPostRequest?: VerifyNumberPostRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'accountId' is not null or undefined
-            assertParamExists('veryifyNumberPost', 'accountId', accountId)
-            const localVarPath = `/veryifyNumber/{accountId}`
+            assertParamExists('verifyNumberPost', 'accountId', accountId)
+            const localVarPath = `/verifyNumber/{accountId}`
                 .replace(`{${"accountId"}}`, encodeURIComponent(String(accountId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -395,7 +395,7 @@ export const CallsApiAxiosParamCreator = function (configuration?: Configuration
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(veryifyNumberPostRequest, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(verifyNumberPostRequest, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -517,12 +517,12 @@ export const CallsApiFp = function(configuration?: Configuration) {
          * 
          * @summary Verify the number
          * @param {string} accountId The account id
-         * @param {VeryifyNumberPostRequest} [veryifyNumberPostRequest] 
+         * @param {VerifyNumberPostRequest} [verifyNumberPostRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async veryifyNumberPost(accountId: string, veryifyNumberPostRequest?: VeryifyNumberPostRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<VeryifyNumberPost200Response>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.veryifyNumberPost(accountId, veryifyNumberPostRequest, options);
+        async verifyNumberPost(accountId: string, verifyNumberPostRequest?: VerifyNumberPostRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<VerifyNumberPost200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.verifyNumberPost(accountId, verifyNumberPostRequest, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -589,12 +589,12 @@ export const CallsApiFactory = function (configuration?: Configuration, basePath
         /**
          * 
          * @summary Verify the number
-         * @param {CallsApiVeryifyNumberPostRequest} requestParameters Request parameters.
+         * @param {CallsApiVerifyNumberPostRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        veryifyNumberPost(requestParameters: CallsApiVeryifyNumberPostRequest, options?: AxiosRequestConfig): AxiosPromise<VeryifyNumberPost200Response> {
-            return localVarFp.veryifyNumberPost(requestParameters.accountId, requestParameters.veryifyNumberPostRequest, options).then((request) => request(axios, basePath));
+        verifyNumberPost(requestParameters: CallsApiVerifyNumberPostRequest, options?: AxiosRequestConfig): AxiosPromise<VerifyNumberPost200Response> {
+            return localVarFp.verifyNumberPost(requestParameters.accountId, requestParameters.verifyNumberPostRequest, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -655,24 +655,24 @@ export interface CallsApiRecordingsGetRequest {
 }
 
 /**
- * Request parameters for veryifyNumberPost operation in CallsApi.
+ * Request parameters for verifyNumberPost operation in CallsApi.
  * @export
- * @interface CallsApiVeryifyNumberPostRequest
+ * @interface CallsApiVerifyNumberPostRequest
  */
-export interface CallsApiVeryifyNumberPostRequest {
+export interface CallsApiVerifyNumberPostRequest {
     /**
      * The account id
      * @type {string}
-     * @memberof CallsApiVeryifyNumberPost
+     * @memberof CallsApiVerifyNumberPost
      */
     readonly accountId: string
 
     /**
      * 
-     * @type {VeryifyNumberPostRequest}
-     * @memberof CallsApiVeryifyNumberPost
+     * @type {VerifyNumberPostRequest}
+     * @memberof CallsApiVerifyNumberPost
      */
-    readonly veryifyNumberPostRequest?: VeryifyNumberPostRequest
+    readonly verifyNumberPostRequest?: VerifyNumberPostRequest
 }
 
 /**
@@ -748,13 +748,13 @@ export class CallsApi extends BaseAPI {
     /**
      * 
      * @summary Verify the number
-     * @param {CallsApiVeryifyNumberPostRequest} requestParameters Request parameters.
+     * @param {CallsApiVerifyNumberPostRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof CallsApi
      */
-    public veryifyNumberPost(requestParameters: CallsApiVeryifyNumberPostRequest, options?: AxiosRequestConfig) {
-        return CallsApiFp(this.configuration).veryifyNumberPost(requestParameters.accountId, requestParameters.veryifyNumberPostRequest, options).then((request) => request(this.axios, this.basePath));
+    public verifyNumberPost(requestParameters: CallsApiVerifyNumberPostRequest, options?: AxiosRequestConfig) {
+        return CallsApiFp(this.configuration).verifyNumberPost(requestParameters.accountId, requestParameters.verifyNumberPostRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
