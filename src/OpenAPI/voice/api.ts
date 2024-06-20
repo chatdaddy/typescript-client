@@ -38,6 +38,12 @@ export interface Calls {
      */
     'accountId': string;
     /**
+     * TeamId of the user making the call
+     * @type {string}
+     * @memberof Calls
+     */
+    'teamId'?: string;
+    /**
      * phone number of the user
      * @type {string}
      * @memberof Calls
@@ -55,6 +61,12 @@ export interface Calls {
      * @memberof Calls
      */
     'callId': string;
+    /**
+     * URL of the recording
+     * @type {string}
+     * @memberof Calls
+     */
+    'callRecording'?: string | null;
 }
 /**
  * 
@@ -239,17 +251,23 @@ export interface VoiceOutboundPostRequest {
      */
     'To': string;
     /**
+     * Id of the call
+     * @type {string}
+     * @memberof VoiceOutboundPostRequest
+     */
+    'CallSid'?: string;
+    /**
      * The account id of the user making the call
      * @type {string}
      * @memberof VoiceOutboundPostRequest
      */
     'accountId': string;
     /**
-     * Id of the call
+     * The team id of the user making the call
      * @type {string}
      * @memberof VoiceOutboundPostRequest
      */
-    'CallSid'?: string;
+    'teamId': string;
 }
 
 /**
@@ -261,19 +279,11 @@ export const CallsApiAxiosParamCreator = function (configuration?: Configuration
         /**
          * 
          * @summary Get the calls for the account
-         * @param {string} accountId The account id
-         * @param {string} phoneNumber The phone number
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        callsGet: async (accountId: string, phoneNumber: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'accountId' is not null or undefined
-            assertParamExists('callsGet', 'accountId', accountId)
-            // verify required parameter 'phoneNumber' is not null or undefined
-            assertParamExists('callsGet', 'phoneNumber', phoneNumber)
-            const localVarPath = `/calls/{accountId}/{phoneNumber}`
-                .replace(`{${"accountId"}}`, encodeURIComponent(String(accountId)))
-                .replace(`{${"phoneNumber"}}`, encodeURIComponent(String(phoneNumber)));
+        callsGet: async (options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/calls`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -483,13 +493,11 @@ export const CallsApiFp = function(configuration?: Configuration) {
         /**
          * 
          * @summary Get the calls for the account
-         * @param {string} accountId The account id
-         * @param {string} phoneNumber The phone number
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async callsGet(accountId: string, phoneNumber: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CallsGet200Response>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.callsGet(accountId, phoneNumber, options);
+        async callsGet(options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CallsGet200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.callsGet(options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -560,12 +568,11 @@ export const CallsApiFactory = function (configuration?: Configuration, basePath
         /**
          * 
          * @summary Get the calls for the account
-         * @param {CallsApiCallsGetRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        callsGet(requestParameters: CallsApiCallsGetRequest, options?: AxiosRequestConfig): AxiosPromise<CallsGet200Response> {
-            return localVarFp.callsGet(requestParameters.accountId, requestParameters.phoneNumber, options).then((request) => request(axios, basePath));
+        callsGet(options?: AxiosRequestConfig): AxiosPromise<CallsGet200Response> {
+            return localVarFp.callsGet(options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -618,27 +625,6 @@ export const CallsApiFactory = function (configuration?: Configuration, basePath
         },
     };
 };
-
-/**
- * Request parameters for callsGet operation in CallsApi.
- * @export
- * @interface CallsApiCallsGetRequest
- */
-export interface CallsApiCallsGetRequest {
-    /**
-     * The account id
-     * @type {string}
-     * @memberof CallsApiCallsGet
-     */
-    readonly accountId: string
-
-    /**
-     * The phone number
-     * @type {string}
-     * @memberof CallsApiCallsGet
-     */
-    readonly phoneNumber: string
-}
 
 /**
  * Request parameters for recordingsGet operation in CallsApi.
@@ -713,13 +699,12 @@ export class CallsApi extends BaseAPI {
     /**
      * 
      * @summary Get the calls for the account
-     * @param {CallsApiCallsGetRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof CallsApi
      */
-    public callsGet(requestParameters: CallsApiCallsGetRequest, options?: AxiosRequestConfig) {
-        return CallsApiFp(this.configuration).callsGet(requestParameters.accountId, requestParameters.phoneNumber, options).then((request) => request(this.axios, this.basePath));
+    public callsGet(options?: AxiosRequestConfig) {
+        return CallsApiFp(this.configuration).callsGet(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
