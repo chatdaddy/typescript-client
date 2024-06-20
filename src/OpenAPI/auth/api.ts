@@ -4529,14 +4529,14 @@ export const PinnedFiltersApiAxiosParamCreator = function (configuration?: Confi
         /**
          * 
          * @summary Rename a pinned filter
-         * @param {string} name name of filter to update
+         * @param {string} nameToUpdate name of filter to update
          * @param {InboxFilterName} [inboxFilterName] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        inboxFiltersUpdate: async (name: string, inboxFilterName?: InboxFilterName, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'name' is not null or undefined
-            assertParamExists('inboxFiltersUpdate', 'name', name)
+        inboxFiltersUpdate: async (nameToUpdate: string, inboxFilterName?: InboxFilterName, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'nameToUpdate' is not null or undefined
+            assertParamExists('inboxFiltersUpdate', 'nameToUpdate', nameToUpdate)
             const localVarPath = `/inbox-filters`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -4549,8 +4549,8 @@ export const PinnedFiltersApiAxiosParamCreator = function (configuration?: Confi
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
-            if (name !== undefined) {
-                localVarQueryParameter['name'] = name;
+            if (nameToUpdate !== undefined) {
+                localVarQueryParameter['nameToUpdate'] = nameToUpdate;
             }
 
 
@@ -4612,13 +4612,13 @@ export const PinnedFiltersApiFp = function(configuration?: Configuration) {
         /**
          * 
          * @summary Rename a pinned filter
-         * @param {string} name name of filter to update
+         * @param {string} nameToUpdate name of filter to update
          * @param {InboxFilterName} [inboxFilterName] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async inboxFiltersUpdate(name: string, inboxFilterName?: InboxFilterName, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.inboxFiltersUpdate(name, inboxFilterName, options);
+        async inboxFiltersUpdate(nameToUpdate: string, inboxFilterName?: InboxFilterName, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.inboxFiltersUpdate(nameToUpdate, inboxFilterName, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
     }
@@ -4668,7 +4668,7 @@ export const PinnedFiltersApiFactory = function (configuration?: Configuration, 
          * @throws {RequiredError}
          */
         inboxFiltersUpdate(requestParameters: PinnedFiltersApiInboxFiltersUpdateRequest, options?: AxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.inboxFiltersUpdate(requestParameters.name, requestParameters.inboxFilterName, options).then((request) => request(axios, basePath));
+            return localVarFp.inboxFiltersUpdate(requestParameters.nameToUpdate, requestParameters.inboxFilterName, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -4712,7 +4712,7 @@ export interface PinnedFiltersApiInboxFiltersUpdateRequest {
      * @type {string}
      * @memberof PinnedFiltersApiInboxFiltersUpdate
      */
-    readonly name: string
+    readonly nameToUpdate: string
 
     /**
      * 
@@ -4773,7 +4773,7 @@ export class PinnedFiltersApi extends BaseAPI {
      * @memberof PinnedFiltersApi
      */
     public inboxFiltersUpdate(requestParameters: PinnedFiltersApiInboxFiltersUpdateRequest, options?: AxiosRequestConfig) {
-        return PinnedFiltersApiFp(this.configuration).inboxFiltersUpdate(requestParameters.name, requestParameters.inboxFilterName, options).then((request) => request(this.axios, this.basePath));
+        return PinnedFiltersApiFp(this.configuration).inboxFiltersUpdate(requestParameters.nameToUpdate, requestParameters.inboxFilterName, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
