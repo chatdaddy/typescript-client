@@ -3849,6 +3849,7 @@ export const CreditsApiAxiosParamCreator = function (configuration?: Configurati
          * 
          * @summary Get transaction history
          * @param {string} [teamId] Filter by teamId
+         * @param {string} [customerId] Filter by customerId
          * @param {number} [count] 
          * @param {string} [cursor] 
          * @param {Array<CreditBalanceEffectType>} [type] 
@@ -3859,7 +3860,7 @@ export const CreditsApiAxiosParamCreator = function (configuration?: Configurati
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        creditTxsGet: async (teamId?: string, count?: number, cursor?: string, type?: Array<CreditBalanceEffectType>, effectType?: 'gain' | 'consume', id?: Array<string>, createdAt?: DateRange, returnTotal?: boolean, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        creditTxsGet: async (teamId?: string, customerId?: string, count?: number, cursor?: string, type?: Array<CreditBalanceEffectType>, effectType?: 'gain' | 'consume', id?: Array<string>, createdAt?: DateRange, returnTotal?: boolean, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v2/credits/consumption`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -3878,6 +3879,10 @@ export const CreditsApiAxiosParamCreator = function (configuration?: Configurati
 
             if (teamId !== undefined) {
                 localVarQueryParameter['teamId'] = teamId;
+            }
+
+            if (customerId !== undefined) {
+                localVarQueryParameter['customerId'] = customerId;
             }
 
             if (count !== undefined) {
@@ -4452,6 +4457,7 @@ export const CreditsApiFp = function(configuration?: Configuration) {
          * 
          * @summary Get transaction history
          * @param {string} [teamId] Filter by teamId
+         * @param {string} [customerId] Filter by customerId
          * @param {number} [count] 
          * @param {string} [cursor] 
          * @param {Array<CreditBalanceEffectType>} [type] 
@@ -4462,8 +4468,8 @@ export const CreditsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async creditTxsGet(teamId?: string, count?: number, cursor?: string, type?: Array<CreditBalanceEffectType>, effectType?: 'gain' | 'consume', id?: Array<string>, createdAt?: DateRange, returnTotal?: boolean, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CreditTxsGet200Response>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.creditTxsGet(teamId, count, cursor, type, effectType, id, createdAt, returnTotal, options);
+        async creditTxsGet(teamId?: string, customerId?: string, count?: number, cursor?: string, type?: Array<CreditBalanceEffectType>, effectType?: 'gain' | 'consume', id?: Array<string>, createdAt?: DateRange, returnTotal?: boolean, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CreditTxsGet200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.creditTxsGet(teamId, customerId, count, cursor, type, effectType, id, createdAt, returnTotal, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -4677,7 +4683,7 @@ export const CreditsApiFactory = function (configuration?: Configuration, basePa
          * @throws {RequiredError}
          */
         creditTxsGet(requestParameters: CreditsApiCreditTxsGetRequest = {}, options?: AxiosRequestConfig): AxiosPromise<CreditTxsGet200Response> {
-            return localVarFp.creditTxsGet(requestParameters.teamId, requestParameters.count, requestParameters.cursor, requestParameters.type, requestParameters.effectType, requestParameters.id, requestParameters.createdAt, requestParameters.returnTotal, options).then((request) => request(axios, basePath));
+            return localVarFp.creditTxsGet(requestParameters.teamId, requestParameters.customerId, requestParameters.count, requestParameters.cursor, requestParameters.type, requestParameters.effectType, requestParameters.id, requestParameters.createdAt, requestParameters.returnTotal, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -4949,6 +4955,13 @@ export interface CreditsApiCreditTxsGetRequest {
      * @memberof CreditsApiCreditTxsGet
      */
     readonly teamId?: string
+
+    /**
+     * Filter by customerId
+     * @type {string}
+     * @memberof CreditsApiCreditTxsGet
+     */
+    readonly customerId?: string
 
     /**
      * 
@@ -5260,7 +5273,7 @@ export class CreditsApi extends BaseAPI {
      * @memberof CreditsApi
      */
     public creditTxsGet(requestParameters: CreditsApiCreditTxsGetRequest = {}, options?: AxiosRequestConfig) {
-        return CreditsApiFp(this.configuration).creditTxsGet(requestParameters.teamId, requestParameters.count, requestParameters.cursor, requestParameters.type, requestParameters.effectType, requestParameters.id, requestParameters.createdAt, requestParameters.returnTotal, options).then((request) => request(this.axios, this.basePath));
+        return CreditsApiFp(this.configuration).creditTxsGet(requestParameters.teamId, requestParameters.customerId, requestParameters.count, requestParameters.cursor, requestParameters.type, requestParameters.effectType, requestParameters.id, requestParameters.createdAt, requestParameters.returnTotal, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
