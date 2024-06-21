@@ -736,6 +736,37 @@ export interface CreditCustomerMetadata {
     'stripeAccountId'?: string;
 }
 /**
+ * Used to migrate a customer to the credits system. Any recurring consumptions will be migrated to the new system. If the customerId is not provided, we\'ll retreive the customerId from Stripe using the teamId
+ * @export
+ * @interface CreditCustomerMigrate
+ */
+export interface CreditCustomerMigrate {
+    /**
+     * The ID of a team
+     * @type {string}
+     * @memberof CreditCustomerMigrate
+     */
+    'teamId': string;
+    /**
+     * Region from which the customer is from.
+     * @type {string}
+     * @memberof CreditCustomerMigrate
+     */
+    'region': string;
+    /**
+     * 
+     * @type {StripeCustomerCreate}
+     * @memberof CreditCustomerMigrate
+     */
+    'customer'?: StripeCustomerCreate;
+    /**
+     * 
+     * @type {CreditAutoRenewalUpdate}
+     * @memberof CreditCustomerMigrate
+     */
+    'autoRenewal'?: CreditAutoRenewalUpdate;
+}
+/**
  * 
  * @export
  * @interface CreditCustomerPost
@@ -753,6 +784,12 @@ export interface CreditCustomerPost {
      * @memberof CreditCustomerPost
      */
     'metadata': CreditCustomerMetadata;
+    /**
+     * If true, the customer will receive the signup bonus.
+     * @type {boolean}
+     * @memberof CreditCustomerPost
+     */
+    'addSignupBonus'?: boolean;
     /**
      * The referral code to use for this customer. This is only used if the customer is new.
      * @type {string}
@@ -1524,6 +1561,12 @@ export interface MiscBillingOptions {
      * @memberof MiscBillingOptions
      */
     'alwaysReturnLink'?: boolean;
+    /**
+     * An ISO formatted timestamp
+     * @type {string}
+     * @memberof MiscBillingOptions
+     */
+    'startDate'?: string;
 }
 /**
  * 
@@ -3970,6 +4013,44 @@ export const CreditsApiAxiosParamCreator = function (configuration?: Configurati
         },
         /**
          * 
+         * @summary Migrate the customer\'s subscription & any other purchased items to the credit system
+         * @param {CreditCustomerMigrate} [creditCustomerMigrate] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        creditsCustomerMigrate: async (creditCustomerMigrate?: CreditCustomerMigrate, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v2/credits/customer/migrate`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["ADMIN_PANEL_ACCESS", "PARTNER_ADMIN_PANEL_ACCESS"], configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(creditCustomerMigrate, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
          * @summary Create a new customer, or link the team to an existing customer
          * @param {CreditCustomerPost} [creditCustomerPost] 
          * @param {*} [options] Override http request option.
@@ -4486,6 +4567,17 @@ export const CreditsApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
+         * @summary Migrate the customer\'s subscription & any other purchased items to the credit system
+         * @param {CreditCustomerMigrate} [creditCustomerMigrate] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async creditsCustomerMigrate(creditCustomerMigrate?: CreditCustomerMigrate, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.creditsCustomerMigrate(creditCustomerMigrate, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
          * @summary Create a new customer, or link the team to an existing customer
          * @param {CreditCustomerPost} [creditCustomerPost] 
          * @param {*} [options] Override http request option.
@@ -4694,6 +4786,16 @@ export const CreditsApiFactory = function (configuration?: Configuration, basePa
          */
         creditsCustomerGet(requestParameters: CreditsApiCreditsCustomerGetRequest = {}, options?: AxiosRequestConfig): AxiosPromise<CreditCustomer> {
             return localVarFp.creditsCustomerGet(requestParameters.returnAutoRenewal, requestParameters.returnSupportPlan, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Migrate the customer\'s subscription & any other purchased items to the credit system
+         * @param {CreditsApiCreditsCustomerMigrateRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        creditsCustomerMigrate(requestParameters: CreditsApiCreditsCustomerMigrateRequest = {}, options?: AxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.creditsCustomerMigrate(requestParameters.creditCustomerMigrate, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -5035,6 +5137,20 @@ export interface CreditsApiCreditsCustomerGetRequest {
 }
 
 /**
+ * Request parameters for creditsCustomerMigrate operation in CreditsApi.
+ * @export
+ * @interface CreditsApiCreditsCustomerMigrateRequest
+ */
+export interface CreditsApiCreditsCustomerMigrateRequest {
+    /**
+     * 
+     * @type {CreditCustomerMigrate}
+     * @memberof CreditsApiCreditsCustomerMigrate
+     */
+    readonly creditCustomerMigrate?: CreditCustomerMigrate
+}
+
+/**
  * Request parameters for creditsCustomerPost operation in CreditsApi.
  * @export
  * @interface CreditsApiCreditsCustomerPostRequest
@@ -5286,6 +5402,18 @@ export class CreditsApi extends BaseAPI {
      */
     public creditsCustomerGet(requestParameters: CreditsApiCreditsCustomerGetRequest = {}, options?: AxiosRequestConfig) {
         return CreditsApiFp(this.configuration).creditsCustomerGet(requestParameters.returnAutoRenewal, requestParameters.returnSupportPlan, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Migrate the customer\'s subscription & any other purchased items to the credit system
+     * @param {CreditsApiCreditsCustomerMigrateRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CreditsApi
+     */
+    public creditsCustomerMigrate(requestParameters: CreditsApiCreditsCustomerMigrateRequest = {}, options?: AxiosRequestConfig) {
+        return CreditsApiFp(this.configuration).creditsCustomerMigrate(requestParameters.creditCustomerMigrate, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
