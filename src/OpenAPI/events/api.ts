@@ -9884,7 +9884,8 @@ export const TagInsertDataValidationOneOfFormatEnum = {
     Phone: 'phone',
     Uri: 'uri',
     Attachment: 'attachment',
-    TeamMember: 'team-member'
+    TeamMember: 'team-member',
+    DateTime: 'date-time'
 } as const;
 
 export type TagInsertDataValidationOneOfFormatEnum = typeof TagInsertDataValidationOneOfFormatEnum[keyof typeof TagInsertDataValidationOneOfFormatEnum];
