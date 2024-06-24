@@ -28,6 +28,25 @@ import { COLLECTION_FORMATS, BaseAPI, RequiredError } from '../base';
 /**
  * 
  * @export
+ * @interface CallNotesPostRequest
+ */
+export interface CallNotesPostRequest {
+    /**
+     * Id of the call
+     * @type {string}
+     * @memberof CallNotesPostRequest
+     */
+    'callId': string;
+    /**
+     * Notes for the call
+     * @type {string}
+     * @memberof CallNotesPostRequest
+     */
+    'callNotes': string;
+}
+/**
+ * 
+ * @export
  * @interface Calls
  */
 export interface Calls {
@@ -62,11 +81,23 @@ export interface Calls {
      */
     'callId': string;
     /**
+     * Date of the call
+     * @type {string}
+     * @memberof Calls
+     */
+    'createdAt': string;
+    /**
      * URL of the recording
      * @type {string}
      * @memberof Calls
      */
     'callRecording'?: string | null;
+    /**
+     * Notes for the call
+     * @type {string}
+     * @memberof Calls
+     */
+    'callNotes'?: string | null;
 }
 /**
  * 
@@ -99,6 +130,19 @@ interface Contact {
      * @memberof Contact
      */
     'phoneNumber': string;
+}
+/**
+ * 
+ * @export
+ * @interface PhoneNumbersGet200Response
+ */
+export interface PhoneNumbersGet200Response {
+    /**
+     * 
+     * @type {Array<Contact>}
+     * @memberof PhoneNumbersGet200Response
+     */
+    'phoneNumbers'?: Array<Contact>;
 }
 /**
  * 
@@ -278,12 +322,84 @@ export const CallsApiAxiosParamCreator = function (configuration?: Configuration
     return {
         /**
          * 
+         * @summary Add notes to the call
+         * @param {CallNotesPostRequest} [callNotesPostRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        callNotesPost: async (callNotesPostRequest?: CallNotesPostRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/callNotes`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", [], configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(callNotesPostRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
          * @summary Get the calls for the account
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
         callsGet: async (options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/calls`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", [], configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Get the phone numbers for the account
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        phoneNumbersGet: async (options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/phoneNumbers`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -492,12 +608,33 @@ export const CallsApiFp = function(configuration?: Configuration) {
     return {
         /**
          * 
+         * @summary Add notes to the call
+         * @param {CallNotesPostRequest} [callNotesPostRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async callNotesPost(callNotesPostRequest?: CallNotesPostRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Calls>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.callNotesPost(callNotesPostRequest, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
          * @summary Get the calls for the account
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
         async callsGet(options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CallsGet200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.callsGet(options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary Get the phone numbers for the account
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async phoneNumbersGet(options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PhoneNumbersGet200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.phoneNumbersGet(options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -567,12 +704,31 @@ export const CallsApiFactory = function (configuration?: Configuration, basePath
     return {
         /**
          * 
+         * @summary Add notes to the call
+         * @param {CallsApiCallNotesPostRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        callNotesPost(requestParameters: CallsApiCallNotesPostRequest = {}, options?: AxiosRequestConfig): AxiosPromise<Calls> {
+            return localVarFp.callNotesPost(requestParameters.callNotesPostRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
          * @summary Get the calls for the account
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
         callsGet(options?: AxiosRequestConfig): AxiosPromise<CallsGet200Response> {
             return localVarFp.callsGet(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Get the phone numbers for the account
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        phoneNumbersGet(options?: AxiosRequestConfig): AxiosPromise<PhoneNumbersGet200Response> {
+            return localVarFp.phoneNumbersGet(options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -625,6 +781,20 @@ export const CallsApiFactory = function (configuration?: Configuration, basePath
         },
     };
 };
+
+/**
+ * Request parameters for callNotesPost operation in CallsApi.
+ * @export
+ * @interface CallsApiCallNotesPostRequest
+ */
+export interface CallsApiCallNotesPostRequest {
+    /**
+     * 
+     * @type {CallNotesPostRequest}
+     * @memberof CallsApiCallNotesPost
+     */
+    readonly callNotesPostRequest?: CallNotesPostRequest
+}
 
 /**
  * Request parameters for recordingsGet operation in CallsApi.
@@ -698,6 +868,18 @@ export interface CallsApiVoiceOutboundPostRequest {
 export class CallsApi extends BaseAPI {
     /**
      * 
+     * @summary Add notes to the call
+     * @param {CallsApiCallNotesPostRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CallsApi
+     */
+    public callNotesPost(requestParameters: CallsApiCallNotesPostRequest = {}, options?: AxiosRequestConfig) {
+        return CallsApiFp(this.configuration).callNotesPost(requestParameters.callNotesPostRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
      * @summary Get the calls for the account
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -705,6 +887,17 @@ export class CallsApi extends BaseAPI {
      */
     public callsGet(options?: AxiosRequestConfig) {
         return CallsApiFp(this.configuration).callsGet(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Get the phone numbers for the account
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CallsApi
+     */
+    public phoneNumbersGet(options?: AxiosRequestConfig) {
+        return CallsApiFp(this.configuration).phoneNumbersGet(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
