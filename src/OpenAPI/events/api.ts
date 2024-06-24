@@ -10216,7 +10216,8 @@ export const TeamInsertDataScopesEnum = {
     CouponCreate: 'COUPON_CREATE',
     CouponDelete: 'COUPON_DELETE',
     CouponUpdate: 'COUPON_UPDATE',
-    TeammembersReadContactDetails: 'TEAMMEMBERS_READ_CONTACT_DETAILS'
+    TeammembersReadContactDetails: 'TEAMMEMBERS_READ_CONTACT_DETAILS',
+    TeammembersReadMessageDetails: 'TEAMMEMBERS_READ_MESSAGE_DETAILS'
 } as const;
 
 export type TeamInsertDataScopesEnum = typeof TeamInsertDataScopesEnum[keyof typeof TeamInsertDataScopesEnum];
@@ -10628,7 +10629,8 @@ export const TeamUpdateDataScopesEnum = {
     CouponCreate: 'COUPON_CREATE',
     CouponDelete: 'COUPON_DELETE',
     CouponUpdate: 'COUPON_UPDATE',
-    TeammembersReadContactDetails: 'TEAMMEMBERS_READ_CONTACT_DETAILS'
+    TeammembersReadContactDetails: 'TEAMMEMBERS_READ_CONTACT_DETAILS',
+    TeammembersReadMessageDetails: 'TEAMMEMBERS_READ_MESSAGE_DETAILS'
 } as const;
 
 export type TeamUpdateDataScopesEnum = typeof TeamUpdateDataScopesEnum[keyof typeof TeamUpdateDataScopesEnum];
@@ -10820,7 +10822,8 @@ export const TeammemberInsertDataScopesEnum = {
     CouponCreate: 'COUPON_CREATE',
     CouponDelete: 'COUPON_DELETE',
     CouponUpdate: 'COUPON_UPDATE',
-    TeammembersReadContactDetails: 'TEAMMEMBERS_READ_CONTACT_DETAILS'
+    TeammembersReadContactDetails: 'TEAMMEMBERS_READ_CONTACT_DETAILS',
+    TeammembersReadMessageDetails: 'TEAMMEMBERS_READ_MESSAGE_DETAILS'
 } as const;
 
 export type TeammemberInsertDataScopesEnum = typeof TeammemberInsertDataScopesEnum[keyof typeof TeammemberInsertDataScopesEnum];
@@ -11020,7 +11023,8 @@ export const TeammemberUpdateDataScopesEnum = {
     CouponCreate: 'COUPON_CREATE',
     CouponDelete: 'COUPON_DELETE',
     CouponUpdate: 'COUPON_UPDATE',
-    TeammembersReadContactDetails: 'TEAMMEMBERS_READ_CONTACT_DETAILS'
+    TeammembersReadContactDetails: 'TEAMMEMBERS_READ_CONTACT_DETAILS',
+    TeammembersReadMessageDetails: 'TEAMMEMBERS_READ_MESSAGE_DETAILS'
 } as const;
 
 export type TeammemberUpdateDataScopesEnum = typeof TeammemberUpdateDataScopesEnum[keyof typeof TeammemberUpdateDataScopesEnum];
