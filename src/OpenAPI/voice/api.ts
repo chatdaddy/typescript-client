@@ -28,6 +28,19 @@ import { COLLECTION_FORMATS, BaseAPI, RequiredError } from '../base';
 /**
  * 
  * @export
+ * @interface CallNotesPost200Response
+ */
+export interface CallNotesPost200Response {
+    /**
+     * 
+     * @type {Calls}
+     * @memberof CallNotesPost200Response
+     */
+    'calls'?: Calls;
+}
+/**
+ * 
+ * @export
  * @interface CallNotesPostRequest
  */
 export interface CallNotesPostRequest {
@@ -613,7 +626,7 @@ export const CallsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async callNotesPost(callNotesPostRequest?: CallNotesPostRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Calls>> {
+        async callNotesPost(callNotesPostRequest?: CallNotesPostRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CallNotesPost200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.callNotesPost(callNotesPostRequest, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -709,7 +722,7 @@ export const CallsApiFactory = function (configuration?: Configuration, basePath
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        callNotesPost(requestParameters: CallsApiCallNotesPostRequest = {}, options?: AxiosRequestConfig): AxiosPromise<Calls> {
+        callNotesPost(requestParameters: CallsApiCallNotesPostRequest = {}, options?: AxiosRequestConfig): AxiosPromise<CallNotesPost200Response> {
             return localVarFp.callNotesPost(requestParameters.callNotesPostRequest, options).then((request) => request(axios, basePath));
         },
         /**
