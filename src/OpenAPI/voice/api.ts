@@ -128,6 +128,25 @@ export interface CallsGet200Response {
 /**
  * 
  * @export
+ * @interface HoldCallPostRequest
+ */
+export interface HoldCallPostRequest {
+    /**
+     * Id of the call
+     * @type {string}
+     * @memberof HoldCallPostRequest
+     */
+    'callId': string;
+    /**
+     * Status of the call
+     * @type {boolean}
+     * @memberof HoldCallPostRequest
+     */
+    'holdStatus'?: boolean;
+}
+/**
+ * 
+ * @export
  * @interface PhoneNumbersGet200Response
  */
 export interface PhoneNumbersGet200Response {
@@ -407,6 +426,44 @@ export const CallsApiAxiosParamCreator = function (configuration?: Configuration
         },
         /**
          * 
+         * @summary Hold or resume the call
+         * @param {HoldCallPostRequest} [holdCallPostRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        holdCallPost: async (holdCallPostRequest?: HoldCallPostRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/holdCall`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", [], configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(holdCallPostRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
          * @summary Get the phone numbers for the account
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -642,6 +699,17 @@ export const CallsApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
+         * @summary Hold or resume the call
+         * @param {HoldCallPostRequest} [holdCallPostRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async holdCallPost(holdCallPostRequest?: HoldCallPostRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CallNotesPost200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.holdCallPost(holdCallPostRequest, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
          * @summary Get the phone numbers for the account
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -736,6 +804,16 @@ export const CallsApiFactory = function (configuration?: Configuration, basePath
         },
         /**
          * 
+         * @summary Hold or resume the call
+         * @param {CallsApiHoldCallPostRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        holdCallPost(requestParameters: CallsApiHoldCallPostRequest = {}, options?: AxiosRequestConfig): AxiosPromise<CallNotesPost200Response> {
+            return localVarFp.holdCallPost(requestParameters.holdCallPostRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
          * @summary Get the phone numbers for the account
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -807,6 +885,20 @@ export interface CallsApiCallNotesPostRequest {
      * @memberof CallsApiCallNotesPost
      */
     readonly callNotesPostRequest?: CallNotesPostRequest
+}
+
+/**
+ * Request parameters for holdCallPost operation in CallsApi.
+ * @export
+ * @interface CallsApiHoldCallPostRequest
+ */
+export interface CallsApiHoldCallPostRequest {
+    /**
+     * 
+     * @type {HoldCallPostRequest}
+     * @memberof CallsApiHoldCallPost
+     */
+    readonly holdCallPostRequest?: HoldCallPostRequest
 }
 
 /**
@@ -900,6 +992,18 @@ export class CallsApi extends BaseAPI {
      */
     public callsGet(options?: AxiosRequestConfig) {
         return CallsApiFp(this.configuration).callsGet(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Hold or resume the call
+     * @param {CallsApiHoldCallPostRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CallsApi
+     */
+    public holdCallPost(requestParameters: CallsApiHoldCallPostRequest = {}, options?: AxiosRequestConfig) {
+        return CallsApiFp(this.configuration).holdCallPost(requestParameters.holdCallPostRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
