@@ -1582,7 +1582,8 @@ export const Scope = {
     CouponCreate: 'COUPON_CREATE',
     CouponDelete: 'COUPON_DELETE',
     CouponUpdate: 'COUPON_UPDATE',
-    TeammembersReadContactDetails: 'TEAMMEMBERS_READ_CONTACT_DETAILS'
+    TeammembersReadContactDetails: 'TEAMMEMBERS_READ_CONTACT_DETAILS',
+    TeammembersReadMessageDetails: 'TEAMMEMBERS_READ_MESSAGE_DETAILS'
 } as const;
 
 export type Scope = typeof Scope[keyof typeof Scope];

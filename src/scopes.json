@@ -924,5 +924,19 @@
     ],
     "section":"settings",
     "group": "Team"
+  },
+  "TEAMMEMBERS_READ_MESSAGE_DETAILS": {
+    "number": 100,
+    "description": "Access Message's Personal Information",
+    "subtext": "Read message content, sender & receiver details",
+    "features": [],
+    "roles": [
+      "admin",
+      "editor",
+      "viewer",
+      "agent"
+    ],
+    "section":"settings",
+    "group": "Team"
   }
 }
