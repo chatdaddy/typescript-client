@@ -128,34 +128,15 @@ export interface CallsGet200Response {
 /**
  * 
  * @export
- * @interface Contact
- */
-interface Contact {
-    /**
-     * ID of the contact
-     * @type {string}
-     * @memberof Contact
-     */
-    'name': string;
-    /**
-     * Access token for the contact
-     * @type {string}
-     * @memberof Contact
-     */
-    'phoneNumber': string;
-}
-/**
- * 
- * @export
  * @interface PhoneNumbersGet200Response
  */
 export interface PhoneNumbersGet200Response {
     /**
      * 
-     * @type {Array<Contact>}
+     * @type {Array<VoiceContact>}
      * @memberof PhoneNumbersGet200Response
      */
-    'phoneNumbers'?: Array<Contact>;
+    'phoneNumbers'?: Array<VoiceContact>;
 }
 /**
  * 
@@ -261,6 +242,25 @@ export interface VerifyNumberPostRequest {
      * The phone number
      * @type {string}
      * @memberof VerifyNumberPostRequest
+     */
+    'phoneNumber': string;
+}
+/**
+ * 
+ * @export
+ * @interface VoiceContact
+ */
+export interface VoiceContact {
+    /**
+     * ID of the contact
+     * @type {string}
+     * @memberof VoiceContact
+     */
+    'name': string;
+    /**
+     * Access token for the contact
+     * @type {string}
+     * @memberof VoiceContact
      */
     'phoneNumber': string;
 }
