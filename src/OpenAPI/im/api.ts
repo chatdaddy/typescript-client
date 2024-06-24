@@ -4290,6 +4290,12 @@ export interface MessagingItemsMessage {
      * @memberof MessagingItemsMessage
      */
     'text'?: string;
+    /**
+     * 
+     * @type {Array<MessengerAttachmentItems>}
+     * @memberof MessagingItemsMessage
+     */
+    'attachments'?: Array<MessengerAttachmentItems>;
 }
 /**
  * 
@@ -4328,6 +4334,38 @@ export interface MessagingItemsSender {
      * @memberof MessagingItemsSender
      */
     'id'?: string;
+}
+/**
+ * 
+ * @export
+ * @interface MessengerAttachmentItems
+ */
+export interface MessengerAttachmentItems {
+    /**
+     * 
+     * @type {string}
+     * @memberof MessengerAttachmentItems
+     */
+    'type'?: string;
+    /**
+     * 
+     * @type {MessengerAttachmentItemsPayload}
+     * @memberof MessengerAttachmentItems
+     */
+    'payload'?: MessengerAttachmentItemsPayload;
+}
+/**
+ * 
+ * @export
+ * @interface MessengerAttachmentItemsPayload
+ */
+export interface MessengerAttachmentItemsPayload {
+    /**
+     * 
+     * @type {string}
+     * @memberof MessengerAttachmentItemsPayload
+     */
+    'url'?: string;
 }
 /**
  * 
