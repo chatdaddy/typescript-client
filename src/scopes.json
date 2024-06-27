@@ -922,13 +922,13 @@
       "viewer",
       "agent"
     ],
-    "section":"settings",
-    "group": "Team"
+    "section":"crm",
+    "group": "Contact"
   },
   "TEAMMEMBERS_READ_MESSAGE_DETAILS": {
     "number": 100,
     "description": "Access Message's Personal Information",
-    "subtext": "Read message content, sender & receiver details",
+    "subtext": "Read message content details",
     "features": [],
     "roles": [
       "admin",
@@ -936,7 +936,7 @@
       "viewer",
       "agent"
     ],
-    "section":"settings",
-    "group": "Team"
+    "section":"team-inbox",
+    "group": "Messages"
   }
 }
