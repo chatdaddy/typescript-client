@@ -1182,6 +1182,63 @@ export interface AppAction {
     'nextAction'?: NextAction;
 }
 /**
+ * 
+ * @export
+ * @interface AppTriggerMethod
+ */
+export interface AppTriggerMethod {
+    /**
+     * 
+     * @type {string}
+     * @memberof AppTriggerMethod
+     */
+    'type': AppTriggerMethodTypeEnum;
+    /**
+     * 
+     * @type {AppTriggerMethodData}
+     * @memberof AppTriggerMethod
+     */
+    'data': AppTriggerMethodData;
+}
+
+export const AppTriggerMethodTypeEnum = {
+    App: 'app'
+} as const;
+
+export type AppTriggerMethodTypeEnum = typeof AppTriggerMethodTypeEnum[keyof typeof AppTriggerMethodTypeEnum];
+
+/**
+ * 
+ * @export
+ * @interface AppTriggerMethodData
+ */
+export interface AppTriggerMethodData {
+    /**
+     * 
+     * @type {string}
+     * @memberof AppTriggerMethodData
+     */
+    'appId': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof AppTriggerMethodData
+     */
+    'integrationId'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof AppTriggerMethodData
+     */
+    'secretId'?: string;
+    /**
+     * 
+     * @type {{ [key: string]: any; }}
+     * @memberof AppTriggerMethodData
+     */
+    'registrationOutput'?: { [key: string]: any; };
+}
+/**
  * Describe an array
  * @export
  * @interface ArrayPropertyDescriptor
@@ -1207,6 +1264,43 @@ export const ArrayPropertyDescriptorTypeEnum = {
 
 export type ArrayPropertyDescriptorTypeEnum = typeof ArrayPropertyDescriptorTypeEnum[keyof typeof ArrayPropertyDescriptorTypeEnum];
 
+/**
+ * 
+ * @export
+ * @interface BaseTriggerConfig
+ */
+export interface BaseTriggerConfig {
+    /**
+     * 
+     * @type {string}
+     * @memberof BaseTriggerConfig
+     */
+    'title': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof BaseTriggerConfig
+     */
+    'description': string;
+    /**
+     * 
+     * @type {DisplayIcon}
+     * @memberof BaseTriggerConfig
+     */
+    'icon'?: DisplayIcon;
+    /**
+     * 
+     * @type {TriggersUIConfig}
+     * @memberof BaseTriggerConfig
+     */
+    'config': TriggersUIConfig;
+    /**
+     * Enable the feature for the specified domains. If empty, the feature will be enabled for all domains.
+     * @type {Array<string>}
+     * @memberof BaseTriggerConfig
+     */
+    'domains'?: Array<string>;
+}
 /**
  * 
  * @export
@@ -2830,6 +2924,32 @@ export type ExternalTemplateStatus = typeof ExternalTemplateStatus[keyof typeof 
 /**
  * 
  * @export
+ * @interface FireTriggerWebhook200Response
+ */
+export interface FireTriggerWebhook200Response {
+    /**
+     * 
+     * @type {FireTriggerWebhook200ResponseInstance}
+     * @memberof FireTriggerWebhook200Response
+     */
+    'instance': FireTriggerWebhook200ResponseInstance;
+}
+/**
+ * The trigger instance that was created
+ * @export
+ * @interface FireTriggerWebhook200ResponseInstance
+ */
+export interface FireTriggerWebhook200ResponseInstance {
+    /**
+     * 
+     * @type {string}
+     * @memberof FireTriggerWebhook200ResponseInstance
+     */
+    'id': string;
+}
+/**
+ * 
+ * @export
  * @interface Folder
  */
 export interface Folder {
@@ -3542,12 +3662,6 @@ export interface InternalEventUIConfig {
      * @type {string}
      * @memberof InternalEventUIConfig
      */
-    'event': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof InternalEventUIConfig
-     */
     'title': string;
     /**
      * 
@@ -3568,17 +3682,30 @@ export interface InternalEventUIConfig {
      */
     'config': TriggersUIConfig;
     /**
-     * Define under which conditions this group\'s conditions should be displayed to the user. Conditions will be applied to the Trigger itself. The conditions are ANDed together
-     * @type {Array<BotCondition>}
-     * @memberof InternalEventUIConfig
-     */
-    'displayConditions'?: Array<BotCondition>;
-    /**
      * Enable the feature for the specified domains. If empty, the feature will be enabled for all domains.
      * @type {Array<string>}
      * @memberof InternalEventUIConfig
      */
     'domains'?: Array<string>;
+    /**
+     * 
+     * @type {string}
+     * @memberof InternalEventUIConfig
+     */
+    'event': string;
+}
+/**
+ * 
+ * @export
+ * @interface InternalEventUIConfigAllOf
+ */
+export interface InternalEventUIConfigAllOf {
+    /**
+     * 
+     * @type {string}
+     * @memberof InternalEventUIConfigAllOf
+     */
+    'event': string;
 }
 /**
  * 
@@ -4752,6 +4879,74 @@ export interface TimestampedTriggerMethodDataRecurring {
     'endDate'?: string;
 }
 /**
+ * 
+ * @export
+ * @interface TriggerAppConfig
+ */
+export interface TriggerAppConfig {
+    /**
+     * 
+     * @type {string}
+     * @memberof TriggerAppConfig
+     */
+    'title': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof TriggerAppConfig
+     */
+    'description': string;
+    /**
+     * 
+     * @type {DisplayIcon}
+     * @memberof TriggerAppConfig
+     */
+    'icon'?: DisplayIcon;
+    /**
+     * 
+     * @type {TriggersUIConfig}
+     * @memberof TriggerAppConfig
+     */
+    'config': TriggersUIConfig;
+    /**
+     * Enable the feature for the specified domains. If empty, the feature will be enabled for all domains.
+     * @type {Array<string>}
+     * @memberof TriggerAppConfig
+     */
+    'domains'?: Array<string>;
+    /**
+     * 
+     * @type {string}
+     * @memberof TriggerAppConfig
+     */
+    'appId': string;
+    /**
+     * 
+     * @type {Array<DataProperty>}
+     * @memberof TriggerAppConfig
+     */
+    'registrationOutputProperties': Array<DataProperty>;
+}
+/**
+ * 
+ * @export
+ * @interface TriggerAppConfigAllOf
+ */
+export interface TriggerAppConfigAllOf {
+    /**
+     * 
+     * @type {string}
+     * @memberof TriggerAppConfigAllOf
+     */
+    'appId': string;
+    /**
+     * 
+     * @type {Array<DataProperty>}
+     * @memberof TriggerAppConfigAllOf
+     */
+    'registrationOutputProperties': Array<DataProperty>;
+}
+/**
  * @type TriggerDelay
  * @export
  */
@@ -4857,7 +5052,7 @@ export type TriggerDelayOneOf2TypeEnum = typeof TriggerDelayOneOf2TypeEnum[keyof
  * @type TriggerMethod
  * @export
  */
-export type TriggerMethod = InternalEventTriggerMethod | TimestampedTriggerMethod;
+export type TriggerMethod = AppTriggerMethod | InternalEventTriggerMethod | TimestampedTriggerMethod;
 
 /**
  * 
@@ -4950,6 +5145,12 @@ export interface TriggersDisplayConfiguration {
      * @memberof TriggersDisplayConfiguration
      */
     'actionApps': Array<ActionAppConfig>;
+    /**
+     * 
+     * @type {Array<TriggerAppConfig>}
+     * @memberof TriggersDisplayConfiguration
+     */
+    'triggerApps': Array<TriggerAppConfig>;
 }
 /**
  * 
@@ -5949,6 +6150,44 @@ export class BotRecordsApi extends BaseAPI {
 export const BotTriggersApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
+         * This endpoint is used to fire a trigger via a webhook. The secret is used to authenticate the request. The endpoint will throw an error if:   - the trigger is disabled   - no recipients were obtained from the trigger config or req body   - throttle limit is reached for the trigger/all recipients
+         * @summary Fire a trigger via a webhook
+         * @param {string} secret 
+         * @param {{ [key: string]: any; }} [requestBody] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        fireTriggerWebhook: async (secret: string, requestBody?: { [key: string]: any; }, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'secret' is not null or undefined
+            assertParamExists('fireTriggerWebhook', 'secret', secret)
+            const localVarPath = `/triggers/app-webhook/{secret}`
+                .replace(`{${"secret"}}`, encodeURIComponent(String(secret)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(requestBody, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * 
          * @summary Get trigger display configuration
          * @param {*} [options] Override http request option.
@@ -6096,6 +6335,18 @@ export const BotTriggersApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = BotTriggersApiAxiosParamCreator(configuration)
     return {
         /**
+         * This endpoint is used to fire a trigger via a webhook. The secret is used to authenticate the request. The endpoint will throw an error if:   - the trigger is disabled   - no recipients were obtained from the trigger config or req body   - throttle limit is reached for the trigger/all recipients
+         * @summary Fire a trigger via a webhook
+         * @param {string} secret 
+         * @param {{ [key: string]: any; }} [requestBody] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async fireTriggerWebhook(secret: string, requestBody?: { [key: string]: any; }, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<FireTriggerWebhook200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.fireTriggerWebhook(secret, requestBody, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
          * 
          * @summary Get trigger display configuration
          * @param {*} [options] Override http request option.
@@ -6144,6 +6395,16 @@ export const BotTriggersApiFactory = function (configuration?: Configuration, ba
     const localVarFp = BotTriggersApiFp(configuration)
     return {
         /**
+         * This endpoint is used to fire a trigger via a webhook. The secret is used to authenticate the request. The endpoint will throw an error if:   - the trigger is disabled   - no recipients were obtained from the trigger config or req body   - throttle limit is reached for the trigger/all recipients
+         * @summary Fire a trigger via a webhook
+         * @param {BotTriggersApiFireTriggerWebhookRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        fireTriggerWebhook(requestParameters: BotTriggersApiFireTriggerWebhookRequest, options?: AxiosRequestConfig): AxiosPromise<FireTriggerWebhook200Response> {
+            return localVarFp.fireTriggerWebhook(requestParameters.secret, requestParameters.requestBody, options).then((request) => request(axios, basePath));
+        },
+        /**
          * 
          * @summary Get trigger display configuration
          * @param {*} [options] Override http request option.
@@ -6174,6 +6435,27 @@ export const BotTriggersApiFactory = function (configuration?: Configuration, ba
         },
     };
 };
+
+/**
+ * Request parameters for fireTriggerWebhook operation in BotTriggersApi.
+ * @export
+ * @interface BotTriggersApiFireTriggerWebhookRequest
+ */
+export interface BotTriggersApiFireTriggerWebhookRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof BotTriggersApiFireTriggerWebhook
+     */
+    readonly secret: string
+
+    /**
+     * 
+     * @type {{ [key: string]: any; }}
+     * @memberof BotTriggersApiFireTriggerWebhook
+     */
+    readonly requestBody?: { [key: string]: any; }
+}
 
 /**
  * Request parameters for getTriggerInstances operation in BotTriggersApi.
@@ -6252,6 +6534,18 @@ export interface BotTriggersApiStopTriggerInstanceRequest {
  * @extends {BaseAPI}
  */
 export class BotTriggersApi extends BaseAPI {
+    /**
+     * This endpoint is used to fire a trigger via a webhook. The secret is used to authenticate the request. The endpoint will throw an error if:   - the trigger is disabled   - no recipients were obtained from the trigger config or req body   - throttle limit is reached for the trigger/all recipients
+     * @summary Fire a trigger via a webhook
+     * @param {BotTriggersApiFireTriggerWebhookRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof BotTriggersApi
+     */
+    public fireTriggerWebhook(requestParameters: BotTriggersApiFireTriggerWebhookRequest, options?: AxiosRequestConfig) {
+        return BotTriggersApiFp(this.configuration).fireTriggerWebhook(requestParameters.secret, requestParameters.requestBody, options).then((request) => request(this.axios, this.basePath));
+    }
+
     /**
      * 
      * @summary Get trigger display configuration
