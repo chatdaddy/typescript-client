@@ -344,6 +344,12 @@ export interface VoiceOutboundPostRequest {
      * @memberof VoiceOutboundPostRequest
      */
     'teamId': string;
+    /**
+     * Flag for whether or not call should be recorded
+     * @type {string}
+     * @memberof VoiceOutboundPostRequest
+     */
+    'record'?: string;
 }
 
 /**
