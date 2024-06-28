@@ -7183,7 +7183,7 @@ export const BotsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async botsPatch(id: string, botPatch?: BotPatch, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async botsPatch(id: string, botPatch?: BotPatch, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BotData>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.botsPatch(id, botPatch, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -7299,7 +7299,7 @@ export const BotsApiFactory = function (configuration?: Configuration, basePath?
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        botsPatch(requestParameters: BotsApiBotsPatchRequest, options?: AxiosRequestConfig): AxiosPromise<void> {
+        botsPatch(requestParameters: BotsApiBotsPatchRequest, options?: AxiosRequestConfig): AxiosPromise<BotData> {
             return localVarFp.botsPatch(requestParameters.id, requestParameters.botPatch, options).then((request) => request(axios, basePath));
         },
         /**
@@ -9080,7 +9080,7 @@ export const ShareBotApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async patchBotBySlug(slug: string, patchBotBySlugRequest?: PatchBotBySlugRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async patchBotBySlug(slug: string, patchBotBySlugRequest?: PatchBotBySlugRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BotData>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.patchBotBySlug(slug, patchBotBySlugRequest, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -9152,7 +9152,7 @@ export const ShareBotApiFactory = function (configuration?: Configuration, baseP
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        patchBotBySlug(requestParameters: ShareBotApiPatchBotBySlugRequest, options?: AxiosRequestConfig): AxiosPromise<void> {
+        patchBotBySlug(requestParameters: ShareBotApiPatchBotBySlugRequest, options?: AxiosRequestConfig): AxiosPromise<BotData> {
             return localVarFp.patchBotBySlug(requestParameters.slug, requestParameters.patchBotBySlugRequest, options).then((request) => request(axios, basePath));
         },
         /**
