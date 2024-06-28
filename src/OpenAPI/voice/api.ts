@@ -258,6 +258,12 @@ export interface VerifyNumberPost200Response {
  */
 export interface VerifyNumberPostRequest {
     /**
+     * The name of owner of the phone number
+     * @type {string}
+     * @memberof VerifyNumberPostRequest
+     */
+    'name'?: string;
+    /**
      * The phone number
      * @type {string}
      * @memberof VerifyNumberPostRequest
