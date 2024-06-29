@@ -584,25 +584,25 @@ export interface Like {
      * @type {number}
      * @memberof Like
      */
-    'id'?: number;
+    'id': number;
     /**
      * 
      * @type {string}
      * @memberof Like
      */
-    'listingId'?: string;
+    'listingId': string;
     /**
      * 
      * @type {string}
      * @memberof Like
      */
-    'likedBy'?: string;
+    'likedBy': string;
     /**
      * An ISO formatted timestamp
      * @type {string}
      * @memberof Like
      */
-    'likedAt'?: string;
+    'likedAt': string;
 }
 /**
  * 
