@@ -640,6 +640,18 @@ export interface Listing {
     'type': AppType;
     /**
      * 
+     * @type {number}
+     * @memberof Listing
+     */
+    'likes'?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof Listing
+     */
+    'author'?: string;
+    /**
+     * 
      * @type {string}
      * @memberof Listing
      */
@@ -701,6 +713,18 @@ export interface ListingCreate {
      * @memberof ListingCreate
      */
     'language'?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof ListingCreate
+     */
+    'likes'?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof ListingCreate
+     */
+    'author'?: string;
     /**
      * 
      * @type {string}
@@ -812,6 +836,18 @@ export interface ListingUpdate {
      * @memberof ListingUpdate
      */
     'updatedAt'?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof ListingUpdate
+     */
+    'likes'?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof ListingUpdate
+     */
+    'author'?: string;
     /**
      * 
      * @type {AppType}
