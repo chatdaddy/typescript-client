@@ -765,12 +765,6 @@ export interface ListingCreate {
     'language'?: string;
     /**
      * 
-     * @type {Array<Like>}
-     * @memberof ListingCreate
-     */
-    'likes'?: Array<Like>;
-    /**
-     * 
      * @type {string}
      * @memberof ListingCreate
      */
@@ -886,12 +880,6 @@ export interface ListingUpdate {
      * @memberof ListingUpdate
      */
     'updatedAt'?: string;
-    /**
-     * 
-     * @type {Array<Like>}
-     * @memberof ListingUpdate
-     */
-    'likes'?: Array<Like>;
     /**
      * 
      * @type {string}
