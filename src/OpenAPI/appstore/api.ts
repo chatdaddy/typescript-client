@@ -71,6 +71,19 @@ export interface DataType {
 /**
  * 
  * @export
+ * @interface DoesUserLikeListing200Response
+ */
+export interface DoesUserLikeListing200Response {
+    /**
+     * 
+     * @type {boolean}
+     * @memberof DoesUserLikeListing200Response
+     */
+    'liked': boolean;
+}
+/**
+ * 
+ * @export
  * @interface Extension
  */
 export interface Extension {
@@ -563,6 +576,25 @@ export interface InstalledExtensionUpdate {
 /**
  * 
  * @export
+ * @interface Like
+ */
+export interface Like {
+    /**
+     * 
+     * @type {string}
+     * @memberof Like
+     */
+    'likedBy'?: string;
+    /**
+     * An ISO formatted timestamp
+     * @type {string}
+     * @memberof Like
+     */
+    'likedAt'?: string;
+}
+/**
+ * 
+ * @export
  * @interface Listing
  */
 export interface Listing {
@@ -640,10 +672,16 @@ export interface Listing {
     'type': AppType;
     /**
      * 
+     * @type {Array<Like>}
+     * @memberof Listing
+     */
+    'likes'?: Array<Like>;
+    /**
+     * 
      * @type {number}
      * @memberof Listing
      */
-    'likes'?: number;
+    'likeCount'?: number;
     /**
      * 
      * @type {string}
@@ -715,10 +753,10 @@ export interface ListingCreate {
     'language'?: string;
     /**
      * 
-     * @type {number}
+     * @type {Array<Like>}
      * @memberof ListingCreate
      */
-    'likes'?: number;
+    'likes'?: Array<Like>;
     /**
      * 
      * @type {string}
@@ -838,10 +876,10 @@ export interface ListingUpdate {
     'updatedAt'?: string;
     /**
      * 
-     * @type {number}
+     * @type {Array<Like>}
      * @memberof ListingUpdate
      */
-    'likes'?: number;
+    'likes'?: Array<Like>;
     /**
      * 
      * @type {string}
@@ -2022,6 +2060,44 @@ export const ListingsApiAxiosParamCreator = function (configuration?: Configurat
         },
         /**
          * 
+         * @summary Check if a user likes a listing
+         * @param {string} id The id of the listing to check
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        doesUserLikeListing: async (id: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('doesUserLikeListing', 'id', id)
+            const localVarPath = `/listing/{id}/like`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", [], configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
          * @summary Get listings
          * @param {number} [count] The number of extensions to get
          * @param {number} [cursor] The cursor to get extensions from
@@ -2141,6 +2217,44 @@ export const ListingsApiAxiosParamCreator = function (configuration?: Configurat
         },
         /**
          * 
+         * @summary Toggle like on a listing
+         * @param {string} id The id of the listing to like
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        toggleLikeListing: async (id: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('toggleLikeListing', 'id', id)
+            const localVarPath = `/listing/{id}/like`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", [], configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
          * @summary Update a listing
          * @param {string} id The id of the listing to update
          * @param {ListingUpdate} listingUpdate The listing to update
@@ -2217,6 +2331,17 @@ export const ListingsApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
+         * @summary Check if a user likes a listing
+         * @param {string} id The id of the listing to check
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async doesUserLikeListing(id: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DoesUserLikeListing200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.doesUserLikeListing(id, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
          * @summary Get listings
          * @param {number} [count] The number of extensions to get
          * @param {number} [cursor] The cursor to get extensions from
@@ -2243,6 +2368,17 @@ export const ListingsApiFp = function(configuration?: Configuration) {
          */
         async installListing(installListingRequest: InstallListingRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.installListing(installListingRequest, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary Toggle like on a listing
+         * @param {string} id The id of the listing to like
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async toggleLikeListing(id: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.toggleLikeListing(id, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -2289,6 +2425,16 @@ export const ListingsApiFactory = function (configuration?: Configuration, baseP
         },
         /**
          * 
+         * @summary Check if a user likes a listing
+         * @param {ListingsApiDoesUserLikeListingRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        doesUserLikeListing(requestParameters: ListingsApiDoesUserLikeListingRequest, options?: AxiosRequestConfig): AxiosPromise<DoesUserLikeListing200Response> {
+            return localVarFp.doesUserLikeListing(requestParameters.id, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
          * @summary Get listings
          * @param {ListingsApiGetListingsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -2306,6 +2452,16 @@ export const ListingsApiFactory = function (configuration?: Configuration, baseP
          */
         installListing(requestParameters: ListingsApiInstallListingRequest, options?: AxiosRequestConfig): AxiosPromise<void> {
             return localVarFp.installListing(requestParameters.installListingRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Toggle like on a listing
+         * @param {ListingsApiToggleLikeListingRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        toggleLikeListing(requestParameters: ListingsApiToggleLikeListingRequest, options?: AxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.toggleLikeListing(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -2344,6 +2500,20 @@ export interface ListingsApiDeleteListingRequest {
      * The id of the listing to delete
      * @type {string}
      * @memberof ListingsApiDeleteListing
+     */
+    readonly id: string
+}
+
+/**
+ * Request parameters for doesUserLikeListing operation in ListingsApi.
+ * @export
+ * @interface ListingsApiDoesUserLikeListingRequest
+ */
+export interface ListingsApiDoesUserLikeListingRequest {
+    /**
+     * The id of the listing to check
+     * @type {string}
+     * @memberof ListingsApiDoesUserLikeListing
      */
     readonly id: string
 }
@@ -2433,6 +2603,20 @@ export interface ListingsApiInstallListingRequest {
 }
 
 /**
+ * Request parameters for toggleLikeListing operation in ListingsApi.
+ * @export
+ * @interface ListingsApiToggleLikeListingRequest
+ */
+export interface ListingsApiToggleLikeListingRequest {
+    /**
+     * The id of the listing to like
+     * @type {string}
+     * @memberof ListingsApiToggleLikeListing
+     */
+    readonly id: string
+}
+
+/**
  * Request parameters for updateListing operation in ListingsApi.
  * @export
  * @interface ListingsApiUpdateListingRequest
@@ -2486,6 +2670,18 @@ export class ListingsApi extends BaseAPI {
 
     /**
      * 
+     * @summary Check if a user likes a listing
+     * @param {ListingsApiDoesUserLikeListingRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ListingsApi
+     */
+    public doesUserLikeListing(requestParameters: ListingsApiDoesUserLikeListingRequest, options?: AxiosRequestConfig) {
+        return ListingsApiFp(this.configuration).doesUserLikeListing(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
      * @summary Get listings
      * @param {ListingsApiGetListingsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -2506,6 +2702,18 @@ export class ListingsApi extends BaseAPI {
      */
     public installListing(requestParameters: ListingsApiInstallListingRequest, options?: AxiosRequestConfig) {
         return ListingsApiFp(this.configuration).installListing(requestParameters.installListingRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Toggle like on a listing
+     * @param {ListingsApiToggleLikeListingRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ListingsApi
+     */
+    public toggleLikeListing(requestParameters: ListingsApiToggleLikeListingRequest, options?: AxiosRequestConfig) {
+        return ListingsApiFp(this.configuration).toggleLikeListing(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
