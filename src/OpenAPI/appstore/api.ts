@@ -581,6 +581,18 @@ export interface InstalledExtensionUpdate {
 export interface Like {
     /**
      * 
+     * @type {number}
+     * @memberof Like
+     */
+    'id'?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof Like
+     */
+    'listingId'?: string;
+    /**
+     * 
      * @type {string}
      * @memberof Like
      */
