@@ -4220,8 +4220,15 @@ export interface MessagesSearch200Response {
      * 
      * @type {number}
      * @memberof MessagesSearch200Response
+     * @deprecated
      */
     'nextPage'?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof MessagesSearch200Response
+     */
+    'nextPageCursor'?: string;
     /**
      * 
      * @type {Array<Message>}
@@ -12255,10 +12262,10 @@ export const MessagesApiAxiosParamCreator = function (configuration?: Configurat
         /**
          * 
          * @summary Search messages
-         * @param {string} q The search query
          * @param {Array<string>} [accountId] Get contacts only belonging to this account
          * @param {MessagesGetRangeParameter} [range] Fetch messages only within this range. If not specified, fetches all messages
-         * @param {number} [page] Page number to paginate through results
+         * @param {string} [q] Search items by this string
+         * @param {string} [page] 
          * @param {number} [count] Number of items to return
          * @param {string} [chatId] 
          * @param {boolean} [returnChats] Return the corresponding chats alongside the messages
@@ -12266,9 +12273,7 @@ export const MessagesApiAxiosParamCreator = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        messagesSearch: async (q: string, accountId?: Array<string>, range?: MessagesGetRangeParameter, page?: number, count?: number, chatId?: string, returnChats?: boolean, fromMe?: boolean, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'q' is not null or undefined
-            assertParamExists('messagesSearch', 'q', q)
+        messagesSearch: async (accountId?: Array<string>, range?: MessagesGetRangeParameter, q?: string, page?: string, count?: number, chatId?: string, returnChats?: boolean, fromMe?: boolean, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/messages/search`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -12552,10 +12557,10 @@ export const MessagesApiFp = function(configuration?: Configuration) {
         /**
          * 
          * @summary Search messages
-         * @param {string} q The search query
          * @param {Array<string>} [accountId] Get contacts only belonging to this account
          * @param {MessagesGetRangeParameter} [range] Fetch messages only within this range. If not specified, fetches all messages
-         * @param {number} [page] Page number to paginate through results
+         * @param {string} [q] Search items by this string
+         * @param {string} [page] 
          * @param {number} [count] Number of items to return
          * @param {string} [chatId] 
          * @param {boolean} [returnChats] Return the corresponding chats alongside the messages
@@ -12563,8 +12568,8 @@ export const MessagesApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async messagesSearch(q: string, accountId?: Array<string>, range?: MessagesGetRangeParameter, page?: number, count?: number, chatId?: string, returnChats?: boolean, fromMe?: boolean, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MessagesSearch200Response>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.messagesSearch(q, accountId, range, page, count, chatId, returnChats, fromMe, options);
+        async messagesSearch(accountId?: Array<string>, range?: MessagesGetRangeParameter, q?: string, page?: string, count?: number, chatId?: string, returnChats?: boolean, fromMe?: boolean, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MessagesSearch200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.messagesSearch(accountId, range, q, page, count, chatId, returnChats, fromMe, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -12688,8 +12693,8 @@ export const MessagesApiFactory = function (configuration?: Configuration, baseP
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        messagesSearch(requestParameters: MessagesApiMessagesSearchRequest, options?: AxiosRequestConfig): AxiosPromise<MessagesSearch200Response> {
-            return localVarFp.messagesSearch(requestParameters.q, requestParameters.accountId, requestParameters.range, requestParameters.page, requestParameters.count, requestParameters.chatId, requestParameters.returnChats, requestParameters.fromMe, options).then((request) => request(axios, basePath));
+        messagesSearch(requestParameters: MessagesApiMessagesSearchRequest = {}, options?: AxiosRequestConfig): AxiosPromise<MessagesSearch200Response> {
+            return localVarFp.messagesSearch(requestParameters.accountId, requestParameters.range, requestParameters.q, requestParameters.page, requestParameters.count, requestParameters.chatId, requestParameters.returnChats, requestParameters.fromMe, options).then((request) => request(axios, basePath));
         },
         /**
          * Send a message with text and/or attachments. The `text` property can be used as a [mustache](https://mustache.github.io) template which automatically prefills data from the contact\'s details including **custom fields**. Some examples:   1. `{\"text\": \"Hello there {{name}}\"}` will automatically pre-fill the contact\'s name (if present)   2. `{\"text\": \"Hello {{name}} your number is {{phoneNumber}}\"}` will automatically pre-fill the contact\'s name & phone number   3. `{\"text\": \"Hello {{name}} your pet name is {{pet name}}\"}` will automatically pre-fill `petName` if the contact has such a custom field
@@ -13036,13 +13041,6 @@ export interface MessagesApiMessagesRefreshRequest {
  */
 export interface MessagesApiMessagesSearchRequest {
     /**
-     * The search query
-     * @type {string}
-     * @memberof MessagesApiMessagesSearch
-     */
-    readonly q: string
-
-    /**
      * Get contacts only belonging to this account
      * @type {Array<string>}
      * @memberof MessagesApiMessagesSearch
@@ -13057,11 +13055,18 @@ export interface MessagesApiMessagesSearchRequest {
     readonly range?: MessagesGetRangeParameter
 
     /**
-     * Page number to paginate through results
-     * @type {number}
+     * Search items by this string
+     * @type {string}
      * @memberof MessagesApiMessagesSearch
      */
-    readonly page?: number
+    readonly q?: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof MessagesApiMessagesSearch
+     */
+    readonly page?: string
 
     /**
      * Number of items to return
@@ -13257,8 +13262,8 @@ export class MessagesApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof MessagesApi
      */
-    public messagesSearch(requestParameters: MessagesApiMessagesSearchRequest, options?: AxiosRequestConfig) {
-        return MessagesApiFp(this.configuration).messagesSearch(requestParameters.q, requestParameters.accountId, requestParameters.range, requestParameters.page, requestParameters.count, requestParameters.chatId, requestParameters.returnChats, requestParameters.fromMe, options).then((request) => request(this.axios, this.basePath));
+    public messagesSearch(requestParameters: MessagesApiMessagesSearchRequest = {}, options?: AxiosRequestConfig) {
+        return MessagesApiFp(this.configuration).messagesSearch(requestParameters.accountId, requestParameters.range, requestParameters.q, requestParameters.page, requestParameters.count, requestParameters.chatId, requestParameters.returnChats, requestParameters.fromMe, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
