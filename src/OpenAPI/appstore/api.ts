@@ -424,6 +424,12 @@ export interface GetListings200Response {
      * @memberof GetListings200Response
      */
     'cursor'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof GetListings200Response
+     */
+    'totalDataCount'?: number;
 }
 /**
  * 
