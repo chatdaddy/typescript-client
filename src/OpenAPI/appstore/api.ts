@@ -2132,12 +2132,12 @@ export const ListingsApiAxiosParamCreator = function (configuration?: Configurat
          * @param {string} [industry] The industry to get extensions from
          * @param {string} [q] The query to get extensions from
          * @param {'delisted' | 'published' | 'underReview'} [publishedState] The publishedState of the listing
-         * @param {'inslalls' | 'likes' | 'reccomended' | 'createdAt'} [sortBy] The field to sort by
+         * @param {'installs' | 'likes' | 'reccomended' | 'createdAt'} [sortBy] The field to sort by
          * @param {boolean} [returnTotalDataCount] Return the total data count
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getListings: async (count?: number, cursor?: string, teamId?: string, type?: AppType, ids?: Array<string>, language?: string, industry?: string, q?: string, publishedState?: 'delisted' | 'published' | 'underReview', sortBy?: 'inslalls' | 'likes' | 'reccomended' | 'createdAt', returnTotalDataCount?: boolean, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getListings: async (count?: number, cursor?: string, teamId?: string, type?: AppType, ids?: Array<string>, language?: string, industry?: string, q?: string, publishedState?: 'delisted' | 'published' | 'underReview', sortBy?: 'installs' | 'likes' | 'reccomended' | 'createdAt', returnTotalDataCount?: boolean, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/listings`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -2386,12 +2386,12 @@ export const ListingsApiFp = function(configuration?: Configuration) {
          * @param {string} [industry] The industry to get extensions from
          * @param {string} [q] The query to get extensions from
          * @param {'delisted' | 'published' | 'underReview'} [publishedState] The publishedState of the listing
-         * @param {'inslalls' | 'likes' | 'reccomended' | 'createdAt'} [sortBy] The field to sort by
+         * @param {'installs' | 'likes' | 'reccomended' | 'createdAt'} [sortBy] The field to sort by
          * @param {boolean} [returnTotalDataCount] Return the total data count
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getListings(count?: number, cursor?: string, teamId?: string, type?: AppType, ids?: Array<string>, language?: string, industry?: string, q?: string, publishedState?: 'delisted' | 'published' | 'underReview', sortBy?: 'inslalls' | 'likes' | 'reccomended' | 'createdAt', returnTotalDataCount?: boolean, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetListings200Response>> {
+        async getListings(count?: number, cursor?: string, teamId?: string, type?: AppType, ids?: Array<string>, language?: string, industry?: string, q?: string, publishedState?: 'delisted' | 'published' | 'underReview', sortBy?: 'installs' | 'likes' | 'reccomended' | 'createdAt', returnTotalDataCount?: boolean, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetListings200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getListings(count, cursor, teamId, type, ids, language, industry, q, publishedState, sortBy, returnTotalDataCount, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -2625,10 +2625,10 @@ export interface ListingsApiGetListingsRequest {
 
     /**
      * The field to sort by
-     * @type {'inslalls' | 'likes' | 'reccomended' | 'createdAt'}
+     * @type {'installs' | 'likes' | 'reccomended' | 'createdAt'}
      * @memberof ListingsApiGetListings
      */
-    readonly sortBy?: 'inslalls' | 'likes' | 'reccomended' | 'createdAt'
+    readonly sortBy?: 'installs' | 'likes' | 'reccomended' | 'createdAt'
 
     /**
      * Return the total data count
