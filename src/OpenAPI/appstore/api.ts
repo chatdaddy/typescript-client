@@ -420,10 +420,10 @@ export interface GetListings200Response {
     'items': Array<Listing>;
     /**
      * 
-     * @type {number}
+     * @type {string}
      * @memberof GetListings200Response
      */
-    'cursor'?: number;
+    'cursor'?: string;
     /**
      * 
      * @type {number}
