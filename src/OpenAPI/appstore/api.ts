@@ -630,6 +630,12 @@ export interface Listing {
     'teamId': string;
     /**
      * 
+     * @type {boolean}
+     * @memberof Listing
+     */
+    'isReccomended'?: boolean;
+    /**
+     * 
      * @type {string}
      * @memberof Listing
      */
@@ -747,6 +753,12 @@ export interface ListingCreate {
     'description': string;
     /**
      * 
+     * @type {boolean}
+     * @memberof ListingCreate
+     */
+    'isReccomended'?: boolean;
+    /**
+     * 
      * @type {Array<string>}
      * @memberof ListingCreate
      */
@@ -832,6 +844,12 @@ export interface ListingUpdate {
      * @memberof ListingUpdate
      */
     'teamId'?: string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof ListingUpdate
+     */
+    'isReccomended'?: boolean;
     /**
      * 
      * @type {string}
@@ -2114,11 +2132,12 @@ export const ListingsApiAxiosParamCreator = function (configuration?: Configurat
          * @param {string} [industry] The industry to get extensions from
          * @param {string} [q] The query to get extensions from
          * @param {'delisted' | 'published' | 'underReview'} [publishedState] The publishedState of the listing
+         * @param {'inslalls' | 'likes' | 'reccomended' | 'createdAt'} [sortBy] The field to sort by
          * @param {boolean} [returnTotalDataCount] Return the total data count
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getListings: async (count?: number, cursor?: number, teamId?: string, type?: AppType, ids?: Array<string>, language?: string, industry?: string, q?: string, publishedState?: 'delisted' | 'published' | 'underReview', returnTotalDataCount?: boolean, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getListings: async (count?: number, cursor?: number, teamId?: string, type?: AppType, ids?: Array<string>, language?: string, industry?: string, q?: string, publishedState?: 'delisted' | 'published' | 'underReview', sortBy?: 'inslalls' | 'likes' | 'reccomended' | 'createdAt', returnTotalDataCount?: boolean, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/listings`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -2169,6 +2188,10 @@ export const ListingsApiAxiosParamCreator = function (configuration?: Configurat
 
             if (publishedState !== undefined) {
                 localVarQueryParameter['publishedState'] = publishedState;
+            }
+
+            if (sortBy !== undefined) {
+                localVarQueryParameter['sortBy'] = sortBy;
             }
 
             if (returnTotalDataCount !== undefined) {
@@ -2363,12 +2386,13 @@ export const ListingsApiFp = function(configuration?: Configuration) {
          * @param {string} [industry] The industry to get extensions from
          * @param {string} [q] The query to get extensions from
          * @param {'delisted' | 'published' | 'underReview'} [publishedState] The publishedState of the listing
+         * @param {'inslalls' | 'likes' | 'reccomended' | 'createdAt'} [sortBy] The field to sort by
          * @param {boolean} [returnTotalDataCount] Return the total data count
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getListings(count?: number, cursor?: number, teamId?: string, type?: AppType, ids?: Array<string>, language?: string, industry?: string, q?: string, publishedState?: 'delisted' | 'published' | 'underReview', returnTotalDataCount?: boolean, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetListings200Response>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getListings(count, cursor, teamId, type, ids, language, industry, q, publishedState, returnTotalDataCount, options);
+        async getListings(count?: number, cursor?: number, teamId?: string, type?: AppType, ids?: Array<string>, language?: string, industry?: string, q?: string, publishedState?: 'delisted' | 'published' | 'underReview', sortBy?: 'inslalls' | 'likes' | 'reccomended' | 'createdAt', returnTotalDataCount?: boolean, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetListings200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getListings(count, cursor, teamId, type, ids, language, industry, q, publishedState, sortBy, returnTotalDataCount, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -2453,7 +2477,7 @@ export const ListingsApiFactory = function (configuration?: Configuration, baseP
          * @throws {RequiredError}
          */
         getListings(requestParameters: ListingsApiGetListingsRequest = {}, options?: AxiosRequestConfig): AxiosPromise<GetListings200Response> {
-            return localVarFp.getListings(requestParameters.count, requestParameters.cursor, requestParameters.teamId, requestParameters.type, requestParameters.ids, requestParameters.language, requestParameters.industry, requestParameters.q, requestParameters.publishedState, requestParameters.returnTotalDataCount, options).then((request) => request(axios, basePath));
+            return localVarFp.getListings(requestParameters.count, requestParameters.cursor, requestParameters.teamId, requestParameters.type, requestParameters.ids, requestParameters.language, requestParameters.industry, requestParameters.q, requestParameters.publishedState, requestParameters.sortBy, requestParameters.returnTotalDataCount, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -2600,6 +2624,13 @@ export interface ListingsApiGetListingsRequest {
     readonly publishedState?: 'delisted' | 'published' | 'underReview'
 
     /**
+     * The field to sort by
+     * @type {'inslalls' | 'likes' | 'reccomended' | 'createdAt'}
+     * @memberof ListingsApiGetListings
+     */
+    readonly sortBy?: 'inslalls' | 'likes' | 'reccomended' | 'createdAt'
+
+    /**
      * Return the total data count
      * @type {boolean}
      * @memberof ListingsApiGetListings
@@ -2708,7 +2739,7 @@ export class ListingsApi extends BaseAPI {
      * @memberof ListingsApi
      */
     public getListings(requestParameters: ListingsApiGetListingsRequest = {}, options?: AxiosRequestConfig) {
-        return ListingsApiFp(this.configuration).getListings(requestParameters.count, requestParameters.cursor, requestParameters.teamId, requestParameters.type, requestParameters.ids, requestParameters.language, requestParameters.industry, requestParameters.q, requestParameters.publishedState, requestParameters.returnTotalDataCount, options).then((request) => request(this.axios, this.basePath));
+        return ListingsApiFp(this.configuration).getListings(requestParameters.count, requestParameters.cursor, requestParameters.teamId, requestParameters.type, requestParameters.ids, requestParameters.language, requestParameters.industry, requestParameters.q, requestParameters.publishedState, requestParameters.sortBy, requestParameters.returnTotalDataCount, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
