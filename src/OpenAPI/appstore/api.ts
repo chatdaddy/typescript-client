@@ -2124,7 +2124,7 @@ export const ListingsApiAxiosParamCreator = function (configuration?: Configurat
          * 
          * @summary Get listings
          * @param {number} [count] The number of extensions to get
-         * @param {number} [cursor] The cursor to get extensions from
+         * @param {string} [cursor] The cursor to get extensions from
          * @param {string} [teamId] The teamId to get extensions from
          * @param {AppType} [type] The type to get extensions from
          * @param {Array<string>} [ids] The ids to get extensions from
@@ -2137,7 +2137,7 @@ export const ListingsApiAxiosParamCreator = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getListings: async (count?: number, cursor?: number, teamId?: string, type?: AppType, ids?: Array<string>, language?: string, industry?: string, q?: string, publishedState?: 'delisted' | 'published' | 'underReview', sortBy?: 'inslalls' | 'likes' | 'reccomended' | 'createdAt', returnTotalDataCount?: boolean, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getListings: async (count?: number, cursor?: string, teamId?: string, type?: AppType, ids?: Array<string>, language?: string, industry?: string, q?: string, publishedState?: 'delisted' | 'published' | 'underReview', sortBy?: 'inslalls' | 'likes' | 'reccomended' | 'createdAt', returnTotalDataCount?: boolean, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/listings`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -2378,7 +2378,7 @@ export const ListingsApiFp = function(configuration?: Configuration) {
          * 
          * @summary Get listings
          * @param {number} [count] The number of extensions to get
-         * @param {number} [cursor] The cursor to get extensions from
+         * @param {string} [cursor] The cursor to get extensions from
          * @param {string} [teamId] The teamId to get extensions from
          * @param {AppType} [type] The type to get extensions from
          * @param {Array<string>} [ids] The ids to get extensions from
@@ -2391,7 +2391,7 @@ export const ListingsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getListings(count?: number, cursor?: number, teamId?: string, type?: AppType, ids?: Array<string>, language?: string, industry?: string, q?: string, publishedState?: 'delisted' | 'published' | 'underReview', sortBy?: 'inslalls' | 'likes' | 'reccomended' | 'createdAt', returnTotalDataCount?: boolean, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetListings200Response>> {
+        async getListings(count?: number, cursor?: string, teamId?: string, type?: AppType, ids?: Array<string>, language?: string, industry?: string, q?: string, publishedState?: 'delisted' | 'published' | 'underReview', sortBy?: 'inslalls' | 'likes' | 'reccomended' | 'createdAt', returnTotalDataCount?: boolean, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetListings200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getListings(count, cursor, teamId, type, ids, language, industry, q, publishedState, sortBy, returnTotalDataCount, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -2569,10 +2569,10 @@ export interface ListingsApiGetListingsRequest {
 
     /**
      * The cursor to get extensions from
-     * @type {number}
+     * @type {string}
      * @memberof ListingsApiGetListings
      */
-    readonly cursor?: number
+    readonly cursor?: string
 
     /**
      * The teamId to get extensions from
