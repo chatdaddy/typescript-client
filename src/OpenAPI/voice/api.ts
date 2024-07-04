@@ -88,6 +88,12 @@ export interface Calls {
      */
     'to'?: string;
     /**
+     * Name of the contact
+     * @type {string}
+     * @memberof Calls
+     */
+    'contactName'?: string;
+    /**
      * Id of the call
      * @type {string}
      * @memberof Calls
@@ -143,6 +149,32 @@ export interface HoldCallPostRequest {
      * @memberof HoldCallPostRequest
      */
     'holdStatus'?: boolean;
+}
+/**
+ * 
+ * @export
+ * @interface PhoneNumbersDelete200Response
+ */
+export interface PhoneNumbersDelete200Response {
+    /**
+     * 
+     * @type {VoiceContact}
+     * @memberof PhoneNumbersDelete200Response
+     */
+    'phoneNumbers'?: VoiceContact;
+}
+/**
+ * 
+ * @export
+ * @interface PhoneNumbersDeleteRequest
+ */
+export interface PhoneNumbersDeleteRequest {
+    /**
+     * The phone number
+     * @type {string}
+     * @memberof PhoneNumbersDeleteRequest
+     */
+    'phoneNumber': string;
 }
 /**
  * 
@@ -476,6 +508,44 @@ export const CallsApiAxiosParamCreator = function (configuration?: Configuration
         },
         /**
          * 
+         * @summary Delete the phone number
+         * @param {PhoneNumbersDeleteRequest} [phoneNumbersDeleteRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        phoneNumbersDelete: async (phoneNumbersDeleteRequest?: PhoneNumbersDeleteRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/phoneNumbers`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", [], configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(phoneNumbersDeleteRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
          * @summary Get the phone numbers for the account
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -730,6 +800,17 @@ export const CallsApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
+         * @summary Delete the phone number
+         * @param {PhoneNumbersDeleteRequest} [phoneNumbersDeleteRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async phoneNumbersDelete(phoneNumbersDeleteRequest?: PhoneNumbersDeleteRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PhoneNumbersDelete200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.phoneNumbersDelete(phoneNumbersDeleteRequest, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
          * @summary Get the phone numbers for the account
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -834,6 +915,16 @@ export const CallsApiFactory = function (configuration?: Configuration, basePath
         },
         /**
          * 
+         * @summary Delete the phone number
+         * @param {CallsApiPhoneNumbersDeleteRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        phoneNumbersDelete(requestParameters: CallsApiPhoneNumbersDeleteRequest = {}, options?: AxiosRequestConfig): AxiosPromise<PhoneNumbersDelete200Response> {
+            return localVarFp.phoneNumbersDelete(requestParameters.phoneNumbersDeleteRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
          * @summary Get the phone numbers for the account
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -919,6 +1010,20 @@ export interface CallsApiHoldCallPostRequest {
      * @memberof CallsApiHoldCallPost
      */
     readonly holdCallPostRequest?: HoldCallPostRequest
+}
+
+/**
+ * Request parameters for phoneNumbersDelete operation in CallsApi.
+ * @export
+ * @interface CallsApiPhoneNumbersDeleteRequest
+ */
+export interface CallsApiPhoneNumbersDeleteRequest {
+    /**
+     * 
+     * @type {PhoneNumbersDeleteRequest}
+     * @memberof CallsApiPhoneNumbersDelete
+     */
+    readonly phoneNumbersDeleteRequest?: PhoneNumbersDeleteRequest
 }
 
 /**
@@ -1024,6 +1129,18 @@ export class CallsApi extends BaseAPI {
      */
     public holdCallPost(requestParameters: CallsApiHoldCallPostRequest = {}, options?: AxiosRequestConfig) {
         return CallsApiFp(this.configuration).holdCallPost(requestParameters.holdCallPostRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Delete the phone number
+     * @param {CallsApiPhoneNumbersDeleteRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CallsApi
+     */
+    public phoneNumbersDelete(requestParameters: CallsApiPhoneNumbersDeleteRequest = {}, options?: AxiosRequestConfig) {
+        return CallsApiFp(this.configuration).phoneNumbersDelete(requestParameters.phoneNumbersDeleteRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
