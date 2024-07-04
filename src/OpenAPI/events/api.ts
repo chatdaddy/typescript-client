@@ -1520,6 +1520,12 @@ export interface BotInsertDataActionsInnerAllOf1MessageAttachmentsInner {
     'mimetype': string;
     /**
      * 
+     * @type {boolean}
+     * @memberof BotInsertDataActionsInnerAllOf1MessageAttachmentsInner
+     */
+    'isGif'?: boolean;
+    /**
+     * 
      * @type {string}
      * @memberof BotInsertDataActionsInnerAllOf1MessageAttachmentsInner
      */
@@ -3422,10 +3428,10 @@ export interface BotNodeEventDataOneOf9Data {
     'id'?: string;
     /**
      * 
-     * @type {Array<BotInsertDataActionsInnerAllOf1MessageAttachmentsInner>}
+     * @type {Array<BotNodeEventDataOneOfDataAllOf1MessageAttachmentsInner>}
      * @memberof BotNodeEventDataOneOf9Data
      */
-    'attachments'?: Array<BotInsertDataActionsInnerAllOf1MessageAttachmentsInner>;
+    'attachments'?: Array<BotNodeEventDataOneOfDataAllOf1MessageAttachmentsInner>;
     /**
      * 
      * @type {string}
@@ -3780,10 +3786,10 @@ export interface BotNodeEventDataOneOfDataAllOf1Message {
     'text': string | null;
     /**
      * array of attachments for the template
-     * @type {Array<BotInsertDataActionsInnerAllOf1MessageAttachmentsInner>}
+     * @type {Array<BotNodeEventDataOneOfDataAllOf1MessageAttachmentsInner>}
      * @memberof BotNodeEventDataOneOfDataAllOf1Message
      */
-    'attachments'?: Array<BotInsertDataActionsInnerAllOf1MessageAttachmentsInner>;
+    'attachments'?: Array<BotNodeEventDataOneOfDataAllOf1MessageAttachmentsInner>;
     /**
      * 
      * @type {Array<BotInsertDataActionsInnerAllOf1MessageButtonsInner>}
@@ -3827,6 +3833,68 @@ export interface BotNodeEventDataOneOfDataAllOf1Message {
      */
     'subject'?: string;
 }
+/**
+ * 
+ * @export
+ * @interface BotNodeEventDataOneOfDataAllOf1MessageAttachmentsInner
+ */
+export interface BotNodeEventDataOneOfDataAllOf1MessageAttachmentsInner {
+    /**
+     * 
+     * @type {string}
+     * @memberof BotNodeEventDataOneOfDataAllOf1MessageAttachmentsInner
+     */
+    'type': BotNodeEventDataOneOfDataAllOf1MessageAttachmentsInnerTypeEnum;
+    /**
+     * 
+     * @type {string}
+     * @memberof BotNodeEventDataOneOfDataAllOf1MessageAttachmentsInner
+     */
+    'mimetype': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof BotNodeEventDataOneOfDataAllOf1MessageAttachmentsInner
+     */
+    'url': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof BotNodeEventDataOneOfDataAllOf1MessageAttachmentsInner
+     */
+    'jpegThumbnail'?: string | null;
+    /**
+     * 
+     * @type {number}
+     * @memberof BotNodeEventDataOneOfDataAllOf1MessageAttachmentsInner
+     */
+    'seconds'?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof BotNodeEventDataOneOfDataAllOf1MessageAttachmentsInner
+     */
+    'filename'?: string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof BotNodeEventDataOneOfDataAllOf1MessageAttachmentsInner
+     */
+    'pttAudio'?: boolean;
+}
+
+export const BotNodeEventDataOneOfDataAllOf1MessageAttachmentsInnerTypeEnum = {
+    Image: 'image',
+    Video: 'video',
+    Contact: 'contact',
+    Sticker: 'sticker',
+    Audio: 'audio',
+    Document: 'document',
+    Location: 'location'
+} as const;
+
+export type BotNodeEventDataOneOfDataAllOf1MessageAttachmentsInnerTypeEnum = typeof BotNodeEventDataOneOfDataAllOf1MessageAttachmentsInnerTypeEnum[keyof typeof BotNodeEventDataOneOfDataAllOf1MessageAttachmentsInnerTypeEnum];
+
 /**
  * 
  * @export
