@@ -752,7 +752,7 @@ export interface CreditCustomerMigrate {
      * @type {string}
      * @memberof CreditCustomerMigrate
      */
-    'region': string;
+    'region'?: string;
     /**
      * 
      * @type {StripeCustomerCreate}
