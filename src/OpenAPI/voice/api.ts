@@ -320,6 +320,18 @@ export interface VoiceContact {
      * @memberof VoiceContact
      */
     'phoneNumber': string;
+    /**
+     * TeamId of the user making the call
+     * @type {string}
+     * @memberof VoiceContact
+     */
+    'teamId'?: string;
+    /**
+     * Outgoing caller Id
+     * @type {string}
+     * @memberof VoiceContact
+     */
+    'userId'?: string;
 }
 /**
  * 
