@@ -383,6 +383,12 @@ export interface VoiceOutboundPostRequest {
      */
     'CallSid'?: string;
     /**
+     * Name of the contact
+     * @type {string}
+     * @memberof VoiceOutboundPostRequest
+     */
+    'contactName'?: string;
+    /**
      * The account id of the user making the call
      * @type {string}
      * @memberof VoiceOutboundPostRequest
