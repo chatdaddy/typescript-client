@@ -4203,6 +4203,225 @@ export interface BotUpdateData {
 /**
  * 
  * @export
+ * @interface CallDelete
+ */
+export interface CallDelete {
+    /**
+     * 
+     * @type {string}
+     * @memberof CallDelete
+     */
+    'event': CallDeleteEventEnum;
+    /**
+     * 
+     * @type {Array<CallDeleteData>}
+     * @memberof CallDelete
+     */
+    'data': Array<CallDeleteData>;
+}
+
+export const CallDeleteEventEnum = {
+    CallDelete: 'call-delete'
+} as const;
+
+export type CallDeleteEventEnum = typeof CallDeleteEventEnum[keyof typeof CallDeleteEventEnum];
+
+/**
+ * 
+ * @export
+ * @interface CallDeleteData
+ */
+export interface CallDeleteData {
+    /**
+     * 
+     * @type {string}
+     * @memberof CallDeleteData
+     */
+    'accountId': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof CallDeleteData
+     */
+    'phoneNumber': string;
+}
+/**
+ * 
+ * @export
+ * @interface CallInsert
+ */
+export interface CallInsert {
+    /**
+     * 
+     * @type {string}
+     * @memberof CallInsert
+     */
+    'event': CallInsertEventEnum;
+    /**
+     * 
+     * @type {Array<CallInsertData>}
+     * @memberof CallInsert
+     */
+    'data': Array<CallInsertData>;
+}
+
+export const CallInsertEventEnum = {
+    CallInsert: 'call-insert'
+} as const;
+
+export type CallInsertEventEnum = typeof CallInsertEventEnum[keyof typeof CallInsertEventEnum];
+
+/**
+ * 
+ * @export
+ * @interface CallInsertData
+ */
+export interface CallInsertData {
+    /**
+     * 
+     * @type {string}
+     * @memberof CallInsertData
+     */
+    'accountId': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof CallInsertData
+     */
+    'teamId'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof CallInsertData
+     */
+    'phoneNumber': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof CallInsertData
+     */
+    'to'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof CallInsertData
+     */
+    'contactName'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof CallInsertData
+     */
+    'callId': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof CallInsertData
+     */
+    'createdAt': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof CallInsertData
+     */
+    'callRecording'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof CallInsertData
+     */
+    'callNotes'?: string | null;
+}
+/**
+ * 
+ * @export
+ * @interface CallUpdate
+ */
+export interface CallUpdate {
+    /**
+     * 
+     * @type {string}
+     * @memberof CallUpdate
+     */
+    'event': CallUpdateEventEnum;
+    /**
+     * 
+     * @type {Array<CallUpdateData>}
+     * @memberof CallUpdate
+     */
+    'data': Array<CallUpdateData>;
+}
+
+export const CallUpdateEventEnum = {
+    CallUpdate: 'call-update'
+} as const;
+
+export type CallUpdateEventEnum = typeof CallUpdateEventEnum[keyof typeof CallUpdateEventEnum];
+
+/**
+ * 
+ * @export
+ * @interface CallUpdateData
+ */
+export interface CallUpdateData {
+    /**
+     * 
+     * @type {string}
+     * @memberof CallUpdateData
+     */
+    'accountId': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof CallUpdateData
+     */
+    'teamId'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof CallUpdateData
+     */
+    'phoneNumber': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof CallUpdateData
+     */
+    'to'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof CallUpdateData
+     */
+    'contactName'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof CallUpdateData
+     */
+    'callId'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof CallUpdateData
+     */
+    'createdAt'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof CallUpdateData
+     */
+    'callRecording'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof CallUpdateData
+     */
+    'callNotes'?: string | null;
+}
+/**
+ * 
+ * @export
  * @interface CampaignInsert
  */
 export interface CampaignInsert {
@@ -6293,7 +6512,10 @@ export const EventName = {
     BotDelete: 'bot-delete',
     CrmTicketInsert: 'crm-ticket-insert',
     CrmTicketUpdate: 'crm-ticket-update',
-    CrmTicketDelete: 'crm-ticket-delete'
+    CrmTicketDelete: 'crm-ticket-delete',
+    CallInsert: 'call-insert',
+    CallUpdate: 'call-update',
+    CallDelete: 'call-delete'
 } as const;
 
 export type EventName = typeof EventName[keyof typeof EventName];
@@ -6387,7 +6609,7 @@ export type EventSubscriptionType = typeof EventSubscriptionType[keyof typeof Ev
  * The request body you\'ll receive in a webhook
  * @export
  */
-export type EventWebhookData = AccountDelete | AccountInsert | AccountUpdate | ActionExecute | BotDelete | BotInsert | BotUpdate | CampaignInsert | ChatDelete | ChatInsert | ChatUpdate | ChatbotInsert | ContactDelete | ContactInsert | ContactUpdate | CredittransactionrecordInsert | CrmTicketDelete | CrmTicketInsert | CrmTicketUpdate | CustomerCreditsLevelUpdate | DashboardwithdataInsert | FewMessagesLeft | GroupUpdate | KeywordbasedactionInsert | MembershipactionInsert | MessageDelete | MessageInsert | MessageUpdate | OrderInsert | PaymentintegrationInsert | PlatformproductDelete | PlatformproductInsert | PlatformproductUpdate | PresenceUpdate | PushNotification | ShopproductInsert | StaleAccountNotification | TagDelete | TagInsert | TagUpdate | TeamDelete | TeamInsert | TeamUpdate | TeammemberDelete | TeammemberInsert | TeammemberLogout | TeammemberUpdate | TrackingDelete | TrackingInsert | TrackingUpdate | UserDelete | UserInsert | UserUpdate;
+export type EventWebhookData = AccountDelete | AccountInsert | AccountUpdate | ActionExecute | BotDelete | BotInsert | BotUpdate | CallDelete | CallInsert | CallUpdate | CampaignInsert | ChatDelete | ChatInsert | ChatUpdate | ChatbotInsert | ContactDelete | ContactInsert | ContactUpdate | CredittransactionrecordInsert | CrmTicketDelete | CrmTicketInsert | CrmTicketUpdate | CustomerCreditsLevelUpdate | DashboardwithdataInsert | FewMessagesLeft | GroupUpdate | KeywordbasedactionInsert | MembershipactionInsert | MessageDelete | MessageInsert | MessageUpdate | OrderInsert | PaymentintegrationInsert | PlatformproductDelete | PlatformproductInsert | PlatformproductUpdate | PresenceUpdate | PushNotification | ShopproductInsert | StaleAccountNotification | TagDelete | TagInsert | TagUpdate | TeamDelete | TeamInsert | TeamUpdate | TeammemberDelete | TeammemberInsert | TeammemberLogout | TeammemberUpdate | TrackingDelete | TrackingInsert | TrackingUpdate | UserDelete | UserInsert | UserUpdate;
 
 /**
  * 
