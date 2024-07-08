@@ -5307,6 +5307,12 @@ export interface ProfileMessengerPostRequest {
      * @type {string}
      * @memberof ProfileMessengerPostRequest
      */
+    'fbPageId'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ProfileMessengerPostRequest
+     */
     'type'?: ProfileMessengerPostRequestTypeEnum;
 }
 
