@@ -58,6 +58,25 @@ export type AppType = typeof AppType[keyof typeof AppType];
 /**
  * 
  * @export
+ * @interface Author
+ */
+export interface Author {
+    /**
+     * 
+     * @type {string}
+     * @memberof Author
+     */
+    'id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Author
+     */
+    'name': string;
+}
+/**
+ * 
+ * @export
  * @interface DataType
  */
 export interface DataType {
@@ -708,10 +727,10 @@ export interface Listing {
     'likeCount'?: number;
     /**
      * 
-     * @type {string}
+     * @type {Author}
      * @memberof Listing
      */
-    'author'?: string;
+    'author'?: Author;
     /**
      * 
      * @type {string}
@@ -783,10 +802,10 @@ export interface ListingCreate {
     'language'?: string;
     /**
      * 
-     * @type {string}
+     * @type {Author}
      * @memberof ListingCreate
      */
-    'author'?: string;
+    'author'?: Author;
     /**
      * 
      * @type {string}
@@ -906,10 +925,10 @@ export interface ListingUpdate {
     'updatedAt'?: string;
     /**
      * 
-     * @type {string}
+     * @type {Author}
      * @memberof ListingUpdate
      */
-    'author'?: string;
+    'author'?: Author;
     /**
      * 
      * @type {AppType}
