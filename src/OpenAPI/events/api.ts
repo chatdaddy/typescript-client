@@ -906,6 +906,12 @@ export interface BotInsertData {
     'folderId'?: string | null;
     /**
      * 
+     * @type {string}
+     * @memberof BotInsertData
+     */
+    'templateId'?: string | null;
+    /**
+     * 
      * @type {boolean}
      * @memberof BotInsertData
      */
@@ -4121,6 +4127,12 @@ export interface BotUpdateData {
      * @memberof BotUpdateData
      */
     'folderId'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof BotUpdateData
+     */
+    'templateId'?: string | null;
     /**
      * 
      * @type {boolean}

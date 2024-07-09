@@ -1350,6 +1350,12 @@ export interface Bot {
      */
     'folderId'?: string | null;
     /**
+     * 
+     * @type {string}
+     * @memberof Bot
+     */
+    'templateId'?: string | null;
+    /**
      * If true, this bot is treated as a form
      * @type {boolean}
      * @memberof Bot
