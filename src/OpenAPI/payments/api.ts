@@ -565,6 +565,7 @@ export const CreditConsumptionType = {
     MessageSentMessenger: 'message_sent/messenger',
     MessageSentMail: 'message_sent/mail',
     ConversationWaBusinessApi: 'conversation/wa-business-api',
+    VoiceCall: 'voice_call',
     IntegrationNotification: 'integration/notification',
     IntegrationPayment: 'integration/payment',
     AiChatbot: 'ai_chatbot',

@@ -2116,6 +2116,12 @@ export interface BotPatch {
      * @type {string}
      * @memberof BotPatch
      */
+    'templateId'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof BotPatch
+     */
     'folderId'?: string | null;
     /**
      * Define variables that can be used in the bot. These variables can be used to replace parameters in the bot\'s actions. For any \"board\" type properties, any conditions can use the `board_path_stages` property to get the stages of the board as an array, assuming `board_path` is the property name of the board.
