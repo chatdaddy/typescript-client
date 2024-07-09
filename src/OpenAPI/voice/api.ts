@@ -94,6 +94,12 @@ export interface Calls {
      */
     'contactName'?: string;
     /**
+     * Duration of the call
+     * @type {string}
+     * @memberof Calls
+     */
+    'callDuration'?: string;
+    /**
      * Id of the call
      * @type {string}
      * @memberof Calls

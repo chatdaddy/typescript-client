@@ -4324,6 +4324,12 @@ export interface CallInsertData {
      * @type {string}
      * @memberof CallInsertData
      */
+    'callDuration'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof CallInsertData
+     */
     'callId': string;
     /**
      * 
@@ -4406,6 +4412,12 @@ export interface CallUpdateData {
      * @memberof CallUpdateData
      */
     'contactName'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof CallUpdateData
+     */
+    'callDuration'?: string;
     /**
      * 
      * @type {string}
