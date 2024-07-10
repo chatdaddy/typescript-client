@@ -7828,7 +7828,7 @@ export const CRMApiAxiosParamCreator = function (configuration?: Configuration) 
          * @param {string} [boardId] 
          * @param {string} [stageId] 
          * @param {UniqueContactID} [contactId] 
-         * @param {string} [id] 
+         * @param {Array<string>} [id] 
          * @param {boolean} [returnTotalCount] 
          * @param {string} [q] Search items by this string
          * @param {ChatsGetTagsParameter} [tags] Get contacts who fall in either of these tags
@@ -7837,7 +7837,7 @@ export const CRMApiAxiosParamCreator = function (configuration?: Configuration) 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getTickets: async (count?: number, page?: string, boardId?: string, stageId?: string, contactId?: UniqueContactID, id?: string, returnTotalCount?: boolean, q?: string, tags?: ChatsGetTagsParameter, customFields?: Array<TagFilter>, assignee?: ChatsGetAssigneeParameter, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getTickets: async (count?: number, page?: string, boardId?: string, stageId?: string, contactId?: UniqueContactID, id?: Array<string>, returnTotalCount?: boolean, q?: string, tags?: ChatsGetTagsParameter, customFields?: Array<TagFilter>, assignee?: ChatsGetAssigneeParameter, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/crm/tickets`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -7874,7 +7874,7 @@ export const CRMApiAxiosParamCreator = function (configuration?: Configuration) 
                 localVarQueryParameter['contactId'] = contactId;
             }
 
-            if (id !== undefined) {
+            if (id) {
                 localVarQueryParameter['id'] = id;
             }
 
@@ -8115,7 +8115,7 @@ export const CRMApiFp = function(configuration?: Configuration) {
          * @param {string} [boardId] 
          * @param {string} [stageId] 
          * @param {UniqueContactID} [contactId] 
-         * @param {string} [id] 
+         * @param {Array<string>} [id] 
          * @param {boolean} [returnTotalCount] 
          * @param {string} [q] Search items by this string
          * @param {ChatsGetTagsParameter} [tags] Get contacts who fall in either of these tags
@@ -8124,7 +8124,7 @@ export const CRMApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getTickets(count?: number, page?: string, boardId?: string, stageId?: string, contactId?: UniqueContactID, id?: string, returnTotalCount?: boolean, q?: string, tags?: ChatsGetTagsParameter, customFields?: Array<TagFilter>, assignee?: ChatsGetAssigneeParameter, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetTickets200Response>> {
+        async getTickets(count?: number, page?: string, boardId?: string, stageId?: string, contactId?: UniqueContactID, id?: Array<string>, returnTotalCount?: boolean, q?: string, tags?: ChatsGetTagsParameter, customFields?: Array<TagFilter>, assignee?: ChatsGetAssigneeParameter, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetTickets200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getTickets(count, page, boardId, stageId, contactId, id, returnTotalCount, q, tags, customFields, assignee, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -8395,10 +8395,10 @@ export interface CRMApiGetTicketsRequest {
 
     /**
      * 
-     * @type {string}
+     * @type {Array<string>}
      * @memberof CRMApiGetTickets
      */
-    readonly id?: string
+    readonly id?: Array<string>
 
     /**
      * 
