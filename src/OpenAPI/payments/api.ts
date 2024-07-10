@@ -136,6 +136,12 @@ export interface AmountWithCurrency {
     'currency': string;
 }
 /**
+ * @type AnyCreditConsumptionType
+ * @export
+ */
+export type AnyCreditConsumptionType = CreditConsumptionType | RecurringCreditConsumptionType;
+
+/**
  * 
  * @export
  * @interface AutoChargeProduct
@@ -329,6 +335,61 @@ export const CountryTier = {
 export type CountryTier = typeof CountryTier[keyof typeof CountryTier];
 
 
+/**
+ * 
+ * @export
+ * @interface Coupon
+ */
+export interface Coupon {
+    /**
+     * The ID of the coupon
+     * @type {string}
+     * @memberof Coupon
+     */
+    'id': string;
+    /**
+     * The percentage off the coupon provides
+     * @type {number}
+     * @memberof Coupon
+     */
+    'percentageOff': number;
+    /**
+     * An ISO formatted timestamp
+     * @type {string}
+     * @memberof Coupon
+     */
+    'createdAt': string;
+    /**
+     * The ID of a user
+     * @type {string}
+     * @memberof Coupon
+     */
+    'createdBy': string;
+    /**
+     * If true, the coupon can be used for all subsequent billing cycles, else, only the first
+     * @type {boolean}
+     * @memberof Coupon
+     */
+    'isRecurring'?: boolean;
+    /**
+     * An ISO formatted timestamp
+     * @type {string}
+     * @memberof Coupon
+     */
+    'expiresAt'?: string | null;
+    /**
+     * limit coupon code to certain product types. If not provided, coupon code is applicable to all recurring product types
+     * @type {Array<AnyCreditConsumptionType>}
+     * @memberof Coupon
+     */
+    'creditConsumptionTypes': Array<AnyCreditConsumptionType>;
+    /**
+     * An ISO formatted timestamp
+     * @type {string}
+     * @memberof Coupon
+     */
+    'archivedAt'?: string | null;
+}
 /**
  * 
  * @export
@@ -565,7 +626,6 @@ export const CreditConsumptionType = {
     MessageSentMessenger: 'message_sent/messenger',
     MessageSentMail: 'message_sent/mail',
     ConversationWaBusinessApi: 'conversation/wa-business-api',
-    VoiceCall: 'voice_call',
     IntegrationNotification: 'integration/notification',
     IntegrationPayment: 'integration/payment',
     AiChatbot: 'ai_chatbot',
@@ -579,6 +639,43 @@ export const CreditConsumptionType = {
 export type CreditConsumptionType = typeof CreditConsumptionType[keyof typeof CreditConsumptionType];
 
 
+/**
+ * 
+ * @export
+ * @interface CreditCouponCodeCreateOptions
+ */
+export interface CreditCouponCodeCreateOptions {
+    /**
+     * limit coupon code to certain product types. If not provided, coupon code is applicable to all recurring product types
+     * @type {Array<AnyCreditConsumptionType>}
+     * @memberof CreditCouponCodeCreateOptions
+     */
+    'creditConsumptionTypes'?: Array<AnyCreditConsumptionType>;
+    /**
+     * 
+     * @type {number}
+     * @memberof CreditCouponCodeCreateOptions
+     */
+    'discountPercentageOff': number;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof CreditCouponCodeCreateOptions
+     */
+    'isRecurring'?: boolean;
+    /**
+     * An ISO formatted timestamp
+     * @type {string}
+     * @memberof CreditCouponCodeCreateOptions
+     */
+    'expiresAt'?: string | null;
+    /**
+     * The ID of the coupon
+     * @type {string}
+     * @memberof CreditCouponCodeCreateOptions
+     */
+    'id'?: string;
+}
 /**
  * 
  * @export
@@ -611,10 +708,10 @@ export interface CreditCustomer {
     'unlockedFeatures': Array<CreditUnlockType>;
     /**
      * 
-     * @type {CustomerAutoRenewal}
+     * @type {CustomerAutoRenewalWRedeemedCoupon}
      * @memberof CreditCustomer
      */
-    'autoRenewal'?: CustomerAutoRenewal;
+    'autoRenewal'?: CustomerAutoRenewalWRedeemedCoupon;
     /**
      * 
      * @type {CountryTier}
@@ -686,10 +783,10 @@ export interface CreditCustomerAllOf {
     'unlockedFeatures': Array<CreditUnlockType>;
     /**
      * 
-     * @type {CustomerAutoRenewal}
+     * @type {CustomerAutoRenewalWRedeemedCoupon}
      * @memberof CreditCustomerAllOf
      */
-    'autoRenewal'?: CustomerAutoRenewal;
+    'autoRenewal'?: CustomerAutoRenewalWRedeemedCoupon;
     /**
      * 
      * @type {CountryTier}
@@ -1133,10 +1230,10 @@ export interface CreditTransactionBase {
     'objectId': string;
     /**
      * 
-     * @type {{ [key: string]: any; }}
+     * @type {TxMetadata}
      * @memberof CreditTransactionBase
      */
-    'metadata'?: { [key: string]: any; };
+    'metadata'?: TxMetadata | null;
 }
 /**
  * A record of a credit transaction. This could be a gain or a consumption record & is immutable.
@@ -1176,10 +1273,10 @@ export interface CreditTransactionRecord {
     'objectId': string;
     /**
      * 
-     * @type {{ [key: string]: any; }}
+     * @type {TxMetadata}
      * @memberof CreditTransactionRecord
      */
-    'metadata'?: { [key: string]: any; };
+    'metadata'?: TxMetadata | null;
     /**
      * 
      * @type {CreditConsumptionRecordDataType}
@@ -1283,6 +1380,38 @@ export type CreditUnlockType = typeof CreditUnlockType[keyof typeof CreditUnlock
 /**
  * 
  * @export
+ * @interface CreditsCouponsArchiveRequest
+ */
+export interface CreditsCouponsArchiveRequest {
+    /**
+     * The ID of the coupon
+     * @type {string}
+     * @memberof CreditsCouponsArchiveRequest
+     */
+    'id': string;
+}
+/**
+ * 
+ * @export
+ * @interface CreditsCouponsGet200Response
+ */
+export interface CreditsCouponsGet200Response {
+    /**
+     * The ID of the coupon
+     * @type {string}
+     * @memberof CreditsCouponsGet200Response
+     */
+    'nextPageCursor'?: string;
+    /**
+     * 
+     * @type {Array<Coupon>}
+     * @memberof CreditsCouponsGet200Response
+     */
+    'items': Array<Coupon>;
+}
+/**
+ * 
+ * @export
  * @interface CreditsCustomerPost200Response
  */
 export interface CreditsCustomerPost200Response {
@@ -1367,6 +1496,12 @@ export interface CustomerAutoRenewal {
      * @memberof CustomerAutoRenewal
      */
     'status': CustomerAutoRenewalStatusEnum;
+    /**
+     * The redeemed coupon ID
+     * @type {string}
+     * @memberof CustomerAutoRenewal
+     */
+    'currentRedeemedCouponId'?: string;
 }
 
 export const CustomerAutoRenewalStatusEnum = {
@@ -1377,6 +1512,89 @@ export const CustomerAutoRenewalStatusEnum = {
 
 export type CustomerAutoRenewalStatusEnum = typeof CustomerAutoRenewalStatusEnum[keyof typeof CustomerAutoRenewalStatusEnum];
 
+/**
+ * 
+ * @export
+ * @interface CustomerAutoRenewalWRedeemedCoupon
+ */
+export interface CustomerAutoRenewalWRedeemedCoupon {
+    /**
+     * The ID of the subscription that was created for this credit transaction.
+     * @type {string}
+     * @memberof CustomerAutoRenewalWRedeemedCoupon
+     */
+    'subscriptionId': string;
+    /**
+     * Number of units consumed per period
+     * @type {number}
+     * @memberof CustomerAutoRenewalWRedeemedCoupon
+     */
+    'units': number;
+    /**
+     * Number of bonus units
+     * @type {number}
+     * @memberof CustomerAutoRenewalWRedeemedCoupon
+     */
+    'bonusUnits': number;
+    /**
+     * 
+     * @type {AutoRenewalPeriod}
+     * @memberof CustomerAutoRenewalWRedeemedCoupon
+     */
+    'period': AutoRenewalPeriod;
+    /**
+     * An ISO formatted timestamp
+     * @type {string}
+     * @memberof CustomerAutoRenewalWRedeemedCoupon
+     */
+    'createdAt': string;
+    /**
+     * An ISO formatted timestamp
+     * @type {string}
+     * @memberof CustomerAutoRenewalWRedeemedCoupon
+     */
+    'nextChargeAt': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof CustomerAutoRenewalWRedeemedCoupon
+     */
+    'status': CustomerAutoRenewalWRedeemedCouponStatusEnum;
+    /**
+     * The redeemed coupon ID
+     * @type {string}
+     * @memberof CustomerAutoRenewalWRedeemedCoupon
+     */
+    'currentRedeemedCouponId'?: string;
+    /**
+     * 
+     * @type {RedeemedCoupon}
+     * @memberof CustomerAutoRenewalWRedeemedCoupon
+     */
+    'currentRedeemedCoupon'?: RedeemedCoupon;
+}
+
+export const CustomerAutoRenewalWRedeemedCouponStatusEnum = {
+    Active: 'active',
+    Cancelled: 'cancelled',
+    Overdue: 'overdue'
+} as const;
+
+export type CustomerAutoRenewalWRedeemedCouponStatusEnum = typeof CustomerAutoRenewalWRedeemedCouponStatusEnum[keyof typeof CustomerAutoRenewalWRedeemedCouponStatusEnum];
+
+/**
+ * 
+ * @export
+ * @interface CustomerAutoRenewalWRedeemedCouponAllOf
+ */
+export interface CustomerAutoRenewalWRedeemedCouponAllOf {
+    /**
+     * 
+     * @type {RedeemedCoupon}
+     * @memberof CustomerAutoRenewalWRedeemedCouponAllOf
+     */
+    'currentRedeemedCoupon'?: RedeemedCoupon;
+}
 /**
  * 
  * @export
@@ -2168,10 +2386,10 @@ export interface RecurringCreditConsumption {
     'objectId': string;
     /**
      * 
-     * @type {{ [key: string]: any; }}
+     * @type {TxMetadata}
      * @memberof RecurringCreditConsumption
      */
-    'metadata'?: { [key: string]: any; };
+    'metadata'?: TxMetadata | null;
 }
 
 
@@ -2259,6 +2477,43 @@ export interface RecurringCreditsGet200Response {
      * @memberof RecurringCreditsGet200Response
      */
     'total'?: number;
+}
+/**
+ * 
+ * @export
+ * @interface RedeemedCoupon
+ */
+export interface RedeemedCoupon {
+    /**
+     * The redeemed coupon ID
+     * @type {string}
+     * @memberof RedeemedCoupon
+     */
+    'id': string;
+    /**
+     * An ISO formatted timestamp
+     * @type {string}
+     * @memberof RedeemedCoupon
+     */
+    'createdAt': string;
+    /**
+     * The ID of the coupon
+     * @type {string}
+     * @memberof RedeemedCoupon
+     */
+    'couponId': string;
+    /**
+     * ID of a customer. All credits are linked to a customer. Multiple teams can be linked to the same customer & thus share credits.
+     * @type {string}
+     * @memberof RedeemedCoupon
+     */
+    'customerId': string;
+    /**
+     * An ISO formatted timestamp
+     * @type {string}
+     * @memberof RedeemedCoupon
+     */
+    'expiredAt'?: string | null;
 }
 /**
  * @type SingleConsumptionMetadata
@@ -2982,6 +3237,27 @@ export interface TeamDetailUpdate {
 /**
  * 
  * @export
+ * @interface TxMetadata
+ */
+export interface TxMetadata {
+    [key: string]: any;
+
+    /**
+     * The redeemed coupon ID
+     * @type {string}
+     * @memberof TxMetadata
+     */
+    'redeemedCouponId'?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof TxMetadata
+     */
+    'percentageOff'?: number;
+}
+/**
+ * 
+ * @export
  * @interface UnlockPreference
  */
 export interface UnlockPreference {
@@ -3444,6 +3720,140 @@ export const CouponCodesApiAxiosParamCreator = function (configuration?: Configu
                 options: localVarRequestOptions,
             };
         },
+        /**
+         * 
+         * @summary Archive a coupon code
+         * @param {CreditsCouponsArchiveRequest} [creditsCouponsArchiveRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        creditsCouponsArchive: async (creditsCouponsArchiveRequest?: CreditsCouponsArchiveRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v2/credits/coupons/archive`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["ADMIN_PANEL_ACCESS", "PARTNER_ADMIN_PANEL_ACCESS"], configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(creditsCouponsArchiveRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Get Chatdaddy coupon data
+         * @param {number} [count] 
+         * @param {boolean} [returnTotal] Return total number of coupons
+         * @param {string} [cursor] 
+         * @param {string} [q] Search by partial coupon id
+         * @param {string} [id] Filter by coupon ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        creditsCouponsGet: async (count?: number, returnTotal?: boolean, cursor?: string, q?: string, id?: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v2/credits/coupons`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["ADMIN_PANEL_ACCESS", "PARTNER_ADMIN_PANEL_ACCESS"], configuration)
+
+            if (count !== undefined) {
+                localVarQueryParameter['count'] = count;
+            }
+
+            if (returnTotal !== undefined) {
+                localVarQueryParameter['returnTotal'] = returnTotal;
+            }
+
+            if (cursor !== undefined) {
+                localVarQueryParameter['cursor'] = cursor;
+            }
+
+            if (q !== undefined) {
+                localVarQueryParameter['q'] = q;
+            }
+
+            if (id !== undefined) {
+                localVarQueryParameter['id'] = id;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Generate a coupon code
+         * @param {CreditCouponCodeCreateOptions} [creditCouponCodeCreateOptions] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        creditsCouponsPost: async (creditCouponCodeCreateOptions?: CreditCouponCodeCreateOptions, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v2/credits/coupons`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["ADMIN_PANEL_ACCESS", "PARTNER_ADMIN_PANEL_ACCESS"], configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(creditCouponCodeCreateOptions, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
     }
 };
 
@@ -3475,6 +3885,42 @@ export const CouponCodesApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.couponsPost(couponCodeCreateOptions, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
+        /**
+         * 
+         * @summary Archive a coupon code
+         * @param {CreditsCouponsArchiveRequest} [creditsCouponsArchiveRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async creditsCouponsArchive(creditsCouponsArchiveRequest?: CreditsCouponsArchiveRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.creditsCouponsArchive(creditsCouponsArchiveRequest, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary Get Chatdaddy coupon data
+         * @param {number} [count] 
+         * @param {boolean} [returnTotal] Return total number of coupons
+         * @param {string} [cursor] 
+         * @param {string} [q] Search by partial coupon id
+         * @param {string} [id] Filter by coupon ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async creditsCouponsGet(count?: number, returnTotal?: boolean, cursor?: string, q?: string, id?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CreditsCouponsGet200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.creditsCouponsGet(count, returnTotal, cursor, q, id, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * Generate a coupon code
+         * @param {CreditCouponCodeCreateOptions} [creditCouponCodeCreateOptions] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async creditsCouponsPost(creditCouponCodeCreateOptions?: CreditCouponCodeCreateOptions, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Coupon>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.creditsCouponsPost(creditCouponCodeCreateOptions, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
     }
 };
 
@@ -3503,6 +3949,35 @@ export const CouponCodesApiFactory = function (configuration?: Configuration, ba
          */
         couponsPost(requestParameters: CouponCodesApiCouponsPostRequest = {}, options?: AxiosRequestConfig): AxiosPromise<CouponsPost200Response> {
             return localVarFp.couponsPost(requestParameters.couponCodeCreateOptions, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Archive a coupon code
+         * @param {CouponCodesApiCreditsCouponsArchiveRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        creditsCouponsArchive(requestParameters: CouponCodesApiCreditsCouponsArchiveRequest = {}, options?: AxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.creditsCouponsArchive(requestParameters.creditsCouponsArchiveRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Get Chatdaddy coupon data
+         * @param {CouponCodesApiCreditsCouponsGetRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        creditsCouponsGet(requestParameters: CouponCodesApiCreditsCouponsGetRequest = {}, options?: AxiosRequestConfig): AxiosPromise<CreditsCouponsGet200Response> {
+            return localVarFp.creditsCouponsGet(requestParameters.count, requestParameters.returnTotal, requestParameters.cursor, requestParameters.q, requestParameters.id, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Generate a coupon code
+         * @param {CouponCodesApiCreditsCouponsPostRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        creditsCouponsPost(requestParameters: CouponCodesApiCreditsCouponsPostRequest = {}, options?: AxiosRequestConfig): AxiosPromise<Coupon> {
+            return localVarFp.creditsCouponsPost(requestParameters.creditCouponCodeCreateOptions, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -3536,6 +4011,76 @@ export interface CouponCodesApiCouponsPostRequest {
 }
 
 /**
+ * Request parameters for creditsCouponsArchive operation in CouponCodesApi.
+ * @export
+ * @interface CouponCodesApiCreditsCouponsArchiveRequest
+ */
+export interface CouponCodesApiCreditsCouponsArchiveRequest {
+    /**
+     * 
+     * @type {CreditsCouponsArchiveRequest}
+     * @memberof CouponCodesApiCreditsCouponsArchive
+     */
+    readonly creditsCouponsArchiveRequest?: CreditsCouponsArchiveRequest
+}
+
+/**
+ * Request parameters for creditsCouponsGet operation in CouponCodesApi.
+ * @export
+ * @interface CouponCodesApiCreditsCouponsGetRequest
+ */
+export interface CouponCodesApiCreditsCouponsGetRequest {
+    /**
+     * 
+     * @type {number}
+     * @memberof CouponCodesApiCreditsCouponsGet
+     */
+    readonly count?: number
+
+    /**
+     * Return total number of coupons
+     * @type {boolean}
+     * @memberof CouponCodesApiCreditsCouponsGet
+     */
+    readonly returnTotal?: boolean
+
+    /**
+     * 
+     * @type {string}
+     * @memberof CouponCodesApiCreditsCouponsGet
+     */
+    readonly cursor?: string
+
+    /**
+     * Search by partial coupon id
+     * @type {string}
+     * @memberof CouponCodesApiCreditsCouponsGet
+     */
+    readonly q?: string
+
+    /**
+     * Filter by coupon ID
+     * @type {string}
+     * @memberof CouponCodesApiCreditsCouponsGet
+     */
+    readonly id?: string
+}
+
+/**
+ * Request parameters for creditsCouponsPost operation in CouponCodesApi.
+ * @export
+ * @interface CouponCodesApiCreditsCouponsPostRequest
+ */
+export interface CouponCodesApiCreditsCouponsPostRequest {
+    /**
+     * 
+     * @type {CreditCouponCodeCreateOptions}
+     * @memberof CouponCodesApiCreditsCouponsPost
+     */
+    readonly creditCouponCodeCreateOptions?: CreditCouponCodeCreateOptions
+}
+
+/**
  * CouponCodesApi - object-oriented interface
  * @export
  * @class CouponCodesApi
@@ -3563,6 +4108,41 @@ export class CouponCodesApi extends BaseAPI {
      */
     public couponsPost(requestParameters: CouponCodesApiCouponsPostRequest = {}, options?: AxiosRequestConfig) {
         return CouponCodesApiFp(this.configuration).couponsPost(requestParameters.couponCodeCreateOptions, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Archive a coupon code
+     * @param {CouponCodesApiCreditsCouponsArchiveRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CouponCodesApi
+     */
+    public creditsCouponsArchive(requestParameters: CouponCodesApiCreditsCouponsArchiveRequest = {}, options?: AxiosRequestConfig) {
+        return CouponCodesApiFp(this.configuration).creditsCouponsArchive(requestParameters.creditsCouponsArchiveRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Get Chatdaddy coupon data
+     * @param {CouponCodesApiCreditsCouponsGetRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CouponCodesApi
+     */
+    public creditsCouponsGet(requestParameters: CouponCodesApiCreditsCouponsGetRequest = {}, options?: AxiosRequestConfig) {
+        return CouponCodesApiFp(this.configuration).creditsCouponsGet(requestParameters.count, requestParameters.returnTotal, requestParameters.cursor, requestParameters.q, requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Generate a coupon code
+     * @param {CouponCodesApiCreditsCouponsPostRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CouponCodesApi
+     */
+    public creditsCouponsPost(requestParameters: CouponCodesApiCreditsCouponsPostRequest = {}, options?: AxiosRequestConfig) {
+        return CouponCodesApiFp(this.configuration).creditsCouponsPost(requestParameters.creditCouponCodeCreateOptions, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

@@ -178,7 +178,7 @@ export type AccountAssignType = typeof AccountAssignType[keyof typeof AccountAss
  * @type AccountCredentialsAlibaba
  * @export
  */
-export type AccountCredentialsAlibaba = AccountCredentialsAlibabaOneOf | AccountCredentialsAlibabaV2;
+export type AccountCredentialsAlibaba = AccountCredentialsAlibabaOneOf | AccountCredentialsAlibabaV2 | AccountCredentialsWaba;
 
 /**
  * 
@@ -383,6 +383,38 @@ export const AccountCredentialsTikTokTypeEnum = {
 } as const;
 
 export type AccountCredentialsTikTokTypeEnum = typeof AccountCredentialsTikTokTypeEnum[keyof typeof AccountCredentialsTikTokTypeEnum];
+
+/**
+ * 
+ * @export
+ * @interface AccountCredentialsWaba
+ */
+export interface AccountCredentialsWaba {
+    /**
+     * 
+     * @type {string}
+     * @memberof AccountCredentialsWaba
+     */
+    'type': AccountCredentialsWabaTypeEnum;
+    /**
+     * The WABA ID of the business account.
+     * @type {string}
+     * @memberof AccountCredentialsWaba
+     */
+    'phoneNumberId': string;
+    /**
+     * ID of the business
+     * @type {string}
+     * @memberof AccountCredentialsWaba
+     */
+    'waBusinessId': string;
+}
+
+export const AccountCredentialsWabaTypeEnum = {
+    Waba: 'waba'
+} as const;
+
+export type AccountCredentialsWabaTypeEnum = typeof AccountCredentialsWabaTypeEnum[keyof typeof AccountCredentialsWabaTypeEnum];
 
 /**
  * 
@@ -786,6 +818,12 @@ export interface AlibabaCAMSStateInfo {
      * @type {string}
      * @memberof AlibabaCAMSStateInfo
      */
+    'version'?: AlibabaCAMSStateInfoVersionEnum;
+    /**
+     * 
+     * @type {string}
+     * @memberof AlibabaCAMSStateInfo
+     */
     'status'?: AlibabaCAMSStateInfoStatusEnum;
     /**
      * Status of the company name approval from WABA
@@ -813,6 +851,12 @@ export interface AlibabaCAMSStateInfo {
     'profileDescription'?: string;
 }
 
+export const AlibabaCAMSStateInfoVersionEnum = {
+    Waba: 'waba',
+    AlibabaCamsV2: 'alibaba-cams-v2'
+} as const;
+
+export type AlibabaCAMSStateInfoVersionEnum = typeof AlibabaCAMSStateInfoVersionEnum[keyof typeof AlibabaCAMSStateInfoVersionEnum];
 export const AlibabaCAMSStateInfoStatusEnum = {
     PendingApproval: 'pending-approval',
     Approved: 'approved',
@@ -1094,6 +1138,12 @@ export interface AlibabaCamsRegister200Response {
  */
 export interface AlibabaCamsRegisterRequest {
     /**
+     * Version of the integration
+     * @type {string}
+     * @memberof AlibabaCamsRegisterRequest
+     */
+    'version'?: AlibabaCamsRegisterRequestVersionEnum;
+    /**
      * Id of the latest whatsapp business account
      * @type {string}
      * @memberof AlibabaCamsRegisterRequest
@@ -1109,9 +1159,18 @@ export interface AlibabaCamsRegisterRequest {
      * Token from embedded sign up
      * @type {string}
      * @memberof AlibabaCamsRegisterRequest
+     * @deprecated
      */
     'token'?: string;
 }
+
+export const AlibabaCamsRegisterRequestVersionEnum = {
+    Waba: 'waba',
+    AlibabaCamsV2: 'alibaba-cams-v2'
+} as const;
+
+export type AlibabaCamsRegisterRequestVersionEnum = typeof AlibabaCamsRegisterRequestVersionEnum[keyof typeof AlibabaCamsRegisterRequestVersionEnum];
+
 /**
  * 
  * @export
@@ -2537,6 +2596,12 @@ export interface EntryItems {
      * @memberof EntryItems
      */
     'messaging'?: Array<MessagingItems>;
+    /**
+     * 
+     * @type {Array<{ [key: string]: any; }>}
+     * @memberof EntryItems
+     */
+    'changes'?: Array<{ [key: string]: any; }>;
 }
 /**
  * 
@@ -2983,6 +3048,12 @@ export interface Message {
     'conversationMetadata'?: WABAConversationMetadata;
     /**
      * 
+     * @type {MessageAllOfReactionAction}
+     * @memberof Message
+     */
+    'reactionAction'?: MessageAllOfReactionAction;
+    /**
+     * 
      * @type {Array<string>}
      * @memberof Message
      */
@@ -3176,6 +3247,12 @@ export interface MessageAllOf {
      * @memberof MessageAllOf
      */
     'conversationMetadata'?: WABAConversationMetadata;
+    /**
+     * 
+     * @type {MessageAllOfReactionAction}
+     * @memberof MessageAllOf
+     */
+    'reactionAction'?: MessageAllOfReactionAction;
 }
 
 
@@ -3203,6 +3280,25 @@ export interface MessageAllOfError {
      * @memberof MessageAllOfError
      */
     'retries'?: number;
+}
+/**
+ * Message describes a reaction to another message
+ * @export
+ * @interface MessageAllOfReactionAction
+ */
+export interface MessageAllOfReactionAction {
+    /**
+     * Describes a reaction on a message
+     * @type {string}
+     * @memberof MessageAllOfReactionAction
+     */
+    'type': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof MessageAllOfReactionAction
+     */
+    'id': string;
 }
 /**
  * The user ID of the person that sent it

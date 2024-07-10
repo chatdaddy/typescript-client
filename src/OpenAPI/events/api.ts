@@ -5771,10 +5771,10 @@ export interface CredittransactionrecordInsertData {
     'objectId': string;
     /**
      * 
-     * @type {{ [key: string]: any; }}
+     * @type {CredittransactionrecordInsertDataAllOfMetadata}
      * @memberof CredittransactionrecordInsertData
      */
-    'metadata'?: { [key: string]: any; };
+    'metadata'?: CredittransactionrecordInsertDataAllOfMetadata | null;
     /**
      * 
      * @type {string}
@@ -5838,10 +5838,31 @@ export interface CredittransactionrecordInsertDataAllOf {
     'objectId': string;
     /**
      * 
-     * @type {{ [key: string]: any; }}
+     * @type {CredittransactionrecordInsertDataAllOfMetadata}
      * @memberof CredittransactionrecordInsertDataAllOf
      */
-    'metadata'?: { [key: string]: any; };
+    'metadata'?: CredittransactionrecordInsertDataAllOfMetadata | null;
+}
+/**
+ * 
+ * @export
+ * @interface CredittransactionrecordInsertDataAllOfMetadata
+ */
+export interface CredittransactionrecordInsertDataAllOfMetadata {
+    [key: string]: any;
+
+    /**
+     * The redeemed coupon ID
+     * @type {string}
+     * @memberof CredittransactionrecordInsertDataAllOfMetadata
+     */
+    'redeemedCouponId'?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof CredittransactionrecordInsertDataAllOfMetadata
+     */
+    'percentageOff'?: number;
 }
 /**
  * 
@@ -7636,6 +7657,12 @@ export interface MessageInsertData {
     'conversationMetadata'?: MessageInsertDataConversationMetadata;
     /**
      * 
+     * @type {MessageInsertDataReactionAction}
+     * @memberof MessageInsertData
+     */
+    'reactionAction'?: MessageInsertDataReactionAction;
+    /**
+     * 
      * @type {Array<string>}
      * @memberof MessageInsertData
      */
@@ -8381,6 +8408,25 @@ export interface MessageInsertDataQuoted {
 /**
  * 
  * @export
+ * @interface MessageInsertDataReactionAction
+ */
+export interface MessageInsertDataReactionAction {
+    /**
+     * 
+     * @type {string}
+     * @memberof MessageInsertDataReactionAction
+     */
+    'type': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof MessageInsertDataReactionAction
+     */
+    'id': string;
+}
+/**
+ * 
+ * @export
  * @interface MessageInsertDataReactionsInner
  */
 export interface MessageInsertDataReactionsInner {
@@ -8600,6 +8646,12 @@ export interface MessageUpdateData {
      * @memberof MessageUpdateData
      */
     'conversationMetadata'?: MessageInsertDataConversationMetadata;
+    /**
+     * 
+     * @type {MessageInsertDataReactionAction}
+     * @memberof MessageUpdateData
+     */
+    'reactionAction'?: MessageInsertDataReactionAction;
     /**
      * 
      * @type {Array<string>}
