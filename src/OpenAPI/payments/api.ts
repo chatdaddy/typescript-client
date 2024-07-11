@@ -389,6 +389,12 @@ export interface Coupon {
      * @memberof Coupon
      */
     'archivedAt'?: string | null;
+    /**
+     * The partnership to use for this coupon. Only partnership teams can redeem this coupon.
+     * @type {string}
+     * @memberof Coupon
+     */
+    'partnership'?: string;
 }
 /**
  * 
@@ -626,6 +632,7 @@ export const CreditConsumptionType = {
     MessageSentMessenger: 'message_sent/messenger',
     MessageSentMail: 'message_sent/mail',
     ConversationWaBusinessApi: 'conversation/wa-business-api',
+    VoiceCall: 'voice_call',
     IntegrationNotification: 'integration/notification',
     IntegrationPayment: 'integration/payment',
     AiChatbot: 'ai_chatbot',
@@ -1408,6 +1415,37 @@ export interface CreditsCouponsGet200Response {
      * @memberof CreditsCouponsGet200Response
      */
     'items': Array<Coupon>;
+    /**
+     * 
+     * @type {number}
+     * @memberof CreditsCouponsGet200Response
+     */
+    'total'?: number;
+}
+/**
+ * 
+ * @export
+ * @interface CreditsCouponsRedemptionsGet200Response
+ */
+export interface CreditsCouponsRedemptionsGet200Response {
+    /**
+     * The redeemed coupon ID
+     * @type {string}
+     * @memberof CreditsCouponsRedemptionsGet200Response
+     */
+    'nextPageCursor'?: string;
+    /**
+     * 
+     * @type {Array<RedeemedCoupon>}
+     * @memberof CreditsCouponsRedemptionsGet200Response
+     */
+    'items': Array<RedeemedCoupon>;
+    /**
+     * 
+     * @type {number}
+     * @memberof CreditsCouponsRedemptionsGet200Response
+     */
+    'total'?: number;
 }
 /**
  * 
@@ -3854,6 +3892,65 @@ export const CouponCodesApiAxiosParamCreator = function (configuration?: Configu
                 options: localVarRequestOptions,
             };
         },
+        /**
+         * 
+         * @summary Get coupon redemptions
+         * @param {number} [count] 
+         * @param {boolean} [returnTotal] Return total number of redemptions
+         * @param {string} [cursor] 
+         * @param {string} [q] Search by partial redeemed coupon id
+         * @param {string} [couponId] Filter by coupon ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        creditsCouponsRedemptionsGet: async (count?: number, returnTotal?: boolean, cursor?: string, q?: string, couponId?: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v2/credits/coupons/redemptions`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["ADMIN_PANEL_ACCESS", "PARTNER_ADMIN_PANEL_ACCESS"], configuration)
+
+            if (count !== undefined) {
+                localVarQueryParameter['count'] = count;
+            }
+
+            if (returnTotal !== undefined) {
+                localVarQueryParameter['returnTotal'] = returnTotal;
+            }
+
+            if (cursor !== undefined) {
+                localVarQueryParameter['cursor'] = cursor;
+            }
+
+            if (q !== undefined) {
+                localVarQueryParameter['q'] = q;
+            }
+
+            if (couponId !== undefined) {
+                localVarQueryParameter['couponId'] = couponId;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
     }
 };
 
@@ -3921,6 +4018,21 @@ export const CouponCodesApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.creditsCouponsPost(creditCouponCodeCreateOptions, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
+        /**
+         * 
+         * @summary Get coupon redemptions
+         * @param {number} [count] 
+         * @param {boolean} [returnTotal] Return total number of redemptions
+         * @param {string} [cursor] 
+         * @param {string} [q] Search by partial redeemed coupon id
+         * @param {string} [couponId] Filter by coupon ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async creditsCouponsRedemptionsGet(count?: number, returnTotal?: boolean, cursor?: string, q?: string, couponId?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CreditsCouponsRedemptionsGet200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.creditsCouponsRedemptionsGet(count, returnTotal, cursor, q, couponId, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
     }
 };
 
@@ -3978,6 +4090,16 @@ export const CouponCodesApiFactory = function (configuration?: Configuration, ba
          */
         creditsCouponsPost(requestParameters: CouponCodesApiCreditsCouponsPostRequest = {}, options?: AxiosRequestConfig): AxiosPromise<Coupon> {
             return localVarFp.creditsCouponsPost(requestParameters.creditCouponCodeCreateOptions, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Get coupon redemptions
+         * @param {CouponCodesApiCreditsCouponsRedemptionsGetRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        creditsCouponsRedemptionsGet(requestParameters: CouponCodesApiCreditsCouponsRedemptionsGetRequest = {}, options?: AxiosRequestConfig): AxiosPromise<CreditsCouponsRedemptionsGet200Response> {
+            return localVarFp.creditsCouponsRedemptionsGet(requestParameters.count, requestParameters.returnTotal, requestParameters.cursor, requestParameters.q, requestParameters.couponId, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -4081,6 +4203,48 @@ export interface CouponCodesApiCreditsCouponsPostRequest {
 }
 
 /**
+ * Request parameters for creditsCouponsRedemptionsGet operation in CouponCodesApi.
+ * @export
+ * @interface CouponCodesApiCreditsCouponsRedemptionsGetRequest
+ */
+export interface CouponCodesApiCreditsCouponsRedemptionsGetRequest {
+    /**
+     * 
+     * @type {number}
+     * @memberof CouponCodesApiCreditsCouponsRedemptionsGet
+     */
+    readonly count?: number
+
+    /**
+     * Return total number of redemptions
+     * @type {boolean}
+     * @memberof CouponCodesApiCreditsCouponsRedemptionsGet
+     */
+    readonly returnTotal?: boolean
+
+    /**
+     * 
+     * @type {string}
+     * @memberof CouponCodesApiCreditsCouponsRedemptionsGet
+     */
+    readonly cursor?: string
+
+    /**
+     * Search by partial redeemed coupon id
+     * @type {string}
+     * @memberof CouponCodesApiCreditsCouponsRedemptionsGet
+     */
+    readonly q?: string
+
+    /**
+     * Filter by coupon ID
+     * @type {string}
+     * @memberof CouponCodesApiCreditsCouponsRedemptionsGet
+     */
+    readonly couponId?: string
+}
+
+/**
  * CouponCodesApi - object-oriented interface
  * @export
  * @class CouponCodesApi
@@ -4143,6 +4307,18 @@ export class CouponCodesApi extends BaseAPI {
      */
     public creditsCouponsPost(requestParameters: CouponCodesApiCreditsCouponsPostRequest = {}, options?: AxiosRequestConfig) {
         return CouponCodesApiFp(this.configuration).creditsCouponsPost(requestParameters.creditCouponCodeCreateOptions, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Get coupon redemptions
+     * @param {CouponCodesApiCreditsCouponsRedemptionsGetRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CouponCodesApi
+     */
+    public creditsCouponsRedemptionsGet(requestParameters: CouponCodesApiCreditsCouponsRedemptionsGetRequest = {}, options?: AxiosRequestConfig) {
+        return CouponCodesApiFp(this.configuration).creditsCouponsRedemptionsGet(requestParameters.count, requestParameters.returnTotal, requestParameters.cursor, requestParameters.q, requestParameters.couponId, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
