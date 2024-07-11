@@ -2575,6 +2575,31 @@ export interface CrmTicketPost {
 /**
  * 
  * @export
+ * @interface CrmTicketsPage
+ */
+export interface CrmTicketsPage {
+    /**
+     * 
+     * @type {Array<CrmTicket>}
+     * @memberof CrmTicketsPage
+     */
+    'items': Array<CrmTicket>;
+    /**
+     * 
+     * @type {string}
+     * @memberof CrmTicketsPage
+     */
+    'nextPageCursor'?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof CrmTicketsPage
+     */
+    'totalCount'?: number;
+}
+/**
+ * 
+ * @export
  * @interface EntryItems
  */
 export interface EntryItems {
@@ -2619,27 +2644,15 @@ export interface GetChatHistory200Response {
 /**
  * 
  * @export
- * @interface GetTickets200Response
+ * @interface GetTicketsByStage200Response
  */
-export interface GetTickets200Response {
+export interface GetTicketsByStage200Response {
     /**
      * 
-     * @type {Array<CrmTicket>}
-     * @memberof GetTickets200Response
+     * @type {{ [key: string]: CrmTicketsPage; }}
+     * @memberof GetTicketsByStage200Response
      */
-    'items': Array<CrmTicket>;
-    /**
-     * 
-     * @type {string}
-     * @memberof GetTickets200Response
-     */
-    'nextPageCursor'?: string;
-    /**
-     * 
-     * @type {number}
-     * @memberof GetTickets200Response
-     */
-    'totalCount'?: number;
+    'ticketsByStage': { [key: string]: CrmTicketsPage; };
 }
 /**
  * @type GroupAction
@@ -8007,6 +8020,95 @@ export const CRMApiAxiosParamCreator = function (configuration?: Configuration) 
         },
         /**
          * 
+         * @summary Get CRM tickets grouped by stage
+         * @param {number} [count] Number of items to return
+         * @param {string} [page] 
+         * @param {string} [boardId] 
+         * @param {string} [stageId] 
+         * @param {UniqueContactID} [contactId] 
+         * @param {Array<string>} [id] 
+         * @param {boolean} [returnTotalCount] 
+         * @param {string} [q] Search items by this string
+         * @param {ChatsGetTagsParameter} [tags] Get contacts who fall in either of these tags
+         * @param {Array<TagFilter>} [customFields] Get contacts with these custom fields
+         * @param {ChatsGetAssigneeParameter} [assignee] Get contacts assigned to the specified users
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getTicketsByStage: async (count?: number, page?: string, boardId?: string, stageId?: string, contactId?: UniqueContactID, id?: Array<string>, returnTotalCount?: boolean, q?: string, tags?: ChatsGetTagsParameter, customFields?: Array<TagFilter>, assignee?: ChatsGetAssigneeParameter, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/crm/tickets/by-stage`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", [], configuration)
+
+            if (count !== undefined) {
+                localVarQueryParameter['count'] = count;
+            }
+
+            if (page !== undefined) {
+                localVarQueryParameter['page'] = page;
+            }
+
+            if (boardId !== undefined) {
+                localVarQueryParameter['boardId'] = boardId;
+            }
+
+            if (stageId !== undefined) {
+                localVarQueryParameter['stageId'] = stageId;
+            }
+
+            if (contactId !== undefined) {
+                localVarQueryParameter['contactId'] = contactId;
+            }
+
+            if (id) {
+                localVarQueryParameter['id'] = id;
+            }
+
+            if (returnTotalCount !== undefined) {
+                localVarQueryParameter['returnTotalCount'] = returnTotalCount;
+            }
+
+            if (q !== undefined) {
+                localVarQueryParameter['q'] = q;
+            }
+
+            if (tags !== undefined) {
+                localVarQueryParameter['tags'] = tags;
+            }
+
+            if (customFields) {
+                localVarQueryParameter['customFields'] = customFields;
+            }
+
+            if (assignee !== undefined) {
+                localVarQueryParameter['assignee'] = assignee;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
          * @summary Start a timer for a CRM ticket
          * @param {string} id 
          * @param {TicketTimerCreate} [ticketTimerCreate] 
@@ -8220,8 +8322,29 @@ export const CRMApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getTickets(count?: number, page?: string, boardId?: string, stageId?: string, contactId?: UniqueContactID, id?: Array<string>, returnTotalCount?: boolean, q?: string, tags?: ChatsGetTagsParameter, customFields?: Array<TagFilter>, assignee?: ChatsGetAssigneeParameter, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetTickets200Response>> {
+        async getTickets(count?: number, page?: string, boardId?: string, stageId?: string, contactId?: UniqueContactID, id?: Array<string>, returnTotalCount?: boolean, q?: string, tags?: ChatsGetTagsParameter, customFields?: Array<TagFilter>, assignee?: ChatsGetAssigneeParameter, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CrmTicketsPage>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getTickets(count, page, boardId, stageId, contactId, id, returnTotalCount, q, tags, customFields, assignee, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary Get CRM tickets grouped by stage
+         * @param {number} [count] Number of items to return
+         * @param {string} [page] 
+         * @param {string} [boardId] 
+         * @param {string} [stageId] 
+         * @param {UniqueContactID} [contactId] 
+         * @param {Array<string>} [id] 
+         * @param {boolean} [returnTotalCount] 
+         * @param {string} [q] Search items by this string
+         * @param {ChatsGetTagsParameter} [tags] Get contacts who fall in either of these tags
+         * @param {Array<TagFilter>} [customFields] Get contacts with these custom fields
+         * @param {ChatsGetAssigneeParameter} [assignee] Get contacts assigned to the specified users
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getTicketsByStage(count?: number, page?: string, boardId?: string, stageId?: string, contactId?: UniqueContactID, id?: Array<string>, returnTotalCount?: boolean, q?: string, tags?: ChatsGetTagsParameter, customFields?: Array<TagFilter>, assignee?: ChatsGetAssigneeParameter, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetTicketsByStage200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getTicketsByStage(count, page, boardId, stageId, contactId, id, returnTotalCount, q, tags, customFields, assignee, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -8335,8 +8458,18 @@ export const CRMApiFactory = function (configuration?: Configuration, basePath?:
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getTickets(requestParameters: CRMApiGetTicketsRequest = {}, options?: AxiosRequestConfig): AxiosPromise<GetTickets200Response> {
+        getTickets(requestParameters: CRMApiGetTicketsRequest = {}, options?: AxiosRequestConfig): AxiosPromise<CrmTicketsPage> {
             return localVarFp.getTickets(requestParameters.count, requestParameters.page, requestParameters.boardId, requestParameters.stageId, requestParameters.contactId, requestParameters.id, requestParameters.returnTotalCount, requestParameters.q, requestParameters.tags, requestParameters.customFields, requestParameters.assignee, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Get CRM tickets grouped by stage
+         * @param {CRMApiGetTicketsByStageRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getTicketsByStage(requestParameters: CRMApiGetTicketsByStageRequest = {}, options?: AxiosRequestConfig): AxiosPromise<GetTicketsByStage200Response> {
+            return localVarFp.getTicketsByStage(requestParameters.count, requestParameters.page, requestParameters.boardId, requestParameters.stageId, requestParameters.contactId, requestParameters.id, requestParameters.returnTotalCount, requestParameters.q, requestParameters.tags, requestParameters.customFields, requestParameters.assignee, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -8533,6 +8666,90 @@ export interface CRMApiGetTicketsRequest {
 }
 
 /**
+ * Request parameters for getTicketsByStage operation in CRMApi.
+ * @export
+ * @interface CRMApiGetTicketsByStageRequest
+ */
+export interface CRMApiGetTicketsByStageRequest {
+    /**
+     * Number of items to return
+     * @type {number}
+     * @memberof CRMApiGetTicketsByStage
+     */
+    readonly count?: number
+
+    /**
+     * 
+     * @type {string}
+     * @memberof CRMApiGetTicketsByStage
+     */
+    readonly page?: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof CRMApiGetTicketsByStage
+     */
+    readonly boardId?: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof CRMApiGetTicketsByStage
+     */
+    readonly stageId?: string
+
+    /**
+     * 
+     * @type {UniqueContactID}
+     * @memberof CRMApiGetTicketsByStage
+     */
+    readonly contactId?: UniqueContactID
+
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof CRMApiGetTicketsByStage
+     */
+    readonly id?: Array<string>
+
+    /**
+     * 
+     * @type {boolean}
+     * @memberof CRMApiGetTicketsByStage
+     */
+    readonly returnTotalCount?: boolean
+
+    /**
+     * Search items by this string
+     * @type {string}
+     * @memberof CRMApiGetTicketsByStage
+     */
+    readonly q?: string
+
+    /**
+     * Get contacts who fall in either of these tags
+     * @type {ChatsGetTagsParameter}
+     * @memberof CRMApiGetTicketsByStage
+     */
+    readonly tags?: ChatsGetTagsParameter
+
+    /**
+     * Get contacts with these custom fields
+     * @type {Array<TagFilter>}
+     * @memberof CRMApiGetTicketsByStage
+     */
+    readonly customFields?: Array<TagFilter>
+
+    /**
+     * Get contacts assigned to the specified users
+     * @type {ChatsGetAssigneeParameter}
+     * @memberof CRMApiGetTicketsByStage
+     */
+    readonly assignee?: ChatsGetAssigneeParameter
+}
+
+/**
  * Request parameters for startTicketTimer operation in CRMApi.
  * @export
  * @interface CRMApiStartTicketTimerRequest
@@ -8676,6 +8893,18 @@ export class CRMApi extends BaseAPI {
      */
     public getTickets(requestParameters: CRMApiGetTicketsRequest = {}, options?: AxiosRequestConfig) {
         return CRMApiFp(this.configuration).getTickets(requestParameters.count, requestParameters.page, requestParameters.boardId, requestParameters.stageId, requestParameters.contactId, requestParameters.id, requestParameters.returnTotalCount, requestParameters.q, requestParameters.tags, requestParameters.customFields, requestParameters.assignee, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Get CRM tickets grouped by stage
+     * @param {CRMApiGetTicketsByStageRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CRMApi
+     */
+    public getTicketsByStage(requestParameters: CRMApiGetTicketsByStageRequest = {}, options?: AxiosRequestConfig) {
+        return CRMApiFp(this.configuration).getTicketsByStage(requestParameters.count, requestParameters.page, requestParameters.boardId, requestParameters.stageId, requestParameters.contactId, requestParameters.id, requestParameters.returnTotalCount, requestParameters.q, requestParameters.tags, requestParameters.customFields, requestParameters.assignee, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
