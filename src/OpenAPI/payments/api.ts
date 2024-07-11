@@ -1606,10 +1606,10 @@ export interface CustomerAutoRenewalWRedeemedCoupon {
     'currentRedeemedCouponId'?: string;
     /**
      * 
-     * @type {RedeemedCoupon}
+     * @type {CustomerAutoRenewalWRedeemedCouponAllOfCurrentRedeemedCoupon}
      * @memberof CustomerAutoRenewalWRedeemedCoupon
      */
-    'currentRedeemedCoupon'?: RedeemedCoupon;
+    'currentRedeemedCoupon'?: CustomerAutoRenewalWRedeemedCouponAllOfCurrentRedeemedCoupon;
 }
 
 export const CustomerAutoRenewalWRedeemedCouponStatusEnum = {
@@ -1628,10 +1628,66 @@ export type CustomerAutoRenewalWRedeemedCouponStatusEnum = typeof CustomerAutoRe
 export interface CustomerAutoRenewalWRedeemedCouponAllOf {
     /**
      * 
-     * @type {RedeemedCoupon}
+     * @type {CustomerAutoRenewalWRedeemedCouponAllOfCurrentRedeemedCoupon}
      * @memberof CustomerAutoRenewalWRedeemedCouponAllOf
      */
-    'currentRedeemedCoupon'?: RedeemedCoupon;
+    'currentRedeemedCoupon'?: CustomerAutoRenewalWRedeemedCouponAllOfCurrentRedeemedCoupon;
+}
+/**
+ * 
+ * @export
+ * @interface CustomerAutoRenewalWRedeemedCouponAllOfCurrentRedeemedCoupon
+ */
+export interface CustomerAutoRenewalWRedeemedCouponAllOfCurrentRedeemedCoupon {
+    /**
+     * The redeemed coupon ID
+     * @type {string}
+     * @memberof CustomerAutoRenewalWRedeemedCouponAllOfCurrentRedeemedCoupon
+     */
+    'id': string;
+    /**
+     * An ISO formatted timestamp
+     * @type {string}
+     * @memberof CustomerAutoRenewalWRedeemedCouponAllOfCurrentRedeemedCoupon
+     */
+    'createdAt': string;
+    /**
+     * The ID of the coupon
+     * @type {string}
+     * @memberof CustomerAutoRenewalWRedeemedCouponAllOfCurrentRedeemedCoupon
+     */
+    'couponId': string;
+    /**
+     * ID of a customer. All credits are linked to a customer. Multiple teams can be linked to the same customer & thus share credits.
+     * @type {string}
+     * @memberof CustomerAutoRenewalWRedeemedCouponAllOfCurrentRedeemedCoupon
+     */
+    'customerId': string;
+    /**
+     * An ISO formatted timestamp
+     * @type {string}
+     * @memberof CustomerAutoRenewalWRedeemedCouponAllOfCurrentRedeemedCoupon
+     */
+    'expiredAt'?: string | null;
+    /**
+     * 
+     * @type {Coupon}
+     * @memberof CustomerAutoRenewalWRedeemedCouponAllOfCurrentRedeemedCoupon
+     */
+    'coupon'?: Coupon;
+}
+/**
+ * 
+ * @export
+ * @interface CustomerAutoRenewalWRedeemedCouponAllOfCurrentRedeemedCouponAllOf
+ */
+export interface CustomerAutoRenewalWRedeemedCouponAllOfCurrentRedeemedCouponAllOf {
+    /**
+     * 
+     * @type {Coupon}
+     * @memberof CustomerAutoRenewalWRedeemedCouponAllOfCurrentRedeemedCouponAllOf
+     */
+    'coupon'?: Coupon;
 }
 /**
  * 
