@@ -1668,7 +1668,13 @@ export interface CustomerAutoRenewalWRedeemedCouponAllOfCurrentRedeemedCoupon {
      * @type {string}
      * @memberof CustomerAutoRenewalWRedeemedCouponAllOfCurrentRedeemedCoupon
      */
-    'expiredAt'?: string | null;
+    'expiresAt'?: string | null;
+    /**
+     * Number of credits saved by using this coupon
+     * @type {number}
+     * @memberof CustomerAutoRenewalWRedeemedCouponAllOfCurrentRedeemedCoupon
+     */
+    'creditsSaved'?: number;
     /**
      * 
      * @type {Coupon}
@@ -2607,7 +2613,13 @@ export interface RedeemedCoupon {
      * @type {string}
      * @memberof RedeemedCoupon
      */
-    'expiredAt'?: string | null;
+    'expiresAt'?: string | null;
+    /**
+     * Number of credits saved by using this coupon
+     * @type {number}
+     * @memberof RedeemedCoupon
+     */
+    'creditsSaved'?: number;
 }
 /**
  * @type SingleConsumptionMetadata
