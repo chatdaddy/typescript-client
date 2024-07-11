@@ -2169,10 +2169,6 @@ export const ListingsApiAxiosParamCreator = function (configuration?: Configurat
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
-            // authentication chatdaddy required
-            // oauth required
-            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", [], configuration)
-
             if (count !== undefined) {
                 localVarQueryParameter['count'] = count;
             }
