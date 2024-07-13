@@ -5863,6 +5863,12 @@ export interface CredittransactionrecordInsertDataAllOfMetadata {
      * @memberof CredittransactionrecordInsertDataAllOfMetadata
      */
     'percentageOff'?: number;
+    /**
+     * The ID of the coupon
+     * @type {string}
+     * @memberof CredittransactionrecordInsertDataAllOfMetadata
+     */
+    'couponId'?: string;
 }
 /**
  * 

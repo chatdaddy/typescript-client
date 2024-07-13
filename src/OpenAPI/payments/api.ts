@@ -3360,6 +3360,12 @@ export interface TxMetadata {
      * @memberof TxMetadata
      */
     'percentageOff'?: number;
+    /**
+     * The ID of the coupon
+     * @type {string}
+     * @memberof TxMetadata
+     */
+    'couponId'?: string;
 }
 /**
  * 
