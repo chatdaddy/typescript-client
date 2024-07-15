@@ -2757,6 +2757,19 @@ export interface BotsGets200Response {
 /**
  * 
  * @export
+ * @interface CalendarAuth200Response
+ */
+export interface CalendarAuth200Response {
+    /**
+     * 
+     * @type {string}
+     * @memberof CalendarAuth200Response
+     */
+    'refreshToken': string;
+}
+/**
+ * 
+ * @export
  * @interface ConditionalPropertyOption
  */
 export interface ConditionalPropertyOption {
@@ -4126,6 +4139,32 @@ export interface NextActionGroupsInnerTarget {
      */
     'position'?: Position | null;
 }
+/**
+ * describe OAuth input for access tokens
+ * @export
+ * @interface OAuthPropertyDescriptor
+ */
+export interface OAuthPropertyDescriptor {
+    /**
+     * 
+     * @type {string}
+     * @memberof OAuthPropertyDescriptor
+     */
+    'type': OAuthPropertyDescriptorTypeEnum;
+    /**
+     * 
+     * @type {string}
+     * @memberof OAuthPropertyDescriptor
+     */
+    'url'?: string;
+}
+
+export const OAuthPropertyDescriptorTypeEnum = {
+    Oauth: 'oauth'
+} as const;
+
+export type OAuthPropertyDescriptorTypeEnum = typeof OAuthPropertyDescriptorTypeEnum[keyof typeof OAuthPropertyDescriptorTypeEnum];
+
 /**
  * 
  * @export
@@ -7749,6 +7788,128 @@ export class BotsApi extends BaseAPI {
      */
     public getActionFireRecords(requestParameters: BotsApiGetActionFireRecordsRequest = {}, options?: AxiosRequestConfig) {
         return BotsApiFp(this.configuration).getActionFireRecords(requestParameters.count, requestParameters.beforeId, requestParameters.botId, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+/**
+ * CalendarApi - axios parameter creator
+ * @export
+ */
+export const CalendarApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @summary Get refresh token for google OAuth
+         * @param {string} authCode authorization code
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        calendarAuth: async (authCode: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'authCode' is not null or undefined
+            assertParamExists('calendarAuth', 'authCode', authCode)
+            const localVarPath = `/calendar`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (authCode !== undefined) {
+                localVarQueryParameter['authCode'] = authCode;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * CalendarApi - functional programming interface
+ * @export
+ */
+export const CalendarApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = CalendarApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * 
+         * @summary Get refresh token for google OAuth
+         * @param {string} authCode authorization code
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async calendarAuth(authCode: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CalendarAuth200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.calendarAuth(authCode, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+    }
+};
+
+/**
+ * CalendarApi - factory interface
+ * @export
+ */
+export const CalendarApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = CalendarApiFp(configuration)
+    return {
+        /**
+         * 
+         * @summary Get refresh token for google OAuth
+         * @param {CalendarApiCalendarAuthRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        calendarAuth(requestParameters: CalendarApiCalendarAuthRequest, options?: AxiosRequestConfig): AxiosPromise<CalendarAuth200Response> {
+            return localVarFp.calendarAuth(requestParameters.authCode, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * Request parameters for calendarAuth operation in CalendarApi.
+ * @export
+ * @interface CalendarApiCalendarAuthRequest
+ */
+export interface CalendarApiCalendarAuthRequest {
+    /**
+     * authorization code
+     * @type {string}
+     * @memberof CalendarApiCalendarAuth
+     */
+    readonly authCode: string
+}
+
+/**
+ * CalendarApi - object-oriented interface
+ * @export
+ * @class CalendarApi
+ * @extends {BaseAPI}
+ */
+export class CalendarApi extends BaseAPI {
+    /**
+     * 
+     * @summary Get refresh token for google OAuth
+     * @param {CalendarApiCalendarAuthRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CalendarApi
+     */
+    public calendarAuth(requestParameters: CalendarApiCalendarAuthRequest, options?: AxiosRequestConfig) {
+        return CalendarApiFp(this.configuration).calendarAuth(requestParameters.authCode, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
