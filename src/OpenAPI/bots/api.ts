@@ -2828,7 +2828,7 @@ export type DataProperty = DataPropertyDescriptor & PropertyMetadata
  * @type DataPropertyDescriptor
  * @export
  */
-export type DataPropertyDescriptor = SimplePropertyDescriptor | ArrayPropertyDescriptor | MapPropertyDescriptor;
+export type DataPropertyDescriptor = SimplePropertyDescriptor | ArrayPropertyDescriptor | MapPropertyDescriptor | OAuthPropertyDescriptor;
 
 /**
  * 
