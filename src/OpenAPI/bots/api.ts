@@ -2774,6 +2774,12 @@ export interface CalendarAuth200Response {
      * @memberof CalendarAuth200Response
      */
     'refreshToken': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof CalendarAuth200Response
+     */
+    'email': string;
 }
 /**
  * 
