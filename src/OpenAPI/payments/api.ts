@@ -395,6 +395,12 @@ export interface Coupon {
      * @memberof Coupon
      */
     'partnership'?: string;
+    /**
+     * 
+     * @type {CouponValidation}
+     * @memberof Coupon
+     */
+    'couponValidation'?: CouponValidation;
 }
 /**
  * 
@@ -432,6 +438,19 @@ export interface CouponCodeCreateOptions {
      * @memberof CouponCodeCreateOptions
      */
     'discountPercentageOff': number;
+}
+/**
+ * 
+ * @export
+ * @interface CouponValidation
+ */
+export interface CouponValidation {
+    /**
+     * 
+     * @type {Array<AutoRenewalPeriod>}
+     * @memberof CouponValidation
+     */
+    'period'?: Array<AutoRenewalPeriod>;
 }
 /**
  * 
@@ -682,6 +701,12 @@ export interface CreditCouponCodeCreateOptions {
      * @memberof CreditCouponCodeCreateOptions
      */
     'id'?: string;
+    /**
+     * 
+     * @type {CouponValidation}
+     * @memberof CreditCouponCodeCreateOptions
+     */
+    'couponValidation'?: CouponValidation;
 }
 /**
  * 
@@ -3930,6 +3955,44 @@ export const CouponCodesApiAxiosParamCreator = function (configuration?: Configu
             };
         },
         /**
+         * 
+         * @summary Get a coupon by ID
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        creditsCouponsGetId: async (id: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('creditsCouponsGetId', 'id', id)
+            const localVarPath = `/v2/credits/coupons/{id}`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", [], configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * Generate a coupon code
          * @param {CreditCouponCodeCreateOptions} [creditCouponCodeCreateOptions] 
          * @param {*} [options] Override http request option.
@@ -4083,6 +4146,17 @@ export const CouponCodesApiFp = function(configuration?: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
+         * 
+         * @summary Get a coupon by ID
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async creditsCouponsGetId(id: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Coupon>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.creditsCouponsGetId(id, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
          * Generate a coupon code
          * @param {CreditCouponCodeCreateOptions} [creditCouponCodeCreateOptions] 
          * @param {*} [options] Override http request option.
@@ -4155,6 +4229,16 @@ export const CouponCodesApiFactory = function (configuration?: Configuration, ba
          */
         creditsCouponsGet(requestParameters: CouponCodesApiCreditsCouponsGetRequest = {}, options?: AxiosRequestConfig): AxiosPromise<CreditsCouponsGet200Response> {
             return localVarFp.creditsCouponsGet(requestParameters.count, requestParameters.returnTotal, requestParameters.cursor, requestParameters.q, requestParameters.id, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Get a coupon by ID
+         * @param {CouponCodesApiCreditsCouponsGetIdRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        creditsCouponsGetId(requestParameters: CouponCodesApiCreditsCouponsGetIdRequest, options?: AxiosRequestConfig): AxiosPromise<Coupon> {
+            return localVarFp.creditsCouponsGetId(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
          * Generate a coupon code
@@ -4260,6 +4344,20 @@ export interface CouponCodesApiCreditsCouponsGetRequest {
      * @memberof CouponCodesApiCreditsCouponsGet
      */
     readonly id?: string
+}
+
+/**
+ * Request parameters for creditsCouponsGetId operation in CouponCodesApi.
+ * @export
+ * @interface CouponCodesApiCreditsCouponsGetIdRequest
+ */
+export interface CouponCodesApiCreditsCouponsGetIdRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof CouponCodesApiCreditsCouponsGetId
+     */
+    readonly id: string
 }
 
 /**
@@ -4370,6 +4468,18 @@ export class CouponCodesApi extends BaseAPI {
      */
     public creditsCouponsGet(requestParameters: CouponCodesApiCreditsCouponsGetRequest = {}, options?: AxiosRequestConfig) {
         return CouponCodesApiFp(this.configuration).creditsCouponsGet(requestParameters.count, requestParameters.returnTotal, requestParameters.cursor, requestParameters.q, requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Get a coupon by ID
+     * @param {CouponCodesApiCreditsCouponsGetIdRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CouponCodesApi
+     */
+    public creditsCouponsGetId(requestParameters: CouponCodesApiCreditsCouponsGetIdRequest, options?: AxiosRequestConfig) {
+        return CouponCodesApiFp(this.configuration).creditsCouponsGetId(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
