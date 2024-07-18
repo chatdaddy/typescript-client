@@ -461,10 +461,11 @@ export const CallsApiAxiosParamCreator = function (configuration?: Configuration
         /**
          * 
          * @summary Get the calls for the account
+         * @param {string} [q] Search items by this string
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        callsGet: async (options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        callsGet: async (q?: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/calls`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -480,6 +481,10 @@ export const CallsApiAxiosParamCreator = function (configuration?: Configuration
             // authentication chatdaddy required
             // oauth required
             await setOAuthToObject(localVarHeaderParameter, "chatdaddy", [], configuration)
+
+            if (q !== undefined) {
+                localVarQueryParameter['q'] = q;
+            }
 
 
     
@@ -571,10 +576,11 @@ export const CallsApiAxiosParamCreator = function (configuration?: Configuration
         /**
          * 
          * @summary Get the phone numbers for the account
+         * @param {string} [q] Search items by this string
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        phoneNumbersGet: async (options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        phoneNumbersGet: async (q?: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/phoneNumbers`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -590,6 +596,10 @@ export const CallsApiAxiosParamCreator = function (configuration?: Configuration
             // authentication chatdaddy required
             // oauth required
             await setOAuthToObject(localVarHeaderParameter, "chatdaddy", [], configuration)
+
+            if (q !== undefined) {
+                localVarQueryParameter['q'] = q;
+            }
 
 
     
@@ -749,12 +759,11 @@ export const CallsApiAxiosParamCreator = function (configuration?: Configuration
         /**
          * 
          * @summary Place the call and pass the audio stream
-         * @param {string} [q] Search items by this string
          * @param {VoiceOutboundPostRequest} [voiceOutboundPostRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        voiceOutboundPost: async (q?: string, voiceOutboundPostRequest?: VoiceOutboundPostRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        voiceOutboundPost: async (voiceOutboundPostRequest?: VoiceOutboundPostRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/voice/outbound`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -766,10 +775,6 @@ export const CallsApiAxiosParamCreator = function (configuration?: Configuration
             const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
-
-            if (q !== undefined) {
-                localVarQueryParameter['q'] = q;
-            }
 
 
     
@@ -809,11 +814,12 @@ export const CallsApiFp = function(configuration?: Configuration) {
         /**
          * 
          * @summary Get the calls for the account
+         * @param {string} [q] Search items by this string
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async callsGet(options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CallsGet200Response>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.callsGet(options);
+        async callsGet(q?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CallsGet200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.callsGet(q, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -841,11 +847,12 @@ export const CallsApiFp = function(configuration?: Configuration) {
         /**
          * 
          * @summary Get the phone numbers for the account
+         * @param {string} [q] Search items by this string
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async phoneNumbersGet(options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PhoneNumbersGet200Response>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.phoneNumbersGet(options);
+        async phoneNumbersGet(q?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PhoneNumbersGet200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.phoneNumbersGet(q, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -895,13 +902,12 @@ export const CallsApiFp = function(configuration?: Configuration) {
         /**
          * 
          * @summary Place the call and pass the audio stream
-         * @param {string} [q] Search items by this string
          * @param {VoiceOutboundPostRequest} [voiceOutboundPostRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async voiceOutboundPost(q?: string, voiceOutboundPostRequest?: VoiceOutboundPostRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<string>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.voiceOutboundPost(q, voiceOutboundPostRequest, options);
+        async voiceOutboundPost(voiceOutboundPostRequest?: VoiceOutboundPostRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<string>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.voiceOutboundPost(voiceOutboundPostRequest, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
     }
@@ -927,11 +933,12 @@ export const CallsApiFactory = function (configuration?: Configuration, basePath
         /**
          * 
          * @summary Get the calls for the account
+         * @param {CallsApiCallsGetRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        callsGet(options?: AxiosRequestConfig): AxiosPromise<CallsGet200Response> {
-            return localVarFp.callsGet(options).then((request) => request(axios, basePath));
+        callsGet(requestParameters: CallsApiCallsGetRequest = {}, options?: AxiosRequestConfig): AxiosPromise<CallsGet200Response> {
+            return localVarFp.callsGet(requestParameters.q, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -956,11 +963,12 @@ export const CallsApiFactory = function (configuration?: Configuration, basePath
         /**
          * 
          * @summary Get the phone numbers for the account
+         * @param {CallsApiPhoneNumbersGetRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        phoneNumbersGet(options?: AxiosRequestConfig): AxiosPromise<PhoneNumbersGet200Response> {
-            return localVarFp.phoneNumbersGet(options).then((request) => request(axios, basePath));
+        phoneNumbersGet(requestParameters: CallsApiPhoneNumbersGetRequest = {}, options?: AxiosRequestConfig): AxiosPromise<PhoneNumbersGet200Response> {
+            return localVarFp.phoneNumbersGet(requestParameters.q, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -1009,7 +1017,7 @@ export const CallsApiFactory = function (configuration?: Configuration, basePath
          * @throws {RequiredError}
          */
         voiceOutboundPost(requestParameters: CallsApiVoiceOutboundPostRequest = {}, options?: AxiosRequestConfig): AxiosPromise<string> {
-            return localVarFp.voiceOutboundPost(requestParameters.q, requestParameters.voiceOutboundPostRequest, options).then((request) => request(axios, basePath));
+            return localVarFp.voiceOutboundPost(requestParameters.voiceOutboundPostRequest, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -1026,6 +1034,20 @@ export interface CallsApiCallNotesPostRequest {
      * @memberof CallsApiCallNotesPost
      */
     readonly callNotesPostRequest?: CallNotesPostRequest
+}
+
+/**
+ * Request parameters for callsGet operation in CallsApi.
+ * @export
+ * @interface CallsApiCallsGetRequest
+ */
+export interface CallsApiCallsGetRequest {
+    /**
+     * Search items by this string
+     * @type {string}
+     * @memberof CallsApiCallsGet
+     */
+    readonly q?: string
 }
 
 /**
@@ -1054,6 +1076,20 @@ export interface CallsApiPhoneNumbersDeleteRequest {
      * @memberof CallsApiPhoneNumbersDelete
      */
     readonly phoneNumbersDeleteRequest?: PhoneNumbersDeleteRequest
+}
+
+/**
+ * Request parameters for phoneNumbersGet operation in CallsApi.
+ * @export
+ * @interface CallsApiPhoneNumbersGetRequest
+ */
+export interface CallsApiPhoneNumbersGetRequest {
+    /**
+     * Search items by this string
+     * @type {string}
+     * @memberof CallsApiPhoneNumbersGet
+     */
+    readonly q?: string
 }
 
 /**
@@ -1112,13 +1148,6 @@ export interface CallsApiVoiceInboundPostRequest {
  */
 export interface CallsApiVoiceOutboundPostRequest {
     /**
-     * Search items by this string
-     * @type {string}
-     * @memberof CallsApiVoiceOutboundPost
-     */
-    readonly q?: string
-
-    /**
      * 
      * @type {VoiceOutboundPostRequest}
      * @memberof CallsApiVoiceOutboundPost
@@ -1148,12 +1177,13 @@ export class CallsApi extends BaseAPI {
     /**
      * 
      * @summary Get the calls for the account
+     * @param {CallsApiCallsGetRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof CallsApi
      */
-    public callsGet(options?: AxiosRequestConfig) {
-        return CallsApiFp(this.configuration).callsGet(options).then((request) => request(this.axios, this.basePath));
+    public callsGet(requestParameters: CallsApiCallsGetRequest = {}, options?: AxiosRequestConfig) {
+        return CallsApiFp(this.configuration).callsGet(requestParameters.q, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -1183,12 +1213,13 @@ export class CallsApi extends BaseAPI {
     /**
      * 
      * @summary Get the phone numbers for the account
+     * @param {CallsApiPhoneNumbersGetRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof CallsApi
      */
-    public phoneNumbersGet(options?: AxiosRequestConfig) {
-        return CallsApiFp(this.configuration).phoneNumbersGet(options).then((request) => request(this.axios, this.basePath));
+    public phoneNumbersGet(requestParameters: CallsApiPhoneNumbersGetRequest = {}, options?: AxiosRequestConfig) {
+        return CallsApiFp(this.configuration).phoneNumbersGet(requestParameters.q, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -1247,7 +1278,7 @@ export class CallsApi extends BaseAPI {
      * @memberof CallsApi
      */
     public voiceOutboundPost(requestParameters: CallsApiVoiceOutboundPostRequest = {}, options?: AxiosRequestConfig) {
-        return CallsApiFp(this.configuration).voiceOutboundPost(requestParameters.q, requestParameters.voiceOutboundPostRequest, options).then((request) => request(this.axios, this.basePath));
+        return CallsApiFp(this.configuration).voiceOutboundPost(requestParameters.voiceOutboundPostRequest, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
