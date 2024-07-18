@@ -749,11 +749,12 @@ export const CallsApiAxiosParamCreator = function (configuration?: Configuration
         /**
          * 
          * @summary Place the call and pass the audio stream
+         * @param {string} [q] Search items by this string
          * @param {VoiceOutboundPostRequest} [voiceOutboundPostRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        voiceOutboundPost: async (voiceOutboundPostRequest?: VoiceOutboundPostRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        voiceOutboundPost: async (q?: string, voiceOutboundPostRequest?: VoiceOutboundPostRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/voice/outbound`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -765,6 +766,10 @@ export const CallsApiAxiosParamCreator = function (configuration?: Configuration
             const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
+
+            if (q !== undefined) {
+                localVarQueryParameter['q'] = q;
+            }
 
 
     
@@ -890,12 +895,13 @@ export const CallsApiFp = function(configuration?: Configuration) {
         /**
          * 
          * @summary Place the call and pass the audio stream
+         * @param {string} [q] Search items by this string
          * @param {VoiceOutboundPostRequest} [voiceOutboundPostRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async voiceOutboundPost(voiceOutboundPostRequest?: VoiceOutboundPostRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<string>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.voiceOutboundPost(voiceOutboundPostRequest, options);
+        async voiceOutboundPost(q?: string, voiceOutboundPostRequest?: VoiceOutboundPostRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<string>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.voiceOutboundPost(q, voiceOutboundPostRequest, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
     }
@@ -1003,7 +1009,7 @@ export const CallsApiFactory = function (configuration?: Configuration, basePath
          * @throws {RequiredError}
          */
         voiceOutboundPost(requestParameters: CallsApiVoiceOutboundPostRequest = {}, options?: AxiosRequestConfig): AxiosPromise<string> {
-            return localVarFp.voiceOutboundPost(requestParameters.voiceOutboundPostRequest, options).then((request) => request(axios, basePath));
+            return localVarFp.voiceOutboundPost(requestParameters.q, requestParameters.voiceOutboundPostRequest, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -1105,6 +1111,13 @@ export interface CallsApiVoiceInboundPostRequest {
  * @interface CallsApiVoiceOutboundPostRequest
  */
 export interface CallsApiVoiceOutboundPostRequest {
+    /**
+     * Search items by this string
+     * @type {string}
+     * @memberof CallsApiVoiceOutboundPost
+     */
+    readonly q?: string
+
     /**
      * 
      * @type {VoiceOutboundPostRequest}
@@ -1234,7 +1247,7 @@ export class CallsApi extends BaseAPI {
      * @memberof CallsApi
      */
     public voiceOutboundPost(requestParameters: CallsApiVoiceOutboundPostRequest = {}, options?: AxiosRequestConfig) {
-        return CallsApiFp(this.configuration).voiceOutboundPost(requestParameters.voiceOutboundPostRequest, options).then((request) => request(this.axios, this.basePath));
+        return CallsApiFp(this.configuration).voiceOutboundPost(requestParameters.q, requestParameters.voiceOutboundPostRequest, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
