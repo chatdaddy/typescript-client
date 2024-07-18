@@ -10514,6 +10514,12 @@ export interface TeamInsertData {
      * @memberof TeamInsertData
      */
     'connectedChannelCount'?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof TeamInsertData
+     */
+    'customerId'?: string | null;
 }
 
 export const TeamInsertDataScopesEnum = {
@@ -10927,6 +10933,12 @@ export interface TeamUpdateData {
      * @memberof TeamUpdateData
      */
     'connectedChannelCount'?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof TeamUpdateData
+     */
+    'customerId'?: string | null;
 }
 
 export const TeamUpdateDataScopesEnum = {

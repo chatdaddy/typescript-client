@@ -1762,6 +1762,12 @@ export interface Team {
      * @memberof Team
      */
     'connectedChannelCount'?: number;
+    /**
+     * ID of a customer. All credits are linked to a customer. Multiple teams can be linked to the same customer & thus share credits.
+     * @type {string}
+     * @memberof Team
+     */
+    'customerId'?: string | null;
 }
 /**
  * 
@@ -5324,10 +5330,11 @@ export const TeamsApiAxiosParamCreator = function (configuration?: Configuration
          * @param {boolean} [includeCreator] include the creator\&#39;s data in the API result
          * @param {string} [partner] string to identify user with a partner
          * @param {boolean} [returnOnboardingScore] return the onboarding score for the team
+         * @param {boolean} [isCreditSystemCustomer] If true, only return teams that are credit system customers. If false, only return teams that are not credit system customers. A team is only considered a credit system customer if they have a customerId set.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        teamsGet: async (q?: string, partnership?: string, onboardingScoreMin?: number, onboardingScoreMax?: number, createdAfter?: string, completedSteps?: Array<OnboardingStepID>, id?: Array<string>, userId?: string, count?: number, page?: number, includeTeamMembers?: boolean, includeInviteLinks?: boolean, includeTotal?: boolean, includeCreator?: boolean, partner?: string, returnOnboardingScore?: boolean, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        teamsGet: async (q?: string, partnership?: string, onboardingScoreMin?: number, onboardingScoreMax?: number, createdAfter?: string, completedSteps?: Array<OnboardingStepID>, id?: Array<string>, userId?: string, count?: number, page?: number, includeTeamMembers?: boolean, includeInviteLinks?: boolean, includeTotal?: boolean, includeCreator?: boolean, partner?: string, returnOnboardingScore?: boolean, isCreditSystemCustomer?: boolean, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/teams`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -5408,6 +5415,10 @@ export const TeamsApiAxiosParamCreator = function (configuration?: Configuration
 
             if (returnOnboardingScore !== undefined) {
                 localVarQueryParameter['returnOnboardingScore'] = returnOnboardingScore;
+            }
+
+            if (isCreditSystemCustomer !== undefined) {
+                localVarQueryParameter['isCreditSystemCustomer'] = isCreditSystemCustomer;
             }
 
 
@@ -5562,11 +5573,12 @@ export const TeamsApiFp = function(configuration?: Configuration) {
          * @param {boolean} [includeCreator] include the creator\&#39;s data in the API result
          * @param {string} [partner] string to identify user with a partner
          * @param {boolean} [returnOnboardingScore] return the onboarding score for the team
+         * @param {boolean} [isCreditSystemCustomer] If true, only return teams that are credit system customers. If false, only return teams that are not credit system customers. A team is only considered a credit system customer if they have a customerId set.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async teamsGet(q?: string, partnership?: string, onboardingScoreMin?: number, onboardingScoreMax?: number, createdAfter?: string, completedSteps?: Array<OnboardingStepID>, id?: Array<string>, userId?: string, count?: number, page?: number, includeTeamMembers?: boolean, includeInviteLinks?: boolean, includeTotal?: boolean, includeCreator?: boolean, partner?: string, returnOnboardingScore?: boolean, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TeamsGet200Response>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.teamsGet(q, partnership, onboardingScoreMin, onboardingScoreMax, createdAfter, completedSteps, id, userId, count, page, includeTeamMembers, includeInviteLinks, includeTotal, includeCreator, partner, returnOnboardingScore, options);
+        async teamsGet(q?: string, partnership?: string, onboardingScoreMin?: number, onboardingScoreMax?: number, createdAfter?: string, completedSteps?: Array<OnboardingStepID>, id?: Array<string>, userId?: string, count?: number, page?: number, includeTeamMembers?: boolean, includeInviteLinks?: boolean, includeTotal?: boolean, includeCreator?: boolean, partner?: string, returnOnboardingScore?: boolean, isCreditSystemCustomer?: boolean, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TeamsGet200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.teamsGet(q, partnership, onboardingScoreMin, onboardingScoreMax, createdAfter, completedSteps, id, userId, count, page, includeTeamMembers, includeInviteLinks, includeTotal, includeCreator, partner, returnOnboardingScore, isCreditSystemCustomer, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -5638,7 +5650,7 @@ export const TeamsApiFactory = function (configuration?: Configuration, basePath
          * @throws {RequiredError}
          */
         teamsGet(requestParameters: TeamsApiTeamsGetRequest = {}, options?: AxiosRequestConfig): AxiosPromise<TeamsGet200Response> {
-            return localVarFp.teamsGet(requestParameters.q, requestParameters.partnership, requestParameters.onboardingScoreMin, requestParameters.onboardingScoreMax, requestParameters.createdAfter, requestParameters.completedSteps, requestParameters.id, requestParameters.userId, requestParameters.count, requestParameters.page, requestParameters.includeTeamMembers, requestParameters.includeInviteLinks, requestParameters.includeTotal, requestParameters.includeCreator, requestParameters.partner, requestParameters.returnOnboardingScore, options).then((request) => request(axios, basePath));
+            return localVarFp.teamsGet(requestParameters.q, requestParameters.partnership, requestParameters.onboardingScoreMin, requestParameters.onboardingScoreMax, requestParameters.createdAfter, requestParameters.completedSteps, requestParameters.id, requestParameters.userId, requestParameters.count, requestParameters.page, requestParameters.includeTeamMembers, requestParameters.includeInviteLinks, requestParameters.includeTotal, requestParameters.includeCreator, requestParameters.partner, requestParameters.returnOnboardingScore, requestParameters.isCreditSystemCustomer, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -5815,6 +5827,13 @@ export interface TeamsApiTeamsGetRequest {
      * @memberof TeamsApiTeamsGet
      */
     readonly returnOnboardingScore?: boolean
+
+    /**
+     * If true, only return teams that are credit system customers. If false, only return teams that are not credit system customers. A team is only considered a credit system customer if they have a customerId set.
+     * @type {boolean}
+     * @memberof TeamsApiTeamsGet
+     */
+    readonly isCreditSystemCustomer?: boolean
 }
 
 /**
@@ -5896,7 +5915,7 @@ export class TeamsApi extends BaseAPI {
      * @memberof TeamsApi
      */
     public teamsGet(requestParameters: TeamsApiTeamsGetRequest = {}, options?: AxiosRequestConfig) {
-        return TeamsApiFp(this.configuration).teamsGet(requestParameters.q, requestParameters.partnership, requestParameters.onboardingScoreMin, requestParameters.onboardingScoreMax, requestParameters.createdAfter, requestParameters.completedSteps, requestParameters.id, requestParameters.userId, requestParameters.count, requestParameters.page, requestParameters.includeTeamMembers, requestParameters.includeInviteLinks, requestParameters.includeTotal, requestParameters.includeCreator, requestParameters.partner, requestParameters.returnOnboardingScore, options).then((request) => request(this.axios, this.basePath));
+        return TeamsApiFp(this.configuration).teamsGet(requestParameters.q, requestParameters.partnership, requestParameters.onboardingScoreMin, requestParameters.onboardingScoreMax, requestParameters.createdAfter, requestParameters.completedSteps, requestParameters.id, requestParameters.userId, requestParameters.count, requestParameters.page, requestParameters.includeTeamMembers, requestParameters.includeInviteLinks, requestParameters.includeTotal, requestParameters.includeCreator, requestParameters.partner, requestParameters.returnOnboardingScore, requestParameters.isCreditSystemCustomer, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
