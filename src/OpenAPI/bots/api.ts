@@ -1013,19 +1013,19 @@ export type ActionInteractionOneOfAllOfTypeEnum = typeof ActionInteractionOneOfA
 /**
  * 
  * @export
- * @interface ActionInteractionQueryValue
+ * @interface ActionInteractionQueryItem
  */
-export interface ActionInteractionQueryValue {
+export interface ActionInteractionQueryItem {
     /**
      * 
      * @type {ActionInteractionType}
-     * @memberof ActionInteractionQueryValue
+     * @memberof ActionInteractionQueryItem
      */
     'type': ActionInteractionType;
     /**
      * 
      * @type {string}
-     * @memberof ActionInteractionQueryValue
+     * @memberof ActionInteractionQueryItem
      */
     'text'?: string;
 }
@@ -5909,14 +5909,15 @@ export const BotRecordsApiAxiosParamCreator = function (configuration?: Configur
          * @param {GetBotFireRecordsContactsParameter} [contacts] 
          * @param {number} [count] 
          * @param {string} [cursor] 
-         * @param {{ [key: string]: ActionInteractionQueryValue; }} [interactions] 
+         * @param {{ [key: string]: ActionInteractionQueryItem; }} [interactions] 
+         * @param {ActionInteractionQueryItem} [scheduledActionInteraction] 
          * @param {boolean} [returnTotal] 
          * @param {string} [instanceId] 
          * @param {string} [triggerId] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getBotFireRecords: async (botId?: string, contacts?: GetBotFireRecordsContactsParameter, count?: number, cursor?: string, interactions?: { [key: string]: ActionInteractionQueryValue; }, returnTotal?: boolean, instanceId?: string, triggerId?: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getBotFireRecords: async (botId?: string, contacts?: GetBotFireRecordsContactsParameter, count?: number, cursor?: string, interactions?: { [key: string]: ActionInteractionQueryItem; }, scheduledActionInteraction?: ActionInteractionQueryItem, returnTotal?: boolean, instanceId?: string, triggerId?: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/bot/records`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -5951,6 +5952,10 @@ export const BotRecordsApiAxiosParamCreator = function (configuration?: Configur
 
             if (interactions !== undefined) {
                 localVarQueryParameter['interactions'] = interactions;
+            }
+
+            if (scheduledActionInteraction !== undefined) {
+                localVarQueryParameter['scheduledActionInteraction'] = scheduledActionInteraction;
             }
 
             if (returnTotal !== undefined) {
@@ -6041,15 +6046,16 @@ export const BotRecordsApiFp = function(configuration?: Configuration) {
          * @param {GetBotFireRecordsContactsParameter} [contacts] 
          * @param {number} [count] 
          * @param {string} [cursor] 
-         * @param {{ [key: string]: ActionInteractionQueryValue; }} [interactions] 
+         * @param {{ [key: string]: ActionInteractionQueryItem; }} [interactions] 
+         * @param {ActionInteractionQueryItem} [scheduledActionInteraction] 
          * @param {boolean} [returnTotal] 
          * @param {string} [instanceId] 
          * @param {string} [triggerId] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getBotFireRecords(botId?: string, contacts?: GetBotFireRecordsContactsParameter, count?: number, cursor?: string, interactions?: { [key: string]: ActionInteractionQueryValue; }, returnTotal?: boolean, instanceId?: string, triggerId?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetBotFireRecords200Response>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getBotFireRecords(botId, contacts, count, cursor, interactions, returnTotal, instanceId, triggerId, options);
+        async getBotFireRecords(botId?: string, contacts?: GetBotFireRecordsContactsParameter, count?: number, cursor?: string, interactions?: { [key: string]: ActionInteractionQueryItem; }, scheduledActionInteraction?: ActionInteractionQueryItem, returnTotal?: boolean, instanceId?: string, triggerId?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetBotFireRecords200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getBotFireRecords(botId, contacts, count, cursor, interactions, scheduledActionInteraction, returnTotal, instanceId, triggerId, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -6082,7 +6088,7 @@ export const BotRecordsApiFactory = function (configuration?: Configuration, bas
          * @throws {RequiredError}
          */
         getBotFireRecords(requestParameters: BotRecordsApiGetBotFireRecordsRequest = {}, options?: AxiosRequestConfig): AxiosPromise<GetBotFireRecords200Response> {
-            return localVarFp.getBotFireRecords(requestParameters.botId, requestParameters.contacts, requestParameters.count, requestParameters.cursor, requestParameters.interactions, requestParameters.returnTotal, requestParameters.instanceId, requestParameters.triggerId, options).then((request) => request(axios, basePath));
+            return localVarFp.getBotFireRecords(requestParameters.botId, requestParameters.contacts, requestParameters.count, requestParameters.cursor, requestParameters.interactions, requestParameters.scheduledActionInteraction, requestParameters.returnTotal, requestParameters.instanceId, requestParameters.triggerId, options).then((request) => request(axios, basePath));
         },
         /**
          * This endpoint simulates the result of an action execution based on the provided parameters
@@ -6133,10 +6139,17 @@ export interface BotRecordsApiGetBotFireRecordsRequest {
 
     /**
      * 
-     * @type {{ [key: string]: ActionInteractionQueryValue; }}
+     * @type {{ [key: string]: ActionInteractionQueryItem; }}
      * @memberof BotRecordsApiGetBotFireRecords
      */
-    readonly interactions?: { [key: string]: ActionInteractionQueryValue; }
+    readonly interactions?: { [key: string]: ActionInteractionQueryItem; }
+
+    /**
+     * 
+     * @type {ActionInteractionQueryItem}
+     * @memberof BotRecordsApiGetBotFireRecords
+     */
+    readonly scheduledActionInteraction?: ActionInteractionQueryItem
 
     /**
      * 
@@ -6197,7 +6210,7 @@ export class BotRecordsApi extends BaseAPI {
      * @memberof BotRecordsApi
      */
     public getBotFireRecords(requestParameters: BotRecordsApiGetBotFireRecordsRequest = {}, options?: AxiosRequestConfig) {
-        return BotRecordsApiFp(this.configuration).getBotFireRecords(requestParameters.botId, requestParameters.contacts, requestParameters.count, requestParameters.cursor, requestParameters.interactions, requestParameters.returnTotal, requestParameters.instanceId, requestParameters.triggerId, options).then((request) => request(this.axios, this.basePath));
+        return BotRecordsApiFp(this.configuration).getBotFireRecords(requestParameters.botId, requestParameters.contacts, requestParameters.count, requestParameters.cursor, requestParameters.interactions, requestParameters.scheduledActionInteraction, requestParameters.returnTotal, requestParameters.instanceId, requestParameters.triggerId, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
