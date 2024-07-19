@@ -1767,7 +1767,7 @@ export interface Team {
      * @type {string}
      * @memberof Team
      */
-    'customerId'?: string | null;
+    'creditCustomerId'?: string | null;
 }
 /**
  * 
@@ -5330,7 +5330,7 @@ export const TeamsApiAxiosParamCreator = function (configuration?: Configuration
          * @param {boolean} [includeCreator] include the creator\&#39;s data in the API result
          * @param {string} [partner] string to identify user with a partner
          * @param {boolean} [returnOnboardingScore] return the onboarding score for the team
-         * @param {boolean} [isCreditSystemCustomer] If true, only return teams that are credit system customers. If false, only return teams that are not credit system customers. A team is only considered a credit system customer if they have a customerId set.
+         * @param {boolean} [isCreditSystemCustomer] If true, only return teams that are credit system customers. If false, only return teams that are not credit system customers. A team is only considered a credit system customer if they have a \&quot;creditCustomerId\&quot; set.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -5573,7 +5573,7 @@ export const TeamsApiFp = function(configuration?: Configuration) {
          * @param {boolean} [includeCreator] include the creator\&#39;s data in the API result
          * @param {string} [partner] string to identify user with a partner
          * @param {boolean} [returnOnboardingScore] return the onboarding score for the team
-         * @param {boolean} [isCreditSystemCustomer] If true, only return teams that are credit system customers. If false, only return teams that are not credit system customers. A team is only considered a credit system customer if they have a customerId set.
+         * @param {boolean} [isCreditSystemCustomer] If true, only return teams that are credit system customers. If false, only return teams that are not credit system customers. A team is only considered a credit system customer if they have a \&quot;creditCustomerId\&quot; set.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -5829,7 +5829,7 @@ export interface TeamsApiTeamsGetRequest {
     readonly returnOnboardingScore?: boolean
 
     /**
-     * If true, only return teams that are credit system customers. If false, only return teams that are not credit system customers. A team is only considered a credit system customer if they have a customerId set.
+     * If true, only return teams that are credit system customers. If false, only return teams that are not credit system customers. A team is only considered a credit system customer if they have a \&quot;creditCustomerId\&quot; set.
      * @type {boolean}
      * @memberof TeamsApiTeamsGet
      */

@@ -10519,7 +10519,7 @@ export interface TeamInsertData {
      * @type {string}
      * @memberof TeamInsertData
      */
-    'customerId'?: string | null;
+    'creditCustomerId'?: string | null;
 }
 
 export const TeamInsertDataScopesEnum = {
@@ -10938,7 +10938,7 @@ export interface TeamUpdateData {
      * @type {string}
      * @memberof TeamUpdateData
      */
-    'customerId'?: string | null;
+    'creditCustomerId'?: string | null;
 }
 
 export const TeamUpdateDataScopesEnum = {
