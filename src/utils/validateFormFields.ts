@@ -36,13 +36,17 @@ const assertValidFormFields = (fields: FormSubmission['fields'], questions: Acti
         }
 
         if (question.formActionMetadata?.type === 'date') {
-            if (!Date.parse(fields[key])) {
+            //ensure string is of type dd/mm/yyyy
+            const regex = new RegExp('^(0[1-9]|[12][0-9]|3[01])/(0[1-9]|1[0-2])/[0-9]{4}$')
+            if (!regex.test(fields[key])) {
                 throw new Error(`field ${key} must be a valid date`)
             }
         }
 
         if (question.formActionMetadata?.type === 'time') {
-            if (!Date.parse(`1/1/1970 ${fields[key]}`)) {
+            //ensure string is of type hh:mm
+            const regex = new RegExp('^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$')
+            if (!regex.test(fields[key])) {
                 throw new Error(`field ${key} must be a valid time`)
             }
         }
