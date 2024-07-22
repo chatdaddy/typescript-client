@@ -136,6 +136,18 @@ export interface CallsGet200Response {
      * @memberof CallsGet200Response
      */
     'calls'?: Array<Calls>;
+    /**
+     * Cursor to use to fetch next page of results
+     * @type {string}
+     * @memberof CallsGet200Response
+     */
+    'nextPageCursor'?: string;
+    /**
+     * Total number of calls fetched
+     * @type {number}
+     * @memberof CallsGet200Response
+     */
+    'totalDataCount'?: number;
 }
 /**
  * 
