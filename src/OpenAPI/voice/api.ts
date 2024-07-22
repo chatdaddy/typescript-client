@@ -28,15 +28,82 @@ import { COLLECTION_FORMATS, BaseAPI, RequiredError } from '../base';
 /**
  * 
  * @export
+ * @interface Call
+ */
+export interface Call {
+    /**
+     * AccountId of the user making the call
+     * @type {string}
+     * @memberof Call
+     */
+    'accountId': string;
+    /**
+     * TeamId of the user making the call
+     * @type {string}
+     * @memberof Call
+     */
+    'teamId'?: string;
+    /**
+     * phone number of the user
+     * @type {string}
+     * @memberof Call
+     */
+    'phoneNumber': string;
+    /**
+     * phone number of the recipient
+     * @type {string}
+     * @memberof Call
+     */
+    'to'?: string;
+    /**
+     * Name of the contact
+     * @type {string}
+     * @memberof Call
+     */
+    'contactName'?: string;
+    /**
+     * Duration of the call
+     * @type {string}
+     * @memberof Call
+     */
+    'callDuration'?: string;
+    /**
+     * Id of the call
+     * @type {string}
+     * @memberof Call
+     */
+    'callId': string;
+    /**
+     * Date of the call
+     * @type {string}
+     * @memberof Call
+     */
+    'createdAt': string;
+    /**
+     * URL of the recording
+     * @type {string}
+     * @memberof Call
+     */
+    'callRecording'?: string | null;
+    /**
+     * Notes for the call
+     * @type {string}
+     * @memberof Call
+     */
+    'callNotes'?: string | null;
+}
+/**
+ * 
+ * @export
  * @interface CallNotesPost200Response
  */
 export interface CallNotesPost200Response {
     /**
      * 
-     * @type {Calls}
+     * @type {Call}
      * @memberof CallNotesPost200Response
      */
-    'calls'?: Calls;
+    'calls'?: Call;
 }
 /**
  * 
@@ -60,82 +127,15 @@ export interface CallNotesPostRequest {
 /**
  * 
  * @export
- * @interface Calls
- */
-export interface Calls {
-    /**
-     * AccountId of the user making the call
-     * @type {string}
-     * @memberof Calls
-     */
-    'accountId': string;
-    /**
-     * TeamId of the user making the call
-     * @type {string}
-     * @memberof Calls
-     */
-    'teamId'?: string;
-    /**
-     * phone number of the user
-     * @type {string}
-     * @memberof Calls
-     */
-    'phoneNumber': string;
-    /**
-     * phone number of the recipient
-     * @type {string}
-     * @memberof Calls
-     */
-    'to'?: string;
-    /**
-     * Name of the contact
-     * @type {string}
-     * @memberof Calls
-     */
-    'contactName'?: string;
-    /**
-     * Duration of the call
-     * @type {string}
-     * @memberof Calls
-     */
-    'callDuration'?: string;
-    /**
-     * Id of the call
-     * @type {string}
-     * @memberof Calls
-     */
-    'callId': string;
-    /**
-     * Date of the call
-     * @type {string}
-     * @memberof Calls
-     */
-    'createdAt': string;
-    /**
-     * URL of the recording
-     * @type {string}
-     * @memberof Calls
-     */
-    'callRecording'?: string | null;
-    /**
-     * Notes for the call
-     * @type {string}
-     * @memberof Calls
-     */
-    'callNotes'?: string | null;
-}
-/**
- * 
- * @export
  * @interface CallsGet200Response
  */
 export interface CallsGet200Response {
     /**
      * 
-     * @type {Array<Calls>}
+     * @type {Array<Call>}
      * @memberof CallsGet200Response
      */
-    'calls'?: Array<Calls>;
+    'calls'?: Array<Call>;
     /**
      * Cursor to use to fetch next page of results
      * @type {string}
