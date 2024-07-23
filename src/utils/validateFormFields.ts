@@ -1,5 +1,6 @@
 import { Action, FormSubmission } from '../OpenAPI'
 
+const dateRegex = '/^(0?[1-9]|[12][0-9]|3[01])[/-](0?[1-9]|1[012])[/-]d{4}$/'
 const assertValidFormFields = (fields: FormSubmission['fields'], questions: Action[]) => {
     for (const key in fields) {
         const question = questions.find((q) => q.id === key)
@@ -37,7 +38,7 @@ const assertValidFormFields = (fields: FormSubmission['fields'], questions: Acti
 
         if (question.formActionMetadata?.type === 'date') {
             //ensure string is of type dd/mm/yyyy
-            const regex = new RegExp('d{1,2}/d{1,2}/d{2,4}')
+            const regex = new RegExp(dateRegex)
             if (!regex.test(fields[key])) {
                 throw new Error(`field ${key} must be a valid date`)
             }
