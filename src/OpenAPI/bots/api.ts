@@ -310,6 +310,12 @@ export interface ActionAppConfig {
      * @memberof ActionAppConfig
      */
     'domains'?: Array<string>;
+    /**
+     * Article ID of helpkit article to be linked
+     * @type {string}
+     * @memberof ActionAppConfig
+     */
+    'helpkitId'?: string;
 }
 /**
  * 
@@ -3738,6 +3744,12 @@ export interface InternalEventUIConfig {
      * @memberof InternalEventUIConfig
      */
     'event': string;
+    /**
+     * Article ID of helpkit article to be linked
+     * @type {string}
+     * @memberof InternalEventUIConfig
+     */
+    'helpkitId'?: string;
 }
 /**
  * 
@@ -3751,6 +3763,12 @@ export interface InternalEventUIConfigAllOf {
      * @memberof InternalEventUIConfigAllOf
      */
     'event': string;
+    /**
+     * Article ID of helpkit article to be linked
+     * @type {string}
+     * @memberof InternalEventUIConfigAllOf
+     */
+    'helpkitId'?: string;
 }
 /**
  * 
@@ -4997,6 +5015,12 @@ export interface TriggerAppConfig {
      * @memberof TriggerAppConfig
      */
     'registrationOutputProperties': Array<DataProperty>;
+    /**
+     * Article ID of helpkit article to be linked
+     * @type {string}
+     * @memberof TriggerAppConfig
+     */
+    'helpkitId'?: string;
 }
 /**
  * 
@@ -5016,6 +5040,12 @@ export interface TriggerAppConfigAllOf {
      * @memberof TriggerAppConfigAllOf
      */
     'registrationOutputProperties': Array<DataProperty>;
+    /**
+     * Article ID of helpkit article to be linked
+     * @type {string}
+     * @memberof TriggerAppConfigAllOf
+     */
+    'helpkitId'?: string;
 }
 /**
  * @type TriggerDelay
