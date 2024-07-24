@@ -8,10 +8,6 @@ const assertValidFormFields = (fields: FormSubmission['fields'], questions: Acti
             throw new Error(`question ${key} not found`)
         }
 
-        if (!question.message?.input?.validation) {
-            continue
-        }
-
         if (question.message?.input?.validation.type === 'integer') {
             if (!Number.isInteger(fields[key])) {
                 throw new Error(`field ${key} must be an integer`)
