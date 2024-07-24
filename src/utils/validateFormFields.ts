@@ -1,6 +1,6 @@
 import { Action, FormSubmission } from '../OpenAPI'
 
-const dateRegex = '/(([1-2][0-9])|([1-9])|(3[0-1]))/((1[0-2])|([1-9]))/[0-9]{4}/g'
+const dateRegex = '/(([1-2][0-9])|([1-9])|(3[0-1]))\/((1[0-2])|([1-9]))\/[0-9]{4}/g'
 const assertValidFormFields = (fields: FormSubmission['fields'], questions: Action[]) => {
     for (const key in fields) {
         const question = questions.find((q) => q.id === key)
