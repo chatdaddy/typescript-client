@@ -33,7 +33,9 @@ const assertValidFormFields = (fields: FormSubmission['fields'], questions: Acti
         
         if (question.formActionMetadata?.type === 'date') {
             //ensure string is of type dd/mm/yyyy or mm/dd/yyyy
-            const regex = new RegExp('/^(0[1-9]|[12][0-9]|3[01])\/(0[1-9]|1[0-2])\/\d{4}$|^(0[1-9]|1[0-2])\/(0[1-9]|[12][0-9]|3[01])\/\d{4}$/gm')
+            const regex = new RegExp(
+                '^(0?[1-9]|[12][0-9]|3[01])/(0?[1-9]|1[0-2])/\\d{4}$|^(0?[1-9]|1[0-2])/(0?[1-9]|[12][0-9]|3[01])/\\d{4}$'
+            )
             if (!regex.test(fields[key])) {
                 throw new Error(`field ${key} must be a valid date`)
             }
