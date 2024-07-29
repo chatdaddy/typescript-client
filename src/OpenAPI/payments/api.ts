@@ -647,9 +647,8 @@ export interface CreditConsumptionTier {
 
 export const CreditConsumptionType = {
     MessageSentWa: 'message_sent/wa',
-    MessageSentTiktok: 'message_sent/tiktok',
-    MessageSentMessenger: 'message_sent/messenger',
     MessageSentMail: 'message_sent/mail',
+    MessageSentSms: 'message_sent/sms',
     ConversationWaBusinessApi: 'conversation/wa-business-api',
     VoiceCall: 'voice_call',
     IntegrationNotification: 'integration/notification',
@@ -659,7 +658,8 @@ export const CreditConsumptionType = {
     AdminDiscretionary: 'admin/discretionary',
     AdminRefund: 'admin/refund',
     AdminExpiredCreditGain: 'admin/expired_credit_gain',
-    ConsultationTraining: 'consultation/training'
+    ConsultationTraining: 'consultation/training',
+    ActiveChat: 'active_chat'
 } as const;
 
 export type CreditConsumptionType = typeof CreditConsumptionType[keyof typeof CreditConsumptionType];
@@ -4809,7 +4809,7 @@ export const CreditsApiAxiosParamCreator = function (configuration?: Configurati
 
             // authentication chatdaddy required
             // oauth required
-            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["ADMIN_PANEL_ACCESS", "PARTNER_ADMIN_PANEL_ACCESS"], configuration)
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["ADMIN_PANEL_ACCESS"], configuration)
 
 
     
