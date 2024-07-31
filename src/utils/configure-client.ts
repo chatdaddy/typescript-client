@@ -32,6 +32,7 @@ axiosRetry(
 function isGatewayError(errCode: number | undefined) {
 	return errCode === 502
 		|| errCode === 503
+		|| errCode === 504
 }
 
 BaseAPI.DEFAULT_AXIOS = CLIENT_AXIOS
