@@ -733,6 +733,44 @@ export interface AccountsPostRequest {
 
 
 /**
+ * Context about the actor of a particular action
+ * @export
+ * @interface ActorMetadata
+ */
+export interface ActorMetadata {
+    /**
+     * 
+     * @type {string}
+     * @memberof ActorMetadata
+     */
+    'type': ActorMetadataTypeEnum;
+    /**
+     * ID of the object that sent the message. For example, the campaign ID or keyword reply ID. Separate sub-objects with a `/`. For example, to specify the action of a bot -- use `bot_id/action_id`
+     * @type {string}
+     * @memberof ActorMetadata
+     */
+    'objectId': string;
+    /**
+     * Name of the object that sent the message. For example, the campaign name or keyword reply name
+     * @type {string}
+     * @memberof ActorMetadata
+     */
+    'objectName'?: string;
+}
+
+export const ActorMetadataTypeEnum = {
+    KeywordReply: 'keyword-reply',
+    DefaultReply: 'default-reply',
+    Campaigns: 'campaigns',
+    Notifications: 'notifications',
+    Bot: 'bot',
+    AiChatbot: 'ai-chatbot',
+    Trigger: 'trigger'
+} as const;
+
+export type ActorMetadataTypeEnum = typeof ActorMetadataTypeEnum[keyof typeof ActorMetadataTypeEnum];
+
+/**
  * 
  * @export
  * @interface AlibabCAMSQuotedContext
@@ -4169,7 +4207,7 @@ export interface MessageReaction {
     'timestamp'?: string;
 }
 /**
- * Optional context about the sender of the message
+ * Context about the actor of a particular action
  * @export
  * @interface MessageSenderContext
  */
