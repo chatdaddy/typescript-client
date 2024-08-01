@@ -2487,6 +2487,12 @@ export interface BotTriggerInstance {
     'completedAt'?: string;
     /**
      * 
+     * @type {BotTriggerInstanceError}
+     * @memberof BotTriggerInstance
+     */
+    'error'?: BotTriggerInstanceError;
+    /**
+     * 
      * @type {BotTriggerInstanceTrigger}
      * @memberof BotTriggerInstance
      */
@@ -2494,6 +2500,19 @@ export interface BotTriggerInstance {
 }
 
 
+/**
+ * 
+ * @export
+ * @interface BotTriggerInstanceError
+ */
+export interface BotTriggerInstanceError {
+    /**
+     * 
+     * @type {string}
+     * @memberof BotTriggerInstanceError
+     */
+    'message': string;
+}
 /**
  * 
  * @export
