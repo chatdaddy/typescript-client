@@ -737,7 +737,7 @@ export interface AccountsPostRequest {
  * @export
  * @interface ActorMetadata
  */
-export interface ActorMetadata {
+interface ActorMetadata {
     /**
      * 
      * @type {string}
@@ -758,7 +758,7 @@ export interface ActorMetadata {
     'objectName'?: string;
 }
 
-export const ActorMetadataTypeEnum = {
+const ActorMetadataTypeEnum = {
     KeywordReply: 'keyword-reply',
     DefaultReply: 'default-reply',
     Campaigns: 'campaigns',
@@ -768,7 +768,7 @@ export const ActorMetadataTypeEnum = {
     Trigger: 'trigger'
 } as const;
 
-export type ActorMetadataTypeEnum = typeof ActorMetadataTypeEnum[keyof typeof ActorMetadataTypeEnum];
+type ActorMetadataTypeEnum = typeof ActorMetadataTypeEnum[keyof typeof ActorMetadataTypeEnum];
 
 /**
  * 
