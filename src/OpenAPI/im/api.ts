@@ -887,6 +887,12 @@ export interface AlibabaCAMSStateInfo {
      * @memberof AlibabaCAMSStateInfo
      */
     'profileDescription'?: string;
+    /**
+     * Whether the business account has enabled the welcome message feature
+     * @type {boolean}
+     * @memberof AlibabaCAMSStateInfo
+     */
+    'enabledWelcomeMessage'?: boolean;
 }
 
 export const AlibabaCAMSStateInfoVersionEnum = {
@@ -1155,6 +1161,12 @@ export interface AlibabaCamsProfileUpdateRequest {
      * @memberof AlibabaCamsProfileUpdateRequest
      */
     'description'?: string;
+    /**
+     * Enable welcome message
+     * @type {boolean}
+     * @memberof AlibabaCamsProfileUpdateRequest
+     */
+    'enabledWelcomeMessage'?: boolean;
 }
 /**
  * 
