@@ -5530,6 +5530,44 @@ export const TeamsApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
+         * 
+         * @summary Leave a team
+         * @param {string} teamId the teamId of the team to leave
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        teamsLeave: async (teamId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'teamId' is not null or undefined
+            assertParamExists('teamsLeave', 'teamId', teamId)
+            const localVarPath = `/teams/leave/{teamId}`
+                .replace(`{${"teamId"}}`, encodeURIComponent(String(teamId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", [], configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * - If you want to update/delete members -- ensure you have the `TEAMMEMBERS_UPDATE` scope - If you want to delete invite links -- ensure you have the `TEAMLINKS_UPDATE` scope - Also you cannot delete/update yourself in the team. If you attempt to do so, a 400 will be returned - If scopes and role are both specified, scopes will be ignored 
          * @summary Update the team the access token is for
          * @param {TeamPatchRequest} [teamPatchRequest] 
@@ -5649,6 +5687,17 @@ export const TeamsApiFp = function(configuration?: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
+         * 
+         * @summary Leave a team
+         * @param {string} teamId the teamId of the team to leave
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async teamsLeave(teamId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.teamsLeave(teamId, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
          * - If you want to update/delete members -- ensure you have the `TEAMMEMBERS_UPDATE` scope - If you want to delete invite links -- ensure you have the `TEAMLINKS_UPDATE` scope - Also you cannot delete/update yourself in the team. If you attempt to do so, a 400 will be returned - If scopes and role are both specified, scopes will be ignored 
          * @summary Update the team the access token is for
          * @param {TeamPatchRequest} [teamPatchRequest] 
@@ -5717,6 +5766,16 @@ export const TeamsApiFactory = function (configuration?: Configuration, basePath
          */
         teamsJoinInvite(requestParameters: TeamsApiTeamsJoinInviteRequest, options?: AxiosRequestConfig): AxiosPromise<void> {
             return localVarFp.teamsJoinInvite(requestParameters.id, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Leave a team
+         * @param {TeamsApiTeamsLeaveRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        teamsLeave(requestParameters: TeamsApiTeamsLeaveRequest, options?: AxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.teamsLeave(requestParameters.teamId, options).then((request) => request(axios, basePath));
         },
         /**
          * - If you want to update/delete members -- ensure you have the `TEAMMEMBERS_UPDATE` scope - If you want to delete invite links -- ensure you have the `TEAMLINKS_UPDATE` scope - Also you cannot delete/update yourself in the team. If you attempt to do so, a 400 will be returned - If scopes and role are both specified, scopes will be ignored 
@@ -5907,6 +5966,20 @@ export interface TeamsApiTeamsJoinInviteRequest {
 }
 
 /**
+ * Request parameters for teamsLeave operation in TeamsApi.
+ * @export
+ * @interface TeamsApiTeamsLeaveRequest
+ */
+export interface TeamsApiTeamsLeaveRequest {
+    /**
+     * the teamId of the team to leave
+     * @type {string}
+     * @memberof TeamsApiTeamsLeave
+     */
+    readonly teamId: string
+}
+
+/**
  * Request parameters for teamsPatch operation in TeamsApi.
  * @export
  * @interface TeamsApiTeamsPatchRequest
@@ -5984,6 +6057,18 @@ export class TeamsApi extends BaseAPI {
      */
     public teamsJoinInvite(requestParameters: TeamsApiTeamsJoinInviteRequest, options?: AxiosRequestConfig) {
         return TeamsApiFp(this.configuration).teamsJoinInvite(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Leave a team
+     * @param {TeamsApiTeamsLeaveRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof TeamsApi
+     */
+    public teamsLeave(requestParameters: TeamsApiTeamsLeaveRequest, options?: AxiosRequestConfig) {
+        return TeamsApiFp(this.configuration).teamsLeave(requestParameters.teamId, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
