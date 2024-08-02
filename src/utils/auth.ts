@@ -1,6 +1,6 @@
 import type { verify } from 'jsonwebtoken'
 import { createHash } from 'crypto'
-import { Configuration, ConfigurationParameters, JWT, OAuthApi, RefreshTokenLoginRequest, Scope } from '../OpenAPI'
+import { ActorMetadata, Configuration, ConfigurationParameters, JWT, OAuthApi, RefreshTokenLoginRequest, Scope } from '../OpenAPI'
 import SCOPES from '../scopes.json'
 
 const PUBLIC_KEY = `
@@ -127,8 +127,9 @@ export const makeAccessTokenFactory = (
 		return tokenAPI.tokenPost({ authRequest: req })
 	}
 
-	return async (teamId: string) => {
+	return async (teamId: string, metadata?: ActorMetadata) => {
 		const key = teamId
+			+ (metadata ? '_' + metadata.objectId : '')
 		let task = tokenCache[key]
 		if(
 			!task
@@ -141,7 +142,7 @@ export const makeAccessTokenFactory = (
 				token: (async() => {
 					try {
 						const { data: { access_token } } = await makeTokenApiRequest(
-							{ ...request, teamId }
+							{ ...request, metadata, teamId }
 						)
 
 						const jwt = decodeToken(access_token)
