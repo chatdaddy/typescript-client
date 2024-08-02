@@ -7038,7 +7038,51 @@ export interface GroupUpdateDataOwnerTagsInnerAllOf1AddedMetadata {
      * @memberof GroupUpdateDataOwnerTagsInnerAllOf1AddedMetadata
      */
     'doneBy': string;
+    /**
+     * 
+     * @type {GroupUpdateDataOwnerTagsInnerAllOf1AddedMetadataActor}
+     * @memberof GroupUpdateDataOwnerTagsInnerAllOf1AddedMetadata
+     */
+    'actor'?: GroupUpdateDataOwnerTagsInnerAllOf1AddedMetadataActor;
 }
+/**
+ * 
+ * @export
+ * @interface GroupUpdateDataOwnerTagsInnerAllOf1AddedMetadataActor
+ */
+export interface GroupUpdateDataOwnerTagsInnerAllOf1AddedMetadataActor {
+    /**
+     * 
+     * @type {string}
+     * @memberof GroupUpdateDataOwnerTagsInnerAllOf1AddedMetadataActor
+     */
+    'type': GroupUpdateDataOwnerTagsInnerAllOf1AddedMetadataActorTypeEnum;
+    /**
+     * 
+     * @type {string}
+     * @memberof GroupUpdateDataOwnerTagsInnerAllOf1AddedMetadataActor
+     */
+    'objectId': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof GroupUpdateDataOwnerTagsInnerAllOf1AddedMetadataActor
+     */
+    'objectName'?: string;
+}
+
+export const GroupUpdateDataOwnerTagsInnerAllOf1AddedMetadataActorTypeEnum = {
+    KeywordReply: 'keyword-reply',
+    DefaultReply: 'default-reply',
+    Campaigns: 'campaigns',
+    Notifications: 'notifications',
+    Bot: 'bot',
+    AiChatbot: 'ai-chatbot',
+    Trigger: 'trigger'
+} as const;
+
+export type GroupUpdateDataOwnerTagsInnerAllOf1AddedMetadataActorTypeEnum = typeof GroupUpdateDataOwnerTagsInnerAllOf1AddedMetadataActorTypeEnum[keyof typeof GroupUpdateDataOwnerTagsInnerAllOf1AddedMetadataActorTypeEnum];
+
 /**
  * 
  * @export
@@ -8481,49 +8525,11 @@ export interface MessageInsertDataSender {
     'createdAt'?: string;
     /**
      * 
-     * @type {MessageInsertDataSenderContext}
+     * @type {GroupUpdateDataOwnerTagsInnerAllOf1AddedMetadataActor}
      * @memberof MessageInsertDataSender
      */
-    'context'?: MessageInsertDataSenderContext;
+    'context'?: GroupUpdateDataOwnerTagsInnerAllOf1AddedMetadataActor;
 }
-/**
- * 
- * @export
- * @interface MessageInsertDataSenderContext
- */
-export interface MessageInsertDataSenderContext {
-    /**
-     * 
-     * @type {string}
-     * @memberof MessageInsertDataSenderContext
-     */
-    'type': MessageInsertDataSenderContextTypeEnum;
-    /**
-     * 
-     * @type {string}
-     * @memberof MessageInsertDataSenderContext
-     */
-    'objectId': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof MessageInsertDataSenderContext
-     */
-    'objectName'?: string;
-}
-
-export const MessageInsertDataSenderContextTypeEnum = {
-    KeywordReply: 'keyword-reply',
-    DefaultReply: 'default-reply',
-    Campaigns: 'campaigns',
-    Notifications: 'notifications',
-    Bot: 'bot',
-    AiChatbot: 'ai-chatbot',
-    Trigger: 'trigger'
-} as const;
-
-export type MessageInsertDataSenderContextTypeEnum = typeof MessageInsertDataSenderContextTypeEnum[keyof typeof MessageInsertDataSenderContextTypeEnum];
-
 /**
  * 
  * @export

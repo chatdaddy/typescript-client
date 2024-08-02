@@ -3561,6 +3561,7 @@ export interface MessageCompose {
      * 
      * @type {MessageComposeAllOfSender}
      * @memberof MessageCompose
+     * @deprecated
      */
     'sender'?: MessageComposeAllOfSender;
     /**
@@ -3702,6 +3703,7 @@ export interface MessageComposeAllOf {
      * 
      * @type {MessageComposeAllOfSender}
      * @memberof MessageComposeAllOf
+     * @deprecated
      */
     'sender'?: MessageComposeAllOfSender;
 }
@@ -3766,6 +3768,7 @@ export interface MessageComposeWChatID {
      * 
      * @type {MessageComposeAllOfSender}
      * @memberof MessageComposeWChatID
+     * @deprecated
      */
     'sender'?: MessageComposeAllOfSender;
     /**
@@ -6048,6 +6051,12 @@ export interface UpsertMetadata {
      * @memberof UpsertMetadata
      */
     'doneBy': string;
+    /**
+     * 
+     * @type {ActorMetadata}
+     * @memberof UpsertMetadata
+     */
+    'actor'?: ActorMetadata;
 }
 /**
  * Metadata about a WABA conversation. This is set on the message when a new conversation is created.
