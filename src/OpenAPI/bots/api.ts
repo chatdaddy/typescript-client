@@ -316,6 +316,12 @@ export interface ActionAppConfig {
      * @memberof ActionAppConfig
      */
     'helpkitId'?: string;
+    /**
+     * ID corresponding to which platforms an app node can be integrated with
+     * @type {string}
+     * @memberof ActionAppConfig
+     */
+    'appGroupId'?: string;
 }
 /**
  * 
@@ -1186,6 +1192,136 @@ export interface AppAction {
      * @memberof AppAction
      */
     'nextAction'?: NextAction;
+}
+/**
+ * 
+ * @export
+ * @interface AppGroupConfig
+ */
+export interface AppGroupConfig {
+    /**
+     * ID corresponding to which platforms an app node can be integrated with
+     * @type {string}
+     * @memberof AppGroupConfig
+     */
+    'id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof AppGroupConfig
+     */
+    'title': string;
+    /**
+     * 
+     * @type {Array<DataProperty>}
+     * @memberof AppGroupConfig
+     */
+    'integrationConfig': Array<DataProperty>;
+}
+/**
+ * 
+ * @export
+ * @interface AppIntegration
+ */
+export interface AppIntegration {
+    /**
+     * 
+     * @type {string}
+     * @memberof AppIntegration
+     */
+    'name': string;
+    /**
+     * ID corresponding to which platforms an app node can be integrated with
+     * @type {string}
+     * @memberof AppIntegration
+     */
+    'appGroupId': string;
+    /**
+     * configures the authorization required. Pass additional props as needed.
+     * @type {{ [key: string]: any; }}
+     * @memberof AppIntegration
+     */
+    'config': { [key: string]: any; };
+    /**
+     * randomly generated id for an integration
+     * @type {string}
+     * @memberof AppIntegration
+     */
+    'id': string;
+    /**
+     * An ISO formatted timestamp
+     * @type {string}
+     * @memberof AppIntegration
+     */
+    'createdAt': string;
+    /**
+     * An ISO formatted timestamp
+     * @type {string}
+     * @memberof AppIntegration
+     */
+    'updatedAt': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof AppIntegration
+     */
+    'teamId': string;
+}
+/**
+ * 
+ * @export
+ * @interface AppIntegrationAllOf
+ */
+export interface AppIntegrationAllOf {
+    /**
+     * randomly generated id for an integration
+     * @type {string}
+     * @memberof AppIntegrationAllOf
+     */
+    'id': string;
+    /**
+     * An ISO formatted timestamp
+     * @type {string}
+     * @memberof AppIntegrationAllOf
+     */
+    'createdAt': string;
+    /**
+     * An ISO formatted timestamp
+     * @type {string}
+     * @memberof AppIntegrationAllOf
+     */
+    'updatedAt': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof AppIntegrationAllOf
+     */
+    'teamId': string;
+}
+/**
+ * 
+ * @export
+ * @interface AppIntegrationCreate
+ */
+export interface AppIntegrationCreate {
+    /**
+     * 
+     * @type {string}
+     * @memberof AppIntegrationCreate
+     */
+    'name': string;
+    /**
+     * ID corresponding to which platforms an app node can be integrated with
+     * @type {string}
+     * @memberof AppIntegrationCreate
+     */
+    'appGroupId': string;
+    /**
+     * configures the authorization required. Pass additional props as needed.
+     * @type {{ [key: string]: any; }}
+     * @memberof AppIntegrationCreate
+     */
+    'config': { [key: string]: any; };
 }
 /**
  * 
@@ -3679,6 +3815,19 @@ export interface InstanceFirstActionStatusCounts {
 /**
  * 
  * @export
+ * @interface IntegrationsGet200Response
+ */
+export interface IntegrationsGet200Response {
+    /**
+     * 
+     * @type {Array<AppIntegration>}
+     * @memberof IntegrationsGet200Response
+     */
+    'items': Array<AppIntegration>;
+}
+/**
+ * 
+ * @export
  * @interface InternalEventTriggerMethod
  */
 export interface InternalEventTriggerMethod {
@@ -4542,7 +4691,8 @@ export const SimplePropertyType = {
     BoardStage: 'board_stage',
     Duration: 'duration',
     Ticket: 'ticket',
-    Board: 'board'
+    Board: 'board',
+    Oauth: 'oauth'
 } as const;
 
 export type SimplePropertyType = typeof SimplePropertyType[keyof typeof SimplePropertyType];
@@ -5271,6 +5421,12 @@ export interface TriggersDisplayConfiguration {
      * @memberof TriggersDisplayConfiguration
      */
     'triggerApps': Array<TriggerAppConfig>;
+    /**
+     * 
+     * @type {Array<AppGroupConfig>}
+     * @memberof TriggersDisplayConfiguration
+     */
+    'appGroups': Array<AppGroupConfig>;
 }
 /**
  * 
@@ -5818,6 +5974,387 @@ export class ActionsApi extends BaseAPI {
      */
     public actionsGptGenerate(requestParameters: ActionsApiActionsGptGenerateRequest = {}, options?: AxiosRequestConfig) {
         return ActionsApiFp(this.configuration).actionsGptGenerate(requestParameters.actionsGptGenerateRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+/**
+ * AppIntegrationApi - axios parameter creator
+ * @export
+ */
+export const AppIntegrationApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @summary Get refresh token for google OAuth
+         * @param {string} authCode 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        calendarAuth: async (authCode: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'authCode' is not null or undefined
+            assertParamExists('calendarAuth', 'authCode', authCode)
+            const localVarPath = `/calendar`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (authCode !== undefined) {
+                localVarQueryParameter['authCode'] = authCode;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary create a new user integration
+         * @param {AppIntegrationCreate} [appIntegrationCreate] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        integrationCreate: async (appIntegrationCreate?: AppIntegrationCreate, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/integrations`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["TEMPLATES_READ"], configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(appIntegrationCreate, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Delete a user integration
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        integrationDelete: async (id: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('integrationDelete', 'id', id)
+            const localVarPath = `/integrations`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["TEMPLATES_READ"], configuration)
+
+            if (id !== undefined) {
+                localVarQueryParameter['id'] = id;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Get the list of app integrations in a team
+         * @param {string} [appGroupId] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        integrationsGet: async (appGroupId?: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/integrations`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["TEMPLATES_READ"], configuration)
+
+            if (appGroupId !== undefined) {
+                localVarQueryParameter['appGroupId'] = appGroupId;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * AppIntegrationApi - functional programming interface
+ * @export
+ */
+export const AppIntegrationApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = AppIntegrationApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * 
+         * @summary Get refresh token for google OAuth
+         * @param {string} authCode 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async calendarAuth(authCode: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CalendarAuth200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.calendarAuth(authCode, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary create a new user integration
+         * @param {AppIntegrationCreate} [appIntegrationCreate] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async integrationCreate(appIntegrationCreate?: AppIntegrationCreate, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AppIntegration>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.integrationCreate(appIntegrationCreate, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary Delete a user integration
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async integrationDelete(id: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.integrationDelete(id, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary Get the list of app integrations in a team
+         * @param {string} [appGroupId] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async integrationsGet(appGroupId?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IntegrationsGet200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.integrationsGet(appGroupId, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+    }
+};
+
+/**
+ * AppIntegrationApi - factory interface
+ * @export
+ */
+export const AppIntegrationApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = AppIntegrationApiFp(configuration)
+    return {
+        /**
+         * 
+         * @summary Get refresh token for google OAuth
+         * @param {AppIntegrationApiCalendarAuthRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        calendarAuth(requestParameters: AppIntegrationApiCalendarAuthRequest, options?: AxiosRequestConfig): AxiosPromise<CalendarAuth200Response> {
+            return localVarFp.calendarAuth(requestParameters.authCode, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary create a new user integration
+         * @param {AppIntegrationApiIntegrationCreateRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        integrationCreate(requestParameters: AppIntegrationApiIntegrationCreateRequest = {}, options?: AxiosRequestConfig): AxiosPromise<AppIntegration> {
+            return localVarFp.integrationCreate(requestParameters.appIntegrationCreate, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Delete a user integration
+         * @param {AppIntegrationApiIntegrationDeleteRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        integrationDelete(requestParameters: AppIntegrationApiIntegrationDeleteRequest, options?: AxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.integrationDelete(requestParameters.id, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Get the list of app integrations in a team
+         * @param {AppIntegrationApiIntegrationsGetRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        integrationsGet(requestParameters: AppIntegrationApiIntegrationsGetRequest = {}, options?: AxiosRequestConfig): AxiosPromise<IntegrationsGet200Response> {
+            return localVarFp.integrationsGet(requestParameters.appGroupId, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * Request parameters for calendarAuth operation in AppIntegrationApi.
+ * @export
+ * @interface AppIntegrationApiCalendarAuthRequest
+ */
+export interface AppIntegrationApiCalendarAuthRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof AppIntegrationApiCalendarAuth
+     */
+    readonly authCode: string
+}
+
+/**
+ * Request parameters for integrationCreate operation in AppIntegrationApi.
+ * @export
+ * @interface AppIntegrationApiIntegrationCreateRequest
+ */
+export interface AppIntegrationApiIntegrationCreateRequest {
+    /**
+     * 
+     * @type {AppIntegrationCreate}
+     * @memberof AppIntegrationApiIntegrationCreate
+     */
+    readonly appIntegrationCreate?: AppIntegrationCreate
+}
+
+/**
+ * Request parameters for integrationDelete operation in AppIntegrationApi.
+ * @export
+ * @interface AppIntegrationApiIntegrationDeleteRequest
+ */
+export interface AppIntegrationApiIntegrationDeleteRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof AppIntegrationApiIntegrationDelete
+     */
+    readonly id: string
+}
+
+/**
+ * Request parameters for integrationsGet operation in AppIntegrationApi.
+ * @export
+ * @interface AppIntegrationApiIntegrationsGetRequest
+ */
+export interface AppIntegrationApiIntegrationsGetRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof AppIntegrationApiIntegrationsGet
+     */
+    readonly appGroupId?: string
+}
+
+/**
+ * AppIntegrationApi - object-oriented interface
+ * @export
+ * @class AppIntegrationApi
+ * @extends {BaseAPI}
+ */
+export class AppIntegrationApi extends BaseAPI {
+    /**
+     * 
+     * @summary Get refresh token for google OAuth
+     * @param {AppIntegrationApiCalendarAuthRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AppIntegrationApi
+     */
+    public calendarAuth(requestParameters: AppIntegrationApiCalendarAuthRequest, options?: AxiosRequestConfig) {
+        return AppIntegrationApiFp(this.configuration).calendarAuth(requestParameters.authCode, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary create a new user integration
+     * @param {AppIntegrationApiIntegrationCreateRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AppIntegrationApi
+     */
+    public integrationCreate(requestParameters: AppIntegrationApiIntegrationCreateRequest = {}, options?: AxiosRequestConfig) {
+        return AppIntegrationApiFp(this.configuration).integrationCreate(requestParameters.appIntegrationCreate, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Delete a user integration
+     * @param {AppIntegrationApiIntegrationDeleteRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AppIntegrationApi
+     */
+    public integrationDelete(requestParameters: AppIntegrationApiIntegrationDeleteRequest, options?: AxiosRequestConfig) {
+        return AppIntegrationApiFp(this.configuration).integrationDelete(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Get the list of app integrations in a team
+     * @param {AppIntegrationApiIntegrationsGetRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AppIntegrationApi
+     */
+    public integrationsGet(requestParameters: AppIntegrationApiIntegrationsGetRequest = {}, options?: AxiosRequestConfig) {
+        return AppIntegrationApiFp(this.configuration).integrationsGet(requestParameters.appGroupId, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
@@ -7877,128 +8414,6 @@ export class BotsApi extends BaseAPI {
      */
     public getActionFireRecords(requestParameters: BotsApiGetActionFireRecordsRequest = {}, options?: AxiosRequestConfig) {
         return BotsApiFp(this.configuration).getActionFireRecords(requestParameters.count, requestParameters.beforeId, requestParameters.botId, options).then((request) => request(this.axios, this.basePath));
-    }
-}
-
-
-/**
- * CalendarApi - axios parameter creator
- * @export
- */
-export const CalendarApiAxiosParamCreator = function (configuration?: Configuration) {
-    return {
-        /**
-         * 
-         * @summary Get refresh token for google OAuth
-         * @param {string} authCode authorization code
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        calendarAuth: async (authCode: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'authCode' is not null or undefined
-            assertParamExists('calendarAuth', 'authCode', authCode)
-            const localVarPath = `/calendar`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            if (authCode !== undefined) {
-                localVarQueryParameter['authCode'] = authCode;
-            }
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-    }
-};
-
-/**
- * CalendarApi - functional programming interface
- * @export
- */
-export const CalendarApiFp = function(configuration?: Configuration) {
-    const localVarAxiosParamCreator = CalendarApiAxiosParamCreator(configuration)
-    return {
-        /**
-         * 
-         * @summary Get refresh token for google OAuth
-         * @param {string} authCode authorization code
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async calendarAuth(authCode: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CalendarAuth200Response>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.calendarAuth(authCode, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-    }
-};
-
-/**
- * CalendarApi - factory interface
- * @export
- */
-export const CalendarApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
-    const localVarFp = CalendarApiFp(configuration)
-    return {
-        /**
-         * 
-         * @summary Get refresh token for google OAuth
-         * @param {CalendarApiCalendarAuthRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        calendarAuth(requestParameters: CalendarApiCalendarAuthRequest, options?: AxiosRequestConfig): AxiosPromise<CalendarAuth200Response> {
-            return localVarFp.calendarAuth(requestParameters.authCode, options).then((request) => request(axios, basePath));
-        },
-    };
-};
-
-/**
- * Request parameters for calendarAuth operation in CalendarApi.
- * @export
- * @interface CalendarApiCalendarAuthRequest
- */
-export interface CalendarApiCalendarAuthRequest {
-    /**
-     * authorization code
-     * @type {string}
-     * @memberof CalendarApiCalendarAuth
-     */
-    readonly authCode: string
-}
-
-/**
- * CalendarApi - object-oriented interface
- * @export
- * @class CalendarApi
- * @extends {BaseAPI}
- */
-export class CalendarApi extends BaseAPI {
-    /**
-     * 
-     * @summary Get refresh token for google OAuth
-     * @param {CalendarApiCalendarAuthRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof CalendarApi
-     */
-    public calendarAuth(requestParameters: CalendarApiCalendarAuthRequest, options?: AxiosRequestConfig) {
-        return CalendarApiFp(this.configuration).calendarAuth(requestParameters.authCode, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
