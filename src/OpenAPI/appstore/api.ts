@@ -697,6 +697,12 @@ export interface Listing {
     'industry'?: string;
     /**
      * 
+     * @type {Array<string>}
+     * @memberof Listing
+     */
+    'industries'?: Array<string>;
+    /**
+     * 
      * @type {string}
      * @memberof Listing
      */
@@ -814,6 +820,12 @@ export interface ListingCreate {
     'industry'?: string;
     /**
      * 
+     * @type {Array<string>}
+     * @memberof ListingCreate
+     */
+    'industries'?: Array<string>;
+    /**
+     * 
      * @type {AppType}
      * @memberof ListingCreate
      */
@@ -913,10 +925,16 @@ export interface ListingUpdate {
     'language'?: string;
     /**
      * 
-     * @type {string}
+     * @type {any}
      * @memberof ListingUpdate
      */
-    'industry'?: string;
+    'industry'?: any;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof ListingUpdate
+     */
+    'industries'?: Array<string>;
     /**
      * 
      * @type {string}
