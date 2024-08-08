@@ -1528,6 +1528,12 @@ export interface Bot {
      */
     'description'?: string;
     /**
+     * Industry of the bot
+     * @type {string}
+     * @memberof Bot
+     */
+    'industry'?: string;
+    /**
      * Industries of the bot
      * @type {Array<string>}
      * @memberof Bot
@@ -2241,6 +2247,12 @@ export interface BotPatch {
      * @memberof BotPatch
      */
     'description'?: string;
+    /**
+     * Industry of the bot
+     * @type {string}
+     * @memberof BotPatch
+     */
+    'industry'?: string;
     /**
      * Industries of the bot
      * @type {Array<string>}
