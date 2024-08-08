@@ -925,10 +925,10 @@ export interface ListingUpdate {
     'language'?: string;
     /**
      * 
-     * @type {any}
+     * @type {string}
      * @memberof ListingUpdate
      */
-    'industry'?: any;
+    'industry'?: string;
     /**
      * 
      * @type {Array<string>}
