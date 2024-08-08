@@ -942,10 +942,10 @@ export interface BotInsertData {
     'description'?: string;
     /**
      * 
-     * @type {string}
+     * @type {Array<string>}
      * @memberof BotInsertData
      */
-    'industry'?: string;
+    'industries'?: Array<string>;
     /**
      * 
      * @type {string}
@@ -4165,10 +4165,10 @@ export interface BotUpdateData {
     'description'?: string;
     /**
      * 
-     * @type {string}
+     * @type {Array<string>}
      * @memberof BotUpdateData
      */
-    'industry'?: string;
+    'industries'?: Array<string>;
     /**
      * 
      * @type {string}
