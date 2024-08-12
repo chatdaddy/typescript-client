@@ -1,0 +1,8 @@
+export const DEFAULT_ADD_POINTS_KEYWORD = 'Add Loyalty Points!'
+export const DEFAULT_REMOVE_POINTS_KEYWORD = 'Deduct Loyalty Points!'
+export const DEFUALT_INIT_ADD_TEXT = 'Thanks for purchasing. How much points are you adding?'
+export const DEFUALT_INIT_REMOVE_TEXT = 'How much points are you spending?'
+export const DEFAULT_CONFIRMATION_ADD_TEXT = 'Once confirmed, your points will be added. Thank you!'
+export const DEFAULT_CONFIRMATION_REMOVE_TEXT = 'Once confirmed, your points will be removed. Thank you!'
+export const DEFAULT_ADD_POINTS_BOT_NAME = 'membership_add_points_bot'
+export const DEFAULT_REMOVE_POINTS_BOT_NAME = 'membership_remove_points_bot'
