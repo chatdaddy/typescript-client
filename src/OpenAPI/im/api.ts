@@ -864,6 +864,12 @@ export interface AlibabaCAMSStateInfo {
      */
     'status'?: AlibabaCAMSStateInfoStatusEnum;
     /**
+     * 
+     * @type {string}
+     * @memberof AlibabaCAMSStateInfo
+     */
+    'qualityRating'?: AlibabaCAMSStateInfoQualityRatingEnum;
+    /**
      * Status of the company name approval from WABA
      * @type {string}
      * @memberof AlibabaCAMSStateInfo
@@ -908,6 +914,15 @@ export const AlibabaCAMSStateInfoStatusEnum = {
 } as const;
 
 export type AlibabaCAMSStateInfoStatusEnum = typeof AlibabaCAMSStateInfoStatusEnum[keyof typeof AlibabaCAMSStateInfoStatusEnum];
+export const AlibabaCAMSStateInfoQualityRatingEnum = {
+    Red: 'RED',
+    Yellow: 'YELLOW',
+    Green: 'GREEN',
+    Na: 'NA',
+    Unknown: 'UNKNOWN'
+} as const;
+
+export type AlibabaCAMSStateInfoQualityRatingEnum = typeof AlibabaCAMSStateInfoQualityRatingEnum[keyof typeof AlibabaCAMSStateInfoQualityRatingEnum];
 
 /**
  * @type AlibabaCAMSWebhookItem
