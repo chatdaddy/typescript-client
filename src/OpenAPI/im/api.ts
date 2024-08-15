@@ -6391,13 +6391,14 @@ export const AccountApiAxiosParamCreator = function (configuration?: Configurati
          * @param {string} [q] Search items by this string
          * @param {number} [page] Page number to paginate through results
          * @param {number} [count] Number of items to return
+         * @param {AccountType} [type] 
          * @param {boolean} [all] 
          * @param {AccountState} [state] only fetch accounts with a state
          * @param {boolean} [returnCount] return total count of accounts
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        accountsGet: async (q?: string, page?: number, count?: number, all?: boolean, state?: AccountState, returnCount?: boolean, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        accountsGet: async (q?: string, page?: number, count?: number, type?: AccountType, all?: boolean, state?: AccountState, returnCount?: boolean, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/accounts`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -6424,6 +6425,10 @@ export const AccountApiAxiosParamCreator = function (configuration?: Configurati
 
             if (count !== undefined) {
                 localVarQueryParameter['count'] = count;
+            }
+
+            if (type !== undefined) {
+                localVarQueryParameter['type'] = type;
             }
 
             if (all !== undefined) {
@@ -6698,14 +6703,15 @@ export const AccountApiFp = function(configuration?: Configuration) {
          * @param {string} [q] Search items by this string
          * @param {number} [page] Page number to paginate through results
          * @param {number} [count] Number of items to return
+         * @param {AccountType} [type] 
          * @param {boolean} [all] 
          * @param {AccountState} [state] only fetch accounts with a state
          * @param {boolean} [returnCount] return total count of accounts
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async accountsGet(q?: string, page?: number, count?: number, all?: boolean, state?: AccountState, returnCount?: boolean, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AccountsGet200Response>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.accountsGet(q, page, count, all, state, returnCount, options);
+        async accountsGet(q?: string, page?: number, count?: number, type?: AccountType, all?: boolean, state?: AccountState, returnCount?: boolean, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AccountsGet200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.accountsGet(q, page, count, type, all, state, returnCount, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -6813,7 +6819,7 @@ export const AccountApiFactory = function (configuration?: Configuration, basePa
          * @throws {RequiredError}
          */
         accountsGet(requestParameters: AccountApiAccountsGetRequest = {}, options?: AxiosRequestConfig): AxiosPromise<AccountsGet200Response> {
-            return localVarFp.accountsGet(requestParameters.q, requestParameters.page, requestParameters.count, requestParameters.all, requestParameters.state, requestParameters.returnCount, options).then((request) => request(axios, basePath));
+            return localVarFp.accountsGet(requestParameters.q, requestParameters.page, requestParameters.count, requestParameters.type, requestParameters.all, requestParameters.state, requestParameters.returnCount, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -6950,6 +6956,13 @@ export interface AccountApiAccountsGetRequest {
      * @memberof AccountApiAccountsGet
      */
     readonly count?: number
+
+    /**
+     * 
+     * @type {AccountType}
+     * @memberof AccountApiAccountsGet
+     */
+    readonly type?: AccountType
 
     /**
      * 
@@ -7109,7 +7122,7 @@ export class AccountApi extends BaseAPI {
      * @memberof AccountApi
      */
     public accountsGet(requestParameters: AccountApiAccountsGetRequest = {}, options?: AxiosRequestConfig) {
-        return AccountApiFp(this.configuration).accountsGet(requestParameters.q, requestParameters.page, requestParameters.count, requestParameters.all, requestParameters.state, requestParameters.returnCount, options).then((request) => request(this.axios, this.basePath));
+        return AccountApiFp(this.configuration).accountsGet(requestParameters.q, requestParameters.page, requestParameters.count, requestParameters.type, requestParameters.all, requestParameters.state, requestParameters.returnCount, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
