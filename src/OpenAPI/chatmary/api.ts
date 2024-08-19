@@ -79,6 +79,52 @@ export interface BotAddPostRequest {
 /**
  * 
  * @export
+ * @interface BotDetails
+ */
+export interface BotDetails {
+    /**
+     * Id of the user
+     * @type {string}
+     * @memberof BotDetails
+     */
+    'userId': string;
+    /**
+     * 
+     * @type {BotUseCase}
+     * @memberof BotDetails
+     */
+    'botApp'?: BotUseCase;
+    /**
+     * 
+     * @type {BotDetailsData}
+     * @memberof BotDetails
+     */
+    'data'?: BotDetailsData;
+    /**
+     * Questions asked by the user
+     * @type {Array<string>}
+     * @memberof BotDetails
+     */
+    'questions'?: Array<string>;
+    /**
+     * Answers provided by the bot
+     * @type {Array<string>}
+     * @memberof BotDetails
+     */
+    'answers'?: Array<string>;
+}
+
+
+/**
+ * @type BotDetailsData
+ * Data specific to the bot use case
+ * @export
+ */
+export type BotDetailsData = MedicalBotData;
+
+/**
+ * 
+ * @export
  * @interface BotMessagePost200Response
  */
 export interface BotMessagePost200Response {
@@ -102,6 +148,19 @@ export interface BotMessagePostRequest {
      */
     'message': string;
 }
+/**
+ * Use case of the bot
+ * @export
+ * @enum {string}
+ */
+
+export const BotUseCase = {
+    MedicalBot: 'medicalBot'
+} as const;
+
+export type BotUseCase = typeof BotUseCase[keyof typeof BotUseCase];
+
+
 /**
  * 
  * @export
@@ -331,6 +390,50 @@ export interface CustomBot {
      * @memberof CustomBot
      */
     'teamId'?: string;
+}
+/**
+ * 
+ * @export
+ * @interface ManageUserDataPostRequest
+ */
+export interface ManageUserDataPostRequest {
+    /**
+     * Stringified json data about the user
+     * @type {string}
+     * @memberof ManageUserDataPostRequest
+     */
+    'data': string;
+}
+/**
+ * 
+ * @export
+ * @interface MedicalBotData
+ */
+export interface MedicalBotData {
+    /**
+     * Name of the user
+     * @type {string}
+     * @memberof MedicalBotData
+     */
+    'name'?: string;
+    /**
+     * Age of the user
+     * @type {number}
+     * @memberof MedicalBotData
+     */
+    'age'?: number;
+    /**
+     * Stage of the ailment
+     * @type {string}
+     * @memberof MedicalBotData
+     */
+    'stage'?: string;
+    /**
+     * Symptoms of the ailment
+     * @type {Array<string>}
+     * @memberof MedicalBotData
+     */
+    'symptoms'?: Array<string>;
 }
 /**
  * 
@@ -587,6 +690,92 @@ export const CustomBotApiAxiosParamCreator = function (configuration?: Configura
                 options: localVarRequestOptions,
             };
         },
+        /**
+         * 
+         * @summary Get user data
+         * @param {BotUseCase} botApp 
+         * @param {string} userId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        manageUserDataGet: async (botApp: BotUseCase, userId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'botApp' is not null or undefined
+            assertParamExists('manageUserDataGet', 'botApp', botApp)
+            // verify required parameter 'userId' is not null or undefined
+            assertParamExists('manageUserDataGet', 'userId', userId)
+            const localVarPath = `/manageUserData/{botApp}`
+                .replace(`{${"botApp"}}`, encodeURIComponent(String(botApp)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (userId !== undefined) {
+                localVarQueryParameter['userId'] = userId;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Set user data
+         * @param {BotUseCase} botApp 
+         * @param {string} userId 
+         * @param {ManageUserDataPostRequest} [manageUserDataPostRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        manageUserDataPost: async (botApp: BotUseCase, userId: string, manageUserDataPostRequest?: ManageUserDataPostRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'botApp' is not null or undefined
+            assertParamExists('manageUserDataPost', 'botApp', botApp)
+            // verify required parameter 'userId' is not null or undefined
+            assertParamExists('manageUserDataPost', 'userId', userId)
+            const localVarPath = `/manageUserData/{botApp}`
+                .replace(`{${"botApp"}}`, encodeURIComponent(String(botApp)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (userId !== undefined) {
+                localVarQueryParameter['userId'] = userId;
+            }
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(manageUserDataPostRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
     }
 };
 
@@ -664,6 +853,31 @@ export const CustomBotApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.conversationIdPost(conversationIdPostRequest, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
+        /**
+         * 
+         * @summary Get user data
+         * @param {BotUseCase} botApp 
+         * @param {string} userId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async manageUserDataGet(botApp: BotUseCase, userId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BotDetails>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.manageUserDataGet(botApp, userId, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary Set user data
+         * @param {BotUseCase} botApp 
+         * @param {string} userId 
+         * @param {ManageUserDataPostRequest} [manageUserDataPostRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async manageUserDataPost(botApp: BotUseCase, userId: string, manageUserDataPostRequest?: ManageUserDataPostRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BotDetails>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.manageUserDataPost(botApp, userId, manageUserDataPostRequest, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
     }
 };
 
@@ -732,6 +946,26 @@ export const CustomBotApiFactory = function (configuration?: Configuration, base
          */
         conversationIdPost(requestParameters: CustomBotApiConversationIdPostRequest = {}, options?: AxiosRequestConfig): AxiosPromise<ConversationRecord> {
             return localVarFp.conversationIdPost(requestParameters.conversationIdPostRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Get user data
+         * @param {CustomBotApiManageUserDataGetRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        manageUserDataGet(requestParameters: CustomBotApiManageUserDataGetRequest, options?: AxiosRequestConfig): AxiosPromise<BotDetails> {
+            return localVarFp.manageUserDataGet(requestParameters.botApp, requestParameters.userId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Set user data
+         * @param {CustomBotApiManageUserDataPostRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        manageUserDataPost(requestParameters: CustomBotApiManageUserDataPostRequest, options?: AxiosRequestConfig): AxiosPromise<BotDetails> {
+            return localVarFp.manageUserDataPost(requestParameters.botApp, requestParameters.userId, requestParameters.manageUserDataPostRequest, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -821,6 +1055,55 @@ export interface CustomBotApiConversationIdPostRequest {
 }
 
 /**
+ * Request parameters for manageUserDataGet operation in CustomBotApi.
+ * @export
+ * @interface CustomBotApiManageUserDataGetRequest
+ */
+export interface CustomBotApiManageUserDataGetRequest {
+    /**
+     * 
+     * @type {BotUseCase}
+     * @memberof CustomBotApiManageUserDataGet
+     */
+    readonly botApp: BotUseCase
+
+    /**
+     * 
+     * @type {string}
+     * @memberof CustomBotApiManageUserDataGet
+     */
+    readonly userId: string
+}
+
+/**
+ * Request parameters for manageUserDataPost operation in CustomBotApi.
+ * @export
+ * @interface CustomBotApiManageUserDataPostRequest
+ */
+export interface CustomBotApiManageUserDataPostRequest {
+    /**
+     * 
+     * @type {BotUseCase}
+     * @memberof CustomBotApiManageUserDataPost
+     */
+    readonly botApp: BotUseCase
+
+    /**
+     * 
+     * @type {string}
+     * @memberof CustomBotApiManageUserDataPost
+     */
+    readonly userId: string
+
+    /**
+     * 
+     * @type {ManageUserDataPostRequest}
+     * @memberof CustomBotApiManageUserDataPost
+     */
+    readonly manageUserDataPostRequest?: ManageUserDataPostRequest
+}
+
+/**
  * CustomBotApi - object-oriented interface
  * @export
  * @class CustomBotApi
@@ -896,6 +1179,30 @@ export class CustomBotApi extends BaseAPI {
      */
     public conversationIdPost(requestParameters: CustomBotApiConversationIdPostRequest = {}, options?: AxiosRequestConfig) {
         return CustomBotApiFp(this.configuration).conversationIdPost(requestParameters.conversationIdPostRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Get user data
+     * @param {CustomBotApiManageUserDataGetRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CustomBotApi
+     */
+    public manageUserDataGet(requestParameters: CustomBotApiManageUserDataGetRequest, options?: AxiosRequestConfig) {
+        return CustomBotApiFp(this.configuration).manageUserDataGet(requestParameters.botApp, requestParameters.userId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Set user data
+     * @param {CustomBotApiManageUserDataPostRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CustomBotApi
+     */
+    public manageUserDataPost(requestParameters: CustomBotApiManageUserDataPostRequest, options?: AxiosRequestConfig) {
+        return CustomBotApiFp(this.configuration).manageUserDataPost(requestParameters.botApp, requestParameters.userId, requestParameters.manageUserDataPostRequest, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
