@@ -164,6 +164,19 @@ export type BotUseCase = typeof BotUseCase[keyof typeof BotUseCase];
 /**
  * 
  * @export
+ * @interface BotUsersGet200Response
+ */
+export interface BotUsersGet200Response {
+    /**
+     * 
+     * @type {Array<BotDetails>}
+     * @memberof BotUsersGet200Response
+     */
+    'data'?: Array<BotDetails>;
+}
+/**
+ * 
+ * @export
  * @interface BotsGet200Response
  */
 export interface BotsGet200Response {
@@ -582,6 +595,73 @@ export const CustomBotApiAxiosParamCreator = function (configuration?: Configura
         },
         /**
          * 
+         * @summary Get bot users
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        botUsersGet: async (options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/botUsers`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Delete bot user
+         * @param {string} userId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        botUsersPost: async (userId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'userId' is not null or undefined
+            assertParamExists('botUsersPost', 'userId', userId)
+            const localVarPath = `/botUsers`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (userId !== undefined) {
+                localVarQueryParameter['userId'] = userId;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
          * @summary Get all custom bots
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -823,6 +903,27 @@ export const CustomBotApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
+         * @summary Get bot users
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async botUsersGet(options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BotUsersGet200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.botUsersGet(options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary Delete bot user
+         * @param {string} userId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async botUsersPost(userId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BotDetails>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.botUsersPost(userId, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
          * @summary Get all custom bots
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -917,6 +1018,25 @@ export const CustomBotApiFactory = function (configuration?: Configuration, base
          */
         botMessagePost(requestParameters: CustomBotApiBotMessagePostRequest, options?: AxiosRequestConfig): AxiosPromise<BotMessagePost200Response> {
             return localVarFp.botMessagePost(requestParameters.botId, requestParameters.botMessagePostRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Get bot users
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        botUsersGet(options?: AxiosRequestConfig): AxiosPromise<BotUsersGet200Response> {
+            return localVarFp.botUsersGet(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Delete bot user
+         * @param {CustomBotApiBotUsersPostRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        botUsersPost(requestParameters: CustomBotApiBotUsersPostRequest, options?: AxiosRequestConfig): AxiosPromise<BotDetails> {
+            return localVarFp.botUsersPost(requestParameters.userId, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -1024,6 +1144,20 @@ export interface CustomBotApiBotMessagePostRequest {
      * @memberof CustomBotApiBotMessagePost
      */
     readonly botMessagePostRequest?: BotMessagePostRequest
+}
+
+/**
+ * Request parameters for botUsersPost operation in CustomBotApi.
+ * @export
+ * @interface CustomBotApiBotUsersPostRequest
+ */
+export interface CustomBotApiBotUsersPostRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof CustomBotApiBotUsersPost
+     */
+    readonly userId: string
 }
 
 /**
@@ -1144,6 +1278,29 @@ export class CustomBotApi extends BaseAPI {
      */
     public botMessagePost(requestParameters: CustomBotApiBotMessagePostRequest, options?: AxiosRequestConfig) {
         return CustomBotApiFp(this.configuration).botMessagePost(requestParameters.botId, requestParameters.botMessagePostRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Get bot users
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CustomBotApi
+     */
+    public botUsersGet(options?: AxiosRequestConfig) {
+        return CustomBotApiFp(this.configuration).botUsersGet(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Delete bot user
+     * @param {CustomBotApiBotUsersPostRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CustomBotApi
+     */
+    public botUsersPost(requestParameters: CustomBotApiBotUsersPostRequest, options?: AxiosRequestConfig) {
+        return CustomBotApiFp(this.configuration).botUsersPost(requestParameters.userId, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
