@@ -10,6 +10,8 @@ SNEGnm4K1V6HzZF0F9+mQS7N0UHNE+gv0OQIKi5D6e48ZCVytj3iX4Todg==
 -----END PUBLIC KEY-----
 `
 
+let customPublicKey: string | undefined
+
 /** exports the binary string used in auth tokens */
 export const generateBinaryString = (scopes: Scope[]) => {
 	let str = ''
@@ -33,8 +35,12 @@ export const verifyToken = (token: string) => {
 	if (!verifyJWT) {
 		verifyJWT = require('jsonwebtoken').verify
 	}
-	const user = verifyJWT(token, PUBLIC_KEY, { algorithms: ['ES256'] }) as JWT
+	const user = verifyJWT(token, customPublicKey || PUBLIC_KEY, { algorithms: ['ES256'] }) as JWT
 	return user
+}
+
+export const setCustomPublicKey = (key: string) => {
+	customPublicKey = key
 }
 
 /** decodes a JWT token and returns the included object */
@@ -77,7 +83,7 @@ export type AccessTokenFactoryOptions = {
 	/** optional config to generate the API client */
 	config?: ConfigurationParameters
 	/** max number of retries, 500ms delay between requests */
-	maxRetries?: number 
+	maxRetries?: number
 	/**
 	 * margin in milliseconds to expire the token early
 	 * to account for delays in network requests
@@ -107,7 +113,7 @@ export const makeAccessTokenFactory = (
 	maxRetries = maxRetries || 1
 
 	const tokenAPI = new OAuthApi(new Configuration(config || {}))
-	const tokenCache: TokenCache = 
+	const tokenCache: TokenCache =
 		existingTokens.reduce((dict, token) => {
 			const jwt = decodeToken(token)
 			const expiresAt = new Date(
