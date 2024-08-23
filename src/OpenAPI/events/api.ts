@@ -11567,7 +11567,7 @@ export interface TrackingInsertData {
      * @type {Array<TrackingInsertDataEventsInner>}
      * @memberof TrackingInsertData
      */
-    'events': Array<TrackingInsertDataEventsInner>;
+    'events'?: Array<TrackingInsertDataEventsInner>;
     /**
      * 
      * @type {string}

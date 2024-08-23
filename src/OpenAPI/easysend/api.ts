@@ -935,7 +935,7 @@ export interface OrderDataModel {
      * @type {OrderDataModelNote}
      * @memberof OrderDataModel
      */
-    'note'?: OrderDataModelNote;
+    'note'?: OrderDataModelNote | null;
     /**
      * 
      * @type {string}
@@ -2588,7 +2588,7 @@ export interface TrackServiceModel {
      * @type {Array<EventTrigger>}
      * @memberof TrackServiceModel
      */
-    'events': Array<EventTrigger>;
+    'events'?: Array<EventTrigger>;
     /**
      * An ISO formatted timestamp
      * @type {string}
