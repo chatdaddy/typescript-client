@@ -947,8 +947,7 @@
     "roles": [
       "admin",
       "agent",
-      "editor",
-      "viewer"
+      "editor"
     ],
     "section":"calls",
     "group": "Phone Number"
@@ -962,8 +961,7 @@
     "roles": [
       "admin",
       "agent",
-      "editor",
-      "viewer"
+      "editor"
     ],
     "section":"calls",
     "group": "Phone Number"
@@ -977,8 +975,7 @@
     "roles": [
       "admin",
       "agent",
-      "editor",
-      "viewer"
+      "editor"
     ],
     "section":"calls",
     "group": "Phone Number"
