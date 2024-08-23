@@ -935,7 +935,7 @@ export interface OrderDataModel {
      * @type {OrderDataModelNote}
      * @memberof OrderDataModel
      */
-    'note': OrderDataModelNote;
+    'note'?: OrderDataModelNote;
     /**
      * 
      * @type {string}
