@@ -1596,11 +1596,11 @@ export const Scope = {
     AccountRead: 'ACCOUNT_READ',
     AccountDelete: 'ACCOUNT_DELETE',
     AccountPatch: 'ACCOUNT_PATCH',
+    CreateSubUser: 'CREATE_SUB_USER',
     TeamlinkCreate: 'TEAMLINK_CREATE',
-    TeamlinkRead: 'TEAMLINK_READ',
     TeammembersUpdate: 'TEAMMEMBERS_UPDATE',
     TeammembersRead: 'TEAMMEMBERS_READ',
-    TeamNotify: 'TEAM_NOTIFY',
+    LogoutSubUser: 'LOGOUT_SUB_USER',
     ChatsAccessAll: 'CHATS_ACCESS_ALL',
     ChatsAccessAssigned: 'CHATS_ACCESS_ASSIGNED',
     ChatsDelete: 'CHATS_DELETE',
@@ -1639,7 +1639,11 @@ export const Scope = {
     CouponDelete: 'COUPON_DELETE',
     CouponUpdate: 'COUPON_UPDATE',
     TeammembersReadContactDetails: 'TEAMMEMBERS_READ_CONTACT_DETAILS',
-    TeammembersReadMessageDetails: 'TEAMMEMBERS_READ_MESSAGE_DETAILS'
+    TeammembersReadMessageDetails: 'TEAMMEMBERS_READ_MESSAGE_DETAILS',
+    CallPhoneCreate: 'CALL_PHONE_CREATE',
+    CallPhoneDelete: 'CALL_PHONE_DELETE',
+    MakeCalls: 'MAKE_CALLS',
+    CallLogsRead: 'CALL_LOGS_READ'
 } as const;
 
 export type Scope = typeof Scope[keyof typeof Scope];
@@ -4926,7 +4930,7 @@ export const SubUserApiAxiosParamCreator = function (configuration?: Configurati
 
             // authentication chatdaddy required
             // oauth required
-            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["TEAMMEMBERS_UPDATE"], configuration)
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["LOGOUT_SUB_USER"], configuration)
 
 
     
@@ -5003,7 +5007,7 @@ export const SubUserApiAxiosParamCreator = function (configuration?: Configurati
 
             // authentication chatdaddy required
             // oauth required
-            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["TEAMMEMBERS_UPDATE"], configuration)
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["CREATE_SUB_USER"], configuration)
 
 
     

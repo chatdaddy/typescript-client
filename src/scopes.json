@@ -325,7 +325,7 @@
   },
   "TEAM_UPDATE": {
     "number": 29,
-    "description": "Modify the details of the team",
+    "description": "Update team details",
     "features": [],
     "roles": [
       "admin"
@@ -387,24 +387,24 @@
     "section":"inbox",
     "group": "Channels"
   },
-  "TEAMLINK_CREATE": {
-    "number": 38,
-    "description": "Create a new invite link for the team",
-    "features": [],
-    "roles": [
-      "admin"
-    ],
-    "section":"settings", 
-    "group": "Team"
-  },
-  "TEAMLINK_READ": {
-    "number": 39,
-    "description": "Read invite links of the team",
+  "CREATE_SUB_USER": {
+    "number": 37,
+    "description": "Create a new user",
     "features": [],
     "roles": [
       "admin"
     ],
     "section":"settings",
+    "group": "Team"
+  },
+  "TEAMLINK_CREATE": {
+    "number": 38,
+    "description": "Create new invite links",
+    "features": [],
+    "roles": [
+      "admin"
+    ],
+    "section":"settings", 
     "group": "Team"
   },
   "TEAMMEMBERS_UPDATE": {
@@ -430,13 +430,12 @@
     "section":"settings",
     "group": "Team"
   },
-  "TEAM_NOTIFY": {
-    "number": 52,
-    "description": "Notify Teams",
+  "LOGOUT_SUB_USER": {
+    "number": 41,
+    "description": "Log out sub-users from all active sessions",
     "features": [],
     "roles": [
-      "admin",
-      "editor"
+      "admin"
     ],
     "section":"settings",
     "group": "Team"
@@ -938,5 +937,66 @@
     ],
     "section":"team-inbox",
     "group": "Messages"
+  },
+  "CALL_PHONE_CREATE": {
+    "number": 101,
+    "description": "Create/Update Phone Numbers",
+    "features": [
+      "calls"
+    ],
+    "roles": [
+      "admin",
+      "agent",
+      "editor",
+      "viewer"
+    ],
+    "section":"calls",
+    "group": "Phone Number"
+  },
+  "CALL_PHONE_DELETE": {
+    "number": 102,
+    "description": "Delete Phone Numbers",
+    "features": [
+      "calls"
+    ],
+    "roles": [
+      "admin",
+      "agent",
+      "editor",
+      "viewer"
+    ],
+    "section":"calls",
+    "group": "Phone Number"
+  },
+  "MAKE_CALLS": {
+    "number": 103,
+    "description": "Make outgoing calls",
+    "features": [
+      "calls"
+    ],
+    "roles": [
+      "admin",
+      "agent",
+      "editor",
+      "viewer"
+    ],
+    "section":"calls",
+    "group": "Phone Number"
+  },
+  "CALL_LOGS_READ": {
+    "number": 104,
+    "description": "Read Call Logs Details",
+    "subtext": "View call notes and play/download call recordings",
+    "features": [
+      "calls"
+    ],
+    "roles": [
+      "admin",
+      "agent",
+      "editor",
+      "viewer"
+    ],
+    "section":"calls",
+    "group": "Call Notes"
   }
 }

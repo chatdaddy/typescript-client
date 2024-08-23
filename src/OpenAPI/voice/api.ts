@@ -579,7 +579,7 @@ export const CallsApiAxiosParamCreator = function (configuration?: Configuration
 
             // authentication chatdaddy required
             // oauth required
-            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", [], configuration)
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["CALL_PHONE_DELETE"], configuration)
 
 
     
@@ -728,7 +728,7 @@ export const CallsApiAxiosParamCreator = function (configuration?: Configuration
 
             // authentication chatdaddy required
             // oauth required
-            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", [], configuration)
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["CALL_PHONE_CREATE"], configuration)
 
 
     
