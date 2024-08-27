@@ -1,4 +1,4 @@
-const BASE_PATH = "https://api-events.chatdaddy.tech".replace(/\/+$/, "");
+const BASE_PATH = "https://api.chatdaddy.tech/events".replace(/\/+$/, "");
 
 /* tslint:disable */
 /* eslint-disable */
@@ -6591,7 +6591,7 @@ export type EventName = typeof EventName[keyof typeof EventName];
  */
 export interface EventSubscription {
     /**
-     * ID of the subscription
+     * The subscription ID
      * @type {string}
      * @memberof EventSubscription
      */
@@ -9455,6 +9455,25 @@ export interface PostEventSubscription {
      * @memberof PostEventSubscription
      */
     'url': string;
+}
+/**
+ * 
+ * @export
+ * @interface PostMessageBySecretRequest
+ */
+export interface PostMessageBySecretRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof PostMessageBySecretRequest
+     */
+    'event': string;
+    /**
+     * 
+     * @type {Array<{ [key: string]: any; }>}
+     * @memberof PostMessageBySecretRequest
+     */
+    'data': Array<{ [key: string]: any; }>;
 }
 /**
  * 
@@ -12813,6 +12832,48 @@ export const EventSubscriptionApiAxiosParamCreator = function (configuration?: C
     return {
         /**
          * 
+         * @summary Send message to subscription
+         * @param {string} id 
+         * @param {string} secret 
+         * @param {PostMessageBySecretRequest} [postMessageBySecretRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postMessageBySecret: async (id: string, secret: string, postMessageBySecretRequest?: PostMessageBySecretRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('postMessageBySecret', 'id', id)
+            // verify required parameter 'secret' is not null or undefined
+            assertParamExists('postMessageBySecret', 'secret', secret)
+            const localVarPath = `/subscriptions/{id}/message/{secret}`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)))
+                .replace(`{${"secret"}}`, encodeURIComponent(String(secret)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(postMessageBySecretRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
          * @summary Delete a webhook subscription
          * @param {string} id 
          * @param {*} [options] Override http request option.
@@ -13037,6 +13098,19 @@ export const EventSubscriptionApiFp = function(configuration?: Configuration) {
     return {
         /**
          * 
+         * @summary Send message to subscription
+         * @param {string} id 
+         * @param {string} secret 
+         * @param {PostMessageBySecretRequest} [postMessageBySecretRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async postMessageBySecret(id: string, secret: string, postMessageBySecretRequest?: PostMessageBySecretRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postMessageBySecret(id, secret, postMessageBySecretRequest, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
          * @summary Delete a webhook subscription
          * @param {string} id 
          * @param {*} [options] Override http request option.
@@ -13107,6 +13181,16 @@ export const EventSubscriptionApiFactory = function (configuration?: Configurati
     return {
         /**
          * 
+         * @summary Send message to subscription
+         * @param {EventSubscriptionApiPostMessageBySecretRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postMessageBySecret(requestParameters: EventSubscriptionApiPostMessageBySecretRequest, options?: AxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.postMessageBySecret(requestParameters.id, requestParameters.secret, requestParameters.postMessageBySecretRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
          * @summary Delete a webhook subscription
          * @param {EventSubscriptionApiSubscriptionsDeleteRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -13157,6 +13241,34 @@ export const EventSubscriptionApiFactory = function (configuration?: Configurati
         },
     };
 };
+
+/**
+ * Request parameters for postMessageBySecret operation in EventSubscriptionApi.
+ * @export
+ * @interface EventSubscriptionApiPostMessageBySecretRequest
+ */
+export interface EventSubscriptionApiPostMessageBySecretRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof EventSubscriptionApiPostMessageBySecret
+     */
+    readonly id: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof EventSubscriptionApiPostMessageBySecret
+     */
+    readonly secret: string
+
+    /**
+     * 
+     * @type {PostMessageBySecretRequest}
+     * @memberof EventSubscriptionApiPostMessageBySecret
+     */
+    readonly postMessageBySecretRequest?: PostMessageBySecretRequest
+}
 
 /**
  * Request parameters for subscriptionsDelete operation in EventSubscriptionApi.
@@ -13272,6 +13384,18 @@ export interface EventSubscriptionApiSubscriptionsPostRequest {
 export class EventSubscriptionApi extends BaseAPI {
     /**
      * 
+     * @summary Send message to subscription
+     * @param {EventSubscriptionApiPostMessageBySecretRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof EventSubscriptionApi
+     */
+    public postMessageBySecret(requestParameters: EventSubscriptionApiPostMessageBySecretRequest, options?: AxiosRequestConfig) {
+        return EventSubscriptionApiFp(this.configuration).postMessageBySecret(requestParameters.id, requestParameters.secret, requestParameters.postMessageBySecretRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
      * @summary Delete a webhook subscription
      * @param {EventSubscriptionApiSubscriptionsDeleteRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -13339,7 +13463,7 @@ export class EventSubscriptionApi extends BaseAPI {
 export const WebSocketApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
-         * Note: you need to fetch the WS from wss://live.chatdaddy.tech Not from the base url mentioned in the API doc 
+         * Connect to this route to receive live events from ChatDaddy via a WebSocket.
          * @summary The WebSocket Route
          * @param {string} accessToken the JWT authorization token
          * @param {Array<EventName>} events Events to subscribe to
@@ -13347,11 +13471,65 @@ export const WebSocketApiAxiosParamCreator = function (configuration?: Configura
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        rootGet: async (accessToken: string, events: Array<EventName>, accounts?: Array<string>, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        ws: async (accessToken: string, events: Array<EventName>, accounts?: Array<string>, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'accessToken' is not null or undefined
-            assertParamExists('rootGet', 'accessToken', accessToken)
+            assertParamExists('ws', 'accessToken', accessToken)
             // verify required parameter 'events' is not null or undefined
-            assertParamExists('rootGet', 'events', events)
+            assertParamExists('ws', 'events', events)
+            const localVarPath = `/ws`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", [], configuration)
+
+            if (accessToken !== undefined) {
+                localVarQueryParameter['accessToken'] = accessToken;
+            }
+
+            if (events) {
+                localVarQueryParameter['events'] = events;
+            }
+
+            if (accounts) {
+                localVarQueryParameter['accounts'] = accounts;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Connect to this route to receive live events from ChatDaddy via a WebSocket. This route is deprecated, use `/ws` instead.
+         * @summary The WebSocket Route
+         * @param {string} accessToken the JWT authorization token
+         * @param {Array<EventName>} events Events to subscribe to
+         * @param {Array<string>} [accounts] Set the IM accounts to receive events from
+         * @param {*} [options] Override http request option.
+         * @deprecated
+         * @throws {RequiredError}
+         */
+        wsLegacy: async (accessToken: string, events: Array<EventName>, accounts?: Array<string>, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'accessToken' is not null or undefined
+            assertParamExists('wsLegacy', 'accessToken', accessToken)
+            // verify required parameter 'events' is not null or undefined
+            assertParamExists('wsLegacy', 'events', events)
             const localVarPath = `/`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -13402,7 +13580,7 @@ export const WebSocketApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = WebSocketApiAxiosParamCreator(configuration)
     return {
         /**
-         * Note: you need to fetch the WS from wss://live.chatdaddy.tech Not from the base url mentioned in the API doc 
+         * Connect to this route to receive live events from ChatDaddy via a WebSocket.
          * @summary The WebSocket Route
          * @param {string} accessToken the JWT authorization token
          * @param {Array<EventName>} events Events to subscribe to
@@ -13410,8 +13588,22 @@ export const WebSocketApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async rootGet(accessToken: string, events: Array<EventName>, accounts?: Array<string>, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.rootGet(accessToken, events, accounts, options);
+        async ws(accessToken: string, events: Array<EventName>, accounts?: Array<string>, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.ws(accessToken, events, accounts, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * Connect to this route to receive live events from ChatDaddy via a WebSocket. This route is deprecated, use `/ws` instead.
+         * @summary The WebSocket Route
+         * @param {string} accessToken the JWT authorization token
+         * @param {Array<EventName>} events Events to subscribe to
+         * @param {Array<string>} [accounts] Set the IM accounts to receive events from
+         * @param {*} [options] Override http request option.
+         * @deprecated
+         * @throws {RequiredError}
+         */
+        async wsLegacy(accessToken: string, events: Array<EventName>, accounts?: Array<string>, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.wsLegacy(accessToken, events, accounts, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
     }
@@ -13425,42 +13617,81 @@ export const WebSocketApiFactory = function (configuration?: Configuration, base
     const localVarFp = WebSocketApiFp(configuration)
     return {
         /**
-         * Note: you need to fetch the WS from wss://live.chatdaddy.tech Not from the base url mentioned in the API doc 
+         * Connect to this route to receive live events from ChatDaddy via a WebSocket.
          * @summary The WebSocket Route
-         * @param {WebSocketApiRootGetRequest} requestParameters Request parameters.
+         * @param {WebSocketApiWsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        rootGet(requestParameters: WebSocketApiRootGetRequest, options?: AxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.rootGet(requestParameters.accessToken, requestParameters.events, requestParameters.accounts, options).then((request) => request(axios, basePath));
+        ws(requestParameters: WebSocketApiWsRequest, options?: AxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.ws(requestParameters.accessToken, requestParameters.events, requestParameters.accounts, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Connect to this route to receive live events from ChatDaddy via a WebSocket. This route is deprecated, use `/ws` instead.
+         * @summary The WebSocket Route
+         * @param {WebSocketApiWsLegacyRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @deprecated
+         * @throws {RequiredError}
+         */
+        wsLegacy(requestParameters: WebSocketApiWsLegacyRequest, options?: AxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.wsLegacy(requestParameters.accessToken, requestParameters.events, requestParameters.accounts, options).then((request) => request(axios, basePath));
         },
     };
 };
 
 /**
- * Request parameters for rootGet operation in WebSocketApi.
+ * Request parameters for ws operation in WebSocketApi.
  * @export
- * @interface WebSocketApiRootGetRequest
+ * @interface WebSocketApiWsRequest
  */
-export interface WebSocketApiRootGetRequest {
+export interface WebSocketApiWsRequest {
     /**
      * the JWT authorization token
      * @type {string}
-     * @memberof WebSocketApiRootGet
+     * @memberof WebSocketApiWs
      */
     readonly accessToken: string
 
     /**
      * Events to subscribe to
      * @type {Array<EventName>}
-     * @memberof WebSocketApiRootGet
+     * @memberof WebSocketApiWs
      */
     readonly events: Array<EventName>
 
     /**
      * Set the IM accounts to receive events from
      * @type {Array<string>}
-     * @memberof WebSocketApiRootGet
+     * @memberof WebSocketApiWs
+     */
+    readonly accounts?: Array<string>
+}
+
+/**
+ * Request parameters for wsLegacy operation in WebSocketApi.
+ * @export
+ * @interface WebSocketApiWsLegacyRequest
+ */
+export interface WebSocketApiWsLegacyRequest {
+    /**
+     * the JWT authorization token
+     * @type {string}
+     * @memberof WebSocketApiWsLegacy
+     */
+    readonly accessToken: string
+
+    /**
+     * Events to subscribe to
+     * @type {Array<EventName>}
+     * @memberof WebSocketApiWsLegacy
+     */
+    readonly events: Array<EventName>
+
+    /**
+     * Set the IM accounts to receive events from
+     * @type {Array<string>}
+     * @memberof WebSocketApiWsLegacy
      */
     readonly accounts?: Array<string>
 }
@@ -13473,15 +13704,28 @@ export interface WebSocketApiRootGetRequest {
  */
 export class WebSocketApi extends BaseAPI {
     /**
-     * Note: you need to fetch the WS from wss://live.chatdaddy.tech Not from the base url mentioned in the API doc 
+     * Connect to this route to receive live events from ChatDaddy via a WebSocket.
      * @summary The WebSocket Route
-     * @param {WebSocketApiRootGetRequest} requestParameters Request parameters.
+     * @param {WebSocketApiWsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof WebSocketApi
      */
-    public rootGet(requestParameters: WebSocketApiRootGetRequest, options?: AxiosRequestConfig) {
-        return WebSocketApiFp(this.configuration).rootGet(requestParameters.accessToken, requestParameters.events, requestParameters.accounts, options).then((request) => request(this.axios, this.basePath));
+    public ws(requestParameters: WebSocketApiWsRequest, options?: AxiosRequestConfig) {
+        return WebSocketApiFp(this.configuration).ws(requestParameters.accessToken, requestParameters.events, requestParameters.accounts, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Connect to this route to receive live events from ChatDaddy via a WebSocket. This route is deprecated, use `/ws` instead.
+     * @summary The WebSocket Route
+     * @param {WebSocketApiWsLegacyRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @deprecated
+     * @throws {RequiredError}
+     * @memberof WebSocketApi
+     */
+    public wsLegacy(requestParameters: WebSocketApiWsLegacyRequest, options?: AxiosRequestConfig) {
+        return WebSocketApiFp(this.configuration).wsLegacy(requestParameters.accessToken, requestParameters.events, requestParameters.accounts, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
@@ -13498,7 +13742,7 @@ export const WebhookExampleApiAxiosParamCreator = function (configuration?: Conf
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        webhookExamplePost: async (eventWebhookData?: EventWebhookData, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        webhookExample: async (eventWebhookData?: EventWebhookData, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/webhook/example`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -13541,8 +13785,8 @@ export const WebhookExampleApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async webhookExamplePost(eventWebhookData?: EventWebhookData, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.webhookExamplePost(eventWebhookData, options);
+        async webhookExample(eventWebhookData?: EventWebhookData, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.webhookExample(eventWebhookData, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
     }
@@ -13557,26 +13801,26 @@ export const WebhookExampleApiFactory = function (configuration?: Configuration,
     return {
         /**
          * Example of what to expect from a ChatDaddy Webhook, this is not a real route. Points to keep in mind: - the request body you\'ll receive in the webhook will   match the request body shown in this route - there will be a chatdaddy token in the headers with no scopes - a POST request will be made to the url - ChatDaddy expects a 200 response to mark a successful delivery 
-         * @param {WebhookExampleApiWebhookExamplePostRequest} requestParameters Request parameters.
+         * @param {WebhookExampleApiWebhookExampleRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        webhookExamplePost(requestParameters: WebhookExampleApiWebhookExamplePostRequest = {}, options?: AxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.webhookExamplePost(requestParameters.eventWebhookData, options).then((request) => request(axios, basePath));
+        webhookExample(requestParameters: WebhookExampleApiWebhookExampleRequest = {}, options?: AxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.webhookExample(requestParameters.eventWebhookData, options).then((request) => request(axios, basePath));
         },
     };
 };
 
 /**
- * Request parameters for webhookExamplePost operation in WebhookExampleApi.
+ * Request parameters for webhookExample operation in WebhookExampleApi.
  * @export
- * @interface WebhookExampleApiWebhookExamplePostRequest
+ * @interface WebhookExampleApiWebhookExampleRequest
  */
-export interface WebhookExampleApiWebhookExamplePostRequest {
+export interface WebhookExampleApiWebhookExampleRequest {
     /**
      * 
      * @type {EventWebhookData}
-     * @memberof WebhookExampleApiWebhookExamplePost
+     * @memberof WebhookExampleApiWebhookExample
      */
     readonly eventWebhookData?: EventWebhookData
 }
@@ -13590,13 +13834,13 @@ export interface WebhookExampleApiWebhookExamplePostRequest {
 export class WebhookExampleApi extends BaseAPI {
     /**
      * Example of what to expect from a ChatDaddy Webhook, this is not a real route. Points to keep in mind: - the request body you\'ll receive in the webhook will   match the request body shown in this route - there will be a chatdaddy token in the headers with no scopes - a POST request will be made to the url - ChatDaddy expects a 200 response to mark a successful delivery 
-     * @param {WebhookExampleApiWebhookExamplePostRequest} requestParameters Request parameters.
+     * @param {WebhookExampleApiWebhookExampleRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof WebhookExampleApi
      */
-    public webhookExamplePost(requestParameters: WebhookExampleApiWebhookExamplePostRequest = {}, options?: AxiosRequestConfig) {
-        return WebhookExampleApiFp(this.configuration).webhookExamplePost(requestParameters.eventWebhookData, options).then((request) => request(this.axios, this.basePath));
+    public webhookExample(requestParameters: WebhookExampleApiWebhookExampleRequest = {}, options?: AxiosRequestConfig) {
+        return WebhookExampleApiFp(this.configuration).webhookExample(requestParameters.eventWebhookData, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
