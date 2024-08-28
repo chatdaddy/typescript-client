@@ -954,6 +954,12 @@ export interface BotInsertData {
     'industries'?: Array<string>;
     /**
      * 
+     * @type {Array<BotInsertDataTriggersInner>}
+     * @memberof BotInsertData
+     */
+    'triggers'?: Array<BotInsertDataTriggersInner>;
+    /**
+     * 
      * @type {string}
      * @memberof BotInsertData
      */
@@ -2831,6 +2837,209 @@ export const BotInsertDataSharedSlugsInnerUserIdentityTypeEnum = {
 export type BotInsertDataSharedSlugsInnerUserIdentityTypeEnum = typeof BotInsertDataSharedSlugsInnerUserIdentityTypeEnum[keyof typeof BotInsertDataSharedSlugsInnerUserIdentityTypeEnum];
 
 /**
+ * 
+ * @export
+ * @interface BotInsertDataTriggersInner
+ */
+export interface BotInsertDataTriggersInner {
+    /**
+     * 
+     * @type {string}
+     * @memberof BotInsertDataTriggersInner
+     */
+    'id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof BotInsertDataTriggersInner
+     */
+    'name': string;
+    /**
+     * 
+     * @type {BotInsertDataTriggersInnerMethod}
+     * @memberof BotInsertDataTriggersInner
+     */
+    'method': BotInsertDataTriggersInnerMethod;
+}
+/**
+ * @type BotInsertDataTriggersInnerMethod
+ * @export
+ */
+export type BotInsertDataTriggersInnerMethod = BotInsertDataTriggersInnerMethodOneOf | BotInsertDataTriggersInnerMethodOneOf1 | BotInsertDataTriggersInnerMethodOneOf2;
+
+/**
+ * 
+ * @export
+ * @interface BotInsertDataTriggersInnerMethodOneOf
+ */
+export interface BotInsertDataTriggersInnerMethodOneOf {
+    /**
+     * 
+     * @type {string}
+     * @memberof BotInsertDataTriggersInnerMethodOneOf
+     */
+    'type': BotInsertDataTriggersInnerMethodOneOfTypeEnum;
+    /**
+     * 
+     * @type {BotInsertDataTriggersInnerMethodOneOfData}
+     * @memberof BotInsertDataTriggersInnerMethodOneOf
+     */
+    'data': BotInsertDataTriggersInnerMethodOneOfData;
+}
+
+export const BotInsertDataTriggersInnerMethodOneOfTypeEnum = {
+    InternalEvent: 'internal_event'
+} as const;
+
+export type BotInsertDataTriggersInnerMethodOneOfTypeEnum = typeof BotInsertDataTriggersInnerMethodOneOfTypeEnum[keyof typeof BotInsertDataTriggersInnerMethodOneOfTypeEnum];
+
+/**
+ * 
+ * @export
+ * @interface BotInsertDataTriggersInnerMethodOneOf1
+ */
+export interface BotInsertDataTriggersInnerMethodOneOf1 {
+    /**
+     * 
+     * @type {string}
+     * @memberof BotInsertDataTriggersInnerMethodOneOf1
+     */
+    'type': BotInsertDataTriggersInnerMethodOneOf1TypeEnum;
+    /**
+     * 
+     * @type {BotInsertDataTriggersInnerMethodOneOf1Data}
+     * @memberof BotInsertDataTriggersInnerMethodOneOf1
+     */
+    'data': BotInsertDataTriggersInnerMethodOneOf1Data;
+}
+
+export const BotInsertDataTriggersInnerMethodOneOf1TypeEnum = {
+    Timestamp: 'timestamp'
+} as const;
+
+export type BotInsertDataTriggersInnerMethodOneOf1TypeEnum = typeof BotInsertDataTriggersInnerMethodOneOf1TypeEnum[keyof typeof BotInsertDataTriggersInnerMethodOneOf1TypeEnum];
+
+/**
+ * 
+ * @export
+ * @interface BotInsertDataTriggersInnerMethodOneOf1Data
+ */
+export interface BotInsertDataTriggersInnerMethodOneOf1Data {
+    /**
+     * 
+     * @type {string}
+     * @memberof BotInsertDataTriggersInnerMethodOneOf1Data
+     */
+    'startDate': string;
+    /**
+     * 
+     * @type {BotInsertDataTriggersInnerMethodOneOf1DataRecurring}
+     * @memberof BotInsertDataTriggersInnerMethodOneOf1Data
+     */
+    'recurring'?: BotInsertDataTriggersInnerMethodOneOf1DataRecurring;
+    /**
+     * 
+     * @type {string}
+     * @memberof BotInsertDataTriggersInnerMethodOneOf1Data
+     */
+    'nextExecutionDate'?: string;
+}
+/**
+ * 
+ * @export
+ * @interface BotInsertDataTriggersInnerMethodOneOf1DataRecurring
+ */
+export interface BotInsertDataTriggersInnerMethodOneOf1DataRecurring {
+    /**
+     * 
+     * @type {number}
+     * @memberof BotInsertDataTriggersInnerMethodOneOf1DataRecurring
+     */
+    'intervalMinutes': number;
+    /**
+     * 
+     * @type {string}
+     * @memberof BotInsertDataTriggersInnerMethodOneOf1DataRecurring
+     */
+    'endDate'?: string;
+}
+/**
+ * 
+ * @export
+ * @interface BotInsertDataTriggersInnerMethodOneOf2
+ */
+export interface BotInsertDataTriggersInnerMethodOneOf2 {
+    /**
+     * 
+     * @type {string}
+     * @memberof BotInsertDataTriggersInnerMethodOneOf2
+     */
+    'type': BotInsertDataTriggersInnerMethodOneOf2TypeEnum;
+    /**
+     * 
+     * @type {BotInsertDataTriggersInnerMethodOneOf2Data}
+     * @memberof BotInsertDataTriggersInnerMethodOneOf2
+     */
+    'data': BotInsertDataTriggersInnerMethodOneOf2Data;
+}
+
+export const BotInsertDataTriggersInnerMethodOneOf2TypeEnum = {
+    App: 'app'
+} as const;
+
+export type BotInsertDataTriggersInnerMethodOneOf2TypeEnum = typeof BotInsertDataTriggersInnerMethodOneOf2TypeEnum[keyof typeof BotInsertDataTriggersInnerMethodOneOf2TypeEnum];
+
+/**
+ * 
+ * @export
+ * @interface BotInsertDataTriggersInnerMethodOneOf2Data
+ */
+export interface BotInsertDataTriggersInnerMethodOneOf2Data {
+    /**
+     * 
+     * @type {string}
+     * @memberof BotInsertDataTriggersInnerMethodOneOf2Data
+     */
+    'appId': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof BotInsertDataTriggersInnerMethodOneOf2Data
+     */
+    'integrationId'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof BotInsertDataTriggersInnerMethodOneOf2Data
+     */
+    'secretId'?: string;
+    /**
+     * 
+     * @type {{ [key: string]: any; }}
+     * @memberof BotInsertDataTriggersInnerMethodOneOf2Data
+     */
+    'registrationOutput'?: { [key: string]: any; };
+}
+/**
+ * 
+ * @export
+ * @interface BotInsertDataTriggersInnerMethodOneOfData
+ */
+export interface BotInsertDataTriggersInnerMethodOneOfData {
+    /**
+     * 
+     * @type {string}
+     * @memberof BotInsertDataTriggersInnerMethodOneOfData
+     */
+    'event': string;
+    /**
+     * Useful for \'order-insert\' event, to specify the service type of the integration. This\'ll help distinguish which conditions to display in the UI
+     * @type {string}
+     * @memberof BotInsertDataTriggersInnerMethodOneOfData
+     */
+    'serviceType'?: string;
+}
+/**
  * @type BotNodeEventData
  * @export
  */
@@ -4181,6 +4390,12 @@ export interface BotUpdateData {
      * @memberof BotUpdateData
      */
     'industries'?: Array<string>;
+    /**
+     * 
+     * @type {Array<BotInsertDataTriggersInner>}
+     * @memberof BotUpdateData
+     */
+    'triggers'?: Array<BotInsertDataTriggersInner>;
     /**
      * 
      * @type {string}

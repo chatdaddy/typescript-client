@@ -1540,6 +1540,12 @@ export interface Bot {
      */
     'industries'?: Array<string>;
     /**
+     * 
+     * @type {Array<BotTriggersInner>}
+     * @memberof Bot
+     */
+    'triggers'?: Array<BotTriggersInner>;
+    /**
      * Language of the bot
      * @type {string}
      * @memberof Bot
@@ -2787,6 +2793,31 @@ export type BotTriggerTarget = ContactsQueryTarget | PropertyPathTarget;
 /**
  * 
  * @export
+ * @interface BotTriggersInner
+ */
+export interface BotTriggersInner {
+    /**
+     * 
+     * @type {string}
+     * @memberof BotTriggersInner
+     */
+    'id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof BotTriggersInner
+     */
+    'name': string;
+    /**
+     * 
+     * @type {TriggerMethod}
+     * @memberof BotTriggersInner
+     */
+    'method': TriggerMethod;
+}
+/**
+ * 
+ * @export
  * @interface BotsAnalyticsGet200Response
  */
 export interface BotsAnalyticsGet200Response {
@@ -2935,6 +2966,12 @@ export interface BotsGets200Response {
      */
     'totalCount'?: number;
 }
+/**
+ * @type BotsGetsTriggerTypesParameter
+ * @export
+ */
+export type BotsGetsTriggerTypesParameter = Array<TriggerMethodFilter> | TriggerMethodFilter;
+
 /**
  * 
  * @export
@@ -5339,6 +5376,32 @@ export type TriggerDelayOneOf2TypeEnum = typeof TriggerDelayOneOf2TypeEnum[keyof
 export type TriggerMethod = AppTriggerMethod | InternalEventTriggerMethod | TimestampedTriggerMethod;
 
 /**
+ * @type TriggerMethodFilter
+ * @export
+ */
+export type TriggerMethodFilter = AppTriggerMethod | InternalEventTriggerMethod | TriggerMethodFilterOneOf;
+
+/**
+ * 
+ * @export
+ * @interface TriggerMethodFilterOneOf
+ */
+export interface TriggerMethodFilterOneOf {
+    /**
+     * 
+     * @type {string}
+     * @memberof TriggerMethodFilterOneOf
+     */
+    'type': TriggerMethodFilterOneOfTypeEnum;
+}
+
+export const TriggerMethodFilterOneOfTypeEnum = {
+    Timestamp: 'timestamp'
+} as const;
+
+export type TriggerMethodFilterOneOfTypeEnum = typeof TriggerMethodFilterOneOfTypeEnum[keyof typeof TriggerMethodFilterOneOfTypeEnum];
+
+/**
  * 
  * @export
  * @interface TriggerUpsert
@@ -7563,10 +7626,11 @@ export const BotsApiAxiosParamCreator = function (configuration?: Configuration)
          * @param {string} [language] 
          * @param {string} [industry] 
          * @param {boolean} [returnTotalCount] 
+         * @param {BotsGetsTriggerTypesParameter} [triggerTypes] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        botsGets: async (q?: string, isForm?: boolean, before?: string, count?: number, id?: Array<string>, sortBy?: 'name' | 'updatedAt', order?: 'ASC' | 'DESC', folderId?: string, language?: string, industry?: string, returnTotalCount?: boolean, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        botsGets: async (q?: string, isForm?: boolean, before?: string, count?: number, id?: Array<string>, sortBy?: 'name' | 'updatedAt', order?: 'ASC' | 'DESC', folderId?: string, language?: string, industry?: string, returnTotalCount?: boolean, triggerTypes?: BotsGetsTriggerTypesParameter, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/bots`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -7625,6 +7689,10 @@ export const BotsApiAxiosParamCreator = function (configuration?: Configuration)
 
             if (returnTotalCount !== undefined) {
                 localVarQueryParameter['returnTotalCount'] = returnTotalCount;
+            }
+
+            if (triggerTypes !== undefined) {
+                localVarQueryParameter['triggerTypes'] = triggerTypes;
             }
 
 
@@ -7865,11 +7933,12 @@ export const BotsApiFp = function(configuration?: Configuration) {
          * @param {string} [language] 
          * @param {string} [industry] 
          * @param {boolean} [returnTotalCount] 
+         * @param {BotsGetsTriggerTypesParameter} [triggerTypes] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async botsGets(q?: string, isForm?: boolean, before?: string, count?: number, id?: Array<string>, sortBy?: 'name' | 'updatedAt', order?: 'ASC' | 'DESC', folderId?: string, language?: string, industry?: string, returnTotalCount?: boolean, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BotsGets200Response>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.botsGets(q, isForm, before, count, id, sortBy, order, folderId, language, industry, returnTotalCount, options);
+        async botsGets(q?: string, isForm?: boolean, before?: string, count?: number, id?: Array<string>, sortBy?: 'name' | 'updatedAt', order?: 'ASC' | 'DESC', folderId?: string, language?: string, industry?: string, returnTotalCount?: boolean, triggerTypes?: BotsGetsTriggerTypesParameter, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BotsGets200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.botsGets(q, isForm, before, count, id, sortBy, order, folderId, language, industry, returnTotalCount, triggerTypes, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -7987,7 +8056,7 @@ export const BotsApiFactory = function (configuration?: Configuration, basePath?
          * @throws {RequiredError}
          */
         botsGets(requestParameters: BotsApiBotsGetsRequest = {}, options?: AxiosRequestConfig): AxiosPromise<BotsGets200Response> {
-            return localVarFp.botsGets(requestParameters.q, requestParameters.isForm, requestParameters.before, requestParameters.count, requestParameters.id, requestParameters.sortBy, requestParameters.order, requestParameters.folderId, requestParameters.language, requestParameters.industry, requestParameters.returnTotalCount, options).then((request) => request(axios, basePath));
+            return localVarFp.botsGets(requestParameters.q, requestParameters.isForm, requestParameters.before, requestParameters.count, requestParameters.id, requestParameters.sortBy, requestParameters.order, requestParameters.folderId, requestParameters.language, requestParameters.industry, requestParameters.returnTotalCount, requestParameters.triggerTypes, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -8237,6 +8306,13 @@ export interface BotsApiBotsGetsRequest {
      * @memberof BotsApiBotsGets
      */
     readonly returnTotalCount?: boolean
+
+    /**
+     * 
+     * @type {BotsGetsTriggerTypesParameter}
+     * @memberof BotsApiBotsGets
+     */
+    readonly triggerTypes?: BotsGetsTriggerTypesParameter
 }
 
 /**
@@ -8391,7 +8467,7 @@ export class BotsApi extends BaseAPI {
      * @memberof BotsApi
      */
     public botsGets(requestParameters: BotsApiBotsGetsRequest = {}, options?: AxiosRequestConfig) {
-        return BotsApiFp(this.configuration).botsGets(requestParameters.q, requestParameters.isForm, requestParameters.before, requestParameters.count, requestParameters.id, requestParameters.sortBy, requestParameters.order, requestParameters.folderId, requestParameters.language, requestParameters.industry, requestParameters.returnTotalCount, options).then((request) => request(this.axios, this.basePath));
+        return BotsApiFp(this.configuration).botsGets(requestParameters.q, requestParameters.isForm, requestParameters.before, requestParameters.count, requestParameters.id, requestParameters.sortBy, requestParameters.order, requestParameters.folderId, requestParameters.language, requestParameters.industry, requestParameters.returnTotalCount, requestParameters.triggerTypes, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
