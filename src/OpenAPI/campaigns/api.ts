@@ -60,6 +60,65 @@ export interface CampaignAsyncCreate200Response {
 /**
  * 
  * @export
+ * @interface CampaignAsyncGet200Response
+ */
+export interface CampaignAsyncGet200Response {
+    /**
+     * ID of the campaign
+     * @type {string}
+     * @memberof CampaignAsyncGet200Response
+     */
+    'id': string;
+    /**
+     * Team ID of the campaign
+     * @type {string}
+     * @memberof CampaignAsyncGet200Response
+     */
+    'teamId': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof CampaignAsyncGet200Response
+     */
+    'status': CampaignAsyncGet200ResponseStatusEnum;
+    /**
+     * 
+     * @type {{ [key: string]: any; }}
+     * @memberof CampaignAsyncGet200Response
+     */
+    'error'?: { [key: string]: any; } | null;
+    /**
+     * 
+     * @type {CampaignMetadata}
+     * @memberof CampaignAsyncGet200Response
+     */
+    'campaign'?: CampaignMetadata;
+}
+
+export const CampaignAsyncGet200ResponseStatusEnum = {
+    Executing: 'executing',
+    Success: 'success',
+    Error: 'error'
+} as const;
+
+export type CampaignAsyncGet200ResponseStatusEnum = typeof CampaignAsyncGet200ResponseStatusEnum[keyof typeof CampaignAsyncGet200ResponseStatusEnum];
+
+/**
+ * 
+ * @export
+ * @interface CampaignAsyncGet200ResponseAllOf
+ */
+export interface CampaignAsyncGet200ResponseAllOf {
+    /**
+     * 
+     * @type {CampaignMetadata}
+     * @memberof CampaignAsyncGet200ResponseAllOf
+     */
+    'campaign'?: CampaignMetadata;
+}
+/**
+ * 
+ * @export
  * @interface CampaignCreateAsync
  */
 export interface CampaignCreateAsync {
@@ -971,7 +1030,7 @@ export const CampaignsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async campaignAsyncGet(id: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CampaignCreateJob>> {
+        async campaignAsyncGet(id: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CampaignAsyncGet200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.campaignAsyncGet(id, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -1077,7 +1136,7 @@ export const CampaignsApiFactory = function (configuration?: Configuration, base
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        campaignAsyncGet(requestParameters: CampaignsApiCampaignAsyncGetRequest, options?: AxiosRequestConfig): AxiosPromise<CampaignCreateJob> {
+        campaignAsyncGet(requestParameters: CampaignsApiCampaignAsyncGetRequest, options?: AxiosRequestConfig): AxiosPromise<CampaignAsyncGet200Response> {
             return localVarFp.campaignAsyncGet(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
