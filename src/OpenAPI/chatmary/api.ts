@@ -447,6 +447,12 @@ export interface MedicalBotData {
      * @memberof MedicalBotData
      */
     'symptoms'?: Array<string>;
+    /**
+     * Inputs from the user
+     * @type {Array<string>}
+     * @memberof MedicalBotData
+     */
+    'questions'?: Array<string>;
 }
 /**
  * 
