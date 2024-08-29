@@ -60,40 +60,6 @@ export interface CampaignAsyncCreate200Response {
 /**
  * 
  * @export
- * @interface CampaignAsyncGet200Response
- */
-export interface CampaignAsyncGet200Response {
-    /**
-     * 
-     * @type {string}
-     * @memberof CampaignAsyncGet200Response
-     */
-    'status': CampaignAsyncGet200ResponseStatusEnum;
-    /**
-     * 
-     * @type {{ [key: string]: any; }}
-     * @memberof CampaignAsyncGet200Response
-     */
-    'error'?: { [key: string]: any; };
-    /**
-     * 
-     * @type {CampaignMetadata}
-     * @memberof CampaignAsyncGet200Response
-     */
-    'campaign'?: CampaignMetadata;
-}
-
-export const CampaignAsyncGet200ResponseStatusEnum = {
-    Executing: 'executing',
-    Success: 'success',
-    Error: 'error'
-} as const;
-
-export type CampaignAsyncGet200ResponseStatusEnum = typeof CampaignAsyncGet200ResponseStatusEnum[keyof typeof CampaignAsyncGet200ResponseStatusEnum];
-
-/**
- * 
- * @export
  * @interface CampaignCreateAsync
  */
 export interface CampaignCreateAsync {
@@ -165,6 +131,46 @@ export interface CampaignCreateAsync {
      */
     'contactFilters'?: { [key: string]: any; };
 }
+/**
+ * Current state of campaign creation
+ * @export
+ * @interface CampaignCreateJob
+ */
+export interface CampaignCreateJob {
+    /**
+     * ID of the campaign
+     * @type {string}
+     * @memberof CampaignCreateJob
+     */
+    'id': string;
+    /**
+     * Team ID of the campaign
+     * @type {string}
+     * @memberof CampaignCreateJob
+     */
+    'teamId': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof CampaignCreateJob
+     */
+    'status': CampaignCreateJobStatusEnum;
+    /**
+     * 
+     * @type {{ [key: string]: any; }}
+     * @memberof CampaignCreateJob
+     */
+    'error'?: { [key: string]: any; } | null;
+}
+
+export const CampaignCreateJobStatusEnum = {
+    Executing: 'executing',
+    Success: 'success',
+    Error: 'error'
+} as const;
+
+export type CampaignCreateJobStatusEnum = typeof CampaignCreateJobStatusEnum[keyof typeof CampaignCreateJobStatusEnum];
+
 /**
  * 
  * @export
@@ -965,7 +971,7 @@ export const CampaignsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async campaignAsyncGet(id: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CampaignAsyncGet200Response>> {
+        async campaignAsyncGet(id: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CampaignCreateJob>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.campaignAsyncGet(id, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -1071,7 +1077,7 @@ export const CampaignsApiFactory = function (configuration?: Configuration, base
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        campaignAsyncGet(requestParameters: CampaignsApiCampaignAsyncGetRequest, options?: AxiosRequestConfig): AxiosPromise<CampaignAsyncGet200Response> {
+        campaignAsyncGet(requestParameters: CampaignsApiCampaignAsyncGetRequest, options?: AxiosRequestConfig): AxiosPromise<CampaignCreateJob> {
             return localVarFp.campaignAsyncGet(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
