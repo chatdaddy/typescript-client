@@ -189,6 +189,12 @@ export interface CampaignCreateAsync {
      * @memberof CampaignCreateAsync
      */
     'contactFilters'?: { [key: string]: any; };
+    /**
+     * 
+     * @type {string}
+     * @memberof CampaignCreateAsync
+     */
+    'createdAt'?: string;
 }
 /**
  * Current state of campaign creation
