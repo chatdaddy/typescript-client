@@ -6745,7 +6745,6 @@ export const EventName = {
     FewMessagesLeft: 'few-messages-left',
     StaleAccountNotification: 'stale-account-notification',
     CustomerCreditsLevelUpdate: 'customer-credits-level-update',
-    MembershipactionInsert: 'membershipaction-insert',
     PushNotification: 'push-notification',
     CampaignInsert: 'campaign-insert',
     CredittransactionrecordInsert: 'credittransactionrecord-insert',
@@ -6887,7 +6886,7 @@ export type EventSubscriptionType = typeof EventSubscriptionType[keyof typeof Ev
  * The request body you\'ll receive in a webhook
  * @export
  */
-export type EventWebhookData = AccountDelete | AccountInsert | AccountUpdate | ActionExecute | BotDelete | BotInsert | BotUpdate | CallDelete | CallInsert | CallUpdate | CampaignInsert | ChatDelete | ChatInsert | ChatUpdate | ChatbotInsert | ContactDelete | ContactInsert | ContactUpdate | CredittransactionrecordInsert | CrmTicketDelete | CrmTicketInsert | CrmTicketUpdate | CustomerCreditsLevelUpdate | DashboardwithdataInsert | FewMessagesLeft | GroupUpdate | KeywordbasedactionInsert | MembershipactionInsert | MessageDelete | MessageInsert | MessageUpdate | OrderInsert | PaymentintegrationInsert | PlatformproductDelete | PlatformproductInsert | PlatformproductUpdate | PresenceUpdate | PushNotification | ShopproductInsert | StaleAccountNotification | TagDelete | TagInsert | TagUpdate | TeamDelete | TeamInsert | TeamUpdate | TeammemberDelete | TeammemberInsert | TeammemberLogout | TeammemberUpdate | TrackingDelete | TrackingInsert | TrackingUpdate | UserDelete | UserInsert | UserUpdate;
+export type EventWebhookData = AccountDelete | AccountInsert | AccountUpdate | ActionExecute | BotDelete | BotInsert | BotUpdate | CallDelete | CallInsert | CallUpdate | CampaignInsert | ChatDelete | ChatInsert | ChatUpdate | ChatbotInsert | ContactDelete | ContactInsert | ContactUpdate | CredittransactionrecordInsert | CrmTicketDelete | CrmTicketInsert | CrmTicketUpdate | CustomerCreditsLevelUpdate | DashboardwithdataInsert | FewMessagesLeft | GroupUpdate | KeywordbasedactionInsert | MessageDelete | MessageInsert | MessageUpdate | OrderInsert | PaymentintegrationInsert | PlatformproductDelete | PlatformproductInsert | PlatformproductUpdate | PresenceUpdate | PushNotification | ShopproductInsert | StaleAccountNotification | TagDelete | TagInsert | TagUpdate | TeamDelete | TeamInsert | TeamUpdate | TeammemberDelete | TeammemberInsert | TeammemberLogout | TeammemberUpdate | TrackingDelete | TrackingInsert | TrackingUpdate | UserDelete | UserInsert | UserUpdate;
 
 /**
  * 
@@ -7662,32 +7661,6 @@ export const MembershipActionInsertDataApprovalStateEnum = {
 } as const;
 
 export type MembershipActionInsertDataApprovalStateEnum = typeof MembershipActionInsertDataApprovalStateEnum[keyof typeof MembershipActionInsertDataApprovalStateEnum];
-
-/**
- * 
- * @export
- * @interface MembershipactionInsert
- */
-export interface MembershipactionInsert {
-    /**
-     * 
-     * @type {string}
-     * @memberof MembershipactionInsert
-     */
-    'event': MembershipactionInsertEventEnum;
-    /**
-     * 
-     * @type {Array<MembershipactionInsertData>}
-     * @memberof MembershipactionInsert
-     */
-    'data': Array<MembershipactionInsertData>;
-}
-
-export const MembershipactionInsertEventEnum = {
-    MembershipactionInsert: 'membershipaction-insert'
-} as const;
-
-export type MembershipactionInsertEventEnum = typeof MembershipactionInsertEventEnum[keyof typeof MembershipactionInsertEventEnum];
 
 /**
  * 

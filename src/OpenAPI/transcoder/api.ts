@@ -1,4 +1,4 @@
-const BASE_PATH = "https://api-transcoder.chatdaddy.tech".replace(/\/+$/, "");
+const BASE_PATH = "https://api.chatdaddy.tech/transcoder".replace(/\/+$/, "");
 
 /* tslint:disable */
 /* eslint-disable */

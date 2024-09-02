@@ -1,4 +1,4 @@
-const BASE_PATH = "https://api-keywordreply.chatdaddy.tech".replace(/\/+$/, "");
+const BASE_PATH = "https://api.chatdaddy.tech/keywordreply".replace(/\/+$/, "");
 
 /* tslint:disable */
 /* eslint-disable */
