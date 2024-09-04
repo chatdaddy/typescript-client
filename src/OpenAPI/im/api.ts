@@ -6238,6 +6238,43 @@ export interface WASyncStateInfo {
 /**
  * 
  * @export
+ * @interface WebhookMailPostRequest
+ */
+export interface WebhookMailPostRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof WebhookMailPostRequest
+     */
+    'MessageID': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof WebhookMailPostRequest
+     */
+    'Recipient': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof WebhookMailPostRequest
+     */
+    'RecordType'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof WebhookMailPostRequest
+     */
+    'DeliveredAt'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof WebhookMailPostRequest
+     */
+    'Tag': string;
+}
+/**
+ * 
+ * @export
  * @interface WebhookMessengerPostRequest
  */
 export interface WebhookMessengerPostRequest {
@@ -12148,6 +12185,40 @@ export const MailApiAxiosParamCreator = function (configuration?: Configuration)
                 options: localVarRequestOptions,
             };
         },
+        /**
+         * 
+         * @summary Receive a message from the platform
+         * @param {WebhookMailPostRequest} [webhookMailPostRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        webhookMailPost: async (webhookMailPostRequest?: WebhookMailPostRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/mail/webhook`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(webhookMailPostRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
     }
 };
 
@@ -12170,6 +12241,17 @@ export const MailApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.mailRegisterPost(accountId, mailRegisterPostRequest, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
+        /**
+         * 
+         * @summary Receive a message from the platform
+         * @param {WebhookMailPostRequest} [webhookMailPostRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async webhookMailPost(webhookMailPostRequest?: WebhookMailPostRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AccountsLogout200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.webhookMailPost(webhookMailPostRequest, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
     }
 };
 
@@ -12189,6 +12271,16 @@ export const MailApiFactory = function (configuration?: Configuration, basePath?
          */
         mailRegisterPost(requestParameters: MailApiMailRegisterPostRequest, options?: AxiosRequestConfig): AxiosPromise<AccountsLogout200Response> {
             return localVarFp.mailRegisterPost(requestParameters.accountId, requestParameters.mailRegisterPostRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Receive a message from the platform
+         * @param {MailApiWebhookMailPostRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        webhookMailPost(requestParameters: MailApiWebhookMailPostRequest = {}, options?: AxiosRequestConfig): AxiosPromise<AccountsLogout200Response> {
+            return localVarFp.webhookMailPost(requestParameters.webhookMailPostRequest, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -12215,6 +12307,20 @@ export interface MailApiMailRegisterPostRequest {
 }
 
 /**
+ * Request parameters for webhookMailPost operation in MailApi.
+ * @export
+ * @interface MailApiWebhookMailPostRequest
+ */
+export interface MailApiWebhookMailPostRequest {
+    /**
+     * 
+     * @type {WebhookMailPostRequest}
+     * @memberof MailApiWebhookMailPost
+     */
+    readonly webhookMailPostRequest?: WebhookMailPostRequest
+}
+
+/**
  * MailApi - object-oriented interface
  * @export
  * @class MailApi
@@ -12231,6 +12337,18 @@ export class MailApi extends BaseAPI {
      */
     public mailRegisterPost(requestParameters: MailApiMailRegisterPostRequest, options?: AxiosRequestConfig) {
         return MailApiFp(this.configuration).mailRegisterPost(requestParameters.accountId, requestParameters.mailRegisterPostRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Receive a message from the platform
+     * @param {MailApiWebhookMailPostRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof MailApi
+     */
+    public webhookMailPost(requestParameters: MailApiWebhookMailPostRequest = {}, options?: AxiosRequestConfig) {
+        return MailApiFp(this.configuration).webhookMailPost(requestParameters.webhookMailPostRequest, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
