@@ -1,4 +1,4 @@
-const BASE_PATH = "https://api.chatdaddy.tech/payments".replace(/\/+$/, "");
+const BASE_PATH = `https://${globalThis.BASE_HOST_NAME || 'api.chatdaddy.tech'}/payments`.replace(/\/+$/, "");
 
 /* tslint:disable */
 /* eslint-disable */
@@ -26,19 +26,19 @@ import type { RequestArgs } from '../base';
 import { COLLECTION_FORMATS, BaseAPI, RequiredError } from '../base';
 
 /**
- * 
+ *
  * @export
  * @interface Access
  */
 export interface Access {
     /**
-     * 
+     *
      * @type {Array<Feature>}
      * @memberof Access
      */
     'features': Array<Feature>;
     /**
-     * 
+     *
      * @type {LimitationMap}
      * @memberof Access
      */
@@ -51,45 +51,45 @@ export interface Access {
     'lastExpiryOrRenewalDate'?: string;
 }
 /**
- * 
+ *
  * @export
  * @interface AccountAccess
  */
 export interface AccountAccess {
     /**
-     * 
+     *
      * @type {Array<AccountFeature>}
      * @memberof AccountAccess
      */
     'features': Array<AccountFeature>;
     /**
-     * 
+     *
      * @type {AccountLimitationMap}
      * @memberof AccountAccess
      */
     'limits': AccountLimitationMap;
 }
 /**
- * 
+ *
  * @export
  * @interface AccountAccessDetail
  */
 export interface AccountAccessDetail {
     /**
-     * 
+     *
      * @type {AccountAccess}
      * @memberof AccountAccessDetail
      */
     'access': AccountAccess;
     /**
-     * 
+     *
      * @type {LimitationMap}
      * @memberof AccountAccessDetail
      */
     'usage': LimitationMap;
 }
 /**
- * 
+ *
  * @export
  * @enum {string}
  */
@@ -104,7 +104,7 @@ export type AccountFeature = typeof AccountFeature[keyof typeof AccountFeature];
 
 
 /**
- * 
+ *
  * @export
  * @interface AccountLimitationMap
  */
@@ -117,7 +117,7 @@ export interface AccountLimitationMap {
     'messages'?: number;
 }
 /**
- * 
+ *
  * @export
  * @interface AmountWithCurrency
  */
@@ -129,7 +129,7 @@ export interface AmountWithCurrency {
      */
     'amount': number;
     /**
-     * 
+     *
      * @type {string}
      * @memberof AmountWithCurrency
      */
@@ -142,19 +142,19 @@ export interface AmountWithCurrency {
 export type AnyCreditConsumptionType = CreditConsumptionType | RecurringCreditConsumptionType;
 
 /**
- * 
+ *
  * @export
  * @interface AutoChargeProduct
  */
 export interface AutoChargeProduct {
     /**
-     * 
+     *
      * @type {LimitedItem}
      * @memberof AutoChargeProduct
      */
     'item': LimitedItem;
     /**
-     * 
+     *
      * @type {string}
      * @memberof AutoChargeProduct
      */
@@ -163,13 +163,13 @@ export interface AutoChargeProduct {
 
 
 /**
- * 
+ *
  * @export
  * @interface AutoChargeProductSet
  */
 export interface AutoChargeProductSet {
     /**
-     * 
+     *
      * @type {LimitedItem}
      * @memberof AutoChargeProductSet
      */
@@ -184,39 +184,39 @@ export interface AutoChargeProductSet {
 
 
 /**
- * 
+ *
  * @export
  * @interface AutoChargeProductsGet200Response
  */
 export interface AutoChargeProductsGet200Response {
     /**
-     * 
+     *
      * @type {Array<AutoChargeProduct>}
      * @memberof AutoChargeProductsGet200Response
      */
     'items': Array<AutoChargeProduct>;
 }
 /**
- * 
+ *
  * @export
  * @interface AutoChargeProductsPrepare200Response
  */
 export interface AutoChargeProductsPrepare200Response {
     /**
-     * 
+     *
      * @type {Access}
      * @memberof AutoChargeProductsPrepare200Response
      */
     'access': Access;
     /**
-     * 
+     *
      * @type {LimitationMap}
      * @memberof AutoChargeProductsPrepare200Response
      */
     'usage': LimitationMap;
 }
 /**
- * 
+ *
  * @export
  * @enum {string}
  */
@@ -230,7 +230,7 @@ export type AutoRenewalPeriod = typeof AutoRenewalPeriod[keyof typeof AutoRenewa
 
 
 /**
- * 
+ *
  * @export
  * @enum {string}
  */
@@ -245,44 +245,44 @@ export type BillingPeriod = typeof BillingPeriod[keyof typeof BillingPeriod];
 
 
 /**
- * 
+ *
  * @export
  * @interface BillingSessionPost200Response
  */
 export interface BillingSessionPost200Response {
     /**
-     * 
+     *
      * @type {string}
      * @memberof BillingSessionPost200Response
      */
     'sessionId': string;
     /**
-     * 
+     *
      * @type {string}
      * @memberof BillingSessionPost200Response
      */
     'url': string;
 }
 /**
- * 
+ *
  * @export
  * @interface CheckoutCreateOptions
  */
 export interface CheckoutCreateOptions {
     /**
-     * 
+     *
      * @type {CheckoutCreateOptionsCallbackUrls}
      * @memberof CheckoutCreateOptions
      */
     'callbackUrls': CheckoutCreateOptionsCallbackUrls;
     /**
-     * 
+     *
      * @type {string}
      * @memberof CheckoutCreateOptions
      */
     'coupon'?: string;
     /**
-     * 
+     *
      * @type {Array<ProductsSelectionInner>}
      * @memberof CheckoutCreateOptions
      */
@@ -294,33 +294,33 @@ export interface CheckoutCreateOptions {
      */
     'extraDays'?: number;
     /**
-     * 
+     *
      * @type {boolean}
      * @memberof CheckoutCreateOptions
      */
     'disableAutoRenew'?: boolean;
 }
 /**
- * 
+ *
  * @export
  * @interface CheckoutCreateOptionsCallbackUrls
  */
 export interface CheckoutCreateOptionsCallbackUrls {
     /**
-     * 
+     *
      * @type {string}
      * @memberof CheckoutCreateOptionsCallbackUrls
      */
     'success': string;
     /**
-     * 
+     *
      * @type {string}
      * @memberof CheckoutCreateOptionsCallbackUrls
      */
     'failure': string;
 }
 /**
- * 
+ *
  * @export
  * @enum {string}
  */
@@ -336,7 +336,7 @@ export type CountryTier = typeof CountryTier[keyof typeof CountryTier];
 
 
 /**
- * 
+ *
  * @export
  * @interface Coupon
  */
@@ -396,20 +396,20 @@ export interface Coupon {
      */
     'partnership'?: string;
     /**
-     * 
+     *
      * @type {CouponValidation}
      * @memberof Coupon
      */
     'couponValidation'?: CouponValidation;
 }
 /**
- * 
+ *
  * @export
  * @interface CouponCodeCreateOptions
  */
 export interface CouponCodeCreateOptions {
     /**
-     * 
+     *
      * @type {string}
      * @memberof CouponCodeCreateOptions
      */
@@ -433,71 +433,71 @@ export interface CouponCodeCreateOptions {
      */
     'extraDays'?: number;
     /**
-     * 
+     *
      * @type {number}
      * @memberof CouponCodeCreateOptions
      */
     'discountPercentageOff': number;
 }
 /**
- * 
+ *
  * @export
  * @interface CouponValidation
  */
 export interface CouponValidation {
     /**
-     * 
+     *
      * @type {Array<AutoRenewalPeriod>}
      * @memberof CouponValidation
      */
     'period'?: Array<AutoRenewalPeriod>;
 }
 /**
- * 
+ *
  * @export
  * @interface CouponsPost200Response
  */
 export interface CouponsPost200Response {
     /**
-     * 
+     *
      * @type {string}
      * @memberof CouponsPost200Response
      */
     'code': string;
 }
 /**
- * 
+ *
  * @export
  * @interface CreditAmountObj
  */
 export interface CreditAmountObj {
     /**
-     * 
+     *
      * @type {number}
      * @memberof CreditAmountObj
      */
     'amount': number;
 }
 /**
- * 
+ *
  * @export
  * @interface CreditAutoRenewalUpdate
  */
 export interface CreditAutoRenewalUpdate {
     /**
-     * 
+     *
      * @type {AutoRenewalPeriod}
      * @memberof CreditAutoRenewalUpdate
      */
     'period': AutoRenewalPeriod;
     /**
-     * 
+     *
      * @type {CreditUnitsPurchaseOpts}
      * @memberof CreditAutoRenewalUpdate
      */
     'units': CreditUnitsPurchaseOpts;
     /**
-     * 
+     *
      * @type {MiscBillingOptions}
      * @memberof CreditAutoRenewalUpdate
      */
@@ -513,26 +513,26 @@ export interface CreditAutoRenewalUpdate {
 export type CreditBalanceEffectType = CreditConsumptionType | CreditGainType | RecurringCreditConsumptionType;
 
 /**
- * 
+ *
  * @export
  * @interface CreditCanConsumeResponse
  */
 export interface CreditCanConsumeResponse {
     /**
-     * 
+     *
      * @type {Array<CreditUnlockType>}
      * @memberof CreditCanConsumeResponse
      */
     'unlocks': Array<CreditUnlockType>;
 }
 /**
- * 
+ *
  * @export
  * @interface CreditConsumptionCreate
  */
 export interface CreditConsumptionCreate {
     /**
-     * 
+     *
      * @type {CreditConsumptionType}
      * @memberof CreditConsumptionCreate
      */
@@ -562,7 +562,7 @@ export interface CreditConsumptionCreate {
      */
     'multiplier'?: number;
     /**
-     * 
+     *
      * @type {{ [key: string]: any; }}
      * @memberof CreditConsumptionCreate
      */
@@ -571,7 +571,7 @@ export interface CreditConsumptionCreate {
 
 
 /**
- * 
+ *
  * @export
  * @interface CreditConsumptionPostRequest
  */
@@ -583,26 +583,26 @@ export interface CreditConsumptionPostRequest {
      */
     'customerId': string;
     /**
-     * 
+     *
      * @type {Array<CreditConsumptionCreate>}
      * @memberof CreditConsumptionPostRequest
      */
     'items': Array<CreditConsumptionCreate>;
 }
 /**
- * 
+ *
  * @export
  * @interface CreditConsumptionRecordData
  */
 export interface CreditConsumptionRecordData {
     /**
-     * 
+     *
      * @type {CreditConsumptionRecordDataType}
      * @memberof CreditConsumptionRecordData
      */
     'type': CreditConsumptionRecordDataType;
     /**
-     * 
+     *
      * @type {string}
      * @memberof CreditConsumptionRecordData
      */
@@ -621,7 +621,7 @@ export interface CreditConsumptionRecordData {
 export type CreditConsumptionRecordDataType = CreditConsumptionType | RecurringCreditConsumptionType;
 
 /**
- * 
+ *
  * @export
  * @interface CreditConsumptionTier
  */
@@ -666,7 +666,7 @@ export type CreditConsumptionType = typeof CreditConsumptionType[keyof typeof Cr
 
 
 /**
- * 
+ *
  * @export
  * @interface CreditCouponCodeCreateOptions
  */
@@ -678,13 +678,13 @@ export interface CreditCouponCodeCreateOptions {
      */
     'creditConsumptionTypes'?: Array<AnyCreditConsumptionType>;
     /**
-     * 
+     *
      * @type {number}
      * @memberof CreditCouponCodeCreateOptions
      */
     'discountPercentageOff': number;
     /**
-     * 
+     *
      * @type {boolean}
      * @memberof CreditCouponCodeCreateOptions
      */
@@ -702,14 +702,14 @@ export interface CreditCouponCodeCreateOptions {
      */
     'id'?: string;
     /**
-     * 
+     *
      * @type {CouponValidation}
      * @memberof CreditCouponCodeCreateOptions
      */
     'couponValidation'?: CouponValidation;
 }
 /**
- * 
+ *
  * @export
  * @interface CreditCustomer
  */
@@ -739,25 +739,25 @@ export interface CreditCustomer {
      */
     'unlockedFeatures': Array<CreditUnlockType>;
     /**
-     * 
+     *
      * @type {CustomerAutoRenewalWRedeemedCoupon}
      * @memberof CreditCustomer
      */
     'autoRenewal'?: CustomerAutoRenewalWRedeemedCoupon;
     /**
-     * 
+     *
      * @type {CountryTier}
      * @memberof CreditCustomer
      */
     'tier'?: CountryTier;
     /**
-     * 
+     *
      * @type {CreditLevelStatus}
      * @memberof CreditCustomer
      */
     'creditLevelStatus'?: CreditLevelStatus | null;
     /**
-     * 
+     *
      * @type {RecurringCreditConsumption}
      * @memberof CreditCustomer
      */
@@ -784,7 +784,7 @@ export interface CreditCustomer {
 
 
 /**
- * 
+ *
  * @export
  * @interface CreditCustomerAllOf
  */
@@ -814,25 +814,25 @@ export interface CreditCustomerAllOf {
      */
     'unlockedFeatures': Array<CreditUnlockType>;
     /**
-     * 
+     *
      * @type {CustomerAutoRenewalWRedeemedCoupon}
      * @memberof CreditCustomerAllOf
      */
     'autoRenewal'?: CustomerAutoRenewalWRedeemedCoupon;
     /**
-     * 
+     *
      * @type {CountryTier}
      * @memberof CreditCustomerAllOf
      */
     'tier'?: CountryTier;
     /**
-     * 
+     *
      * @type {CreditLevelStatus}
      * @memberof CreditCustomerAllOf
      */
     'creditLevelStatus'?: CreditLevelStatus | null;
     /**
-     * 
+     *
      * @type {RecurringCreditConsumption}
      * @memberof CreditCustomerAllOf
      */
@@ -841,7 +841,7 @@ export interface CreditCustomerAllOf {
 
 
 /**
- * 
+ *
  * @export
  * @interface CreditCustomerMetadata
  */
@@ -884,32 +884,32 @@ export interface CreditCustomerMigrate {
      */
     'region'?: string;
     /**
-     * 
+     *
      * @type {StripeCustomerCreate}
      * @memberof CreditCustomerMigrate
      */
     'customer'?: StripeCustomerCreate;
     /**
-     * 
+     *
      * @type {CreditAutoRenewalUpdate}
      * @memberof CreditCustomerMigrate
      */
     'autoRenewal'?: CreditAutoRenewalUpdate;
 }
 /**
- * 
+ *
  * @export
  * @interface CreditCustomerPost
  */
 export interface CreditCustomerPost {
     /**
-     * 
+     *
      * @type {StripeCustomerCreate}
      * @memberof CreditCustomerPost
      */
     'stripeCustomer': StripeCustomerCreate;
     /**
-     * 
+     *
      * @type {CreditCustomerMetadata}
      * @memberof CreditCustomerPost
      */
@@ -928,7 +928,7 @@ export interface CreditCustomerPost {
     'referralCode'?: string;
 }
 /**
- * 
+ *
  * @export
  * @interface CreditGain
  */
@@ -940,7 +940,7 @@ export interface CreditGain {
      */
     'id': string;
     /**
-     * 
+     *
      * @type {CreditGainType}
      * @memberof CreditGain
      */
@@ -958,7 +958,7 @@ export interface CreditGain {
      */
     'unitsLeft': number;
     /**
-     * 
+     *
      * @type {CreditGainStatus}
      * @memberof CreditGain
      */
@@ -970,7 +970,7 @@ export interface CreditGain {
      */
     'createdAt': string;
     /**
-     * 
+     *
      * @type {string}
      * @memberof CreditGain
      */
@@ -982,19 +982,19 @@ export interface CreditGain {
      */
     'doneBy': string;
     /**
-     * 
+     *
      * @type {{ [key: string]: any; }}
      * @memberof CreditGain
      */
     'metadata'?: { [key: string]: any; };
     /**
-     * 
+     *
      * @type {StripeMetadata}
      * @memberof CreditGain
      */
     'stripe'?: StripeMetadata;
     /**
-     * 
+     *
      * @type {FloatAmountWithCurrency}
      * @memberof CreditGain
      */
@@ -1003,7 +1003,7 @@ export interface CreditGain {
 
 
 /**
- * 
+ *
  * @export
  * @interface CreditGainCreate
  */
@@ -1021,26 +1021,26 @@ export interface CreditGainCreate {
      */
     'units': number;
     /**
-     * 
+     *
      * @type {{ [key: string]: any; }}
      * @memberof CreditGainCreate
      */
     'metadata'?: { [key: string]: any; };
 }
 /**
- * 
+ *
  * @export
  * @interface CreditGainRecordData
  */
 export interface CreditGainRecordData {
     /**
-     * 
+     *
      * @type {CreditGainType}
      * @memberof CreditGainRecordData
      */
     'type': CreditGainType;
     /**
-     * 
+     *
      * @type {CreditGainRecordDataGain}
      * @memberof CreditGainRecordData
      */
@@ -1049,20 +1049,20 @@ export interface CreditGainRecordData {
 
 
 /**
- * 
+ *
  * @export
  * @interface CreditGainRecordDataGain
  */
 export interface CreditGainRecordDataGain {
     /**
-     * 
+     *
      * @type {StripeMetadata}
      * @memberof CreditGainRecordDataGain
      */
     'stripe'?: StripeMetadata;
 }
 /**
- * 
+ *
  * @export
  * @enum {string}
  */
@@ -1092,32 +1092,32 @@ export type CreditGainType = typeof CreditGainType[keyof typeof CreditGainType];
 
 
 /**
- * 
+ *
  * @export
  * @interface CreditGainsGet200Response
  */
 export interface CreditGainsGet200Response {
     /**
-     * 
+     *
      * @type {Array<CreditGain>}
      * @memberof CreditGainsGet200Response
      */
     'items': Array<CreditGain>;
     /**
-     * 
+     *
      * @type {string}
      * @memberof CreditGainsGet200Response
      */
     'nextPageCursor'?: string;
     /**
-     * 
+     *
      * @type {number}
      * @memberof CreditGainsGet200Response
      */
     'total'?: number;
 }
 /**
- * 
+ *
  * @export
  * @enum {string}
  */
@@ -1156,7 +1156,7 @@ export interface CreditPurchaseTier {
     'maxUnits'?: number;
 }
 /**
- * 
+ *
  * @export
  * @interface CreditStripePrice
  */
@@ -1174,14 +1174,14 @@ export interface CreditStripePrice {
      */
     'currency': string;
     /**
-     * 
+     *
      * @type {CreditStripePricePriceIds}
      * @memberof CreditStripePrice
      */
     'priceIds': CreditStripePricePriceIds;
 }
 /**
- * 
+ *
  * @export
  * @interface CreditStripePricePriceIds
  */
@@ -1206,26 +1206,26 @@ export interface CreditStripePricePriceIds {
     'oneTime': string;
 }
 /**
- * 
+ *
  * @export
  * @interface CreditTopUpOptions
  */
 export interface CreditTopUpOptions {
     /**
-     * 
+     *
      * @type {CreditUnitsPurchaseOpts}
      * @memberof CreditTopUpOptions
      */
     'units': CreditUnitsPurchaseOpts;
     /**
-     * 
+     *
      * @type {MiscBillingOptions}
      * @memberof CreditTopUpOptions
      */
     'options'?: MiscBillingOptions;
 }
 /**
- * 
+ *
  * @export
  * @interface CreditTransactionBase
  */
@@ -1261,7 +1261,7 @@ export interface CreditTransactionBase {
      */
     'objectId': string;
     /**
-     * 
+     *
      * @type {TxMetadata}
      * @memberof CreditTransactionBase
      */
@@ -1304,25 +1304,25 @@ export interface CreditTransactionRecord {
      */
     'objectId': string;
     /**
-     * 
+     *
      * @type {TxMetadata}
      * @memberof CreditTransactionRecord
      */
     'metadata'?: TxMetadata | null;
     /**
-     * 
+     *
      * @type {CreditConsumptionRecordDataType}
      * @memberof CreditTransactionRecord
      */
     'type': CreditConsumptionRecordDataType;
     /**
-     * 
+     *
      * @type {CreditGainRecordDataGain}
      * @memberof CreditTransactionRecord
      */
     'gain'?: CreditGainRecordDataGain;
     /**
-     * 
+     *
      * @type {string}
      * @memberof CreditTransactionRecord
      */
@@ -1335,25 +1335,25 @@ export interface CreditTransactionRecord {
     'recurringConsumptionId'?: string;
 }
 /**
- * 
+ *
  * @export
  * @interface CreditTxsGet200Response
  */
 export interface CreditTxsGet200Response {
     /**
-     * 
+     *
      * @type {Array<CreditTransactionRecord>}
      * @memberof CreditTxsGet200Response
      */
     'items': Array<CreditTransactionRecord>;
     /**
-     * 
+     *
      * @type {string}
      * @memberof CreditTxsGet200Response
      */
     'nextPageCursor'?: string;
     /**
-     * 
+     *
      * @type {number}
      * @memberof CreditTxsGet200Response
      */
@@ -1366,20 +1366,20 @@ export interface CreditTxsGet200Response {
  */
 export interface CreditUnitsPurchaseOpts {
     /**
-     * 
+     *
      * @type {string}
      * @memberof CreditUnitsPurchaseOpts
      */
     'tier': string;
     /**
-     * 
+     *
      * @type {number}
      * @memberof CreditUnitsPurchaseOpts
      */
     'steps': number;
 }
 /**
- * 
+ *
  * @export
  * @interface CreditUnlockMetadata
  */
@@ -1410,7 +1410,7 @@ export type CreditUnlockType = typeof CreditUnlockType[keyof typeof CreditUnlock
 
 
 /**
- * 
+ *
  * @export
  * @interface CreditsCouponsArchiveRequest
  */
@@ -1423,7 +1423,7 @@ export interface CreditsCouponsArchiveRequest {
     'id': string;
 }
 /**
- * 
+ *
  * @export
  * @interface CreditsCouponsGet200Response
  */
@@ -1435,20 +1435,20 @@ export interface CreditsCouponsGet200Response {
      */
     'nextPageCursor'?: string;
     /**
-     * 
+     *
      * @type {Array<Coupon>}
      * @memberof CreditsCouponsGet200Response
      */
     'items': Array<Coupon>;
     /**
-     * 
+     *
      * @type {number}
      * @memberof CreditsCouponsGet200Response
      */
     'total'?: number;
 }
 /**
- * 
+ *
  * @export
  * @interface CreditsCouponsRedemptionsGet200Response
  */
@@ -1460,20 +1460,20 @@ export interface CreditsCouponsRedemptionsGet200Response {
      */
     'nextPageCursor'?: string;
     /**
-     * 
+     *
      * @type {Array<RedeemedCoupon>}
      * @memberof CreditsCouponsRedemptionsGet200Response
      */
     'items': Array<RedeemedCoupon>;
     /**
-     * 
+     *
      * @type {number}
      * @memberof CreditsCouponsRedemptionsGet200Response
      */
     'total'?: number;
 }
 /**
- * 
+ *
  * @export
  * @interface CreditsCustomerPost200Response
  */
@@ -1486,33 +1486,33 @@ export interface CreditsCustomerPost200Response {
     'id': string;
 }
 /**
- * 
+ *
  * @export
  * @interface CreditsPreferences
  */
 export interface CreditsPreferences {
     /**
-     * 
+     *
      * @type {Array<CreditPreference>}
      * @memberof CreditsPreferences
      */
     'items': Array<CreditPreference>;
 }
 /**
- * 
+ *
  * @export
  * @interface CreditsPreferencesPostRequest
  */
 export interface CreditsPreferencesPostRequest {
     /**
-     * 
+     *
      * @type {Array<CreditPreference>}
      * @memberof CreditsPreferencesPostRequest
      */
     'items': Array<CreditPreference>;
 }
 /**
- * 
+ *
  * @export
  * @interface CustomerAutoRenewal
  */
@@ -1536,7 +1536,7 @@ export interface CustomerAutoRenewal {
      */
     'bonusUnits': number;
     /**
-     * 
+     *
      * @type {AutoRenewalPeriod}
      * @memberof CustomerAutoRenewal
      */
@@ -1554,7 +1554,7 @@ export interface CustomerAutoRenewal {
      */
     'nextChargeAt': string;
     /**
-     * 
+     *
      * @type {string}
      * @memberof CustomerAutoRenewal
      */
@@ -1576,7 +1576,7 @@ export const CustomerAutoRenewalStatusEnum = {
 export type CustomerAutoRenewalStatusEnum = typeof CustomerAutoRenewalStatusEnum[keyof typeof CustomerAutoRenewalStatusEnum];
 
 /**
- * 
+ *
  * @export
  * @interface CustomerAutoRenewalWRedeemedCoupon
  */
@@ -1600,7 +1600,7 @@ export interface CustomerAutoRenewalWRedeemedCoupon {
      */
     'bonusUnits': number;
     /**
-     * 
+     *
      * @type {AutoRenewalPeriod}
      * @memberof CustomerAutoRenewalWRedeemedCoupon
      */
@@ -1618,7 +1618,7 @@ export interface CustomerAutoRenewalWRedeemedCoupon {
      */
     'nextChargeAt': string;
     /**
-     * 
+     *
      * @type {string}
      * @memberof CustomerAutoRenewalWRedeemedCoupon
      */
@@ -1630,7 +1630,7 @@ export interface CustomerAutoRenewalWRedeemedCoupon {
      */
     'currentRedeemedCouponId'?: string;
     /**
-     * 
+     *
      * @type {CustomerAutoRenewalWRedeemedCouponAllOfCurrentRedeemedCoupon}
      * @memberof CustomerAutoRenewalWRedeemedCoupon
      */
@@ -1646,20 +1646,20 @@ export const CustomerAutoRenewalWRedeemedCouponStatusEnum = {
 export type CustomerAutoRenewalWRedeemedCouponStatusEnum = typeof CustomerAutoRenewalWRedeemedCouponStatusEnum[keyof typeof CustomerAutoRenewalWRedeemedCouponStatusEnum];
 
 /**
- * 
+ *
  * @export
  * @interface CustomerAutoRenewalWRedeemedCouponAllOf
  */
 export interface CustomerAutoRenewalWRedeemedCouponAllOf {
     /**
-     * 
+     *
      * @type {CustomerAutoRenewalWRedeemedCouponAllOfCurrentRedeemedCoupon}
      * @memberof CustomerAutoRenewalWRedeemedCouponAllOf
      */
     'currentRedeemedCoupon'?: CustomerAutoRenewalWRedeemedCouponAllOfCurrentRedeemedCoupon;
 }
 /**
- * 
+ *
  * @export
  * @interface CustomerAutoRenewalWRedeemedCouponAllOfCurrentRedeemedCoupon
  */
@@ -1701,27 +1701,27 @@ export interface CustomerAutoRenewalWRedeemedCouponAllOfCurrentRedeemedCoupon {
      */
     'creditsSaved'?: number;
     /**
-     * 
+     *
      * @type {Coupon}
      * @memberof CustomerAutoRenewalWRedeemedCouponAllOfCurrentRedeemedCoupon
      */
     'coupon'?: Coupon;
 }
 /**
- * 
+ *
  * @export
  * @interface CustomerAutoRenewalWRedeemedCouponAllOfCurrentRedeemedCouponAllOf
  */
 export interface CustomerAutoRenewalWRedeemedCouponAllOfCurrentRedeemedCouponAllOf {
     /**
-     * 
+     *
      * @type {Coupon}
      * @memberof CustomerAutoRenewalWRedeemedCouponAllOfCurrentRedeemedCouponAllOf
      */
     'coupon'?: Coupon;
 }
 /**
- * 
+ *
  * @export
  * @interface DateRange
  */
@@ -1740,7 +1740,7 @@ interface DateRange {
     'to': string;
 }
 /**
- * 
+ *
  * @export
  * @interface DefinedSingleConsumptionMetadata
  */
@@ -1781,7 +1781,7 @@ export type Feature = typeof Feature[keyof typeof Feature];
 export type FeatureConfig = Array<Feature> | string;
 
 /**
- * 
+ *
  * @export
  * @interface FloatAmountWithCurrency
  */
@@ -1800,32 +1800,32 @@ export interface FloatAmountWithCurrency {
     'currency': string;
 }
 /**
- * 
+ *
  * @export
  * @interface GetPartner200Response
  */
 export interface GetPartner200Response {
     /**
-     * 
+     *
      * @type {string}
      * @memberof GetPartner200Response
      */
     'partnerAdmin'?: string;
 }
 /**
- * 
+ *
  * @export
  * @interface LegacyCanConsumeOpts
  */
 export interface LegacyCanConsumeOpts {
     /**
-     * 
+     *
      * @type {LimitedItem}
      * @memberof LegacyCanConsumeOpts
      */
     'item': LimitedItem;
     /**
-     * 
+     *
      * @type {string}
      * @memberof LegacyCanConsumeOpts
      */
@@ -1834,7 +1834,7 @@ export interface LegacyCanConsumeOpts {
 
 
 /**
- * 
+ *
  * @export
  * @interface LimitationMap
  */
@@ -1888,7 +1888,7 @@ export type LimitedItem = typeof LimitedItem[keyof typeof LimitedItem];
 
 
 /**
- * 
+ *
  * @export
  * @interface MiscBillingOptions
  */
@@ -1913,31 +1913,31 @@ export interface MiscBillingOptions {
     'startDate'?: string;
 }
 /**
- * 
+ *
  * @export
  * @interface MiscPreference
  */
 export interface MiscPreference {
     /**
-     * 
+     *
      * @type {string}
      * @memberof MiscPreference
      */
     'category': MiscPreferenceCategoryEnum;
     /**
-     * 
+     *
      * @type {string}
      * @memberof MiscPreference
      */
     'key': MiscPreferenceKeyEnum;
     /**
-     * 
+     *
      * @type {CreditAmountObj}
      * @memberof MiscPreference
      */
     'data': CreditAmountObj;
     /**
-     * 
+     *
      * @type {CountryTier}
      * @memberof MiscPreference
      */
@@ -1958,7 +1958,7 @@ export const MiscPreferenceKeyEnum = {
 export type MiscPreferenceKeyEnum = typeof MiscPreferenceKeyEnum[keyof typeof MiscPreferenceKeyEnum];
 
 /**
- * 
+ *
  * @export
  * @interface ModifySupportPlan
  */
@@ -1980,25 +1980,25 @@ export const ModifySupportPlanTypeEnum = {
 export type ModifySupportPlanTypeEnum = typeof ModifySupportPlanTypeEnum[keyof typeof ModifySupportPlanTypeEnum];
 
 /**
- * 
+ *
  * @export
  * @interface NotificationPreference
  */
 export interface NotificationPreference {
     /**
-     * 
+     *
      * @type {string}
      * @memberof NotificationPreference
      */
     'category': NotificationPreferenceCategoryEnum;
     /**
-     * 
+     *
      * @type {string}
      * @memberof NotificationPreference
      */
     'key': NotificationPreferenceKeyEnum;
     /**
-     * 
+     *
      * @type {NotificationPreferenceData}
      * @memberof NotificationPreference
      */
@@ -2024,13 +2024,13 @@ export type NotificationPreferenceKeyEnum = typeof NotificationPreferenceKeyEnum
  */
 export interface NotificationPreferenceData {
     /**
-     * 
+     *
      * @type {number}
      * @memberof NotificationPreferenceData
      */
     'danger': number;
     /**
-     * 
+     *
      * @type {number}
      * @memberof NotificationPreferenceData
      */
@@ -2055,7 +2055,7 @@ export interface PartnerReferral {
      */
     'stripePriceId': string | null;
     /**
-     * 
+     *
      * @type {StripePrice}
      * @memberof PartnerReferral
      */
@@ -2141,63 +2141,63 @@ export interface PartnerReferralCreateOptions {
     'credits'?: number;
 }
 /**
- * 
+ *
  * @export
  * @interface PartnerReferralsGet200Response
  */
 export interface PartnerReferralsGet200Response {
     /**
-     * 
+     *
      * @type {Array<PartnerReferral>}
      * @memberof PartnerReferralsGet200Response
      */
     'items': Array<PartnerReferral>;
     /**
-     * 
+     *
      * @type {number}
      * @memberof PartnerReferralsGet200Response
      */
     'nextPageCursor'?: number;
     /**
-     * 
+     *
      * @type {number}
      * @memberof PartnerReferralsGet200Response
      */
     'total'?: number;
 }
 /**
- * 
+ *
  * @export
  * @interface PartnerReferralsPost200Response
  */
 export interface PartnerReferralsPost200Response {
     /**
-     * 
+     *
      * @type {string}
      * @memberof PartnerReferralsPost200Response
      */
     'referralCode': string;
 }
 /**
- * 
+ *
  * @export
  * @interface PaymentData
  */
 export interface PaymentData {
     /**
-     * 
+     *
      * @type {string}
      * @memberof PaymentData
      */
     'id': string;
     /**
-     * 
+     *
      * @type {string}
      * @memberof PaymentData
      */
     'invoiceId'?: string;
     /**
-     * 
+     *
      * @type {AmountWithCurrency}
      * @memberof PaymentData
      */
@@ -2210,7 +2210,7 @@ export interface PaymentData {
     'createdAt'?: string;
 }
 /**
- * 
+ *
  * @export
  * @interface PaymentRequest
  */
@@ -2223,7 +2223,7 @@ export interface PaymentRequest {
     'paymentUrl': string;
 }
 /**
- * 
+ *
  * @export
  * @interface Product
  */
@@ -2235,13 +2235,13 @@ export interface Product {
      */
     'id': string;
     /**
-     * 
+     *
      * @type {string}
      * @memberof Product
      */
     'name': string;
     /**
-     * 
+     *
      * @type {ProductAccess}
      * @memberof Product
      */
@@ -2259,58 +2259,58 @@ export interface Product {
      */
     'updatedAt': string;
     /**
-     * 
+     *
      * @type {Array<StripePrice>}
      * @memberof Product
      */
     'stripePrices'?: Array<StripePrice>;
 }
 /**
- * 
+ *
  * @export
  * @interface ProductAccess
  */
 export interface ProductAccess {
     /**
-     * 
+     *
      * @type {FeatureConfig}
      * @memberof ProductAccess
      */
     'features': FeatureConfig;
     /**
-     * 
+     *
      * @type {LimitationMap}
      * @memberof ProductAccess
      */
     'limits': LimitationMap;
 }
 /**
- * 
+ *
  * @export
  * @interface ProductCreate
  */
 export interface ProductCreate {
     /**
-     * 
+     *
      * @type {string}
      * @memberof ProductCreate
      */
     'name': string;
     /**
-     * 
+     *
      * @type {ProductAccess}
      * @memberof ProductCreate
      */
     'access': ProductAccess;
 }
 /**
- * 
+ *
  * @export
  * @interface ProductUpdate
  */
 export interface ProductUpdate {
     /**
-     * 
+     *
      * @type {ProductAccess}
      * @memberof ProductUpdate
      */
@@ -2323,20 +2323,20 @@ export interface ProductUpdate {
     'stripePriceIds'?: Array<StripePriceAttachmentUpdate>;
 }
 /**
- * 
+ *
  * @export
  * @interface ProductsGet200Response
  */
 export interface ProductsGet200Response {
     /**
-     * 
+     *
      * @type {Array<Product>}
      * @memberof ProductsGet200Response
      */
     'items': Array<Product>;
 }
 /**
- * 
+ *
  * @export
  * @interface ProductsSelectionInner
  */
@@ -2348,26 +2348,26 @@ export interface ProductsSelectionInner {
      */
     'id': string;
     /**
-     * 
+     *
      * @type {string}
      * @memberof ProductsSelectionInner
      */
     'stripePriceId': string;
     /**
-     * 
+     *
      * @type {number}
      * @memberof ProductsSelectionInner
      */
     'quantity': number;
 }
 /**
- * 
+ *
  * @export
  * @interface PurchaseTierPreference
  */
 export interface PurchaseTierPreference {
     /**
-     * 
+     *
      * @type {string}
      * @memberof PurchaseTierPreference
      */
@@ -2379,13 +2379,13 @@ export interface PurchaseTierPreference {
      */
     'key': string;
     /**
-     * 
+     *
      * @type {CountryTier}
      * @memberof PurchaseTierPreference
      */
     'tier'?: CountryTier;
     /**
-     * 
+     *
      * @type {CreditPurchaseTier}
      * @memberof PurchaseTierPreference
      */
@@ -2399,44 +2399,44 @@ export const PurchaseTierPreferenceCategoryEnum = {
 export type PurchaseTierPreferenceCategoryEnum = typeof PurchaseTierPreferenceCategoryEnum[keyof typeof PurchaseTierPreferenceCategoryEnum];
 
 /**
- * 
+ *
  * @export
  * @interface RecurringConsumptionMetadata
  */
 export interface RecurringConsumptionMetadata {
     /**
-     * 
+     *
      * @type {Array<CreditConsumptionTier>}
      * @memberof RecurringConsumptionMetadata
      */
     'tiers': Array<CreditConsumptionTier>;
 }
 /**
- * 
+ *
  * @export
  * @interface RecurringConsumptionPreference
  */
 export interface RecurringConsumptionPreference {
     /**
-     * 
+     *
      * @type {string}
      * @memberof RecurringConsumptionPreference
      */
     'category': RecurringConsumptionPreferenceCategoryEnum;
     /**
-     * 
+     *
      * @type {RecurringCreditConsumptionType}
      * @memberof RecurringConsumptionPreference
      */
     'key': RecurringCreditConsumptionType;
     /**
-     * 
+     *
      * @type {CountryTier}
      * @memberof RecurringConsumptionPreference
      */
     'tier'?: CountryTier;
     /**
-     * 
+     *
      * @type {RecurringConsumptionMetadata}
      * @memberof RecurringConsumptionPreference
      */
@@ -2462,7 +2462,7 @@ export interface RecurringCreditConsumption {
      */
     'id': string;
     /**
-     * 
+     *
      * @type {RecurringCreditConsumptionType}
      * @memberof RecurringCreditConsumption
      */
@@ -2498,7 +2498,7 @@ export interface RecurringCreditConsumption {
      */
     'doneBy': string;
     /**
-     * 
+     *
      * @type {string}
      * @memberof RecurringCreditConsumption
      */
@@ -2510,7 +2510,7 @@ export interface RecurringCreditConsumption {
      */
     'objectId': string;
     /**
-     * 
+     *
      * @type {TxMetadata}
      * @memberof RecurringCreditConsumption
      */
@@ -2519,13 +2519,13 @@ export interface RecurringCreditConsumption {
 
 
 /**
- * 
+ *
  * @export
  * @interface RecurringCreditConsumptionCreate
  */
 export interface RecurringCreditConsumptionCreate {
     /**
-     * 
+     *
      * @type {RecurringCreditConsumptionType}
      * @memberof RecurringCreditConsumptionCreate
      */
@@ -2549,7 +2549,7 @@ export interface RecurringCreditConsumptionCreate {
      */
     'objectId': string;
     /**
-     * 
+     *
      * @type {{ [key: string]: any; }}
      * @memberof RecurringCreditConsumptionCreate
      */
@@ -2579,32 +2579,32 @@ export type RecurringCreditConsumptionType = typeof RecurringCreditConsumptionTy
 
 
 /**
- * 
+ *
  * @export
  * @interface RecurringCreditsGet200Response
  */
 export interface RecurringCreditsGet200Response {
     /**
-     * 
+     *
      * @type {Array<RecurringCreditConsumption>}
      * @memberof RecurringCreditsGet200Response
      */
     'items': Array<RecurringCreditConsumption>;
     /**
-     * 
+     *
      * @type {string}
      * @memberof RecurringCreditsGet200Response
      */
     'nextPageCursor'?: string;
     /**
-     * 
+     *
      * @type {number}
      * @memberof RecurringCreditsGet200Response
      */
     'total'?: number;
 }
 /**
- * 
+ *
  * @export
  * @interface RedeemedCoupon
  */
@@ -2653,31 +2653,31 @@ export interface RedeemedCoupon {
 export type SingleConsumptionMetadata = DefinedSingleConsumptionMetadata | VariableSingleConsumptionMetadata;
 
 /**
- * 
+ *
  * @export
  * @interface SingleConsumptionPreference
  */
 export interface SingleConsumptionPreference {
     /**
-     * 
+     *
      * @type {string}
      * @memberof SingleConsumptionPreference
      */
     'category': SingleConsumptionPreferenceCategoryEnum;
     /**
-     * 
+     *
      * @type {CreditConsumptionType}
      * @memberof SingleConsumptionPreference
      */
     'key': CreditConsumptionType;
     /**
-     * 
+     *
      * @type {CountryTier}
      * @memberof SingleConsumptionPreference
      */
     'tier'?: CountryTier;
     /**
-     * 
+     *
      * @type {SingleConsumptionMetadata}
      * @memberof SingleConsumptionPreference
      */
@@ -2691,26 +2691,26 @@ export const SingleConsumptionPreferenceCategoryEnum = {
 export type SingleConsumptionPreferenceCategoryEnum = typeof SingleConsumptionPreferenceCategoryEnum[keyof typeof SingleConsumptionPreferenceCategoryEnum];
 
 /**
- * 
+ *
  * @export
  * @interface StripeCheckout200Response
  */
 export interface StripeCheckout200Response {
     /**
-     * 
+     *
      * @type {string}
      * @memberof StripeCheckout200Response
      */
     'sessionId': string;
     /**
-     * 
+     *
      * @type {string}
      * @memberof StripeCheckout200Response
      */
     'url': string;
 }
 /**
- * 
+ *
  * @export
  * @interface StripeCouponData
  */
@@ -2722,7 +2722,7 @@ export interface StripeCouponData {
      */
     'id': string;
     /**
-     * 
+     *
      * @type {FloatAmountWithCurrency}
      * @memberof StripeCouponData
      */
@@ -2734,7 +2734,7 @@ export interface StripeCouponData {
      */
     'percentageOff'?: number;
     /**
-     * 
+     *
      * @type {FloatAmountWithCurrency}
      * @memberof StripeCouponData
      */
@@ -2767,7 +2767,7 @@ export type StripeCustomerCreate = StripeCustomerCreateOneOf | StripeCustomerCre
  */
 export interface StripeCustomerCreateOneOf {
     /**
-     * 
+     *
      * @type {string}
      * @memberof StripeCustomerCreateOneOf
      */
@@ -2780,26 +2780,26 @@ export interface StripeCustomerCreateOneOf {
  */
 export interface StripeCustomerCreateOneOf1 {
     /**
-     * 
+     *
      * @type {string}
      * @memberof StripeCustomerCreateOneOf1
      */
     'fullName': string;
     /**
-     * 
+     *
      * @type {string}
      * @memberof StripeCustomerCreateOneOf1
      */
     'email'?: string;
     /**
-     * 
+     *
      * @type {string}
      * @memberof StripeCustomerCreateOneOf1
      */
     'phoneNumber'?: string;
 }
 /**
- * 
+ *
  * @export
  * @interface StripeMetadata
  */
@@ -2824,81 +2824,81 @@ export interface StripeMetadata {
     'paidFraction': number;
 }
 /**
- * 
+ *
  * @export
  * @interface StripePaymentIntent
  */
 export interface StripePaymentIntent {
     /**
-     * 
+     *
      * @type {string}
      * @memberof StripePaymentIntent
      */
     'id': string;
     /**
-     * 
+     *
      * @type {string}
      * @memberof StripePaymentIntent
      */
     'customer'?: string;
     /**
-     * 
+     *
      * @type {number}
      * @memberof StripePaymentIntent
      */
     'amount': number;
     /**
-     * 
+     *
      * @type {string}
      * @memberof StripePaymentIntent
      */
     'description'?: string;
     /**
-     * 
+     *
      * @type {string}
      * @memberof StripePaymentIntent
      */
     'status'?: string;
     /**
-     * 
+     *
      * @type {number}
      * @memberof StripePaymentIntent
      */
     'created'?: number;
 }
 /**
- * 
+ *
  * @export
  * @interface StripePaymentIntentsGet200Response
  */
 export interface StripePaymentIntentsGet200Response {
     /**
-     * 
+     *
      * @type {Array<StripePaymentIntent>}
      * @memberof StripePaymentIntentsGet200Response
      */
     'paymentIntents': Array<StripePaymentIntent>;
 }
 /**
- * 
+ *
  * @export
  * @interface StripePreference
  */
 export interface StripePreference {
     /**
-     * 
+     *
      * @type {string}
      * @memberof StripePreference
      */
     'category': StripePreferenceCategoryEnum;
     /**
-     * 
+     *
      * @type {string}
      * @memberof StripePreference
      */
     'key': StripePreferenceKeyEnum;
     /**
-     * 
+     *
      * @type {CreditStripePrice}
      * @memberof StripePreference
      */
@@ -2919,31 +2919,31 @@ export const StripePreferenceKeyEnum = {
 export type StripePreferenceKeyEnum = typeof StripePreferenceKeyEnum[keyof typeof StripePreferenceKeyEnum];
 
 /**
- * 
+ *
  * @export
  * @interface StripePrice
  */
 export interface StripePrice {
     /**
-     * 
+     *
      * @type {string}
      * @memberof StripePrice
      */
     'id': string;
     /**
-     * 
+     *
      * @type {string}
      * @memberof StripePrice
      */
     'productName'?: string;
     /**
-     * 
+     *
      * @type {BillingPeriod}
      * @memberof StripePrice
      */
     'period': BillingPeriod;
     /**
-     * 
+     *
      * @type {AmountWithCurrency}
      * @memberof StripePrice
      */
@@ -2964,7 +2964,7 @@ export interface StripePrice {
  */
 export interface StripePriceAttachmentUpdate {
     /**
-     * 
+     *
      * @type {string}
      * @memberof StripePriceAttachmentUpdate
      */
@@ -2983,51 +2983,51 @@ export interface StripePriceAttachmentUpdate {
     'remove'?: boolean;
 }
 /**
- * 
+ *
  * @export
  * @interface StripePricesGet200Response
  */
 export interface StripePricesGet200Response {
     /**
-     * 
+     *
      * @type {Array<StripePrice>}
      * @memberof StripePricesGet200Response
      */
     'items': Array<StripePrice>;
     /**
-     * 
+     *
      * @type {string}
      * @memberof StripePricesGet200Response
      */
     'nextPageCursor'?: string;
 }
 /**
- * 
+ *
  * @export
  * @interface StripeSubscriptionItem
  */
 export interface StripeSubscriptionItem {
     /**
-     * 
+     *
      * @type {string}
      * @memberof StripeSubscriptionItem
      */
     'id': string;
 }
 /**
- * 
+ *
  * @export
  * @interface SubscribedProduct
  */
 export interface SubscribedProduct {
     /**
-     * 
+     *
      * @type {Product}
      * @memberof SubscribedProduct
      */
     'product'?: Product;
     /**
-     * 
+     *
      * @type {string}
      * @memberof SubscribedProduct
      */
@@ -3039,14 +3039,14 @@ export interface SubscribedProduct {
      */
     'stripePriceId': string;
     /**
-     * 
+     *
      * @type {number}
      * @memberof SubscribedProduct
      */
     'quantity': number;
 }
 /**
- * 
+ *
  * @export
  * @interface Subscription
  */
@@ -3082,26 +3082,26 @@ export interface Subscription {
      */
     'voidReason'?: string;
     /**
-     * 
+     *
      * @type {SubscriptionStripeData}
      * @memberof Subscription
      */
     'stripe'?: SubscriptionStripeData;
     /**
-     * 
+     *
      * @type {Array<SubscribedProduct>}
      * @memberof Subscription
      */
     'products'?: Array<SubscribedProduct>;
     /**
-     * 
+     *
      * @type {AutoChargeProduct}
      * @memberof Subscription
      */
     'autoCharge'?: AutoChargeProduct;
 }
 /**
- * 
+ *
  * @export
  * @interface SubscriptionCreate
  */
@@ -3113,13 +3113,13 @@ export interface SubscriptionCreate {
      */
     'teamId': string;
     /**
-     * 
+     *
      * @type {Array<ProductsSelectionInner>}
      * @memberof SubscriptionCreate
      */
     'products': Array<ProductsSelectionInner>;
     /**
-     * 
+     *
      * @type {string}
      * @memberof SubscriptionCreate
      */
@@ -3162,7 +3162,7 @@ export interface SubscriptionCreate {
     'refreshAccess'?: boolean;
 }
 /**
- * 
+ *
  * @export
  * @interface SubscriptionStripeData
  */
@@ -3180,20 +3180,20 @@ export interface SubscriptionStripeData {
      */
     'nextRenewalDate'?: string;
     /**
-     * 
+     *
      * @type {Array<StripeSubscriptionItem>}
      * @memberof SubscriptionStripeData
      */
     'items': Array<StripeSubscriptionItem>;
     /**
-     * 
+     *
      * @type {Array<PaymentData>}
      * @memberof SubscriptionStripeData
      */
     'payments': Array<PaymentData>;
 }
 /**
- * 
+ *
  * @export
  * @interface SubscriptionUpdate
  */
@@ -3212,32 +3212,32 @@ export interface SubscriptionUpdate {
     'voidReason'?: string;
 }
 /**
- * 
+ *
  * @export
  * @interface SubscriptionsGet200Response
  */
 interface SubscriptionsGet200Response {
     /**
-     * 
+     *
      * @type {Array<Subscription>}
      * @memberof SubscriptionsGet200Response
      */
     'items': Array<Subscription>;
     /**
-     * 
+     *
      * @type {number}
      * @memberof SubscriptionsGet200Response
      */
     'nextPage'?: number;
     /**
-     * 
+     *
      * @type {number}
      * @memberof SubscriptionsGet200Response
      */
     'total'?: number;
 }
 /**
- * 
+ *
  * @export
  * @interface TeamDetail
  */
@@ -3249,13 +3249,13 @@ export interface TeamDetail {
      */
     'id': string;
     /**
-     * 
+     *
      * @type {Access}
      * @memberof TeamDetail
      */
     'access': Access;
     /**
-     * 
+     *
      * @type {LimitationMap}
      * @memberof TeamDetail
      */
@@ -3279,32 +3279,32 @@ export interface TeamDetail {
      */
     'lastAccessComputedAt': string;
     /**
-     * 
+     *
      * @type {Array<LimitedItem>}
      * @memberof TeamDetail
      */
     'autoChargeItems': Array<LimitedItem>;
     /**
-     * 
+     *
      * @type {string}
      * @memberof TeamDetail
      */
     'stripeCustomerId'?: string;
     /**
-     * 
+     *
      * @type {Array<Subscription>}
      * @memberof TeamDetail
      */
     'subscriptions'?: Array<Subscription>;
     /**
-     * 
+     *
      * @type {string}
      * @memberof TeamDetail
      */
     'partnership'?: string;
 }
 /**
- * 
+ *
  * @export
  * @interface TeamDetailCreate
  */
@@ -3316,57 +3316,57 @@ export interface TeamDetailCreate {
      */
     'id': string;
     /**
-     * 
+     *
      * @type {Set<LimitedItem>}
      * @memberof TeamDetailCreate
      */
     'autoChargeItems'?: Set<LimitedItem>;
     /**
-     * 
+     *
      * @type {StripeCustomerCreate}
      * @memberof TeamDetailCreate
      */
     'stripeCustomer': StripeCustomerCreate;
     /**
-     * 
+     *
      * @type {string}
      * @memberof TeamDetailCreate
      */
     'partnership'?: string;
     /**
-     * 
+     *
      * @type {string}
      * @memberof TeamDetailCreate
      */
     'referralCode'?: string;
 }
 /**
- * 
+ *
  * @export
  * @interface TeamDetailUpdate
  */
 export interface TeamDetailUpdate {
     /**
-     * 
+     *
      * @type {Set<LimitedItem>}
      * @memberof TeamDetailUpdate
      */
     'autoChargeItems'?: Set<LimitedItem>;
     /**
-     * 
+     *
      * @type {string}
      * @memberof TeamDetailUpdate
      */
     'stripeCustomerId'?: string;
     /**
-     * 
+     *
      * @type {LimitationMap}
      * @memberof TeamDetailUpdate
      */
     'usage'?: LimitationMap;
 }
 /**
- * 
+ *
  * @export
  * @interface TxMetadata
  */
@@ -3380,7 +3380,7 @@ export interface TxMetadata {
      */
     'redeemedCouponId'?: string;
     /**
-     * 
+     *
      * @type {number}
      * @memberof TxMetadata
      */
@@ -3393,31 +3393,31 @@ export interface TxMetadata {
     'couponId'?: string;
 }
 /**
- * 
+ *
  * @export
  * @interface UnlockPreference
  */
 export interface UnlockPreference {
     /**
-     * 
+     *
      * @type {string}
      * @memberof UnlockPreference
      */
     'category': UnlockPreferenceCategoryEnum;
     /**
-     * 
+     *
      * @type {CreditUnlockType}
      * @memberof UnlockPreference
      */
     'key': CreditUnlockType;
     /**
-     * 
+     *
      * @type {CountryTier}
      * @memberof UnlockPreference
      */
     'tier'?: CountryTier;
     /**
-     * 
+     *
      * @type {CreditUnlockMetadata}
      * @memberof UnlockPreference
      */
@@ -3431,13 +3431,13 @@ export const UnlockPreferenceCategoryEnum = {
 export type UnlockPreferenceCategoryEnum = typeof UnlockPreferenceCategoryEnum[keyof typeof UnlockPreferenceCategoryEnum];
 
 /**
- * 
+ *
  * @export
  * @interface VariableSingleConsumptionMetadata
  */
 export interface VariableSingleConsumptionMetadata {
     /**
-     * 
+     *
      * @type {string}
      * @memberof VariableSingleConsumptionMetadata
      */
@@ -3463,25 +3463,25 @@ export type VariableSingleConsumptionMetadataTypeEnum = typeof VariableSingleCon
  */
 export interface WabaPricingData {
     /**
-     * 
+     *
      * @type {number}
      * @memberof WabaPricingData
      */
     'authentication'?: number;
     /**
-     * 
+     *
      * @type {number}
      * @memberof WabaPricingData
      */
     'service'?: number;
     /**
-     * 
+     *
      * @type {number}
      * @memberof WabaPricingData
      */
     'marketing'?: number;
     /**
-     * 
+     *
      * @type {number}
      * @memberof WabaPricingData
      */
@@ -3495,7 +3495,7 @@ export interface WabaPricingData {
 export const AutoChargeProductsApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
-         * 
+         *
          * @summary Fetch All Auto Charge Products
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -3518,7 +3518,7 @@ export const AutoChargeProductsApiAxiosParamCreator = function (configuration?: 
             await setOAuthToObject(localVarHeaderParameter, "chatdaddy", [], configuration)
 
 
-    
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
@@ -3531,7 +3531,7 @@ export const AutoChargeProductsApiAxiosParamCreator = function (configuration?: 
         /**
          * - If usage < limit, then no action is taken - If usage >= limit, then:   - a metered subscription is created, if it doesn\'t exist   - fails if cannot be auto-charged
          * @summary Prepares the team for auto charge
-         * @param {LimitedItem} item 
+         * @param {LimitedItem} item
          * @param {string} [accountId] The account ID to prepare usage for. Relevant for messages only.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -3561,7 +3561,7 @@ export const AutoChargeProductsApiAxiosParamCreator = function (configuration?: 
             }
 
 
-    
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
@@ -3572,9 +3572,9 @@ export const AutoChargeProductsApiAxiosParamCreator = function (configuration?: 
             };
         },
         /**
-         * 
+         *
          * @summary Sets config for auto charge product
-         * @param {AutoChargeProductSet} [autoChargeProductSet] 
+         * @param {AutoChargeProductSet} [autoChargeProductSet]
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -3596,7 +3596,7 @@ export const AutoChargeProductsApiAxiosParamCreator = function (configuration?: 
             await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["ADMIN_PANEL_ACCESS"], configuration)
 
 
-    
+
             localVarHeaderParameter['Content-Type'] = 'application/json';
 
             setSearchParams(localVarUrlObj, localVarQueryParameter);
@@ -3620,7 +3620,7 @@ export const AutoChargeProductsApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = AutoChargeProductsApiAxiosParamCreator(configuration)
     return {
         /**
-         * 
+         *
          * @summary Fetch All Auto Charge Products
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -3632,7 +3632,7 @@ export const AutoChargeProductsApiFp = function(configuration?: Configuration) {
         /**
          * - If usage < limit, then no action is taken - If usage >= limit, then:   - a metered subscription is created, if it doesn\'t exist   - fails if cannot be auto-charged
          * @summary Prepares the team for auto charge
-         * @param {LimitedItem} item 
+         * @param {LimitedItem} item
          * @param {string} [accountId] The account ID to prepare usage for. Relevant for messages only.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -3642,9 +3642,9 @@ export const AutoChargeProductsApiFp = function(configuration?: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
-         * 
+         *
          * @summary Sets config for auto charge product
-         * @param {AutoChargeProductSet} [autoChargeProductSet] 
+         * @param {AutoChargeProductSet} [autoChargeProductSet]
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -3663,7 +3663,7 @@ export const AutoChargeProductsApiFactory = function (configuration?: Configurat
     const localVarFp = AutoChargeProductsApiFp(configuration)
     return {
         /**
-         * 
+         *
          * @summary Fetch All Auto Charge Products
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -3682,7 +3682,7 @@ export const AutoChargeProductsApiFactory = function (configuration?: Configurat
             return localVarFp.autoChargeProductsPrepare(requestParameters.item, requestParameters.accountId, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         *
          * @summary Sets config for auto charge product
          * @param {AutoChargeProductsApiAutoChargeProductsSetRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -3701,7 +3701,7 @@ export const AutoChargeProductsApiFactory = function (configuration?: Configurat
  */
 export interface AutoChargeProductsApiAutoChargeProductsPrepareRequest {
     /**
-     * 
+     *
      * @type {LimitedItem}
      * @memberof AutoChargeProductsApiAutoChargeProductsPrepare
      */
@@ -3722,7 +3722,7 @@ export interface AutoChargeProductsApiAutoChargeProductsPrepareRequest {
  */
 export interface AutoChargeProductsApiAutoChargeProductsSetRequest {
     /**
-     * 
+     *
      * @type {AutoChargeProductSet}
      * @memberof AutoChargeProductsApiAutoChargeProductsSet
      */
@@ -3737,7 +3737,7 @@ export interface AutoChargeProductsApiAutoChargeProductsSetRequest {
  */
 export class AutoChargeProductsApi extends BaseAPI {
     /**
-     * 
+     *
      * @summary Fetch All Auto Charge Products
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -3760,7 +3760,7 @@ export class AutoChargeProductsApi extends BaseAPI {
     }
 
     /**
-     * 
+     *
      * @summary Sets config for auto charge product
      * @param {AutoChargeProductsApiAutoChargeProductsSetRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -3780,9 +3780,9 @@ export class AutoChargeProductsApi extends BaseAPI {
 export const CouponCodesApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
-         * 
+         *
          * @summary Get and verify coupon data from Stripe
-         * @param {string} code 
+         * @param {string} code
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -3810,7 +3810,7 @@ export const CouponCodesApiAxiosParamCreator = function (configuration?: Configu
             }
 
 
-    
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
@@ -3822,7 +3822,7 @@ export const CouponCodesApiAxiosParamCreator = function (configuration?: Configu
         },
         /**
          * Generate a coupon code
-         * @param {CouponCodeCreateOptions} [couponCodeCreateOptions] 
+         * @param {CouponCodeCreateOptions} [couponCodeCreateOptions]
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -3844,7 +3844,7 @@ export const CouponCodesApiAxiosParamCreator = function (configuration?: Configu
             await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["ADMIN_PANEL_ACCESS"], configuration)
 
 
-    
+
             localVarHeaderParameter['Content-Type'] = 'application/json';
 
             setSearchParams(localVarUrlObj, localVarQueryParameter);
@@ -3858,9 +3858,9 @@ export const CouponCodesApiAxiosParamCreator = function (configuration?: Configu
             };
         },
         /**
-         * 
+         *
          * @summary Archive a coupon code
-         * @param {CreditsCouponsArchiveRequest} [creditsCouponsArchiveRequest] 
+         * @param {CreditsCouponsArchiveRequest} [creditsCouponsArchiveRequest]
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -3882,7 +3882,7 @@ export const CouponCodesApiAxiosParamCreator = function (configuration?: Configu
             await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["ADMIN_PANEL_ACCESS", "PARTNER_ADMIN_PANEL_ACCESS"], configuration)
 
 
-    
+
             localVarHeaderParameter['Content-Type'] = 'application/json';
 
             setSearchParams(localVarUrlObj, localVarQueryParameter);
@@ -3896,11 +3896,11 @@ export const CouponCodesApiAxiosParamCreator = function (configuration?: Configu
             };
         },
         /**
-         * 
+         *
          * @summary Get Chatdaddy coupon data
-         * @param {number} [count] 
+         * @param {number} [count]
          * @param {boolean} [returnTotal] Return total number of coupons
-         * @param {string} [cursor] 
+         * @param {string} [cursor]
          * @param {string} [q] Search by partial coupon id
          * @param {string} [id] Filter by coupon ID
          * @param {*} [options] Override http request option.
@@ -3944,7 +3944,7 @@ export const CouponCodesApiAxiosParamCreator = function (configuration?: Configu
             }
 
 
-    
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
@@ -3955,9 +3955,9 @@ export const CouponCodesApiAxiosParamCreator = function (configuration?: Configu
             };
         },
         /**
-         * 
+         *
          * @summary Get a coupon by ID
-         * @param {string} id 
+         * @param {string} id
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -3978,7 +3978,7 @@ export const CouponCodesApiAxiosParamCreator = function (configuration?: Configu
             const localVarQueryParameter = {} as any;
 
 
-    
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
@@ -3990,7 +3990,7 @@ export const CouponCodesApiAxiosParamCreator = function (configuration?: Configu
         },
         /**
          * Generate a coupon code
-         * @param {CreditCouponCodeCreateOptions} [creditCouponCodeCreateOptions] 
+         * @param {CreditCouponCodeCreateOptions} [creditCouponCodeCreateOptions]
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -4012,7 +4012,7 @@ export const CouponCodesApiAxiosParamCreator = function (configuration?: Configu
             await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["ADMIN_PANEL_ACCESS", "PARTNER_ADMIN_PANEL_ACCESS"], configuration)
 
 
-    
+
             localVarHeaderParameter['Content-Type'] = 'application/json';
 
             setSearchParams(localVarUrlObj, localVarQueryParameter);
@@ -4026,11 +4026,11 @@ export const CouponCodesApiAxiosParamCreator = function (configuration?: Configu
             };
         },
         /**
-         * 
+         *
          * @summary Get coupon redemptions
-         * @param {number} [count] 
+         * @param {number} [count]
          * @param {boolean} [returnTotal] Return total number of redemptions
-         * @param {string} [cursor] 
+         * @param {string} [cursor]
          * @param {string} [q] Search by partial redeemed coupon id
          * @param {string} [couponId] Filter by coupon ID
          * @param {*} [options] Override http request option.
@@ -4074,7 +4074,7 @@ export const CouponCodesApiAxiosParamCreator = function (configuration?: Configu
             }
 
 
-    
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
@@ -4095,9 +4095,9 @@ export const CouponCodesApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = CouponCodesApiAxiosParamCreator(configuration)
     return {
         /**
-         * 
+         *
          * @summary Get and verify coupon data from Stripe
-         * @param {string} code 
+         * @param {string} code
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -4107,7 +4107,7 @@ export const CouponCodesApiFp = function(configuration?: Configuration) {
         },
         /**
          * Generate a coupon code
-         * @param {CouponCodeCreateOptions} [couponCodeCreateOptions] 
+         * @param {CouponCodeCreateOptions} [couponCodeCreateOptions]
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -4116,9 +4116,9 @@ export const CouponCodesApiFp = function(configuration?: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
-         * 
+         *
          * @summary Archive a coupon code
-         * @param {CreditsCouponsArchiveRequest} [creditsCouponsArchiveRequest] 
+         * @param {CreditsCouponsArchiveRequest} [creditsCouponsArchiveRequest]
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -4127,11 +4127,11 @@ export const CouponCodesApiFp = function(configuration?: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
-         * 
+         *
          * @summary Get Chatdaddy coupon data
-         * @param {number} [count] 
+         * @param {number} [count]
          * @param {boolean} [returnTotal] Return total number of coupons
-         * @param {string} [cursor] 
+         * @param {string} [cursor]
          * @param {string} [q] Search by partial coupon id
          * @param {string} [id] Filter by coupon ID
          * @param {*} [options] Override http request option.
@@ -4142,9 +4142,9 @@ export const CouponCodesApiFp = function(configuration?: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
-         * 
+         *
          * @summary Get a coupon by ID
-         * @param {string} id 
+         * @param {string} id
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -4154,7 +4154,7 @@ export const CouponCodesApiFp = function(configuration?: Configuration) {
         },
         /**
          * Generate a coupon code
-         * @param {CreditCouponCodeCreateOptions} [creditCouponCodeCreateOptions] 
+         * @param {CreditCouponCodeCreateOptions} [creditCouponCodeCreateOptions]
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -4163,11 +4163,11 @@ export const CouponCodesApiFp = function(configuration?: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
-         * 
+         *
          * @summary Get coupon redemptions
-         * @param {number} [count] 
+         * @param {number} [count]
          * @param {boolean} [returnTotal] Return total number of redemptions
-         * @param {string} [cursor] 
+         * @param {string} [cursor]
          * @param {string} [q] Search by partial redeemed coupon id
          * @param {string} [couponId] Filter by coupon ID
          * @param {*} [options] Override http request option.
@@ -4188,7 +4188,7 @@ export const CouponCodesApiFactory = function (configuration?: Configuration, ba
     const localVarFp = CouponCodesApiFp(configuration)
     return {
         /**
-         * 
+         *
          * @summary Get and verify coupon data from Stripe
          * @param {CouponCodesApiCouponsGetRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -4207,7 +4207,7 @@ export const CouponCodesApiFactory = function (configuration?: Configuration, ba
             return localVarFp.couponsPost(requestParameters.couponCodeCreateOptions, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         *
          * @summary Archive a coupon code
          * @param {CouponCodesApiCreditsCouponsArchiveRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -4217,7 +4217,7 @@ export const CouponCodesApiFactory = function (configuration?: Configuration, ba
             return localVarFp.creditsCouponsArchive(requestParameters.creditsCouponsArchiveRequest, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         *
          * @summary Get Chatdaddy coupon data
          * @param {CouponCodesApiCreditsCouponsGetRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -4227,7 +4227,7 @@ export const CouponCodesApiFactory = function (configuration?: Configuration, ba
             return localVarFp.creditsCouponsGet(requestParameters.count, requestParameters.returnTotal, requestParameters.cursor, requestParameters.q, requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         *
          * @summary Get a coupon by ID
          * @param {CouponCodesApiCreditsCouponsGetIdRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -4246,7 +4246,7 @@ export const CouponCodesApiFactory = function (configuration?: Configuration, ba
             return localVarFp.creditsCouponsPost(requestParameters.creditCouponCodeCreateOptions, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         *
          * @summary Get coupon redemptions
          * @param {CouponCodesApiCreditsCouponsRedemptionsGetRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -4265,7 +4265,7 @@ export const CouponCodesApiFactory = function (configuration?: Configuration, ba
  */
 export interface CouponCodesApiCouponsGetRequest {
     /**
-     * 
+     *
      * @type {string}
      * @memberof CouponCodesApiCouponsGet
      */
@@ -4279,7 +4279,7 @@ export interface CouponCodesApiCouponsGetRequest {
  */
 export interface CouponCodesApiCouponsPostRequest {
     /**
-     * 
+     *
      * @type {CouponCodeCreateOptions}
      * @memberof CouponCodesApiCouponsPost
      */
@@ -4293,7 +4293,7 @@ export interface CouponCodesApiCouponsPostRequest {
  */
 export interface CouponCodesApiCreditsCouponsArchiveRequest {
     /**
-     * 
+     *
      * @type {CreditsCouponsArchiveRequest}
      * @memberof CouponCodesApiCreditsCouponsArchive
      */
@@ -4307,7 +4307,7 @@ export interface CouponCodesApiCreditsCouponsArchiveRequest {
  */
 export interface CouponCodesApiCreditsCouponsGetRequest {
     /**
-     * 
+     *
      * @type {number}
      * @memberof CouponCodesApiCreditsCouponsGet
      */
@@ -4321,7 +4321,7 @@ export interface CouponCodesApiCreditsCouponsGetRequest {
     readonly returnTotal?: boolean
 
     /**
-     * 
+     *
      * @type {string}
      * @memberof CouponCodesApiCreditsCouponsGet
      */
@@ -4349,7 +4349,7 @@ export interface CouponCodesApiCreditsCouponsGetRequest {
  */
 export interface CouponCodesApiCreditsCouponsGetIdRequest {
     /**
-     * 
+     *
      * @type {string}
      * @memberof CouponCodesApiCreditsCouponsGetId
      */
@@ -4363,7 +4363,7 @@ export interface CouponCodesApiCreditsCouponsGetIdRequest {
  */
 export interface CouponCodesApiCreditsCouponsPostRequest {
     /**
-     * 
+     *
      * @type {CreditCouponCodeCreateOptions}
      * @memberof CouponCodesApiCreditsCouponsPost
      */
@@ -4377,7 +4377,7 @@ export interface CouponCodesApiCreditsCouponsPostRequest {
  */
 export interface CouponCodesApiCreditsCouponsRedemptionsGetRequest {
     /**
-     * 
+     *
      * @type {number}
      * @memberof CouponCodesApiCreditsCouponsRedemptionsGet
      */
@@ -4391,7 +4391,7 @@ export interface CouponCodesApiCreditsCouponsRedemptionsGetRequest {
     readonly returnTotal?: boolean
 
     /**
-     * 
+     *
      * @type {string}
      * @memberof CouponCodesApiCreditsCouponsRedemptionsGet
      */
@@ -4420,7 +4420,7 @@ export interface CouponCodesApiCreditsCouponsRedemptionsGetRequest {
  */
 export class CouponCodesApi extends BaseAPI {
     /**
-     * 
+     *
      * @summary Get and verify coupon data from Stripe
      * @param {CouponCodesApiCouponsGetRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -4443,7 +4443,7 @@ export class CouponCodesApi extends BaseAPI {
     }
 
     /**
-     * 
+     *
      * @summary Archive a coupon code
      * @param {CouponCodesApiCreditsCouponsArchiveRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -4455,7 +4455,7 @@ export class CouponCodesApi extends BaseAPI {
     }
 
     /**
-     * 
+     *
      * @summary Get Chatdaddy coupon data
      * @param {CouponCodesApiCreditsCouponsGetRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -4467,7 +4467,7 @@ export class CouponCodesApi extends BaseAPI {
     }
 
     /**
-     * 
+     *
      * @summary Get a coupon by ID
      * @param {CouponCodesApiCreditsCouponsGetIdRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -4490,7 +4490,7 @@ export class CouponCodesApi extends BaseAPI {
     }
 
     /**
-     * 
+     *
      * @summary Get coupon redemptions
      * @param {CouponCodesApiCreditsCouponsRedemptionsGetRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -4510,7 +4510,7 @@ export class CouponCodesApi extends BaseAPI {
 export const CreditsApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
-         * 
+         *
          * @summary Cancel the current auto-renewal credit sub
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -4533,7 +4533,7 @@ export const CreditsApiAxiosParamCreator = function (configuration?: Configurati
             await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["PAYMENTS_UPDATE"], configuration)
 
 
-    
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
@@ -4544,9 +4544,9 @@ export const CreditsApiAxiosParamCreator = function (configuration?: Configurati
             };
         },
         /**
-         * 
+         *
          * @summary Create/update the auto-renewal credit sub
-         * @param {CreditAutoRenewalUpdate} [creditAutoRenewalUpdate] 
+         * @param {CreditAutoRenewalUpdate} [creditAutoRenewalUpdate]
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -4568,7 +4568,7 @@ export const CreditsApiAxiosParamCreator = function (configuration?: Configurati
             await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["PAYMENTS_UPDATE"], configuration)
 
 
-    
+
             localVarHeaderParameter['Content-Type'] = 'application/json';
 
             setSearchParams(localVarUrlObj, localVarQueryParameter);
@@ -4582,11 +4582,11 @@ export const CreditsApiAxiosParamCreator = function (configuration?: Configurati
             };
         },
         /**
-         * 
+         *
          * @summary Check if the team can consume the given quantity of credits
          * @param {CreditConsumptionType} type The type of consumption
          * @param {number} quantity The number of times to consume the given type
-         * @param {LegacyCanConsumeOpts} [legacyOpts] 
+         * @param {LegacyCanConsumeOpts} [legacyOpts]
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -4624,7 +4624,7 @@ export const CreditsApiAxiosParamCreator = function (configuration?: Configurati
             }
 
 
-    
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
@@ -4635,10 +4635,10 @@ export const CreditsApiAxiosParamCreator = function (configuration?: Configurati
             };
         },
         /**
-         * 
+         *
          * @summary Check if the team can consume the given quantity of credits
          * @param {RecurringCreditConsumptionType} type The type of consumption
-         * @param {LegacyCanConsumeOpts} [legacyOpts] 
+         * @param {LegacyCanConsumeOpts} [legacyOpts]
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -4670,7 +4670,7 @@ export const CreditsApiAxiosParamCreator = function (configuration?: Configurati
             }
 
 
-    
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
@@ -4681,9 +4681,9 @@ export const CreditsApiAxiosParamCreator = function (configuration?: Configurati
             };
         },
         /**
-         * 
+         *
          * @summary Create a new single use credit consumption record
-         * @param {CreditConsumptionPostRequest} [creditConsumptionPostRequest] 
+         * @param {CreditConsumptionPostRequest} [creditConsumptionPostRequest]
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -4705,7 +4705,7 @@ export const CreditsApiAxiosParamCreator = function (configuration?: Configurati
             await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["ADMIN_PANEL_ACCESS", "PARTNER_ADMIN_PANEL_ACCESS"], configuration)
 
 
-    
+
             localVarHeaderParameter['Content-Type'] = 'application/json';
 
             setSearchParams(localVarUrlObj, localVarQueryParameter);
@@ -4719,14 +4719,14 @@ export const CreditsApiAxiosParamCreator = function (configuration?: Configurati
             };
         },
         /**
-         * 
+         *
          * @summary Get list of gains your team has received
          * @param {string} [customerId] Filter by customerId.
-         * @param {number} [count] 
-         * @param {string} [cursor] 
-         * @param {Array<CreditGainType>} [type] 
-         * @param {DateRange} [createdAt] 
-         * @param {CreditGainStatus} [status] 
+         * @param {number} [count]
+         * @param {string} [cursor]
+         * @param {Array<CreditGainType>} [type]
+         * @param {DateRange} [createdAt]
+         * @param {CreditGainStatus} [status]
          * @param {boolean} [returnTotal] Return total number of consumptions
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -4777,7 +4777,7 @@ export const CreditsApiAxiosParamCreator = function (configuration?: Configurati
             }
 
 
-    
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
@@ -4788,9 +4788,9 @@ export const CreditsApiAxiosParamCreator = function (configuration?: Configurati
             };
         },
         /**
-         * 
+         *
          * @summary Create a new credit gain
-         * @param {CreditGainCreate} [creditGainCreate] 
+         * @param {CreditGainCreate} [creditGainCreate]
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -4812,7 +4812,7 @@ export const CreditsApiAxiosParamCreator = function (configuration?: Configurati
             await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["ADMIN_PANEL_ACCESS"], configuration)
 
 
-    
+
             localVarHeaderParameter['Content-Type'] = 'application/json';
 
             setSearchParams(localVarUrlObj, localVarQueryParameter);
@@ -4826,16 +4826,16 @@ export const CreditsApiAxiosParamCreator = function (configuration?: Configurati
             };
         },
         /**
-         * 
+         *
          * @summary Get transaction history
          * @param {string} [teamId] Filter by teamId
          * @param {string} [customerId] Filter by customerId
-         * @param {number} [count] 
-         * @param {string} [cursor] 
-         * @param {Array<CreditBalanceEffectType>} [type] 
-         * @param {'gain' | 'consume'} [effectType] 
-         * @param {Array<string>} [id] 
-         * @param {DateRange} [createdAt] 
+         * @param {number} [count]
+         * @param {string} [cursor]
+         * @param {Array<CreditBalanceEffectType>} [type]
+         * @param {'gain' | 'consume'} [effectType]
+         * @param {Array<string>} [id]
+         * @param {DateRange} [createdAt]
          * @param {boolean} [returnTotal] Return total number of consumptions
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -4894,7 +4894,7 @@ export const CreditsApiAxiosParamCreator = function (configuration?: Configurati
             }
 
 
-    
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
@@ -4905,7 +4905,7 @@ export const CreditsApiAxiosParamCreator = function (configuration?: Configurati
             };
         },
         /**
-         * 
+         *
          * @summary Get the customer\'s credit details
          * @param {boolean} [returnAutoRenewal] Return the auto-renewal subscription details. PAYMENTS_READ scope is required.
          * @param {boolean} [returnSupportPlan] Return the support plan details.
@@ -4938,7 +4938,7 @@ export const CreditsApiAxiosParamCreator = function (configuration?: Configurati
             }
 
 
-    
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
@@ -4949,9 +4949,9 @@ export const CreditsApiAxiosParamCreator = function (configuration?: Configurati
             };
         },
         /**
-         * 
+         *
          * @summary Migrate the customer\'s subscription & any other purchased items to the credit system
-         * @param {CreditCustomerMigrate} [creditCustomerMigrate] 
+         * @param {CreditCustomerMigrate} [creditCustomerMigrate]
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -4973,7 +4973,7 @@ export const CreditsApiAxiosParamCreator = function (configuration?: Configurati
             await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["ADMIN_PANEL_ACCESS", "PARTNER_ADMIN_PANEL_ACCESS"], configuration)
 
 
-    
+
             localVarHeaderParameter['Content-Type'] = 'application/json';
 
             setSearchParams(localVarUrlObj, localVarQueryParameter);
@@ -4987,9 +4987,9 @@ export const CreditsApiAxiosParamCreator = function (configuration?: Configurati
             };
         },
         /**
-         * 
+         *
          * @summary Create a new customer, or link the team to an existing customer
-         * @param {CreditCustomerPost} [creditCustomerPost] 
+         * @param {CreditCustomerPost} [creditCustomerPost]
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -5011,7 +5011,7 @@ export const CreditsApiAxiosParamCreator = function (configuration?: Configurati
             await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["ADMIN_PANEL_ACCESS"], configuration)
 
 
-    
+
             localVarHeaderParameter['Content-Type'] = 'application/json';
 
             setSearchParams(localVarUrlObj, localVarQueryParameter);
@@ -5025,7 +5025,7 @@ export const CreditsApiAxiosParamCreator = function (configuration?: Configurati
             };
         },
         /**
-         * 
+         *
          * @summary Refreshes the customer\'s subscription & any other purchased items
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -5048,7 +5048,7 @@ export const CreditsApiAxiosParamCreator = function (configuration?: Configurati
             await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["PAYMENTS_UPDATE"], configuration)
 
 
-    
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
@@ -5059,9 +5059,9 @@ export const CreditsApiAxiosParamCreator = function (configuration?: Configurati
             };
         },
         /**
-         * 
+         *
          * @summary Get metadata for credit consumptions and unlocks
-         * @param {string} [region] 
+         * @param {string} [region]
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -5083,7 +5083,7 @@ export const CreditsApiAxiosParamCreator = function (configuration?: Configurati
             }
 
 
-    
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
@@ -5094,7 +5094,7 @@ export const CreditsApiAxiosParamCreator = function (configuration?: Configurati
             };
         },
         /**
-         * 
+         *
          * @summary Get the system credit preferences
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -5117,7 +5117,7 @@ export const CreditsApiAxiosParamCreator = function (configuration?: Configurati
             await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["ADMIN_PANEL_ACCESS"], configuration)
 
 
-    
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
@@ -5128,9 +5128,9 @@ export const CreditsApiAxiosParamCreator = function (configuration?: Configurati
             };
         },
         /**
-         * 
+         *
          * @summary Updates the given credit preferences
-         * @param {CreditsPreferencesPostRequest} [creditsPreferencesPostRequest] 
+         * @param {CreditsPreferencesPostRequest} [creditsPreferencesPostRequest]
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -5152,7 +5152,7 @@ export const CreditsApiAxiosParamCreator = function (configuration?: Configurati
             await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["ADMIN_PANEL_ACCESS"], configuration)
 
 
-    
+
             localVarHeaderParameter['Content-Type'] = 'application/json';
 
             setSearchParams(localVarUrlObj, localVarQueryParameter);
@@ -5166,9 +5166,9 @@ export const CreditsApiAxiosParamCreator = function (configuration?: Configurati
             };
         },
         /**
-         * 
+         *
          * @summary Create/update/cancel the support plan
-         * @param {ModifySupportPlan} [modifySupportPlan] 
+         * @param {ModifySupportPlan} [modifySupportPlan]
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -5190,7 +5190,7 @@ export const CreditsApiAxiosParamCreator = function (configuration?: Configurati
             await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["PAYMENTS_UPDATE"], configuration)
 
 
-    
+
             localVarHeaderParameter['Content-Type'] = 'application/json';
 
             setSearchParams(localVarUrlObj, localVarQueryParameter);
@@ -5204,12 +5204,12 @@ export const CreditsApiAxiosParamCreator = function (configuration?: Configurati
             };
         },
         /**
-         * 
+         *
          * @summary Get recurring credit consumptions
          * @param {string} [teamId] Filter by teamId
-         * @param {number} [count] 
-         * @param {string} [cursor] 
-         * @param {RecurringCreditConsumptionType} [type] 
+         * @param {number} [count]
+         * @param {string} [cursor]
+         * @param {RecurringCreditConsumptionType} [type]
          * @param {boolean} [returnTotal] Return total number of consumptions
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -5252,7 +5252,7 @@ export const CreditsApiAxiosParamCreator = function (configuration?: Configurati
             }
 
 
-    
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
@@ -5263,9 +5263,9 @@ export const CreditsApiAxiosParamCreator = function (configuration?: Configurati
             };
         },
         /**
-         * 
+         *
          * @summary Create a new recurring credit consumption record
-         * @param {RecurringCreditConsumptionCreate} [recurringCreditConsumptionCreate] 
+         * @param {RecurringCreditConsumptionCreate} [recurringCreditConsumptionCreate]
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -5287,7 +5287,7 @@ export const CreditsApiAxiosParamCreator = function (configuration?: Configurati
             await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["PAYMENTS_UPDATE"], configuration)
 
 
-    
+
             localVarHeaderParameter['Content-Type'] = 'application/json';
 
             setSearchParams(localVarUrlObj, localVarQueryParameter);
@@ -5301,9 +5301,9 @@ export const CreditsApiAxiosParamCreator = function (configuration?: Configurati
             };
         },
         /**
-         * 
+         *
          * @summary Stop a recurring credit consumption
-         * @param {string} id 
+         * @param {string} id
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -5328,7 +5328,7 @@ export const CreditsApiAxiosParamCreator = function (configuration?: Configurati
             await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["PAYMENTS_UPDATE"], configuration)
 
 
-    
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
@@ -5339,9 +5339,9 @@ export const CreditsApiAxiosParamCreator = function (configuration?: Configurati
             };
         },
         /**
-         * 
+         *
          * @summary Top up credits
-         * @param {CreditTopUpOptions} [creditTopUpOptions] 
+         * @param {CreditTopUpOptions} [creditTopUpOptions]
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -5363,7 +5363,7 @@ export const CreditsApiAxiosParamCreator = function (configuration?: Configurati
             await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["PAYMENTS_UPDATE"], configuration)
 
 
-    
+
             localVarHeaderParameter['Content-Type'] = 'application/json';
 
             setSearchParams(localVarUrlObj, localVarQueryParameter);
@@ -5387,7 +5387,7 @@ export const CreditsApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = CreditsApiAxiosParamCreator(configuration)
     return {
         /**
-         * 
+         *
          * @summary Cancel the current auto-renewal credit sub
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -5397,9 +5397,9 @@ export const CreditsApiFp = function(configuration?: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
-         * 
+         *
          * @summary Create/update the auto-renewal credit sub
-         * @param {CreditAutoRenewalUpdate} [creditAutoRenewalUpdate] 
+         * @param {CreditAutoRenewalUpdate} [creditAutoRenewalUpdate]
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -5408,11 +5408,11 @@ export const CreditsApiFp = function(configuration?: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
-         * 
+         *
          * @summary Check if the team can consume the given quantity of credits
          * @param {CreditConsumptionType} type The type of consumption
          * @param {number} quantity The number of times to consume the given type
-         * @param {LegacyCanConsumeOpts} [legacyOpts] 
+         * @param {LegacyCanConsumeOpts} [legacyOpts]
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -5421,10 +5421,10 @@ export const CreditsApiFp = function(configuration?: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
-         * 
+         *
          * @summary Check if the team can consume the given quantity of credits
          * @param {RecurringCreditConsumptionType} type The type of consumption
-         * @param {LegacyCanConsumeOpts} [legacyOpts] 
+         * @param {LegacyCanConsumeOpts} [legacyOpts]
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -5433,9 +5433,9 @@ export const CreditsApiFp = function(configuration?: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
-         * 
+         *
          * @summary Create a new single use credit consumption record
-         * @param {CreditConsumptionPostRequest} [creditConsumptionPostRequest] 
+         * @param {CreditConsumptionPostRequest} [creditConsumptionPostRequest]
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -5444,14 +5444,14 @@ export const CreditsApiFp = function(configuration?: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
-         * 
+         *
          * @summary Get list of gains your team has received
          * @param {string} [customerId] Filter by customerId.
-         * @param {number} [count] 
-         * @param {string} [cursor] 
-         * @param {Array<CreditGainType>} [type] 
-         * @param {DateRange} [createdAt] 
-         * @param {CreditGainStatus} [status] 
+         * @param {number} [count]
+         * @param {string} [cursor]
+         * @param {Array<CreditGainType>} [type]
+         * @param {DateRange} [createdAt]
+         * @param {CreditGainStatus} [status]
          * @param {boolean} [returnTotal] Return total number of consumptions
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -5461,9 +5461,9 @@ export const CreditsApiFp = function(configuration?: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
-         * 
+         *
          * @summary Create a new credit gain
-         * @param {CreditGainCreate} [creditGainCreate] 
+         * @param {CreditGainCreate} [creditGainCreate]
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -5472,16 +5472,16 @@ export const CreditsApiFp = function(configuration?: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
-         * 
+         *
          * @summary Get transaction history
          * @param {string} [teamId] Filter by teamId
          * @param {string} [customerId] Filter by customerId
-         * @param {number} [count] 
-         * @param {string} [cursor] 
-         * @param {Array<CreditBalanceEffectType>} [type] 
-         * @param {'gain' | 'consume'} [effectType] 
-         * @param {Array<string>} [id] 
-         * @param {DateRange} [createdAt] 
+         * @param {number} [count]
+         * @param {string} [cursor]
+         * @param {Array<CreditBalanceEffectType>} [type]
+         * @param {'gain' | 'consume'} [effectType]
+         * @param {Array<string>} [id]
+         * @param {DateRange} [createdAt]
          * @param {boolean} [returnTotal] Return total number of consumptions
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -5491,7 +5491,7 @@ export const CreditsApiFp = function(configuration?: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
-         * 
+         *
          * @summary Get the customer\'s credit details
          * @param {boolean} [returnAutoRenewal] Return the auto-renewal subscription details. PAYMENTS_READ scope is required.
          * @param {boolean} [returnSupportPlan] Return the support plan details.
@@ -5503,9 +5503,9 @@ export const CreditsApiFp = function(configuration?: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
-         * 
+         *
          * @summary Migrate the customer\'s subscription & any other purchased items to the credit system
-         * @param {CreditCustomerMigrate} [creditCustomerMigrate] 
+         * @param {CreditCustomerMigrate} [creditCustomerMigrate]
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -5514,9 +5514,9 @@ export const CreditsApiFp = function(configuration?: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
-         * 
+         *
          * @summary Create a new customer, or link the team to an existing customer
-         * @param {CreditCustomerPost} [creditCustomerPost] 
+         * @param {CreditCustomerPost} [creditCustomerPost]
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -5525,7 +5525,7 @@ export const CreditsApiFp = function(configuration?: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
-         * 
+         *
          * @summary Refreshes the customer\'s subscription & any other purchased items
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -5535,9 +5535,9 @@ export const CreditsApiFp = function(configuration?: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
-         * 
+         *
          * @summary Get metadata for credit consumptions and unlocks
-         * @param {string} [region] 
+         * @param {string} [region]
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -5546,7 +5546,7 @@ export const CreditsApiFp = function(configuration?: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
-         * 
+         *
          * @summary Get the system credit preferences
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -5556,9 +5556,9 @@ export const CreditsApiFp = function(configuration?: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
-         * 
+         *
          * @summary Updates the given credit preferences
-         * @param {CreditsPreferencesPostRequest} [creditsPreferencesPostRequest] 
+         * @param {CreditsPreferencesPostRequest} [creditsPreferencesPostRequest]
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -5567,9 +5567,9 @@ export const CreditsApiFp = function(configuration?: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
-         * 
+         *
          * @summary Create/update/cancel the support plan
-         * @param {ModifySupportPlan} [modifySupportPlan] 
+         * @param {ModifySupportPlan} [modifySupportPlan]
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -5578,12 +5578,12 @@ export const CreditsApiFp = function(configuration?: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
-         * 
+         *
          * @summary Get recurring credit consumptions
          * @param {string} [teamId] Filter by teamId
-         * @param {number} [count] 
-         * @param {string} [cursor] 
-         * @param {RecurringCreditConsumptionType} [type] 
+         * @param {number} [count]
+         * @param {string} [cursor]
+         * @param {RecurringCreditConsumptionType} [type]
          * @param {boolean} [returnTotal] Return total number of consumptions
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -5593,9 +5593,9 @@ export const CreditsApiFp = function(configuration?: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
-         * 
+         *
          * @summary Create a new recurring credit consumption record
-         * @param {RecurringCreditConsumptionCreate} [recurringCreditConsumptionCreate] 
+         * @param {RecurringCreditConsumptionCreate} [recurringCreditConsumptionCreate]
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -5604,9 +5604,9 @@ export const CreditsApiFp = function(configuration?: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
-         * 
+         *
          * @summary Stop a recurring credit consumption
-         * @param {string} id 
+         * @param {string} id
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -5615,9 +5615,9 @@ export const CreditsApiFp = function(configuration?: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
-         * 
+         *
          * @summary Top up credits
-         * @param {CreditTopUpOptions} [creditTopUpOptions] 
+         * @param {CreditTopUpOptions} [creditTopUpOptions]
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -5636,7 +5636,7 @@ export const CreditsApiFactory = function (configuration?: Configuration, basePa
     const localVarFp = CreditsApiFp(configuration)
     return {
         /**
-         * 
+         *
          * @summary Cancel the current auto-renewal credit sub
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -5645,7 +5645,7 @@ export const CreditsApiFactory = function (configuration?: Configuration, basePa
             return localVarFp.autoRenewalCancel(options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         *
          * @summary Create/update the auto-renewal credit sub
          * @param {CreditsApiAutoRenewalPostRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -5655,7 +5655,7 @@ export const CreditsApiFactory = function (configuration?: Configuration, basePa
             return localVarFp.autoRenewalPost(requestParameters.creditAutoRenewalUpdate, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         *
          * @summary Check if the team can consume the given quantity of credits
          * @param {CreditsApiCanConsumeCreditsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -5665,7 +5665,7 @@ export const CreditsApiFactory = function (configuration?: Configuration, basePa
             return localVarFp.canConsumeCredits(requestParameters.type, requestParameters.quantity, requestParameters.legacyOpts, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         *
          * @summary Check if the team can consume the given quantity of credits
          * @param {CreditsApiCanConsumeRecurringCreditsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -5675,7 +5675,7 @@ export const CreditsApiFactory = function (configuration?: Configuration, basePa
             return localVarFp.canConsumeRecurringCredits(requestParameters.type, requestParameters.legacyOpts, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         *
          * @summary Create a new single use credit consumption record
          * @param {CreditsApiCreditConsumptionPostRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -5685,7 +5685,7 @@ export const CreditsApiFactory = function (configuration?: Configuration, basePa
             return localVarFp.creditConsumptionPost(requestParameters.creditConsumptionPostRequest, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         *
          * @summary Get list of gains your team has received
          * @param {CreditsApiCreditGainsGetRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -5695,7 +5695,7 @@ export const CreditsApiFactory = function (configuration?: Configuration, basePa
             return localVarFp.creditGainsGet(requestParameters.customerId, requestParameters.count, requestParameters.cursor, requestParameters.type, requestParameters.createdAt, requestParameters.status, requestParameters.returnTotal, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         *
          * @summary Create a new credit gain
          * @param {CreditsApiCreditGainsPostRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -5705,7 +5705,7 @@ export const CreditsApiFactory = function (configuration?: Configuration, basePa
             return localVarFp.creditGainsPost(requestParameters.creditGainCreate, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         *
          * @summary Get transaction history
          * @param {CreditsApiCreditTxsGetRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -5715,7 +5715,7 @@ export const CreditsApiFactory = function (configuration?: Configuration, basePa
             return localVarFp.creditTxsGet(requestParameters.teamId, requestParameters.customerId, requestParameters.count, requestParameters.cursor, requestParameters.type, requestParameters.effectType, requestParameters.id, requestParameters.createdAt, requestParameters.returnTotal, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         *
          * @summary Get the customer\'s credit details
          * @param {CreditsApiCreditsCustomerGetRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -5725,7 +5725,7 @@ export const CreditsApiFactory = function (configuration?: Configuration, basePa
             return localVarFp.creditsCustomerGet(requestParameters.returnAutoRenewal, requestParameters.returnSupportPlan, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         *
          * @summary Migrate the customer\'s subscription & any other purchased items to the credit system
          * @param {CreditsApiCreditsCustomerMigrateRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -5735,7 +5735,7 @@ export const CreditsApiFactory = function (configuration?: Configuration, basePa
             return localVarFp.creditsCustomerMigrate(requestParameters.creditCustomerMigrate, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         *
          * @summary Create a new customer, or link the team to an existing customer
          * @param {CreditsApiCreditsCustomerPostRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -5745,7 +5745,7 @@ export const CreditsApiFactory = function (configuration?: Configuration, basePa
             return localVarFp.creditsCustomerPost(requestParameters.creditCustomerPost, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         *
          * @summary Refreshes the customer\'s subscription & any other purchased items
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -5754,7 +5754,7 @@ export const CreditsApiFactory = function (configuration?: Configuration, basePa
             return localVarFp.creditsCustomerRefresh(options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         *
          * @summary Get metadata for credit consumptions and unlocks
          * @param {CreditsApiCreditsPreferencesGetRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -5764,7 +5764,7 @@ export const CreditsApiFactory = function (configuration?: Configuration, basePa
             return localVarFp.creditsPreferencesGet(requestParameters.region, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         *
          * @summary Get the system credit preferences
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -5773,7 +5773,7 @@ export const CreditsApiFactory = function (configuration?: Configuration, basePa
             return localVarFp.creditsPreferencesGetAdmin(options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         *
          * @summary Updates the given credit preferences
          * @param {CreditsApiCreditsPreferencesPostRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -5783,7 +5783,7 @@ export const CreditsApiFactory = function (configuration?: Configuration, basePa
             return localVarFp.creditsPreferencesPost(requestParameters.creditsPreferencesPostRequest, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         *
          * @summary Create/update/cancel the support plan
          * @param {CreditsApiModifySupportPlanRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -5793,7 +5793,7 @@ export const CreditsApiFactory = function (configuration?: Configuration, basePa
             return localVarFp.modifySupportPlan(requestParameters.modifySupportPlan, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         *
          * @summary Get recurring credit consumptions
          * @param {CreditsApiRecurringCreditsGetRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -5803,7 +5803,7 @@ export const CreditsApiFactory = function (configuration?: Configuration, basePa
             return localVarFp.recurringCreditsGet(requestParameters.teamId, requestParameters.count, requestParameters.cursor, requestParameters.type, requestParameters.returnTotal, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         *
          * @summary Create a new recurring credit consumption record
          * @param {CreditsApiStartRecurringConsumptionRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -5813,7 +5813,7 @@ export const CreditsApiFactory = function (configuration?: Configuration, basePa
             return localVarFp.startRecurringConsumption(requestParameters.recurringCreditConsumptionCreate, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         *
          * @summary Stop a recurring credit consumption
          * @param {CreditsApiStopRecurringConsumptionRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -5823,7 +5823,7 @@ export const CreditsApiFactory = function (configuration?: Configuration, basePa
             return localVarFp.stopRecurringConsumption(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         *
          * @summary Top up credits
          * @param {CreditsApiTopUpCreditsPostRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -5842,7 +5842,7 @@ export const CreditsApiFactory = function (configuration?: Configuration, basePa
  */
 export interface CreditsApiAutoRenewalPostRequest {
     /**
-     * 
+     *
      * @type {CreditAutoRenewalUpdate}
      * @memberof CreditsApiAutoRenewalPost
      */
@@ -5870,7 +5870,7 @@ export interface CreditsApiCanConsumeCreditsRequest {
     readonly quantity: number
 
     /**
-     * 
+     *
      * @type {LegacyCanConsumeOpts}
      * @memberof CreditsApiCanConsumeCredits
      */
@@ -5891,7 +5891,7 @@ export interface CreditsApiCanConsumeRecurringCreditsRequest {
     readonly type: RecurringCreditConsumptionType
 
     /**
-     * 
+     *
      * @type {LegacyCanConsumeOpts}
      * @memberof CreditsApiCanConsumeRecurringCredits
      */
@@ -5905,7 +5905,7 @@ export interface CreditsApiCanConsumeRecurringCreditsRequest {
  */
 export interface CreditsApiCreditConsumptionPostRequest {
     /**
-     * 
+     *
      * @type {CreditConsumptionPostRequest}
      * @memberof CreditsApiCreditConsumptionPost
      */
@@ -5926,35 +5926,35 @@ export interface CreditsApiCreditGainsGetRequest {
     readonly customerId?: string
 
     /**
-     * 
+     *
      * @type {number}
      * @memberof CreditsApiCreditGainsGet
      */
     readonly count?: number
 
     /**
-     * 
+     *
      * @type {string}
      * @memberof CreditsApiCreditGainsGet
      */
     readonly cursor?: string
 
     /**
-     * 
+     *
      * @type {Array<CreditGainType>}
      * @memberof CreditsApiCreditGainsGet
      */
     readonly type?: Array<CreditGainType>
 
     /**
-     * 
+     *
      * @type {DateRange}
      * @memberof CreditsApiCreditGainsGet
      */
     readonly createdAt?: DateRange
 
     /**
-     * 
+     *
      * @type {CreditGainStatus}
      * @memberof CreditsApiCreditGainsGet
      */
@@ -5975,7 +5975,7 @@ export interface CreditsApiCreditGainsGetRequest {
  */
 export interface CreditsApiCreditGainsPostRequest {
     /**
-     * 
+     *
      * @type {CreditGainCreate}
      * @memberof CreditsApiCreditGainsPost
      */
@@ -6003,42 +6003,42 @@ export interface CreditsApiCreditTxsGetRequest {
     readonly customerId?: string
 
     /**
-     * 
+     *
      * @type {number}
      * @memberof CreditsApiCreditTxsGet
      */
     readonly count?: number
 
     /**
-     * 
+     *
      * @type {string}
      * @memberof CreditsApiCreditTxsGet
      */
     readonly cursor?: string
 
     /**
-     * 
+     *
      * @type {Array<CreditBalanceEffectType>}
      * @memberof CreditsApiCreditTxsGet
      */
     readonly type?: Array<CreditBalanceEffectType>
 
     /**
-     * 
+     *
      * @type {'gain' | 'consume'}
      * @memberof CreditsApiCreditTxsGet
      */
     readonly effectType?: 'gain' | 'consume'
 
     /**
-     * 
+     *
      * @type {Array<string>}
      * @memberof CreditsApiCreditTxsGet
      */
     readonly id?: Array<string>
 
     /**
-     * 
+     *
      * @type {DateRange}
      * @memberof CreditsApiCreditTxsGet
      */
@@ -6080,7 +6080,7 @@ export interface CreditsApiCreditsCustomerGetRequest {
  */
 export interface CreditsApiCreditsCustomerMigrateRequest {
     /**
-     * 
+     *
      * @type {CreditCustomerMigrate}
      * @memberof CreditsApiCreditsCustomerMigrate
      */
@@ -6094,7 +6094,7 @@ export interface CreditsApiCreditsCustomerMigrateRequest {
  */
 export interface CreditsApiCreditsCustomerPostRequest {
     /**
-     * 
+     *
      * @type {CreditCustomerPost}
      * @memberof CreditsApiCreditsCustomerPost
      */
@@ -6108,7 +6108,7 @@ export interface CreditsApiCreditsCustomerPostRequest {
  */
 export interface CreditsApiCreditsPreferencesGetRequest {
     /**
-     * 
+     *
      * @type {string}
      * @memberof CreditsApiCreditsPreferencesGet
      */
@@ -6122,7 +6122,7 @@ export interface CreditsApiCreditsPreferencesGetRequest {
  */
 export interface CreditsApiCreditsPreferencesPostRequest {
     /**
-     * 
+     *
      * @type {CreditsPreferencesPostRequest}
      * @memberof CreditsApiCreditsPreferencesPost
      */
@@ -6136,7 +6136,7 @@ export interface CreditsApiCreditsPreferencesPostRequest {
  */
 export interface CreditsApiModifySupportPlanRequest {
     /**
-     * 
+     *
      * @type {ModifySupportPlan}
      * @memberof CreditsApiModifySupportPlan
      */
@@ -6157,21 +6157,21 @@ export interface CreditsApiRecurringCreditsGetRequest {
     readonly teamId?: string
 
     /**
-     * 
+     *
      * @type {number}
      * @memberof CreditsApiRecurringCreditsGet
      */
     readonly count?: number
 
     /**
-     * 
+     *
      * @type {string}
      * @memberof CreditsApiRecurringCreditsGet
      */
     readonly cursor?: string
 
     /**
-     * 
+     *
      * @type {RecurringCreditConsumptionType}
      * @memberof CreditsApiRecurringCreditsGet
      */
@@ -6192,7 +6192,7 @@ export interface CreditsApiRecurringCreditsGetRequest {
  */
 export interface CreditsApiStartRecurringConsumptionRequest {
     /**
-     * 
+     *
      * @type {RecurringCreditConsumptionCreate}
      * @memberof CreditsApiStartRecurringConsumption
      */
@@ -6206,7 +6206,7 @@ export interface CreditsApiStartRecurringConsumptionRequest {
  */
 export interface CreditsApiStopRecurringConsumptionRequest {
     /**
-     * 
+     *
      * @type {string}
      * @memberof CreditsApiStopRecurringConsumption
      */
@@ -6220,7 +6220,7 @@ export interface CreditsApiStopRecurringConsumptionRequest {
  */
 export interface CreditsApiTopUpCreditsPostRequest {
     /**
-     * 
+     *
      * @type {CreditTopUpOptions}
      * @memberof CreditsApiTopUpCreditsPost
      */
@@ -6235,7 +6235,7 @@ export interface CreditsApiTopUpCreditsPostRequest {
  */
 export class CreditsApi extends BaseAPI {
     /**
-     * 
+     *
      * @summary Cancel the current auto-renewal credit sub
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -6246,7 +6246,7 @@ export class CreditsApi extends BaseAPI {
     }
 
     /**
-     * 
+     *
      * @summary Create/update the auto-renewal credit sub
      * @param {CreditsApiAutoRenewalPostRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -6258,7 +6258,7 @@ export class CreditsApi extends BaseAPI {
     }
 
     /**
-     * 
+     *
      * @summary Check if the team can consume the given quantity of credits
      * @param {CreditsApiCanConsumeCreditsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -6270,7 +6270,7 @@ export class CreditsApi extends BaseAPI {
     }
 
     /**
-     * 
+     *
      * @summary Check if the team can consume the given quantity of credits
      * @param {CreditsApiCanConsumeRecurringCreditsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -6282,7 +6282,7 @@ export class CreditsApi extends BaseAPI {
     }
 
     /**
-     * 
+     *
      * @summary Create a new single use credit consumption record
      * @param {CreditsApiCreditConsumptionPostRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -6294,7 +6294,7 @@ export class CreditsApi extends BaseAPI {
     }
 
     /**
-     * 
+     *
      * @summary Get list of gains your team has received
      * @param {CreditsApiCreditGainsGetRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -6306,7 +6306,7 @@ export class CreditsApi extends BaseAPI {
     }
 
     /**
-     * 
+     *
      * @summary Create a new credit gain
      * @param {CreditsApiCreditGainsPostRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -6318,7 +6318,7 @@ export class CreditsApi extends BaseAPI {
     }
 
     /**
-     * 
+     *
      * @summary Get transaction history
      * @param {CreditsApiCreditTxsGetRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -6330,7 +6330,7 @@ export class CreditsApi extends BaseAPI {
     }
 
     /**
-     * 
+     *
      * @summary Get the customer\'s credit details
      * @param {CreditsApiCreditsCustomerGetRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -6342,7 +6342,7 @@ export class CreditsApi extends BaseAPI {
     }
 
     /**
-     * 
+     *
      * @summary Migrate the customer\'s subscription & any other purchased items to the credit system
      * @param {CreditsApiCreditsCustomerMigrateRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -6354,7 +6354,7 @@ export class CreditsApi extends BaseAPI {
     }
 
     /**
-     * 
+     *
      * @summary Create a new customer, or link the team to an existing customer
      * @param {CreditsApiCreditsCustomerPostRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -6366,7 +6366,7 @@ export class CreditsApi extends BaseAPI {
     }
 
     /**
-     * 
+     *
      * @summary Refreshes the customer\'s subscription & any other purchased items
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -6377,7 +6377,7 @@ export class CreditsApi extends BaseAPI {
     }
 
     /**
-     * 
+     *
      * @summary Get metadata for credit consumptions and unlocks
      * @param {CreditsApiCreditsPreferencesGetRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -6389,7 +6389,7 @@ export class CreditsApi extends BaseAPI {
     }
 
     /**
-     * 
+     *
      * @summary Get the system credit preferences
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -6400,7 +6400,7 @@ export class CreditsApi extends BaseAPI {
     }
 
     /**
-     * 
+     *
      * @summary Updates the given credit preferences
      * @param {CreditsApiCreditsPreferencesPostRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -6412,7 +6412,7 @@ export class CreditsApi extends BaseAPI {
     }
 
     /**
-     * 
+     *
      * @summary Create/update/cancel the support plan
      * @param {CreditsApiModifySupportPlanRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -6424,7 +6424,7 @@ export class CreditsApi extends BaseAPI {
     }
 
     /**
-     * 
+     *
      * @summary Get recurring credit consumptions
      * @param {CreditsApiRecurringCreditsGetRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -6436,7 +6436,7 @@ export class CreditsApi extends BaseAPI {
     }
 
     /**
-     * 
+     *
      * @summary Create a new recurring credit consumption record
      * @param {CreditsApiStartRecurringConsumptionRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -6448,7 +6448,7 @@ export class CreditsApi extends BaseAPI {
     }
 
     /**
-     * 
+     *
      * @summary Stop a recurring credit consumption
      * @param {CreditsApiStopRecurringConsumptionRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -6460,7 +6460,7 @@ export class CreditsApi extends BaseAPI {
     }
 
     /**
-     * 
+     *
      * @summary Top up credits
      * @param {CreditsApiTopUpCreditsPostRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -6480,7 +6480,7 @@ export class CreditsApi extends BaseAPI {
 export const ProductsApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
-         * 
+         *
          * @summary Fetch All Available Products
          * @param {string} [region] The region to filter by
          * @param {*} [options] Override http request option.
@@ -6508,7 +6508,7 @@ export const ProductsApiAxiosParamCreator = function (configuration?: Configurat
             }
 
 
-    
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
@@ -6519,10 +6519,10 @@ export const ProductsApiAxiosParamCreator = function (configuration?: Configurat
             };
         },
         /**
-         * 
+         *
          * @summary Update a product\'s properties
-         * @param {string} id 
-         * @param {ProductUpdate} [productUpdate] 
+         * @param {string} id
+         * @param {ProductUpdate} [productUpdate]
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -6547,7 +6547,7 @@ export const ProductsApiAxiosParamCreator = function (configuration?: Configurat
             await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["ADMIN_PANEL_ACCESS"], configuration)
 
 
-    
+
             localVarHeaderParameter['Content-Type'] = 'application/json';
 
             setSearchParams(localVarUrlObj, localVarQueryParameter);
@@ -6561,9 +6561,9 @@ export const ProductsApiAxiosParamCreator = function (configuration?: Configurat
             };
         },
         /**
-         * 
+         *
          * @summary Create a new product
-         * @param {ProductCreate} [productCreate] 
+         * @param {ProductCreate} [productCreate]
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -6585,7 +6585,7 @@ export const ProductsApiAxiosParamCreator = function (configuration?: Configurat
             await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["ADMIN_PANEL_ACCESS"], configuration)
 
 
-    
+
             localVarHeaderParameter['Content-Type'] = 'application/json';
 
             setSearchParams(localVarUrlObj, localVarQueryParameter);
@@ -6609,7 +6609,7 @@ export const ProductsApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = ProductsApiAxiosParamCreator(configuration)
     return {
         /**
-         * 
+         *
          * @summary Fetch All Available Products
          * @param {string} [region] The region to filter by
          * @param {*} [options] Override http request option.
@@ -6620,10 +6620,10 @@ export const ProductsApiFp = function(configuration?: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
-         * 
+         *
          * @summary Update a product\'s properties
-         * @param {string} id 
-         * @param {ProductUpdate} [productUpdate] 
+         * @param {string} id
+         * @param {ProductUpdate} [productUpdate]
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -6632,9 +6632,9 @@ export const ProductsApiFp = function(configuration?: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
-         * 
+         *
          * @summary Create a new product
-         * @param {ProductCreate} [productCreate] 
+         * @param {ProductCreate} [productCreate]
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -6653,7 +6653,7 @@ export const ProductsApiFactory = function (configuration?: Configuration, baseP
     const localVarFp = ProductsApiFp(configuration)
     return {
         /**
-         * 
+         *
          * @summary Fetch All Available Products
          * @param {ProductsApiProductsGetRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -6663,7 +6663,7 @@ export const ProductsApiFactory = function (configuration?: Configuration, baseP
             return localVarFp.productsGet(requestParameters.region, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         *
          * @summary Update a product\'s properties
          * @param {ProductsApiProductsPatchRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -6673,7 +6673,7 @@ export const ProductsApiFactory = function (configuration?: Configuration, baseP
             return localVarFp.productsPatch(requestParameters.id, requestParameters.productUpdate, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         *
          * @summary Create a new product
          * @param {ProductsApiProductsPostRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -6706,14 +6706,14 @@ export interface ProductsApiProductsGetRequest {
  */
 export interface ProductsApiProductsPatchRequest {
     /**
-     * 
+     *
      * @type {string}
      * @memberof ProductsApiProductsPatch
      */
     readonly id: string
 
     /**
-     * 
+     *
      * @type {ProductUpdate}
      * @memberof ProductsApiProductsPatch
      */
@@ -6727,7 +6727,7 @@ export interface ProductsApiProductsPatchRequest {
  */
 export interface ProductsApiProductsPostRequest {
     /**
-     * 
+     *
      * @type {ProductCreate}
      * @memberof ProductsApiProductsPost
      */
@@ -6742,7 +6742,7 @@ export interface ProductsApiProductsPostRequest {
  */
 export class ProductsApi extends BaseAPI {
     /**
-     * 
+     *
      * @summary Fetch All Available Products
      * @param {ProductsApiProductsGetRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -6754,7 +6754,7 @@ export class ProductsApi extends BaseAPI {
     }
 
     /**
-     * 
+     *
      * @summary Update a product\'s properties
      * @param {ProductsApiProductsPatchRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -6766,7 +6766,7 @@ export class ProductsApi extends BaseAPI {
     }
 
     /**
-     * 
+     *
      * @summary Create a new product
      * @param {ProductsApiProductsPostRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -6786,8 +6786,8 @@ export class ProductsApi extends BaseAPI {
 export const ReferralsApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
-         * 
-         * @param {string} referralCode 
+         *
+         * @param {string} referralCode
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -6815,7 +6815,7 @@ export const ReferralsApiAxiosParamCreator = function (configuration?: Configura
             }
 
 
-    
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
@@ -6826,8 +6826,8 @@ export const ReferralsApiAxiosParamCreator = function (configuration?: Configura
             };
         },
         /**
-         * 
-         * @param {string} referralCode 
+         *
+         * @param {string} referralCode
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -6855,7 +6855,7 @@ export const ReferralsApiAxiosParamCreator = function (configuration?: Configura
             }
 
 
-    
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
@@ -6866,7 +6866,7 @@ export const ReferralsApiAxiosParamCreator = function (configuration?: Configura
             };
         },
         /**
-         * 
+         *
          * @param {number} [page] The page for the cursor
          * @param {number} [count] The numbers of items to return
          * @param {Array<string>} [id] The array of referralCodes to be fetched
@@ -6913,7 +6913,7 @@ export const ReferralsApiAxiosParamCreator = function (configuration?: Configura
             }
 
 
-    
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
@@ -6924,8 +6924,8 @@ export const ReferralsApiAxiosParamCreator = function (configuration?: Configura
             };
         },
         /**
-         * 
-         * @param {PartnerReferralCreateOptions} [partnerReferralCreateOptions] 
+         *
+         * @param {PartnerReferralCreateOptions} [partnerReferralCreateOptions]
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -6947,7 +6947,7 @@ export const ReferralsApiAxiosParamCreator = function (configuration?: Configura
             await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["PARTNER_ADMIN_PANEL_ACCESS", "ADMIN_PANEL_ACCESS"], configuration)
 
 
-    
+
             localVarHeaderParameter['Content-Type'] = 'application/json';
 
             setSearchParams(localVarUrlObj, localVarQueryParameter);
@@ -6971,8 +6971,8 @@ export const ReferralsApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = ReferralsApiAxiosParamCreator(configuration)
     return {
         /**
-         * 
-         * @param {string} referralCode 
+         *
+         * @param {string} referralCode
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -6981,8 +6981,8 @@ export const ReferralsApiFp = function(configuration?: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
-         * 
-         * @param {string} referralCode 
+         *
+         * @param {string} referralCode
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -6991,7 +6991,7 @@ export const ReferralsApiFp = function(configuration?: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
-         * 
+         *
          * @param {number} [page] The page for the cursor
          * @param {number} [count] The numbers of items to return
          * @param {Array<string>} [id] The array of referralCodes to be fetched
@@ -7005,8 +7005,8 @@ export const ReferralsApiFp = function(configuration?: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
-         * 
-         * @param {PartnerReferralCreateOptions} [partnerReferralCreateOptions] 
+         *
+         * @param {PartnerReferralCreateOptions} [partnerReferralCreateOptions]
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -7025,7 +7025,7 @@ export const ReferralsApiFactory = function (configuration?: Configuration, base
     const localVarFp = ReferralsApiFp(configuration)
     return {
         /**
-         * 
+         *
          * @param {ReferralsApiGetPartnerRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -7034,7 +7034,7 @@ export const ReferralsApiFactory = function (configuration?: Configuration, base
             return localVarFp.getPartner(requestParameters.referralCode, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         *
          * @param {ReferralsApiPartnerReferralsDeleteRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -7043,7 +7043,7 @@ export const ReferralsApiFactory = function (configuration?: Configuration, base
             return localVarFp.partnerReferralsDelete(requestParameters.referralCode, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         *
          * @param {ReferralsApiPartnerReferralsGetRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -7052,7 +7052,7 @@ export const ReferralsApiFactory = function (configuration?: Configuration, base
             return localVarFp.partnerReferralsGet(requestParameters.page, requestParameters.count, requestParameters.id, requestParameters.q, requestParameters.returnTotal, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         *
          * @param {ReferralsApiPartnerReferralsPostRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -7070,7 +7070,7 @@ export const ReferralsApiFactory = function (configuration?: Configuration, base
  */
 export interface ReferralsApiGetPartnerRequest {
     /**
-     * 
+     *
      * @type {string}
      * @memberof ReferralsApiGetPartner
      */
@@ -7084,7 +7084,7 @@ export interface ReferralsApiGetPartnerRequest {
  */
 export interface ReferralsApiPartnerReferralsDeleteRequest {
     /**
-     * 
+     *
      * @type {string}
      * @memberof ReferralsApiPartnerReferralsDelete
      */
@@ -7140,7 +7140,7 @@ export interface ReferralsApiPartnerReferralsGetRequest {
  */
 export interface ReferralsApiPartnerReferralsPostRequest {
     /**
-     * 
+     *
      * @type {PartnerReferralCreateOptions}
      * @memberof ReferralsApiPartnerReferralsPost
      */
@@ -7155,7 +7155,7 @@ export interface ReferralsApiPartnerReferralsPostRequest {
  */
 export class ReferralsApi extends BaseAPI {
     /**
-     * 
+     *
      * @param {ReferralsApiGetPartnerRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -7166,7 +7166,7 @@ export class ReferralsApi extends BaseAPI {
     }
 
     /**
-     * 
+     *
      * @param {ReferralsApiPartnerReferralsDeleteRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -7177,7 +7177,7 @@ export class ReferralsApi extends BaseAPI {
     }
 
     /**
-     * 
+     *
      * @param {ReferralsApiPartnerReferralsGetRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -7188,7 +7188,7 @@ export class ReferralsApi extends BaseAPI {
     }
 
     /**
-     * 
+     *
      * @param {ReferralsApiPartnerReferralsPostRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -7207,9 +7207,9 @@ export class ReferralsApi extends BaseAPI {
 export const StripeApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
-         * 
+         *
          * @summary Create a new billing portal session to manage payment details
-         * @param {string} returnUrl 
+         * @param {string} returnUrl
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -7237,7 +7237,7 @@ export const StripeApiAxiosParamCreator = function (configuration?: Configuratio
             }
 
 
-    
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
@@ -7248,9 +7248,9 @@ export const StripeApiAxiosParamCreator = function (configuration?: Configuratio
             };
         },
         /**
-         * 
+         *
          * @summary Create a checkout session
-         * @param {CheckoutCreateOptions} [checkoutCreateOptions] 
+         * @param {CheckoutCreateOptions} [checkoutCreateOptions]
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -7272,7 +7272,7 @@ export const StripeApiAxiosParamCreator = function (configuration?: Configuratio
             await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["PAYMENTS_UPDATE"], configuration)
 
 
-    
+
             localVarHeaderParameter['Content-Type'] = 'application/json';
 
             setSearchParams(localVarUrlObj, localVarQueryParameter);
@@ -7286,10 +7286,10 @@ export const StripeApiAxiosParamCreator = function (configuration?: Configuratio
             };
         },
         /**
-         * 
+         *
          * @summary Receive stripe hook
-         * @param {string} secret 
-         * @param {{ [key: string]: any; }} [requestBody] 
+         * @param {string} secret
+         * @param {{ [key: string]: any; }} [requestBody]
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -7310,7 +7310,7 @@ export const StripeApiAxiosParamCreator = function (configuration?: Configuratio
             const localVarQueryParameter = {} as any;
 
 
-    
+
             localVarHeaderParameter['Content-Type'] = 'application/json';
 
             setSearchParams(localVarUrlObj, localVarQueryParameter);
@@ -7324,7 +7324,7 @@ export const StripeApiAxiosParamCreator = function (configuration?: Configuratio
             };
         },
         /**
-         * 
+         *
          * @summary Create a payment intent
          * @param {string} [stripeCustomerId] The stripe customer ID
          * @param {*} [options] Override http request option.
@@ -7352,7 +7352,7 @@ export const StripeApiAxiosParamCreator = function (configuration?: Configuratio
             }
 
 
-    
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
@@ -7365,8 +7365,8 @@ export const StripeApiAxiosParamCreator = function (configuration?: Configuratio
         /**
          * Use results from here to attach prices to products.
          * @summary Get prices from Stripe
-         * @param {number} [count] 
-         * @param {string} [cursor] 
+         * @param {number} [count]
+         * @param {string} [cursor]
          * @param {string} [q] Filter by stripe query. See https://stripe.com/docs/search#search-query-language
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -7401,7 +7401,7 @@ export const StripeApiAxiosParamCreator = function (configuration?: Configuratio
             }
 
 
-    
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
@@ -7422,9 +7422,9 @@ export const StripeApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = StripeApiAxiosParamCreator(configuration)
     return {
         /**
-         * 
+         *
          * @summary Create a new billing portal session to manage payment details
-         * @param {string} returnUrl 
+         * @param {string} returnUrl
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -7433,9 +7433,9 @@ export const StripeApiFp = function(configuration?: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
-         * 
+         *
          * @summary Create a checkout session
-         * @param {CheckoutCreateOptions} [checkoutCreateOptions] 
+         * @param {CheckoutCreateOptions} [checkoutCreateOptions]
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -7444,10 +7444,10 @@ export const StripeApiFp = function(configuration?: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
-         * 
+         *
          * @summary Receive stripe hook
-         * @param {string} secret 
-         * @param {{ [key: string]: any; }} [requestBody] 
+         * @param {string} secret
+         * @param {{ [key: string]: any; }} [requestBody]
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -7456,7 +7456,7 @@ export const StripeApiFp = function(configuration?: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
-         * 
+         *
          * @summary Create a payment intent
          * @param {string} [stripeCustomerId] The stripe customer ID
          * @param {*} [options] Override http request option.
@@ -7469,8 +7469,8 @@ export const StripeApiFp = function(configuration?: Configuration) {
         /**
          * Use results from here to attach prices to products.
          * @summary Get prices from Stripe
-         * @param {number} [count] 
-         * @param {string} [cursor] 
+         * @param {number} [count]
+         * @param {string} [cursor]
          * @param {string} [q] Filter by stripe query. See https://stripe.com/docs/search#search-query-language
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -7490,7 +7490,7 @@ export const StripeApiFactory = function (configuration?: Configuration, basePat
     const localVarFp = StripeApiFp(configuration)
     return {
         /**
-         * 
+         *
          * @summary Create a new billing portal session to manage payment details
          * @param {StripeApiBillingSessionPostRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -7500,7 +7500,7 @@ export const StripeApiFactory = function (configuration?: Configuration, basePat
             return localVarFp.billingSessionPost(requestParameters.returnUrl, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         *
          * @summary Create a checkout session
          * @param {StripeApiStripeCheckoutRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -7510,7 +7510,7 @@ export const StripeApiFactory = function (configuration?: Configuration, basePat
             return localVarFp.stripeCheckout(requestParameters.checkoutCreateOptions, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         *
          * @summary Receive stripe hook
          * @param {StripeApiStripeHookRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -7520,7 +7520,7 @@ export const StripeApiFactory = function (configuration?: Configuration, basePat
             return localVarFp.stripeHook(requestParameters.secret, requestParameters.requestBody, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         *
          * @summary Create a payment intent
          * @param {StripeApiStripePaymentIntentsGetRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -7549,7 +7549,7 @@ export const StripeApiFactory = function (configuration?: Configuration, basePat
  */
 export interface StripeApiBillingSessionPostRequest {
     /**
-     * 
+     *
      * @type {string}
      * @memberof StripeApiBillingSessionPost
      */
@@ -7563,7 +7563,7 @@ export interface StripeApiBillingSessionPostRequest {
  */
 export interface StripeApiStripeCheckoutRequest {
     /**
-     * 
+     *
      * @type {CheckoutCreateOptions}
      * @memberof StripeApiStripeCheckout
      */
@@ -7577,14 +7577,14 @@ export interface StripeApiStripeCheckoutRequest {
  */
 export interface StripeApiStripeHookRequest {
     /**
-     * 
+     *
      * @type {string}
      * @memberof StripeApiStripeHook
      */
     readonly secret: string
 
     /**
-     * 
+     *
      * @type {{ [key: string]: any; }}
      * @memberof StripeApiStripeHook
      */
@@ -7612,14 +7612,14 @@ export interface StripeApiStripePaymentIntentsGetRequest {
  */
 export interface StripeApiStripePricesGetRequest {
     /**
-     * 
+     *
      * @type {number}
      * @memberof StripeApiStripePricesGet
      */
     readonly count?: number
 
     /**
-     * 
+     *
      * @type {string}
      * @memberof StripeApiStripePricesGet
      */
@@ -7641,7 +7641,7 @@ export interface StripeApiStripePricesGetRequest {
  */
 export class StripeApi extends BaseAPI {
     /**
-     * 
+     *
      * @summary Create a new billing portal session to manage payment details
      * @param {StripeApiBillingSessionPostRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -7653,7 +7653,7 @@ export class StripeApi extends BaseAPI {
     }
 
     /**
-     * 
+     *
      * @summary Create a checkout session
      * @param {StripeApiStripeCheckoutRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -7665,7 +7665,7 @@ export class StripeApi extends BaseAPI {
     }
 
     /**
-     * 
+     *
      * @summary Receive stripe hook
      * @param {StripeApiStripeHookRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -7677,7 +7677,7 @@ export class StripeApi extends BaseAPI {
     }
 
     /**
-     * 
+     *
      * @summary Create a payment intent
      * @param {StripeApiStripePaymentIntentsGetRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -7709,11 +7709,11 @@ export class StripeApi extends BaseAPI {
 export const SubscriptionsApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
-         * 
+         *
          * @summary Get the list of subscriptions
          * @param {string} [teamId] Filter by teamId
-         * @param {number} [count] 
-         * @param {number} [page] 
+         * @param {number} [count]
+         * @param {number} [page]
          * @param {string} [q] Search by subscription ID, team ID or product name
          * @param {boolean} [includeFreeTier] Include free tier subscriptions
          * @param {'startDate' | 'endOrNextRenewalDate'} [sortBy] Sort by the given field
@@ -7796,7 +7796,7 @@ export const SubscriptionsApiAxiosParamCreator = function (configuration?: Confi
             }
 
 
-    
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
@@ -7807,10 +7807,10 @@ export const SubscriptionsApiAxiosParamCreator = function (configuration?: Confi
             };
         },
         /**
-         * 
+         *
          * @summary Update a subscription\'s properties
-         * @param {string} id 
-         * @param {SubscriptionUpdate} [subscriptionUpdate] 
+         * @param {string} id
+         * @param {SubscriptionUpdate} [subscriptionUpdate]
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -7835,7 +7835,7 @@ export const SubscriptionsApiAxiosParamCreator = function (configuration?: Confi
             await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["PAYMENTS_UPDATE", "PARTNER_ADMIN_PANEL_ACCESS"], configuration)
 
 
-    
+
             localVarHeaderParameter['Content-Type'] = 'application/json';
 
             setSearchParams(localVarUrlObj, localVarQueryParameter);
@@ -7851,7 +7851,7 @@ export const SubscriptionsApiAxiosParamCreator = function (configuration?: Confi
         /**
          * Subscription created here does not get counted in revenue. Not recommended, create a payment link instead.
          * @summary Manually create a subscription for the team
-         * @param {SubscriptionCreate} [subscriptionCreate] 
+         * @param {SubscriptionCreate} [subscriptionCreate]
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -7873,7 +7873,7 @@ export const SubscriptionsApiAxiosParamCreator = function (configuration?: Confi
             await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["ADMIN_PANEL_ACCESS", "PARTNER_ADMIN_PANEL_ACCESS"], configuration)
 
 
-    
+
             localVarHeaderParameter['Content-Type'] = 'application/json';
 
             setSearchParams(localVarUrlObj, localVarQueryParameter);
@@ -7897,11 +7897,11 @@ export const SubscriptionsApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = SubscriptionsApiAxiosParamCreator(configuration)
     return {
         /**
-         * 
+         *
          * @summary Get the list of subscriptions
          * @param {string} [teamId] Filter by teamId
-         * @param {number} [count] 
-         * @param {number} [page] 
+         * @param {number} [count]
+         * @param {number} [page]
          * @param {string} [q] Search by subscription ID, team ID or product name
          * @param {boolean} [includeFreeTier] Include free tier subscriptions
          * @param {'startDate' | 'endOrNextRenewalDate'} [sortBy] Sort by the given field
@@ -7919,10 +7919,10 @@ export const SubscriptionsApiFp = function(configuration?: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
-         * 
+         *
          * @summary Update a subscription\'s properties
-         * @param {string} id 
-         * @param {SubscriptionUpdate} [subscriptionUpdate] 
+         * @param {string} id
+         * @param {SubscriptionUpdate} [subscriptionUpdate]
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -7933,7 +7933,7 @@ export const SubscriptionsApiFp = function(configuration?: Configuration) {
         /**
          * Subscription created here does not get counted in revenue. Not recommended, create a payment link instead.
          * @summary Manually create a subscription for the team
-         * @param {SubscriptionCreate} [subscriptionCreate] 
+         * @param {SubscriptionCreate} [subscriptionCreate]
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -7952,7 +7952,7 @@ export const SubscriptionsApiFactory = function (configuration?: Configuration, 
     const localVarFp = SubscriptionsApiFp(configuration)
     return {
         /**
-         * 
+         *
          * @summary Get the list of subscriptions
          * @param {SubscriptionsApiSubscriptionsGetRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -7962,7 +7962,7 @@ export const SubscriptionsApiFactory = function (configuration?: Configuration, 
             return localVarFp.subscriptionsGet(requestParameters.teamId, requestParameters.count, requestParameters.page, requestParameters.q, requestParameters.includeFreeTier, requestParameters.sortBy, requestParameters.sortDirection, requestParameters.endsOrRenewsAfter, requestParameters.endsOrRenewsBefore, requestParameters.stripeOnly, requestParameters.product, requestParameters.returnTotal, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         *
          * @summary Update a subscription\'s properties
          * @param {SubscriptionsApiSubscriptionsPatchRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -7998,14 +7998,14 @@ export interface SubscriptionsApiSubscriptionsGetRequest {
     readonly teamId?: string
 
     /**
-     * 
+     *
      * @type {number}
      * @memberof SubscriptionsApiSubscriptionsGet
      */
     readonly count?: number
 
     /**
-     * 
+     *
      * @type {number}
      * @memberof SubscriptionsApiSubscriptionsGet
      */
@@ -8082,14 +8082,14 @@ export interface SubscriptionsApiSubscriptionsGetRequest {
  */
 export interface SubscriptionsApiSubscriptionsPatchRequest {
     /**
-     * 
+     *
      * @type {string}
      * @memberof SubscriptionsApiSubscriptionsPatch
      */
     readonly id: string
 
     /**
-     * 
+     *
      * @type {SubscriptionUpdate}
      * @memberof SubscriptionsApiSubscriptionsPatch
      */
@@ -8103,7 +8103,7 @@ export interface SubscriptionsApiSubscriptionsPatchRequest {
  */
 export interface SubscriptionsApiSubscriptionsPostRequest {
     /**
-     * 
+     *
      * @type {SubscriptionCreate}
      * @memberof SubscriptionsApiSubscriptionsPost
      */
@@ -8118,7 +8118,7 @@ export interface SubscriptionsApiSubscriptionsPostRequest {
  */
 export class SubscriptionsApi extends BaseAPI {
     /**
-     * 
+     *
      * @summary Get the list of subscriptions
      * @param {SubscriptionsApiSubscriptionsGetRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -8130,7 +8130,7 @@ export class SubscriptionsApi extends BaseAPI {
     }
 
     /**
-     * 
+     *
      * @summary Update a subscription\'s properties
      * @param {SubscriptionsApiSubscriptionsPatchRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -8164,7 +8164,7 @@ export const TeamDetailApiAxiosParamCreator = function (configuration?: Configur
         /**
          * If the account is an independent account, the access details for the account are returned. Otherwise, the team\'s access details are returned.
          * @summary Get the access details for the given account
-         * @param {string} accountId 
+         * @param {string} accountId
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -8189,7 +8189,7 @@ export const TeamDetailApiAxiosParamCreator = function (configuration?: Configur
             await setOAuthToObject(localVarHeaderParameter, "chatdaddy", [], configuration)
 
 
-    
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
@@ -8200,7 +8200,7 @@ export const TeamDetailApiAxiosParamCreator = function (configuration?: Configur
             };
         },
         /**
-         * 
+         *
          * @summary Get the team\'s subscription and payment details
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -8223,7 +8223,7 @@ export const TeamDetailApiAxiosParamCreator = function (configuration?: Configur
             await setOAuthToObject(localVarHeaderParameter, "chatdaddy", [], configuration)
 
 
-    
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
@@ -8234,9 +8234,9 @@ export const TeamDetailApiAxiosParamCreator = function (configuration?: Configur
             };
         },
         /**
-         * 
+         *
          * @summary Update the team\'s subscription and payment details
-         * @param {TeamDetailUpdate} [teamDetailUpdate] 
+         * @param {TeamDetailUpdate} [teamDetailUpdate]
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -8258,7 +8258,7 @@ export const TeamDetailApiAxiosParamCreator = function (configuration?: Configur
             await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["PAYMENTS_UPDATE"], configuration)
 
 
-    
+
             localVarHeaderParameter['Content-Type'] = 'application/json';
 
             setSearchParams(localVarUrlObj, localVarQueryParameter);
@@ -8272,9 +8272,9 @@ export const TeamDetailApiAxiosParamCreator = function (configuration?: Configur
             };
         },
         /**
-         * 
+         *
          * @summary Initialise a team with the free tier
-         * @param {TeamDetailCreate} [teamDetailCreate] 
+         * @param {TeamDetailCreate} [teamDetailCreate]
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -8296,7 +8296,7 @@ export const TeamDetailApiAxiosParamCreator = function (configuration?: Configur
             await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["ADMIN_PANEL_ACCESS"], configuration)
 
 
-    
+
             localVarHeaderParameter['Content-Type'] = 'application/json';
 
             setSearchParams(localVarUrlObj, localVarQueryParameter);
@@ -8310,7 +8310,7 @@ export const TeamDetailApiAxiosParamCreator = function (configuration?: Configur
             };
         },
         /**
-         * Fetches the list of active subscriptions/purchases from stripe and calculates what the current subscriptions should be. This route can be called to refresh the subscription after checkout to ensure the subscription is retreived. 
+         * Fetches the list of active subscriptions/purchases from stripe and calculates what the current subscriptions should be. This route can be called to refresh the subscription after checkout to ensure the subscription is retreived.
          * @summary Refreshes the access given by subscriptions
          * @param {boolean} [refreshUsage] Refreshes usage statistics as well
          * @param {*} [options] Override http request option.
@@ -8338,7 +8338,7 @@ export const TeamDetailApiAxiosParamCreator = function (configuration?: Configur
             }
 
 
-    
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
@@ -8361,7 +8361,7 @@ export const TeamDetailApiFp = function(configuration?: Configuration) {
         /**
          * If the account is an independent account, the access details for the account are returned. Otherwise, the team\'s access details are returned.
          * @summary Get the access details for the given account
-         * @param {string} accountId 
+         * @param {string} accountId
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -8370,7 +8370,7 @@ export const TeamDetailApiFp = function(configuration?: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
-         * 
+         *
          * @summary Get the team\'s subscription and payment details
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -8380,9 +8380,9 @@ export const TeamDetailApiFp = function(configuration?: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
-         * 
+         *
          * @summary Update the team\'s subscription and payment details
-         * @param {TeamDetailUpdate} [teamDetailUpdate] 
+         * @param {TeamDetailUpdate} [teamDetailUpdate]
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -8391,9 +8391,9 @@ export const TeamDetailApiFp = function(configuration?: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
-         * 
+         *
          * @summary Initialise a team with the free tier
-         * @param {TeamDetailCreate} [teamDetailCreate] 
+         * @param {TeamDetailCreate} [teamDetailCreate]
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -8402,7 +8402,7 @@ export const TeamDetailApiFp = function(configuration?: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
-         * Fetches the list of active subscriptions/purchases from stripe and calculates what the current subscriptions should be. This route can be called to refresh the subscription after checkout to ensure the subscription is retreived. 
+         * Fetches the list of active subscriptions/purchases from stripe and calculates what the current subscriptions should be. This route can be called to refresh the subscription after checkout to ensure the subscription is retreived.
          * @summary Refreshes the access given by subscriptions
          * @param {boolean} [refreshUsage] Refreshes usage statistics as well
          * @param {*} [options] Override http request option.
@@ -8433,7 +8433,7 @@ export const TeamDetailApiFactory = function (configuration?: Configuration, bas
             return localVarFp.teamDetailAccountAccessGet(requestParameters.accountId, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         *
          * @summary Get the team\'s subscription and payment details
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -8442,7 +8442,7 @@ export const TeamDetailApiFactory = function (configuration?: Configuration, bas
             return localVarFp.teamDetailGet(options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         *
          * @summary Update the team\'s subscription and payment details
          * @param {TeamDetailApiTeamDetailPatchRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -8452,7 +8452,7 @@ export const TeamDetailApiFactory = function (configuration?: Configuration, bas
             return localVarFp.teamDetailPatch(requestParameters.teamDetailUpdate, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         *
          * @summary Initialise a team with the free tier
          * @param {TeamDetailApiTeamDetailPostRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -8462,7 +8462,7 @@ export const TeamDetailApiFactory = function (configuration?: Configuration, bas
             return localVarFp.teamDetailPost(requestParameters.teamDetailCreate, options).then((request) => request(axios, basePath));
         },
         /**
-         * Fetches the list of active subscriptions/purchases from stripe and calculates what the current subscriptions should be. This route can be called to refresh the subscription after checkout to ensure the subscription is retreived. 
+         * Fetches the list of active subscriptions/purchases from stripe and calculates what the current subscriptions should be. This route can be called to refresh the subscription after checkout to ensure the subscription is retreived.
          * @summary Refreshes the access given by subscriptions
          * @param {TeamDetailApiTeamDetailRefreshAccessRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -8481,7 +8481,7 @@ export const TeamDetailApiFactory = function (configuration?: Configuration, bas
  */
 export interface TeamDetailApiTeamDetailAccountAccessGetRequest {
     /**
-     * 
+     *
      * @type {string}
      * @memberof TeamDetailApiTeamDetailAccountAccessGet
      */
@@ -8495,7 +8495,7 @@ export interface TeamDetailApiTeamDetailAccountAccessGetRequest {
  */
 export interface TeamDetailApiTeamDetailPatchRequest {
     /**
-     * 
+     *
      * @type {TeamDetailUpdate}
      * @memberof TeamDetailApiTeamDetailPatch
      */
@@ -8509,7 +8509,7 @@ export interface TeamDetailApiTeamDetailPatchRequest {
  */
 export interface TeamDetailApiTeamDetailPostRequest {
     /**
-     * 
+     *
      * @type {TeamDetailCreate}
      * @memberof TeamDetailApiTeamDetailPost
      */
@@ -8550,7 +8550,7 @@ export class TeamDetailApi extends BaseAPI {
     }
 
     /**
-     * 
+     *
      * @summary Get the team\'s subscription and payment details
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -8561,7 +8561,7 @@ export class TeamDetailApi extends BaseAPI {
     }
 
     /**
-     * 
+     *
      * @summary Update the team\'s subscription and payment details
      * @param {TeamDetailApiTeamDetailPatchRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -8573,7 +8573,7 @@ export class TeamDetailApi extends BaseAPI {
     }
 
     /**
-     * 
+     *
      * @summary Initialise a team with the free tier
      * @param {TeamDetailApiTeamDetailPostRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -8585,7 +8585,7 @@ export class TeamDetailApi extends BaseAPI {
     }
 
     /**
-     * Fetches the list of active subscriptions/purchases from stripe and calculates what the current subscriptions should be. This route can be called to refresh the subscription after checkout to ensure the subscription is retreived. 
+     * Fetches the list of active subscriptions/purchases from stripe and calculates what the current subscriptions should be. This route can be called to refresh the subscription after checkout to ensure the subscription is retreived.
      * @summary Refreshes the access given by subscriptions
      * @param {TeamDetailApiTeamDetailRefreshAccessRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.

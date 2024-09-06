@@ -1,4 +1,4 @@
-const BASE_PATH = "https://api.chatdaddy.tech/auth".replace(/\/+$/, "");
+const BASE_PATH = `https://${globalThis.BASE_HOST_NAME || 'api.chatdaddy.tech'}/auth`.replace(/\/+$/, "");
 
 /* tslint:disable */
 /* eslint-disable */
@@ -26,13 +26,13 @@ import type { RequestArgs } from '../base';
 import { COLLECTION_FORMATS, BaseAPI, RequiredError } from '../base';
 
 /**
- * 
+ *
  * @export
  * @interface AccountNotificationPreference
  */
 export interface AccountNotificationPreference {
     /**
-     * 
+     *
      * @type {Array<NotificationDestination>}
      * @memberof AccountNotificationPreference
      */
@@ -45,13 +45,13 @@ export interface AccountNotificationPreference {
     'accounts'?: Array<AccountNotificationPreferenceAccountsInner>;
 }
 /**
- * 
+ *
  * @export
  * @interface AccountNotificationPreferenceAccountsInner
  */
 export interface AccountNotificationPreferenceAccountsInner {
     /**
-     * 
+     *
      * @type {string}
      * @memberof AccountNotificationPreferenceAccountsInner
      */
@@ -64,7 +64,7 @@ export interface AccountNotificationPreferenceAccountsInner {
  */
 export interface ActorMetadata {
     /**
-     * 
+     *
      * @type {string}
      * @memberof ActorMetadata
      */
@@ -96,7 +96,7 @@ export const ActorMetadataTypeEnum = {
 export type ActorMetadataTypeEnum = typeof ActorMetadataTypeEnum[keyof typeof ActorMetadataTypeEnum];
 
 /**
- * 
+ *
  * @export
  * @interface AnnouncementButtonAction
  */
@@ -121,7 +121,7 @@ export interface AnnouncementButtonAction {
     'openInNewTab'?: boolean;
 }
 /**
- * 
+ *
  * @export
  * @interface AnnouncementMetadata
  */
@@ -139,25 +139,25 @@ export interface AnnouncementMetadata {
      */
     'partnership'?: string;
     /**
-     * 
+     *
      * @type {string}
      * @memberof AnnouncementMetadata
      */
     'createdAt'?: string;
     /**
-     * 
+     *
      * @type {string}
      * @memberof AnnouncementMetadata
      */
     'updatedAt'?: string;
     /**
-     * 
+     *
      * @type {AnnouncementUser}
      * @memberof AnnouncementMetadata
      */
     'createdBy'?: AnnouncementUser;
     /**
-     * 
+     *
      * @type {AnnouncementUser}
      * @memberof AnnouncementMetadata
      */
@@ -175,19 +175,19 @@ export interface AnnouncementMetadata {
      */
     'title': string;
     /**
-     * 
+     *
      * @type {string}
      * @memberof AnnouncementMetadata
      */
     'publishedAt': string;
     /**
-     * 
+     *
      * @type {string}
      * @memberof AnnouncementMetadata
      */
     'expiresAt'?: string | null;
     /**
-     * 
+     *
      * @type {Array<AnnouncementButtonAction>}
      * @memberof AnnouncementMetadata
      */
@@ -228,13 +228,13 @@ export const AnnouncementMetadataRepeatOptionEnum = {
 export type AnnouncementMetadataRepeatOptionEnum = typeof AnnouncementMetadataRepeatOptionEnum[keyof typeof AnnouncementMetadataRepeatOptionEnum];
 
 /**
- * 
+ *
  * @export
  * @interface AnnouncementPatch
  */
 export interface AnnouncementPatch {
     /**
-     * 
+     *
      * @type {string}
      * @memberof AnnouncementPatch
      */
@@ -252,19 +252,19 @@ export interface AnnouncementPatch {
      */
     'title'?: string;
     /**
-     * 
+     *
      * @type {string}
      * @memberof AnnouncementPatch
      */
     'publishedAt'?: string;
     /**
-     * 
+     *
      * @type {string}
      * @memberof AnnouncementPatch
      */
     'expiresAt'?: string | null;
     /**
-     * 
+     *
      * @type {Array<AnnouncementButtonAction>}
      * @memberof AnnouncementPatch
      */
@@ -305,13 +305,13 @@ export const AnnouncementPatchRepeatOptionEnum = {
 export type AnnouncementPatchRepeatOptionEnum = typeof AnnouncementPatchRepeatOptionEnum[keyof typeof AnnouncementPatchRepeatOptionEnum];
 
 /**
- * 
+ *
  * @export
  * @interface AnnouncementRetrievalResponse
  */
 export interface AnnouncementRetrievalResponse {
     /**
-     * 
+     *
      * @type {Array<AnnouncementMetadata>}
      * @memberof AnnouncementRetrievalResponse
      */
@@ -330,26 +330,26 @@ export interface AnnouncementRetrievalResponse {
     'totalCount'?: number;
 }
 /**
- * 
+ *
  * @export
  * @interface AnnouncementUser
  */
 export interface AnnouncementUser {
     /**
-     * 
+     *
      * @type {string}
      * @memberof AnnouncementUser
      */
     'id': string;
     /**
-     * 
+     *
      * @type {string}
      * @memberof AnnouncementUser
      */
     'fullName': string;
 }
 /**
- * 
+ *
  * @export
  * @interface ApiToken
  */
@@ -361,51 +361,51 @@ export interface ApiToken {
      */
     'reason': string;
     /**
-     * 
+     *
      * @type {string}
      * @memberof ApiToken
      */
     'token': string;
     /**
-     * 
+     *
      * @type {string}
      * @memberof ApiToken
      */
     'createdAt': string;
     /**
-     * 
+     *
      * @type {string}
      * @memberof ApiToken
      */
     'userId': string;
     /**
-     * 
+     *
      * @type {string}
      * @memberof ApiToken
      */
     'teamId': string;
     /**
-     * 
+     *
      * @type {Array<Scope>}
      * @memberof ApiToken
      */
     'scopes': Array<Scope>;
 }
 /**
- * 
+ *
  * @export
  * @interface ApiTokenGet200Response
  */
 export interface ApiTokenGet200Response {
     /**
-     * 
+     *
      * @type {Array<ApiToken>}
      * @memberof ApiTokenGet200Response
      */
     'tokens': Array<ApiToken>;
 }
 /**
- * 
+ *
  * @export
  * @interface ApiTokenPostRequest
  */
@@ -417,20 +417,20 @@ export interface ApiTokenPostRequest {
      */
     'reason': string;
     /**
-     * 
+     *
      * @type {Array<Scope>}
      * @memberof ApiTokenPostRequest
      */
     'scopes': Array<Scope>;
 }
 /**
- * 
+ *
  * @export
  * @interface ApiTokenValidatePostRequest
  */
 export interface ApiTokenValidatePostRequest {
     /**
-     * 
+     *
      * @type {string}
      * @memberof ApiTokenValidatePostRequest
      */
@@ -455,25 +455,25 @@ export interface BoutirTokenRequest {
      */
     'inviteLinkId'?: string;
     /**
-     * 
+     *
      * @type {string}
      * @memberof BoutirTokenRequest
      */
     'type': BoutirTokenRequestTypeEnum;
     /**
-     * 
+     *
      * @type {string}
      * @memberof BoutirTokenRequest
      */
     'username': string;
     /**
-     * 
+     *
      * @type {string}
      * @memberof BoutirTokenRequest
      */
     'password': string;
     /**
-     * 
+     *
      * @type {string}
      * @memberof BoutirTokenRequest
      */
@@ -487,13 +487,13 @@ export const BoutirTokenRequestTypeEnum = {
 export type BoutirTokenRequestTypeEnum = typeof BoutirTokenRequestTypeEnum[keyof typeof BoutirTokenRequestTypeEnum];
 
 /**
- * 
+ *
  * @export
  * @interface ConfirmOtp200Response
  */
 export interface ConfirmOtp200Response {
     /**
-     * 
+     *
      * @type {boolean}
      * @memberof ConfirmOtp200Response
      */
@@ -506,26 +506,26 @@ export interface ConfirmOtp200Response {
 export type EitherRoleOrScopes = EitherRoleOrScopesOneOf | EitherRoleOrScopesOneOf1;
 
 /**
- * 
+ *
  * @export
  * @interface EitherRoleOrScopesOneOf
  */
 export interface EitherRoleOrScopesOneOf {
     /**
-     * 
+     *
      * @type {Array<Scope>}
      * @memberof EitherRoleOrScopesOneOf
      */
     'scopes': Array<Scope>;
 }
 /**
- * 
+ *
  * @export
  * @interface EitherRoleOrScopesOneOf1
  */
 export interface EitherRoleOrScopesOneOf1 {
     /**
-     * 
+     *
      * @type {TeamMemberRole}
      * @memberof EitherRoleOrScopesOneOf1
      */
@@ -534,7 +534,7 @@ export interface EitherRoleOrScopesOneOf1 {
 
 
 /**
- * 
+ *
  * @export
  * @interface ExternalTokenPostResponse
  */
@@ -546,26 +546,26 @@ export interface ExternalTokenPostResponse {
      */
     'created'?: boolean;
     /**
-     * 
+     *
      * @type {string}
      * @memberof ExternalTokenPostResponse
      */
     'access_token': string;
     /**
-     * 
+     *
      * @type {string}
      * @memberof ExternalTokenPostResponse
      */
     'refresh_token'?: string;
     /**
-     * 
+     *
      * @type {string}
      * @memberof ExternalTokenPostResponse
      */
     'refresh_token_expiry'?: string;
 }
 /**
- * 
+ *
  * @export
  * @interface ExternalTokenPostResponseAllOf
  */
@@ -596,19 +596,19 @@ export interface FirebaseTokenRequest {
      */
     'inviteLinkId'?: string;
     /**
-     * 
+     *
      * @type {string}
      * @memberof FirebaseTokenRequest
      */
     'type': FirebaseTokenRequestTypeEnum;
     /**
-     * 
+     *
      * @type {string}
      * @memberof FirebaseTokenRequest
      */
     'idToken': string;
     /**
-     * 
+     *
      * @type {string}
      * @memberof FirebaseTokenRequest
      */
@@ -622,45 +622,45 @@ export const FirebaseTokenRequestTypeEnum = {
 export type FirebaseTokenRequestTypeEnum = typeof FirebaseTokenRequestTypeEnum[keyof typeof FirebaseTokenRequestTypeEnum];
 
 /**
- * 
+ *
  * @export
  * @interface InboxFilterData
  */
 export interface InboxFilterData {
     /**
-     * 
+     *
      * @type {string}
      * @memberof InboxFilterData
      */
     'name': string;
     /**
-     * 
+     *
      * @type {{ [key: string]: any; }}
      * @memberof InboxFilterData
      */
     'filters': { [key: string]: any; };
 }
 /**
- * 
+ *
  * @export
  * @interface InboxFilterName
  */
 export interface InboxFilterName {
     /**
-     * 
+     *
      * @type {string}
      * @memberof InboxFilterName
      */
     'name': string;
 }
 /**
- * 
+ *
  * @export
  * @interface InviteLink
  */
 export interface InviteLink {
     /**
-     * 
+     *
      * @type {string}
      * @memberof InviteLink
      */
@@ -678,13 +678,13 @@ export interface InviteLink {
      */
     'createdBy': string;
     /**
-     * 
+     *
      * @type {string}
      * @memberof InviteLink
      */
     'createdAt': string;
     /**
-     * 
+     *
      * @type {string}
      * @memberof InviteLink
      */
@@ -696,13 +696,13 @@ export interface InviteLink {
      */
     'scopes': Array<Scope>;
     /**
-     * 
+     *
      * @type {TeamMemberRole}
      * @memberof InviteLink
      */
     'role'?: TeamMemberRole;
     /**
-     * 
+     *
      * @type {Team}
      * @memberof InviteLink
      */
@@ -711,7 +711,7 @@ export interface InviteLink {
 
 
 /**
- * 
+ *
  * @export
  * @interface JWT
  */
@@ -723,26 +723,26 @@ export interface JWT {
      */
     'scope': string;
     /**
-     * 
+     *
      * @type {number}
      * @memberof JWT
      */
     'exp': number;
     /**
-     * 
+     *
      * @type {number}
      * @memberof JWT
      */
     'iat': number;
     /**
-     * 
+     *
      * @type {JWTUser}
      * @memberof JWT
      */
     'user': JWTUser;
 }
 /**
- * 
+ *
  * @export
  * @interface JWTUser
  */
@@ -760,25 +760,25 @@ export interface JWTUser {
      */
     'teamId': string;
     /**
-     * 
+     *
      * @type {string}
      * @memberof JWTUser
      */
     'fullName'?: string;
     /**
-     * 
+     *
      * @type {number}
      * @memberof JWTUser
      */
     'phoneNumber'?: number;
     /**
-     * 
+     *
      * @type {string}
      * @memberof JWTUser
      */
     'emailAddress'?: string;
     /**
-     * 
+     *
      * @type {string}
      * @memberof JWTUser
      */
@@ -790,26 +790,26 @@ export interface JWTUser {
      */
     'partnerAdmin'?: string;
     /**
-     * 
+     *
      * @type {ActorMetadata}
      * @memberof JWTUser
      */
     'metadata'?: ActorMetadata;
 }
 /**
- * 
+ *
  * @export
  * @interface NewMessageNotificationPreference
  */
 export interface NewMessageNotificationPreference {
     /**
-     * 
+     *
      * @type {Array<string>}
      * @memberof NewMessageNotificationPreference
      */
     'destinations': Array<NewMessageNotificationPreferenceDestinationsEnum>;
     /**
-     * 
+     *
      * @type {NewMessageNotificationType}
      * @memberof NewMessageNotificationPreference
      */
@@ -829,19 +829,19 @@ export const NewMessageNotificationPreferenceDestinationsEnum = {
 export type NewMessageNotificationPreferenceDestinationsEnum = typeof NewMessageNotificationPreferenceDestinationsEnum[keyof typeof NewMessageNotificationPreferenceDestinationsEnum];
 
 /**
- * 
+ *
  * @export
  * @interface NewMessageNotificationPreferenceAccountsInner
  */
 export interface NewMessageNotificationPreferenceAccountsInner {
     /**
-     * 
+     *
      * @type {string}
      * @memberof NewMessageNotificationPreferenceAccountsInner
      */
     'id': string;
     /**
-     * 
+     *
      * @type {NewMessageNotificationType}
      * @memberof NewMessageNotificationPreferenceAccountsInner
      */
@@ -854,7 +854,7 @@ export interface NewMessageNotificationPreferenceAccountsInner {
 export type NewMessageNotificationType = Array<string> | string;
 
 /**
- * 
+ *
  * @export
  * @enum {string}
  */
@@ -869,7 +869,7 @@ export type NotificationDestination = typeof NotificationDestination[keyof typeo
 
 
 /**
- * 
+ *
  * @export
  * @interface NotificationMiscData
  */
@@ -887,80 +887,80 @@ export interface NotificationMiscData {
      */
     'imgUrl'?: string;
     /**
-     * 
+     *
      * @type {{ [key: string]: any; }}
      * @memberof NotificationMiscData
      */
     'context'?: { [key: string]: any; };
 }
 /**
- * 
+ *
  * @export
  * @interface NotificationPreferences
  */
 export interface NotificationPreferences {
     /**
-     * 
+     *
      * @type {AccountNotificationPreference}
      * @memberof NotificationPreferences
      */
     'accountDisconnected'?: AccountNotificationPreference;
     /**
-     * 
+     *
      * @type {SimpleNotificationPreference}
      * @memberof NotificationPreferences
      */
     'contactAssignedToMe'?: SimpleNotificationPreference;
     /**
-     * 
+     *
      * @type {NewMessageNotificationPreference}
      * @memberof NotificationPreferences
      */
     'newMessage'?: NewMessageNotificationPreference;
     /**
-     * 
+     *
      * @type {SimpleNotificationPreference}
      * @memberof NotificationPreferences
      */
     'teamMemberAdded'?: SimpleNotificationPreference;
     /**
-     * 
+     *
      * @type {SimpleNotificationPreference}
      * @memberof NotificationPreferences
      */
     'trackingAdded'?: SimpleNotificationPreference;
     /**
-     * 
+     *
      * @type {SimpleNotificationPreference}
      * @memberof NotificationPreferences
      */
     'trackingErrored'?: SimpleNotificationPreference;
     /**
-     * 
+     *
      * @type {AccountNotificationPreference}
      * @memberof NotificationPreferences
      */
     'botExternalTemplateStatusUpdated'?: AccountNotificationPreference;
     /**
-     * 
+     *
      * @type {SimpleNotificationPreference}
      * @memberof NotificationPreferences
      */
     'actionExecute'?: SimpleNotificationPreference;
     /**
-     * 
+     *
      * @type {SimpleNotificationPreference}
      * @memberof NotificationPreferences
      */
     'noteMentionsMe'?: SimpleNotificationPreference;
     /**
-     * 
+     *
      * @type {SimpleNotificationPreference}
      * @memberof NotificationPreferences
      */
     'payments'?: SimpleNotificationPreference;
     /**
-     * 
+     *
      * @type {SimpleNotificationPreference}
      * @memberof NotificationPreferences
      */
@@ -979,126 +979,126 @@ export type NotificationResult = boolean | string;
  */
 export interface NotifyModel {
     /**
-     * 
+     *
      * @type {boolean}
      * @memberof NotifyModel
      */
     'whatsapp'?: boolean;
     /**
-     * 
+     *
      * @type {boolean}
      * @memberof NotifyModel
      */
     'email'?: boolean;
     /**
-     * 
+     *
      * @type {boolean}
      * @memberof NotifyModel
      */
     'desktop'?: boolean;
 }
 /**
- * 
+ *
  * @export
  * @interface NotifyRequestWithContent
  */
 export interface NotifyRequestWithContent {
     /**
-     * 
+     *
      * @type {string}
      * @memberof NotifyRequestWithContent
      */
     'title': string;
     /**
-     * 
+     *
      * @type {string}
      * @memberof NotifyRequestWithContent
      */
     'content': string;
     /**
-     * 
+     *
      * @type {NotifyRequestWithContentOverrides}
      * @memberof NotifyRequestWithContent
      */
     'overrides'?: NotifyRequestWithContentOverrides;
     /**
-     * 
+     *
      * @type {{ [key: string]: any; }}
      * @memberof NotifyRequestWithContent
      */
     'parameters'?: { [key: string]: any; };
 }
 /**
- * 
+ *
  * @export
  * @interface NotifyRequestWithContentOverrides
  */
 export interface NotifyRequestWithContentOverrides {
     /**
-     * 
+     *
      * @type {NotifyRequestWithContentOverridesWhatsapp}
      * @memberof NotifyRequestWithContentOverrides
      */
     'whatsapp'?: NotifyRequestWithContentOverridesWhatsapp;
 }
 /**
- * 
+ *
  * @export
  * @interface NotifyRequestWithContentOverridesWhatsapp
  */
 export interface NotifyRequestWithContentOverridesWhatsapp {
     /**
-     * 
+     *
      * @type {string}
      * @memberof NotifyRequestWithContentOverridesWhatsapp
      */
     'botId': string;
 }
 /**
- * 
+ *
  * @export
  * @interface OTP
  */
 export interface OTP {
     /**
-     * 
+     *
      * @type {number}
      * @memberof OTP
      */
     'phoneNumber': number;
     /**
-     * 
+     *
      * @type {number}
      * @memberof OTP
      */
     'otp'?: number;
     /**
-     * 
+     *
      * @type {string}
      * @memberof OTP
      */
     'expiresAt': string;
     /**
-     * 
+     *
      * @type {number}
      * @memberof OTP
      */
     'resendsLeft': number;
 }
 /**
- * 
+ *
  * @export
  * @interface OnboardingStep
  */
 export interface OnboardingStep {
     /**
-     * 
+     *
      * @type {OnboardingStepID}
      * @memberof OnboardingStep
      */
     'id': OnboardingStepID;
     /**
-     * 
+     *
      * @type {string}
      * @memberof OnboardingStep
      */
@@ -1113,7 +1113,7 @@ export interface OnboardingStep {
 
 
 /**
- * 
+ *
  * @export
  * @enum {string}
  */
@@ -1145,37 +1145,37 @@ export type OnboardingStepID = typeof OnboardingStepID[keyof typeof OnboardingSt
 
 
 /**
- * 
+ *
  * @export
  * @interface OptionalWidgetButtonParams
  */
 export interface OptionalWidgetButtonParams {
     /**
-     * 
+     *
      * @type {string}
      * @memberof OptionalWidgetButtonParams
      */
     'buttonIcon'?: OptionalWidgetButtonParamsButtonIconEnum;
     /**
-     * 
+     *
      * @type {string}
      * @memberof OptionalWidgetButtonParams
      */
     'buttonText'?: string;
     /**
-     * 
+     *
      * @type {string}
      * @memberof OptionalWidgetButtonParams
      */
     'buttonBackgroundColor'?: string;
     /**
-     * 
+     *
      * @type {string}
      * @memberof OptionalWidgetButtonParams
      */
     'buttonTextAndIconColor'?: string;
     /**
-     * 
+     *
      * @type {string}
      * @memberof OptionalWidgetButtonParams
      */
@@ -1198,118 +1198,118 @@ export const OptionalWidgetButtonParamsButtonPositionEnum = {
 export type OptionalWidgetButtonParamsButtonPositionEnum = typeof OptionalWidgetButtonParamsButtonPositionEnum[keyof typeof OptionalWidgetButtonParamsButtonPositionEnum];
 
 /**
- * 
+ *
  * @export
  * @interface OptionalWidgetCTAParams
  */
 export interface OptionalWidgetCTAParams {
     /**
-     * 
+     *
      * @type {string}
      * @memberof OptionalWidgetCTAParams
      */
     'widgetCTAButtonText'?: string;
     /**
-     * 
+     *
      * @type {string}
      * @memberof OptionalWidgetCTAParams
      */
     'widgetCTAContentColor'?: string;
     /**
-     * 
+     *
      * @type {string}
      * @memberof OptionalWidgetCTAParams
      */
     'widgetCTABackgroundColor'?: string;
     /**
-     * 
+     *
      * @type {string}
      * @memberof OptionalWidgetCTAParams
      */
     'CTALink'?: string;
 }
 /**
- * 
+ *
  * @export
  * @interface OptionalWidgetConfigParams
  */
 export interface OptionalWidgetConfigParams {
     /**
-     * 
+     *
      * @type {OptionalWidgetButtonParams}
      * @memberof OptionalWidgetConfigParams
      */
     'widgetButtonParams'?: OptionalWidgetButtonParams;
     /**
-     * 
+     *
      * @type {OptionalWidgetDialogParams}
      * @memberof OptionalWidgetConfigParams
      */
     'widgetDialogParams'?: OptionalWidgetDialogParams;
     /**
-     * 
+     *
      * @type {OptionalWidgetCTAParams}
      * @memberof OptionalWidgetConfigParams
      */
     'widgetCTAParams'?: OptionalWidgetCTAParams;
 }
 /**
- * 
+ *
  * @export
  * @interface OptionalWidgetDialogParams
  */
 export interface OptionalWidgetDialogParams {
     /**
-     * 
+     *
      * @type {string}
      * @memberof OptionalWidgetDialogParams
      */
     'widgetBrandName'?: string;
     /**
-     * 
+     *
      * @type {string}
      * @memberof OptionalWidgetDialogParams
      */
     'widgetHeaderCaption'?: string;
     /**
-     * 
+     *
      * @type {string}
      * @memberof OptionalWidgetDialogParams
      */
     'widgetBrandIconUrl'?: string;
     /**
-     * 
+     *
      * @type {string}
      * @memberof OptionalWidgetDialogParams
      */
     'widgetWelcomeMessage'?: string;
     /**
-     * 
+     *
      * @type {string}
      * @memberof OptionalWidgetDialogParams
      */
     'widgetPrefilledTextMessage'?: string;
     /**
-     * 
+     *
      * @type {string}
      * @memberof OptionalWidgetDialogParams
      */
     'widgetHeaderContentColor'?: string;
     /**
-     * 
+     *
      * @type {string}
      * @memberof OptionalWidgetDialogParams
      */
     'widgetHeaderBackgroundColor'?: string;
 }
 /**
- * 
+ *
  * @export
  * @interface OtpPostRequest
  */
 export interface OtpPostRequest {
     /**
-     * 
+     *
      * @type {string}
      * @memberof OtpPostRequest
      */
@@ -1321,103 +1321,103 @@ export interface OtpPostRequest {
      */
     'template'?: string;
     /**
-     * 
+     *
      * @type {string}
      * @memberof OtpPostRequest
      */
     'captchaToken'?: string;
 }
 /**
- * 
+ *
  * @export
  * @interface OtpTokenPost200Response
  */
 export interface OtpTokenPost200Response {
     /**
-     * 
+     *
      * @type {string}
      * @memberof OtpTokenPost200Response
      */
     'access_token': string;
 }
 /**
- * 
+ *
  * @export
  * @interface OtpTokenPostRequest
  */
 export interface OtpTokenPostRequest {
     /**
-     * 
+     *
      * @type {string}
      * @memberof OtpTokenPostRequest
      */
     'phoneNumber': string;
     /**
-     * 
+     *
      * @type {string}
      * @memberof OtpTokenPostRequest
      */
     'otp': string;
 }
 /**
- * 
+ *
  * @export
  * @interface PartnerAdminGet200Response
  */
 export interface PartnerAdminGet200Response {
     /**
-     * 
+     *
      * @type {Array<PartnerAdminGet200ResponseTeamsInner>}
      * @memberof PartnerAdminGet200Response
      */
     'teams': Array<PartnerAdminGet200ResponseTeamsInner>;
 }
 /**
- * 
+ *
  * @export
  * @interface PartnerAdminGet200ResponseTeamsInner
  */
 export interface PartnerAdminGet200ResponseTeamsInner {
     /**
-     * 
+     *
      * @type {string}
      * @memberof PartnerAdminGet200ResponseTeamsInner
      */
     'id': string;
     /**
-     * 
+     *
      * @type {string}
      * @memberof PartnerAdminGet200ResponseTeamsInner
      */
     'partnerAdmin': string;
 }
 /**
- * 
+ *
  * @export
  * @interface PartnerTeamPatchRequest
  */
 export interface PartnerTeamPatchRequest {
     /**
-     * 
+     *
      * @type {string}
      * @memberof PartnerTeamPatchRequest
      */
     'partnerAdmin': string | null;
 }
 /**
- * 
+ *
  * @export
  * @interface PasswordAuthRequest
  */
 export interface PasswordAuthRequest {
     /**
-     * 
+     *
      * @type {number}
      * @memberof PasswordAuthRequest
      */
     'phoneNumber': number;
     /**
-     * 
+     *
      * @type {boolean}
      * @memberof PasswordAuthRequest
      */
@@ -1441,7 +1441,7 @@ export interface PasswordAuthRequest {
      */
     'teamId'?: string;
     /**
-     * 
+     *
      * @type {Array<Scope>}
      * @memberof PasswordAuthRequest
      */
@@ -1459,7 +1459,7 @@ export interface PasswordAuthRequest {
      */
     'force'?: boolean;
     /**
-     * 
+     *
      * @type {ActorMetadata}
      * @memberof PasswordAuthRequest
      */
@@ -1474,44 +1474,44 @@ export const PasswordAuthRequestPasswordEncodingEnum = {
 export type PasswordAuthRequestPasswordEncodingEnum = typeof PasswordAuthRequestPasswordEncodingEnum[keyof typeof PasswordAuthRequestPasswordEncodingEnum];
 
 /**
- * A refresh token allows you to generate access tokens to access & update things on ChatDaddy services. A refresh token will expire and become invalidated after 14 days of no activity. 
+ * A refresh token allows you to generate access tokens to access & update things on ChatDaddy services. A refresh token will expire and become invalidated after 14 days of no activity.
  * @export
  * @interface RefreshToken
  */
 export interface RefreshToken {
     /**
-     * 
+     *
      * @type {string}
      * @memberof RefreshToken
      */
     'token': string;
     /**
-     * 
+     *
      * @type {string}
      * @memberof RefreshToken
      */
     'userId': string;
     /**
-     * 
+     *
      * @type {string}
      * @memberof RefreshToken
      */
     'createdAt': string;
     /**
-     * 
+     *
      * @type {string}
      * @memberof RefreshToken
      */
     'expiresAt': string;
 }
 /**
- * 
+ *
  * @export
  * @interface RefreshTokenLoginRequest
  */
 export interface RefreshTokenLoginRequest {
     /**
-     * 
+     *
      * @type {string}
      * @memberof RefreshTokenLoginRequest
      */
@@ -1523,7 +1523,7 @@ export interface RefreshTokenLoginRequest {
      */
     'teamId': string;
     /**
-     * 
+     *
      * @type {Array<Scope>}
      * @memberof RefreshTokenLoginRequest
      */
@@ -1541,27 +1541,27 @@ export interface RefreshTokenLoginRequest {
      */
     'force'?: boolean;
     /**
-     * 
+     *
      * @type {ActorMetadata}
      * @memberof RefreshTokenLoginRequest
      */
     'metadata'?: ActorMetadata;
 }
 /**
- * 
+ *
  * @export
  * @interface ResetPassword
  */
 export interface ResetPassword {
     /**
-     * 
+     *
      * @type {string}
      * @memberof ResetPassword
      */
     'password': string;
 }
 /**
- * 
+ *
  * @export
  * @enum {string}
  */
@@ -1650,26 +1650,26 @@ export type Scope = typeof Scope[keyof typeof Scope];
 
 
 /**
- * 
+ *
  * @export
  * @interface SimpleNotificationPreference
  */
 export interface SimpleNotificationPreference {
     /**
-     * 
+     *
      * @type {Array<NotificationDestination>}
      * @memberof SimpleNotificationPreference
      */
     'destinations': Array<NotificationDestination>;
 }
 /**
- * 
+ *
  * @export
  * @interface SubUserCreate
  */
 export interface SubUserCreate {
     /**
-     * 
+     *
      * @type {string}
      * @memberof SubUserCreate
      */
@@ -1687,7 +1687,7 @@ export interface SubUserCreate {
      */
     'password': string;
     /**
-     * 
+     *
      * @type {TeamMemberRole}
      * @memberof SubUserCreate
      */
@@ -1696,44 +1696,44 @@ export interface SubUserCreate {
 
 
 /**
- * 
+ *
  * @export
  * @interface SubUserPatchRequest
  */
 export interface SubUserPatchRequest {
     /**
-     * 
+     *
      * @type {string}
      * @memberof SubUserPatchRequest
      */
     'password': string;
     /**
-     * 
+     *
      * @type {boolean}
      * @memberof SubUserPatchRequest
      */
     'logout'?: boolean;
 }
 /**
- * 
+ *
  * @export
  * @interface Team
  */
 export interface Team {
     /**
-     * 
+     *
      * @type {string}
      * @memberof Team
      */
     'id': string;
     /**
-     * 
+     *
      * @type {string}
      * @memberof Team
      */
     'createdAt': string;
     /**
-     * 
+     *
      * @type {string}
      * @memberof Team
      */
@@ -1745,7 +1745,7 @@ export interface Team {
      */
     'createdBy'?: string;
     /**
-     * 
+     *
      * @type {User}
      * @memberof Team
      */
@@ -1757,7 +1757,7 @@ export interface Team {
      */
     'region': string;
     /**
-     * 
+     *
      * @type {string}
      * @memberof Team
      */
@@ -1775,19 +1775,19 @@ export interface Team {
      */
     'scopes': Array<Scope>;
     /**
-     * 
+     *
      * @type {TeamMetadata}
      * @memberof Team
      */
     'metadata': TeamMetadata;
     /**
-     * 
+     *
      * @type {Array<TeamMember>}
      * @memberof Team
      */
     'members'?: Array<TeamMember>;
     /**
-     * 
+     *
      * @type {Array<InviteLink>}
      * @memberof Team
      */
@@ -1799,13 +1799,13 @@ export interface Team {
      */
     'partnerAdmin'?: string | null;
     /**
-     * 
+     *
      * @type {TeamZapierToken}
      * @memberof Team
      */
     'zapierToken'?: TeamZapierToken | null;
     /**
-     * 
+     *
      * @type {Array<OnboardingStep>}
      * @memberof Team
      */
@@ -1830,19 +1830,19 @@ export interface Team {
     'creditCustomerId'?: string | null;
 }
 /**
- * 
+ *
  * @export
  * @interface TeamMember
  */
 export interface TeamMember {
     /**
-     * 
+     *
      * @type {Team}
      * @memberof TeamMember
      */
     'team'?: Team;
     /**
-     * 
+     *
      * @type {User}
      * @memberof TeamMember
      */
@@ -1860,25 +1860,25 @@ export interface TeamMember {
      */
     'teamId': string;
     /**
-     * 
+     *
      * @type {string}
      * @memberof TeamMember
      */
     'addedAt': string;
     /**
-     * 
+     *
      * @type {string}
      * @memberof TeamMember
      */
     'addedBy'?: string | null;
     /**
-     * 
+     *
      * @type {Array<Scope>}
      * @memberof TeamMember
      */
     'scopes': Array<Scope>;
     /**
-     * 
+     *
      * @type {TeamMemberRole}
      * @memberof TeamMember
      */
@@ -1887,26 +1887,26 @@ export interface TeamMember {
 
 
 /**
- * 
+ *
  * @export
  * @interface TeamMemberLogout
  */
 export interface TeamMemberLogout {
     /**
-     * 
+     *
      * @type {string}
      * @memberof TeamMemberLogout
      */
     'teamId': string;
     /**
-     * 
+     *
      * @type {string}
      * @memberof TeamMemberLogout
      */
     'userId': string;
 }
 /**
- * 
+ *
  * @export
  * @enum {string}
  */
@@ -1922,81 +1922,81 @@ export type TeamMemberRole = typeof TeamMemberRole[keyof typeof TeamMemberRole];
 
 
 /**
- * 
+ *
  * @export
  * @interface TeamMetadata
  */
 export interface TeamMetadata {
     /**
-     * 
+     *
      * @type {string}
      * @memberof TeamMetadata
      */
     'companyName'?: string;
     /**
-     * 
+     *
      * @type {string}
      * @memberof TeamMetadata
      */
     'companyEmailAddress'?: string;
     /**
-     * 
+     *
      * @type {string}
      * @memberof TeamMetadata
      */
     'companyWebsite'?: string;
     /**
-     * 
+     *
      * @type {string}
      * @memberof TeamMetadata
      */
     'industry'?: string;
 }
 /**
- * 
+ *
  * @export
  * @interface TeamPatchRequest
  */
 export interface TeamPatchRequest {
     /**
-     * 
+     *
      * @type {string}
      * @memberof TeamPatchRequest
      */
     'name'?: string;
     /**
-     * 
+     *
      * @type {TeamMetadata}
      * @memberof TeamPatchRequest
      */
     'metadata'?: TeamMetadata;
     /**
-     * 
+     *
      * @type {Array<TeamPatchRequestMembersInner>}
      * @memberof TeamPatchRequest
      */
     'members'?: Array<TeamPatchRequestMembersInner>;
     /**
-     * 
+     *
      * @type {Array<TeamPatchRequestInviteLinksInner>}
      * @memberof TeamPatchRequest
      */
     'inviteLinks'?: Array<TeamPatchRequestInviteLinksInner>;
     /**
-     * 
+     *
      * @type {TeamZapierToken}
      * @memberof TeamPatchRequest
      */
     'zapierToken'?: TeamZapierToken | null;
 }
 /**
- * 
+ *
  * @export
  * @interface TeamPatchRequestInviteLinksInner
  */
 export interface TeamPatchRequestInviteLinksInner {
     /**
-     * 
+     *
      * @type {string}
      * @memberof TeamPatchRequestInviteLinksInner
      */
@@ -2009,13 +2009,13 @@ export interface TeamPatchRequestInviteLinksInner {
     'delete'?: boolean;
 }
 /**
- * 
+ *
  * @export
  * @interface TeamPatchRequestMembersInner
  */
 export interface TeamPatchRequestMembersInner {
     /**
-     * 
+     *
      * @type {string}
      * @memberof TeamPatchRequestMembersInner
      */
@@ -2027,13 +2027,13 @@ export interface TeamPatchRequestMembersInner {
      */
     'delete'?: boolean;
     /**
-     * 
+     *
      * @type {Array<Scope>}
      * @memberof TeamPatchRequestMembersInner
      */
     'scopes'?: Array<Scope>;
     /**
-     * 
+     *
      * @type {TeamMemberRole}
      * @memberof TeamPatchRequestMembersInner
      */
@@ -2042,64 +2042,64 @@ export interface TeamPatchRequestMembersInner {
 
 
 /**
- * 
+ *
  * @export
  * @interface TeamZapierToken
  */
 export interface TeamZapierToken {
     /**
-     * 
+     *
      * @type {string}
      * @memberof TeamZapierToken
      */
     'token': string;
     /**
-     * 
+     *
      * @type {string}
      * @memberof TeamZapierToken
      */
     'expiresAt': string;
 }
 /**
- * 
+ *
  * @export
  * @interface TeamsGet200Response
  */
 export interface TeamsGet200Response {
     /**
-     * 
+     *
      * @type {number}
      * @memberof TeamsGet200Response
      */
     'total'?: number;
     /**
-     * 
+     *
      * @type {Array<Team>}
      * @memberof TeamsGet200Response
      */
     'teams': Array<Team>;
 }
 /**
- * 
+ *
  * @export
  * @interface TeamsPatch200Response
  */
 export interface TeamsPatch200Response {
     /**
-     * 
+     *
      * @type {boolean}
      * @memberof TeamsPatch200Response
      */
     'success': boolean;
 }
 /**
- * 
+ *
  * @export
  * @interface TokenGet400Response
  */
 export interface TokenGet400Response {
     /**
-     * 
+     *
      * @type {number}
      * @memberof TokenGet400Response
      */
@@ -2124,93 +2124,93 @@ export interface TokenGet400Response {
     'data'?: object;
 }
 /**
- * 
+ *
  * @export
  * @interface TokenPost200Response
  */
 export interface TokenPost200Response {
     /**
-     * 
+     *
      * @type {string}
      * @memberof TokenPost200Response
      */
     'access_token': string;
     /**
-     * 
+     *
      * @type {string}
      * @memberof TokenPost200Response
      */
     'refresh_token'?: string;
     /**
-     * 
+     *
      * @type {string}
      * @memberof TokenPost200Response
      */
     'refresh_token_expiry'?: string;
     /**
-     * 
+     *
      * @type {boolean}
      * @memberof TokenPost200Response
      */
     'was_forced'?: boolean;
 }
 /**
- * 
+ *
  * @export
  * @interface TokenPostResponse
  */
 export interface TokenPostResponse {
     /**
-     * 
+     *
      * @type {string}
      * @memberof TokenPostResponse
      */
     'access_token': string;
     /**
-     * 
+     *
      * @type {string}
      * @memberof TokenPostResponse
      */
     'refresh_token'?: string;
     /**
-     * 
+     *
      * @type {string}
      * @memberof TokenPostResponse
      */
     'refresh_token_expiry'?: string;
 }
 /**
- * 
+ *
  * @export
  * @interface User
  */
 export interface User {
     /**
-     * 
+     *
      * @type {string}
      * @memberof User
      */
     'id': string;
     /**
-     * 
+     *
      * @type {string}
      * @memberof User
      */
     'createdAt': string;
     /**
-     * 
+     *
      * @type {string}
      * @memberof User
      */
     'updatedAt': string;
     /**
-     * 
+     *
      * @type {string}
      * @memberof User
      */
     'disabledAt'?: string;
     /**
-     * 
+     *
      * @type {string}
      * @memberof User
      */
@@ -2228,26 +2228,26 @@ export interface User {
      */
     'phoneNumber': number | null;
     /**
-     * 
+     *
      * @type {string}
      * @memberof User
      */
     'emailAddress'?: string | null;
     /**
-     * 
+     *
      * @type {UserCreateMethod}
      * @memberof User
      */
     'createdByMethod'?: UserCreateMethod;
     /**
-     * 
+     *
      * @type {NotifyModel}
      * @memberof User
      * @deprecated
      */
     'notify': NotifyModel;
     /**
-     * 
+     *
      * @type {NotificationPreferences}
      * @memberof User
      */
@@ -2265,13 +2265,13 @@ export interface User {
      */
     'signature'?: string | null;
     /**
-     * 
+     *
      * @type {Array<TeamMember>}
      * @memberof User
      */
     'memberships'?: Array<TeamMember>;
     /**
-     * 
+     *
      * @type {Array<WebPushSubscription>}
      * @memberof User
      */
@@ -2286,13 +2286,13 @@ export interface User {
 
 
 /**
- * 
+ *
  * @export
  * @interface UserCreate
  */
 export interface UserCreate {
     /**
-     * 
+     *
      * @type {string}
      * @memberof UserCreate
      */
@@ -2310,7 +2310,7 @@ export interface UserCreate {
      */
     'password': string;
     /**
-     * 
+     *
      * @type {string}
      * @memberof UserCreate
      */
@@ -2322,20 +2322,20 @@ export interface UserCreate {
      */
     'creditCustomer'?: UserCreateCreditCustomerEnum;
     /**
-     * 
+     *
      * @type {TeamMetadata}
      * @memberof UserCreate
      */
     'metadata'?: TeamMetadata;
     /**
-     * 
+     *
      * @type {NotifyModel}
      * @memberof UserCreate
      * @deprecated
      */
     'notify'?: NotifyModel;
     /**
-     * 
+     *
      * @type {NotificationPreferences}
      * @memberof UserCreate
      */
@@ -2368,7 +2368,7 @@ export const UserCreateCreditCustomerEnum = {
 export type UserCreateCreditCustomerEnum = typeof UserCreateCreditCustomerEnum[keyof typeof UserCreateCreditCustomerEnum];
 
 /**
- * 
+ *
  * @export
  * @enum {string}
  */
@@ -2386,32 +2386,32 @@ export type UserCreateMethod = typeof UserCreateMethod[keyof typeof UserCreateMe
 
 
 /**
- * 
+ *
  * @export
  * @interface UserPatch
  */
 export interface UserPatch {
     /**
-     * 
+     *
      * @type {string}
      * @memberof UserPatch
      */
     'fullName'?: string;
     /**
-     * 
+     *
      * @type {string}
      * @memberof UserPatch
      */
     'emailAddress'?: string | null;
     /**
-     * 
+     *
      * @type {NotifyModel}
      * @memberof UserPatch
      * @deprecated
      */
     'notify'?: NotifyModel;
     /**
-     * 
+     *
      * @type {NotificationPreferences}
      * @memberof UserPatch
      */
@@ -2441,7 +2441,7 @@ export interface UserPatch {
      */
     'signature'?: string;
     /**
-     * 
+     *
      * @type {Array<WebPushSubscription>}
      * @memberof UserPatch
      */
@@ -2467,57 +2467,57 @@ export const UserPatchCreditCustomerEnum = {
 export type UserPatchCreditCustomerEnum = typeof UserPatchCreditCustomerEnum[keyof typeof UserPatchCreditCustomerEnum];
 
 /**
- * 
+ *
  * @export
  * @interface UsersGet200Response
  */
 export interface UsersGet200Response {
     /**
-     * 
+     *
      * @type {number}
      * @memberof UsersGet200Response
      */
     'total'?: number;
     /**
-     * 
+     *
      * @type {Array<User>}
      * @memberof UsersGet200Response
      */
     'users': Array<User>;
 }
 /**
- * 
+ *
  * @export
  * @interface UsersPhoneNumberPatchRequest
  */
 export interface UsersPhoneNumberPatchRequest {
     /**
-     * 
+     *
      * @type {number}
      * @memberof UsersPhoneNumberPatchRequest
      */
     'phoneNumber': number;
     /**
-     * 
+     *
      * @type {string}
      * @memberof UsersPhoneNumberPatchRequest
      */
     'userId'?: string;
 }
 /**
- * 
+ *
  * @export
  * @interface WebPushNotification
  */
 export interface WebPushNotification {
     /**
-     * 
+     *
      * @type {string}
      * @memberof WebPushNotification
      */
     'title': string;
     /**
-     * 
+     *
      * @type {string}
      * @memberof WebPushNotification
      */
@@ -2529,7 +2529,7 @@ export interface WebPushNotification {
      */
     'onlineOnly'?: boolean;
     /**
-     * 
+     *
      * @type {string}
      * @memberof WebPushNotification
      */
@@ -2547,69 +2547,69 @@ export interface WebPushNotification {
      */
     'imgUrl'?: string;
     /**
-     * 
+     *
      * @type {{ [key: string]: any; }}
      * @memberof WebPushNotification
      */
     'context'?: { [key: string]: any; };
 }
 /**
- * 
+ *
  * @export
  * @interface WebPushSubscription
  */
 export interface WebPushSubscription {
     /**
-     * 
+     *
      * @type {string}
      * @memberof WebPushSubscription
      */
     'endpoint': string;
     /**
-     * 
+     *
      * @type {string}
      * @memberof WebPushSubscription
      */
     'authKey': string;
     /**
-     * 
+     *
      * @type {string}
      * @memberof WebPushSubscription
      */
     'p256dhKey': string;
 }
 /**
- * 
+ *
  * @export
  * @interface WidgetButtonParams
  */
 export interface WidgetButtonParams {
     /**
-     * 
+     *
      * @type {string}
      * @memberof WidgetButtonParams
      */
     'buttonIcon': WidgetButtonParamsButtonIconEnum;
     /**
-     * 
+     *
      * @type {string}
      * @memberof WidgetButtonParams
      */
     'buttonText': string;
     /**
-     * 
+     *
      * @type {string}
      * @memberof WidgetButtonParams
      */
     'buttonBackgroundColor': string;
     /**
-     * 
+     *
      * @type {string}
      * @memberof WidgetButtonParams
      */
     'buttonTextAndIconColor': string;
     /**
-     * 
+     *
      * @type {string}
      * @memberof WidgetButtonParams
      */
@@ -2632,185 +2632,185 @@ export const WidgetButtonParamsButtonPositionEnum = {
 export type WidgetButtonParamsButtonPositionEnum = typeof WidgetButtonParamsButtonPositionEnum[keyof typeof WidgetButtonParamsButtonPositionEnum];
 
 /**
- * 
+ *
  * @export
  * @interface WidgetCTAParams
  */
 export interface WidgetCTAParams {
     /**
-     * 
+     *
      * @type {string}
      * @memberof WidgetCTAParams
      */
     'widgetCTAButtonText': string;
     /**
-     * 
+     *
      * @type {string}
      * @memberof WidgetCTAParams
      */
     'widgetCTAContentColor': string;
     /**
-     * 
+     *
      * @type {string}
      * @memberof WidgetCTAParams
      */
     'widgetCTABackgroundColor': string;
     /**
-     * 
+     *
      * @type {string}
      * @memberof WidgetCTAParams
      */
     'CTALink': string;
 }
 /**
- * 
+ *
  * @export
  * @interface WidgetConfig
  */
 export interface WidgetConfig {
     /**
-     * 
+     *
      * @type {WidgetButtonParams}
      * @memberof WidgetConfig
      */
     'widgetButtonParams': WidgetButtonParams;
     /**
-     * 
+     *
      * @type {WidgetDialogParams}
      * @memberof WidgetConfig
      */
     'widgetDialogParams': WidgetDialogParams;
     /**
-     * 
+     *
      * @type {WidgetCTAParams}
      * @memberof WidgetConfig
      */
     'widgetCTAParams': WidgetCTAParams;
     /**
-     * 
+     *
      * @type {string}
      * @memberof WidgetConfig
      */
     'teamId': string;
     /**
-     * 
+     *
      * @type {string}
      * @memberof WidgetConfig
      */
     'createdAt': string;
     /**
-     * 
+     *
      * @type {string}
      * @memberof WidgetConfig
      */
     'updatedAt': string;
     /**
-     * 
+     *
      * @type {string}
      * @memberof WidgetConfig
      */
     'configUrl': string;
 }
 /**
- * 
+ *
  * @export
  * @interface WidgetConfigAllOf
  */
 export interface WidgetConfigAllOf {
     /**
-     * 
+     *
      * @type {string}
      * @memberof WidgetConfigAllOf
      */
     'teamId': string;
     /**
-     * 
+     *
      * @type {string}
      * @memberof WidgetConfigAllOf
      */
     'createdAt': string;
     /**
-     * 
+     *
      * @type {string}
      * @memberof WidgetConfigAllOf
      */
     'updatedAt': string;
     /**
-     * 
+     *
      * @type {string}
      * @memberof WidgetConfigAllOf
      */
     'configUrl': string;
 }
 /**
- * 
+ *
  * @export
  * @interface WidgetConfigParams
  */
 export interface WidgetConfigParams {
     /**
-     * 
+     *
      * @type {WidgetButtonParams}
      * @memberof WidgetConfigParams
      */
     'widgetButtonParams': WidgetButtonParams;
     /**
-     * 
+     *
      * @type {WidgetDialogParams}
      * @memberof WidgetConfigParams
      */
     'widgetDialogParams': WidgetDialogParams;
     /**
-     * 
+     *
      * @type {WidgetCTAParams}
      * @memberof WidgetConfigParams
      */
     'widgetCTAParams': WidgetCTAParams;
 }
 /**
- * 
+ *
  * @export
  * @interface WidgetDialogParams
  */
 export interface WidgetDialogParams {
     /**
-     * 
+     *
      * @type {string}
      * @memberof WidgetDialogParams
      */
     'widgetBrandName': string;
     /**
-     * 
+     *
      * @type {string}
      * @memberof WidgetDialogParams
      */
     'widgetHeaderCaption': string;
     /**
-     * 
+     *
      * @type {string}
      * @memberof WidgetDialogParams
      */
     'widgetBrandIconUrl': string;
     /**
-     * 
+     *
      * @type {string}
      * @memberof WidgetDialogParams
      */
     'widgetWelcomeMessage': string;
     /**
-     * 
+     *
      * @type {string}
      * @memberof WidgetDialogParams
      */
     'widgetPrefilledTextMessage': string;
     /**
-     * 
+     *
      * @type {string}
      * @memberof WidgetDialogParams
      */
     'widgetHeaderContentColor': string;
     /**
-     * 
+     *
      * @type {string}
      * @memberof WidgetDialogParams
      */
@@ -2824,9 +2824,9 @@ export interface WidgetDialogParams {
 export const APITokensApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
-         * 
+         *
          * @summary Delete an API token
-         * @param {Array<string>} tokens 
+         * @param {Array<string>} tokens
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -2854,7 +2854,7 @@ export const APITokensApiAxiosParamCreator = function (configuration?: Configura
             }
 
 
-    
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
@@ -2865,7 +2865,7 @@ export const APITokensApiAxiosParamCreator = function (configuration?: Configura
             };
         },
         /**
-         * 
+         *
          * @summary Fetch API tokens
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -2888,7 +2888,7 @@ export const APITokensApiAxiosParamCreator = function (configuration?: Configura
             await setOAuthToObject(localVarHeaderParameter, "chatdaddy", [], configuration)
 
 
-    
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
@@ -2899,9 +2899,9 @@ export const APITokensApiAxiosParamCreator = function (configuration?: Configura
             };
         },
         /**
-         * 
+         *
          * @summary Generate an API token
-         * @param {ApiTokenPostRequest} [apiTokenPostRequest] 
+         * @param {ApiTokenPostRequest} [apiTokenPostRequest]
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -2923,7 +2923,7 @@ export const APITokensApiAxiosParamCreator = function (configuration?: Configura
             await setOAuthToObject(localVarHeaderParameter, "chatdaddy", [], configuration)
 
 
-    
+
             localVarHeaderParameter['Content-Type'] = 'application/json';
 
             setSearchParams(localVarUrlObj, localVarQueryParameter);
@@ -2937,9 +2937,9 @@ export const APITokensApiAxiosParamCreator = function (configuration?: Configura
             };
         },
         /**
-         * 
+         *
          * @summary Validate an API token
-         * @param {ApiTokenValidatePostRequest} [apiTokenValidatePostRequest] 
+         * @param {ApiTokenValidatePostRequest} [apiTokenValidatePostRequest]
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -2957,7 +2957,7 @@ export const APITokensApiAxiosParamCreator = function (configuration?: Configura
             const localVarQueryParameter = {} as any;
 
 
-    
+
             localVarHeaderParameter['Content-Type'] = 'application/json';
 
             setSearchParams(localVarUrlObj, localVarQueryParameter);
@@ -2981,9 +2981,9 @@ export const APITokensApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = APITokensApiAxiosParamCreator(configuration)
     return {
         /**
-         * 
+         *
          * @summary Delete an API token
-         * @param {Array<string>} tokens 
+         * @param {Array<string>} tokens
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -2992,7 +2992,7 @@ export const APITokensApiFp = function(configuration?: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
-         * 
+         *
          * @summary Fetch API tokens
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -3002,9 +3002,9 @@ export const APITokensApiFp = function(configuration?: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
-         * 
+         *
          * @summary Generate an API token
-         * @param {ApiTokenPostRequest} [apiTokenPostRequest] 
+         * @param {ApiTokenPostRequest} [apiTokenPostRequest]
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -3013,9 +3013,9 @@ export const APITokensApiFp = function(configuration?: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
-         * 
+         *
          * @summary Validate an API token
-         * @param {ApiTokenValidatePostRequest} [apiTokenValidatePostRequest] 
+         * @param {ApiTokenValidatePostRequest} [apiTokenValidatePostRequest]
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -3034,7 +3034,7 @@ export const APITokensApiFactory = function (configuration?: Configuration, base
     const localVarFp = APITokensApiFp(configuration)
     return {
         /**
-         * 
+         *
          * @summary Delete an API token
          * @param {APITokensApiApiTokenDeleteRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -3044,7 +3044,7 @@ export const APITokensApiFactory = function (configuration?: Configuration, base
             return localVarFp.apiTokenDelete(requestParameters.tokens, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         *
          * @summary Fetch API tokens
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -3053,7 +3053,7 @@ export const APITokensApiFactory = function (configuration?: Configuration, base
             return localVarFp.apiTokenGet(options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         *
          * @summary Generate an API token
          * @param {APITokensApiApiTokenPostRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -3063,7 +3063,7 @@ export const APITokensApiFactory = function (configuration?: Configuration, base
             return localVarFp.apiTokenPost(requestParameters.apiTokenPostRequest, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         *
          * @summary Validate an API token
          * @param {APITokensApiApiTokenValidatePostRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -3082,7 +3082,7 @@ export const APITokensApiFactory = function (configuration?: Configuration, base
  */
 export interface APITokensApiApiTokenDeleteRequest {
     /**
-     * 
+     *
      * @type {Array<string>}
      * @memberof APITokensApiApiTokenDelete
      */
@@ -3096,7 +3096,7 @@ export interface APITokensApiApiTokenDeleteRequest {
  */
 export interface APITokensApiApiTokenPostRequest {
     /**
-     * 
+     *
      * @type {ApiTokenPostRequest}
      * @memberof APITokensApiApiTokenPost
      */
@@ -3110,7 +3110,7 @@ export interface APITokensApiApiTokenPostRequest {
  */
 export interface APITokensApiApiTokenValidatePostRequest {
     /**
-     * 
+     *
      * @type {ApiTokenValidatePostRequest}
      * @memberof APITokensApiApiTokenValidatePost
      */
@@ -3125,7 +3125,7 @@ export interface APITokensApiApiTokenValidatePostRequest {
  */
 export class APITokensApi extends BaseAPI {
     /**
-     * 
+     *
      * @summary Delete an API token
      * @param {APITokensApiApiTokenDeleteRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -3137,7 +3137,7 @@ export class APITokensApi extends BaseAPI {
     }
 
     /**
-     * 
+     *
      * @summary Fetch API tokens
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -3148,7 +3148,7 @@ export class APITokensApi extends BaseAPI {
     }
 
     /**
-     * 
+     *
      * @summary Generate an API token
      * @param {APITokensApiApiTokenPostRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -3160,7 +3160,7 @@ export class APITokensApi extends BaseAPI {
     }
 
     /**
-     * 
+     *
      * @summary Validate an API token
      * @param {APITokensApiApiTokenValidatePostRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -3180,9 +3180,9 @@ export class APITokensApi extends BaseAPI {
 export const AnnouncementsApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
-         * 
+         *
          * @summary Creates new announcement
-         * @param {AnnouncementPatch} [announcementPatch] 
+         * @param {AnnouncementPatch} [announcementPatch]
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -3204,7 +3204,7 @@ export const AnnouncementsApiAxiosParamCreator = function (configuration?: Confi
             await setOAuthToObject(localVarHeaderParameter, "chatdaddy", [], configuration)
 
 
-    
+
             localVarHeaderParameter['Content-Type'] = 'application/json';
 
             setSearchParams(localVarUrlObj, localVarQueryParameter);
@@ -3218,9 +3218,9 @@ export const AnnouncementsApiAxiosParamCreator = function (configuration?: Confi
             };
         },
         /**
-         * 
+         *
          * @summary Deletes list of announcements
-         * @param {Array<string>} ids 
+         * @param {Array<string>} ids
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -3248,7 +3248,7 @@ export const AnnouncementsApiAxiosParamCreator = function (configuration?: Confi
             }
 
 
-    
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
@@ -3259,15 +3259,15 @@ export const AnnouncementsApiAxiosParamCreator = function (configuration?: Confi
             };
         },
         /**
-         * 
+         *
          * @summary Get list of announcements
          * @param {number} [count] Number of announcements to fetch
          * @param {string} [before] Announcements to fetch before
          * @param {string} [q] Search by category, title etc.
-         * @param {string} [publishedAt] Optional filter to retrieve announcements published on or before a specific date and time. If provided, only announcements published on or before the given timestamp will be returned. 
-         * @param {string} [expiresAt] Optional filter to retrieve announcements that are valid until a specific date and time. - If set to a specific timestamp, only announcements that expire on or after the given timestamp will be returned. - If set to &#x60;null&#x60;, only announcements with no expiration date will be returned. 
+         * @param {string} [publishedAt] Optional filter to retrieve announcements published on or before a specific date and time. If provided, only announcements published on or before the given timestamp will be returned.
+         * @param {string} [expiresAt] Optional filter to retrieve announcements that are valid until a specific date and time. - If set to a specific timestamp, only announcements that expire on or after the given timestamp will be returned. - If set to &#x60;null&#x60;, only announcements with no expiration date will be returned.
          * @param {string} [partnership] Search by partnership
-         * @param {boolean} [returnTotalCount] 
+         * @param {boolean} [returnTotalCount]
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -3321,7 +3321,7 @@ export const AnnouncementsApiAxiosParamCreator = function (configuration?: Confi
             }
 
 
-    
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
@@ -3332,10 +3332,10 @@ export const AnnouncementsApiAxiosParamCreator = function (configuration?: Confi
             };
         },
         /**
-         * 
+         *
          * @summary Update an announcement
-         * @param {string} id 
-         * @param {AnnouncementPatch} [announcementPatch] 
+         * @param {string} id
+         * @param {AnnouncementPatch} [announcementPatch]
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -3360,7 +3360,7 @@ export const AnnouncementsApiAxiosParamCreator = function (configuration?: Confi
             await setOAuthToObject(localVarHeaderParameter, "chatdaddy", [], configuration)
 
 
-    
+
             localVarHeaderParameter['Content-Type'] = 'application/json';
 
             setSearchParams(localVarUrlObj, localVarQueryParameter);
@@ -3384,9 +3384,9 @@ export const AnnouncementsApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = AnnouncementsApiAxiosParamCreator(configuration)
     return {
         /**
-         * 
+         *
          * @summary Creates new announcement
-         * @param {AnnouncementPatch} [announcementPatch] 
+         * @param {AnnouncementPatch} [announcementPatch]
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -3395,9 +3395,9 @@ export const AnnouncementsApiFp = function(configuration?: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
-         * 
+         *
          * @summary Deletes list of announcements
-         * @param {Array<string>} ids 
+         * @param {Array<string>} ids
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -3406,15 +3406,15 @@ export const AnnouncementsApiFp = function(configuration?: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
-         * 
+         *
          * @summary Get list of announcements
          * @param {number} [count] Number of announcements to fetch
          * @param {string} [before] Announcements to fetch before
          * @param {string} [q] Search by category, title etc.
-         * @param {string} [publishedAt] Optional filter to retrieve announcements published on or before a specific date and time. If provided, only announcements published on or before the given timestamp will be returned. 
-         * @param {string} [expiresAt] Optional filter to retrieve announcements that are valid until a specific date and time. - If set to a specific timestamp, only announcements that expire on or after the given timestamp will be returned. - If set to &#x60;null&#x60;, only announcements with no expiration date will be returned. 
+         * @param {string} [publishedAt] Optional filter to retrieve announcements published on or before a specific date and time. If provided, only announcements published on or before the given timestamp will be returned.
+         * @param {string} [expiresAt] Optional filter to retrieve announcements that are valid until a specific date and time. - If set to a specific timestamp, only announcements that expire on or after the given timestamp will be returned. - If set to &#x60;null&#x60;, only announcements with no expiration date will be returned.
          * @param {string} [partnership] Search by partnership
-         * @param {boolean} [returnTotalCount] 
+         * @param {boolean} [returnTotalCount]
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -3423,10 +3423,10 @@ export const AnnouncementsApiFp = function(configuration?: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
-         * 
+         *
          * @summary Update an announcement
-         * @param {string} id 
-         * @param {AnnouncementPatch} [announcementPatch] 
+         * @param {string} id
+         * @param {AnnouncementPatch} [announcementPatch]
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -3445,7 +3445,7 @@ export const AnnouncementsApiFactory = function (configuration?: Configuration, 
     const localVarFp = AnnouncementsApiFp(configuration)
     return {
         /**
-         * 
+         *
          * @summary Creates new announcement
          * @param {AnnouncementsApiAnnouncementCreateRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -3455,7 +3455,7 @@ export const AnnouncementsApiFactory = function (configuration?: Configuration, 
             return localVarFp.announcementCreate(requestParameters.announcementPatch, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         *
          * @summary Deletes list of announcements
          * @param {AnnouncementsApiAnnouncementDeleteRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -3465,7 +3465,7 @@ export const AnnouncementsApiFactory = function (configuration?: Configuration, 
             return localVarFp.announcementDelete(requestParameters.ids, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         *
          * @summary Get list of announcements
          * @param {AnnouncementsApiAnnouncementGetRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -3475,7 +3475,7 @@ export const AnnouncementsApiFactory = function (configuration?: Configuration, 
             return localVarFp.announcementGet(requestParameters.count, requestParameters.before, requestParameters.q, requestParameters.publishedAt, requestParameters.expiresAt, requestParameters.partnership, requestParameters.returnTotalCount, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         *
          * @summary Update an announcement
          * @param {AnnouncementsApiAnnouncementPatchRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -3494,7 +3494,7 @@ export const AnnouncementsApiFactory = function (configuration?: Configuration, 
  */
 export interface AnnouncementsApiAnnouncementCreateRequest {
     /**
-     * 
+     *
      * @type {AnnouncementPatch}
      * @memberof AnnouncementsApiAnnouncementCreate
      */
@@ -3508,7 +3508,7 @@ export interface AnnouncementsApiAnnouncementCreateRequest {
  */
 export interface AnnouncementsApiAnnouncementDeleteRequest {
     /**
-     * 
+     *
      * @type {Array<string>}
      * @memberof AnnouncementsApiAnnouncementDelete
      */
@@ -3543,14 +3543,14 @@ export interface AnnouncementsApiAnnouncementGetRequest {
     readonly q?: string
 
     /**
-     * Optional filter to retrieve announcements published on or before a specific date and time. If provided, only announcements published on or before the given timestamp will be returned. 
+     * Optional filter to retrieve announcements published on or before a specific date and time. If provided, only announcements published on or before the given timestamp will be returned.
      * @type {string}
      * @memberof AnnouncementsApiAnnouncementGet
      */
     readonly publishedAt?: string
 
     /**
-     * Optional filter to retrieve announcements that are valid until a specific date and time. - If set to a specific timestamp, only announcements that expire on or after the given timestamp will be returned. - If set to &#x60;null&#x60;, only announcements with no expiration date will be returned. 
+     * Optional filter to retrieve announcements that are valid until a specific date and time. - If set to a specific timestamp, only announcements that expire on or after the given timestamp will be returned. - If set to &#x60;null&#x60;, only announcements with no expiration date will be returned.
      * @type {string}
      * @memberof AnnouncementsApiAnnouncementGet
      */
@@ -3564,7 +3564,7 @@ export interface AnnouncementsApiAnnouncementGetRequest {
     readonly partnership?: string
 
     /**
-     * 
+     *
      * @type {boolean}
      * @memberof AnnouncementsApiAnnouncementGet
      */
@@ -3578,14 +3578,14 @@ export interface AnnouncementsApiAnnouncementGetRequest {
  */
 export interface AnnouncementsApiAnnouncementPatchRequest {
     /**
-     * 
+     *
      * @type {string}
      * @memberof AnnouncementsApiAnnouncementPatch
      */
     readonly id: string
 
     /**
-     * 
+     *
      * @type {AnnouncementPatch}
      * @memberof AnnouncementsApiAnnouncementPatch
      */
@@ -3600,7 +3600,7 @@ export interface AnnouncementsApiAnnouncementPatchRequest {
  */
 export class AnnouncementsApi extends BaseAPI {
     /**
-     * 
+     *
      * @summary Creates new announcement
      * @param {AnnouncementsApiAnnouncementCreateRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -3612,7 +3612,7 @@ export class AnnouncementsApi extends BaseAPI {
     }
 
     /**
-     * 
+     *
      * @summary Deletes list of announcements
      * @param {AnnouncementsApiAnnouncementDeleteRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -3624,7 +3624,7 @@ export class AnnouncementsApi extends BaseAPI {
     }
 
     /**
-     * 
+     *
      * @summary Get list of announcements
      * @param {AnnouncementsApiAnnouncementGetRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -3636,7 +3636,7 @@ export class AnnouncementsApi extends BaseAPI {
     }
 
     /**
-     * 
+     *
      * @summary Update an announcement
      * @param {AnnouncementsApiAnnouncementPatchRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -3656,7 +3656,7 @@ export class AnnouncementsApi extends BaseAPI {
 export const InviteLinksApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
-         * 
+         *
          * @summary Get info about an invite link
          * @param {string} id the invite link ID
          * @param {*} [options] Override http request option.
@@ -3683,7 +3683,7 @@ export const InviteLinksApiAxiosParamCreator = function (configuration?: Configu
             await setOAuthToObject(localVarHeaderParameter, "chatdaddy", [], configuration)
 
 
-    
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
@@ -3694,9 +3694,9 @@ export const InviteLinksApiAxiosParamCreator = function (configuration?: Configu
             };
         },
         /**
-         * To generate an invite link for a specific set of scopes, you must also have the same set of scopes. Eg. you cannot generate a link which gives access to `MESSAGE_SEND` when you don\'t have access to `MESSAGE_SEND` yourself. This is done for obvious security concerns. 
+         * To generate an invite link for a specific set of scopes, you must also have the same set of scopes. Eg. you cannot generate a link which gives access to `MESSAGE_SEND` when you don\'t have access to `MESSAGE_SEND` yourself. This is done for obvious security concerns.
          * @summary Create an invite link for the team
-         * @param {EitherRoleOrScopes} [eitherRoleOrScopes] 
+         * @param {EitherRoleOrScopes} [eitherRoleOrScopes]
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -3718,7 +3718,7 @@ export const InviteLinksApiAxiosParamCreator = function (configuration?: Configu
             await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["TEAMLINK_CREATE"], configuration)
 
 
-    
+
             localVarHeaderParameter['Content-Type'] = 'application/json';
 
             setSearchParams(localVarUrlObj, localVarQueryParameter);
@@ -3742,7 +3742,7 @@ export const InviteLinksApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = InviteLinksApiAxiosParamCreator(configuration)
     return {
         /**
-         * 
+         *
          * @summary Get info about an invite link
          * @param {string} id the invite link ID
          * @param {*} [options] Override http request option.
@@ -3753,9 +3753,9 @@ export const InviteLinksApiFp = function(configuration?: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
-         * To generate an invite link for a specific set of scopes, you must also have the same set of scopes. Eg. you cannot generate a link which gives access to `MESSAGE_SEND` when you don\'t have access to `MESSAGE_SEND` yourself. This is done for obvious security concerns. 
+         * To generate an invite link for a specific set of scopes, you must also have the same set of scopes. Eg. you cannot generate a link which gives access to `MESSAGE_SEND` when you don\'t have access to `MESSAGE_SEND` yourself. This is done for obvious security concerns.
          * @summary Create an invite link for the team
-         * @param {EitherRoleOrScopes} [eitherRoleOrScopes] 
+         * @param {EitherRoleOrScopes} [eitherRoleOrScopes]
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -3774,7 +3774,7 @@ export const InviteLinksApiFactory = function (configuration?: Configuration, ba
     const localVarFp = InviteLinksApiFp(configuration)
     return {
         /**
-         * 
+         *
          * @summary Get info about an invite link
          * @param {InviteLinksApiInviteLinksGetRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -3784,7 +3784,7 @@ export const InviteLinksApiFactory = function (configuration?: Configuration, ba
             return localVarFp.inviteLinksGet(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
-         * To generate an invite link for a specific set of scopes, you must also have the same set of scopes. Eg. you cannot generate a link which gives access to `MESSAGE_SEND` when you don\'t have access to `MESSAGE_SEND` yourself. This is done for obvious security concerns. 
+         * To generate an invite link for a specific set of scopes, you must also have the same set of scopes. Eg. you cannot generate a link which gives access to `MESSAGE_SEND` when you don\'t have access to `MESSAGE_SEND` yourself. This is done for obvious security concerns.
          * @summary Create an invite link for the team
          * @param {InviteLinksApiInviteLinksPostRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -3817,7 +3817,7 @@ export interface InviteLinksApiInviteLinksGetRequest {
  */
 export interface InviteLinksApiInviteLinksPostRequest {
     /**
-     * 
+     *
      * @type {EitherRoleOrScopes}
      * @memberof InviteLinksApiInviteLinksPost
      */
@@ -3832,7 +3832,7 @@ export interface InviteLinksApiInviteLinksPostRequest {
  */
 export class InviteLinksApi extends BaseAPI {
     /**
-     * 
+     *
      * @summary Get info about an invite link
      * @param {InviteLinksApiInviteLinksGetRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -3844,7 +3844,7 @@ export class InviteLinksApi extends BaseAPI {
     }
 
     /**
-     * To generate an invite link for a specific set of scopes, you must also have the same set of scopes. Eg. you cannot generate a link which gives access to `MESSAGE_SEND` when you don\'t have access to `MESSAGE_SEND` yourself. This is done for obvious security concerns. 
+     * To generate an invite link for a specific set of scopes, you must also have the same set of scopes. Eg. you cannot generate a link which gives access to `MESSAGE_SEND` when you don\'t have access to `MESSAGE_SEND` yourself. This is done for obvious security concerns.
      * @summary Create an invite link for the team
      * @param {InviteLinksApiInviteLinksPostRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -3866,7 +3866,7 @@ export const OAuthApiAxiosParamCreator = function (configuration?: Configuration
         /**
          * If the token is not specified, all tokens of the user are revoked
          * @summary Revoke refresh tokens
-         * @param {string} [token] 
+         * @param {string} [token]
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -3892,7 +3892,7 @@ export const OAuthApiAxiosParamCreator = function (configuration?: Configuration
             }
 
 
-    
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
@@ -3926,7 +3926,7 @@ export const OAuthApiAxiosParamCreator = function (configuration?: Configuration
             await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["TOKENS_READ"], configuration)
 
 
-    
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
@@ -3937,9 +3937,9 @@ export const OAuthApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
-         * 
+         *
          * @summary Login to ChatDaddy
-         * @param {AuthRequest} [authRequest] 
+         * @param {AuthRequest} [authRequest]
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -3957,7 +3957,7 @@ export const OAuthApiAxiosParamCreator = function (configuration?: Configuration
             const localVarQueryParameter = {} as any;
 
 
-    
+
             localVarHeaderParameter['Content-Type'] = 'application/json';
 
             setSearchParams(localVarUrlObj, localVarQueryParameter);
@@ -3971,9 +3971,9 @@ export const OAuthApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
-         * 
+         *
          * @summary Login via an external partner
-         * @param {ExternalTokenRequest} [externalTokenRequest] 
+         * @param {ExternalTokenRequest} [externalTokenRequest]
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -3991,7 +3991,7 @@ export const OAuthApiAxiosParamCreator = function (configuration?: Configuration
             const localVarQueryParameter = {} as any;
 
 
-    
+
             localVarHeaderParameter['Content-Type'] = 'application/json';
 
             setSearchParams(localVarUrlObj, localVarQueryParameter);
@@ -4017,7 +4017,7 @@ export const OAuthApiFp = function(configuration?: Configuration) {
         /**
          * If the token is not specified, all tokens of the user are revoked
          * @summary Revoke refresh tokens
-         * @param {string} [token] 
+         * @param {string} [token]
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -4036,9 +4036,9 @@ export const OAuthApiFp = function(configuration?: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
-         * 
+         *
          * @summary Login to ChatDaddy
-         * @param {AuthRequest} [authRequest] 
+         * @param {AuthRequest} [authRequest]
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -4047,9 +4047,9 @@ export const OAuthApiFp = function(configuration?: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
-         * 
+         *
          * @summary Login via an external partner
-         * @param {ExternalTokenRequest} [externalTokenRequest] 
+         * @param {ExternalTokenRequest} [externalTokenRequest]
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -4087,7 +4087,7 @@ export const OAuthApiFactory = function (configuration?: Configuration, basePath
             return localVarFp.tokenGet(options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         *
          * @summary Login to ChatDaddy
          * @param {OAuthApiTokenPostRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -4097,7 +4097,7 @@ export const OAuthApiFactory = function (configuration?: Configuration, basePath
             return localVarFp.tokenPost(requestParameters.authRequest, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         *
          * @summary Login via an external partner
          * @param {OAuthApiTokenPostExternalRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -4116,7 +4116,7 @@ export const OAuthApiFactory = function (configuration?: Configuration, basePath
  */
 export interface OAuthApiTokenDeleteRequest {
     /**
-     * 
+     *
      * @type {string}
      * @memberof OAuthApiTokenDelete
      */
@@ -4130,7 +4130,7 @@ export interface OAuthApiTokenDeleteRequest {
  */
 export interface OAuthApiTokenPostRequest {
     /**
-     * 
+     *
      * @type {AuthRequest}
      * @memberof OAuthApiTokenPost
      */
@@ -4144,7 +4144,7 @@ export interface OAuthApiTokenPostRequest {
  */
 export interface OAuthApiTokenPostExternalRequest {
     /**
-     * 
+     *
      * @type {ExternalTokenRequest}
      * @memberof OAuthApiTokenPostExternal
      */
@@ -4182,7 +4182,7 @@ export class OAuthApi extends BaseAPI {
     }
 
     /**
-     * 
+     *
      * @summary Login to ChatDaddy
      * @param {OAuthApiTokenPostRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -4194,7 +4194,7 @@ export class OAuthApi extends BaseAPI {
     }
 
     /**
-     * 
+     *
      * @summary Login via an external partner
      * @param {OAuthApiTokenPostExternalRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -4214,7 +4214,7 @@ export class OAuthApi extends BaseAPI {
 export const OTPApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
-         * 
+         *
          * @summary Confirm OTP while checkout products.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -4236,7 +4236,7 @@ export const OTPApiAxiosParamCreator = function (configuration?: Configuration) 
             await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
 
 
-    
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
@@ -4247,10 +4247,10 @@ export const OTPApiAxiosParamCreator = function (configuration?: Configuration) 
             };
         },
         /**
-         * 
+         *
          * @summary Generate an OTP
-         * @param {'sms' | 'whatsapp'} [channel] 
-         * @param {OtpPostRequest} [otpPostRequest] 
+         * @param {'sms' | 'whatsapp'} [channel]
+         * @param {OtpPostRequest} [otpPostRequest]
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -4272,7 +4272,7 @@ export const OTPApiAxiosParamCreator = function (configuration?: Configuration) 
             }
 
 
-    
+
             localVarHeaderParameter['Content-Type'] = 'application/json';
 
             setSearchParams(localVarUrlObj, localVarQueryParameter);
@@ -4286,9 +4286,9 @@ export const OTPApiAxiosParamCreator = function (configuration?: Configuration) 
             };
         },
         /**
-         * 
+         *
          * @summary Generate an OTP token
-         * @param {OtpTokenPostRequest} [otpTokenPostRequest] 
+         * @param {OtpTokenPostRequest} [otpTokenPostRequest]
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -4309,7 +4309,7 @@ export const OTPApiAxiosParamCreator = function (configuration?: Configuration) 
             await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
 
 
-    
+
             localVarHeaderParameter['Content-Type'] = 'application/json';
 
             setSearchParams(localVarUrlObj, localVarQueryParameter);
@@ -4333,7 +4333,7 @@ export const OTPApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = OTPApiAxiosParamCreator(configuration)
     return {
         /**
-         * 
+         *
          * @summary Confirm OTP while checkout products.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -4343,10 +4343,10 @@ export const OTPApiFp = function(configuration?: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
-         * 
+         *
          * @summary Generate an OTP
-         * @param {'sms' | 'whatsapp'} [channel] 
-         * @param {OtpPostRequest} [otpPostRequest] 
+         * @param {'sms' | 'whatsapp'} [channel]
+         * @param {OtpPostRequest} [otpPostRequest]
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -4355,9 +4355,9 @@ export const OTPApiFp = function(configuration?: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
-         * 
+         *
          * @summary Generate an OTP token
-         * @param {OtpTokenPostRequest} [otpTokenPostRequest] 
+         * @param {OtpTokenPostRequest} [otpTokenPostRequest]
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -4376,7 +4376,7 @@ export const OTPApiFactory = function (configuration?: Configuration, basePath?:
     const localVarFp = OTPApiFp(configuration)
     return {
         /**
-         * 
+         *
          * @summary Confirm OTP while checkout products.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -4385,7 +4385,7 @@ export const OTPApiFactory = function (configuration?: Configuration, basePath?:
             return localVarFp.confirmOtp(options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         *
          * @summary Generate an OTP
          * @param {OTPApiOtpPostRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -4395,7 +4395,7 @@ export const OTPApiFactory = function (configuration?: Configuration, basePath?:
             return localVarFp.otpPost(requestParameters.channel, requestParameters.otpPostRequest, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         *
          * @summary Generate an OTP token
          * @param {OTPApiOtpTokenPostRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -4414,14 +4414,14 @@ export const OTPApiFactory = function (configuration?: Configuration, basePath?:
  */
 export interface OTPApiOtpPostRequest {
     /**
-     * 
+     *
      * @type {'sms' | 'whatsapp'}
      * @memberof OTPApiOtpPost
      */
     readonly channel?: 'sms' | 'whatsapp'
 
     /**
-     * 
+     *
      * @type {OtpPostRequest}
      * @memberof OTPApiOtpPost
      */
@@ -4435,7 +4435,7 @@ export interface OTPApiOtpPostRequest {
  */
 export interface OTPApiOtpTokenPostRequest {
     /**
-     * 
+     *
      * @type {OtpTokenPostRequest}
      * @memberof OTPApiOtpTokenPost
      */
@@ -4450,7 +4450,7 @@ export interface OTPApiOtpTokenPostRequest {
  */
 export class OTPApi extends BaseAPI {
     /**
-     * 
+     *
      * @summary Confirm OTP while checkout products.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -4461,7 +4461,7 @@ export class OTPApi extends BaseAPI {
     }
 
     /**
-     * 
+     *
      * @summary Generate an OTP
      * @param {OTPApiOtpPostRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -4473,7 +4473,7 @@ export class OTPApi extends BaseAPI {
     }
 
     /**
-     * 
+     *
      * @summary Generate an OTP token
      * @param {OTPApiOtpTokenPostRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -4493,7 +4493,7 @@ export class OTPApi extends BaseAPI {
 export const PinnedFiltersApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
-         * 
+         *
          * @summary Delete a pinned filter
          * @param {string} name name of filter to delete
          * @param {*} [options] Override http request option.
@@ -4523,7 +4523,7 @@ export const PinnedFiltersApiAxiosParamCreator = function (configuration?: Confi
             }
 
 
-    
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
@@ -4534,7 +4534,7 @@ export const PinnedFiltersApiAxiosParamCreator = function (configuration?: Confi
             };
         },
         /**
-         * 
+         *
          * @summary Read pinned filters created by a user
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -4557,7 +4557,7 @@ export const PinnedFiltersApiAxiosParamCreator = function (configuration?: Confi
             await setOAuthToObject(localVarHeaderParameter, "chatdaddy", [], configuration)
 
 
-    
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
@@ -4568,9 +4568,9 @@ export const PinnedFiltersApiAxiosParamCreator = function (configuration?: Confi
             };
         },
         /**
-         * 
+         *
          * @summary Create new pinned filter
-         * @param {InboxFilterData} [inboxFilterData] 
+         * @param {InboxFilterData} [inboxFilterData]
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -4592,7 +4592,7 @@ export const PinnedFiltersApiAxiosParamCreator = function (configuration?: Confi
             await setOAuthToObject(localVarHeaderParameter, "chatdaddy", [], configuration)
 
 
-    
+
             localVarHeaderParameter['Content-Type'] = 'application/json';
 
             setSearchParams(localVarUrlObj, localVarQueryParameter);
@@ -4606,10 +4606,10 @@ export const PinnedFiltersApiAxiosParamCreator = function (configuration?: Confi
             };
         },
         /**
-         * 
+         *
          * @summary Rename a pinned filter
          * @param {string} nameToUpdate name of filter to update
-         * @param {InboxFilterName} [inboxFilterName] 
+         * @param {InboxFilterName} [inboxFilterName]
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -4637,7 +4637,7 @@ export const PinnedFiltersApiAxiosParamCreator = function (configuration?: Confi
             }
 
 
-    
+
             localVarHeaderParameter['Content-Type'] = 'application/json';
 
             setSearchParams(localVarUrlObj, localVarQueryParameter);
@@ -4661,7 +4661,7 @@ export const PinnedFiltersApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = PinnedFiltersApiAxiosParamCreator(configuration)
     return {
         /**
-         * 
+         *
          * @summary Delete a pinned filter
          * @param {string} name name of filter to delete
          * @param {*} [options] Override http request option.
@@ -4672,7 +4672,7 @@ export const PinnedFiltersApiFp = function(configuration?: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
-         * 
+         *
          * @summary Read pinned filters created by a user
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -4682,9 +4682,9 @@ export const PinnedFiltersApiFp = function(configuration?: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
-         * 
+         *
          * @summary Create new pinned filter
-         * @param {InboxFilterData} [inboxFilterData] 
+         * @param {InboxFilterData} [inboxFilterData]
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -4693,10 +4693,10 @@ export const PinnedFiltersApiFp = function(configuration?: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
-         * 
+         *
          * @summary Rename a pinned filter
          * @param {string} nameToUpdate name of filter to update
-         * @param {InboxFilterName} [inboxFilterName] 
+         * @param {InboxFilterName} [inboxFilterName]
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -4715,7 +4715,7 @@ export const PinnedFiltersApiFactory = function (configuration?: Configuration, 
     const localVarFp = PinnedFiltersApiFp(configuration)
     return {
         /**
-         * 
+         *
          * @summary Delete a pinned filter
          * @param {PinnedFiltersApiInboxFiltersDeleteRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -4725,7 +4725,7 @@ export const PinnedFiltersApiFactory = function (configuration?: Configuration, 
             return localVarFp.inboxFiltersDelete(requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         *
          * @summary Read pinned filters created by a user
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -4734,7 +4734,7 @@ export const PinnedFiltersApiFactory = function (configuration?: Configuration, 
             return localVarFp.inboxFiltersGet(options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         *
          * @summary Create new pinned filter
          * @param {PinnedFiltersApiInboxFiltersPostRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -4744,7 +4744,7 @@ export const PinnedFiltersApiFactory = function (configuration?: Configuration, 
             return localVarFp.inboxFiltersPost(requestParameters.inboxFilterData, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         *
          * @summary Rename a pinned filter
          * @param {PinnedFiltersApiInboxFiltersUpdateRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -4777,7 +4777,7 @@ export interface PinnedFiltersApiInboxFiltersDeleteRequest {
  */
 export interface PinnedFiltersApiInboxFiltersPostRequest {
     /**
-     * 
+     *
      * @type {InboxFilterData}
      * @memberof PinnedFiltersApiInboxFiltersPost
      */
@@ -4798,7 +4798,7 @@ export interface PinnedFiltersApiInboxFiltersUpdateRequest {
     readonly nameToUpdate: string
 
     /**
-     * 
+     *
      * @type {InboxFilterName}
      * @memberof PinnedFiltersApiInboxFiltersUpdate
      */
@@ -4813,7 +4813,7 @@ export interface PinnedFiltersApiInboxFiltersUpdateRequest {
  */
 export class PinnedFiltersApi extends BaseAPI {
     /**
-     * 
+     *
      * @summary Delete a pinned filter
      * @param {PinnedFiltersApiInboxFiltersDeleteRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -4825,7 +4825,7 @@ export class PinnedFiltersApi extends BaseAPI {
     }
 
     /**
-     * 
+     *
      * @summary Read pinned filters created by a user
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -4836,7 +4836,7 @@ export class PinnedFiltersApi extends BaseAPI {
     }
 
     /**
-     * 
+     *
      * @summary Create new pinned filter
      * @param {PinnedFiltersApiInboxFiltersPostRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -4848,7 +4848,7 @@ export class PinnedFiltersApi extends BaseAPI {
     }
 
     /**
-     * 
+     *
      * @summary Rename a pinned filter
      * @param {PinnedFiltersApiInboxFiltersUpdateRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -4868,9 +4868,9 @@ export class PinnedFiltersApi extends BaseAPI {
 export const SubUserApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
-         * 
+         *
          * @summary Delete a sub user
-         * @param {string} id 
+         * @param {string} id
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -4895,7 +4895,7 @@ export const SubUserApiAxiosParamCreator = function (configuration?: Configurati
             await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["TEAMMEMBERS_UPDATE"], configuration)
 
 
-    
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
@@ -4906,9 +4906,9 @@ export const SubUserApiAxiosParamCreator = function (configuration?: Configurati
             };
         },
         /**
-         * 
+         *
          * @summary Logout a sub user
-         * @param {string} id 
+         * @param {string} id
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -4933,7 +4933,7 @@ export const SubUserApiAxiosParamCreator = function (configuration?: Configurati
             await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["LOGOUT_SUB_USER"], configuration)
 
 
-    
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
@@ -4944,10 +4944,10 @@ export const SubUserApiAxiosParamCreator = function (configuration?: Configurati
             };
         },
         /**
-         * 
+         *
          * @summary Update a sub user
-         * @param {string} id 
-         * @param {SubUserPatchRequest} [subUserPatchRequest] 
+         * @param {string} id
+         * @param {SubUserPatchRequest} [subUserPatchRequest]
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -4972,7 +4972,7 @@ export const SubUserApiAxiosParamCreator = function (configuration?: Configurati
             await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["TEAMMEMBERS_UPDATE"], configuration)
 
 
-    
+
             localVarHeaderParameter['Content-Type'] = 'application/json';
 
             setSearchParams(localVarUrlObj, localVarQueryParameter);
@@ -4986,9 +4986,9 @@ export const SubUserApiAxiosParamCreator = function (configuration?: Configurati
             };
         },
         /**
-         * 
+         *
          * @summary Create a sub user
-         * @param {SubUserCreate} [subUserCreate] 
+         * @param {SubUserCreate} [subUserCreate]
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -5010,7 +5010,7 @@ export const SubUserApiAxiosParamCreator = function (configuration?: Configurati
             await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["CREATE_SUB_USER"], configuration)
 
 
-    
+
             localVarHeaderParameter['Content-Type'] = 'application/json';
 
             setSearchParams(localVarUrlObj, localVarQueryParameter);
@@ -5034,9 +5034,9 @@ export const SubUserApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = SubUserApiAxiosParamCreator(configuration)
     return {
         /**
-         * 
+         *
          * @summary Delete a sub user
-         * @param {string} id 
+         * @param {string} id
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -5045,9 +5045,9 @@ export const SubUserApiFp = function(configuration?: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
-         * 
+         *
          * @summary Logout a sub user
-         * @param {string} id 
+         * @param {string} id
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -5056,10 +5056,10 @@ export const SubUserApiFp = function(configuration?: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
-         * 
+         *
          * @summary Update a sub user
-         * @param {string} id 
-         * @param {SubUserPatchRequest} [subUserPatchRequest] 
+         * @param {string} id
+         * @param {SubUserPatchRequest} [subUserPatchRequest]
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -5068,9 +5068,9 @@ export const SubUserApiFp = function(configuration?: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
-         * 
+         *
          * @summary Create a sub user
-         * @param {SubUserCreate} [subUserCreate] 
+         * @param {SubUserCreate} [subUserCreate]
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -5089,7 +5089,7 @@ export const SubUserApiFactory = function (configuration?: Configuration, basePa
     const localVarFp = SubUserApiFp(configuration)
     return {
         /**
-         * 
+         *
          * @summary Delete a sub user
          * @param {SubUserApiSubUserDeleteRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -5099,7 +5099,7 @@ export const SubUserApiFactory = function (configuration?: Configuration, basePa
             return localVarFp.subUserDelete(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         *
          * @summary Logout a sub user
          * @param {SubUserApiSubUserLogoutRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -5109,7 +5109,7 @@ export const SubUserApiFactory = function (configuration?: Configuration, basePa
             return localVarFp.subUserLogout(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         *
          * @summary Update a sub user
          * @param {SubUserApiSubUserPatchRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -5119,7 +5119,7 @@ export const SubUserApiFactory = function (configuration?: Configuration, basePa
             return localVarFp.subUserPatch(requestParameters.id, requestParameters.subUserPatchRequest, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         *
          * @summary Create a sub user
          * @param {SubUserApiSubUserPostRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -5138,7 +5138,7 @@ export const SubUserApiFactory = function (configuration?: Configuration, basePa
  */
 export interface SubUserApiSubUserDeleteRequest {
     /**
-     * 
+     *
      * @type {string}
      * @memberof SubUserApiSubUserDelete
      */
@@ -5152,7 +5152,7 @@ export interface SubUserApiSubUserDeleteRequest {
  */
 export interface SubUserApiSubUserLogoutRequest {
     /**
-     * 
+     *
      * @type {string}
      * @memberof SubUserApiSubUserLogout
      */
@@ -5166,14 +5166,14 @@ export interface SubUserApiSubUserLogoutRequest {
  */
 export interface SubUserApiSubUserPatchRequest {
     /**
-     * 
+     *
      * @type {string}
      * @memberof SubUserApiSubUserPatch
      */
     readonly id: string
 
     /**
-     * 
+     *
      * @type {SubUserPatchRequest}
      * @memberof SubUserApiSubUserPatch
      */
@@ -5187,7 +5187,7 @@ export interface SubUserApiSubUserPatchRequest {
  */
 export interface SubUserApiSubUserPostRequest {
     /**
-     * 
+     *
      * @type {SubUserCreate}
      * @memberof SubUserApiSubUserPost
      */
@@ -5202,7 +5202,7 @@ export interface SubUserApiSubUserPostRequest {
  */
 export class SubUserApi extends BaseAPI {
     /**
-     * 
+     *
      * @summary Delete a sub user
      * @param {SubUserApiSubUserDeleteRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -5214,7 +5214,7 @@ export class SubUserApi extends BaseAPI {
     }
 
     /**
-     * 
+     *
      * @summary Logout a sub user
      * @param {SubUserApiSubUserLogoutRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -5226,7 +5226,7 @@ export class SubUserApi extends BaseAPI {
     }
 
     /**
-     * 
+     *
      * @summary Update a sub user
      * @param {SubUserApiSubUserPatchRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -5238,7 +5238,7 @@ export class SubUserApi extends BaseAPI {
     }
 
     /**
-     * 
+     *
      * @summary Create a sub user
      * @param {SubUserApiSubUserPostRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -5258,7 +5258,7 @@ export class SubUserApi extends BaseAPI {
 export const TeamsApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
-         * 
+         *
          * @summary Fetch partner admin teamIds
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -5281,7 +5281,7 @@ export const TeamsApiAxiosParamCreator = function (configuration?: Configuration
             await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["ADMIN_PANEL_ACCESS"], configuration)
 
 
-    
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
@@ -5292,10 +5292,10 @@ export const TeamsApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
-         * 
+         *
          * @summary Upgrade the team to \'partner\' if partner is specified, else, downgrade partner status
          * @param {string} teamId the teamId of the team to be upgraded/downgraded
-         * @param {PartnerTeamPatchRequest} [partnerTeamPatchRequest] 
+         * @param {PartnerTeamPatchRequest} [partnerTeamPatchRequest]
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -5320,7 +5320,7 @@ export const TeamsApiAxiosParamCreator = function (configuration?: Configuration
             await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["ADMIN_PANEL_ACCESS"], configuration)
 
 
-    
+
             localVarHeaderParameter['Content-Type'] = 'application/json';
 
             setSearchParams(localVarUrlObj, localVarQueryParameter);
@@ -5334,7 +5334,7 @@ export const TeamsApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
-         * 
+         *
          * @summary Mark a team as having completed an onboarding step
          * @param {OnboardingStepID} step the onboarding step to mark as completed
          * @param {*} [options] Override http request option.
@@ -5361,7 +5361,7 @@ export const TeamsApiAxiosParamCreator = function (configuration?: Configuration
             await setOAuthToObject(localVarHeaderParameter, "chatdaddy", [], configuration)
 
 
-    
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
@@ -5372,7 +5372,7 @@ export const TeamsApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
-         * 
+         *
          * @summary Fetch teams you have access to
          * @param {string} [q] Search by name, ID, invite code, etc.
          * @param {string} [partnership] Search by partnership
@@ -5482,7 +5482,7 @@ export const TeamsApiAxiosParamCreator = function (configuration?: Configuration
             }
 
 
-    
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
@@ -5493,7 +5493,7 @@ export const TeamsApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
-         * 
+         *
          * @summary Join a team
          * @param {string} id inviteLink ID
          * @param {*} [options] Override http request option.
@@ -5523,7 +5523,7 @@ export const TeamsApiAxiosParamCreator = function (configuration?: Configuration
             }
 
 
-    
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
@@ -5534,7 +5534,7 @@ export const TeamsApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
-         * 
+         *
          * @summary Leave a team
          * @param {string} teamId the teamId of the team to leave
          * @param {*} [options] Override http request option.
@@ -5561,7 +5561,7 @@ export const TeamsApiAxiosParamCreator = function (configuration?: Configuration
             await setOAuthToObject(localVarHeaderParameter, "chatdaddy", [], configuration)
 
 
-    
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
@@ -5572,9 +5572,9 @@ export const TeamsApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
-         * - If you want to update/delete members -- ensure you have the `TEAMMEMBERS_UPDATE` scope - If you want to delete invite links -- ensure you have the `TEAMLINKS_UPDATE` scope - Also you cannot delete/update yourself in the team. If you attempt to do so, a 400 will be returned - If scopes and role are both specified, scopes will be ignored 
+         * - If you want to update/delete members -- ensure you have the `TEAMMEMBERS_UPDATE` scope - If you want to delete invite links -- ensure you have the `TEAMLINKS_UPDATE` scope - Also you cannot delete/update yourself in the team. If you attempt to do so, a 400 will be returned - If scopes and role are both specified, scopes will be ignored
          * @summary Update the team the access token is for
-         * @param {TeamPatchRequest} [teamPatchRequest] 
+         * @param {TeamPatchRequest} [teamPatchRequest]
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -5596,7 +5596,7 @@ export const TeamsApiAxiosParamCreator = function (configuration?: Configuration
             await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["TEAM_UPDATE"], configuration)
 
 
-    
+
             localVarHeaderParameter['Content-Type'] = 'application/json';
 
             setSearchParams(localVarUrlObj, localVarQueryParameter);
@@ -5620,7 +5620,7 @@ export const TeamsApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = TeamsApiAxiosParamCreator(configuration)
     return {
         /**
-         * 
+         *
          * @summary Fetch partner admin teamIds
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -5630,10 +5630,10 @@ export const TeamsApiFp = function(configuration?: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
-         * 
+         *
          * @summary Upgrade the team to \'partner\' if partner is specified, else, downgrade partner status
          * @param {string} teamId the teamId of the team to be upgraded/downgraded
-         * @param {PartnerTeamPatchRequest} [partnerTeamPatchRequest] 
+         * @param {PartnerTeamPatchRequest} [partnerTeamPatchRequest]
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -5642,7 +5642,7 @@ export const TeamsApiFp = function(configuration?: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
-         * 
+         *
          * @summary Mark a team as having completed an onboarding step
          * @param {OnboardingStepID} step the onboarding step to mark as completed
          * @param {*} [options] Override http request option.
@@ -5653,7 +5653,7 @@ export const TeamsApiFp = function(configuration?: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
-         * 
+         *
          * @summary Fetch teams you have access to
          * @param {string} [q] Search by name, ID, invite code, etc.
          * @param {string} [partnership] Search by partnership
@@ -5680,7 +5680,7 @@ export const TeamsApiFp = function(configuration?: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
-         * 
+         *
          * @summary Join a team
          * @param {string} id inviteLink ID
          * @param {*} [options] Override http request option.
@@ -5691,7 +5691,7 @@ export const TeamsApiFp = function(configuration?: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
-         * 
+         *
          * @summary Leave a team
          * @param {string} teamId the teamId of the team to leave
          * @param {*} [options] Override http request option.
@@ -5702,9 +5702,9 @@ export const TeamsApiFp = function(configuration?: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
-         * - If you want to update/delete members -- ensure you have the `TEAMMEMBERS_UPDATE` scope - If you want to delete invite links -- ensure you have the `TEAMLINKS_UPDATE` scope - Also you cannot delete/update yourself in the team. If you attempt to do so, a 400 will be returned - If scopes and role are both specified, scopes will be ignored 
+         * - If you want to update/delete members -- ensure you have the `TEAMMEMBERS_UPDATE` scope - If you want to delete invite links -- ensure you have the `TEAMLINKS_UPDATE` scope - Also you cannot delete/update yourself in the team. If you attempt to do so, a 400 will be returned - If scopes and role are both specified, scopes will be ignored
          * @summary Update the team the access token is for
-         * @param {TeamPatchRequest} [teamPatchRequest] 
+         * @param {TeamPatchRequest} [teamPatchRequest]
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -5723,7 +5723,7 @@ export const TeamsApiFactory = function (configuration?: Configuration, basePath
     const localVarFp = TeamsApiFp(configuration)
     return {
         /**
-         * 
+         *
          * @summary Fetch partner admin teamIds
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -5732,7 +5732,7 @@ export const TeamsApiFactory = function (configuration?: Configuration, basePath
             return localVarFp.partnerAdminGet(options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         *
          * @summary Upgrade the team to \'partner\' if partner is specified, else, downgrade partner status
          * @param {TeamsApiPartnerTeamPatchRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -5742,7 +5742,7 @@ export const TeamsApiFactory = function (configuration?: Configuration, basePath
             return localVarFp.partnerTeamPatch(requestParameters.teamId, requestParameters.partnerTeamPatchRequest, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         *
          * @summary Mark a team as having completed an onboarding step
          * @param {TeamsApiTeamsCompletedOnboardingStepPostRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -5752,7 +5752,7 @@ export const TeamsApiFactory = function (configuration?: Configuration, basePath
             return localVarFp.teamsCompletedOnboardingStepPost(requestParameters.step, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         *
          * @summary Fetch teams you have access to
          * @param {TeamsApiTeamsGetRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -5762,7 +5762,7 @@ export const TeamsApiFactory = function (configuration?: Configuration, basePath
             return localVarFp.teamsGet(requestParameters.q, requestParameters.partnership, requestParameters.onboardingScoreMin, requestParameters.onboardingScoreMax, requestParameters.createdAfter, requestParameters.completedSteps, requestParameters.id, requestParameters.userId, requestParameters.count, requestParameters.page, requestParameters.includeTeamMembers, requestParameters.includeInviteLinks, requestParameters.includeTotal, requestParameters.includeCreator, requestParameters.partner, requestParameters.returnOnboardingScore, requestParameters.isCreditSystemCustomer, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         *
          * @summary Join a team
          * @param {TeamsApiTeamsJoinInviteRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -5772,7 +5772,7 @@ export const TeamsApiFactory = function (configuration?: Configuration, basePath
             return localVarFp.teamsJoinInvite(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         *
          * @summary Leave a team
          * @param {TeamsApiTeamsLeaveRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -5782,7 +5782,7 @@ export const TeamsApiFactory = function (configuration?: Configuration, basePath
             return localVarFp.teamsLeave(requestParameters.teamId, options).then((request) => request(axios, basePath));
         },
         /**
-         * - If you want to update/delete members -- ensure you have the `TEAMMEMBERS_UPDATE` scope - If you want to delete invite links -- ensure you have the `TEAMLINKS_UPDATE` scope - Also you cannot delete/update yourself in the team. If you attempt to do so, a 400 will be returned - If scopes and role are both specified, scopes will be ignored 
+         * - If you want to update/delete members -- ensure you have the `TEAMMEMBERS_UPDATE` scope - If you want to delete invite links -- ensure you have the `TEAMLINKS_UPDATE` scope - Also you cannot delete/update yourself in the team. If you attempt to do so, a 400 will be returned - If scopes and role are both specified, scopes will be ignored
          * @summary Update the team the access token is for
          * @param {TeamsApiTeamsPatchRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -5808,7 +5808,7 @@ export interface TeamsApiPartnerTeamPatchRequest {
     readonly teamId: string
 
     /**
-     * 
+     *
      * @type {PartnerTeamPatchRequest}
      * @memberof TeamsApiPartnerTeamPatch
      */
@@ -5990,7 +5990,7 @@ export interface TeamsApiTeamsLeaveRequest {
  */
 export interface TeamsApiTeamsPatchRequest {
     /**
-     * 
+     *
      * @type {TeamPatchRequest}
      * @memberof TeamsApiTeamsPatch
      */
@@ -6005,7 +6005,7 @@ export interface TeamsApiTeamsPatchRequest {
  */
 export class TeamsApi extends BaseAPI {
     /**
-     * 
+     *
      * @summary Fetch partner admin teamIds
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -6016,7 +6016,7 @@ export class TeamsApi extends BaseAPI {
     }
 
     /**
-     * 
+     *
      * @summary Upgrade the team to \'partner\' if partner is specified, else, downgrade partner status
      * @param {TeamsApiPartnerTeamPatchRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -6028,7 +6028,7 @@ export class TeamsApi extends BaseAPI {
     }
 
     /**
-     * 
+     *
      * @summary Mark a team as having completed an onboarding step
      * @param {TeamsApiTeamsCompletedOnboardingStepPostRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -6040,7 +6040,7 @@ export class TeamsApi extends BaseAPI {
     }
 
     /**
-     * 
+     *
      * @summary Fetch teams you have access to
      * @param {TeamsApiTeamsGetRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -6052,7 +6052,7 @@ export class TeamsApi extends BaseAPI {
     }
 
     /**
-     * 
+     *
      * @summary Join a team
      * @param {TeamsApiTeamsJoinInviteRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -6064,7 +6064,7 @@ export class TeamsApi extends BaseAPI {
     }
 
     /**
-     * 
+     *
      * @summary Leave a team
      * @param {TeamsApiTeamsLeaveRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -6076,7 +6076,7 @@ export class TeamsApi extends BaseAPI {
     }
 
     /**
-     * - If you want to update/delete members -- ensure you have the `TEAMMEMBERS_UPDATE` scope - If you want to delete invite links -- ensure you have the `TEAMLINKS_UPDATE` scope - Also you cannot delete/update yourself in the team. If you attempt to do so, a 400 will be returned - If scopes and role are both specified, scopes will be ignored 
+     * - If you want to update/delete members -- ensure you have the `TEAMMEMBERS_UPDATE` scope - If you want to delete invite links -- ensure you have the `TEAMLINKS_UPDATE` scope - Also you cannot delete/update yourself in the team. If you attempt to do so, a 400 will be returned - If scopes and role are both specified, scopes will be ignored
      * @summary Update the team the access token is for
      * @param {TeamsApiTeamsPatchRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -6098,7 +6098,7 @@ export const UsersApiAxiosParamCreator = function (configuration?: Configuration
         /**
          * Deletes the user specified
          * @summary Delete a user
-         * @param {string} id 
+         * @param {string} id
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -6126,7 +6126,7 @@ export const UsersApiAxiosParamCreator = function (configuration?: Configuration
             }
 
 
-    
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
@@ -6137,7 +6137,7 @@ export const UsersApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
-         * 
+         *
          * @summary Fetch users you have access to
          * @param {string} [q] Search by name, ID, email, phone etc.
          * @param {string} [partnership] Search by partnership
@@ -6205,7 +6205,7 @@ export const UsersApiAxiosParamCreator = function (configuration?: Configuration
             }
 
 
-    
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
@@ -6216,9 +6216,9 @@ export const UsersApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
-         * 
+         *
          * @summary Reset user password
-         * @param {ResetPassword} [resetPassword] 
+         * @param {ResetPassword} [resetPassword]
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -6239,7 +6239,7 @@ export const UsersApiAxiosParamCreator = function (configuration?: Configuration
             await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
 
 
-    
+
             localVarHeaderParameter['Content-Type'] = 'application/json';
 
             setSearchParams(localVarUrlObj, localVarQueryParameter);
@@ -6253,10 +6253,10 @@ export const UsersApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
-         * 
+         *
          * @summary Update the user in the access token
          * @param {string} [userId] Change the password of this user ID
-         * @param {UserPatch} [userPatch] 
+         * @param {UserPatch} [userPatch]
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -6282,7 +6282,7 @@ export const UsersApiAxiosParamCreator = function (configuration?: Configuration
             }
 
 
-    
+
             localVarHeaderParameter['Content-Type'] = 'application/json';
 
             setSearchParams(localVarUrlObj, localVarQueryParameter);
@@ -6296,9 +6296,9 @@ export const UsersApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
-         * 
+         *
          * @summary Updates users Phonenumber
-         * @param {UsersPhoneNumberPatchRequest} [usersPhoneNumberPatchRequest] 
+         * @param {UsersPhoneNumberPatchRequest} [usersPhoneNumberPatchRequest]
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -6319,7 +6319,7 @@ export const UsersApiAxiosParamCreator = function (configuration?: Configuration
             await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
 
 
-    
+
             localVarHeaderParameter['Content-Type'] = 'application/json';
 
             setSearchParams(localVarUrlObj, localVarQueryParameter);
@@ -6333,9 +6333,9 @@ export const UsersApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
-         * 
+         *
          * @summary Create a new user
-         * @param {UserCreate} [userCreate] 
+         * @param {UserCreate} [userCreate]
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -6360,7 +6360,7 @@ export const UsersApiAxiosParamCreator = function (configuration?: Configuration
             await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["ADMIN_PANEL_ACCESS", "PARTNER_ADMIN_PANEL_ACCESS"], configuration)
 
 
-    
+
             localVarHeaderParameter['Content-Type'] = 'application/json';
 
             setSearchParams(localVarUrlObj, localVarQueryParameter);
@@ -6386,7 +6386,7 @@ export const UsersApiFp = function(configuration?: Configuration) {
         /**
          * Deletes the user specified
          * @summary Delete a user
-         * @param {string} id 
+         * @param {string} id
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -6395,7 +6395,7 @@ export const UsersApiFp = function(configuration?: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
-         * 
+         *
          * @summary Fetch users you have access to
          * @param {string} [q] Search by name, ID, email, phone etc.
          * @param {string} [partnership] Search by partnership
@@ -6414,9 +6414,9 @@ export const UsersApiFp = function(configuration?: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
-         * 
+         *
          * @summary Reset user password
-         * @param {ResetPassword} [resetPassword] 
+         * @param {ResetPassword} [resetPassword]
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -6425,10 +6425,10 @@ export const UsersApiFp = function(configuration?: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
-         * 
+         *
          * @summary Update the user in the access token
          * @param {string} [userId] Change the password of this user ID
-         * @param {UserPatch} [userPatch] 
+         * @param {UserPatch} [userPatch]
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -6437,9 +6437,9 @@ export const UsersApiFp = function(configuration?: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
-         * 
+         *
          * @summary Updates users Phonenumber
-         * @param {UsersPhoneNumberPatchRequest} [usersPhoneNumberPatchRequest] 
+         * @param {UsersPhoneNumberPatchRequest} [usersPhoneNumberPatchRequest]
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -6448,9 +6448,9 @@ export const UsersApiFp = function(configuration?: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
-         * 
+         *
          * @summary Create a new user
-         * @param {UserCreate} [userCreate] 
+         * @param {UserCreate} [userCreate]
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -6479,7 +6479,7 @@ export const UsersApiFactory = function (configuration?: Configuration, basePath
             return localVarFp.usersDelete(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         *
          * @summary Fetch users you have access to
          * @param {UsersApiUsersGetRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -6489,7 +6489,7 @@ export const UsersApiFactory = function (configuration?: Configuration, basePath
             return localVarFp.usersGet(requestParameters.q, requestParameters.partnership, requestParameters.id, requestParameters.originalTeamId, requestParameters.count, requestParameters.page, requestParameters.includeMemberships, requestParameters.includeTotal, requestParameters.other, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         *
          * @summary Reset user password
          * @param {UsersApiUsersPasswordPatchRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -6499,7 +6499,7 @@ export const UsersApiFactory = function (configuration?: Configuration, basePath
             return localVarFp.usersPasswordPatch(requestParameters.resetPassword, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         *
          * @summary Update the user in the access token
          * @param {UsersApiUsersPatchRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -6509,7 +6509,7 @@ export const UsersApiFactory = function (configuration?: Configuration, basePath
             return localVarFp.usersPatch(requestParameters.userId, requestParameters.userPatch, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         *
          * @summary Updates users Phonenumber
          * @param {UsersApiUsersPhoneNumberPatchRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -6519,7 +6519,7 @@ export const UsersApiFactory = function (configuration?: Configuration, basePath
             return localVarFp.usersPhoneNumberPatch(requestParameters.usersPhoneNumberPatchRequest, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         *
          * @summary Create a new user
          * @param {UsersApiUsersPostRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -6538,7 +6538,7 @@ export const UsersApiFactory = function (configuration?: Configuration, basePath
  */
 export interface UsersApiUsersDeleteRequest {
     /**
-     * 
+     *
      * @type {string}
      * @memberof UsersApiUsersDelete
      */
@@ -6622,7 +6622,7 @@ export interface UsersApiUsersGetRequest {
  */
 export interface UsersApiUsersPasswordPatchRequest {
     /**
-     * 
+     *
      * @type {ResetPassword}
      * @memberof UsersApiUsersPasswordPatch
      */
@@ -6643,7 +6643,7 @@ export interface UsersApiUsersPatchRequest {
     readonly userId?: string
 
     /**
-     * 
+     *
      * @type {UserPatch}
      * @memberof UsersApiUsersPatch
      */
@@ -6657,7 +6657,7 @@ export interface UsersApiUsersPatchRequest {
  */
 export interface UsersApiUsersPhoneNumberPatchRequest {
     /**
-     * 
+     *
      * @type {UsersPhoneNumberPatchRequest}
      * @memberof UsersApiUsersPhoneNumberPatch
      */
@@ -6671,7 +6671,7 @@ export interface UsersApiUsersPhoneNumberPatchRequest {
  */
 export interface UsersApiUsersPostRequest {
     /**
-     * 
+     *
      * @type {UserCreate}
      * @memberof UsersApiUsersPost
      */
@@ -6698,7 +6698,7 @@ export class UsersApi extends BaseAPI {
     }
 
     /**
-     * 
+     *
      * @summary Fetch users you have access to
      * @param {UsersApiUsersGetRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -6710,7 +6710,7 @@ export class UsersApi extends BaseAPI {
     }
 
     /**
-     * 
+     *
      * @summary Reset user password
      * @param {UsersApiUsersPasswordPatchRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -6722,7 +6722,7 @@ export class UsersApi extends BaseAPI {
     }
 
     /**
-     * 
+     *
      * @summary Update the user in the access token
      * @param {UsersApiUsersPatchRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -6734,7 +6734,7 @@ export class UsersApi extends BaseAPI {
     }
 
     /**
-     * 
+     *
      * @summary Updates users Phonenumber
      * @param {UsersApiUsersPhoneNumberPatchRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -6746,7 +6746,7 @@ export class UsersApi extends BaseAPI {
     }
 
     /**
-     * 
+     *
      * @summary Create a new user
      * @param {UsersApiUsersPostRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -6766,7 +6766,7 @@ export class UsersApi extends BaseAPI {
 export const WidgetConfigApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
-         * 
+         *
          * @summary Get widget config for a team id
          * @param {string} teamId teamId
          * @param {*} [options] Override http request option.
@@ -6789,7 +6789,7 @@ export const WidgetConfigApiAxiosParamCreator = function (configuration?: Config
             const localVarQueryParameter = {} as any;
 
 
-    
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
@@ -6800,8 +6800,8 @@ export const WidgetConfigApiAxiosParamCreator = function (configuration?: Config
             };
         },
         /**
-         * 
-         * @param {OptionalWidgetConfigParams} [optionalWidgetConfigParams] 
+         *
+         * @param {OptionalWidgetConfigParams} [optionalWidgetConfigParams]
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -6823,7 +6823,7 @@ export const WidgetConfigApiAxiosParamCreator = function (configuration?: Config
             await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["WIDGET_EDIT"], configuration)
 
 
-    
+
             localVarHeaderParameter['Content-Type'] = 'application/json';
 
             setSearchParams(localVarUrlObj, localVarQueryParameter);
@@ -6837,9 +6837,9 @@ export const WidgetConfigApiAxiosParamCreator = function (configuration?: Config
             };
         },
         /**
-         * 
+         *
          * @summary Create widget config
-         * @param {WidgetConfigParams} [widgetConfigParams] 
+         * @param {WidgetConfigParams} [widgetConfigParams]
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -6861,7 +6861,7 @@ export const WidgetConfigApiAxiosParamCreator = function (configuration?: Config
             await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["WIDGET_EDIT"], configuration)
 
 
-    
+
             localVarHeaderParameter['Content-Type'] = 'application/json';
 
             setSearchParams(localVarUrlObj, localVarQueryParameter);
@@ -6885,7 +6885,7 @@ export const WidgetConfigApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = WidgetConfigApiAxiosParamCreator(configuration)
     return {
         /**
-         * 
+         *
          * @summary Get widget config for a team id
          * @param {string} teamId teamId
          * @param {*} [options] Override http request option.
@@ -6896,8 +6896,8 @@ export const WidgetConfigApiFp = function(configuration?: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
-         * 
-         * @param {OptionalWidgetConfigParams} [optionalWidgetConfigParams] 
+         *
+         * @param {OptionalWidgetConfigParams} [optionalWidgetConfigParams]
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -6906,9 +6906,9 @@ export const WidgetConfigApiFp = function(configuration?: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
-         * 
+         *
          * @summary Create widget config
-         * @param {WidgetConfigParams} [widgetConfigParams] 
+         * @param {WidgetConfigParams} [widgetConfigParams]
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -6927,7 +6927,7 @@ export const WidgetConfigApiFactory = function (configuration?: Configuration, b
     const localVarFp = WidgetConfigApiFp(configuration)
     return {
         /**
-         * 
+         *
          * @summary Get widget config for a team id
          * @param {WidgetConfigApiWidgetGetRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -6937,7 +6937,7 @@ export const WidgetConfigApiFactory = function (configuration?: Configuration, b
             return localVarFp.widgetGet(requestParameters.teamId, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         *
          * @param {WidgetConfigApiWidgetPatchRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -6946,7 +6946,7 @@ export const WidgetConfigApiFactory = function (configuration?: Configuration, b
             return localVarFp.widgetPatch(requestParameters.optionalWidgetConfigParams, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         *
          * @summary Create widget config
          * @param {WidgetConfigApiWidgetPostRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -6979,7 +6979,7 @@ export interface WidgetConfigApiWidgetGetRequest {
  */
 export interface WidgetConfigApiWidgetPatchRequest {
     /**
-     * 
+     *
      * @type {OptionalWidgetConfigParams}
      * @memberof WidgetConfigApiWidgetPatch
      */
@@ -6993,7 +6993,7 @@ export interface WidgetConfigApiWidgetPatchRequest {
  */
 export interface WidgetConfigApiWidgetPostRequest {
     /**
-     * 
+     *
      * @type {WidgetConfigParams}
      * @memberof WidgetConfigApiWidgetPost
      */
@@ -7008,7 +7008,7 @@ export interface WidgetConfigApiWidgetPostRequest {
  */
 export class WidgetConfigApi extends BaseAPI {
     /**
-     * 
+     *
      * @summary Get widget config for a team id
      * @param {WidgetConfigApiWidgetGetRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -7020,7 +7020,7 @@ export class WidgetConfigApi extends BaseAPI {
     }
 
     /**
-     * 
+     *
      * @param {WidgetConfigApiWidgetPatchRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -7031,7 +7031,7 @@ export class WidgetConfigApi extends BaseAPI {
     }
 
     /**
-     * 
+     *
      * @summary Create widget config
      * @param {WidgetConfigApiWidgetPostRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
