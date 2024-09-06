@@ -3,7 +3,7 @@ import { createHash } from 'crypto'
 import { ActorMetadata, Configuration, ConfigurationParameters, JWT, OAuthApi, RefreshTokenLoginRequest, Scope } from '../OpenAPI'
 import SCOPES from '../scopes.json'
 
-const PUBLIC_KEY = `
+const PUBLIC_KEY = process.env.PUBLIC_KEY || `
 -----BEGIN PUBLIC KEY-----
 MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEevVHEB81+mIuHJ6Ka2+GveuyAb2P
 SNEGnm4K1V6HzZF0F9+mQS7N0UHNE+gv0OQIKi5D6e48ZCVytj3iX4Todg==
