@@ -6271,6 +6271,12 @@ export interface WebhookMailPostRequest {
      * @memberof WebhookMailPostRequest
      */
     'Tag': string;
+    /**
+     * Extra information about the request
+     * @type {object}
+     * @memberof WebhookMailPostRequest
+     */
+    'Metadata'?: object;
 }
 /**
  * 
