@@ -667,6 +667,12 @@ export interface Listing {
     'description': string;
     /**
      * 
+     * @type {string}
+     * @memberof Listing
+     */
+    'partnership'?: string;
+    /**
+     * 
      * @type {Array<string>}
      * @memberof Listing
      */
@@ -796,6 +802,12 @@ export interface ListingCreate {
     'imageUrl'?: string;
     /**
      * 
+     * @type {string}
+     * @memberof ListingCreate
+     */
+    'partnership'?: string;
+    /**
+     * 
      * @type {number}
      * @memberof ListingCreate
      */
@@ -893,6 +905,12 @@ export interface ListingUpdate {
      * @memberof ListingUpdate
      */
     'description'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ListingUpdate
+     */
+    'partnership'?: string;
     /**
      * 
      * @type {Array<string>}
