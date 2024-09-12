@@ -467,6 +467,44 @@ export interface OauthCallback200Response {
      */
     'accessToken'?: string;
 }
+/**
+ * 
+ * @export
+ * @interface TranslateTextPost200Response
+ */
+export interface TranslateTextPost200Response {
+    /**
+     * 
+     * @type {string}
+     * @memberof TranslateTextPost200Response
+     */
+    'text': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof TranslateTextPost200Response
+     */
+    'language'?: string;
+}
+/**
+ * 
+ * @export
+ * @interface TranslateTextPostRequest
+ */
+export interface TranslateTextPostRequest {
+    /**
+     * Content that needs translation
+     * @type {string}
+     * @memberof TranslateTextPostRequest
+     */
+    'text': string;
+    /**
+     * Language to translate to
+     * @type {string}
+     * @memberof TranslateTextPostRequest
+     */
+    'language': string;
+}
 
 /**
  * CustomBotApi - axios parameter creator
@@ -1366,6 +1404,129 @@ export class CustomBotApi extends BaseAPI {
      */
     public manageUserDataPost(requestParameters: CustomBotApiManageUserDataPostRequest, options?: AxiosRequestConfig) {
         return CustomBotApiFp(this.configuration).manageUserDataPost(requestParameters.botApp, requestParameters.userId, requestParameters.manageUserDataPostRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+/**
+ * LocaleBotApi - axios parameter creator
+ * @export
+ */
+export const LocaleBotApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @summary Get translation for text to language
+         * @param {TranslateTextPostRequest} [translateTextPostRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        translateTextPost: async (translateTextPostRequest?: TranslateTextPostRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/translateText`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", [], configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(translateTextPostRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * LocaleBotApi - functional programming interface
+ * @export
+ */
+export const LocaleBotApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = LocaleBotApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * 
+         * @summary Get translation for text to language
+         * @param {TranslateTextPostRequest} [translateTextPostRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async translateTextPost(translateTextPostRequest?: TranslateTextPostRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TranslateTextPost200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.translateTextPost(translateTextPostRequest, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+    }
+};
+
+/**
+ * LocaleBotApi - factory interface
+ * @export
+ */
+export const LocaleBotApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = LocaleBotApiFp(configuration)
+    return {
+        /**
+         * 
+         * @summary Get translation for text to language
+         * @param {LocaleBotApiTranslateTextPostRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        translateTextPost(requestParameters: LocaleBotApiTranslateTextPostRequest = {}, options?: AxiosRequestConfig): AxiosPromise<TranslateTextPost200Response> {
+            return localVarFp.translateTextPost(requestParameters.translateTextPostRequest, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * Request parameters for translateTextPost operation in LocaleBotApi.
+ * @export
+ * @interface LocaleBotApiTranslateTextPostRequest
+ */
+export interface LocaleBotApiTranslateTextPostRequest {
+    /**
+     * 
+     * @type {TranslateTextPostRequest}
+     * @memberof LocaleBotApiTranslateTextPost
+     */
+    readonly translateTextPostRequest?: TranslateTextPostRequest
+}
+
+/**
+ * LocaleBotApi - object-oriented interface
+ * @export
+ * @class LocaleBotApi
+ * @extends {BaseAPI}
+ */
+export class LocaleBotApi extends BaseAPI {
+    /**
+     * 
+     * @summary Get translation for text to language
+     * @param {LocaleBotApiTranslateTextPostRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof LocaleBotApi
+     */
+    public translateTextPost(requestParameters: LocaleBotApiTranslateTextPostRequest = {}, options?: AxiosRequestConfig) {
+        return LocaleBotApiFp(this.configuration).translateTextPost(requestParameters.translateTextPostRequest, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
