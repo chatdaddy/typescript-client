@@ -557,9 +557,37 @@
     "section":"inbox",
     "group": "Groups"
   },
-  "NOTES": {
+  "CREATE_NOTES": {
     "number": 64,
-    "description": "Use Notes",
+    "description": "Create Notes",
+    "features": [
+      "team-inbox"
+    ],
+    "roles": [
+      "admin",
+      "agent",
+      "editor"
+    ],
+    "section":"inbox",
+    "group": "Notes"
+  },
+  "EDIT_NOTES": {
+    "number": 60,
+    "description": "Edit Notes",
+    "features": [
+      "team-inbox"
+    ],
+    "roles": [
+      "admin",
+      "agent",
+      "editor"
+    ],
+    "section":"inbox",
+    "group": "Notes"
+  },
+  "DELETE_NOTES": {
+    "number": 70,
+    "description": "Delete Notes",
     "features": [
       "team-inbox"
     ],
