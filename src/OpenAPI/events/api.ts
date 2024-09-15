@@ -188,10 +188,10 @@ export interface AccountInsertData {
     'state': AccountInsertDataStateEnum;
     /**
      * 
-     * @type {AccountInsertDataErrorAllOf}
+     * @type {AccountInsertDataError}
      * @memberof AccountInsertData
      */
-    'error'?: AccountInsertDataErrorAllOf | null;
+    'error'?: AccountInsertDataError | null;
     /**
      * 
      * @type {{ [key: string]: any; }}
@@ -244,6 +244,31 @@ export const AccountInsertDataStateEnum = {
 
 export type AccountInsertDataStateEnum = typeof AccountInsertDataStateEnum[keyof typeof AccountInsertDataStateEnum];
 
+/**
+ * 
+ * @export
+ * @interface AccountInsertDataError
+ */
+export interface AccountInsertDataError {
+    /**
+     * 
+     * @type {number}
+     * @memberof AccountInsertDataError
+     */
+    'statusCode': number;
+    /**
+     * 
+     * @type {string}
+     * @memberof AccountInsertDataError
+     */
+    'message': string;
+    /**
+     * 
+     * @type {AccountInsertDataErrorAllOfData}
+     * @memberof AccountInsertDataError
+     */
+    'data'?: AccountInsertDataErrorAllOfData;
+}
 /**
  * 
  * @export
@@ -584,10 +609,10 @@ export interface AccountUpdateData {
     'state'?: AccountUpdateDataStateEnum;
     /**
      * 
-     * @type {AccountInsertDataErrorAllOf}
+     * @type {AccountInsertDataError}
      * @memberof AccountUpdateData
      */
-    'error'?: AccountInsertDataErrorAllOf | null;
+    'error'?: AccountInsertDataError | null;
     /**
      * 
      * @type {{ [key: string]: any; }}

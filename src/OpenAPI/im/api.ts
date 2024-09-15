@@ -123,10 +123,10 @@ export interface Account {
     'state': AccountState;
     /**
      * 
-     * @type {AppError}
+     * @type {AccountError}
      * @memberof Account
      */
-    'error'?: AppError | null;
+    'error'?: AccountError | null;
     /**
      * 
      * @type {{ [key: string]: any; }}
@@ -416,6 +416,31 @@ export const AccountCredentialsWabaTypeEnum = {
 
 export type AccountCredentialsWabaTypeEnum = typeof AccountCredentialsWabaTypeEnum[keyof typeof AccountCredentialsWabaTypeEnum];
 
+/**
+ * 
+ * @export
+ * @interface AccountError
+ */
+export interface AccountError {
+    /**
+     * 
+     * @type {number}
+     * @memberof AccountError
+     */
+    'statusCode': number;
+    /**
+     * What the error was
+     * @type {string}
+     * @memberof AccountError
+     */
+    'message': string;
+    /**
+     * 
+     * @type {AppErrorData}
+     * @memberof AccountError
+     */
+    'data'?: AppErrorData;
+}
 /**
  * 
  * @export
