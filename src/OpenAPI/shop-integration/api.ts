@@ -344,6 +344,78 @@ type AddServiceModelSetupValueRequired = boolean | string;
 /**
  * 
  * @export
+ * @interface AppError
+ */
+interface AppError {
+    /**
+     * 
+     * @type {number}
+     * @memberof AppError
+     */
+    'statusCode': number;
+    /**
+     * What the error was
+     * @type {string}
+     * @memberof AppError
+     */
+    'message': string;
+    /**
+     * 
+     * @type {AppErrorData}
+     * @memberof AppError
+     */
+    'data'?: AppErrorData;
+}
+/**
+ * Some extra information about the error
+ * @export
+ * @interface AppErrorData
+ */
+interface AppErrorData {
+    [key: string]: any;
+
+    /**
+     * 
+     * @type {AppErrorDataHelpLink}
+     * @memberof AppErrorData
+     */
+    'helpLink'?: AppErrorDataHelpLink;
+}
+/**
+ * @type AppErrorDataHelpLink
+ * @export
+ */
+type AppErrorDataHelpLink = AppErrorDataHelpLinkOneOf | AppErrorDataHelpLinkOneOf1;
+
+/**
+ * 
+ * @export
+ * @interface AppErrorDataHelpLinkOneOf
+ */
+interface AppErrorDataHelpLinkOneOf {
+    /**
+     * 
+     * @type {string}
+     * @memberof AppErrorDataHelpLinkOneOf
+     */
+    'docId': string;
+}
+/**
+ * 
+ * @export
+ * @interface AppErrorDataHelpLinkOneOf1
+ */
+interface AppErrorDataHelpLinkOneOf1 {
+    /**
+     * 
+     * @type {string}
+     * @memberof AppErrorDataHelpLinkOneOf1
+     */
+    'url': string;
+}
+/**
+ * 
+ * @export
  * @interface CreateTrackingRequest
  */
 export interface CreateTrackingRequest {
@@ -366,37 +438,6 @@ export interface GetTrackingProducts200Response {
      * @memberof GetTrackingProducts200Response
      */
     'products': Array<ShopProduct>;
-}
-/**
- * 
- * @export
- * @interface ModelError
- */
-interface ModelError {
-    /**
-     * 
-     * @type {number}
-     * @memberof ModelError
-     */
-    'statusCode': number;
-    /**
-     * Specific description of the error
-     * @type {string}
-     * @memberof ModelError
-     */
-    'error': string;
-    /**
-     * What the error was
-     * @type {string}
-     * @memberof ModelError
-     */
-    'message': string;
-    /**
-     * Some extra information about the error
-     * @type {object}
-     * @memberof ModelError
-     */
-    'data'?: object;
 }
 /**
  * Model for a product on an external platform (eg. WhatsApp)
@@ -508,10 +549,10 @@ interface PlatformProduct {
     'isSyncing'?: boolean;
     /**
      * 
-     * @type {Error}
+     * @type {AppError}
      * @memberof PlatformProduct
      */
-    'error'?: Error;
+    'error'?: AppError;
     /**
      * An ISO formatted timestamp
      * @type {string}
@@ -782,10 +823,10 @@ interface ShopProduct {
     'isSyncing'?: boolean;
     /**
      * 
-     * @type {Error}
+     * @type {AppError}
      * @memberof ShopProduct
      */
-    'error'?: Error;
+    'error'?: AppError;
     /**
      * An ISO formatted timestamp
      * @type {string}

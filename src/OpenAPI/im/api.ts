@@ -123,10 +123,10 @@ export interface Account {
     'state': AccountState;
     /**
      * 
-     * @type {AccountError}
+     * @type {AppError}
      * @memberof Account
      */
-    'error'?: AccountError | null;
+    'error'?: AppError | null;
     /**
      * 
      * @type {{ [key: string]: any; }}
@@ -416,19 +416,6 @@ export const AccountCredentialsWabaTypeEnum = {
 
 export type AccountCredentialsWabaTypeEnum = typeof AccountCredentialsWabaTypeEnum[keyof typeof AccountCredentialsWabaTypeEnum];
 
-/**
- * 
- * @export
- * @interface AccountError
- */
-export interface AccountError {
-    /**
-     * 
-     * @type {string}
-     * @memberof AccountError
-     */
-    'message'?: string;
-}
 /**
  * 
  * @export
@@ -1274,6 +1261,78 @@ export interface AlibabaCamsSyncRequest {
  */
 export type AnyContactID = UniqueContactID | string;
 
+/**
+ * 
+ * @export
+ * @interface AppError
+ */
+export interface AppError {
+    /**
+     * 
+     * @type {number}
+     * @memberof AppError
+     */
+    'statusCode': number;
+    /**
+     * What the error was
+     * @type {string}
+     * @memberof AppError
+     */
+    'message': string;
+    /**
+     * 
+     * @type {AppErrorData}
+     * @memberof AppError
+     */
+    'data'?: AppErrorData;
+}
+/**
+ * Some extra information about the error
+ * @export
+ * @interface AppErrorData
+ */
+export interface AppErrorData {
+    [key: string]: any;
+
+    /**
+     * 
+     * @type {AppErrorDataHelpLink}
+     * @memberof AppErrorData
+     */
+    'helpLink'?: AppErrorDataHelpLink;
+}
+/**
+ * @type AppErrorDataHelpLink
+ * @export
+ */
+export type AppErrorDataHelpLink = AppErrorDataHelpLinkOneOf | AppErrorDataHelpLinkOneOf1;
+
+/**
+ * 
+ * @export
+ * @interface AppErrorDataHelpLinkOneOf
+ */
+export interface AppErrorDataHelpLinkOneOf {
+    /**
+     * 
+     * @type {string}
+     * @memberof AppErrorDataHelpLinkOneOf
+     */
+    'docId': string;
+}
+/**
+ * 
+ * @export
+ * @interface AppErrorDataHelpLinkOneOf1
+ */
+export interface AppErrorDataHelpLinkOneOf1 {
+    /**
+     * 
+     * @type {string}
+     * @memberof AppErrorDataHelpLinkOneOf1
+     */
+    'url': string;
+}
 /**
  * 
  * @export
@@ -3342,22 +3401,41 @@ export interface MessageAllOf {
 export interface MessageAllOfError {
     /**
      * 
+     * @type {number}
+     * @memberof MessageAllOfError
+     */
+    'statusCode': number;
+    /**
+     * What the error was
      * @type {string}
      * @memberof MessageAllOfError
      */
     'message': string;
     /**
      * 
-     * @type {number}
+     * @type {AppErrorData}
      * @memberof MessageAllOfError
      */
-    'statusCode': number;
+    'data'?: AppErrorData;
     /**
      * 
      * @type {number}
      * @memberof MessageAllOfError
      */
-    'retries'?: number;
+    'retries': number;
+}
+/**
+ * 
+ * @export
+ * @interface MessageAllOfErrorAllOf
+ */
+export interface MessageAllOfErrorAllOf {
+    /**
+     * 
+     * @type {number}
+     * @memberof MessageAllOfErrorAllOf
+     */
+    'retries': number;
 }
 /**
  * Message describes a reaction to another message
@@ -4743,37 +4821,6 @@ export interface MiscOptionsForwarded {
     'id': string;
 }
 /**
- * 
- * @export
- * @interface ModelError
- */
-export interface ModelError {
-    /**
-     * 
-     * @type {number}
-     * @memberof ModelError
-     */
-    'statusCode': number;
-    /**
-     * Specific description of the error
-     * @type {string}
-     * @memberof ModelError
-     */
-    'error': string;
-    /**
-     * What the error was
-     * @type {string}
-     * @memberof ModelError
-     */
-    'message': string;
-    /**
-     * Some extra information about the error
-     * @type {object}
-     * @memberof ModelError
-     */
-    'data'?: object;
-}
-/**
  * Use to send 1 or more messages in a single request. You can override the default compose options for each message by passing in the compose options in the recipient object
  * @export
  * @interface MultiMessageCompose
@@ -4978,10 +5025,10 @@ export interface PlatformProduct {
     'isSyncing'?: boolean;
     /**
      * 
-     * @type {Error}
+     * @type {AppError}
      * @memberof PlatformProduct
      */
-    'error'?: Error;
+    'error'?: AppError;
     /**
      * An ISO formatted timestamp
      * @type {string}

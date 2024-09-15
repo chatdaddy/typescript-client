@@ -188,10 +188,10 @@ export interface AccountInsertData {
     'state': AccountInsertDataStateEnum;
     /**
      * 
-     * @type {AccountInsertDataError}
+     * @type {AccountInsertDataErrorAllOf}
      * @memberof AccountInsertData
      */
-    'error'?: AccountInsertDataError | null;
+    'error'?: AccountInsertDataErrorAllOf | null;
     /**
      * 
      * @type {{ [key: string]: any; }}
@@ -247,15 +247,74 @@ export type AccountInsertDataStateEnum = typeof AccountInsertDataStateEnum[keyof
 /**
  * 
  * @export
- * @interface AccountInsertDataError
+ * @interface AccountInsertDataErrorAllOf
  */
-export interface AccountInsertDataError {
+export interface AccountInsertDataErrorAllOf {
+    /**
+     * 
+     * @type {number}
+     * @memberof AccountInsertDataErrorAllOf
+     */
+    'statusCode': number;
     /**
      * 
      * @type {string}
-     * @memberof AccountInsertDataError
+     * @memberof AccountInsertDataErrorAllOf
      */
-    'message'?: string;
+    'message': string;
+    /**
+     * 
+     * @type {AccountInsertDataErrorAllOfData}
+     * @memberof AccountInsertDataErrorAllOf
+     */
+    'data'?: AccountInsertDataErrorAllOfData;
+}
+/**
+ * 
+ * @export
+ * @interface AccountInsertDataErrorAllOfData
+ */
+export interface AccountInsertDataErrorAllOfData {
+    [key: string]: any;
+
+    /**
+     * 
+     * @type {AccountInsertDataErrorAllOfDataHelpLink}
+     * @memberof AccountInsertDataErrorAllOfData
+     */
+    'helpLink'?: AccountInsertDataErrorAllOfDataHelpLink;
+}
+/**
+ * @type AccountInsertDataErrorAllOfDataHelpLink
+ * @export
+ */
+export type AccountInsertDataErrorAllOfDataHelpLink = AccountInsertDataErrorAllOfDataHelpLinkOneOf | AccountInsertDataErrorAllOfDataHelpLinkOneOf1;
+
+/**
+ * 
+ * @export
+ * @interface AccountInsertDataErrorAllOfDataHelpLinkOneOf
+ */
+export interface AccountInsertDataErrorAllOfDataHelpLinkOneOf {
+    /**
+     * 
+     * @type {string}
+     * @memberof AccountInsertDataErrorAllOfDataHelpLinkOneOf
+     */
+    'docId': string;
+}
+/**
+ * 
+ * @export
+ * @interface AccountInsertDataErrorAllOfDataHelpLinkOneOf1
+ */
+export interface AccountInsertDataErrorAllOfDataHelpLinkOneOf1 {
+    /**
+     * 
+     * @type {string}
+     * @memberof AccountInsertDataErrorAllOfDataHelpLinkOneOf1
+     */
+    'url': string;
 }
 /**
  * 
@@ -525,10 +584,10 @@ export interface AccountUpdateData {
     'state'?: AccountUpdateDataStateEnum;
     /**
      * 
-     * @type {AccountInsertDataError}
+     * @type {AccountInsertDataErrorAllOf}
      * @memberof AccountUpdateData
      */
-    'error'?: AccountInsertDataError | null;
+    'error'?: AccountInsertDataErrorAllOf | null;
     /**
      * 
      * @type {{ [key: string]: any; }}
@@ -8223,22 +8282,41 @@ export interface MessageInsertDataConversationMetadata {
 export interface MessageInsertDataError {
     /**
      * 
-     * @type {string}
-     * @memberof MessageInsertDataError
-     */
-    'message': string;
-    /**
-     * 
      * @type {number}
      * @memberof MessageInsertDataError
      */
     'statusCode': number;
     /**
      * 
+     * @type {string}
+     * @memberof MessageInsertDataError
+     */
+    'message': string;
+    /**
+     * 
+     * @type {AccountInsertDataErrorAllOfData}
+     * @memberof MessageInsertDataError
+     */
+    'data'?: AccountInsertDataErrorAllOfData;
+    /**
+     * 
      * @type {number}
      * @memberof MessageInsertDataError
      */
-    'retries'?: number;
+    'retries': number;
+}
+/**
+ * 
+ * @export
+ * @interface MessageInsertDataErrorAllOf
+ */
+export interface MessageInsertDataErrorAllOf {
+    /**
+     * 
+     * @type {number}
+     * @memberof MessageInsertDataErrorAllOf
+     */
+    'retries': number;
 }
 /**
  * 
@@ -9370,10 +9448,10 @@ export interface PlatformproductInsertData {
     'isSyncing'?: boolean;
     /**
      * 
-     * @type {PlatformproductInsertDataError}
+     * @type {AccountInsertDataErrorAllOf}
      * @memberof PlatformproductInsertData
      */
-    'error'?: PlatformproductInsertDataError;
+    'error'?: AccountInsertDataErrorAllOf;
     /**
      * 
      * @type {string}
@@ -9408,37 +9486,6 @@ export const PlatformproductInsertDataSyncStatusEnum = {
 
 export type PlatformproductInsertDataSyncStatusEnum = typeof PlatformproductInsertDataSyncStatusEnum[keyof typeof PlatformproductInsertDataSyncStatusEnum];
 
-/**
- * 
- * @export
- * @interface PlatformproductInsertDataError
- */
-export interface PlatformproductInsertDataError {
-    /**
-     * 
-     * @type {number}
-     * @memberof PlatformproductInsertDataError
-     */
-    'statusCode': number;
-    /**
-     * 
-     * @type {string}
-     * @memberof PlatformproductInsertDataError
-     */
-    'error': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof PlatformproductInsertDataError
-     */
-    'message': string;
-    /**
-     * 
-     * @type {object}
-     * @memberof PlatformproductInsertDataError
-     */
-    'data'?: object;
-}
 /**
  * 
  * @export
@@ -9569,10 +9616,10 @@ export interface PlatformproductUpdateData {
     'isSyncing'?: boolean;
     /**
      * 
-     * @type {PlatformproductInsertDataError}
+     * @type {AccountInsertDataErrorAllOf}
      * @memberof PlatformproductUpdateData
      */
-    'error'?: PlatformproductInsertDataError;
+    'error'?: AccountInsertDataErrorAllOf;
     /**
      * 
      * @type {string}
