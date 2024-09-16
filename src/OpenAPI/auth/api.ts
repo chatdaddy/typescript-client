@@ -58,6 +58,25 @@ export interface AccountNotificationPreferenceAccountsInner {
     'id': string;
 }
 /**
+ * 
+ * @export
+ * @enum {string}
+ */
+
+export const ActorAutomationType = {
+    KeywordReply: 'keyword-reply',
+    DefaultReply: 'default-reply',
+    Campaigns: 'campaigns',
+    Notifications: 'notifications',
+    Bot: 'bot',
+    AiChatbot: 'ai-chatbot',
+    Trigger: 'trigger'
+} as const;
+
+export type ActorAutomationType = typeof ActorAutomationType[keyof typeof ActorAutomationType];
+
+
+/**
  * Context about the actor of a particular action
  * @export
  * @interface ActorMetadata
@@ -65,10 +84,10 @@ export interface AccountNotificationPreferenceAccountsInner {
 export interface ActorMetadata {
     /**
      * 
-     * @type {string}
+     * @type {ActorAutomationType}
      * @memberof ActorMetadata
      */
-    'type': ActorMetadataTypeEnum;
+    'type': ActorAutomationType;
     /**
      * ID of the object that sent the message. For example, the campaign ID or keyword reply ID. Separate sub-objects with a `/`. For example, to specify the action of a bot -- use `bot_id/action_id`
      * @type {string}
@@ -83,17 +102,6 @@ export interface ActorMetadata {
     'objectName'?: string;
 }
 
-export const ActorMetadataTypeEnum = {
-    KeywordReply: 'keyword-reply',
-    DefaultReply: 'default-reply',
-    Campaigns: 'campaigns',
-    Notifications: 'notifications',
-    Bot: 'bot',
-    AiChatbot: 'ai-chatbot',
-    Trigger: 'trigger'
-} as const;
-
-export type ActorMetadataTypeEnum = typeof ActorMetadataTypeEnum[keyof typeof ActorMetadataTypeEnum];
 
 /**
  * 

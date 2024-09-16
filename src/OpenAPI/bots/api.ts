@@ -2994,25 +2994,6 @@ export interface CalendarAuth200Response {
 /**
  * 
  * @export
- * @interface ConditionalPropertyOption
- */
-export interface ConditionalPropertyOption {
-    /**
-     * Stringified value of the option.
-     * @type {string}
-     * @memberof ConditionalPropertyOption
-     */
-    'valueStr': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ConditionalPropertyOption
-     */
-    'label': string;
-}
-/**
- * 
- * @export
  * @interface ContactsQueryTarget
  */
 export interface ContactsQueryTarget {
@@ -4718,37 +4699,6 @@ export interface SimplePropertyDescriptor {
      */
     'minimumStages'?: number;
 }
-
-
-/**
- * Type of property. - string, number, boolean: Simple property type - timestamp: timestamp string in ISO format - timezone: timezone in offset format - time: time in 24 hour format - channel, tag, team_member, chat, board_stage, board, ticket:     Reference to another object by ID - custom_field: Object of type { name: string, value: string } - duration: integer representing seconds 
- * @export
- * @enum {string}
- */
-
-export const SimplePropertyType = {
-    String: 'string',
-    Number: 'number',
-    Boolean: 'boolean',
-    Channel: 'channel',
-    Tag: 'tag',
-    CustomField: 'custom_field',
-    Timestamp: 'timestamp',
-    CountryCode: 'country_code',
-    TeamMember: 'team_member',
-    Chat: 'chat',
-    BoardStage: 'board_stage',
-    Duration: 'duration',
-    Ticket: 'ticket',
-    Board: 'board',
-    Oauth: 'oauth',
-    Timezone: 'timezone',
-    Time: 'time'
-} as const;
-
-export type SimplePropertyType = typeof SimplePropertyType[keyof typeof SimplePropertyType];
-
-
 /**
  * 
  * @export

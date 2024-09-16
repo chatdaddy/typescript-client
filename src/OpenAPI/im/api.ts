@@ -745,6 +745,25 @@ export interface AccountsPostRequest {
 
 
 /**
+ * 
+ * @export
+ * @enum {string}
+ */
+
+const ActorAutomationType = {
+    KeywordReply: 'keyword-reply',
+    DefaultReply: 'default-reply',
+    Campaigns: 'campaigns',
+    Notifications: 'notifications',
+    Bot: 'bot',
+    AiChatbot: 'ai-chatbot',
+    Trigger: 'trigger'
+} as const;
+
+type ActorAutomationType = typeof ActorAutomationType[keyof typeof ActorAutomationType];
+
+
+/**
  * Context about the actor of a particular action
  * @export
  * @interface ActorMetadata
@@ -752,10 +771,10 @@ export interface AccountsPostRequest {
 interface ActorMetadata {
     /**
      * 
-     * @type {string}
+     * @type {ActorAutomationType}
      * @memberof ActorMetadata
      */
-    'type': ActorMetadataTypeEnum;
+    'type': ActorAutomationType;
     /**
      * ID of the object that sent the message. For example, the campaign ID or keyword reply ID. Separate sub-objects with a `/`. For example, to specify the action of a bot -- use `bot_id/action_id`
      * @type {string}
@@ -770,17 +789,6 @@ interface ActorMetadata {
     'objectName'?: string;
 }
 
-const ActorMetadataTypeEnum = {
-    KeywordReply: 'keyword-reply',
-    DefaultReply: 'default-reply',
-    Campaigns: 'campaigns',
-    Notifications: 'notifications',
-    Bot: 'bot',
-    AiChatbot: 'ai-chatbot',
-    Trigger: 'trigger'
-} as const;
-
-type ActorMetadataTypeEnum = typeof ActorMetadataTypeEnum[keyof typeof ActorMetadataTypeEnum];
 
 /**
  * 
@@ -4347,10 +4355,10 @@ export interface MessageReaction {
 export interface MessageSenderContext {
     /**
      * 
-     * @type {string}
+     * @type {ActorAutomationType}
      * @memberof MessageSenderContext
      */
-    'type': MessageSenderContextTypeEnum;
+    'type': ActorAutomationType;
     /**
      * ID of the object that sent the message. For example, the campaign ID or keyword reply ID. Separate sub-objects with a `/`. For example, to specify the action of a bot -- use `bot_id/action_id`
      * @type {string}
@@ -4365,17 +4373,6 @@ export interface MessageSenderContext {
     'objectName'?: string;
 }
 
-export const MessageSenderContextTypeEnum = {
-    KeywordReply: 'keyword-reply',
-    DefaultReply: 'default-reply',
-    Campaigns: 'campaigns',
-    Notifications: 'notifications',
-    Bot: 'bot',
-    AiChatbot: 'ai-chatbot',
-    Trigger: 'trigger'
-} as const;
-
-export type MessageSenderContextTypeEnum = typeof MessageSenderContextTypeEnum[keyof typeof MessageSenderContextTypeEnum];
 
 /**
  * 
