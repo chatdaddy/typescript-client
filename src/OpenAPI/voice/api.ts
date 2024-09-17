@@ -95,6 +95,37 @@ export interface Call {
 /**
  * 
  * @export
+ * @interface CallChannel
+ */
+export interface CallChannel {
+    /**
+     * ID of the contact
+     * @type {string}
+     * @memberof CallChannel
+     */
+    'name': string;
+    /**
+     * Access token for the contact
+     * @type {string}
+     * @memberof CallChannel
+     */
+    'phoneNumber': string;
+    /**
+     * TeamId of the user making the call
+     * @type {string}
+     * @memberof CallChannel
+     */
+    'teamId'?: string;
+    /**
+     * Outgoing caller Id
+     * @type {string}
+     * @memberof CallChannel
+     */
+    'userId'?: string;
+}
+/**
+ * 
+ * @export
  * @interface CallNotesPost200Response
  */
 export interface CallNotesPost200Response {
@@ -176,10 +207,10 @@ export interface HoldCallPostRequest {
 export interface PhoneNumbersDelete200Response {
     /**
      * 
-     * @type {VoiceContact}
+     * @type {CallChannel}
      * @memberof PhoneNumbersDelete200Response
      */
-    'phoneNumbers'?: VoiceContact;
+    'phoneNumbers'?: CallChannel;
 }
 /**
  * 
@@ -202,10 +233,10 @@ export interface PhoneNumbersDeleteRequest {
 export interface PhoneNumbersGet200Response {
     /**
      * 
-     * @type {Array<VoiceContact>}
+     * @type {Array<CallChannel>}
      * @memberof PhoneNumbersGet200Response
      */
-    'phoneNumbers'?: Array<VoiceContact>;
+    'phoneNumbers'?: Array<CallChannel>;
 }
 /**
  * 
@@ -319,37 +350,6 @@ export interface VerifyNumberPostRequest {
      * @memberof VerifyNumberPostRequest
      */
     'phoneNumber': string;
-}
-/**
- * 
- * @export
- * @interface VoiceContact
- */
-export interface VoiceContact {
-    /**
-     * ID of the contact
-     * @type {string}
-     * @memberof VoiceContact
-     */
-    'name': string;
-    /**
-     * Access token for the contact
-     * @type {string}
-     * @memberof VoiceContact
-     */
-    'phoneNumber': string;
-    /**
-     * TeamId of the user making the call
-     * @type {string}
-     * @memberof VoiceContact
-     */
-    'teamId'?: string;
-    /**
-     * Outgoing caller Id
-     * @type {string}
-     * @memberof VoiceContact
-     */
-    'userId'?: string;
 }
 /**
  * 

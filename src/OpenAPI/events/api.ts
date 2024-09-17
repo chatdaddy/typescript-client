@@ -4757,6 +4757,159 @@ export interface CallUpdateData {
 /**
  * 
  * @export
+ * @interface CallchannelDelete
+ */
+export interface CallchannelDelete {
+    /**
+     * 
+     * @type {string}
+     * @memberof CallchannelDelete
+     */
+    'event': CallchannelDeleteEventEnum;
+    /**
+     * 
+     * @type {Array<CallchannelDeleteData>}
+     * @memberof CallchannelDelete
+     */
+    'data': Array<CallchannelDeleteData>;
+}
+
+export const CallchannelDeleteEventEnum = {
+    CallchannelDelete: 'callchannel-delete'
+} as const;
+
+export type CallchannelDeleteEventEnum = typeof CallchannelDeleteEventEnum[keyof typeof CallchannelDeleteEventEnum];
+
+/**
+ * 
+ * @export
+ * @interface CallchannelDeleteData
+ */
+export interface CallchannelDeleteData {
+    /**
+     * 
+     * @type {string}
+     * @memberof CallchannelDeleteData
+     */
+    'phoneNumber': string;
+}
+/**
+ * 
+ * @export
+ * @interface CallchannelInsert
+ */
+export interface CallchannelInsert {
+    /**
+     * 
+     * @type {string}
+     * @memberof CallchannelInsert
+     */
+    'event': CallchannelInsertEventEnum;
+    /**
+     * 
+     * @type {Array<CallchannelInsertData>}
+     * @memberof CallchannelInsert
+     */
+    'data': Array<CallchannelInsertData>;
+}
+
+export const CallchannelInsertEventEnum = {
+    CallchannelInsert: 'callchannel-insert'
+} as const;
+
+export type CallchannelInsertEventEnum = typeof CallchannelInsertEventEnum[keyof typeof CallchannelInsertEventEnum];
+
+/**
+ * 
+ * @export
+ * @interface CallchannelInsertData
+ */
+export interface CallchannelInsertData {
+    /**
+     * 
+     * @type {string}
+     * @memberof CallchannelInsertData
+     */
+    'name': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof CallchannelInsertData
+     */
+    'phoneNumber': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof CallchannelInsertData
+     */
+    'teamId'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof CallchannelInsertData
+     */
+    'userId'?: string;
+}
+/**
+ * 
+ * @export
+ * @interface CallchannelUpdate
+ */
+export interface CallchannelUpdate {
+    /**
+     * 
+     * @type {string}
+     * @memberof CallchannelUpdate
+     */
+    'event': CallchannelUpdateEventEnum;
+    /**
+     * 
+     * @type {Array<CallchannelUpdateData>}
+     * @memberof CallchannelUpdate
+     */
+    'data': Array<CallchannelUpdateData>;
+}
+
+export const CallchannelUpdateEventEnum = {
+    CallchannelUpdate: 'callchannel-update'
+} as const;
+
+export type CallchannelUpdateEventEnum = typeof CallchannelUpdateEventEnum[keyof typeof CallchannelUpdateEventEnum];
+
+/**
+ * 
+ * @export
+ * @interface CallchannelUpdateData
+ */
+export interface CallchannelUpdateData {
+    /**
+     * 
+     * @type {string}
+     * @memberof CallchannelUpdateData
+     */
+    'name'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof CallchannelUpdateData
+     */
+    'phoneNumber': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof CallchannelUpdateData
+     */
+    'teamId'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof CallchannelUpdateData
+     */
+    'userId'?: string;
+}
+/**
+ * 
+ * @export
  * @interface CampaignInsert
  */
 export interface CampaignInsert {
@@ -6876,7 +7029,10 @@ export const EventName = {
     CrmTicketDelete: 'crm-ticket-delete',
     CallInsert: 'call-insert',
     CallUpdate: 'call-update',
-    CallDelete: 'call-delete'
+    CallDelete: 'call-delete',
+    CallchannelInsert: 'callchannel-insert',
+    CallchannelUpdate: 'callchannel-update',
+    CallchannelDelete: 'callchannel-delete'
 } as const;
 
 export type EventName = typeof EventName[keyof typeof EventName];
@@ -6970,7 +7126,7 @@ export type EventSubscriptionType = typeof EventSubscriptionType[keyof typeof Ev
  * The request body you\'ll receive in a webhook
  * @export
  */
-export type EventWebhookData = AccountDelete | AccountInsert | AccountUpdate | ActionExecute | BotDelete | BotInsert | BotUpdate | CallDelete | CallInsert | CallUpdate | CampaignInsert | ChatDelete | ChatInsert | ChatUpdate | ChatbotInsert | ContactDelete | ContactInsert | ContactUpdate | CredittransactionrecordInsert | CrmTicketDelete | CrmTicketInsert | CrmTicketUpdate | CustomerCreditsLevelUpdate | DashboardwithdataInsert | FewMessagesLeft | GroupUpdate | KeywordbasedactionInsert | MessageDelete | MessageInsert | MessageUpdate | OrderInsert | PaymentintegrationInsert | PlatformproductDelete | PlatformproductInsert | PlatformproductUpdate | PresenceUpdate | PushNotification | ShopproductInsert | StaleAccountNotification | TagDelete | TagInsert | TagUpdate | TeamDelete | TeamInsert | TeamUpdate | TeammemberDelete | TeammemberInsert | TeammemberLogout | TeammemberUpdate | TrackingDelete | TrackingInsert | TrackingUpdate | UserDelete | UserInsert | UserUpdate;
+export type EventWebhookData = AccountDelete | AccountInsert | AccountUpdate | ActionExecute | BotDelete | BotInsert | BotUpdate | CallDelete | CallInsert | CallUpdate | CallchannelDelete | CallchannelInsert | CallchannelUpdate | CampaignInsert | ChatDelete | ChatInsert | ChatUpdate | ChatbotInsert | ContactDelete | ContactInsert | ContactUpdate | CredittransactionrecordInsert | CrmTicketDelete | CrmTicketInsert | CrmTicketUpdate | CustomerCreditsLevelUpdate | DashboardwithdataInsert | FewMessagesLeft | GroupUpdate | KeywordbasedactionInsert | MessageDelete | MessageInsert | MessageUpdate | OrderInsert | PaymentintegrationInsert | PlatformproductDelete | PlatformproductInsert | PlatformproductUpdate | PresenceUpdate | PushNotification | ShopproductInsert | StaleAccountNotification | TagDelete | TagInsert | TagUpdate | TeamDelete | TeamInsert | TeamUpdate | TeammemberDelete | TeammemberInsert | TeammemberLogout | TeammemberUpdate | TrackingDelete | TrackingInsert | TrackingUpdate | UserDelete | UserInsert | UserUpdate;
 
 /**
  * 
