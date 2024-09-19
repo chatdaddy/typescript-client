@@ -120,6 +120,12 @@ export interface AutocompleteModifyRequest {
      * @memberof AutocompleteModifyRequest
      */
     'text': string;
+    /**
+     * Language to get response in
+     * @type {string}
+     * @memberof AutocompleteModifyRequest
+     */
+    'language'?: string;
 }
 /**
  * Provide chat as context for the modifier
