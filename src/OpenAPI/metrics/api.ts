@@ -547,6 +547,19 @@ export interface GetDashboardMetadatas200Response {
     'items': Array<DashboardMetadata>;
 }
 /**
+ * 
+ * @export
+ * @interface GetMetricsConfig200Response
+ */
+export interface GetMetricsConfig200Response {
+    /**
+     * 
+     * @type {Array<MetricConfig>}
+     * @memberof GetMetricsConfig200Response
+     */
+    'items': Array<MetricConfig>;
+}
+/**
  * Describe a map
  * @export
  * @interface MapPropertyDescriptor
@@ -1519,6 +1532,108 @@ export class DashboardApi extends BaseAPI {
      */
     public updateDashboardMetadata(requestParameters: DashboardApiUpdateDashboardMetadataRequest, options?: AxiosRequestConfig) {
         return DashboardApiFp(this.configuration).updateDashboardMetadata(requestParameters.id, requestParameters.dashboardUpdate, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+/**
+ * MetricsApi - axios parameter creator
+ * @export
+ */
+export const MetricsApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @summary Get metrics configuration
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getMetricsConfig: async (options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/metrics-config`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", [], configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * MetricsApi - functional programming interface
+ * @export
+ */
+export const MetricsApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = MetricsApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * 
+         * @summary Get metrics configuration
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getMetricsConfig(options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetMetricsConfig200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getMetricsConfig(options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+    }
+};
+
+/**
+ * MetricsApi - factory interface
+ * @export
+ */
+export const MetricsApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = MetricsApiFp(configuration)
+    return {
+        /**
+         * 
+         * @summary Get metrics configuration
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getMetricsConfig(options?: AxiosRequestConfig): AxiosPromise<GetMetricsConfig200Response> {
+            return localVarFp.getMetricsConfig(options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * MetricsApi - object-oriented interface
+ * @export
+ * @class MetricsApi
+ * @extends {BaseAPI}
+ */
+export class MetricsApi extends BaseAPI {
+    /**
+     * 
+     * @summary Get metrics configuration
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof MetricsApi
+     */
+    public getMetricsConfig(options?: AxiosRequestConfig) {
+        return MetricsApiFp(this.configuration).getMetricsConfig(options).then((request) => request(this.axios, this.basePath));
     }
 }
 
