@@ -41,6 +41,32 @@ export type Aggregate = typeof Aggregate[keyof typeof Aggregate];
 
 
 /**
+ * Describe an array
+ * @export
+ * @interface ArrayPropertyDescriptor
+ */
+interface ArrayPropertyDescriptor {
+    /**
+     * 
+     * @type {string}
+     * @memberof ArrayPropertyDescriptor
+     */
+    'type': ArrayPropertyDescriptorTypeEnum;
+    /**
+     * 
+     * @type {DataPropertyDescriptor}
+     * @memberof ArrayPropertyDescriptor
+     */
+    'items': DataPropertyDescriptor;
+}
+
+const ArrayPropertyDescriptorTypeEnum = {
+    Array: 'array'
+} as const;
+
+type ArrayPropertyDescriptorTypeEnum = typeof ArrayPropertyDescriptorTypeEnum[keyof typeof ArrayPropertyDescriptorTypeEnum];
+
+/**
  * 
  * @export
  * @interface DashboardCreate
@@ -71,6 +97,12 @@ export interface DashboardData {
      * @memberof DashboardData
      */
     'data': Array<MetricsResult>;
+    /**
+     * 
+     * @type {Array<MetricsResultV2>}
+     * @memberof DashboardData
+     */
+    'dataV2'?: Array<MetricsResultV2>;
 }
 /**
  * 
@@ -128,24 +160,11 @@ export type DashboardPeriod = typeof DashboardPeriod[keyof typeof DashboardPerio
 
 
 /**
- * 
+ * @type DashboardSchema
  * @export
- * @interface DashboardSchema
  */
-export interface DashboardSchema {
-    /**
-     * 
-     * @type {boolean}
-     * @memberof DashboardSchema
-     */
-    'includePreviousPeriod'?: boolean;
-    /**
-     * 
-     * @type {Array<DashboardSchemaItem>}
-     * @memberof DashboardSchema
-     */
-    'items': Array<DashboardSchemaItem>;
-}
+export type DashboardSchema = DashboardSchemaV1 | DashboardSchemaV2;
+
 /**
  * 
  * @export
@@ -176,6 +195,121 @@ export interface DashboardSchemaItem {
 /**
  * 
  * @export
+ * @interface DashboardSchemaItemV2
+ */
+export interface DashboardSchemaItemV2 {
+    /**
+     * 
+     * @type {string}
+     * @memberof DashboardSchemaItemV2
+     */
+    'id': string;
+    /**
+     * 
+     * @type {DashboardVisualizationType}
+     * @memberof DashboardSchemaItemV2
+     */
+    'visualizationType': DashboardVisualizationType;
+    /**
+     * 
+     * @type {string}
+     * @memberof DashboardSchemaItemV2
+     */
+    'metricId': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof DashboardSchemaItemV2
+     */
+    'name': string;
+    /**
+     * 
+     * @type {{ [key: string]: any; }}
+     * @memberof DashboardSchemaItemV2
+     */
+    'filter'?: { [key: string]: any; };
+    /**
+     * 
+     * @type {string}
+     * @memberof DashboardSchemaItemV2
+     */
+    'breakdown'?: string;
+    /**
+     * Hide the default value in the breakdown.
+     * @type {boolean}
+     * @memberof DashboardSchemaItemV2
+     */
+    'hideDefaultInBreakdown'?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof DashboardSchemaItemV2
+     */
+    'includePreviousPeriod'?: boolean;
+}
+
+
+/**
+ * 
+ * @export
+ * @interface DashboardSchemaV1
+ */
+export interface DashboardSchemaV1 {
+    /**
+     * 
+     * @type {string}
+     * @memberof DashboardSchemaV1
+     */
+    'version'?: DashboardSchemaV1VersionEnum;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof DashboardSchemaV1
+     */
+    'includePreviousPeriod'?: boolean;
+    /**
+     * 
+     * @type {Array<DashboardSchemaItem>}
+     * @memberof DashboardSchemaV1
+     */
+    'items': Array<DashboardSchemaItem>;
+}
+
+export const DashboardSchemaV1VersionEnum = {
+    1: '1'
+} as const;
+
+export type DashboardSchemaV1VersionEnum = typeof DashboardSchemaV1VersionEnum[keyof typeof DashboardSchemaV1VersionEnum];
+
+/**
+ * 
+ * @export
+ * @interface DashboardSchemaV2
+ */
+export interface DashboardSchemaV2 {
+    /**
+     * 
+     * @type {string}
+     * @memberof DashboardSchemaV2
+     */
+    'version': DashboardSchemaV2VersionEnum;
+    /**
+     * 
+     * @type {Array<DashboardSchemaItemV2>}
+     * @memberof DashboardSchemaV2
+     */
+    'items': Array<DashboardSchemaItemV2>;
+}
+
+export const DashboardSchemaV2VersionEnum = {
+    2: '2'
+} as const;
+
+export type DashboardSchemaV2VersionEnum = typeof DashboardSchemaV2VersionEnum[keyof typeof DashboardSchemaV2VersionEnum];
+
+/**
+ * 
+ * @export
  * @interface DashboardUpdate
  */
 export interface DashboardUpdate {
@@ -192,6 +326,20 @@ export interface DashboardUpdate {
      */
     'schema'?: DashboardSchema;
 }
+/**
+ * 
+ * @export
+ * @enum {string}
+ */
+
+export const DashboardVisualizationType = {
+    Histogram: 'histogram',
+    Total: 'total'
+} as const;
+
+export type DashboardVisualizationType = typeof DashboardVisualizationType[keyof typeof DashboardVisualizationType];
+
+
 /**
  * 
  * @export
@@ -234,6 +382,12 @@ export interface DashboardWithData {
      * @memberof DashboardWithData
      */
     'data': Array<MetricsResult>;
+    /**
+     * 
+     * @type {Array<MetricsResultV2>}
+     * @memberof DashboardWithData
+     */
+    'dataV2'?: Array<MetricsResultV2>;
 }
 /**
  * 
@@ -248,6 +402,85 @@ export const DataAggregateType = {
 
 export type DataAggregateType = typeof DataAggregateType[keyof typeof DataAggregateType];
 
+
+/**
+ * Description of a property
+ * @export
+ * @interface DataProperty
+ */
+interface DataProperty extends DataPropertyDescriptor {
+    /**
+     * 
+     * @type {any}
+     * @memberof DataProperty
+     */
+    'type'?: any;
+    /**
+     * 
+     * @type {any}
+     * @memberof DataProperty
+     */
+    'properties'?: any;
+    /**
+     * 
+     * @type {any}
+     * @memberof DataProperty
+     */
+    'additionalProperties'?: any;
+    /**
+     * 
+     * @type {any}
+     * @memberof DataProperty
+     */
+    'format'?: any;
+    /**
+     * 
+     * @type {any}
+     * @memberof DataProperty
+     */
+    'minimumStages'?: any;
+    /**
+     * 
+     * @type {any}
+     * @memberof DataProperty
+     */
+    'items'?: any;
+    /**
+     * 
+     * @type {any}
+     * @memberof DataProperty
+     */
+    'title'?: any;
+    /**
+     * 
+     * @type {any}
+     * @memberof DataProperty
+     */
+    'description'?: any;
+    /**
+     * 
+     * @type {any}
+     * @memberof DataProperty
+     */
+    'propertyPath'?: any;
+    /**
+     * 
+     * @type {any}
+     * @memberof DataProperty
+     */
+    'icon'?: any;
+    /**
+     * 
+     * @type {any}
+     * @memberof DataProperty
+     */
+    'required'?: any;
+}
+/**
+ * @type DataPropertyDescriptor
+ * @export
+ */
+type DataPropertyDescriptor = { type: 'DataProperty' } & DataProperty;
 
 /**
  * 
@@ -267,6 +500,25 @@ export interface DateRange {
      * @memberof DateRange
      */
     'end': string;
+}
+/**
+ * 
+ * @export
+ * @interface DisplayIcon
+ */
+interface DisplayIcon {
+    /**
+     * Material symbol name
+     * @type {string}
+     * @memberof DisplayIcon
+     */
+    'name': string;
+    /**
+     * Color name, hex code or theme color
+     * @type {string}
+     * @memberof DisplayIcon
+     */
+    'color'?: string;
 }
 /**
  * 
@@ -295,6 +547,38 @@ export interface GetDashboardMetadatas200Response {
     'items': Array<DashboardMetadata>;
 }
 /**
+ * Describe a map
+ * @export
+ * @interface MapPropertyDescriptor
+ */
+interface MapPropertyDescriptor {
+    /**
+     * 
+     * @type {string}
+     * @memberof MapPropertyDescriptor
+     */
+    'type': MapPropertyDescriptorTypeEnum;
+    /**
+     * 
+     * @type {Array<DataProperty>}
+     * @memberof MapPropertyDescriptor
+     */
+    'properties': Array<DataProperty>;
+    /**
+     * 
+     * @type {DataPropertyDescriptor}
+     * @memberof MapPropertyDescriptor
+     */
+    'additionalProperties'?: DataPropertyDescriptor;
+}
+
+const MapPropertyDescriptorTypeEnum = {
+    Map: 'map'
+} as const;
+
+type MapPropertyDescriptorTypeEnum = typeof MapPropertyDescriptorTypeEnum[keyof typeof MapPropertyDescriptorTypeEnum];
+
+/**
  * 
  * @export
  * @interface Metric
@@ -312,6 +596,37 @@ export interface Metric {
      * @memberof Metric
      */
     'value': number;
+}
+/**
+ * 
+ * @export
+ * @interface MetricConfig
+ */
+export interface MetricConfig {
+    /**
+     * 
+     * @type {string}
+     * @memberof MetricConfig
+     */
+    'id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof MetricConfig
+     */
+    'defaultName': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof MetricConfig
+     */
+    'description'?: string;
+    /**
+     * 
+     * @type {Array<DataProperty>}
+     * @memberof MetricConfig
+     */
+    'properties': Array<DataProperty>;
 }
 /**
  * 
@@ -379,6 +694,182 @@ export interface MetricsResult {
 }
 
 
+/**
+ * @type MetricsResultV2
+ * @export
+ */
+export type MetricsResultV2 = MetricsResultV2Histogram | MetricsResultV2Total;
+
+/**
+ * 
+ * @export
+ * @interface MetricsResultV2Histogram
+ */
+export interface MetricsResultV2Histogram {
+    /**
+     * 
+     * @type {string}
+     * @memberof MetricsResultV2Histogram
+     */
+    'id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof MetricsResultV2Histogram
+     */
+    'visualizationType': MetricsResultV2HistogramVisualizationTypeEnum;
+    /**
+     * 
+     * @type {{ [key: string]: Array<Metric>; }}
+     * @memberof MetricsResultV2Histogram
+     */
+    'lines': { [key: string]: Array<Metric>; };
+    /**
+     * 
+     * @type {{ [key: string]: Array<Metric>; }}
+     * @memberof MetricsResultV2Histogram
+     */
+    'previousPeriodLines'?: { [key: string]: Array<Metric>; };
+}
+
+export const MetricsResultV2HistogramVisualizationTypeEnum = {
+    Histogram: 'histogram'
+} as const;
+
+export type MetricsResultV2HistogramVisualizationTypeEnum = typeof MetricsResultV2HistogramVisualizationTypeEnum[keyof typeof MetricsResultV2HistogramVisualizationTypeEnum];
+
+/**
+ * 
+ * @export
+ * @interface MetricsResultV2Total
+ */
+export interface MetricsResultV2Total {
+    /**
+     * 
+     * @type {string}
+     * @memberof MetricsResultV2Total
+     */
+    'id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof MetricsResultV2Total
+     */
+    'visualizationType': MetricsResultV2TotalVisualizationTypeEnum;
+    /**
+     * 
+     * @type {{ [key: string]: number; }}
+     * @memberof MetricsResultV2Total
+     */
+    'values': { [key: string]: number; };
+    /**
+     * 
+     * @type {{ [key: string]: { [key: string]: number; }; }}
+     * @memberof MetricsResultV2Total
+     */
+    'previousPeriodValues'?: { [key: string]: { [key: string]: number; }; };
+}
+
+export const MetricsResultV2TotalVisualizationTypeEnum = {
+    Total: 'total'
+} as const;
+
+export type MetricsResultV2TotalVisualizationTypeEnum = typeof MetricsResultV2TotalVisualizationTypeEnum[keyof typeof MetricsResultV2TotalVisualizationTypeEnum];
+
+/**
+ * describe OAuth input for access tokens
+ * @export
+ * @interface OAuthPropertyDescriptor
+ */
+interface OAuthPropertyDescriptor {
+    /**
+     * 
+     * @type {string}
+     * @memberof OAuthPropertyDescriptor
+     */
+    'type': OAuthPropertyDescriptorTypeEnum;
+    /**
+     * 
+     * @type {string}
+     * @memberof OAuthPropertyDescriptor
+     */
+    'url'?: string;
+}
+
+const OAuthPropertyDescriptorTypeEnum = {
+    Oauth: 'oauth'
+} as const;
+
+type OAuthPropertyDescriptorTypeEnum = typeof OAuthPropertyDescriptorTypeEnum[keyof typeof OAuthPropertyDescriptorTypeEnum];
+
+/**
+ * 
+ * @export
+ * @interface PropertyMetadata
+ */
+interface PropertyMetadata {
+    /**
+     * 
+     * @type {string}
+     * @memberof PropertyMetadata
+     */
+    'propertyPath': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof PropertyMetadata
+     */
+    'title': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof PropertyMetadata
+     */
+    'description'?: string;
+    /**
+     * 
+     * @type {DisplayIcon}
+     * @memberof PropertyMetadata
+     */
+    'icon'?: DisplayIcon;
+    /**
+     * Is the property always expected to be present.
+     * @type {boolean}
+     * @memberof PropertyMetadata
+     */
+    'required'?: boolean;
+}
+/**
+ * Simple string/number/boolean type
+ * @export
+ * @interface SimplePropertyDescriptor
+ */
+interface SimplePropertyDescriptor {
+    /**
+     * 
+     * @type {SimplePropertyType}
+     * @memberof SimplePropertyDescriptor
+     */
+    'type': SimplePropertyType;
+    /**
+     * 
+     * @type {Array<ConditionalPropertyOption>}
+     * @memberof SimplePropertyDescriptor
+     */
+    'options'?: Array<ConditionalPropertyOption>;
+    /**
+     * Format of the property.  Only valid for string type. For example, \'date-time\' for timestamp properties
+     * @type {string}
+     * @memberof SimplePropertyDescriptor
+     */
+    'format'?: string;
+    /**
+     * Minimum number of stages required in the board for the condition to be valid. Only valid for \"board\" type
+     * @type {number}
+     * @memberof SimplePropertyDescriptor
+     */
+    'minimumStages'?: number;
+}
 
 /**
  * DashboardApi - axios parameter creator

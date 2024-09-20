@@ -6763,6 +6763,12 @@ export interface DashboardwithdataInsertData {
      * @memberof DashboardwithdataInsertData
      */
     'data': Array<DashboardwithdataInsertDataAllOf1Data>;
+    /**
+     * 
+     * @type {Array<DashboardwithdataInsertDataAllOf1DataV2Inner>}
+     * @memberof DashboardwithdataInsertData
+     */
+    'dataV2'?: Array<DashboardwithdataInsertDataAllOf1DataV2Inner>;
 }
 /**
  * 
@@ -6813,6 +6819,12 @@ export interface DashboardwithdataInsertDataAllOf1 {
      * @memberof DashboardwithdataInsertDataAllOf1
      */
     'data': Array<DashboardwithdataInsertDataAllOf1Data>;
+    /**
+     * 
+     * @type {Array<DashboardwithdataInsertDataAllOf1DataV2Inner>}
+     * @memberof DashboardwithdataInsertDataAllOf1
+     */
+    'dataV2'?: Array<DashboardwithdataInsertDataAllOf1DataV2Inner>;
 }
 /**
  * 
@@ -6879,6 +6891,107 @@ export const DashboardwithdataInsertDataAllOf1DataDataAggregateEnum = {
 export type DashboardwithdataInsertDataAllOf1DataDataAggregateEnum = typeof DashboardwithdataInsertDataAllOf1DataDataAggregateEnum[keyof typeof DashboardwithdataInsertDataAllOf1DataDataAggregateEnum];
 
 /**
+ * @type DashboardwithdataInsertDataAllOf1DataV2Inner
+ * @export
+ */
+export type DashboardwithdataInsertDataAllOf1DataV2Inner = DashboardwithdataInsertDataAllOf1DataV2InnerOneOf | DashboardwithdataInsertDataAllOf1DataV2InnerOneOf1;
+
+/**
+ * 
+ * @export
+ * @interface DashboardwithdataInsertDataAllOf1DataV2InnerOneOf
+ */
+export interface DashboardwithdataInsertDataAllOf1DataV2InnerOneOf {
+    /**
+     * 
+     * @type {string}
+     * @memberof DashboardwithdataInsertDataAllOf1DataV2InnerOneOf
+     */
+    'id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof DashboardwithdataInsertDataAllOf1DataV2InnerOneOf
+     */
+    'visualizationType': DashboardwithdataInsertDataAllOf1DataV2InnerOneOfVisualizationTypeEnum;
+    /**
+     * 
+     * @type {{ [key: string]: Array<DashboardwithdataInsertDataAllOf1DataV2InnerOneOfLinesValueInner>; }}
+     * @memberof DashboardwithdataInsertDataAllOf1DataV2InnerOneOf
+     */
+    'lines': { [key: string]: Array<DashboardwithdataInsertDataAllOf1DataV2InnerOneOfLinesValueInner>; };
+    /**
+     * 
+     * @type {{ [key: string]: Array<DashboardwithdataInsertDataAllOf1DataV2InnerOneOfLinesValueInner>; }}
+     * @memberof DashboardwithdataInsertDataAllOf1DataV2InnerOneOf
+     */
+    'previousPeriodLines'?: { [key: string]: Array<DashboardwithdataInsertDataAllOf1DataV2InnerOneOfLinesValueInner>; };
+}
+
+export const DashboardwithdataInsertDataAllOf1DataV2InnerOneOfVisualizationTypeEnum = {
+    Histogram: 'histogram'
+} as const;
+
+export type DashboardwithdataInsertDataAllOf1DataV2InnerOneOfVisualizationTypeEnum = typeof DashboardwithdataInsertDataAllOf1DataV2InnerOneOfVisualizationTypeEnum[keyof typeof DashboardwithdataInsertDataAllOf1DataV2InnerOneOfVisualizationTypeEnum];
+
+/**
+ * 
+ * @export
+ * @interface DashboardwithdataInsertDataAllOf1DataV2InnerOneOf1
+ */
+export interface DashboardwithdataInsertDataAllOf1DataV2InnerOneOf1 {
+    /**
+     * 
+     * @type {string}
+     * @memberof DashboardwithdataInsertDataAllOf1DataV2InnerOneOf1
+     */
+    'id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof DashboardwithdataInsertDataAllOf1DataV2InnerOneOf1
+     */
+    'visualizationType': DashboardwithdataInsertDataAllOf1DataV2InnerOneOf1VisualizationTypeEnum;
+    /**
+     * 
+     * @type {{ [key: string]: number; }}
+     * @memberof DashboardwithdataInsertDataAllOf1DataV2InnerOneOf1
+     */
+    'values': { [key: string]: number; };
+    /**
+     * 
+     * @type {{ [key: string]: { [key: string]: number; }; }}
+     * @memberof DashboardwithdataInsertDataAllOf1DataV2InnerOneOf1
+     */
+    'previousPeriodValues'?: { [key: string]: { [key: string]: number; }; };
+}
+
+export const DashboardwithdataInsertDataAllOf1DataV2InnerOneOf1VisualizationTypeEnum = {
+    Total: 'total'
+} as const;
+
+export type DashboardwithdataInsertDataAllOf1DataV2InnerOneOf1VisualizationTypeEnum = typeof DashboardwithdataInsertDataAllOf1DataV2InnerOneOf1VisualizationTypeEnum[keyof typeof DashboardwithdataInsertDataAllOf1DataV2InnerOneOf1VisualizationTypeEnum];
+
+/**
+ * 
+ * @export
+ * @interface DashboardwithdataInsertDataAllOf1DataV2InnerOneOfLinesValueInner
+ */
+export interface DashboardwithdataInsertDataAllOf1DataV2InnerOneOfLinesValueInner {
+    /**
+     * An ISO formatted timestamp
+     * @type {string}
+     * @memberof DashboardwithdataInsertDataAllOf1DataV2InnerOneOfLinesValueInner
+     */
+    'timestamp': string;
+    /**
+     * 
+     * @type {number}
+     * @memberof DashboardwithdataInsertDataAllOf1DataV2InnerOneOfLinesValueInner
+     */
+    'value': number;
+}
+/**
  * 
  * @export
  * @interface DashboardwithdataInsertDataAllOf1Metrics
@@ -6898,51 +7011,159 @@ export interface DashboardwithdataInsertDataAllOf1Metrics {
     'value': number;
 }
 /**
+ * @type DashboardwithdataInsertDataAllOfSchema
+ * @export
+ */
+export type DashboardwithdataInsertDataAllOfSchema = DashboardwithdataInsertDataAllOfSchemaOneOf | DashboardwithdataInsertDataAllOfSchemaOneOf1;
+
+/**
  * 
  * @export
- * @interface DashboardwithdataInsertDataAllOfSchema
+ * @interface DashboardwithdataInsertDataAllOfSchemaOneOf
  */
-export interface DashboardwithdataInsertDataAllOfSchema {
+export interface DashboardwithdataInsertDataAllOfSchemaOneOf {
+    /**
+     * 
+     * @type {string}
+     * @memberof DashboardwithdataInsertDataAllOfSchemaOneOf
+     */
+    'version'?: DashboardwithdataInsertDataAllOfSchemaOneOfVersionEnum;
     /**
      * 
      * @type {boolean}
-     * @memberof DashboardwithdataInsertDataAllOfSchema
+     * @memberof DashboardwithdataInsertDataAllOfSchemaOneOf
      */
     'includePreviousPeriod'?: boolean;
     /**
      * 
-     * @type {Array<DashboardwithdataInsertDataAllOfSchemaItems>}
-     * @memberof DashboardwithdataInsertDataAllOfSchema
+     * @type {Array<DashboardwithdataInsertDataAllOfSchemaOneOfItemsInner>}
+     * @memberof DashboardwithdataInsertDataAllOfSchemaOneOf
      */
-    'items': Array<DashboardwithdataInsertDataAllOfSchemaItems>;
+    'items': Array<DashboardwithdataInsertDataAllOfSchemaOneOfItemsInner>;
 }
+
+export const DashboardwithdataInsertDataAllOfSchemaOneOfVersionEnum = {
+    1: '1'
+} as const;
+
+export type DashboardwithdataInsertDataAllOfSchemaOneOfVersionEnum = typeof DashboardwithdataInsertDataAllOfSchemaOneOfVersionEnum[keyof typeof DashboardwithdataInsertDataAllOfSchemaOneOfVersionEnum];
+
 /**
  * 
  * @export
- * @interface DashboardwithdataInsertDataAllOfSchemaItems
+ * @interface DashboardwithdataInsertDataAllOfSchemaOneOf1
  */
-export interface DashboardwithdataInsertDataAllOfSchemaItems {
+export interface DashboardwithdataInsertDataAllOfSchemaOneOf1 {
     /**
      * 
      * @type {string}
-     * @memberof DashboardwithdataInsertDataAllOfSchemaItems
+     * @memberof DashboardwithdataInsertDataAllOfSchemaOneOf1
      */
-    'metric': DashboardwithdataInsertDataAllOfSchemaItemsMetricEnum;
+    'version': DashboardwithdataInsertDataAllOfSchemaOneOf1VersionEnum;
     /**
      * 
-     * @type {string}
-     * @memberof DashboardwithdataInsertDataAllOfSchemaItems
+     * @type {Array<DashboardwithdataInsertDataAllOfSchemaOneOf1ItemsInner>}
+     * @memberof DashboardwithdataInsertDataAllOfSchemaOneOf1
      */
-    'aggregate': DashboardwithdataInsertDataAllOfSchemaItemsAggregateEnum;
+    'items': Array<DashboardwithdataInsertDataAllOfSchemaOneOf1ItemsInner>;
+}
+
+export const DashboardwithdataInsertDataAllOfSchemaOneOf1VersionEnum = {
+    2: '2'
+} as const;
+
+export type DashboardwithdataInsertDataAllOfSchemaOneOf1VersionEnum = typeof DashboardwithdataInsertDataAllOfSchemaOneOf1VersionEnum[keyof typeof DashboardwithdataInsertDataAllOfSchemaOneOf1VersionEnum];
+
+/**
+ * 
+ * @export
+ * @interface DashboardwithdataInsertDataAllOfSchemaOneOf1ItemsInner
+ */
+export interface DashboardwithdataInsertDataAllOfSchemaOneOf1ItemsInner {
     /**
      * 
      * @type {string}
-     * @memberof DashboardwithdataInsertDataAllOfSchemaItems
+     * @memberof DashboardwithdataInsertDataAllOfSchemaOneOf1ItemsInner
+     */
+    'id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof DashboardwithdataInsertDataAllOfSchemaOneOf1ItemsInner
+     */
+    'visualizationType': DashboardwithdataInsertDataAllOfSchemaOneOf1ItemsInnerVisualizationTypeEnum;
+    /**
+     * 
+     * @type {string}
+     * @memberof DashboardwithdataInsertDataAllOfSchemaOneOf1ItemsInner
+     */
+    'metricId': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof DashboardwithdataInsertDataAllOfSchemaOneOf1ItemsInner
+     */
+    'name': string;
+    /**
+     * 
+     * @type {{ [key: string]: any; }}
+     * @memberof DashboardwithdataInsertDataAllOfSchemaOneOf1ItemsInner
+     */
+    'filter'?: { [key: string]: any; };
+    /**
+     * 
+     * @type {string}
+     * @memberof DashboardwithdataInsertDataAllOfSchemaOneOf1ItemsInner
+     */
+    'breakdown'?: string;
+    /**
+     * Hide the default value in the breakdown.
+     * @type {boolean}
+     * @memberof DashboardwithdataInsertDataAllOfSchemaOneOf1ItemsInner
+     */
+    'hideDefaultInBreakdown'?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof DashboardwithdataInsertDataAllOfSchemaOneOf1ItemsInner
+     */
+    'includePreviousPeriod'?: boolean;
+}
+
+export const DashboardwithdataInsertDataAllOfSchemaOneOf1ItemsInnerVisualizationTypeEnum = {
+    Histogram: 'histogram',
+    Total: 'total'
+} as const;
+
+export type DashboardwithdataInsertDataAllOfSchemaOneOf1ItemsInnerVisualizationTypeEnum = typeof DashboardwithdataInsertDataAllOfSchemaOneOf1ItemsInnerVisualizationTypeEnum[keyof typeof DashboardwithdataInsertDataAllOfSchemaOneOf1ItemsInnerVisualizationTypeEnum];
+
+/**
+ * 
+ * @export
+ * @interface DashboardwithdataInsertDataAllOfSchemaOneOfItemsInner
+ */
+export interface DashboardwithdataInsertDataAllOfSchemaOneOfItemsInner {
+    /**
+     * 
+     * @type {string}
+     * @memberof DashboardwithdataInsertDataAllOfSchemaOneOfItemsInner
+     */
+    'metric': DashboardwithdataInsertDataAllOfSchemaOneOfItemsInnerMetricEnum;
+    /**
+     * 
+     * @type {string}
+     * @memberof DashboardwithdataInsertDataAllOfSchemaOneOfItemsInner
+     */
+    'aggregate': DashboardwithdataInsertDataAllOfSchemaOneOfItemsInnerAggregateEnum;
+    /**
+     * 
+     * @type {string}
+     * @memberof DashboardwithdataInsertDataAllOfSchemaOneOfItemsInner
      */
     'key'?: string;
 }
 
-export const DashboardwithdataInsertDataAllOfSchemaItemsMetricEnum = {
+export const DashboardwithdataInsertDataAllOfSchemaOneOfItemsInnerMetricEnum = {
     MessagesSentByUser: 'messages-sent-by-user',
     MessagesSentByAccount: 'messages-sent-by-account',
     MessagesRecvByChat: 'messages-recv-by-chat',
@@ -6960,13 +7181,13 @@ export const DashboardwithdataInsertDataAllOfSchemaItemsMetricEnum = {
     NewChats: 'new-chats'
 } as const;
 
-export type DashboardwithdataInsertDataAllOfSchemaItemsMetricEnum = typeof DashboardwithdataInsertDataAllOfSchemaItemsMetricEnum[keyof typeof DashboardwithdataInsertDataAllOfSchemaItemsMetricEnum];
-export const DashboardwithdataInsertDataAllOfSchemaItemsAggregateEnum = {
+export type DashboardwithdataInsertDataAllOfSchemaOneOfItemsInnerMetricEnum = typeof DashboardwithdataInsertDataAllOfSchemaOneOfItemsInnerMetricEnum[keyof typeof DashboardwithdataInsertDataAllOfSchemaOneOfItemsInnerMetricEnum];
+export const DashboardwithdataInsertDataAllOfSchemaOneOfItemsInnerAggregateEnum = {
     Avg: 'avg',
     Sum: 'sum'
 } as const;
 
-export type DashboardwithdataInsertDataAllOfSchemaItemsAggregateEnum = typeof DashboardwithdataInsertDataAllOfSchemaItemsAggregateEnum[keyof typeof DashboardwithdataInsertDataAllOfSchemaItemsAggregateEnum];
+export type DashboardwithdataInsertDataAllOfSchemaOneOfItemsInnerAggregateEnum = typeof DashboardwithdataInsertDataAllOfSchemaOneOfItemsInnerAggregateEnum[keyof typeof DashboardwithdataInsertDataAllOfSchemaOneOfItemsInnerAggregateEnum];
 
 /**
  * 
