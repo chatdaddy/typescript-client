@@ -102,7 +102,7 @@ export interface DashboardCreate {
      * @type {DashboardSchema}
      * @memberof DashboardCreate
      */
-    'schema': DashboardSchema;
+    'schema'?: DashboardSchema;
 }
 /**
  * 
