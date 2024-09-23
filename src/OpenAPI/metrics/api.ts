@@ -1128,6 +1128,69 @@ export const DashboardApiAxiosParamCreator = function (configuration?: Configura
         },
         /**
          * 
+         * @summary Get initial data
+         * @param {DashboardPeriod} period 
+         * @param {Aggregate} aggregate Timeframe to aggregate the data in.
+         * @param {string} [id] Dashboard ID to fetch data for. If not provided, the default dashboard will be returned.
+         * @param {DateRange} [customDateRange] Custom date range to query the data in. Only required if period is set to \&quot;custom\&quot;
+         * @param {string} [timezoneOffset] Timezone offset to query the data in.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getInitData: async (period: DashboardPeriod, aggregate: Aggregate, id?: string, customDateRange?: DateRange, timezoneOffset?: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'period' is not null or undefined
+            assertParamExists('getInitData', 'period', period)
+            // verify required parameter 'aggregate' is not null or undefined
+            assertParamExists('getInitData', 'aggregate', aggregate)
+            const localVarPath = `/init`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["METRICS_GET"], configuration)
+
+            if (id !== undefined) {
+                localVarQueryParameter['id'] = id;
+            }
+
+            if (period !== undefined) {
+                localVarQueryParameter['period'] = period;
+            }
+
+            if (customDateRange !== undefined) {
+                localVarQueryParameter['customDateRange'] = customDateRange;
+            }
+
+            if (timezoneOffset !== undefined) {
+                localVarQueryParameter['timezoneOffset'] = timezoneOffset;
+            }
+
+            if (aggregate !== undefined) {
+                localVarQueryParameter['aggregate'] = aggregate;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
          * @summary Update a dashboard metadata
          * @param {string} id 
          * @param {DashboardUpdate} [dashboardUpdate] 
@@ -1242,6 +1305,21 @@ export const DashboardApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
+         * @summary Get initial data
+         * @param {DashboardPeriod} period 
+         * @param {Aggregate} aggregate Timeframe to aggregate the data in.
+         * @param {string} [id] Dashboard ID to fetch data for. If not provided, the default dashboard will be returned.
+         * @param {DateRange} [customDateRange] Custom date range to query the data in. Only required if period is set to \&quot;custom\&quot;
+         * @param {string} [timezoneOffset] Timezone offset to query the data in.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getInitData(period: DashboardPeriod, aggregate: Aggregate, id?: string, customDateRange?: DateRange, timezoneOffset?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetInitData200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getInitData(period, aggregate, id, customDateRange, timezoneOffset, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
          * @summary Update a dashboard metadata
          * @param {string} id 
          * @param {DashboardUpdate} [dashboardUpdate] 
@@ -1310,6 +1388,16 @@ export const DashboardApiFactory = function (configuration?: Configuration, base
          */
         getDashboardMetadatas(options?: AxiosRequestConfig): AxiosPromise<GetDashboardMetadatas200Response> {
             return localVarFp.getDashboardMetadatas(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Get initial data
+         * @param {DashboardApiGetInitDataRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getInitData(requestParameters: DashboardApiGetInitDataRequest, options?: AxiosRequestConfig): AxiosPromise<GetInitData200Response> {
+            return localVarFp.getInitData(requestParameters.period, requestParameters.aggregate, requestParameters.id, requestParameters.customDateRange, requestParameters.timezoneOffset, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -1437,6 +1525,48 @@ export interface DashboardApiGetDashboardBySchemaRequest {
 }
 
 /**
+ * Request parameters for getInitData operation in DashboardApi.
+ * @export
+ * @interface DashboardApiGetInitDataRequest
+ */
+export interface DashboardApiGetInitDataRequest {
+    /**
+     * 
+     * @type {DashboardPeriod}
+     * @memberof DashboardApiGetInitData
+     */
+    readonly period: DashboardPeriod
+
+    /**
+     * Timeframe to aggregate the data in.
+     * @type {Aggregate}
+     * @memberof DashboardApiGetInitData
+     */
+    readonly aggregate: Aggregate
+
+    /**
+     * Dashboard ID to fetch data for. If not provided, the default dashboard will be returned.
+     * @type {string}
+     * @memberof DashboardApiGetInitData
+     */
+    readonly id?: string
+
+    /**
+     * Custom date range to query the data in. Only required if period is set to \&quot;custom\&quot;
+     * @type {DateRange}
+     * @memberof DashboardApiGetInitData
+     */
+    readonly customDateRange?: DateRange
+
+    /**
+     * Timezone offset to query the data in.
+     * @type {string}
+     * @memberof DashboardApiGetInitData
+     */
+    readonly timezoneOffset?: string
+}
+
+/**
  * Request parameters for updateDashboardMetadata operation in DashboardApi.
  * @export
  * @interface DashboardApiUpdateDashboardMetadataRequest
@@ -1525,6 +1655,18 @@ export class DashboardApi extends BaseAPI {
 
     /**
      * 
+     * @summary Get initial data
+     * @param {DashboardApiGetInitDataRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DashboardApi
+     */
+    public getInitData(requestParameters: DashboardApiGetInitDataRequest, options?: AxiosRequestConfig) {
+        return DashboardApiFp(this.configuration).getInitData(requestParameters.period, requestParameters.aggregate, requestParameters.id, requestParameters.customDateRange, requestParameters.timezoneOffset, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
      * @summary Update a dashboard metadata
      * @param {DashboardApiUpdateDashboardMetadataRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -1533,186 +1675,6 @@ export class DashboardApi extends BaseAPI {
      */
     public updateDashboardMetadata(requestParameters: DashboardApiUpdateDashboardMetadataRequest, options?: AxiosRequestConfig) {
         return DashboardApiFp(this.configuration).updateDashboardMetadata(requestParameters.id, requestParameters.dashboardUpdate, options).then((request) => request(this.axios, this.basePath));
-    }
-}
-
-
-/**
- * MetricsApi - axios parameter creator
- * @export
- */
-export const MetricsApiAxiosParamCreator = function (configuration?: Configuration) {
-    return {
-        /**
-         * 
-         * @summary Get initial data
-         * @param {DashboardPeriod} period 
-         * @param {Aggregate} aggregate Timeframe to aggregate the data in.
-         * @param {string} [id] Dashboard ID to fetch data for. If not provided, the default dashboard will be returned.
-         * @param {DateRange} [customDateRange] Custom date range to query the data in. Only required if period is set to \&quot;custom\&quot;
-         * @param {string} [timezoneOffset] Timezone offset to query the data in.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getInitData: async (period: DashboardPeriod, aggregate: Aggregate, id?: string, customDateRange?: DateRange, timezoneOffset?: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'period' is not null or undefined
-            assertParamExists('getInitData', 'period', period)
-            // verify required parameter 'aggregate' is not null or undefined
-            assertParamExists('getInitData', 'aggregate', aggregate)
-            const localVarPath = `/init`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication chatdaddy required
-            // oauth required
-            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["METRICS_GET"], configuration)
-
-            if (id !== undefined) {
-                localVarQueryParameter['id'] = id;
-            }
-
-            if (period !== undefined) {
-                localVarQueryParameter['period'] = period;
-            }
-
-            if (customDateRange !== undefined) {
-                localVarQueryParameter['customDateRange'] = customDateRange;
-            }
-
-            if (timezoneOffset !== undefined) {
-                localVarQueryParameter['timezoneOffset'] = timezoneOffset;
-            }
-
-            if (aggregate !== undefined) {
-                localVarQueryParameter['aggregate'] = aggregate;
-            }
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-    }
-};
-
-/**
- * MetricsApi - functional programming interface
- * @export
- */
-export const MetricsApiFp = function(configuration?: Configuration) {
-    const localVarAxiosParamCreator = MetricsApiAxiosParamCreator(configuration)
-    return {
-        /**
-         * 
-         * @summary Get initial data
-         * @param {DashboardPeriod} period 
-         * @param {Aggregate} aggregate Timeframe to aggregate the data in.
-         * @param {string} [id] Dashboard ID to fetch data for. If not provided, the default dashboard will be returned.
-         * @param {DateRange} [customDateRange] Custom date range to query the data in. Only required if period is set to \&quot;custom\&quot;
-         * @param {string} [timezoneOffset] Timezone offset to query the data in.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async getInitData(period: DashboardPeriod, aggregate: Aggregate, id?: string, customDateRange?: DateRange, timezoneOffset?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetInitData200Response>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getInitData(period, aggregate, id, customDateRange, timezoneOffset, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-    }
-};
-
-/**
- * MetricsApi - factory interface
- * @export
- */
-export const MetricsApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
-    const localVarFp = MetricsApiFp(configuration)
-    return {
-        /**
-         * 
-         * @summary Get initial data
-         * @param {MetricsApiGetInitDataRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getInitData(requestParameters: MetricsApiGetInitDataRequest, options?: AxiosRequestConfig): AxiosPromise<GetInitData200Response> {
-            return localVarFp.getInitData(requestParameters.period, requestParameters.aggregate, requestParameters.id, requestParameters.customDateRange, requestParameters.timezoneOffset, options).then((request) => request(axios, basePath));
-        },
-    };
-};
-
-/**
- * Request parameters for getInitData operation in MetricsApi.
- * @export
- * @interface MetricsApiGetInitDataRequest
- */
-export interface MetricsApiGetInitDataRequest {
-    /**
-     * 
-     * @type {DashboardPeriod}
-     * @memberof MetricsApiGetInitData
-     */
-    readonly period: DashboardPeriod
-
-    /**
-     * Timeframe to aggregate the data in.
-     * @type {Aggregate}
-     * @memberof MetricsApiGetInitData
-     */
-    readonly aggregate: Aggregate
-
-    /**
-     * Dashboard ID to fetch data for. If not provided, the default dashboard will be returned.
-     * @type {string}
-     * @memberof MetricsApiGetInitData
-     */
-    readonly id?: string
-
-    /**
-     * Custom date range to query the data in. Only required if period is set to \&quot;custom\&quot;
-     * @type {DateRange}
-     * @memberof MetricsApiGetInitData
-     */
-    readonly customDateRange?: DateRange
-
-    /**
-     * Timezone offset to query the data in.
-     * @type {string}
-     * @memberof MetricsApiGetInitData
-     */
-    readonly timezoneOffset?: string
-}
-
-/**
- * MetricsApi - object-oriented interface
- * @export
- * @class MetricsApi
- * @extends {BaseAPI}
- */
-export class MetricsApi extends BaseAPI {
-    /**
-     * 
-     * @summary Get initial data
-     * @param {MetricsApiGetInitDataRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof MetricsApi
-     */
-    public getInitData(requestParameters: MetricsApiGetInitDataRequest, options?: AxiosRequestConfig) {
-        return MetricsApiFp(this.configuration).getInitData(requestParameters.period, requestParameters.aggregate, requestParameters.id, requestParameters.customDateRange, requestParameters.timezoneOffset, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
