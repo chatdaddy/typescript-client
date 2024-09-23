@@ -6815,6 +6815,12 @@ export interface DashboardwithdataInsertDataAllOf {
 export interface DashboardwithdataInsertDataAllOf1 {
     /**
      * 
+     * @type {string}
+     * @memberof DashboardwithdataInsertDataAllOf1
+     */
+    'id': string;
+    /**
+     * 
      * @type {Array<DashboardwithdataInsertDataAllOf1Data>}
      * @memberof DashboardwithdataInsertDataAllOf1
      */
