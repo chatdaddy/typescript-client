@@ -528,6 +528,49 @@ export interface GetInitData200Response {
      * @memberof GetInitData200Response
      */
     'data': DashboardData;
+    /**
+     * 
+     * @type {GetInitData200ResponseDefaultDashboard}
+     * @memberof GetInitData200Response
+     */
+    'defaultDashboard'?: GetInitData200ResponseDefaultDashboard;
+}
+/**
+ * Present if the data being fetched is for the default dashboard. 
+ * @export
+ * @interface GetInitData200ResponseDefaultDashboard
+ */
+export interface GetInitData200ResponseDefaultDashboard {
+    /**
+     * 
+     * @type {string}
+     * @memberof GetInitData200ResponseDefaultDashboard
+     */
+    'id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof GetInitData200ResponseDefaultDashboard
+     */
+    'name': string;
+    /**
+     * An ISO formatted timestamp
+     * @type {string}
+     * @memberof GetInitData200ResponseDefaultDashboard
+     */
+    'createdAt': string;
+    /**
+     * An ISO formatted timestamp
+     * @type {string}
+     * @memberof GetInitData200ResponseDefaultDashboard
+     */
+    'updatedAt': string;
+    /**
+     * 
+     * @type {DashboardSchema}
+     * @memberof GetInitData200ResponseDefaultDashboard
+     */
+    'schema': DashboardSchema;
 }
 /**
  * Describe a map
