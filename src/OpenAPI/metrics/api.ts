@@ -649,6 +649,18 @@ export interface MetricConfig {
     'valueFormat'?: MetricConfigValueFormatEnum;
     /**
      * 
+     * @type {DataAggregateType}
+     * @memberof MetricConfig
+     */
+    'aggregationType'?: DataAggregateType;
+    /**
+     * Whether an increase in the metric is good or bad.
+     * @type {boolean}
+     * @memberof MetricConfig
+     */
+    'isIncreaseGood'?: boolean;
+    /**
+     * 
      * @type {string}
      * @memberof MetricConfig
      */
@@ -804,10 +816,10 @@ export interface MetricsResultV2Total {
     'values': { [key: string]: number; };
     /**
      * 
-     * @type {{ [key: string]: { [key: string]: number; }; }}
+     * @type {{ [key: string]: number; }}
      * @memberof MetricsResultV2Total
      */
-    'previousPeriodValues'?: { [key: string]: { [key: string]: number; }; };
+    'previousPeriodValues'?: { [key: string]: number; };
 }
 
 export const MetricsResultV2TotalVisualizationTypeEnum = {

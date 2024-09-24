@@ -6966,10 +6966,10 @@ export interface DashboardwithdataInsertDataAllOf1DataV2InnerOneOf1 {
     'values': { [key: string]: number; };
     /**
      * 
-     * @type {{ [key: string]: { [key: string]: number; }; }}
+     * @type {{ [key: string]: number; }}
      * @memberof DashboardwithdataInsertDataAllOf1DataV2InnerOneOf1
      */
-    'previousPeriodValues'?: { [key: string]: { [key: string]: number; }; };
+    'previousPeriodValues'?: { [key: string]: number; };
 }
 
 export const DashboardwithdataInsertDataAllOf1DataV2InnerOneOf1VisualizationTypeEnum = {
