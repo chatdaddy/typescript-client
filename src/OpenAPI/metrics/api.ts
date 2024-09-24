@@ -646,6 +646,12 @@ export interface MetricConfig {
      * @type {string}
      * @memberof MetricConfig
      */
+    'valueFormat'?: MetricConfigValueFormatEnum;
+    /**
+     * 
+     * @type {string}
+     * @memberof MetricConfig
+     */
     'description'?: string;
     /**
      * 
@@ -654,6 +660,14 @@ export interface MetricConfig {
      */
     'properties': Array<DataProperty>;
 }
+
+export const MetricConfigValueFormatEnum = {
+    Count: 'count',
+    DurationSeconds: 'durationSeconds'
+} as const;
+
+export type MetricConfigValueFormatEnum = typeof MetricConfigValueFormatEnum[keyof typeof MetricConfigValueFormatEnum];
+
 /**
  * 
  * @export
