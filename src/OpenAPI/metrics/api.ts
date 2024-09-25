@@ -622,6 +622,25 @@ export interface Metric {
      * @memberof Metric
      */
     'value': number;
+    /**
+     * Number of data points in this metric. Only present for when the value is not a count 
+     * @type {number}
+     * @memberof Metric
+     */
+    'count'?: number;
+}
+/**
+ * 
+ * @export
+ * @interface MetricAllOf
+ */
+export interface MetricAllOf {
+    /**
+     * An ISO formatted timestamp
+     * @type {string}
+     * @memberof MetricAllOf
+     */
+    'timestamp': string;
 }
 /**
  * 
@@ -810,16 +829,16 @@ export interface MetricsResultV2Total {
     'visualizationType': MetricsResultV2TotalVisualizationTypeEnum;
     /**
      * 
-     * @type {{ [key: string]: number; }}
+     * @type {{ [key: string]: ValueObject; }}
      * @memberof MetricsResultV2Total
      */
-    'values': { [key: string]: number; };
+    'values': { [key: string]: ValueObject; };
     /**
      * 
-     * @type {{ [key: string]: number; }}
+     * @type {{ [key: string]: ValueObject; }}
      * @memberof MetricsResultV2Total
      */
-    'previousPeriodValues'?: { [key: string]: number; };
+    'previousPeriodValues'?: { [key: string]: ValueObject; };
 }
 
 export const MetricsResultV2TotalVisualizationTypeEnum = {
@@ -953,6 +972,25 @@ const SimplePropertyType = {
 type SimplePropertyType = typeof SimplePropertyType[keyof typeof SimplePropertyType];
 
 
+/**
+ * 
+ * @export
+ * @interface ValueObject
+ */
+export interface ValueObject {
+    /**
+     * 
+     * @type {number}
+     * @memberof ValueObject
+     */
+    'value': number;
+    /**
+     * Number of data points in this metric. Only present for when the value is not a count 
+     * @type {number}
+     * @memberof ValueObject
+     */
+    'count'?: number;
+}
 
 /**
  * DashboardApi - axios parameter creator

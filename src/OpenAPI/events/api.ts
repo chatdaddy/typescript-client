@@ -6840,16 +6840,16 @@ export interface DashboardwithdataInsertDataAllOf1 {
 export interface DashboardwithdataInsertDataAllOf1Data {
     /**
      * 
-     * @type {Array<DashboardwithdataInsertDataAllOf1Metrics>}
+     * @type {Array<object>}
      * @memberof DashboardwithdataInsertDataAllOf1Data
      */
-    'metrics': Array<DashboardwithdataInsertDataAllOf1Metrics>;
+    'metrics': Array<object>;
     /**
      * 
-     * @type {Array<DashboardwithdataInsertDataAllOf1Metrics>}
+     * @type {Array<object>}
      * @memberof DashboardwithdataInsertDataAllOf1Data
      */
-    'previousMetrics'?: Array<DashboardwithdataInsertDataAllOf1Metrics>;
+    'previousMetrics'?: Array<object>;
     /**
      * 
      * @type {string}
@@ -6960,16 +6960,16 @@ export interface DashboardwithdataInsertDataAllOf1DataV2InnerOneOf1 {
     'visualizationType': DashboardwithdataInsertDataAllOf1DataV2InnerOneOf1VisualizationTypeEnum;
     /**
      * 
-     * @type {{ [key: string]: number; }}
+     * @type {{ [key: string]: DashboardwithdataInsertDataAllOf1DataV2InnerOneOfLinesValueInnerAllOf1; }}
      * @memberof DashboardwithdataInsertDataAllOf1DataV2InnerOneOf1
      */
-    'values': { [key: string]: number; };
+    'values': { [key: string]: DashboardwithdataInsertDataAllOf1DataV2InnerOneOfLinesValueInnerAllOf1; };
     /**
      * 
-     * @type {{ [key: string]: number; }}
+     * @type {{ [key: string]: DashboardwithdataInsertDataAllOf1DataV2InnerOneOfLinesValueInnerAllOf1; }}
      * @memberof DashboardwithdataInsertDataAllOf1DataV2InnerOneOf1
      */
-    'previousPeriodValues'?: { [key: string]: number; };
+    'previousPeriodValues'?: { [key: string]: DashboardwithdataInsertDataAllOf1DataV2InnerOneOfLinesValueInnerAllOf1; };
 }
 
 export const DashboardwithdataInsertDataAllOf1DataV2InnerOneOf1VisualizationTypeEnum = {
@@ -6996,25 +6996,44 @@ export interface DashboardwithdataInsertDataAllOf1DataV2InnerOneOfLinesValueInne
      * @memberof DashboardwithdataInsertDataAllOf1DataV2InnerOneOfLinesValueInner
      */
     'value': number;
+    /**
+     * Number of data points in this metric. Only present for when the value is not a count 
+     * @type {number}
+     * @memberof DashboardwithdataInsertDataAllOf1DataV2InnerOneOfLinesValueInner
+     */
+    'count'?: number;
 }
 /**
  * 
  * @export
- * @interface DashboardwithdataInsertDataAllOf1Metrics
+ * @interface DashboardwithdataInsertDataAllOf1DataV2InnerOneOfLinesValueInnerAllOf
  */
-export interface DashboardwithdataInsertDataAllOf1Metrics {
+export interface DashboardwithdataInsertDataAllOf1DataV2InnerOneOfLinesValueInnerAllOf {
     /**
      * An ISO formatted timestamp
      * @type {string}
-     * @memberof DashboardwithdataInsertDataAllOf1Metrics
+     * @memberof DashboardwithdataInsertDataAllOf1DataV2InnerOneOfLinesValueInnerAllOf
      */
     'timestamp': string;
+}
+/**
+ * 
+ * @export
+ * @interface DashboardwithdataInsertDataAllOf1DataV2InnerOneOfLinesValueInnerAllOf1
+ */
+export interface DashboardwithdataInsertDataAllOf1DataV2InnerOneOfLinesValueInnerAllOf1 {
     /**
      * 
      * @type {number}
-     * @memberof DashboardwithdataInsertDataAllOf1Metrics
+     * @memberof DashboardwithdataInsertDataAllOf1DataV2InnerOneOfLinesValueInnerAllOf1
      */
     'value': number;
+    /**
+     * Number of data points in this metric. Only present for when the value is not a count 
+     * @type {number}
+     * @memberof DashboardwithdataInsertDataAllOf1DataV2InnerOneOfLinesValueInnerAllOf1
+     */
+    'count'?: number;
 }
 /**
  * @type DashboardwithdataInsertDataAllOfSchema
