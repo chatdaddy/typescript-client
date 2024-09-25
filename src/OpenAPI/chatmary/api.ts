@@ -453,6 +453,12 @@ export interface MedicalBotData {
      * @memberof MedicalBotData
      */
     'questions'?: Array<string>;
+    /**
+     * Answers provided by the bot
+     * @type {Array<string>}
+     * @memberof MedicalBotData
+     */
+    'answers'?: Array<string>;
 }
 /**
  * 
