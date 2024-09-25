@@ -7157,7 +7157,9 @@ export interface DashboardwithdataInsertDataAllOfSchemaOneOf1ItemsInner {
 
 export const DashboardwithdataInsertDataAllOfSchemaOneOf1ItemsInnerVisualizationTypeEnum = {
     Histogram: 'histogram',
-    Total: 'total'
+    PieChart: 'pie-chart',
+    Table: 'table',
+    Snapshot: 'snapshot'
 } as const;
 
 export type DashboardwithdataInsertDataAllOfSchemaOneOf1ItemsInnerVisualizationTypeEnum = typeof DashboardwithdataInsertDataAllOfSchemaOneOf1ItemsInnerVisualizationTypeEnum[keyof typeof DashboardwithdataInsertDataAllOfSchemaOneOf1ItemsInnerVisualizationTypeEnum];
