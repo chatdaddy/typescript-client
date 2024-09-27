@@ -696,7 +696,8 @@ export interface MetricConfig {
 
 export const MetricConfigValueFormatEnum = {
     Count: 'count',
-    DurationSeconds: 'durationSeconds'
+    DurationSeconds: 'durationSeconds',
+    Percentage: 'percentage'
 } as const;
 
 export type MetricConfigValueFormatEnum = typeof MetricConfigValueFormatEnum[keyof typeof MetricConfigValueFormatEnum];
