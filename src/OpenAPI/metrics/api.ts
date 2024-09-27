@@ -1004,11 +1004,12 @@ export const DashboardApiAxiosParamCreator = function (configuration?: Configura
         /**
          * 
          * @summary Create a new dashboard metadata
+         * @param {'1' | '2'} [version] Which version of the schema to use.
          * @param {DashboardCreate} [dashboardCreate] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        createDashboardMetadata: async (dashboardCreate?: DashboardCreate, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        createDashboardMetadata: async (version?: '1' | '2', dashboardCreate?: DashboardCreate, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/dashboard/metadatas`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -1024,6 +1025,10 @@ export const DashboardApiAxiosParamCreator = function (configuration?: Configura
             // authentication chatdaddy required
             // oauth required
             await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["METRICS_GET"], configuration)
+
+            if (version !== undefined) {
+                localVarQueryParameter['version'] = version;
+            }
 
 
     
@@ -1354,12 +1359,13 @@ export const DashboardApiFp = function(configuration?: Configuration) {
         /**
          * 
          * @summary Create a new dashboard metadata
+         * @param {'1' | '2'} [version] Which version of the schema to use.
          * @param {DashboardCreate} [dashboardCreate] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async createDashboardMetadata(dashboardCreate?: DashboardCreate, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DashboardMetadata>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.createDashboardMetadata(dashboardCreate, options);
+        async createDashboardMetadata(version?: '1' | '2', dashboardCreate?: DashboardCreate, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DashboardMetadata>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.createDashboardMetadata(version, dashboardCreate, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -1458,7 +1464,7 @@ export const DashboardApiFactory = function (configuration?: Configuration, base
          * @throws {RequiredError}
          */
         createDashboardMetadata(requestParameters: DashboardApiCreateDashboardMetadataRequest = {}, options?: AxiosRequestConfig): AxiosPromise<DashboardMetadata> {
-            return localVarFp.createDashboardMetadata(requestParameters.dashboardCreate, options).then((request) => request(axios, basePath));
+            return localVarFp.createDashboardMetadata(requestParameters.version, requestParameters.dashboardCreate, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -1528,6 +1534,13 @@ export const DashboardApiFactory = function (configuration?: Configuration, base
  * @interface DashboardApiCreateDashboardMetadataRequest
  */
 export interface DashboardApiCreateDashboardMetadataRequest {
+    /**
+     * Which version of the schema to use.
+     * @type {'1' | '2'}
+     * @memberof DashboardApiCreateDashboardMetadata
+     */
+    readonly version?: '1' | '2'
+
     /**
      * 
      * @type {DashboardCreate}
@@ -1713,7 +1726,7 @@ export class DashboardApi extends BaseAPI {
      * @memberof DashboardApi
      */
     public createDashboardMetadata(requestParameters: DashboardApiCreateDashboardMetadataRequest = {}, options?: AxiosRequestConfig) {
-        return DashboardApiFp(this.configuration).createDashboardMetadata(requestParameters.dashboardCreate, options).then((request) => request(this.axios, this.basePath));
+        return DashboardApiFp(this.configuration).createDashboardMetadata(requestParameters.version, requestParameters.dashboardCreate, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
