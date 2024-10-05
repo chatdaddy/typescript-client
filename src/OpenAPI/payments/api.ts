@@ -1360,23 +1360,42 @@ export interface CreditTxsGet200Response {
     'total'?: number;
 }
 /**
+ * @type CreditUnitsPurchaseOpts
+ * @export
+ */
+export type CreditUnitsPurchaseOpts = CreditUnitsPurchaseOpts1 | CreditUnitsPurchaseOpts2;
+
+/**
  * Options for purchasing credits. The total units are computed as the maxUnits of the previous tier from the specified tier, plus the step size of the specified tier multiplied by the number of steps specified. Essentially:   totalUnits = prev(maxUnits) + current(step) * steps
  * @export
- * @interface CreditUnitsPurchaseOpts
+ * @interface CreditUnitsPurchaseOpts1
  */
-export interface CreditUnitsPurchaseOpts {
+export interface CreditUnitsPurchaseOpts1 {
     /**
      * 
      * @type {string}
-     * @memberof CreditUnitsPurchaseOpts
+     * @memberof CreditUnitsPurchaseOpts1
      */
     'tier': string;
     /**
      * 
      * @type {number}
-     * @memberof CreditUnitsPurchaseOpts
+     * @memberof CreditUnitsPurchaseOpts1
      */
     'steps': number;
+}
+/**
+ * Number of units to purchase. This is the total number of units to purchase.
+ * @export
+ * @interface CreditUnitsPurchaseOpts2
+ */
+export interface CreditUnitsPurchaseOpts2 {
+    /**
+     * Number of units to purchase
+     * @type {number}
+     * @memberof CreditUnitsPurchaseOpts2
+     */
+    'units': number;
 }
 /**
  * 
