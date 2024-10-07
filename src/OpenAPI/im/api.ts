@@ -1870,6 +1870,12 @@ export interface ContactChat {
      * @memberof ContactChat
      */
     'lastMessage': string;
+    /**
+     * 
+     * @type {number}
+     * @memberof ContactChat
+     */
+    'unread'?: number;
 }
 /**
  * @type ContactCrmTicketPatch
