@@ -2124,6 +2124,32 @@ export type ContactType = typeof ContactType[keyof typeof ContactType];
 /**
  * 
  * @export
+ * @interface ContactsAggregationGet200Response
+ */
+export interface ContactsAggregationGet200Response {
+    /**
+     * 
+     * @type {{ [key: string]: ContactsAggregationGet200ResponseContactsValue; }}
+     * @memberof ContactsAggregationGet200Response
+     */
+    'contacts': { [key: string]: ContactsAggregationGet200ResponseContactsValue; };
+}
+/**
+ * 
+ * @export
+ * @interface ContactsAggregationGet200ResponseContactsValue
+ */
+export interface ContactsAggregationGet200ResponseContactsValue {
+    /**
+     * 
+     * @type {number}
+     * @memberof ContactsAggregationGet200ResponseContactsValue
+     */
+    'count': number;
+}
+/**
+ * 
+ * @export
  * @interface ContactsCheckExists200Response
  */
 export interface ContactsCheckExists200Response {
@@ -10061,6 +10087,47 @@ export class ChatsApi extends BaseAPI {
 export const ContactsApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
+         * 
+         * @summary Get the number of contacts per team for the given teamIds
+         * @param {Array<string>} teamIds 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        contactsAggregationGet: async (teamIds: Array<string>, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'teamIds' is not null or undefined
+            assertParamExists('contactsAggregationGet', 'teamIds', teamIds)
+            const localVarPath = `/contacts/aggregation`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["ADMIN_PANEL_ACCESS"], configuration)
+
+            if (teamIds) {
+                localVarQueryParameter['teamIds'] = teamIds;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * Eg. provide a phone number to check whether the user is registered on WhatsApp
          * @summary Check a given user exists on the IM platform
          * @param {'whatsapp' | 'tiktok'} type which account type to check from
@@ -10620,6 +10687,17 @@ export const ContactsApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = ContactsApiAxiosParamCreator(configuration)
     return {
         /**
+         * 
+         * @summary Get the number of contacts per team for the given teamIds
+         * @param {Array<string>} teamIds 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async contactsAggregationGet(teamIds: Array<string>, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ContactsAggregationGet200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.contactsAggregationGet(teamIds, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
          * Eg. provide a phone number to check whether the user is registered on WhatsApp
          * @summary Check a given user exists on the IM platform
          * @param {'whatsapp' | 'tiktok'} type which account type to check from
@@ -10757,6 +10835,16 @@ export const ContactsApiFactory = function (configuration?: Configuration, baseP
     const localVarFp = ContactsApiFp(configuration)
     return {
         /**
+         * 
+         * @summary Get the number of contacts per team for the given teamIds
+         * @param {ContactsApiContactsAggregationGetRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        contactsAggregationGet(requestParameters: ContactsApiContactsAggregationGetRequest, options?: AxiosRequestConfig): AxiosPromise<ContactsAggregationGet200Response> {
+            return localVarFp.contactsAggregationGet(requestParameters.teamIds, options).then((request) => request(axios, basePath));
+        },
+        /**
          * Eg. provide a phone number to check whether the user is registered on WhatsApp
          * @summary Check a given user exists on the IM platform
          * @param {ContactsApiContactsCheckExistsRequest} requestParameters Request parameters.
@@ -10818,6 +10906,20 @@ export const ContactsApiFactory = function (configuration?: Configuration, baseP
         },
     };
 };
+
+/**
+ * Request parameters for contactsAggregationGet operation in ContactsApi.
+ * @export
+ * @interface ContactsApiContactsAggregationGetRequest
+ */
+export interface ContactsApiContactsAggregationGetRequest {
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof ContactsApiContactsAggregationGet
+     */
+    readonly teamIds: Array<string>
+}
 
 /**
  * Request parameters for contactsCheckExists operation in ContactsApi.
@@ -11337,6 +11439,18 @@ export interface ContactsApiContactsPostRequest {
  * @extends {BaseAPI}
  */
 export class ContactsApi extends BaseAPI {
+    /**
+     * 
+     * @summary Get the number of contacts per team for the given teamIds
+     * @param {ContactsApiContactsAggregationGetRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ContactsApi
+     */
+    public contactsAggregationGet(requestParameters: ContactsApiContactsAggregationGetRequest, options?: AxiosRequestConfig) {
+        return ContactsApiFp(this.configuration).contactsAggregationGet(requestParameters.teamIds, options).then((request) => request(this.axios, this.basePath));
+    }
+
     /**
      * Eg. provide a phone number to check whether the user is registered on WhatsApp
      * @summary Check a given user exists on the IM platform
