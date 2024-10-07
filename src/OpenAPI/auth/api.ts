@@ -1329,7 +1329,7 @@ export interface OtpPostRequest {
      */
     'template'?: string;
     /**
-     * 
+     * Specify the Recaptcha token
      * @type {string}
      * @memberof OtpPostRequest
      */
@@ -2101,37 +2101,6 @@ export interface TeamsPatch200Response {
      * @memberof TeamsPatch200Response
      */
     'success': boolean;
-}
-/**
- * 
- * @export
- * @interface TokenGet400Response
- */
-export interface TokenGet400Response {
-    /**
-     * 
-     * @type {number}
-     * @memberof TokenGet400Response
-     */
-    'statusCode'?: number;
-    /**
-     * Specific description of the error
-     * @type {string}
-     * @memberof TokenGet400Response
-     */
-    'error'?: string;
-    /**
-     * What the error was
-     * @type {string}
-     * @memberof TokenGet400Response
-     */
-    'message'?: string;
-    /**
-     * Some extra information about the error
-     * @type {object}
-     * @memberof TokenGet400Response
-     */
-    'data'?: object;
 }
 /**
  * 
@@ -3947,8 +3916,8 @@ export const OAuthApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
-         * 
-         * @summary Login to ChatDaddy
+         * Generates a new access token, and optionally a refresh token. The refresh token can then be used to generate a new access token when the current one expires.  The token can be generated either via a phone number/password combo or via a refresh token. 
+         * @summary Generate a new token
          * @param {AuthRequest} [authRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -4046,8 +4015,8 @@ export const OAuthApiFp = function(configuration?: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
-         * 
-         * @summary Login to ChatDaddy
+         * Generates a new access token, and optionally a refresh token. The refresh token can then be used to generate a new access token when the current one expires.  The token can be generated either via a phone number/password combo or via a refresh token. 
+         * @summary Generate a new token
          * @param {AuthRequest} [authRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -4097,8 +4066,8 @@ export const OAuthApiFactory = function (configuration?: Configuration, basePath
             return localVarFp.tokenGet(options).then((request) => request(axios, basePath));
         },
         /**
-         * 
-         * @summary Login to ChatDaddy
+         * Generates a new access token, and optionally a refresh token. The refresh token can then be used to generate a new access token when the current one expires.  The token can be generated either via a phone number/password combo or via a refresh token. 
+         * @summary Generate a new token
          * @param {OAuthApiTokenPostRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -4192,8 +4161,8 @@ export class OAuthApi extends BaseAPI {
     }
 
     /**
-     * 
-     * @summary Login to ChatDaddy
+     * Generates a new access token, and optionally a refresh token. The refresh token can then be used to generate a new access token when the current one expires.  The token can be generated either via a phone number/password combo or via a refresh token. 
+     * @summary Generate a new token
      * @param {OAuthApiTokenPostRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -4257,7 +4226,7 @@ export const OTPApiAxiosParamCreator = function (configuration?: Configuration) 
             };
         },
         /**
-         * 
+         * Generates an OTP for the given phone number. Once generated, the OTP can be used to authenticate the user for specific APIs, i.e. signup & forget password.  A captcha token is required to generate an OTP, available only from the frontend 
          * @summary Generate an OTP
          * @param {'sms' | 'whatsapp'} [channel] 
          * @param {OtpPostRequest} [otpPostRequest] 
@@ -4353,7 +4322,7 @@ export const OTPApiFp = function(configuration?: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
-         * 
+         * Generates an OTP for the given phone number. Once generated, the OTP can be used to authenticate the user for specific APIs, i.e. signup & forget password.  A captcha token is required to generate an OTP, available only from the frontend 
          * @summary Generate an OTP
          * @param {'sms' | 'whatsapp'} [channel] 
          * @param {OtpPostRequest} [otpPostRequest] 
@@ -4395,7 +4364,7 @@ export const OTPApiFactory = function (configuration?: Configuration, basePath?:
             return localVarFp.confirmOtp(options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Generates an OTP for the given phone number. Once generated, the OTP can be used to authenticate the user for specific APIs, i.e. signup & forget password.  A captcha token is required to generate an OTP, available only from the frontend 
          * @summary Generate an OTP
          * @param {OTPApiOtpPostRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -4471,7 +4440,7 @@ export class OTPApi extends BaseAPI {
     }
 
     /**
-     * 
+     * Generates an OTP for the given phone number. Once generated, the OTP can be used to authenticate the user for specific APIs, i.e. signup & forget password.  A captcha token is required to generate an OTP, available only from the frontend 
      * @summary Generate an OTP
      * @param {OTPApiOtpPostRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
