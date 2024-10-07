@@ -1093,6 +1093,19 @@ export interface StartJobResponse {
 /**
  * 
  * @export
+ * @interface TagSuggest200Response
+ */
+export interface TagSuggest200Response {
+    /**
+     * Suggested name of the tag
+     * @type {string}
+     * @memberof TagSuggest200Response
+     */
+    'suggestedTagName': string;
+}
+/**
+ * 
+ * @export
  * @interface TrainingStatusResponse
  */
 export interface TrainingStatusResponse {
@@ -1596,6 +1609,48 @@ export const AutocompleteApiAxiosParamCreator = function (configuration?: Config
                 options: localVarRequestOptions,
             };
         },
+        /**
+         * 
+         * @summary Returns a suggested tag name
+         * @param {string} accountId 
+         * @param {string} chatId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        tagSuggest: async (accountId: string, chatId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'accountId' is not null or undefined
+            assertParamExists('tagSuggest', 'accountId', accountId)
+            // verify required parameter 'chatId' is not null or undefined
+            assertParamExists('tagSuggest', 'chatId', chatId)
+            const localVarPath = `/tag/suggest/{accountId}/{chatId}`
+                .replace(`{${"accountId"}}`, encodeURIComponent(String(accountId)))
+                .replace(`{${"chatId"}}`, encodeURIComponent(String(chatId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["AUTOCOMPLETE_GET"], configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
     }
 };
 
@@ -1654,6 +1709,18 @@ export const AutocompleteApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.oauthCallback(code, state, scope, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
+        /**
+         * 
+         * @summary Returns a suggested tag name
+         * @param {string} accountId 
+         * @param {string} chatId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async tagSuggest(accountId: string, chatId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TagSuggest200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.tagSuggest(accountId, chatId, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
     }
 };
 
@@ -1703,6 +1770,16 @@ export const AutocompleteApiFactory = function (configuration?: Configuration, b
          */
         oauthCallback(requestParameters: AutocompleteApiOauthCallbackRequest, options?: AxiosRequestConfig): AxiosPromise<OauthCallback200Response> {
             return localVarFp.oauthCallback(requestParameters.code, requestParameters.state, requestParameters.scope, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Returns a suggested tag name
+         * @param {AutocompleteApiTagSuggestRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        tagSuggest(requestParameters: AutocompleteApiTagSuggestRequest, options?: AxiosRequestConfig): AxiosPromise<TagSuggest200Response> {
+            return localVarFp.tagSuggest(requestParameters.accountId, requestParameters.chatId, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -1792,6 +1869,27 @@ export interface AutocompleteApiOauthCallbackRequest {
 }
 
 /**
+ * Request parameters for tagSuggest operation in AutocompleteApi.
+ * @export
+ * @interface AutocompleteApiTagSuggestRequest
+ */
+export interface AutocompleteApiTagSuggestRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof AutocompleteApiTagSuggest
+     */
+    readonly accountId: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof AutocompleteApiTagSuggest
+     */
+    readonly chatId: string
+}
+
+/**
  * AutocompleteApi - object-oriented interface
  * @export
  * @class AutocompleteApi
@@ -1844,6 +1942,18 @@ export class AutocompleteApi extends BaseAPI {
      */
     public oauthCallback(requestParameters: AutocompleteApiOauthCallbackRequest, options?: AxiosRequestConfig) {
         return AutocompleteApiFp(this.configuration).oauthCallback(requestParameters.code, requestParameters.state, requestParameters.scope, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Returns a suggested tag name
+     * @param {AutocompleteApiTagSuggestRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AutocompleteApi
+     */
+    public tagSuggest(requestParameters: AutocompleteApiTagSuggestRequest, options?: AxiosRequestConfig) {
+        return AutocompleteApiFp(this.configuration).tagSuggest(requestParameters.accountId, requestParameters.chatId, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
