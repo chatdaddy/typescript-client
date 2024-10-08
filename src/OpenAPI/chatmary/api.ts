@@ -461,10 +461,10 @@ export interface MedicalBotData {
     'answers'?: Array<string>;
     /**
      * Additional details about the user
-     * @type {string}
+     * @type {object}
      * @memberof MedicalBotData
      */
-    'additionalData'?: string;
+    'additionalData'?: object;
 }
 /**
  * 
