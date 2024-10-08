@@ -2420,6 +2420,62 @@ export type PurchaseTierPreferenceCategoryEnum = typeof PurchaseTierPreferenceCa
 /**
  * 
  * @export
+ * @interface RecTxMetadata
+ */
+export interface RecTxMetadata {
+    /**
+     * The redeemed coupon ID
+     * @type {string}
+     * @memberof RecTxMetadata
+     */
+    'redeemedCouponId'?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof RecTxMetadata
+     */
+    'percentageOff'?: number;
+    /**
+     * The ID of the coupon
+     * @type {string}
+     * @memberof RecTxMetadata
+     */
+    'couponId'?: string;
+    /**
+     * If this recurring charge was resynced after another recurring sub was cancelled, this will be the number of units that were charged previously. 
+     * @type {number}
+     * @memberof RecTxMetadata
+     */
+    'previousChargeUnits'?: number;
+    /**
+     * Number of times this recurring charge was resynced after another recurring sub was cancelled.
+     * @type {number}
+     * @memberof RecTxMetadata
+     */
+    'nextChargeResyncs'?: number;
+}
+/**
+ * 
+ * @export
+ * @interface RecTxMetadataAllOf
+ */
+export interface RecTxMetadataAllOf {
+    /**
+     * If this recurring charge was resynced after another recurring sub was cancelled, this will be the number of units that were charged previously. 
+     * @type {number}
+     * @memberof RecTxMetadataAllOf
+     */
+    'previousChargeUnits'?: number;
+    /**
+     * Number of times this recurring charge was resynced after another recurring sub was cancelled.
+     * @type {number}
+     * @memberof RecTxMetadataAllOf
+     */
+    'nextChargeResyncs'?: number;
+}
+/**
+ * 
+ * @export
  * @interface RecurringConsumptionMetadata
  */
 export interface RecurringConsumptionMetadata {
@@ -2530,10 +2586,10 @@ export interface RecurringCreditConsumption {
     'objectId': string;
     /**
      * 
-     * @type {TxMetadata}
+     * @type {RecTxMetadata}
      * @memberof RecurringCreditConsumption
      */
-    'metadata'?: TxMetadata | null;
+    'metadata'?: RecTxMetadata;
 }
 
 
