@@ -459,6 +459,12 @@ export interface MedicalBotData {
      * @memberof MedicalBotData
      */
     'answers'?: Array<string>;
+    /**
+     * Additional details about the user
+     * @type {string}
+     * @memberof MedicalBotData
+     */
+    'additionalData'?: string;
 }
 /**
  * 
