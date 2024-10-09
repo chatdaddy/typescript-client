@@ -28,6 +28,77 @@ import { COLLECTION_FORMATS, BaseAPI, RequiredError } from '../base';
 /**
  * 
  * @export
+ * @enum {string}
+ */
+
+const ActorAutomationType = {
+    KeywordReply: 'keyword-reply',
+    DefaultReply: 'default-reply',
+    Campaigns: 'campaigns',
+    Notifications: 'notifications',
+    Bot: 'bot',
+    AiChatbot: 'ai-chatbot',
+    Trigger: 'trigger'
+} as const;
+
+type ActorAutomationType = typeof ActorAutomationType[keyof typeof ActorAutomationType];
+
+
+/**
+ * Context about the actor of a particular action
+ * @export
+ * @interface ActorMetadata
+ */
+interface ActorMetadata {
+    /**
+     * 
+     * @type {ActorAutomationType}
+     * @memberof ActorMetadata
+     */
+    'type': ActorAutomationType;
+    /**
+     * ID of the object that sent the message. For example, the campaign ID or keyword reply ID. Separate sub-objects with a `/`. For example, to specify the action of a bot -- use `bot_id/action_id`
+     * @type {string}
+     * @memberof ActorMetadata
+     */
+    'objectId': string;
+    /**
+     * Name of the object that sent the message. For example, the campaign name or keyword reply name
+     * @type {string}
+     * @memberof ActorMetadata
+     */
+    'objectName'?: string;
+}
+
+
+/**
+ * 
+ * @export
+ * @interface AiCreditUse
+ */
+interface AiCreditUse {
+    /**
+     * 
+     * @type {string}
+     * @memberof AiCreditUse
+     */
+    'teamId': string;
+    /**
+     * 
+     * @type {ActorMetadata}
+     * @memberof AiCreditUse
+     */
+    'actor': ActorMetadata;
+    /**
+     * 
+     * @type {object}
+     * @memberof AiCreditUse
+     */
+    'metadata': object;
+}
+/**
+ * 
+ * @export
  * @interface AutocompleteCalendarEventRequest
  */
 interface AutocompleteCalendarEventRequest {

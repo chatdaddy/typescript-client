@@ -820,6 +820,95 @@ export interface ActionExecuteDataMessagesInner {
 /**
  * 
  * @export
+ * @interface AiCreditUse
+ */
+export interface AiCreditUse {
+    /**
+     * 
+     * @type {string}
+     * @memberof AiCreditUse
+     */
+    'event': AiCreditUseEventEnum;
+    /**
+     * 
+     * @type {Array<AiCreditUseData>}
+     * @memberof AiCreditUse
+     */
+    'data': Array<AiCreditUseData>;
+}
+
+export const AiCreditUseEventEnum = {
+    AiCreditUse: 'ai-credit-use'
+} as const;
+
+export type AiCreditUseEventEnum = typeof AiCreditUseEventEnum[keyof typeof AiCreditUseEventEnum];
+
+/**
+ * 
+ * @export
+ * @interface AiCreditUseData
+ */
+export interface AiCreditUseData {
+    /**
+     * 
+     * @type {string}
+     * @memberof AiCreditUseData
+     */
+    'teamId': string;
+    /**
+     * 
+     * @type {AiCreditUseDataActor}
+     * @memberof AiCreditUseData
+     */
+    'actor': AiCreditUseDataActor;
+    /**
+     * 
+     * @type {object}
+     * @memberof AiCreditUseData
+     */
+    'metadata': object;
+}
+/**
+ * Context about the actor of a particular action
+ * @export
+ * @interface AiCreditUseDataActor
+ */
+export interface AiCreditUseDataActor {
+    /**
+     * 
+     * @type {string}
+     * @memberof AiCreditUseDataActor
+     */
+    'type': AiCreditUseDataActorTypeEnum;
+    /**
+     * ID of the object that sent the message. For example, the campaign ID or keyword reply ID. Separate sub-objects with a `/`. For example, to specify the action of a bot -- use `bot_id/action_id`
+     * @type {string}
+     * @memberof AiCreditUseDataActor
+     */
+    'objectId': string;
+    /**
+     * Name of the object that sent the message. For example, the campaign name or keyword reply name
+     * @type {string}
+     * @memberof AiCreditUseDataActor
+     */
+    'objectName'?: string;
+}
+
+export const AiCreditUseDataActorTypeEnum = {
+    KeywordReply: 'keyword-reply',
+    DefaultReply: 'default-reply',
+    Campaigns: 'campaigns',
+    Notifications: 'notifications',
+    Bot: 'bot',
+    AiChatbot: 'ai-chatbot',
+    Trigger: 'trigger'
+} as const;
+
+export type AiCreditUseDataActorTypeEnum = typeof AiCreditUseDataActorTypeEnum[keyof typeof AiCreditUseDataActorTypeEnum];
+
+/**
+ * 
+ * @export
  * @interface AlarmPost200Response
  */
 export interface AlarmPost200Response {
@@ -7239,6 +7328,7 @@ export const EventName = {
     DashboardwithdataInsert: 'dashboardwithdata-insert',
     ShopproductInsert: 'shopproduct-insert',
     TeammemberLogout: 'teammember-logout',
+    AiCreditUse: 'ai-credit-use',
     ContactInsert: 'contact-insert',
     ContactUpdate: 'contact-update',
     ContactDelete: 'contact-delete',
@@ -7374,7 +7464,7 @@ export type EventSubscriptionType = typeof EventSubscriptionType[keyof typeof Ev
  * The request body you\'ll receive in a webhook
  * @export
  */
-export type EventWebhookData = AccountDelete | AccountInsert | AccountUpdate | ActionExecute | BotDelete | BotInsert | BotUpdate | CallDelete | CallInsert | CallUpdate | CallchannelDelete | CallchannelInsert | CallchannelUpdate | CampaignInsert | ChatDelete | ChatInsert | ChatUpdate | ChatbotInsert | ContactDelete | ContactInsert | ContactUpdate | CredittransactionrecordInsert | CrmTicketDelete | CrmTicketInsert | CrmTicketUpdate | CustomerCreditsLevelUpdate | DashboardwithdataInsert | FewMessagesLeft | GroupUpdate | KeywordbasedactionInsert | MessageDelete | MessageInsert | MessageUpdate | OrderInsert | PaymentintegrationInsert | PlatformproductDelete | PlatformproductInsert | PlatformproductUpdate | PresenceUpdate | PushNotification | ShopproductInsert | StaleAccountNotification | TagDelete | TagInsert | TagUpdate | TeamDelete | TeamInsert | TeamUpdate | TeammemberDelete | TeammemberInsert | TeammemberLogout | TeammemberUpdate | TrackingDelete | TrackingInsert | TrackingUpdate | UserDelete | UserInsert | UserUpdate;
+export type EventWebhookData = AccountDelete | AccountInsert | AccountUpdate | ActionExecute | AiCreditUse | BotDelete | BotInsert | BotUpdate | CallDelete | CallInsert | CallUpdate | CallchannelDelete | CallchannelInsert | CallchannelUpdate | CampaignInsert | ChatDelete | ChatInsert | ChatUpdate | ChatbotInsert | ContactDelete | ContactInsert | ContactUpdate | CredittransactionrecordInsert | CrmTicketDelete | CrmTicketInsert | CrmTicketUpdate | CustomerCreditsLevelUpdate | DashboardwithdataInsert | FewMessagesLeft | GroupUpdate | KeywordbasedactionInsert | MessageDelete | MessageInsert | MessageUpdate | OrderInsert | PaymentintegrationInsert | PlatformproductDelete | PlatformproductInsert | PlatformproductUpdate | PresenceUpdate | PushNotification | ShopproductInsert | StaleAccountNotification | TagDelete | TagInsert | TagUpdate | TeamDelete | TeamInsert | TeamUpdate | TeammemberDelete | TeammemberInsert | TeammemberLogout | TeammemberUpdate | TrackingDelete | TrackingInsert | TrackingUpdate | UserDelete | UserInsert | UserUpdate;
 
 /**
  * 
