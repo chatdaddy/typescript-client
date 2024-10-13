@@ -6848,16 +6848,10 @@ export interface DashboardwithdataInsertData {
     'schema': DashboardwithdataInsertDataAllOfSchema;
     /**
      * 
-     * @type {Array<DashboardwithdataInsertDataAllOf1Data>}
-     * @memberof DashboardwithdataInsertData
-     */
-    'data': Array<DashboardwithdataInsertDataAllOf1Data>;
-    /**
-     * 
      * @type {Array<DashboardwithdataInsertDataAllOf1DataV2Inner>}
      * @memberof DashboardwithdataInsertData
      */
-    'dataV2'?: Array<DashboardwithdataInsertDataAllOf1DataV2Inner>;
+    'dataV2': Array<DashboardwithdataInsertDataAllOf1DataV2Inner>;
 }
 /**
  * 
@@ -6910,81 +6904,11 @@ export interface DashboardwithdataInsertDataAllOf1 {
     'id': string;
     /**
      * 
-     * @type {Array<DashboardwithdataInsertDataAllOf1Data>}
-     * @memberof DashboardwithdataInsertDataAllOf1
-     */
-    'data': Array<DashboardwithdataInsertDataAllOf1Data>;
-    /**
-     * 
      * @type {Array<DashboardwithdataInsertDataAllOf1DataV2Inner>}
      * @memberof DashboardwithdataInsertDataAllOf1
      */
-    'dataV2'?: Array<DashboardwithdataInsertDataAllOf1DataV2Inner>;
+    'dataV2': Array<DashboardwithdataInsertDataAllOf1DataV2Inner>;
 }
-/**
- * 
- * @export
- * @interface DashboardwithdataInsertDataAllOf1Data
- */
-export interface DashboardwithdataInsertDataAllOf1Data {
-    /**
-     * 
-     * @type {Array<object>}
-     * @memberof DashboardwithdataInsertDataAllOf1Data
-     */
-    'metrics': Array<object>;
-    /**
-     * 
-     * @type {Array<object>}
-     * @memberof DashboardwithdataInsertDataAllOf1Data
-     */
-    'previousMetrics'?: Array<object>;
-    /**
-     * 
-     * @type {string}
-     * @memberof DashboardwithdataInsertDataAllOf1Data
-     */
-    'type': DashboardwithdataInsertDataAllOf1DataTypeEnum;
-    /**
-     * 
-     * @type {string}
-     * @memberof DashboardwithdataInsertDataAllOf1Data
-     */
-    'dataAggregate': DashboardwithdataInsertDataAllOf1DataDataAggregateEnum;
-    /**
-     * 
-     * @type {string}
-     * @memberof DashboardwithdataInsertDataAllOf1Data
-     */
-    'key'?: string;
-}
-
-export const DashboardwithdataInsertDataAllOf1DataTypeEnum = {
-    MessagesSentByUser: 'messages-sent-by-user',
-    MessagesSentByAccount: 'messages-sent-by-account',
-    MessagesRecvByChat: 'messages-recv-by-chat',
-    AvgResponseTimeByUser: 'avg-response-time-by-user',
-    MessageReplyRateByUser: 'message-reply-rate-by-user',
-    TasksAddedByUser: 'tasks-added-by-user',
-    TasksSolvedByUser: 'tasks-solved-by-user',
-    TasksAddedByChat: 'tasks-added-by-chat',
-    ContactsTaggedByTag: 'contacts-tagged-by-tag',
-    MessageFlowsSentByFlowId: 'message-flows-sent-by-flow-id',
-    MessageFlowsCompletedByFlowId: 'message-flows-completed-by-flow-id',
-    MessageFlowClickRateByFlowId: 'message-flow-click-rate-by-flow-id',
-    PaymentRecvByPhone: 'payment-recv-by-phone',
-    OrdersRecvByPhone: 'orders-recv-by-phone',
-    NewChats: 'new-chats'
-} as const;
-
-export type DashboardwithdataInsertDataAllOf1DataTypeEnum = typeof DashboardwithdataInsertDataAllOf1DataTypeEnum[keyof typeof DashboardwithdataInsertDataAllOf1DataTypeEnum];
-export const DashboardwithdataInsertDataAllOf1DataDataAggregateEnum = {
-    Avg: 'avg',
-    Sum: 'sum'
-} as const;
-
-export type DashboardwithdataInsertDataAllOf1DataDataAggregateEnum = typeof DashboardwithdataInsertDataAllOf1DataDataAggregateEnum[keyof typeof DashboardwithdataInsertDataAllOf1DataDataAggregateEnum];
-
 /**
  * @type DashboardwithdataInsertDataAllOf1DataV2Inner
  * @export
@@ -7125,185 +7049,95 @@ export interface DashboardwithdataInsertDataAllOf1DataV2InnerOneOfLinesValueInne
     'count'?: number;
 }
 /**
- * @type DashboardwithdataInsertDataAllOfSchema
- * @export
- */
-export type DashboardwithdataInsertDataAllOfSchema = DashboardwithdataInsertDataAllOfSchemaOneOf | DashboardwithdataInsertDataAllOfSchemaOneOf1;
-
-/**
  * 
  * @export
- * @interface DashboardwithdataInsertDataAllOfSchemaOneOf
+ * @interface DashboardwithdataInsertDataAllOfSchema
  */
-export interface DashboardwithdataInsertDataAllOfSchemaOneOf {
+export interface DashboardwithdataInsertDataAllOfSchema {
     /**
      * 
      * @type {string}
-     * @memberof DashboardwithdataInsertDataAllOfSchemaOneOf
+     * @memberof DashboardwithdataInsertDataAllOfSchema
      */
-    'version'?: DashboardwithdataInsertDataAllOfSchemaOneOfVersionEnum;
+    'version': DashboardwithdataInsertDataAllOfSchemaVersionEnum;
     /**
      * 
-     * @type {boolean}
-     * @memberof DashboardwithdataInsertDataAllOfSchemaOneOf
+     * @type {Array<DashboardwithdataInsertDataAllOfSchemaItems>}
+     * @memberof DashboardwithdataInsertDataAllOfSchema
      */
-    'includePreviousPeriod'?: boolean;
-    /**
-     * 
-     * @type {Array<DashboardwithdataInsertDataAllOfSchemaOneOfItemsInner>}
-     * @memberof DashboardwithdataInsertDataAllOfSchemaOneOf
-     */
-    'items': Array<DashboardwithdataInsertDataAllOfSchemaOneOfItemsInner>;
+    'items': Array<DashboardwithdataInsertDataAllOfSchemaItems>;
 }
 
-export const DashboardwithdataInsertDataAllOfSchemaOneOfVersionEnum = {
-    1: '1'
-} as const;
-
-export type DashboardwithdataInsertDataAllOfSchemaOneOfVersionEnum = typeof DashboardwithdataInsertDataAllOfSchemaOneOfVersionEnum[keyof typeof DashboardwithdataInsertDataAllOfSchemaOneOfVersionEnum];
-
-/**
- * 
- * @export
- * @interface DashboardwithdataInsertDataAllOfSchemaOneOf1
- */
-export interface DashboardwithdataInsertDataAllOfSchemaOneOf1 {
-    /**
-     * 
-     * @type {string}
-     * @memberof DashboardwithdataInsertDataAllOfSchemaOneOf1
-     */
-    'version': DashboardwithdataInsertDataAllOfSchemaOneOf1VersionEnum;
-    /**
-     * 
-     * @type {Array<DashboardwithdataInsertDataAllOfSchemaOneOf1ItemsInner>}
-     * @memberof DashboardwithdataInsertDataAllOfSchemaOneOf1
-     */
-    'items': Array<DashboardwithdataInsertDataAllOfSchemaOneOf1ItemsInner>;
-}
-
-export const DashboardwithdataInsertDataAllOfSchemaOneOf1VersionEnum = {
+export const DashboardwithdataInsertDataAllOfSchemaVersionEnum = {
     2: '2'
 } as const;
 
-export type DashboardwithdataInsertDataAllOfSchemaOneOf1VersionEnum = typeof DashboardwithdataInsertDataAllOfSchemaOneOf1VersionEnum[keyof typeof DashboardwithdataInsertDataAllOfSchemaOneOf1VersionEnum];
+export type DashboardwithdataInsertDataAllOfSchemaVersionEnum = typeof DashboardwithdataInsertDataAllOfSchemaVersionEnum[keyof typeof DashboardwithdataInsertDataAllOfSchemaVersionEnum];
 
 /**
  * 
  * @export
- * @interface DashboardwithdataInsertDataAllOfSchemaOneOf1ItemsInner
+ * @interface DashboardwithdataInsertDataAllOfSchemaItems
  */
-export interface DashboardwithdataInsertDataAllOfSchemaOneOf1ItemsInner {
+export interface DashboardwithdataInsertDataAllOfSchemaItems {
     /**
      * 
      * @type {string}
-     * @memberof DashboardwithdataInsertDataAllOfSchemaOneOf1ItemsInner
+     * @memberof DashboardwithdataInsertDataAllOfSchemaItems
      */
     'id': string;
     /**
      * 
      * @type {string}
-     * @memberof DashboardwithdataInsertDataAllOfSchemaOneOf1ItemsInner
+     * @memberof DashboardwithdataInsertDataAllOfSchemaItems
      */
-    'visualizationType': DashboardwithdataInsertDataAllOfSchemaOneOf1ItemsInnerVisualizationTypeEnum;
+    'visualizationType': DashboardwithdataInsertDataAllOfSchemaItemsVisualizationTypeEnum;
     /**
      * 
      * @type {string}
-     * @memberof DashboardwithdataInsertDataAllOfSchemaOneOf1ItemsInner
+     * @memberof DashboardwithdataInsertDataAllOfSchemaItems
      */
     'metricId': string;
     /**
      * 
      * @type {string}
-     * @memberof DashboardwithdataInsertDataAllOfSchemaOneOf1ItemsInner
+     * @memberof DashboardwithdataInsertDataAllOfSchemaItems
      */
     'name': string;
     /**
      * 
      * @type {{ [key: string]: any; }}
-     * @memberof DashboardwithdataInsertDataAllOfSchemaOneOf1ItemsInner
+     * @memberof DashboardwithdataInsertDataAllOfSchemaItems
      */
     'filter'?: { [key: string]: any; };
     /**
      * 
      * @type {string}
-     * @memberof DashboardwithdataInsertDataAllOfSchemaOneOf1ItemsInner
+     * @memberof DashboardwithdataInsertDataAllOfSchemaItems
      */
     'breakdown'?: string;
     /**
      * Hide the default value in the breakdown.
      * @type {boolean}
-     * @memberof DashboardwithdataInsertDataAllOfSchemaOneOf1ItemsInner
+     * @memberof DashboardwithdataInsertDataAllOfSchemaItems
      */
     'hideDefaultInBreakdown'?: boolean;
     /**
      * 
      * @type {boolean}
-     * @memberof DashboardwithdataInsertDataAllOfSchemaOneOf1ItemsInner
+     * @memberof DashboardwithdataInsertDataAllOfSchemaItems
      */
     'includePreviousPeriod'?: boolean;
 }
 
-export const DashboardwithdataInsertDataAllOfSchemaOneOf1ItemsInnerVisualizationTypeEnum = {
+export const DashboardwithdataInsertDataAllOfSchemaItemsVisualizationTypeEnum = {
     Histogram: 'histogram',
     PieChart: 'pie-chart',
     Table: 'table',
     Snapshot: 'snapshot'
 } as const;
 
-export type DashboardwithdataInsertDataAllOfSchemaOneOf1ItemsInnerVisualizationTypeEnum = typeof DashboardwithdataInsertDataAllOfSchemaOneOf1ItemsInnerVisualizationTypeEnum[keyof typeof DashboardwithdataInsertDataAllOfSchemaOneOf1ItemsInnerVisualizationTypeEnum];
-
-/**
- * 
- * @export
- * @interface DashboardwithdataInsertDataAllOfSchemaOneOfItemsInner
- */
-export interface DashboardwithdataInsertDataAllOfSchemaOneOfItemsInner {
-    /**
-     * 
-     * @type {string}
-     * @memberof DashboardwithdataInsertDataAllOfSchemaOneOfItemsInner
-     */
-    'metric': DashboardwithdataInsertDataAllOfSchemaOneOfItemsInnerMetricEnum;
-    /**
-     * 
-     * @type {string}
-     * @memberof DashboardwithdataInsertDataAllOfSchemaOneOfItemsInner
-     */
-    'aggregate': DashboardwithdataInsertDataAllOfSchemaOneOfItemsInnerAggregateEnum;
-    /**
-     * 
-     * @type {string}
-     * @memberof DashboardwithdataInsertDataAllOfSchemaOneOfItemsInner
-     */
-    'key'?: string;
-}
-
-export const DashboardwithdataInsertDataAllOfSchemaOneOfItemsInnerMetricEnum = {
-    MessagesSentByUser: 'messages-sent-by-user',
-    MessagesSentByAccount: 'messages-sent-by-account',
-    MessagesRecvByChat: 'messages-recv-by-chat',
-    AvgResponseTimeByUser: 'avg-response-time-by-user',
-    MessageReplyRateByUser: 'message-reply-rate-by-user',
-    TasksAddedByUser: 'tasks-added-by-user',
-    TasksSolvedByUser: 'tasks-solved-by-user',
-    TasksAddedByChat: 'tasks-added-by-chat',
-    ContactsTaggedByTag: 'contacts-tagged-by-tag',
-    MessageFlowsSentByFlowId: 'message-flows-sent-by-flow-id',
-    MessageFlowsCompletedByFlowId: 'message-flows-completed-by-flow-id',
-    MessageFlowClickRateByFlowId: 'message-flow-click-rate-by-flow-id',
-    PaymentRecvByPhone: 'payment-recv-by-phone',
-    OrdersRecvByPhone: 'orders-recv-by-phone',
-    NewChats: 'new-chats'
-} as const;
-
-export type DashboardwithdataInsertDataAllOfSchemaOneOfItemsInnerMetricEnum = typeof DashboardwithdataInsertDataAllOfSchemaOneOfItemsInnerMetricEnum[keyof typeof DashboardwithdataInsertDataAllOfSchemaOneOfItemsInnerMetricEnum];
-export const DashboardwithdataInsertDataAllOfSchemaOneOfItemsInnerAggregateEnum = {
-    Avg: 'avg',
-    Sum: 'sum'
-} as const;
-
-export type DashboardwithdataInsertDataAllOfSchemaOneOfItemsInnerAggregateEnum = typeof DashboardwithdataInsertDataAllOfSchemaOneOfItemsInnerAggregateEnum[keyof typeof DashboardwithdataInsertDataAllOfSchemaOneOfItemsInnerAggregateEnum];
+export type DashboardwithdataInsertDataAllOfSchemaItemsVisualizationTypeEnum = typeof DashboardwithdataInsertDataAllOfSchemaItemsVisualizationTypeEnum[keyof typeof DashboardwithdataInsertDataAllOfSchemaItemsVisualizationTypeEnum];
 
 /**
  * 

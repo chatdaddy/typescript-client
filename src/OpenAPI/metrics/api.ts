@@ -121,13 +121,7 @@ export interface DashboardData {
      * @type {Array<MetricsResult>}
      * @memberof DashboardData
      */
-    'data': Array<MetricsResult>;
-    /**
-     * 
-     * @type {Array<MetricsResultV2>}
-     * @memberof DashboardData
-     */
-    'dataV2'?: Array<MetricsResultV2>;
+    'dataV2': Array<MetricsResult>;
 }
 /**
  * 
@@ -185,10 +179,30 @@ export type DashboardPeriod = typeof DashboardPeriod[keyof typeof DashboardPerio
 
 
 /**
- * @type DashboardSchema
+ * 
  * @export
+ * @interface DashboardSchema
  */
-export type DashboardSchema = DashboardSchemaV1 | DashboardSchemaV2;
+export interface DashboardSchema {
+    /**
+     * 
+     * @type {string}
+     * @memberof DashboardSchema
+     */
+    'version': DashboardSchemaVersionEnum;
+    /**
+     * 
+     * @type {Array<DashboardSchemaItem>}
+     * @memberof DashboardSchema
+     */
+    'items': Array<DashboardSchemaItem>;
+}
+
+export const DashboardSchemaVersionEnum = {
+    2: '2'
+} as const;
+
+export type DashboardSchemaVersionEnum = typeof DashboardSchemaVersionEnum[keyof typeof DashboardSchemaVersionEnum];
 
 /**
  * 
@@ -198,139 +212,54 @@ export type DashboardSchema = DashboardSchemaV1 | DashboardSchemaV2;
 export interface DashboardSchemaItem {
     /**
      * 
-     * @type {MetricType}
-     * @memberof DashboardSchemaItem
-     */
-    'metric': MetricType;
-    /**
-     * 
-     * @type {DataAggregateType}
-     * @memberof DashboardSchemaItem
-     */
-    'aggregate': DataAggregateType;
-    /**
-     * 
      * @type {string}
      * @memberof DashboardSchemaItem
-     */
-    'key'?: string;
-}
-
-
-/**
- * 
- * @export
- * @interface DashboardSchemaItemV2
- */
-export interface DashboardSchemaItemV2 {
-    /**
-     * 
-     * @type {string}
-     * @memberof DashboardSchemaItemV2
      */
     'id': string;
     /**
      * 
      * @type {DashboardVisualizationType}
-     * @memberof DashboardSchemaItemV2
+     * @memberof DashboardSchemaItem
      */
     'visualizationType': DashboardVisualizationType;
     /**
      * 
      * @type {string}
-     * @memberof DashboardSchemaItemV2
+     * @memberof DashboardSchemaItem
      */
     'metricId': string;
     /**
      * 
      * @type {string}
-     * @memberof DashboardSchemaItemV2
+     * @memberof DashboardSchemaItem
      */
     'name': string;
     /**
      * 
      * @type {{ [key: string]: any; }}
-     * @memberof DashboardSchemaItemV2
+     * @memberof DashboardSchemaItem
      */
     'filter'?: { [key: string]: any; };
     /**
      * 
      * @type {string}
-     * @memberof DashboardSchemaItemV2
+     * @memberof DashboardSchemaItem
      */
     'breakdown'?: string;
     /**
      * Hide the default value in the breakdown.
      * @type {boolean}
-     * @memberof DashboardSchemaItemV2
+     * @memberof DashboardSchemaItem
      */
     'hideDefaultInBreakdown'?: boolean;
     /**
      * 
      * @type {boolean}
-     * @memberof DashboardSchemaItemV2
+     * @memberof DashboardSchemaItem
      */
     'includePreviousPeriod'?: boolean;
 }
 
-
-/**
- * 
- * @export
- * @interface DashboardSchemaV1
- */
-export interface DashboardSchemaV1 {
-    /**
-     * 
-     * @type {string}
-     * @memberof DashboardSchemaV1
-     */
-    'version'?: DashboardSchemaV1VersionEnum;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof DashboardSchemaV1
-     */
-    'includePreviousPeriod'?: boolean;
-    /**
-     * 
-     * @type {Array<DashboardSchemaItem>}
-     * @memberof DashboardSchemaV1
-     */
-    'items': Array<DashboardSchemaItem>;
-}
-
-export const DashboardSchemaV1VersionEnum = {
-    1: '1'
-} as const;
-
-export type DashboardSchemaV1VersionEnum = typeof DashboardSchemaV1VersionEnum[keyof typeof DashboardSchemaV1VersionEnum];
-
-/**
- * 
- * @export
- * @interface DashboardSchemaV2
- */
-export interface DashboardSchemaV2 {
-    /**
-     * 
-     * @type {string}
-     * @memberof DashboardSchemaV2
-     */
-    'version': DashboardSchemaV2VersionEnum;
-    /**
-     * 
-     * @type {Array<DashboardSchemaItemV2>}
-     * @memberof DashboardSchemaV2
-     */
-    'items': Array<DashboardSchemaItemV2>;
-}
-
-export const DashboardSchemaV2VersionEnum = {
-    2: '2'
-} as const;
-
-export type DashboardSchemaV2VersionEnum = typeof DashboardSchemaV2VersionEnum[keyof typeof DashboardSchemaV2VersionEnum];
 
 /**
  * 
@@ -408,13 +337,7 @@ export interface DashboardWithData {
      * @type {Array<MetricsResult>}
      * @memberof DashboardWithData
      */
-    'data': Array<MetricsResult>;
-    /**
-     * 
-     * @type {Array<MetricsResultV2>}
-     * @memberof DashboardWithData
-     */
-    'dataV2'?: Array<MetricsResultV2>;
+    'dataV2': Array<MetricsResult>;
 }
 /**
  * 
@@ -703,152 +626,86 @@ export const MetricConfigValueFormatEnum = {
 export type MetricConfigValueFormatEnum = typeof MetricConfigValueFormatEnum[keyof typeof MetricConfigValueFormatEnum];
 
 /**
- * 
+ * @type MetricsResult
  * @export
- * @enum {string}
  */
-
-export const MetricType = {
-    MessagesSentByUser: 'messages-sent-by-user',
-    MessagesSentByAccount: 'messages-sent-by-account',
-    MessagesRecvByChat: 'messages-recv-by-chat',
-    AvgResponseTimeByUser: 'avg-response-time-by-user',
-    MessageReplyRateByUser: 'message-reply-rate-by-user',
-    TasksAddedByUser: 'tasks-added-by-user',
-    TasksSolvedByUser: 'tasks-solved-by-user',
-    TasksAddedByChat: 'tasks-added-by-chat',
-    ContactsTaggedByTag: 'contacts-tagged-by-tag',
-    MessageFlowsSentByFlowId: 'message-flows-sent-by-flow-id',
-    MessageFlowsCompletedByFlowId: 'message-flows-completed-by-flow-id',
-    MessageFlowClickRateByFlowId: 'message-flow-click-rate-by-flow-id',
-    PaymentRecvByPhone: 'payment-recv-by-phone',
-    OrdersRecvByPhone: 'orders-recv-by-phone',
-    NewChats: 'new-chats'
-} as const;
-
-export type MetricType = typeof MetricType[keyof typeof MetricType];
-
+export type MetricsResult = MetricsResultHistogram | MetricsResultTotal;
 
 /**
  * 
  * @export
- * @interface MetricsResult
+ * @interface MetricsResultHistogram
  */
-export interface MetricsResult {
-    /**
-     * 
-     * @type {Array<Metric>}
-     * @memberof MetricsResult
-     */
-    'metrics': Array<Metric>;
-    /**
-     * 
-     * @type {Array<Metric>}
-     * @memberof MetricsResult
-     */
-    'previousMetrics'?: Array<Metric>;
-    /**
-     * 
-     * @type {MetricType}
-     * @memberof MetricsResult
-     */
-    'type': MetricType;
-    /**
-     * 
-     * @type {DataAggregateType}
-     * @memberof MetricsResult
-     */
-    'dataAggregate': DataAggregateType;
+export interface MetricsResultHistogram {
     /**
      * 
      * @type {string}
-     * @memberof MetricsResult
-     */
-    'key'?: string;
-}
-
-
-/**
- * @type MetricsResultV2
- * @export
- */
-export type MetricsResultV2 = MetricsResultV2Histogram | MetricsResultV2Total;
-
-/**
- * 
- * @export
- * @interface MetricsResultV2Histogram
- */
-export interface MetricsResultV2Histogram {
-    /**
-     * 
-     * @type {string}
-     * @memberof MetricsResultV2Histogram
+     * @memberof MetricsResultHistogram
      */
     'id': string;
     /**
      * 
      * @type {string}
-     * @memberof MetricsResultV2Histogram
+     * @memberof MetricsResultHistogram
      */
-    'visualizationType': MetricsResultV2HistogramVisualizationTypeEnum;
+    'visualizationType': MetricsResultHistogramVisualizationTypeEnum;
     /**
      * 
      * @type {{ [key: string]: Array<Metric>; }}
-     * @memberof MetricsResultV2Histogram
+     * @memberof MetricsResultHistogram
      */
     'lines': { [key: string]: Array<Metric>; };
     /**
      * 
      * @type {{ [key: string]: Array<Metric>; }}
-     * @memberof MetricsResultV2Histogram
+     * @memberof MetricsResultHistogram
      */
     'previousPeriodLines'?: { [key: string]: Array<Metric>; };
 }
 
-export const MetricsResultV2HistogramVisualizationTypeEnum = {
+export const MetricsResultHistogramVisualizationTypeEnum = {
     Histogram: 'histogram'
 } as const;
 
-export type MetricsResultV2HistogramVisualizationTypeEnum = typeof MetricsResultV2HistogramVisualizationTypeEnum[keyof typeof MetricsResultV2HistogramVisualizationTypeEnum];
+export type MetricsResultHistogramVisualizationTypeEnum = typeof MetricsResultHistogramVisualizationTypeEnum[keyof typeof MetricsResultHistogramVisualizationTypeEnum];
 
 /**
  * 
  * @export
- * @interface MetricsResultV2Total
+ * @interface MetricsResultTotal
  */
-export interface MetricsResultV2Total {
+export interface MetricsResultTotal {
     /**
      * 
      * @type {string}
-     * @memberof MetricsResultV2Total
+     * @memberof MetricsResultTotal
      */
     'id': string;
     /**
      * 
      * @type {string}
-     * @memberof MetricsResultV2Total
+     * @memberof MetricsResultTotal
      */
-    'visualizationType': MetricsResultV2TotalVisualizationTypeEnum;
+    'visualizationType': MetricsResultTotalVisualizationTypeEnum;
     /**
      * 
      * @type {{ [key: string]: ValueObject; }}
-     * @memberof MetricsResultV2Total
+     * @memberof MetricsResultTotal
      */
     'values': { [key: string]: ValueObject; };
     /**
      * 
      * @type {{ [key: string]: ValueObject; }}
-     * @memberof MetricsResultV2Total
+     * @memberof MetricsResultTotal
      */
     'previousPeriodValues'?: { [key: string]: ValueObject; };
 }
 
-export const MetricsResultV2TotalVisualizationTypeEnum = {
+export const MetricsResultTotalVisualizationTypeEnum = {
     Total: 'total'
 } as const;
 
-export type MetricsResultV2TotalVisualizationTypeEnum = typeof MetricsResultV2TotalVisualizationTypeEnum[keyof typeof MetricsResultV2TotalVisualizationTypeEnum];
+export type MetricsResultTotalVisualizationTypeEnum = typeof MetricsResultTotalVisualizationTypeEnum[keyof typeof MetricsResultTotalVisualizationTypeEnum];
 
 /**
  * describe OAuth input for access tokens
