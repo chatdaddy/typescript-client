@@ -862,56 +862,18 @@ export interface AiCreditUseData {
      */
     'doneBy': string;
     /**
-     * 
-     * @type {AiCreditUseDataActor}
+     * An ISO formatted timestamp
+     * @type {string}
      * @memberof AiCreditUseData
      */
-    'actor': AiCreditUseDataActor;
+    'doneAt': string;
     /**
      * 
      * @type {object}
      * @memberof AiCreditUseData
      */
-    'metadata': object;
+    'metadata'?: object;
 }
-/**
- * Context about the actor of a particular action
- * @export
- * @interface AiCreditUseDataActor
- */
-export interface AiCreditUseDataActor {
-    /**
-     * 
-     * @type {string}
-     * @memberof AiCreditUseDataActor
-     */
-    'type': AiCreditUseDataActorTypeEnum;
-    /**
-     * ID of the object that sent the message. For example, the campaign ID or keyword reply ID. Separate sub-objects with a `/`. For example, to specify the action of a bot -- use `bot_id/action_id`
-     * @type {string}
-     * @memberof AiCreditUseDataActor
-     */
-    'objectId': string;
-    /**
-     * Name of the object that sent the message. For example, the campaign name or keyword reply name
-     * @type {string}
-     * @memberof AiCreditUseDataActor
-     */
-    'objectName'?: string;
-}
-
-export const AiCreditUseDataActorTypeEnum = {
-    KeywordReply: 'keyword-reply',
-    DefaultReply: 'default-reply',
-    Campaigns: 'campaigns',
-    Notifications: 'notifications',
-    Bot: 'bot',
-    AiChatbot: 'ai-chatbot',
-    Trigger: 'trigger'
-} as const;
-
-export type AiCreditUseDataActorTypeEnum = typeof AiCreditUseDataActorTypeEnum[keyof typeof AiCreditUseDataActorTypeEnum];
-
 /**
  * 
  * @export
