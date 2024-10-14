@@ -36,6 +36,12 @@ interface AiCreditUse {
      * @type {string}
      * @memberof AiCreditUse
      */
+    'id'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof AiCreditUse
+     */
     'teamId': string;
     /**
      * 
