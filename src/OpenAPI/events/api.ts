@@ -857,6 +857,12 @@ export interface AiCreditUseData {
     'teamId': string;
     /**
      * 
+     * @type {string}
+     * @memberof AiCreditUseData
+     */
+    'doneBy': string;
+    /**
+     * 
      * @type {AiCreditUseDataActor}
      * @memberof AiCreditUseData
      */

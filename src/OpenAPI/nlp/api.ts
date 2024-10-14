@@ -85,6 +85,12 @@ interface AiCreditUse {
     'teamId': string;
     /**
      * 
+     * @type {string}
+     * @memberof AiCreditUse
+     */
+    'doneBy': string;
+    /**
+     * 
      * @type {ActorMetadata}
      * @memberof AiCreditUse
      */
