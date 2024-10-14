@@ -36,7 +36,7 @@ interface AiCreditUse {
      * @type {string}
      * @memberof AiCreditUse
      */
-    'id'?: string;
+    'id': string;
     /**
      * 
      * @type {string}

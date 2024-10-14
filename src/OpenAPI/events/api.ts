@@ -854,7 +854,7 @@ export interface AiCreditUseData {
      * @type {string}
      * @memberof AiCreditUseData
      */
-    'id'?: string;
+    'id': string;
     /**
      * 
      * @type {string}
