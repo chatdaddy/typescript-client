@@ -1134,11 +1134,11 @@ export interface StartJobResponse {
  */
 export interface TagSuggest200Response {
     /**
-     * Suggested name of the tag
-     * @type {string}
+     * 
+     * @type {Array<string>}
      * @memberof TagSuggest200Response
      */
-    'suggestedTagName': string;
+    'suggestedTagNames'?: Array<string>;
 }
 /**
  * 
