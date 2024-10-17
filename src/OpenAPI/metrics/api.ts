@@ -363,7 +363,7 @@ type DataProperty = DataPropertyDescriptor & PropertyMetadata
  * @type DataPropertyDescriptor
  * @export
  */
-type DataPropertyDescriptor = SimplePropertyDescriptor | ArrayPropertyDescriptor | MapPropertyDescriptor | OAuthPropertyDescriptor;
+type DataPropertyDescriptor = SimplePropertyDescriptor | ArrayPropertyDescriptor | MapPropertyDescriptor | OAuthPropertyDescriptor | { type: 'MetricConfigProperty' } & MetricConfigProperty;
 
 /**
  * 
@@ -611,10 +611,10 @@ export interface MetricConfig {
     'description'?: string;
     /**
      * 
-     * @type {Array<DataProperty>}
+     * @type {Array<MetricConfigProperty>}
      * @memberof MetricConfig
      */
-    'properties': Array<DataProperty>;
+    'properties': Array<MetricConfigProperty>;
 }
 
 export const MetricConfigValueFormatEnum = {
@@ -625,6 +625,34 @@ export const MetricConfigValueFormatEnum = {
 
 export type MetricConfigValueFormatEnum = typeof MetricConfigValueFormatEnum[keyof typeof MetricConfigValueFormatEnum];
 
+/**
+ * 
+ * @export
+ * @interface MetricConfigProperty
+ */
+export interface MetricConfigProperty extends DataProperty {
+    /**
+     * Title to show when the value is none. Use \"{{appName}}\" to refer to the app name. 
+     * @type {string}
+     * @memberof MetricConfigProperty
+     */
+    'noneValueTitle'?: string;
+}
+
+
+/**
+ * 
+ * @export
+ * @interface MetricConfigPropertyAllOf
+ */
+export interface MetricConfigPropertyAllOf {
+    /**
+     * Title to show when the value is none. Use \"{{appName}}\" to refer to the app name. 
+     * @type {string}
+     * @memberof MetricConfigPropertyAllOf
+     */
+    'noneValueTitle'?: string;
+}
 /**
  * @type MetricsResult
  * @export
