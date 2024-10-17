@@ -1299,7 +1299,7 @@ export type AnyContactID = UniqueContactID | string;
  * @export
  * @interface AppError
  */
-export interface AppError {
+interface AppError {
     /**
      * 
      * @type {number}
@@ -1324,7 +1324,7 @@ export interface AppError {
  * @export
  * @interface AppErrorData
  */
-export interface AppErrorData {
+interface AppErrorData {
     [key: string]: any;
 
     /**
@@ -1338,14 +1338,14 @@ export interface AppErrorData {
  * @type AppErrorDataHelpLink
  * @export
  */
-export type AppErrorDataHelpLink = AppErrorDataHelpLinkOneOf | AppErrorDataHelpLinkOneOf1;
+type AppErrorDataHelpLink = AppErrorDataHelpLinkOneOf | AppErrorDataHelpLinkOneOf1;
 
 /**
  * 
  * @export
  * @interface AppErrorDataHelpLinkOneOf
  */
-export interface AppErrorDataHelpLinkOneOf {
+interface AppErrorDataHelpLinkOneOf {
     /**
      * 
      * @type {string}
@@ -1358,7 +1358,7 @@ export interface AppErrorDataHelpLinkOneOf {
  * @export
  * @interface AppErrorDataHelpLinkOneOf1
  */
-export interface AppErrorDataHelpLinkOneOf1 {
+interface AppErrorDataHelpLinkOneOf1 {
     /**
      * 
      * @type {string}

@@ -47,6 +47,78 @@ export interface ActivationTimeRange {
 /**
  * 
  * @export
+ * @interface AppError
+ */
+export interface AppError {
+    /**
+     * 
+     * @type {number}
+     * @memberof AppError
+     */
+    'statusCode': number;
+    /**
+     * What the error was
+     * @type {string}
+     * @memberof AppError
+     */
+    'message': string;
+    /**
+     * 
+     * @type {AppErrorData}
+     * @memberof AppError
+     */
+    'data'?: AppErrorData;
+}
+/**
+ * Some extra information about the error
+ * @export
+ * @interface AppErrorData
+ */
+export interface AppErrorData {
+    [key: string]: any;
+
+    /**
+     * 
+     * @type {AppErrorDataHelpLink}
+     * @memberof AppErrorData
+     */
+    'helpLink'?: AppErrorDataHelpLink;
+}
+/**
+ * @type AppErrorDataHelpLink
+ * @export
+ */
+export type AppErrorDataHelpLink = AppErrorDataHelpLinkOneOf | AppErrorDataHelpLinkOneOf1;
+
+/**
+ * 
+ * @export
+ * @interface AppErrorDataHelpLinkOneOf
+ */
+export interface AppErrorDataHelpLinkOneOf {
+    /**
+     * 
+     * @type {string}
+     * @memberof AppErrorDataHelpLinkOneOf
+     */
+    'docId': string;
+}
+/**
+ * 
+ * @export
+ * @interface AppErrorDataHelpLinkOneOf1
+ */
+export interface AppErrorDataHelpLinkOneOf1 {
+    /**
+     * 
+     * @type {string}
+     * @memberof AppErrorDataHelpLinkOneOf1
+     */
+    'url': string;
+}
+/**
+ * 
+ * @export
  * @interface CampaignAsyncCreate200Response
  */
 export interface CampaignAsyncCreate200Response {
@@ -524,6 +596,12 @@ export interface CampaignRecipients {
      * @type {string}
      * @memberof CampaignRecipients
      */
+    'accountId'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof CampaignRecipients
+     */
     'tag'?: string;
     /**
      * 
@@ -536,7 +614,7 @@ export interface CampaignRecipients {
      * @type {string}
      * @memberof CampaignRecipients
      */
-    'sentAt'?: string;
+    'sentAt'?: string | null;
     /**
      * 
      * @type {WaResponse}
@@ -639,10 +717,10 @@ export interface WaResponse {
     'code'?: number;
     /**
      * 
-     * @type {object}
+     * @type {AppError}
      * @memberof WaResponse
      */
-    'body'?: object;
+    'body'?: AppError;
 }
 
 /**
