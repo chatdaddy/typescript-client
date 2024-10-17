@@ -363,7 +363,7 @@ type DataProperty = DataPropertyDescriptor & PropertyMetadata
  * @type DataPropertyDescriptor
  * @export
  */
-type DataPropertyDescriptor = SimplePropertyDescriptor | ArrayPropertyDescriptor | MapPropertyDescriptor | OAuthPropertyDescriptor | { type: 'MetricConfigProperty' } & MetricConfigProperty;
+type DataPropertyDescriptor = SimplePropertyDescriptor | ArrayPropertyDescriptor | MapPropertyDescriptor | OAuthPropertyDescriptor;
 
 /**
  * 
@@ -630,7 +630,7 @@ export type MetricConfigValueFormatEnum = typeof MetricConfigValueFormatEnum[key
  * @export
  * @interface MetricConfigProperty
  */
-export interface MetricConfigProperty extends DataProperty {
+export type MetricConfigProperty = DataProperty & {
     /**
      * Title to show when the value is none. Use \"{{appName}}\" to refer to the app name. 
      * @type {string}
