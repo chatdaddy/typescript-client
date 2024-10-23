@@ -79,6 +79,31 @@ export interface BotAddPostRequest {
 /**
  * 
  * @export
+ * @interface BotConversation
+ */
+export interface BotConversation {
+    /**
+     * Turn number
+     * @type {number}
+     * @memberof BotConversation
+     */
+    'turn'?: number;
+    /**
+     * Question asked by the user
+     * @type {string}
+     * @memberof BotConversation
+     */
+    'question'?: string;
+    /**
+     * Answer provided by the bot
+     * @type {string}
+     * @memberof BotConversation
+     */
+    'answer'?: string;
+}
+/**
+ * 
+ * @export
  * @interface BotDetails
  */
 export interface BotDetails {
@@ -448,17 +473,11 @@ export interface MedicalBotData {
      */
     'symptoms'?: Array<string>;
     /**
-     * Inputs from the user
-     * @type {Array<string>}
+     * 
+     * @type {Array<BotConversation>}
      * @memberof MedicalBotData
      */
-    'questions'?: Array<string>;
-    /**
-     * Answers provided by the bot
-     * @type {Array<string>}
-     * @memberof MedicalBotData
-     */
-    'answers'?: Array<string>;
+    'conversationHistory'?: Array<BotConversation>;
     /**
      * Additional details about the user
      * @type {object}
