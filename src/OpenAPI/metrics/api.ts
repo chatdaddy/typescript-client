@@ -173,8 +173,8 @@ export interface DashboardMetadata {
  */
 
 export const DashboardMetadataAccess = {
-    1View: 'lvl_1_view',
-    2Edit: 'lvl_2_edit'
+    Lvl1View: 'lvl1_view',
+    Lvl2Edit: 'lvl2_edit'
 } as const;
 
 export type DashboardMetadataAccess = typeof DashboardMetadataAccess[keyof typeof DashboardMetadataAccess];
