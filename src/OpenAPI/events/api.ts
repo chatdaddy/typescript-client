@@ -6822,6 +6822,12 @@ export interface DashboardwithdataInsertData {
     'schema': DashboardwithdataInsertDataAllOfSchema;
     /**
      * 
+     * @type {DashboardwithdataInsertDataAllOfPermissions}
+     * @memberof DashboardwithdataInsertData
+     */
+    'permissions'?: DashboardwithdataInsertDataAllOfPermissions;
+    /**
+     * 
      * @type {Array<DashboardwithdataInsertDataAllOf1DataV2Inner>}
      * @memberof DashboardwithdataInsertData
      */
@@ -6863,6 +6869,12 @@ export interface DashboardwithdataInsertDataAllOf {
      * @memberof DashboardwithdataInsertDataAllOf
      */
     'schema': DashboardwithdataInsertDataAllOfSchema;
+    /**
+     * 
+     * @type {DashboardwithdataInsertDataAllOfPermissions}
+     * @memberof DashboardwithdataInsertDataAllOf
+     */
+    'permissions'?: DashboardwithdataInsertDataAllOfPermissions;
 }
 /**
  * 
@@ -7022,6 +7034,52 @@ export interface DashboardwithdataInsertDataAllOf1DataV2InnerOneOfLinesValueInne
      */
     'count'?: number;
 }
+/**
+ * 
+ * @export
+ * @interface DashboardwithdataInsertDataAllOfPermissions
+ */
+export interface DashboardwithdataInsertDataAllOfPermissions {
+    /**
+     * 
+     * @type {Array<DashboardwithdataInsertDataAllOfPermissionsAllMembers>}
+     * @memberof DashboardwithdataInsertDataAllOfPermissions
+     */
+    'allMembers'?: Array<DashboardwithdataInsertDataAllOfPermissionsAllMembers>;
+    /**
+     * 
+     * @type {Array<DashboardwithdataInsertDataAllOfPermissionsAllMembers>}
+     * @memberof DashboardwithdataInsertDataAllOfPermissions
+     */
+    'users'?: Array<DashboardwithdataInsertDataAllOfPermissionsAllMembers>;
+}
+/**
+ * 
+ * @export
+ * @interface DashboardwithdataInsertDataAllOfPermissionsAllMembers
+ */
+export interface DashboardwithdataInsertDataAllOfPermissionsAllMembers {
+    /**
+     * 
+     * @type {string}
+     * @memberof DashboardwithdataInsertDataAllOfPermissionsAllMembers
+     */
+    'id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof DashboardwithdataInsertDataAllOfPermissionsAllMembers
+     */
+    'access': DashboardwithdataInsertDataAllOfPermissionsAllMembersAccessEnum;
+}
+
+export const DashboardwithdataInsertDataAllOfPermissionsAllMembersAccessEnum = {
+    1View: 'lvl_1_view',
+    2Edit: 'lvl_2_edit'
+} as const;
+
+export type DashboardwithdataInsertDataAllOfPermissionsAllMembersAccessEnum = typeof DashboardwithdataInsertDataAllOfPermissionsAllMembersAccessEnum[keyof typeof DashboardwithdataInsertDataAllOfPermissionsAllMembersAccessEnum];
+
 /**
  * 
  * @export

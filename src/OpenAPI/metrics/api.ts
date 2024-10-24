@@ -159,6 +159,66 @@ export interface DashboardMetadata {
      * @memberof DashboardMetadata
      */
     'schema': DashboardSchema;
+    /**
+     * 
+     * @type {DashboardMetadataPermissions}
+     * @memberof DashboardMetadata
+     */
+    'permissions'?: DashboardMetadataPermissions;
+}
+/**
+ * 
+ * @export
+ * @enum {string}
+ */
+
+export const DashboardMetadataAccess = {
+    1View: 'lvl_1_view',
+    2Edit: 'lvl_2_edit'
+} as const;
+
+export type DashboardMetadataAccess = typeof DashboardMetadataAccess[keyof typeof DashboardMetadataAccess];
+
+
+/**
+ * 
+ * @export
+ * @interface DashboardMetadataPermissionItem
+ */
+export interface DashboardMetadataPermissionItem {
+    /**
+     * 
+     * @type {string}
+     * @memberof DashboardMetadataPermissionItem
+     */
+    'id': string;
+    /**
+     * 
+     * @type {DashboardMetadataAccess}
+     * @memberof DashboardMetadataPermissionItem
+     */
+    'access': DashboardMetadataAccess;
+}
+
+
+/**
+ * 
+ * @export
+ * @interface DashboardMetadataPermissions
+ */
+export interface DashboardMetadataPermissions {
+    /**
+     * 
+     * @type {Array<DashboardMetadataPermissionItem>}
+     * @memberof DashboardMetadataPermissions
+     */
+    'allMembers'?: Array<DashboardMetadataPermissionItem>;
+    /**
+     * 
+     * @type {Array<DashboardMetadataPermissionItem>}
+     * @memberof DashboardMetadataPermissions
+     */
+    'users'?: Array<DashboardMetadataPermissionItem>;
 }
 /**
  * 
@@ -279,6 +339,12 @@ export interface DashboardUpdate {
      * @memberof DashboardUpdate
      */
     'schema'?: DashboardSchema;
+    /**
+     * 
+     * @type {DashboardMetadataPermissions}
+     * @memberof DashboardUpdate
+     */
+    'permissions'?: DashboardMetadataPermissions;
 }
 /**
  * 
@@ -332,6 +398,12 @@ export interface DashboardWithData {
      * @memberof DashboardWithData
      */
     'schema': DashboardSchema;
+    /**
+     * 
+     * @type {DashboardMetadataPermissions}
+     * @memberof DashboardWithData
+     */
+    'permissions'?: DashboardMetadataPermissions;
     /**
      * 
      * @type {Array<MetricsResult>}
@@ -496,6 +568,12 @@ export interface GetInitData200ResponseDefaultDashboard {
      * @memberof GetInitData200ResponseDefaultDashboard
      */
     'schema': DashboardSchema;
+    /**
+     * 
+     * @type {DashboardMetadataPermissions}
+     * @memberof GetInitData200ResponseDefaultDashboard
+     */
+    'permissions'?: DashboardMetadataPermissions;
 }
 /**
  * Describe a map
