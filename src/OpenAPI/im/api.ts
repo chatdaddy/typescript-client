@@ -963,6 +963,12 @@ export interface AlibabaCAMSWebhookMessageItem {
      */
     'Type': AlibabaCAMSWebhookMessageItemTypeEnum;
     /**
+     * 
+     * @type {{ [key: string]: any; }}
+     * @memberof AlibabaCAMSWebhookMessageItem
+     */
+    'referral'?: { [key: string]: any; };
+    /**
      * Reason for rejection of template
      * @type {string}
      * @memberof AlibabaCAMSWebhookMessageItem
