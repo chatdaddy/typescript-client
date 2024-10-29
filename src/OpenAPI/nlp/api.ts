@@ -1651,10 +1651,11 @@ export const AutocompleteApiAxiosParamCreator = function (configuration?: Config
          * @summary Returns a suggested tag name
          * @param {string} accountId 
          * @param {string} chatId 
+         * @param {boolean} [isCustomField] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        tagSuggest: async (accountId: string, chatId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        tagSuggest: async (accountId: string, chatId: string, isCustomField?: boolean, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'accountId' is not null or undefined
             assertParamExists('tagSuggest', 'accountId', accountId)
             // verify required parameter 'chatId' is not null or undefined
@@ -1676,6 +1677,10 @@ export const AutocompleteApiAxiosParamCreator = function (configuration?: Config
             // authentication chatdaddy required
             // oauth required
             await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["AUTOCOMPLETE_GET"], configuration)
+
+            if (isCustomField !== undefined) {
+                localVarQueryParameter['isCustomField'] = isCustomField;
+            }
 
 
     
@@ -1751,11 +1756,12 @@ export const AutocompleteApiFp = function(configuration?: Configuration) {
          * @summary Returns a suggested tag name
          * @param {string} accountId 
          * @param {string} chatId 
+         * @param {boolean} [isCustomField] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async tagSuggest(accountId: string, chatId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TagSuggest200Response>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.tagSuggest(accountId, chatId, options);
+        async tagSuggest(accountId: string, chatId: string, isCustomField?: boolean, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TagSuggest200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.tagSuggest(accountId, chatId, isCustomField, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
     }
@@ -1816,7 +1822,7 @@ export const AutocompleteApiFactory = function (configuration?: Configuration, b
          * @throws {RequiredError}
          */
         tagSuggest(requestParameters: AutocompleteApiTagSuggestRequest, options?: AxiosRequestConfig): AxiosPromise<TagSuggest200Response> {
-            return localVarFp.tagSuggest(requestParameters.accountId, requestParameters.chatId, options).then((request) => request(axios, basePath));
+            return localVarFp.tagSuggest(requestParameters.accountId, requestParameters.chatId, requestParameters.isCustomField, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -1924,6 +1930,13 @@ export interface AutocompleteApiTagSuggestRequest {
      * @memberof AutocompleteApiTagSuggest
      */
     readonly chatId: string
+
+    /**
+     * 
+     * @type {boolean}
+     * @memberof AutocompleteApiTagSuggest
+     */
+    readonly isCustomField?: boolean
 }
 
 /**
@@ -1990,7 +2003,7 @@ export class AutocompleteApi extends BaseAPI {
      * @memberof AutocompleteApi
      */
     public tagSuggest(requestParameters: AutocompleteApiTagSuggestRequest, options?: AxiosRequestConfig) {
-        return AutocompleteApiFp(this.configuration).tagSuggest(requestParameters.accountId, requestParameters.chatId, options).then((request) => request(this.axios, this.basePath));
+        return AutocompleteApiFp(this.configuration).tagSuggest(requestParameters.accountId, requestParameters.chatId, requestParameters.isCustomField, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
