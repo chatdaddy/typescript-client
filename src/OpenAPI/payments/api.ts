@@ -5288,10 +5288,11 @@ export const CreditsApiAxiosParamCreator = function (configuration?: Configurati
          * @param {string} [cursor] 
          * @param {RecurringCreditConsumptionType} [type] 
          * @param {boolean} [returnTotal] Return total number of consumptions
+         * @param {string} [doneBy] Filter by the user who created the consumption
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        recurringCreditsGet: async (teamId?: string, count?: number, cursor?: string, type?: RecurringCreditConsumptionType, returnTotal?: boolean, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        recurringCreditsGet: async (teamId?: string, count?: number, cursor?: string, type?: RecurringCreditConsumptionType, returnTotal?: boolean, doneBy?: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v2/credits/recurring`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -5326,6 +5327,10 @@ export const CreditsApiAxiosParamCreator = function (configuration?: Configurati
 
             if (returnTotal !== undefined) {
                 localVarQueryParameter['returnTotal'] = returnTotal;
+            }
+
+            if (doneBy !== undefined) {
+                localVarQueryParameter['doneBy'] = doneBy;
             }
 
 
@@ -5662,11 +5667,12 @@ export const CreditsApiFp = function(configuration?: Configuration) {
          * @param {string} [cursor] 
          * @param {RecurringCreditConsumptionType} [type] 
          * @param {boolean} [returnTotal] Return total number of consumptions
+         * @param {string} [doneBy] Filter by the user who created the consumption
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async recurringCreditsGet(teamId?: string, count?: number, cursor?: string, type?: RecurringCreditConsumptionType, returnTotal?: boolean, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<RecurringCreditsGet200Response>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.recurringCreditsGet(teamId, count, cursor, type, returnTotal, options);
+        async recurringCreditsGet(teamId?: string, count?: number, cursor?: string, type?: RecurringCreditConsumptionType, returnTotal?: boolean, doneBy?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<RecurringCreditsGet200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.recurringCreditsGet(teamId, count, cursor, type, returnTotal, doneBy, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -5877,7 +5883,7 @@ export const CreditsApiFactory = function (configuration?: Configuration, basePa
          * @throws {RequiredError}
          */
         recurringCreditsGet(requestParameters: CreditsApiRecurringCreditsGetRequest = {}, options?: AxiosRequestConfig): AxiosPromise<RecurringCreditsGet200Response> {
-            return localVarFp.recurringCreditsGet(requestParameters.teamId, requestParameters.count, requestParameters.cursor, requestParameters.type, requestParameters.returnTotal, options).then((request) => request(axios, basePath));
+            return localVarFp.recurringCreditsGet(requestParameters.teamId, requestParameters.count, requestParameters.cursor, requestParameters.type, requestParameters.returnTotal, requestParameters.doneBy, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -6260,6 +6266,13 @@ export interface CreditsApiRecurringCreditsGetRequest {
      * @memberof CreditsApiRecurringCreditsGet
      */
     readonly returnTotal?: boolean
+
+    /**
+     * Filter by the user who created the consumption
+     * @type {string}
+     * @memberof CreditsApiRecurringCreditsGet
+     */
+    readonly doneBy?: string
 }
 
 /**
@@ -6509,7 +6522,7 @@ export class CreditsApi extends BaseAPI {
      * @memberof CreditsApi
      */
     public recurringCreditsGet(requestParameters: CreditsApiRecurringCreditsGetRequest = {}, options?: AxiosRequestConfig) {
-        return CreditsApiFp(this.configuration).recurringCreditsGet(requestParameters.teamId, requestParameters.count, requestParameters.cursor, requestParameters.type, requestParameters.returnTotal, options).then((request) => request(this.axios, this.basePath));
+        return CreditsApiFp(this.configuration).recurringCreditsGet(requestParameters.teamId, requestParameters.count, requestParameters.cursor, requestParameters.type, requestParameters.returnTotal, requestParameters.doneBy, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
