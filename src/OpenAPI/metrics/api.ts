@@ -1220,7 +1220,7 @@ export const DashboardApiAxiosParamCreator = function (configuration?: Configura
             assertParamExists('getInitData', 'period', period)
             // verify required parameter 'aggregate' is not null or undefined
             assertParamExists('getInitData', 'aggregate', aggregate)
-            const localVarPath = `/init`;
+            const localVarPath = `/initData`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
