@@ -3669,6 +3669,25 @@ export interface GetTriggerInstances200Response {
 /**
  * 
  * @export
+ * @interface GetTriggerInstancesDateRageParameter
+ */
+export interface GetTriggerInstancesDateRageParameter {
+    /**
+     * An ISO formatted timestamp
+     * @type {string}
+     * @memberof GetTriggerInstancesDateRageParameter
+     */
+    'from'?: string;
+    /**
+     * An ISO formatted timestamp
+     * @type {string}
+     * @memberof GetTriggerInstancesDateRageParameter
+     */
+    'to'?: string;
+}
+/**
+ * 
+ * @export
  * @interface IMMessageAttachment
  */
 export interface IMMessageAttachment {
@@ -6975,10 +6994,11 @@ export const BotTriggersApiAxiosParamCreator = function (configuration?: Configu
          * @param {boolean} [returnTotalCount] 
          * @param {Array<string>} [botId] 
          * @param {string} [q] 
+         * @param {GetTriggerInstancesDateRageParameter} [dateRage] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getTriggerInstances: async (triggerId?: string, count?: number, status?: Array<BotTriggerInstanceStatus>, cursor?: string, id?: string, returnTotalCount?: boolean, botId?: Array<string>, q?: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getTriggerInstances: async (triggerId?: string, count?: number, status?: Array<BotTriggerInstanceStatus>, cursor?: string, id?: string, returnTotalCount?: boolean, botId?: Array<string>, q?: string, dateRage?: GetTriggerInstancesDateRageParameter, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/trigger-instances`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -7025,6 +7045,10 @@ export const BotTriggersApiAxiosParamCreator = function (configuration?: Configu
 
             if (q !== undefined) {
                 localVarQueryParameter['q'] = q;
+            }
+
+            if (dateRage !== undefined) {
+                localVarQueryParameter['dateRage'] = dateRage;
             }
 
 
@@ -7119,11 +7143,12 @@ export const BotTriggersApiFp = function(configuration?: Configuration) {
          * @param {boolean} [returnTotalCount] 
          * @param {Array<string>} [botId] 
          * @param {string} [q] 
+         * @param {GetTriggerInstancesDateRageParameter} [dateRage] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getTriggerInstances(triggerId?: string, count?: number, status?: Array<BotTriggerInstanceStatus>, cursor?: string, id?: string, returnTotalCount?: boolean, botId?: Array<string>, q?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetTriggerInstances200Response>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getTriggerInstances(triggerId, count, status, cursor, id, returnTotalCount, botId, q, options);
+        async getTriggerInstances(triggerId?: string, count?: number, status?: Array<BotTriggerInstanceStatus>, cursor?: string, id?: string, returnTotalCount?: boolean, botId?: Array<string>, q?: string, dateRage?: GetTriggerInstancesDateRageParameter, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetTriggerInstances200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getTriggerInstances(triggerId, count, status, cursor, id, returnTotalCount, botId, q, dateRage, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -7174,7 +7199,7 @@ export const BotTriggersApiFactory = function (configuration?: Configuration, ba
          * @throws {RequiredError}
          */
         getTriggerInstances(requestParameters: BotTriggersApiGetTriggerInstancesRequest = {}, options?: AxiosRequestConfig): AxiosPromise<GetTriggerInstances200Response> {
-            return localVarFp.getTriggerInstances(requestParameters.triggerId, requestParameters.count, requestParameters.status, requestParameters.cursor, requestParameters.id, requestParameters.returnTotalCount, requestParameters.botId, requestParameters.q, options).then((request) => request(axios, basePath));
+            return localVarFp.getTriggerInstances(requestParameters.triggerId, requestParameters.count, requestParameters.status, requestParameters.cursor, requestParameters.id, requestParameters.returnTotalCount, requestParameters.botId, requestParameters.q, requestParameters.dateRage, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -7271,6 +7296,13 @@ export interface BotTriggersApiGetTriggerInstancesRequest {
      * @memberof BotTriggersApiGetTriggerInstances
      */
     readonly q?: string
+
+    /**
+     * 
+     * @type {GetTriggerInstancesDateRageParameter}
+     * @memberof BotTriggersApiGetTriggerInstances
+     */
+    readonly dateRage?: GetTriggerInstancesDateRageParameter
 }
 
 /**
@@ -7326,7 +7358,7 @@ export class BotTriggersApi extends BaseAPI {
      * @memberof BotTriggersApi
      */
     public getTriggerInstances(requestParameters: BotTriggersApiGetTriggerInstancesRequest = {}, options?: AxiosRequestConfig) {
-        return BotTriggersApiFp(this.configuration).getTriggerInstances(requestParameters.triggerId, requestParameters.count, requestParameters.status, requestParameters.cursor, requestParameters.id, requestParameters.returnTotalCount, requestParameters.botId, requestParameters.q, options).then((request) => request(this.axios, this.basePath));
+        return BotTriggersApiFp(this.configuration).getTriggerInstances(requestParameters.triggerId, requestParameters.count, requestParameters.status, requestParameters.cursor, requestParameters.id, requestParameters.returnTotalCount, requestParameters.botId, requestParameters.q, requestParameters.dateRage, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
