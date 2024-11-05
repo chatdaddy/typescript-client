@@ -326,7 +326,7 @@ export interface DashboardSchemaItem {
  * @export
  * @interface DashboardUpdate
  */
-export interface DashboardUpdate {
+interface DashboardUpdate {
     /**
      * 
      * @type {string}

@@ -6796,200 +6796,282 @@ export interface DashboardDeleteData {
      * @memberof DashboardDeleteData
      */
     'id': string;
+}
+/**
+ * 
+ * @export
+ * @interface DashboardInsert
+ */
+export interface DashboardInsert {
     /**
      * 
      * @type {string}
-     * @memberof DashboardDeleteData
+     * @memberof DashboardInsert
+     */
+    'event': DashboardInsertEventEnum;
+    /**
+     * 
+     * @type {Array<DashboardInsertData>}
+     * @memberof DashboardInsert
+     */
+    'data': Array<DashboardInsertData>;
+}
+
+export const DashboardInsertEventEnum = {
+    DashboardInsert: 'dashboard-insert'
+} as const;
+
+export type DashboardInsertEventEnum = typeof DashboardInsertEventEnum[keyof typeof DashboardInsertEventEnum];
+
+/**
+ * 
+ * @export
+ * @interface DashboardInsertData
+ */
+export interface DashboardInsertData {
+    /**
+     * 
+     * @type {string}
+     * @memberof DashboardInsertData
+     */
+    'id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof DashboardInsertData
      */
     'name': string;
     /**
-     * An ISO formatted timestamp
+     * 
      * @type {string}
-     * @memberof DashboardDeleteData
+     * @memberof DashboardInsertData
      */
     'createdAt': string;
     /**
-     * An ISO formatted timestamp
+     * 
      * @type {string}
-     * @memberof DashboardDeleteData
+     * @memberof DashboardInsertData
      */
     'updatedAt': string;
     /**
      * 
-     * @type {DashboardDeleteDataSchema}
-     * @memberof DashboardDeleteData
+     * @type {DashboardInsertDataSchema}
+     * @memberof DashboardInsertData
      */
-    'schema': DashboardDeleteDataSchema;
+    'schema': DashboardInsertDataSchema;
     /**
      * 
-     * @type {DashboardDeleteDataPermissions}
-     * @memberof DashboardDeleteData
+     * @type {DashboardInsertDataPermissions}
+     * @memberof DashboardInsertData
      */
-    'permissions'?: DashboardDeleteDataPermissions;
+    'permissions'?: DashboardInsertDataPermissions;
 }
 /**
  * 
  * @export
- * @interface DashboardDeleteDataPermissions
+ * @interface DashboardInsertDataPermissions
  */
-export interface DashboardDeleteDataPermissions {
+export interface DashboardInsertDataPermissions {
     /**
      * 
-     * @type {Array<DashboardDeleteDataPermissionsAllMembersInner>}
-     * @memberof DashboardDeleteDataPermissions
+     * @type {Array<DashboardInsertDataPermissionsAllMembersInner>}
+     * @memberof DashboardInsertDataPermissions
      */
-    'allMembers'?: Array<DashboardDeleteDataPermissionsAllMembersInner>;
+    'allMembers'?: Array<DashboardInsertDataPermissionsAllMembersInner>;
     /**
      * 
-     * @type {Array<DashboardDeleteDataPermissionsAllMembersInner>}
-     * @memberof DashboardDeleteDataPermissions
+     * @type {Array<DashboardInsertDataPermissionsAllMembersInner>}
+     * @memberof DashboardInsertDataPermissions
      */
-    'users'?: Array<DashboardDeleteDataPermissionsAllMembersInner>;
+    'users'?: Array<DashboardInsertDataPermissionsAllMembersInner>;
 }
 /**
  * 
  * @export
- * @interface DashboardDeleteDataPermissionsAllMembersInner
+ * @interface DashboardInsertDataPermissionsAllMembersInner
  */
-export interface DashboardDeleteDataPermissionsAllMembersInner {
+export interface DashboardInsertDataPermissionsAllMembersInner {
     /**
      * 
      * @type {string}
-     * @memberof DashboardDeleteDataPermissionsAllMembersInner
+     * @memberof DashboardInsertDataPermissionsAllMembersInner
      */
     'id': string;
     /**
      * 
      * @type {string}
-     * @memberof DashboardDeleteDataPermissionsAllMembersInner
+     * @memberof DashboardInsertDataPermissionsAllMembersInner
      */
-    'access': DashboardDeleteDataPermissionsAllMembersInnerAccessEnum;
+    'access': DashboardInsertDataPermissionsAllMembersInnerAccessEnum;
 }
 
-export const DashboardDeleteDataPermissionsAllMembersInnerAccessEnum = {
+export const DashboardInsertDataPermissionsAllMembersInnerAccessEnum = {
     Lvl1View: 'lvl1_view',
     Lvl2Edit: 'lvl2_edit'
 } as const;
 
-export type DashboardDeleteDataPermissionsAllMembersInnerAccessEnum = typeof DashboardDeleteDataPermissionsAllMembersInnerAccessEnum[keyof typeof DashboardDeleteDataPermissionsAllMembersInnerAccessEnum];
+export type DashboardInsertDataPermissionsAllMembersInnerAccessEnum = typeof DashboardInsertDataPermissionsAllMembersInnerAccessEnum[keyof typeof DashboardInsertDataPermissionsAllMembersInnerAccessEnum];
 
 /**
  * 
  * @export
- * @interface DashboardDeleteDataSchema
+ * @interface DashboardInsertDataSchema
  */
-export interface DashboardDeleteDataSchema {
+export interface DashboardInsertDataSchema {
     /**
      * 
      * @type {string}
-     * @memberof DashboardDeleteDataSchema
+     * @memberof DashboardInsertDataSchema
      */
-    'version': DashboardDeleteDataSchemaVersionEnum;
+    'version': DashboardInsertDataSchemaVersionEnum;
     /**
      * 
-     * @type {Array<DashboardDeleteDataSchemaItemsInner>}
-     * @memberof DashboardDeleteDataSchema
+     * @type {Array<DashboardInsertDataSchemaItemsInner>}
+     * @memberof DashboardInsertDataSchema
      */
-    'items': Array<DashboardDeleteDataSchemaItemsInner>;
+    'items': Array<DashboardInsertDataSchemaItemsInner>;
 }
 
-export const DashboardDeleteDataSchemaVersionEnum = {
+export const DashboardInsertDataSchemaVersionEnum = {
     2: '2'
 } as const;
 
-export type DashboardDeleteDataSchemaVersionEnum = typeof DashboardDeleteDataSchemaVersionEnum[keyof typeof DashboardDeleteDataSchemaVersionEnum];
+export type DashboardInsertDataSchemaVersionEnum = typeof DashboardInsertDataSchemaVersionEnum[keyof typeof DashboardInsertDataSchemaVersionEnum];
 
 /**
  * 
  * @export
- * @interface DashboardDeleteDataSchemaItemsInner
+ * @interface DashboardInsertDataSchemaItemsInner
  */
-export interface DashboardDeleteDataSchemaItemsInner {
+export interface DashboardInsertDataSchemaItemsInner {
     /**
      * 
      * @type {string}
-     * @memberof DashboardDeleteDataSchemaItemsInner
+     * @memberof DashboardInsertDataSchemaItemsInner
      */
     'id': string;
     /**
      * 
      * @type {string}
-     * @memberof DashboardDeleteDataSchemaItemsInner
+     * @memberof DashboardInsertDataSchemaItemsInner
      */
-    'visualizationType': DashboardDeleteDataSchemaItemsInnerVisualizationTypeEnum;
+    'visualizationType': DashboardInsertDataSchemaItemsInnerVisualizationTypeEnum;
     /**
      * 
      * @type {string}
-     * @memberof DashboardDeleteDataSchemaItemsInner
+     * @memberof DashboardInsertDataSchemaItemsInner
      */
     'metricId': string;
     /**
      * 
      * @type {string}
-     * @memberof DashboardDeleteDataSchemaItemsInner
+     * @memberof DashboardInsertDataSchemaItemsInner
      */
     'name': string;
     /**
      * 
      * @type {{ [key: string]: any; }}
-     * @memberof DashboardDeleteDataSchemaItemsInner
+     * @memberof DashboardInsertDataSchemaItemsInner
      */
     'filter'?: { [key: string]: any; };
     /**
      * 
      * @type {string}
-     * @memberof DashboardDeleteDataSchemaItemsInner
+     * @memberof DashboardInsertDataSchemaItemsInner
      */
     'breakdown'?: string;
     /**
-     * Hide the default value in the breakdown.
+     * 
      * @type {boolean}
-     * @memberof DashboardDeleteDataSchemaItemsInner
+     * @memberof DashboardInsertDataSchemaItemsInner
      */
     'hideDefaultInBreakdown'?: boolean;
     /**
      * 
      * @type {boolean}
-     * @memberof DashboardDeleteDataSchemaItemsInner
+     * @memberof DashboardInsertDataSchemaItemsInner
      */
     'includePreviousPeriod'?: boolean;
 }
 
-export const DashboardDeleteDataSchemaItemsInnerVisualizationTypeEnum = {
+export const DashboardInsertDataSchemaItemsInnerVisualizationTypeEnum = {
     Histogram: 'histogram',
     PieChart: 'pie-chart',
     Table: 'table',
     Snapshot: 'snapshot'
 } as const;
 
-export type DashboardDeleteDataSchemaItemsInnerVisualizationTypeEnum = typeof DashboardDeleteDataSchemaItemsInnerVisualizationTypeEnum[keyof typeof DashboardDeleteDataSchemaItemsInnerVisualizationTypeEnum];
+export type DashboardInsertDataSchemaItemsInnerVisualizationTypeEnum = typeof DashboardInsertDataSchemaItemsInnerVisualizationTypeEnum[keyof typeof DashboardInsertDataSchemaItemsInnerVisualizationTypeEnum];
 
 /**
  * 
  * @export
- * @interface DashboardwithdataInsert
+ * @interface DashboardUpdate
  */
-export interface DashboardwithdataInsert {
+export interface DashboardUpdate {
     /**
      * 
      * @type {string}
-     * @memberof DashboardwithdataInsert
+     * @memberof DashboardUpdate
      */
-    'event': DashboardwithdataInsertEventEnum;
+    'event': DashboardUpdateEventEnum;
     /**
      * 
-     * @type {Array<DashboardwithdataInsertData>}
-     * @memberof DashboardwithdataInsert
+     * @type {Array<DashboardUpdateData>}
+     * @memberof DashboardUpdate
      */
-    'data': Array<DashboardwithdataInsertData>;
+    'data': Array<DashboardUpdateData>;
 }
 
-export const DashboardwithdataInsertEventEnum = {
-    DashboardwithdataInsert: 'dashboardwithdata-insert'
+export const DashboardUpdateEventEnum = {
+    DashboardUpdate: 'dashboard-update'
 } as const;
 
-export type DashboardwithdataInsertEventEnum = typeof DashboardwithdataInsertEventEnum[keyof typeof DashboardwithdataInsertEventEnum];
+export type DashboardUpdateEventEnum = typeof DashboardUpdateEventEnum[keyof typeof DashboardUpdateEventEnum];
 
+/**
+ * 
+ * @export
+ * @interface DashboardUpdateData
+ */
+export interface DashboardUpdateData {
+    /**
+     * 
+     * @type {string}
+     * @memberof DashboardUpdateData
+     */
+    'id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof DashboardUpdateData
+     */
+    'name'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof DashboardUpdateData
+     */
+    'createdAt'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof DashboardUpdateData
+     */
+    'updatedAt'?: string;
+    /**
+     * 
+     * @type {DashboardInsertDataSchema}
+     * @memberof DashboardUpdateData
+     */
+    'schema'?: DashboardInsertDataSchema;
+    /**
+     * 
+     * @type {DashboardInsertDataPermissions}
+     * @memberof DashboardUpdateData
+     */
+    'permissions'?: DashboardInsertDataPermissions;
+}
 /**
  * 
  * @export
@@ -7397,10 +7479,11 @@ export const EventName = {
     KeywordbasedactionInsert: 'keywordbasedaction-insert',
     ChatbotInsert: 'chatbot-insert',
     PaymentintegrationInsert: 'paymentintegration-insert',
-    DashboardwithdataInsert: 'dashboardwithdata-insert',
     ShopproductInsert: 'shopproduct-insert',
     TeammemberLogout: 'teammember-logout',
     AiCreditUse: 'ai-credit-use',
+    DashboardInsert: 'dashboard-insert',
+    DashboardUpdate: 'dashboard-update',
     DashboardDelete: 'dashboard-delete',
     ContactInsert: 'contact-insert',
     ContactUpdate: 'contact-update',
@@ -7537,7 +7620,7 @@ export type EventSubscriptionType = typeof EventSubscriptionType[keyof typeof Ev
  * The request body you\'ll receive in a webhook
  * @export
  */
-export type EventWebhookData = AccountDelete | AccountInsert | AccountUpdate | ActionExecute | AiCreditUse | BotDelete | BotInsert | BotUpdate | CallDelete | CallInsert | CallUpdate | CallchannelDelete | CallchannelInsert | CallchannelUpdate | CampaignInsert | ChatDelete | ChatInsert | ChatUpdate | ChatbotInsert | ContactDelete | ContactInsert | ContactUpdate | CredittransactionrecordInsert | CrmTicketDelete | CrmTicketInsert | CrmTicketUpdate | CustomerCreditsLevelUpdate | DashboardDelete | DashboardwithdataInsert | FewMessagesLeft | GroupUpdate | KeywordbasedactionInsert | MessageDelete | MessageInsert | MessageUpdate | OrderInsert | PaymentintegrationInsert | PlatformproductDelete | PlatformproductInsert | PlatformproductUpdate | PresenceUpdate | PushNotification | ShopproductInsert | StaleAccountNotification | TagDelete | TagInsert | TagUpdate | TeamDelete | TeamInsert | TeamUpdate | TeammemberDelete | TeammemberInsert | TeammemberLogout | TeammemberUpdate | TrackingDelete | TrackingInsert | TrackingUpdate | UserDelete | UserInsert | UserUpdate;
+export type EventWebhookData = AccountDelete | AccountInsert | AccountUpdate | ActionExecute | AiCreditUse | BotDelete | BotInsert | BotUpdate | CallDelete | CallInsert | CallUpdate | CallchannelDelete | CallchannelInsert | CallchannelUpdate | CampaignInsert | ChatDelete | ChatInsert | ChatUpdate | ChatbotInsert | ContactDelete | ContactInsert | ContactUpdate | CredittransactionrecordInsert | CrmTicketDelete | CrmTicketInsert | CrmTicketUpdate | CustomerCreditsLevelUpdate | DashboardDelete | DashboardInsert | DashboardUpdate | FewMessagesLeft | GroupUpdate | KeywordbasedactionInsert | MessageDelete | MessageInsert | MessageUpdate | OrderInsert | PaymentintegrationInsert | PlatformproductDelete | PlatformproductInsert | PlatformproductUpdate | PresenceUpdate | PushNotification | ShopproductInsert | StaleAccountNotification | TagDelete | TagInsert | TagUpdate | TeamDelete | TeamInsert | TeamUpdate | TeammemberDelete | TeammemberInsert | TeammemberLogout | TeammemberUpdate | TrackingDelete | TrackingInsert | TrackingUpdate | UserDelete | UserInsert | UserUpdate;
 
 /**
  * 
