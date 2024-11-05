@@ -142,6 +142,12 @@ export interface DashboardMetadata {
      */
     'name': string;
     /**
+     * 
+     * @type {string}
+     * @memberof DashboardMetadata
+     */
+    'teamId': string;
+    /**
      * An ISO formatted timestamp
      * @type {string}
      * @memberof DashboardMetadata
@@ -381,6 +387,12 @@ export interface DashboardWithData {
      */
     'name': string;
     /**
+     * 
+     * @type {string}
+     * @memberof DashboardWithData
+     */
+    'teamId': string;
+    /**
      * An ISO formatted timestamp
      * @type {string}
      * @memberof DashboardWithData
@@ -550,6 +562,12 @@ export interface GetInitData200ResponseDefaultDashboard {
      * @memberof GetInitData200ResponseDefaultDashboard
      */
     'name': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof GetInitData200ResponseDefaultDashboard
+     */
+    'teamId': string;
     /**
      * An ISO formatted timestamp
      * @type {string}

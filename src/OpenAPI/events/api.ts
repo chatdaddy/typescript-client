@@ -6846,6 +6846,12 @@ export interface DashboardInsertData {
      * @type {string}
      * @memberof DashboardInsertData
      */
+    'teamId': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof DashboardInsertData
+     */
     'createdAt': string;
     /**
      * 
@@ -7047,6 +7053,12 @@ export interface DashboardUpdateData {
      * @memberof DashboardUpdateData
      */
     'name'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof DashboardUpdateData
+     */
+    'teamId'?: string;
     /**
      * 
      * @type {string}
