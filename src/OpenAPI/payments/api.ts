@@ -764,6 +764,12 @@ export interface CreditCustomer {
      */
     'supportPlan'?: RecurringCreditConsumption;
     /**
+     * 
+     * @type {CreditCustomerRecurringPlans}
+     * @memberof CreditCustomer
+     */
+    'recurringPlans'?: CreditCustomerRecurringPlans;
+    /**
      * The partnership to use for this customer. This is only used if the customer is new.
      * @type {string}
      * @memberof CreditCustomer
@@ -838,6 +844,12 @@ export interface CreditCustomerAllOf {
      * @memberof CreditCustomerAllOf
      */
     'supportPlan'?: RecurringCreditConsumption;
+    /**
+     * 
+     * @type {CreditCustomerRecurringPlans}
+     * @memberof CreditCustomerAllOf
+     */
+    'recurringPlans'?: CreditCustomerRecurringPlans;
 }
 
 
@@ -927,6 +939,25 @@ export interface CreditCustomerPost {
      * @memberof CreditCustomerPost
      */
     'referralCode'?: string;
+}
+/**
+ * 
+ * @export
+ * @interface CreditCustomerRecurringPlans
+ */
+export interface CreditCustomerRecurringPlans {
+    /**
+     * 
+     * @type {RecurringCreditConsumption}
+     * @memberof CreditCustomerRecurringPlans
+     */
+    'supportPlan'?: RecurringCreditConsumption;
+    /**
+     * 
+     * @type {RecurringCreditConsumption}
+     * @memberof CreditCustomerRecurringPlans
+     */
+    'analyticsPlan'?: RecurringCreditConsumption;
 }
 /**
  * 
@@ -2649,7 +2680,8 @@ export const RecurringCreditConsumptionType = {
     ConsultationSupportPlanLvl1: 'consultation/support_plan_lvl1',
     ConsultationSupportPlanLvl2: 'consultation/support_plan_lvl2',
     User: 'user',
-    CallChannel: 'call_channel'
+    CallChannel: 'call_channel',
+    AnalyticsDashboard: 'analytics_dashboard'
 } as const;
 
 export type RecurringCreditConsumptionType = typeof RecurringCreditConsumptionType[keyof typeof RecurringCreditConsumptionType];
@@ -5005,10 +5037,11 @@ export const CreditsApiAxiosParamCreator = function (configuration?: Configurati
          * @summary Get the customer\'s credit details
          * @param {boolean} [returnAutoRenewal] Return the auto-renewal subscription details. PAYMENTS_READ scope is required.
          * @param {boolean} [returnSupportPlan] Return the support plan details.
+         * @param {boolean} [returnRecurringPlans] Return the support plan details.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        creditsCustomerGet: async (returnAutoRenewal?: boolean, returnSupportPlan?: boolean, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        creditsCustomerGet: async (returnAutoRenewal?: boolean, returnSupportPlan?: boolean, returnRecurringPlans?: boolean, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v2/credits/customer`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -5031,6 +5064,10 @@ export const CreditsApiAxiosParamCreator = function (configuration?: Configurati
 
             if (returnSupportPlan !== undefined) {
                 localVarQueryParameter['returnSupportPlan'] = returnSupportPlan;
+            }
+
+            if (returnRecurringPlans !== undefined) {
+                localVarQueryParameter['returnRecurringPlans'] = returnRecurringPlans;
             }
 
 
@@ -5601,11 +5638,12 @@ export const CreditsApiFp = function(configuration?: Configuration) {
          * @summary Get the customer\'s credit details
          * @param {boolean} [returnAutoRenewal] Return the auto-renewal subscription details. PAYMENTS_READ scope is required.
          * @param {boolean} [returnSupportPlan] Return the support plan details.
+         * @param {boolean} [returnRecurringPlans] Return the support plan details.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async creditsCustomerGet(returnAutoRenewal?: boolean, returnSupportPlan?: boolean, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CreditCustomer>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.creditsCustomerGet(returnAutoRenewal, returnSupportPlan, options);
+        async creditsCustomerGet(returnAutoRenewal?: boolean, returnSupportPlan?: boolean, returnRecurringPlans?: boolean, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CreditCustomer>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.creditsCustomerGet(returnAutoRenewal, returnSupportPlan, returnRecurringPlans, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -5830,7 +5868,7 @@ export const CreditsApiFactory = function (configuration?: Configuration, basePa
          * @throws {RequiredError}
          */
         creditsCustomerGet(requestParameters: CreditsApiCreditsCustomerGetRequest = {}, options?: AxiosRequestConfig): AxiosPromise<CreditCustomer> {
-            return localVarFp.creditsCustomerGet(requestParameters.returnAutoRenewal, requestParameters.returnSupportPlan, options).then((request) => request(axios, basePath));
+            return localVarFp.creditsCustomerGet(requestParameters.returnAutoRenewal, requestParameters.returnSupportPlan, requestParameters.returnRecurringPlans, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -6179,6 +6217,13 @@ export interface CreditsApiCreditsCustomerGetRequest {
      * @memberof CreditsApiCreditsCustomerGet
      */
     readonly returnSupportPlan?: boolean
+
+    /**
+     * Return the support plan details.
+     * @type {boolean}
+     * @memberof CreditsApiCreditsCustomerGet
+     */
+    readonly returnRecurringPlans?: boolean
 }
 
 /**
@@ -6460,7 +6505,7 @@ export class CreditsApi extends BaseAPI {
      * @memberof CreditsApi
      */
     public creditsCustomerGet(requestParameters: CreditsApiCreditsCustomerGetRequest = {}, options?: AxiosRequestConfig) {
-        return CreditsApiFp(this.configuration).creditsCustomerGet(requestParameters.returnAutoRenewal, requestParameters.returnSupportPlan, options).then((request) => request(this.axios, this.basePath));
+        return CreditsApiFp(this.configuration).creditsCustomerGet(requestParameters.returnAutoRenewal, requestParameters.returnSupportPlan, requestParameters.returnRecurringPlans, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
