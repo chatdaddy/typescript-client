@@ -1,1027 +1,1047 @@
 {
-  "CONTACTS_READ_ASSIGNED": {
-    "number": 2,
-    "description": "Read Assigned contacts",
-    "features": [
-      "audience"
-    ],
-    "roles": [
-      "admin",
-      "agent",
-      "editor"
-    ],
-    "hidden": true,
-    "section":"crm",
-    "group": "Contact"
-  },
-  "CONTACTS_READ_ALL": {
-    "number": 3,
-    "description": "Read All contacts",
-    "subtext": "(If Unchecked, then only assigned contacts will be accessible)",
-    "features": [
-      "audience"
-    ],
-    "roles": [
-      "admin",
-      "agent",
-      "editor",
-      "viewer"
-    ],
-    "section":"crm",
-    "group": "Contact"
-  },
-  "CONTACTS_EXPORT_BUTTON": {
-    "number": 26,
-    "description": "Export Contacts",
-    "features": [
-      "audience"
-    ],
-    "roles": [
-      "admin",
-      "editor"
-    ],
-    "section":"crm",
-    "group": "Contact"
-  },
-  "CONTACTS_CREATE": {
-    "number": 4,
-    "description": "Create contacts",
-    "features": [
-      "audience"
-    ],
-    "roles": [
-      "admin",
-      "editor"
-    ],
-    "section":"crm",
-    "group": "Contact"
-  },
-  "CONTACTS_DELETE": {
-    "number": 5,
-    "description": "Delete contacts",
-    "features": [
-      "audience"
-    ],
-    "roles": [
-      "admin",
-      "editor"
-    ],
-    "section":"crm",
-    "group": "Contact"
-  },
-  "CONTACTS_UPDATE": {
-    "number": 6,
-    "description": "Update contacts",
-    "features": [
-      "audience"
-    ],
-    "roles": [
-      "admin",
-      "editor"
-    ],
-    "section":"crm",
-    "group": "Contact"
-  },
-  "CAMPAIGNS_READ": {
-    "number": 7,
-    "description": "Read",
-    "features": [
-      "broadcast"
-    ],
-    "roles": [
-      "admin",
-      "editor",
-      "viewer"
-    ],
-    "section":"automation",
-    "group": "Broadcast"
-  },
-  "CAMPAIGNS_CREATE": {
-    "number": 8,
-    "description": "Create",
-    "features": [
-      "broadcast"
-    ],
-    "roles": [
-      "admin",
-      "editor"
-    ],
-    "section":"automation",
-    "group": "Broadcast"
-  },
-  "CAMPAIGNS_DELETE": {
-    "number": 9,
-    "description": "Delete",
-    "features": [
-      "broadcast"
-    ],
-    "roles": [
-      "admin",
-      "editor"
-    ],
-    "section":"automation",
-    "group": "Broadcast"
-  },
-  "CAMPAIGNS_UPDATE": {
-    "number": 10,
-    "description": "Update",
-    "features": [
-      "broadcast"
-    ],
-    "roles": [
-      "admin",
-      "editor"
-    ],
-    "section":"automation",
-    "group": "Broadcast"
-  },
-  "KEYWORD_READ": {
-    "number": 11,
-    "description": "Read",
-    "features": [
-      "keyword-reply"
-    ],
-    "roles": [
-      "admin",
-      "editor",
-      "viewer"
-    ],
-    "section":"automation",
-    "group": "Keyword Reply"
-  },
-  "KEYWORD_CREATE": {
-    "number": 12,
-    "description": "Create",
-    "features": [
-      "keyword-reply"
-    ],
-    "roles": [
-      "admin",
-      "editor"
-    ],
-    "section":"automation",
-    "group": "Keyword Reply"
-  },
-  "KEYWORD_DELETE": {
-    "number": 13,
-    "description": "Delete",
-    "features": [
-      "keyword-reply"
-    ],
-    "roles": [
-      "admin",
-      "editor"
-    ],
-    "section":"automation",
-    "group": "Keyword Reply"
-  },
-  "KEYWORD_UPDATE": {
-    "number": 14,
-    "description": "Update",
-    "features": [
-      "keyword-reply"
-    ],
-    "roles": [
-      "admin",
-      "editor"
-    ],
-    "section":"automation",
-    "group": "Keyword Reply"
-  },
-  "TEMPLATES_READ": {
-    "number": 15,
-    "description": "Read",
-    "features": [
-      "message-flows"
-    ],
-    "roles": [
-      "admin",
-      "editor",
-      "viewer"
-    ],
-    "section":"automation",
-    "group": "Message Flows"
-  },
-  "TEMPLATES_CREATE": {
-    "number": 16,
-    "description": "Create",
-    "features": [
-      "message-flows"
-    ],
-    "roles": [
-      "admin",
-      "editor"
-    ],
-    "section":"automation",
-    "group": "Message Flows"
-  },
-  "TEMPLATES_DELETE": {
-    "number": 17,
-    "description": "Delete",
-    "features": [
-      "message-flows"
-    ],
-    "roles": [
-      "admin",
-      "editor"
-    ],
-    "section":"automation",
-    "group": "Message Flows"
-  },
-  "TEMPLATES_UPDATE": {
-    "number": 18,
-    "description": "Update",
-    "features": [
-      "message-flows"
-    ],
-    "roles": [
-      "admin",
-      "editor"
-    ],
-    "section":"automation",
-    "group": "Message Flows"
-  },
-  "TAGS_READ": {
-    "number": 19,
-    "description": "Read",
-    "features": [
-      "audience"
-    ],
-    "roles": [
-      "admin",
-      "editor",
-      "viewer"
-    ],
-    "section":"crm",
-    "group": "Tags"
-  },
-  "TAGS_CREATE": {
-    "number": 20,
-    "description": "Create",
-    "features": [
-      "audience"
-    ],
-    "roles": [
-      "admin",
-      "editor"
-    ],
-    "section":"crm",
-    "group": "Tags"
-  },
-  "TAGS_DELETE": {
-    "number": 21,
-    "description": "Delete",
-    "features": [
-      "audience"
-    ],
-    "roles": [
-      "admin",
-      "editor"
-    ],
-    "section":"crm",
-    "group": "Tags"
-  },
-  "TOKENS_READ": {
-    "number": 22,
-    "description": "Read all tokens belonging to your account",
-    "irrevokable": true,
-    "features": [],
-    "roles": [
-      "admin",
-      "agent",
-      "viewer",
-      "editor"
-    ],
-    "section":null,
-    "group": null
-  },
-  "TOKENS_DELETE": {
-    "number": 23,
-    "description": "Delete a token belonging to your account",
-    "irrevokable": true,
-    "features": [],
-    "roles": [
-      "admin",
-      "agent",
-      "viewer",
-      "editor"
-    ],
-    "section":null,
-    "group": null
-  },
-  "USERS_PATCH": {
-    "number": 24,
-    "description": "Update your personal info",
-    "irrevokable": true,
-    "features": [],
-    "roles": [
-      "admin",
-      "agent",
-      "viewer",
-      "editor"
-    ],
-    "section":"settings",
-    "group": null
-  },
-  "TEAM_UPDATE": {
-    "number": 29,
-    "description": "Update team details",
-    "features": [],
-    "roles": [
-      "admin"
-    ],
-    "section":"settings",
-    "group": "Team"
-  },
-  "ACCOUNT_CREATE": {
-    "number": 30,
-    "description": "Add a Channel",
-    "features": [
-      "team-inbox"
-    ],
-    "roles": [
-      "admin"
-    ],
-    "section":"inbox",
-    "group": "Channels"
-  },
-  "ACCOUNT_READ": {
-    "number": 31,
-    "description": "Read all available Channels",
-    "features": [
-      "team-inbox"
-    ],
-    "roles": [
-      "admin",
-      "editor",
-      "viewer",
-      "agent"
-    ],
-    "section":"inbox",
-    "group": "Channels"
-  },
-  "ACCOUNT_DELETE": {
-    "number": 32,
-    "description": "Delete a Channel",
-    "features": [
-      "team-inbox"
-    ],
-    "roles": [
-      "admin"
-    ],
-    "section":"inbox",
-    "group": "Channels"
-  },
-  "ACCOUNT_PATCH": {
-    "number": 30,
-    "description": "Update a Channel",
-    "subtext": "Connect, disconnect, change advanced settings for a channel",
-    "features": [
-      "team-inbox"
-    ],
-    "roles": [
-      "admin",
-      "editor",
-      "agent"
-    ],
-    "section":"inbox",
-    "group": "Channels"
-  },
-  "CREATE_SUB_USER": {
-    "number": 37,
-    "description": "Create a new user",
-    "features": [],
-    "roles": [
-      "admin"
-    ],
-    "section":"settings",
-    "group": "Team"
-  },
-  "TEAMLINK_CREATE": {
-    "number": 38,
-    "description": "Create new invite links",
-    "features": [],
-    "roles": [
-      "admin"
-    ],
-    "section":"settings", 
-    "group": "Team"
-  },
-  "TEAMMEMBERS_UPDATE": {
-    "number": 30,
-    "description": "Update/delete team members",
-    "features": [],
-    "roles": [
-      "admin"
-    ],
-    "section":"settings",
-    "group": "Team"
-  },
-  "TEAMMEMBERS_READ": {
-    "number": 40,
-    "description": "Read the members of your team",
-    "features": [],
-    "roles": [
-      "admin",
-      "editor",
-      "viewer",
-      "agent"
-    ],
-    "section":"settings",
-    "group": "Team"
-  },
-  "LOGOUT_SUB_USER": {
-    "number": 41,
-    "description": "Log out sub-users from all active sessions",
-    "features": [],
-    "roles": [
-      "admin"
-    ],
-    "section":"settings",
-    "group": "Team"
-  },
-  "CHATS_ACCESS_ALL": {
-    "number": 55,
-    "description": "Access to all Chats",
-    "subtext":"(If Unchecked, then only assigned chats will be accessible)",
-    "features": [
-      "team-inbox"
-    ],
-    "roles": [
-      "admin",
-      "agent",
-      "editor",
-      "viewer"
-    ],
-    "section":"inbox",
-    "group": "Chat"
-  },
-  "CHATS_ACCESS_ASSIGNED": {
-    "number": 56,
-    "description": "Access to assigned Chats",
-    "features": [
-      "team-inbox"
-    ],
-    "roles": [
-      "admin",
-      "agent",
-      "editor"
-    ],
-    "hidden": true,
-    "section":"inbox",
-    "group": "Chat"
-  },
-  "CHATS_DELETE": {
-    "number": 57,
-    "description": "Delete Chats",
-    "features": [
-      "team-inbox"
-    ],
-    "roles": [
-      "admin",
-      "agent",
-      "editor"
-    ],
-    "section":"inbox",
-    "group": "Chat"
-  },
-  "MESSAGES_SEND_TO_ASSIGNED": {
-    "number": 58,
-    "description": "Send Messages to Assigned",
-    "features": [
-      "team-inbox"
-    ],
-    "roles": [
-      "admin",
-      "agent",
-      "editor"
-    ],
-    "hidden": true,
-    "section":"inbox",
-    "group": "Messages"
-  },
-  "MESSAGES_SEND_TO_ALL": {
-    "number": 59,
-    "description": "Access to Messages to All",
-    "subtext":"(If Unchecked, then only assigned messages will be accessible)",
-    "features": [
-      "team-inbox"
-    ],
-    "roles": [
-      "admin",
-      "agent",
-      "editor"
-    ],
-    "section":"inbox",
-    "group": "Messages"
-  },
-  "MESSAGES_DELETE": {
-    "number": 61,
-    "description": "Delete Messages",
-    "features": [
-      "team-inbox"
-    ],
-    "roles": [
-      "admin",
-      "agent",
-      "editor"
-    ],
-    "section":"inbox",
-    "group": "Messages"
-  },
-  "GROUPS_CREATE": {
-    "number": 62,
-    "description": "Create",
-    "features": [
-      "team-inbox"
-    ],
-    "roles": [
-      "admin",
-      "agent",
-      "editor"
-    ],
-    "section":"inbox",
-    "group": "Groups"
-  },
-  "GROUPS_UPDATE": {
-    "number": 63,
-    "description": "Update",
-    "features": [
-      "team-inbox"
-    ],
-    "roles": [
-      "admin",
-      "agent",
-      "editor"
-    ],
-    "section":"inbox",
-    "group": "Groups"
-  },
-  "CREATE_NOTES": {
-    "number": 64,
-    "description": "Create Notes",
-    "features": [
-      "team-inbox"
-    ],
-    "roles": [
-      "admin",
-      "agent",
-      "editor"
-    ],
-    "section":"inbox",
-    "group": "Notes"
-  },
-  "EDIT_NOTES": {
-    "number": 60,
-    "description": "Edit Notes",
-    "features": [
-      "team-inbox"
-    ],
-    "roles": [
-      "admin",
-      "agent",
-      "editor"
-    ],
-    "section":"inbox",
-    "group": "Notes"
-  },
-  "DELETE_NOTES": {
-    "number": 70,
-    "description": "Delete Notes",
-    "features": [
-      "team-inbox"
-    ],
-    "roles": [
-      "admin",
-      "agent",
-      "editor"
-    ],
-    "section":"inbox",
-    "group": "Notes"
-  },
-  "NOTIFICATION_READ": {
-    "number": 66,
-    "description": "Read",
-    "features": [
-      "notifications"
-    ],
-    "roles": [
-      "admin",
-      "editor",
-      "viewer"
-    ],
-    "section":"automation",
-    "group": "Shop Notification"
-  },
-  "NOTIFICATION_CREATE": {
-    "number": 67,
-    "description": "Create",
-    "features": [
-      "notifications"
-    ],
-    "roles": [
-      "admin",
-      "editor"
-    ],
-    "section":"automation",
-    "group": "Shop Notification"
-  },
-  "NOTIFICATION_UPDATE": {
-    "number": 68,
-    "description": "Update",
-    "features": [
-      "notifications"
-    ],
-    "roles": [
-      "admin",
-      "editor"
-    ],
-    "section":"automation",
-    "group": "Shop Notification"
-  },
-  "NOTIFICATION_DELETE": {
-    "number": 69,
-    "description": "Delete",
-    "features": [
-      "notifications"
-    ],
-    "roles": [
-      "admin",
-      "editor"
-    ],
-    "section":"automation",
-    "group": "Shop Notification"
-  },
-  "INTEGRATIONS_UPDATE": {
-    "number": 71,
-    "description": "Update private integrations for notifications API",
-    "features": [
-      "notifications"
-    ],
-    "roles": [
-      "admin"
-    ],
-    "section":"appstoreAndApi",
-    "group": "API"
-  },
-  "ADMIN_PANEL_ACCESS": {
-    "number": 72,
-    "description": "Access admin level functionality",
-    "features": [],
-    "roles": [],
-    "section": null,
-    "group": null
-  },
-  "PAYMENTS_READ": {
-    "number": 78,
-    "description": "Read Billing History",
-    "features": [],
-    "roles": [
-      "admin"
-    ],
-    "section":"settings",
-    "group": "Billing"
-  },
-  "PAYMENTS_UPDATE": {
-    "number": 79,
-    "description": "Update/make new payments",
-    "features": [],
-    "roles": [
-      "admin"
-    ],
-    "section":"settings",
-    "group": "Billing"
-  },
-  "WA_LIVE_EVENTS": {
-    "number": 80,
-    "description": "Receive Live Events on this Team",
-    "features": [
-      "team-inbox"
-    ],
-    "roles": [
-      "viewer",
-      "admin",
-      "agent",
-      "editor"
-    ],
-    "section":"appstoreAndApi",
-    "group": "Live Events Access"
-  },
-  "CHATDADDY_HOOK": {
-    "number": 65,
-    "description": "Read/Update API Web hooks",
-    "features": [],
-    "roles": [
-      "admin"
-    ],
-    "section":"appstoreAndApi",
-    "group": "API"
-  },
-  "PARTNER_ADMIN_PANEL_ACCESS": {
-    "number": 81,
-    "description": "Admin access to all users/teams created using a referral code",
-    "features": [],
-    "roles": [],
-    "section":null,
-    "group": null
-  },
-  "PRODUCTS_GET": {
-    "number": 82,
-    "description": "Fetch all platform products",
-    "features": [
-      "shop"
-    ],
-    "roles": [
-      "viewer",
-      "admin"
-    ],
-    "section":"shop",
-    "group": "Product"
-  },
-  "PRODUCTS_CREATE": {
-    "number": 83,
-    "description": "Create a platform product",
-    "features": [
-      "shop"
-    ],
-    "roles": [
-      "admin",
-      "editor"
-    ],
-    "section":"shop",
-    "group": "Product"
-  },
-  "PRODUCTS_UPDATE": {
-    "number": 84,
-    "description": "Update a platform product",
-    "features": [
-      "shop"
-    ],
-    "roles": [
-      "admin",
-      "editor"
-    ],
-    "section":"shop",
-    "group": "Product"
-  },
-  "PRODUCTS_DELETE": {
-    "number": 85,
-    "description": "Delete a platform product",
-    "features": [
-      "shop"
-    ],
-    "roles": [
-      "admin",
-      "editor"
-    ],
-    "section":"shop",
-    "group": "Product"
-  },
-  "PAYMENT_INTEGRATION_READ": {
-    "number": 86,
-    "description": "Read Payment Integration Details",
-    "features": [
-      "shop"
-    ],
-    "roles": [
-      "admin",
-      "editor"
-    ],
-    "section":"shop",
-    "group": "Payment"
-  },
-  "PAYMENT_INTEGRATION_WRITE": {
-    "number": 87,
-    "description": "Create/Update/Delete Payment Integration",
-    "features": [
-      "shop"
-    ],
-    "roles": [
-      "admin",
-      "editor"
-    ],
-    "section":"shop",
-    "group": "Payment"
-  },
-  "PAYMENT_RECORDS_READ": {
-    "number": 88,
-    "description": "Read Payment Records",
-    "features": [
-      "shop"
-    ],
-    "roles": [
-      "admin",
-      "editor",
-      "agent",
-      "viewer"
-    ],
-    "section":"shop",
-    "group": "Payment"
-  },
-  "PAYMENT_RECORDS_WRITE": {
-    "number": 89,
-    "description": "Update/Delete Payment Records",
-    "features": [
-      "shop"
-    ],
-    "roles": [
-      "agent",
-      "editor",
-      "admin"
-    ],
-    "section":"shop",
-    "group": "Payment"
-  },
-  "METRICS_GET": {
-    "number": 90,
-    "description": "View aggregate metrics about your team",
-    "features": [
-      "audience"
-    ],
-    "roles": [
-      "viewer",
-      "admin",
-      "agent",
-      "editor"
-    ],
-    "section":"analytics",
-    "group": "View Analytics"
-  },
-  "ACCOUNTS_READ_ASSIGNED": {
-    "number": 91,
-    "description": "Access to read assigned channels",
-    "features": [],
-    "roles": []
-  },
-  "AUTOCOMPLETE_GET": {
-    "number": 92,
-    "description": "Access to AI autocomplete",
-    "features": [
-      "autocomplete"
-    ],
-    "roles": [
-      "admin",
-      "agent",
-      "editor"
-    ],
-    "section":"inbox",
-    "group": "Chat"
-  },
-    "MESSAGES_SEARCH": {
-    "number": 93,
-    "description": "Search all Messages",
-    "features": [
-      "team-inbox"
-    ],
-    "roles": [
-      "admin",
-      "agent",
-      "editor"
-    ],
-    "section":"inbox",
-    "group": "Messages"
-  },
-  "WIDGET_EDIT": {
-    "number": 94,
-    "description": "Edit the widget",
-    "features": [],
-    "roles": [
-      "admin",
-      "agent",
-      "editor"
-    ],
-    "section":"tools",
-    "group": "Edit Widget Builder"
-  },
-  "COUPON_READ": {
-    "number": 95,
-    "description": "Read coupon campaigns",
-    "features": [],
-    "roles": [
-      "admin",
-      "editor",
-      "viewer"
-    ],
-    "section":"tools",
-    "group": "Coupon Campaign"
-  },
-  "COUPON_CREATE": {
-    "number": 96,
-    "description": "Write coupon campaigns",
-    "features": [],
-    "roles": [
-      "admin",
-      "editor"
-    ],
-    "section":"tools",
-    "group": "Coupon Campaign"
-  },
-  "COUPON_DELETE": {
-    "number": 97,
-    "description": "Delete coupon campaigns",
-    "features": [],
-    "roles": [
-      "admin",
-      "editor"
-    ],
-    "section":"tools",
-    "group": "Coupon Campaign"
-  },
-  "COUPON_UPDATE": {
-    "number": 98,
-    "description": "Update coupon campaigns",
-    "features": [],
-    "roles": [
-      "admin",
-      "editor"
-    ],
-    "section":"tools",
-    "group": "Coupon Campaign"
-  },
-  "TEAMMEMBERS_READ_CONTACT_DETAILS": {
-    "number": 99,
-    "description": "Access Contact's Personal Information",
-    "subtext": "Read phone numbers, emails & usernames of your contacts",
-    "features": [],
-    "roles": [
-      "admin",
-      "editor",
-      "viewer",
-      "agent"
-    ],
-    "section":"crm",
-    "group": "Contact"
-  },
-  "TEAMMEMBERS_READ_MESSAGE_DETAILS": {
-    "number": 100,
-    "description": "Access Message's Personal Information",
-    "subtext": "Read message content details",
-    "features": [],
-    "roles": [
-      "admin",
-      "editor",
-      "viewer",
-      "agent"
-    ],
-    "section":"team-inbox",
-    "group": "Messages"
-  },
-  "CALL_PHONE_CREATE": {
-    "number": 101,
-    "description": "Create/Update Phone Numbers",
-    "features": [
-      "calls"
-    ],
-    "roles": [
-      "admin",
-      "agent",
-      "editor"
-    ],
-    "section":"calls",
-    "group": "Phone Number"
-  },
-  "CALL_PHONE_DELETE": {
-    "number": 102,
-    "description": "Delete Phone Numbers",
-    "features": [
-      "calls"
-    ],
-    "roles": [
-      "admin",
-      "agent",
-      "editor"
-    ],
-    "section":"calls",
-    "group": "Phone Number"
-  },
-  "MAKE_CALLS": {
-    "number": 103,
-    "description": "Make outgoing calls",
-    "features": [
-      "calls"
-    ],
-    "roles": [
-      "admin",
-      "agent",
-      "editor"
-    ],
-    "section":"calls",
-    "group": "Phone Number"
-  },
-  "CALL_LOGS_READ": {
-    "number": 104,
-    "description": "Read Call Logs Details",
-    "subtext": "View call notes and play/download call recordings",
-    "features": [
-      "calls"
-    ],
-    "roles": [
-      "admin",
-      "agent",
-      "editor",
-      "viewer"
-    ],
-    "section":"calls",
-    "group": "Call Notes"
-  }
+	"CONTACTS_READ_ASSIGNED": {
+		"number": 2,
+		"description": "Read Assigned contacts",
+		"features": [
+			"audience"
+		],
+		"roles": [
+			"admin",
+			"agent",
+			"editor"
+		],
+		"hidden": true,
+		"section": "crm",
+		"group": "Contact"
+	},
+	"CONTACTS_READ_ALL": {
+		"number": 3,
+		"description": "Read All contacts",
+		"subtext": "(If Unchecked, then only assigned contacts will be accessible)",
+		"features": [
+			"audience"
+		],
+		"roles": [
+			"admin",
+			"agent",
+			"editor",
+			"viewer"
+		],
+		"section": "crm",
+		"group": "Contact"
+	},
+	"CONTACTS_CREATE": {
+		"number": 4,
+		"description": "Create contacts",
+		"features": [
+			"audience"
+		],
+		"roles": [
+			"admin",
+			"editor"
+		],
+		"section": "crm",
+		"group": "Contact"
+	},
+	"CONTACTS_DELETE": {
+		"number": 5,
+		"description": "Delete contacts",
+		"features": [
+			"audience"
+		],
+		"roles": [
+			"admin",
+			"editor"
+		],
+		"section": "crm",
+		"group": "Contact"
+	},
+	"CONTACTS_UPDATE": {
+		"number": 6,
+		"description": "Update contacts",
+		"features": [
+			"audience"
+		],
+		"roles": [
+			"admin",
+			"editor"
+		],
+		"section": "crm",
+		"group": "Contact"
+	},
+	"CAMPAIGNS_READ": {
+		"number": 7,
+		"description": "Read",
+		"features": [
+			"broadcast"
+		],
+		"roles": [
+			"admin",
+			"editor",
+			"viewer"
+		],
+		"section": "automation",
+		"group": "Broadcast"
+	},
+	"CAMPAIGNS_CREATE": {
+		"number": 8,
+		"description": "Create",
+		"features": [
+			"broadcast"
+		],
+		"roles": [
+			"admin",
+			"editor"
+		],
+		"section": "automation",
+		"group": "Broadcast"
+	},
+	"CAMPAIGNS_DELETE": {
+		"number": 9,
+		"description": "Delete",
+		"features": [
+			"broadcast"
+		],
+		"roles": [
+			"admin",
+			"editor"
+		],
+		"section": "automation",
+		"group": "Broadcast"
+	},
+	"CAMPAIGNS_UPDATE": {
+		"number": 10,
+		"description": "Update",
+		"features": [
+			"broadcast"
+		],
+		"roles": [
+			"admin",
+			"editor"
+		],
+		"section": "automation",
+		"group": "Broadcast"
+	},
+	"KEYWORD_READ": {
+		"number": 11,
+		"description": "Read",
+		"features": [
+			"keyword-reply"
+		],
+		"roles": [
+			"admin",
+			"editor",
+			"viewer"
+		],
+		"section": "automation",
+		"group": "Keyword Reply"
+	},
+	"KEYWORD_CREATE": {
+		"number": 12,
+		"description": "Create",
+		"features": [
+			"keyword-reply"
+		],
+		"roles": [
+			"admin",
+			"editor"
+		],
+		"section": "automation",
+		"group": "Keyword Reply"
+	},
+	"KEYWORD_DELETE": {
+		"number": 13,
+		"description": "Delete",
+		"features": [
+			"keyword-reply"
+		],
+		"roles": [
+			"admin",
+			"editor"
+		],
+		"section": "automation",
+		"group": "Keyword Reply"
+	},
+	"KEYWORD_UPDATE": {
+		"number": 14,
+		"description": "Update",
+		"features": [
+			"keyword-reply"
+		],
+		"roles": [
+			"admin",
+			"editor"
+		],
+		"section": "automation",
+		"group": "Keyword Reply"
+	},
+	"TEMPLATES_READ": {
+		"number": 15,
+		"description": "Read",
+		"features": [
+			"message-flows"
+		],
+		"roles": [
+			"admin",
+			"editor",
+			"viewer"
+		],
+		"section": "automation",
+		"group": "Message Flows"
+	},
+	"TEMPLATES_CREATE": {
+		"number": 16,
+		"description": "Create",
+		"features": [
+			"message-flows"
+		],
+		"roles": [
+			"admin",
+			"editor"
+		],
+		"section": "automation",
+		"group": "Message Flows"
+	},
+	"TEMPLATES_DELETE": {
+		"number": 17,
+		"description": "Delete",
+		"features": [
+			"message-flows"
+		],
+		"roles": [
+			"admin",
+			"editor"
+		],
+		"section": "automation",
+		"group": "Message Flows"
+	},
+	"TEMPLATES_UPDATE": {
+		"number": 18,
+		"description": "Update",
+		"features": [
+			"message-flows"
+		],
+		"roles": [
+			"admin",
+			"editor"
+		],
+		"section": "automation",
+		"group": "Message Flows"
+	},
+	"TAGS_READ": {
+		"number": 19,
+		"description": "Read",
+		"features": [
+			"audience"
+		],
+		"roles": [
+			"admin",
+			"editor",
+			"viewer"
+		],
+		"section": "crm",
+		"group": "Tags"
+	},
+	"TAGS_CREATE": {
+		"number": 20,
+		"description": "Create",
+		"features": [
+			"audience"
+		],
+		"roles": [
+			"admin",
+			"editor"
+		],
+		"section": "crm",
+		"group": "Tags"
+	},
+	"TAGS_DELETE": {
+		"number": 21,
+		"description": "Delete",
+		"features": [
+			"audience"
+		],
+		"roles": [
+			"admin",
+			"editor"
+		],
+		"section": "crm",
+		"group": "Tags"
+	},
+	"TOKENS_READ": {
+		"number": 22,
+		"description": "Read all tokens belonging to your account",
+		"irrevokable": true,
+		"features": [],
+		"roles": [
+			"admin",
+			"agent",
+			"viewer",
+			"editor"
+		],
+		"section": null,
+		"group": null
+	},
+	"TOKENS_DELETE": {
+		"number": 23,
+		"description": "Delete a token belonging to your account",
+		"irrevokable": true,
+		"features": [],
+		"roles": [
+			"admin",
+			"agent",
+			"viewer",
+			"editor"
+		],
+		"section": null,
+		"group": null
+	},
+	"USERS_PATCH": {
+		"number": 24,
+		"description": "Update your personal info",
+		"irrevokable": true,
+		"features": [],
+		"roles": [
+			"admin",
+			"agent",
+			"viewer",
+			"editor"
+		],
+		"section": "settings",
+		"group": null
+	},
+	"CONTACTS_EXPORT_BUTTON": {
+		"number": 26,
+		"description": "Export Contacts",
+		"features": [
+			"audience"
+		],
+		"roles": [
+			"admin",
+			"editor"
+		],
+		"section": "crm",
+		"group": "Contact"
+	},
+	"TEAM_UPDATE": {
+		"number": 29,
+		"description": "Update team details",
+		"features": [],
+		"roles": [
+			"admin"
+		],
+		"section": "settings",
+		"group": "Team"
+	},
+	"ACCOUNT_CREATE": {
+		"number": 30,
+		"description": "Add a Channel",
+		"features": [
+			"team-inbox"
+		],
+		"roles": [
+			"admin"
+		],
+		"section": "inbox",
+		"group": "Channels"
+	},
+	"ACCOUNT_PATCH": {
+		"number": 30,
+		"description": "Update a Channel",
+		"subtext": "Connect, disconnect, change advanced settings for a channel",
+		"features": [
+			"team-inbox"
+		],
+		"roles": [
+			"admin",
+			"editor",
+			"agent"
+		],
+		"section": "inbox",
+		"group": "Channels"
+	},
+	"TEAMMEMBERS_UPDATE": {
+		"number": 30,
+		"description": "Update/delete team members",
+		"features": [],
+		"roles": [
+			"admin"
+		],
+		"section": "settings",
+		"group": "Team"
+	},
+	"ACCOUNT_READ": {
+		"number": 31,
+		"description": "Read all available Channels",
+		"features": [
+			"team-inbox"
+		],
+		"roles": [
+			"admin",
+			"editor",
+			"viewer",
+			"agent"
+		],
+		"section": "inbox",
+		"group": "Channels"
+	},
+	"ACCOUNT_DELETE": {
+		"number": 32,
+		"description": "Delete a Channel",
+		"features": [
+			"team-inbox"
+		],
+		"roles": [
+			"admin"
+		],
+		"section": "inbox",
+		"group": "Channels"
+	},
+	"CREATE_SUB_USER": {
+		"number": 37,
+		"description": "Create a new user",
+		"features": [],
+		"roles": [
+			"admin"
+		],
+		"section": "settings",
+		"group": "Team"
+	},
+	"TEAMLINK_CREATE": {
+		"number": 38,
+		"description": "Create new invite links",
+		"features": [],
+		"roles": [
+			"admin"
+		],
+		"section": "settings",
+		"group": "Team"
+	},
+	"TEAMMEMBERS_READ": {
+		"number": 40,
+		"description": "Read the members of your team",
+		"features": [],
+		"roles": [
+			"admin",
+			"editor",
+			"viewer",
+			"agent"
+		],
+		"section": "settings",
+		"group": "Team"
+	},
+	"LOGOUT_SUB_USER": {
+		"number": 41,
+		"description": "Log out sub-users from all active sessions",
+		"features": [],
+		"roles": [
+			"admin"
+		],
+		"section": "settings",
+		"group": "Team"
+	},
+	"CHATS_ACCESS_ALL": {
+		"number": 55,
+		"description": "Access to all Chats",
+		"subtext": "(If Unchecked, then only assigned chats will be accessible)",
+		"features": [
+			"team-inbox"
+		],
+		"roles": [
+			"admin",
+			"agent",
+			"editor",
+			"viewer"
+		],
+		"section": "inbox",
+		"group": "Chat"
+	},
+	"CHATS_ACCESS_ASSIGNED": {
+		"number": 56,
+		"description": "Access to assigned Chats",
+		"features": [
+			"team-inbox"
+		],
+		"roles": [
+			"admin",
+			"agent",
+			"editor"
+		],
+		"hidden": true,
+		"section": "inbox",
+		"group": "Chat"
+	},
+	"CHATS_DELETE": {
+		"number": 57,
+		"description": "Delete Chats",
+		"features": [
+			"team-inbox"
+		],
+		"roles": [
+			"admin",
+			"agent",
+			"editor"
+		],
+		"section": "inbox",
+		"group": "Chat"
+	},
+	"MESSAGES_SEND_TO_ASSIGNED": {
+		"number": 58,
+		"description": "Send Messages to Assigned",
+		"features": [
+			"team-inbox"
+		],
+		"roles": [
+			"admin",
+			"agent",
+			"editor"
+		],
+		"hidden": true,
+		"section": "inbox",
+		"group": "Messages"
+	},
+	"MESSAGES_SEND_TO_ALL": {
+		"number": 59,
+		"description": "Access to Messages to All",
+		"subtext": "(If Unchecked, then only assigned messages will be accessible)",
+		"features": [
+			"team-inbox"
+		],
+		"roles": [
+			"admin",
+			"agent",
+			"editor"
+		],
+		"section": "inbox",
+		"group": "Messages"
+	},
+	"EDIT_NOTES": {
+		"number": 60,
+		"description": "Edit Notes",
+		"features": [
+			"team-inbox"
+		],
+		"roles": [
+			"admin",
+			"agent",
+			"editor"
+		],
+		"section": "inbox",
+		"group": "Notes"
+	},
+	"MESSAGES_DELETE": {
+		"number": 61,
+		"description": "Delete Messages",
+		"features": [
+			"team-inbox"
+		],
+		"roles": [
+			"admin",
+			"agent",
+			"editor"
+		],
+		"section": "inbox",
+		"group": "Messages"
+	},
+	"GROUPS_CREATE": {
+		"number": 62,
+		"description": "Create",
+		"features": [
+			"team-inbox"
+		],
+		"roles": [
+			"admin",
+			"agent",
+			"editor"
+		],
+		"section": "inbox",
+		"group": "Groups"
+	},
+	"GROUPS_UPDATE": {
+		"number": 63,
+		"description": "Update",
+		"features": [
+			"team-inbox"
+		],
+		"roles": [
+			"admin",
+			"agent",
+			"editor"
+		],
+		"section": "inbox",
+		"group": "Groups"
+	},
+	"CREATE_NOTES": {
+		"number": 64,
+		"description": "Create Notes",
+		"features": [
+			"team-inbox"
+		],
+		"roles": [
+			"admin",
+			"agent",
+			"editor"
+		],
+		"section": "inbox",
+		"group": "Notes"
+	},
+	"CHATDADDY_HOOK": {
+		"number": 65,
+		"description": "Read/Update API Web hooks",
+		"features": [],
+		"roles": [
+			"admin"
+		],
+		"section": "appstoreAndApi",
+		"group": "API"
+	},
+	"NOTIFICATION_READ": {
+		"number": 66,
+		"description": "Read",
+		"features": [
+			"notifications"
+		],
+		"roles": [
+			"admin",
+			"editor",
+			"viewer"
+		],
+		"section": "automation",
+		"group": "Shop Notification"
+	},
+	"NOTIFICATION_CREATE": {
+		"number": 67,
+		"description": "Create",
+		"features": [
+			"notifications"
+		],
+		"roles": [
+			"admin",
+			"editor"
+		],
+		"section": "automation",
+		"group": "Shop Notification"
+	},
+	"NOTIFICATION_UPDATE": {
+		"number": 68,
+		"description": "Update",
+		"features": [
+			"notifications"
+		],
+		"roles": [
+			"admin",
+			"editor"
+		],
+		"section": "automation",
+		"group": "Shop Notification"
+	},
+	"NOTIFICATION_DELETE": {
+		"number": 69,
+		"description": "Delete",
+		"features": [
+			"notifications"
+		],
+		"roles": [
+			"admin",
+			"editor"
+		],
+		"section": "automation",
+		"group": "Shop Notification"
+	},
+	"DELETE_NOTES": {
+		"number": 70,
+		"description": "Delete Notes",
+		"features": [
+			"team-inbox"
+		],
+		"roles": [
+			"admin",
+			"agent",
+			"editor"
+		],
+		"section": "inbox",
+		"group": "Notes"
+	},
+	"INTEGRATIONS_UPDATE": {
+		"number": 71,
+		"description": "Update private integrations for notifications API",
+		"features": [
+			"notifications"
+		],
+		"roles": [
+			"admin"
+		],
+		"section": "appstoreAndApi",
+		"group": "API"
+	},
+	"ADMIN_PANEL_ACCESS": {
+		"number": 72,
+		"description": "Access admin level functionality",
+		"features": [],
+		"roles": [],
+		"section": null,
+		"group": null
+	},
+	"DASHBOARD_CREATE": {
+		"number": 73,
+		"description": "Create an Analytics Dashboard",
+		"features": [],
+		"roles": [
+			"admin"
+		],
+		"section": "analytics",
+		"group": "View Analytics"
+	},
+	"DASHBOARD_DELETE": {
+		"number": 74,
+		"description": "Delete an Analytics Dashboard",
+		"features": [],
+		"roles": [
+			"admin"
+		],
+		"section": "analytics",
+		"group": "View Analytics"
+	},
+	"PAYMENTS_READ": {
+		"number": 78,
+		"description": "Read Billing History",
+		"features": [],
+		"roles": [
+			"admin"
+		],
+		"section": "settings",
+		"group": "Billing"
+	},
+	"PAYMENTS_UPDATE": {
+		"number": 79,
+		"description": "Update/make new payments",
+		"features": [],
+		"roles": [
+			"admin"
+		],
+		"section": "settings",
+		"group": "Billing"
+	},
+	"WA_LIVE_EVENTS": {
+		"number": 80,
+		"description": "Receive Live Events on this Team",
+		"features": [
+			"team-inbox"
+		],
+		"roles": [
+			"viewer",
+			"admin",
+			"agent",
+			"editor"
+		],
+		"section": "appstoreAndApi",
+		"group": "Live Events Access"
+	},
+	"PARTNER_ADMIN_PANEL_ACCESS": {
+		"number": 81,
+		"description": "Admin access to all users/teams created using a referral code",
+		"features": [],
+		"roles": [],
+		"section": null,
+		"group": null
+	},
+	"PRODUCTS_GET": {
+		"number": 82,
+		"description": "Fetch all platform products",
+		"features": [
+			"shop"
+		],
+		"roles": [
+			"viewer",
+			"admin"
+		],
+		"section": "shop",
+		"group": "Product"
+	},
+	"PRODUCTS_CREATE": {
+		"number": 83,
+		"description": "Create a platform product",
+		"features": [
+			"shop"
+		],
+		"roles": [
+			"admin",
+			"editor"
+		],
+		"section": "shop",
+		"group": "Product"
+	},
+	"PRODUCTS_UPDATE": {
+		"number": 84,
+		"description": "Update a platform product",
+		"features": [
+			"shop"
+		],
+		"roles": [
+			"admin",
+			"editor"
+		],
+		"section": "shop",
+		"group": "Product"
+	},
+	"PRODUCTS_DELETE": {
+		"number": 85,
+		"description": "Delete a platform product",
+		"features": [
+			"shop"
+		],
+		"roles": [
+			"admin",
+			"editor"
+		],
+		"section": "shop",
+		"group": "Product"
+	},
+	"PAYMENT_INTEGRATION_READ": {
+		"number": 86,
+		"description": "Read Payment Integration Details",
+		"features": [
+			"shop"
+		],
+		"roles": [
+			"admin",
+			"editor"
+		],
+		"section": "shop",
+		"group": "Payment"
+	},
+	"PAYMENT_INTEGRATION_WRITE": {
+		"number": 87,
+		"description": "Create/Update/Delete Payment Integration",
+		"features": [
+			"shop"
+		],
+		"roles": [
+			"admin",
+			"editor"
+		],
+		"section": "shop",
+		"group": "Payment"
+	},
+	"PAYMENT_RECORDS_READ": {
+		"number": 88,
+		"description": "Read Payment Records",
+		"features": [
+			"shop"
+		],
+		"roles": [
+			"admin",
+			"editor",
+			"agent",
+			"viewer"
+		],
+		"section": "shop",
+		"group": "Payment"
+	},
+	"PAYMENT_RECORDS_WRITE": {
+		"number": 89,
+		"description": "Update/Delete Payment Records",
+		"features": [
+			"shop"
+		],
+		"roles": [
+			"agent",
+			"editor",
+			"admin"
+		],
+		"section": "shop",
+		"group": "Payment"
+	},
+	"METRICS_GET": {
+		"number": 90,
+		"description": "View aggregate metrics about your team",
+		"features": [
+			"audience"
+		],
+		"roles": [
+			"viewer",
+			"admin",
+			"agent",
+			"editor"
+		],
+		"section": "analytics",
+		"group": "View Analytics"
+	},
+	"ACCOUNTS_READ_ASSIGNED": {
+		"number": 91,
+		"description": "Access to read assigned channels",
+		"features": [],
+		"roles": []
+	},
+	"AUTOCOMPLETE_GET": {
+		"number": 92,
+		"description": "Access to AI autocomplete",
+		"features": [
+			"autocomplete"
+		],
+		"roles": [
+			"admin",
+			"agent",
+			"editor"
+		],
+		"section": "inbox",
+		"group": "Chat"
+	},
+	"MESSAGES_SEARCH": {
+		"number": 93,
+		"description": "Search all Messages",
+		"features": [
+			"team-inbox"
+		],
+		"roles": [
+			"admin",
+			"agent",
+			"editor"
+		],
+		"section": "inbox",
+		"group": "Messages"
+	},
+	"WIDGET_EDIT": {
+		"number": 94,
+		"description": "Edit the widget",
+		"features": [],
+		"roles": [
+			"admin",
+			"agent",
+			"editor"
+		],
+		"section": "tools",
+		"group": "Edit Widget Builder"
+	},
+	"COUPON_READ": {
+		"number": 95,
+		"description": "Read coupon campaigns",
+		"features": [],
+		"roles": [
+			"admin",
+			"editor",
+			"viewer"
+		],
+		"section": "tools",
+		"group": "Coupon Campaign"
+	},
+	"COUPON_CREATE": {
+		"number": 96,
+		"description": "Write coupon campaigns",
+		"features": [],
+		"roles": [
+			"admin",
+			"editor"
+		],
+		"section": "tools",
+		"group": "Coupon Campaign"
+	},
+	"COUPON_DELETE": {
+		"number": 97,
+		"description": "Delete coupon campaigns",
+		"features": [],
+		"roles": [
+			"admin",
+			"editor"
+		],
+		"section": "tools",
+		"group": "Coupon Campaign"
+	},
+	"COUPON_UPDATE": {
+		"number": 98,
+		"description": "Update coupon campaigns",
+		"features": [],
+		"roles": [
+			"admin",
+			"editor"
+		],
+		"section": "tools",
+		"group": "Coupon Campaign"
+	},
+	"TEAMMEMBERS_READ_CONTACT_DETAILS": {
+		"number": 99,
+		"description": "Access Contact's Personal Information",
+		"subtext": "Read phone numbers, emails & usernames of your contacts",
+		"features": [],
+		"roles": [
+			"admin",
+			"editor",
+			"viewer",
+			"agent"
+		],
+		"section": "crm",
+		"group": "Contact"
+	},
+	"TEAMMEMBERS_READ_MESSAGE_DETAILS": {
+		"number": 100,
+		"description": "Access Message's Personal Information",
+		"subtext": "Read message content details",
+		"features": [],
+		"roles": [
+			"admin",
+			"editor",
+			"viewer",
+			"agent"
+		],
+		"section": "team-inbox",
+		"group": "Messages"
+	},
+	"CALL_PHONE_CREATE": {
+		"number": 101,
+		"description": "Create/Update Phone Numbers",
+		"features": [
+			"calls"
+		],
+		"roles": [
+			"admin",
+			"agent",
+			"editor"
+		],
+		"section": "calls",
+		"group": "Phone Number"
+	},
+	"CALL_PHONE_DELETE": {
+		"number": 102,
+		"description": "Delete Phone Numbers",
+		"features": [
+			"calls"
+		],
+		"roles": [
+			"admin",
+			"agent",
+			"editor"
+		],
+		"section": "calls",
+		"group": "Phone Number"
+	},
+	"MAKE_CALLS": {
+		"number": 103,
+		"description": "Make outgoing calls",
+		"features": [
+			"calls"
+		],
+		"roles": [
+			"admin",
+			"agent",
+			"editor"
+		],
+		"section": "calls",
+		"group": "Phone Number"
+	},
+	"CALL_LOGS_READ": {
+		"number": 104,
+		"description": "Read Call Logs Details",
+		"subtext": "View call notes and play/download call recordings",
+		"features": [
+			"calls"
+		],
+		"roles": [
+			"admin",
+			"agent",
+			"editor",
+			"viewer"
+		],
+		"section": "calls",
+		"group": "Call Notes"
+	}
 }

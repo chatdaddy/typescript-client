@@ -1040,7 +1040,7 @@ export const DashboardApiAxiosParamCreator = function (configuration?: Configura
 
             // authentication chatdaddy required
             // oauth required
-            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["METRICS_GET"], configuration)
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["DASHBOARD_CREATE"], configuration)
 
             if (version !== undefined) {
                 localVarQueryParameter['version'] = version;
@@ -1085,7 +1085,7 @@ export const DashboardApiAxiosParamCreator = function (configuration?: Configura
 
             // authentication chatdaddy required
             // oauth required
-            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["METRICS_GET"], configuration)
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["DASHBOARD_DELETE"], configuration)
 
 
     
