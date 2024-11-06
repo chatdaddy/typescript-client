@@ -142,6 +142,12 @@ export interface DashboardMetadata {
      */
     'name': string;
     /**
+     * Unique identifier for a user
+     * @type {string}
+     * @memberof DashboardMetadata
+     */
+    'userId': string;
+    /**
      * 
      * @type {string}
      * @memberof DashboardMetadata
@@ -387,6 +393,12 @@ export interface DashboardWithData {
      */
     'name': string;
     /**
+     * Unique identifier for a user
+     * @type {string}
+     * @memberof DashboardWithData
+     */
+    'userId': string;
+    /**
      * 
      * @type {string}
      * @memberof DashboardWithData
@@ -562,6 +574,12 @@ export interface GetInitData200ResponseDefaultDashboard {
      * @memberof GetInitData200ResponseDefaultDashboard
      */
     'name': string;
+    /**
+     * Unique identifier for a user
+     * @type {string}
+     * @memberof GetInitData200ResponseDefaultDashboard
+     */
+    'userId': string;
     /**
      * 
      * @type {string}
