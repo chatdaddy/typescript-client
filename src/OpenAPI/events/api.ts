@@ -6886,43 +6886,52 @@ export interface DashboardInsertData {
 export interface DashboardInsertDataPermissions {
     /**
      * 
-     * @type {Array<DashboardInsertDataPermissionsAllMembersInner>}
+     * @type {string}
      * @memberof DashboardInsertDataPermissions
      */
-    'allMembers'?: Array<DashboardInsertDataPermissionsAllMembersInner>;
+    'allMembers'?: DashboardInsertDataPermissionsAllMembersEnum;
     /**
      * 
-     * @type {Array<DashboardInsertDataPermissionsAllMembersInner>}
+     * @type {Array<DashboardInsertDataPermissionsUsersInner>}
      * @memberof DashboardInsertDataPermissions
      */
-    'users'?: Array<DashboardInsertDataPermissionsAllMembersInner>;
+    'users'?: Array<DashboardInsertDataPermissionsUsersInner>;
 }
+
+export const DashboardInsertDataPermissionsAllMembersEnum = {
+    Lvl1View: 'lvl1_view',
+    Lvl2Edit: 'lvl2_edit',
+    Null: null as null
+} as const;
+
+export type DashboardInsertDataPermissionsAllMembersEnum = typeof DashboardInsertDataPermissionsAllMembersEnum[keyof typeof DashboardInsertDataPermissionsAllMembersEnum];
+
 /**
  * 
  * @export
- * @interface DashboardInsertDataPermissionsAllMembersInner
+ * @interface DashboardInsertDataPermissionsUsersInner
  */
-export interface DashboardInsertDataPermissionsAllMembersInner {
+export interface DashboardInsertDataPermissionsUsersInner {
     /**
      * 
      * @type {string}
-     * @memberof DashboardInsertDataPermissionsAllMembersInner
+     * @memberof DashboardInsertDataPermissionsUsersInner
      */
     'id': string;
     /**
      * 
      * @type {string}
-     * @memberof DashboardInsertDataPermissionsAllMembersInner
+     * @memberof DashboardInsertDataPermissionsUsersInner
      */
-    'access': DashboardInsertDataPermissionsAllMembersInnerAccessEnum;
+    'access': DashboardInsertDataPermissionsUsersInnerAccessEnum;
 }
 
-export const DashboardInsertDataPermissionsAllMembersInnerAccessEnum = {
+export const DashboardInsertDataPermissionsUsersInnerAccessEnum = {
     Lvl1View: 'lvl1_view',
     Lvl2Edit: 'lvl2_edit'
 } as const;
 
-export type DashboardInsertDataPermissionsAllMembersInnerAccessEnum = typeof DashboardInsertDataPermissionsAllMembersInnerAccessEnum[keyof typeof DashboardInsertDataPermissionsAllMembersInnerAccessEnum];
+export type DashboardInsertDataPermissionsUsersInnerAccessEnum = typeof DashboardInsertDataPermissionsUsersInnerAccessEnum[keyof typeof DashboardInsertDataPermissionsUsersInnerAccessEnum];
 
 /**
  * 

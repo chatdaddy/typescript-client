@@ -221,10 +221,10 @@ export interface DashboardMetadataPermissionItem {
 export interface DashboardMetadataPermissions {
     /**
      * 
-     * @type {Array<DashboardMetadataPermissionItem>}
+     * @type {NullableDashboardMetadataAccess}
      * @memberof DashboardMetadataPermissions
      */
-    'allMembers'?: Array<DashboardMetadataPermissionItem>;
+    'allMembers'?: NullableDashboardMetadataAccess | null;
     /**
      * 
      * @type {Array<DashboardMetadataPermissionItem>}
@@ -232,6 +232,8 @@ export interface DashboardMetadataPermissions {
      */
     'users'?: Array<DashboardMetadataPermissionItem>;
 }
+
+
 /**
  * 
  * @export
@@ -848,6 +850,21 @@ export const MetricsResultTotalVisualizationTypeEnum = {
 } as const;
 
 export type MetricsResultTotalVisualizationTypeEnum = typeof MetricsResultTotalVisualizationTypeEnum[keyof typeof MetricsResultTotalVisualizationTypeEnum];
+
+/**
+ * 
+ * @export
+ * @enum {string}
+ */
+
+export const NullableDashboardMetadataAccess = {
+    Lvl1View: 'lvl1_view',
+    Lvl2Edit: 'lvl2_edit',
+    Null: null as null
+} as const;
+
+export type NullableDashboardMetadataAccess = typeof NullableDashboardMetadataAccess[keyof typeof NullableDashboardMetadataAccess];
+
 
 /**
  * describe OAuth input for access tokens
