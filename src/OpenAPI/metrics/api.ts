@@ -103,6 +103,12 @@ export interface DashboardCreate {
      * @memberof DashboardCreate
      */
     'schema'?: DashboardSchema;
+    /**
+     * 
+     * @type {DashboardMetadataPermissions}
+     * @memberof DashboardCreate
+     */
+    'permissions'?: DashboardMetadataPermissions;
 }
 /**
  * 
