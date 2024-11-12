@@ -6404,6 +6404,19 @@ export interface WebhookMessengerPostRequest {
      */
     'entry'?: Array<EntryItems>;
 }
+/**
+ * 
+ * @export
+ * @interface WebhookSmsLimitPostRequest
+ */
+export interface WebhookSmsLimitPostRequest {
+    /**
+     * Account SID
+     * @type {string}
+     * @memberof WebhookSmsLimitPostRequest
+     */
+    'AccountSid'?: string;
+}
 
 /**
  * AccountApi - axios parameter creator
@@ -15469,6 +15482,44 @@ export const SMSApiAxiosParamCreator = function (configuration?: Configuration) 
                 options: localVarRequestOptions,
             };
         },
+        /**
+         * 
+         * @summary Usage trigger for SMS limit exceeded
+         * @param {string} triggerSecret 
+         * @param {WebhookSmsLimitPostRequest} [webhookSmsLimitPostRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        webhookSmsLimitPost: async (triggerSecret: string, webhookSmsLimitPostRequest?: WebhookSmsLimitPostRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'triggerSecret' is not null or undefined
+            assertParamExists('webhookSmsLimitPost', 'triggerSecret', triggerSecret)
+            const localVarPath = `/sms/webhook/limit/{triggerSecret}`
+                .replace(`{${"triggerSecret"}}`, encodeURIComponent(String(triggerSecret)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(webhookSmsLimitPostRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
     }
 };
 
@@ -15491,6 +15542,18 @@ export const SMSApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.smsSenderIdPost(accountId, smsSenderIdPostRequest, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
+        /**
+         * 
+         * @summary Usage trigger for SMS limit exceeded
+         * @param {string} triggerSecret 
+         * @param {WebhookSmsLimitPostRequest} [webhookSmsLimitPostRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async webhookSmsLimitPost(triggerSecret: string, webhookSmsLimitPostRequest?: WebhookSmsLimitPostRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AccountsLogout200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.webhookSmsLimitPost(triggerSecret, webhookSmsLimitPostRequest, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
     }
 };
 
@@ -15510,6 +15573,16 @@ export const SMSApiFactory = function (configuration?: Configuration, basePath?:
          */
         smsSenderIdPost(requestParameters: SMSApiSmsSenderIdPostRequest, options?: AxiosRequestConfig): AxiosPromise<void> {
             return localVarFp.smsSenderIdPost(requestParameters.accountId, requestParameters.smsSenderIdPostRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Usage trigger for SMS limit exceeded
+         * @param {SMSApiWebhookSmsLimitPostRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        webhookSmsLimitPost(requestParameters: SMSApiWebhookSmsLimitPostRequest, options?: AxiosRequestConfig): AxiosPromise<AccountsLogout200Response> {
+            return localVarFp.webhookSmsLimitPost(requestParameters.triggerSecret, requestParameters.webhookSmsLimitPostRequest, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -15536,6 +15609,27 @@ export interface SMSApiSmsSenderIdPostRequest {
 }
 
 /**
+ * Request parameters for webhookSmsLimitPost operation in SMSApi.
+ * @export
+ * @interface SMSApiWebhookSmsLimitPostRequest
+ */
+export interface SMSApiWebhookSmsLimitPostRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof SMSApiWebhookSmsLimitPost
+     */
+    readonly triggerSecret: string
+
+    /**
+     * 
+     * @type {WebhookSmsLimitPostRequest}
+     * @memberof SMSApiWebhookSmsLimitPost
+     */
+    readonly webhookSmsLimitPostRequest?: WebhookSmsLimitPostRequest
+}
+
+/**
  * SMSApi - object-oriented interface
  * @export
  * @class SMSApi
@@ -15552,6 +15646,18 @@ export class SMSApi extends BaseAPI {
      */
     public smsSenderIdPost(requestParameters: SMSApiSmsSenderIdPostRequest, options?: AxiosRequestConfig) {
         return SMSApiFp(this.configuration).smsSenderIdPost(requestParameters.accountId, requestParameters.smsSenderIdPostRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Usage trigger for SMS limit exceeded
+     * @param {SMSApiWebhookSmsLimitPostRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof SMSApi
+     */
+    public webhookSmsLimitPost(requestParameters: SMSApiWebhookSmsLimitPostRequest, options?: AxiosRequestConfig) {
+        return SMSApiFp(this.configuration).webhookSmsLimitPost(requestParameters.triggerSecret, requestParameters.webhookSmsLimitPostRequest, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
