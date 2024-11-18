@@ -246,6 +246,98 @@ export interface CalendarEvent {
 /**
  * 
  * @export
+ * @interface ChatFlowRecord
+ */
+export interface ChatFlowRecord {
+    /**
+     * ID of the chat flow
+     * @type {string}
+     * @memberof ChatFlowRecord
+     */
+    'id'?: string;
+    /**
+     * ID of the bot
+     * @type {string}
+     * @memberof ChatFlowRecord
+     */
+    'botId': string;
+    /**
+     * ID of the chat
+     * @type {string}
+     * @memberof ChatFlowRecord
+     */
+    'chatId': string;
+    /**
+     * ID of the conversation
+     * @type {string}
+     * @memberof ChatFlowRecord
+     */
+    'conversationId'?: string;
+    /**
+     * Name of the workflow being Used
+     * @type {string}
+     * @memberof ChatFlowRecord
+     */
+    'worflowName'?: string;
+    /**
+     * 
+     * @type {Array<ChatHistory>}
+     * @memberof ChatFlowRecord
+     */
+    'chatHistory'?: Array<ChatHistory>;
+    /**
+     * input variables for context
+     * @type {string}
+     * @memberof ChatFlowRecord
+     */
+    'inputs'?: string;
+}
+/**
+ * 
+ * @export
+ * @interface ChatFlowRecordPostRequest
+ */
+export interface ChatFlowRecordPostRequest {
+    /**
+     * ID of the bot
+     * @type {string}
+     * @memberof ChatFlowRecordPostRequest
+     */
+    'botId': string;
+    /**
+     * ID of the chat
+     * @type {string}
+     * @memberof ChatFlowRecordPostRequest
+     */
+    'chatId': string;
+    /**
+     * ID of the conversation
+     * @type {string}
+     * @memberof ChatFlowRecordPostRequest
+     */
+    'conversationId': string;
+    /**
+     * Name of the workflow being Used
+     * @type {string}
+     * @memberof ChatFlowRecordPostRequest
+     */
+    'worflowName': string;
+    /**
+     * 
+     * @type {Array<ChatHistory>}
+     * @memberof ChatFlowRecordPostRequest
+     */
+    'chatHistory'?: Array<ChatHistory>;
+    /**
+     * input variables for context
+     * @type {string}
+     * @memberof ChatFlowRecordPostRequest
+     */
+    'inputs'?: string;
+}
+/**
+ * 
+ * @export
  * @interface ChatHistory
  */
 export interface ChatHistory {
@@ -597,37 +689,6 @@ export interface TranslateTextPostRequest {
      */
     'language': string;
 }
-/**
- * 
- * @export
- * @interface UserConversationHistoryAppendPostRequest
- */
-export interface UserConversationHistoryAppendPostRequest {
-    /**
-     * ID of the bot
-     * @type {string}
-     * @memberof UserConversationHistoryAppendPostRequest
-     */
-    'botId': string;
-    /**
-     * ID of the chat
-     * @type {string}
-     * @memberof UserConversationHistoryAppendPostRequest
-     */
-    'chatId': string;
-    /**
-     * ID of the conversation
-     * @type {string}
-     * @memberof UserConversationHistoryAppendPostRequest
-     */
-    'conversationId': string;
-    /**
-     * 
-     * @type {Array<ChatHistory>}
-     * @memberof UserConversationHistoryAppendPostRequest
-     */
-    'conversationHistory': Array<ChatHistory>;
-}
 
 /**
  * CustomBotApi - axios parameter creator
@@ -863,6 +924,90 @@ export const CustomBotApiAxiosParamCreator = function (configuration?: Configura
         },
         /**
          * 
+         * @summary Set chat flow record
+         * @param {ChatFlowRecordPostRequest} [chatFlowRecordPostRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        chatFlowRecordPost: async (chatFlowRecordPostRequest?: ChatFlowRecordPostRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/chatflow-record`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", [], configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(chatFlowRecordPostRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Get chat flow records
+         * @param {string} chatId 
+         * @param {string} [botId] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        chatFlowRecordsGet: async (chatId: string, botId?: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'chatId' is not null or undefined
+            assertParamExists('chatFlowRecordsGet', 'chatId', chatId)
+            const localVarPath = `/chatflow-records`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", [], configuration)
+
+            if (botId !== undefined) {
+                localVarQueryParameter['botId'] = botId;
+            }
+
+            if (chatId !== undefined) {
+                localVarQueryParameter['chatId'] = chatId;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
          * @summary Get conversation ID
          * @param {ConversationIdGetRequest} [conversationIdGetRequest] 
          * @param {*} [options] Override http request option.
@@ -1023,90 +1168,6 @@ export const CustomBotApiAxiosParamCreator = function (configuration?: Configura
                 options: localVarRequestOptions,
             };
         },
-        /**
-         * 
-         * @summary Append conversation history
-         * @param {UserConversationHistoryAppendPostRequest} [userConversationHistoryAppendPostRequest] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        userConversationHistoryAppendPost: async (userConversationHistoryAppendPostRequest?: UserConversationHistoryAppendPostRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/user-conversation-history/`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication chatdaddy required
-            // oauth required
-            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", [], configuration)
-
-
-    
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(userConversationHistoryAppendPostRequest, localVarRequestOptions, configuration)
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @summary Get conversation history
-         * @param {string} chatId 
-         * @param {string} [botId] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        userConversationHistoryGet: async (chatId: string, botId?: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'chatId' is not null or undefined
-            assertParamExists('userConversationHistoryGet', 'chatId', chatId)
-            const localVarPath = `/user-conversation-history`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication chatdaddy required
-            // oauth required
-            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", [], configuration)
-
-            if (botId !== undefined) {
-                localVarQueryParameter['botId'] = botId;
-            }
-
-            if (chatId !== undefined) {
-                localVarQueryParameter['chatId'] = chatId;
-            }
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
     }
 };
 
@@ -1185,6 +1246,29 @@ export const CustomBotApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
+         * @summary Set chat flow record
+         * @param {ChatFlowRecordPostRequest} [chatFlowRecordPostRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async chatFlowRecordPost(chatFlowRecordPostRequest?: ChatFlowRecordPostRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.chatFlowRecordPost(chatFlowRecordPostRequest, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary Get chat flow records
+         * @param {string} chatId 
+         * @param {string} [botId] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async chatFlowRecordsGet(chatId: string, botId?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<ChatFlowRecord>>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.chatFlowRecordsGet(chatId, botId, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
          * @summary Get conversation ID
          * @param {ConversationIdGetRequest} [conversationIdGetRequest] 
          * @param {*} [options] Override http request option.
@@ -1228,29 +1312,6 @@ export const CustomBotApiFp = function(configuration?: Configuration) {
          */
         async manageUserDataPost(botApp: BotUseCase, userId: string, manageUserDataPostRequest?: ManageUserDataPostRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BotDetails>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.manageUserDataPost(botApp, userId, manageUserDataPostRequest, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-        /**
-         * 
-         * @summary Append conversation history
-         * @param {UserConversationHistoryAppendPostRequest} [userConversationHistoryAppendPostRequest] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async userConversationHistoryAppendPost(userConversationHistoryAppendPostRequest?: UserConversationHistoryAppendPostRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ConversationRecord>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.userConversationHistoryAppendPost(userConversationHistoryAppendPostRequest, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-        /**
-         * 
-         * @summary Get conversation history
-         * @param {string} chatId 
-         * @param {string} [botId] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async userConversationHistoryGet(chatId: string, botId?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ConversationRecord>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.userConversationHistoryGet(chatId, botId, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
     }
@@ -1323,6 +1384,26 @@ export const CustomBotApiFactory = function (configuration?: Configuration, base
         },
         /**
          * 
+         * @summary Set chat flow record
+         * @param {CustomBotApiChatFlowRecordPostRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        chatFlowRecordPost(requestParameters: CustomBotApiChatFlowRecordPostRequest = {}, options?: AxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.chatFlowRecordPost(requestParameters.chatFlowRecordPostRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Get chat flow records
+         * @param {CustomBotApiChatFlowRecordsGetRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        chatFlowRecordsGet(requestParameters: CustomBotApiChatFlowRecordsGetRequest, options?: AxiosRequestConfig): AxiosPromise<Array<ChatFlowRecord>> {
+            return localVarFp.chatFlowRecordsGet(requestParameters.chatId, requestParameters.botId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
          * @summary Get conversation ID
          * @param {CustomBotApiConversationIdGetRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -1360,26 +1441,6 @@ export const CustomBotApiFactory = function (configuration?: Configuration, base
          */
         manageUserDataPost(requestParameters: CustomBotApiManageUserDataPostRequest, options?: AxiosRequestConfig): AxiosPromise<BotDetails> {
             return localVarFp.manageUserDataPost(requestParameters.botApp, requestParameters.userId, requestParameters.manageUserDataPostRequest, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
-         * @summary Append conversation history
-         * @param {CustomBotApiUserConversationHistoryAppendPostRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        userConversationHistoryAppendPost(requestParameters: CustomBotApiUserConversationHistoryAppendPostRequest = {}, options?: AxiosRequestConfig): AxiosPromise<ConversationRecord> {
-            return localVarFp.userConversationHistoryAppendPost(requestParameters.userConversationHistoryAppendPostRequest, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
-         * @summary Get conversation history
-         * @param {CustomBotApiUserConversationHistoryGetRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        userConversationHistoryGet(requestParameters: CustomBotApiUserConversationHistoryGetRequest, options?: AxiosRequestConfig): AxiosPromise<ConversationRecord> {
-            return localVarFp.userConversationHistoryGet(requestParameters.chatId, requestParameters.botId, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -1452,6 +1513,41 @@ export interface CustomBotApiBotUsersPostRequest {
      * @memberof CustomBotApiBotUsersPost
      */
     readonly userId: string
+}
+
+/**
+ * Request parameters for chatFlowRecordPost operation in CustomBotApi.
+ * @export
+ * @interface CustomBotApiChatFlowRecordPostRequest
+ */
+export interface CustomBotApiChatFlowRecordPostRequest {
+    /**
+     * 
+     * @type {ChatFlowRecordPostRequest}
+     * @memberof CustomBotApiChatFlowRecordPost
+     */
+    readonly chatFlowRecordPostRequest?: ChatFlowRecordPostRequest
+}
+
+/**
+ * Request parameters for chatFlowRecordsGet operation in CustomBotApi.
+ * @export
+ * @interface CustomBotApiChatFlowRecordsGetRequest
+ */
+export interface CustomBotApiChatFlowRecordsGetRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof CustomBotApiChatFlowRecordsGet
+     */
+    readonly chatId: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof CustomBotApiChatFlowRecordsGet
+     */
+    readonly botId?: string
 }
 
 /**
@@ -1529,41 +1625,6 @@ export interface CustomBotApiManageUserDataPostRequest {
      * @memberof CustomBotApiManageUserDataPost
      */
     readonly manageUserDataPostRequest?: ManageUserDataPostRequest
-}
-
-/**
- * Request parameters for userConversationHistoryAppendPost operation in CustomBotApi.
- * @export
- * @interface CustomBotApiUserConversationHistoryAppendPostRequest
- */
-export interface CustomBotApiUserConversationHistoryAppendPostRequest {
-    /**
-     * 
-     * @type {UserConversationHistoryAppendPostRequest}
-     * @memberof CustomBotApiUserConversationHistoryAppendPost
-     */
-    readonly userConversationHistoryAppendPostRequest?: UserConversationHistoryAppendPostRequest
-}
-
-/**
- * Request parameters for userConversationHistoryGet operation in CustomBotApi.
- * @export
- * @interface CustomBotApiUserConversationHistoryGetRequest
- */
-export interface CustomBotApiUserConversationHistoryGetRequest {
-    /**
-     * 
-     * @type {string}
-     * @memberof CustomBotApiUserConversationHistoryGet
-     */
-    readonly chatId: string
-
-    /**
-     * 
-     * @type {string}
-     * @memberof CustomBotApiUserConversationHistoryGet
-     */
-    readonly botId?: string
 }
 
 /**
@@ -1645,6 +1706,30 @@ export class CustomBotApi extends BaseAPI {
 
     /**
      * 
+     * @summary Set chat flow record
+     * @param {CustomBotApiChatFlowRecordPostRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CustomBotApi
+     */
+    public chatFlowRecordPost(requestParameters: CustomBotApiChatFlowRecordPostRequest = {}, options?: AxiosRequestConfig) {
+        return CustomBotApiFp(this.configuration).chatFlowRecordPost(requestParameters.chatFlowRecordPostRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Get chat flow records
+     * @param {CustomBotApiChatFlowRecordsGetRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CustomBotApi
+     */
+    public chatFlowRecordsGet(requestParameters: CustomBotApiChatFlowRecordsGetRequest, options?: AxiosRequestConfig) {
+        return CustomBotApiFp(this.configuration).chatFlowRecordsGet(requestParameters.chatId, requestParameters.botId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
      * @summary Get conversation ID
      * @param {CustomBotApiConversationIdGetRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -1689,30 +1774,6 @@ export class CustomBotApi extends BaseAPI {
      */
     public manageUserDataPost(requestParameters: CustomBotApiManageUserDataPostRequest, options?: AxiosRequestConfig) {
         return CustomBotApiFp(this.configuration).manageUserDataPost(requestParameters.botApp, requestParameters.userId, requestParameters.manageUserDataPostRequest, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
-     * @summary Append conversation history
-     * @param {CustomBotApiUserConversationHistoryAppendPostRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof CustomBotApi
-     */
-    public userConversationHistoryAppendPost(requestParameters: CustomBotApiUserConversationHistoryAppendPostRequest = {}, options?: AxiosRequestConfig) {
-        return CustomBotApiFp(this.configuration).userConversationHistoryAppendPost(requestParameters.userConversationHistoryAppendPostRequest, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
-     * @summary Get conversation history
-     * @param {CustomBotApiUserConversationHistoryGetRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof CustomBotApi
-     */
-    public userConversationHistoryGet(requestParameters: CustomBotApiUserConversationHistoryGetRequest, options?: AxiosRequestConfig) {
-        return CustomBotApiFp(this.configuration).userConversationHistoryGet(requestParameters.chatId, requestParameters.botId, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
