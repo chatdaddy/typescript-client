@@ -1064,16 +1064,15 @@ export const CustomBotApiAxiosParamCreator = function (configuration?: Configura
         /**
          * 
          * @summary Get conversation history
-         * @param {string} userId 
+         * @param {string} chatId 
          * @param {string} [botId] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        userConversationHistoryGet: async (userId: string, botId?: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'userId' is not null or undefined
-            assertParamExists('userConversationHistoryGet', 'userId', userId)
-            const localVarPath = `/user-conversation-history/{userId}/`
-                .replace(`{${"userId"}}`, encodeURIComponent(String(userId)));
+        userConversationHistoryGet: async (chatId: string, botId?: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'chatId' is not null or undefined
+            assertParamExists('userConversationHistoryGet', 'chatId', chatId)
+            const localVarPath = `/user-conversation-history`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -1091,6 +1090,10 @@ export const CustomBotApiAxiosParamCreator = function (configuration?: Configura
 
             if (botId !== undefined) {
                 localVarQueryParameter['botId'] = botId;
+            }
+
+            if (chatId !== undefined) {
+                localVarQueryParameter['chatId'] = chatId;
             }
 
 
@@ -1241,13 +1244,13 @@ export const CustomBotApiFp = function(configuration?: Configuration) {
         /**
          * 
          * @summary Get conversation history
-         * @param {string} userId 
+         * @param {string} chatId 
          * @param {string} [botId] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async userConversationHistoryGet(userId: string, botId?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ConversationRecord>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.userConversationHistoryGet(userId, botId, options);
+        async userConversationHistoryGet(chatId: string, botId?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ConversationRecord>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.userConversationHistoryGet(chatId, botId, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
     }
@@ -1376,7 +1379,7 @@ export const CustomBotApiFactory = function (configuration?: Configuration, base
          * @throws {RequiredError}
          */
         userConversationHistoryGet(requestParameters: CustomBotApiUserConversationHistoryGetRequest, options?: AxiosRequestConfig): AxiosPromise<ConversationRecord> {
-            return localVarFp.userConversationHistoryGet(requestParameters.userId, requestParameters.botId, options).then((request) => request(axios, basePath));
+            return localVarFp.userConversationHistoryGet(requestParameters.chatId, requestParameters.botId, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -1553,7 +1556,7 @@ export interface CustomBotApiUserConversationHistoryGetRequest {
      * @type {string}
      * @memberof CustomBotApiUserConversationHistoryGet
      */
-    readonly userId: string
+    readonly chatId: string
 
     /**
      * 
@@ -1709,7 +1712,7 @@ export class CustomBotApi extends BaseAPI {
      * @memberof CustomBotApi
      */
     public userConversationHistoryGet(requestParameters: CustomBotApiUserConversationHistoryGetRequest, options?: AxiosRequestConfig) {
-        return CustomBotApiFp(this.configuration).userConversationHistoryGet(requestParameters.userId, requestParameters.botId, options).then((request) => request(this.axios, this.basePath));
+        return CustomBotApiFp(this.configuration).userConversationHistoryGet(requestParameters.chatId, requestParameters.botId, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
