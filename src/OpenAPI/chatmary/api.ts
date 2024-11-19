@@ -278,7 +278,7 @@ export interface ChatFlowRecord {
      * @type {string}
      * @memberof ChatFlowRecord
      */
-    'worflowName'?: string;
+    'workflowName'?: string;
     /**
      * 
      * @type {Array<ChatHistory>}
@@ -321,7 +321,7 @@ export interface ChatFlowRecordPostRequest {
      * @type {string}
      * @memberof ChatFlowRecordPostRequest
      */
-    'worflowName': string;
+    'workflowName': string;
     /**
      * 
      * @type {Array<ChatHistory>}
