@@ -5850,25 +5850,6 @@ export interface TagsGet200Response {
 /**
  * 
  * @export
- * @interface TagsPatchRequest
- */
-export interface TagsPatchRequest {
-    /**
-     * 
-     * @type {TagFieldValidation}
-     * @memberof TagsPatchRequest
-     */
-    'validation'?: TagFieldValidation;
-    /**
-     * Hex color code
-     * @type {string}
-     * @memberof TagsPatchRequest
-     */
-    'color'?: string;
-}
-/**
- * 
- * @export
  * @interface TagsPostRequest
  */
 export interface TagsPostRequest {
@@ -5878,6 +5859,12 @@ export interface TagsPostRequest {
      * @memberof TagsPostRequest
      */
     'validation'?: TagFieldValidation;
+    /**
+     * Hex color code
+     * @type {string}
+     * @memberof TagsPostRequest
+     */
+    'color'?: string;
 }
 /**
  * Description of the category of the template
@@ -15771,11 +15758,11 @@ export const TagsApiAxiosParamCreator = function (configuration?: Configuration)
         /**
          * 
          * @param {string} name 
-         * @param {TagsPatchRequest} [tagsPatchRequest] 
+         * @param {TagsPostRequest} [tagsPostRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        tagsPatch: async (name: string, tagsPatchRequest?: TagsPatchRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        tagsPatch: async (name: string, tagsPostRequest?: TagsPostRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'name' is not null or undefined
             assertParamExists('tagsPatch', 'name', name)
             const localVarPath = `/tags`;
@@ -15805,7 +15792,7 @@ export const TagsApiAxiosParamCreator = function (configuration?: Configuration)
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(tagsPatchRequest, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(tagsPostRequest, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -15896,12 +15883,12 @@ export const TagsApiFp = function(configuration?: Configuration) {
         /**
          * 
          * @param {string} name 
-         * @param {TagsPatchRequest} [tagsPatchRequest] 
+         * @param {TagsPostRequest} [tagsPostRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async tagsPatch(name: string, tagsPatchRequest?: TagsPatchRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Tag>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.tagsPatch(name, tagsPatchRequest, options);
+        async tagsPatch(name: string, tagsPostRequest?: TagsPostRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Tag>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.tagsPatch(name, tagsPostRequest, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -15953,7 +15940,7 @@ export const TagsApiFactory = function (configuration?: Configuration, basePath?
          * @throws {RequiredError}
          */
         tagsPatch(requestParameters: TagsApiTagsPatchRequest, options?: AxiosRequestConfig): AxiosPromise<Tag> {
-            return localVarFp.tagsPatch(requestParameters.name, requestParameters.tagsPatchRequest, options).then((request) => request(axios, basePath));
+            return localVarFp.tagsPatch(requestParameters.name, requestParameters.tagsPostRequest, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -16039,10 +16026,10 @@ export interface TagsApiTagsPatchRequest {
 
     /**
      * 
-     * @type {TagsPatchRequest}
+     * @type {TagsPostRequest}
      * @memberof TagsApiTagsPatch
      */
-    readonly tagsPatchRequest?: TagsPatchRequest
+    readonly tagsPostRequest?: TagsPostRequest
 }
 
 /**
@@ -16105,7 +16092,7 @@ export class TagsApi extends BaseAPI {
      * @memberof TagsApi
      */
     public tagsPatch(requestParameters: TagsApiTagsPatchRequest, options?: AxiosRequestConfig) {
-        return TagsApiFp(this.configuration).tagsPatch(requestParameters.name, requestParameters.tagsPatchRequest, options).then((request) => request(this.axios, this.basePath));
+        return TagsApiFp(this.configuration).tagsPatch(requestParameters.name, requestParameters.tagsPostRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
