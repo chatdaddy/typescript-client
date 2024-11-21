@@ -246,61 +246,104 @@ export interface CalendarEvent {
 /**
  * 
  * @export
- * @interface ChatFlowRecord
+ * @interface ChatFlowHistory
  */
-export interface ChatFlowRecord {
+export interface ChatFlowHistory {
+    /**
+     * ID of this chat history
+     * @type {string}
+     * @memberof ChatFlowHistory
+     */
+    'id': string;
+    /**
+     * ID of the bot
+     * @type {string}
+     * @memberof ChatFlowHistory
+     */
+    'botId'?: string;
+    /**
+     * ID of the chat
+     * @type {string}
+     * @memberof ChatFlowHistory
+     */
+    'chatId': string;
+    /**
+     * Name of the workflow being Used
+     * @type {string}
+     * @memberof ChatFlowHistory
+     */
+    'workflowName': string;
+    /**
+     * ID of the conversation
+     * @type {string}
+     * @memberof ChatFlowHistory
+     */
+    'conversationId': string;
+    /**
+     * 
+     * @type {Array<ChatFlowRecordEntry>}
+     * @memberof ChatFlowHistory
+     */
+    'records': Array<ChatFlowRecordEntry>;
+}
+/**
+ * 
+ * @export
+ * @interface ChatFlowRecordEntry
+ */
+export interface ChatFlowRecordEntry {
     /**
      * ID of the chat record
      * @type {string}
-     * @memberof ChatFlowRecord
+     * @memberof ChatFlowRecordEntry
      */
     'id': string;
     /**
      * ID of the chat
      * @type {string}
-     * @memberof ChatFlowRecord
+     * @memberof ChatFlowRecordEntry
      */
     'chatId': string;
     /**
      * ID of the conversation
      * @type {string}
-     * @memberof ChatFlowRecord
+     * @memberof ChatFlowRecordEntry
      */
     'conversationId': string;
     /**
      * 
      * @type {string}
-     * @memberof ChatFlowRecord
+     * @memberof ChatFlowRecordEntry
      */
     'userMessage': string;
     /**
      * 
      * @type {string}
-     * @memberof ChatFlowRecord
+     * @memberof ChatFlowRecordEntry
      */
     'botOutput': string;
     /**
      * 
      * @type {string}
-     * @memberof ChatFlowRecord
+     * @memberof ChatFlowRecordEntry
      */
     'questionIntention'?: string;
     /**
      * 
      * @type {string}
-     * @memberof ChatFlowRecord
+     * @memberof ChatFlowRecordEntry
      */
     'questionForRAG'?: string;
     /**
      * 
      * @type {Array<RetrieverResourcesInner>}
-     * @memberof ChatFlowRecord
+     * @memberof ChatFlowRecordEntry
      */
     'limRAGResults'?: Array<RetrieverResourcesInner>;
     /**
      * 
      * @type {Array<RetrieverResourcesInner>}
-     * @memberof ChatFlowRecord
+     * @memberof ChatFlowRecordEntry
      */
     'exactRAGResults'?: Array<RetrieverResourcesInner>;
 }
@@ -364,49 +407,6 @@ export interface ChatFlowRecordPostRequest {
      * @memberof ChatFlowRecordPostRequest
      */
     'exactRAGResults'?: Array<RetrieverResourcesInner>;
-}
-/**
- * 
- * @export
- * @interface ChatHistory
- */
-export interface ChatHistory {
-    /**
-     * ID of this chat history
-     * @type {string}
-     * @memberof ChatHistory
-     */
-    'id': string;
-    /**
-     * ID of the bot
-     * @type {string}
-     * @memberof ChatHistory
-     */
-    'botId'?: string;
-    /**
-     * ID of the chat
-     * @type {string}
-     * @memberof ChatHistory
-     */
-    'chatId': string;
-    /**
-     * Name of the workflow being Used
-     * @type {string}
-     * @memberof ChatHistory
-     */
-    'workflowName': string;
-    /**
-     * ID of the conversation
-     * @type {string}
-     * @memberof ChatHistory
-     */
-    'conversationId': string;
-    /**
-     * 
-     * @type {Array<ChatFlowRecord>}
-     * @memberof ChatHistory
-     */
-    'records': Array<ChatFlowRecord>;
 }
 /**
  * 
@@ -484,10 +484,10 @@ export interface ConversationIdPostRequest {
     'appName'?: string;
     /**
      * 
-     * @type {Array<ChatHistory>}
+     * @type {Array<ChatFlowHistory>}
      * @memberof ConversationIdPostRequest
      */
-    'chatHistory'?: Array<ChatHistory>;
+    'chatHistory'?: Array<ChatFlowHistory>;
 }
 /**
  * 
@@ -521,10 +521,10 @@ export interface ConversationRecord {
     'appName'?: string;
     /**
      * 
-     * @type {Array<ChatHistory>}
+     * @type {Array<ChatFlowHistory>}
      * @memberof ConversationRecord
      */
-    'chatHistory'?: Array<ChatHistory>;
+    'chatHistory'?: Array<ChatFlowHistory>;
     /**
      * input variables for context
      * @type {string}
@@ -1311,7 +1311,7 @@ export const CustomBotApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async chatFlowRecordsGet(chatId: string, botId?: string, conversationId?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<ChatHistory>>> {
+        async chatFlowRecordsGet(chatId: string, botId?: string, conversationId?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<ChatFlowHistory>>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.chatFlowRecordsGet(chatId, botId, conversationId, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -1447,7 +1447,7 @@ export const CustomBotApiFactory = function (configuration?: Configuration, base
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        chatFlowRecordsGet(requestParameters: CustomBotApiChatFlowRecordsGetRequest, options?: AxiosRequestConfig): AxiosPromise<Array<ChatHistory>> {
+        chatFlowRecordsGet(requestParameters: CustomBotApiChatFlowRecordsGetRequest, options?: AxiosRequestConfig): AxiosPromise<Array<ChatFlowHistory>> {
             return localVarFp.chatFlowRecordsGet(requestParameters.chatId, requestParameters.botId, requestParameters.conversationId, options).then((request) => request(axios, basePath));
         },
         /**
