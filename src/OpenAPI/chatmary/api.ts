@@ -1007,10 +1007,11 @@ export const CustomBotApiAxiosParamCreator = function (configuration?: Configura
          * @summary Get chat flow records
          * @param {string} chatId 
          * @param {string} [botId] 
+         * @param {string} [conversationId] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        chatFlowRecordsGet: async (chatId: string, botId?: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        chatFlowRecordsGet: async (chatId: string, botId?: string, conversationId?: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'chatId' is not null or undefined
             assertParamExists('chatFlowRecordsGet', 'chatId', chatId)
             const localVarPath = `/chatflow-records`;
@@ -1031,6 +1032,10 @@ export const CustomBotApiAxiosParamCreator = function (configuration?: Configura
 
             if (botId !== undefined) {
                 localVarQueryParameter['botId'] = botId;
+            }
+
+            if (conversationId !== undefined) {
+                localVarQueryParameter['conversationId'] = conversationId;
             }
 
             if (chatId !== undefined) {
@@ -1302,11 +1307,12 @@ export const CustomBotApiFp = function(configuration?: Configuration) {
          * @summary Get chat flow records
          * @param {string} chatId 
          * @param {string} [botId] 
+         * @param {string} [conversationId] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async chatFlowRecordsGet(chatId: string, botId?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<ChatHistory>>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.chatFlowRecordsGet(chatId, botId, options);
+        async chatFlowRecordsGet(chatId: string, botId?: string, conversationId?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<ChatHistory>>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.chatFlowRecordsGet(chatId, botId, conversationId, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -1442,7 +1448,7 @@ export const CustomBotApiFactory = function (configuration?: Configuration, base
          * @throws {RequiredError}
          */
         chatFlowRecordsGet(requestParameters: CustomBotApiChatFlowRecordsGetRequest, options?: AxiosRequestConfig): AxiosPromise<Array<ChatHistory>> {
-            return localVarFp.chatFlowRecordsGet(requestParameters.chatId, requestParameters.botId, options).then((request) => request(axios, basePath));
+            return localVarFp.chatFlowRecordsGet(requestParameters.chatId, requestParameters.botId, requestParameters.conversationId, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -1590,6 +1596,13 @@ export interface CustomBotApiChatFlowRecordsGetRequest {
      * @memberof CustomBotApiChatFlowRecordsGet
      */
     readonly botId?: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof CustomBotApiChatFlowRecordsGet
+     */
+    readonly conversationId?: string
 }
 
 /**
@@ -1767,7 +1780,7 @@ export class CustomBotApi extends BaseAPI {
      * @memberof CustomBotApi
      */
     public chatFlowRecordsGet(requestParameters: CustomBotApiChatFlowRecordsGetRequest, options?: AxiosRequestConfig) {
-        return CustomBotApiFp(this.configuration).chatFlowRecordsGet(requestParameters.chatId, requestParameters.botId, options).then((request) => request(this.axios, this.basePath));
+        return CustomBotApiFp(this.configuration).chatFlowRecordsGet(requestParameters.chatId, requestParameters.botId, requestParameters.conversationId, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
