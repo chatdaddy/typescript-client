@@ -250,17 +250,11 @@ export interface CalendarEvent {
  */
 export interface ChatFlowRecord {
     /**
-     * ID of the chat flow
+     * ID of the chat record
      * @type {string}
      * @memberof ChatFlowRecord
      */
-    'id'?: string;
-    /**
-     * ID of the bot
-     * @type {string}
-     * @memberof ChatFlowRecord
-     */
-    'botId': string;
+    'id': string;
     /**
      * ID of the chat
      * @type {string}
@@ -272,25 +266,43 @@ export interface ChatFlowRecord {
      * @type {string}
      * @memberof ChatFlowRecord
      */
-    'conversationId'?: string;
-    /**
-     * Name of the workflow being Used
-     * @type {string}
-     * @memberof ChatFlowRecord
-     */
-    'workflowName'?: string;
+    'conversationId': string;
     /**
      * 
-     * @type {Array<ChatHistory>}
-     * @memberof ChatFlowRecord
-     */
-    'chatHistory'?: Array<ChatHistory>;
-    /**
-     * input variables for context
      * @type {string}
      * @memberof ChatFlowRecord
      */
-    'inputs'?: string;
+    'userMessage': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ChatFlowRecord
+     */
+    'botOutput': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ChatFlowRecord
+     */
+    'questionIntention'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ChatFlowRecord
+     */
+    'questionForRAG'?: string;
+    /**
+     * 
+     * @type {Array<RetrieverResourcesInner>}
+     * @memberof ChatFlowRecord
+     */
+    'limRAGResults'?: Array<RetrieverResourcesInner>;
+    /**
+     * 
+     * @type {Array<RetrieverResourcesInner>}
+     * @memberof ChatFlowRecord
+     */
+    'exactRAGResults'?: Array<RetrieverResourcesInner>;
 }
 /**
  * 
@@ -298,12 +310,6 @@ export interface ChatFlowRecord {
  * @interface ChatFlowRecordPostRequest
  */
 export interface ChatFlowRecordPostRequest {
-    /**
-     * ID of the bot
-     * @type {string}
-     * @memberof ChatFlowRecordPostRequest
-     */
-    'botId': string;
     /**
      * ID of the chat
      * @type {string}
@@ -321,19 +327,43 @@ export interface ChatFlowRecordPostRequest {
      * @type {string}
      * @memberof ChatFlowRecordPostRequest
      */
-    'workflowName': string;
+    'workflowName'?: string;
     /**
-     * 
-     * @type {Array<ChatHistory>}
-     * @memberof ChatFlowRecordPostRequest
-     */
-    'chatHistory'?: Array<ChatHistory>;
-    /**
-     * input variables for context
+     * User message
      * @type {string}
      * @memberof ChatFlowRecordPostRequest
      */
-    'inputs'?: string;
+    'userMessage': string;
+    /**
+     * Bot output
+     * @type {string}
+     * @memberof ChatFlowRecordPostRequest
+     */
+    'botOutput': string;
+    /**
+     * Intention of the question
+     * @type {string}
+     * @memberof ChatFlowRecordPostRequest
+     */
+    'questionIntention'?: string;
+    /**
+     * Question for RAG
+     * @type {string}
+     * @memberof ChatFlowRecordPostRequest
+     */
+    'questionForRAG'?: string;
+    /**
+     * 
+     * @type {Array<RetrieverResourcesInner>}
+     * @memberof ChatFlowRecordPostRequest
+     */
+    'limRAGResults'?: Array<RetrieverResourcesInner>;
+    /**
+     * 
+     * @type {Array<RetrieverResourcesInner>}
+     * @memberof ChatFlowRecordPostRequest
+     */
+    'exactRAGResults'?: Array<RetrieverResourcesInner>;
 }
 /**
  * 
@@ -342,84 +372,41 @@ export interface ChatFlowRecordPostRequest {
  */
 export interface ChatHistory {
     /**
-     * Role of the user
+     * ID of this chat history
      * @type {string}
      * @memberof ChatHistory
      */
-    'role': string;
+    'id': string;
     /**
-     * Type of the message
+     * ID of the bot
      * @type {string}
      * @memberof ChatHistory
      */
-    'type': string;
+    'botId'?: string;
     /**
-     * Content of the message
+     * ID of the chat
      * @type {string}
      * @memberof ChatHistory
      */
-    'content': string;
+    'chatId': string;
+    /**
+     * Name of the workflow being Used
+     * @type {string}
+     * @memberof ChatHistory
+     */
+    'workflowName': string;
+    /**
+     * ID of the conversation
+     * @type {string}
+     * @memberof ChatHistory
+     */
+    'conversationId': string;
     /**
      * 
-     * @type {Array<ChatHistoryRetrieverResourcesInner>}
+     * @type {Array<ChatFlowRecord>}
      * @memberof ChatHistory
      */
-    'retrieverResources'?: Array<ChatHistoryRetrieverResourcesInner>;
-}
-/**
- * 
- * @export
- * @interface ChatHistoryRetrieverResourcesInner
- */
-export interface ChatHistoryRetrieverResourcesInner {
-    /**
-     * Position of the resource
-     * @type {number}
-     * @memberof ChatHistoryRetrieverResourcesInner
-     */
-    'position'?: number;
-    /**
-     * ID of the dataset
-     * @type {string}
-     * @memberof ChatHistoryRetrieverResourcesInner
-     */
-    'datasetId'?: string;
-    /**
-     * Name of the dataset
-     * @type {string}
-     * @memberof ChatHistoryRetrieverResourcesInner
-     */
-    'datasetName'?: string;
-    /**
-     * ID of the document
-     * @type {string}
-     * @memberof ChatHistoryRetrieverResourcesInner
-     */
-    'documentId'?: string;
-    /**
-     * Name of the document
-     * @type {string}
-     * @memberof ChatHistoryRetrieverResourcesInner
-     */
-    'documentName'?: string;
-    /**
-     * ID of the segment
-     * @type {string}
-     * @memberof ChatHistoryRetrieverResourcesInner
-     */
-    'segmentId'?: string;
-    /**
-     * Score of the resource
-     * @type {number}
-     * @memberof ChatHistoryRetrieverResourcesInner
-     */
-    'score'?: number;
-    /**
-     * Content of the resource
-     * @type {string}
-     * @memberof ChatHistoryRetrieverResourcesInner
-     */
-    'content'?: string;
+    'records': Array<ChatFlowRecord>;
 }
 /**
  * 
@@ -650,6 +637,61 @@ export interface OauthCallback200Response {
      * @memberof OauthCallback200Response
      */
     'accessToken'?: string;
+}
+/**
+ * 
+ * @export
+ * @interface RetrieverResourcesInner
+ */
+export interface RetrieverResourcesInner {
+    /**
+     * Position of the resource
+     * @type {number}
+     * @memberof RetrieverResourcesInner
+     */
+    'position'?: number;
+    /**
+     * ID of the dataset
+     * @type {string}
+     * @memberof RetrieverResourcesInner
+     */
+    'datasetId'?: string;
+    /**
+     * Name of the dataset
+     * @type {string}
+     * @memberof RetrieverResourcesInner
+     */
+    'datasetName'?: string;
+    /**
+     * ID of the document
+     * @type {string}
+     * @memberof RetrieverResourcesInner
+     */
+    'documentId'?: string;
+    /**
+     * Name of the document
+     * @type {string}
+     * @memberof RetrieverResourcesInner
+     */
+    'documentName'?: string;
+    /**
+     * ID of the segment
+     * @type {string}
+     * @memberof RetrieverResourcesInner
+     */
+    'segmentId'?: string;
+    /**
+     * Score of the resource
+     * @type {number}
+     * @memberof RetrieverResourcesInner
+     */
+    'score'?: number;
+    /**
+     * Content of the resource
+     * @type {string}
+     * @memberof RetrieverResourcesInner
+     */
+    'content'?: string;
 }
 /**
  * 
@@ -1263,7 +1305,7 @@ export const CustomBotApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async chatFlowRecordsGet(chatId: string, botId?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<ChatFlowRecord>>> {
+        async chatFlowRecordsGet(chatId: string, botId?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<ChatHistory>>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.chatFlowRecordsGet(chatId, botId, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -1399,7 +1441,7 @@ export const CustomBotApiFactory = function (configuration?: Configuration, base
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        chatFlowRecordsGet(requestParameters: CustomBotApiChatFlowRecordsGetRequest, options?: AxiosRequestConfig): AxiosPromise<Array<ChatFlowRecord>> {
+        chatFlowRecordsGet(requestParameters: CustomBotApiChatFlowRecordsGetRequest, options?: AxiosRequestConfig): AxiosPromise<Array<ChatHistory>> {
             return localVarFp.chatFlowRecordsGet(requestParameters.chatId, requestParameters.botId, options).then((request) => request(axios, basePath));
         },
         /**
