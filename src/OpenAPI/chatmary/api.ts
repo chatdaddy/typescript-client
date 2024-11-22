@@ -397,16 +397,16 @@ export interface ChatFlowRecordPostRequest {
     'questionForRAG'?: string;
     /**
      * 
-     * @type {Array<RetrieverResourcesInner>}
+     * @type {string}
      * @memberof ChatFlowRecordPostRequest
      */
-    'limRAGResults'?: Array<RetrieverResourcesInner>;
+    'limRAGResults'?: string;
     /**
      * 
-     * @type {Array<RetrieverResourcesInner>}
+     * @type {string}
      * @memberof ChatFlowRecordPostRequest
      */
-    'exactRAGResults'?: Array<RetrieverResourcesInner>;
+    'exactRAGResults'?: string;
 }
 /**
  * 
