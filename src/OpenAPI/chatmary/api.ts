@@ -645,53 +645,114 @@ export interface OauthCallback200Response {
  */
 export interface RetrieverResourcesInner {
     /**
-     * Position of the resource
-     * @type {number}
+     * 
+     * @type {RetrieverResourcesInnerMetadata}
      * @memberof RetrieverResourcesInner
      */
-    'position'?: number;
+    'metadata'?: RetrieverResourcesInnerMetadata;
     /**
-     * ID of the dataset
+     * 
      * @type {string}
      * @memberof RetrieverResourcesInner
      */
-    'datasetId'?: string;
+    'title'?: string;
     /**
-     * Name of the dataset
-     * @type {string}
-     * @memberof RetrieverResourcesInner
-     */
-    'datasetName'?: string;
-    /**
-     * ID of the document
-     * @type {string}
-     * @memberof RetrieverResourcesInner
-     */
-    'documentId'?: string;
-    /**
-     * Name of the document
-     * @type {string}
-     * @memberof RetrieverResourcesInner
-     */
-    'documentName'?: string;
-    /**
-     * ID of the segment
-     * @type {string}
-     * @memberof RetrieverResourcesInner
-     */
-    'segmentId'?: string;
-    /**
-     * Score of the resource
-     * @type {number}
-     * @memberof RetrieverResourcesInner
-     */
-    'score'?: number;
-    /**
-     * Content of the resource
+     * 
      * @type {string}
      * @memberof RetrieverResourcesInner
      */
     'content'?: string;
+}
+/**
+ * 
+ * @export
+ * @interface RetrieverResourcesInnerMetadata
+ */
+export interface RetrieverResourcesInnerMetadata {
+    /**
+     * 
+     * @type {string}
+     * @memberof RetrieverResourcesInnerMetadata
+     */
+    '_source'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof RetrieverResourcesInnerMetadata
+     */
+    'dataset_id'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof RetrieverResourcesInnerMetadata
+     */
+    'dataset_name'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof RetrieverResourcesInnerMetadata
+     */
+    'document_id'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof RetrieverResourcesInnerMetadata
+     */
+    'document_name'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof RetrieverResourcesInnerMetadata
+     */
+    'document_data_source_type'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof RetrieverResourcesInnerMetadata
+     */
+    'segment_id'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof RetrieverResourcesInnerMetadata
+     */
+    'retriever_from'?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof RetrieverResourcesInnerMetadata
+     */
+    'score'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof RetrieverResourcesInnerMetadata
+     */
+    'segment_hit_count'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof RetrieverResourcesInnerMetadata
+     */
+    'segment_word_count'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof RetrieverResourcesInnerMetadata
+     */
+    'segment_position'?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof RetrieverResourcesInnerMetadata
+     */
+    'segment_index_node_hash'?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof RetrieverResourcesInnerMetadata
+     */
+    'position'?: number;
 }
 /**
  * 
