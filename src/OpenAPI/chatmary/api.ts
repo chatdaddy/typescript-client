@@ -440,27 +440,14 @@ export interface ChatFlowRecordPostRequest {
 export interface ChatHistoryDataGet200Response {
     /**
      * 
-     * @type {Array<ChatHistoryDataGet200ResponseDataInner>}
-     * @memberof ChatHistoryDataGet200Response
-     */
-    'data'?: Array<ChatHistoryDataGet200ResponseDataInner>;
-}
-/**
- * 
- * @export
- * @interface ChatHistoryDataGet200ResponseDataInner
- */
-export interface ChatHistoryDataGet200ResponseDataInner {
-    /**
-     * 
      * @type {{ [key: string]: any; }}
-     * @memberof ChatHistoryDataGet200ResponseDataInner
+     * @memberof ChatHistoryDataGet200Response
      */
     'variableData'?: { [key: string]: any; };
     /**
      * 
      * @type {Array<ChatFlowRecordEntry>}
-     * @memberof ChatHistoryDataGet200ResponseDataInner
+     * @memberof ChatHistoryDataGet200Response
      */
     'records'?: Array<ChatFlowRecordEntry>;
 }
