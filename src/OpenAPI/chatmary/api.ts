@@ -293,6 +293,18 @@ export interface ChatFlowHistory {
     'variableData'?: { [key: string]: any; };
     /**
      * 
+     * @type {string}
+     * @memberof ChatFlowHistory
+     */
+    'createdAt'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ChatFlowHistory
+     */
+    'lastRecordAddedAt'?: string;
+    /**
+     * 
      * @type {Array<ChatFlowRecordEntry>}
      * @memberof ChatFlowHistory
      */
@@ -346,6 +358,12 @@ export interface ChatFlowRecordEntry {
      * @memberof ChatFlowRecordEntry
      */
     'questionForRAG'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ChatFlowRecordEntry
+     */
+    'createdAt'?: string;
     /**
      * 
      * @type {Array<RetrieverResourcesInner>}
