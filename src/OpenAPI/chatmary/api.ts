@@ -281,10 +281,10 @@ export interface ChatFlowHistory {
     'conversationId': string;
     /**
      * JSON key value of variables associated with this conversation
-     * @type {string}
+     * @type {{ [key: string]: any; }}
      * @memberof ChatFlowHistory
      */
-    'variableData'?: string;
+    'variableData'?: { [key: string]: any; };
     /**
      * 
      * @type {Array<ChatFlowRecordEntry>}
