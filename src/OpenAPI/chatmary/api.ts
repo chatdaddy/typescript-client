@@ -269,10 +269,10 @@ export interface ChatFlowHistory {
     'chatId': string;
     /**
      * ID of the worflow
-     * @type {Stting}
+     * @type {string}
      * @memberof ChatFlowHistory
      */
-    'workflowId'?: Stting;
+    'workflowId'?: string;
     /**
      * Name of the workflow being Used
      * @type {string}
