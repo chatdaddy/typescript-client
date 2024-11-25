@@ -737,6 +737,12 @@ export interface MetricConfig {
      * @memberof MetricConfig
      */
     'properties': Array<MetricConfigProperty>;
+    /**
+     * 
+     * @type {Array<DashboardVisualizationType>}
+     * @memberof MetricConfig
+     */
+    'disallowedVisualisations'?: Array<DashboardVisualizationType>;
 }
 
 export const MetricConfigValueFormatEnum = {
