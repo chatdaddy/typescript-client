@@ -1174,13 +1174,16 @@ export const CustomBotApiAxiosParamCreator = function (configuration?: Configura
          * 
          * @summary Get chat history data
          * @param {string} chatId 
+         * @param {string} workflowId 
          * @param {number} [previousConverstationCount] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        chatHistoryDataGet: async (chatId: string, previousConverstationCount?: number, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        chatHistoryDataGet: async (chatId: string, workflowId: string, previousConverstationCount?: number, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'chatId' is not null or undefined
             assertParamExists('chatHistoryDataGet', 'chatId', chatId)
+            // verify required parameter 'workflowId' is not null or undefined
+            assertParamExists('chatHistoryDataGet', 'workflowId', workflowId)
             const localVarPath = `/chat-history-data`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -1199,6 +1202,10 @@ export const CustomBotApiAxiosParamCreator = function (configuration?: Configura
 
             if (chatId !== undefined) {
                 localVarQueryParameter['chatId'] = chatId;
+            }
+
+            if (workflowId !== undefined) {
+                localVarQueryParameter['workflowId'] = workflowId;
             }
 
             if (previousConverstationCount !== undefined) {
@@ -1482,12 +1489,13 @@ export const CustomBotApiFp = function(configuration?: Configuration) {
          * 
          * @summary Get chat history data
          * @param {string} chatId 
+         * @param {string} workflowId 
          * @param {number} [previousConverstationCount] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async chatHistoryDataGet(chatId: string, previousConverstationCount?: number, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ChatHistoryDataGet200Response>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.chatHistoryDataGet(chatId, previousConverstationCount, options);
+        async chatHistoryDataGet(chatId: string, workflowId: string, previousConverstationCount?: number, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ChatHistoryDataGet200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.chatHistoryDataGet(chatId, workflowId, previousConverstationCount, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -1633,7 +1641,7 @@ export const CustomBotApiFactory = function (configuration?: Configuration, base
          * @throws {RequiredError}
          */
         chatHistoryDataGet(requestParameters: CustomBotApiChatHistoryDataGetRequest, options?: AxiosRequestConfig): AxiosPromise<ChatHistoryDataGet200Response> {
-            return localVarFp.chatHistoryDataGet(requestParameters.chatId, requestParameters.previousConverstationCount, options).then((request) => request(axios, basePath));
+            return localVarFp.chatHistoryDataGet(requestParameters.chatId, requestParameters.workflowId, requestParameters.previousConverstationCount, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -1802,6 +1810,13 @@ export interface CustomBotApiChatHistoryDataGetRequest {
      * @memberof CustomBotApiChatHistoryDataGet
      */
     readonly chatId: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof CustomBotApiChatHistoryDataGet
+     */
+    readonly workflowId: string
 
     /**
      * 
@@ -1998,7 +2013,7 @@ export class CustomBotApi extends BaseAPI {
      * @memberof CustomBotApi
      */
     public chatHistoryDataGet(requestParameters: CustomBotApiChatHistoryDataGetRequest, options?: AxiosRequestConfig) {
-        return CustomBotApiFp(this.configuration).chatHistoryDataGet(requestParameters.chatId, requestParameters.previousConverstationCount, options).then((request) => request(this.axios, this.basePath));
+        return CustomBotApiFp(this.configuration).chatHistoryDataGet(requestParameters.chatId, requestParameters.workflowId, requestParameters.previousConverstationCount, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
