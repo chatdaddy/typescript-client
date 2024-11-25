@@ -280,6 +280,12 @@ export interface ChatFlowHistory {
      */
     'conversationId': string;
     /**
+     * JSON key value of variables associated with this conversation
+     * @type {string}
+     * @memberof ChatFlowHistory
+     */
+    'variableData'?: string;
+    /**
      * 
      * @type {Array<ChatFlowRecordEntry>}
      * @memberof ChatFlowHistory
@@ -407,6 +413,12 @@ export interface ChatFlowRecordPostRequest {
      * @memberof ChatFlowRecordPostRequest
      */
     'exactRAGResults'?: string;
+    /**
+     * JSON key value of variables associated with this conversation
+     * @type {string}
+     * @memberof ChatFlowRecordPostRequest
+     */
+    'historyVariableData'?: string;
 }
 /**
  * 
