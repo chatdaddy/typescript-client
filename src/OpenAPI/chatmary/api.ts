@@ -1126,6 +1126,54 @@ export const CustomBotApiAxiosParamCreator = function (configuration?: Configura
         },
         /**
          * 
+         * @summary Delete chat flow records
+         * @param {string} chatId 
+         * @param {string} workflowId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        chatFlowRecordsDelete: async (chatId: string, workflowId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'chatId' is not null or undefined
+            assertParamExists('chatFlowRecordsDelete', 'chatId', chatId)
+            // verify required parameter 'workflowId' is not null or undefined
+            assertParamExists('chatFlowRecordsDelete', 'workflowId', workflowId)
+            const localVarPath = `/chatflow-records`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", [], configuration)
+
+            if (chatId !== undefined) {
+                localVarQueryParameter['chatId'] = chatId;
+            }
+
+            if (workflowId !== undefined) {
+                localVarQueryParameter['workflowId'] = workflowId;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
          * @summary Get chat flow records
          * @param {string} chatId 
          * @param {string} [botId] 
@@ -1479,6 +1527,18 @@ export const CustomBotApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
+         * @summary Delete chat flow records
+         * @param {string} chatId 
+         * @param {string} workflowId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async chatFlowRecordsDelete(chatId: string, workflowId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.chatFlowRecordsDelete(chatId, workflowId, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
          * @summary Get chat flow records
          * @param {string} chatId 
          * @param {string} [botId] 
@@ -1630,6 +1690,16 @@ export const CustomBotApiFactory = function (configuration?: Configuration, base
         },
         /**
          * 
+         * @summary Delete chat flow records
+         * @param {CustomBotApiChatFlowRecordsDeleteRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        chatFlowRecordsDelete(requestParameters: CustomBotApiChatFlowRecordsDeleteRequest, options?: AxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.chatFlowRecordsDelete(requestParameters.chatId, requestParameters.workflowId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
          * @summary Get chat flow records
          * @param {CustomBotApiChatFlowRecordsGetRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -1773,6 +1843,27 @@ export interface CustomBotApiChatFlowRecordPostRequest {
      * @memberof CustomBotApiChatFlowRecordPost
      */
     readonly chatFlowRecordPostRequest?: ChatFlowRecordPostRequest
+}
+
+/**
+ * Request parameters for chatFlowRecordsDelete operation in CustomBotApi.
+ * @export
+ * @interface CustomBotApiChatFlowRecordsDeleteRequest
+ */
+export interface CustomBotApiChatFlowRecordsDeleteRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof CustomBotApiChatFlowRecordsDelete
+     */
+    readonly chatId: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof CustomBotApiChatFlowRecordsDelete
+     */
+    readonly workflowId: string
 }
 
 /**
@@ -1995,6 +2086,18 @@ export class CustomBotApi extends BaseAPI {
      */
     public chatFlowRecordPost(requestParameters: CustomBotApiChatFlowRecordPostRequest = {}, options?: AxiosRequestConfig) {
         return CustomBotApiFp(this.configuration).chatFlowRecordPost(requestParameters.chatFlowRecordPostRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Delete chat flow records
+     * @param {CustomBotApiChatFlowRecordsDeleteRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CustomBotApi
+     */
+    public chatFlowRecordsDelete(requestParameters: CustomBotApiChatFlowRecordsDeleteRequest, options?: AxiosRequestConfig) {
+        return CustomBotApiFp(this.configuration).chatFlowRecordsDelete(requestParameters.chatId, requestParameters.workflowId, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
