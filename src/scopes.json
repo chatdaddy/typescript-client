@@ -346,7 +346,7 @@
 		"group": "Channels"
 	},
 	"ACCOUNT_PATCH": {
-		"number": 30,
+		"number": 31,
 		"description": "Update a Channel",
 		"subtext": "Connect, disconnect, change advanced settings for a channel",
 		"features": [
@@ -355,31 +355,6 @@
 		"roles": [
 			"admin",
 			"editor",
-			"agent"
-		],
-		"section": "inbox",
-		"group": "Channels"
-	},
-	"TEAMMEMBERS_UPDATE": {
-		"number": 30,
-		"description": "Update/delete team members",
-		"features": [],
-		"roles": [
-			"admin"
-		],
-		"section": "settings",
-		"group": "Team"
-	},
-	"ACCOUNT_READ": {
-		"number": 31,
-		"description": "Read all available Channels",
-		"features": [
-			"team-inbox"
-		],
-		"roles": [
-			"admin",
-			"editor",
-			"viewer",
 			"agent"
 		],
 		"section": "inbox",
@@ -397,6 +372,21 @@
 		"section": "inbox",
 		"group": "Channels"
 	},
+	"ACCOUNT_READ": {
+		"number": 33,
+		"description": "Read all available Channels",
+		"features": [
+			"team-inbox"
+		],
+		"roles": [
+			"admin",
+			"editor",
+			"viewer",
+			"agent"
+		],
+		"section": "inbox",
+		"group": "Channels"
+	},
 	"CREATE_SUB_USER": {
 		"number": 37,
 		"description": "Create a new user",
@@ -410,6 +400,16 @@
 	"TEAMLINK_CREATE": {
 		"number": 38,
 		"description": "Create new invite links",
+		"features": [],
+		"roles": [
+			"admin"
+		],
+		"section": "settings",
+		"group": "Team"
+	},
+	"TEAMMEMBERS_UPDATE": {
+		"number": 39,
+		"description": "Update/delete team members",
 		"features": [],
 		"roles": [
 			"admin"
