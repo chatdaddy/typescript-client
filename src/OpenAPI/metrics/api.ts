@@ -376,7 +376,8 @@ export const DashboardVisualizationType = {
     Histogram: 'histogram',
     PieChart: 'pie-chart',
     Table: 'table',
-    Snapshot: 'snapshot'
+    Snapshot: 'snapshot',
+    SimpleSnapshot: 'simple-snapshot'
 } as const;
 
 export type DashboardVisualizationType = typeof DashboardVisualizationType[keyof typeof DashboardVisualizationType];

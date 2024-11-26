@@ -7019,7 +7019,8 @@ export const DashboardInsertDataSchemaItemsInnerVisualizationTypeEnum = {
     Histogram: 'histogram',
     PieChart: 'pie-chart',
     Table: 'table',
-    Snapshot: 'snapshot'
+    Snapshot: 'snapshot',
+    SimpleSnapshot: 'simple-snapshot'
 } as const;
 
 export type DashboardInsertDataSchemaItemsInnerVisualizationTypeEnum = typeof DashboardInsertDataSchemaItemsInnerVisualizationTypeEnum[keyof typeof DashboardInsertDataSchemaItemsInnerVisualizationTypeEnum];
