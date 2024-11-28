@@ -6960,62 +6960,68 @@ export const DashboardInsertDataSchemaVersionEnum = {
 export type DashboardInsertDataSchemaVersionEnum = typeof DashboardInsertDataSchemaVersionEnum[keyof typeof DashboardInsertDataSchemaVersionEnum];
 
 /**
+ * @type DashboardInsertDataSchemaItemsInner
+ * @export
+ */
+export type DashboardInsertDataSchemaItemsInner = DashboardInsertDataSchemaItemsInnerOneOf | DashboardInsertDataSchemaItemsInnerOneOf1;
+
+/**
  * 
  * @export
- * @interface DashboardInsertDataSchemaItemsInner
+ * @interface DashboardInsertDataSchemaItemsInnerOneOf
  */
-export interface DashboardInsertDataSchemaItemsInner {
+export interface DashboardInsertDataSchemaItemsInnerOneOf {
     /**
      * 
      * @type {string}
-     * @memberof DashboardInsertDataSchemaItemsInner
+     * @memberof DashboardInsertDataSchemaItemsInnerOneOf
      */
     'id': string;
     /**
      * 
      * @type {string}
-     * @memberof DashboardInsertDataSchemaItemsInner
+     * @memberof DashboardInsertDataSchemaItemsInnerOneOf
      */
-    'visualizationType': DashboardInsertDataSchemaItemsInnerVisualizationTypeEnum;
+    'visualizationType': DashboardInsertDataSchemaItemsInnerOneOfVisualizationTypeEnum;
     /**
      * 
      * @type {string}
-     * @memberof DashboardInsertDataSchemaItemsInner
+     * @memberof DashboardInsertDataSchemaItemsInnerOneOf
      */
     'metricId': string;
     /**
      * 
      * @type {string}
-     * @memberof DashboardInsertDataSchemaItemsInner
+     * @memberof DashboardInsertDataSchemaItemsInnerOneOf
      */
     'name': string;
     /**
      * 
      * @type {{ [key: string]: any; }}
-     * @memberof DashboardInsertDataSchemaItemsInner
+     * @memberof DashboardInsertDataSchemaItemsInnerOneOf
      */
     'filter'?: { [key: string]: any; };
     /**
      * 
      * @type {string}
-     * @memberof DashboardInsertDataSchemaItemsInner
+     * @memberof DashboardInsertDataSchemaItemsInnerOneOf
      */
     'breakdown'?: string;
     /**
-     * 
+     * Hide the default value in the breakdown.
      * @type {boolean}
-     * @memberof DashboardInsertDataSchemaItemsInner
+     * @memberof DashboardInsertDataSchemaItemsInnerOneOf
      */
     'hideDefaultInBreakdown'?: boolean;
     /**
      * 
      * @type {boolean}
-     * @memberof DashboardInsertDataSchemaItemsInner
+     * @memberof DashboardInsertDataSchemaItemsInnerOneOf
      */
     'includePreviousPeriod'?: boolean;
 }
 
-export const DashboardInsertDataSchemaItemsInnerVisualizationTypeEnum = {
+export const DashboardInsertDataSchemaItemsInnerOneOfVisualizationTypeEnum = {
     Histogram: 'histogram',
     PieChart: 'pie-chart',
     Table: 'table',
@@ -7023,8 +7029,27 @@ export const DashboardInsertDataSchemaItemsInnerVisualizationTypeEnum = {
     SimpleSnapshot: 'simple-snapshot'
 } as const;
 
-export type DashboardInsertDataSchemaItemsInnerVisualizationTypeEnum = typeof DashboardInsertDataSchemaItemsInnerVisualizationTypeEnum[keyof typeof DashboardInsertDataSchemaItemsInnerVisualizationTypeEnum];
+export type DashboardInsertDataSchemaItemsInnerOneOfVisualizationTypeEnum = typeof DashboardInsertDataSchemaItemsInnerOneOfVisualizationTypeEnum[keyof typeof DashboardInsertDataSchemaItemsInnerOneOfVisualizationTypeEnum];
 
+/**
+ * 
+ * @export
+ * @interface DashboardInsertDataSchemaItemsInnerOneOf1
+ */
+export interface DashboardInsertDataSchemaItemsInnerOneOf1 {
+    /**
+     * 
+     * @type {string}
+     * @memberof DashboardInsertDataSchemaItemsInnerOneOf1
+     */
+    'id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof DashboardInsertDataSchemaItemsInnerOneOf1
+     */
+    'title': string;
+}
 /**
  * 
  * @export

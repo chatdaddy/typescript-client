@@ -272,10 +272,10 @@ export interface DashboardSchema {
     'version': DashboardSchemaVersionEnum;
     /**
      * 
-     * @type {Array<DashboardSchemaItem>}
+     * @type {Array<DashboardSchemaItemsInner>}
      * @memberof DashboardSchema
      */
-    'items': Array<DashboardSchemaItem>;
+    'items': Array<DashboardSchemaItemsInner>;
 }
 
 export const DashboardSchemaVersionEnum = {
@@ -340,6 +340,12 @@ export interface DashboardSchemaItem {
     'includePreviousPeriod'?: boolean;
 }
 
+
+/**
+ * @type DashboardSchemaItemsInner
+ * @export
+ */
+export type DashboardSchemaItemsInner = DashboardSchemaItem | TextSchemaItem;
 
 /**
  * 
@@ -1005,6 +1011,25 @@ const SimplePropertyType = {
 type SimplePropertyType = typeof SimplePropertyType[keyof typeof SimplePropertyType];
 
 
+/**
+ * 
+ * @export
+ * @interface TextSchemaItem
+ */
+export interface TextSchemaItem {
+    /**
+     * 
+     * @type {string}
+     * @memberof TextSchemaItem
+     */
+    'id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof TextSchemaItem
+     */
+    'title': string;
+}
 /**
  * 
  * @export
