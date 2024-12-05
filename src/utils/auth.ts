@@ -140,11 +140,10 @@ export const makeAccessTokenFactory = (
 	}
 
 	const refreshTokenExpiryCheck = () => {
-		if(!refreshTokenExpiryOpts) return
-		const { refreshTokenExpiryMs, onExpiry } = refreshTokenExpiryOpts
-		if(Date.now() > refreshTokenExpiryMs) {
-			onExpiry()
+		if(!refreshTokenExpiryOpts || refreshTokenExpiryOpts.refreshTokenExpiryMs < Date.now()) {
+			return
 		}
+		refreshTokenExpiryOpts.onExpiry()
 	}
 
 	return async (teamId: string, metadata?: ActorMetadata) => {
