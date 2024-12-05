@@ -90,6 +90,11 @@ export type AccessTokenFactoryOptions = {
 	 * @default 2m
 	 */
 	tokenExpiryMarginMs?: number
+
+	refreshTokenExpiryOpts?: {
+		refreshTokenExpiryMs: number
+		onExpiry: () => void
+	}
 }
 
 type TokenCacheItem = {
@@ -103,7 +108,8 @@ export const makeAccessTokenFactory = (
 		existingTokens,
 		config,
 		maxRetries,
-		tokenExpiryMarginMs = 2 * 60_000
+		tokenExpiryMarginMs = 2 * 60_000,
+		refreshTokenExpiryOpts
 	}: AccessTokenFactoryOptions
 ) => {
 
@@ -133,6 +139,14 @@ export const makeAccessTokenFactory = (
 		return tokenAPI.tokenPost({ authRequest: req })
 	}
 
+	const refreshTokenExpiryCheck = () => {
+		if(!refreshTokenExpiryOpts) return
+		const { refreshTokenExpiryMs, onExpiry } = refreshTokenExpiryOpts
+		if(Date.now() > refreshTokenExpiryMs) {
+			onExpiry()
+		}
+	}
+
 	return async (teamId: string, metadata?: ActorMetadata) => {
 		const key = teamId
 			+ (metadata ? '_' + metadata.objectId : '')
@@ -147,6 +161,7 @@ export const makeAccessTokenFactory = (
 			tokenCache[key] = {
 				token: (async() => {
 					try {
+						refreshTokenExpiryCheck()
 						const { data: { access_token } } = await makeTokenApiRequest(
 							{ ...request, metadata, teamId }
 						)
