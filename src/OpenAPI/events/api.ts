@@ -6060,6 +6060,12 @@ export interface ContactInsertData {
     'assignedAt'?: string;
     /**
      * 
+     * @type {string}
+     * @memberof ContactInsertData
+     */
+    'firstAssignedAt'?: string;
+    /**
+     * 
      * @type {number}
      * @memberof ContactInsertData
      */
@@ -6210,6 +6216,12 @@ export interface ContactUpdateData {
      * @memberof ContactUpdateData
      */
     'assignedAt'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ContactUpdateData
+     */
+    'firstAssignedAt'?: string;
     /**
      * 
      * @type {number}
@@ -7909,6 +7921,12 @@ export interface GroupUpdateDataOwner {
      * @memberof GroupUpdateDataOwner
      */
     'assignedAt'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof GroupUpdateDataOwner
+     */
+    'firstAssignedAt'?: string;
     /**
      * 
      * @type {number}
