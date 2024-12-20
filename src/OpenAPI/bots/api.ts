@@ -5261,6 +5261,12 @@ export interface TriggerAppConfig {
      * @memberof TriggerAppConfig
      */
     'helpkitId'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof TriggerAppConfig
+     */
+    'appGroupId'?: string;
 }
 /**
  * 
@@ -5286,6 +5292,12 @@ export interface TriggerAppConfigAllOf {
      * @memberof TriggerAppConfigAllOf
      */
     'helpkitId'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof TriggerAppConfigAllOf
+     */
+    'appGroupId'?: string;
 }
 /**
  * @type TriggerDelay
