@@ -13132,7 +13132,7 @@ export const MessagesApiAxiosParamCreator = function (configuration?: Configurat
             };
         },
         /**
-         * 
+         * Given a particular message, calling this route will decode all the message attachments
          * @summary Permanently store attachments of a message
          * @param {string} accountId 
          * @param {string} chatId 
@@ -13335,7 +13335,7 @@ export const MessagesApiFp = function(configuration?: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
-         * 
+         * Given a particular message, calling this route will decode all the message attachments
          * @summary Permanently store attachments of a message
          * @param {string} accountId 
          * @param {string} chatId 
@@ -13456,7 +13456,7 @@ export const MessagesApiFactory = function (configuration?: Configuration, baseP
             return localVarFp.messagesSend(requestParameters.accountId, requestParameters.requireOpenAccount, requestParameters.multiMessageCompose, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Given a particular message, calling this route will decode all the message attachments
          * @summary Permanently store attachments of a message
          * @param {MessagesApiPermanentlyStoreAttachmentsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -14035,7 +14035,7 @@ export class MessagesApi extends BaseAPI {
     }
 
     /**
-     * 
+     * Given a particular message, calling this route will decode all the message attachments
      * @summary Permanently store attachments of a message
      * @param {MessagesApiPermanentlyStoreAttachmentsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
