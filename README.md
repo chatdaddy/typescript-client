@@ -122,14 +122,6 @@ The library has a list of examples of how to use this client, you can find them 
 3. Run example scripts using `yarn ts-node examples/{example-script}`
 	- Eg. `yarn ts-node examples/send-message`
 
-### Rate Limits
-{
-	public: 500,
-	authenticated: 50,
-	total: 1000,
-}
-
-The rate limits for unauth
 
 ### Transcoding Attachments
 You should use the "permanentlyStoreAttachments" of "MessagesApi" to save the decoded attachments to your messages. Calling this route for a given message will save the attachment to the message and return the attachment object.
