@@ -126,3 +126,4 @@ The library has a list of examples of how to use this client, you can find them 
 ### Transcoding Attachments
 You should use the "permanentlyStoreAttachments" of "MessagesApi" to save the decoded attachments to your messages. Calling this route for a given message will save the attachment to the message and return the attachment object.
 
+You can find an example of how to do this [here](/examples/transcode.ts)
