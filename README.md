@@ -1,6 +1,6 @@
 # ChatDaddy Typescript Client
 
-Typescript client for interacting with all ChatDaddy services. 
+Typescript client for interacting with all ChatDaddy services.
 You can use this client to authenticate, send & receive messages, update chats, create groups & everything you expect from the ChatDaddy APIs.
 
 ## API Docs
@@ -27,7 +27,7 @@ import { MessagesApi } from '@chatdaddy/client'
 
 ## Refresh Tokens and Generating Them
 
-We recommend you use refresh tokens to generate these short lived access tokens. The refresh token is immune to password changes & prevents you from ever entering the password in plaintext. The refresh token automatically becomes invalid after **14 Days** of inactivity. 
+We recommend you use refresh tokens to generate these short lived access tokens. The refresh token is immune to password changes & prevents you from ever entering the password in plaintext. The refresh token automatically becomes invalid after **14 Days** of inactivity.
 
 You do have to use your password to generate a refresh token.
 ``` ts
@@ -88,6 +88,13 @@ const getToken = makeAccessTokenFactory({
 
 ```
 
+## API Tokens
+In case you want to use the ChatDaddy API in an environment where you cannot easily generate access tokens from the refresh token, you can use an API token. Use these tokens with caution as they never expire. We recommend you use access tokens as they are more secure.
+
+You can generate API tokens here: https://www.app.chatdaddy.tech/developer/apiToken with the scopes you require.
+
+For examples of how to use API tokens, see the [api-token.ts](/examples/api-token.ts) example.
+
 ## Finding Out your Team ID
 
 1. Login & open ChatDaddy App from `https://app.chatdaddy.tech`
@@ -114,3 +121,16 @@ The library has a list of examples of how to use this client, you can find them 
 	You can get this information from the [API page](https://app.chatdaddy.tech/settings/api) on ChatDaddy.
 3. Run example scripts using `yarn ts-node examples/{example-script}`
 	- Eg. `yarn ts-node examples/send-message`
+
+### Rate Limits
+{
+	public: 500,
+	authenticated: 50,
+	total: 1000,
+}
+
+The rate limits for unauth
+
+### Transcoding Attachments
+You should use the "permanentlyStoreAttachments" of "MessagesApi" to save the decoded attachments to your messages. Calling this route for a given message will save the attachment to the message and return the attachment object.
+
