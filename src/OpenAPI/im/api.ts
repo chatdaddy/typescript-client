@@ -16364,7 +16364,7 @@ export class TemplatesApi extends BaseAPI {
  * WebhookApi - axios parameter creator
  * @export
  */
-export const WebhookApiAxiosParamCreator = function (configuration?: Configuration) {
+const WebhookApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
          * 
@@ -16463,7 +16463,7 @@ export const WebhookApiAxiosParamCreator = function (configuration?: Configurati
  * WebhookApi - functional programming interface
  * @export
  */
-export const WebhookApiFp = function(configuration?: Configuration) {
+const WebhookApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = WebhookApiAxiosParamCreator(configuration)
     return {
         /**
@@ -16498,7 +16498,7 @@ export const WebhookApiFp = function(configuration?: Configuration) {
  * WebhookApi - factory interface
  * @export
  */
-export const WebhookApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+const WebhookApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
     const localVarFp = WebhookApiFp(configuration)
     return {
         /**
