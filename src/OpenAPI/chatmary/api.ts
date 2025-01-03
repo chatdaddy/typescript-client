@@ -868,6 +868,139 @@ export interface WebhookLarkGet200Response {
 }
 
 /**
+ * ChatmaryWebhookApi - axios parameter creator
+ * @export
+ */
+export const ChatmaryWebhookApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @summary Lark webhook
+         * @param {string} [code] 
+         * @param {string} [state] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        webhookLarkGet: async (code?: string, state?: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/webhookLark`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (code !== undefined) {
+                localVarQueryParameter['code'] = code;
+            }
+
+            if (state !== undefined) {
+                localVarQueryParameter['state'] = state;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * ChatmaryWebhookApi - functional programming interface
+ * @export
+ */
+export const ChatmaryWebhookApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = ChatmaryWebhookApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * 
+         * @summary Lark webhook
+         * @param {string} [code] 
+         * @param {string} [state] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async webhookLarkGet(code?: string, state?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<WebhookLarkGet200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.webhookLarkGet(code, state, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+    }
+};
+
+/**
+ * ChatmaryWebhookApi - factory interface
+ * @export
+ */
+export const ChatmaryWebhookApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = ChatmaryWebhookApiFp(configuration)
+    return {
+        /**
+         * 
+         * @summary Lark webhook
+         * @param {ChatmaryWebhookApiWebhookLarkGetRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        webhookLarkGet(requestParameters: ChatmaryWebhookApiWebhookLarkGetRequest = {}, options?: AxiosRequestConfig): AxiosPromise<WebhookLarkGet200Response> {
+            return localVarFp.webhookLarkGet(requestParameters.code, requestParameters.state, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * Request parameters for webhookLarkGet operation in ChatmaryWebhookApi.
+ * @export
+ * @interface ChatmaryWebhookApiWebhookLarkGetRequest
+ */
+export interface ChatmaryWebhookApiWebhookLarkGetRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof ChatmaryWebhookApiWebhookLarkGet
+     */
+    readonly code?: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof ChatmaryWebhookApiWebhookLarkGet
+     */
+    readonly state?: string
+}
+
+/**
+ * ChatmaryWebhookApi - object-oriented interface
+ * @export
+ * @class ChatmaryWebhookApi
+ * @extends {BaseAPI}
+ */
+export class ChatmaryWebhookApi extends BaseAPI {
+    /**
+     * 
+     * @summary Lark webhook
+     * @param {ChatmaryWebhookApiWebhookLarkGetRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ChatmaryWebhookApi
+     */
+    public webhookLarkGet(requestParameters: ChatmaryWebhookApiWebhookLarkGetRequest = {}, options?: AxiosRequestConfig) {
+        return ChatmaryWebhookApiFp(this.configuration).webhookLarkGet(requestParameters.code, requestParameters.state, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+/**
  * CustomBotApi - axios parameter creator
  * @export
  */
@@ -2541,139 +2674,6 @@ export class ScheduleApi extends BaseAPI {
      */
     public oauthCallback(requestParameters: ScheduleApiOauthCallbackRequest, options?: AxiosRequestConfig) {
         return ScheduleApiFp(this.configuration).oauthCallback(requestParameters.code, requestParameters.state, requestParameters.scope, options).then((request) => request(this.axios, this.basePath));
-    }
-}
-
-
-/**
- * WebhookApi - axios parameter creator
- * @export
- */
-export const WebhookApiAxiosParamCreator = function (configuration?: Configuration) {
-    return {
-        /**
-         * 
-         * @summary Lark webhook
-         * @param {string} [code] 
-         * @param {string} [state] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        webhookLarkGet: async (code?: string, state?: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/webhookLark`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            if (code !== undefined) {
-                localVarQueryParameter['code'] = code;
-            }
-
-            if (state !== undefined) {
-                localVarQueryParameter['state'] = state;
-            }
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-    }
-};
-
-/**
- * WebhookApi - functional programming interface
- * @export
- */
-export const WebhookApiFp = function(configuration?: Configuration) {
-    const localVarAxiosParamCreator = WebhookApiAxiosParamCreator(configuration)
-    return {
-        /**
-         * 
-         * @summary Lark webhook
-         * @param {string} [code] 
-         * @param {string} [state] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async webhookLarkGet(code?: string, state?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<WebhookLarkGet200Response>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.webhookLarkGet(code, state, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-    }
-};
-
-/**
- * WebhookApi - factory interface
- * @export
- */
-export const WebhookApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
-    const localVarFp = WebhookApiFp(configuration)
-    return {
-        /**
-         * 
-         * @summary Lark webhook
-         * @param {WebhookApiWebhookLarkGetRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        webhookLarkGet(requestParameters: WebhookApiWebhookLarkGetRequest = {}, options?: AxiosRequestConfig): AxiosPromise<WebhookLarkGet200Response> {
-            return localVarFp.webhookLarkGet(requestParameters.code, requestParameters.state, options).then((request) => request(axios, basePath));
-        },
-    };
-};
-
-/**
- * Request parameters for webhookLarkGet operation in WebhookApi.
- * @export
- * @interface WebhookApiWebhookLarkGetRequest
- */
-export interface WebhookApiWebhookLarkGetRequest {
-    /**
-     * 
-     * @type {string}
-     * @memberof WebhookApiWebhookLarkGet
-     */
-    readonly code?: string
-
-    /**
-     * 
-     * @type {string}
-     * @memberof WebhookApiWebhookLarkGet
-     */
-    readonly state?: string
-}
-
-/**
- * WebhookApi - object-oriented interface
- * @export
- * @class WebhookApi
- * @extends {BaseAPI}
- */
-export class WebhookApi extends BaseAPI {
-    /**
-     * 
-     * @summary Lark webhook
-     * @param {WebhookApiWebhookLarkGetRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof WebhookApi
-     */
-    public webhookLarkGet(requestParameters: WebhookApiWebhookLarkGetRequest = {}, options?: AxiosRequestConfig) {
-        return WebhookApiFp(this.configuration).webhookLarkGet(requestParameters.code, requestParameters.state, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
