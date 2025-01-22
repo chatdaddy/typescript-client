@@ -866,6 +866,38 @@ export interface WebhookLarkGet200Response {
      */
     'success': boolean;
 }
+/**
+ * 
+ * @export
+ * @interface WebhookNotionPostRequest
+ */
+export interface WebhookNotionPostRequest {
+    /**
+     * 
+     * @type {WebhookNotionPostRequestData}
+     * @memberof WebhookNotionPostRequest
+     */
+    'data'?: WebhookNotionPostRequestData;
+}
+/**
+ * 
+ * @export
+ * @interface WebhookNotionPostRequestData
+ */
+export interface WebhookNotionPostRequestData {
+    /**
+     * ID of the notion page
+     * @type {string}
+     * @memberof WebhookNotionPostRequestData
+     */
+    'id'?: string;
+    /**
+     * 
+     * @type {{ [key: string]: any; }}
+     * @memberof WebhookNotionPostRequestData
+     */
+    'properties'?: { [key: string]: any; };
+}
 
 /**
  * ChatmaryWebhookApi - axios parameter creator
@@ -913,6 +945,47 @@ export const ChatmaryWebhookApiAxiosParamCreator = function (configuration?: Con
                 options: localVarRequestOptions,
             };
         },
+        /**
+         * 
+         * @summary Notion webhook
+         * @param {string} token 
+         * @param {WebhookNotionPostRequest} [webhookNotionPostRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        webhookNotionPost: async (token: string, webhookNotionPostRequest?: WebhookNotionPostRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'token' is not null or undefined
+            assertParamExists('webhookNotionPost', 'token', token)
+            const localVarPath = `/webhookNotion`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (token !== undefined) {
+                localVarQueryParameter['token'] = token;
+            }
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(webhookNotionPostRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
     }
 };
 
@@ -935,6 +1008,18 @@ export const ChatmaryWebhookApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.webhookLarkGet(code, state, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
+        /**
+         * 
+         * @summary Notion webhook
+         * @param {string} token 
+         * @param {WebhookNotionPostRequest} [webhookNotionPostRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async webhookNotionPost(token: string, webhookNotionPostRequest?: WebhookNotionPostRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<WebhookLarkGet200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.webhookNotionPost(token, webhookNotionPostRequest, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
     }
 };
 
@@ -954,6 +1039,16 @@ export const ChatmaryWebhookApiFactory = function (configuration?: Configuration
          */
         webhookLarkGet(requestParameters: ChatmaryWebhookApiWebhookLarkGetRequest = {}, options?: AxiosRequestConfig): AxiosPromise<WebhookLarkGet200Response> {
             return localVarFp.webhookLarkGet(requestParameters.code, requestParameters.state, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Notion webhook
+         * @param {ChatmaryWebhookApiWebhookNotionPostRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        webhookNotionPost(requestParameters: ChatmaryWebhookApiWebhookNotionPostRequest, options?: AxiosRequestConfig): AxiosPromise<WebhookLarkGet200Response> {
+            return localVarFp.webhookNotionPost(requestParameters.token, requestParameters.webhookNotionPostRequest, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -980,6 +1075,27 @@ export interface ChatmaryWebhookApiWebhookLarkGetRequest {
 }
 
 /**
+ * Request parameters for webhookNotionPost operation in ChatmaryWebhookApi.
+ * @export
+ * @interface ChatmaryWebhookApiWebhookNotionPostRequest
+ */
+export interface ChatmaryWebhookApiWebhookNotionPostRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof ChatmaryWebhookApiWebhookNotionPost
+     */
+    readonly token: string
+
+    /**
+     * 
+     * @type {WebhookNotionPostRequest}
+     * @memberof ChatmaryWebhookApiWebhookNotionPost
+     */
+    readonly webhookNotionPostRequest?: WebhookNotionPostRequest
+}
+
+/**
  * ChatmaryWebhookApi - object-oriented interface
  * @export
  * @class ChatmaryWebhookApi
@@ -996,6 +1112,18 @@ export class ChatmaryWebhookApi extends BaseAPI {
      */
     public webhookLarkGet(requestParameters: ChatmaryWebhookApiWebhookLarkGetRequest = {}, options?: AxiosRequestConfig) {
         return ChatmaryWebhookApiFp(this.configuration).webhookLarkGet(requestParameters.code, requestParameters.state, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Notion webhook
+     * @param {ChatmaryWebhookApiWebhookNotionPostRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ChatmaryWebhookApi
+     */
+    public webhookNotionPost(requestParameters: ChatmaryWebhookApiWebhookNotionPostRequest, options?: AxiosRequestConfig) {
+        return ChatmaryWebhookApiFp(this.configuration).webhookNotionPost(requestParameters.token, requestParameters.webhookNotionPostRequest, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
