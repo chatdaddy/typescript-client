@@ -1440,12 +1440,6 @@ export interface Chat {
      */
     'readOnly': boolean;
     /**
-     * 
-     * @type {TicketStatus}
-     * @memberof Chat
-     */
-    'ticketStatus'?: TicketStatus | null;
-    /**
      * Timestamp of when the chat was muted
      * @type {number}
      * @memberof Chat
@@ -1524,8 +1518,6 @@ export interface Chat {
      */
     'cursor': string;
 }
-
-
 /**
  * 
  * @export
@@ -1720,27 +1712,6 @@ export interface ChatsGetTicketParameter {
      */
     'stageId'?: string;
 }
-/**
- * 
- * @export
- * @interface ChatsTicketStatusPatchRequest
- */
-export interface ChatsTicketStatusPatchRequest {
-    /**
-     * 
-     * @type {string}
-     * @memberof ChatsTicketStatusPatchRequest
-     */
-    'ticketStatus': ChatsTicketStatusPatchRequestTicketStatusEnum;
-}
-
-export const ChatsTicketStatusPatchRequestTicketStatusEnum = {
-    Closed: 'closed',
-    Open: 'open'
-} as const;
-
-export type ChatsTicketStatusPatchRequestTicketStatusEnum = typeof ChatsTicketStatusPatchRequestTicketStatusEnum[keyof typeof ChatsTicketStatusPatchRequestTicketStatusEnum];
-
 /**
  * 
  * @export
@@ -2139,32 +2110,6 @@ export const ContactType = {
 export type ContactType = typeof ContactType[keyof typeof ContactType];
 
 
-/**
- * 
- * @export
- * @interface ContactsAggregationGet200Response
- */
-export interface ContactsAggregationGet200Response {
-    /**
-     * 
-     * @type {{ [key: string]: ContactsAggregationGet200ResponseContactsValue; }}
-     * @memberof ContactsAggregationGet200Response
-     */
-    'contacts': { [key: string]: ContactsAggregationGet200ResponseContactsValue; };
-}
-/**
- * 
- * @export
- * @interface ContactsAggregationGet200ResponseContactsValue
- */
-export interface ContactsAggregationGet200ResponseContactsValue {
-    /**
-     * 
-     * @type {number}
-     * @memberof ContactsAggregationGet200ResponseContactsValue
-     */
-    'count': number;
-}
 /**
  * 
  * @export
@@ -6005,20 +5950,6 @@ export interface TemplatesSubmitForReviewRequest {
     'message': TemplateCreate;
 }
 /**
- * Status of the ticket. Null/undefined mean the ticket is open
- * @export
- * @enum {string}
- */
-
-export const TicketStatus = {
-    Closed: 'closed',
-    Null: null as null
-} as const;
-
-export type TicketStatus = typeof TicketStatus[keyof typeof TicketStatus];
-
-
-/**
  * 
  * @export
  * @interface TicketTimer
@@ -8277,7 +8208,6 @@ export const CRMApiAxiosParamCreator = function (configuration?: Configuration) 
          * @param {string} [boardId] 
          * @param {string} [stageId] 
          * @param {UniqueContactID} [contactId] 
-         * @param {Array<string>} [id] 
          * @param {boolean} [returnTotalCount] 
          * @param {string} [q] Search items by this string
          * @param {ChatsGetTagsParameter} [tags] Get contacts who fall in either of these tags
@@ -8285,7 +8215,7 @@ export const CRMApiAxiosParamCreator = function (configuration?: Configuration) 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getTicketsByStage: async (count?: number, page?: string, boardId?: string, stageId?: string, contactId?: UniqueContactID, id?: Array<string>, returnTotalCount?: boolean, q?: string, tags?: ChatsGetTagsParameter, assignee?: ChatsGetAssigneeParameter, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getTicketsByStage: async (count?: number, page?: string, boardId?: string, stageId?: string, contactId?: UniqueContactID, returnTotalCount?: boolean, q?: string, tags?: ChatsGetTagsParameter, assignee?: ChatsGetAssigneeParameter, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/crm/tickets/by-stage`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -8320,10 +8250,6 @@ export const CRMApiAxiosParamCreator = function (configuration?: Configuration) 
 
             if (contactId !== undefined) {
                 localVarQueryParameter['contactId'] = contactId;
-            }
-
-            if (id) {
-                localVarQueryParameter['id'] = id;
             }
 
             if (returnTotalCount !== undefined) {
@@ -8579,7 +8505,6 @@ export const CRMApiFp = function(configuration?: Configuration) {
          * @param {string} [boardId] 
          * @param {string} [stageId] 
          * @param {UniqueContactID} [contactId] 
-         * @param {Array<string>} [id] 
          * @param {boolean} [returnTotalCount] 
          * @param {string} [q] Search items by this string
          * @param {ChatsGetTagsParameter} [tags] Get contacts who fall in either of these tags
@@ -8587,8 +8512,8 @@ export const CRMApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getTicketsByStage(count?: number, page?: string, boardId?: string, stageId?: string, contactId?: UniqueContactID, id?: Array<string>, returnTotalCount?: boolean, q?: string, tags?: ChatsGetTagsParameter, assignee?: ChatsGetAssigneeParameter, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetTicketsByStage200Response>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getTicketsByStage(count, page, boardId, stageId, contactId, id, returnTotalCount, q, tags, assignee, options);
+        async getTicketsByStage(count?: number, page?: string, boardId?: string, stageId?: string, contactId?: UniqueContactID, returnTotalCount?: boolean, q?: string, tags?: ChatsGetTagsParameter, assignee?: ChatsGetAssigneeParameter, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetTicketsByStage200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getTicketsByStage(count, page, boardId, stageId, contactId, returnTotalCount, q, tags, assignee, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -8713,7 +8638,7 @@ export const CRMApiFactory = function (configuration?: Configuration, basePath?:
          * @throws {RequiredError}
          */
         getTicketsByStage(requestParameters: CRMApiGetTicketsByStageRequest = {}, options?: AxiosRequestConfig): AxiosPromise<GetTicketsByStage200Response> {
-            return localVarFp.getTicketsByStage(requestParameters.count, requestParameters.page, requestParameters.boardId, requestParameters.stageId, requestParameters.contactId, requestParameters.id, requestParameters.returnTotalCount, requestParameters.q, requestParameters.tags, requestParameters.assignee, options).then((request) => request(axios, basePath));
+            return localVarFp.getTicketsByStage(requestParameters.count, requestParameters.page, requestParameters.boardId, requestParameters.stageId, requestParameters.contactId, requestParameters.returnTotalCount, requestParameters.q, requestParameters.tags, requestParameters.assignee, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -8945,13 +8870,6 @@ export interface CRMApiGetTicketsByStageRequest {
 
     /**
      * 
-     * @type {Array<string>}
-     * @memberof CRMApiGetTicketsByStage
-     */
-    readonly id?: Array<string>
-
-    /**
-     * 
      * @type {boolean}
      * @memberof CRMApiGetTicketsByStage
      */
@@ -9134,7 +9052,7 @@ export class CRMApi extends BaseAPI {
      * @memberof CRMApi
      */
     public getTicketsByStage(requestParameters: CRMApiGetTicketsByStageRequest = {}, options?: AxiosRequestConfig) {
-        return CRMApiFp(this.configuration).getTicketsByStage(requestParameters.count, requestParameters.page, requestParameters.boardId, requestParameters.stageId, requestParameters.contactId, requestParameters.id, requestParameters.returnTotalCount, requestParameters.q, requestParameters.tags, requestParameters.assignee, options).then((request) => request(this.axios, this.basePath));
+        return CRMApiFp(this.configuration).getTicketsByStage(requestParameters.count, requestParameters.page, requestParameters.boardId, requestParameters.stageId, requestParameters.contactId, requestParameters.returnTotalCount, requestParameters.q, requestParameters.tags, requestParameters.assignee, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -9415,7 +9333,6 @@ export const ChatsApiAxiosParamCreator = function (configuration?: Configuration
          * @param {string} [mentioned] 
          * @param {boolean} [hasUnsolvedNote] 
          * @param {boolean} [hasFailedMessage] 
-         * @param {'closed' | 'open'} [ticketStatus] 
          * @param {boolean} [lastMessageFromMe] Only get chats where the last message was sent by me/not me
          * @param {ChatsGetTagsParameter} [tags] Get contacts who fall in either of these tags
          * @param {Array<string>} [notTags] Get contacts who are not in any of these tags
@@ -9429,7 +9346,7 @@ export const ChatsApiAxiosParamCreator = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        chatsGet: async (count?: number, page?: string, archive?: boolean, unread?: boolean, returnTotalCount?: boolean, hasPendingMessage?: boolean, mentioned?: string, hasUnsolvedNote?: boolean, hasFailedMessage?: boolean, ticketStatus?: 'closed' | 'open', lastMessageFromMe?: boolean, tags?: ChatsGetTagsParameter, notTags?: Array<string>, contacts?: ChatsGetContactsParameter, q?: string, assignee?: ChatsGetAssigneeParameter, accountId?: Array<string>, type?: ContactType, ticket?: ChatsGetTicketParameter, returnUnreadChatCount?: boolean, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        chatsGet: async (count?: number, page?: string, archive?: boolean, unread?: boolean, returnTotalCount?: boolean, hasPendingMessage?: boolean, mentioned?: string, hasUnsolvedNote?: boolean, hasFailedMessage?: boolean, lastMessageFromMe?: boolean, tags?: ChatsGetTagsParameter, notTags?: Array<string>, contacts?: ChatsGetContactsParameter, q?: string, assignee?: ChatsGetAssigneeParameter, accountId?: Array<string>, type?: ContactType, ticket?: ChatsGetTicketParameter, returnUnreadChatCount?: boolean, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/chats`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -9480,10 +9397,6 @@ export const ChatsApiAxiosParamCreator = function (configuration?: Configuration
 
             if (hasFailedMessage !== undefined) {
                 localVarQueryParameter['hasFailedMessage'] = hasFailedMessage;
-            }
-
-            if (ticketStatus !== undefined) {
-                localVarQueryParameter['ticketStatus'] = ticketStatus;
             }
 
             if (lastMessageFromMe !== undefined) {
@@ -9632,52 +9545,6 @@ export const ChatsApiAxiosParamCreator = function (configuration?: Configuration
                 options: localVarRequestOptions,
             };
         },
-        /**
-         * 
-         * @summary Update a chat\'s ticket status -- closed | null\'
-         * @param {string} accountId 
-         * @param {string} id 
-         * @param {ChatsTicketStatusPatchRequest} [chatsTicketStatusPatchRequest] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        chatsTicketStatusPatch: async (accountId: string, id: string, chatsTicketStatusPatchRequest?: ChatsTicketStatusPatchRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'accountId' is not null or undefined
-            assertParamExists('chatsTicketStatusPatch', 'accountId', accountId)
-            // verify required parameter 'id' is not null or undefined
-            assertParamExists('chatsTicketStatusPatch', 'id', id)
-            const localVarPath = `/chats/{accountId}/{id}/ticket-status`
-                .replace(`{${"accountId"}}`, encodeURIComponent(String(accountId)))
-                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'PATCH', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication chatdaddy required
-            // oauth required
-            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["CHATS_ACCESS_ALL", "CHATS_ACCESS_ASSIGNED"], configuration)
-
-
-    
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(chatsTicketStatusPatchRequest, localVarRequestOptions, configuration)
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
     }
 };
 
@@ -9700,7 +9567,6 @@ export const ChatsApiFp = function(configuration?: Configuration) {
          * @param {string} [mentioned] 
          * @param {boolean} [hasUnsolvedNote] 
          * @param {boolean} [hasFailedMessage] 
-         * @param {'closed' | 'open'} [ticketStatus] 
          * @param {boolean} [lastMessageFromMe] Only get chats where the last message was sent by me/not me
          * @param {ChatsGetTagsParameter} [tags] Get contacts who fall in either of these tags
          * @param {Array<string>} [notTags] Get contacts who are not in any of these tags
@@ -9714,8 +9580,8 @@ export const ChatsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async chatsGet(count?: number, page?: string, archive?: boolean, unread?: boolean, returnTotalCount?: boolean, hasPendingMessage?: boolean, mentioned?: string, hasUnsolvedNote?: boolean, hasFailedMessage?: boolean, ticketStatus?: 'closed' | 'open', lastMessageFromMe?: boolean, tags?: ChatsGetTagsParameter, notTags?: Array<string>, contacts?: ChatsGetContactsParameter, q?: string, assignee?: ChatsGetAssigneeParameter, accountId?: Array<string>, type?: ContactType, ticket?: ChatsGetTicketParameter, returnUnreadChatCount?: boolean, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ChatsGet200Response>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.chatsGet(count, page, archive, unread, returnTotalCount, hasPendingMessage, mentioned, hasUnsolvedNote, hasFailedMessage, ticketStatus, lastMessageFromMe, tags, notTags, contacts, q, assignee, accountId, type, ticket, returnUnreadChatCount, options);
+        async chatsGet(count?: number, page?: string, archive?: boolean, unread?: boolean, returnTotalCount?: boolean, hasPendingMessage?: boolean, mentioned?: string, hasUnsolvedNote?: boolean, hasFailedMessage?: boolean, lastMessageFromMe?: boolean, tags?: ChatsGetTagsParameter, notTags?: Array<string>, contacts?: ChatsGetContactsParameter, q?: string, assignee?: ChatsGetAssigneeParameter, accountId?: Array<string>, type?: ContactType, ticket?: ChatsGetTicketParameter, returnUnreadChatCount?: boolean, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ChatsGet200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.chatsGet(count, page, archive, unread, returnTotalCount, hasPendingMessage, mentioned, hasUnsolvedNote, hasFailedMessage, lastMessageFromMe, tags, notTags, contacts, q, assignee, accountId, type, ticket, returnUnreadChatCount, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -9744,19 +9610,6 @@ export const ChatsApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.chatsPresencePost(accountId, id, presence, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
-        /**
-         * 
-         * @summary Update a chat\'s ticket status -- closed | null\'
-         * @param {string} accountId 
-         * @param {string} id 
-         * @param {ChatsTicketStatusPatchRequest} [chatsTicketStatusPatchRequest] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async chatsTicketStatusPatch(accountId: string, id: string, chatsTicketStatusPatchRequest?: ChatsTicketStatusPatchRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AccountsLogout200Response>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.chatsTicketStatusPatch(accountId, id, chatsTicketStatusPatchRequest, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
     }
 };
 
@@ -9775,7 +9628,7 @@ export const ChatsApiFactory = function (configuration?: Configuration, basePath
          * @throws {RequiredError}
          */
         chatsGet(requestParameters: ChatsApiChatsGetRequest = {}, options?: AxiosRequestConfig): AxiosPromise<ChatsGet200Response> {
-            return localVarFp.chatsGet(requestParameters.count, requestParameters.page, requestParameters.archive, requestParameters.unread, requestParameters.returnTotalCount, requestParameters.hasPendingMessage, requestParameters.mentioned, requestParameters.hasUnsolvedNote, requestParameters.hasFailedMessage, requestParameters.ticketStatus, requestParameters.lastMessageFromMe, requestParameters.tags, requestParameters.notTags, requestParameters.contacts, requestParameters.q, requestParameters.assignee, requestParameters.accountId, requestParameters.type, requestParameters.ticket, requestParameters.returnUnreadChatCount, options).then((request) => request(axios, basePath));
+            return localVarFp.chatsGet(requestParameters.count, requestParameters.page, requestParameters.archive, requestParameters.unread, requestParameters.returnTotalCount, requestParameters.hasPendingMessage, requestParameters.mentioned, requestParameters.hasUnsolvedNote, requestParameters.hasFailedMessage, requestParameters.lastMessageFromMe, requestParameters.tags, requestParameters.notTags, requestParameters.contacts, requestParameters.q, requestParameters.assignee, requestParameters.accountId, requestParameters.type, requestParameters.ticket, requestParameters.returnUnreadChatCount, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -9796,16 +9649,6 @@ export const ChatsApiFactory = function (configuration?: Configuration, basePath
          */
         chatsPresencePost(requestParameters: ChatsApiChatsPresencePostRequest, options?: AxiosRequestConfig): AxiosPromise<AccountsLogout200Response> {
             return localVarFp.chatsPresencePost(requestParameters.accountId, requestParameters.id, requestParameters.presence, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
-         * @summary Update a chat\'s ticket status -- closed | null\'
-         * @param {ChatsApiChatsTicketStatusPatchRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        chatsTicketStatusPatch(requestParameters: ChatsApiChatsTicketStatusPatchRequest, options?: AxiosRequestConfig): AxiosPromise<AccountsLogout200Response> {
-            return localVarFp.chatsTicketStatusPatch(requestParameters.accountId, requestParameters.id, requestParameters.chatsTicketStatusPatchRequest, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -9878,13 +9721,6 @@ export interface ChatsApiChatsGetRequest {
      * @memberof ChatsApiChatsGet
      */
     readonly hasFailedMessage?: boolean
-
-    /**
-     * 
-     * @type {'closed' | 'open'}
-     * @memberof ChatsApiChatsGet
-     */
-    readonly ticketStatus?: 'closed' | 'open'
 
     /**
      * Only get chats where the last message was sent by me/not me
@@ -10014,34 +9850,6 @@ export interface ChatsApiChatsPresencePostRequest {
 }
 
 /**
- * Request parameters for chatsTicketStatusPatch operation in ChatsApi.
- * @export
- * @interface ChatsApiChatsTicketStatusPatchRequest
- */
-export interface ChatsApiChatsTicketStatusPatchRequest {
-    /**
-     * 
-     * @type {string}
-     * @memberof ChatsApiChatsTicketStatusPatch
-     */
-    readonly accountId: string
-
-    /**
-     * 
-     * @type {string}
-     * @memberof ChatsApiChatsTicketStatusPatch
-     */
-    readonly id: string
-
-    /**
-     * 
-     * @type {ChatsTicketStatusPatchRequest}
-     * @memberof ChatsApiChatsTicketStatusPatch
-     */
-    readonly chatsTicketStatusPatchRequest?: ChatsTicketStatusPatchRequest
-}
-
-/**
  * ChatsApi - object-oriented interface
  * @export
  * @class ChatsApi
@@ -10057,7 +9865,7 @@ export class ChatsApi extends BaseAPI {
      * @memberof ChatsApi
      */
     public chatsGet(requestParameters: ChatsApiChatsGetRequest = {}, options?: AxiosRequestConfig) {
-        return ChatsApiFp(this.configuration).chatsGet(requestParameters.count, requestParameters.page, requestParameters.archive, requestParameters.unread, requestParameters.returnTotalCount, requestParameters.hasPendingMessage, requestParameters.mentioned, requestParameters.hasUnsolvedNote, requestParameters.hasFailedMessage, requestParameters.ticketStatus, requestParameters.lastMessageFromMe, requestParameters.tags, requestParameters.notTags, requestParameters.contacts, requestParameters.q, requestParameters.assignee, requestParameters.accountId, requestParameters.type, requestParameters.ticket, requestParameters.returnUnreadChatCount, options).then((request) => request(this.axios, this.basePath));
+        return ChatsApiFp(this.configuration).chatsGet(requestParameters.count, requestParameters.page, requestParameters.archive, requestParameters.unread, requestParameters.returnTotalCount, requestParameters.hasPendingMessage, requestParameters.mentioned, requestParameters.hasUnsolvedNote, requestParameters.hasFailedMessage, requestParameters.lastMessageFromMe, requestParameters.tags, requestParameters.notTags, requestParameters.contacts, requestParameters.q, requestParameters.assignee, requestParameters.accountId, requestParameters.type, requestParameters.ticket, requestParameters.returnUnreadChatCount, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -10083,18 +9891,6 @@ export class ChatsApi extends BaseAPI {
     public chatsPresencePost(requestParameters: ChatsApiChatsPresencePostRequest, options?: AxiosRequestConfig) {
         return ChatsApiFp(this.configuration).chatsPresencePost(requestParameters.accountId, requestParameters.id, requestParameters.presence, options).then((request) => request(this.axios, this.basePath));
     }
-
-    /**
-     * 
-     * @summary Update a chat\'s ticket status -- closed | null\'
-     * @param {ChatsApiChatsTicketStatusPatchRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof ChatsApi
-     */
-    public chatsTicketStatusPatch(requestParameters: ChatsApiChatsTicketStatusPatchRequest, options?: AxiosRequestConfig) {
-        return ChatsApiFp(this.configuration).chatsTicketStatusPatch(requestParameters.accountId, requestParameters.id, requestParameters.chatsTicketStatusPatchRequest, options).then((request) => request(this.axios, this.basePath));
-    }
 }
 
 
@@ -10104,47 +9900,6 @@ export class ChatsApi extends BaseAPI {
  */
 export const ContactsApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
-        /**
-         * 
-         * @summary Get the number of contacts per team for the given teamIds
-         * @param {Array<string>} teamIds 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        contactsAggregationGet: async (teamIds: Array<string>, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'teamIds' is not null or undefined
-            assertParamExists('contactsAggregationGet', 'teamIds', teamIds)
-            const localVarPath = `/contacts/aggregation`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication chatdaddy required
-            // oauth required
-            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["ADMIN_PANEL_ACCESS"], configuration)
-
-            if (teamIds) {
-                localVarQueryParameter['teamIds'] = teamIds;
-            }
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
         /**
          * Eg. provide a phone number to check whether the user is registered on WhatsApp
          * @summary Check a given user exists on the IM platform
@@ -10705,17 +10460,6 @@ export const ContactsApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = ContactsApiAxiosParamCreator(configuration)
     return {
         /**
-         * 
-         * @summary Get the number of contacts per team for the given teamIds
-         * @param {Array<string>} teamIds 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async contactsAggregationGet(teamIds: Array<string>, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ContactsAggregationGet200Response>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.contactsAggregationGet(teamIds, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-        /**
          * Eg. provide a phone number to check whether the user is registered on WhatsApp
          * @summary Check a given user exists on the IM platform
          * @param {'whatsapp' | 'tiktok'} type which account type to check from
@@ -10853,16 +10597,6 @@ export const ContactsApiFactory = function (configuration?: Configuration, baseP
     const localVarFp = ContactsApiFp(configuration)
     return {
         /**
-         * 
-         * @summary Get the number of contacts per team for the given teamIds
-         * @param {ContactsApiContactsAggregationGetRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        contactsAggregationGet(requestParameters: ContactsApiContactsAggregationGetRequest, options?: AxiosRequestConfig): AxiosPromise<ContactsAggregationGet200Response> {
-            return localVarFp.contactsAggregationGet(requestParameters.teamIds, options).then((request) => request(axios, basePath));
-        },
-        /**
          * Eg. provide a phone number to check whether the user is registered on WhatsApp
          * @summary Check a given user exists on the IM platform
          * @param {ContactsApiContactsCheckExistsRequest} requestParameters Request parameters.
@@ -10924,20 +10658,6 @@ export const ContactsApiFactory = function (configuration?: Configuration, baseP
         },
     };
 };
-
-/**
- * Request parameters for contactsAggregationGet operation in ContactsApi.
- * @export
- * @interface ContactsApiContactsAggregationGetRequest
- */
-export interface ContactsApiContactsAggregationGetRequest {
-    /**
-     * 
-     * @type {Array<string>}
-     * @memberof ContactsApiContactsAggregationGet
-     */
-    readonly teamIds: Array<string>
-}
 
 /**
  * Request parameters for contactsCheckExists operation in ContactsApi.
@@ -11457,18 +11177,6 @@ export interface ContactsApiContactsPostRequest {
  * @extends {BaseAPI}
  */
 export class ContactsApi extends BaseAPI {
-    /**
-     * 
-     * @summary Get the number of contacts per team for the given teamIds
-     * @param {ContactsApiContactsAggregationGetRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof ContactsApi
-     */
-    public contactsAggregationGet(requestParameters: ContactsApiContactsAggregationGetRequest, options?: AxiosRequestConfig) {
-        return ContactsApiFp(this.configuration).contactsAggregationGet(requestParameters.teamIds, options).then((request) => request(this.axios, this.basePath));
-    }
-
     /**
      * Eg. provide a phone number to check whether the user is registered on WhatsApp
      * @summary Check a given user exists on the IM platform

@@ -5305,12 +5305,6 @@ export interface ChatInsertData {
     'readOnly': boolean;
     /**
      * 
-     * @type {string}
-     * @memberof ChatInsertData
-     */
-    'ticketStatus'?: ChatInsertDataTicketStatusEnum;
-    /**
-     * 
      * @type {number}
      * @memberof ChatInsertData
      */
@@ -5370,14 +5364,6 @@ export interface ChatInsertData {
      */
     'cursor': string;
 }
-
-export const ChatInsertDataTicketStatusEnum = {
-    Closed: 'closed',
-    Null: null as null
-} as const;
-
-export type ChatInsertDataTicketStatusEnum = typeof ChatInsertDataTicketStatusEnum[keyof typeof ChatInsertDataTicketStatusEnum];
-
 /**
  * 
  * @export
@@ -5454,12 +5440,6 @@ export interface ChatUpdateData {
     'readOnly'?: boolean;
     /**
      * 
-     * @type {string}
-     * @memberof ChatUpdateData
-     */
-    'ticketStatus'?: ChatUpdateDataTicketStatusEnum;
-    /**
-     * 
      * @type {number}
      * @memberof ChatUpdateData
      */
@@ -5519,14 +5499,6 @@ export interface ChatUpdateData {
      */
     'cursor'?: string;
 }
-
-export const ChatUpdateDataTicketStatusEnum = {
-    Closed: 'closed',
-    Null: null as null
-} as const;
-
-export type ChatUpdateDataTicketStatusEnum = typeof ChatUpdateDataTicketStatusEnum[keyof typeof ChatUpdateDataTicketStatusEnum];
-
 /**
  * 
  * @export
