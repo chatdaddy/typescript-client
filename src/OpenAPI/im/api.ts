@@ -2275,10 +2275,10 @@ export interface ContactsPostContactsInner {
     'email'?: string;
     /**
      * 
-     * @type {Array<ContactTagInsert>}
+     * @type {Array<ContactTagUpdate>}
      * @memberof ContactsPostContactsInner
      */
-    'tags'?: Array<ContactTagInsert> | null;
+    'tags'?: Array<ContactTagUpdate> | null;
     /**
      * 
      * @type {string}
