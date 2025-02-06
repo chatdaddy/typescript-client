@@ -112,7 +112,7 @@ export type AggregateTeamDataValue = ValueObject | { [key: string]: ValueObject;
  * @export
  * @interface ArrayPropertyDescriptor
  */
-interface ArrayPropertyDescriptor {
+export interface ArrayPropertyDescriptor {
     /**
      * 
      * @type {string}
@@ -127,18 +127,18 @@ interface ArrayPropertyDescriptor {
     'items': DataPropertyDescriptor;
 }
 
-const ArrayPropertyDescriptorTypeEnum = {
+export const ArrayPropertyDescriptorTypeEnum = {
     Array: 'array'
 } as const;
 
-type ArrayPropertyDescriptorTypeEnum = typeof ArrayPropertyDescriptorTypeEnum[keyof typeof ArrayPropertyDescriptorTypeEnum];
+export type ArrayPropertyDescriptorTypeEnum = typeof ArrayPropertyDescriptorTypeEnum[keyof typeof ArrayPropertyDescriptorTypeEnum];
 
 /**
  * 
  * @export
  * @interface ConditionalPropertyOption
  */
-interface ConditionalPropertyOption {
+export interface ConditionalPropertyOption {
     /**
      * Stringified value of the option.
      * @type {string}
@@ -420,7 +420,7 @@ export type DashboardSchemaItemsInner = DashboardSchemaItem | TextSchemaItem;
  * @export
  * @interface DashboardUpdate
  */
-interface DashboardUpdate {
+export interface DashboardUpdate {
     /**
      * 
      * @type {string}
@@ -537,12 +537,12 @@ export type DataAggregateType = typeof DataAggregateType[keyof typeof DataAggreg
  * @export
  * @interface DataProperty
  */
-type DataProperty = DataPropertyDescriptor & PropertyMetadata
+export type DataProperty = DataPropertyDescriptor & PropertyMetadata
 /**
  * @type DataPropertyDescriptor
  * @export
  */
-type DataPropertyDescriptor = SimplePropertyDescriptor | ArrayPropertyDescriptor | MapPropertyDescriptor | OAuthPropertyDescriptor;
+export type DataPropertyDescriptor = SimplePropertyDescriptor | ArrayPropertyDescriptor | MapPropertyDescriptor | OAuthPropertyDescriptor;
 
 /**
  * 
@@ -568,7 +568,7 @@ export interface DateRange {
  * @export
  * @interface DisplayIcon
  */
-interface DisplayIcon {
+export interface DisplayIcon {
     /**
      * Material symbol name
      * @type {string}
@@ -705,7 +705,7 @@ export interface GetInitData200ResponseDefaultDashboard {
  * @export
  * @interface MapPropertyDescriptor
  */
-interface MapPropertyDescriptor {
+export interface MapPropertyDescriptor {
     /**
      * 
      * @type {string}
@@ -726,11 +726,11 @@ interface MapPropertyDescriptor {
     'additionalProperties'?: DataPropertyDescriptor;
 }
 
-const MapPropertyDescriptorTypeEnum = {
+export const MapPropertyDescriptorTypeEnum = {
     Map: 'map'
 } as const;
 
-type MapPropertyDescriptorTypeEnum = typeof MapPropertyDescriptorTypeEnum[keyof typeof MapPropertyDescriptorTypeEnum];
+export type MapPropertyDescriptorTypeEnum = typeof MapPropertyDescriptorTypeEnum[keyof typeof MapPropertyDescriptorTypeEnum];
 
 /**
  * 
@@ -964,7 +964,7 @@ export type NullableDashboardMetadataAccess = typeof NullableDashboardMetadataAc
  * @export
  * @interface OAuthPropertyDescriptor
  */
-interface OAuthPropertyDescriptor {
+export interface OAuthPropertyDescriptor {
     /**
      * 
      * @type {string}
@@ -979,18 +979,18 @@ interface OAuthPropertyDescriptor {
     'url'?: string;
 }
 
-const OAuthPropertyDescriptorTypeEnum = {
+export const OAuthPropertyDescriptorTypeEnum = {
     Oauth: 'oauth'
 } as const;
 
-type OAuthPropertyDescriptorTypeEnum = typeof OAuthPropertyDescriptorTypeEnum[keyof typeof OAuthPropertyDescriptorTypeEnum];
+export type OAuthPropertyDescriptorTypeEnum = typeof OAuthPropertyDescriptorTypeEnum[keyof typeof OAuthPropertyDescriptorTypeEnum];
 
 /**
  * 
  * @export
  * @interface PropertyMetadata
  */
-interface PropertyMetadata {
+export interface PropertyMetadata {
     /**
      * 
      * @type {string}
@@ -1027,7 +1027,7 @@ interface PropertyMetadata {
  * @export
  * @interface SimplePropertyDescriptor
  */
-interface SimplePropertyDescriptor {
+export interface SimplePropertyDescriptor {
     /**
      * 
      * @type {SimplePropertyType}
@@ -1061,7 +1061,7 @@ interface SimplePropertyDescriptor {
  * @enum {string}
  */
 
-const SimplePropertyType = {
+export const SimplePropertyType = {
     String: 'string',
     Number: 'number',
     Boolean: 'boolean',
@@ -1082,7 +1082,7 @@ const SimplePropertyType = {
     CreditConsumptionType: 'credit_consumption_type'
 } as const;
 
-type SimplePropertyType = typeof SimplePropertyType[keyof typeof SimplePropertyType];
+export type SimplePropertyType = typeof SimplePropertyType[keyof typeof SimplePropertyType];
 
 
 /**

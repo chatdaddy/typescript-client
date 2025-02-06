@@ -30,7 +30,7 @@ import { COLLECTION_FORMATS, BaseAPI, RequiredError } from '../base';
  * @export
  * @interface AddServiceModel
  */
-interface AddServiceModel {
+export interface AddServiceModel {
     /**
      * Name of the service/scrapper
      * @type {string}
@@ -97,7 +97,7 @@ interface AddServiceModel {
  * @export
  * @interface AddServiceModelOutput
  */
-interface AddServiceModelOutput {
+export interface AddServiceModelOutput {
     /**
      * URL to send webhooks to
      * @type {string}
@@ -109,14 +109,14 @@ interface AddServiceModelOutput {
  * @type AddServiceModelParametersValue
  * @export
  */
-type AddServiceModelParametersValue = AddServiceModelParametersValueOneOf | AddServiceModelParametersValueOneOf1 | AddServiceModelParametersValueOneOf2 | AddServiceModelParametersValueOneOf3;
+export type AddServiceModelParametersValue = AddServiceModelParametersValueOneOf | AddServiceModelParametersValueOneOf1 | AddServiceModelParametersValueOneOf2 | AddServiceModelParametersValueOneOf3;
 
 /**
  * 
  * @export
  * @interface AddServiceModelParametersValueOneOf
  */
-interface AddServiceModelParametersValueOneOf {
+export interface AddServiceModelParametersValueOneOf {
     /**
      * 
      * @type {AddServiceModelParametersValueOneOfCanBeConditionedOn}
@@ -149,24 +149,24 @@ interface AddServiceModelParametersValueOneOf {
     'examples'?: Array<string>;
 }
 
-const AddServiceModelParametersValueOneOfTypeEnum = {
+export const AddServiceModelParametersValueOneOfTypeEnum = {
     String: 'string'
 } as const;
 
-type AddServiceModelParametersValueOneOfTypeEnum = typeof AddServiceModelParametersValueOneOfTypeEnum[keyof typeof AddServiceModelParametersValueOneOfTypeEnum];
-const AddServiceModelParametersValueOneOfFormatEnum = {
+export type AddServiceModelParametersValueOneOfTypeEnum = typeof AddServiceModelParametersValueOneOfTypeEnum[keyof typeof AddServiceModelParametersValueOneOfTypeEnum];
+export const AddServiceModelParametersValueOneOfFormatEnum = {
     DateTime: 'date-time',
     Date: 'date'
 } as const;
 
-type AddServiceModelParametersValueOneOfFormatEnum = typeof AddServiceModelParametersValueOneOfFormatEnum[keyof typeof AddServiceModelParametersValueOneOfFormatEnum];
+export type AddServiceModelParametersValueOneOfFormatEnum = typeof AddServiceModelParametersValueOneOfFormatEnum[keyof typeof AddServiceModelParametersValueOneOfFormatEnum];
 
 /**
  * 
  * @export
  * @interface AddServiceModelParametersValueOneOf1
  */
-interface AddServiceModelParametersValueOneOf1 {
+export interface AddServiceModelParametersValueOneOf1 {
     /**
      * 
      * @type {AddServiceModelParametersValueOneOfCanBeConditionedOn}
@@ -193,18 +193,18 @@ interface AddServiceModelParametersValueOneOf1 {
     'examples'?: Array<number>;
 }
 
-const AddServiceModelParametersValueOneOf1TypeEnum = {
+export const AddServiceModelParametersValueOneOf1TypeEnum = {
     Number: 'number'
 } as const;
 
-type AddServiceModelParametersValueOneOf1TypeEnum = typeof AddServiceModelParametersValueOneOf1TypeEnum[keyof typeof AddServiceModelParametersValueOneOf1TypeEnum];
+export type AddServiceModelParametersValueOneOf1TypeEnum = typeof AddServiceModelParametersValueOneOf1TypeEnum[keyof typeof AddServiceModelParametersValueOneOf1TypeEnum];
 
 /**
  * 
  * @export
  * @interface AddServiceModelParametersValueOneOf2
  */
-interface AddServiceModelParametersValueOneOf2 {
+export interface AddServiceModelParametersValueOneOf2 {
     /**
      * 
      * @type {string}
@@ -225,18 +225,18 @@ interface AddServiceModelParametersValueOneOf2 {
     'examples'?: Array<Array<any>>;
 }
 
-const AddServiceModelParametersValueOneOf2TypeEnum = {
+export const AddServiceModelParametersValueOneOf2TypeEnum = {
     Array: 'array'
 } as const;
 
-type AddServiceModelParametersValueOneOf2TypeEnum = typeof AddServiceModelParametersValueOneOf2TypeEnum[keyof typeof AddServiceModelParametersValueOneOf2TypeEnum];
+export type AddServiceModelParametersValueOneOf2TypeEnum = typeof AddServiceModelParametersValueOneOf2TypeEnum[keyof typeof AddServiceModelParametersValueOneOf2TypeEnum];
 
 /**
  * 
  * @export
  * @interface AddServiceModelParametersValueOneOf2Items
  */
-interface AddServiceModelParametersValueOneOf2Items {
+export interface AddServiceModelParametersValueOneOf2Items {
     /**
      * 
      * @type {string}
@@ -249,7 +249,7 @@ interface AddServiceModelParametersValueOneOf2Items {
  * @export
  * @interface AddServiceModelParametersValueOneOf3
  */
-interface AddServiceModelParametersValueOneOf3 {
+export interface AddServiceModelParametersValueOneOf3 {
     /**
      * 
      * @type {string}
@@ -270,25 +270,25 @@ interface AddServiceModelParametersValueOneOf3 {
     'examples'?: Array<{ [key: string]: any; }>;
 }
 
-const AddServiceModelParametersValueOneOf3TypeEnum = {
+export const AddServiceModelParametersValueOneOf3TypeEnum = {
     Object: 'object'
 } as const;
 
-type AddServiceModelParametersValueOneOf3TypeEnum = typeof AddServiceModelParametersValueOneOf3TypeEnum[keyof typeof AddServiceModelParametersValueOneOf3TypeEnum];
+export type AddServiceModelParametersValueOneOf3TypeEnum = typeof AddServiceModelParametersValueOneOf3TypeEnum[keyof typeof AddServiceModelParametersValueOneOf3TypeEnum];
 
 /**
  * @type AddServiceModelParametersValueOneOfCanBeConditionedOn
  * If this parameter can have conditions. If it is an object, it is forced to be false
  * @export
  */
-type AddServiceModelParametersValueOneOfCanBeConditionedOn = boolean | string;
+export type AddServiceModelParametersValueOneOfCanBeConditionedOn = boolean | string;
 
 /**
  * 
  * @export
  * @interface AddServiceModelSetupValue
  */
-interface AddServiceModelSetupValue {
+export interface AddServiceModelSetupValue {
     /**
      * 
      * @type {string}
@@ -327,26 +327,26 @@ interface AddServiceModelSetupValue {
     'url'?: string;
 }
 
-const AddServiceModelSetupValueTypeEnum = {
+export const AddServiceModelSetupValueTypeEnum = {
     String: 'string',
     Oauth: 'oauth',
     Password: 'password'
 } as const;
 
-type AddServiceModelSetupValueTypeEnum = typeof AddServiceModelSetupValueTypeEnum[keyof typeof AddServiceModelSetupValueTypeEnum];
+export type AddServiceModelSetupValueTypeEnum = typeof AddServiceModelSetupValueTypeEnum[keyof typeof AddServiceModelSetupValueTypeEnum];
 
 /**
  * @type AddServiceModelSetupValueRequired
  * @export
  */
-type AddServiceModelSetupValueRequired = boolean | string;
+export type AddServiceModelSetupValueRequired = boolean | string;
 
 /**
  * 
  * @export
  * @interface AppError
  */
-interface AppError {
+export interface AppError {
     /**
      * 
      * @type {number}
@@ -371,7 +371,7 @@ interface AppError {
  * @export
  * @interface AppErrorData
  */
-interface AppErrorData {
+export interface AppErrorData {
     [key: string]: any;
 
     /**
@@ -385,14 +385,14 @@ interface AppErrorData {
  * @type AppErrorDataHelpLink
  * @export
  */
-type AppErrorDataHelpLink = AppErrorDataHelpLinkOneOf | AppErrorDataHelpLinkOneOf1;
+export type AppErrorDataHelpLink = AppErrorDataHelpLinkOneOf | AppErrorDataHelpLinkOneOf1;
 
 /**
  * 
  * @export
  * @interface AppErrorDataHelpLinkOneOf
  */
-interface AppErrorDataHelpLinkOneOf {
+export interface AppErrorDataHelpLinkOneOf {
     /**
      * 
      * @type {string}
@@ -405,7 +405,7 @@ interface AppErrorDataHelpLinkOneOf {
  * @export
  * @interface AppErrorDataHelpLinkOneOf1
  */
-interface AppErrorDataHelpLinkOneOf1 {
+export interface AppErrorDataHelpLinkOneOf1 {
     /**
      * 
      * @type {string}
@@ -444,7 +444,7 @@ export interface GetTrackingProducts200Response {
  * @export
  * @interface PlatformProduct
  */
-interface PlatformProduct {
+export interface PlatformProduct {
     /**
      * 
      * @type {string}
@@ -580,11 +580,11 @@ interface PlatformProduct {
  * @enum {string}
  */
 
-const ProductAvailability = {
+export const ProductAvailability = {
     InStock: 'in-stock'
 } as const;
 
-type ProductAvailability = typeof ProductAvailability[keyof typeof ProductAvailability];
+export type ProductAvailability = typeof ProductAvailability[keyof typeof ProductAvailability];
 
 
 /**
@@ -592,7 +592,7 @@ type ProductAvailability = typeof ProductAvailability[keyof typeof ProductAvaila
  * @export
  * @interface ProductCategory
  */
-interface ProductCategory {
+export interface ProductCategory {
     /**
      * 
      * @type {string}
@@ -624,14 +624,14 @@ interface ProductCategory {
  * @enum {string}
  */
 
-const ProductSyncStatus = {
+export const ProductSyncStatus = {
     Synced: 'synced',
     PendingCreate: 'pendingCreate',
     PendingUpdate: 'pendingUpdate',
     PendingDelete: 'pendingDelete'
 } as const;
 
-type ProductSyncStatus = typeof ProductSyncStatus[keyof typeof ProductSyncStatus];
+export type ProductSyncStatus = typeof ProductSyncStatus[keyof typeof ProductSyncStatus];
 
 
 /**
@@ -639,7 +639,7 @@ type ProductSyncStatus = typeof ProductSyncStatus[keyof typeof ProductSyncStatus
  * @export
  * @interface ServiceModel
  */
-interface ServiceModel {
+export interface ServiceModel {
     /**
      * Used to store and uniquely identify a service/scraper
      * @type {string}
@@ -718,7 +718,7 @@ interface ServiceModel {
  * @export
  * @interface ShopProduct
  */
-interface ShopProduct {
+export interface ShopProduct {
     /**
      * 
      * @type {string}
