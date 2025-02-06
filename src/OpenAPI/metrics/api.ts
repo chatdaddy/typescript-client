@@ -31,6 +31,67 @@ import { COLLECTION_FORMATS, BaseAPI, RequiredError } from '../base';
  * @enum {string}
  */
 
+export const AdminDashboardPeriod = {
+    4Weeks: 'last-4-weeks',
+    12Weeks: 'last-12-weeks',
+    12Months: 'last-12-months'
+} as const;
+
+export type AdminDashboardPeriod = typeof AdminDashboardPeriod[keyof typeof AdminDashboardPeriod];
+
+
+/**
+ * 
+ * @export
+ * @interface AdminDashboardResponse
+ */
+export interface AdminDashboardResponse {
+    /**
+     * 
+     * @type {Array<TeamData>}
+     * @memberof AdminDashboardResponse
+     */
+    'items': Array<TeamData>;
+    /**
+     * 
+     * @type {string}
+     * @memberof AdminDashboardResponse
+     */
+    'nextCursor'?: string;
+}
+/**
+ * 
+ * @export
+ * @interface AdminDashboardSort
+ */
+export interface AdminDashboardSort {
+    /**
+     * 
+     * @type {string}
+     * @memberof AdminDashboardSort
+     */
+    'field': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof AdminDashboardSort
+     */
+    'order': AdminDashboardSortOrderEnum;
+}
+
+export const AdminDashboardSortOrderEnum = {
+    Asc: 'asc',
+    Desc: 'desc'
+} as const;
+
+export type AdminDashboardSortOrderEnum = typeof AdminDashboardSortOrderEnum[keyof typeof AdminDashboardSortOrderEnum];
+
+/**
+ * 
+ * @export
+ * @enum {string}
+ */
+
 export const Aggregate = {
     Day: 'day',
     Week: 'week',
@@ -39,6 +100,12 @@ export const Aggregate = {
 
 export type Aggregate = typeof Aggregate[keyof typeof Aggregate];
 
+
+/**
+ * @type AggregateTeamDataValue
+ * @export
+ */
+export type AggregateTeamDataValue = ValueObject | { [key: string]: ValueObject; };
 
 /**
  * Describe an array
@@ -252,6 +319,7 @@ export const DashboardPeriod = {
     YearToDate: 'year-to-date',
     Last4Weeks: 'last-4-weeks',
     Last12Weeks: 'last-12-weeks',
+    Last12Months: 'last-12-months',
     Custom: 'custom'
 } as const;
 
@@ -546,6 +614,12 @@ export interface GetDashboardMetadatas200Response {
  * @interface GetInitData200Response
  */
 export interface GetInitData200Response {
+    /**
+     * 
+     * @type {DashboardSchema}
+     * @memberof GetInitData200Response
+     */
+    'adminDashboardSchema'?: DashboardSchema;
     /**
      * 
      * @type {Array<DashboardMetadata>}
@@ -1014,6 +1088,86 @@ type SimplePropertyType = typeof SimplePropertyType[keyof typeof SimplePropertyT
 /**
  * 
  * @export
+ * @interface TeamData
+ */
+export interface TeamData {
+    /**
+     * 
+     * @type {string}
+     * @memberof TeamData
+     */
+    'id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof TeamData
+     */
+    'customerId': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof TeamData
+     */
+    'name'?: string;
+    /**
+     * An ISO formatted timestamp
+     * @type {string}
+     * @memberof TeamData
+     */
+    'updatedAt': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof TeamData
+     */
+    'industry': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof TeamData
+     */
+    'region': string;
+    /**
+     * 
+     * @type {TeamDataData}
+     * @memberof TeamData
+     */
+    'data': TeamDataData;
+}
+/**
+ * 
+ * @export
+ * @interface TeamDataData
+ */
+export interface TeamDataData {
+    /**
+     * 
+     * @type {{ [key: string]: AggregateTeamDataValue; }}
+     * @memberof TeamDataData
+     */
+    'static'?: { [key: string]: AggregateTeamDataValue; };
+    /**
+     * 
+     * @type {{ [key: string]: AggregateTeamDataValue; }}
+     * @memberof TeamDataData
+     */
+    'last4Weeks'?: { [key: string]: AggregateTeamDataValue; };
+    /**
+     * 
+     * @type {{ [key: string]: AggregateTeamDataValue; }}
+     * @memberof TeamDataData
+     */
+    'last12Weeks'?: { [key: string]: AggregateTeamDataValue; };
+    /**
+     * 
+     * @type {{ [key: string]: AggregateTeamDataValue; }}
+     * @memberof TeamDataData
+     */
+    'last12Months'?: { [key: string]: AggregateTeamDataValue; };
+}
+/**
+ * 
+ * @export
  * @interface TextSchemaItem
  */
 export interface TextSchemaItem {
@@ -1125,6 +1279,82 @@ export const DashboardApiAxiosParamCreator = function (configuration?: Configura
             // authentication chatdaddy required
             // oauth required
             await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["DASHBOARD_DELETE"], configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Get admin dashboards
+         * @param {AdminDashboardPeriod} period 
+         * @param {Array<string>} [teamIds] Fetch specific teams by ID
+         * @param {string} [customerId] 
+         * @param {number} [count] Numboer of items to fetch.
+         * @param {string} [cursor] Cursor to fetch the next page of dashboards.
+         * @param {string} [industry] 
+         * @param {string} [region] 
+         * @param {AdminDashboardSort} [sort] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getAdminDashboards: async (period: AdminDashboardPeriod, teamIds?: Array<string>, customerId?: string, count?: number, cursor?: string, industry?: string, region?: string, sort?: AdminDashboardSort, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'period' is not null or undefined
+            assertParamExists('getAdminDashboards', 'period', period)
+            const localVarPath = `/dashboard/admin`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["ADMIN_PANEL_ACCESS"], configuration)
+
+            if (teamIds) {
+                localVarQueryParameter['teamIds'] = teamIds;
+            }
+
+            if (customerId !== undefined) {
+                localVarQueryParameter['customerId'] = customerId;
+            }
+
+            if (count !== undefined) {
+                localVarQueryParameter['count'] = count;
+            }
+
+            if (cursor !== undefined) {
+                localVarQueryParameter['cursor'] = cursor;
+            }
+
+            if (period !== undefined) {
+                localVarQueryParameter['period'] = period;
+            }
+
+            if (industry !== undefined) {
+                localVarQueryParameter['industry'] = industry;
+            }
+
+            if (region !== undefined) {
+                localVarQueryParameter['region'] = region;
+            }
+
+            if (sort !== undefined) {
+                localVarQueryParameter['sort'] = sort;
+            }
 
 
     
@@ -1436,6 +1666,24 @@ export const DashboardApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
+         * @summary Get admin dashboards
+         * @param {AdminDashboardPeriod} period 
+         * @param {Array<string>} [teamIds] Fetch specific teams by ID
+         * @param {string} [customerId] 
+         * @param {number} [count] Numboer of items to fetch.
+         * @param {string} [cursor] Cursor to fetch the next page of dashboards.
+         * @param {string} [industry] 
+         * @param {string} [region] 
+         * @param {AdminDashboardSort} [sort] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getAdminDashboards(period: AdminDashboardPeriod, teamIds?: Array<string>, customerId?: string, count?: number, cursor?: string, industry?: string, region?: string, sort?: AdminDashboardSort, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AdminDashboardResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getAdminDashboards(period, teamIds, customerId, count, cursor, industry, region, sort, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
          * @summary Get dashboard data
          * @param {DashboardPeriod} period 
          * @param {Aggregate} aggregate Timeframe to aggregate the data in.
@@ -1533,6 +1781,16 @@ export const DashboardApiFactory = function (configuration?: Configuration, base
         },
         /**
          * 
+         * @summary Get admin dashboards
+         * @param {DashboardApiGetAdminDashboardsRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getAdminDashboards(requestParameters: DashboardApiGetAdminDashboardsRequest, options?: AxiosRequestConfig): AxiosPromise<AdminDashboardResponse> {
+            return localVarFp.getAdminDashboards(requestParameters.period, requestParameters.teamIds, requestParameters.customerId, requestParameters.count, requestParameters.cursor, requestParameters.industry, requestParameters.region, requestParameters.sort, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
          * @summary Get dashboard data
          * @param {DashboardApiGetDashboardRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -1616,6 +1874,69 @@ export interface DashboardApiDeleteDashboardMetadataRequest {
      * @memberof DashboardApiDeleteDashboardMetadata
      */
     readonly id: string
+}
+
+/**
+ * Request parameters for getAdminDashboards operation in DashboardApi.
+ * @export
+ * @interface DashboardApiGetAdminDashboardsRequest
+ */
+export interface DashboardApiGetAdminDashboardsRequest {
+    /**
+     * 
+     * @type {AdminDashboardPeriod}
+     * @memberof DashboardApiGetAdminDashboards
+     */
+    readonly period: AdminDashboardPeriod
+
+    /**
+     * Fetch specific teams by ID
+     * @type {Array<string>}
+     * @memberof DashboardApiGetAdminDashboards
+     */
+    readonly teamIds?: Array<string>
+
+    /**
+     * 
+     * @type {string}
+     * @memberof DashboardApiGetAdminDashboards
+     */
+    readonly customerId?: string
+
+    /**
+     * Numboer of items to fetch.
+     * @type {number}
+     * @memberof DashboardApiGetAdminDashboards
+     */
+    readonly count?: number
+
+    /**
+     * Cursor to fetch the next page of dashboards.
+     * @type {string}
+     * @memberof DashboardApiGetAdminDashboards
+     */
+    readonly cursor?: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof DashboardApiGetAdminDashboards
+     */
+    readonly industry?: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof DashboardApiGetAdminDashboards
+     */
+    readonly region?: string
+
+    /**
+     * 
+     * @type {AdminDashboardSort}
+     * @memberof DashboardApiGetAdminDashboards
+     */
+    readonly sort?: AdminDashboardSort
 }
 
 /**
@@ -1794,6 +2115,18 @@ export class DashboardApi extends BaseAPI {
      */
     public deleteDashboardMetadata(requestParameters: DashboardApiDeleteDashboardMetadataRequest, options?: AxiosRequestConfig) {
         return DashboardApiFp(this.configuration).deleteDashboardMetadata(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Get admin dashboards
+     * @param {DashboardApiGetAdminDashboardsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DashboardApi
+     */
+    public getAdminDashboards(requestParameters: DashboardApiGetAdminDashboardsRequest, options?: AxiosRequestConfig) {
+        return DashboardApiFp(this.configuration).getAdminDashboards(requestParameters.period, requestParameters.teamIds, requestParameters.customerId, requestParameters.count, requestParameters.cursor, requestParameters.industry, requestParameters.region, requestParameters.sort, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
