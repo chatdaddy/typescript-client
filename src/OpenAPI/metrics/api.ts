@@ -28,21 +28,6 @@ import { COLLECTION_FORMATS, BaseAPI, RequiredError } from '../base';
 /**
  * 
  * @export
- * @enum {string}
- */
-
-export const AdminDashboardPeriod = {
-    4Weeks: 'last-4-weeks',
-    12Weeks: 'last-12-weeks',
-    12Months: 'last-12-months'
-} as const;
-
-export type AdminDashboardPeriod = typeof AdminDashboardPeriod[keyof typeof AdminDashboardPeriod];
-
-
-/**
- * 
- * @export
  * @interface AdminDashboardResponse
  */
 export interface AdminDashboardResponse {
@@ -112,7 +97,7 @@ export type AggregateTeamDataValue = ValueObject | { [key: string]: ValueObject;
  * @export
  * @interface ArrayPropertyDescriptor
  */
-export interface ArrayPropertyDescriptor {
+interface ArrayPropertyDescriptor {
     /**
      * 
      * @type {string}
@@ -127,18 +112,18 @@ export interface ArrayPropertyDescriptor {
     'items': DataPropertyDescriptor;
 }
 
-export const ArrayPropertyDescriptorTypeEnum = {
+const ArrayPropertyDescriptorTypeEnum = {
     Array: 'array'
 } as const;
 
-export type ArrayPropertyDescriptorTypeEnum = typeof ArrayPropertyDescriptorTypeEnum[keyof typeof ArrayPropertyDescriptorTypeEnum];
+type ArrayPropertyDescriptorTypeEnum = typeof ArrayPropertyDescriptorTypeEnum[keyof typeof ArrayPropertyDescriptorTypeEnum];
 
 /**
  * 
  * @export
  * @interface ConditionalPropertyOption
  */
-export interface ConditionalPropertyOption {
+interface ConditionalPropertyOption {
     /**
      * Stringified value of the option.
      * @type {string}
@@ -420,7 +405,7 @@ export type DashboardSchemaItemsInner = DashboardSchemaItem | TextSchemaItem;
  * @export
  * @interface DashboardUpdate
  */
-export interface DashboardUpdate {
+interface DashboardUpdate {
     /**
      * 
      * @type {string}
@@ -537,12 +522,12 @@ export type DataAggregateType = typeof DataAggregateType[keyof typeof DataAggreg
  * @export
  * @interface DataProperty
  */
-export type DataProperty = DataPropertyDescriptor & PropertyMetadata
+type DataProperty = DataPropertyDescriptor & PropertyMetadata
 /**
  * @type DataPropertyDescriptor
  * @export
  */
-export type DataPropertyDescriptor = SimplePropertyDescriptor | ArrayPropertyDescriptor | MapPropertyDescriptor | OAuthPropertyDescriptor;
+type DataPropertyDescriptor = SimplePropertyDescriptor | ArrayPropertyDescriptor | MapPropertyDescriptor | OAuthPropertyDescriptor;
 
 /**
  * 
@@ -568,7 +553,7 @@ export interface DateRange {
  * @export
  * @interface DisplayIcon
  */
-export interface DisplayIcon {
+interface DisplayIcon {
     /**
      * Material symbol name
      * @type {string}
@@ -705,7 +690,7 @@ export interface GetInitData200ResponseDefaultDashboard {
  * @export
  * @interface MapPropertyDescriptor
  */
-export interface MapPropertyDescriptor {
+interface MapPropertyDescriptor {
     /**
      * 
      * @type {string}
@@ -726,11 +711,11 @@ export interface MapPropertyDescriptor {
     'additionalProperties'?: DataPropertyDescriptor;
 }
 
-export const MapPropertyDescriptorTypeEnum = {
+const MapPropertyDescriptorTypeEnum = {
     Map: 'map'
 } as const;
 
-export type MapPropertyDescriptorTypeEnum = typeof MapPropertyDescriptorTypeEnum[keyof typeof MapPropertyDescriptorTypeEnum];
+type MapPropertyDescriptorTypeEnum = typeof MapPropertyDescriptorTypeEnum[keyof typeof MapPropertyDescriptorTypeEnum];
 
 /**
  * 
@@ -964,7 +949,7 @@ export type NullableDashboardMetadataAccess = typeof NullableDashboardMetadataAc
  * @export
  * @interface OAuthPropertyDescriptor
  */
-export interface OAuthPropertyDescriptor {
+interface OAuthPropertyDescriptor {
     /**
      * 
      * @type {string}
@@ -979,18 +964,18 @@ export interface OAuthPropertyDescriptor {
     'url'?: string;
 }
 
-export const OAuthPropertyDescriptorTypeEnum = {
+const OAuthPropertyDescriptorTypeEnum = {
     Oauth: 'oauth'
 } as const;
 
-export type OAuthPropertyDescriptorTypeEnum = typeof OAuthPropertyDescriptorTypeEnum[keyof typeof OAuthPropertyDescriptorTypeEnum];
+type OAuthPropertyDescriptorTypeEnum = typeof OAuthPropertyDescriptorTypeEnum[keyof typeof OAuthPropertyDescriptorTypeEnum];
 
 /**
  * 
  * @export
  * @interface PropertyMetadata
  */
-export interface PropertyMetadata {
+interface PropertyMetadata {
     /**
      * 
      * @type {string}
@@ -1027,7 +1012,7 @@ export interface PropertyMetadata {
  * @export
  * @interface SimplePropertyDescriptor
  */
-export interface SimplePropertyDescriptor {
+interface SimplePropertyDescriptor {
     /**
      * 
      * @type {SimplePropertyType}
@@ -1061,7 +1046,7 @@ export interface SimplePropertyDescriptor {
  * @enum {string}
  */
 
-export const SimplePropertyType = {
+const SimplePropertyType = {
     String: 'string',
     Number: 'number',
     Boolean: 'boolean',
@@ -1082,7 +1067,7 @@ export const SimplePropertyType = {
     CreditConsumptionType: 'credit_consumption_type'
 } as const;
 
-export type SimplePropertyType = typeof SimplePropertyType[keyof typeof SimplePropertyType];
+type SimplePropertyType = typeof SimplePropertyType[keyof typeof SimplePropertyType];
 
 
 /**
@@ -1294,7 +1279,7 @@ export const DashboardApiAxiosParamCreator = function (configuration?: Configura
         /**
          * 
          * @summary Get admin dashboards
-         * @param {AdminDashboardPeriod} period 
+         * @param {'last-4-weeks' | 'last-12-weeks' | 'last-12-months'} period 
          * @param {Array<string>} [teamIds] Fetch specific teams by ID
          * @param {string} [customerId] 
          * @param {number} [count] Numboer of items to fetch.
@@ -1305,7 +1290,7 @@ export const DashboardApiAxiosParamCreator = function (configuration?: Configura
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getAdminDashboards: async (period: AdminDashboardPeriod, teamIds?: Array<string>, customerId?: string, count?: number, cursor?: string, industry?: string, region?: string, sort?: AdminDashboardSort, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getAdminDashboards: async (period: 'last-4-weeks' | 'last-12-weeks' | 'last-12-months', teamIds?: Array<string>, customerId?: string, count?: number, cursor?: string, industry?: string, region?: string, sort?: AdminDashboardSort, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'period' is not null or undefined
             assertParamExists('getAdminDashboards', 'period', period)
             const localVarPath = `/dashboard/admin`;
@@ -1667,7 +1652,7 @@ export const DashboardApiFp = function(configuration?: Configuration) {
         /**
          * 
          * @summary Get admin dashboards
-         * @param {AdminDashboardPeriod} period 
+         * @param {'last-4-weeks' | 'last-12-weeks' | 'last-12-months'} period 
          * @param {Array<string>} [teamIds] Fetch specific teams by ID
          * @param {string} [customerId] 
          * @param {number} [count] Numboer of items to fetch.
@@ -1678,7 +1663,7 @@ export const DashboardApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getAdminDashboards(period: AdminDashboardPeriod, teamIds?: Array<string>, customerId?: string, count?: number, cursor?: string, industry?: string, region?: string, sort?: AdminDashboardSort, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AdminDashboardResponse>> {
+        async getAdminDashboards(period: 'last-4-weeks' | 'last-12-weeks' | 'last-12-months', teamIds?: Array<string>, customerId?: string, count?: number, cursor?: string, industry?: string, region?: string, sort?: AdminDashboardSort, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AdminDashboardResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getAdminDashboards(period, teamIds, customerId, count, cursor, industry, region, sort, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -1884,10 +1869,10 @@ export interface DashboardApiDeleteDashboardMetadataRequest {
 export interface DashboardApiGetAdminDashboardsRequest {
     /**
      * 
-     * @type {AdminDashboardPeriod}
+     * @type {'last-4-weeks' | 'last-12-weeks' | 'last-12-months'}
      * @memberof DashboardApiGetAdminDashboards
      */
-    readonly period: AdminDashboardPeriod
+    readonly period: 'last-4-weeks' | 'last-12-weeks' | 'last-12-months'
 
     /**
      * Fetch specific teams by ID
