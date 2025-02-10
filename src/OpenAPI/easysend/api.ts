@@ -91,6 +91,12 @@ export interface AddServiceModel {
      * @memberof AddServiceModel
      */
     'output'?: AddServiceModelOutput;
+    /**
+     * Whether the service is disabled
+     * @type {boolean}
+     * @memberof AddServiceModel
+     */
+    'disabled'?: boolean;
 }
 /**
  * 
@@ -1913,6 +1919,12 @@ export interface ServiceModel {
      * @memberof ServiceModel
      */
     'output'?: AddServiceModelOutput;
+    /**
+     * Whether the service is disabled
+     * @type {boolean}
+     * @memberof ServiceModel
+     */
+    'disabled'?: boolean;
 }
 /**
  * 
