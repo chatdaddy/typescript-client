@@ -1118,6 +1118,19 @@ export interface PatchPaymentIntegrationRequest {
 /**
  * 
  * @export
+ * @interface PatchServiceModel
+ */
+export interface PatchServiceModel {
+    /**
+     * Whether the service is disabled
+     * @type {boolean}
+     * @memberof PatchServiceModel
+     */
+    'disabled': boolean;
+}
+/**
+ * 
+ * @export
  * @interface PaymentIntegration
  */
 interface PaymentIntegration {
@@ -4627,6 +4640,48 @@ export const ServicesApiAxiosParamCreator = function (configuration?: Configurat
         },
         /**
          * 
+         * @summary Update a service
+         * @param {string} id ID of service to update
+         * @param {PatchServiceModel} [patchServiceModel] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        servicesPatch: async (id: string, patchServiceModel?: PatchServiceModel, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('servicesPatch', 'id', id)
+            const localVarPath = `/services/{id}`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PATCH', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["INTEGRATIONS_UPDATE"], configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(patchServiceModel, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
          * @summary Adds a new service to the list
          * @param {PostServiceModel} [postServiceModel] 
          * @param {*} [options] Override http request option.
@@ -4730,6 +4785,18 @@ export const ServicesApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
+         * @summary Update a service
+         * @param {string} id ID of service to update
+         * @param {PatchServiceModel} [patchServiceModel] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async servicesPatch(id: string, patchServiceModel?: PatchServiceModel, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.servicesPatch(id, patchServiceModel, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
          * @summary Adds a new service to the list
          * @param {PostServiceModel} [postServiceModel] 
          * @param {*} [options] Override http request option.
@@ -4780,6 +4847,16 @@ export const ServicesApiFactory = function (configuration?: Configuration, baseP
         },
         /**
          * 
+         * @summary Update a service
+         * @param {ServicesApiServicesPatchRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        servicesPatch(requestParameters: ServicesApiServicesPatchRequest, options?: AxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.servicesPatch(requestParameters.id, requestParameters.patchServiceModel, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
          * @summary Adds a new service to the list
          * @param {ServicesApiServicesPostRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -4812,6 +4889,27 @@ export interface ServicesApiServicesDeleteRequest {
      * @memberof ServicesApiServicesDelete
      */
     readonly id: string
+}
+
+/**
+ * Request parameters for servicesPatch operation in ServicesApi.
+ * @export
+ * @interface ServicesApiServicesPatchRequest
+ */
+export interface ServicesApiServicesPatchRequest {
+    /**
+     * ID of service to update
+     * @type {string}
+     * @memberof ServicesApiServicesPatch
+     */
+    readonly id: string
+
+    /**
+     * 
+     * @type {PatchServiceModel}
+     * @memberof ServicesApiServicesPatch
+     */
+    readonly patchServiceModel?: PatchServiceModel
 }
 
 /**
@@ -4856,6 +4954,18 @@ export class ServicesApi extends BaseAPI {
      */
     public servicesGet(options?: AxiosRequestConfig) {
         return ServicesApiFp(this.configuration).servicesGet(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Update a service
+     * @param {ServicesApiServicesPatchRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ServicesApi
+     */
+    public servicesPatch(requestParameters: ServicesApiServicesPatchRequest, options?: AxiosRequestConfig) {
+        return ServicesApiFp(this.configuration).servicesPatch(requestParameters.id, requestParameters.patchServiceModel, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
