@@ -601,10 +601,10 @@ export interface GetDashboardMetadatas200Response {
 export interface GetInitData200Response {
     /**
      * 
-     * @type {DashboardSchema}
+     * @type {DashboardMetadata}
      * @memberof GetInitData200Response
      */
-    'adminDashboardSchema'?: DashboardSchema;
+    'adminDashboard'?: DashboardMetadata;
     /**
      * 
      * @type {Array<DashboardMetadata>}
@@ -1422,11 +1422,12 @@ export const DashboardApiAxiosParamCreator = function (configuration?: Configura
          * @param {Aggregate} aggregate Timeframe to aggregate the data in.
          * @param {DateRange} [customDateRange] Custom date range to query the data in. Only required if period is set to \&quot;custom\&quot;
          * @param {string} [timezoneOffset] Timezone offset to query the data in.
+         * @param {string} [teamId] Team ID to fetch data for.
          * @param {GetDashboardBySchemaRequest} [getDashboardBySchemaRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getDashboardBySchema: async (period: DashboardPeriod, aggregate: Aggregate, customDateRange?: DateRange, timezoneOffset?: string, getDashboardBySchemaRequest?: GetDashboardBySchemaRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getDashboardBySchema: async (period: DashboardPeriod, aggregate: Aggregate, customDateRange?: DateRange, timezoneOffset?: string, teamId?: string, getDashboardBySchemaRequest?: GetDashboardBySchemaRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'period' is not null or undefined
             assertParamExists('getDashboardBySchema', 'period', period)
             // verify required parameter 'aggregate' is not null or undefined
@@ -1461,6 +1462,10 @@ export const DashboardApiAxiosParamCreator = function (configuration?: Configura
 
             if (aggregate !== undefined) {
                 localVarQueryParameter['aggregate'] = aggregate;
+            }
+
+            if (teamId !== undefined) {
+                localVarQueryParameter['teamId'] = teamId;
             }
 
 
@@ -1689,12 +1694,13 @@ export const DashboardApiFp = function(configuration?: Configuration) {
          * @param {Aggregate} aggregate Timeframe to aggregate the data in.
          * @param {DateRange} [customDateRange] Custom date range to query the data in. Only required if period is set to \&quot;custom\&quot;
          * @param {string} [timezoneOffset] Timezone offset to query the data in.
+         * @param {string} [teamId] Team ID to fetch data for.
          * @param {GetDashboardBySchemaRequest} [getDashboardBySchemaRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getDashboardBySchema(period: DashboardPeriod, aggregate: Aggregate, customDateRange?: DateRange, timezoneOffset?: string, getDashboardBySchemaRequest?: GetDashboardBySchemaRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DashboardData>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getDashboardBySchema(period, aggregate, customDateRange, timezoneOffset, getDashboardBySchemaRequest, options);
+        async getDashboardBySchema(period: DashboardPeriod, aggregate: Aggregate, customDateRange?: DateRange, timezoneOffset?: string, teamId?: string, getDashboardBySchemaRequest?: GetDashboardBySchemaRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DashboardData>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getDashboardBySchema(period, aggregate, customDateRange, timezoneOffset, teamId, getDashboardBySchemaRequest, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -1792,7 +1798,7 @@ export const DashboardApiFactory = function (configuration?: Configuration, base
          * @throws {RequiredError}
          */
         getDashboardBySchema(requestParameters: DashboardApiGetDashboardBySchemaRequest, options?: AxiosRequestConfig): AxiosPromise<DashboardData> {
-            return localVarFp.getDashboardBySchema(requestParameters.period, requestParameters.aggregate, requestParameters.customDateRange, requestParameters.timezoneOffset, requestParameters.getDashboardBySchemaRequest, options).then((request) => request(axios, basePath));
+            return localVarFp.getDashboardBySchema(requestParameters.period, requestParameters.aggregate, requestParameters.customDateRange, requestParameters.timezoneOffset, requestParameters.teamId, requestParameters.getDashboardBySchemaRequest, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -2001,6 +2007,13 @@ export interface DashboardApiGetDashboardBySchemaRequest {
     readonly timezoneOffset?: string
 
     /**
+     * Team ID to fetch data for.
+     * @type {string}
+     * @memberof DashboardApiGetDashboardBySchema
+     */
+    readonly teamId?: string
+
+    /**
      * 
      * @type {GetDashboardBySchemaRequest}
      * @memberof DashboardApiGetDashboardBySchema
@@ -2135,7 +2148,7 @@ export class DashboardApi extends BaseAPI {
      * @memberof DashboardApi
      */
     public getDashboardBySchema(requestParameters: DashboardApiGetDashboardBySchemaRequest, options?: AxiosRequestConfig) {
-        return DashboardApiFp(this.configuration).getDashboardBySchema(requestParameters.period, requestParameters.aggregate, requestParameters.customDateRange, requestParameters.timezoneOffset, requestParameters.getDashboardBySchemaRequest, options).then((request) => request(this.axios, this.basePath));
+        return DashboardApiFp(this.configuration).getDashboardBySchema(requestParameters.period, requestParameters.aggregate, requestParameters.customDateRange, requestParameters.timezoneOffset, requestParameters.teamId, requestParameters.getDashboardBySchemaRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
