@@ -43,6 +43,12 @@ export interface AdminDashboardResponse {
      * @memberof AdminDashboardResponse
      */
     'nextCursor'?: string;
+    /**
+     * Total number of items
+     * @type {number}
+     * @memberof AdminDashboardResponse
+     */
+    'total': number;
 }
 /**
  * 
