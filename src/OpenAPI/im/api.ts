@@ -1934,6 +1934,12 @@ export interface ContactImg {
      * @memberof ContactImg
      */
     'fetchedAt'?: string;
+    /**
+     * An ISO formatted timestamp
+     * @type {string}
+     * @memberof ContactImg
+     */
+    'fullFetchedAt'?: string;
 }
 /**
  * 

@@ -7947,6 +7947,12 @@ export interface GroupUpdateDataOwnerImg {
      * @memberof GroupUpdateDataOwnerImg
      */
     'fetchedAt'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof GroupUpdateDataOwnerImg
+     */
+    'fullFetchedAt'?: string;
 }
 /**
  * 
