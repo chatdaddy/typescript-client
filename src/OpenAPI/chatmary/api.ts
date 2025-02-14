@@ -491,6 +491,77 @@ export interface ContactToken {
 /**
  * 
  * @export
+ * @interface ContentComment
+ */
+export interface ContentComment {
+    /**
+     * 
+     * @type {string}
+     * @memberof ContentComment
+     */
+    'commentedAt'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ContentComment
+     */
+    'commentedBy'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ContentComment
+     */
+    'comment'?: string;
+    /**
+     * 
+     * @type {{ [key: string]: number; }}
+     * @memberof ContentComment
+     */
+    'reactions'?: { [key: string]: number; };
+}
+/**
+ * 
+ * @export
+ * @interface ContentVersionHistory
+ */
+export interface ContentVersionHistory {
+    /**
+     * 
+     * @type {string}
+     * @memberof ContentVersionHistory
+     */
+    'editedAt'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ContentVersionHistory
+     */
+    'editedBy'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ContentVersionHistory
+     */
+    'version'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ContentVersionHistory
+     */
+    'status'?: ContentVersionHistoryStatusEnum;
+}
+
+export const ContentVersionHistoryStatusEnum = {
+    Live: 'live',
+    Staging: 'staging',
+    Archived: 'archived'
+} as const;
+
+export type ContentVersionHistoryStatusEnum = typeof ContentVersionHistoryStatusEnum[keyof typeof ContentVersionHistoryStatusEnum];
+
+/**
+ * 
+ * @export
  * @interface ConversationIdGetRequest
  */
 export interface ConversationIdGetRequest {
@@ -633,6 +704,249 @@ export interface CustomBot {
 /**
  * 
  * @export
+ * @interface KnowledgeBaseGet200Response
+ */
+export interface KnowledgeBaseGet200Response {
+    /**
+     * 
+     * @type {Array<KnowledgeGraph>}
+     * @memberof KnowledgeBaseGet200Response
+     */
+    'knowledgeGraphs'?: Array<KnowledgeGraph>;
+}
+/**
+ * 
+ * @export
+ * @interface KnowledgeBasePostRequest
+ */
+export interface KnowledgeBasePostRequest {
+    /**
+     * Content that goes into the graph database
+     * @type {string}
+     * @memberof KnowledgeBasePostRequest
+     */
+    'text'?: string;
+    /**
+     * 
+     * @type {KnowledgeGraph}
+     * @memberof KnowledgeBasePostRequest
+     */
+    'knowledgeGraph': KnowledgeGraph;
+}
+/**
+ * 
+ * @export
+ * @interface KnowledgeGraph
+ */
+export interface KnowledgeGraph {
+    /**
+     * ID of the graph knowledge base
+     * @type {string}
+     * @memberof KnowledgeGraph
+     */
+    'id'?: string;
+    /**
+     * Name of the knowledge graph
+     * @type {string}
+     * @memberof KnowledgeGraph
+     */
+    'name'?: string;
+    /**
+     * Description of the knowledge graph
+     * @type {string}
+     * @memberof KnowledgeGraph
+     */
+    'description'?: string;
+    /**
+     * Team ID
+     * @type {string}
+     * @memberof KnowledgeGraph
+     */
+    'teamId'?: string;
+    /**
+     * Status of the knowledge graph
+     * @type {string}
+     * @memberof KnowledgeGraph
+     */
+    'status'?: KnowledgeGraphStatusEnum;
+    /**
+     * 
+     * @type {KnowledgeGraphContent}
+     * @memberof KnowledgeGraph
+     */
+    'content'?: KnowledgeGraphContent;
+    /**
+     * 
+     * @type {string}
+     * @memberof KnowledgeGraph
+     */
+    'createdAt'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof KnowledgeGraph
+     */
+    'updatedAt'?: string;
+    /**
+     * User who created the knowledge graph
+     * @type {string}
+     * @memberof KnowledgeGraph
+     */
+    'createdBy'?: string;
+    /**
+     * User who updated the knowledge graph
+     * @type {string}
+     * @memberof KnowledgeGraph
+     */
+    'updatedBy'?: string;
+    /**
+     * Version of the knowledge graph
+     * @type {string}
+     * @memberof KnowledgeGraph
+     */
+    'version'?: string;
+    /**
+     * Total number of entities in the knowledge graph
+     * @type {number}
+     * @memberof KnowledgeGraph
+     */
+    'totalEntityCount'?: number;
+    /**
+     * 
+     * @type {Array<ContentComment>}
+     * @memberof KnowledgeGraph
+     */
+    'comments'?: Array<ContentComment>;
+}
+
+export const KnowledgeGraphStatusEnum = {
+    Published: 'published',
+    Draft: 'draft'
+} as const;
+
+export type KnowledgeGraphStatusEnum = typeof KnowledgeGraphStatusEnum[keyof typeof KnowledgeGraphStatusEnum];
+
+/**
+ * 
+ * @export
+ * @interface KnowledgeGraphContent
+ */
+export interface KnowledgeGraphContent {
+    /**
+     * Nodes in the knowledge graph
+     * @type {Array<KnowledgeGraphContentNodesInner>}
+     * @memberof KnowledgeGraphContent
+     */
+    'nodes'?: Array<KnowledgeGraphContentNodesInner>;
+    /**
+     * Relationships between nodes in the knowledge graph
+     * @type {Array<KnowledgeGraphContentEdgesInner>}
+     * @memberof KnowledgeGraphContent
+     */
+    'edges'?: Array<KnowledgeGraphContentEdgesInner>;
+}
+/**
+ * 
+ * @export
+ * @interface KnowledgeGraphContentEdgesInner
+ */
+export interface KnowledgeGraphContentEdgesInner {
+    /**
+     * 
+     * @type {string}
+     * @memberof KnowledgeGraphContentEdgesInner
+     */
+    'source'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof KnowledgeGraphContentEdgesInner
+     */
+    'target'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof KnowledgeGraphContentEdgesInner
+     */
+    'label'?: string;
+}
+/**
+ * 
+ * @export
+ * @interface KnowledgeGraphContentNodesInner
+ */
+export interface KnowledgeGraphContentNodesInner {
+    /**
+     * 
+     * @type {string}
+     * @memberof KnowledgeGraphContentNodesInner
+     */
+    'id'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof KnowledgeGraphContentNodesInner
+     */
+    'label'?: string;
+    /**
+     * 
+     * @type {{ [key: string]: any; }}
+     * @memberof KnowledgeGraphContentNodesInner
+     */
+    'properties'?: { [key: string]: any; };
+    /**
+     * 
+     * @type {Array<ContentVersionHistory>}
+     * @memberof KnowledgeGraphContentNodesInner
+     */
+    'versionHistory'?: Array<ContentVersionHistory>;
+    /**
+     * 
+     * @type {Array<ContentComment>}
+     * @memberof KnowledgeGraphContentNodesInner
+     */
+    'comments'?: Array<ContentComment>;
+    /**
+     * 
+     * @type {number}
+     * @memberof KnowledgeGraphContentNodesInner
+     */
+    'totalRetrievalTimes'?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof KnowledgeGraphContentNodesInner
+     */
+    'lastRetrievedAt'?: string;
+}
+/**
+ * 
+ * @export
+ * @interface KnowledgeGraphQueriedData
+ */
+export interface KnowledgeGraphQueriedData {
+    /**
+     * Textual response derived from the query
+     * @type {string}
+     * @memberof KnowledgeGraphQueriedData
+     */
+    'responseText'?: string;
+    /**
+     * Confidence score of the response
+     * @type {number}
+     * @memberof KnowledgeGraphQueriedData
+     */
+    'confidenceScore'?: number;
+    /**
+     * 
+     * @type {KnowledgeGraphContent}
+     * @memberof KnowledgeGraphQueriedData
+     */
+    'content'?: KnowledgeGraphContent;
+}
+/**
+ * 
+ * @export
  * @interface ManageUserDataPostRequest
  */
 export interface ManageUserDataPostRequest {
@@ -698,6 +1012,86 @@ export interface OauthCallback200Response {
      * @memberof OauthCallback200Response
      */
     'accessToken'?: string;
+}
+/**
+ * 
+ * @export
+ * @interface Question
+ */
+export interface Question {
+    /**
+     * 
+     * @type {string}
+     * @memberof Question
+     */
+    'id'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Question
+     */
+    'question'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Question
+     */
+    'date'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Question
+     */
+    'answerId'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Question
+     */
+    'answerBaseId'?: string;
+    /**
+     * 
+     * @type {QuestionAsker}
+     * @memberof Question
+     */
+    'asker'?: QuestionAsker;
+    /**
+     * 
+     * @type {number}
+     * @memberof Question
+     */
+    'confidenceScore'?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof Question
+     */
+    'topic'?: string;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof Question
+     */
+    'exactRagResults'?: Array<string>;
+}
+/**
+ * 
+ * @export
+ * @interface QuestionAsker
+ */
+export interface QuestionAsker {
+    /**
+     * 
+     * @type {string}
+     * @memberof QuestionAsker
+     */
+    'askedBy'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof QuestionAsker
+     */
+    'askedAt'?: string;
 }
 /**
  * 
@@ -2444,6 +2838,316 @@ export class CustomBotApi extends BaseAPI {
      */
     public manageUserDataPost(requestParameters: CustomBotApiManageUserDataPostRequest, options?: AxiosRequestConfig) {
         return CustomBotApiFp(this.configuration).manageUserDataPost(requestParameters.botApp, requestParameters.userId, requestParameters.manageUserDataPostRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+/**
+ * KnowledgeBaseApi - axios parameter creator
+ * @export
+ */
+export const KnowledgeBaseApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @summary Delete knowledge base
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        knowledgeBaseDelete: async (id: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('knowledgeBaseDelete', 'id', id)
+            const localVarPath = `/knowledgeBase`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", [], configuration)
+
+            if (id !== undefined) {
+                localVarQueryParameter['id'] = id;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Get knowledge base
+         * @param {string} [id] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        knowledgeBaseGet: async (id?: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/knowledgeBase`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", [], configuration)
+
+            if (id !== undefined) {
+                localVarQueryParameter['id'] = id;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Add knowledge base
+         * @param {string} [id] 
+         * @param {KnowledgeBasePostRequest} [knowledgeBasePostRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        knowledgeBasePost: async (id?: string, knowledgeBasePostRequest?: KnowledgeBasePostRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/knowledgeBase`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", [], configuration)
+
+            if (id !== undefined) {
+                localVarQueryParameter['id'] = id;
+            }
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(knowledgeBasePostRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * KnowledgeBaseApi - functional programming interface
+ * @export
+ */
+export const KnowledgeBaseApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = KnowledgeBaseApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * 
+         * @summary Delete knowledge base
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async knowledgeBaseDelete(id: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BotAddPost200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.knowledgeBaseDelete(id, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary Get knowledge base
+         * @param {string} [id] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async knowledgeBaseGet(id?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<KnowledgeBaseGet200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.knowledgeBaseGet(id, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary Add knowledge base
+         * @param {string} [id] 
+         * @param {KnowledgeBasePostRequest} [knowledgeBasePostRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async knowledgeBasePost(id?: string, knowledgeBasePostRequest?: KnowledgeBasePostRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BotAddPost200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.knowledgeBasePost(id, knowledgeBasePostRequest, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+    }
+};
+
+/**
+ * KnowledgeBaseApi - factory interface
+ * @export
+ */
+export const KnowledgeBaseApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = KnowledgeBaseApiFp(configuration)
+    return {
+        /**
+         * 
+         * @summary Delete knowledge base
+         * @param {KnowledgeBaseApiKnowledgeBaseDeleteRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        knowledgeBaseDelete(requestParameters: KnowledgeBaseApiKnowledgeBaseDeleteRequest, options?: AxiosRequestConfig): AxiosPromise<BotAddPost200Response> {
+            return localVarFp.knowledgeBaseDelete(requestParameters.id, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Get knowledge base
+         * @param {KnowledgeBaseApiKnowledgeBaseGetRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        knowledgeBaseGet(requestParameters: KnowledgeBaseApiKnowledgeBaseGetRequest = {}, options?: AxiosRequestConfig): AxiosPromise<KnowledgeBaseGet200Response> {
+            return localVarFp.knowledgeBaseGet(requestParameters.id, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Add knowledge base
+         * @param {KnowledgeBaseApiKnowledgeBasePostRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        knowledgeBasePost(requestParameters: KnowledgeBaseApiKnowledgeBasePostRequest = {}, options?: AxiosRequestConfig): AxiosPromise<BotAddPost200Response> {
+            return localVarFp.knowledgeBasePost(requestParameters.id, requestParameters.knowledgeBasePostRequest, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * Request parameters for knowledgeBaseDelete operation in KnowledgeBaseApi.
+ * @export
+ * @interface KnowledgeBaseApiKnowledgeBaseDeleteRequest
+ */
+export interface KnowledgeBaseApiKnowledgeBaseDeleteRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof KnowledgeBaseApiKnowledgeBaseDelete
+     */
+    readonly id: string
+}
+
+/**
+ * Request parameters for knowledgeBaseGet operation in KnowledgeBaseApi.
+ * @export
+ * @interface KnowledgeBaseApiKnowledgeBaseGetRequest
+ */
+export interface KnowledgeBaseApiKnowledgeBaseGetRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof KnowledgeBaseApiKnowledgeBaseGet
+     */
+    readonly id?: string
+}
+
+/**
+ * Request parameters for knowledgeBasePost operation in KnowledgeBaseApi.
+ * @export
+ * @interface KnowledgeBaseApiKnowledgeBasePostRequest
+ */
+export interface KnowledgeBaseApiKnowledgeBasePostRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof KnowledgeBaseApiKnowledgeBasePost
+     */
+    readonly id?: string
+
+    /**
+     * 
+     * @type {KnowledgeBasePostRequest}
+     * @memberof KnowledgeBaseApiKnowledgeBasePost
+     */
+    readonly knowledgeBasePostRequest?: KnowledgeBasePostRequest
+}
+
+/**
+ * KnowledgeBaseApi - object-oriented interface
+ * @export
+ * @class KnowledgeBaseApi
+ * @extends {BaseAPI}
+ */
+export class KnowledgeBaseApi extends BaseAPI {
+    /**
+     * 
+     * @summary Delete knowledge base
+     * @param {KnowledgeBaseApiKnowledgeBaseDeleteRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof KnowledgeBaseApi
+     */
+    public knowledgeBaseDelete(requestParameters: KnowledgeBaseApiKnowledgeBaseDeleteRequest, options?: AxiosRequestConfig) {
+        return KnowledgeBaseApiFp(this.configuration).knowledgeBaseDelete(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Get knowledge base
+     * @param {KnowledgeBaseApiKnowledgeBaseGetRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof KnowledgeBaseApi
+     */
+    public knowledgeBaseGet(requestParameters: KnowledgeBaseApiKnowledgeBaseGetRequest = {}, options?: AxiosRequestConfig) {
+        return KnowledgeBaseApiFp(this.configuration).knowledgeBaseGet(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Add knowledge base
+     * @param {KnowledgeBaseApiKnowledgeBasePostRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof KnowledgeBaseApi
+     */
+    public knowledgeBasePost(requestParameters: KnowledgeBaseApiKnowledgeBasePostRequest = {}, options?: AxiosRequestConfig) {
+        return KnowledgeBaseApiFp(this.configuration).knowledgeBasePost(requestParameters.id, requestParameters.knowledgeBasePostRequest, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
