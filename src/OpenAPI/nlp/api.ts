@@ -1176,25 +1176,91 @@ export type TrainingStatusResponseStatusEnum = typeof TrainingStatusResponseStat
  */
 export interface TranscribePost200Response {
     /**
-     * The transcription of the audio
+     * 
      * @type {string}
      * @memberof TranscribePost200Response
      */
-    'transcription': string;
+    'id': string;
 }
 /**
  * 
  * @export
- * @interface TranscribePostRequest
+ * @interface TranscriptionJob
  */
-export interface TranscribePostRequest {
+export interface TranscriptionJob {
+    /**
+     * 
+     * @type {string}
+     * @memberof TranscriptionJob
+     */
+    'id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof TranscriptionJob
+     */
+    'status': TranscriptionJobStatusEnum;
+    /**
+     * An ISO formatted timestamp
+     * @type {string}
+     * @memberof TranscriptionJob
+     */
+    'createdAt': string;
+    /**
+     * An ISO formatted timestamp
+     * @type {string}
+     * @memberof TranscriptionJob
+     */
+    'timesOutAt': string;
+    /**
+     * Transcription of the audio
+     * @type {string}
+     * @memberof TranscriptionJob
+     */
+    'transcription'?: string;
+    /**
+     * Error message if transcription failed
+     * @type {string}
+     * @memberof TranscriptionJob
+     */
+    'error'?: string;
+}
+
+export const TranscriptionJobStatusEnum = {
+    Pending: 'pending',
+    InProgress: 'in-progress',
+    Completed: 'completed',
+    Failed: 'failed'
+} as const;
+
+export type TranscriptionJobStatusEnum = typeof TranscriptionJobStatusEnum[keyof typeof TranscriptionJobStatusEnum];
+
+/**
+ * 
+ * @export
+ * @interface TranscriptionRequest
+ */
+export interface TranscriptionRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof TranscriptionRequest
+     */
+    'type': TranscriptionRequestTypeEnum;
     /**
      * The URL of the audio to transcribe
      * @type {string}
-     * @memberof TranscribePostRequest
+     * @memberof TranscriptionRequest
      */
-    'audioUrl': string;
+    'url': string;
 }
+
+export const TranscriptionRequestTypeEnum = {
+    Url: 'url'
+} as const;
+
+export type TranscriptionRequestTypeEnum = typeof TranscriptionRequestTypeEnum[keyof typeof TranscriptionRequestTypeEnum];
+
 /**
  * Type of trigger
  * @export
@@ -1349,15 +1415,53 @@ export interface UpdateChatbotRequestAllOf {
 export const AudioTranscriptionApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
-         * Accepts an audio URL and converts it to text using AWS Transcribe. Supports both streaming and batch processing.
-         * @summary Convert audio URL to text
-         * @param {TranscribePostRequest} transcribePostRequest 
+         * Polls the status of a transcription job
+         * @summary Get the status of a transcription job
+         * @param {string} id 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        transcribePost: async (transcribePostRequest: TranscribePostRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'transcribePostRequest' is not null or undefined
-            assertParamExists('transcribePost', 'transcribePostRequest', transcribePostRequest)
+        transcribeGet: async (id: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('transcribeGet', 'id', id)
+            const localVarPath = `/transcribe/{id}`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", [], configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Accepts an audio URL and converts it to text
+         * @summary Convert audio URL to text
+         * @param {TranscriptionRequest} transcriptionRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        transcribePost: async (transcriptionRequest: TranscriptionRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'transcriptionRequest' is not null or undefined
+            assertParamExists('transcribePost', 'transcriptionRequest', transcriptionRequest)
             const localVarPath = `/transcribe`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -1381,7 +1485,7 @@ export const AudioTranscriptionApiAxiosParamCreator = function (configuration?: 
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(transcribePostRequest, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(transcriptionRequest, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -1399,14 +1503,25 @@ export const AudioTranscriptionApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = AudioTranscriptionApiAxiosParamCreator(configuration)
     return {
         /**
-         * Accepts an audio URL and converts it to text using AWS Transcribe. Supports both streaming and batch processing.
-         * @summary Convert audio URL to text
-         * @param {TranscribePostRequest} transcribePostRequest 
+         * Polls the status of a transcription job
+         * @summary Get the status of a transcription job
+         * @param {string} id 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async transcribePost(transcribePostRequest: TranscribePostRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TranscribePost200Response>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.transcribePost(transcribePostRequest, options);
+        async transcribeGet(id: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TranscriptionJob>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.transcribeGet(id, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * Accepts an audio URL and converts it to text
+         * @summary Convert audio URL to text
+         * @param {TranscriptionRequest} transcriptionRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async transcribePost(transcriptionRequest: TranscriptionRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TranscribePost200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.transcribePost(transcriptionRequest, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
     }
@@ -1420,17 +1535,41 @@ export const AudioTranscriptionApiFactory = function (configuration?: Configurat
     const localVarFp = AudioTranscriptionApiFp(configuration)
     return {
         /**
-         * Accepts an audio URL and converts it to text using AWS Transcribe. Supports both streaming and batch processing.
+         * Polls the status of a transcription job
+         * @summary Get the status of a transcription job
+         * @param {AudioTranscriptionApiTranscribeGetRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        transcribeGet(requestParameters: AudioTranscriptionApiTranscribeGetRequest, options?: AxiosRequestConfig): AxiosPromise<TranscriptionJob> {
+            return localVarFp.transcribeGet(requestParameters.id, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Accepts an audio URL and converts it to text
          * @summary Convert audio URL to text
          * @param {AudioTranscriptionApiTranscribePostRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
         transcribePost(requestParameters: AudioTranscriptionApiTranscribePostRequest, options?: AxiosRequestConfig): AxiosPromise<TranscribePost200Response> {
-            return localVarFp.transcribePost(requestParameters.transcribePostRequest, options).then((request) => request(axios, basePath));
+            return localVarFp.transcribePost(requestParameters.transcriptionRequest, options).then((request) => request(axios, basePath));
         },
     };
 };
+
+/**
+ * Request parameters for transcribeGet operation in AudioTranscriptionApi.
+ * @export
+ * @interface AudioTranscriptionApiTranscribeGetRequest
+ */
+export interface AudioTranscriptionApiTranscribeGetRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof AudioTranscriptionApiTranscribeGet
+     */
+    readonly id: string
+}
 
 /**
  * Request parameters for transcribePost operation in AudioTranscriptionApi.
@@ -1440,10 +1579,10 @@ export const AudioTranscriptionApiFactory = function (configuration?: Configurat
 export interface AudioTranscriptionApiTranscribePostRequest {
     /**
      * 
-     * @type {TranscribePostRequest}
+     * @type {TranscriptionRequest}
      * @memberof AudioTranscriptionApiTranscribePost
      */
-    readonly transcribePostRequest: TranscribePostRequest
+    readonly transcriptionRequest: TranscriptionRequest
 }
 
 /**
@@ -1454,7 +1593,19 @@ export interface AudioTranscriptionApiTranscribePostRequest {
  */
 export class AudioTranscriptionApi extends BaseAPI {
     /**
-     * Accepts an audio URL and converts it to text using AWS Transcribe. Supports both streaming and batch processing.
+     * Polls the status of a transcription job
+     * @summary Get the status of a transcription job
+     * @param {AudioTranscriptionApiTranscribeGetRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AudioTranscriptionApi
+     */
+    public transcribeGet(requestParameters: AudioTranscriptionApiTranscribeGetRequest, options?: AxiosRequestConfig) {
+        return AudioTranscriptionApiFp(this.configuration).transcribeGet(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Accepts an audio URL and converts it to text
      * @summary Convert audio URL to text
      * @param {AudioTranscriptionApiTranscribePostRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -1462,7 +1613,7 @@ export class AudioTranscriptionApi extends BaseAPI {
      * @memberof AudioTranscriptionApi
      */
     public transcribePost(requestParameters: AudioTranscriptionApiTranscribePostRequest, options?: AxiosRequestConfig) {
-        return AudioTranscriptionApiFp(this.configuration).transcribePost(requestParameters.transcribePostRequest, options).then((request) => request(this.axios, this.basePath));
+        return AudioTranscriptionApiFp(this.configuration).transcribePost(requestParameters.transcriptionRequest, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
