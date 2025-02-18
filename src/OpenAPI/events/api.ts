@@ -8696,6 +8696,12 @@ export interface MessageInsertData {
     'conversationMetadata'?: MessageInsertDataConversationMetadata;
     /**
      * 
+     * @type {MessageInsertDataTranscription}
+     * @memberof MessageInsertData
+     */
+    'transcription'?: MessageInsertDataTranscription;
+    /**
+     * 
      * @type {MessageInsertDataReactionAction}
      * @memberof MessageInsertData
      */
@@ -9541,6 +9547,34 @@ export interface MessageInsertDataSender {
 /**
  * 
  * @export
+ * @interface MessageInsertDataTranscription
+ */
+export interface MessageInsertDataTranscription {
+    /**
+     * 
+     * @type {string}
+     * @memberof MessageInsertDataTranscription
+     */
+    'status': MessageInsertDataTranscriptionStatusEnum;
+    /**
+     * 
+     * @type {string}
+     * @memberof MessageInsertDataTranscription
+     */
+    'error'?: string;
+}
+
+export const MessageInsertDataTranscriptionStatusEnum = {
+    InProgress: 'in-progress',
+    Completed: 'completed',
+    Failed: 'failed'
+} as const;
+
+export type MessageInsertDataTranscriptionStatusEnum = typeof MessageInsertDataTranscriptionStatusEnum[keyof typeof MessageInsertDataTranscriptionStatusEnum];
+
+/**
+ * 
+ * @export
  * @interface MessageUpdate
  */
 export interface MessageUpdate {
@@ -9666,6 +9700,12 @@ export interface MessageUpdateData {
      * @memberof MessageUpdateData
      */
     'conversationMetadata'?: MessageInsertDataConversationMetadata;
+    /**
+     * 
+     * @type {MessageInsertDataTranscription}
+     * @memberof MessageUpdateData
+     */
+    'transcription'?: MessageInsertDataTranscription;
     /**
      * 
      * @type {MessageInsertDataReactionAction}

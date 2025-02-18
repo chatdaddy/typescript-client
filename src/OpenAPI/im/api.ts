@@ -3213,6 +3213,12 @@ export interface Message {
     'conversationMetadata'?: WABAConversationMetadata;
     /**
      * 
+     * @type {NLPTranscriptionJob}
+     * @memberof Message
+     */
+    'transcription'?: NLPTranscriptionJob;
+    /**
+     * 
      * @type {MessageAllOfReactionAction}
      * @memberof Message
      */
@@ -3412,6 +3418,12 @@ export interface MessageAllOf {
      * @memberof MessageAllOf
      */
     'conversationMetadata'?: WABAConversationMetadata;
+    /**
+     * 
+     * @type {NLPTranscriptionJob}
+     * @memberof MessageAllOf
+     */
+    'transcription'?: NLPTranscriptionJob;
     /**
      * 
      * @type {MessageAllOfReactionAction}
@@ -4856,6 +4868,34 @@ export interface MultiMessageCompose {
      */
     'recipients': Array<MessageComposeWChatID>;
 }
+/**
+ * 
+ * @export
+ * @interface NLPTranscriptionJob
+ */
+export interface NLPTranscriptionJob {
+    /**
+     * 
+     * @type {string}
+     * @memberof NLPTranscriptionJob
+     */
+    'status': NLPTranscriptionJobStatusEnum;
+    /**
+     * 
+     * @type {string}
+     * @memberof NLPTranscriptionJob
+     */
+    'error'?: string;
+}
+
+export const NLPTranscriptionJobStatusEnum = {
+    InProgress: 'in-progress',
+    Completed: 'completed',
+    Failed: 'failed'
+} as const;
+
+export type NLPTranscriptionJobStatusEnum = typeof NLPTranscriptionJobStatusEnum[keyof typeof NLPTranscriptionJobStatusEnum];
+
 /**
  * 
  * @export
@@ -12846,15 +12886,66 @@ export const MessagesApiAxiosParamCreator = function (configuration?: Configurat
             };
         },
         /**
+         * 
+         * @summary Transcribe a voice message
+         * @param {string} accountId 
+         * @param {string} chatId 
+         * @param {string} id 
+         * @param {number} index 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        messagesTranscribe: async (accountId: string, chatId: string, id: string, index: number, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'accountId' is not null or undefined
+            assertParamExists('messagesTranscribe', 'accountId', accountId)
+            // verify required parameter 'chatId' is not null or undefined
+            assertParamExists('messagesTranscribe', 'chatId', chatId)
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('messagesTranscribe', 'id', id)
+            // verify required parameter 'index' is not null or undefined
+            assertParamExists('messagesTranscribe', 'index', index)
+            const localVarPath = `/messages/{accountId}/{chatId}/{id}/{index}/transcribe`
+                .replace(`{${"accountId"}}`, encodeURIComponent(String(accountId)))
+                .replace(`{${"chatId"}}`, encodeURIComponent(String(chatId)))
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)))
+                .replace(`{${"index"}}`, encodeURIComponent(String(index)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["AUTOCOMPLETE_GET"], configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * Given a particular message, calling this route will decode all the message attachments
          * @summary Permanently store attachments of a message
          * @param {string} accountId 
          * @param {string} chatId 
          * @param {string} id 
+         * @param {boolean} [waitForStore] If true, the API will wait for the attachments to be stored before returning
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        permanentlyStoreAttachments: async (accountId: string, chatId: string, id: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        permanentlyStoreAttachments: async (accountId: string, chatId: string, id: string, waitForStore?: boolean, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'accountId' is not null or undefined
             assertParamExists('permanentlyStoreAttachments', 'accountId', accountId)
             // verify required parameter 'chatId' is not null or undefined
@@ -12879,6 +12970,10 @@ export const MessagesApiAxiosParamCreator = function (configuration?: Configurat
             // authentication chatdaddy required
             // oauth required
             await setOAuthToObject(localVarHeaderParameter, "chatdaddy", [], configuration)
+
+            if (waitForStore !== undefined) {
+                localVarQueryParameter['waitForStore'] = waitForStore;
+            }
 
 
     
@@ -13049,16 +13144,31 @@ export const MessagesApiFp = function(configuration?: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
+         * 
+         * @summary Transcribe a voice message
+         * @param {string} accountId 
+         * @param {string} chatId 
+         * @param {string} id 
+         * @param {number} index 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async messagesTranscribe(accountId: string, chatId: string, id: string, index: number, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AccountsLogout200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.messagesTranscribe(accountId, chatId, id, index, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
          * Given a particular message, calling this route will decode all the message attachments
          * @summary Permanently store attachments of a message
          * @param {string} accountId 
          * @param {string} chatId 
          * @param {string} id 
+         * @param {boolean} [waitForStore] If true, the API will wait for the attachments to be stored before returning
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async permanentlyStoreAttachments(accountId: string, chatId: string, id: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PermanentlyStoreAttachments200Response>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.permanentlyStoreAttachments(accountId, chatId, id, options);
+        async permanentlyStoreAttachments(accountId: string, chatId: string, id: string, waitForStore?: boolean, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PermanentlyStoreAttachments200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.permanentlyStoreAttachments(accountId, chatId, id, waitForStore, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
     }
@@ -13170,6 +13280,16 @@ export const MessagesApiFactory = function (configuration?: Configuration, baseP
             return localVarFp.messagesSend(requestParameters.accountId, requestParameters.requireOpenAccount, requestParameters.multiMessageCompose, options).then((request) => request(axios, basePath));
         },
         /**
+         * 
+         * @summary Transcribe a voice message
+         * @param {MessagesApiMessagesTranscribeRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        messagesTranscribe(requestParameters: MessagesApiMessagesTranscribeRequest, options?: AxiosRequestConfig): AxiosPromise<AccountsLogout200Response> {
+            return localVarFp.messagesTranscribe(requestParameters.accountId, requestParameters.chatId, requestParameters.id, requestParameters.index, options).then((request) => request(axios, basePath));
+        },
+        /**
          * Given a particular message, calling this route will decode all the message attachments
          * @summary Permanently store attachments of a message
          * @param {MessagesApiPermanentlyStoreAttachmentsRequest} requestParameters Request parameters.
@@ -13177,7 +13297,7 @@ export const MessagesApiFactory = function (configuration?: Configuration, baseP
          * @throws {RequiredError}
          */
         permanentlyStoreAttachments(requestParameters: MessagesApiPermanentlyStoreAttachmentsRequest, options?: AxiosRequestConfig): AxiosPromise<PermanentlyStoreAttachments200Response> {
-            return localVarFp.permanentlyStoreAttachments(requestParameters.accountId, requestParameters.chatId, requestParameters.id, options).then((request) => request(axios, basePath));
+            return localVarFp.permanentlyStoreAttachments(requestParameters.accountId, requestParameters.chatId, requestParameters.id, requestParameters.waitForStore, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -13596,6 +13716,41 @@ export interface MessagesApiMessagesSendRequest {
 }
 
 /**
+ * Request parameters for messagesTranscribe operation in MessagesApi.
+ * @export
+ * @interface MessagesApiMessagesTranscribeRequest
+ */
+export interface MessagesApiMessagesTranscribeRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof MessagesApiMessagesTranscribe
+     */
+    readonly accountId: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof MessagesApiMessagesTranscribe
+     */
+    readonly chatId: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof MessagesApiMessagesTranscribe
+     */
+    readonly id: string
+
+    /**
+     * 
+     * @type {number}
+     * @memberof MessagesApiMessagesTranscribe
+     */
+    readonly index: number
+}
+
+/**
  * Request parameters for permanentlyStoreAttachments operation in MessagesApi.
  * @export
  * @interface MessagesApiPermanentlyStoreAttachmentsRequest
@@ -13621,6 +13776,13 @@ export interface MessagesApiPermanentlyStoreAttachmentsRequest {
      * @memberof MessagesApiPermanentlyStoreAttachments
      */
     readonly id: string
+
+    /**
+     * If true, the API will wait for the attachments to be stored before returning
+     * @type {boolean}
+     * @memberof MessagesApiPermanentlyStoreAttachments
+     */
+    readonly waitForStore?: boolean
 }
 
 /**
@@ -13749,6 +13911,18 @@ export class MessagesApi extends BaseAPI {
     }
 
     /**
+     * 
+     * @summary Transcribe a voice message
+     * @param {MessagesApiMessagesTranscribeRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof MessagesApi
+     */
+    public messagesTranscribe(requestParameters: MessagesApiMessagesTranscribeRequest, options?: AxiosRequestConfig) {
+        return MessagesApiFp(this.configuration).messagesTranscribe(requestParameters.accountId, requestParameters.chatId, requestParameters.id, requestParameters.index, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
      * Given a particular message, calling this route will decode all the message attachments
      * @summary Permanently store attachments of a message
      * @param {MessagesApiPermanentlyStoreAttachmentsRequest} requestParameters Request parameters.
@@ -13757,7 +13931,7 @@ export class MessagesApi extends BaseAPI {
      * @memberof MessagesApi
      */
     public permanentlyStoreAttachments(requestParameters: MessagesApiPermanentlyStoreAttachmentsRequest, options?: AxiosRequestConfig) {
-        return MessagesApiFp(this.configuration).permanentlyStoreAttachments(requestParameters.accountId, requestParameters.chatId, requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+        return MessagesApiFp(this.configuration).permanentlyStoreAttachments(requestParameters.accountId, requestParameters.chatId, requestParameters.id, requestParameters.waitForStore, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
