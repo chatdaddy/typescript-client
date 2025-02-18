@@ -513,6 +513,12 @@ export interface AccountSettings {
      * @memberof AccountSettings
      */
     'geoLocation'?: string;
+    /**
+     * Should voice messages received be automatically transcribed to text
+     * @type {boolean}
+     * @memberof AccountSettings
+     */
+    'autoTranscribeVoiceMessages'?: boolean;
 }
 /**
  * All new chats will be auto asssigned if one of the option is enabled and select any Assignee
@@ -12892,10 +12898,11 @@ export const MessagesApiAxiosParamCreator = function (configuration?: Configurat
          * @param {string} chatId 
          * @param {string} id 
          * @param {number} index 
+         * @param {boolean} [waitForCompletion] If true, the API will wait for the transcription to be completed before returning
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        messagesTranscribe: async (accountId: string, chatId: string, id: string, index: number, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        messagesTranscribe: async (accountId: string, chatId: string, id: string, index: number, waitForCompletion?: boolean, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'accountId' is not null or undefined
             assertParamExists('messagesTranscribe', 'accountId', accountId)
             // verify required parameter 'chatId' is not null or undefined
@@ -12924,6 +12931,10 @@ export const MessagesApiAxiosParamCreator = function (configuration?: Configurat
             // oauth required
             await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["AUTOCOMPLETE_GET"], configuration)
 
+            if (waitForCompletion !== undefined) {
+                localVarQueryParameter['waitForCompletion'] = waitForCompletion;
+            }
+
 
     
             setSearchParams(localVarUrlObj, localVarQueryParameter);
@@ -12941,11 +12952,11 @@ export const MessagesApiAxiosParamCreator = function (configuration?: Configurat
          * @param {string} accountId 
          * @param {string} chatId 
          * @param {string} id 
-         * @param {boolean} [waitForStore] If true, the API will wait for the attachments to be stored before returning
+         * @param {boolean} [waitForCompletion] If true, the API will wait for the attachments to be stored before returning
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        permanentlyStoreAttachments: async (accountId: string, chatId: string, id: string, waitForStore?: boolean, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        permanentlyStoreAttachments: async (accountId: string, chatId: string, id: string, waitForCompletion?: boolean, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'accountId' is not null or undefined
             assertParamExists('permanentlyStoreAttachments', 'accountId', accountId)
             // verify required parameter 'chatId' is not null or undefined
@@ -12971,8 +12982,8 @@ export const MessagesApiAxiosParamCreator = function (configuration?: Configurat
             // oauth required
             await setOAuthToObject(localVarHeaderParameter, "chatdaddy", [], configuration)
 
-            if (waitForStore !== undefined) {
-                localVarQueryParameter['waitForStore'] = waitForStore;
+            if (waitForCompletion !== undefined) {
+                localVarQueryParameter['waitForCompletion'] = waitForCompletion;
             }
 
 
@@ -13150,11 +13161,12 @@ export const MessagesApiFp = function(configuration?: Configuration) {
          * @param {string} chatId 
          * @param {string} id 
          * @param {number} index 
+         * @param {boolean} [waitForCompletion] If true, the API will wait for the transcription to be completed before returning
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async messagesTranscribe(accountId: string, chatId: string, id: string, index: number, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AccountsLogout200Response>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.messagesTranscribe(accountId, chatId, id, index, options);
+        async messagesTranscribe(accountId: string, chatId: string, id: string, index: number, waitForCompletion?: boolean, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AccountsLogout200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.messagesTranscribe(accountId, chatId, id, index, waitForCompletion, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -13163,12 +13175,12 @@ export const MessagesApiFp = function(configuration?: Configuration) {
          * @param {string} accountId 
          * @param {string} chatId 
          * @param {string} id 
-         * @param {boolean} [waitForStore] If true, the API will wait for the attachments to be stored before returning
+         * @param {boolean} [waitForCompletion] If true, the API will wait for the attachments to be stored before returning
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async permanentlyStoreAttachments(accountId: string, chatId: string, id: string, waitForStore?: boolean, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PermanentlyStoreAttachments200Response>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.permanentlyStoreAttachments(accountId, chatId, id, waitForStore, options);
+        async permanentlyStoreAttachments(accountId: string, chatId: string, id: string, waitForCompletion?: boolean, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PermanentlyStoreAttachments200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.permanentlyStoreAttachments(accountId, chatId, id, waitForCompletion, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
     }
@@ -13287,7 +13299,7 @@ export const MessagesApiFactory = function (configuration?: Configuration, baseP
          * @throws {RequiredError}
          */
         messagesTranscribe(requestParameters: MessagesApiMessagesTranscribeRequest, options?: AxiosRequestConfig): AxiosPromise<AccountsLogout200Response> {
-            return localVarFp.messagesTranscribe(requestParameters.accountId, requestParameters.chatId, requestParameters.id, requestParameters.index, options).then((request) => request(axios, basePath));
+            return localVarFp.messagesTranscribe(requestParameters.accountId, requestParameters.chatId, requestParameters.id, requestParameters.index, requestParameters.waitForCompletion, options).then((request) => request(axios, basePath));
         },
         /**
          * Given a particular message, calling this route will decode all the message attachments
@@ -13297,7 +13309,7 @@ export const MessagesApiFactory = function (configuration?: Configuration, baseP
          * @throws {RequiredError}
          */
         permanentlyStoreAttachments(requestParameters: MessagesApiPermanentlyStoreAttachmentsRequest, options?: AxiosRequestConfig): AxiosPromise<PermanentlyStoreAttachments200Response> {
-            return localVarFp.permanentlyStoreAttachments(requestParameters.accountId, requestParameters.chatId, requestParameters.id, requestParameters.waitForStore, options).then((request) => request(axios, basePath));
+            return localVarFp.permanentlyStoreAttachments(requestParameters.accountId, requestParameters.chatId, requestParameters.id, requestParameters.waitForCompletion, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -13748,6 +13760,13 @@ export interface MessagesApiMessagesTranscribeRequest {
      * @memberof MessagesApiMessagesTranscribe
      */
     readonly index: number
+
+    /**
+     * If true, the API will wait for the transcription to be completed before returning
+     * @type {boolean}
+     * @memberof MessagesApiMessagesTranscribe
+     */
+    readonly waitForCompletion?: boolean
 }
 
 /**
@@ -13782,7 +13801,7 @@ export interface MessagesApiPermanentlyStoreAttachmentsRequest {
      * @type {boolean}
      * @memberof MessagesApiPermanentlyStoreAttachments
      */
-    readonly waitForStore?: boolean
+    readonly waitForCompletion?: boolean
 }
 
 /**
@@ -13919,7 +13938,7 @@ export class MessagesApi extends BaseAPI {
      * @memberof MessagesApi
      */
     public messagesTranscribe(requestParameters: MessagesApiMessagesTranscribeRequest, options?: AxiosRequestConfig) {
-        return MessagesApiFp(this.configuration).messagesTranscribe(requestParameters.accountId, requestParameters.chatId, requestParameters.id, requestParameters.index, options).then((request) => request(this.axios, this.basePath));
+        return MessagesApiFp(this.configuration).messagesTranscribe(requestParameters.accountId, requestParameters.chatId, requestParameters.id, requestParameters.index, requestParameters.waitForCompletion, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -13931,7 +13950,7 @@ export class MessagesApi extends BaseAPI {
      * @memberof MessagesApi
      */
     public permanentlyStoreAttachments(requestParameters: MessagesApiPermanentlyStoreAttachmentsRequest, options?: AxiosRequestConfig) {
-        return MessagesApiFp(this.configuration).permanentlyStoreAttachments(requestParameters.accountId, requestParameters.chatId, requestParameters.id, requestParameters.waitForStore, options).then((request) => request(this.axios, this.basePath));
+        return MessagesApiFp(this.configuration).permanentlyStoreAttachments(requestParameters.accountId, requestParameters.chatId, requestParameters.id, requestParameters.waitForCompletion, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

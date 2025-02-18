@@ -413,6 +413,12 @@ export interface AccountInsertDataSettings {
      * @memberof AccountInsertDataSettings
      */
     'geoLocation'?: string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof AccountInsertDataSettings
+     */
+    'autoTranscribeVoiceMessages'?: boolean;
 }
 /**
  * 
