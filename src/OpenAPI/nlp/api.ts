@@ -57,10 +57,37 @@ interface AiCreditUse {
     'doneAt': string;
     /**
      * 
-     * @type {object}
+     * @type {AiCreditUseMetadata}
      * @memberof AiCreditUse
      */
-    'metadata'?: object;
+    'metadata'?: AiCreditUseMetadata;
+}
+/**
+ * 
+ * @export
+ * @interface AiCreditUseMetadata
+ */
+export interface AiCreditUseMetadata {
+    [key: string]: any;
+
+    /**
+     * 
+     * @type {string}
+     * @memberof AiCreditUseMetadata
+     */
+    'uniqueMessageId'?: string;
+    /**
+     * Is this usage for transcription?
+     * @type {boolean}
+     * @memberof AiCreditUseMetadata
+     */
+    'isTranscription'?: boolean;
+    /**
+     * Duration of the transcription in seconds
+     * @type {number}
+     * @memberof AiCreditUseMetadata
+     */
+    'durationS'?: number;
 }
 /**
  * 

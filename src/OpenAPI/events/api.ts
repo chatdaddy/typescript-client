@@ -881,10 +881,37 @@ export interface AiCreditUseData {
     'doneAt': string;
     /**
      * 
-     * @type {object}
+     * @type {AiCreditUseDataMetadata}
      * @memberof AiCreditUseData
      */
-    'metadata'?: object;
+    'metadata'?: AiCreditUseDataMetadata;
+}
+/**
+ * 
+ * @export
+ * @interface AiCreditUseDataMetadata
+ */
+export interface AiCreditUseDataMetadata {
+    [key: string]: any;
+
+    /**
+     * 
+     * @type {string}
+     * @memberof AiCreditUseDataMetadata
+     */
+    'uniqueMessageId'?: string;
+    /**
+     * Is this usage for transcription?
+     * @type {boolean}
+     * @memberof AiCreditUseDataMetadata
+     */
+    'isTranscription'?: boolean;
+    /**
+     * Duration of the transcription in seconds
+     * @type {number}
+     * @memberof AiCreditUseDataMetadata
+     */
+    'durationS'?: number;
 }
 /**
  * 

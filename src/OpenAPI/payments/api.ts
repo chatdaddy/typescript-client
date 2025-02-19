@@ -660,7 +660,8 @@ export const CreditConsumptionType = {
     AdminExpiredCreditGain: 'admin/expired_credit_gain',
     ConsultationTraining: 'consultation/training',
     ActiveChat: 'active_chat',
-    AiCreditUse: 'ai_credit_use'
+    AiCreditUse: 'ai_credit_use',
+    AiTranscription: 'ai_transcription'
 } as const;
 
 export type CreditConsumptionType = typeof CreditConsumptionType[keyof typeof CreditConsumptionType];
