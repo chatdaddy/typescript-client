@@ -881,6 +881,12 @@ export interface AiCreditUseData {
     'doneAt': string;
     /**
      * 
+     * @type {AiCreditUseDataTranscriptionMetadata}
+     * @memberof AiCreditUseData
+     */
+    'transcriptionMetadata'?: AiCreditUseDataTranscriptionMetadata;
+    /**
+     * 
      * @type {AiCreditUseDataMetadata}
      * @memberof AiCreditUseData
      */
@@ -900,18 +906,19 @@ export interface AiCreditUseDataMetadata {
      * @memberof AiCreditUseDataMetadata
      */
     'uniqueMessageId'?: string;
-    /**
-     * Is this usage for transcription?
-     * @type {boolean}
-     * @memberof AiCreditUseDataMetadata
-     */
-    'isTranscription'?: boolean;
+}
+/**
+ * 
+ * @export
+ * @interface AiCreditUseDataTranscriptionMetadata
+ */
+export interface AiCreditUseDataTranscriptionMetadata {
     /**
      * Duration of the transcription in seconds
      * @type {number}
-     * @memberof AiCreditUseDataMetadata
+     * @memberof AiCreditUseDataTranscriptionMetadata
      */
-    'durationS'?: number;
+    'durationS': number;
 }
 /**
  * 

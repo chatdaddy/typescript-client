@@ -57,6 +57,12 @@ interface AiCreditUse {
     'doneAt': string;
     /**
      * 
+     * @type {AiCreditUseTranscriptionMetadata}
+     * @memberof AiCreditUse
+     */
+    'transcriptionMetadata'?: AiCreditUseTranscriptionMetadata;
+    /**
+     * 
      * @type {AiCreditUseMetadata}
      * @memberof AiCreditUse
      */
@@ -76,18 +82,19 @@ export interface AiCreditUseMetadata {
      * @memberof AiCreditUseMetadata
      */
     'uniqueMessageId'?: string;
-    /**
-     * Is this usage for transcription?
-     * @type {boolean}
-     * @memberof AiCreditUseMetadata
-     */
-    'isTranscription'?: boolean;
+}
+/**
+ * 
+ * @export
+ * @interface AiCreditUseTranscriptionMetadata
+ */
+export interface AiCreditUseTranscriptionMetadata {
     /**
      * Duration of the transcription in seconds
      * @type {number}
-     * @memberof AiCreditUseMetadata
+     * @memberof AiCreditUseTranscriptionMetadata
      */
-    'durationS'?: number;
+    'durationS': number;
 }
 /**
  * 
@@ -1280,6 +1287,12 @@ export interface TranscriptionRequest {
      * @memberof TranscriptionRequest
      */
     'url': string;
+    /**
+     * 
+     * @type {AiCreditUseMetadata}
+     * @memberof TranscriptionRequest
+     */
+    'metadata'?: AiCreditUseMetadata;
 }
 
 export const TranscriptionRequestTypeEnum = {
