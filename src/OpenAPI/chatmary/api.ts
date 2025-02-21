@@ -704,6 +704,19 @@ export interface CustomBot {
 /**
  * 
  * @export
+ * @interface GenerateFlowWithGenkitPostRequest
+ */
+export interface GenerateFlowWithGenkitPostRequest {
+    /**
+     * Text to generate flow from
+     * @type {string}
+     * @memberof GenerateFlowWithGenkitPostRequest
+     */
+    'text': string;
+}
+/**
+ * 
+ * @export
  * @interface KnowledgeBaseGet200Response
  */
 export interface KnowledgeBaseGet200Response {
@@ -2838,6 +2851,129 @@ export class CustomBotApi extends BaseAPI {
      */
     public manageUserDataPost(requestParameters: CustomBotApiManageUserDataPostRequest, options?: AxiosRequestConfig) {
         return CustomBotApiFp(this.configuration).manageUserDataPost(requestParameters.botApp, requestParameters.userId, requestParameters.manageUserDataPostRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+/**
+ * GenkitApi - axios parameter creator
+ * @export
+ */
+export const GenkitApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @summary Generate flow with Genkit
+         * @param {GenerateFlowWithGenkitPostRequest} [generateFlowWithGenkitPostRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        generateFlowWithGenkitPost: async (generateFlowWithGenkitPostRequest?: GenerateFlowWithGenkitPostRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/generateFlowWithGenkit`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", [], configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(generateFlowWithGenkitPostRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * GenkitApi - functional programming interface
+ * @export
+ */
+export const GenkitApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = GenkitApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * 
+         * @summary Generate flow with Genkit
+         * @param {GenerateFlowWithGenkitPostRequest} [generateFlowWithGenkitPostRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async generateFlowWithGenkitPost(generateFlowWithGenkitPostRequest?: GenerateFlowWithGenkitPostRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<{ [key: string]: any; }>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.generateFlowWithGenkitPost(generateFlowWithGenkitPostRequest, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+    }
+};
+
+/**
+ * GenkitApi - factory interface
+ * @export
+ */
+export const GenkitApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = GenkitApiFp(configuration)
+    return {
+        /**
+         * 
+         * @summary Generate flow with Genkit
+         * @param {GenkitApiGenerateFlowWithGenkitPostRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        generateFlowWithGenkitPost(requestParameters: GenkitApiGenerateFlowWithGenkitPostRequest = {}, options?: AxiosRequestConfig): AxiosPromise<{ [key: string]: any; }> {
+            return localVarFp.generateFlowWithGenkitPost(requestParameters.generateFlowWithGenkitPostRequest, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * Request parameters for generateFlowWithGenkitPost operation in GenkitApi.
+ * @export
+ * @interface GenkitApiGenerateFlowWithGenkitPostRequest
+ */
+export interface GenkitApiGenerateFlowWithGenkitPostRequest {
+    /**
+     * 
+     * @type {GenerateFlowWithGenkitPostRequest}
+     * @memberof GenkitApiGenerateFlowWithGenkitPost
+     */
+    readonly generateFlowWithGenkitPostRequest?: GenerateFlowWithGenkitPostRequest
+}
+
+/**
+ * GenkitApi - object-oriented interface
+ * @export
+ * @class GenkitApi
+ * @extends {BaseAPI}
+ */
+export class GenkitApi extends BaseAPI {
+    /**
+     * 
+     * @summary Generate flow with Genkit
+     * @param {GenkitApiGenerateFlowWithGenkitPostRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof GenkitApi
+     */
+    public generateFlowWithGenkitPost(requestParameters: GenkitApiGenerateFlowWithGenkitPostRequest = {}, options?: AxiosRequestConfig) {
+        return GenkitApiFp(this.configuration).generateFlowWithGenkitPost(requestParameters.generateFlowWithGenkitPostRequest, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
