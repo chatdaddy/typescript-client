@@ -1519,6 +1519,10 @@ export const DashboardApiAxiosParamCreator = function (configuration?: Configura
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["ADMIN_PANEL_ACCESS"], configuration)
+
             if (segmentationField !== undefined) {
                 localVarQueryParameter['segmentationField'] = segmentationField;
             }
