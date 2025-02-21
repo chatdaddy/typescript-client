@@ -96,7 +96,7 @@ export type Aggregate = typeof Aggregate[keyof typeof Aggregate];
  * @type AggregateTeamDataValue
  * @export
  */
-export type AggregateTeamDataValue = ValueObject | { [key: string]: ValueObject; };
+export type AggregateTeamDataValue = StringValueObject | ValueObject | { [key: string]: ValueObject; };
 
 /**
  * Describe an array
@@ -123,6 +123,56 @@ const ArrayPropertyDescriptorTypeEnum = {
 } as const;
 
 type ArrayPropertyDescriptorTypeEnum = typeof ArrayPropertyDescriptorTypeEnum[keyof typeof ArrayPropertyDescriptorTypeEnum];
+
+/**
+ * 
+ * @export
+ * @interface BenchmarkValues
+ */
+export interface BenchmarkValues {
+    /**
+     * 
+     * @type {ValueObject}
+     * @memberof BenchmarkValues
+     */
+    'low': ValueObject;
+    /**
+     * 
+     * @type {ValueObject}
+     * @memberof BenchmarkValues
+     */
+    'medium': ValueObject;
+    /**
+     * 
+     * @type {ValueObject}
+     * @memberof BenchmarkValues
+     */
+    'high': ValueObject;
+}
+/**
+ * 
+ * @export
+ * @interface Benchmarks
+ */
+export interface Benchmarks {
+    /**
+     * 
+     * @type {BenchmarkValues}
+     * @memberof Benchmarks
+     */
+    'segmentationValues'?: BenchmarkValues;
+    /**
+     * 
+     * @type {BenchmarksMainBenchmarks}
+     * @memberof Benchmarks
+     */
+    'mainBenchmarks': BenchmarksMainBenchmarks;
+}
+/**
+ * @type BenchmarksMainBenchmarks
+ * @export
+ */
+export type BenchmarksMainBenchmarks = SegmentedBenchmarks | { [key: string]: BenchmarkValues; };
 
 /**
  * 
@@ -576,6 +626,35 @@ interface DisplayIcon {
 /**
  * 
  * @export
+ * @enum {string}
+ */
+
+export const FlagState = {
+    Growth: 'growth',
+    Decline: 'decline',
+    Inactive: 'inactive',
+    Stable: 'stable'
+} as const;
+
+export type FlagState = typeof FlagState[keyof typeof FlagState];
+
+
+/**
+ * 
+ * @export
+ * @interface GetBenchmarks200Response
+ */
+export interface GetBenchmarks200Response {
+    /**
+     * 
+     * @type {Benchmarks}
+     * @memberof GetBenchmarks200Response
+     */
+    'benchmarks': Benchmarks;
+}
+/**
+ * 
+ * @export
  * @interface GetDashboardBySchemaRequest
  */
 export interface GetDashboardBySchemaRequest {
@@ -1014,6 +1093,37 @@ interface PropertyMetadata {
     'required'?: boolean;
 }
 /**
+ * 
+ * @export
+ * @interface SegmentedBenchmarks
+ */
+export interface SegmentedBenchmarks {
+    /**
+     * 
+     * @type {{ [key: string]: BenchmarkValues; }}
+     * @memberof SegmentedBenchmarks
+     */
+    'low': { [key: string]: BenchmarkValues; };
+    /**
+     * 
+     * @type {{ [key: string]: BenchmarkValues; }}
+     * @memberof SegmentedBenchmarks
+     */
+    'medium': { [key: string]: BenchmarkValues; };
+    /**
+     * 
+     * @type {{ [key: string]: BenchmarkValues; }}
+     * @memberof SegmentedBenchmarks
+     */
+    'high': { [key: string]: BenchmarkValues; };
+    /**
+     * 
+     * @type {{ [key: string]: BenchmarkValues; }}
+     * @memberof SegmentedBenchmarks
+     */
+    'super': { [key: string]: BenchmarkValues; };
+}
+/**
  * Simple string/number/boolean type
  * @export
  * @interface SimplePropertyDescriptor
@@ -1075,6 +1185,32 @@ const SimplePropertyType = {
 
 type SimplePropertyType = typeof SimplePropertyType[keyof typeof SimplePropertyType];
 
+
+/**
+ * 
+ * @export
+ * @interface StringValueObject
+ */
+export interface StringValueObject {
+    /**
+     * 
+     * @type {string}
+     * @memberof StringValueObject
+     */
+    'type'?: StringValueObjectTypeEnum;
+    /**
+     * 
+     * @type {string}
+     * @memberof StringValueObject
+     */
+    'value': string;
+}
+
+export const StringValueObjectTypeEnum = {
+    String: 'string'
+} as const;
+
+export type StringValueObjectTypeEnum = typeof StringValueObjectTypeEnum[keyof typeof StringValueObjectTypeEnum];
 
 /**
  * 
@@ -1345,6 +1481,58 @@ export const DashboardApiAxiosParamCreator = function (configuration?: Configura
 
             if (sort !== undefined) {
                 localVarQueryParameter['sort'] = sort;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Get benchmarks
+         * @param {DashboardPeriod} period 
+         * @param {string} [segmentationField] 
+         * @param {string} [industry] 
+         * @param {string} [region] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getBenchmarks: async (period: DashboardPeriod, segmentationField?: string, industry?: string, region?: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'period' is not null or undefined
+            assertParamExists('getBenchmarks', 'period', period)
+            const localVarPath = `/dashboard/benchmarks`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (segmentationField !== undefined) {
+                localVarQueryParameter['segmentationField'] = segmentationField;
+            }
+
+            if (period !== undefined) {
+                localVarQueryParameter['period'] = period;
+            }
+
+            if (industry !== undefined) {
+                localVarQueryParameter['industry'] = industry;
+            }
+
+            if (region !== undefined) {
+                localVarQueryParameter['region'] = region;
             }
 
 
@@ -1680,6 +1868,20 @@ export const DashboardApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
+         * @summary Get benchmarks
+         * @param {DashboardPeriod} period 
+         * @param {string} [segmentationField] 
+         * @param {string} [industry] 
+         * @param {string} [region] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getBenchmarks(period: DashboardPeriod, segmentationField?: string, industry?: string, region?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetBenchmarks200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getBenchmarks(period, segmentationField, industry, region, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
          * @summary Get dashboard data
          * @param {DashboardPeriod} period 
          * @param {Aggregate} aggregate Timeframe to aggregate the data in.
@@ -1785,6 +1987,16 @@ export const DashboardApiFactory = function (configuration?: Configuration, base
          */
         getAdminDashboards(requestParameters: DashboardApiGetAdminDashboardsRequest, options?: AxiosRequestConfig): AxiosPromise<AdminDashboardResponse> {
             return localVarFp.getAdminDashboards(requestParameters.period, requestParameters.teamIds, requestParameters.customerId, requestParameters.count, requestParameters.cursor, requestParameters.industry, requestParameters.region, requestParameters.sort, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Get benchmarks
+         * @param {DashboardApiGetBenchmarksRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getBenchmarks(requestParameters: DashboardApiGetBenchmarksRequest, options?: AxiosRequestConfig): AxiosPromise<GetBenchmarks200Response> {
+            return localVarFp.getBenchmarks(requestParameters.period, requestParameters.segmentationField, requestParameters.industry, requestParameters.region, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -1934,6 +2146,41 @@ export interface DashboardApiGetAdminDashboardsRequest {
      * @memberof DashboardApiGetAdminDashboards
      */
     readonly sort?: AdminDashboardSort
+}
+
+/**
+ * Request parameters for getBenchmarks operation in DashboardApi.
+ * @export
+ * @interface DashboardApiGetBenchmarksRequest
+ */
+export interface DashboardApiGetBenchmarksRequest {
+    /**
+     * 
+     * @type {DashboardPeriod}
+     * @memberof DashboardApiGetBenchmarks
+     */
+    readonly period: DashboardPeriod
+
+    /**
+     * 
+     * @type {string}
+     * @memberof DashboardApiGetBenchmarks
+     */
+    readonly segmentationField?: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof DashboardApiGetBenchmarks
+     */
+    readonly industry?: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof DashboardApiGetBenchmarks
+     */
+    readonly region?: string
 }
 
 /**
@@ -2131,6 +2378,18 @@ export class DashboardApi extends BaseAPI {
      */
     public getAdminDashboards(requestParameters: DashboardApiGetAdminDashboardsRequest, options?: AxiosRequestConfig) {
         return DashboardApiFp(this.configuration).getAdminDashboards(requestParameters.period, requestParameters.teamIds, requestParameters.customerId, requestParameters.count, requestParameters.cursor, requestParameters.industry, requestParameters.region, requestParameters.sort, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Get benchmarks
+     * @param {DashboardApiGetBenchmarksRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DashboardApi
+     */
+    public getBenchmarks(requestParameters: DashboardApiGetBenchmarksRequest, options?: AxiosRequestConfig) {
+        return DashboardApiFp(this.configuration).getBenchmarks(requestParameters.period, requestParameters.segmentationField, requestParameters.industry, requestParameters.region, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
