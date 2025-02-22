@@ -1505,10 +1505,11 @@ export const DashboardApiAxiosParamCreator = function (configuration?: Configura
          * @param {string} [segmentationField] 
          * @param {string} [industry] 
          * @param {string} [region] 
+         * @param {FlagState} [flagState] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getBenchmarks: async (period: DashboardPeriod, segmentationField?: string, industry?: string, region?: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getBenchmarks: async (period: DashboardPeriod, segmentationField?: string, industry?: string, region?: string, flagState?: FlagState, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'period' is not null or undefined
             assertParamExists('getBenchmarks', 'period', period)
             const localVarPath = `/dashboard/benchmarks`;
@@ -1541,6 +1542,10 @@ export const DashboardApiAxiosParamCreator = function (configuration?: Configura
 
             if (region !== undefined) {
                 localVarQueryParameter['region'] = region;
+            }
+
+            if (flagState !== undefined) {
+                localVarQueryParameter['flagState'] = flagState;
             }
 
 
@@ -1882,11 +1887,12 @@ export const DashboardApiFp = function(configuration?: Configuration) {
          * @param {string} [segmentationField] 
          * @param {string} [industry] 
          * @param {string} [region] 
+         * @param {FlagState} [flagState] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getBenchmarks(period: DashboardPeriod, segmentationField?: string, industry?: string, region?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetBenchmarks200Response>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getBenchmarks(period, segmentationField, industry, region, options);
+        async getBenchmarks(period: DashboardPeriod, segmentationField?: string, industry?: string, region?: string, flagState?: FlagState, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetBenchmarks200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getBenchmarks(period, segmentationField, industry, region, flagState, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -2005,7 +2011,7 @@ export const DashboardApiFactory = function (configuration?: Configuration, base
          * @throws {RequiredError}
          */
         getBenchmarks(requestParameters: DashboardApiGetBenchmarksRequest, options?: AxiosRequestConfig): AxiosPromise<GetBenchmarks200Response> {
-            return localVarFp.getBenchmarks(requestParameters.period, requestParameters.segmentationField, requestParameters.industry, requestParameters.region, options).then((request) => request(axios, basePath));
+            return localVarFp.getBenchmarks(requestParameters.period, requestParameters.segmentationField, requestParameters.industry, requestParameters.region, requestParameters.flagState, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -2197,6 +2203,13 @@ export interface DashboardApiGetBenchmarksRequest {
      * @memberof DashboardApiGetBenchmarks
      */
     readonly region?: string
+
+    /**
+     * 
+     * @type {FlagState}
+     * @memberof DashboardApiGetBenchmarks
+     */
+    readonly flagState?: FlagState
 }
 
 /**
@@ -2405,7 +2418,7 @@ export class DashboardApi extends BaseAPI {
      * @memberof DashboardApi
      */
     public getBenchmarks(requestParameters: DashboardApiGetBenchmarksRequest, options?: AxiosRequestConfig) {
-        return DashboardApiFp(this.configuration).getBenchmarks(requestParameters.period, requestParameters.segmentationField, requestParameters.industry, requestParameters.region, options).then((request) => request(this.axios, this.basePath));
+        return DashboardApiFp(this.configuration).getBenchmarks(requestParameters.period, requestParameters.segmentationField, requestParameters.industry, requestParameters.region, requestParameters.flagState, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
