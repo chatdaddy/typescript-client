@@ -26,6 +26,56 @@ import type { RequestArgs } from '../base';
 import { COLLECTION_FORMATS, BaseAPI, RequiredError } from '../base';
 
 /**
+ * @type AdminDashboardFilter
+ * @export
+ */
+export type AdminDashboardFilter = AdminDashboardMatchFilter | AdminDashboardRangeFilter;
+
+/**
+ * @type AdminDashboardFilterItems
+ * @export
+ */
+export type AdminDashboardFilterItems = AdminDashboardFilter | Array<AdminDashboardFilter>;
+
+/**
+ * 
+ * @export
+ * @interface AdminDashboardMatchFilter
+ */
+export interface AdminDashboardMatchFilter {
+    /**
+     * 
+     * @type {string}
+     * @memberof AdminDashboardMatchFilter
+     */
+    'field': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof AdminDashboardMatchFilter
+     */
+    'value': string;
+}
+/**
+ * 
+ * @export
+ * @interface AdminDashboardRangeFilter
+ */
+export interface AdminDashboardRangeFilter {
+    /**
+     * 
+     * @type {string}
+     * @memberof AdminDashboardRangeFilter
+     */
+    'field': string;
+    /**
+     * 
+     * @type {NumericalRange}
+     * @memberof AdminDashboardRangeFilter
+     */
+    'range': NumericalRange;
+}
+/**
  * 
  * @export
  * @interface AdminDashboardResponse
@@ -160,20 +210,8 @@ export interface Benchmarks {
      * @type {BenchmarkValues}
      * @memberof Benchmarks
      */
-    'segmentationValues'?: BenchmarkValues;
-    /**
-     * 
-     * @type {BenchmarksMainBenchmarks}
-     * @memberof Benchmarks
-     */
-    'mainBenchmarks': BenchmarksMainBenchmarks;
+    'benchmarkValues': BenchmarkValues;
 }
-/**
- * @type BenchmarksMainBenchmarks
- * @export
- */
-export type BenchmarksMainBenchmarks = SegmentedBenchmarks | { [key: string]: BenchmarkValues; };
-
 /**
  * 
  * @export
@@ -1029,6 +1067,25 @@ export type NullableDashboardMetadataAccess = typeof NullableDashboardMetadataAc
 
 
 /**
+ * 
+ * @export
+ * @interface NumericalRange
+ */
+export interface NumericalRange {
+    /**
+     * 
+     * @type {number}
+     * @memberof NumericalRange
+     */
+    'start'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof NumericalRange
+     */
+    'end'?: number;
+}
+/**
  * describe OAuth input for access tokens
  * @export
  * @interface OAuthPropertyDescriptor
@@ -1090,37 +1147,6 @@ interface PropertyMetadata {
      * @memberof PropertyMetadata
      */
     'required'?: boolean;
-}
-/**
- * 
- * @export
- * @interface SegmentedBenchmarks
- */
-export interface SegmentedBenchmarks {
-    /**
-     * 
-     * @type {{ [key: string]: BenchmarkValues; }}
-     * @memberof SegmentedBenchmarks
-     */
-    'low': { [key: string]: BenchmarkValues; };
-    /**
-     * 
-     * @type {{ [key: string]: BenchmarkValues; }}
-     * @memberof SegmentedBenchmarks
-     */
-    'medium': { [key: string]: BenchmarkValues; };
-    /**
-     * 
-     * @type {{ [key: string]: BenchmarkValues; }}
-     * @memberof SegmentedBenchmarks
-     */
-    'high': { [key: string]: BenchmarkValues; };
-    /**
-     * 
-     * @type {{ [key: string]: BenchmarkValues; }}
-     * @memberof SegmentedBenchmarks
-     */
-    'super': { [key: string]: BenchmarkValues; };
 }
 /**
  * Simple string/number/boolean type
@@ -1425,15 +1451,13 @@ export const DashboardApiAxiosParamCreator = function (configuration?: Configura
          * @param {string} [customerId] 
          * @param {number} [count] Numboer of items to fetch.
          * @param {string} [cursor] Cursor to fetch the next page of dashboards.
-         * @param {string} [industry] 
-         * @param {string} [region] 
-         * @param {AdminDashboardSort} [sort] 
-         * @param {FlagState} [flagState] 
          * @param {boolean} [returnTotal] Whether to return the total number of dashboards.
+         * @param {AdminDashboardSort} [sort] Sort the dashboards by a field.
+         * @param {AdminDashboardFilterItems} [filters] Filters to apply to the dashboards.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getAdminDashboards: async (period: 'last-4-weeks' | 'last-12-weeks' | 'last-12-months', teamIds?: Array<string>, customerId?: string, count?: number, cursor?: string, industry?: string, region?: string, sort?: AdminDashboardSort, flagState?: FlagState, returnTotal?: boolean, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getAdminDashboards: async (period: 'last-4-weeks' | 'last-12-weeks' | 'last-12-months', teamIds?: Array<string>, customerId?: string, count?: number, cursor?: string, returnTotal?: boolean, sort?: AdminDashboardSort, filters?: AdminDashboardFilterItems, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'period' is not null or undefined
             assertParamExists('getAdminDashboards', 'period', period)
             const localVarPath = `/dashboard/admin`;
@@ -1472,24 +1496,16 @@ export const DashboardApiAxiosParamCreator = function (configuration?: Configura
                 localVarQueryParameter['period'] = period;
             }
 
-            if (industry !== undefined) {
-                localVarQueryParameter['industry'] = industry;
-            }
-
-            if (region !== undefined) {
-                localVarQueryParameter['region'] = region;
+            if (returnTotal !== undefined) {
+                localVarQueryParameter['returnTotal'] = returnTotal;
             }
 
             if (sort !== undefined) {
                 localVarQueryParameter['sort'] = sort;
             }
 
-            if (flagState !== undefined) {
-                localVarQueryParameter['flagState'] = flagState;
-            }
-
-            if (returnTotal !== undefined) {
-                localVarQueryParameter['returnTotal'] = returnTotal;
+            if (filters !== undefined) {
+                localVarQueryParameter['filters'] = filters;
             }
 
 
@@ -1506,17 +1522,12 @@ export const DashboardApiAxiosParamCreator = function (configuration?: Configura
         /**
          * 
          * @summary Get benchmarks
-         * @param {DashboardPeriod} period 
-         * @param {string} [segmentationField] 
-         * @param {string} [industry] 
-         * @param {string} [region] 
-         * @param {FlagState} [flagState] 
+         * @param {DashboardPeriod} [period] 
+         * @param {AdminDashboardFilterItems} [filters] Filters to apply to the benchmarks query
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getBenchmarks: async (period: DashboardPeriod, segmentationField?: string, industry?: string, region?: string, flagState?: FlagState, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'period' is not null or undefined
-            assertParamExists('getBenchmarks', 'period', period)
+        getBenchmarks: async (period?: DashboardPeriod, filters?: AdminDashboardFilterItems, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/dashboard/benchmarks`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -1533,24 +1544,12 @@ export const DashboardApiAxiosParamCreator = function (configuration?: Configura
             // oauth required
             await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["ADMIN_PANEL_ACCESS"], configuration)
 
-            if (segmentationField !== undefined) {
-                localVarQueryParameter['segmentationField'] = segmentationField;
-            }
-
             if (period !== undefined) {
                 localVarQueryParameter['period'] = period;
             }
 
-            if (industry !== undefined) {
-                localVarQueryParameter['industry'] = industry;
-            }
-
-            if (region !== undefined) {
-                localVarQueryParameter['region'] = region;
-            }
-
-            if (flagState !== undefined) {
-                localVarQueryParameter['flagState'] = flagState;
+            if (filters !== undefined) {
+                localVarQueryParameter['filters'] = filters;
             }
 
 
@@ -1874,31 +1873,26 @@ export const DashboardApiFp = function(configuration?: Configuration) {
          * @param {string} [customerId] 
          * @param {number} [count] Numboer of items to fetch.
          * @param {string} [cursor] Cursor to fetch the next page of dashboards.
-         * @param {string} [industry] 
-         * @param {string} [region] 
-         * @param {AdminDashboardSort} [sort] 
-         * @param {FlagState} [flagState] 
          * @param {boolean} [returnTotal] Whether to return the total number of dashboards.
+         * @param {AdminDashboardSort} [sort] Sort the dashboards by a field.
+         * @param {AdminDashboardFilterItems} [filters] Filters to apply to the dashboards.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getAdminDashboards(period: 'last-4-weeks' | 'last-12-weeks' | 'last-12-months', teamIds?: Array<string>, customerId?: string, count?: number, cursor?: string, industry?: string, region?: string, sort?: AdminDashboardSort, flagState?: FlagState, returnTotal?: boolean, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AdminDashboardResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getAdminDashboards(period, teamIds, customerId, count, cursor, industry, region, sort, flagState, returnTotal, options);
+        async getAdminDashboards(period: 'last-4-weeks' | 'last-12-weeks' | 'last-12-months', teamIds?: Array<string>, customerId?: string, count?: number, cursor?: string, returnTotal?: boolean, sort?: AdminDashboardSort, filters?: AdminDashboardFilterItems, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AdminDashboardResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getAdminDashboards(period, teamIds, customerId, count, cursor, returnTotal, sort, filters, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
          * 
          * @summary Get benchmarks
-         * @param {DashboardPeriod} period 
-         * @param {string} [segmentationField] 
-         * @param {string} [industry] 
-         * @param {string} [region] 
-         * @param {FlagState} [flagState] 
+         * @param {DashboardPeriod} [period] 
+         * @param {AdminDashboardFilterItems} [filters] Filters to apply to the benchmarks query
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getBenchmarks(period: DashboardPeriod, segmentationField?: string, industry?: string, region?: string, flagState?: FlagState, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetBenchmarks200Response>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getBenchmarks(period, segmentationField, industry, region, flagState, options);
+        async getBenchmarks(period?: DashboardPeriod, filters?: AdminDashboardFilterItems, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetBenchmarks200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getBenchmarks(period, filters, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -2007,7 +2001,7 @@ export const DashboardApiFactory = function (configuration?: Configuration, base
          * @throws {RequiredError}
          */
         getAdminDashboards(requestParameters: DashboardApiGetAdminDashboardsRequest, options?: AxiosRequestConfig): AxiosPromise<AdminDashboardResponse> {
-            return localVarFp.getAdminDashboards(requestParameters.period, requestParameters.teamIds, requestParameters.customerId, requestParameters.count, requestParameters.cursor, requestParameters.industry, requestParameters.region, requestParameters.sort, requestParameters.flagState, requestParameters.returnTotal, options).then((request) => request(axios, basePath));
+            return localVarFp.getAdminDashboards(requestParameters.period, requestParameters.teamIds, requestParameters.customerId, requestParameters.count, requestParameters.cursor, requestParameters.returnTotal, requestParameters.sort, requestParameters.filters, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -2016,8 +2010,8 @@ export const DashboardApiFactory = function (configuration?: Configuration, base
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getBenchmarks(requestParameters: DashboardApiGetBenchmarksRequest, options?: AxiosRequestConfig): AxiosPromise<GetBenchmarks200Response> {
-            return localVarFp.getBenchmarks(requestParameters.period, requestParameters.segmentationField, requestParameters.industry, requestParameters.region, requestParameters.flagState, options).then((request) => request(axios, basePath));
+        getBenchmarks(requestParameters: DashboardApiGetBenchmarksRequest = {}, options?: AxiosRequestConfig): AxiosPromise<GetBenchmarks200Response> {
+            return localVarFp.getBenchmarks(requestParameters.period, requestParameters.filters, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -2148,39 +2142,25 @@ export interface DashboardApiGetAdminDashboardsRequest {
     readonly cursor?: string
 
     /**
-     * 
-     * @type {string}
+     * Whether to return the total number of dashboards.
+     * @type {boolean}
      * @memberof DashboardApiGetAdminDashboards
      */
-    readonly industry?: string
+    readonly returnTotal?: boolean
 
     /**
-     * 
-     * @type {string}
-     * @memberof DashboardApiGetAdminDashboards
-     */
-    readonly region?: string
-
-    /**
-     * 
+     * Sort the dashboards by a field.
      * @type {AdminDashboardSort}
      * @memberof DashboardApiGetAdminDashboards
      */
     readonly sort?: AdminDashboardSort
 
     /**
-     * 
-     * @type {FlagState}
+     * Filters to apply to the dashboards.
+     * @type {AdminDashboardFilterItems}
      * @memberof DashboardApiGetAdminDashboards
      */
-    readonly flagState?: FlagState
-
-    /**
-     * Whether to return the total number of dashboards.
-     * @type {boolean}
-     * @memberof DashboardApiGetAdminDashboards
-     */
-    readonly returnTotal?: boolean
+    readonly filters?: AdminDashboardFilterItems
 }
 
 /**
@@ -2194,35 +2174,14 @@ export interface DashboardApiGetBenchmarksRequest {
      * @type {DashboardPeriod}
      * @memberof DashboardApiGetBenchmarks
      */
-    readonly period: DashboardPeriod
+    readonly period?: DashboardPeriod
 
     /**
-     * 
-     * @type {string}
+     * Filters to apply to the benchmarks query
+     * @type {AdminDashboardFilterItems}
      * @memberof DashboardApiGetBenchmarks
      */
-    readonly segmentationField?: string
-
-    /**
-     * 
-     * @type {string}
-     * @memberof DashboardApiGetBenchmarks
-     */
-    readonly industry?: string
-
-    /**
-     * 
-     * @type {string}
-     * @memberof DashboardApiGetBenchmarks
-     */
-    readonly region?: string
-
-    /**
-     * 
-     * @type {FlagState}
-     * @memberof DashboardApiGetBenchmarks
-     */
-    readonly flagState?: FlagState
+    readonly filters?: AdminDashboardFilterItems
 }
 
 /**
@@ -2419,7 +2378,7 @@ export class DashboardApi extends BaseAPI {
      * @memberof DashboardApi
      */
     public getAdminDashboards(requestParameters: DashboardApiGetAdminDashboardsRequest, options?: AxiosRequestConfig) {
-        return DashboardApiFp(this.configuration).getAdminDashboards(requestParameters.period, requestParameters.teamIds, requestParameters.customerId, requestParameters.count, requestParameters.cursor, requestParameters.industry, requestParameters.region, requestParameters.sort, requestParameters.flagState, requestParameters.returnTotal, options).then((request) => request(this.axios, this.basePath));
+        return DashboardApiFp(this.configuration).getAdminDashboards(requestParameters.period, requestParameters.teamIds, requestParameters.customerId, requestParameters.count, requestParameters.cursor, requestParameters.returnTotal, requestParameters.sort, requestParameters.filters, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -2430,8 +2389,8 @@ export class DashboardApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof DashboardApi
      */
-    public getBenchmarks(requestParameters: DashboardApiGetBenchmarksRequest, options?: AxiosRequestConfig) {
-        return DashboardApiFp(this.configuration).getBenchmarks(requestParameters.period, requestParameters.segmentationField, requestParameters.industry, requestParameters.region, requestParameters.flagState, options).then((request) => request(this.axios, this.basePath));
+    public getBenchmarks(requestParameters: DashboardApiGetBenchmarksRequest = {}, options?: AxiosRequestConfig) {
+        return DashboardApiFp(this.configuration).getBenchmarks(requestParameters.period, requestParameters.filters, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
