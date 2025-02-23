@@ -207,10 +207,10 @@ export interface BenchmarkValues {
 export interface Benchmarks {
     /**
      * 
-     * @type {BenchmarkValues}
+     * @type {{ [key: string]: BenchmarkValues; }}
      * @memberof Benchmarks
      */
-    'benchmarkValues': BenchmarkValues;
+    'benchmarks': { [key: string]: BenchmarkValues; };
 }
 /**
  * 
@@ -676,19 +676,6 @@ export const FlagState = {
 export type FlagState = typeof FlagState[keyof typeof FlagState];
 
 
-/**
- * 
- * @export
- * @interface GetBenchmarks200Response
- */
-export interface GetBenchmarks200Response {
-    /**
-     * 
-     * @type {Benchmarks}
-     * @memberof GetBenchmarks200Response
-     */
-    'benchmarks': Benchmarks;
-}
 /**
  * 
  * @export
@@ -1891,7 +1878,7 @@ export const DashboardApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getBenchmarks(period?: DashboardPeriod, filters?: AdminDashboardFilterItems, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetBenchmarks200Response>> {
+        async getBenchmarks(period?: DashboardPeriod, filters?: AdminDashboardFilterItems, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Benchmarks>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getBenchmarks(period, filters, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -2010,7 +1997,7 @@ export const DashboardApiFactory = function (configuration?: Configuration, base
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getBenchmarks(requestParameters: DashboardApiGetBenchmarksRequest = {}, options?: AxiosRequestConfig): AxiosPromise<GetBenchmarks200Response> {
+        getBenchmarks(requestParameters: DashboardApiGetBenchmarksRequest = {}, options?: AxiosRequestConfig): AxiosPromise<Benchmarks> {
             return localVarFp.getBenchmarks(requestParameters.period, requestParameters.filters, options).then((request) => request(axios, basePath));
         },
         /**
