@@ -9394,11 +9394,12 @@ export const ChatsApiAxiosParamCreator = function (configuration?: Configuration
          * @param {Array<string>} [accountId] Get contacts only belonging to this account
          * @param {ContactType} [type] only get contacts of type
          * @param {ChatsGetTicketParameter} [ticket] Query the status of a ticket
+         * @param {Array<string>} [notAssignee] Exclude contacts assigned to the specified users
          * @param {boolean} [returnUnreadChatCount] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        chatsGet: async (count?: number, page?: string, archive?: boolean, unread?: boolean, returnTotalCount?: boolean, hasPendingMessage?: boolean, mentioned?: string, hasUnsolvedNote?: boolean, hasFailedMessage?: boolean, lastMessageFromMe?: boolean, tags?: ChatsGetTagsParameter, notTags?: Array<string>, contacts?: ChatsGetContactsParameter, q?: string, assignee?: ChatsGetAssigneeParameter, accountId?: Array<string>, type?: ContactType, ticket?: ChatsGetTicketParameter, returnUnreadChatCount?: boolean, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        chatsGet: async (count?: number, page?: string, archive?: boolean, unread?: boolean, returnTotalCount?: boolean, hasPendingMessage?: boolean, mentioned?: string, hasUnsolvedNote?: boolean, hasFailedMessage?: boolean, lastMessageFromMe?: boolean, tags?: ChatsGetTagsParameter, notTags?: Array<string>, contacts?: ChatsGetContactsParameter, q?: string, assignee?: ChatsGetAssigneeParameter, accountId?: Array<string>, type?: ContactType, ticket?: ChatsGetTicketParameter, notAssignee?: Array<string>, returnUnreadChatCount?: boolean, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/chats`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -9485,6 +9486,10 @@ export const ChatsApiAxiosParamCreator = function (configuration?: Configuration
 
             if (ticket !== undefined) {
                 localVarQueryParameter['ticket'] = ticket;
+            }
+
+            if (notAssignee) {
+                localVarQueryParameter['notAssignee'] = notAssignee;
             }
 
             if (returnUnreadChatCount !== undefined) {
@@ -9628,12 +9633,13 @@ export const ChatsApiFp = function(configuration?: Configuration) {
          * @param {Array<string>} [accountId] Get contacts only belonging to this account
          * @param {ContactType} [type] only get contacts of type
          * @param {ChatsGetTicketParameter} [ticket] Query the status of a ticket
+         * @param {Array<string>} [notAssignee] Exclude contacts assigned to the specified users
          * @param {boolean} [returnUnreadChatCount] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async chatsGet(count?: number, page?: string, archive?: boolean, unread?: boolean, returnTotalCount?: boolean, hasPendingMessage?: boolean, mentioned?: string, hasUnsolvedNote?: boolean, hasFailedMessage?: boolean, lastMessageFromMe?: boolean, tags?: ChatsGetTagsParameter, notTags?: Array<string>, contacts?: ChatsGetContactsParameter, q?: string, assignee?: ChatsGetAssigneeParameter, accountId?: Array<string>, type?: ContactType, ticket?: ChatsGetTicketParameter, returnUnreadChatCount?: boolean, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ChatsGet200Response>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.chatsGet(count, page, archive, unread, returnTotalCount, hasPendingMessage, mentioned, hasUnsolvedNote, hasFailedMessage, lastMessageFromMe, tags, notTags, contacts, q, assignee, accountId, type, ticket, returnUnreadChatCount, options);
+        async chatsGet(count?: number, page?: string, archive?: boolean, unread?: boolean, returnTotalCount?: boolean, hasPendingMessage?: boolean, mentioned?: string, hasUnsolvedNote?: boolean, hasFailedMessage?: boolean, lastMessageFromMe?: boolean, tags?: ChatsGetTagsParameter, notTags?: Array<string>, contacts?: ChatsGetContactsParameter, q?: string, assignee?: ChatsGetAssigneeParameter, accountId?: Array<string>, type?: ContactType, ticket?: ChatsGetTicketParameter, notAssignee?: Array<string>, returnUnreadChatCount?: boolean, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ChatsGet200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.chatsGet(count, page, archive, unread, returnTotalCount, hasPendingMessage, mentioned, hasUnsolvedNote, hasFailedMessage, lastMessageFromMe, tags, notTags, contacts, q, assignee, accountId, type, ticket, notAssignee, returnUnreadChatCount, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -9680,7 +9686,7 @@ export const ChatsApiFactory = function (configuration?: Configuration, basePath
          * @throws {RequiredError}
          */
         chatsGet(requestParameters: ChatsApiChatsGetRequest = {}, options?: AxiosRequestConfig): AxiosPromise<ChatsGet200Response> {
-            return localVarFp.chatsGet(requestParameters.count, requestParameters.page, requestParameters.archive, requestParameters.unread, requestParameters.returnTotalCount, requestParameters.hasPendingMessage, requestParameters.mentioned, requestParameters.hasUnsolvedNote, requestParameters.hasFailedMessage, requestParameters.lastMessageFromMe, requestParameters.tags, requestParameters.notTags, requestParameters.contacts, requestParameters.q, requestParameters.assignee, requestParameters.accountId, requestParameters.type, requestParameters.ticket, requestParameters.returnUnreadChatCount, options).then((request) => request(axios, basePath));
+            return localVarFp.chatsGet(requestParameters.count, requestParameters.page, requestParameters.archive, requestParameters.unread, requestParameters.returnTotalCount, requestParameters.hasPendingMessage, requestParameters.mentioned, requestParameters.hasUnsolvedNote, requestParameters.hasFailedMessage, requestParameters.lastMessageFromMe, requestParameters.tags, requestParameters.notTags, requestParameters.contacts, requestParameters.q, requestParameters.assignee, requestParameters.accountId, requestParameters.type, requestParameters.ticket, requestParameters.notAssignee, requestParameters.returnUnreadChatCount, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -9838,6 +9844,13 @@ export interface ChatsApiChatsGetRequest {
     readonly ticket?: ChatsGetTicketParameter
 
     /**
+     * Exclude contacts assigned to the specified users
+     * @type {Array<string>}
+     * @memberof ChatsApiChatsGet
+     */
+    readonly notAssignee?: Array<string>
+
+    /**
      * 
      * @type {boolean}
      * @memberof ChatsApiChatsGet
@@ -9917,7 +9930,7 @@ export class ChatsApi extends BaseAPI {
      * @memberof ChatsApi
      */
     public chatsGet(requestParameters: ChatsApiChatsGetRequest = {}, options?: AxiosRequestConfig) {
-        return ChatsApiFp(this.configuration).chatsGet(requestParameters.count, requestParameters.page, requestParameters.archive, requestParameters.unread, requestParameters.returnTotalCount, requestParameters.hasPendingMessage, requestParameters.mentioned, requestParameters.hasUnsolvedNote, requestParameters.hasFailedMessage, requestParameters.lastMessageFromMe, requestParameters.tags, requestParameters.notTags, requestParameters.contacts, requestParameters.q, requestParameters.assignee, requestParameters.accountId, requestParameters.type, requestParameters.ticket, requestParameters.returnUnreadChatCount, options).then((request) => request(this.axios, this.basePath));
+        return ChatsApiFp(this.configuration).chatsGet(requestParameters.count, requestParameters.page, requestParameters.archive, requestParameters.unread, requestParameters.returnTotalCount, requestParameters.hasPendingMessage, requestParameters.mentioned, requestParameters.hasUnsolvedNote, requestParameters.hasFailedMessage, requestParameters.lastMessageFromMe, requestParameters.tags, requestParameters.notTags, requestParameters.contacts, requestParameters.q, requestParameters.assignee, requestParameters.accountId, requestParameters.type, requestParameters.ticket, requestParameters.notAssignee, requestParameters.returnUnreadChatCount, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
