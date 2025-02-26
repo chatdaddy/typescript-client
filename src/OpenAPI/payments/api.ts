@@ -2662,6 +2662,18 @@ export interface RecurringCreditConsumptionCreate {
      * @memberof RecurringCreditConsumptionCreate
      */
     'metadata'?: { [key: string]: any; };
+    /**
+     * Number of units to consume at the first charge
+     * @type {number}
+     * @memberof RecurringCreditConsumptionCreate
+     */
+    'units'?: number;
+    /**
+     * An ISO formatted timestamp
+     * @type {string}
+     * @memberof RecurringCreditConsumptionCreate
+     */
+    'cancelledAt'?: string | null;
 }
 
 
@@ -5428,7 +5440,7 @@ export const CreditsApiAxiosParamCreator = function (configuration?: Configurati
 
             // authentication chatdaddy required
             // oauth required
-            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["PAYMENTS_UPDATE"], configuration)
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["ADMIN_PANEL_ACCESS", "PARTNER_ADMIN_PANEL_ACCESS"], configuration)
 
 
     
