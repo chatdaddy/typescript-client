@@ -3266,6 +3266,12 @@ export interface Message {
      */
     'failDecryption'?: boolean;
     /**
+     * True, if the message is a comment
+     * @type {boolean}
+     * @memberof Message
+     */
+    'isComment'?: boolean;
+    /**
      * 
      * @type {MessageContentAction}
      * @memberof Message
@@ -3752,6 +3758,12 @@ export interface MessageCompose {
      */
     'failDecryption'?: boolean;
     /**
+     * True, if the message is a comment
+     * @type {boolean}
+     * @memberof MessageCompose
+     */
+    'isComment'?: boolean;
+    /**
      * 
      * @type {MessageContentAction}
      * @memberof MessageCompose
@@ -3959,6 +3971,12 @@ export interface MessageComposeWChatID {
      */
     'failDecryption'?: boolean;
     /**
+     * True, if the message is a comment
+     * @type {boolean}
+     * @memberof MessageComposeWChatID
+     */
+    'isComment'?: boolean;
+    /**
      * 
      * @type {MessageContentAction}
      * @memberof MessageComposeWChatID
@@ -4082,6 +4100,12 @@ export interface MessageContent {
      * @memberof MessageContent
      */
     'failDecryption'?: boolean;
+    /**
+     * True, if the message is a comment
+     * @type {boolean}
+     * @memberof MessageContent
+     */
+    'isComment'?: boolean;
     /**
      * 
      * @type {MessageContentAction}

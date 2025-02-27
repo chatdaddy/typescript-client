@@ -8784,6 +8784,12 @@ export interface MessageInsertData {
     'failDecryption'?: boolean;
     /**
      * 
+     * @type {boolean}
+     * @memberof MessageInsertData
+     */
+    'isComment'?: boolean;
+    /**
+     * 
      * @type {MessageInsertDataAction}
      * @memberof MessageInsertData
      */
@@ -9788,6 +9794,12 @@ export interface MessageUpdateData {
      * @memberof MessageUpdateData
      */
     'failDecryption'?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof MessageUpdateData
+     */
+    'isComment'?: boolean;
     /**
      * 
      * @type {MessageInsertDataAction}
