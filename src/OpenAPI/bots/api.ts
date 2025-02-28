@@ -4763,7 +4763,8 @@ export const SimplePropertyType = {
     Oauth: 'oauth',
     Timezone: 'timezone',
     Time: 'time',
-    CreditConsumptionType: 'credit_consumption_type'
+    CreditConsumptionType: 'credit_consumption_type',
+    CustomFieldSelect: 'custom_field_select'
 } as const;
 
 export type SimplePropertyType = typeof SimplePropertyType[keyof typeof SimplePropertyType];
