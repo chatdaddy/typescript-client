@@ -1398,6 +1398,64 @@ export interface AssigneeFilter {
     'assigned'?: MetadataQuery;
 }
 /**
+ * @type BulkMessageAction
+ * @export
+ */
+export type BulkMessageAction = BulkMessageActionOneOf | BulkMessageActionOneOf1;
+
+/**
+ * 
+ * @export
+ * @interface BulkMessageActionOneOf
+ */
+export interface BulkMessageActionOneOf {
+    /**
+     * 
+     * @type {string}
+     * @memberof BulkMessageActionOneOf
+     */
+    'type': BulkMessageActionOneOfTypeEnum;
+}
+
+export const BulkMessageActionOneOfTypeEnum = {
+    Delete: 'delete'
+} as const;
+
+export type BulkMessageActionOneOfTypeEnum = typeof BulkMessageActionOneOfTypeEnum[keyof typeof BulkMessageActionOneOfTypeEnum];
+
+/**
+ * 
+ * @export
+ * @interface BulkMessageActionOneOf1
+ */
+export interface BulkMessageActionOneOf1 {
+    /**
+     * 
+     * @type {string}
+     * @memberof BulkMessageActionOneOf1
+     */
+    'type': BulkMessageActionOneOf1TypeEnum;
+    /**
+     * An ISO formatted timestamp
+     * @type {string}
+     * @memberof BulkMessageActionOneOf1
+     */
+    'timestamp'?: string;
+    /**
+     * If multiple messages are being retried, add an interval between each message, starting from the timestamp
+     * @type {number}
+     * @memberof BulkMessageActionOneOf1
+     */
+    'intervalS'?: number;
+}
+
+export const BulkMessageActionOneOf1TypeEnum = {
+    Retry: 'retry'
+} as const;
+
+export type BulkMessageActionOneOf1TypeEnum = typeof BulkMessageActionOneOf1TypeEnum[keyof typeof BulkMessageActionOneOf1TypeEnum];
+
+/**
  * 
  * @export
  * @interface Chat
@@ -4431,6 +4489,19 @@ export type MessageStatus = typeof MessageStatus[keyof typeof MessageStatus];
 
 
 /**
+ * 
+ * @export
+ * @interface MessagesBulkActionRequest
+ */
+export interface MessagesBulkActionRequest {
+    /**
+     * 
+     * @type {BulkMessageAction}
+     * @memberof MessagesBulkActionRequest
+     */
+    'action': BulkMessageAction;
+}
+/**
  * @type MessagesForwardToChatIdParameter
  * @export
  */
@@ -4530,13 +4601,6 @@ export interface MessagesPatchRequest {
  * @interface MessagesSearch200Response
  */
 export interface MessagesSearch200Response {
-    /**
-     * 
-     * @type {number}
-     * @memberof MessagesSearch200Response
-     * @deprecated
-     */
-    'nextPage'?: number;
     /**
      * 
      * @type {string}
@@ -12365,6 +12429,66 @@ export const MessagesApiAxiosParamCreator = function (configuration?: Configurat
     return {
         /**
          * 
+         * @summary Perform bulk actions on messages
+         * @param {'pending' | 'error' | 'cancelled'} status 
+         * @param {Array<string>} [accountId] Get contacts only belonging to this account
+         * @param {MessagesGetRangeParameter} [range] Fetch messages only within this range. If not specified, fetches all messages
+         * @param {string} [chatId] 
+         * @param {MessagesBulkActionRequest} [messagesBulkActionRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        messagesBulkAction: async (status: 'pending' | 'error' | 'cancelled', accountId?: Array<string>, range?: MessagesGetRangeParameter, chatId?: string, messagesBulkActionRequest?: MessagesBulkActionRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'status' is not null or undefined
+            assertParamExists('messagesBulkAction', 'status', status)
+            const localVarPath = `/messages/bulk-action`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["MESSAGES_SEND_TO_ALL", "MESSAGES_SEND_TO_ASSIGNED"], configuration)
+
+            if (accountId) {
+                localVarQueryParameter['accountId'] = accountId;
+            }
+
+            if (range !== undefined) {
+                localVarQueryParameter['range'] = range;
+            }
+
+            if (chatId !== undefined) {
+                localVarQueryParameter['chatId'] = chatId;
+            }
+
+            if (status !== undefined) {
+                localVarQueryParameter['status'] = status;
+            }
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(messagesBulkActionRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
          * @summary Delete a message
          * @param {string} accountId 
          * @param {string} chatId 
@@ -12411,11 +12535,12 @@ export const MessagesApiAxiosParamCreator = function (configuration?: Configurat
         },
         /**
          * 
-         * @summary Clears all pending/error messages
+         * @summary Clears all pending/error messages. Deprecated, use the /messages/bulk-action route instead
          * @param {'pending' | 'error' | 'cancelled'} status 
          * @param {string} [accountId] If specified, only clears messages of this account
          * @param {string} [chatId] If specified, only clears messages of this chat
          * @param {*} [options] Override http request option.
+         * @deprecated
          * @throws {RequiredError}
          */
         messagesDeletePending: async (status: 'pending' | 'error' | 'cancelled', accountId?: string, chatId?: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
@@ -12653,9 +12778,11 @@ export const MessagesApiAxiosParamCreator = function (configuration?: Configurat
         },
         /**
          * Retry all the messages in a given status
+         * @summary Use the /messages/bulk-action route instead
          * @param {'pending' | 'error' | 'cancelled'} status 
          * @param {MessagesPatchPendingRequest} [messagesPatchPendingRequest] 
          * @param {*} [options] Override http request option.
+         * @deprecated
          * @throws {RequiredError}
          */
         messagesPatchPending: async (status: 'pending' | 'error' | 'cancelled', messagesPatchPendingRequest?: MessagesPatchPendingRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
@@ -13046,6 +13173,21 @@ export const MessagesApiFp = function(configuration?: Configuration) {
     return {
         /**
          * 
+         * @summary Perform bulk actions on messages
+         * @param {'pending' | 'error' | 'cancelled'} status 
+         * @param {Array<string>} [accountId] Get contacts only belonging to this account
+         * @param {MessagesGetRangeParameter} [range] Fetch messages only within this range. If not specified, fetches all messages
+         * @param {string} [chatId] 
+         * @param {MessagesBulkActionRequest} [messagesBulkActionRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async messagesBulkAction(status: 'pending' | 'error' | 'cancelled', accountId?: Array<string>, range?: MessagesGetRangeParameter, chatId?: string, messagesBulkActionRequest?: MessagesBulkActionRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AccountsLogout200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.messagesBulkAction(status, accountId, range, chatId, messagesBulkActionRequest, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
          * @summary Delete a message
          * @param {string} accountId 
          * @param {string} chatId 
@@ -13059,11 +13201,12 @@ export const MessagesApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
-         * @summary Clears all pending/error messages
+         * @summary Clears all pending/error messages. Deprecated, use the /messages/bulk-action route instead
          * @param {'pending' | 'error' | 'cancelled'} status 
          * @param {string} [accountId] If specified, only clears messages of this account
          * @param {string} [chatId] If specified, only clears messages of this chat
          * @param {*} [options] Override http request option.
+         * @deprecated
          * @throws {RequiredError}
          */
         async messagesDeletePending(status: 'pending' | 'error' | 'cancelled', accountId?: string, chatId?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AccountsLogout200Response>> {
@@ -13121,9 +13264,11 @@ export const MessagesApiFp = function(configuration?: Configuration) {
         },
         /**
          * Retry all the messages in a given status
+         * @summary Use the /messages/bulk-action route instead
          * @param {'pending' | 'error' | 'cancelled'} status 
          * @param {MessagesPatchPendingRequest} [messagesPatchPendingRequest] 
          * @param {*} [options] Override http request option.
+         * @deprecated
          * @throws {RequiredError}
          */
         async messagesPatchPending(status: 'pending' | 'error' | 'cancelled', messagesPatchPendingRequest?: MessagesPatchPendingRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AccountsLogout200Response>> {
@@ -13232,6 +13377,16 @@ export const MessagesApiFactory = function (configuration?: Configuration, baseP
     return {
         /**
          * 
+         * @summary Perform bulk actions on messages
+         * @param {MessagesApiMessagesBulkActionRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        messagesBulkAction(requestParameters: MessagesApiMessagesBulkActionRequest, options?: AxiosRequestConfig): AxiosPromise<AccountsLogout200Response> {
+            return localVarFp.messagesBulkAction(requestParameters.status, requestParameters.accountId, requestParameters.range, requestParameters.chatId, requestParameters.messagesBulkActionRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
          * @summary Delete a message
          * @param {MessagesApiMessagesDeleteRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -13242,9 +13397,10 @@ export const MessagesApiFactory = function (configuration?: Configuration, baseP
         },
         /**
          * 
-         * @summary Clears all pending/error messages
+         * @summary Clears all pending/error messages. Deprecated, use the /messages/bulk-action route instead
          * @param {MessagesApiMessagesDeletePendingRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
+         * @deprecated
          * @throws {RequiredError}
          */
         messagesDeletePending(requestParameters: MessagesApiMessagesDeletePendingRequest, options?: AxiosRequestConfig): AxiosPromise<AccountsLogout200Response> {
@@ -13281,8 +13437,10 @@ export const MessagesApiFactory = function (configuration?: Configuration, baseP
         },
         /**
          * Retry all the messages in a given status
+         * @summary Use the /messages/bulk-action route instead
          * @param {MessagesApiMessagesPatchPendingRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
+         * @deprecated
          * @throws {RequiredError}
          */
         messagesPatchPending(requestParameters: MessagesApiMessagesPatchPendingRequest, options?: AxiosRequestConfig): AxiosPromise<AccountsLogout200Response> {
@@ -13350,6 +13508,48 @@ export const MessagesApiFactory = function (configuration?: Configuration, baseP
         },
     };
 };
+
+/**
+ * Request parameters for messagesBulkAction operation in MessagesApi.
+ * @export
+ * @interface MessagesApiMessagesBulkActionRequest
+ */
+export interface MessagesApiMessagesBulkActionRequest {
+    /**
+     * 
+     * @type {'pending' | 'error' | 'cancelled'}
+     * @memberof MessagesApiMessagesBulkAction
+     */
+    readonly status: 'pending' | 'error' | 'cancelled'
+
+    /**
+     * Get contacts only belonging to this account
+     * @type {Array<string>}
+     * @memberof MessagesApiMessagesBulkAction
+     */
+    readonly accountId?: Array<string>
+
+    /**
+     * Fetch messages only within this range. If not specified, fetches all messages
+     * @type {MessagesGetRangeParameter}
+     * @memberof MessagesApiMessagesBulkAction
+     */
+    readonly range?: MessagesGetRangeParameter
+
+    /**
+     * 
+     * @type {string}
+     * @memberof MessagesApiMessagesBulkAction
+     */
+    readonly chatId?: string
+
+    /**
+     * 
+     * @type {MessagesBulkActionRequest}
+     * @memberof MessagesApiMessagesBulkAction
+     */
+    readonly messagesBulkActionRequest?: MessagesBulkActionRequest
+}
 
 /**
  * Request parameters for messagesDelete operation in MessagesApi.
@@ -13850,6 +14050,18 @@ export interface MessagesApiPermanentlyStoreAttachmentsRequest {
 export class MessagesApi extends BaseAPI {
     /**
      * 
+     * @summary Perform bulk actions on messages
+     * @param {MessagesApiMessagesBulkActionRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof MessagesApi
+     */
+    public messagesBulkAction(requestParameters: MessagesApiMessagesBulkActionRequest, options?: AxiosRequestConfig) {
+        return MessagesApiFp(this.configuration).messagesBulkAction(requestParameters.status, requestParameters.accountId, requestParameters.range, requestParameters.chatId, requestParameters.messagesBulkActionRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
      * @summary Delete a message
      * @param {MessagesApiMessagesDeleteRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -13862,9 +14074,10 @@ export class MessagesApi extends BaseAPI {
 
     /**
      * 
-     * @summary Clears all pending/error messages
+     * @summary Clears all pending/error messages. Deprecated, use the /messages/bulk-action route instead
      * @param {MessagesApiMessagesDeletePendingRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
+     * @deprecated
      * @throws {RequiredError}
      * @memberof MessagesApi
      */
@@ -13909,8 +14122,10 @@ export class MessagesApi extends BaseAPI {
 
     /**
      * Retry all the messages in a given status
+     * @summary Use the /messages/bulk-action route instead
      * @param {MessagesApiMessagesPatchPendingRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
+     * @deprecated
      * @throws {RequiredError}
      * @memberof MessagesApi
      */
