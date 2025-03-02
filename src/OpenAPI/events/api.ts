@@ -216,6 +216,12 @@ export interface AccountInsertData {
      * @memberof AccountInsertData
      */
     'settings': AccountInsertDataSettings;
+    /**
+     * 
+     * @type {AccountInsertDataArchiveState}
+     * @memberof AccountInsertData
+     */
+    'archiveState'?: AccountInsertDataArchiveState;
 }
 
 export const AccountInsertDataTierEnum = {
@@ -243,6 +249,40 @@ export const AccountInsertDataStateEnum = {
 } as const;
 
 export type AccountInsertDataStateEnum = typeof AccountInsertDataStateEnum[keyof typeof AccountInsertDataStateEnum];
+
+/**
+ * 
+ * @export
+ * @interface AccountInsertDataArchiveState
+ */
+export interface AccountInsertDataArchiveState {
+    /**
+     * 
+     * @type {string}
+     * @memberof AccountInsertDataArchiveState
+     */
+    'type': AccountInsertDataArchiveStateTypeEnum;
+    /**
+     * 
+     * @type {string}
+     * @memberof AccountInsertDataArchiveState
+     */
+    'doneAt': string;
+    /**
+     * 
+     * @type {AccountInsertDataErrorAllOf}
+     * @memberof AccountInsertDataArchiveState
+     */
+    'error'?: AccountInsertDataErrorAllOf;
+}
+
+export const AccountInsertDataArchiveStateTypeEnum = {
+    Archiving: 'archiving',
+    Error: 'error',
+    Done: 'done'
+} as const;
+
+export type AccountInsertDataArchiveStateTypeEnum = typeof AccountInsertDataArchiveStateTypeEnum[keyof typeof AccountInsertDataArchiveStateTypeEnum];
 
 /**
  * 
@@ -643,6 +683,12 @@ export interface AccountUpdateData {
      * @memberof AccountUpdateData
      */
     'settings'?: AccountInsertDataSettings;
+    /**
+     * 
+     * @type {AccountInsertDataArchiveState}
+     * @memberof AccountUpdateData
+     */
+    'archiveState'?: AccountInsertDataArchiveState;
 }
 
 export const AccountUpdateDataTierEnum = {

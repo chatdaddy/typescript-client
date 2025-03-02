@@ -157,6 +157,12 @@ export interface Account {
      * @memberof Account
      */
     'settings': AccountSettings;
+    /**
+     * 
+     * @type {ArchiveState}
+     * @memberof Account
+     */
+    'archiveState'?: ArchiveState;
 }
 
 
@@ -1378,6 +1384,40 @@ interface AppErrorDataHelpLinkOneOf1 {
      */
     'url': string;
 }
+/**
+ * 
+ * @export
+ * @interface ArchiveState
+ */
+export interface ArchiveState {
+    /**
+     * 
+     * @type {string}
+     * @memberof ArchiveState
+     */
+    'type': ArchiveStateTypeEnum;
+    /**
+     * An ISO formatted timestamp
+     * @type {string}
+     * @memberof ArchiveState
+     */
+    'doneAt': string;
+    /**
+     * 
+     * @type {AppError}
+     * @memberof ArchiveState
+     */
+    'error'?: AppError;
+}
+
+export const ArchiveStateTypeEnum = {
+    Archiving: 'archiving',
+    Error: 'error',
+    Done: 'done'
+} as const;
+
+export type ArchiveStateTypeEnum = typeof ArchiveStateTypeEnum[keyof typeof ArchiveStateTypeEnum];
+
 /**
  * 
  * @export
@@ -6489,8 +6529,8 @@ export interface WebhookSmsLimitPostRequest {
 export const AccountApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
-         * 
-         * @summary Archive an account. Logs out of the account & removes all synced chats, messages. Keeps contacts, and notes.
+         * Logs out of the account & removes all synced chats, messages. Keeps contacts, and notes.
+         * @summary Archive an account\'s resyncable data.
          * @param {string} accountId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -6895,8 +6935,8 @@ export const AccountApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = AccountApiAxiosParamCreator(configuration)
     return {
         /**
-         * 
-         * @summary Archive an account. Logs out of the account & removes all synced chats, messages. Keeps contacts, and notes.
+         * Logs out of the account & removes all synced chats, messages. Keeps contacts, and notes.
+         * @summary Archive an account\'s resyncable data.
          * @param {string} accountId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -7015,8 +7055,8 @@ export const AccountApiFactory = function (configuration?: Configuration, basePa
     const localVarFp = AccountApiFp(configuration)
     return {
         /**
-         * 
-         * @summary Archive an account. Logs out of the account & removes all synced chats, messages. Keeps contacts, and notes.
+         * Logs out of the account & removes all synced chats, messages. Keeps contacts, and notes.
+         * @summary Archive an account\'s resyncable data.
          * @param {AccountApiAccountsArchiveRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -7318,8 +7358,8 @@ export interface AccountApiWaChangeLoginModeRequest {
  */
 export class AccountApi extends BaseAPI {
     /**
-     * 
-     * @summary Archive an account. Logs out of the account & removes all synced chats, messages. Keeps contacts, and notes.
+     * Logs out of the account & removes all synced chats, messages. Keeps contacts, and notes.
+     * @summary Archive an account\'s resyncable data.
      * @param {AccountApiAccountsArchiveRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
