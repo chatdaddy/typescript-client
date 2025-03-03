@@ -1065,6 +1065,58 @@ export type ActionInteractionType = typeof ActionInteractionType[keyof typeof Ac
 /**
  * 
  * @export
+ * @interface ActionScheduleRecord
+ */
+export interface ActionScheduleRecord {
+    /**
+     * 
+     * @type {number}
+     * @memberof ActionScheduleRecord
+     */
+    'id': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof ActionScheduleRecord
+     */
+    'sourceActionFireRecordId': number;
+    /**
+     * An ISO formatted timestamp
+     * @type {string}
+     * @memberof ActionScheduleRecord
+     */
+    'scheduledAt': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ActionScheduleRecord
+     */
+    'status': ActionScheduleRecordStatusEnum;
+    /**
+     * 
+     * @type {number}
+     * @memberof ActionScheduleRecord
+     */
+    'delayIdx'?: number;
+    /**
+     * 
+     * @type {ServiceResponse}
+     * @memberof ActionScheduleRecord
+     */
+    'failureReason'?: ServiceResponse;
+}
+
+export const ActionScheduleRecordStatusEnum = {
+    Pending: 'pending',
+    Completed: 'completed',
+    Failed: 'failed'
+} as const;
+
+export type ActionScheduleRecordStatusEnum = typeof ActionScheduleRecordStatusEnum[keyof typeof ActionScheduleRecordStatusEnum];
+
+/**
+ * 
+ * @export
  * @interface ActionTarget
  */
 export interface ActionTarget {

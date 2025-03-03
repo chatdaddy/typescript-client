@@ -872,6 +872,84 @@ export interface ActionExecuteDataMessagesInner {
 /**
  * 
  * @export
+ * @interface ActionSchedule
+ */
+export interface ActionSchedule {
+    /**
+     * 
+     * @type {string}
+     * @memberof ActionSchedule
+     */
+    'event': ActionScheduleEventEnum;
+    /**
+     * 
+     * @type {Array<ActionScheduleData>}
+     * @memberof ActionSchedule
+     */
+    'data': Array<ActionScheduleData>;
+}
+
+export const ActionScheduleEventEnum = {
+    ActionSchedule: 'action-schedule'
+} as const;
+
+export type ActionScheduleEventEnum = typeof ActionScheduleEventEnum[keyof typeof ActionScheduleEventEnum];
+
+/**
+ * 
+ * @export
+ * @interface ActionScheduleData
+ */
+export interface ActionScheduleData {
+    /**
+     * 
+     * @type {number}
+     * @memberof ActionScheduleData
+     */
+    'id': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof ActionScheduleData
+     */
+    'sourceActionFireRecordId': number;
+    /**
+     * 
+     * @type {string}
+     * @memberof ActionScheduleData
+     */
+    'scheduledAt': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ActionScheduleData
+     */
+    'status': ActionScheduleDataStatusEnum;
+    /**
+     * 
+     * @type {number}
+     * @memberof ActionScheduleData
+     */
+    'delayIdx'?: number;
+    /**
+     * 
+     * @type {ActionExecuteDataMessagesInner}
+     * @memberof ActionScheduleData
+     */
+    'failureReason'?: ActionExecuteDataMessagesInner;
+}
+
+export const ActionScheduleDataStatusEnum = {
+    Pending: 'pending',
+    Completed: 'completed',
+    Failed: 'failed'
+} as const;
+
+export type ActionScheduleDataStatusEnum = typeof ActionScheduleDataStatusEnum[keyof typeof ActionScheduleDataStatusEnum];
+
+/**
+ * 
+ * @export
  * @interface AiCreditUse
  */
 export interface AiCreditUse {
@@ -7599,6 +7677,7 @@ export const EventName = {
     PresenceUpdate: 'presence-update',
     OrderInsert: 'order-insert',
     ActionExecute: 'action-execute',
+    ActionSchedule: 'action-schedule',
     FewMessagesLeft: 'few-messages-left',
     StaleAccountNotification: 'stale-account-notification',
     CustomerCreditsLevelUpdate: 'customer-credits-level-update',
@@ -7749,7 +7828,7 @@ export type EventSubscriptionType = typeof EventSubscriptionType[keyof typeof Ev
  * The request body you\'ll receive in a webhook
  * @export
  */
-export type EventWebhookData = AccountDelete | AccountInsert | AccountUpdate | ActionExecute | AiCreditUse | BotDelete | BotInsert | BotUpdate | CallDelete | CallInsert | CallUpdate | CallchannelDelete | CallchannelInsert | CallchannelUpdate | CampaignInsert | ChatDelete | ChatInsert | ChatUpdate | ChatbotInsert | ContactDelete | ContactInsert | ContactUpdate | CredittransactionrecordInsert | CrmTicketDelete | CrmTicketInsert | CrmTicketUpdate | CustomerCreditsLevelUpdate | DashboardDelete | DashboardInsert | DashboardUpdate | FewMessagesLeft | GroupUpdate | KeywordbasedactionInsert | MessageDelete | MessageInsert | MessageUpdate | OrderInsert | PaymentintegrationInsert | PlatformproductDelete | PlatformproductInsert | PlatformproductUpdate | PresenceUpdate | PushNotification | ShopproductInsert | StaleAccountNotification | TagDelete | TagInsert | TagUpdate | TeamDelete | TeamInsert | TeamUpdate | TeammemberDelete | TeammemberInsert | TeammemberLogout | TeammemberUpdate | TrackingDelete | TrackingInsert | TrackingUpdate | UserDelete | UserInsert | UserUpdate;
+export type EventWebhookData = AccountDelete | AccountInsert | AccountUpdate | ActionExecute | ActionSchedule | AiCreditUse | BotDelete | BotInsert | BotUpdate | CallDelete | CallInsert | CallUpdate | CallchannelDelete | CallchannelInsert | CallchannelUpdate | CampaignInsert | ChatDelete | ChatInsert | ChatUpdate | ChatbotInsert | ContactDelete | ContactInsert | ContactUpdate | CredittransactionrecordInsert | CrmTicketDelete | CrmTicketInsert | CrmTicketUpdate | CustomerCreditsLevelUpdate | DashboardDelete | DashboardInsert | DashboardUpdate | FewMessagesLeft | GroupUpdate | KeywordbasedactionInsert | MessageDelete | MessageInsert | MessageUpdate | OrderInsert | PaymentintegrationInsert | PlatformproductDelete | PlatformproductInsert | PlatformproductUpdate | PresenceUpdate | PushNotification | ShopproductInsert | StaleAccountNotification | TagDelete | TagInsert | TagUpdate | TeamDelete | TeamInsert | TeamUpdate | TeammemberDelete | TeammemberInsert | TeammemberLogout | TeammemberUpdate | TrackingDelete | TrackingInsert | TrackingUpdate | UserDelete | UserInsert | UserUpdate;
 
 /**
  * 
