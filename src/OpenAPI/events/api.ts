@@ -7060,6 +7060,12 @@ export interface DashboardInsertDataSchema {
      * @memberof DashboardInsertDataSchema
      */
     'items': Array<DashboardInsertDataSchemaItemsInner>;
+    /**
+     * 
+     * @type {DashboardInsertDataSchemaLayout}
+     * @memberof DashboardInsertDataSchema
+     */
+    'layout'?: DashboardInsertDataSchemaLayout;
 }
 
 export const DashboardInsertDataSchemaVersionEnum = {
@@ -7158,6 +7164,74 @@ export interface DashboardInsertDataSchemaItemsInnerOneOf1 {
      * @memberof DashboardInsertDataSchemaItemsInnerOneOf1
      */
     'title': string;
+}
+/**
+ * 
+ * @export
+ * @interface DashboardInsertDataSchemaLayout
+ */
+export interface DashboardInsertDataSchemaLayout {
+    /**
+     * 
+     * @type {Array<DashboardInsertDataSchemaLayoutXlInner>}
+     * @memberof DashboardInsertDataSchemaLayout
+     */
+    'xl': Array<DashboardInsertDataSchemaLayoutXlInner>;
+    /**
+     * 
+     * @type {Array<DashboardInsertDataSchemaLayoutXlInner>}
+     * @memberof DashboardInsertDataSchemaLayout
+     */
+    'lg': Array<DashboardInsertDataSchemaLayoutXlInner>;
+    /**
+     * 
+     * @type {Array<DashboardInsertDataSchemaLayoutXlInner>}
+     * @memberof DashboardInsertDataSchemaLayout
+     */
+    'md': Array<DashboardInsertDataSchemaLayoutXlInner>;
+    /**
+     * 
+     * @type {Array<DashboardInsertDataSchemaLayoutXlInner>}
+     * @memberof DashboardInsertDataSchemaLayout
+     */
+    'sm': Array<DashboardInsertDataSchemaLayoutXlInner>;
+}
+/**
+ * 
+ * @export
+ * @interface DashboardInsertDataSchemaLayoutXlInner
+ */
+export interface DashboardInsertDataSchemaLayoutXlInner {
+    /**
+     * 
+     * @type {string}
+     * @memberof DashboardInsertDataSchemaLayoutXlInner
+     */
+    'id': string;
+    /**
+     * 
+     * @type {number}
+     * @memberof DashboardInsertDataSchemaLayoutXlInner
+     */
+    'x': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof DashboardInsertDataSchemaLayoutXlInner
+     */
+    'y': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof DashboardInsertDataSchemaLayoutXlInner
+     */
+    'w': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof DashboardInsertDataSchemaLayoutXlInner
+     */
+    'h': number;
 }
 /**
  * 

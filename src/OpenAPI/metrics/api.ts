@@ -423,6 +423,12 @@ export interface DashboardSchema {
      * @memberof DashboardSchema
      */
     'items': Array<DashboardSchemaItemsInner>;
+    /**
+     * 
+     * @type {DashboardSchemaLayout}
+     * @memberof DashboardSchema
+     */
+    'layout'?: DashboardSchemaLayout;
 }
 
 export const DashboardSchemaVersionEnum = {
@@ -494,6 +500,37 @@ export interface DashboardSchemaItem {
  */
 export type DashboardSchemaItemsInner = DashboardSchemaItem | TextSchemaItem;
 
+/**
+ * 
+ * @export
+ * @interface DashboardSchemaLayout
+ */
+export interface DashboardSchemaLayout {
+    /**
+     * 
+     * @type {Array<LayoutSchema>}
+     * @memberof DashboardSchemaLayout
+     */
+    'xl': Array<LayoutSchema>;
+    /**
+     * 
+     * @type {Array<LayoutSchema>}
+     * @memberof DashboardSchemaLayout
+     */
+    'lg': Array<LayoutSchema>;
+    /**
+     * 
+     * @type {Array<LayoutSchema>}
+     * @memberof DashboardSchemaLayout
+     */
+    'md': Array<LayoutSchema>;
+    /**
+     * 
+     * @type {Array<LayoutSchema>}
+     * @memberof DashboardSchemaLayout
+     */
+    'sm': Array<LayoutSchema>;
+}
 /**
  * 
  * @export
@@ -793,6 +830,43 @@ export interface GetInitData200ResponseDefaultDashboard {
      * @memberof GetInitData200ResponseDefaultDashboard
      */
     'permissions'?: DashboardMetadataPermissions;
+}
+/**
+ * 
+ * @export
+ * @interface LayoutSchema
+ */
+export interface LayoutSchema {
+    /**
+     * 
+     * @type {string}
+     * @memberof LayoutSchema
+     */
+    'id': string;
+    /**
+     * 
+     * @type {number}
+     * @memberof LayoutSchema
+     */
+    'x': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof LayoutSchema
+     */
+    'y': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof LayoutSchema
+     */
+    'w': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof LayoutSchema
+     */
+    'h': number;
 }
 /**
  * Describe a map
