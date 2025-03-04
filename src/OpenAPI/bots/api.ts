@@ -1097,7 +1097,7 @@ export interface ActionScheduleRecord {
      * @type {number}
      * @memberof ActionScheduleRecord
      */
-    'delayIdx'?: number;
+    'delayIdx': number;
     /**
      * 
      * @type {ServiceResponse}
@@ -4792,7 +4792,7 @@ export interface SimplePropertyDescriptor {
 
 
 /**
- * Type of property. - string, number, boolean: Simple property type - timestamp: timestamp string in ISO format - timezone: timezone in offset format - time: time in 24 hour format - channel, tag, team_member, chat, board_stage, board, ticket:     Reference to another object by ID - custom_field: Object of type { name: string, value: string } - duration: integer representing seconds - credit_consumption_type: all credit consumption types 
+ * Type of property. - string, number, boolean: Simple property type - timestamp: timestamp string in ISO format - timezone: timezone in offset format - time: time in 24 hour format - channel, tag, team_member, chat, board_stage, board, ticket:     Reference to another object by ID - custom_field: Object of type { name: string, value: string } - duration: integer representing seconds - credit_consumption_type: all credit consumption types - delay: object containing bot delay details 
  * @export
  * @enum {string}
  */
@@ -4816,7 +4816,8 @@ export const SimplePropertyType = {
     Timezone: 'timezone',
     Time: 'time',
     CreditConsumptionType: 'credit_consumption_type',
-    CustomFieldSelect: 'custom_field_select'
+    CustomFieldSelect: 'custom_field_select',
+    Delay: 'delay'
 } as const;
 
 export type SimplePropertyType = typeof SimplePropertyType[keyof typeof SimplePropertyType];
