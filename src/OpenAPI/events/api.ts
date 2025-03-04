@@ -907,46 +907,7 @@ export interface ActionScheduleData {
      * @memberof ActionScheduleData
      */
     'id': number;
-    /**
-     * 
-     * @type {number}
-     * @memberof ActionScheduleData
-     */
-    'sourceActionFireRecordId'?: number;
-    /**
-     * 
-     * @type {string}
-     * @memberof ActionScheduleData
-     */
-    'scheduledAt'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ActionScheduleData
-     */
-    'status'?: ActionScheduleDataStatusEnum;
-    /**
-     * 
-     * @type {number}
-     * @memberof ActionScheduleData
-     */
-    'delayIdx'?: number;
-    /**
-     * 
-     * @type {ActionExecuteDataMessagesInner}
-     * @memberof ActionScheduleData
-     */
-    'failureReason'?: ActionExecuteDataMessagesInner;
 }
-
-export const ActionScheduleDataStatusEnum = {
-    Pending: 'pending',
-    Queued: 'queued',
-    Completed: 'completed'
-} as const;
-
-export type ActionScheduleDataStatusEnum = typeof ActionScheduleDataStatusEnum[keyof typeof ActionScheduleDataStatusEnum];
-
 /**
  * 
  * @export
