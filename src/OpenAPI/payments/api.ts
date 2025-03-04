@@ -4977,11 +4977,12 @@ export const CreditsApiAxiosParamCreator = function (configuration?: Configurati
          * @param {'gain' | 'consume'} [effectType] 
          * @param {Array<string>} [id] 
          * @param {DateRange} [createdAt] 
+         * @param {string} [doneBy] 
          * @param {boolean} [returnTotal] Return total number of consumptions
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        creditTxsGet: async (teamId?: string, customerId?: string, count?: number, cursor?: string, type?: Array<CreditBalanceEffectType>, effectType?: 'gain' | 'consume', id?: Array<string>, createdAt?: DateRange, returnTotal?: boolean, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        creditTxsGet: async (teamId?: string, customerId?: string, count?: number, cursor?: string, type?: Array<CreditBalanceEffectType>, effectType?: 'gain' | 'consume', id?: Array<string>, createdAt?: DateRange, doneBy?: string, returnTotal?: boolean, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v2/credits/consumption`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -5028,6 +5029,10 @@ export const CreditsApiAxiosParamCreator = function (configuration?: Configurati
 
             if (createdAt !== undefined) {
                 localVarQueryParameter['createdAt'] = createdAt;
+            }
+
+            if (doneBy !== undefined) {
+                localVarQueryParameter['doneBy'] = doneBy;
             }
 
             if (returnTotal !== undefined) {
@@ -5638,12 +5643,13 @@ export const CreditsApiFp = function(configuration?: Configuration) {
          * @param {'gain' | 'consume'} [effectType] 
          * @param {Array<string>} [id] 
          * @param {DateRange} [createdAt] 
+         * @param {string} [doneBy] 
          * @param {boolean} [returnTotal] Return total number of consumptions
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async creditTxsGet(teamId?: string, customerId?: string, count?: number, cursor?: string, type?: Array<CreditBalanceEffectType>, effectType?: 'gain' | 'consume', id?: Array<string>, createdAt?: DateRange, returnTotal?: boolean, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CreditTxsGet200Response>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.creditTxsGet(teamId, customerId, count, cursor, type, effectType, id, createdAt, returnTotal, options);
+        async creditTxsGet(teamId?: string, customerId?: string, count?: number, cursor?: string, type?: Array<CreditBalanceEffectType>, effectType?: 'gain' | 'consume', id?: Array<string>, createdAt?: DateRange, doneBy?: string, returnTotal?: boolean, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CreditTxsGet200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.creditTxsGet(teamId, customerId, count, cursor, type, effectType, id, createdAt, doneBy, returnTotal, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -5871,7 +5877,7 @@ export const CreditsApiFactory = function (configuration?: Configuration, basePa
          * @throws {RequiredError}
          */
         creditTxsGet(requestParameters: CreditsApiCreditTxsGetRequest = {}, options?: AxiosRequestConfig): AxiosPromise<CreditTxsGet200Response> {
-            return localVarFp.creditTxsGet(requestParameters.teamId, requestParameters.customerId, requestParameters.count, requestParameters.cursor, requestParameters.type, requestParameters.effectType, requestParameters.id, requestParameters.createdAt, requestParameters.returnTotal, options).then((request) => request(axios, basePath));
+            return localVarFp.creditTxsGet(requestParameters.teamId, requestParameters.customerId, requestParameters.count, requestParameters.cursor, requestParameters.type, requestParameters.effectType, requestParameters.id, requestParameters.createdAt, requestParameters.doneBy, requestParameters.returnTotal, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -6204,6 +6210,13 @@ export interface CreditsApiCreditTxsGetRequest {
     readonly createdAt?: DateRange
 
     /**
+     * 
+     * @type {string}
+     * @memberof CreditsApiCreditTxsGet
+     */
+    readonly doneBy?: string
+
+    /**
      * Return total number of consumptions
      * @type {boolean}
      * @memberof CreditsApiCreditTxsGet
@@ -6506,7 +6519,7 @@ export class CreditsApi extends BaseAPI {
      * @memberof CreditsApi
      */
     public creditTxsGet(requestParameters: CreditsApiCreditTxsGetRequest = {}, options?: AxiosRequestConfig) {
-        return CreditsApiFp(this.configuration).creditTxsGet(requestParameters.teamId, requestParameters.customerId, requestParameters.count, requestParameters.cursor, requestParameters.type, requestParameters.effectType, requestParameters.id, requestParameters.createdAt, requestParameters.returnTotal, options).then((request) => request(this.axios, this.basePath));
+        return CreditsApiFp(this.configuration).creditTxsGet(requestParameters.teamId, requestParameters.customerId, requestParameters.count, requestParameters.cursor, requestParameters.type, requestParameters.effectType, requestParameters.id, requestParameters.createdAt, requestParameters.doneBy, requestParameters.returnTotal, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
