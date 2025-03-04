@@ -902,7 +902,7 @@ export type ActionScheduleEventEnum = typeof ActionScheduleEventEnum[keyof typeo
  */
 export interface ActionScheduleData {
     /**
-     * 
+     * ID of the action schedule record
      * @type {number}
      * @memberof ActionScheduleData
      */
@@ -912,19 +912,19 @@ export interface ActionScheduleData {
      * @type {number}
      * @memberof ActionScheduleData
      */
-    'sourceActionFireRecordId': number;
+    'sourceActionFireRecordId'?: number;
     /**
      * 
      * @type {string}
      * @memberof ActionScheduleData
      */
-    'scheduledAt': string;
+    'scheduledAt'?: string;
     /**
      * 
      * @type {string}
      * @memberof ActionScheduleData
      */
-    'status': ActionScheduleDataStatusEnum;
+    'status'?: ActionScheduleDataStatusEnum;
     /**
      * 
      * @type {number}
@@ -941,8 +941,8 @@ export interface ActionScheduleData {
 
 export const ActionScheduleDataStatusEnum = {
     Pending: 'pending',
-    Completed: 'completed',
-    Failed: 'failed'
+    Queued: 'queued',
+    Completed: 'completed'
 } as const;
 
 export type ActionScheduleDataStatusEnum = typeof ActionScheduleDataStatusEnum[keyof typeof ActionScheduleDataStatusEnum];

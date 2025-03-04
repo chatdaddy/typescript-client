@@ -1069,7 +1069,7 @@ export type ActionInteractionType = typeof ActionInteractionType[keyof typeof Ac
  */
 export interface ActionScheduleRecord {
     /**
-     * 
+     * ID of the action schedule record
      * @type {number}
      * @memberof ActionScheduleRecord
      */
@@ -1108,8 +1108,8 @@ export interface ActionScheduleRecord {
 
 export const ActionScheduleRecordStatusEnum = {
     Pending: 'pending',
-    Completed: 'completed',
-    Failed: 'failed'
+    Queued: 'queued',
+    Completed: 'completed'
 } as const;
 
 export type ActionScheduleRecordStatusEnum = typeof ActionScheduleRecordStatusEnum[keyof typeof ActionScheduleRecordStatusEnum];
