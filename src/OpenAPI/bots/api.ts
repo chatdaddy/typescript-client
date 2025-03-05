@@ -273,6 +273,12 @@ export interface ActionAppConfig {
      * @type {string}
      * @memberof ActionAppConfig
      */
+    'type'?: ActionAppConfigTypeEnum;
+    /**
+     * 
+     * @type {string}
+     * @memberof ActionAppConfig
+     */
     'id': string;
     /**
      * 
@@ -323,6 +329,14 @@ export interface ActionAppConfig {
      */
     'appGroupId'?: string;
 }
+
+export const ActionAppConfigTypeEnum = {
+    Asynchronous: 'asynchronous',
+    Synchronous: 'synchronous'
+} as const;
+
+export type ActionAppConfigTypeEnum = typeof ActionAppConfigTypeEnum[keyof typeof ActionAppConfigTypeEnum];
+
 /**
  * 
  * @export
