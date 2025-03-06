@@ -278,6 +278,37 @@ export interface DashboardData {
 /**
  * 
  * @export
+ * @interface DashboardLayoutSchema
+ */
+export interface DashboardLayoutSchema {
+    /**
+     * 
+     * @type {Array<LayoutSchema>}
+     * @memberof DashboardLayoutSchema
+     */
+    'xl': Array<LayoutSchema>;
+    /**
+     * 
+     * @type {Array<LayoutSchema>}
+     * @memberof DashboardLayoutSchema
+     */
+    'lg': Array<LayoutSchema>;
+    /**
+     * 
+     * @type {Array<LayoutSchema>}
+     * @memberof DashboardLayoutSchema
+     */
+    'md': Array<LayoutSchema>;
+    /**
+     * 
+     * @type {Array<LayoutSchema>}
+     * @memberof DashboardLayoutSchema
+     */
+    'sm': Array<LayoutSchema>;
+}
+/**
+ * 
+ * @export
  * @interface DashboardMetadata
  */
 export interface DashboardMetadata {
@@ -425,10 +456,10 @@ export interface DashboardSchema {
     'items': Array<DashboardSchemaItemsInner>;
     /**
      * 
-     * @type {DashboardSchemaLayout}
+     * @type {DashboardLayoutSchema}
      * @memberof DashboardSchema
      */
-    'layout'?: DashboardSchemaLayout;
+    'layout'?: DashboardLayoutSchema;
 }
 
 export const DashboardSchemaVersionEnum = {
@@ -503,37 +534,6 @@ export type DashboardSchemaItemsInner = DashboardSchemaItem | TextSchemaItem;
 /**
  * 
  * @export
- * @interface DashboardSchemaLayout
- */
-export interface DashboardSchemaLayout {
-    /**
-     * 
-     * @type {Array<LayoutSchema>}
-     * @memberof DashboardSchemaLayout
-     */
-    'xl': Array<LayoutSchema>;
-    /**
-     * 
-     * @type {Array<LayoutSchema>}
-     * @memberof DashboardSchemaLayout
-     */
-    'lg': Array<LayoutSchema>;
-    /**
-     * 
-     * @type {Array<LayoutSchema>}
-     * @memberof DashboardSchemaLayout
-     */
-    'md': Array<LayoutSchema>;
-    /**
-     * 
-     * @type {Array<LayoutSchema>}
-     * @memberof DashboardSchemaLayout
-     */
-    'sm': Array<LayoutSchema>;
-}
-/**
- * 
- * @export
  * @interface DashboardUpdate
  */
 interface DashboardUpdate {
@@ -555,6 +555,12 @@ interface DashboardUpdate {
      * @memberof DashboardUpdate
      */
     'permissions'?: DashboardMetadataPermissions;
+    /**
+     * 
+     * @type {DashboardLayoutSchema}
+     * @memberof DashboardUpdate
+     */
+    'layout'?: DashboardLayoutSchema;
 }
 /**
  * 
