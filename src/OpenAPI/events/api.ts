@@ -7202,6 +7202,8 @@ export interface DashboardInsertDataSchemaLayout {
  * @interface DashboardInsertDataSchemaLayoutXlInner
  */
 export interface DashboardInsertDataSchemaLayoutXlInner {
+    [key: string]: any;
+
     /**
      * 
      * @type {string}

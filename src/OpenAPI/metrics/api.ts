@@ -837,6 +837,8 @@ export interface GetInitData200ResponseDefaultDashboard {
  * @interface LayoutSchema
  */
 export interface LayoutSchema {
+    [key: string]: any;
+
     /**
      * 
      * @type {string}
