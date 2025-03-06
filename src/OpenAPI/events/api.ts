@@ -7209,7 +7209,7 @@ export interface DashboardInsertDataSchemaLayoutXlInner {
      * @type {string}
      * @memberof DashboardInsertDataSchemaLayoutXlInner
      */
-    'id': string;
+    'i': string;
     /**
      * 
      * @type {number}

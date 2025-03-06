@@ -850,7 +850,7 @@ export interface LayoutSchema {
      * @type {string}
      * @memberof LayoutSchema
      */
-    'id': string;
+    'i': string;
     /**
      * 
      * @type {number}
