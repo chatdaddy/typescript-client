@@ -1431,17 +1431,17 @@ export interface PasswordAuthRequest {
      */
     'returnRefreshToken'?: boolean;
     /**
-     * Base64 encoded SHA256 of the plaintext password, or the plaintext itself. See \"passwordEncoding\" below
+     * plaintext/base64Sha256 of the password, depending on the passwordEncoding
      * @type {string}
      * @memberof PasswordAuthRequest
      */
     'password': string;
     /**
-     * describe how the password is encoded
-     * @type {string}
+     * 
+     * @type {PasswordEncoding}
      * @memberof PasswordAuthRequest
      */
-    'passwordEncoding'?: PasswordAuthRequestPasswordEncodingEnum;
+    'passwordEncoding'?: PasswordEncoding;
     /**
      * The team ID to generate the token for, lastUsedTeam will be used otherwise
      * @type {string}
@@ -1474,12 +1474,20 @@ export interface PasswordAuthRequest {
     'metadata'?: ActorMetadata;
 }
 
-export const PasswordAuthRequestPasswordEncodingEnum = {
+
+/**
+ * describe how the password is encoded
+ * @export
+ * @enum {string}
+ */
+
+export const PasswordEncoding = {
     ShaBase64: 'shaBase64',
     Plaintext: 'plaintext'
 } as const;
 
-export type PasswordAuthRequestPasswordEncodingEnum = typeof PasswordAuthRequestPasswordEncodingEnum[keyof typeof PasswordAuthRequestPasswordEncodingEnum];
+export type PasswordEncoding = typeof PasswordEncoding[keyof typeof PasswordEncoding];
+
 
 /**
  * A refresh token allows you to generate access tokens to access & update things on ChatDaddy services. A refresh token will expire and become invalidated after 14 days of no activity. 
@@ -1562,7 +1570,7 @@ export interface RefreshTokenLoginRequest {
  */
 export interface ResetPassword {
     /**
-     * 
+     * plaintext/base64Sha256 of the password, depending on the passwordEncoding
      * @type {string}
      * @memberof ResetPassword
      */
@@ -1693,11 +1701,17 @@ export interface SubUserCreate {
      */
     'phoneNumber': number;
     /**
-     * Plaintext password pls
+     * plaintext/base64Sha256 of the password, depending on the passwordEncoding
      * @type {string}
      * @memberof SubUserCreate
      */
     'password': string;
+    /**
+     * 
+     * @type {PasswordEncoding}
+     * @memberof SubUserCreate
+     */
+    'passwordEncoding'?: PasswordEncoding;
     /**
      * 
      * @type {TeamMemberRole}
@@ -1714,11 +1728,17 @@ export interface SubUserCreate {
  */
 export interface SubUserPatchRequest {
     /**
-     * 
+     * plaintext/base64Sha256 of the password, depending on the passwordEncoding
      * @type {string}
      * @memberof SubUserPatchRequest
      */
     'password': string;
+    /**
+     * 
+     * @type {PasswordEncoding}
+     * @memberof SubUserPatchRequest
+     */
+    'passwordEncoding'?: PasswordEncoding;
     /**
      * 
      * @type {boolean}
@@ -1726,6 +1746,8 @@ export interface SubUserPatchRequest {
      */
     'logout'?: boolean;
 }
+
+
 /**
  * 
  * @export
@@ -2410,7 +2432,7 @@ export interface UserPatch {
      */
     'otp'?: number;
     /**
-     * new password. Only admin access can modify
+     * plaintext/base64Sha256 of the password, depending on the passwordEncoding
      * @type {string}
      * @memberof UserPatch
      */
