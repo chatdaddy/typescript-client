@@ -4324,6 +4324,31 @@ export interface MessageContentOrder {
 /**
  * 
  * @export
+ * @interface MessageID
+ */
+export interface MessageID {
+    /**
+     * 
+     * @type {string}
+     * @memberof MessageID
+     */
+    'id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof MessageID
+     */
+    'accountId': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof MessageID
+     */
+    'chatId': string;
+}
+/**
+ * 
+ * @export
  * @interface MessageLinkPreview
  */
 export interface MessageLinkPreview {
@@ -12529,6 +12554,47 @@ export const MessagesApiAxiosParamCreator = function (configuration?: Configurat
         },
         /**
          * 
+         * @summary Bulk message Get
+         * @param {Array<MessageID>} ids Message IDs to fetch
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        messagesBulkGet: async (ids: Array<MessageID>, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'ids' is not null or undefined
+            assertParamExists('messagesBulkGet', 'ids', ids)
+            const localVarPath = `/messages/bulk`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", [], configuration)
+
+            if (ids) {
+                localVarQueryParameter['ids'] = ids;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
          * @summary Delete a message
          * @param {string} accountId 
          * @param {string} chatId 
@@ -13228,6 +13294,17 @@ export const MessagesApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
+         * @summary Bulk message Get
+         * @param {Array<MessageID>} ids Message IDs to fetch
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async messagesBulkGet(ids: Array<MessageID>, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<Message>>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.messagesBulkGet(ids, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
          * @summary Delete a message
          * @param {string} accountId 
          * @param {string} chatId 
@@ -13427,6 +13504,16 @@ export const MessagesApiFactory = function (configuration?: Configuration, baseP
         },
         /**
          * 
+         * @summary Bulk message Get
+         * @param {MessagesApiMessagesBulkGetRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        messagesBulkGet(requestParameters: MessagesApiMessagesBulkGetRequest, options?: AxiosRequestConfig): AxiosPromise<Array<Message>> {
+            return localVarFp.messagesBulkGet(requestParameters.ids, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
          * @summary Delete a message
          * @param {MessagesApiMessagesDeleteRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -13589,6 +13676,20 @@ export interface MessagesApiMessagesBulkActionRequest {
      * @memberof MessagesApiMessagesBulkAction
      */
     readonly messagesBulkActionRequest?: MessagesBulkActionRequest
+}
+
+/**
+ * Request parameters for messagesBulkGet operation in MessagesApi.
+ * @export
+ * @interface MessagesApiMessagesBulkGetRequest
+ */
+export interface MessagesApiMessagesBulkGetRequest {
+    /**
+     * Message IDs to fetch
+     * @type {Array<MessageID>}
+     * @memberof MessagesApiMessagesBulkGet
+     */
+    readonly ids: Array<MessageID>
 }
 
 /**
@@ -14098,6 +14199,18 @@ export class MessagesApi extends BaseAPI {
      */
     public messagesBulkAction(requestParameters: MessagesApiMessagesBulkActionRequest, options?: AxiosRequestConfig) {
         return MessagesApiFp(this.configuration).messagesBulkAction(requestParameters.status, requestParameters.accountId, requestParameters.range, requestParameters.chatId, requestParameters.messagesBulkActionRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Bulk message Get
+     * @param {MessagesApiMessagesBulkGetRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof MessagesApi
+     */
+    public messagesBulkGet(requestParameters: MessagesApiMessagesBulkGetRequest, options?: AxiosRequestConfig) {
+        return MessagesApiFp(this.configuration).messagesBulkGet(requestParameters.ids, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
