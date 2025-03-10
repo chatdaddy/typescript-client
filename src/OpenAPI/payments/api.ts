@@ -502,6 +502,12 @@ export interface CreditAutoRenewalUpdate {
      * @memberof CreditAutoRenewalUpdate
      */
     'options'?: MiscBillingOptions;
+    /**
+     * These actions are executed after the payment is successful
+     * @type {Array<PostPaymentAction>}
+     * @memberof CreditAutoRenewalUpdate
+     */
+    'postPaymentActions'?: Array<PostPaymentAction>;
 }
 
 
@@ -2021,6 +2027,12 @@ export interface ModifySupportPlan {
      * @memberof ModifySupportPlan
      */
     'type': ModifySupportPlanTypeEnum;
+    /**
+     * 
+     * @type {ModifySupportPlanConfig}
+     * @memberof ModifySupportPlan
+     */
+    'config'?: ModifySupportPlanConfig;
 }
 
 export const ModifySupportPlanTypeEnum = {
@@ -2031,6 +2043,50 @@ export const ModifySupportPlanTypeEnum = {
 
 export type ModifySupportPlanTypeEnum = typeof ModifySupportPlanTypeEnum[keyof typeof ModifySupportPlanTypeEnum];
 
+/**
+ * Options for us to modify the support plan. This is only used internally
+ * @export
+ * @interface ModifySupportPlanConfig
+ */
+export interface ModifySupportPlanConfig {
+    /**
+     * 
+     * @type {ModifySupportPlanConfigDuration}
+     * @memberof ModifySupportPlanConfig
+     */
+    'duration'?: ModifySupportPlanConfigDuration;
+    /**
+     * An ISO formatted timestamp
+     * @type {string}
+     * @memberof ModifySupportPlanConfig
+     */
+    'createdAt'?: string;
+    /**
+     * The number of units the first charge is for
+     * @type {number}
+     * @memberof ModifySupportPlanConfig
+     */
+    'firstChargeUnits'?: number;
+}
+/**
+ * 
+ * @export
+ * @interface ModifySupportPlanConfigDuration
+ */
+export interface ModifySupportPlanConfigDuration {
+    /**
+     * The number of months to purchase for, by default, the support plan will continue forever.
+     * @type {number}
+     * @memberof ModifySupportPlanConfigDuration
+     */
+    'months': number;
+    /**
+     * If true, the support plan will be charged as a one-time charge. If false, the support plan will be charged monthly.
+     * @type {boolean}
+     * @memberof ModifySupportPlanConfigDuration
+     */
+    'oneTimeCharge'?: boolean;
+}
 /**
  * 
  * @export
@@ -2274,6 +2330,32 @@ export interface PaymentRequest {
      */
     'paymentUrl': string;
 }
+/**
+ * 
+ * @export
+ * @interface PostPaymentAction
+ */
+export interface PostPaymentAction {
+    /**
+     * 
+     * @type {string}
+     * @memberof PostPaymentAction
+     */
+    'type': PostPaymentActionTypeEnum;
+    /**
+     * 
+     * @type {ModifySupportPlan}
+     * @memberof PostPaymentAction
+     */
+    'data': ModifySupportPlan;
+}
+
+export const PostPaymentActionTypeEnum = {
+    ModifySupportPlan: 'modifySupportPlan'
+} as const;
+
+export type PostPaymentActionTypeEnum = typeof PostPaymentActionTypeEnum[keyof typeof PostPaymentActionTypeEnum];
+
 /**
  * 
  * @export
@@ -2588,17 +2670,29 @@ export interface RecurringCreditConsumption {
      */
     'createdAt': string;
     /**
-     * An ISO formatted timestamp
-     * @type {string}
+     * If true, the consumption is considered manually cancelled
+     * @type {boolean}
      * @memberof RecurringCreditConsumption
      */
-    'cancelledAt'?: string | null;
+    'cancelled'?: boolean;
     /**
      * An ISO formatted timestamp
      * @type {string}
      * @memberof RecurringCreditConsumption
      */
     'nextChargeAt': string;
+    /**
+     * An ISO formatted timestamp
+     * @type {string}
+     * @memberof RecurringCreditConsumption
+     */
+    'expiresAt'?: string | null;
+    /**
+     * An ISO formatted timestamp
+     * @type {string}
+     * @memberof RecurringCreditConsumption
+     */
+    'endedAt'?: string | null;
     /**
      * The ID of a user
      * @type {string}
@@ -2673,7 +2767,7 @@ export interface RecurringCreditConsumptionCreate {
      * @type {string}
      * @memberof RecurringCreditConsumptionCreate
      */
-    'cancelledAt'?: string | null;
+    'expiresAt'?: string | null;
 }
 
 
