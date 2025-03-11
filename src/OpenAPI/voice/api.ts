@@ -477,12 +477,13 @@ export const CallsApiAxiosParamCreator = function (configuration?: Configuration
          * @param {Array<string>} [phoneNumbers] list of phone numbers
          * @param {string} [callsDateRangeFrom] 
          * @param {string} [callsDateRangeTo] 
+         * @param {Array<string>} [id] 
          * @param {string} [before] 
          * @param {number} [count] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        callsGet: async (q?: string, phoneNumbers?: Array<string>, callsDateRangeFrom?: string, callsDateRangeTo?: string, before?: string, count?: number, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        callsGet: async (q?: string, phoneNumbers?: Array<string>, callsDateRangeFrom?: string, callsDateRangeTo?: string, id?: Array<string>, before?: string, count?: number, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/calls`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -517,6 +518,10 @@ export const CallsApiAxiosParamCreator = function (configuration?: Configuration
                 localVarQueryParameter['callsDateRangeTo'] = (callsDateRangeTo as any instanceof Date) ?
                     (callsDateRangeTo as any).toISOString() :
                     callsDateRangeTo;
+            }
+
+            if (id) {
+                localVarQueryParameter['id'] = id;
             }
 
             if (before !== undefined) {
@@ -859,13 +864,14 @@ export const CallsApiFp = function(configuration?: Configuration) {
          * @param {Array<string>} [phoneNumbers] list of phone numbers
          * @param {string} [callsDateRangeFrom] 
          * @param {string} [callsDateRangeTo] 
+         * @param {Array<string>} [id] 
          * @param {string} [before] 
          * @param {number} [count] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async callsGet(q?: string, phoneNumbers?: Array<string>, callsDateRangeFrom?: string, callsDateRangeTo?: string, before?: string, count?: number, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CallsGet200Response>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.callsGet(q, phoneNumbers, callsDateRangeFrom, callsDateRangeTo, before, count, options);
+        async callsGet(q?: string, phoneNumbers?: Array<string>, callsDateRangeFrom?: string, callsDateRangeTo?: string, id?: Array<string>, before?: string, count?: number, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CallsGet200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.callsGet(q, phoneNumbers, callsDateRangeFrom, callsDateRangeTo, id, before, count, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -984,7 +990,7 @@ export const CallsApiFactory = function (configuration?: Configuration, basePath
          * @throws {RequiredError}
          */
         callsGet(requestParameters: CallsApiCallsGetRequest = {}, options?: AxiosRequestConfig): AxiosPromise<CallsGet200Response> {
-            return localVarFp.callsGet(requestParameters.q, requestParameters.phoneNumbers, requestParameters.callsDateRangeFrom, requestParameters.callsDateRangeTo, requestParameters.before, requestParameters.count, options).then((request) => request(axios, basePath));
+            return localVarFp.callsGet(requestParameters.q, requestParameters.phoneNumbers, requestParameters.callsDateRangeFrom, requestParameters.callsDateRangeTo, requestParameters.id, requestParameters.before, requestParameters.count, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -1115,6 +1121,13 @@ export interface CallsApiCallsGetRequest {
      * @memberof CallsApiCallsGet
      */
     readonly callsDateRangeTo?: string
+
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof CallsApiCallsGet
+     */
+    readonly id?: Array<string>
 
     /**
      * 
@@ -1264,7 +1277,7 @@ export class CallsApi extends BaseAPI {
      * @memberof CallsApi
      */
     public callsGet(requestParameters: CallsApiCallsGetRequest = {}, options?: AxiosRequestConfig) {
-        return CallsApiFp(this.configuration).callsGet(requestParameters.q, requestParameters.phoneNumbers, requestParameters.callsDateRangeFrom, requestParameters.callsDateRangeTo, requestParameters.before, requestParameters.count, options).then((request) => request(this.axios, this.basePath));
+        return CallsApiFp(this.configuration).callsGet(requestParameters.q, requestParameters.phoneNumbers, requestParameters.callsDateRangeFrom, requestParameters.callsDateRangeTo, requestParameters.id, requestParameters.before, requestParameters.count, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
