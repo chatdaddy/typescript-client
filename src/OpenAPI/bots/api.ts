@@ -4332,6 +4332,18 @@ export interface MessageSendOptionsQuoted {
      * @memberof MessageSendOptionsQuoted
      */
     'id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof MessageSendOptionsQuoted
+     */
+    'text'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof MessageSendOptionsQuoted
+     */
+    'jpegThumbnail'?: string;
 }
 /**
  * 
