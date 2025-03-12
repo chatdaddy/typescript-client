@@ -51,11 +51,17 @@ export interface AdminDashboardMatchFilter {
     'field': string;
     /**
      * 
-     * @type {string}
+     * @type {AdminDashboardMatchFilterValue}
      * @memberof AdminDashboardMatchFilter
      */
-    'value': string;
+    'value': AdminDashboardMatchFilterValue;
 }
+/**
+ * @type AdminDashboardMatchFilterValue
+ * @export
+ */
+export type AdminDashboardMatchFilterValue = Array<string> | string;
+
 /**
  * 
  * @export
@@ -1022,6 +1028,12 @@ export type MetricConfigProperty = DataProperty & {
      * @memberof MetricConfigProperty
      */
     'noneValueTitle'?: string;
+    /**
+     * 
+     * @type {MetricConfigPropertyAllOfElasticConfig}
+     * @memberof MetricConfigProperty
+     */
+    'elasticConfig'?: MetricConfigPropertyAllOfElasticConfig;
 }
 
 
@@ -1037,6 +1049,25 @@ export interface MetricConfigPropertyAllOf {
      * @memberof MetricConfigPropertyAllOf
      */
     'noneValueTitle'?: string;
+    /**
+     * 
+     * @type {MetricConfigPropertyAllOfElasticConfig}
+     * @memberof MetricConfigPropertyAllOf
+     */
+    'elasticConfig'?: MetricConfigPropertyAllOfElasticConfig;
+}
+/**
+ * 
+ * @export
+ * @interface MetricConfigPropertyAllOfElasticConfig
+ */
+export interface MetricConfigPropertyAllOfElasticConfig {
+    /**
+     * The path to the nested field. If true, the metric will be nested in the query. 
+     * @type {string}
+     * @memberof MetricConfigPropertyAllOfElasticConfig
+     */
+    'nestedPath'?: string;
 }
 /**
  * @type MetricsResult
