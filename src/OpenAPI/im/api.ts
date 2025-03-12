@@ -4717,10 +4717,37 @@ export interface MessagingItems {
     'message'?: MessagingItemsMessage;
     /**
      * 
+     * @type {MessagingItemsDelivery}
+     * @memberof MessagingItems
+     */
+    'delivery'?: MessagingItemsDelivery;
+    /**
+     * 
+     * @type {MessagingItemsRead}
+     * @memberof MessagingItems
+     */
+    'read'?: MessagingItemsRead;
+    /**
+     * 
      * @type {MessagingItemsPostback}
      * @memberof MessagingItems
      */
     'postback'?: MessagingItemsPostback;
+}
+/**
+ * 
+ * @export
+ * @interface MessagingItemsDelivery
+ */
+export interface MessagingItemsDelivery {
+    [key: string]: any;
+
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof MessagingItemsDelivery
+     */
+    'mids'?: Array<string>;
 }
 /**
  * 
@@ -4742,10 +4769,31 @@ export interface MessagingItemsMessage {
     'text'?: string;
     /**
      * 
+     * @type {MessagingItemsMessageReplyTo}
+     * @memberof MessagingItemsMessage
+     */
+    'reply_to'?: MessagingItemsMessageReplyTo;
+    /**
+     * 
      * @type {Array<MessengerAttachmentItems>}
      * @memberof MessagingItemsMessage
      */
     'attachments'?: Array<MessengerAttachmentItems>;
+}
+/**
+ * 
+ * @export
+ * @interface MessagingItemsMessageReplyTo
+ */
+export interface MessagingItemsMessageReplyTo {
+    [key: string]: any;
+
+    /**
+     * 
+     * @type {string}
+     * @memberof MessagingItemsMessageReplyTo
+     */
+    'mid'?: string;
 }
 /**
  * 
@@ -4771,6 +4819,27 @@ export interface MessagingItemsPostback {
      * @memberof MessagingItemsPostback
      */
     'payload'?: string;
+}
+/**
+ * 
+ * @export
+ * @interface MessagingItemsRead
+ */
+export interface MessagingItemsRead {
+    [key: string]: any;
+
+    /**
+     * 
+     * @type {string}
+     * @memberof MessagingItemsRead
+     */
+    'mid'?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof MessagingItemsRead
+     */
+    'watermark'?: number;
 }
 /**
  * 
@@ -4810,6 +4879,8 @@ export interface MessengerAttachmentItems {
  * @interface MessengerAttachmentItemsPayload
  */
 export interface MessengerAttachmentItemsPayload {
+    [key: string]: any;
+
     /**
      * 
      * @type {string}
