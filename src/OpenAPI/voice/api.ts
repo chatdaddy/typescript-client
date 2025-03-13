@@ -44,6 +44,12 @@ export interface Call {
      */
     'teamId'?: string;
     /**
+     * ChatId of the recipient
+     * @type {string}
+     * @memberof Call
+     */
+    'chatId'?: string;
+    /**
      * phone number of the user
      * @type {string}
      * @memberof Call
@@ -424,6 +430,12 @@ export interface VoiceOutboundPostRequest {
      * @memberof VoiceOutboundPostRequest
      */
     'record'?: string;
+    /**
+     * The chat id of the recipient
+     * @type {string}
+     * @memberof VoiceOutboundPostRequest
+     */
+    'chatId': string;
 }
 
 /**

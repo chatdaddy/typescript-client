@@ -4805,6 +4805,12 @@ export interface CallInsertData {
      * @type {string}
      * @memberof CallInsertData
      */
+    'chatId'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof CallInsertData
+     */
     'phoneNumber': string;
     /**
      * 
@@ -4893,6 +4899,12 @@ export interface CallUpdateData {
      * @memberof CallUpdateData
      */
     'teamId'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof CallUpdateData
+     */
+    'chatId'?: string;
     /**
      * 
      * @type {string}
