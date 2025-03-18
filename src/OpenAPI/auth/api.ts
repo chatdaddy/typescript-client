@@ -1524,7 +1524,21 @@ export interface ResetPassword {
      * @memberof ResetPassword
      */
     'password': string;
+    /**
+     * 
+     * @type {PasswordEncoding}
+     * @memberof ResetPassword
+     */
+    'passwordEncoding'?: PasswordEncoding;
+    /**
+     * Logs out the user from all devices. If the user is logged in on the device, the user will be logged out.
+     * @type {boolean}
+     * @memberof ResetPassword
+     */
+    'logout'?: boolean;
 }
+
+
 /**
  * 
  * @export
@@ -1667,33 +1681,6 @@ export interface SubUserCreate {
      * @memberof SubUserCreate
      */
     'role': TeamMemberRole;
-}
-
-
-/**
- * 
- * @export
- * @interface SubUserPatchRequest
- */
-export interface SubUserPatchRequest {
-    /**
-     * plaintext/base64Sha256 of the password, depending on the passwordEncoding
-     * @type {string}
-     * @memberof SubUserPatchRequest
-     */
-    'password': string;
-    /**
-     * 
-     * @type {PasswordEncoding}
-     * @memberof SubUserPatchRequest
-     */
-    'passwordEncoding'?: PasswordEncoding;
-    /**
-     * Logs out the user from all devices. If the user is logged in on the device, the user will be logged out.
-     * @type {boolean}
-     * @memberof SubUserPatchRequest
-     */
-    'logout'?: boolean;
 }
 
 
@@ -4912,11 +4899,11 @@ export const SubUserApiAxiosParamCreator = function (configuration?: Configurati
          * 
          * @summary Update a sub user
          * @param {string} id 
-         * @param {SubUserPatchRequest} [subUserPatchRequest] 
+         * @param {ResetPassword} [resetPassword] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        subUserPatch: async (id: string, subUserPatchRequest?: SubUserPatchRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        subUserPatch: async (id: string, resetPassword?: ResetPassword, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
             assertParamExists('subUserPatch', 'id', id)
             const localVarPath = `/sub-user/{id}`
@@ -4943,7 +4930,7 @@ export const SubUserApiAxiosParamCreator = function (configuration?: Configurati
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(subUserPatchRequest, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(resetPassword, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -5024,12 +5011,12 @@ export const SubUserApiFp = function(configuration?: Configuration) {
          * 
          * @summary Update a sub user
          * @param {string} id 
-         * @param {SubUserPatchRequest} [subUserPatchRequest] 
+         * @param {ResetPassword} [resetPassword] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async subUserPatch(id: string, subUserPatchRequest?: SubUserPatchRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.subUserPatch(id, subUserPatchRequest, options);
+        async subUserPatch(id: string, resetPassword?: ResetPassword, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.subUserPatch(id, resetPassword, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -5081,7 +5068,7 @@ export const SubUserApiFactory = function (configuration?: Configuration, basePa
          * @throws {RequiredError}
          */
         subUserPatch(requestParameters: SubUserApiSubUserPatchRequest, options?: AxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.subUserPatch(requestParameters.id, requestParameters.subUserPatchRequest, options).then((request) => request(axios, basePath));
+            return localVarFp.subUserPatch(requestParameters.id, requestParameters.resetPassword, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -5139,10 +5126,10 @@ export interface SubUserApiSubUserPatchRequest {
 
     /**
      * 
-     * @type {SubUserPatchRequest}
+     * @type {ResetPassword}
      * @memberof SubUserApiSubUserPatch
      */
-    readonly subUserPatchRequest?: SubUserPatchRequest
+    readonly resetPassword?: ResetPassword
 }
 
 /**
@@ -5199,7 +5186,7 @@ export class SubUserApi extends BaseAPI {
      * @memberof SubUserApi
      */
     public subUserPatch(requestParameters: SubUserApiSubUserPatchRequest, options?: AxiosRequestConfig) {
-        return SubUserApiFp(this.configuration).subUserPatch(requestParameters.id, requestParameters.subUserPatchRequest, options).then((request) => request(this.axios, this.basePath));
+        return SubUserApiFp(this.configuration).subUserPatch(requestParameters.id, requestParameters.resetPassword, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
