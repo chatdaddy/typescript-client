@@ -23,7 +23,11 @@ axiosRetry(
 				axiosRetry.isNetworkError(err) 
 				&& axiosRetry.isRetryableError(err)
 			)
-			|| err.response?.status === TOO_MANY_REQUESTS
+			|| (
+				err.response?.status === TOO_MANY_REQUESTS
+				// do not retry on too many OTP err
+				&& !err.response?.config?.url?.includes('otp') 
+			)
 			|| isGatewayError(err.response?.status)
 		}
 	}
