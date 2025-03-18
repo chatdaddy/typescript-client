@@ -495,19 +495,6 @@ export const BoutirTokenRequestTypeEnum = {
 export type BoutirTokenRequestTypeEnum = typeof BoutirTokenRequestTypeEnum[keyof typeof BoutirTokenRequestTypeEnum];
 
 /**
- * 
- * @export
- * @interface ConfirmOtp200Response
- */
-export interface ConfirmOtp200Response {
-    /**
-     * 
-     * @type {boolean}
-     * @memberof ConfirmOtp200Response
-     */
-    'success'?: boolean;
-}
-/**
  * @type EitherRoleOrScopes
  * @export
  */
@@ -1323,49 +1310,11 @@ export interface OtpPostRequest {
      */
     'phoneNumber': string;
     /**
-     * Optionally specify the OTP template type
-     * @type {string}
-     * @memberof OtpPostRequest
-     */
-    'template'?: string;
-    /**
      * Specify the Recaptcha token
      * @type {string}
      * @memberof OtpPostRequest
      */
     'captchaToken'?: string;
-}
-/**
- * 
- * @export
- * @interface OtpTokenPost200Response
- */
-export interface OtpTokenPost200Response {
-    /**
-     * 
-     * @type {string}
-     * @memberof OtpTokenPost200Response
-     */
-    'access_token': string;
-}
-/**
- * 
- * @export
- * @interface OtpTokenPostRequest
- */
-export interface OtpTokenPostRequest {
-    /**
-     * 
-     * @type {string}
-     * @memberof OtpTokenPostRequest
-     */
-    'phoneNumber': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof OtpTokenPostRequest
-     */
-    'otp': string;
 }
 /**
  * 
@@ -4365,47 +4314,14 @@ export class OAuthApi extends BaseAPI {
 export const OTPApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
-         * 
-         * @summary Confirm OTP while checkout products.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        confirmOtp: async (options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/verify-otp`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication otp required
-            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
          * Generates an OTP for the given phone number. Once generated, the OTP can be used to authenticate the user for specific APIs, i.e. signup & forget password.  A captcha token is required to generate an OTP, available only from the frontend 
          * @summary Generate an OTP
-         * @param {'sms' | 'whatsapp'} [channel] 
+         * @param {'whatsapp'} [channel] 
          * @param {OtpPostRequest} [otpPostRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        otpPost: async (channel?: 'sms' | 'whatsapp', otpPostRequest?: OtpPostRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        otpPost: async (channel?: 'whatsapp', otpPostRequest?: OtpPostRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/otp`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -4436,43 +4352,6 @@ export const OTPApiAxiosParamCreator = function (configuration?: Configuration) 
                 options: localVarRequestOptions,
             };
         },
-        /**
-         * 
-         * @summary Generate an OTP token
-         * @param {OtpTokenPostRequest} [otpTokenPostRequest] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        otpTokenPost: async (otpTokenPostRequest?: OtpTokenPostRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/otp/token`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication otp required
-            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
-
-
-    
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(otpTokenPostRequest, localVarRequestOptions, configuration)
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
     }
 };
 
@@ -4484,36 +4363,15 @@ export const OTPApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = OTPApiAxiosParamCreator(configuration)
     return {
         /**
-         * 
-         * @summary Confirm OTP while checkout products.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async confirmOtp(options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ConfirmOtp200Response>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.confirmOtp(options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-        /**
          * Generates an OTP for the given phone number. Once generated, the OTP can be used to authenticate the user for specific APIs, i.e. signup & forget password.  A captcha token is required to generate an OTP, available only from the frontend 
          * @summary Generate an OTP
-         * @param {'sms' | 'whatsapp'} [channel] 
+         * @param {'whatsapp'} [channel] 
          * @param {OtpPostRequest} [otpPostRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async otpPost(channel?: 'sms' | 'whatsapp', otpPostRequest?: OtpPostRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<OTP>> {
+        async otpPost(channel?: 'whatsapp', otpPostRequest?: OtpPostRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<OTP>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.otpPost(channel, otpPostRequest, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-        /**
-         * 
-         * @summary Generate an OTP token
-         * @param {OtpTokenPostRequest} [otpTokenPostRequest] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async otpTokenPost(otpTokenPostRequest?: OtpTokenPostRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<OtpTokenPost200Response>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.otpTokenPost(otpTokenPostRequest, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
     }
@@ -4527,15 +4385,6 @@ export const OTPApiFactory = function (configuration?: Configuration, basePath?:
     const localVarFp = OTPApiFp(configuration)
     return {
         /**
-         * 
-         * @summary Confirm OTP while checkout products.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        confirmOtp(options?: AxiosRequestConfig): AxiosPromise<ConfirmOtp200Response> {
-            return localVarFp.confirmOtp(options).then((request) => request(axios, basePath));
-        },
-        /**
          * Generates an OTP for the given phone number. Once generated, the OTP can be used to authenticate the user for specific APIs, i.e. signup & forget password.  A captcha token is required to generate an OTP, available only from the frontend 
          * @summary Generate an OTP
          * @param {OTPApiOtpPostRequest} requestParameters Request parameters.
@@ -4544,16 +4393,6 @@ export const OTPApiFactory = function (configuration?: Configuration, basePath?:
          */
         otpPost(requestParameters: OTPApiOtpPostRequest = {}, options?: AxiosRequestConfig): AxiosPromise<OTP> {
             return localVarFp.otpPost(requestParameters.channel, requestParameters.otpPostRequest, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
-         * @summary Generate an OTP token
-         * @param {OTPApiOtpTokenPostRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        otpTokenPost(requestParameters: OTPApiOtpTokenPostRequest = {}, options?: AxiosRequestConfig): AxiosPromise<OtpTokenPost200Response> {
-            return localVarFp.otpTokenPost(requestParameters.otpTokenPostRequest, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -4566,10 +4405,10 @@ export const OTPApiFactory = function (configuration?: Configuration, basePath?:
 export interface OTPApiOtpPostRequest {
     /**
      * 
-     * @type {'sms' | 'whatsapp'}
+     * @type {'whatsapp'}
      * @memberof OTPApiOtpPost
      */
-    readonly channel?: 'sms' | 'whatsapp'
+    readonly channel?: 'whatsapp'
 
     /**
      * 
@@ -4580,37 +4419,12 @@ export interface OTPApiOtpPostRequest {
 }
 
 /**
- * Request parameters for otpTokenPost operation in OTPApi.
- * @export
- * @interface OTPApiOtpTokenPostRequest
- */
-export interface OTPApiOtpTokenPostRequest {
-    /**
-     * 
-     * @type {OtpTokenPostRequest}
-     * @memberof OTPApiOtpTokenPost
-     */
-    readonly otpTokenPostRequest?: OtpTokenPostRequest
-}
-
-/**
  * OTPApi - object-oriented interface
  * @export
  * @class OTPApi
  * @extends {BaseAPI}
  */
 export class OTPApi extends BaseAPI {
-    /**
-     * 
-     * @summary Confirm OTP while checkout products.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof OTPApi
-     */
-    public confirmOtp(options?: AxiosRequestConfig) {
-        return OTPApiFp(this.configuration).confirmOtp(options).then((request) => request(this.axios, this.basePath));
-    }
-
     /**
      * Generates an OTP for the given phone number. Once generated, the OTP can be used to authenticate the user for specific APIs, i.e. signup & forget password.  A captcha token is required to generate an OTP, available only from the frontend 
      * @summary Generate an OTP
@@ -4621,18 +4435,6 @@ export class OTPApi extends BaseAPI {
      */
     public otpPost(requestParameters: OTPApiOtpPostRequest = {}, options?: AxiosRequestConfig) {
         return OTPApiFp(this.configuration).otpPost(requestParameters.channel, requestParameters.otpPostRequest, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
-     * @summary Generate an OTP token
-     * @param {OTPApiOtpTokenPostRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof OTPApi
-     */
-    public otpTokenPost(requestParameters: OTPApiOtpTokenPostRequest = {}, options?: AxiosRequestConfig) {
-        return OTPApiFp(this.configuration).otpTokenPost(requestParameters.otpTokenPostRequest, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
