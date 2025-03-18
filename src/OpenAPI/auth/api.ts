@@ -1689,7 +1689,7 @@ export interface SubUserPatchRequest {
      */
     'passwordEncoding'?: PasswordEncoding;
     /**
-     * 
+     * Logs out the user from all devices. If the user is logged in on the device, the user will be logged out.
      * @type {boolean}
      * @memberof SubUserPatchRequest
      */
@@ -2386,6 +2386,18 @@ export interface UserPatch {
      * @memberof UserPatch
      */
     'password'?: string;
+    /**
+     * 
+     * @type {PasswordEncoding}
+     * @memberof UserPatch
+     */
+    'passwordEncoding'?: PasswordEncoding;
+    /**
+     * Logs out the user from all devices. If the user is logged in on the device, the user will be logged out.
+     * @type {boolean}
+     * @memberof UserPatch
+     */
+    'logout'?: boolean;
     /**
      * A signature of the user to be used at the end of the message
      * @type {string}
