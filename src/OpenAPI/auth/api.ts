@@ -1947,6 +1947,12 @@ export interface TeamPatchRequest {
      */
     'metadata'?: TeamMetadata;
     /**
+     * The ISO country code of the team
+     * @type {string}
+     * @memberof TeamPatchRequest
+     */
+    'region'?: string;
+    /**
      * 
      * @type {Array<TeamPatchRequestMembersInner>}
      * @memberof TeamPatchRequest
