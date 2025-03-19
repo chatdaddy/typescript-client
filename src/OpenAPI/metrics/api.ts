@@ -152,7 +152,7 @@ export type Aggregate = typeof Aggregate[keyof typeof Aggregate];
  * @type AggregateTeamDataValue
  * @export
  */
-export type AggregateTeamDataValue = StringValueObject | ValueObject | { [key: string]: ValueObject; };
+export type AggregateTeamDataValue = BooleanValueObject | StringValueObject | ValueObject | { [key: string]: ValueObject; };
 
 /**
  * Describe an array
@@ -217,6 +217,19 @@ export interface Benchmarks {
      * @memberof Benchmarks
      */
     'benchmarks': { [key: string]: BenchmarkValues; };
+}
+/**
+ * 
+ * @export
+ * @interface BooleanValueObject
+ */
+export interface BooleanValueObject {
+    /**
+     * 
+     * @type {boolean}
+     * @memberof BooleanValueObject
+     */
+    'value': boolean;
 }
 /**
  * 
@@ -1324,21 +1337,8 @@ export interface StringValueObject {
      * @type {string}
      * @memberof StringValueObject
      */
-    'type'?: StringValueObjectTypeEnum;
-    /**
-     * 
-     * @type {string}
-     * @memberof StringValueObject
-     */
     'value': string;
 }
-
-export const StringValueObjectTypeEnum = {
-    String: 'string'
-} as const;
-
-export type StringValueObjectTypeEnum = typeof StringValueObjectTypeEnum[keyof typeof StringValueObjectTypeEnum];
-
 /**
  * 
  * @export
@@ -1351,12 +1351,6 @@ export interface TeamData {
      * @memberof TeamData
      */
     'id': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof TeamData
-     */
-    'customerId': string;
     /**
      * 
      * @type {string}
@@ -1550,7 +1544,6 @@ export const DashboardApiAxiosParamCreator = function (configuration?: Configura
          * @summary Get admin dashboards
          * @param {'last-4-weeks' | 'last-12-weeks' | 'last-12-months'} period 
          * @param {Array<string>} [teamIds] Fetch specific teams by ID
-         * @param {string} [customerId] 
          * @param {number} [count] Numboer of items to fetch.
          * @param {string} [cursor] Cursor to fetch the next page of dashboards.
          * @param {boolean} [returnTotal] Whether to return the total number of dashboards.
@@ -1559,7 +1552,7 @@ export const DashboardApiAxiosParamCreator = function (configuration?: Configura
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getAdminDashboards: async (period: 'last-4-weeks' | 'last-12-weeks' | 'last-12-months', teamIds?: Array<string>, customerId?: string, count?: number, cursor?: string, returnTotal?: boolean, sort?: AdminDashboardSort, filters?: AdminDashboardFilterItems, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getAdminDashboards: async (period: 'last-4-weeks' | 'last-12-weeks' | 'last-12-months', teamIds?: Array<string>, count?: number, cursor?: string, returnTotal?: boolean, sort?: AdminDashboardSort, filters?: AdminDashboardFilterItems, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'period' is not null or undefined
             assertParamExists('getAdminDashboards', 'period', period)
             const localVarPath = `/dashboard/admin`;
@@ -1580,10 +1573,6 @@ export const DashboardApiAxiosParamCreator = function (configuration?: Configura
 
             if (teamIds) {
                 localVarQueryParameter['teamIds'] = teamIds;
-            }
-
-            if (customerId !== undefined) {
-                localVarQueryParameter['customerId'] = customerId;
             }
 
             if (count !== undefined) {
@@ -1972,7 +1961,6 @@ export const DashboardApiFp = function(configuration?: Configuration) {
          * @summary Get admin dashboards
          * @param {'last-4-weeks' | 'last-12-weeks' | 'last-12-months'} period 
          * @param {Array<string>} [teamIds] Fetch specific teams by ID
-         * @param {string} [customerId] 
          * @param {number} [count] Numboer of items to fetch.
          * @param {string} [cursor] Cursor to fetch the next page of dashboards.
          * @param {boolean} [returnTotal] Whether to return the total number of dashboards.
@@ -1981,8 +1969,8 @@ export const DashboardApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getAdminDashboards(period: 'last-4-weeks' | 'last-12-weeks' | 'last-12-months', teamIds?: Array<string>, customerId?: string, count?: number, cursor?: string, returnTotal?: boolean, sort?: AdminDashboardSort, filters?: AdminDashboardFilterItems, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AdminDashboardResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getAdminDashboards(period, teamIds, customerId, count, cursor, returnTotal, sort, filters, options);
+        async getAdminDashboards(period: 'last-4-weeks' | 'last-12-weeks' | 'last-12-months', teamIds?: Array<string>, count?: number, cursor?: string, returnTotal?: boolean, sort?: AdminDashboardSort, filters?: AdminDashboardFilterItems, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AdminDashboardResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getAdminDashboards(period, teamIds, count, cursor, returnTotal, sort, filters, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -2103,7 +2091,7 @@ export const DashboardApiFactory = function (configuration?: Configuration, base
          * @throws {RequiredError}
          */
         getAdminDashboards(requestParameters: DashboardApiGetAdminDashboardsRequest, options?: AxiosRequestConfig): AxiosPromise<AdminDashboardResponse> {
-            return localVarFp.getAdminDashboards(requestParameters.period, requestParameters.teamIds, requestParameters.customerId, requestParameters.count, requestParameters.cursor, requestParameters.returnTotal, requestParameters.sort, requestParameters.filters, options).then((request) => request(axios, basePath));
+            return localVarFp.getAdminDashboards(requestParameters.period, requestParameters.teamIds, requestParameters.count, requestParameters.cursor, requestParameters.returnTotal, requestParameters.sort, requestParameters.filters, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -2221,13 +2209,6 @@ export interface DashboardApiGetAdminDashboardsRequest {
      * @memberof DashboardApiGetAdminDashboards
      */
     readonly teamIds?: Array<string>
-
-    /**
-     * 
-     * @type {string}
-     * @memberof DashboardApiGetAdminDashboards
-     */
-    readonly customerId?: string
 
     /**
      * Numboer of items to fetch.
@@ -2480,7 +2461,7 @@ export class DashboardApi extends BaseAPI {
      * @memberof DashboardApi
      */
     public getAdminDashboards(requestParameters: DashboardApiGetAdminDashboardsRequest, options?: AxiosRequestConfig) {
-        return DashboardApiFp(this.configuration).getAdminDashboards(requestParameters.period, requestParameters.teamIds, requestParameters.customerId, requestParameters.count, requestParameters.cursor, requestParameters.returnTotal, requestParameters.sort, requestParameters.filters, options).then((request) => request(this.axios, this.basePath));
+        return DashboardApiFp(this.configuration).getAdminDashboards(requestParameters.period, requestParameters.teamIds, requestParameters.count, requestParameters.cursor, requestParameters.returnTotal, requestParameters.sort, requestParameters.filters, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
