@@ -8922,6 +8922,12 @@ export interface MessageInsertData {
     'reactionAction'?: MessageInsertDataReactionAction;
     /**
      * 
+     * @type {MessageInsertDataReferencedPost}
+     * @memberof MessageInsertData
+     */
+    'referencedPost'?: MessageInsertDataReferencedPost;
+    /**
+     * 
      * @type {Array<string>}
      * @memberof MessageInsertData
      */
@@ -9742,6 +9748,64 @@ export interface MessageInsertDataReactionsInner {
 /**
  * 
  * @export
+ * @interface MessageInsertDataReferencedPost
+ */
+export interface MessageInsertDataReferencedPost {
+    /**
+     * 
+     * @type {string}
+     * @memberof MessageInsertDataReferencedPost
+     */
+    'id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof MessageInsertDataReferencedPost
+     */
+    'url': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof MessageInsertDataReferencedPost
+     */
+    'type': MessageInsertDataReferencedPostTypeEnum;
+    /**
+     * 
+     * @type {string}
+     * @memberof MessageInsertDataReferencedPost
+     */
+    'caption': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof MessageInsertDataReferencedPost
+     */
+    'liveStatus'?: MessageInsertDataReferencedPostLiveStatusEnum;
+    /**
+     * 
+     * @type {string}
+     * @memberof MessageInsertDataReferencedPost
+     */
+    'createdAt': string;
+}
+
+export const MessageInsertDataReferencedPostTypeEnum = {
+    LiveVideo: 'live_video',
+    Post: 'post',
+    Reel: 'reel'
+} as const;
+
+export type MessageInsertDataReferencedPostTypeEnum = typeof MessageInsertDataReferencedPostTypeEnum[keyof typeof MessageInsertDataReferencedPostTypeEnum];
+export const MessageInsertDataReferencedPostLiveStatusEnum = {
+    Ongoing: 'ongoing',
+    Ended: 'ended'
+} as const;
+
+export type MessageInsertDataReferencedPostLiveStatusEnum = typeof MessageInsertDataReferencedPostLiveStatusEnum[keyof typeof MessageInsertDataReferencedPostLiveStatusEnum];
+
+/**
+ * 
+ * @export
  * @interface MessageInsertDataSender
  */
 export interface MessageInsertDataSender {
@@ -9932,6 +9996,12 @@ export interface MessageUpdateData {
      * @memberof MessageUpdateData
      */
     'reactionAction'?: MessageInsertDataReactionAction;
+    /**
+     * 
+     * @type {MessageInsertDataReferencedPost}
+     * @memberof MessageUpdateData
+     */
+    'referencedPost'?: MessageInsertDataReferencedPost;
     /**
      * 
      * @type {Array<string>}

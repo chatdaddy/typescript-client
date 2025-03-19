@@ -1913,7 +1913,7 @@ export interface Contact {
      */
     'assigner'?: string | null;
     /**
-     * 
+     * An ISO formatted timestamp
      * @type {string}
      * @memberof Contact
      */
@@ -3329,6 +3329,12 @@ export interface Message {
     'reactionAction'?: MessageAllOfReactionAction;
     /**
      * 
+     * @type {ReferencedPost}
+     * @memberof Message
+     */
+    'referencedPost'?: ReferencedPost;
+    /**
+     * 
      * @type {Array<string>}
      * @memberof Message
      */
@@ -3540,6 +3546,12 @@ export interface MessageAllOf {
      * @memberof MessageAllOf
      */
     'reactionAction'?: MessageAllOfReactionAction;
+    /**
+     * 
+     * @type {ReferencedPost}
+     * @memberof MessageAllOf
+     */
+    'referencedPost'?: ReferencedPost;
 }
 
 
@@ -5871,6 +5883,64 @@ export interface QuotedMessage {
      */
     'jpegThumbnail'?: string | null;
 }
+/**
+ * 
+ * @export
+ * @interface ReferencedPost
+ */
+export interface ReferencedPost {
+    /**
+     * ID of the post
+     * @type {string}
+     * @memberof ReferencedPost
+     */
+    'id': string;
+    /**
+     * URL of the post
+     * @type {string}
+     * @memberof ReferencedPost
+     */
+    'url': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ReferencedPost
+     */
+    'type': ReferencedPostTypeEnum;
+    /**
+     * 
+     * @type {string}
+     * @memberof ReferencedPost
+     */
+    'caption': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ReferencedPost
+     */
+    'liveStatus'?: ReferencedPostLiveStatusEnum;
+    /**
+     * An ISO formatted timestamp
+     * @type {string}
+     * @memberof ReferencedPost
+     */
+    'createdAt': string;
+}
+
+export const ReferencedPostTypeEnum = {
+    LiveVideo: 'live_video',
+    Post: 'post',
+    Reel: 'reel'
+} as const;
+
+export type ReferencedPostTypeEnum = typeof ReferencedPostTypeEnum[keyof typeof ReferencedPostTypeEnum];
+export const ReferencedPostLiveStatusEnum = {
+    Ongoing: 'ongoing',
+    Ended: 'ended'
+} as const;
+
+export type ReferencedPostLiveStatusEnum = typeof ReferencedPostLiveStatusEnum[keyof typeof ReferencedPostLiveStatusEnum];
+
 /**
  * 
  * @export
