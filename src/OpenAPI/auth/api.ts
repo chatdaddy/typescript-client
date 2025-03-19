@@ -1921,6 +1921,12 @@ export interface TeamMetadata {
      * @memberof TeamMetadata
      */
     'industry'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof TeamMetadata
+     */
+    'subIndustry'?: string;
 }
 /**
  * 

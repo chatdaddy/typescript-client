@@ -12016,6 +12016,12 @@ export interface TeamInsertDataMetadata {
      * @memberof TeamInsertDataMetadata
      */
     'industry'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof TeamInsertDataMetadata
+     */
+    'subIndustry'?: string;
 }
 /**
  * 
