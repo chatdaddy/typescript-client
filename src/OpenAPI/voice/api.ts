@@ -435,7 +435,7 @@ export interface VoiceOutboundPostRequest {
      * @type {string}
      * @memberof VoiceOutboundPostRequest
      */
-    'chatId': string;
+    'chatId'?: string;
 }
 
 /**
