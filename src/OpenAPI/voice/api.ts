@@ -356,6 +356,18 @@ export interface VerifyNumberPostRequest {
      * @memberof VerifyNumberPostRequest
      */
     'phoneNumber': string;
+    /**
+     * Flag for whether or not the number was purchased from chatdaddy
+     * @type {boolean}
+     * @memberof VerifyNumberPostRequest
+     */
+    'purchasedNumber'?: boolean;
+    /**
+     * The key of the purchased number
+     * @type {string}
+     * @memberof VerifyNumberPostRequest
+     */
+    'purchasedNumberKey'?: string;
 }
 /**
  * 
