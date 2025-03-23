@@ -2900,6 +2900,25 @@ export interface GetChatHistory200Response {
 /**
  * 
  * @export
+ * @interface GetPosts200Response
+ */
+export interface GetPosts200Response {
+    /**
+     * 
+     * @type {Array<ReferencedPost>}
+     * @memberof GetPosts200Response
+     */
+    'items': Array<ReferencedPost>;
+    /**
+     * next page cursor, if it exists
+     * @type {string}
+     * @memberof GetPosts200Response
+     */
+    'nextPageCursor'?: string;
+}
+/**
+ * 
+ * @export
  * @interface GetTicketsByStage200Response
  */
 export interface GetTicketsByStage200Response {
@@ -5925,6 +5944,12 @@ export interface ReferencedPost {
      * @memberof ReferencedPost
      */
     'createdAt': string;
+    /**
+     * URL of the preview image
+     * @type {string}
+     * @memberof ReferencedPost
+     */
+    'previewUrl'?: string;
 }
 
 export const ReferencedPostTypeEnum = {
@@ -14497,6 +14522,181 @@ export class MessagesApi extends BaseAPI {
      */
     public permanentlyStoreAttachments(requestParameters: MessagesApiPermanentlyStoreAttachmentsRequest, options?: AxiosRequestConfig) {
         return MessagesApiFp(this.configuration).permanentlyStoreAttachments(requestParameters.accountId, requestParameters.chatId, requestParameters.id, requestParameters.waitForCompletion, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+/**
+ * PostsApi - axios parameter creator
+ * @export
+ */
+export const PostsApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @summary Get posts from a channel
+         * @param {string} accountId 
+         * @param {Array<string>} [id] 
+         * @param {string} [q] Search items by this string
+         * @param {number} [count] Number of items to return
+         * @param {string} [page] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getPosts: async (accountId: string, id?: Array<string>, q?: string, count?: number, page?: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'accountId' is not null or undefined
+            assertParamExists('getPosts', 'accountId', accountId)
+            const localVarPath = `/posts/{accountId}`
+                .replace(`{${"accountId"}}`, encodeURIComponent(String(accountId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", [], configuration)
+
+            if (id) {
+                localVarQueryParameter['id'] = id;
+            }
+
+            if (q !== undefined) {
+                localVarQueryParameter['q'] = q;
+            }
+
+            if (count !== undefined) {
+                localVarQueryParameter['count'] = count;
+            }
+
+            if (page !== undefined) {
+                localVarQueryParameter['page'] = page;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * PostsApi - functional programming interface
+ * @export
+ */
+export const PostsApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = PostsApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * 
+         * @summary Get posts from a channel
+         * @param {string} accountId 
+         * @param {Array<string>} [id] 
+         * @param {string} [q] Search items by this string
+         * @param {number} [count] Number of items to return
+         * @param {string} [page] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getPosts(accountId: string, id?: Array<string>, q?: string, count?: number, page?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetPosts200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getPosts(accountId, id, q, count, page, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+    }
+};
+
+/**
+ * PostsApi - factory interface
+ * @export
+ */
+export const PostsApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = PostsApiFp(configuration)
+    return {
+        /**
+         * 
+         * @summary Get posts from a channel
+         * @param {PostsApiGetPostsRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getPosts(requestParameters: PostsApiGetPostsRequest, options?: AxiosRequestConfig): AxiosPromise<GetPosts200Response> {
+            return localVarFp.getPosts(requestParameters.accountId, requestParameters.id, requestParameters.q, requestParameters.count, requestParameters.page, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * Request parameters for getPosts operation in PostsApi.
+ * @export
+ * @interface PostsApiGetPostsRequest
+ */
+export interface PostsApiGetPostsRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof PostsApiGetPosts
+     */
+    readonly accountId: string
+
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof PostsApiGetPosts
+     */
+    readonly id?: Array<string>
+
+    /**
+     * Search items by this string
+     * @type {string}
+     * @memberof PostsApiGetPosts
+     */
+    readonly q?: string
+
+    /**
+     * Number of items to return
+     * @type {number}
+     * @memberof PostsApiGetPosts
+     */
+    readonly count?: number
+
+    /**
+     * 
+     * @type {string}
+     * @memberof PostsApiGetPosts
+     */
+    readonly page?: string
+}
+
+/**
+ * PostsApi - object-oriented interface
+ * @export
+ * @class PostsApi
+ * @extends {BaseAPI}
+ */
+export class PostsApi extends BaseAPI {
+    /**
+     * 
+     * @summary Get posts from a channel
+     * @param {PostsApiGetPostsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof PostsApi
+     */
+    public getPosts(requestParameters: PostsApiGetPostsRequest, options?: AxiosRequestConfig) {
+        return PostsApiFp(this.configuration).getPosts(requestParameters.accountId, requestParameters.id, requestParameters.q, requestParameters.count, requestParameters.page, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

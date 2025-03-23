@@ -9787,6 +9787,12 @@ export interface MessageInsertDataReferencedPost {
      * @memberof MessageInsertDataReferencedPost
      */
     'createdAt': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof MessageInsertDataReferencedPost
+     */
+    'previewUrl'?: string;
 }
 
 export const MessageInsertDataReferencedPostTypeEnum = {
