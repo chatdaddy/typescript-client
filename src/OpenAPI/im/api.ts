@@ -2444,6 +2444,12 @@ export interface CrmBoard {
      * @memberof CrmBoard
      */
     'updatedMetadata'?: UpsertMetadata;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof CrmBoard
+     */
+    'pinned'?: boolean;
 }
 /**
  * 
@@ -2513,6 +2519,12 @@ export interface CrmBoardPatch {
      * @memberof CrmBoardPatch
      */
     'customFields'?: CrmBoardPatchCustomFields;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof CrmBoardPatch
+     */
+    'pinned'?: boolean;
 }
 /**
  * @type CrmBoardPatchCustomFields
