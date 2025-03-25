@@ -526,6 +526,12 @@ export interface AccountSettings {
      */
     'autoTranscribeVoiceMessages'?: boolean;
     /**
+     * Should calls received be automatically transcribed to text?
+     * @type {boolean}
+     * @memberof AccountSettings
+     */
+    'autoTranscribeCalls'?: boolean;
+    /**
      * 
      * @type {CommentsSilenceConfig}
      * @memberof AccountSettings

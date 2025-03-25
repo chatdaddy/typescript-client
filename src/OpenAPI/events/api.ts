@@ -461,6 +461,12 @@ export interface AccountInsertDataSettings {
     'autoTranscribeVoiceMessages'?: boolean;
     /**
      * 
+     * @type {boolean}
+     * @memberof AccountInsertDataSettings
+     */
+    'autoTranscribeCalls'?: boolean;
+    /**
+     * 
      * @type {AccountInsertDataSettingsCommentsSilence}
      * @memberof AccountInsertDataSettings
      */
