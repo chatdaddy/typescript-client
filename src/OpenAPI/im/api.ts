@@ -1833,7 +1833,7 @@ export interface CommentsSilenceConfig {
      * @type {string}
      * @memberof CommentsSilenceConfig
      */
-    'category': CommentsSilenceConfigCategoryEnum;
+    'category'?: CommentsSilenceConfigCategoryEnum;
 }
 
 export const CommentsSilenceConfigCategoryEnum = {

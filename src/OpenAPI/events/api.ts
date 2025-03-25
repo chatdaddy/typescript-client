@@ -477,7 +477,7 @@ export interface AccountInsertDataSettingsCommentsSilence {
      * @type {string}
      * @memberof AccountInsertDataSettingsCommentsSilence
      */
-    'category': AccountInsertDataSettingsCommentsSilenceCategoryEnum;
+    'category'?: AccountInsertDataSettingsCommentsSilenceCategoryEnum;
 }
 
 export const AccountInsertDataSettingsCommentsSilenceCategoryEnum = {
