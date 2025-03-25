@@ -2824,6 +2824,31 @@ export interface BotTriggerOptions {
      * @memberof BotTriggerOptions
      */
     'perContactThrottle'?: ThrottleOptions;
+    /**
+     * 
+     * @type {BotTriggerOptionsThrottle}
+     * @memberof BotTriggerOptions
+     */
+    'throttle'?: BotTriggerOptionsThrottle;
+}
+/**
+ * Total throttle options for the trigger. Maximum throughput: 100 triggers/minute 
+ * @export
+ * @interface BotTriggerOptionsThrottle
+ */
+export interface BotTriggerOptionsThrottle {
+    /**
+     * The maximum number of messages that can be sent in the time period
+     * @type {number}
+     * @memberof BotTriggerOptionsThrottle
+     */
+    'maximum': number;
+    /**
+     * The time period in seconds in which the maximum number of messages can be sent
+     * @type {number}
+     * @memberof BotTriggerOptionsThrottle
+     */
+    'intervalS': number;
 }
 /**
  * 
