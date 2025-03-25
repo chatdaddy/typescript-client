@@ -459,7 +459,35 @@ export interface AccountInsertDataSettings {
      * @memberof AccountInsertDataSettings
      */
     'autoTranscribeVoiceMessages'?: boolean;
+    /**
+     * 
+     * @type {AccountInsertDataSettingsCommentsSilence}
+     * @memberof AccountInsertDataSettings
+     */
+    'commentsSilence'?: AccountInsertDataSettingsCommentsSilence;
 }
+/**
+ * 
+ * @export
+ * @interface AccountInsertDataSettingsCommentsSilence
+ */
+export interface AccountInsertDataSettingsCommentsSilence {
+    /**
+     * 
+     * @type {string}
+     * @memberof AccountInsertDataSettingsCommentsSilence
+     */
+    'category': AccountInsertDataSettingsCommentsSilenceCategoryEnum;
+}
+
+export const AccountInsertDataSettingsCommentsSilenceCategoryEnum = {
+    OngoingLive: 'ongoing-live',
+    AllLive: 'all-live',
+    All: 'all'
+} as const;
+
+export type AccountInsertDataSettingsCommentsSilenceCategoryEnum = typeof AccountInsertDataSettingsCommentsSilenceCategoryEnum[keyof typeof AccountInsertDataSettingsCommentsSilenceCategoryEnum];
+
 /**
  * 
  * @export

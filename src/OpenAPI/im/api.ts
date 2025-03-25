@@ -525,6 +525,12 @@ export interface AccountSettings {
      * @memberof AccountSettings
      */
     'autoTranscribeVoiceMessages'?: boolean;
+    /**
+     * 
+     * @type {CommentsSilenceConfig}
+     * @memberof AccountSettings
+     */
+    'commentsSilence'?: CommentsSilenceConfig;
 }
 /**
  * All new chats will be auto asssigned if one of the option is enabled and select any Assignee
@@ -1816,6 +1822,28 @@ export interface ChatsGetTicketParameter {
      */
     'stageId'?: string;
 }
+/**
+ * 
+ * @export
+ * @interface CommentsSilenceConfig
+ */
+export interface CommentsSilenceConfig {
+    /**
+     * Settings for which comments should be silenced. When silenced, the comment will not the chat\'s lastMessage or unread count.
+     * @type {string}
+     * @memberof CommentsSilenceConfig
+     */
+    'category': CommentsSilenceConfigCategoryEnum;
+}
+
+export const CommentsSilenceConfigCategoryEnum = {
+    OngoingLive: 'ongoing-live',
+    AllLive: 'all-live',
+    All: 'all'
+} as const;
+
+export type CommentsSilenceConfigCategoryEnum = typeof CommentsSilenceConfigCategoryEnum[keyof typeof CommentsSilenceConfigCategoryEnum];
+
 /**
  * 
  * @export
