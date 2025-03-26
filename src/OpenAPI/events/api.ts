@@ -4888,7 +4888,53 @@ export interface CallInsertData {
      * @memberof CallInsertData
      */
     'callNotes'?: string | null;
+    /**
+     * 
+     * @type {CallInsertDataTranscription}
+     * @memberof CallInsertData
+     */
+    'transcription'?: CallInsertDataTranscription | null;
 }
+/**
+ * 
+ * @export
+ * @interface CallInsertDataTranscription
+ */
+export interface CallInsertDataTranscription {
+    /**
+     * 
+     * @type {string}
+     * @memberof CallInsertDataTranscription
+     */
+    'text'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof CallInsertDataTranscription
+     */
+    'error'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof CallInsertDataTranscription
+     */
+    'status': CallInsertDataTranscriptionStatusEnum;
+    /**
+     * 
+     * @type {string}
+     * @memberof CallInsertDataTranscription
+     */
+    'jobId'?: string;
+}
+
+export const CallInsertDataTranscriptionStatusEnum = {
+    InProgress: 'in-progress',
+    Completed: 'completed',
+    Failed: 'failed'
+} as const;
+
+export type CallInsertDataTranscriptionStatusEnum = typeof CallInsertDataTranscriptionStatusEnum[keyof typeof CallInsertDataTranscriptionStatusEnum];
+
 /**
  * 
  * @export
@@ -4987,6 +5033,12 @@ export interface CallUpdateData {
      * @memberof CallUpdateData
      */
     'callNotes'?: string | null;
+    /**
+     * 
+     * @type {CallInsertDataTranscription}
+     * @memberof CallUpdateData
+     */
+    'transcription'?: CallInsertDataTranscription | null;
 }
 /**
  * 

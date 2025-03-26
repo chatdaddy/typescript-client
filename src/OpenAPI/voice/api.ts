@@ -97,6 +97,12 @@ export interface Call {
      * @memberof Call
      */
     'callNotes'?: string | null;
+    /**
+     * 
+     * @type {CallTranscription}
+     * @memberof Call
+     */
+    'transcription'?: CallTranscription | null;
 }
 /**
  * 
@@ -161,6 +167,46 @@ export interface CallNotesPostRequest {
      */
     'callNotes': string;
 }
+/**
+ * Transcription of the call
+ * @export
+ * @interface CallTranscription
+ */
+export interface CallTranscription {
+    /**
+     * Text of the transcription
+     * @type {string}
+     * @memberof CallTranscription
+     */
+    'text'?: string;
+    /**
+     * Error message if the transcription failed
+     * @type {string}
+     * @memberof CallTranscription
+     */
+    'error'?: string;
+    /**
+     * Status of the transcription
+     * @type {string}
+     * @memberof CallTranscription
+     */
+    'status': CallTranscriptionStatusEnum;
+    /**
+     * Id of the transcription job
+     * @type {string}
+     * @memberof CallTranscription
+     */
+    'jobId'?: string;
+}
+
+export const CallTranscriptionStatusEnum = {
+    InProgress: 'in-progress',
+    Completed: 'completed',
+    Failed: 'failed'
+} as const;
+
+export type CallTranscriptionStatusEnum = typeof CallTranscriptionStatusEnum[keyof typeof CallTranscriptionStatusEnum];
+
 /**
  * 
  * @export
@@ -568,6 +614,49 @@ export const CallsApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
+         * Transcribe the call and return the transcript
+         * @summary Transcribe the call
+         * @param {string} callId The id of the call to transcribe
+         * @param {boolean} [waitForCompletion] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        callsTranscribePost: async (callId: string, waitForCompletion?: boolean, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'callId' is not null or undefined
+            assertParamExists('callsTranscribePost', 'callId', callId)
+            const localVarPath = `/calls/transcribe/{callId}`
+                .replace(`{${"callId"}}`, encodeURIComponent(String(callId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", [], configuration)
+
+            if (waitForCompletion !== undefined) {
+                localVarQueryParameter['waitForCompletion'] = waitForCompletion;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * 
          * @summary Hold or resume the call
          * @param {HoldCallPostRequest} [holdCallPostRequest] 
@@ -899,6 +988,18 @@ export const CallsApiFp = function(configuration?: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
+         * Transcribe the call and return the transcript
+         * @summary Transcribe the call
+         * @param {string} callId The id of the call to transcribe
+         * @param {boolean} [waitForCompletion] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async callsTranscribePost(callId: string, waitForCompletion?: boolean, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.callsTranscribePost(callId, waitForCompletion, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
          * 
          * @summary Hold or resume the call
          * @param {HoldCallPostRequest} [holdCallPostRequest] 
@@ -1015,6 +1116,16 @@ export const CallsApiFactory = function (configuration?: Configuration, basePath
          */
         callsGet(requestParameters: CallsApiCallsGetRequest = {}, options?: AxiosRequestConfig): AxiosPromise<CallsGet200Response> {
             return localVarFp.callsGet(requestParameters.q, requestParameters.phoneNumbers, requestParameters.callsDateRangeFrom, requestParameters.callsDateRangeTo, requestParameters.id, requestParameters.before, requestParameters.count, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Transcribe the call and return the transcript
+         * @summary Transcribe the call
+         * @param {CallsApiCallsTranscribePostRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        callsTranscribePost(requestParameters: CallsApiCallsTranscribePostRequest, options?: AxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.callsTranscribePost(requestParameters.callId, requestParameters.waitForCompletion, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -1169,6 +1280,27 @@ export interface CallsApiCallsGetRequest {
 }
 
 /**
+ * Request parameters for callsTranscribePost operation in CallsApi.
+ * @export
+ * @interface CallsApiCallsTranscribePostRequest
+ */
+export interface CallsApiCallsTranscribePostRequest {
+    /**
+     * The id of the call to transcribe
+     * @type {string}
+     * @memberof CallsApiCallsTranscribePost
+     */
+    readonly callId: string
+
+    /**
+     * 
+     * @type {boolean}
+     * @memberof CallsApiCallsTranscribePost
+     */
+    readonly waitForCompletion?: boolean
+}
+
+/**
  * Request parameters for holdCallPost operation in CallsApi.
  * @export
  * @interface CallsApiHoldCallPostRequest
@@ -1302,6 +1434,18 @@ export class CallsApi extends BaseAPI {
      */
     public callsGet(requestParameters: CallsApiCallsGetRequest = {}, options?: AxiosRequestConfig) {
         return CallsApiFp(this.configuration).callsGet(requestParameters.q, requestParameters.phoneNumbers, requestParameters.callsDateRangeFrom, requestParameters.callsDateRangeTo, requestParameters.id, requestParameters.before, requestParameters.count, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Transcribe the call and return the transcript
+     * @summary Transcribe the call
+     * @param {CallsApiCallsTranscribePostRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CallsApi
+     */
+    public callsTranscribePost(requestParameters: CallsApiCallsTranscribePostRequest, options?: AxiosRequestConfig) {
+        return CallsApiFp(this.configuration).callsTranscribePost(requestParameters.callId, requestParameters.waitForCompletion, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
