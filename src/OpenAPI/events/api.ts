@@ -1083,6 +1083,12 @@ export interface AlarmPostRequest {
      */
     'parameters'?: { [key: string]: any; };
     /**
+     * Send alarm to this URL
+     * @type {string}
+     * @memberof AlarmPostRequest
+     */
+    'url'?: string;
+    /**
      * 
      * @type {string}
      * @memberof AlarmPostRequest
