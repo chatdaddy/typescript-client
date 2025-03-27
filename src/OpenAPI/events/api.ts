@@ -4795,6 +4795,12 @@ export interface CallDeleteData {
      * @memberof CallDeleteData
      */
     'phoneNumber': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof CallDeleteData
+     */
+    'callId': string;
 }
 /**
  * 
@@ -5020,7 +5026,7 @@ export interface CallUpdateData {
      * @type {string}
      * @memberof CallUpdateData
      */
-    'callId'?: string;
+    'callId': string;
     /**
      * 
      * @type {string}
