@@ -800,6 +800,12 @@ export interface GetInitData200Response {
      * @memberof GetInitData200Response
      */
     'defaultDashboard'?: GetInitData200ResponseDefaultDashboard;
+    /**
+     * 
+     * @type {DashboardSchema}
+     * @memberof GetInitData200Response
+     */
+    'defaultSchema'?: DashboardSchema;
 }
 /**
  * Present if the data being fetched is for the default dashboard. 
@@ -968,6 +974,23 @@ export interface MetricAllOf {
 /**
  * 
  * @export
+ * @enum {string}
+ */
+
+export const MetricCategory = {
+    Message: 'message',
+    ChatContact: 'chat-contact',
+    Metadata: 'metadata',
+    CreditTransactionRecord: 'credit-transaction-record',
+    TeamData: 'team-data'
+} as const;
+
+export type MetricCategory = typeof MetricCategory[keyof typeof MetricCategory];
+
+
+/**
+ * 
+ * @export
  * @interface MetricConfig
  */
 export interface MetricConfig {
@@ -1019,6 +1042,12 @@ export interface MetricConfig {
      * @memberof MetricConfig
      */
     'disallowedVisualisations'?: Array<DashboardVisualizationType>;
+    /**
+     * 
+     * @type {MetricCategory}
+     * @memberof MetricConfig
+     */
+    'category'?: MetricCategory;
 }
 
 export const MetricConfigValueFormatEnum = {
