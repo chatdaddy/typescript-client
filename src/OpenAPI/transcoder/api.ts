@@ -49,7 +49,7 @@ export interface ConvertRequest {
      * @type {string}
      * @memberof ConvertRequest
      */
-    'outputFormat': ConvertRequestOutputFormatEnum;
+    'outputFormat': string;
     /**
      * 
      * @type {string}
@@ -57,13 +57,6 @@ export interface ConvertRequest {
      */
     'url': string;
 }
-
-export const ConvertRequestOutputFormatEnum = {
-    Mp4: 'mp4'
-} as const;
-
-export type ConvertRequestOutputFormatEnum = typeof ConvertRequestOutputFormatEnum[keyof typeof ConvertRequestOutputFormatEnum];
-
 /**
  * 
  * @export
