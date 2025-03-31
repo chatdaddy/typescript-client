@@ -28,6 +28,45 @@ import { COLLECTION_FORMATS, BaseAPI, RequiredError } from '../base';
 /**
  * 
  * @export
+ * @interface Convert200Response
+ */
+export interface Convert200Response {
+    /**
+     * 
+     * @type {string}
+     * @memberof Convert200Response
+     */
+    'url': string;
+}
+/**
+ * 
+ * @export
+ * @interface ConvertRequest
+ */
+export interface ConvertRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof ConvertRequest
+     */
+    'outputFormat': ConvertRequestOutputFormatEnum;
+    /**
+     * 
+     * @type {string}
+     * @memberof ConvertRequest
+     */
+    'url': string;
+}
+
+export const ConvertRequestOutputFormatEnum = {
+    Mp4: 'mp4'
+} as const;
+
+export type ConvertRequestOutputFormatEnum = typeof ConvertRequestOutputFormatEnum[keyof typeof ConvertRequestOutputFormatEnum];
+
+/**
+ * 
+ * @export
  * @enum {string}
  */
 
@@ -45,6 +84,46 @@ export type TranscodeMethod = typeof TranscodeMethod[keyof typeof TranscodeMetho
  */
 export const TranscodeApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
+        /**
+         * 
+         * @summary Convert audio/video
+         * @param {ConvertRequest} convertRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        convert: async (convertRequest: ConvertRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'convertRequest' is not null or undefined
+            assertParamExists('convert', 'convertRequest', convertRequest)
+            const localVarPath = `/convert`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", [], configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(convertRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
         /**
          * 
          * @summary Stream content from an encrypted message attachment
@@ -182,6 +261,17 @@ export const TranscodeApiFp = function(configuration?: Configuration) {
     return {
         /**
          * 
+         * @summary Convert audio/video
+         * @param {ConvertRequest} convertRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async convert(convertRequest: ConvertRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Convert200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.convert(convertRequest, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
          * @summary Stream content from an encrypted message attachment
          * @param {string} accountId Account ID
          * @param {string} chatId Chat ID
@@ -224,6 +314,16 @@ export const TranscodeApiFactory = function (configuration?: Configuration, base
     return {
         /**
          * 
+         * @summary Convert audio/video
+         * @param {TranscodeApiConvertRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        convert(requestParameters: TranscodeApiConvertRequest, options?: AxiosRequestConfig): AxiosPromise<Convert200Response> {
+            return localVarFp.convert(requestParameters.convertRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
          * @summary Stream content from an encrypted message attachment
          * @param {TranscodeApiStreamMessageAttachmentRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -244,6 +344,20 @@ export const TranscodeApiFactory = function (configuration?: Configuration, base
         },
     };
 };
+
+/**
+ * Request parameters for convert operation in TranscodeApi.
+ * @export
+ * @interface TranscodeApiConvertRequest
+ */
+export interface TranscodeApiConvertRequest {
+    /**
+     * 
+     * @type {ConvertRequest}
+     * @memberof TranscodeApiConvert
+     */
+    readonly convertRequest: ConvertRequest
+}
 
 /**
  * Request parameters for streamMessageAttachment operation in TranscodeApi.
@@ -350,6 +464,18 @@ export interface TranscodeApiTranscodeRequest {
  * @extends {BaseAPI}
  */
 export class TranscodeApi extends BaseAPI {
+    /**
+     * 
+     * @summary Convert audio/video
+     * @param {TranscodeApiConvertRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof TranscodeApi
+     */
+    public convert(requestParameters: TranscodeApiConvertRequest, options?: AxiosRequestConfig) {
+        return TranscodeApiFp(this.configuration).convert(requestParameters.convertRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
     /**
      * 
      * @summary Stream content from an encrypted message attachment
