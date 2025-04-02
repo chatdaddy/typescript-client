@@ -1324,7 +1324,7 @@ interface SimplePropertyDescriptor {
 
 
 /**
- * Type of property. - string, number, boolean: Simple property type - timestamp: timestamp string in ISO format - timezone: timezone in offset format - time: time in 24 hour format - channel, tag, team_member, chat, board_stage, board, ticket:     Reference to another object by ID - custom_field: Object of type { name: string, value: string } - duration: integer representing seconds - credit_consumption_type: all credit consumption types - delay: object containing bot delay details - post: ID of a post on the platform (eg. messenger, instagram) 
+ * Type of property. - string, number, boolean: Simple property type - timestamp: timestamp string in ISO format - timezone: timezone in offset format - time: time in 24 hour format - channel, tag, team_member, chat, board_stage, board, ticket, custom_field_select, knowledge_base:     Reference to another object by ID - custom_field: Object of type { name: string, value: string } - duration: integer representing seconds - credit_consumption_type: all credit consumption types - delay: object containing bot delay details - post: ID of a post on the platform (eg. messenger, instagram) - next_action: ActionTarget object containing next action details - data_property_map: MapPropertyDescriptor object 
  * @export
  * @enum {string}
  */
@@ -1350,7 +1350,10 @@ const SimplePropertyType = {
     CreditConsumptionType: 'credit_consumption_type',
     CustomFieldSelect: 'custom_field_select',
     Delay: 'delay',
-    Post: 'post'
+    Post: 'post',
+    KnowledgeBase: 'knowledge_base',
+    NextAction: 'next_action',
+    DataPropertyMap: 'data_property_map'
 } as const;
 
 type SimplePropertyType = typeof SimplePropertyType[keyof typeof SimplePropertyType];
