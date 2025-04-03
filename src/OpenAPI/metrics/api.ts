@@ -707,6 +707,31 @@ export interface DateRange {
 /**
  * 
  * @export
+ * @interface DefaultMetricConfigInner
+ */
+export interface DefaultMetricConfigInner {
+    /**
+     * 
+     * @type {string}
+     * @memberof DefaultMetricConfigInner
+     */
+    'title': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof DefaultMetricConfigInner
+     */
+    'description'?: string | null;
+    /**
+     * 
+     * @type {Array<DashboardSchemaItem>}
+     * @memberof DefaultMetricConfigInner
+     */
+    'items': Array<DashboardSchemaItem>;
+}
+/**
+ * 
+ * @export
  * @interface DisplayIcon
  */
 interface DisplayIcon {
@@ -802,10 +827,10 @@ export interface GetInitData200Response {
     'defaultDashboard'?: GetInitData200ResponseDefaultDashboard;
     /**
      * 
-     * @type {DashboardSchema}
+     * @type {Array<DefaultMetricConfigInner>}
      * @memberof GetInitData200Response
      */
-    'defaultSchema'?: DashboardSchema;
+    'defaultSchema'?: Array<DefaultMetricConfigInner>;
 }
 /**
  * Present if the data being fetched is for the default dashboard. 
@@ -1042,12 +1067,6 @@ export interface MetricConfig {
      * @memberof MetricConfig
      */
     'disallowedVisualisations'?: Array<DashboardVisualizationType>;
-    /**
-     * 
-     * @type {MetricCategory}
-     * @memberof MetricConfig
-     */
-    'category'?: MetricCategory;
 }
 
 export const MetricConfigValueFormatEnum = {
