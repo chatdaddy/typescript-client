@@ -28,6 +28,39 @@ import { COLLECTION_FORMATS, BaseAPI, RequiredError } from '../base';
 /**
  * 
  * @export
+ * @interface AddSourceFile
+ */
+export interface AddSourceFile {
+    /**
+     * 
+     * @type {string}
+     * @memberof AddSourceFile
+     */
+    'type': AddSourceFileTypeEnum;
+    /**
+     * URL of the file to add
+     * @type {string}
+     * @memberof AddSourceFile
+     */
+    'url': string;
+}
+
+export const AddSourceFileTypeEnum = {
+    Url: 'url',
+    File: 'file'
+} as const;
+
+export type AddSourceFileTypeEnum = typeof AddSourceFileTypeEnum[keyof typeof AddSourceFileTypeEnum];
+
+/**
+ * @type AddSourceRequest
+ * @export
+ */
+export type AddSourceRequest = AddSourceFile;
+
+/**
+ * 
+ * @export
  * @interface AiCreditUse
  */
 interface AiCreditUse {
@@ -260,43 +293,6 @@ interface CalendarEvent {
      * @memberof CalendarEvent
      */
     'duration': string;
-}
-/**
- * 
- * @export
- * @interface ChatThread
- */
-export interface ChatThread {
-    /**
-     * 
-     * @type {string}
-     * @memberof ChatThread
-     */
-    'id': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ChatThread
-     */
-    'threadId': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ChatThread
-     */
-    'accountId': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ChatThread
-     */
-    'chatId': string;
-    /**
-     * An ISO formatted timestamp
-     * @type {string}
-     * @memberof ChatThread
-     */
-    'createdAt'?: string;
 }
 /**
  * 
@@ -543,6 +539,32 @@ export interface CreateChatbotResponse {
     'chatbot': Chatbot;
 }
 /**
+ * Converse via a custom messages
+ * @export
+ * @interface CustomLlmChatInput
+ */
+export interface CustomLlmChatInput {
+    /**
+     * 
+     * @type {string}
+     * @memberof CustomLlmChatInput
+     */
+    'type': CustomLlmChatInputTypeEnum;
+    /**
+     * 
+     * @type {Array<LlmMessage>}
+     * @memberof CustomLlmChatInput
+     */
+    'messages': Array<LlmMessage>;
+}
+
+export const CustomLlmChatInputTypeEnum = {
+    Messages: 'messages'
+} as const;
+
+export type CustomLlmChatInputTypeEnum = typeof CustomLlmChatInputTypeEnum[keyof typeof CustomLlmChatInputTypeEnum];
+
+/**
  * 
  * @export
  * @interface DeleteTriggers200Response
@@ -683,6 +705,32 @@ export interface GetExecutionRecord200Response {
 /**
  * 
  * @export
+ * @interface GetKnowledgeBases200Response
+ */
+export interface GetKnowledgeBases200Response {
+    /**
+     * 
+     * @type {Array<KnowledgeBase>}
+     * @memberof GetKnowledgeBases200Response
+     */
+    'items': Array<KnowledgeBase>;
+}
+/**
+ * 
+ * @export
+ * @interface GetSources200Response
+ */
+export interface GetSources200Response {
+    /**
+     * 
+     * @type {Array<KnowledgeBaseSource>}
+     * @memberof GetSources200Response
+     */
+    'items': Array<KnowledgeBaseSource>;
+}
+/**
+ * 
+ * @export
  * @interface GetTriggers200Response
  */
 export interface GetTriggers200Response {
@@ -705,6 +753,44 @@ export interface GetTriggers200Response {
      */
     'totalCount'?: number;
 }
+/**
+ * Converse via an existing IM chat. The unique identifier for the thread is simply `accountId/id`
+ * @export
+ * @interface ImLlmChatInput
+ */
+export interface ImLlmChatInput {
+    /**
+     * 
+     * @type {string}
+     * @memberof ImLlmChatInput
+     */
+    'type': ImLlmChatInputTypeEnum;
+    /**
+     * Account ID of the chat
+     * @type {string}
+     * @memberof ImLlmChatInput
+     */
+    'accountId': string;
+    /**
+     * ID of the chat
+     * @type {string}
+     * @memberof ImLlmChatInput
+     */
+    'id': string;
+    /**
+     * If no conversation exists with the bot, instructions to start the conversation
+     * @type {string}
+     * @memberof ImLlmChatInput
+     */
+    'instructions'?: string;
+}
+
+export const ImLlmChatInputTypeEnum = {
+    ImChat: 'im-chat'
+} as const;
+
+export type ImLlmChatInputTypeEnum = typeof ImLlmChatInputTypeEnum[keyof typeof ImLlmChatInputTypeEnum];
+
 /**
  * 
  * @export
@@ -1119,6 +1205,390 @@ export interface KeywordBasedAction {
 /**
  * 
  * @export
+ * @interface KnowledgeBase
+ */
+export interface KnowledgeBase {
+    /**
+     * ID of the knowledge base
+     * @type {string}
+     * @memberof KnowledgeBase
+     */
+    'id': string;
+    /**
+     * Name of the knowledge base
+     * @type {string}
+     * @memberof KnowledgeBase
+     */
+    'name': string;
+    /**
+     * An ISO formatted timestamp
+     * @type {string}
+     * @memberof KnowledgeBase
+     */
+    'createdAt': string;
+    /**
+     * User who created the knowledge base
+     * @type {string}
+     * @memberof KnowledgeBase
+     */
+    'createdBy': string;
+    /**
+     * Size of the knowledge base in bytes
+     * @type {number}
+     * @memberof KnowledgeBase
+     */
+    'storageSizeBytes': number;
+}
+/**
+ * 
+ * @export
+ * @interface KnowledgeBaseSource
+ */
+export interface KnowledgeBaseSource {
+    /**
+     * ID of the source
+     * @type {string}
+     * @memberof KnowledgeBaseSource
+     */
+    'id': string;
+    /**
+     * 
+     * @type {KnowledgeBaseSourceData}
+     * @memberof KnowledgeBaseSource
+     */
+    'data': KnowledgeBaseSourceData;
+    /**
+     * An ISO formatted timestamp
+     * @type {string}
+     * @memberof KnowledgeBaseSource
+     */
+    'createdAt': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof KnowledgeBaseSource
+     */
+    'createdBy': string;
+}
+/**
+ * @type KnowledgeBaseSourceData
+ * @export
+ */
+export type KnowledgeBaseSourceData = KnowledgeBaseSourceDataFile;
+
+/**
+ * 
+ * @export
+ * @interface KnowledgeBaseSourceDataFile
+ */
+export interface KnowledgeBaseSourceDataFile {
+    /**
+     * URL of the uploaded file
+     * @type {string}
+     * @memberof KnowledgeBaseSourceDataFile
+     */
+    'url': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof KnowledgeBaseSourceDataFile
+     */
+    'type': KnowledgeBaseSourceDataFileTypeEnum;
+    /**
+     * Size of the knowledge base in bytes
+     * @type {number}
+     * @memberof KnowledgeBaseSourceDataFile
+     */
+    'storageSizeBytes': number;
+    /**
+     * MIME type of the file
+     * @type {string}
+     * @memberof KnowledgeBaseSourceDataFile
+     */
+    'mimetype': string;
+    /**
+     * ID of the file
+     * @type {string}
+     * @memberof KnowledgeBaseSourceDataFile
+     */
+    'fileId': string;
+}
+
+export const KnowledgeBaseSourceDataFileTypeEnum = {
+    File: 'file',
+    Url: 'url'
+} as const;
+
+export type KnowledgeBaseSourceDataFileTypeEnum = typeof KnowledgeBaseSourceDataFileTypeEnum[keyof typeof KnowledgeBaseSourceDataFileTypeEnum];
+
+/**
+ * 
+ * @export
+ * @interface LlmChat200Response
+ */
+export interface LlmChat200Response {
+    /**
+     * 
+     * @type {Array<LlmChatOutputItem>}
+     * @memberof LlmChat200Response
+     */
+    'items': Array<LlmChatOutputItem>;
+}
+/**
+ * @type LlmChatInput
+ * @export
+ */
+export type LlmChatInput = CustomLlmChatInput | ImLlmChatInput;
+
+/**
+ * @type LlmChatOutputItem
+ * @export
+ */
+export type LlmChatOutputItem = LlmChatOutputText | LlmChatOutputToolRequest;
+
+/**
+ * Text response from the chatbot
+ * @export
+ * @interface LlmChatOutputText
+ */
+export interface LlmChatOutputText {
+    /**
+     * 
+     * @type {string}
+     * @memberof LlmChatOutputText
+     */
+    'type': LlmChatOutputTextTypeEnum;
+    /**
+     * Text response from the chatbot
+     * @type {string}
+     * @memberof LlmChatOutputText
+     */
+    'text': string;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof LlmChatOutputText
+     */
+    'sources'?: Array<string>;
+}
+
+export const LlmChatOutputTextTypeEnum = {
+    Text: 'text'
+} as const;
+
+export type LlmChatOutputTextTypeEnum = typeof LlmChatOutputTextTypeEnum[keyof typeof LlmChatOutputTextTypeEnum];
+
+/**
+ * Request execution of a tool
+ * @export
+ * @interface LlmChatOutputToolRequest
+ */
+export interface LlmChatOutputToolRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof LlmChatOutputToolRequest
+     */
+    'type': LlmChatOutputToolRequestTypeEnum;
+    /**
+     * Name of the tool to call
+     * @type {string}
+     * @memberof LlmChatOutputToolRequest
+     */
+    'name': string;
+    /**
+     * ID of the request
+     * @type {string}
+     * @memberof LlmChatOutputToolRequest
+     */
+    'id': string;
+    /**
+     * 
+     * @type {{ [key: string]: any; }}
+     * @memberof LlmChatOutputToolRequest
+     */
+    'params': { [key: string]: any; };
+}
+
+export const LlmChatOutputToolRequestTypeEnum = {
+    Tool: 'tool'
+} as const;
+
+export type LlmChatOutputToolRequestTypeEnum = typeof LlmChatOutputToolRequestTypeEnum[keyof typeof LlmChatOutputToolRequestTypeEnum];
+
+/**
+ * 
+ * @export
+ * @interface LlmChatRequest
+ */
+export interface LlmChatRequest {
+    /**
+     * Thread ID of the conversation
+     * @type {string}
+     * @memberof LlmChatRequest
+     */
+    'id': string;
+    /**
+     * 
+     * @type {LlmChatInput}
+     * @memberof LlmChatRequest
+     */
+    'input': LlmChatInput;
+    /**
+     * 
+     * @type {Array<LlmTool>}
+     * @memberof LlmChatRequest
+     */
+    'tools'?: Array<LlmTool>;
+    /**
+     * 
+     * @type {string}
+     * @memberof LlmChatRequest
+     */
+    'model'?: LlmChatRequestModelEnum;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof LlmChatRequest
+     */
+    'knowledgeBaseIds'?: Array<string>;
+    /**
+     * 
+     * @type {number}
+     * @memberof LlmChatRequest
+     */
+    'temperature'?: number;
+    /**
+     * Clear any existing conversation, and start a new one
+     * @type {boolean}
+     * @memberof LlmChatRequest
+     */
+    'clear'?: boolean;
+}
+
+export const LlmChatRequestModelEnum = {
+    Gpt4oMini: 'gpt-4o-mini'
+} as const;
+
+export type LlmChatRequestModelEnum = typeof LlmChatRequestModelEnum[keyof typeof LlmChatRequestModelEnum];
+
+/**
+ * @type LlmMessage
+ * @export
+ */
+export type LlmMessage = LlmMessageInput | LlmMessageToolOutput;
+
+/**
+ * 
+ * @export
+ * @interface LlmMessageInput
+ */
+export interface LlmMessageInput {
+    /**
+     * 
+     * @type {string}
+     * @memberof LlmMessageInput
+     */
+    'type': LlmMessageInputTypeEnum;
+    /**
+     * Text to send to the chatbot
+     * @type {string}
+     * @memberof LlmMessageInput
+     */
+    'text'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof LlmMessageInput
+     */
+    'imageUrl'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof LlmMessageInput
+     */
+    'fileUrl'?: string;
+    /**
+     * Role of the sender
+     * @type {string}
+     * @memberof LlmMessageInput
+     */
+    'role': LlmMessageInputRoleEnum;
+}
+
+export const LlmMessageInputTypeEnum = {
+    Input: 'input'
+} as const;
+
+export type LlmMessageInputTypeEnum = typeof LlmMessageInputTypeEnum[keyof typeof LlmMessageInputTypeEnum];
+export const LlmMessageInputRoleEnum = {
+    User: 'user',
+    System: 'system',
+    Assistant: 'assistant'
+} as const;
+
+export type LlmMessageInputRoleEnum = typeof LlmMessageInputRoleEnum[keyof typeof LlmMessageInputRoleEnum];
+
+/**
+ * 
+ * @export
+ * @interface LlmMessageToolOutput
+ */
+export interface LlmMessageToolOutput {
+    /**
+     * 
+     * @type {string}
+     * @memberof LlmMessageToolOutput
+     */
+    'type': LlmMessageToolOutputTypeEnum;
+    /**
+     * ID of the tool call being responded to
+     * @type {string}
+     * @memberof LlmMessageToolOutput
+     */
+    'id': string;
+    /**
+     * Output of the tool
+     * @type {string}
+     * @memberof LlmMessageToolOutput
+     */
+    'output': string;
+}
+
+export const LlmMessageToolOutputTypeEnum = {
+    ToolOutput: 'tool-output'
+} as const;
+
+export type LlmMessageToolOutputTypeEnum = typeof LlmMessageToolOutputTypeEnum[keyof typeof LlmMessageToolOutputTypeEnum];
+
+/**
+ * 
+ * @export
+ * @interface LlmTool
+ */
+export interface LlmTool {
+    /**
+     * Name of the tool, only supports alphanumeric characters
+     * @type {string}
+     * @memberof LlmTool
+     */
+    'name': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof LlmTool
+     */
+    'description': string;
+    /**
+     * 
+     * @type {{ [key: string]: any; }}
+     * @memberof LlmTool
+     */
+    'parameters': { [key: string]: any; };
+}
+/**
+ * 
+ * @export
  * @interface OauthCallback200Response
  */
 interface OauthCallback200Response {
@@ -1446,6 +1916,19 @@ export interface UpdateChatbotRequestAllOf {
      * @memberof UpdateChatbotRequestAllOf
      */
     'removeDocumentIds'?: Array<string>;
+}
+/**
+ * 
+ * @export
+ * @interface UpsertKnowledgeBase
+ */
+export interface UpsertKnowledgeBase {
+    /**
+     * Name of the knowledge base
+     * @type {string}
+     * @memberof UpsertKnowledgeBase
+     */
+    'name': string;
 }
 
 /**
@@ -2406,6 +2889,46 @@ export const ChatbotApiAxiosParamCreator = function (configuration?: Configurati
         },
         /**
          * 
+         * @summary Send a message to an LLM
+         * @param {LlmChatRequest} llmChatRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        llmChat: async (llmChatRequest: LlmChatRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'llmChatRequest' is not null or undefined
+            assertParamExists('llmChat', 'llmChatRequest', llmChatRequest)
+            const localVarPath = `/llm-chat`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", [], configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(llmChatRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
          * @summary Send message to the chatbot
          * @param {string} id ID of the chatbot
          * @param {ChatbotMessageRequest} [chatbotMessageRequest] 
@@ -2595,6 +3118,17 @@ export const ChatbotApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
+         * @summary Send a message to an LLM
+         * @param {LlmChatRequest} llmChatRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async llmChat(llmChatRequest: LlmChatRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<LlmChat200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.llmChat(llmChatRequest, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
          * @summary Send message to the chatbot
          * @param {string} id ID of the chatbot
          * @param {ChatbotMessageRequest} [chatbotMessageRequest] 
@@ -2687,6 +3221,16 @@ export const ChatbotApiFactory = function (configuration?: Configuration, basePa
          */
         jobStart(requestParameters: ChatbotApiJobStartRequest, options?: AxiosRequestConfig): AxiosPromise<StartJobResponse> {
             return localVarFp.jobStart(requestParameters.id, requestParameters.type, requestParameters.startJobRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Send a message to an LLM
+         * @param {ChatbotApiLlmChatRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        llmChat(requestParameters: ChatbotApiLlmChatRequest, options?: AxiosRequestConfig): AxiosPromise<LlmChat200Response> {
+            return localVarFp.llmChat(requestParameters.llmChatRequest, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -2803,6 +3347,20 @@ export interface ChatbotApiJobStartRequest {
      * @memberof ChatbotApiJobStart
      */
     readonly startJobRequest?: StartJobRequest
+}
+
+/**
+ * Request parameters for llmChat operation in ChatbotApi.
+ * @export
+ * @interface ChatbotApiLlmChatRequest
+ */
+export interface ChatbotApiLlmChatRequest {
+    /**
+     * 
+     * @type {LlmChatRequest}
+     * @memberof ChatbotApiLlmChat
+     */
+    readonly llmChatRequest: LlmChatRequest
 }
 
 /**
@@ -2926,6 +3484,18 @@ export class ChatbotApi extends BaseAPI {
      */
     public jobStart(requestParameters: ChatbotApiJobStartRequest, options?: AxiosRequestConfig) {
         return ChatbotApiFp(this.configuration).jobStart(requestParameters.id, requestParameters.type, requestParameters.startJobRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Send a message to an LLM
+     * @param {ChatbotApiLlmChatRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ChatbotApi
+     */
+    public llmChat(requestParameters: ChatbotApiLlmChatRequest, options?: AxiosRequestConfig) {
+        return ChatbotApiFp(this.configuration).llmChat(requestParameters.llmChatRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -3537,6 +4107,660 @@ export class KeywordsApi extends BaseAPI {
      */
     public getTriggers(requestParameters: KeywordsApiGetTriggersRequest = {}, options?: AxiosRequestConfig) {
         return KeywordsApiFp(this.configuration).getTriggers(requestParameters.q, requestParameters.count, requestParameters.id, requestParameters.triggerType, requestParameters.cursor, requestParameters.returnTotalCount, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+/**
+ * KnowledgeBaseApi - axios parameter creator
+ * @export
+ */
+const KnowledgeBaseApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @summary Add a source to the knowledge base
+         * @param {string} id 
+         * @param {AddSourceRequest} addSourceRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        addSource: async (id: string, addSourceRequest: AddSourceRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('addSource', 'id', id)
+            // verify required parameter 'addSourceRequest' is not null or undefined
+            assertParamExists('addSource', 'addSourceRequest', addSourceRequest)
+            const localVarPath = `/knowledge-base/{id}/sources`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["AUTOCOMPLETE_GET"], configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(addSourceRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Create a knowledge base
+         * @param {UpsertKnowledgeBase} upsertKnowledgeBase 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createKnowledgeBase: async (upsertKnowledgeBase: UpsertKnowledgeBase, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'upsertKnowledgeBase' is not null or undefined
+            assertParamExists('createKnowledgeBase', 'upsertKnowledgeBase', upsertKnowledgeBase)
+            const localVarPath = `/knowledge-base`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["AUTOCOMPLETE_GET"], configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(upsertKnowledgeBase, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Delete a knowledge base
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteKnowledgeBase: async (id: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('deleteKnowledgeBase', 'id', id)
+            const localVarPath = `/knowledge-base/{id}`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["AUTOCOMPLETE_GET"], configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Delete a source from the knowledge base
+         * @param {string} baseId 
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteSource: async (baseId: string, id: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'baseId' is not null or undefined
+            assertParamExists('deleteSource', 'baseId', baseId)
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('deleteSource', 'id', id)
+            const localVarPath = `/knowledge-base/{baseId}/sources/{id}`
+                .replace(`{${"baseId"}}`, encodeURIComponent(String(baseId)))
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["AUTOCOMPLETE_GET"], configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Get all knowledge bases
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getKnowledgeBases: async (options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/knowledge-base`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["AUTOCOMPLETE_GET"], configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Get all sources in a knowledge base
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getSources: async (id: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('getSources', 'id', id)
+            const localVarPath = `/knowledge-base/{id}/sources`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["AUTOCOMPLETE_GET"], configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Update the name of a knowledge base
+         * @param {string} id 
+         * @param {UpsertKnowledgeBase} upsertKnowledgeBase 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        updateKnowledgeBase: async (id: string, upsertKnowledgeBase: UpsertKnowledgeBase, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('updateKnowledgeBase', 'id', id)
+            // verify required parameter 'upsertKnowledgeBase' is not null or undefined
+            assertParamExists('updateKnowledgeBase', 'upsertKnowledgeBase', upsertKnowledgeBase)
+            const localVarPath = `/knowledge-base/{id}`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PATCH', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["AUTOCOMPLETE_GET"], configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(upsertKnowledgeBase, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * KnowledgeBaseApi - functional programming interface
+ * @export
+ */
+const KnowledgeBaseApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = KnowledgeBaseApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * 
+         * @summary Add a source to the knowledge base
+         * @param {string} id 
+         * @param {AddSourceRequest} addSourceRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async addSource(id: string, addSourceRequest: AddSourceRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<KnowledgeBaseSource>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.addSource(id, addSourceRequest, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary Create a knowledge base
+         * @param {UpsertKnowledgeBase} upsertKnowledgeBase 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async createKnowledgeBase(upsertKnowledgeBase: UpsertKnowledgeBase, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<KnowledgeBase>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.createKnowledgeBase(upsertKnowledgeBase, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary Delete a knowledge base
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async deleteKnowledgeBase(id: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteKnowledgeBase(id, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary Delete a source from the knowledge base
+         * @param {string} baseId 
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async deleteSource(baseId: string, id: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteSource(baseId, id, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary Get all knowledge bases
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getKnowledgeBases(options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetKnowledgeBases200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getKnowledgeBases(options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary Get all sources in a knowledge base
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getSources(id: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetSources200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getSources(id, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary Update the name of a knowledge base
+         * @param {string} id 
+         * @param {UpsertKnowledgeBase} upsertKnowledgeBase 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async updateKnowledgeBase(id: string, upsertKnowledgeBase: UpsertKnowledgeBase, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.updateKnowledgeBase(id, upsertKnowledgeBase, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+    }
+};
+
+/**
+ * KnowledgeBaseApi - factory interface
+ * @export
+ */
+const KnowledgeBaseApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = KnowledgeBaseApiFp(configuration)
+    return {
+        /**
+         * 
+         * @summary Add a source to the knowledge base
+         * @param {KnowledgeBaseApiAddSourceRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        addSource(requestParameters: KnowledgeBaseApiAddSourceRequest, options?: AxiosRequestConfig): AxiosPromise<KnowledgeBaseSource> {
+            return localVarFp.addSource(requestParameters.id, requestParameters.addSourceRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Create a knowledge base
+         * @param {KnowledgeBaseApiCreateKnowledgeBaseRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createKnowledgeBase(requestParameters: KnowledgeBaseApiCreateKnowledgeBaseRequest, options?: AxiosRequestConfig): AxiosPromise<KnowledgeBase> {
+            return localVarFp.createKnowledgeBase(requestParameters.upsertKnowledgeBase, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Delete a knowledge base
+         * @param {KnowledgeBaseApiDeleteKnowledgeBaseRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteKnowledgeBase(requestParameters: KnowledgeBaseApiDeleteKnowledgeBaseRequest, options?: AxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.deleteKnowledgeBase(requestParameters.id, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Delete a source from the knowledge base
+         * @param {KnowledgeBaseApiDeleteSourceRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteSource(requestParameters: KnowledgeBaseApiDeleteSourceRequest, options?: AxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.deleteSource(requestParameters.baseId, requestParameters.id, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Get all knowledge bases
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getKnowledgeBases(options?: AxiosRequestConfig): AxiosPromise<GetKnowledgeBases200Response> {
+            return localVarFp.getKnowledgeBases(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Get all sources in a knowledge base
+         * @param {KnowledgeBaseApiGetSourcesRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getSources(requestParameters: KnowledgeBaseApiGetSourcesRequest, options?: AxiosRequestConfig): AxiosPromise<GetSources200Response> {
+            return localVarFp.getSources(requestParameters.id, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Update the name of a knowledge base
+         * @param {KnowledgeBaseApiUpdateKnowledgeBaseRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        updateKnowledgeBase(requestParameters: KnowledgeBaseApiUpdateKnowledgeBaseRequest, options?: AxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.updateKnowledgeBase(requestParameters.id, requestParameters.upsertKnowledgeBase, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * Request parameters for addSource operation in KnowledgeBaseApi.
+ * @export
+ * @interface KnowledgeBaseApiAddSourceRequest
+ */
+export interface KnowledgeBaseApiAddSourceRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof KnowledgeBaseApiAddSource
+     */
+    readonly id: string
+
+    /**
+     * 
+     * @type {AddSourceRequest}
+     * @memberof KnowledgeBaseApiAddSource
+     */
+    readonly addSourceRequest: AddSourceRequest
+}
+
+/**
+ * Request parameters for createKnowledgeBase operation in KnowledgeBaseApi.
+ * @export
+ * @interface KnowledgeBaseApiCreateKnowledgeBaseRequest
+ */
+export interface KnowledgeBaseApiCreateKnowledgeBaseRequest {
+    /**
+     * 
+     * @type {UpsertKnowledgeBase}
+     * @memberof KnowledgeBaseApiCreateKnowledgeBase
+     */
+    readonly upsertKnowledgeBase: UpsertKnowledgeBase
+}
+
+/**
+ * Request parameters for deleteKnowledgeBase operation in KnowledgeBaseApi.
+ * @export
+ * @interface KnowledgeBaseApiDeleteKnowledgeBaseRequest
+ */
+export interface KnowledgeBaseApiDeleteKnowledgeBaseRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof KnowledgeBaseApiDeleteKnowledgeBase
+     */
+    readonly id: string
+}
+
+/**
+ * Request parameters for deleteSource operation in KnowledgeBaseApi.
+ * @export
+ * @interface KnowledgeBaseApiDeleteSourceRequest
+ */
+export interface KnowledgeBaseApiDeleteSourceRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof KnowledgeBaseApiDeleteSource
+     */
+    readonly baseId: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof KnowledgeBaseApiDeleteSource
+     */
+    readonly id: string
+}
+
+/**
+ * Request parameters for getSources operation in KnowledgeBaseApi.
+ * @export
+ * @interface KnowledgeBaseApiGetSourcesRequest
+ */
+export interface KnowledgeBaseApiGetSourcesRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof KnowledgeBaseApiGetSources
+     */
+    readonly id: string
+}
+
+/**
+ * Request parameters for updateKnowledgeBase operation in KnowledgeBaseApi.
+ * @export
+ * @interface KnowledgeBaseApiUpdateKnowledgeBaseRequest
+ */
+export interface KnowledgeBaseApiUpdateKnowledgeBaseRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof KnowledgeBaseApiUpdateKnowledgeBase
+     */
+    readonly id: string
+
+    /**
+     * 
+     * @type {UpsertKnowledgeBase}
+     * @memberof KnowledgeBaseApiUpdateKnowledgeBase
+     */
+    readonly upsertKnowledgeBase: UpsertKnowledgeBase
+}
+
+/**
+ * KnowledgeBaseApi - object-oriented interface
+ * @export
+ * @class KnowledgeBaseApi
+ * @extends {BaseAPI}
+ */
+export class KnowledgeBaseApi extends BaseAPI {
+    /**
+     * 
+     * @summary Add a source to the knowledge base
+     * @param {KnowledgeBaseApiAddSourceRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof KnowledgeBaseApi
+     */
+    public addSource(requestParameters: KnowledgeBaseApiAddSourceRequest, options?: AxiosRequestConfig) {
+        return KnowledgeBaseApiFp(this.configuration).addSource(requestParameters.id, requestParameters.addSourceRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Create a knowledge base
+     * @param {KnowledgeBaseApiCreateKnowledgeBaseRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof KnowledgeBaseApi
+     */
+    public createKnowledgeBase(requestParameters: KnowledgeBaseApiCreateKnowledgeBaseRequest, options?: AxiosRequestConfig) {
+        return KnowledgeBaseApiFp(this.configuration).createKnowledgeBase(requestParameters.upsertKnowledgeBase, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Delete a knowledge base
+     * @param {KnowledgeBaseApiDeleteKnowledgeBaseRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof KnowledgeBaseApi
+     */
+    public deleteKnowledgeBase(requestParameters: KnowledgeBaseApiDeleteKnowledgeBaseRequest, options?: AxiosRequestConfig) {
+        return KnowledgeBaseApiFp(this.configuration).deleteKnowledgeBase(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Delete a source from the knowledge base
+     * @param {KnowledgeBaseApiDeleteSourceRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof KnowledgeBaseApi
+     */
+    public deleteSource(requestParameters: KnowledgeBaseApiDeleteSourceRequest, options?: AxiosRequestConfig) {
+        return KnowledgeBaseApiFp(this.configuration).deleteSource(requestParameters.baseId, requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Get all knowledge bases
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof KnowledgeBaseApi
+     */
+    public getKnowledgeBases(options?: AxiosRequestConfig) {
+        return KnowledgeBaseApiFp(this.configuration).getKnowledgeBases(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Get all sources in a knowledge base
+     * @param {KnowledgeBaseApiGetSourcesRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof KnowledgeBaseApi
+     */
+    public getSources(requestParameters: KnowledgeBaseApiGetSourcesRequest, options?: AxiosRequestConfig) {
+        return KnowledgeBaseApiFp(this.configuration).getSources(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Update the name of a knowledge base
+     * @param {KnowledgeBaseApiUpdateKnowledgeBaseRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof KnowledgeBaseApi
+     */
+    public updateKnowledgeBase(requestParameters: KnowledgeBaseApiUpdateKnowledgeBaseRequest, options?: AxiosRequestConfig) {
+        return KnowledgeBaseApiFp(this.configuration).updateKnowledgeBase(requestParameters.id, requestParameters.upsertKnowledgeBase, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
