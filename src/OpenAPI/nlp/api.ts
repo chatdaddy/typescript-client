@@ -4112,10 +4112,10 @@ export class KeywordsApi extends BaseAPI {
 
 
 /**
- * KnowledgeBaseApi - axios parameter creator
+ * KnowledgebaseApi - axios parameter creator
  * @export
  */
-const KnowledgeBaseApiAxiosParamCreator = function (configuration?: Configuration) {
+export const KnowledgebaseApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
          * 
@@ -4401,11 +4401,11 @@ const KnowledgeBaseApiAxiosParamCreator = function (configuration?: Configuratio
 };
 
 /**
- * KnowledgeBaseApi - functional programming interface
+ * KnowledgebaseApi - functional programming interface
  * @export
  */
-const KnowledgeBaseApiFp = function(configuration?: Configuration) {
-    const localVarAxiosParamCreator = KnowledgeBaseApiAxiosParamCreator(configuration)
+export const KnowledgebaseApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = KnowledgebaseApiAxiosParamCreator(configuration)
     return {
         /**
          * 
@@ -4490,50 +4490,50 @@ const KnowledgeBaseApiFp = function(configuration?: Configuration) {
 };
 
 /**
- * KnowledgeBaseApi - factory interface
+ * KnowledgebaseApi - factory interface
  * @export
  */
-const KnowledgeBaseApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
-    const localVarFp = KnowledgeBaseApiFp(configuration)
+export const KnowledgebaseApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = KnowledgebaseApiFp(configuration)
     return {
         /**
          * 
          * @summary Add a source to the knowledge base
-         * @param {KnowledgeBaseApiAddSourceRequest} requestParameters Request parameters.
+         * @param {KnowledgebaseApiAddSourceRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        addSource(requestParameters: KnowledgeBaseApiAddSourceRequest, options?: AxiosRequestConfig): AxiosPromise<KnowledgeBaseSource> {
+        addSource(requestParameters: KnowledgebaseApiAddSourceRequest, options?: AxiosRequestConfig): AxiosPromise<KnowledgeBaseSource> {
             return localVarFp.addSource(requestParameters.id, requestParameters.addSourceRequest, options).then((request) => request(axios, basePath));
         },
         /**
          * 
          * @summary Create a knowledge base
-         * @param {KnowledgeBaseApiCreateKnowledgeBaseRequest} requestParameters Request parameters.
+         * @param {KnowledgebaseApiCreateKnowledgeBaseRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        createKnowledgeBase(requestParameters: KnowledgeBaseApiCreateKnowledgeBaseRequest, options?: AxiosRequestConfig): AxiosPromise<KnowledgeBase> {
+        createKnowledgeBase(requestParameters: KnowledgebaseApiCreateKnowledgeBaseRequest, options?: AxiosRequestConfig): AxiosPromise<KnowledgeBase> {
             return localVarFp.createKnowledgeBase(requestParameters.upsertKnowledgeBase, options).then((request) => request(axios, basePath));
         },
         /**
          * 
          * @summary Delete a knowledge base
-         * @param {KnowledgeBaseApiDeleteKnowledgeBaseRequest} requestParameters Request parameters.
+         * @param {KnowledgebaseApiDeleteKnowledgeBaseRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteKnowledgeBase(requestParameters: KnowledgeBaseApiDeleteKnowledgeBaseRequest, options?: AxiosRequestConfig): AxiosPromise<void> {
+        deleteKnowledgeBase(requestParameters: KnowledgebaseApiDeleteKnowledgeBaseRequest, options?: AxiosRequestConfig): AxiosPromise<void> {
             return localVarFp.deleteKnowledgeBase(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
          * 
          * @summary Delete a source from the knowledge base
-         * @param {KnowledgeBaseApiDeleteSourceRequest} requestParameters Request parameters.
+         * @param {KnowledgebaseApiDeleteSourceRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteSource(requestParameters: KnowledgeBaseApiDeleteSourceRequest, options?: AxiosRequestConfig): AxiosPromise<void> {
+        deleteSource(requestParameters: KnowledgebaseApiDeleteSourceRequest, options?: AxiosRequestConfig): AxiosPromise<void> {
             return localVarFp.deleteSource(requestParameters.baseId, requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
@@ -4548,184 +4548,184 @@ const KnowledgeBaseApiFactory = function (configuration?: Configuration, basePat
         /**
          * 
          * @summary Get all sources in a knowledge base
-         * @param {KnowledgeBaseApiGetSourcesRequest} requestParameters Request parameters.
+         * @param {KnowledgebaseApiGetSourcesRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getSources(requestParameters: KnowledgeBaseApiGetSourcesRequest, options?: AxiosRequestConfig): AxiosPromise<GetSources200Response> {
+        getSources(requestParameters: KnowledgebaseApiGetSourcesRequest, options?: AxiosRequestConfig): AxiosPromise<GetSources200Response> {
             return localVarFp.getSources(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
          * 
          * @summary Update the name of a knowledge base
-         * @param {KnowledgeBaseApiUpdateKnowledgeBaseRequest} requestParameters Request parameters.
+         * @param {KnowledgebaseApiUpdateKnowledgeBaseRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        updateKnowledgeBase(requestParameters: KnowledgeBaseApiUpdateKnowledgeBaseRequest, options?: AxiosRequestConfig): AxiosPromise<void> {
+        updateKnowledgeBase(requestParameters: KnowledgebaseApiUpdateKnowledgeBaseRequest, options?: AxiosRequestConfig): AxiosPromise<void> {
             return localVarFp.updateKnowledgeBase(requestParameters.id, requestParameters.upsertKnowledgeBase, options).then((request) => request(axios, basePath));
         },
     };
 };
 
 /**
- * Request parameters for addSource operation in KnowledgeBaseApi.
+ * Request parameters for addSource operation in KnowledgebaseApi.
  * @export
- * @interface KnowledgeBaseApiAddSourceRequest
+ * @interface KnowledgebaseApiAddSourceRequest
  */
-export interface KnowledgeBaseApiAddSourceRequest {
+export interface KnowledgebaseApiAddSourceRequest {
     /**
      * 
      * @type {string}
-     * @memberof KnowledgeBaseApiAddSource
+     * @memberof KnowledgebaseApiAddSource
      */
     readonly id: string
 
     /**
      * 
      * @type {AddSourceRequest}
-     * @memberof KnowledgeBaseApiAddSource
+     * @memberof KnowledgebaseApiAddSource
      */
     readonly addSourceRequest: AddSourceRequest
 }
 
 /**
- * Request parameters for createKnowledgeBase operation in KnowledgeBaseApi.
+ * Request parameters for createKnowledgeBase operation in KnowledgebaseApi.
  * @export
- * @interface KnowledgeBaseApiCreateKnowledgeBaseRequest
+ * @interface KnowledgebaseApiCreateKnowledgeBaseRequest
  */
-export interface KnowledgeBaseApiCreateKnowledgeBaseRequest {
+export interface KnowledgebaseApiCreateKnowledgeBaseRequest {
     /**
      * 
      * @type {UpsertKnowledgeBase}
-     * @memberof KnowledgeBaseApiCreateKnowledgeBase
+     * @memberof KnowledgebaseApiCreateKnowledgeBase
      */
     readonly upsertKnowledgeBase: UpsertKnowledgeBase
 }
 
 /**
- * Request parameters for deleteKnowledgeBase operation in KnowledgeBaseApi.
+ * Request parameters for deleteKnowledgeBase operation in KnowledgebaseApi.
  * @export
- * @interface KnowledgeBaseApiDeleteKnowledgeBaseRequest
+ * @interface KnowledgebaseApiDeleteKnowledgeBaseRequest
  */
-export interface KnowledgeBaseApiDeleteKnowledgeBaseRequest {
+export interface KnowledgebaseApiDeleteKnowledgeBaseRequest {
     /**
      * 
      * @type {string}
-     * @memberof KnowledgeBaseApiDeleteKnowledgeBase
+     * @memberof KnowledgebaseApiDeleteKnowledgeBase
      */
     readonly id: string
 }
 
 /**
- * Request parameters for deleteSource operation in KnowledgeBaseApi.
+ * Request parameters for deleteSource operation in KnowledgebaseApi.
  * @export
- * @interface KnowledgeBaseApiDeleteSourceRequest
+ * @interface KnowledgebaseApiDeleteSourceRequest
  */
-export interface KnowledgeBaseApiDeleteSourceRequest {
+export interface KnowledgebaseApiDeleteSourceRequest {
     /**
      * 
      * @type {string}
-     * @memberof KnowledgeBaseApiDeleteSource
+     * @memberof KnowledgebaseApiDeleteSource
      */
     readonly baseId: string
 
     /**
      * 
      * @type {string}
-     * @memberof KnowledgeBaseApiDeleteSource
+     * @memberof KnowledgebaseApiDeleteSource
      */
     readonly id: string
 }
 
 /**
- * Request parameters for getSources operation in KnowledgeBaseApi.
+ * Request parameters for getSources operation in KnowledgebaseApi.
  * @export
- * @interface KnowledgeBaseApiGetSourcesRequest
+ * @interface KnowledgebaseApiGetSourcesRequest
  */
-export interface KnowledgeBaseApiGetSourcesRequest {
+export interface KnowledgebaseApiGetSourcesRequest {
     /**
      * 
      * @type {string}
-     * @memberof KnowledgeBaseApiGetSources
+     * @memberof KnowledgebaseApiGetSources
      */
     readonly id: string
 }
 
 /**
- * Request parameters for updateKnowledgeBase operation in KnowledgeBaseApi.
+ * Request parameters for updateKnowledgeBase operation in KnowledgebaseApi.
  * @export
- * @interface KnowledgeBaseApiUpdateKnowledgeBaseRequest
+ * @interface KnowledgebaseApiUpdateKnowledgeBaseRequest
  */
-export interface KnowledgeBaseApiUpdateKnowledgeBaseRequest {
+export interface KnowledgebaseApiUpdateKnowledgeBaseRequest {
     /**
      * 
      * @type {string}
-     * @memberof KnowledgeBaseApiUpdateKnowledgeBase
+     * @memberof KnowledgebaseApiUpdateKnowledgeBase
      */
     readonly id: string
 
     /**
      * 
      * @type {UpsertKnowledgeBase}
-     * @memberof KnowledgeBaseApiUpdateKnowledgeBase
+     * @memberof KnowledgebaseApiUpdateKnowledgeBase
      */
     readonly upsertKnowledgeBase: UpsertKnowledgeBase
 }
 
 /**
- * KnowledgeBaseApi - object-oriented interface
+ * KnowledgebaseApi - object-oriented interface
  * @export
- * @class KnowledgeBaseApi
+ * @class KnowledgebaseApi
  * @extends {BaseAPI}
  */
-export class KnowledgeBaseApi extends BaseAPI {
+export class KnowledgebaseApi extends BaseAPI {
     /**
      * 
      * @summary Add a source to the knowledge base
-     * @param {KnowledgeBaseApiAddSourceRequest} requestParameters Request parameters.
+     * @param {KnowledgebaseApiAddSourceRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof KnowledgeBaseApi
+     * @memberof KnowledgebaseApi
      */
-    public addSource(requestParameters: KnowledgeBaseApiAddSourceRequest, options?: AxiosRequestConfig) {
-        return KnowledgeBaseApiFp(this.configuration).addSource(requestParameters.id, requestParameters.addSourceRequest, options).then((request) => request(this.axios, this.basePath));
+    public addSource(requestParameters: KnowledgebaseApiAddSourceRequest, options?: AxiosRequestConfig) {
+        return KnowledgebaseApiFp(this.configuration).addSource(requestParameters.id, requestParameters.addSourceRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * 
      * @summary Create a knowledge base
-     * @param {KnowledgeBaseApiCreateKnowledgeBaseRequest} requestParameters Request parameters.
+     * @param {KnowledgebaseApiCreateKnowledgeBaseRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof KnowledgeBaseApi
+     * @memberof KnowledgebaseApi
      */
-    public createKnowledgeBase(requestParameters: KnowledgeBaseApiCreateKnowledgeBaseRequest, options?: AxiosRequestConfig) {
-        return KnowledgeBaseApiFp(this.configuration).createKnowledgeBase(requestParameters.upsertKnowledgeBase, options).then((request) => request(this.axios, this.basePath));
+    public createKnowledgeBase(requestParameters: KnowledgebaseApiCreateKnowledgeBaseRequest, options?: AxiosRequestConfig) {
+        return KnowledgebaseApiFp(this.configuration).createKnowledgeBase(requestParameters.upsertKnowledgeBase, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * 
      * @summary Delete a knowledge base
-     * @param {KnowledgeBaseApiDeleteKnowledgeBaseRequest} requestParameters Request parameters.
+     * @param {KnowledgebaseApiDeleteKnowledgeBaseRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof KnowledgeBaseApi
+     * @memberof KnowledgebaseApi
      */
-    public deleteKnowledgeBase(requestParameters: KnowledgeBaseApiDeleteKnowledgeBaseRequest, options?: AxiosRequestConfig) {
-        return KnowledgeBaseApiFp(this.configuration).deleteKnowledgeBase(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    public deleteKnowledgeBase(requestParameters: KnowledgebaseApiDeleteKnowledgeBaseRequest, options?: AxiosRequestConfig) {
+        return KnowledgebaseApiFp(this.configuration).deleteKnowledgeBase(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * 
      * @summary Delete a source from the knowledge base
-     * @param {KnowledgeBaseApiDeleteSourceRequest} requestParameters Request parameters.
+     * @param {KnowledgebaseApiDeleteSourceRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof KnowledgeBaseApi
+     * @memberof KnowledgebaseApi
      */
-    public deleteSource(requestParameters: KnowledgeBaseApiDeleteSourceRequest, options?: AxiosRequestConfig) {
-        return KnowledgeBaseApiFp(this.configuration).deleteSource(requestParameters.baseId, requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    public deleteSource(requestParameters: KnowledgebaseApiDeleteSourceRequest, options?: AxiosRequestConfig) {
+        return KnowledgebaseApiFp(this.configuration).deleteSource(requestParameters.baseId, requestParameters.id, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -4733,34 +4733,34 @@ export class KnowledgeBaseApi extends BaseAPI {
      * @summary Get all knowledge bases
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof KnowledgeBaseApi
+     * @memberof KnowledgebaseApi
      */
     public getKnowledgeBases(options?: AxiosRequestConfig) {
-        return KnowledgeBaseApiFp(this.configuration).getKnowledgeBases(options).then((request) => request(this.axios, this.basePath));
+        return KnowledgebaseApiFp(this.configuration).getKnowledgeBases(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * 
      * @summary Get all sources in a knowledge base
-     * @param {KnowledgeBaseApiGetSourcesRequest} requestParameters Request parameters.
+     * @param {KnowledgebaseApiGetSourcesRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof KnowledgeBaseApi
+     * @memberof KnowledgebaseApi
      */
-    public getSources(requestParameters: KnowledgeBaseApiGetSourcesRequest, options?: AxiosRequestConfig) {
-        return KnowledgeBaseApiFp(this.configuration).getSources(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    public getSources(requestParameters: KnowledgebaseApiGetSourcesRequest, options?: AxiosRequestConfig) {
+        return KnowledgebaseApiFp(this.configuration).getSources(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * 
      * @summary Update the name of a knowledge base
-     * @param {KnowledgeBaseApiUpdateKnowledgeBaseRequest} requestParameters Request parameters.
+     * @param {KnowledgebaseApiUpdateKnowledgeBaseRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof KnowledgeBaseApi
+     * @memberof KnowledgebaseApi
      */
-    public updateKnowledgeBase(requestParameters: KnowledgeBaseApiUpdateKnowledgeBaseRequest, options?: AxiosRequestConfig) {
-        return KnowledgeBaseApiFp(this.configuration).updateKnowledgeBase(requestParameters.id, requestParameters.upsertKnowledgeBase, options).then((request) => request(this.axios, this.basePath));
+    public updateKnowledgeBase(requestParameters: KnowledgebaseApiUpdateKnowledgeBaseRequest, options?: AxiosRequestConfig) {
+        return KnowledgebaseApiFp(this.configuration).updateKnowledgeBase(requestParameters.id, requestParameters.upsertKnowledgeBase, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
