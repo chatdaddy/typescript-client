@@ -1467,7 +1467,8 @@ export interface LlmChatRequest {
 }
 
 export const LlmChatRequestModelEnum = {
-    Gpt4oMini: 'gpt-4o-mini'
+    4oMini: 'gpt-4o-mini',
+    4o: 'gpt-4o'
 } as const;
 
 export type LlmChatRequestModelEnum = typeof LlmChatRequestModelEnum[keyof typeof LlmChatRequestModelEnum];
