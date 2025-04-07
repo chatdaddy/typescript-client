@@ -16,14 +16,14 @@ const BASE_PATH = "https://api.chatdaddy.tech/metrics".replace(/\/+$/, "");
 
 
 import type { Configuration } from '../configuration';
-import type { AxiosPromise, AxiosInstance, AxiosRequestConfig } from 'axios';
+import type { AxiosPromise, AxiosInstance, RawAxiosRequestConfig } from 'axios';
 import globalAxios from 'axios';
 // Some imports not used depending on template conditions
 // @ts-ignore
 import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObject, setBearerAuthToObject, setOAuthToObject, setSearchParams, serializeDataIfNeeded, toPathString, createRequestFunction } from '../common';
 import type { RequestArgs } from '../base';
 // @ts-ignore
-import { COLLECTION_FORMATS, BaseAPI, RequiredError } from '../base';
+import { COLLECTION_FORMATS, BaseAPI, RequiredError, operationServerMap } from '../base';
 
 /**
  * @type AdminDashboardFilter
@@ -820,72 +820,17 @@ export interface GetInitData200Response {
      */
     'data': DashboardData;
     /**
-     * 
-     * @type {GetInitData200ResponseDefaultDashboard}
+     * Present if the data being fetched is for the default dashboard. 
+     * @type {DashboardMetadata}
      * @memberof GetInitData200Response
      */
-    'defaultDashboard'?: GetInitData200ResponseDefaultDashboard;
+    'defaultDashboard'?: DashboardMetadata;
     /**
      * 
      * @type {Array<DefaultMetricConfigInner>}
      * @memberof GetInitData200Response
      */
     'defaultSchema'?: Array<DefaultMetricConfigInner>;
-}
-/**
- * Present if the data being fetched is for the default dashboard. 
- * @export
- * @interface GetInitData200ResponseDefaultDashboard
- */
-export interface GetInitData200ResponseDefaultDashboard {
-    /**
-     * 
-     * @type {string}
-     * @memberof GetInitData200ResponseDefaultDashboard
-     */
-    'id': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof GetInitData200ResponseDefaultDashboard
-     */
-    'name': string;
-    /**
-     * Unique identifier for a user
-     * @type {string}
-     * @memberof GetInitData200ResponseDefaultDashboard
-     */
-    'userId': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof GetInitData200ResponseDefaultDashboard
-     */
-    'teamId': string;
-    /**
-     * An ISO formatted timestamp
-     * @type {string}
-     * @memberof GetInitData200ResponseDefaultDashboard
-     */
-    'createdAt': string;
-    /**
-     * An ISO formatted timestamp
-     * @type {string}
-     * @memberof GetInitData200ResponseDefaultDashboard
-     */
-    'updatedAt': string;
-    /**
-     * 
-     * @type {DashboardSchema}
-     * @memberof GetInitData200ResponseDefaultDashboard
-     */
-    'schema': DashboardSchema;
-    /**
-     * 
-     * @type {DashboardMetadataPermissions}
-     * @memberof GetInitData200ResponseDefaultDashboard
-     */
-    'permissions'?: DashboardMetadataPermissions;
 }
 /**
  * 
@@ -965,12 +910,6 @@ type MapPropertyDescriptorTypeEnum = typeof MapPropertyDescriptorTypeEnum[keyof 
  */
 export interface Metric {
     /**
-     * An ISO formatted timestamp
-     * @type {string}
-     * @memberof Metric
-     */
-    'timestamp': string;
-    /**
      * 
      * @type {number}
      * @memberof Metric
@@ -982,17 +921,10 @@ export interface Metric {
      * @memberof Metric
      */
     'count'?: number;
-}
-/**
- * 
- * @export
- * @interface MetricAllOf
- */
-export interface MetricAllOf {
     /**
      * An ISO formatted timestamp
      * @type {string}
-     * @memberof MetricAllOf
+     * @memberof Metric
      */
     'timestamp': string;
 }
@@ -1101,25 +1033,6 @@ export type MetricConfigProperty = DataProperty & {
 /**
  * 
  * @export
- * @interface MetricConfigPropertyAllOf
- */
-export interface MetricConfigPropertyAllOf {
-    /**
-     * Title to show when the value is none. Use \"{{appName}}\" to refer to the app name. 
-     * @type {string}
-     * @memberof MetricConfigPropertyAllOf
-     */
-    'noneValueTitle'?: string;
-    /**
-     * 
-     * @type {MetricConfigPropertyAllOfElasticConfig}
-     * @memberof MetricConfigPropertyAllOf
-     */
-    'elasticConfig'?: MetricConfigPropertyAllOfElasticConfig;
-}
-/**
- * 
- * @export
  * @interface MetricConfigPropertyAllOfElasticConfig
  */
 export interface MetricConfigPropertyAllOfElasticConfig {
@@ -1220,8 +1133,7 @@ export type MetricsResultTotalVisualizationTypeEnum = typeof MetricsResultTotalV
 
 export const NullableDashboardMetadataAccess = {
     Lvl1View: 'lvl1_view',
-    Lvl2Edit: 'lvl2_edit',
-    Null: null as null
+    Lvl2Edit: 'lvl2_edit'
 } as const;
 
 export type NullableDashboardMetadataAccess = typeof NullableDashboardMetadataAccess[keyof typeof NullableDashboardMetadataAccess];
@@ -1513,12 +1425,12 @@ export const DashboardApiAxiosParamCreator = function (configuration?: Configura
         /**
          * 
          * @summary Create a new dashboard metadata
-         * @param {'1' | '2'} [version] Which version of the schema to use.
+         * @param {CreateDashboardMetadataVersionEnum} [version] Which version of the schema to use.
          * @param {DashboardCreate} [dashboardCreate] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        createDashboardMetadata: async (version?: '1' | '2', dashboardCreate?: DashboardCreate, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        createDashboardMetadata: async (version?: CreateDashboardMetadataVersionEnum, dashboardCreate?: DashboardCreate, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/dashboard/metadatas`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -1560,7 +1472,7 @@ export const DashboardApiAxiosParamCreator = function (configuration?: Configura
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteDashboardMetadata: async (id: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        deleteDashboardMetadata: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
             assertParamExists('deleteDashboardMetadata', 'id', id)
             const localVarPath = `/dashboard/metadatas/{id}`
@@ -1594,7 +1506,7 @@ export const DashboardApiAxiosParamCreator = function (configuration?: Configura
         /**
          * 
          * @summary Get admin dashboards
-         * @param {'last-4-weeks' | 'last-12-weeks' | 'last-12-months'} period 
+         * @param {GetAdminDashboardsPeriodEnum} period 
          * @param {Array<string>} [teamIds] Fetch specific teams by ID
          * @param {number} [count] Numboer of items to fetch.
          * @param {string} [cursor] Cursor to fetch the next page of dashboards.
@@ -1604,7 +1516,7 @@ export const DashboardApiAxiosParamCreator = function (configuration?: Configura
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getAdminDashboards: async (period: 'last-4-weeks' | 'last-12-weeks' | 'last-12-months', teamIds?: Array<string>, count?: number, cursor?: string, returnTotal?: boolean, sort?: AdminDashboardSort, filters?: AdminDashboardFilterItems, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getAdminDashboards: async (period: GetAdminDashboardsPeriodEnum, teamIds?: Array<string>, count?: number, cursor?: string, returnTotal?: boolean, sort?: AdminDashboardSort, filters?: AdminDashboardFilterItems, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'period' is not null or undefined
             assertParamExists('getAdminDashboards', 'period', period)
             const localVarPath = `/dashboard/admin`;
@@ -1644,11 +1556,15 @@ export const DashboardApiAxiosParamCreator = function (configuration?: Configura
             }
 
             if (sort !== undefined) {
-                localVarQueryParameter['sort'] = sort;
+                for (const [key, value] of Object.entries(sort)) {
+                    localVarQueryParameter[key] = value;
+                }
             }
 
             if (filters !== undefined) {
-                localVarQueryParameter['filters'] = filters;
+                for (const [key, value] of Object.entries(filters)) {
+                    localVarQueryParameter[key] = value;
+                }
             }
 
 
@@ -1670,7 +1586,7 @@ export const DashboardApiAxiosParamCreator = function (configuration?: Configura
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getBenchmarks: async (period?: DashboardPeriod, filters?: AdminDashboardFilterItems, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getBenchmarks: async (period?: DashboardPeriod, filters?: AdminDashboardFilterItems, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/dashboard/benchmarks`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -1692,7 +1608,9 @@ export const DashboardApiAxiosParamCreator = function (configuration?: Configura
             }
 
             if (filters !== undefined) {
-                localVarQueryParameter['filters'] = filters;
+                for (const [key, value] of Object.entries(filters)) {
+                    localVarQueryParameter[key] = value;
+                }
             }
 
 
@@ -1717,7 +1635,7 @@ export const DashboardApiAxiosParamCreator = function (configuration?: Configura
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getDashboard: async (period: DashboardPeriod, aggregate: Aggregate, id?: string, customDateRange?: DateRange, timezoneOffset?: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getDashboard: async (period: DashboardPeriod, aggregate: Aggregate, id?: string, customDateRange?: DateRange, timezoneOffset?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'period' is not null or undefined
             assertParamExists('getDashboard', 'period', period)
             // verify required parameter 'aggregate' is not null or undefined
@@ -1747,7 +1665,9 @@ export const DashboardApiAxiosParamCreator = function (configuration?: Configura
             }
 
             if (customDateRange !== undefined) {
-                localVarQueryParameter['customDateRange'] = customDateRange;
+                for (const [key, value] of Object.entries(customDateRange)) {
+                    localVarQueryParameter[key] = value;
+                }
             }
 
             if (timezoneOffset !== undefined) {
@@ -1781,7 +1701,7 @@ export const DashboardApiAxiosParamCreator = function (configuration?: Configura
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getDashboardBySchema: async (period: DashboardPeriod, aggregate: Aggregate, customDateRange?: DateRange, timezoneOffset?: string, teamId?: string, getDashboardBySchemaRequest?: GetDashboardBySchemaRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getDashboardBySchema: async (period: DashboardPeriod, aggregate: Aggregate, customDateRange?: DateRange, timezoneOffset?: string, teamId?: string, getDashboardBySchemaRequest?: GetDashboardBySchemaRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'period' is not null or undefined
             assertParamExists('getDashboardBySchema', 'period', period)
             // verify required parameter 'aggregate' is not null or undefined
@@ -1807,7 +1727,9 @@ export const DashboardApiAxiosParamCreator = function (configuration?: Configura
             }
 
             if (customDateRange !== undefined) {
-                localVarQueryParameter['customDateRange'] = customDateRange;
+                for (const [key, value] of Object.entries(customDateRange)) {
+                    localVarQueryParameter[key] = value;
+                }
             }
 
             if (timezoneOffset !== undefined) {
@@ -1842,7 +1764,7 @@ export const DashboardApiAxiosParamCreator = function (configuration?: Configura
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getDashboardMetadatas: async (options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getDashboardMetadatas: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/dashboard/metadatas`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -1881,7 +1803,7 @@ export const DashboardApiAxiosParamCreator = function (configuration?: Configura
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getInitData: async (period: DashboardPeriod, aggregate: Aggregate, id?: string, customDateRange?: DateRange, timezoneOffset?: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getInitData: async (period: DashboardPeriod, aggregate: Aggregate, id?: string, customDateRange?: DateRange, timezoneOffset?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'period' is not null or undefined
             assertParamExists('getInitData', 'period', period)
             // verify required parameter 'aggregate' is not null or undefined
@@ -1911,7 +1833,9 @@ export const DashboardApiAxiosParamCreator = function (configuration?: Configura
             }
 
             if (customDateRange !== undefined) {
-                localVarQueryParameter['customDateRange'] = customDateRange;
+                for (const [key, value] of Object.entries(customDateRange)) {
+                    localVarQueryParameter[key] = value;
+                }
             }
 
             if (timezoneOffset !== undefined) {
@@ -1941,7 +1865,7 @@ export const DashboardApiAxiosParamCreator = function (configuration?: Configura
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        updateDashboardMetadata: async (id: string, dashboardUpdate?: DashboardUpdate, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        updateDashboardMetadata: async (id: string, dashboardUpdate?: DashboardUpdate, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
             assertParamExists('updateDashboardMetadata', 'id', id)
             const localVarPath = `/dashboard/metadatas/{id}`
@@ -1988,14 +1912,16 @@ export const DashboardApiFp = function(configuration?: Configuration) {
         /**
          * 
          * @summary Create a new dashboard metadata
-         * @param {'1' | '2'} [version] Which version of the schema to use.
+         * @param {CreateDashboardMetadataVersionEnum} [version] Which version of the schema to use.
          * @param {DashboardCreate} [dashboardCreate] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async createDashboardMetadata(version?: '1' | '2', dashboardCreate?: DashboardCreate, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DashboardMetadata>> {
+        async createDashboardMetadata(version?: CreateDashboardMetadataVersionEnum, dashboardCreate?: DashboardCreate, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DashboardMetadata>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.createDashboardMetadata(version, dashboardCreate, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['DashboardApi.createDashboardMetadata']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
          * 
@@ -2004,14 +1930,16 @@ export const DashboardApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteDashboardMetadata(id: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async deleteDashboardMetadata(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.deleteDashboardMetadata(id, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['DashboardApi.deleteDashboardMetadata']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
          * 
          * @summary Get admin dashboards
-         * @param {'last-4-weeks' | 'last-12-weeks' | 'last-12-months'} period 
+         * @param {GetAdminDashboardsPeriodEnum} period 
          * @param {Array<string>} [teamIds] Fetch specific teams by ID
          * @param {number} [count] Numboer of items to fetch.
          * @param {string} [cursor] Cursor to fetch the next page of dashboards.
@@ -2021,9 +1949,11 @@ export const DashboardApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getAdminDashboards(period: 'last-4-weeks' | 'last-12-weeks' | 'last-12-months', teamIds?: Array<string>, count?: number, cursor?: string, returnTotal?: boolean, sort?: AdminDashboardSort, filters?: AdminDashboardFilterItems, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AdminDashboardResponse>> {
+        async getAdminDashboards(period: GetAdminDashboardsPeriodEnum, teamIds?: Array<string>, count?: number, cursor?: string, returnTotal?: boolean, sort?: AdminDashboardSort, filters?: AdminDashboardFilterItems, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AdminDashboardResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getAdminDashboards(period, teamIds, count, cursor, returnTotal, sort, filters, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['DashboardApi.getAdminDashboards']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
          * 
@@ -2033,9 +1963,11 @@ export const DashboardApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getBenchmarks(period?: DashboardPeriod, filters?: AdminDashboardFilterItems, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Benchmarks>> {
+        async getBenchmarks(period?: DashboardPeriod, filters?: AdminDashboardFilterItems, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Benchmarks>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getBenchmarks(period, filters, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['DashboardApi.getBenchmarks']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
          * 
@@ -2048,9 +1980,11 @@ export const DashboardApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getDashboard(period: DashboardPeriod, aggregate: Aggregate, id?: string, customDateRange?: DateRange, timezoneOffset?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DashboardWithData>> {
+        async getDashboard(period: DashboardPeriod, aggregate: Aggregate, id?: string, customDateRange?: DateRange, timezoneOffset?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DashboardWithData>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getDashboard(period, aggregate, id, customDateRange, timezoneOffset, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['DashboardApi.getDashboard']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
          * 
@@ -2064,9 +1998,11 @@ export const DashboardApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getDashboardBySchema(period: DashboardPeriod, aggregate: Aggregate, customDateRange?: DateRange, timezoneOffset?: string, teamId?: string, getDashboardBySchemaRequest?: GetDashboardBySchemaRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DashboardData>> {
+        async getDashboardBySchema(period: DashboardPeriod, aggregate: Aggregate, customDateRange?: DateRange, timezoneOffset?: string, teamId?: string, getDashboardBySchemaRequest?: GetDashboardBySchemaRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DashboardData>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getDashboardBySchema(period, aggregate, customDateRange, timezoneOffset, teamId, getDashboardBySchemaRequest, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['DashboardApi.getDashboardBySchema']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
          * 
@@ -2074,9 +2010,11 @@ export const DashboardApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getDashboardMetadatas(options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetDashboardMetadatas200Response>> {
+        async getDashboardMetadatas(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetDashboardMetadatas200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getDashboardMetadatas(options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['DashboardApi.getDashboardMetadatas']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
          * 
@@ -2089,9 +2027,11 @@ export const DashboardApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getInitData(period: DashboardPeriod, aggregate: Aggregate, id?: string, customDateRange?: DateRange, timezoneOffset?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetInitData200Response>> {
+        async getInitData(period: DashboardPeriod, aggregate: Aggregate, id?: string, customDateRange?: DateRange, timezoneOffset?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetInitData200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getInitData(period, aggregate, id, customDateRange, timezoneOffset, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['DashboardApi.getInitData']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
          * 
@@ -2101,9 +2041,11 @@ export const DashboardApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async updateDashboardMetadata(id: string, dashboardUpdate?: DashboardUpdate, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async updateDashboardMetadata(id: string, dashboardUpdate?: DashboardUpdate, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.updateDashboardMetadata(id, dashboardUpdate, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['DashboardApi.updateDashboardMetadata']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
     }
 };
@@ -2122,7 +2064,7 @@ export const DashboardApiFactory = function (configuration?: Configuration, base
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        createDashboardMetadata(requestParameters: DashboardApiCreateDashboardMetadataRequest = {}, options?: AxiosRequestConfig): AxiosPromise<DashboardMetadata> {
+        createDashboardMetadata(requestParameters: DashboardApiCreateDashboardMetadataRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<DashboardMetadata> {
             return localVarFp.createDashboardMetadata(requestParameters.version, requestParameters.dashboardCreate, options).then((request) => request(axios, basePath));
         },
         /**
@@ -2132,7 +2074,7 @@ export const DashboardApiFactory = function (configuration?: Configuration, base
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteDashboardMetadata(requestParameters: DashboardApiDeleteDashboardMetadataRequest, options?: AxiosRequestConfig): AxiosPromise<void> {
+        deleteDashboardMetadata(requestParameters: DashboardApiDeleteDashboardMetadataRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
             return localVarFp.deleteDashboardMetadata(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
@@ -2142,7 +2084,7 @@ export const DashboardApiFactory = function (configuration?: Configuration, base
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getAdminDashboards(requestParameters: DashboardApiGetAdminDashboardsRequest, options?: AxiosRequestConfig): AxiosPromise<AdminDashboardResponse> {
+        getAdminDashboards(requestParameters: DashboardApiGetAdminDashboardsRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminDashboardResponse> {
             return localVarFp.getAdminDashboards(requestParameters.period, requestParameters.teamIds, requestParameters.count, requestParameters.cursor, requestParameters.returnTotal, requestParameters.sort, requestParameters.filters, options).then((request) => request(axios, basePath));
         },
         /**
@@ -2152,7 +2094,7 @@ export const DashboardApiFactory = function (configuration?: Configuration, base
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getBenchmarks(requestParameters: DashboardApiGetBenchmarksRequest = {}, options?: AxiosRequestConfig): AxiosPromise<Benchmarks> {
+        getBenchmarks(requestParameters: DashboardApiGetBenchmarksRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<Benchmarks> {
             return localVarFp.getBenchmarks(requestParameters.period, requestParameters.filters, options).then((request) => request(axios, basePath));
         },
         /**
@@ -2162,7 +2104,7 @@ export const DashboardApiFactory = function (configuration?: Configuration, base
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getDashboard(requestParameters: DashboardApiGetDashboardRequest, options?: AxiosRequestConfig): AxiosPromise<DashboardWithData> {
+        getDashboard(requestParameters: DashboardApiGetDashboardRequest, options?: RawAxiosRequestConfig): AxiosPromise<DashboardWithData> {
             return localVarFp.getDashboard(requestParameters.period, requestParameters.aggregate, requestParameters.id, requestParameters.customDateRange, requestParameters.timezoneOffset, options).then((request) => request(axios, basePath));
         },
         /**
@@ -2172,7 +2114,7 @@ export const DashboardApiFactory = function (configuration?: Configuration, base
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getDashboardBySchema(requestParameters: DashboardApiGetDashboardBySchemaRequest, options?: AxiosRequestConfig): AxiosPromise<DashboardData> {
+        getDashboardBySchema(requestParameters: DashboardApiGetDashboardBySchemaRequest, options?: RawAxiosRequestConfig): AxiosPromise<DashboardData> {
             return localVarFp.getDashboardBySchema(requestParameters.period, requestParameters.aggregate, requestParameters.customDateRange, requestParameters.timezoneOffset, requestParameters.teamId, requestParameters.getDashboardBySchemaRequest, options).then((request) => request(axios, basePath));
         },
         /**
@@ -2181,7 +2123,7 @@ export const DashboardApiFactory = function (configuration?: Configuration, base
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getDashboardMetadatas(options?: AxiosRequestConfig): AxiosPromise<GetDashboardMetadatas200Response> {
+        getDashboardMetadatas(options?: RawAxiosRequestConfig): AxiosPromise<GetDashboardMetadatas200Response> {
             return localVarFp.getDashboardMetadatas(options).then((request) => request(axios, basePath));
         },
         /**
@@ -2191,7 +2133,7 @@ export const DashboardApiFactory = function (configuration?: Configuration, base
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getInitData(requestParameters: DashboardApiGetInitDataRequest, options?: AxiosRequestConfig): AxiosPromise<GetInitData200Response> {
+        getInitData(requestParameters: DashboardApiGetInitDataRequest, options?: RawAxiosRequestConfig): AxiosPromise<GetInitData200Response> {
             return localVarFp.getInitData(requestParameters.period, requestParameters.aggregate, requestParameters.id, requestParameters.customDateRange, requestParameters.timezoneOffset, options).then((request) => request(axios, basePath));
         },
         /**
@@ -2201,7 +2143,7 @@ export const DashboardApiFactory = function (configuration?: Configuration, base
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        updateDashboardMetadata(requestParameters: DashboardApiUpdateDashboardMetadataRequest, options?: AxiosRequestConfig): AxiosPromise<void> {
+        updateDashboardMetadata(requestParameters: DashboardApiUpdateDashboardMetadataRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
             return localVarFp.updateDashboardMetadata(requestParameters.id, requestParameters.dashboardUpdate, options).then((request) => request(axios, basePath));
         },
     };
@@ -2218,7 +2160,7 @@ export interface DashboardApiCreateDashboardMetadataRequest {
      * @type {'1' | '2'}
      * @memberof DashboardApiCreateDashboardMetadata
      */
-    readonly version?: '1' | '2'
+    readonly version?: CreateDashboardMetadataVersionEnum
 
     /**
      * 
@@ -2253,7 +2195,7 @@ export interface DashboardApiGetAdminDashboardsRequest {
      * @type {'last-4-weeks' | 'last-12-weeks' | 'last-12-months'}
      * @memberof DashboardApiGetAdminDashboards
      */
-    readonly period: 'last-4-weeks' | 'last-12-weeks' | 'last-12-months'
+    readonly period: GetAdminDashboardsPeriodEnum
 
     /**
      * Fetch specific teams by ID
@@ -2488,7 +2430,7 @@ export class DashboardApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof DashboardApi
      */
-    public createDashboardMetadata(requestParameters: DashboardApiCreateDashboardMetadataRequest = {}, options?: AxiosRequestConfig) {
+    public createDashboardMetadata(requestParameters: DashboardApiCreateDashboardMetadataRequest = {}, options?: RawAxiosRequestConfig) {
         return DashboardApiFp(this.configuration).createDashboardMetadata(requestParameters.version, requestParameters.dashboardCreate, options).then((request) => request(this.axios, this.basePath));
     }
 
@@ -2500,7 +2442,7 @@ export class DashboardApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof DashboardApi
      */
-    public deleteDashboardMetadata(requestParameters: DashboardApiDeleteDashboardMetadataRequest, options?: AxiosRequestConfig) {
+    public deleteDashboardMetadata(requestParameters: DashboardApiDeleteDashboardMetadataRequest, options?: RawAxiosRequestConfig) {
         return DashboardApiFp(this.configuration).deleteDashboardMetadata(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
     }
 
@@ -2512,7 +2454,7 @@ export class DashboardApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof DashboardApi
      */
-    public getAdminDashboards(requestParameters: DashboardApiGetAdminDashboardsRequest, options?: AxiosRequestConfig) {
+    public getAdminDashboards(requestParameters: DashboardApiGetAdminDashboardsRequest, options?: RawAxiosRequestConfig) {
         return DashboardApiFp(this.configuration).getAdminDashboards(requestParameters.period, requestParameters.teamIds, requestParameters.count, requestParameters.cursor, requestParameters.returnTotal, requestParameters.sort, requestParameters.filters, options).then((request) => request(this.axios, this.basePath));
     }
 
@@ -2524,7 +2466,7 @@ export class DashboardApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof DashboardApi
      */
-    public getBenchmarks(requestParameters: DashboardApiGetBenchmarksRequest = {}, options?: AxiosRequestConfig) {
+    public getBenchmarks(requestParameters: DashboardApiGetBenchmarksRequest = {}, options?: RawAxiosRequestConfig) {
         return DashboardApiFp(this.configuration).getBenchmarks(requestParameters.period, requestParameters.filters, options).then((request) => request(this.axios, this.basePath));
     }
 
@@ -2536,7 +2478,7 @@ export class DashboardApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof DashboardApi
      */
-    public getDashboard(requestParameters: DashboardApiGetDashboardRequest, options?: AxiosRequestConfig) {
+    public getDashboard(requestParameters: DashboardApiGetDashboardRequest, options?: RawAxiosRequestConfig) {
         return DashboardApiFp(this.configuration).getDashboard(requestParameters.period, requestParameters.aggregate, requestParameters.id, requestParameters.customDateRange, requestParameters.timezoneOffset, options).then((request) => request(this.axios, this.basePath));
     }
 
@@ -2548,7 +2490,7 @@ export class DashboardApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof DashboardApi
      */
-    public getDashboardBySchema(requestParameters: DashboardApiGetDashboardBySchemaRequest, options?: AxiosRequestConfig) {
+    public getDashboardBySchema(requestParameters: DashboardApiGetDashboardBySchemaRequest, options?: RawAxiosRequestConfig) {
         return DashboardApiFp(this.configuration).getDashboardBySchema(requestParameters.period, requestParameters.aggregate, requestParameters.customDateRange, requestParameters.timezoneOffset, requestParameters.teamId, requestParameters.getDashboardBySchemaRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
@@ -2559,7 +2501,7 @@ export class DashboardApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof DashboardApi
      */
-    public getDashboardMetadatas(options?: AxiosRequestConfig) {
+    public getDashboardMetadatas(options?: RawAxiosRequestConfig) {
         return DashboardApiFp(this.configuration).getDashboardMetadatas(options).then((request) => request(this.axios, this.basePath));
     }
 
@@ -2571,7 +2513,7 @@ export class DashboardApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof DashboardApi
      */
-    public getInitData(requestParameters: DashboardApiGetInitDataRequest, options?: AxiosRequestConfig) {
+    public getInitData(requestParameters: DashboardApiGetInitDataRequest, options?: RawAxiosRequestConfig) {
         return DashboardApiFp(this.configuration).getInitData(requestParameters.period, requestParameters.aggregate, requestParameters.id, requestParameters.customDateRange, requestParameters.timezoneOffset, options).then((request) => request(this.axios, this.basePath));
     }
 
@@ -2583,9 +2525,27 @@ export class DashboardApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof DashboardApi
      */
-    public updateDashboardMetadata(requestParameters: DashboardApiUpdateDashboardMetadataRequest, options?: AxiosRequestConfig) {
+    public updateDashboardMetadata(requestParameters: DashboardApiUpdateDashboardMetadataRequest, options?: RawAxiosRequestConfig) {
         return DashboardApiFp(this.configuration).updateDashboardMetadata(requestParameters.id, requestParameters.dashboardUpdate, options).then((request) => request(this.axios, this.basePath));
     }
 }
+
+/**
+ * @export
+ */
+export const CreateDashboardMetadataVersionEnum = {
+    1: '1',
+    2: '2'
+} as const;
+export type CreateDashboardMetadataVersionEnum = typeof CreateDashboardMetadataVersionEnum[keyof typeof CreateDashboardMetadataVersionEnum];
+/**
+ * @export
+ */
+export const GetAdminDashboardsPeriodEnum = {
+    Last4Weeks: 'last-4-weeks',
+    Last12Weeks: 'last-12-weeks',
+    Last12Months: 'last-12-months'
+} as const;
+export type GetAdminDashboardsPeriodEnum = typeof GetAdminDashboardsPeriodEnum[keyof typeof GetAdminDashboardsPeriodEnum];
 
 

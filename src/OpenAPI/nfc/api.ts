@@ -16,14 +16,14 @@ const BASE_PATH = "https://api-nfc.wscrm.me".replace(/\/+$/, "");
 
 
 import type { Configuration } from '../configuration';
-import type { AxiosPromise, AxiosInstance, AxiosRequestConfig } from 'axios';
+import type { AxiosPromise, AxiosInstance, RawAxiosRequestConfig } from 'axios';
 import globalAxios from 'axios';
 // Some imports not used depending on template conditions
 // @ts-ignore
 import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObject, setBearerAuthToObject, setOAuthToObject, setSearchParams, serializeDataIfNeeded, toPathString, createRequestFunction } from '../common';
 import type { RequestArgs } from '../base';
 // @ts-ignore
-import { COLLECTION_FORMATS, BaseAPI, RequiredError } from '../base';
+import { COLLECTION_FORMATS, BaseAPI, RequiredError, operationServerMap } from '../base';
 
 /**
  * 
@@ -108,7 +108,7 @@ export interface CouponCampaign {
      * @type {string}
      * @memberof CouponCampaign
      */
-    'showAs'?: CouponCampaignShowAsEnum;
+    'showAs'?: CouponCampaignShowAsEnum | null;
     /**
      * 
      * @type {string}
@@ -213,7 +213,7 @@ export interface CouponCampaignCreate {
      * @type {string}
      * @memberof CouponCampaignCreate
      */
-    'showAs'?: CouponCampaignCreateShowAsEnum;
+    'showAs'?: CouponCampaignCreateShowAsEnum | null;
     /**
      * 
      * @type {string}
@@ -600,7 +600,7 @@ export const CouponCampaignApiAxiosParamCreator = function (configuration?: Conf
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        createCouponCampaign: async (couponCampaignCreate: CouponCampaignCreate, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        createCouponCampaign: async (couponCampaignCreate: CouponCampaignCreate, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'couponCampaignCreate' is not null or undefined
             assertParamExists('createCouponCampaign', 'couponCampaignCreate', couponCampaignCreate)
             const localVarPath = `/coupon-campaigns`;
@@ -640,7 +640,7 @@ export const CouponCampaignApiAxiosParamCreator = function (configuration?: Conf
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteCouponCampaigns: async (deleteCouponCampaignsRequest: DeleteCouponCampaignsRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        deleteCouponCampaigns: async (deleteCouponCampaignsRequest: DeleteCouponCampaignsRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'deleteCouponCampaignsRequest' is not null or undefined
             assertParamExists('deleteCouponCampaigns', 'deleteCouponCampaignsRequest', deleteCouponCampaignsRequest)
             const localVarPath = `/coupon-campaigns`;
@@ -680,7 +680,7 @@ export const CouponCampaignApiAxiosParamCreator = function (configuration?: Conf
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getCampaignData: async (campaignId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getCampaignData: async (campaignId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'campaignId' is not null or undefined
             assertParamExists('getCampaignData', 'campaignId', campaignId)
             const localVarPath = `/campaign-data/{campaignId}`
@@ -716,7 +716,7 @@ export const CouponCampaignApiAxiosParamCreator = function (configuration?: Conf
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getCoupon: async (campaignId: string, contactId: string, captchaToken: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getCoupon: async (campaignId: string, contactId: string, captchaToken: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'campaignId' is not null or undefined
             assertParamExists('getCoupon', 'campaignId', campaignId)
             // verify required parameter 'contactId' is not null or undefined
@@ -762,7 +762,7 @@ export const CouponCampaignApiAxiosParamCreator = function (configuration?: Conf
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getCouponCampaign: async (id: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getCouponCampaign: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
             assertParamExists('getCouponCampaign', 'id', id)
             const localVarPath = `/coupon-campaign/{id}`
@@ -802,7 +802,7 @@ export const CouponCampaignApiAxiosParamCreator = function (configuration?: Conf
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getCouponCampaigns: async (q?: string, count?: number, cursor?: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getCouponCampaigns: async (q?: string, count?: number, cursor?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/coupon-campaigns`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -849,7 +849,7 @@ export const CouponCampaignApiAxiosParamCreator = function (configuration?: Conf
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getCouponData: async (couponId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getCouponData: async (couponId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'couponId' is not null or undefined
             assertParamExists('getCouponData', 'couponId', couponId)
             const localVarPath = `/coupon-data/{couponId}`
@@ -886,7 +886,7 @@ export const CouponCampaignApiAxiosParamCreator = function (configuration?: Conf
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getCoupons: async (campaignId: string, q?: string, count?: number, cursor?: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getCoupons: async (campaignId: string, q?: string, count?: number, cursor?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'campaignId' is not null or undefined
             assertParamExists('getCoupons', 'campaignId', campaignId)
             const localVarPath = `/coupon-campaign/{campaignId}/coupons`
@@ -937,7 +937,7 @@ export const CouponCampaignApiAxiosParamCreator = function (configuration?: Conf
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        redeemCoupon: async (couponId: string, redeemCouponRequest: RedeemCouponRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        redeemCoupon: async (couponId: string, redeemCouponRequest: RedeemCouponRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'couponId' is not null or undefined
             assertParamExists('redeemCoupon', 'couponId', couponId)
             // verify required parameter 'redeemCouponRequest' is not null or undefined
@@ -977,7 +977,7 @@ export const CouponCampaignApiAxiosParamCreator = function (configuration?: Conf
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        updateCouponCampaign: async (id: string, couponCampaign: CouponCampaign, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        updateCouponCampaign: async (id: string, couponCampaign: CouponCampaign, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
             assertParamExists('updateCouponCampaign', 'id', id)
             // verify required parameter 'couponCampaign' is not null or undefined
@@ -1030,9 +1030,11 @@ export const CouponCampaignApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async createCouponCampaign(couponCampaignCreate: CouponCampaignCreate, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CouponCampaign>> {
+        async createCouponCampaign(couponCampaignCreate: CouponCampaignCreate, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CouponCampaign>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.createCouponCampaign(couponCampaignCreate, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['CouponCampaignApi.createCouponCampaign']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
          * 
@@ -1041,9 +1043,11 @@ export const CouponCampaignApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteCouponCampaigns(deleteCouponCampaignsRequest: DeleteCouponCampaignsRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async deleteCouponCampaigns(deleteCouponCampaignsRequest: DeleteCouponCampaignsRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.deleteCouponCampaigns(deleteCouponCampaignsRequest, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['CouponCampaignApi.deleteCouponCampaigns']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
          * 
@@ -1052,9 +1056,11 @@ export const CouponCampaignApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getCampaignData(campaignId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetCampaignData200Response>> {
+        async getCampaignData(campaignId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetCampaignData200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getCampaignData(campaignId, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['CouponCampaignApi.getCampaignData']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
          * 
@@ -1065,9 +1071,11 @@ export const CouponCampaignApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getCoupon(campaignId: string, contactId: string, captchaToken: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CouponCode>> {
+        async getCoupon(campaignId: string, contactId: string, captchaToken: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CouponCode>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getCoupon(campaignId, contactId, captchaToken, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['CouponCampaignApi.getCoupon']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
          * 
@@ -1076,9 +1084,11 @@ export const CouponCampaignApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getCouponCampaign(id: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CouponCampaign>> {
+        async getCouponCampaign(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CouponCampaign>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getCouponCampaign(id, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['CouponCampaignApi.getCouponCampaign']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
          * 
@@ -1089,9 +1099,11 @@ export const CouponCampaignApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getCouponCampaigns(q?: string, count?: number, cursor?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetCouponCampaigns200Response>> {
+        async getCouponCampaigns(q?: string, count?: number, cursor?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetCouponCampaigns200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getCouponCampaigns(q, count, cursor, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['CouponCampaignApi.getCouponCampaigns']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
          * 
@@ -1100,9 +1112,11 @@ export const CouponCampaignApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getCouponData(couponId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetCouponData200Response>> {
+        async getCouponData(couponId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetCouponData200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getCouponData(couponId, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['CouponCampaignApi.getCouponData']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
          * 
@@ -1114,9 +1128,11 @@ export const CouponCampaignApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getCoupons(campaignId: string, q?: string, count?: number, cursor?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetCoupons200Response>> {
+        async getCoupons(campaignId: string, q?: string, count?: number, cursor?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetCoupons200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getCoupons(campaignId, q, count, cursor, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['CouponCampaignApi.getCoupons']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
          * 
@@ -1126,9 +1142,11 @@ export const CouponCampaignApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async redeemCoupon(couponId: string, redeemCouponRequest: RedeemCouponRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CouponCode>> {
+        async redeemCoupon(couponId: string, redeemCouponRequest: RedeemCouponRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CouponCode>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.redeemCoupon(couponId, redeemCouponRequest, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['CouponCampaignApi.redeemCoupon']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
          * 
@@ -1138,9 +1156,11 @@ export const CouponCampaignApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async updateCouponCampaign(id: string, couponCampaign: CouponCampaign, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CouponCampaign>> {
+        async updateCouponCampaign(id: string, couponCampaign: CouponCampaign, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CouponCampaign>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.updateCouponCampaign(id, couponCampaign, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['CouponCampaignApi.updateCouponCampaign']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
     }
 };
@@ -1159,7 +1179,7 @@ export const CouponCampaignApiFactory = function (configuration?: Configuration,
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        createCouponCampaign(requestParameters: CouponCampaignApiCreateCouponCampaignRequest, options?: AxiosRequestConfig): AxiosPromise<CouponCampaign> {
+        createCouponCampaign(requestParameters: CouponCampaignApiCreateCouponCampaignRequest, options?: RawAxiosRequestConfig): AxiosPromise<CouponCampaign> {
             return localVarFp.createCouponCampaign(requestParameters.couponCampaignCreate, options).then((request) => request(axios, basePath));
         },
         /**
@@ -1169,7 +1189,7 @@ export const CouponCampaignApiFactory = function (configuration?: Configuration,
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteCouponCampaigns(requestParameters: CouponCampaignApiDeleteCouponCampaignsRequest, options?: AxiosRequestConfig): AxiosPromise<void> {
+        deleteCouponCampaigns(requestParameters: CouponCampaignApiDeleteCouponCampaignsRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
             return localVarFp.deleteCouponCampaigns(requestParameters.deleteCouponCampaignsRequest, options).then((request) => request(axios, basePath));
         },
         /**
@@ -1179,7 +1199,7 @@ export const CouponCampaignApiFactory = function (configuration?: Configuration,
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getCampaignData(requestParameters: CouponCampaignApiGetCampaignDataRequest, options?: AxiosRequestConfig): AxiosPromise<GetCampaignData200Response> {
+        getCampaignData(requestParameters: CouponCampaignApiGetCampaignDataRequest, options?: RawAxiosRequestConfig): AxiosPromise<GetCampaignData200Response> {
             return localVarFp.getCampaignData(requestParameters.campaignId, options).then((request) => request(axios, basePath));
         },
         /**
@@ -1189,7 +1209,7 @@ export const CouponCampaignApiFactory = function (configuration?: Configuration,
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getCoupon(requestParameters: CouponCampaignApiGetCouponRequest, options?: AxiosRequestConfig): AxiosPromise<CouponCode> {
+        getCoupon(requestParameters: CouponCampaignApiGetCouponRequest, options?: RawAxiosRequestConfig): AxiosPromise<CouponCode> {
             return localVarFp.getCoupon(requestParameters.campaignId, requestParameters.contactId, requestParameters.captchaToken, options).then((request) => request(axios, basePath));
         },
         /**
@@ -1199,7 +1219,7 @@ export const CouponCampaignApiFactory = function (configuration?: Configuration,
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getCouponCampaign(requestParameters: CouponCampaignApiGetCouponCampaignRequest, options?: AxiosRequestConfig): AxiosPromise<CouponCampaign> {
+        getCouponCampaign(requestParameters: CouponCampaignApiGetCouponCampaignRequest, options?: RawAxiosRequestConfig): AxiosPromise<CouponCampaign> {
             return localVarFp.getCouponCampaign(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
@@ -1209,7 +1229,7 @@ export const CouponCampaignApiFactory = function (configuration?: Configuration,
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getCouponCampaigns(requestParameters: CouponCampaignApiGetCouponCampaignsRequest = {}, options?: AxiosRequestConfig): AxiosPromise<GetCouponCampaigns200Response> {
+        getCouponCampaigns(requestParameters: CouponCampaignApiGetCouponCampaignsRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<GetCouponCampaigns200Response> {
             return localVarFp.getCouponCampaigns(requestParameters.q, requestParameters.count, requestParameters.cursor, options).then((request) => request(axios, basePath));
         },
         /**
@@ -1219,7 +1239,7 @@ export const CouponCampaignApiFactory = function (configuration?: Configuration,
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getCouponData(requestParameters: CouponCampaignApiGetCouponDataRequest, options?: AxiosRequestConfig): AxiosPromise<GetCouponData200Response> {
+        getCouponData(requestParameters: CouponCampaignApiGetCouponDataRequest, options?: RawAxiosRequestConfig): AxiosPromise<GetCouponData200Response> {
             return localVarFp.getCouponData(requestParameters.couponId, options).then((request) => request(axios, basePath));
         },
         /**
@@ -1229,7 +1249,7 @@ export const CouponCampaignApiFactory = function (configuration?: Configuration,
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getCoupons(requestParameters: CouponCampaignApiGetCouponsRequest, options?: AxiosRequestConfig): AxiosPromise<GetCoupons200Response> {
+        getCoupons(requestParameters: CouponCampaignApiGetCouponsRequest, options?: RawAxiosRequestConfig): AxiosPromise<GetCoupons200Response> {
             return localVarFp.getCoupons(requestParameters.campaignId, requestParameters.q, requestParameters.count, requestParameters.cursor, options).then((request) => request(axios, basePath));
         },
         /**
@@ -1239,7 +1259,7 @@ export const CouponCampaignApiFactory = function (configuration?: Configuration,
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        redeemCoupon(requestParameters: CouponCampaignApiRedeemCouponRequest, options?: AxiosRequestConfig): AxiosPromise<CouponCode> {
+        redeemCoupon(requestParameters: CouponCampaignApiRedeemCouponRequest, options?: RawAxiosRequestConfig): AxiosPromise<CouponCode> {
             return localVarFp.redeemCoupon(requestParameters.couponId, requestParameters.redeemCouponRequest, options).then((request) => request(axios, basePath));
         },
         /**
@@ -1249,7 +1269,7 @@ export const CouponCampaignApiFactory = function (configuration?: Configuration,
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        updateCouponCampaign(requestParameters: CouponCampaignApiUpdateCouponCampaignRequest, options?: AxiosRequestConfig): AxiosPromise<CouponCampaign> {
+        updateCouponCampaign(requestParameters: CouponCampaignApiUpdateCouponCampaignRequest, options?: RawAxiosRequestConfig): AxiosPromise<CouponCampaign> {
             return localVarFp.updateCouponCampaign(requestParameters.id, requestParameters.couponCampaign, options).then((request) => request(axios, basePath));
         },
     };
@@ -1473,7 +1493,7 @@ export class CouponCampaignApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof CouponCampaignApi
      */
-    public createCouponCampaign(requestParameters: CouponCampaignApiCreateCouponCampaignRequest, options?: AxiosRequestConfig) {
+    public createCouponCampaign(requestParameters: CouponCampaignApiCreateCouponCampaignRequest, options?: RawAxiosRequestConfig) {
         return CouponCampaignApiFp(this.configuration).createCouponCampaign(requestParameters.couponCampaignCreate, options).then((request) => request(this.axios, this.basePath));
     }
 
@@ -1485,7 +1505,7 @@ export class CouponCampaignApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof CouponCampaignApi
      */
-    public deleteCouponCampaigns(requestParameters: CouponCampaignApiDeleteCouponCampaignsRequest, options?: AxiosRequestConfig) {
+    public deleteCouponCampaigns(requestParameters: CouponCampaignApiDeleteCouponCampaignsRequest, options?: RawAxiosRequestConfig) {
         return CouponCampaignApiFp(this.configuration).deleteCouponCampaigns(requestParameters.deleteCouponCampaignsRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
@@ -1497,7 +1517,7 @@ export class CouponCampaignApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof CouponCampaignApi
      */
-    public getCampaignData(requestParameters: CouponCampaignApiGetCampaignDataRequest, options?: AxiosRequestConfig) {
+    public getCampaignData(requestParameters: CouponCampaignApiGetCampaignDataRequest, options?: RawAxiosRequestConfig) {
         return CouponCampaignApiFp(this.configuration).getCampaignData(requestParameters.campaignId, options).then((request) => request(this.axios, this.basePath));
     }
 
@@ -1509,7 +1529,7 @@ export class CouponCampaignApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof CouponCampaignApi
      */
-    public getCoupon(requestParameters: CouponCampaignApiGetCouponRequest, options?: AxiosRequestConfig) {
+    public getCoupon(requestParameters: CouponCampaignApiGetCouponRequest, options?: RawAxiosRequestConfig) {
         return CouponCampaignApiFp(this.configuration).getCoupon(requestParameters.campaignId, requestParameters.contactId, requestParameters.captchaToken, options).then((request) => request(this.axios, this.basePath));
     }
 
@@ -1521,7 +1541,7 @@ export class CouponCampaignApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof CouponCampaignApi
      */
-    public getCouponCampaign(requestParameters: CouponCampaignApiGetCouponCampaignRequest, options?: AxiosRequestConfig) {
+    public getCouponCampaign(requestParameters: CouponCampaignApiGetCouponCampaignRequest, options?: RawAxiosRequestConfig) {
         return CouponCampaignApiFp(this.configuration).getCouponCampaign(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
     }
 
@@ -1533,7 +1553,7 @@ export class CouponCampaignApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof CouponCampaignApi
      */
-    public getCouponCampaigns(requestParameters: CouponCampaignApiGetCouponCampaignsRequest = {}, options?: AxiosRequestConfig) {
+    public getCouponCampaigns(requestParameters: CouponCampaignApiGetCouponCampaignsRequest = {}, options?: RawAxiosRequestConfig) {
         return CouponCampaignApiFp(this.configuration).getCouponCampaigns(requestParameters.q, requestParameters.count, requestParameters.cursor, options).then((request) => request(this.axios, this.basePath));
     }
 
@@ -1545,7 +1565,7 @@ export class CouponCampaignApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof CouponCampaignApi
      */
-    public getCouponData(requestParameters: CouponCampaignApiGetCouponDataRequest, options?: AxiosRequestConfig) {
+    public getCouponData(requestParameters: CouponCampaignApiGetCouponDataRequest, options?: RawAxiosRequestConfig) {
         return CouponCampaignApiFp(this.configuration).getCouponData(requestParameters.couponId, options).then((request) => request(this.axios, this.basePath));
     }
 
@@ -1557,7 +1577,7 @@ export class CouponCampaignApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof CouponCampaignApi
      */
-    public getCoupons(requestParameters: CouponCampaignApiGetCouponsRequest, options?: AxiosRequestConfig) {
+    public getCoupons(requestParameters: CouponCampaignApiGetCouponsRequest, options?: RawAxiosRequestConfig) {
         return CouponCampaignApiFp(this.configuration).getCoupons(requestParameters.campaignId, requestParameters.q, requestParameters.count, requestParameters.cursor, options).then((request) => request(this.axios, this.basePath));
     }
 
@@ -1569,7 +1589,7 @@ export class CouponCampaignApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof CouponCampaignApi
      */
-    public redeemCoupon(requestParameters: CouponCampaignApiRedeemCouponRequest, options?: AxiosRequestConfig) {
+    public redeemCoupon(requestParameters: CouponCampaignApiRedeemCouponRequest, options?: RawAxiosRequestConfig) {
         return CouponCampaignApiFp(this.configuration).redeemCoupon(requestParameters.couponId, requestParameters.redeemCouponRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
@@ -1581,10 +1601,11 @@ export class CouponCampaignApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof CouponCampaignApi
      */
-    public updateCouponCampaign(requestParameters: CouponCampaignApiUpdateCouponCampaignRequest, options?: AxiosRequestConfig) {
+    public updateCouponCampaign(requestParameters: CouponCampaignApiUpdateCouponCampaignRequest, options?: RawAxiosRequestConfig) {
         return CouponCampaignApiFp(this.configuration).updateCouponCampaign(requestParameters.id, requestParameters.couponCampaign, options).then((request) => request(this.axios, this.basePath));
     }
 }
+
 
 
 /**
@@ -1600,7 +1621,7 @@ export const QrCodeApiAxiosParamCreator = function (configuration?: Configuratio
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        createQrCodes: async (createQrCodesRequest: CreateQrCodesRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        createQrCodes: async (createQrCodesRequest: CreateQrCodesRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'createQrCodesRequest' is not null or undefined
             assertParamExists('createQrCodes', 'createQrCodesRequest', createQrCodesRequest)
             const localVarPath = `/qr-code`;
@@ -1640,7 +1661,7 @@ export const QrCodeApiAxiosParamCreator = function (configuration?: Configuratio
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteQrCodes: async (ids: Array<string>, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        deleteQrCodes: async (ids: Array<string>, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'ids' is not null or undefined
             assertParamExists('deleteQrCodes', 'ids', ids)
             const localVarPath = `/qr-code`;
@@ -1681,7 +1702,7 @@ export const QrCodeApiAxiosParamCreator = function (configuration?: Configuratio
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getQrCode: async (id: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getQrCode: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
             assertParamExists('getQrCode', 'id', id)
             const localVarPath = `/qr-code/{id}`
@@ -1721,7 +1742,7 @@ export const QrCodeApiAxiosParamCreator = function (configuration?: Configuratio
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getQrCodes: async (q?: string, count?: number, page?: number, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getQrCodes: async (q?: string, count?: number, page?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/qr-code`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -1768,7 +1789,7 @@ export const QrCodeApiAxiosParamCreator = function (configuration?: Configuratio
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getQrCodesByPhone: async (phone: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getQrCodesByPhone: async (phone: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'phone' is not null or undefined
             assertParamExists('getQrCodesByPhone', 'phone', phone)
             const localVarPath = `/qr-codes/{phone}`
@@ -1806,7 +1827,7 @@ export const QrCodeApiAxiosParamCreator = function (configuration?: Configuratio
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        redirectQrCode: async (id: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        redirectQrCode: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
             assertParamExists('redirectQrCode', 'id', id)
             const localVarPath = `/redirect/{id}`
@@ -1841,7 +1862,7 @@ export const QrCodeApiAxiosParamCreator = function (configuration?: Configuratio
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        updateQrCode: async (id: string, qRCodeUpdate: QRCodeUpdate, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        updateQrCode: async (id: string, qRCodeUpdate: QRCodeUpdate, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
             assertParamExists('updateQrCode', 'id', id)
             // verify required parameter 'qRCodeUpdate' is not null or undefined
@@ -1884,7 +1905,7 @@ export const QrCodeApiAxiosParamCreator = function (configuration?: Configuratio
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        updateQrCodes: async (updateQrCodesRequest: UpdateQrCodesRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        updateQrCodes: async (updateQrCodesRequest: UpdateQrCodesRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'updateQrCodesRequest' is not null or undefined
             assertParamExists('updateQrCodes', 'updateQrCodesRequest', updateQrCodesRequest)
             const localVarPath = `/qr-code`;
@@ -1934,9 +1955,11 @@ export const QrCodeApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async createQrCodes(createQrCodesRequest: CreateQrCodesRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CreateQrCodes200Response>> {
+        async createQrCodes(createQrCodesRequest: CreateQrCodesRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CreateQrCodes200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.createQrCodes(createQrCodesRequest, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['QrCodeApi.createQrCodes']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
          * 
@@ -1945,9 +1968,11 @@ export const QrCodeApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteQrCodes(ids: Array<string>, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async deleteQrCodes(ids: Array<string>, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.deleteQrCodes(ids, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['QrCodeApi.deleteQrCodes']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
          * 
@@ -1956,9 +1981,11 @@ export const QrCodeApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getQrCode(id: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<QRCode>> {
+        async getQrCode(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<QRCode>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getQrCode(id, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['QrCodeApi.getQrCode']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
          * 
@@ -1969,9 +1996,11 @@ export const QrCodeApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getQrCodes(q?: string, count?: number, page?: number, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetQrCodes200Response>> {
+        async getQrCodes(q?: string, count?: number, page?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetQrCodes200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getQrCodes(q, count, page, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['QrCodeApi.getQrCodes']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
          * 
@@ -1980,9 +2009,11 @@ export const QrCodeApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getQrCodesByPhone(phone: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CreateQrCodes200Response>> {
+        async getQrCodesByPhone(phone: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CreateQrCodes200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getQrCodesByPhone(phone, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['QrCodeApi.getQrCodesByPhone']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
          * 
@@ -1991,9 +2022,11 @@ export const QrCodeApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async redirectQrCode(id: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async redirectQrCode(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.redirectQrCode(id, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['QrCodeApi.redirectQrCode']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
          * 
@@ -2003,9 +2036,11 @@ export const QrCodeApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async updateQrCode(id: string, qRCodeUpdate: QRCodeUpdate, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<QRCode>> {
+        async updateQrCode(id: string, qRCodeUpdate: QRCodeUpdate, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<QRCode>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.updateQrCode(id, qRCodeUpdate, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['QrCodeApi.updateQrCode']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
          * 
@@ -2014,9 +2049,11 @@ export const QrCodeApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async updateQrCodes(updateQrCodesRequest: UpdateQrCodesRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CreateQrCodes200Response>> {
+        async updateQrCodes(updateQrCodesRequest: UpdateQrCodesRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CreateQrCodes200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.updateQrCodes(updateQrCodesRequest, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['QrCodeApi.updateQrCodes']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
     }
 };
@@ -2035,7 +2072,7 @@ export const QrCodeApiFactory = function (configuration?: Configuration, basePat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        createQrCodes(requestParameters: QrCodeApiCreateQrCodesRequest, options?: AxiosRequestConfig): AxiosPromise<CreateQrCodes200Response> {
+        createQrCodes(requestParameters: QrCodeApiCreateQrCodesRequest, options?: RawAxiosRequestConfig): AxiosPromise<CreateQrCodes200Response> {
             return localVarFp.createQrCodes(requestParameters.createQrCodesRequest, options).then((request) => request(axios, basePath));
         },
         /**
@@ -2045,7 +2082,7 @@ export const QrCodeApiFactory = function (configuration?: Configuration, basePat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteQrCodes(requestParameters: QrCodeApiDeleteQrCodesRequest, options?: AxiosRequestConfig): AxiosPromise<void> {
+        deleteQrCodes(requestParameters: QrCodeApiDeleteQrCodesRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
             return localVarFp.deleteQrCodes(requestParameters.ids, options).then((request) => request(axios, basePath));
         },
         /**
@@ -2055,7 +2092,7 @@ export const QrCodeApiFactory = function (configuration?: Configuration, basePat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getQrCode(requestParameters: QrCodeApiGetQrCodeRequest, options?: AxiosRequestConfig): AxiosPromise<QRCode> {
+        getQrCode(requestParameters: QrCodeApiGetQrCodeRequest, options?: RawAxiosRequestConfig): AxiosPromise<QRCode> {
             return localVarFp.getQrCode(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
@@ -2065,7 +2102,7 @@ export const QrCodeApiFactory = function (configuration?: Configuration, basePat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getQrCodes(requestParameters: QrCodeApiGetQrCodesRequest = {}, options?: AxiosRequestConfig): AxiosPromise<GetQrCodes200Response> {
+        getQrCodes(requestParameters: QrCodeApiGetQrCodesRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<GetQrCodes200Response> {
             return localVarFp.getQrCodes(requestParameters.q, requestParameters.count, requestParameters.page, options).then((request) => request(axios, basePath));
         },
         /**
@@ -2075,7 +2112,7 @@ export const QrCodeApiFactory = function (configuration?: Configuration, basePat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getQrCodesByPhone(requestParameters: QrCodeApiGetQrCodesByPhoneRequest, options?: AxiosRequestConfig): AxiosPromise<CreateQrCodes200Response> {
+        getQrCodesByPhone(requestParameters: QrCodeApiGetQrCodesByPhoneRequest, options?: RawAxiosRequestConfig): AxiosPromise<CreateQrCodes200Response> {
             return localVarFp.getQrCodesByPhone(requestParameters.phone, options).then((request) => request(axios, basePath));
         },
         /**
@@ -2085,7 +2122,7 @@ export const QrCodeApiFactory = function (configuration?: Configuration, basePat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        redirectQrCode(requestParameters: QrCodeApiRedirectQrCodeRequest, options?: AxiosRequestConfig): AxiosPromise<void> {
+        redirectQrCode(requestParameters: QrCodeApiRedirectQrCodeRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
             return localVarFp.redirectQrCode(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
@@ -2095,7 +2132,7 @@ export const QrCodeApiFactory = function (configuration?: Configuration, basePat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        updateQrCode(requestParameters: QrCodeApiUpdateQrCodeRequest, options?: AxiosRequestConfig): AxiosPromise<QRCode> {
+        updateQrCode(requestParameters: QrCodeApiUpdateQrCodeRequest, options?: RawAxiosRequestConfig): AxiosPromise<QRCode> {
             return localVarFp.updateQrCode(requestParameters.id, requestParameters.qRCodeUpdate, options).then((request) => request(axios, basePath));
         },
         /**
@@ -2105,7 +2142,7 @@ export const QrCodeApiFactory = function (configuration?: Configuration, basePat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        updateQrCodes(requestParameters: QrCodeApiUpdateQrCodesRequest, options?: AxiosRequestConfig): AxiosPromise<CreateQrCodes200Response> {
+        updateQrCodes(requestParameters: QrCodeApiUpdateQrCodesRequest, options?: RawAxiosRequestConfig): AxiosPromise<CreateQrCodes200Response> {
             return localVarFp.updateQrCodes(requestParameters.updateQrCodesRequest, options).then((request) => request(axios, basePath));
         },
     };
@@ -2259,7 +2296,7 @@ export class QrCodeApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof QrCodeApi
      */
-    public createQrCodes(requestParameters: QrCodeApiCreateQrCodesRequest, options?: AxiosRequestConfig) {
+    public createQrCodes(requestParameters: QrCodeApiCreateQrCodesRequest, options?: RawAxiosRequestConfig) {
         return QrCodeApiFp(this.configuration).createQrCodes(requestParameters.createQrCodesRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
@@ -2271,7 +2308,7 @@ export class QrCodeApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof QrCodeApi
      */
-    public deleteQrCodes(requestParameters: QrCodeApiDeleteQrCodesRequest, options?: AxiosRequestConfig) {
+    public deleteQrCodes(requestParameters: QrCodeApiDeleteQrCodesRequest, options?: RawAxiosRequestConfig) {
         return QrCodeApiFp(this.configuration).deleteQrCodes(requestParameters.ids, options).then((request) => request(this.axios, this.basePath));
     }
 
@@ -2283,7 +2320,7 @@ export class QrCodeApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof QrCodeApi
      */
-    public getQrCode(requestParameters: QrCodeApiGetQrCodeRequest, options?: AxiosRequestConfig) {
+    public getQrCode(requestParameters: QrCodeApiGetQrCodeRequest, options?: RawAxiosRequestConfig) {
         return QrCodeApiFp(this.configuration).getQrCode(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
     }
 
@@ -2295,7 +2332,7 @@ export class QrCodeApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof QrCodeApi
      */
-    public getQrCodes(requestParameters: QrCodeApiGetQrCodesRequest = {}, options?: AxiosRequestConfig) {
+    public getQrCodes(requestParameters: QrCodeApiGetQrCodesRequest = {}, options?: RawAxiosRequestConfig) {
         return QrCodeApiFp(this.configuration).getQrCodes(requestParameters.q, requestParameters.count, requestParameters.page, options).then((request) => request(this.axios, this.basePath));
     }
 
@@ -2307,7 +2344,7 @@ export class QrCodeApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof QrCodeApi
      */
-    public getQrCodesByPhone(requestParameters: QrCodeApiGetQrCodesByPhoneRequest, options?: AxiosRequestConfig) {
+    public getQrCodesByPhone(requestParameters: QrCodeApiGetQrCodesByPhoneRequest, options?: RawAxiosRequestConfig) {
         return QrCodeApiFp(this.configuration).getQrCodesByPhone(requestParameters.phone, options).then((request) => request(this.axios, this.basePath));
     }
 
@@ -2319,7 +2356,7 @@ export class QrCodeApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof QrCodeApi
      */
-    public redirectQrCode(requestParameters: QrCodeApiRedirectQrCodeRequest, options?: AxiosRequestConfig) {
+    public redirectQrCode(requestParameters: QrCodeApiRedirectQrCodeRequest, options?: RawAxiosRequestConfig) {
         return QrCodeApiFp(this.configuration).redirectQrCode(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
     }
 
@@ -2331,7 +2368,7 @@ export class QrCodeApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof QrCodeApi
      */
-    public updateQrCode(requestParameters: QrCodeApiUpdateQrCodeRequest, options?: AxiosRequestConfig) {
+    public updateQrCode(requestParameters: QrCodeApiUpdateQrCodeRequest, options?: RawAxiosRequestConfig) {
         return QrCodeApiFp(this.configuration).updateQrCode(requestParameters.id, requestParameters.qRCodeUpdate, options).then((request) => request(this.axios, this.basePath));
     }
 
@@ -2343,9 +2380,10 @@ export class QrCodeApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof QrCodeApi
      */
-    public updateQrCodes(requestParameters: QrCodeApiUpdateQrCodesRequest, options?: AxiosRequestConfig) {
+    public updateQrCodes(requestParameters: QrCodeApiUpdateQrCodesRequest, options?: RawAxiosRequestConfig) {
         return QrCodeApiFp(this.configuration).updateQrCodes(requestParameters.updateQrCodesRequest, options).then((request) => request(this.axios, this.basePath));
     }
 }
+
 
 

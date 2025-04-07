@@ -16,14 +16,14 @@ const BASE_PATH = "https://api.chatdaddy.tech/campaigns".replace(/\/+$/, "");
 
 
 import type { Configuration } from '../configuration';
-import type { AxiosPromise, AxiosInstance, AxiosRequestConfig } from 'axios';
+import type { AxiosPromise, AxiosInstance, RawAxiosRequestConfig } from 'axios';
 import globalAxios from 'axios';
 // Some imports not used depending on template conditions
 // @ts-ignore
 import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObject, setBearerAuthToObject, setOAuthToObject, setSearchParams, serializeDataIfNeeded, toPathString, createRequestFunction } from '../common';
 import type { RequestArgs } from '../base';
 // @ts-ignore
-import { COLLECTION_FORMATS, BaseAPI, RequiredError } from '../base';
+import { COLLECTION_FORMATS, BaseAPI, RequiredError, operationServerMap } from '../base';
 
 /**
  * 
@@ -155,10 +155,10 @@ export interface CampaignAsyncGet200Response {
     'status': CampaignAsyncGet200ResponseStatusEnum;
     /**
      * 
-     * @type {{ [key: string]: any; }}
+     * @type {{ [key: string]: object; }}
      * @memberof CampaignAsyncGet200Response
      */
-    'error'?: { [key: string]: any; } | null;
+    'error'?: { [key: string]: object; } | null;
     /**
      * 
      * @type {CampaignMetadata}
@@ -175,19 +175,6 @@ export const CampaignAsyncGet200ResponseStatusEnum = {
 
 export type CampaignAsyncGet200ResponseStatusEnum = typeof CampaignAsyncGet200ResponseStatusEnum[keyof typeof CampaignAsyncGet200ResponseStatusEnum];
 
-/**
- * 
- * @export
- * @interface CampaignAsyncGet200ResponseAllOf
- */
-export interface CampaignAsyncGet200ResponseAllOf {
-    /**
-     * 
-     * @type {CampaignMetadata}
-     * @memberof CampaignAsyncGet200ResponseAllOf
-     */
-    'campaign'?: CampaignMetadata;
-}
 /**
  * 
  * @export
@@ -251,10 +238,10 @@ export interface CampaignCreateAsync {
     'accountIds'?: Array<string> | null;
     /**
      * 
-     * @type {NullableActivationTimeRange}
+     * @type {ActivationTimeRange}
      * @memberof CampaignCreateAsync
      */
-    'activationTimeRange'?: NullableActivationTimeRange;
+    'activationTimeRange'?: ActivationTimeRange | null;
     /**
      * Contact filter query
      * @type {{ [key: string]: any; }}
@@ -384,10 +371,10 @@ export interface CampaignEdit {
     'accountIds'?: Array<string> | null;
     /**
      * 
-     * @type {NullableActivationTimeRange}
+     * @type {ActivationTimeRange}
      * @memberof CampaignEdit
      */
-    'activationTimeRange'?: NullableActivationTimeRange;
+    'activationTimeRange'?: ActivationTimeRange | null;
     /**
      * Contact filter query
      * @type {{ [key: string]: any; }}
@@ -691,17 +678,10 @@ export type CampaignState = typeof CampaignState[keyof typeof CampaignState];
  */
 
 export const NullType = {
-    Null: null as null
 } as const;
 
 export type NullType = typeof NullType[keyof typeof NullType];
 
-
-/**
- * @type NullableActivationTimeRange
- * @export
- */
-export type NullableActivationTimeRange = ActivationTimeRange | NullType;
 
 /**
  * The response received from botsFire which it receives from WhatsApp. It contains either an error message or is of type \"Message\" of the IM service 
@@ -736,7 +716,7 @@ export const CampaignsApiAxiosParamCreator = function (configuration?: Configura
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        campaignAsyncCreate: async (campaignCreateAsync?: CampaignCreateAsync, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        campaignAsyncCreate: async (campaignCreateAsync?: CampaignCreateAsync, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/async`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -774,7 +754,7 @@ export const CampaignsApiAxiosParamCreator = function (configuration?: Configura
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        campaignAsyncGet: async (id: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        campaignAsyncGet: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
             assertParamExists('campaignAsyncGet', 'id', id)
             const localVarPath = `/async/{id}`
@@ -812,7 +792,7 @@ export const CampaignsApiAxiosParamCreator = function (configuration?: Configura
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        campaignDelete: async (id: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        campaignDelete: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
             assertParamExists('campaignDelete', 'id', id)
             const localVarPath = `/{id}`
@@ -854,7 +834,7 @@ export const CampaignsApiAxiosParamCreator = function (configuration?: Configura
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        campaignGetRecipients: async (id: string, count?: number, q?: string, cursor?: string, state?: CampaignRecipientState, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        campaignGetRecipients: async (id: string, count?: number, q?: string, cursor?: string, state?: CampaignRecipientState, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
             assertParamExists('campaignGetRecipients', 'id', id)
             const localVarPath = `/{id}/recipients`
@@ -914,7 +894,7 @@ export const CampaignsApiAxiosParamCreator = function (configuration?: Configura
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        campaignGets: async (count?: number, before?: string, searchString?: string, onlyActive?: boolean, status?: CampaignState, id?: string, returnTotalCount?: boolean, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        campaignGets: async (count?: number, before?: string, searchString?: string, onlyActive?: boolean, status?: CampaignState, id?: string, returnTotalCount?: boolean, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -978,7 +958,7 @@ export const CampaignsApiAxiosParamCreator = function (configuration?: Configura
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        campaignPatch: async (id: string, campaignEdit?: CampaignEdit, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        campaignPatch: async (id: string, campaignEdit?: CampaignEdit, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
             assertParamExists('campaignPatch', 'id', id)
             const localVarPath = `/{id}`
@@ -1018,7 +998,7 @@ export const CampaignsApiAxiosParamCreator = function (configuration?: Configura
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        campaignStart: async (id: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        campaignStart: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
             assertParamExists('campaignStart', 'id', id)
             const localVarPath = `/{id}/start`
@@ -1055,7 +1035,7 @@ export const CampaignsApiAxiosParamCreator = function (configuration?: Configura
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        campaignStop: async (id: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        campaignStop: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
             assertParamExists('campaignStop', 'id', id)
             const localVarPath = `/{id}/stop`
@@ -1103,9 +1083,11 @@ export const CampaignsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async campaignAsyncCreate(campaignCreateAsync?: CampaignCreateAsync, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CampaignAsyncCreate200Response>> {
+        async campaignAsyncCreate(campaignCreateAsync?: CampaignCreateAsync, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CampaignAsyncCreate200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.campaignAsyncCreate(campaignCreateAsync, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['CampaignsApi.campaignAsyncCreate']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
          * 
@@ -1114,9 +1096,11 @@ export const CampaignsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async campaignAsyncGet(id: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CampaignAsyncGet200Response>> {
+        async campaignAsyncGet(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CampaignAsyncGet200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.campaignAsyncGet(id, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['CampaignsApi.campaignAsyncGet']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
          * 
@@ -1125,9 +1109,11 @@ export const CampaignsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async campaignDelete(id: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CampaignDelete200Response>> {
+        async campaignDelete(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CampaignDelete200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.campaignDelete(id, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['CampaignsApi.campaignDelete']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
          * 
@@ -1140,9 +1126,11 @@ export const CampaignsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async campaignGetRecipients(id: string, count?: number, q?: string, cursor?: string, state?: CampaignRecipientState, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CampaignRecipientsResponse>> {
+        async campaignGetRecipients(id: string, count?: number, q?: string, cursor?: string, state?: CampaignRecipientState, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CampaignRecipientsResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.campaignGetRecipients(id, count, q, cursor, state, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['CampaignsApi.campaignGetRecipients']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
          * 
@@ -1157,9 +1145,11 @@ export const CampaignsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async campaignGets(count?: number, before?: string, searchString?: string, onlyActive?: boolean, status?: CampaignState, id?: string, returnTotalCount?: boolean, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CampaignRetreivalResponse>> {
+        async campaignGets(count?: number, before?: string, searchString?: string, onlyActive?: boolean, status?: CampaignState, id?: string, returnTotalCount?: boolean, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CampaignRetreivalResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.campaignGets(count, before, searchString, onlyActive, status, id, returnTotalCount, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['CampaignsApi.campaignGets']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
          * Returns the updated campaign
@@ -1169,9 +1159,11 @@ export const CampaignsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async campaignPatch(id: string, campaignEdit?: CampaignEdit, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async campaignPatch(id: string, campaignEdit?: CampaignEdit, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.campaignPatch(id, campaignEdit, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['CampaignsApi.campaignPatch']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
          * 
@@ -1179,9 +1171,11 @@ export const CampaignsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async campaignStart(id: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CampaignDelete200Response>> {
+        async campaignStart(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CampaignDelete200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.campaignStart(id, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['CampaignsApi.campaignStart']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
          * 
@@ -1189,9 +1183,11 @@ export const CampaignsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async campaignStop(id: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CampaignDelete200Response>> {
+        async campaignStop(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CampaignDelete200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.campaignStop(id, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['CampaignsApi.campaignStop']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
     }
 };
@@ -1210,7 +1206,7 @@ export const CampaignsApiFactory = function (configuration?: Configuration, base
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        campaignAsyncCreate(requestParameters: CampaignsApiCampaignAsyncCreateRequest = {}, options?: AxiosRequestConfig): AxiosPromise<CampaignAsyncCreate200Response> {
+        campaignAsyncCreate(requestParameters: CampaignsApiCampaignAsyncCreateRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<CampaignAsyncCreate200Response> {
             return localVarFp.campaignAsyncCreate(requestParameters.campaignCreateAsync, options).then((request) => request(axios, basePath));
         },
         /**
@@ -1220,7 +1216,7 @@ export const CampaignsApiFactory = function (configuration?: Configuration, base
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        campaignAsyncGet(requestParameters: CampaignsApiCampaignAsyncGetRequest, options?: AxiosRequestConfig): AxiosPromise<CampaignAsyncGet200Response> {
+        campaignAsyncGet(requestParameters: CampaignsApiCampaignAsyncGetRequest, options?: RawAxiosRequestConfig): AxiosPromise<CampaignAsyncGet200Response> {
             return localVarFp.campaignAsyncGet(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
@@ -1230,7 +1226,7 @@ export const CampaignsApiFactory = function (configuration?: Configuration, base
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        campaignDelete(requestParameters: CampaignsApiCampaignDeleteRequest, options?: AxiosRequestConfig): AxiosPromise<CampaignDelete200Response> {
+        campaignDelete(requestParameters: CampaignsApiCampaignDeleteRequest, options?: RawAxiosRequestConfig): AxiosPromise<CampaignDelete200Response> {
             return localVarFp.campaignDelete(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
@@ -1240,7 +1236,7 @@ export const CampaignsApiFactory = function (configuration?: Configuration, base
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        campaignGetRecipients(requestParameters: CampaignsApiCampaignGetRecipientsRequest, options?: AxiosRequestConfig): AxiosPromise<CampaignRecipientsResponse> {
+        campaignGetRecipients(requestParameters: CampaignsApiCampaignGetRecipientsRequest, options?: RawAxiosRequestConfig): AxiosPromise<CampaignRecipientsResponse> {
             return localVarFp.campaignGetRecipients(requestParameters.id, requestParameters.count, requestParameters.q, requestParameters.cursor, requestParameters.state, options).then((request) => request(axios, basePath));
         },
         /**
@@ -1250,7 +1246,7 @@ export const CampaignsApiFactory = function (configuration?: Configuration, base
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        campaignGets(requestParameters: CampaignsApiCampaignGetsRequest = {}, options?: AxiosRequestConfig): AxiosPromise<CampaignRetreivalResponse> {
+        campaignGets(requestParameters: CampaignsApiCampaignGetsRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<CampaignRetreivalResponse> {
             return localVarFp.campaignGets(requestParameters.count, requestParameters.before, requestParameters.searchString, requestParameters.onlyActive, requestParameters.status, requestParameters.id, requestParameters.returnTotalCount, options).then((request) => request(axios, basePath));
         },
         /**
@@ -1260,7 +1256,7 @@ export const CampaignsApiFactory = function (configuration?: Configuration, base
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        campaignPatch(requestParameters: CampaignsApiCampaignPatchRequest, options?: AxiosRequestConfig): AxiosPromise<void> {
+        campaignPatch(requestParameters: CampaignsApiCampaignPatchRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
             return localVarFp.campaignPatch(requestParameters.id, requestParameters.campaignEdit, options).then((request) => request(axios, basePath));
         },
         /**
@@ -1269,7 +1265,7 @@ export const CampaignsApiFactory = function (configuration?: Configuration, base
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        campaignStart(requestParameters: CampaignsApiCampaignStartRequest, options?: AxiosRequestConfig): AxiosPromise<CampaignDelete200Response> {
+        campaignStart(requestParameters: CampaignsApiCampaignStartRequest, options?: RawAxiosRequestConfig): AxiosPromise<CampaignDelete200Response> {
             return localVarFp.campaignStart(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
@@ -1278,7 +1274,7 @@ export const CampaignsApiFactory = function (configuration?: Configuration, base
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        campaignStop(requestParameters: CampaignsApiCampaignStopRequest, options?: AxiosRequestConfig): AxiosPromise<CampaignDelete200Response> {
+        campaignStop(requestParameters: CampaignsApiCampaignStopRequest, options?: RawAxiosRequestConfig): AxiosPromise<CampaignDelete200Response> {
             return localVarFp.campaignStop(requestParameters.id, options).then((request) => request(axios, basePath));
         },
     };
@@ -1488,7 +1484,7 @@ export class CampaignsApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof CampaignsApi
      */
-    public campaignAsyncCreate(requestParameters: CampaignsApiCampaignAsyncCreateRequest = {}, options?: AxiosRequestConfig) {
+    public campaignAsyncCreate(requestParameters: CampaignsApiCampaignAsyncCreateRequest = {}, options?: RawAxiosRequestConfig) {
         return CampaignsApiFp(this.configuration).campaignAsyncCreate(requestParameters.campaignCreateAsync, options).then((request) => request(this.axios, this.basePath));
     }
 
@@ -1500,7 +1496,7 @@ export class CampaignsApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof CampaignsApi
      */
-    public campaignAsyncGet(requestParameters: CampaignsApiCampaignAsyncGetRequest, options?: AxiosRequestConfig) {
+    public campaignAsyncGet(requestParameters: CampaignsApiCampaignAsyncGetRequest, options?: RawAxiosRequestConfig) {
         return CampaignsApiFp(this.configuration).campaignAsyncGet(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
     }
 
@@ -1512,7 +1508,7 @@ export class CampaignsApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof CampaignsApi
      */
-    public campaignDelete(requestParameters: CampaignsApiCampaignDeleteRequest, options?: AxiosRequestConfig) {
+    public campaignDelete(requestParameters: CampaignsApiCampaignDeleteRequest, options?: RawAxiosRequestConfig) {
         return CampaignsApiFp(this.configuration).campaignDelete(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
     }
 
@@ -1524,7 +1520,7 @@ export class CampaignsApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof CampaignsApi
      */
-    public campaignGetRecipients(requestParameters: CampaignsApiCampaignGetRecipientsRequest, options?: AxiosRequestConfig) {
+    public campaignGetRecipients(requestParameters: CampaignsApiCampaignGetRecipientsRequest, options?: RawAxiosRequestConfig) {
         return CampaignsApiFp(this.configuration).campaignGetRecipients(requestParameters.id, requestParameters.count, requestParameters.q, requestParameters.cursor, requestParameters.state, options).then((request) => request(this.axios, this.basePath));
     }
 
@@ -1536,7 +1532,7 @@ export class CampaignsApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof CampaignsApi
      */
-    public campaignGets(requestParameters: CampaignsApiCampaignGetsRequest = {}, options?: AxiosRequestConfig) {
+    public campaignGets(requestParameters: CampaignsApiCampaignGetsRequest = {}, options?: RawAxiosRequestConfig) {
         return CampaignsApiFp(this.configuration).campaignGets(requestParameters.count, requestParameters.before, requestParameters.searchString, requestParameters.onlyActive, requestParameters.status, requestParameters.id, requestParameters.returnTotalCount, options).then((request) => request(this.axios, this.basePath));
     }
 
@@ -1548,7 +1544,7 @@ export class CampaignsApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof CampaignsApi
      */
-    public campaignPatch(requestParameters: CampaignsApiCampaignPatchRequest, options?: AxiosRequestConfig) {
+    public campaignPatch(requestParameters: CampaignsApiCampaignPatchRequest, options?: RawAxiosRequestConfig) {
         return CampaignsApiFp(this.configuration).campaignPatch(requestParameters.id, requestParameters.campaignEdit, options).then((request) => request(this.axios, this.basePath));
     }
 
@@ -1559,7 +1555,7 @@ export class CampaignsApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof CampaignsApi
      */
-    public campaignStart(requestParameters: CampaignsApiCampaignStartRequest, options?: AxiosRequestConfig) {
+    public campaignStart(requestParameters: CampaignsApiCampaignStartRequest, options?: RawAxiosRequestConfig) {
         return CampaignsApiFp(this.configuration).campaignStart(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
     }
 
@@ -1570,9 +1566,10 @@ export class CampaignsApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof CampaignsApi
      */
-    public campaignStop(requestParameters: CampaignsApiCampaignStopRequest, options?: AxiosRequestConfig) {
+    public campaignStop(requestParameters: CampaignsApiCampaignStopRequest, options?: RawAxiosRequestConfig) {
         return CampaignsApiFp(this.configuration).campaignStop(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
     }
 }
+
 
 

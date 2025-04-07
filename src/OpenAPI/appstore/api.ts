@@ -16,14 +16,14 @@ const BASE_PATH = "https://api.chatdaddy.tech/appstore".replace(/\/+$/, "");
 
 
 import type { Configuration } from '../configuration';
-import type { AxiosPromise, AxiosInstance, AxiosRequestConfig } from 'axios';
+import type { AxiosPromise, AxiosInstance, RawAxiosRequestConfig } from 'axios';
 import globalAxios from 'axios';
 // Some imports not used depending on template conditions
 // @ts-ignore
 import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObject, setBearerAuthToObject, setOAuthToObject, setSearchParams, serializeDataIfNeeded, toPathString, createRequestFunction } from '../common';
 import type { RequestArgs } from '../base';
 // @ts-ignore
-import { COLLECTION_FORMATS, BaseAPI, RequiredError } from '../base';
+import { COLLECTION_FORMATS, BaseAPI, RequiredError, operationServerMap } from '../base';
 
 /**
  * 
@@ -1168,7 +1168,7 @@ export const ExtensionsApiAxiosParamCreator = function (configuration?: Configur
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        createExtension: async (extensionCreate: ExtensionCreate, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        createExtension: async (extensionCreate: ExtensionCreate, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'extensionCreate' is not null or undefined
             assertParamExists('createExtension', 'extensionCreate', extensionCreate)
             const localVarPath = `/extensions`;
@@ -1208,7 +1208,7 @@ export const ExtensionsApiAxiosParamCreator = function (configuration?: Configur
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteExtension: async (id: number, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        deleteExtension: async (id: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
             assertParamExists('deleteExtension', 'id', id)
             const localVarPath = `/extensions/{id}`
@@ -1248,12 +1248,12 @@ export const ExtensionsApiAxiosParamCreator = function (configuration?: Configur
          * @param {string} [teamId] The teamId to get extensions from
          * @param {AppLocation} [location] The location to get extensions from
          * @param {ExtensionType} [type] The type to get extensions from
-         * @param {Array<'private' | 'underReview' | 'published'>} [publishedState] The publishedState of the extension
+         * @param {Array<GetExtensionsPublishedStateEnum>} [publishedState] The publishedState of the extension
          * @param {Array<number>} [ids] The ids to get extensions from
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getExtensions: async (count?: number, q?: string, cursor?: number, teamId?: string, location?: AppLocation, type?: ExtensionType, publishedState?: Array<'private' | 'underReview' | 'published'>, ids?: Array<number>, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getExtensions: async (count?: number, q?: string, cursor?: number, teamId?: string, location?: AppLocation, type?: ExtensionType, publishedState?: Array<GetExtensionsPublishedStateEnum>, ids?: Array<number>, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/extensions`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -1321,7 +1321,7 @@ export const ExtensionsApiAxiosParamCreator = function (configuration?: Configur
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        updateExtension: async (id: number, extensionUpdate: ExtensionUpdate, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        updateExtension: async (id: number, extensionUpdate: ExtensionUpdate, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
             assertParamExists('updateExtension', 'id', id)
             // verify required parameter 'extensionUpdate' is not null or undefined
@@ -1374,9 +1374,11 @@ export const ExtensionsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async createExtension(extensionCreate: ExtensionCreate, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Extension>> {
+        async createExtension(extensionCreate: ExtensionCreate, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Extension>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.createExtension(extensionCreate, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['ExtensionsApi.createExtension']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
          * 
@@ -1385,9 +1387,11 @@ export const ExtensionsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteExtension(id: number, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async deleteExtension(id: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.deleteExtension(id, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['ExtensionsApi.deleteExtension']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
          * 
@@ -1398,14 +1402,16 @@ export const ExtensionsApiFp = function(configuration?: Configuration) {
          * @param {string} [teamId] The teamId to get extensions from
          * @param {AppLocation} [location] The location to get extensions from
          * @param {ExtensionType} [type] The type to get extensions from
-         * @param {Array<'private' | 'underReview' | 'published'>} [publishedState] The publishedState of the extension
+         * @param {Array<GetExtensionsPublishedStateEnum>} [publishedState] The publishedState of the extension
          * @param {Array<number>} [ids] The ids to get extensions from
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getExtensions(count?: number, q?: string, cursor?: number, teamId?: string, location?: AppLocation, type?: ExtensionType, publishedState?: Array<'private' | 'underReview' | 'published'>, ids?: Array<number>, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetExtensions200Response>> {
+        async getExtensions(count?: number, q?: string, cursor?: number, teamId?: string, location?: AppLocation, type?: ExtensionType, publishedState?: Array<GetExtensionsPublishedStateEnum>, ids?: Array<number>, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetExtensions200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getExtensions(count, q, cursor, teamId, location, type, publishedState, ids, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['ExtensionsApi.getExtensions']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
          * 
@@ -1415,9 +1421,11 @@ export const ExtensionsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async updateExtension(id: number, extensionUpdate: ExtensionUpdate, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Extension>> {
+        async updateExtension(id: number, extensionUpdate: ExtensionUpdate, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Extension>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.updateExtension(id, extensionUpdate, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['ExtensionsApi.updateExtension']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
     }
 };
@@ -1436,7 +1444,7 @@ export const ExtensionsApiFactory = function (configuration?: Configuration, bas
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        createExtension(requestParameters: ExtensionsApiCreateExtensionRequest, options?: AxiosRequestConfig): AxiosPromise<Extension> {
+        createExtension(requestParameters: ExtensionsApiCreateExtensionRequest, options?: RawAxiosRequestConfig): AxiosPromise<Extension> {
             return localVarFp.createExtension(requestParameters.extensionCreate, options).then((request) => request(axios, basePath));
         },
         /**
@@ -1446,7 +1454,7 @@ export const ExtensionsApiFactory = function (configuration?: Configuration, bas
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteExtension(requestParameters: ExtensionsApiDeleteExtensionRequest, options?: AxiosRequestConfig): AxiosPromise<void> {
+        deleteExtension(requestParameters: ExtensionsApiDeleteExtensionRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
             return localVarFp.deleteExtension(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
@@ -1456,7 +1464,7 @@ export const ExtensionsApiFactory = function (configuration?: Configuration, bas
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getExtensions(requestParameters: ExtensionsApiGetExtensionsRequest = {}, options?: AxiosRequestConfig): AxiosPromise<GetExtensions200Response> {
+        getExtensions(requestParameters: ExtensionsApiGetExtensionsRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<GetExtensions200Response> {
             return localVarFp.getExtensions(requestParameters.count, requestParameters.q, requestParameters.cursor, requestParameters.teamId, requestParameters.location, requestParameters.type, requestParameters.publishedState, requestParameters.ids, options).then((request) => request(axios, basePath));
         },
         /**
@@ -1466,7 +1474,7 @@ export const ExtensionsApiFactory = function (configuration?: Configuration, bas
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        updateExtension(requestParameters: ExtensionsApiUpdateExtensionRequest, options?: AxiosRequestConfig): AxiosPromise<Extension> {
+        updateExtension(requestParameters: ExtensionsApiUpdateExtensionRequest, options?: RawAxiosRequestConfig): AxiosPromise<Extension> {
             return localVarFp.updateExtension(requestParameters.id, requestParameters.extensionUpdate, options).then((request) => request(axios, basePath));
         },
     };
@@ -1553,7 +1561,7 @@ export interface ExtensionsApiGetExtensionsRequest {
      * @type {Array<'private' | 'underReview' | 'published'>}
      * @memberof ExtensionsApiGetExtensions
      */
-    readonly publishedState?: Array<'private' | 'underReview' | 'published'>
+    readonly publishedState?: Array<GetExtensionsPublishedStateEnum>
 
     /**
      * The ids to get extensions from
@@ -1599,7 +1607,7 @@ export class ExtensionsApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof ExtensionsApi
      */
-    public createExtension(requestParameters: ExtensionsApiCreateExtensionRequest, options?: AxiosRequestConfig) {
+    public createExtension(requestParameters: ExtensionsApiCreateExtensionRequest, options?: RawAxiosRequestConfig) {
         return ExtensionsApiFp(this.configuration).createExtension(requestParameters.extensionCreate, options).then((request) => request(this.axios, this.basePath));
     }
 
@@ -1611,7 +1619,7 @@ export class ExtensionsApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof ExtensionsApi
      */
-    public deleteExtension(requestParameters: ExtensionsApiDeleteExtensionRequest, options?: AxiosRequestConfig) {
+    public deleteExtension(requestParameters: ExtensionsApiDeleteExtensionRequest, options?: RawAxiosRequestConfig) {
         return ExtensionsApiFp(this.configuration).deleteExtension(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
     }
 
@@ -1623,7 +1631,7 @@ export class ExtensionsApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof ExtensionsApi
      */
-    public getExtensions(requestParameters: ExtensionsApiGetExtensionsRequest = {}, options?: AxiosRequestConfig) {
+    public getExtensions(requestParameters: ExtensionsApiGetExtensionsRequest = {}, options?: RawAxiosRequestConfig) {
         return ExtensionsApiFp(this.configuration).getExtensions(requestParameters.count, requestParameters.q, requestParameters.cursor, requestParameters.teamId, requestParameters.location, requestParameters.type, requestParameters.publishedState, requestParameters.ids, options).then((request) => request(this.axios, this.basePath));
     }
 
@@ -1635,10 +1643,20 @@ export class ExtensionsApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof ExtensionsApi
      */
-    public updateExtension(requestParameters: ExtensionsApiUpdateExtensionRequest, options?: AxiosRequestConfig) {
+    public updateExtension(requestParameters: ExtensionsApiUpdateExtensionRequest, options?: RawAxiosRequestConfig) {
         return ExtensionsApiFp(this.configuration).updateExtension(requestParameters.id, requestParameters.extensionUpdate, options).then((request) => request(this.axios, this.basePath));
     }
 }
+
+/**
+ * @export
+ */
+export const GetExtensionsPublishedStateEnum = {
+    Private: 'private',
+    UnderReview: 'underReview',
+    Published: 'published'
+} as const;
+export type GetExtensionsPublishedStateEnum = typeof GetExtensionsPublishedStateEnum[keyof typeof GetExtensionsPublishedStateEnum];
 
 
 /**
@@ -1656,7 +1674,7 @@ export const InstalledExtensionsApiAxiosParamCreator = function (configuration?:
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getInstalledExtensions: async (count?: number, cursor?: number, extensionId?: number, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getInstalledExtensions: async (count?: number, cursor?: number, extensionId?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/installed-extensions`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -1703,7 +1721,7 @@ export const InstalledExtensionsApiAxiosParamCreator = function (configuration?:
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        installExtension: async (installedExtensionCreate: InstalledExtensionCreate, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        installExtension: async (installedExtensionCreate: InstalledExtensionCreate, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'installedExtensionCreate' is not null or undefined
             assertParamExists('installExtension', 'installedExtensionCreate', installedExtensionCreate)
             const localVarPath = `/installed-extensions`;
@@ -1743,7 +1761,7 @@ export const InstalledExtensionsApiAxiosParamCreator = function (configuration?:
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        uninstallExtension: async (extensionId: number, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        uninstallExtension: async (extensionId: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'extensionId' is not null or undefined
             assertParamExists('uninstallExtension', 'extensionId', extensionId)
             const localVarPath = `/installed-extensions`;
@@ -1784,7 +1802,7 @@ export const InstalledExtensionsApiAxiosParamCreator = function (configuration?:
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        updateInstalledExtension: async (installedExtensionUpdate: InstalledExtensionUpdate, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        updateInstalledExtension: async (installedExtensionUpdate: InstalledExtensionUpdate, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'installedExtensionUpdate' is not null or undefined
             assertParamExists('updateInstalledExtension', 'installedExtensionUpdate', installedExtensionUpdate)
             const localVarPath = `/installed-extensions`;
@@ -1836,9 +1854,11 @@ export const InstalledExtensionsApiFp = function(configuration?: Configuration) 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getInstalledExtensions(count?: number, cursor?: number, extensionId?: number, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetInstalledExtensions200Response>> {
+        async getInstalledExtensions(count?: number, cursor?: number, extensionId?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetInstalledExtensions200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getInstalledExtensions(count, cursor, extensionId, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['InstalledExtensionsApi.getInstalledExtensions']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
          * 
@@ -1847,9 +1867,11 @@ export const InstalledExtensionsApiFp = function(configuration?: Configuration) 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async installExtension(installedExtensionCreate: InstalledExtensionCreate, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<InstalledExtension>> {
+        async installExtension(installedExtensionCreate: InstalledExtensionCreate, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<InstalledExtension>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.installExtension(installedExtensionCreate, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['InstalledExtensionsApi.installExtension']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
          * 
@@ -1858,9 +1880,11 @@ export const InstalledExtensionsApiFp = function(configuration?: Configuration) 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async uninstallExtension(extensionId: number, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async uninstallExtension(extensionId: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.uninstallExtension(extensionId, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['InstalledExtensionsApi.uninstallExtension']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
          * 
@@ -1869,9 +1893,11 @@ export const InstalledExtensionsApiFp = function(configuration?: Configuration) 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async updateInstalledExtension(installedExtensionUpdate: InstalledExtensionUpdate, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<InstalledExtension>> {
+        async updateInstalledExtension(installedExtensionUpdate: InstalledExtensionUpdate, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<InstalledExtension>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.updateInstalledExtension(installedExtensionUpdate, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['InstalledExtensionsApi.updateInstalledExtension']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
     }
 };
@@ -1890,7 +1916,7 @@ export const InstalledExtensionsApiFactory = function (configuration?: Configura
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getInstalledExtensions(requestParameters: InstalledExtensionsApiGetInstalledExtensionsRequest = {}, options?: AxiosRequestConfig): AxiosPromise<GetInstalledExtensions200Response> {
+        getInstalledExtensions(requestParameters: InstalledExtensionsApiGetInstalledExtensionsRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<GetInstalledExtensions200Response> {
             return localVarFp.getInstalledExtensions(requestParameters.count, requestParameters.cursor, requestParameters.extensionId, options).then((request) => request(axios, basePath));
         },
         /**
@@ -1900,7 +1926,7 @@ export const InstalledExtensionsApiFactory = function (configuration?: Configura
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        installExtension(requestParameters: InstalledExtensionsApiInstallExtensionRequest, options?: AxiosRequestConfig): AxiosPromise<InstalledExtension> {
+        installExtension(requestParameters: InstalledExtensionsApiInstallExtensionRequest, options?: RawAxiosRequestConfig): AxiosPromise<InstalledExtension> {
             return localVarFp.installExtension(requestParameters.installedExtensionCreate, options).then((request) => request(axios, basePath));
         },
         /**
@@ -1910,7 +1936,7 @@ export const InstalledExtensionsApiFactory = function (configuration?: Configura
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        uninstallExtension(requestParameters: InstalledExtensionsApiUninstallExtensionRequest, options?: AxiosRequestConfig): AxiosPromise<void> {
+        uninstallExtension(requestParameters: InstalledExtensionsApiUninstallExtensionRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
             return localVarFp.uninstallExtension(requestParameters.extensionId, options).then((request) => request(axios, basePath));
         },
         /**
@@ -1920,7 +1946,7 @@ export const InstalledExtensionsApiFactory = function (configuration?: Configura
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        updateInstalledExtension(requestParameters: InstalledExtensionsApiUpdateInstalledExtensionRequest, options?: AxiosRequestConfig): AxiosPromise<InstalledExtension> {
+        updateInstalledExtension(requestParameters: InstalledExtensionsApiUpdateInstalledExtensionRequest, options?: RawAxiosRequestConfig): AxiosPromise<InstalledExtension> {
             return localVarFp.updateInstalledExtension(requestParameters.installedExtensionUpdate, options).then((request) => request(axios, basePath));
         },
     };
@@ -2011,7 +2037,7 @@ export class InstalledExtensionsApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof InstalledExtensionsApi
      */
-    public getInstalledExtensions(requestParameters: InstalledExtensionsApiGetInstalledExtensionsRequest = {}, options?: AxiosRequestConfig) {
+    public getInstalledExtensions(requestParameters: InstalledExtensionsApiGetInstalledExtensionsRequest = {}, options?: RawAxiosRequestConfig) {
         return InstalledExtensionsApiFp(this.configuration).getInstalledExtensions(requestParameters.count, requestParameters.cursor, requestParameters.extensionId, options).then((request) => request(this.axios, this.basePath));
     }
 
@@ -2023,7 +2049,7 @@ export class InstalledExtensionsApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof InstalledExtensionsApi
      */
-    public installExtension(requestParameters: InstalledExtensionsApiInstallExtensionRequest, options?: AxiosRequestConfig) {
+    public installExtension(requestParameters: InstalledExtensionsApiInstallExtensionRequest, options?: RawAxiosRequestConfig) {
         return InstalledExtensionsApiFp(this.configuration).installExtension(requestParameters.installedExtensionCreate, options).then((request) => request(this.axios, this.basePath));
     }
 
@@ -2035,7 +2061,7 @@ export class InstalledExtensionsApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof InstalledExtensionsApi
      */
-    public uninstallExtension(requestParameters: InstalledExtensionsApiUninstallExtensionRequest, options?: AxiosRequestConfig) {
+    public uninstallExtension(requestParameters: InstalledExtensionsApiUninstallExtensionRequest, options?: RawAxiosRequestConfig) {
         return InstalledExtensionsApiFp(this.configuration).uninstallExtension(requestParameters.extensionId, options).then((request) => request(this.axios, this.basePath));
     }
 
@@ -2047,10 +2073,11 @@ export class InstalledExtensionsApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof InstalledExtensionsApi
      */
-    public updateInstalledExtension(requestParameters: InstalledExtensionsApiUpdateInstalledExtensionRequest, options?: AxiosRequestConfig) {
+    public updateInstalledExtension(requestParameters: InstalledExtensionsApiUpdateInstalledExtensionRequest, options?: RawAxiosRequestConfig) {
         return InstalledExtensionsApiFp(this.configuration).updateInstalledExtension(requestParameters.installedExtensionUpdate, options).then((request) => request(this.axios, this.basePath));
     }
 }
+
 
 
 /**
@@ -2066,7 +2093,7 @@ export const ListingsApiAxiosParamCreator = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        createListing: async (listingCreate: ListingCreate, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        createListing: async (listingCreate: ListingCreate, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'listingCreate' is not null or undefined
             assertParamExists('createListing', 'listingCreate', listingCreate)
             const localVarPath = `/listings`;
@@ -2106,7 +2133,7 @@ export const ListingsApiAxiosParamCreator = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteListing: async (id: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        deleteListing: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
             assertParamExists('deleteListing', 'id', id)
             const localVarPath = `/listing/{id}`
@@ -2144,7 +2171,7 @@ export const ListingsApiAxiosParamCreator = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        doesUserLikeListing: async (id: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        doesUserLikeListing: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
             assertParamExists('doesUserLikeListing', 'id', id)
             const localVarPath = `/listing/{id}/like`
@@ -2186,14 +2213,14 @@ export const ListingsApiAxiosParamCreator = function (configuration?: Configurat
          * @param {string} [language] The language to get extensions from
          * @param {string} [industry] The industry to get extensions from
          * @param {string} [q] The query to get extensions from
-         * @param {'delisted' | 'published' | 'underReview'} [publishedState] The publishedState of the listing
-         * @param {'installs' | 'likes' | 'recommended' | 'createdAt'} [sortBy] The field to sort by
+         * @param {GetListingsPublishedStateEnum} [publishedState] The publishedState of the listing
+         * @param {GetListingsSortByEnum} [sortBy] The field to sort by
          * @param {boolean} [returnTotalDataCount] Return the total data count
          * @param {string} [partnership] The partnership to get extensions from
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getListings: async (count?: number, cursor?: string, teamId?: string, type?: AppType, ids?: Array<string>, language?: string, industry?: string, q?: string, publishedState?: 'delisted' | 'published' | 'underReview', sortBy?: 'installs' | 'likes' | 'recommended' | 'createdAt', returnTotalDataCount?: boolean, partnership?: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getListings: async (count?: number, cursor?: string, teamId?: string, type?: AppType, ids?: Array<string>, language?: string, industry?: string, q?: string, publishedState?: GetListingsPublishedStateEnum, sortBy?: GetListingsSortByEnum, returnTotalDataCount?: boolean, partnership?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/listings`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -2272,7 +2299,7 @@ export const ListingsApiAxiosParamCreator = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        installListing: async (installListingRequest: InstallListingRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        installListing: async (installListingRequest: InstallListingRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'installListingRequest' is not null or undefined
             assertParamExists('installListing', 'installListingRequest', installListingRequest)
             const localVarPath = `/install-listing`;
@@ -2312,7 +2339,7 @@ export const ListingsApiAxiosParamCreator = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        toggleLikeListing: async (id: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        toggleLikeListing: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
             assertParamExists('toggleLikeListing', 'id', id)
             const localVarPath = `/listing/{id}/like`
@@ -2351,7 +2378,7 @@ export const ListingsApiAxiosParamCreator = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        updateListing: async (id: string, listingUpdate: ListingUpdate, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        updateListing: async (id: string, listingUpdate: ListingUpdate, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
             assertParamExists('updateListing', 'id', id)
             // verify required parameter 'listingUpdate' is not null or undefined
@@ -2404,9 +2431,11 @@ export const ListingsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async createListing(listingCreate: ListingCreate, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Listing>> {
+        async createListing(listingCreate: ListingCreate, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Listing>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.createListing(listingCreate, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['ListingsApi.createListing']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
          * 
@@ -2415,9 +2444,11 @@ export const ListingsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteListing(id: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async deleteListing(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.deleteListing(id, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['ListingsApi.deleteListing']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
          * 
@@ -2426,9 +2457,11 @@ export const ListingsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async doesUserLikeListing(id: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DoesUserLikeListing200Response>> {
+        async doesUserLikeListing(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DoesUserLikeListing200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.doesUserLikeListing(id, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['ListingsApi.doesUserLikeListing']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
          * 
@@ -2441,16 +2474,18 @@ export const ListingsApiFp = function(configuration?: Configuration) {
          * @param {string} [language] The language to get extensions from
          * @param {string} [industry] The industry to get extensions from
          * @param {string} [q] The query to get extensions from
-         * @param {'delisted' | 'published' | 'underReview'} [publishedState] The publishedState of the listing
-         * @param {'installs' | 'likes' | 'recommended' | 'createdAt'} [sortBy] The field to sort by
+         * @param {GetListingsPublishedStateEnum} [publishedState] The publishedState of the listing
+         * @param {GetListingsSortByEnum} [sortBy] The field to sort by
          * @param {boolean} [returnTotalDataCount] Return the total data count
          * @param {string} [partnership] The partnership to get extensions from
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getListings(count?: number, cursor?: string, teamId?: string, type?: AppType, ids?: Array<string>, language?: string, industry?: string, q?: string, publishedState?: 'delisted' | 'published' | 'underReview', sortBy?: 'installs' | 'likes' | 'recommended' | 'createdAt', returnTotalDataCount?: boolean, partnership?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetListings200Response>> {
+        async getListings(count?: number, cursor?: string, teamId?: string, type?: AppType, ids?: Array<string>, language?: string, industry?: string, q?: string, publishedState?: GetListingsPublishedStateEnum, sortBy?: GetListingsSortByEnum, returnTotalDataCount?: boolean, partnership?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetListings200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getListings(count, cursor, teamId, type, ids, language, industry, q, publishedState, sortBy, returnTotalDataCount, partnership, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['ListingsApi.getListings']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
          * 
@@ -2459,9 +2494,11 @@ export const ListingsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async installListing(installListingRequest: InstallListingRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async installListing(installListingRequest: InstallListingRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.installListing(installListingRequest, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['ListingsApi.installListing']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
          * 
@@ -2470,9 +2507,11 @@ export const ListingsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async toggleLikeListing(id: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async toggleLikeListing(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.toggleLikeListing(id, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['ListingsApi.toggleLikeListing']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
          * 
@@ -2482,9 +2521,11 @@ export const ListingsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async updateListing(id: string, listingUpdate: ListingUpdate, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Listing>> {
+        async updateListing(id: string, listingUpdate: ListingUpdate, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Listing>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.updateListing(id, listingUpdate, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['ListingsApi.updateListing']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
     }
 };
@@ -2503,7 +2544,7 @@ export const ListingsApiFactory = function (configuration?: Configuration, baseP
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        createListing(requestParameters: ListingsApiCreateListingRequest, options?: AxiosRequestConfig): AxiosPromise<Listing> {
+        createListing(requestParameters: ListingsApiCreateListingRequest, options?: RawAxiosRequestConfig): AxiosPromise<Listing> {
             return localVarFp.createListing(requestParameters.listingCreate, options).then((request) => request(axios, basePath));
         },
         /**
@@ -2513,7 +2554,7 @@ export const ListingsApiFactory = function (configuration?: Configuration, baseP
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteListing(requestParameters: ListingsApiDeleteListingRequest, options?: AxiosRequestConfig): AxiosPromise<void> {
+        deleteListing(requestParameters: ListingsApiDeleteListingRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
             return localVarFp.deleteListing(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
@@ -2523,7 +2564,7 @@ export const ListingsApiFactory = function (configuration?: Configuration, baseP
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        doesUserLikeListing(requestParameters: ListingsApiDoesUserLikeListingRequest, options?: AxiosRequestConfig): AxiosPromise<DoesUserLikeListing200Response> {
+        doesUserLikeListing(requestParameters: ListingsApiDoesUserLikeListingRequest, options?: RawAxiosRequestConfig): AxiosPromise<DoesUserLikeListing200Response> {
             return localVarFp.doesUserLikeListing(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
@@ -2533,7 +2574,7 @@ export const ListingsApiFactory = function (configuration?: Configuration, baseP
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getListings(requestParameters: ListingsApiGetListingsRequest = {}, options?: AxiosRequestConfig): AxiosPromise<GetListings200Response> {
+        getListings(requestParameters: ListingsApiGetListingsRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<GetListings200Response> {
             return localVarFp.getListings(requestParameters.count, requestParameters.cursor, requestParameters.teamId, requestParameters.type, requestParameters.ids, requestParameters.language, requestParameters.industry, requestParameters.q, requestParameters.publishedState, requestParameters.sortBy, requestParameters.returnTotalDataCount, requestParameters.partnership, options).then((request) => request(axios, basePath));
         },
         /**
@@ -2543,7 +2584,7 @@ export const ListingsApiFactory = function (configuration?: Configuration, baseP
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        installListing(requestParameters: ListingsApiInstallListingRequest, options?: AxiosRequestConfig): AxiosPromise<void> {
+        installListing(requestParameters: ListingsApiInstallListingRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
             return localVarFp.installListing(requestParameters.installListingRequest, options).then((request) => request(axios, basePath));
         },
         /**
@@ -2553,7 +2594,7 @@ export const ListingsApiFactory = function (configuration?: Configuration, baseP
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        toggleLikeListing(requestParameters: ListingsApiToggleLikeListingRequest, options?: AxiosRequestConfig): AxiosPromise<void> {
+        toggleLikeListing(requestParameters: ListingsApiToggleLikeListingRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
             return localVarFp.toggleLikeListing(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
@@ -2563,7 +2604,7 @@ export const ListingsApiFactory = function (configuration?: Configuration, baseP
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        updateListing(requestParameters: ListingsApiUpdateListingRequest, options?: AxiosRequestConfig): AxiosPromise<Listing> {
+        updateListing(requestParameters: ListingsApiUpdateListingRequest, options?: RawAxiosRequestConfig): AxiosPromise<Listing> {
             return localVarFp.updateListing(requestParameters.id, requestParameters.listingUpdate, options).then((request) => request(axios, basePath));
         },
     };
@@ -2678,14 +2719,14 @@ export interface ListingsApiGetListingsRequest {
      * @type {'delisted' | 'published' | 'underReview'}
      * @memberof ListingsApiGetListings
      */
-    readonly publishedState?: 'delisted' | 'published' | 'underReview'
+    readonly publishedState?: GetListingsPublishedStateEnum
 
     /**
      * The field to sort by
      * @type {'installs' | 'likes' | 'recommended' | 'createdAt'}
      * @memberof ListingsApiGetListings
      */
-    readonly sortBy?: 'installs' | 'likes' | 'recommended' | 'createdAt'
+    readonly sortBy?: GetListingsSortByEnum
 
     /**
      * Return the total data count
@@ -2766,7 +2807,7 @@ export class ListingsApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof ListingsApi
      */
-    public createListing(requestParameters: ListingsApiCreateListingRequest, options?: AxiosRequestConfig) {
+    public createListing(requestParameters: ListingsApiCreateListingRequest, options?: RawAxiosRequestConfig) {
         return ListingsApiFp(this.configuration).createListing(requestParameters.listingCreate, options).then((request) => request(this.axios, this.basePath));
     }
 
@@ -2778,7 +2819,7 @@ export class ListingsApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof ListingsApi
      */
-    public deleteListing(requestParameters: ListingsApiDeleteListingRequest, options?: AxiosRequestConfig) {
+    public deleteListing(requestParameters: ListingsApiDeleteListingRequest, options?: RawAxiosRequestConfig) {
         return ListingsApiFp(this.configuration).deleteListing(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
     }
 
@@ -2790,7 +2831,7 @@ export class ListingsApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof ListingsApi
      */
-    public doesUserLikeListing(requestParameters: ListingsApiDoesUserLikeListingRequest, options?: AxiosRequestConfig) {
+    public doesUserLikeListing(requestParameters: ListingsApiDoesUserLikeListingRequest, options?: RawAxiosRequestConfig) {
         return ListingsApiFp(this.configuration).doesUserLikeListing(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
     }
 
@@ -2802,7 +2843,7 @@ export class ListingsApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof ListingsApi
      */
-    public getListings(requestParameters: ListingsApiGetListingsRequest = {}, options?: AxiosRequestConfig) {
+    public getListings(requestParameters: ListingsApiGetListingsRequest = {}, options?: RawAxiosRequestConfig) {
         return ListingsApiFp(this.configuration).getListings(requestParameters.count, requestParameters.cursor, requestParameters.teamId, requestParameters.type, requestParameters.ids, requestParameters.language, requestParameters.industry, requestParameters.q, requestParameters.publishedState, requestParameters.sortBy, requestParameters.returnTotalDataCount, requestParameters.partnership, options).then((request) => request(this.axios, this.basePath));
     }
 
@@ -2814,7 +2855,7 @@ export class ListingsApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof ListingsApi
      */
-    public installListing(requestParameters: ListingsApiInstallListingRequest, options?: AxiosRequestConfig) {
+    public installListing(requestParameters: ListingsApiInstallListingRequest, options?: RawAxiosRequestConfig) {
         return ListingsApiFp(this.configuration).installListing(requestParameters.installListingRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
@@ -2826,7 +2867,7 @@ export class ListingsApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof ListingsApi
      */
-    public toggleLikeListing(requestParameters: ListingsApiToggleLikeListingRequest, options?: AxiosRequestConfig) {
+    public toggleLikeListing(requestParameters: ListingsApiToggleLikeListingRequest, options?: RawAxiosRequestConfig) {
         return ListingsApiFp(this.configuration).toggleLikeListing(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
     }
 
@@ -2838,9 +2879,29 @@ export class ListingsApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof ListingsApi
      */
-    public updateListing(requestParameters: ListingsApiUpdateListingRequest, options?: AxiosRequestConfig) {
+    public updateListing(requestParameters: ListingsApiUpdateListingRequest, options?: RawAxiosRequestConfig) {
         return ListingsApiFp(this.configuration).updateListing(requestParameters.id, requestParameters.listingUpdate, options).then((request) => request(this.axios, this.basePath));
     }
 }
+
+/**
+ * @export
+ */
+export const GetListingsPublishedStateEnum = {
+    Delisted: 'delisted',
+    Published: 'published',
+    UnderReview: 'underReview'
+} as const;
+export type GetListingsPublishedStateEnum = typeof GetListingsPublishedStateEnum[keyof typeof GetListingsPublishedStateEnum];
+/**
+ * @export
+ */
+export const GetListingsSortByEnum = {
+    Installs: 'installs',
+    Likes: 'likes',
+    Recommended: 'recommended',
+    CreatedAt: 'createdAt'
+} as const;
+export type GetListingsSortByEnum = typeof GetListingsSortByEnum[keyof typeof GetListingsSortByEnum];
 
 

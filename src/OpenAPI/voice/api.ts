@@ -16,14 +16,14 @@ const BASE_PATH = "https://api.chatdaddy.tech/voice".replace(/\/+$/, "");
 
 
 import type { Configuration } from '../configuration';
-import type { AxiosPromise, AxiosInstance, AxiosRequestConfig } from 'axios';
+import type { AxiosPromise, AxiosInstance, RawAxiosRequestConfig } from 'axios';
 import globalAxios from 'axios';
 // Some imports not used depending on template conditions
 // @ts-ignore
 import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObject, setBearerAuthToObject, setOAuthToObject, setSearchParams, serializeDataIfNeeded, toPathString, createRequestFunction } from '../common';
 import type { RequestArgs } from '../base';
 // @ts-ignore
-import { COLLECTION_FORMATS, BaseAPI, RequiredError } from '../base';
+import { COLLECTION_FORMATS, BaseAPI, RequiredError, operationServerMap } from '../base';
 
 /**
  * 
@@ -509,7 +509,7 @@ export const CallsApiAxiosParamCreator = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        callNotesPost: async (callNotesPostRequest?: CallNotesPostRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        callNotesPost: async (callNotesPostRequest?: CallNotesPostRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/callNotes`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -553,7 +553,7 @@ export const CallsApiAxiosParamCreator = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        callsGet: async (q?: string, phoneNumbers?: Array<string>, callsDateRangeFrom?: string, callsDateRangeTo?: string, id?: Array<string>, before?: string, count?: number, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        callsGet: async (q?: string, phoneNumbers?: Array<string>, callsDateRangeFrom?: string, callsDateRangeTo?: string, id?: Array<string>, before?: string, count?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/calls`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -621,7 +621,7 @@ export const CallsApiAxiosParamCreator = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        callsTranscribePost: async (callId: string, waitForCompletion?: boolean, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        callsTranscribePost: async (callId: string, waitForCompletion?: boolean, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'callId' is not null or undefined
             assertParamExists('callsTranscribePost', 'callId', callId)
             const localVarPath = `/calls/transcribe/{callId}`
@@ -663,7 +663,7 @@ export const CallsApiAxiosParamCreator = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        holdCallPost: async (holdCallPostRequest?: HoldCallPostRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        holdCallPost: async (holdCallPostRequest?: HoldCallPostRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/holdCall`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -701,7 +701,7 @@ export const CallsApiAxiosParamCreator = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        phoneNumbersDelete: async (phoneNumbersDeleteRequest?: PhoneNumbersDeleteRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        phoneNumbersDelete: async (phoneNumbersDeleteRequest?: PhoneNumbersDeleteRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/phoneNumbers`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -739,7 +739,7 @@ export const CallsApiAxiosParamCreator = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        phoneNumbersGet: async (q?: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        phoneNumbersGet: async (q?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/phoneNumbers`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -778,7 +778,7 @@ export const CallsApiAxiosParamCreator = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        recordingsGet: async (accountId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        recordingsGet: async (accountId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'accountId' is not null or undefined
             assertParamExists('recordingsGet', 'accountId', accountId)
             const localVarPath = `/recordings/{accountId}`
@@ -815,7 +815,7 @@ export const CallsApiAxiosParamCreator = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        tokenGet: async (options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        tokenGet: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/token`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -847,7 +847,7 @@ export const CallsApiAxiosParamCreator = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        verifyNumberPost: async (accountId: string, verifyNumberPostRequest?: VerifyNumberPostRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        verifyNumberPost: async (accountId: string, verifyNumberPostRequest?: VerifyNumberPostRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'accountId' is not null or undefined
             assertParamExists('verifyNumberPost', 'accountId', accountId)
             const localVarPath = `/verifyNumber/{accountId}`
@@ -881,74 +881,6 @@ export const CallsApiAxiosParamCreator = function (configuration?: Configuration
                 options: localVarRequestOptions,
             };
         },
-        /**
-         * 
-         * @summary Inbound call route which receives webhook event and forwards to chatdaddy user
-         * @param {VoiceInboundPostRequest} [voiceInboundPostRequest] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        voiceInboundPost: async (voiceInboundPostRequest?: VoiceInboundPostRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/voice/inbound`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-
-    
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(voiceInboundPostRequest, localVarRequestOptions, configuration)
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @summary Place the call and pass the audio stream
-         * @param {VoiceOutboundPostRequest} [voiceOutboundPostRequest] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        voiceOutboundPost: async (voiceOutboundPostRequest?: VoiceOutboundPostRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/voice/outbound`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-
-    
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(voiceOutboundPostRequest, localVarRequestOptions, configuration)
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
     }
 };
 
@@ -966,9 +898,11 @@ export const CallsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async callNotesPost(callNotesPostRequest?: CallNotesPostRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CallNotesPost200Response>> {
+        async callNotesPost(callNotesPostRequest?: CallNotesPostRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CallNotesPost200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.callNotesPost(callNotesPostRequest, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['CallsApi.callNotesPost']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
          * 
@@ -983,9 +917,11 @@ export const CallsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async callsGet(q?: string, phoneNumbers?: Array<string>, callsDateRangeFrom?: string, callsDateRangeTo?: string, id?: Array<string>, before?: string, count?: number, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CallsGet200Response>> {
+        async callsGet(q?: string, phoneNumbers?: Array<string>, callsDateRangeFrom?: string, callsDateRangeTo?: string, id?: Array<string>, before?: string, count?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CallsGet200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.callsGet(q, phoneNumbers, callsDateRangeFrom, callsDateRangeTo, id, before, count, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['CallsApi.callsGet']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
          * Transcribe the call and return the transcript
@@ -995,9 +931,11 @@ export const CallsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async callsTranscribePost(callId: string, waitForCompletion?: boolean, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async callsTranscribePost(callId: string, waitForCompletion?: boolean, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.callsTranscribePost(callId, waitForCompletion, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['CallsApi.callsTranscribePost']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
          * 
@@ -1006,9 +944,11 @@ export const CallsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async holdCallPost(holdCallPostRequest?: HoldCallPostRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CallNotesPost200Response>> {
+        async holdCallPost(holdCallPostRequest?: HoldCallPostRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CallNotesPost200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.holdCallPost(holdCallPostRequest, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['CallsApi.holdCallPost']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
          * 
@@ -1017,9 +957,11 @@ export const CallsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async phoneNumbersDelete(phoneNumbersDeleteRequest?: PhoneNumbersDeleteRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PhoneNumbersDelete200Response>> {
+        async phoneNumbersDelete(phoneNumbersDeleteRequest?: PhoneNumbersDeleteRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PhoneNumbersDelete200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.phoneNumbersDelete(phoneNumbersDeleteRequest, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['CallsApi.phoneNumbersDelete']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
          * 
@@ -1028,9 +970,11 @@ export const CallsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async phoneNumbersGet(q?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PhoneNumbersGet200Response>> {
+        async phoneNumbersGet(q?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PhoneNumbersGet200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.phoneNumbersGet(q, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['CallsApi.phoneNumbersGet']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
          * 
@@ -1039,9 +983,11 @@ export const CallsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async recordingsGet(accountId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<RecordingsGet200Response>> {
+        async recordingsGet(accountId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<RecordingsGet200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.recordingsGet(accountId, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['CallsApi.recordingsGet']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
          * 
@@ -1049,9 +995,11 @@ export const CallsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async tokenGet(options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TokenGet200Response>> {
+        async tokenGet(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TokenGet200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.tokenGet(options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['CallsApi.tokenGet']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
          * 
@@ -1061,31 +1009,11 @@ export const CallsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async verifyNumberPost(accountId: string, verifyNumberPostRequest?: VerifyNumberPostRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<VerifyNumberPost200Response>> {
+        async verifyNumberPost(accountId: string, verifyNumberPostRequest?: VerifyNumberPostRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<VerifyNumberPost200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.verifyNumberPost(accountId, verifyNumberPostRequest, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-        /**
-         * 
-         * @summary Inbound call route which receives webhook event and forwards to chatdaddy user
-         * @param {VoiceInboundPostRequest} [voiceInboundPostRequest] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async voiceInboundPost(voiceInboundPostRequest?: VoiceInboundPostRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<string>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.voiceInboundPost(voiceInboundPostRequest, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-        /**
-         * 
-         * @summary Place the call and pass the audio stream
-         * @param {VoiceOutboundPostRequest} [voiceOutboundPostRequest] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async voiceOutboundPost(voiceOutboundPostRequest?: VoiceOutboundPostRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<string>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.voiceOutboundPost(voiceOutboundPostRequest, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['CallsApi.verifyNumberPost']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
     }
 };
@@ -1104,7 +1032,7 @@ export const CallsApiFactory = function (configuration?: Configuration, basePath
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        callNotesPost(requestParameters: CallsApiCallNotesPostRequest = {}, options?: AxiosRequestConfig): AxiosPromise<CallNotesPost200Response> {
+        callNotesPost(requestParameters: CallsApiCallNotesPostRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<CallNotesPost200Response> {
             return localVarFp.callNotesPost(requestParameters.callNotesPostRequest, options).then((request) => request(axios, basePath));
         },
         /**
@@ -1114,7 +1042,7 @@ export const CallsApiFactory = function (configuration?: Configuration, basePath
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        callsGet(requestParameters: CallsApiCallsGetRequest = {}, options?: AxiosRequestConfig): AxiosPromise<CallsGet200Response> {
+        callsGet(requestParameters: CallsApiCallsGetRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<CallsGet200Response> {
             return localVarFp.callsGet(requestParameters.q, requestParameters.phoneNumbers, requestParameters.callsDateRangeFrom, requestParameters.callsDateRangeTo, requestParameters.id, requestParameters.before, requestParameters.count, options).then((request) => request(axios, basePath));
         },
         /**
@@ -1124,7 +1052,7 @@ export const CallsApiFactory = function (configuration?: Configuration, basePath
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        callsTranscribePost(requestParameters: CallsApiCallsTranscribePostRequest, options?: AxiosRequestConfig): AxiosPromise<void> {
+        callsTranscribePost(requestParameters: CallsApiCallsTranscribePostRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
             return localVarFp.callsTranscribePost(requestParameters.callId, requestParameters.waitForCompletion, options).then((request) => request(axios, basePath));
         },
         /**
@@ -1134,7 +1062,7 @@ export const CallsApiFactory = function (configuration?: Configuration, basePath
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        holdCallPost(requestParameters: CallsApiHoldCallPostRequest = {}, options?: AxiosRequestConfig): AxiosPromise<CallNotesPost200Response> {
+        holdCallPost(requestParameters: CallsApiHoldCallPostRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<CallNotesPost200Response> {
             return localVarFp.holdCallPost(requestParameters.holdCallPostRequest, options).then((request) => request(axios, basePath));
         },
         /**
@@ -1144,7 +1072,7 @@ export const CallsApiFactory = function (configuration?: Configuration, basePath
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        phoneNumbersDelete(requestParameters: CallsApiPhoneNumbersDeleteRequest = {}, options?: AxiosRequestConfig): AxiosPromise<PhoneNumbersDelete200Response> {
+        phoneNumbersDelete(requestParameters: CallsApiPhoneNumbersDeleteRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<PhoneNumbersDelete200Response> {
             return localVarFp.phoneNumbersDelete(requestParameters.phoneNumbersDeleteRequest, options).then((request) => request(axios, basePath));
         },
         /**
@@ -1154,7 +1082,7 @@ export const CallsApiFactory = function (configuration?: Configuration, basePath
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        phoneNumbersGet(requestParameters: CallsApiPhoneNumbersGetRequest = {}, options?: AxiosRequestConfig): AxiosPromise<PhoneNumbersGet200Response> {
+        phoneNumbersGet(requestParameters: CallsApiPhoneNumbersGetRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<PhoneNumbersGet200Response> {
             return localVarFp.phoneNumbersGet(requestParameters.q, options).then((request) => request(axios, basePath));
         },
         /**
@@ -1164,7 +1092,7 @@ export const CallsApiFactory = function (configuration?: Configuration, basePath
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        recordingsGet(requestParameters: CallsApiRecordingsGetRequest, options?: AxiosRequestConfig): AxiosPromise<RecordingsGet200Response> {
+        recordingsGet(requestParameters: CallsApiRecordingsGetRequest, options?: RawAxiosRequestConfig): AxiosPromise<RecordingsGet200Response> {
             return localVarFp.recordingsGet(requestParameters.accountId, options).then((request) => request(axios, basePath));
         },
         /**
@@ -1173,7 +1101,7 @@ export const CallsApiFactory = function (configuration?: Configuration, basePath
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        tokenGet(options?: AxiosRequestConfig): AxiosPromise<TokenGet200Response> {
+        tokenGet(options?: RawAxiosRequestConfig): AxiosPromise<TokenGet200Response> {
             return localVarFp.tokenGet(options).then((request) => request(axios, basePath));
         },
         /**
@@ -1183,28 +1111,8 @@ export const CallsApiFactory = function (configuration?: Configuration, basePath
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        verifyNumberPost(requestParameters: CallsApiVerifyNumberPostRequest, options?: AxiosRequestConfig): AxiosPromise<VerifyNumberPost200Response> {
+        verifyNumberPost(requestParameters: CallsApiVerifyNumberPostRequest, options?: RawAxiosRequestConfig): AxiosPromise<VerifyNumberPost200Response> {
             return localVarFp.verifyNumberPost(requestParameters.accountId, requestParameters.verifyNumberPostRequest, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
-         * @summary Inbound call route which receives webhook event and forwards to chatdaddy user
-         * @param {CallsApiVoiceInboundPostRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        voiceInboundPost(requestParameters: CallsApiVoiceInboundPostRequest = {}, options?: AxiosRequestConfig): AxiosPromise<string> {
-            return localVarFp.voiceInboundPost(requestParameters.voiceInboundPostRequest, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
-         * @summary Place the call and pass the audio stream
-         * @param {CallsApiVoiceOutboundPostRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        voiceOutboundPost(requestParameters: CallsApiVoiceOutboundPostRequest = {}, options?: AxiosRequestConfig): AxiosPromise<string> {
-            return localVarFp.voiceOutboundPost(requestParameters.voiceOutboundPostRequest, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -1378,34 +1286,6 @@ export interface CallsApiVerifyNumberPostRequest {
 }
 
 /**
- * Request parameters for voiceInboundPost operation in CallsApi.
- * @export
- * @interface CallsApiVoiceInboundPostRequest
- */
-export interface CallsApiVoiceInboundPostRequest {
-    /**
-     * 
-     * @type {VoiceInboundPostRequest}
-     * @memberof CallsApiVoiceInboundPost
-     */
-    readonly voiceInboundPostRequest?: VoiceInboundPostRequest
-}
-
-/**
- * Request parameters for voiceOutboundPost operation in CallsApi.
- * @export
- * @interface CallsApiVoiceOutboundPostRequest
- */
-export interface CallsApiVoiceOutboundPostRequest {
-    /**
-     * 
-     * @type {VoiceOutboundPostRequest}
-     * @memberof CallsApiVoiceOutboundPost
-     */
-    readonly voiceOutboundPostRequest?: VoiceOutboundPostRequest
-}
-
-/**
  * CallsApi - object-oriented interface
  * @export
  * @class CallsApi
@@ -1420,7 +1300,7 @@ export class CallsApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof CallsApi
      */
-    public callNotesPost(requestParameters: CallsApiCallNotesPostRequest = {}, options?: AxiosRequestConfig) {
+    public callNotesPost(requestParameters: CallsApiCallNotesPostRequest = {}, options?: RawAxiosRequestConfig) {
         return CallsApiFp(this.configuration).callNotesPost(requestParameters.callNotesPostRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
@@ -1432,7 +1312,7 @@ export class CallsApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof CallsApi
      */
-    public callsGet(requestParameters: CallsApiCallsGetRequest = {}, options?: AxiosRequestConfig) {
+    public callsGet(requestParameters: CallsApiCallsGetRequest = {}, options?: RawAxiosRequestConfig) {
         return CallsApiFp(this.configuration).callsGet(requestParameters.q, requestParameters.phoneNumbers, requestParameters.callsDateRangeFrom, requestParameters.callsDateRangeTo, requestParameters.id, requestParameters.before, requestParameters.count, options).then((request) => request(this.axios, this.basePath));
     }
 
@@ -1444,7 +1324,7 @@ export class CallsApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof CallsApi
      */
-    public callsTranscribePost(requestParameters: CallsApiCallsTranscribePostRequest, options?: AxiosRequestConfig) {
+    public callsTranscribePost(requestParameters: CallsApiCallsTranscribePostRequest, options?: RawAxiosRequestConfig) {
         return CallsApiFp(this.configuration).callsTranscribePost(requestParameters.callId, requestParameters.waitForCompletion, options).then((request) => request(this.axios, this.basePath));
     }
 
@@ -1456,7 +1336,7 @@ export class CallsApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof CallsApi
      */
-    public holdCallPost(requestParameters: CallsApiHoldCallPostRequest = {}, options?: AxiosRequestConfig) {
+    public holdCallPost(requestParameters: CallsApiHoldCallPostRequest = {}, options?: RawAxiosRequestConfig) {
         return CallsApiFp(this.configuration).holdCallPost(requestParameters.holdCallPostRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
@@ -1468,7 +1348,7 @@ export class CallsApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof CallsApi
      */
-    public phoneNumbersDelete(requestParameters: CallsApiPhoneNumbersDeleteRequest = {}, options?: AxiosRequestConfig) {
+    public phoneNumbersDelete(requestParameters: CallsApiPhoneNumbersDeleteRequest = {}, options?: RawAxiosRequestConfig) {
         return CallsApiFp(this.configuration).phoneNumbersDelete(requestParameters.phoneNumbersDeleteRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
@@ -1480,7 +1360,7 @@ export class CallsApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof CallsApi
      */
-    public phoneNumbersGet(requestParameters: CallsApiPhoneNumbersGetRequest = {}, options?: AxiosRequestConfig) {
+    public phoneNumbersGet(requestParameters: CallsApiPhoneNumbersGetRequest = {}, options?: RawAxiosRequestConfig) {
         return CallsApiFp(this.configuration).phoneNumbersGet(requestParameters.q, options).then((request) => request(this.axios, this.basePath));
     }
 
@@ -1492,7 +1372,7 @@ export class CallsApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof CallsApi
      */
-    public recordingsGet(requestParameters: CallsApiRecordingsGetRequest, options?: AxiosRequestConfig) {
+    public recordingsGet(requestParameters: CallsApiRecordingsGetRequest, options?: RawAxiosRequestConfig) {
         return CallsApiFp(this.configuration).recordingsGet(requestParameters.accountId, options).then((request) => request(this.axios, this.basePath));
     }
 
@@ -1503,7 +1383,7 @@ export class CallsApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof CallsApi
      */
-    public tokenGet(options?: AxiosRequestConfig) {
+    public tokenGet(options?: RawAxiosRequestConfig) {
         return CallsApiFp(this.configuration).tokenGet(options).then((request) => request(this.axios, this.basePath));
     }
 
@@ -1515,33 +1395,10 @@ export class CallsApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof CallsApi
      */
-    public verifyNumberPost(requestParameters: CallsApiVerifyNumberPostRequest, options?: AxiosRequestConfig) {
+    public verifyNumberPost(requestParameters: CallsApiVerifyNumberPostRequest, options?: RawAxiosRequestConfig) {
         return CallsApiFp(this.configuration).verifyNumberPost(requestParameters.accountId, requestParameters.verifyNumberPostRequest, options).then((request) => request(this.axios, this.basePath));
     }
-
-    /**
-     * 
-     * @summary Inbound call route which receives webhook event and forwards to chatdaddy user
-     * @param {CallsApiVoiceInboundPostRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof CallsApi
-     */
-    public voiceInboundPost(requestParameters: CallsApiVoiceInboundPostRequest = {}, options?: AxiosRequestConfig) {
-        return CallsApiFp(this.configuration).voiceInboundPost(requestParameters.voiceInboundPostRequest, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
-     * @summary Place the call and pass the audio stream
-     * @param {CallsApiVoiceOutboundPostRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof CallsApi
-     */
-    public voiceOutboundPost(requestParameters: CallsApiVoiceOutboundPostRequest = {}, options?: AxiosRequestConfig) {
-        return CallsApiFp(this.configuration).voiceOutboundPost(requestParameters.voiceOutboundPostRequest, options).then((request) => request(this.axios, this.basePath));
-    }
 }
+
 
 

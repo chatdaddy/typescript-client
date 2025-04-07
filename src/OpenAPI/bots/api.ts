@@ -16,14 +16,14 @@ const BASE_PATH = "https://api.chatdaddy.tech/bots".replace(/\/+$/, "");
 
 
 import type { Configuration } from '../configuration';
-import type { AxiosPromise, AxiosInstance, AxiosRequestConfig } from 'axios';
+import type { AxiosPromise, AxiosInstance, RawAxiosRequestConfig } from 'axios';
 import globalAxios from 'axios';
 // Some imports not used depending on template conditions
 // @ts-ignore
 import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObject, setBearerAuthToObject, setOAuthToObject, setSearchParams, serializeDataIfNeeded, toPathString, createRequestFunction } from '../common';
 import type { RequestArgs } from '../base';
 // @ts-ignore
-import { COLLECTION_FORMATS, BaseAPI, RequiredError } from '../base';
+import { COLLECTION_FORMATS, BaseAPI, RequiredError, operationServerMap } from '../base';
 
 /**
  * @type AccountIDSelector
@@ -95,30 +95,6 @@ export type AccountIDSelectorOneOfValue = Array<string> | string;
  * @interface Action
  */
 export interface Action {
-    /**
-     * ID of the bot sequence
-     * @type {string}
-     * @memberof Action
-     */
-    'botId': string;
-    /**
-     * An ISO formatted timestamp
-     * @type {string}
-     * @memberof Action
-     */
-    'createdAt': string;
-    /**
-     * An ISO formatted timestamp
-     * @type {string}
-     * @memberof Action
-     */
-    'updatedAt': string;
-    /**
-     * Map from channel to external template provider status. Channel is the key and the value is the status of the template on the provider.
-     * @type {{ [key: string]: ExternalTemplateProvider; }}
-     * @memberof Action
-     */
-    'externalTemplate'?: { [key: string]: ExternalTemplateProvider; };
     /**
      * 
      * @type {string}
@@ -222,6 +198,30 @@ export interface Action {
      * @memberof Action
      */
     'app'?: AppAction;
+    /**
+     * ID of the bot sequence
+     * @type {string}
+     * @memberof Action
+     */
+    'botId': string;
+    /**
+     * An ISO formatted timestamp
+     * @type {string}
+     * @memberof Action
+     */
+    'createdAt': string;
+    /**
+     * An ISO formatted timestamp
+     * @type {string}
+     * @memberof Action
+     */
+    'updatedAt': string;
+    /**
+     * Map from channel to external template provider status. Channel is the key and the value is the status of the template on the provider.
+     * @type {{ [key: string]: ExternalTemplateProvider; }}
+     * @memberof Action
+     */
+    'externalTemplate'?: { [key: string]: ExternalTemplateProvider; };
 }
 
 export const ActionMessageTypeEnum = {
@@ -231,37 +231,6 @@ export const ActionMessageTypeEnum = {
 
 export type ActionMessageTypeEnum = typeof ActionMessageTypeEnum[keyof typeof ActionMessageTypeEnum];
 
-/**
- * 
- * @export
- * @interface ActionAllOf
- */
-export interface ActionAllOf {
-    /**
-     * ID of the bot sequence
-     * @type {string}
-     * @memberof ActionAllOf
-     */
-    'botId': string;
-    /**
-     * An ISO formatted timestamp
-     * @type {string}
-     * @memberof ActionAllOf
-     */
-    'createdAt': string;
-    /**
-     * An ISO formatted timestamp
-     * @type {string}
-     * @memberof ActionAllOf
-     */
-    'updatedAt': string;
-    /**
-     * Map from channel to external template provider status. Channel is the key and the value is the status of the template on the provider.
-     * @type {{ [key: string]: ExternalTemplateProvider; }}
-     * @memberof ActionAllOf
-     */
-    'externalTemplate'?: { [key: string]: ExternalTemplateProvider; };
-}
 /**
  * 
  * @export
@@ -855,27 +824,6 @@ export const ActionInteractionOneOf1TypeEnum = {
 export type ActionInteractionOneOf1TypeEnum = typeof ActionInteractionOneOf1TypeEnum[keyof typeof ActionInteractionOneOf1TypeEnum];
 
 /**
- * Action was simply sent out, no further interaction recorded
- * @export
- * @interface ActionInteractionOneOf1AllOf
- */
-export interface ActionInteractionOneOf1AllOf {
-    /**
-     * 
-     * @type {string}
-     * @memberof ActionInteractionOneOf1AllOf
-     */
-    'type': ActionInteractionOneOf1AllOfTypeEnum;
-}
-
-export const ActionInteractionOneOf1AllOfTypeEnum = {
-    Sent: 'sent',
-    Delivered: 'delivered'
-} as const;
-
-export type ActionInteractionOneOf1AllOfTypeEnum = typeof ActionInteractionOneOf1AllOfTypeEnum[keyof typeof ActionInteractionOneOf1AllOfTypeEnum];
-
-/**
  * 
  * @export
  * @interface ActionInteractionOneOf2
@@ -906,32 +854,6 @@ export const ActionInteractionOneOf2TypeEnum = {
 } as const;
 
 export type ActionInteractionOneOf2TypeEnum = typeof ActionInteractionOneOf2TypeEnum[keyof typeof ActionInteractionOneOf2TypeEnum];
-
-/**
- * Action was sent out and a button/list item was clicked
- * @export
- * @interface ActionInteractionOneOf2AllOf
- */
-export interface ActionInteractionOneOf2AllOf {
-    /**
-     * 
-     * @type {string}
-     * @memberof ActionInteractionOneOf2AllOf
-     */
-    'type': ActionInteractionOneOf2AllOfTypeEnum;
-    /**
-     * Text of the button or list item that was clicked
-     * @type {string}
-     * @memberof ActionInteractionOneOf2AllOf
-     */
-    'text': string;
-}
-
-export const ActionInteractionOneOf2AllOfTypeEnum = {
-    Click: 'click'
-} as const;
-
-export type ActionInteractionOneOf2AllOfTypeEnum = typeof ActionInteractionOneOf2AllOfTypeEnum[keyof typeof ActionInteractionOneOf2AllOfTypeEnum];
 
 /**
  * 
@@ -966,32 +888,6 @@ export const ActionInteractionOneOf3TypeEnum = {
 export type ActionInteractionOneOf3TypeEnum = typeof ActionInteractionOneOf3TypeEnum[keyof typeof ActionInteractionOneOf3TypeEnum];
 
 /**
- * Action was sent out and a user input was submitted
- * @export
- * @interface ActionInteractionOneOf3AllOf
- */
-export interface ActionInteractionOneOf3AllOf {
-    /**
-     * 
-     * @type {string}
-     * @memberof ActionInteractionOneOf3AllOf
-     */
-    'type': ActionInteractionOneOf3AllOfTypeEnum;
-    /**
-     * 
-     * @type {ActionInteractionOneOf3AllOfContent}
-     * @memberof ActionInteractionOneOf3AllOf
-     */
-    'content': ActionInteractionOneOf3AllOfContent;
-}
-
-export const ActionInteractionOneOf3AllOfTypeEnum = {
-    UserInput: 'user_input'
-} as const;
-
-export type ActionInteractionOneOf3AllOfTypeEnum = typeof ActionInteractionOneOf3AllOfTypeEnum[keyof typeof ActionInteractionOneOf3AllOfTypeEnum];
-
-/**
  * Content of the user input that was submitted
  * @export
  * @interface ActionInteractionOneOf3AllOfContent
@@ -1010,32 +906,6 @@ export interface ActionInteractionOneOf3AllOfContent {
      */
     'attachments'?: Array<IMMessageAttachment>;
 }
-/**
- * Action was simply sent out, no further interaction recorded
- * @export
- * @interface ActionInteractionOneOfAllOf
- */
-export interface ActionInteractionOneOfAllOf {
-    /**
-     * 
-     * @type {string}
-     * @memberof ActionInteractionOneOfAllOf
-     */
-    'type': ActionInteractionOneOfAllOfTypeEnum;
-    /**
-     * Error message
-     * @type {string}
-     * @memberof ActionInteractionOneOfAllOf
-     */
-    'message'?: string;
-}
-
-export const ActionInteractionOneOfAllOfTypeEnum = {
-    Error: 'error'
-} as const;
-
-export type ActionInteractionOneOfAllOfTypeEnum = typeof ActionInteractionOneOfAllOfTypeEnum[keyof typeof ActionInteractionOneOfAllOfTypeEnum];
-
 /**
  * 
  * @export
@@ -1330,37 +1200,6 @@ export interface AppIntegration {
      * 
      * @type {string}
      * @memberof AppIntegration
-     */
-    'teamId': string;
-}
-/**
- * 
- * @export
- * @interface AppIntegrationAllOf
- */
-export interface AppIntegrationAllOf {
-    /**
-     * randomly generated id for an integration
-     * @type {string}
-     * @memberof AppIntegrationAllOf
-     */
-    'id': string;
-    /**
-     * An ISO formatted timestamp
-     * @type {string}
-     * @memberof AppIntegrationAllOf
-     */
-    'createdAt': string;
-    /**
-     * An ISO formatted timestamp
-     * @type {string}
-     * @memberof AppIntegrationAllOf
-     */
-    'updatedAt': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof AppIntegrationAllOf
      */
     'teamId': string;
 }
@@ -2604,43 +2443,6 @@ export interface BotTrigger {
 /**
  * 
  * @export
- * @interface BotTriggerAllOf
- */
-export interface BotTriggerAllOf {
-    /**
-     * ID of the bot sequence
-     * @type {string}
-     * @memberof BotTriggerAllOf
-     */
-    'botId': string;
-    /**
-     * An ISO formatted timestamp
-     * @type {string}
-     * @memberof BotTriggerAllOf
-     */
-    'lastTriggered'?: string;
-    /**
-     * 
-     * @type {number}
-     * @memberof BotTriggerAllOf
-     */
-    'triggered': number;
-    /**
-     * An ISO formatted timestamp
-     * @type {string}
-     * @memberof BotTriggerAllOf
-     */
-    'createdAt': string;
-    /**
-     * An ISO formatted timestamp
-     * @type {string}
-     * @memberof BotTriggerAllOf
-     */
-    'updatedAt': string;
-}
-/**
- * 
- * @export
  * @interface BotTriggerContext
  */
 export interface BotTriggerContext {
@@ -2825,30 +2627,11 @@ export interface BotTriggerOptions {
      */
     'perContactThrottle'?: ThrottleOptions;
     /**
-     * 
-     * @type {BotTriggerOptionsThrottle}
+     * Total throttle options for the trigger. Maximum throughput: 100 triggers/minute 
+     * @type {ThrottleOptions}
      * @memberof BotTriggerOptions
      */
-    'throttle'?: BotTriggerOptionsThrottle;
-}
-/**
- * Total throttle options for the trigger. Maximum throughput: 100 triggers/minute 
- * @export
- * @interface BotTriggerOptionsThrottle
- */
-export interface BotTriggerOptionsThrottle {
-    /**
-     * The maximum number of messages that can be sent in the time period
-     * @type {number}
-     * @memberof BotTriggerOptionsThrottle
-     */
-    'maximum': number;
-    /**
-     * The time period in seconds in which the maximum number of messages can be sent
-     * @type {number}
-     * @memberof BotTriggerOptionsThrottle
-     */
-    'intervalS': number;
+    'throttle'?: ThrottleOptions;
 }
 /**
  * 
@@ -4081,25 +3864,6 @@ export interface InternalEventUIConfig {
 /**
  * 
  * @export
- * @interface InternalEventUIConfigAllOf
- */
-export interface InternalEventUIConfigAllOf {
-    /**
-     * 
-     * @type {string}
-     * @memberof InternalEventUIConfigAllOf
-     */
-    'event': string;
-    /**
-     * Article ID of helpkit article to be linked
-     * @type {string}
-     * @memberof InternalEventUIConfigAllOf
-     */
-    'helpkitId'?: string;
-}
-/**
- * 
- * @export
  * @interface LegacyBotMessageDelay
  */
 export interface LegacyBotMessageDelay {
@@ -4409,11 +4173,11 @@ export interface MinMessageSendOptions {
  */
 export interface NextAction {
     /**
-     * 
-     * @type {NextActionDefaultAction}
+     * Fired if all validations failed or no validations are provided
+     * @type {ActionTarget}
      * @memberof NextAction
      */
-    'defaultAction'?: NextActionDefaultAction;
+    'defaultAction'?: ActionTarget;
     /**
      * List of conditions to validate
      * @type {Array<NextActionGroupsInner>}
@@ -4424,31 +4188,6 @@ export interface NextAction {
      * 
      * @type {Position}
      * @memberof NextAction
-     */
-    'position'?: Position | null;
-}
-/**
- * Fired if all validations failed or no validations are provided
- * @export
- * @interface NextActionDefaultAction
- */
-export interface NextActionDefaultAction {
-    /**
-     * 
-     * @type {string}
-     * @memberof NextActionDefaultAction
-     */
-    'triggerActionId': string;
-    /**
-     * ID of the bot sequence
-     * @type {string}
-     * @memberof NextActionDefaultAction
-     */
-    'triggerBotId'?: string;
-    /**
-     * 
-     * @type {Position}
-     * @memberof NextActionDefaultAction
      */
     'position'?: Position | null;
 }
@@ -4471,11 +4210,11 @@ export interface NextActionGroupsInner {
      */
     'validation': Array<BotCondition>;
     /**
-     * 
-     * @type {NextActionGroupsInnerTarget}
+     * Action to fire if all validations pass
+     * @type {ActionTarget}
      * @memberof NextActionGroupsInner
      */
-    'target': NextActionGroupsInnerTarget;
+    'target': ActionTarget;
 }
 
 export const NextActionGroupsInnerOperatorEnum = {
@@ -4485,31 +4224,6 @@ export const NextActionGroupsInnerOperatorEnum = {
 
 export type NextActionGroupsInnerOperatorEnum = typeof NextActionGroupsInnerOperatorEnum[keyof typeof NextActionGroupsInnerOperatorEnum];
 
-/**
- * Action to fire if all validations pass
- * @export
- * @interface NextActionGroupsInnerTarget
- */
-export interface NextActionGroupsInnerTarget {
-    /**
-     * 
-     * @type {string}
-     * @memberof NextActionGroupsInnerTarget
-     */
-    'triggerActionId': string;
-    /**
-     * ID of the bot sequence
-     * @type {string}
-     * @memberof NextActionGroupsInnerTarget
-     */
-    'triggerBotId'?: string;
-    /**
-     * 
-     * @type {Position}
-     * @memberof NextActionGroupsInnerTarget
-     */
-    'position'?: Position | null;
-}
 /**
  * describe OAuth input for access tokens
  * @export
@@ -5378,37 +5092,6 @@ export interface TriggerAppConfig {
     'appGroupId'?: string;
 }
 /**
- * 
- * @export
- * @interface TriggerAppConfigAllOf
- */
-export interface TriggerAppConfigAllOf {
-    /**
-     * 
-     * @type {string}
-     * @memberof TriggerAppConfigAllOf
-     */
-    'appId': string;
-    /**
-     * 
-     * @type {Array<DataProperty>}
-     * @memberof TriggerAppConfigAllOf
-     */
-    'registrationOutputProperties': Array<DataProperty>;
-    /**
-     * Article ID of helpkit article to be linked
-     * @type {string}
-     * @memberof TriggerAppConfigAllOf
-     */
-    'helpkitId'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof TriggerAppConfigAllOf
-     */
-    'appGroupId'?: string;
-}
-/**
  * @type TriggerDelay
  * @export
  */
@@ -5854,7 +5537,7 @@ export const ActionsApiAxiosParamCreator = function (configuration?: Configurati
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        actionExternalTemplateCommand: async (botId: string, accountId: string, actionExternalTemplateCommand?: ActionExternalTemplateCommand, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        actionExternalTemplateCommand: async (botId: string, accountId: string, actionExternalTemplateCommand?: ActionExternalTemplateCommand, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'botId' is not null or undefined
             assertParamExists('actionExternalTemplateCommand', 'botId', botId)
             // verify required parameter 'accountId' is not null or undefined
@@ -5901,7 +5584,7 @@ export const ActionsApiAxiosParamCreator = function (configuration?: Configurati
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        actionsGet: async (count?: number, before?: string, q?: string, botId?: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        actionsGet: async (count?: number, before?: string, q?: string, botId?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/actions`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -5952,7 +5635,7 @@ export const ActionsApiAxiosParamCreator = function (configuration?: Configurati
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        actionsGptGenerate: async (actionsGptGenerateRequest?: ActionsGptGenerateRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        actionsGptGenerate: async (actionsGptGenerateRequest?: ActionsGptGenerateRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/actions/gpt-generate`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -6002,9 +5685,11 @@ export const ActionsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async actionExternalTemplateCommand(botId: string, accountId: string, actionExternalTemplateCommand?: ActionExternalTemplateCommand, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<Action>>> {
+        async actionExternalTemplateCommand(botId: string, accountId: string, actionExternalTemplateCommand?: ActionExternalTemplateCommand, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<Action>>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.actionExternalTemplateCommand(botId, accountId, actionExternalTemplateCommand, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['ActionsApi.actionExternalTemplateCommand']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
          * 
@@ -6016,9 +5701,11 @@ export const ActionsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async actionsGet(count?: number, before?: string, q?: string, botId?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ActionsGet200Response>> {
+        async actionsGet(count?: number, before?: string, q?: string, botId?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ActionsGet200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.actionsGet(count, before, q, botId, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['ActionsApi.actionsGet']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
          * 
@@ -6027,9 +5714,11 @@ export const ActionsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async actionsGptGenerate(actionsGptGenerateRequest?: ActionsGptGenerateRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ActionsGptGenerate200Response>> {
+        async actionsGptGenerate(actionsGptGenerateRequest?: ActionsGptGenerateRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ActionsGptGenerate200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.actionsGptGenerate(actionsGptGenerateRequest, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['ActionsApi.actionsGptGenerate']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
     }
 };
@@ -6048,7 +5737,7 @@ export const ActionsApiFactory = function (configuration?: Configuration, basePa
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        actionExternalTemplateCommand(requestParameters: ActionsApiActionExternalTemplateCommandRequest, options?: AxiosRequestConfig): AxiosPromise<Array<Action>> {
+        actionExternalTemplateCommand(requestParameters: ActionsApiActionExternalTemplateCommandRequest, options?: RawAxiosRequestConfig): AxiosPromise<Array<Action>> {
             return localVarFp.actionExternalTemplateCommand(requestParameters.botId, requestParameters.accountId, requestParameters.actionExternalTemplateCommand, options).then((request) => request(axios, basePath));
         },
         /**
@@ -6058,7 +5747,7 @@ export const ActionsApiFactory = function (configuration?: Configuration, basePa
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        actionsGet(requestParameters: ActionsApiActionsGetRequest = {}, options?: AxiosRequestConfig): AxiosPromise<ActionsGet200Response> {
+        actionsGet(requestParameters: ActionsApiActionsGetRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<ActionsGet200Response> {
             return localVarFp.actionsGet(requestParameters.count, requestParameters.before, requestParameters.q, requestParameters.botId, options).then((request) => request(axios, basePath));
         },
         /**
@@ -6068,7 +5757,7 @@ export const ActionsApiFactory = function (configuration?: Configuration, basePa
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        actionsGptGenerate(requestParameters: ActionsApiActionsGptGenerateRequest = {}, options?: AxiosRequestConfig): AxiosPromise<ActionsGptGenerate200Response> {
+        actionsGptGenerate(requestParameters: ActionsApiActionsGptGenerateRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<ActionsGptGenerate200Response> {
             return localVarFp.actionsGptGenerate(requestParameters.actionsGptGenerateRequest, options).then((request) => request(axios, basePath));
         },
     };
@@ -6166,7 +5855,7 @@ export class ActionsApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof ActionsApi
      */
-    public actionExternalTemplateCommand(requestParameters: ActionsApiActionExternalTemplateCommandRequest, options?: AxiosRequestConfig) {
+    public actionExternalTemplateCommand(requestParameters: ActionsApiActionExternalTemplateCommandRequest, options?: RawAxiosRequestConfig) {
         return ActionsApiFp(this.configuration).actionExternalTemplateCommand(requestParameters.botId, requestParameters.accountId, requestParameters.actionExternalTemplateCommand, options).then((request) => request(this.axios, this.basePath));
     }
 
@@ -6178,7 +5867,7 @@ export class ActionsApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof ActionsApi
      */
-    public actionsGet(requestParameters: ActionsApiActionsGetRequest = {}, options?: AxiosRequestConfig) {
+    public actionsGet(requestParameters: ActionsApiActionsGetRequest = {}, options?: RawAxiosRequestConfig) {
         return ActionsApiFp(this.configuration).actionsGet(requestParameters.count, requestParameters.before, requestParameters.q, requestParameters.botId, options).then((request) => request(this.axios, this.basePath));
     }
 
@@ -6190,10 +5879,11 @@ export class ActionsApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof ActionsApi
      */
-    public actionsGptGenerate(requestParameters: ActionsApiActionsGptGenerateRequest = {}, options?: AxiosRequestConfig) {
+    public actionsGptGenerate(requestParameters: ActionsApiActionsGptGenerateRequest = {}, options?: RawAxiosRequestConfig) {
         return ActionsApiFp(this.configuration).actionsGptGenerate(requestParameters.actionsGptGenerateRequest, options).then((request) => request(this.axios, this.basePath));
     }
 }
+
 
 
 /**
@@ -6209,7 +5899,7 @@ export const AppIntegrationApiAxiosParamCreator = function (configuration?: Conf
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        calendarAuth: async (authCode: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        calendarAuth: async (authCode: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'authCode' is not null or undefined
             assertParamExists('calendarAuth', 'authCode', authCode)
             const localVarPath = `/calendar`;
@@ -6246,7 +5936,7 @@ export const AppIntegrationApiAxiosParamCreator = function (configuration?: Conf
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        integrationCreate: async (appIntegrationCreate?: AppIntegrationCreate, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        integrationCreate: async (appIntegrationCreate?: AppIntegrationCreate, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/integrations`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -6284,7 +5974,7 @@ export const AppIntegrationApiAxiosParamCreator = function (configuration?: Conf
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        integrationDelete: async (id: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        integrationDelete: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
             assertParamExists('integrationDelete', 'id', id)
             const localVarPath = `/integrations`;
@@ -6325,7 +6015,7 @@ export const AppIntegrationApiAxiosParamCreator = function (configuration?: Conf
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        integrationsGet: async (appGroupId?: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        integrationsGet: async (appGroupId?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/integrations`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -6374,9 +6064,11 @@ export const AppIntegrationApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async calendarAuth(authCode: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CalendarAuth200Response>> {
+        async calendarAuth(authCode: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CalendarAuth200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.calendarAuth(authCode, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['AppIntegrationApi.calendarAuth']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
          * 
@@ -6385,9 +6077,11 @@ export const AppIntegrationApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async integrationCreate(appIntegrationCreate?: AppIntegrationCreate, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AppIntegration>> {
+        async integrationCreate(appIntegrationCreate?: AppIntegrationCreate, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AppIntegration>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.integrationCreate(appIntegrationCreate, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['AppIntegrationApi.integrationCreate']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
          * 
@@ -6396,9 +6090,11 @@ export const AppIntegrationApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async integrationDelete(id: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async integrationDelete(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.integrationDelete(id, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['AppIntegrationApi.integrationDelete']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
          * 
@@ -6407,9 +6103,11 @@ export const AppIntegrationApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async integrationsGet(appGroupId?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IntegrationsGet200Response>> {
+        async integrationsGet(appGroupId?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IntegrationsGet200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.integrationsGet(appGroupId, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['AppIntegrationApi.integrationsGet']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
     }
 };
@@ -6428,7 +6126,7 @@ export const AppIntegrationApiFactory = function (configuration?: Configuration,
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        calendarAuth(requestParameters: AppIntegrationApiCalendarAuthRequest, options?: AxiosRequestConfig): AxiosPromise<CalendarAuth200Response> {
+        calendarAuth(requestParameters: AppIntegrationApiCalendarAuthRequest, options?: RawAxiosRequestConfig): AxiosPromise<CalendarAuth200Response> {
             return localVarFp.calendarAuth(requestParameters.authCode, options).then((request) => request(axios, basePath));
         },
         /**
@@ -6438,7 +6136,7 @@ export const AppIntegrationApiFactory = function (configuration?: Configuration,
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        integrationCreate(requestParameters: AppIntegrationApiIntegrationCreateRequest = {}, options?: AxiosRequestConfig): AxiosPromise<AppIntegration> {
+        integrationCreate(requestParameters: AppIntegrationApiIntegrationCreateRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<AppIntegration> {
             return localVarFp.integrationCreate(requestParameters.appIntegrationCreate, options).then((request) => request(axios, basePath));
         },
         /**
@@ -6448,7 +6146,7 @@ export const AppIntegrationApiFactory = function (configuration?: Configuration,
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        integrationDelete(requestParameters: AppIntegrationApiIntegrationDeleteRequest, options?: AxiosRequestConfig): AxiosPromise<void> {
+        integrationDelete(requestParameters: AppIntegrationApiIntegrationDeleteRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
             return localVarFp.integrationDelete(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
@@ -6458,7 +6156,7 @@ export const AppIntegrationApiFactory = function (configuration?: Configuration,
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        integrationsGet(requestParameters: AppIntegrationApiIntegrationsGetRequest = {}, options?: AxiosRequestConfig): AxiosPromise<IntegrationsGet200Response> {
+        integrationsGet(requestParameters: AppIntegrationApiIntegrationsGetRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<IntegrationsGet200Response> {
             return localVarFp.integrationsGet(requestParameters.appGroupId, options).then((request) => request(axios, basePath));
         },
     };
@@ -6535,7 +6233,7 @@ export class AppIntegrationApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof AppIntegrationApi
      */
-    public calendarAuth(requestParameters: AppIntegrationApiCalendarAuthRequest, options?: AxiosRequestConfig) {
+    public calendarAuth(requestParameters: AppIntegrationApiCalendarAuthRequest, options?: RawAxiosRequestConfig) {
         return AppIntegrationApiFp(this.configuration).calendarAuth(requestParameters.authCode, options).then((request) => request(this.axios, this.basePath));
     }
 
@@ -6547,7 +6245,7 @@ export class AppIntegrationApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof AppIntegrationApi
      */
-    public integrationCreate(requestParameters: AppIntegrationApiIntegrationCreateRequest = {}, options?: AxiosRequestConfig) {
+    public integrationCreate(requestParameters: AppIntegrationApiIntegrationCreateRequest = {}, options?: RawAxiosRequestConfig) {
         return AppIntegrationApiFp(this.configuration).integrationCreate(requestParameters.appIntegrationCreate, options).then((request) => request(this.axios, this.basePath));
     }
 
@@ -6559,7 +6257,7 @@ export class AppIntegrationApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof AppIntegrationApi
      */
-    public integrationDelete(requestParameters: AppIntegrationApiIntegrationDeleteRequest, options?: AxiosRequestConfig) {
+    public integrationDelete(requestParameters: AppIntegrationApiIntegrationDeleteRequest, options?: RawAxiosRequestConfig) {
         return AppIntegrationApiFp(this.configuration).integrationDelete(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
     }
 
@@ -6571,10 +6269,11 @@ export class AppIntegrationApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof AppIntegrationApi
      */
-    public integrationsGet(requestParameters: AppIntegrationApiIntegrationsGetRequest = {}, options?: AxiosRequestConfig) {
+    public integrationsGet(requestParameters: AppIntegrationApiIntegrationsGetRequest = {}, options?: RawAxiosRequestConfig) {
         return AppIntegrationApiFp(this.configuration).integrationsGet(requestParameters.appGroupId, options).then((request) => request(this.axios, this.basePath));
     }
 }
+
 
 
 /**
@@ -6590,7 +6289,7 @@ export const BotAnalyticsApiAxiosParamCreator = function (configuration?: Config
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        botsAnalyticsGet: async (botId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        botsAnalyticsGet: async (botId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'botId' is not null or undefined
             assertParamExists('botsAnalyticsGet', 'botId', botId)
             const localVarPath = `/bot/analytics/{botId}`
@@ -6638,9 +6337,11 @@ export const BotAnalyticsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async botsAnalyticsGet(botId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BotsAnalyticsGet200Response>> {
+        async botsAnalyticsGet(botId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BotsAnalyticsGet200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.botsAnalyticsGet(botId, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['BotAnalyticsApi.botsAnalyticsGet']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
     }
 };
@@ -6659,7 +6360,7 @@ export const BotAnalyticsApiFactory = function (configuration?: Configuration, b
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        botsAnalyticsGet(requestParameters: BotAnalyticsApiBotsAnalyticsGetRequest, options?: AxiosRequestConfig): AxiosPromise<BotsAnalyticsGet200Response> {
+        botsAnalyticsGet(requestParameters: BotAnalyticsApiBotsAnalyticsGetRequest, options?: RawAxiosRequestConfig): AxiosPromise<BotsAnalyticsGet200Response> {
             return localVarFp.botsAnalyticsGet(requestParameters.botId, options).then((request) => request(axios, basePath));
         },
     };
@@ -6694,10 +6395,11 @@ export class BotAnalyticsApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof BotAnalyticsApi
      */
-    public botsAnalyticsGet(requestParameters: BotAnalyticsApiBotsAnalyticsGetRequest, options?: AxiosRequestConfig) {
+    public botsAnalyticsGet(requestParameters: BotAnalyticsApiBotsAnalyticsGetRequest, options?: RawAxiosRequestConfig) {
         return BotAnalyticsApiFp(this.configuration).botsAnalyticsGet(requestParameters.botId, options).then((request) => request(this.axios, this.basePath));
     }
 }
+
 
 
 /**
@@ -6721,7 +6423,7 @@ export const BotRecordsApiAxiosParamCreator = function (configuration?: Configur
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getBotFireRecords: async (botId?: string, contacts?: GetBotFireRecordsContactsParameter, count?: number, cursor?: string, interactions?: { [key: string]: ActionInteractionQueryItem; }, scheduledActionInteraction?: ActionInteractionQueryItem, returnTotal?: boolean, instanceId?: string, triggerId?: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getBotFireRecords: async (botId?: string, contacts?: GetBotFireRecordsContactsParameter, count?: number, cursor?: string, interactions?: { [key: string]: ActionInteractionQueryItem; }, scheduledActionInteraction?: ActionInteractionQueryItem, returnTotal?: boolean, instanceId?: string, triggerId?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/bot/records`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -6743,7 +6445,9 @@ export const BotRecordsApiAxiosParamCreator = function (configuration?: Configur
             }
 
             if (contacts !== undefined) {
-                localVarQueryParameter['contacts'] = contacts;
+                for (const [key, value] of Object.entries(contacts)) {
+                    localVarQueryParameter[key] = value;
+                }
             }
 
             if (count !== undefined) {
@@ -6755,11 +6459,15 @@ export const BotRecordsApiAxiosParamCreator = function (configuration?: Configur
             }
 
             if (interactions !== undefined) {
-                localVarQueryParameter['interactions'] = interactions;
+                for (const [key, value] of Object.entries(interactions)) {
+                    localVarQueryParameter[key] = value;
+                }
             }
 
             if (scheduledActionInteraction !== undefined) {
-                localVarQueryParameter['scheduledActionInteraction'] = scheduledActionInteraction;
+                for (const [key, value] of Object.entries(scheduledActionInteraction)) {
+                    localVarQueryParameter[key] = value;
+                }
             }
 
             if (returnTotal !== undefined) {
@@ -6793,7 +6501,7 @@ export const BotRecordsApiAxiosParamCreator = function (configuration?: Configur
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        simulateActionExecuteResult: async (botId: string, actionId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        simulateActionExecuteResult: async (botId: string, actionId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'botId' is not null or undefined
             assertParamExists('simulateActionExecuteResult', 'botId', botId)
             // verify required parameter 'actionId' is not null or undefined
@@ -6858,9 +6566,11 @@ export const BotRecordsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getBotFireRecords(botId?: string, contacts?: GetBotFireRecordsContactsParameter, count?: number, cursor?: string, interactions?: { [key: string]: ActionInteractionQueryItem; }, scheduledActionInteraction?: ActionInteractionQueryItem, returnTotal?: boolean, instanceId?: string, triggerId?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetBotFireRecords200Response>> {
+        async getBotFireRecords(botId?: string, contacts?: GetBotFireRecordsContactsParameter, count?: number, cursor?: string, interactions?: { [key: string]: ActionInteractionQueryItem; }, scheduledActionInteraction?: ActionInteractionQueryItem, returnTotal?: boolean, instanceId?: string, triggerId?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetBotFireRecords200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getBotFireRecords(botId, contacts, count, cursor, interactions, scheduledActionInteraction, returnTotal, instanceId, triggerId, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['BotRecordsApi.getBotFireRecords']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
          * This endpoint simulates the result of an action execution based on the provided parameters
@@ -6870,9 +6580,11 @@ export const BotRecordsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async simulateActionExecuteResult(botId: string, actionId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SimulateActionExecuteResult200Response>> {
+        async simulateActionExecuteResult(botId: string, actionId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SimulateActionExecuteResult200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.simulateActionExecuteResult(botId, actionId, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['BotRecordsApi.simulateActionExecuteResult']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
     }
 };
@@ -6891,7 +6603,7 @@ export const BotRecordsApiFactory = function (configuration?: Configuration, bas
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getBotFireRecords(requestParameters: BotRecordsApiGetBotFireRecordsRequest = {}, options?: AxiosRequestConfig): AxiosPromise<GetBotFireRecords200Response> {
+        getBotFireRecords(requestParameters: BotRecordsApiGetBotFireRecordsRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<GetBotFireRecords200Response> {
             return localVarFp.getBotFireRecords(requestParameters.botId, requestParameters.contacts, requestParameters.count, requestParameters.cursor, requestParameters.interactions, requestParameters.scheduledActionInteraction, requestParameters.returnTotal, requestParameters.instanceId, requestParameters.triggerId, options).then((request) => request(axios, basePath));
         },
         /**
@@ -6901,7 +6613,7 @@ export const BotRecordsApiFactory = function (configuration?: Configuration, bas
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        simulateActionExecuteResult(requestParameters: BotRecordsApiSimulateActionExecuteResultRequest, options?: AxiosRequestConfig): AxiosPromise<SimulateActionExecuteResult200Response> {
+        simulateActionExecuteResult(requestParameters: BotRecordsApiSimulateActionExecuteResultRequest, options?: RawAxiosRequestConfig): AxiosPromise<SimulateActionExecuteResult200Response> {
             return localVarFp.simulateActionExecuteResult(requestParameters.botId, requestParameters.actionId, options).then((request) => request(axios, basePath));
         },
     };
@@ -7013,7 +6725,7 @@ export class BotRecordsApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof BotRecordsApi
      */
-    public getBotFireRecords(requestParameters: BotRecordsApiGetBotFireRecordsRequest = {}, options?: AxiosRequestConfig) {
+    public getBotFireRecords(requestParameters: BotRecordsApiGetBotFireRecordsRequest = {}, options?: RawAxiosRequestConfig) {
         return BotRecordsApiFp(this.configuration).getBotFireRecords(requestParameters.botId, requestParameters.contacts, requestParameters.count, requestParameters.cursor, requestParameters.interactions, requestParameters.scheduledActionInteraction, requestParameters.returnTotal, requestParameters.instanceId, requestParameters.triggerId, options).then((request) => request(this.axios, this.basePath));
     }
 
@@ -7025,10 +6737,11 @@ export class BotRecordsApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof BotRecordsApi
      */
-    public simulateActionExecuteResult(requestParameters: BotRecordsApiSimulateActionExecuteResultRequest, options?: AxiosRequestConfig) {
+    public simulateActionExecuteResult(requestParameters: BotRecordsApiSimulateActionExecuteResultRequest, options?: RawAxiosRequestConfig) {
         return BotRecordsApiFp(this.configuration).simulateActionExecuteResult(requestParameters.botId, requestParameters.actionId, options).then((request) => request(this.axios, this.basePath));
     }
 }
+
 
 
 /**
@@ -7038,50 +6751,12 @@ export class BotRecordsApi extends BaseAPI {
 export const BotTriggersApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
-         * This endpoint is used to fire a trigger via a webhook. The secret is used to authenticate the request. The endpoint will throw an error if:   - the trigger is disabled   - no recipients were obtained from the trigger config or req body   - throttle limit is reached for the trigger/all recipients
-         * @summary Fire a trigger via a webhook
-         * @param {string} secret 
-         * @param {{ [key: string]: any; }} [requestBody] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        fireTriggerWebhook: async (secret: string, requestBody?: { [key: string]: any; }, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'secret' is not null or undefined
-            assertParamExists('fireTriggerWebhook', 'secret', secret)
-            const localVarPath = `/triggers/app-webhook/{secret}`
-                .replace(`{${"secret"}}`, encodeURIComponent(String(secret)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-
-    
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(requestBody, localVarRequestOptions, configuration)
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
          * 
          * @summary Get trigger display configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getDisplayConfiguration: async (options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getDisplayConfiguration: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/triggers/display-configuration`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -7120,7 +6795,7 @@ export const BotTriggersApiAxiosParamCreator = function (configuration?: Configu
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getTriggerInstances: async (triggerId?: string, count?: number, status?: Array<BotTriggerInstanceStatus>, cursor?: string, id?: string, returnTotalCount?: boolean, botId?: Array<string>, q?: string, dateRage?: GetTriggerInstancesDateRageParameter, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getTriggerInstances: async (triggerId?: string, count?: number, status?: Array<BotTriggerInstanceStatus>, cursor?: string, id?: string, returnTotalCount?: boolean, botId?: Array<string>, q?: string, dateRage?: GetTriggerInstancesDateRageParameter, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/trigger-instances`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -7170,7 +6845,9 @@ export const BotTriggersApiAxiosParamCreator = function (configuration?: Configu
             }
 
             if (dateRage !== undefined) {
-                localVarQueryParameter['dateRage'] = dateRage;
+                for (const [key, value] of Object.entries(dateRage)) {
+                    localVarQueryParameter[key] = value;
+                }
             }
 
 
@@ -7191,7 +6868,7 @@ export const BotTriggersApiAxiosParamCreator = function (configuration?: Configu
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        stopTriggerInstance: async (id: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        stopTriggerInstance: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
             assertParamExists('stopTriggerInstance', 'id', id)
             const localVarPath = `/trigger-instances/{id}/stop`
@@ -7233,26 +6910,16 @@ export const BotTriggersApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = BotTriggersApiAxiosParamCreator(configuration)
     return {
         /**
-         * This endpoint is used to fire a trigger via a webhook. The secret is used to authenticate the request. The endpoint will throw an error if:   - the trigger is disabled   - no recipients were obtained from the trigger config or req body   - throttle limit is reached for the trigger/all recipients
-         * @summary Fire a trigger via a webhook
-         * @param {string} secret 
-         * @param {{ [key: string]: any; }} [requestBody] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async fireTriggerWebhook(secret: string, requestBody?: { [key: string]: any; }, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<FireTriggerWebhook200Response>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.fireTriggerWebhook(secret, requestBody, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-        /**
          * 
          * @summary Get trigger display configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getDisplayConfiguration(options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TriggersDisplayConfiguration>> {
+        async getDisplayConfiguration(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TriggersDisplayConfiguration>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getDisplayConfiguration(options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['BotTriggersApi.getDisplayConfiguration']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
          * 
@@ -7269,9 +6936,11 @@ export const BotTriggersApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getTriggerInstances(triggerId?: string, count?: number, status?: Array<BotTriggerInstanceStatus>, cursor?: string, id?: string, returnTotalCount?: boolean, botId?: Array<string>, q?: string, dateRage?: GetTriggerInstancesDateRageParameter, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetTriggerInstances200Response>> {
+        async getTriggerInstances(triggerId?: string, count?: number, status?: Array<BotTriggerInstanceStatus>, cursor?: string, id?: string, returnTotalCount?: boolean, botId?: Array<string>, q?: string, dateRage?: GetTriggerInstancesDateRageParameter, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetTriggerInstances200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getTriggerInstances(triggerId, count, status, cursor, id, returnTotalCount, botId, q, dateRage, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['BotTriggersApi.getTriggerInstances']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
          * 
@@ -7280,9 +6949,11 @@ export const BotTriggersApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async stopTriggerInstance(id: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async stopTriggerInstance(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.stopTriggerInstance(id, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['BotTriggersApi.stopTriggerInstance']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
     }
 };
@@ -7295,22 +6966,12 @@ export const BotTriggersApiFactory = function (configuration?: Configuration, ba
     const localVarFp = BotTriggersApiFp(configuration)
     return {
         /**
-         * This endpoint is used to fire a trigger via a webhook. The secret is used to authenticate the request. The endpoint will throw an error if:   - the trigger is disabled   - no recipients were obtained from the trigger config or req body   - throttle limit is reached for the trigger/all recipients
-         * @summary Fire a trigger via a webhook
-         * @param {BotTriggersApiFireTriggerWebhookRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        fireTriggerWebhook(requestParameters: BotTriggersApiFireTriggerWebhookRequest, options?: AxiosRequestConfig): AxiosPromise<FireTriggerWebhook200Response> {
-            return localVarFp.fireTriggerWebhook(requestParameters.secret, requestParameters.requestBody, options).then((request) => request(axios, basePath));
-        },
-        /**
          * 
          * @summary Get trigger display configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getDisplayConfiguration(options?: AxiosRequestConfig): AxiosPromise<TriggersDisplayConfiguration> {
+        getDisplayConfiguration(options?: RawAxiosRequestConfig): AxiosPromise<TriggersDisplayConfiguration> {
             return localVarFp.getDisplayConfiguration(options).then((request) => request(axios, basePath));
         },
         /**
@@ -7320,7 +6981,7 @@ export const BotTriggersApiFactory = function (configuration?: Configuration, ba
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getTriggerInstances(requestParameters: BotTriggersApiGetTriggerInstancesRequest = {}, options?: AxiosRequestConfig): AxiosPromise<GetTriggerInstances200Response> {
+        getTriggerInstances(requestParameters: BotTriggersApiGetTriggerInstancesRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<GetTriggerInstances200Response> {
             return localVarFp.getTriggerInstances(requestParameters.triggerId, requestParameters.count, requestParameters.status, requestParameters.cursor, requestParameters.id, requestParameters.returnTotalCount, requestParameters.botId, requestParameters.q, requestParameters.dateRage, options).then((request) => request(axios, basePath));
         },
         /**
@@ -7330,32 +6991,11 @@ export const BotTriggersApiFactory = function (configuration?: Configuration, ba
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        stopTriggerInstance(requestParameters: BotTriggersApiStopTriggerInstanceRequest, options?: AxiosRequestConfig): AxiosPromise<void> {
+        stopTriggerInstance(requestParameters: BotTriggersApiStopTriggerInstanceRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
             return localVarFp.stopTriggerInstance(requestParameters.id, options).then((request) => request(axios, basePath));
         },
     };
 };
-
-/**
- * Request parameters for fireTriggerWebhook operation in BotTriggersApi.
- * @export
- * @interface BotTriggersApiFireTriggerWebhookRequest
- */
-export interface BotTriggersApiFireTriggerWebhookRequest {
-    /**
-     * 
-     * @type {string}
-     * @memberof BotTriggersApiFireTriggerWebhook
-     */
-    readonly secret: string
-
-    /**
-     * 
-     * @type {{ [key: string]: any; }}
-     * @memberof BotTriggersApiFireTriggerWebhook
-     */
-    readonly requestBody?: { [key: string]: any; }
-}
 
 /**
  * Request parameters for getTriggerInstances operation in BotTriggersApi.
@@ -7449,25 +7089,13 @@ export interface BotTriggersApiStopTriggerInstanceRequest {
  */
 export class BotTriggersApi extends BaseAPI {
     /**
-     * This endpoint is used to fire a trigger via a webhook. The secret is used to authenticate the request. The endpoint will throw an error if:   - the trigger is disabled   - no recipients were obtained from the trigger config or req body   - throttle limit is reached for the trigger/all recipients
-     * @summary Fire a trigger via a webhook
-     * @param {BotTriggersApiFireTriggerWebhookRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof BotTriggersApi
-     */
-    public fireTriggerWebhook(requestParameters: BotTriggersApiFireTriggerWebhookRequest, options?: AxiosRequestConfig) {
-        return BotTriggersApiFp(this.configuration).fireTriggerWebhook(requestParameters.secret, requestParameters.requestBody, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
      * 
      * @summary Get trigger display configuration
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof BotTriggersApi
      */
-    public getDisplayConfiguration(options?: AxiosRequestConfig) {
+    public getDisplayConfiguration(options?: RawAxiosRequestConfig) {
         return BotTriggersApiFp(this.configuration).getDisplayConfiguration(options).then((request) => request(this.axios, this.basePath));
     }
 
@@ -7479,7 +7107,7 @@ export class BotTriggersApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof BotTriggersApi
      */
-    public getTriggerInstances(requestParameters: BotTriggersApiGetTriggerInstancesRequest = {}, options?: AxiosRequestConfig) {
+    public getTriggerInstances(requestParameters: BotTriggersApiGetTriggerInstancesRequest = {}, options?: RawAxiosRequestConfig) {
         return BotTriggersApiFp(this.configuration).getTriggerInstances(requestParameters.triggerId, requestParameters.count, requestParameters.status, requestParameters.cursor, requestParameters.id, requestParameters.returnTotalCount, requestParameters.botId, requestParameters.q, requestParameters.dateRage, options).then((request) => request(this.axios, this.basePath));
     }
 
@@ -7491,10 +7119,11 @@ export class BotTriggersApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof BotTriggersApi
      */
-    public stopTriggerInstance(requestParameters: BotTriggersApiStopTriggerInstanceRequest, options?: AxiosRequestConfig) {
+    public stopTriggerInstance(requestParameters: BotTriggersApiStopTriggerInstanceRequest, options?: RawAxiosRequestConfig) {
         return BotTriggersApiFp(this.configuration).stopTriggerInstance(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
     }
 }
+
 
 
 /**
@@ -7511,7 +7140,7 @@ export const BotsApiAxiosParamCreator = function (configuration?: Configuration)
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        botsBulkFire: async (id: string, botsBulkFireRequest?: BotsBulkFireRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        botsBulkFire: async (id: string, botsBulkFireRequest?: BotsBulkFireRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
             assertParamExists('botsBulkFire', 'id', id)
             const localVarPath = `/bots/{id}/bulk-fire`
@@ -7552,7 +7181,7 @@ export const BotsApiAxiosParamCreator = function (configuration?: Configuration)
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        botsCreate: async (botsCreateRequest?: BotsCreateRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        botsCreate: async (botsCreateRequest?: BotsCreateRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/bots`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -7590,7 +7219,7 @@ export const BotsApiAxiosParamCreator = function (configuration?: Configuration)
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        botsDataGet: async (botId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        botsDataGet: async (botId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'botId' is not null or undefined
             assertParamExists('botsDataGet', 'botId', botId)
             const localVarPath = `/bots/{botId}/data`
@@ -7628,7 +7257,7 @@ export const BotsApiAxiosParamCreator = function (configuration?: Configuration)
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        botsDeletes: async (bots: Array<string>, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        botsDeletes: async (bots: Array<string>, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'bots' is not null or undefined
             assertParamExists('botsDeletes', 'bots', bots)
             const localVarPath = `/bots`;
@@ -7675,7 +7304,7 @@ export const BotsApiAxiosParamCreator = function (configuration?: Configuration)
          * @deprecated
          * @throws {RequiredError}
          */
-        botsExternalTemplateCommand: async (id: string, accountId: string, command: TemplateCommand, language?: string, category?: string, templateId?: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        botsExternalTemplateCommand: async (id: string, accountId: string, command: TemplateCommand, language?: string, category?: string, templateId?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
             assertParamExists('botsExternalTemplateCommand', 'id', id)
             // verify required parameter 'accountId' is not null or undefined
@@ -7732,7 +7361,7 @@ export const BotsApiAxiosParamCreator = function (configuration?: Configuration)
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        botsFire: async (id: string, botsFireRequest?: BotsFireRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        botsFire: async (id: string, botsFireRequest?: BotsFireRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
             assertParamExists('botsFire', 'id', id)
             const localVarPath = `/bots/{id}/fire`
@@ -7774,8 +7403,8 @@ export const BotsApiAxiosParamCreator = function (configuration?: Configuration)
          * @param {string} [before] 
          * @param {number} [count] 
          * @param {Array<string>} [id] 
-         * @param {'name' | 'updatedAt'} [sortBy] 
-         * @param {'ASC' | 'DESC'} [order] 
+         * @param {BotsGetsSortByEnum} [sortBy] 
+         * @param {BotsGetsOrderEnum} [order] 
          * @param {string} [folderId] 
          * @param {string} [language] 
          * @param {string} [industry] 
@@ -7784,7 +7413,7 @@ export const BotsApiAxiosParamCreator = function (configuration?: Configuration)
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        botsGets: async (q?: string, isForm?: boolean, before?: string, count?: number, id?: Array<string>, sortBy?: 'name' | 'updatedAt', order?: 'ASC' | 'DESC', folderId?: string, language?: string, industry?: string, returnTotalCount?: boolean, triggerTypes?: BotsGetsTriggerTypesParameter, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        botsGets: async (q?: string, isForm?: boolean, before?: string, count?: number, id?: Array<string>, sortBy?: BotsGetsSortByEnum, order?: BotsGetsOrderEnum, folderId?: string, language?: string, industry?: string, returnTotalCount?: boolean, triggerTypes?: BotsGetsTriggerTypesParameter, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/bots`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -7846,7 +7475,9 @@ export const BotsApiAxiosParamCreator = function (configuration?: Configuration)
             }
 
             if (triggerTypes !== undefined) {
-                localVarQueryParameter['triggerTypes'] = triggerTypes;
+                for (const [key, value] of Object.entries(triggerTypes)) {
+                    localVarQueryParameter[key] = value;
+                }
             }
 
 
@@ -7868,7 +7499,7 @@ export const BotsApiAxiosParamCreator = function (configuration?: Configuration)
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        botsPatch: async (id: string, botPatch?: BotPatch, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        botsPatch: async (id: string, botPatch?: BotPatch, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
             assertParamExists('botsPatch', 'id', id)
             const localVarPath = `/bots/{id}`
@@ -7904,44 +7535,6 @@ export const BotsApiAxiosParamCreator = function (configuration?: Configuration)
         },
         /**
          * 
-         * @summary Update status of some templates
-         * @param {TemplateStatusUpdateRequest} [templateStatusUpdateRequest] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        externalTemplateStatusUpdate: async (templateStatusUpdateRequest?: TemplateStatusUpdateRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/external-template-status`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication chatdaddy required
-            // oauth required
-            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["ADMIN_PANEL_ACCESS"], configuration)
-
-
-    
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(templateStatusUpdateRequest, localVarRequestOptions, configuration)
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
          * @summary Returns list of action fire records
          * @param {number} [count] 
          * @param {number} [beforeId] 
@@ -7949,7 +7542,7 @@ export const BotsApiAxiosParamCreator = function (configuration?: Configuration)
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getActionFireRecords: async (count?: number, beforeId?: number, botId?: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getActionFireRecords: async (count?: number, beforeId?: number, botId?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/actions/records`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -8007,9 +7600,11 @@ export const BotsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async botsBulkFire(id: string, botsBulkFireRequest?: BotsBulkFireRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BotsBulkFire200Response>> {
+        async botsBulkFire(id: string, botsBulkFireRequest?: BotsBulkFireRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BotsBulkFire200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.botsBulkFire(id, botsBulkFireRequest, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['BotsApi.botsBulkFire']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
          * 
@@ -8018,9 +7613,11 @@ export const BotsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async botsCreate(botsCreateRequest?: BotsCreateRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Bot>> {
+        async botsCreate(botsCreateRequest?: BotsCreateRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Bot>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.botsCreate(botsCreateRequest, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['BotsApi.botsCreate']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
          * This endpoint fetches bot data based on provided botId parameters
@@ -8029,9 +7626,11 @@ export const BotsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async botsDataGet(botId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BotData>> {
+        async botsDataGet(botId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BotData>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.botsDataGet(botId, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['BotsApi.botsDataGet']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
          * 
@@ -8040,9 +7639,11 @@ export const BotsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async botsDeletes(bots: Array<string>, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async botsDeletes(bots: Array<string>, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.botsDeletes(bots, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['BotsApi.botsDeletes']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
          * Either submit for review, unlink from the external template provider or link with an existing template ID. Note: this is deprecated, use \"actionExternalTemplateCommand\" instead
@@ -8057,9 +7658,11 @@ export const BotsApiFp = function(configuration?: Configuration) {
          * @deprecated
          * @throws {RequiredError}
          */
-        async botsExternalTemplateCommand(id: string, accountId: string, command: TemplateCommand, language?: string, category?: string, templateId?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BotsExternalTemplateCommand200Response>> {
+        async botsExternalTemplateCommand(id: string, accountId: string, command: TemplateCommand, language?: string, category?: string, templateId?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BotsExternalTemplateCommand200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.botsExternalTemplateCommand(id, accountId, command, language, category, templateId, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['BotsApi.botsExternalTemplateCommand']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
          * Will throw a 400 if there is no starting action ID
@@ -8069,9 +7672,11 @@ export const BotsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async botsFire(id: string, botsFireRequest?: BotsFireRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ActionFireRecord>> {
+        async botsFire(id: string, botsFireRequest?: BotsFireRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ActionFireRecord>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.botsFire(id, botsFireRequest, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['BotsApi.botsFire']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
          * 
@@ -8081,8 +7686,8 @@ export const BotsApiFp = function(configuration?: Configuration) {
          * @param {string} [before] 
          * @param {number} [count] 
          * @param {Array<string>} [id] 
-         * @param {'name' | 'updatedAt'} [sortBy] 
-         * @param {'ASC' | 'DESC'} [order] 
+         * @param {BotsGetsSortByEnum} [sortBy] 
+         * @param {BotsGetsOrderEnum} [order] 
          * @param {string} [folderId] 
          * @param {string} [language] 
          * @param {string} [industry] 
@@ -8091,9 +7696,11 @@ export const BotsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async botsGets(q?: string, isForm?: boolean, before?: string, count?: number, id?: Array<string>, sortBy?: 'name' | 'updatedAt', order?: 'ASC' | 'DESC', folderId?: string, language?: string, industry?: string, returnTotalCount?: boolean, triggerTypes?: BotsGetsTriggerTypesParameter, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BotsGets200Response>> {
+        async botsGets(q?: string, isForm?: boolean, before?: string, count?: number, id?: Array<string>, sortBy?: BotsGetsSortByEnum, order?: BotsGetsOrderEnum, folderId?: string, language?: string, industry?: string, returnTotalCount?: boolean, triggerTypes?: BotsGetsTriggerTypesParameter, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BotsGets200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.botsGets(q, isForm, before, count, id, sortBy, order, folderId, language, industry, returnTotalCount, triggerTypes, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['BotsApi.botsGets']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
          * 
@@ -8103,20 +7710,11 @@ export const BotsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async botsPatch(id: string, botPatch?: BotPatch, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BotData>> {
+        async botsPatch(id: string, botPatch?: BotPatch, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BotData>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.botsPatch(id, botPatch, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-        /**
-         * 
-         * @summary Update status of some templates
-         * @param {TemplateStatusUpdateRequest} [templateStatusUpdateRequest] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async externalTemplateStatusUpdate(templateStatusUpdateRequest?: TemplateStatusUpdateRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.externalTemplateStatusUpdate(templateStatusUpdateRequest, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['BotsApi.botsPatch']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
          * 
@@ -8127,9 +7725,11 @@ export const BotsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getActionFireRecords(count?: number, beforeId?: number, botId?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetActionFireRecords200Response>> {
+        async getActionFireRecords(count?: number, beforeId?: number, botId?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetActionFireRecords200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getActionFireRecords(count, beforeId, botId, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['BotsApi.getActionFireRecords']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
     }
 };
@@ -8148,7 +7748,7 @@ export const BotsApiFactory = function (configuration?: Configuration, basePath?
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        botsBulkFire(requestParameters: BotsApiBotsBulkFireRequest, options?: AxiosRequestConfig): AxiosPromise<BotsBulkFire200Response> {
+        botsBulkFire(requestParameters: BotsApiBotsBulkFireRequest, options?: RawAxiosRequestConfig): AxiosPromise<BotsBulkFire200Response> {
             return localVarFp.botsBulkFire(requestParameters.id, requestParameters.botsBulkFireRequest, options).then((request) => request(axios, basePath));
         },
         /**
@@ -8158,7 +7758,7 @@ export const BotsApiFactory = function (configuration?: Configuration, basePath?
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        botsCreate(requestParameters: BotsApiBotsCreateRequest = {}, options?: AxiosRequestConfig): AxiosPromise<Bot> {
+        botsCreate(requestParameters: BotsApiBotsCreateRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<Bot> {
             return localVarFp.botsCreate(requestParameters.botsCreateRequest, options).then((request) => request(axios, basePath));
         },
         /**
@@ -8168,7 +7768,7 @@ export const BotsApiFactory = function (configuration?: Configuration, basePath?
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        botsDataGet(requestParameters: BotsApiBotsDataGetRequest, options?: AxiosRequestConfig): AxiosPromise<BotData> {
+        botsDataGet(requestParameters: BotsApiBotsDataGetRequest, options?: RawAxiosRequestConfig): AxiosPromise<BotData> {
             return localVarFp.botsDataGet(requestParameters.botId, options).then((request) => request(axios, basePath));
         },
         /**
@@ -8178,7 +7778,7 @@ export const BotsApiFactory = function (configuration?: Configuration, basePath?
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        botsDeletes(requestParameters: BotsApiBotsDeletesRequest, options?: AxiosRequestConfig): AxiosPromise<void> {
+        botsDeletes(requestParameters: BotsApiBotsDeletesRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
             return localVarFp.botsDeletes(requestParameters.bots, options).then((request) => request(axios, basePath));
         },
         /**
@@ -8189,7 +7789,7 @@ export const BotsApiFactory = function (configuration?: Configuration, basePath?
          * @deprecated
          * @throws {RequiredError}
          */
-        botsExternalTemplateCommand(requestParameters: BotsApiBotsExternalTemplateCommandRequest, options?: AxiosRequestConfig): AxiosPromise<BotsExternalTemplateCommand200Response> {
+        botsExternalTemplateCommand(requestParameters: BotsApiBotsExternalTemplateCommandRequest, options?: RawAxiosRequestConfig): AxiosPromise<BotsExternalTemplateCommand200Response> {
             return localVarFp.botsExternalTemplateCommand(requestParameters.id, requestParameters.accountId, requestParameters.command, requestParameters.language, requestParameters.category, requestParameters.templateId, options).then((request) => request(axios, basePath));
         },
         /**
@@ -8199,7 +7799,7 @@ export const BotsApiFactory = function (configuration?: Configuration, basePath?
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        botsFire(requestParameters: BotsApiBotsFireRequest, options?: AxiosRequestConfig): AxiosPromise<ActionFireRecord> {
+        botsFire(requestParameters: BotsApiBotsFireRequest, options?: RawAxiosRequestConfig): AxiosPromise<ActionFireRecord> {
             return localVarFp.botsFire(requestParameters.id, requestParameters.botsFireRequest, options).then((request) => request(axios, basePath));
         },
         /**
@@ -8209,7 +7809,7 @@ export const BotsApiFactory = function (configuration?: Configuration, basePath?
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        botsGets(requestParameters: BotsApiBotsGetsRequest = {}, options?: AxiosRequestConfig): AxiosPromise<BotsGets200Response> {
+        botsGets(requestParameters: BotsApiBotsGetsRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<BotsGets200Response> {
             return localVarFp.botsGets(requestParameters.q, requestParameters.isForm, requestParameters.before, requestParameters.count, requestParameters.id, requestParameters.sortBy, requestParameters.order, requestParameters.folderId, requestParameters.language, requestParameters.industry, requestParameters.returnTotalCount, requestParameters.triggerTypes, options).then((request) => request(axios, basePath));
         },
         /**
@@ -8219,18 +7819,8 @@ export const BotsApiFactory = function (configuration?: Configuration, basePath?
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        botsPatch(requestParameters: BotsApiBotsPatchRequest, options?: AxiosRequestConfig): AxiosPromise<BotData> {
+        botsPatch(requestParameters: BotsApiBotsPatchRequest, options?: RawAxiosRequestConfig): AxiosPromise<BotData> {
             return localVarFp.botsPatch(requestParameters.id, requestParameters.botPatch, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
-         * @summary Update status of some templates
-         * @param {BotsApiExternalTemplateStatusUpdateRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        externalTemplateStatusUpdate(requestParameters: BotsApiExternalTemplateStatusUpdateRequest = {}, options?: AxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.externalTemplateStatusUpdate(requestParameters.templateStatusUpdateRequest, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -8239,7 +7829,7 @@ export const BotsApiFactory = function (configuration?: Configuration, basePath?
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getActionFireRecords(requestParameters: BotsApiGetActionFireRecordsRequest = {}, options?: AxiosRequestConfig): AxiosPromise<GetActionFireRecords200Response> {
+        getActionFireRecords(requestParameters: BotsApiGetActionFireRecordsRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<GetActionFireRecords200Response> {
             return localVarFp.getActionFireRecords(requestParameters.count, requestParameters.beforeId, requestParameters.botId, options).then((request) => request(axios, basePath));
         },
     };
@@ -8424,14 +8014,14 @@ export interface BotsApiBotsGetsRequest {
      * @type {'name' | 'updatedAt'}
      * @memberof BotsApiBotsGets
      */
-    readonly sortBy?: 'name' | 'updatedAt'
+    readonly sortBy?: BotsGetsSortByEnum
 
     /**
      * 
      * @type {'ASC' | 'DESC'}
      * @memberof BotsApiBotsGets
      */
-    readonly order?: 'ASC' | 'DESC'
+    readonly order?: BotsGetsOrderEnum
 
     /**
      * 
@@ -8491,20 +8081,6 @@ export interface BotsApiBotsPatchRequest {
 }
 
 /**
- * Request parameters for externalTemplateStatusUpdate operation in BotsApi.
- * @export
- * @interface BotsApiExternalTemplateStatusUpdateRequest
- */
-export interface BotsApiExternalTemplateStatusUpdateRequest {
-    /**
-     * 
-     * @type {TemplateStatusUpdateRequest}
-     * @memberof BotsApiExternalTemplateStatusUpdate
-     */
-    readonly templateStatusUpdateRequest?: TemplateStatusUpdateRequest
-}
-
-/**
  * Request parameters for getActionFireRecords operation in BotsApi.
  * @export
  * @interface BotsApiGetActionFireRecordsRequest
@@ -8547,7 +8123,7 @@ export class BotsApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof BotsApi
      */
-    public botsBulkFire(requestParameters: BotsApiBotsBulkFireRequest, options?: AxiosRequestConfig) {
+    public botsBulkFire(requestParameters: BotsApiBotsBulkFireRequest, options?: RawAxiosRequestConfig) {
         return BotsApiFp(this.configuration).botsBulkFire(requestParameters.id, requestParameters.botsBulkFireRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
@@ -8559,7 +8135,7 @@ export class BotsApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof BotsApi
      */
-    public botsCreate(requestParameters: BotsApiBotsCreateRequest = {}, options?: AxiosRequestConfig) {
+    public botsCreate(requestParameters: BotsApiBotsCreateRequest = {}, options?: RawAxiosRequestConfig) {
         return BotsApiFp(this.configuration).botsCreate(requestParameters.botsCreateRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
@@ -8571,7 +8147,7 @@ export class BotsApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof BotsApi
      */
-    public botsDataGet(requestParameters: BotsApiBotsDataGetRequest, options?: AxiosRequestConfig) {
+    public botsDataGet(requestParameters: BotsApiBotsDataGetRequest, options?: RawAxiosRequestConfig) {
         return BotsApiFp(this.configuration).botsDataGet(requestParameters.botId, options).then((request) => request(this.axios, this.basePath));
     }
 
@@ -8583,7 +8159,7 @@ export class BotsApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof BotsApi
      */
-    public botsDeletes(requestParameters: BotsApiBotsDeletesRequest, options?: AxiosRequestConfig) {
+    public botsDeletes(requestParameters: BotsApiBotsDeletesRequest, options?: RawAxiosRequestConfig) {
         return BotsApiFp(this.configuration).botsDeletes(requestParameters.bots, options).then((request) => request(this.axios, this.basePath));
     }
 
@@ -8596,7 +8172,7 @@ export class BotsApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof BotsApi
      */
-    public botsExternalTemplateCommand(requestParameters: BotsApiBotsExternalTemplateCommandRequest, options?: AxiosRequestConfig) {
+    public botsExternalTemplateCommand(requestParameters: BotsApiBotsExternalTemplateCommandRequest, options?: RawAxiosRequestConfig) {
         return BotsApiFp(this.configuration).botsExternalTemplateCommand(requestParameters.id, requestParameters.accountId, requestParameters.command, requestParameters.language, requestParameters.category, requestParameters.templateId, options).then((request) => request(this.axios, this.basePath));
     }
 
@@ -8608,7 +8184,7 @@ export class BotsApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof BotsApi
      */
-    public botsFire(requestParameters: BotsApiBotsFireRequest, options?: AxiosRequestConfig) {
+    public botsFire(requestParameters: BotsApiBotsFireRequest, options?: RawAxiosRequestConfig) {
         return BotsApiFp(this.configuration).botsFire(requestParameters.id, requestParameters.botsFireRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
@@ -8620,7 +8196,7 @@ export class BotsApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof BotsApi
      */
-    public botsGets(requestParameters: BotsApiBotsGetsRequest = {}, options?: AxiosRequestConfig) {
+    public botsGets(requestParameters: BotsApiBotsGetsRequest = {}, options?: RawAxiosRequestConfig) {
         return BotsApiFp(this.configuration).botsGets(requestParameters.q, requestParameters.isForm, requestParameters.before, requestParameters.count, requestParameters.id, requestParameters.sortBy, requestParameters.order, requestParameters.folderId, requestParameters.language, requestParameters.industry, requestParameters.returnTotalCount, requestParameters.triggerTypes, options).then((request) => request(this.axios, this.basePath));
     }
 
@@ -8632,20 +8208,8 @@ export class BotsApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof BotsApi
      */
-    public botsPatch(requestParameters: BotsApiBotsPatchRequest, options?: AxiosRequestConfig) {
+    public botsPatch(requestParameters: BotsApiBotsPatchRequest, options?: RawAxiosRequestConfig) {
         return BotsApiFp(this.configuration).botsPatch(requestParameters.id, requestParameters.botPatch, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
-     * @summary Update status of some templates
-     * @param {BotsApiExternalTemplateStatusUpdateRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof BotsApi
-     */
-    public externalTemplateStatusUpdate(requestParameters: BotsApiExternalTemplateStatusUpdateRequest = {}, options?: AxiosRequestConfig) {
-        return BotsApiFp(this.configuration).externalTemplateStatusUpdate(requestParameters.templateStatusUpdateRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -8656,10 +8220,27 @@ export class BotsApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof BotsApi
      */
-    public getActionFireRecords(requestParameters: BotsApiGetActionFireRecordsRequest = {}, options?: AxiosRequestConfig) {
+    public getActionFireRecords(requestParameters: BotsApiGetActionFireRecordsRequest = {}, options?: RawAxiosRequestConfig) {
         return BotsApiFp(this.configuration).getActionFireRecords(requestParameters.count, requestParameters.beforeId, requestParameters.botId, options).then((request) => request(this.axios, this.basePath));
     }
 }
+
+/**
+ * @export
+ */
+export const BotsGetsSortByEnum = {
+    Name: 'name',
+    UpdatedAt: 'updatedAt'
+} as const;
+export type BotsGetsSortByEnum = typeof BotsGetsSortByEnum[keyof typeof BotsGetsSortByEnum];
+/**
+ * @export
+ */
+export const BotsGetsOrderEnum = {
+    Asc: 'ASC',
+    Desc: 'DESC'
+} as const;
+export type BotsGetsOrderEnum = typeof BotsGetsOrderEnum[keyof typeof BotsGetsOrderEnum];
 
 
 /**
@@ -8675,7 +8256,7 @@ export const FoldersApiAxiosParamCreator = function (configuration?: Configurati
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        folderCreate: async (folderCreateRequest?: FolderCreateRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        folderCreate: async (folderCreateRequest?: FolderCreateRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/folder`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -8713,7 +8294,7 @@ export const FoldersApiAxiosParamCreator = function (configuration?: Configurati
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        folderDelete: async (folders: Array<string>, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        folderDelete: async (folders: Array<string>, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'folders' is not null or undefined
             assertParamExists('folderDelete', 'folders', folders)
             const localVarPath = `/folder`;
@@ -8756,7 +8337,7 @@ export const FoldersApiAxiosParamCreator = function (configuration?: Configurati
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        folderGet: async (count?: number, before?: string, q?: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        folderGet: async (count?: number, before?: string, q?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/folder`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -8804,7 +8385,7 @@ export const FoldersApiAxiosParamCreator = function (configuration?: Configurati
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        folderUpdate: async (folderId: string, folderUpdateRequest?: FolderUpdateRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        folderUpdate: async (folderId: string, folderUpdateRequest?: FolderUpdateRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'folderId' is not null or undefined
             assertParamExists('folderUpdate', 'folderId', folderId)
             const localVarPath = `/folder/{folderId}`
@@ -8855,9 +8436,11 @@ export const FoldersApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async folderCreate(folderCreateRequest?: FolderCreateRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Folder>> {
+        async folderCreate(folderCreateRequest?: FolderCreateRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Folder>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.folderCreate(folderCreateRequest, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['FoldersApi.folderCreate']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
          * 
@@ -8866,9 +8449,11 @@ export const FoldersApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async folderDelete(folders: Array<string>, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async folderDelete(folders: Array<string>, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.folderDelete(folders, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['FoldersApi.folderDelete']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
          * 
@@ -8879,9 +8464,11 @@ export const FoldersApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async folderGet(count?: number, before?: string, q?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<FolderGet200Response>> {
+        async folderGet(count?: number, before?: string, q?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<FolderGet200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.folderGet(count, before, q, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['FoldersApi.folderGet']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
          * 
@@ -8891,9 +8478,11 @@ export const FoldersApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async folderUpdate(folderId: string, folderUpdateRequest?: FolderUpdateRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async folderUpdate(folderId: string, folderUpdateRequest?: FolderUpdateRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.folderUpdate(folderId, folderUpdateRequest, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['FoldersApi.folderUpdate']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
     }
 };
@@ -8912,7 +8501,7 @@ export const FoldersApiFactory = function (configuration?: Configuration, basePa
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        folderCreate(requestParameters: FoldersApiFolderCreateRequest = {}, options?: AxiosRequestConfig): AxiosPromise<Folder> {
+        folderCreate(requestParameters: FoldersApiFolderCreateRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<Folder> {
             return localVarFp.folderCreate(requestParameters.folderCreateRequest, options).then((request) => request(axios, basePath));
         },
         /**
@@ -8922,7 +8511,7 @@ export const FoldersApiFactory = function (configuration?: Configuration, basePa
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        folderDelete(requestParameters: FoldersApiFolderDeleteRequest, options?: AxiosRequestConfig): AxiosPromise<void> {
+        folderDelete(requestParameters: FoldersApiFolderDeleteRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
             return localVarFp.folderDelete(requestParameters.folders, options).then((request) => request(axios, basePath));
         },
         /**
@@ -8932,7 +8521,7 @@ export const FoldersApiFactory = function (configuration?: Configuration, basePa
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        folderGet(requestParameters: FoldersApiFolderGetRequest = {}, options?: AxiosRequestConfig): AxiosPromise<FolderGet200Response> {
+        folderGet(requestParameters: FoldersApiFolderGetRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<FolderGet200Response> {
             return localVarFp.folderGet(requestParameters.count, requestParameters.before, requestParameters.q, options).then((request) => request(axios, basePath));
         },
         /**
@@ -8942,7 +8531,7 @@ export const FoldersApiFactory = function (configuration?: Configuration, basePa
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        folderUpdate(requestParameters: FoldersApiFolderUpdateRequest, options?: AxiosRequestConfig): AxiosPromise<void> {
+        folderUpdate(requestParameters: FoldersApiFolderUpdateRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
             return localVarFp.folderUpdate(requestParameters.folderId, requestParameters.folderUpdateRequest, options).then((request) => request(axios, basePath));
         },
     };
@@ -9040,7 +8629,7 @@ export class FoldersApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof FoldersApi
      */
-    public folderCreate(requestParameters: FoldersApiFolderCreateRequest = {}, options?: AxiosRequestConfig) {
+    public folderCreate(requestParameters: FoldersApiFolderCreateRequest = {}, options?: RawAxiosRequestConfig) {
         return FoldersApiFp(this.configuration).folderCreate(requestParameters.folderCreateRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
@@ -9052,7 +8641,7 @@ export class FoldersApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof FoldersApi
      */
-    public folderDelete(requestParameters: FoldersApiFolderDeleteRequest, options?: AxiosRequestConfig) {
+    public folderDelete(requestParameters: FoldersApiFolderDeleteRequest, options?: RawAxiosRequestConfig) {
         return FoldersApiFp(this.configuration).folderDelete(requestParameters.folders, options).then((request) => request(this.axios, this.basePath));
     }
 
@@ -9064,7 +8653,7 @@ export class FoldersApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof FoldersApi
      */
-    public folderGet(requestParameters: FoldersApiFolderGetRequest = {}, options?: AxiosRequestConfig) {
+    public folderGet(requestParameters: FoldersApiFolderGetRequest = {}, options?: RawAxiosRequestConfig) {
         return FoldersApiFp(this.configuration).folderGet(requestParameters.count, requestParameters.before, requestParameters.q, options).then((request) => request(this.axios, this.basePath));
     }
 
@@ -9076,10 +8665,11 @@ export class FoldersApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof FoldersApi
      */
-    public folderUpdate(requestParameters: FoldersApiFolderUpdateRequest, options?: AxiosRequestConfig) {
+    public folderUpdate(requestParameters: FoldersApiFolderUpdateRequest, options?: RawAxiosRequestConfig) {
         return FoldersApiFp(this.configuration).folderUpdate(requestParameters.folderId, requestParameters.folderUpdateRequest, options).then((request) => request(this.axios, this.basePath));
     }
 }
+
 
 
 /**
@@ -9095,7 +8685,7 @@ export const FormsApiAxiosParamCreator = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        formDataGet: async (submissionId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        formDataGet: async (submissionId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'submissionId' is not null or undefined
             assertParamExists('formDataGet', 'submissionId', submissionId)
             const localVarPath = `/form-data/{submissionId}`
@@ -9130,7 +8720,7 @@ export const FormsApiAxiosParamCreator = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        formSubmissionCreate: async (botId: string, formSubmissionCreateRequest?: FormSubmissionCreateRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        formSubmissionCreate: async (botId: string, formSubmissionCreateRequest?: FormSubmissionCreateRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'botId' is not null or undefined
             assertParamExists('formSubmissionCreate', 'botId', botId)
             const localVarPath = `/form-submissions/{botId}`
@@ -9168,7 +8758,7 @@ export const FormsApiAxiosParamCreator = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        formSubmissionDelete: async (botId: string, ids: Array<string>, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        formSubmissionDelete: async (botId: string, ids: Array<string>, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'botId' is not null or undefined
             assertParamExists('formSubmissionDelete', 'botId', botId)
             // verify required parameter 'ids' is not null or undefined
@@ -9213,7 +8803,7 @@ export const FormsApiAxiosParamCreator = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        formSubmissionUpdate: async (submissionId: string, formSubmissionUpdate?: FormSubmissionUpdate, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        formSubmissionUpdate: async (submissionId: string, formSubmissionUpdate?: FormSubmissionUpdate, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'submissionId' is not null or undefined
             assertParamExists('formSubmissionUpdate', 'submissionId', submissionId)
             const localVarPath = `/form-submission/{submissionId}`
@@ -9257,7 +8847,7 @@ export const FormsApiAxiosParamCreator = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        formSubmissionsGet: async (botId: string, count?: number, before?: string, q?: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        formSubmissionsGet: async (botId: string, count?: number, before?: string, q?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'botId' is not null or undefined
             assertParamExists('formSubmissionsGet', 'botId', botId)
             const localVarPath = `/form-submissions/{botId}`
@@ -9308,7 +8898,7 @@ export const FormsApiAxiosParamCreator = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        submitForm: async (submissionId: string, submitFormRequest?: SubmitFormRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        submitForm: async (submissionId: string, submitFormRequest?: SubmitFormRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'submissionId' is not null or undefined
             assertParamExists('submitForm', 'submissionId', submissionId)
             const localVarPath = `/form-submission/{submissionId}/submit`
@@ -9355,9 +8945,11 @@ export const FormsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async formDataGet(submissionId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<FormDataGet200Response>> {
+        async formDataGet(submissionId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<FormDataGet200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.formDataGet(submissionId, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['FormsApi.formDataGet']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
          * 
@@ -9367,9 +8959,11 @@ export const FormsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async formSubmissionCreate(botId: string, formSubmissionCreateRequest?: FormSubmissionCreateRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<FormSubmissionCreate200Response>> {
+        async formSubmissionCreate(botId: string, formSubmissionCreateRequest?: FormSubmissionCreateRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<FormSubmissionCreate200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.formSubmissionCreate(botId, formSubmissionCreateRequest, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['FormsApi.formSubmissionCreate']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
          * 
@@ -9379,9 +8973,11 @@ export const FormsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async formSubmissionDelete(botId: string, ids: Array<string>, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async formSubmissionDelete(botId: string, ids: Array<string>, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.formSubmissionDelete(botId, ids, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['FormsApi.formSubmissionDelete']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
          * 
@@ -9391,9 +8987,11 @@ export const FormsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async formSubmissionUpdate(submissionId: string, formSubmissionUpdate?: FormSubmissionUpdate, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async formSubmissionUpdate(submissionId: string, formSubmissionUpdate?: FormSubmissionUpdate, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.formSubmissionUpdate(submissionId, formSubmissionUpdate, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['FormsApi.formSubmissionUpdate']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
          * 
@@ -9405,9 +9003,11 @@ export const FormsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async formSubmissionsGet(botId: string, count?: number, before?: string, q?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<FormSubmissionsGet200Response>> {
+        async formSubmissionsGet(botId: string, count?: number, before?: string, q?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<FormSubmissionsGet200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.formSubmissionsGet(botId, count, before, q, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['FormsApi.formSubmissionsGet']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
          * 
@@ -9417,9 +9017,11 @@ export const FormsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async submitForm(submissionId: string, submitFormRequest?: SubmitFormRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async submitForm(submissionId: string, submitFormRequest?: SubmitFormRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.submitForm(submissionId, submitFormRequest, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['FormsApi.submitForm']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
     }
 };
@@ -9438,7 +9040,7 @@ export const FormsApiFactory = function (configuration?: Configuration, basePath
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        formDataGet(requestParameters: FormsApiFormDataGetRequest, options?: AxiosRequestConfig): AxiosPromise<FormDataGet200Response> {
+        formDataGet(requestParameters: FormsApiFormDataGetRequest, options?: RawAxiosRequestConfig): AxiosPromise<FormDataGet200Response> {
             return localVarFp.formDataGet(requestParameters.submissionId, options).then((request) => request(axios, basePath));
         },
         /**
@@ -9448,7 +9050,7 @@ export const FormsApiFactory = function (configuration?: Configuration, basePath
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        formSubmissionCreate(requestParameters: FormsApiFormSubmissionCreateRequest, options?: AxiosRequestConfig): AxiosPromise<FormSubmissionCreate200Response> {
+        formSubmissionCreate(requestParameters: FormsApiFormSubmissionCreateRequest, options?: RawAxiosRequestConfig): AxiosPromise<FormSubmissionCreate200Response> {
             return localVarFp.formSubmissionCreate(requestParameters.botId, requestParameters.formSubmissionCreateRequest, options).then((request) => request(axios, basePath));
         },
         /**
@@ -9458,7 +9060,7 @@ export const FormsApiFactory = function (configuration?: Configuration, basePath
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        formSubmissionDelete(requestParameters: FormsApiFormSubmissionDeleteRequest, options?: AxiosRequestConfig): AxiosPromise<void> {
+        formSubmissionDelete(requestParameters: FormsApiFormSubmissionDeleteRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
             return localVarFp.formSubmissionDelete(requestParameters.botId, requestParameters.ids, options).then((request) => request(axios, basePath));
         },
         /**
@@ -9468,7 +9070,7 @@ export const FormsApiFactory = function (configuration?: Configuration, basePath
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        formSubmissionUpdate(requestParameters: FormsApiFormSubmissionUpdateRequest, options?: AxiosRequestConfig): AxiosPromise<void> {
+        formSubmissionUpdate(requestParameters: FormsApiFormSubmissionUpdateRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
             return localVarFp.formSubmissionUpdate(requestParameters.submissionId, requestParameters.formSubmissionUpdate, options).then((request) => request(axios, basePath));
         },
         /**
@@ -9478,7 +9080,7 @@ export const FormsApiFactory = function (configuration?: Configuration, basePath
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        formSubmissionsGet(requestParameters: FormsApiFormSubmissionsGetRequest, options?: AxiosRequestConfig): AxiosPromise<FormSubmissionsGet200Response> {
+        formSubmissionsGet(requestParameters: FormsApiFormSubmissionsGetRequest, options?: RawAxiosRequestConfig): AxiosPromise<FormSubmissionsGet200Response> {
             return localVarFp.formSubmissionsGet(requestParameters.botId, requestParameters.count, requestParameters.before, requestParameters.q, options).then((request) => request(axios, basePath));
         },
         /**
@@ -9488,7 +9090,7 @@ export const FormsApiFactory = function (configuration?: Configuration, basePath
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        submitForm(requestParameters: FormsApiSubmitFormRequest, options?: AxiosRequestConfig): AxiosPromise<void> {
+        submitForm(requestParameters: FormsApiSubmitFormRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
             return localVarFp.submitForm(requestParameters.submissionId, requestParameters.submitFormRequest, options).then((request) => request(axios, basePath));
         },
     };
@@ -9642,7 +9244,7 @@ export class FormsApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof FormsApi
      */
-    public formDataGet(requestParameters: FormsApiFormDataGetRequest, options?: AxiosRequestConfig) {
+    public formDataGet(requestParameters: FormsApiFormDataGetRequest, options?: RawAxiosRequestConfig) {
         return FormsApiFp(this.configuration).formDataGet(requestParameters.submissionId, options).then((request) => request(this.axios, this.basePath));
     }
 
@@ -9654,7 +9256,7 @@ export class FormsApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof FormsApi
      */
-    public formSubmissionCreate(requestParameters: FormsApiFormSubmissionCreateRequest, options?: AxiosRequestConfig) {
+    public formSubmissionCreate(requestParameters: FormsApiFormSubmissionCreateRequest, options?: RawAxiosRequestConfig) {
         return FormsApiFp(this.configuration).formSubmissionCreate(requestParameters.botId, requestParameters.formSubmissionCreateRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
@@ -9666,7 +9268,7 @@ export class FormsApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof FormsApi
      */
-    public formSubmissionDelete(requestParameters: FormsApiFormSubmissionDeleteRequest, options?: AxiosRequestConfig) {
+    public formSubmissionDelete(requestParameters: FormsApiFormSubmissionDeleteRequest, options?: RawAxiosRequestConfig) {
         return FormsApiFp(this.configuration).formSubmissionDelete(requestParameters.botId, requestParameters.ids, options).then((request) => request(this.axios, this.basePath));
     }
 
@@ -9678,7 +9280,7 @@ export class FormsApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof FormsApi
      */
-    public formSubmissionUpdate(requestParameters: FormsApiFormSubmissionUpdateRequest, options?: AxiosRequestConfig) {
+    public formSubmissionUpdate(requestParameters: FormsApiFormSubmissionUpdateRequest, options?: RawAxiosRequestConfig) {
         return FormsApiFp(this.configuration).formSubmissionUpdate(requestParameters.submissionId, requestParameters.formSubmissionUpdate, options).then((request) => request(this.axios, this.basePath));
     }
 
@@ -9690,7 +9292,7 @@ export class FormsApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof FormsApi
      */
-    public formSubmissionsGet(requestParameters: FormsApiFormSubmissionsGetRequest, options?: AxiosRequestConfig) {
+    public formSubmissionsGet(requestParameters: FormsApiFormSubmissionsGetRequest, options?: RawAxiosRequestConfig) {
         return FormsApiFp(this.configuration).formSubmissionsGet(requestParameters.botId, requestParameters.count, requestParameters.before, requestParameters.q, options).then((request) => request(this.axios, this.basePath));
     }
 
@@ -9702,10 +9304,11 @@ export class FormsApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof FormsApi
      */
-    public submitForm(requestParameters: FormsApiSubmitFormRequest, options?: AxiosRequestConfig) {
+    public submitForm(requestParameters: FormsApiSubmitFormRequest, options?: RawAxiosRequestConfig) {
         return FormsApiFp(this.configuration).submitForm(requestParameters.submissionId, requestParameters.submitFormRequest, options).then((request) => request(this.axios, this.basePath));
     }
 }
+
 
 
 /**
@@ -9721,7 +9324,7 @@ export const ShareBotApiAxiosParamCreator = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        botShare: async (botShareRequest?: BotShareRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        botShare: async (botShareRequest?: BotShareRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/bot/share`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -9760,7 +9363,7 @@ export const ShareBotApiAxiosParamCreator = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        botSharePatch: async (slug: string, botSharePatchRequest?: BotSharePatchRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        botSharePatch: async (slug: string, botSharePatchRequest?: BotSharePatchRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'slug' is not null or undefined
             assertParamExists('botSharePatch', 'slug', slug)
             const localVarPath = `/bot/share`;
@@ -9804,7 +9407,7 @@ export const ShareBotApiAxiosParamCreator = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        botsDataGetBySlug: async (slug: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        botsDataGetBySlug: async (slug: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'slug' is not null or undefined
             assertParamExists('botsDataGetBySlug', 'slug', slug)
             const localVarPath = `/bot/share/{slug}/data`
@@ -9838,7 +9441,7 @@ export const ShareBotApiAxiosParamCreator = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getShareBot: async (slug: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getShareBot: async (slug: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'slug' is not null or undefined
             assertParamExists('getShareBot', 'slug', slug)
             const localVarPath = `/bot/share/{slug}`
@@ -9873,7 +9476,7 @@ export const ShareBotApiAxiosParamCreator = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        patchBotBySlug: async (slug: string, patchBotBySlugRequest?: PatchBotBySlugRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        patchBotBySlug: async (slug: string, patchBotBySlugRequest?: PatchBotBySlugRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'slug' is not null or undefined
             assertParamExists('patchBotBySlug', 'slug', slug)
             const localVarPath = `/bot/share/{slug}`
@@ -9910,7 +9513,7 @@ export const ShareBotApiAxiosParamCreator = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        slugsDelete: async (slugs: Array<string>, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        slugsDelete: async (slugs: Array<string>, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'slugs' is not null or undefined
             assertParamExists('slugsDelete', 'slugs', slugs)
             const localVarPath = `/bot/share`;
@@ -9961,9 +9564,11 @@ export const ShareBotApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async botShare(botShareRequest?: BotShareRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SharedSlug>> {
+        async botShare(botShareRequest?: BotShareRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SharedSlug>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.botShare(botShareRequest, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['ShareBotApi.botShare']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
          * 
@@ -9973,9 +9578,11 @@ export const ShareBotApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async botSharePatch(slug: string, botSharePatchRequest?: BotSharePatchRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async botSharePatch(slug: string, botSharePatchRequest?: BotSharePatchRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.botSharePatch(slug, botSharePatchRequest, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['ShareBotApi.botSharePatch']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
          * This endpoint fetches bot data based on provided slug parameters
@@ -9984,9 +9591,11 @@ export const ShareBotApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async botsDataGetBySlug(slug: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BotData>> {
+        async botsDataGetBySlug(slug: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BotData>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.botsDataGetBySlug(slug, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['ShareBotApi.botsDataGetBySlug']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
          * 
@@ -9995,9 +9604,11 @@ export const ShareBotApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getShareBot(slug: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Bot>> {
+        async getShareBot(slug: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Bot>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getShareBot(slug, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['ShareBotApi.getShareBot']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
          * 
@@ -10007,9 +9618,11 @@ export const ShareBotApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async patchBotBySlug(slug: string, patchBotBySlugRequest?: PatchBotBySlugRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BotData>> {
+        async patchBotBySlug(slug: string, patchBotBySlugRequest?: PatchBotBySlugRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BotData>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.patchBotBySlug(slug, patchBotBySlugRequest, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['ShareBotApi.patchBotBySlug']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
          * 
@@ -10018,9 +9631,11 @@ export const ShareBotApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async slugsDelete(slugs: Array<string>, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async slugsDelete(slugs: Array<string>, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.slugsDelete(slugs, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['ShareBotApi.slugsDelete']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
     }
 };
@@ -10039,7 +9654,7 @@ export const ShareBotApiFactory = function (configuration?: Configuration, baseP
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        botShare(requestParameters: ShareBotApiBotShareRequest = {}, options?: AxiosRequestConfig): AxiosPromise<SharedSlug> {
+        botShare(requestParameters: ShareBotApiBotShareRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<SharedSlug> {
             return localVarFp.botShare(requestParameters.botShareRequest, options).then((request) => request(axios, basePath));
         },
         /**
@@ -10049,7 +9664,7 @@ export const ShareBotApiFactory = function (configuration?: Configuration, baseP
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        botSharePatch(requestParameters: ShareBotApiBotSharePatchRequest, options?: AxiosRequestConfig): AxiosPromise<void> {
+        botSharePatch(requestParameters: ShareBotApiBotSharePatchRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
             return localVarFp.botSharePatch(requestParameters.slug, requestParameters.botSharePatchRequest, options).then((request) => request(axios, basePath));
         },
         /**
@@ -10059,7 +9674,7 @@ export const ShareBotApiFactory = function (configuration?: Configuration, baseP
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        botsDataGetBySlug(requestParameters: ShareBotApiBotsDataGetBySlugRequest, options?: AxiosRequestConfig): AxiosPromise<BotData> {
+        botsDataGetBySlug(requestParameters: ShareBotApiBotsDataGetBySlugRequest, options?: RawAxiosRequestConfig): AxiosPromise<BotData> {
             return localVarFp.botsDataGetBySlug(requestParameters.slug, options).then((request) => request(axios, basePath));
         },
         /**
@@ -10069,7 +9684,7 @@ export const ShareBotApiFactory = function (configuration?: Configuration, baseP
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getShareBot(requestParameters: ShareBotApiGetShareBotRequest, options?: AxiosRequestConfig): AxiosPromise<Bot> {
+        getShareBot(requestParameters: ShareBotApiGetShareBotRequest, options?: RawAxiosRequestConfig): AxiosPromise<Bot> {
             return localVarFp.getShareBot(requestParameters.slug, options).then((request) => request(axios, basePath));
         },
         /**
@@ -10079,7 +9694,7 @@ export const ShareBotApiFactory = function (configuration?: Configuration, baseP
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        patchBotBySlug(requestParameters: ShareBotApiPatchBotBySlugRequest, options?: AxiosRequestConfig): AxiosPromise<BotData> {
+        patchBotBySlug(requestParameters: ShareBotApiPatchBotBySlugRequest, options?: RawAxiosRequestConfig): AxiosPromise<BotData> {
             return localVarFp.patchBotBySlug(requestParameters.slug, requestParameters.patchBotBySlugRequest, options).then((request) => request(axios, basePath));
         },
         /**
@@ -10089,7 +9704,7 @@ export const ShareBotApiFactory = function (configuration?: Configuration, baseP
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        slugsDelete(requestParameters: ShareBotApiSlugsDeleteRequest, options?: AxiosRequestConfig): AxiosPromise<void> {
+        slugsDelete(requestParameters: ShareBotApiSlugsDeleteRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
             return localVarFp.slugsDelete(requestParameters.slugs, options).then((request) => request(axios, basePath));
         },
     };
@@ -10208,7 +9823,7 @@ export class ShareBotApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof ShareBotApi
      */
-    public botShare(requestParameters: ShareBotApiBotShareRequest = {}, options?: AxiosRequestConfig) {
+    public botShare(requestParameters: ShareBotApiBotShareRequest = {}, options?: RawAxiosRequestConfig) {
         return ShareBotApiFp(this.configuration).botShare(requestParameters.botShareRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
@@ -10220,7 +9835,7 @@ export class ShareBotApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof ShareBotApi
      */
-    public botSharePatch(requestParameters: ShareBotApiBotSharePatchRequest, options?: AxiosRequestConfig) {
+    public botSharePatch(requestParameters: ShareBotApiBotSharePatchRequest, options?: RawAxiosRequestConfig) {
         return ShareBotApiFp(this.configuration).botSharePatch(requestParameters.slug, requestParameters.botSharePatchRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
@@ -10232,7 +9847,7 @@ export class ShareBotApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof ShareBotApi
      */
-    public botsDataGetBySlug(requestParameters: ShareBotApiBotsDataGetBySlugRequest, options?: AxiosRequestConfig) {
+    public botsDataGetBySlug(requestParameters: ShareBotApiBotsDataGetBySlugRequest, options?: RawAxiosRequestConfig) {
         return ShareBotApiFp(this.configuration).botsDataGetBySlug(requestParameters.slug, options).then((request) => request(this.axios, this.basePath));
     }
 
@@ -10244,7 +9859,7 @@ export class ShareBotApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof ShareBotApi
      */
-    public getShareBot(requestParameters: ShareBotApiGetShareBotRequest, options?: AxiosRequestConfig) {
+    public getShareBot(requestParameters: ShareBotApiGetShareBotRequest, options?: RawAxiosRequestConfig) {
         return ShareBotApiFp(this.configuration).getShareBot(requestParameters.slug, options).then((request) => request(this.axios, this.basePath));
     }
 
@@ -10256,7 +9871,7 @@ export class ShareBotApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof ShareBotApi
      */
-    public patchBotBySlug(requestParameters: ShareBotApiPatchBotBySlugRequest, options?: AxiosRequestConfig) {
+    public patchBotBySlug(requestParameters: ShareBotApiPatchBotBySlugRequest, options?: RawAxiosRequestConfig) {
         return ShareBotApiFp(this.configuration).patchBotBySlug(requestParameters.slug, requestParameters.patchBotBySlugRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
@@ -10268,10 +9883,11 @@ export class ShareBotApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof ShareBotApi
      */
-    public slugsDelete(requestParameters: ShareBotApiSlugsDeleteRequest, options?: AxiosRequestConfig) {
+    public slugsDelete(requestParameters: ShareBotApiSlugsDeleteRequest, options?: RawAxiosRequestConfig) {
         return ShareBotApiFp(this.configuration).slugsDelete(requestParameters.slugs, options).then((request) => request(this.axios, this.basePath));
     }
 }
+
 
 
 /**
@@ -10287,7 +9903,7 @@ export const StoreApiAxiosParamCreator = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        storeCreate: async (storeCreateRequest?: StoreCreateRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        storeCreate: async (storeCreateRequest?: StoreCreateRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/store`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -10329,7 +9945,7 @@ export const StoreApiAxiosParamCreator = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        storeGet: async (count?: number, before?: string, q?: string, language?: string, categoryKeyValue?: Array<string>, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        storeGet: async (count?: number, before?: string, q?: string, language?: string, categoryKeyValue?: Array<string>, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/store`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -10390,9 +10006,11 @@ export const StoreApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async storeCreate(storeCreateRequest?: StoreCreateRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TemplateItem>> {
+        async storeCreate(storeCreateRequest?: StoreCreateRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TemplateItem>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.storeCreate(storeCreateRequest, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['StoreApi.storeCreate']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
          * 
@@ -10405,9 +10023,11 @@ export const StoreApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async storeGet(count?: number, before?: string, q?: string, language?: string, categoryKeyValue?: Array<string>, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<StoreGet200Response>> {
+        async storeGet(count?: number, before?: string, q?: string, language?: string, categoryKeyValue?: Array<string>, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<StoreGet200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.storeGet(count, before, q, language, categoryKeyValue, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['StoreApi.storeGet']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
     }
 };
@@ -10426,7 +10046,7 @@ export const StoreApiFactory = function (configuration?: Configuration, basePath
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        storeCreate(requestParameters: StoreApiStoreCreateRequest = {}, options?: AxiosRequestConfig): AxiosPromise<TemplateItem> {
+        storeCreate(requestParameters: StoreApiStoreCreateRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<TemplateItem> {
             return localVarFp.storeCreate(requestParameters.storeCreateRequest, options).then((request) => request(axios, basePath));
         },
         /**
@@ -10436,7 +10056,7 @@ export const StoreApiFactory = function (configuration?: Configuration, basePath
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        storeGet(requestParameters: StoreApiStoreGetRequest = {}, options?: AxiosRequestConfig): AxiosPromise<StoreGet200Response> {
+        storeGet(requestParameters: StoreApiStoreGetRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<StoreGet200Response> {
             return localVarFp.storeGet(requestParameters.count, requestParameters.before, requestParameters.q, requestParameters.language, requestParameters.categoryKeyValue, options).then((request) => request(axios, basePath));
         },
     };
@@ -10513,7 +10133,7 @@ export class StoreApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof StoreApi
      */
-    public storeCreate(requestParameters: StoreApiStoreCreateRequest = {}, options?: AxiosRequestConfig) {
+    public storeCreate(requestParameters: StoreApiStoreCreateRequest = {}, options?: RawAxiosRequestConfig) {
         return StoreApiFp(this.configuration).storeCreate(requestParameters.storeCreateRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
@@ -10525,10 +10145,11 @@ export class StoreApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof StoreApi
      */
-    public storeGet(requestParameters: StoreApiStoreGetRequest = {}, options?: AxiosRequestConfig) {
+    public storeGet(requestParameters: StoreApiStoreGetRequest = {}, options?: RawAxiosRequestConfig) {
         return StoreApiFp(this.configuration).storeGet(requestParameters.count, requestParameters.before, requestParameters.q, requestParameters.language, requestParameters.categoryKeyValue, options).then((request) => request(this.axios, this.basePath));
     }
 }
+
 
 
 /**
@@ -10545,7 +10166,7 @@ export const VisitURLApiAxiosParamCreator = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        visitUrl: async (actionFireRecordId: string, url: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        visitUrl: async (actionFireRecordId: string, url: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'actionFireRecordId' is not null or undefined
             assertParamExists('visitUrl', 'actionFireRecordId', actionFireRecordId)
             // verify required parameter 'url' is not null or undefined
@@ -10596,9 +10217,11 @@ export const VisitURLApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async visitUrl(actionFireRecordId: string, url: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async visitUrl(actionFireRecordId: string, url: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.visitUrl(actionFireRecordId, url, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['VisitURLApi.visitUrl']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
     }
 };
@@ -10617,7 +10240,7 @@ export const VisitURLApiFactory = function (configuration?: Configuration, baseP
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        visitUrl(requestParameters: VisitURLApiVisitUrlRequest, options?: AxiosRequestConfig): AxiosPromise<void> {
+        visitUrl(requestParameters: VisitURLApiVisitUrlRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
             return localVarFp.visitUrl(requestParameters.actionFireRecordId, requestParameters.url, options).then((request) => request(axios, basePath));
         },
     };
@@ -10659,9 +10282,10 @@ export class VisitURLApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof VisitURLApi
      */
-    public visitUrl(requestParameters: VisitURLApiVisitUrlRequest, options?: AxiosRequestConfig) {
+    public visitUrl(requestParameters: VisitURLApiVisitUrlRequest, options?: RawAxiosRequestConfig) {
         return VisitURLApiFp(this.configuration).visitUrl(requestParameters.actionFireRecordId, requestParameters.url, options).then((request) => request(this.axios, this.basePath));
     }
 }
+
 
 

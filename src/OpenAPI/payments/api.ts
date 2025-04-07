@@ -16,14 +16,14 @@ const BASE_PATH = "https://api.chatdaddy.tech/payments".replace(/\/+$/, "");
 
 
 import type { Configuration } from '../configuration';
-import type { AxiosPromise, AxiosInstance, AxiosRequestConfig } from 'axios';
+import type { AxiosPromise, AxiosInstance, RawAxiosRequestConfig } from 'axios';
 import globalAxios from 'axios';
 // Some imports not used depending on template conditions
 // @ts-ignore
 import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObject, setBearerAuthToObject, setOAuthToObject, setSearchParams, serializeDataIfNeeded, toPathString, createRequestFunction } from '../common';
 import type { RequestArgs } from '../base';
 // @ts-ignore
-import { COLLECTION_FORMATS, BaseAPI, RequiredError } from '../base';
+import { COLLECTION_FORMATS, BaseAPI, RequiredError, operationServerMap } from '../base';
 
 /**
  * 
@@ -723,60 +723,6 @@ export interface CreditCouponCodeCreateOptions {
  */
 export interface CreditCustomer {
     /**
-     * ID of a customer. All credits are linked to a customer. Multiple teams can be linked to the same customer & thus share credits.
-     * @type {string}
-     * @memberof CreditCustomer
-     */
-    'id': string;
-    /**
-     * Total number of units available for consumption
-     * @type {number}
-     * @memberof CreditCustomer
-     */
-    'unitsAvailable': number;
-    /**
-     * Number of units consumed per period.
-     * @type {number}
-     * @memberof CreditCustomer
-     */
-    'recurringConsumptionUnits': number;
-    /**
-     * List of features that have been unlocked.
-     * @type {Array<CreditUnlockType>}
-     * @memberof CreditCustomer
-     */
-    'unlockedFeatures': Array<CreditUnlockType>;
-    /**
-     * 
-     * @type {CustomerAutoRenewalWRedeemedCoupon}
-     * @memberof CreditCustomer
-     */
-    'autoRenewal'?: CustomerAutoRenewalWRedeemedCoupon;
-    /**
-     * 
-     * @type {CountryTier}
-     * @memberof CreditCustomer
-     */
-    'tier'?: CountryTier;
-    /**
-     * 
-     * @type {CreditLevelStatus}
-     * @memberof CreditCustomer
-     */
-    'creditLevelStatus'?: CreditLevelStatus | null;
-    /**
-     * 
-     * @type {RecurringCreditConsumption}
-     * @memberof CreditCustomer
-     */
-    'supportPlan'?: RecurringCreditConsumption;
-    /**
-     * 
-     * @type {CreditCustomerRecurringPlans}
-     * @memberof CreditCustomer
-     */
-    'recurringPlans'?: CreditCustomerRecurringPlans;
-    /**
      * The partnership to use for this customer. This is only used if the customer is new.
      * @type {string}
      * @memberof CreditCustomer
@@ -794,67 +740,58 @@ export interface CreditCustomer {
      * @memberof CreditCustomer
      */
     'stripeAccountId'?: string;
-}
-
-
-/**
- * 
- * @export
- * @interface CreditCustomerAllOf
- */
-export interface CreditCustomerAllOf {
     /**
      * ID of a customer. All credits are linked to a customer. Multiple teams can be linked to the same customer & thus share credits.
      * @type {string}
-     * @memberof CreditCustomerAllOf
+     * @memberof CreditCustomer
      */
     'id': string;
     /**
      * Total number of units available for consumption
      * @type {number}
-     * @memberof CreditCustomerAllOf
+     * @memberof CreditCustomer
      */
     'unitsAvailable': number;
     /**
      * Number of units consumed per period.
      * @type {number}
-     * @memberof CreditCustomerAllOf
+     * @memberof CreditCustomer
      */
     'recurringConsumptionUnits': number;
     /**
      * List of features that have been unlocked.
      * @type {Array<CreditUnlockType>}
-     * @memberof CreditCustomerAllOf
+     * @memberof CreditCustomer
      */
     'unlockedFeatures': Array<CreditUnlockType>;
     /**
      * 
      * @type {CustomerAutoRenewalWRedeemedCoupon}
-     * @memberof CreditCustomerAllOf
+     * @memberof CreditCustomer
      */
     'autoRenewal'?: CustomerAutoRenewalWRedeemedCoupon;
     /**
      * 
      * @type {CountryTier}
-     * @memberof CreditCustomerAllOf
+     * @memberof CreditCustomer
      */
     'tier'?: CountryTier;
     /**
      * 
      * @type {CreditLevelStatus}
-     * @memberof CreditCustomerAllOf
+     * @memberof CreditCustomer
      */
     'creditLevelStatus'?: CreditLevelStatus | null;
     /**
      * 
      * @type {RecurringCreditConsumption}
-     * @memberof CreditCustomerAllOf
+     * @memberof CreditCustomer
      */
     'supportPlan'?: RecurringCreditConsumption;
     /**
      * 
      * @type {CreditCustomerRecurringPlans}
-     * @memberof CreditCustomerAllOf
+     * @memberof CreditCustomer
      */
     'recurringPlans'?: CreditCustomerRecurringPlans;
 }
@@ -1168,12 +1105,6 @@ export const CreditLevelStatus = {
 
 export type CreditLevelStatus = typeof CreditLevelStatus[keyof typeof CreditLevelStatus];
 
-
-/**
- * @type CreditPreference
- * @export
- */
-export type CreditPreference = MiscPreference | NotificationPreference | PurchaseTierPreference | RecurringConsumptionPreference | SingleConsumptionPreference | StripePreference | UnlockPreference;
 
 /**
  * A tier of credits that can be purchased. Credits can only be purchased in multiples of the step size. The tier is to be used exactly as is for top-up purchases, and must be  multiplied by the number of months for recurring purchases.
@@ -1706,19 +1637,6 @@ export type CustomerAutoRenewalWRedeemedCouponStatusEnum = typeof CustomerAutoRe
 /**
  * 
  * @export
- * @interface CustomerAutoRenewalWRedeemedCouponAllOf
- */
-export interface CustomerAutoRenewalWRedeemedCouponAllOf {
-    /**
-     * 
-     * @type {CustomerAutoRenewalWRedeemedCouponAllOfCurrentRedeemedCoupon}
-     * @memberof CustomerAutoRenewalWRedeemedCouponAllOf
-     */
-    'currentRedeemedCoupon'?: CustomerAutoRenewalWRedeemedCouponAllOfCurrentRedeemedCoupon;
-}
-/**
- * 
- * @export
  * @interface CustomerAutoRenewalWRedeemedCouponAllOfCurrentRedeemedCoupon
  */
 export interface CustomerAutoRenewalWRedeemedCouponAllOfCurrentRedeemedCoupon {
@@ -1762,19 +1680,6 @@ export interface CustomerAutoRenewalWRedeemedCouponAllOfCurrentRedeemedCoupon {
      * 
      * @type {Coupon}
      * @memberof CustomerAutoRenewalWRedeemedCouponAllOfCurrentRedeemedCoupon
-     */
-    'coupon'?: Coupon;
-}
-/**
- * 
- * @export
- * @interface CustomerAutoRenewalWRedeemedCouponAllOfCurrentRedeemedCouponAllOf
- */
-export interface CustomerAutoRenewalWRedeemedCouponAllOfCurrentRedeemedCouponAllOf {
-    /**
-     * 
-     * @type {Coupon}
-     * @memberof CustomerAutoRenewalWRedeemedCouponAllOfCurrentRedeemedCouponAllOf
      */
     'coupon'?: Coupon;
 }
@@ -2026,7 +1931,7 @@ export interface ModifySupportPlan {
      * @type {string}
      * @memberof ModifySupportPlan
      */
-    'type': ModifySupportPlanTypeEnum;
+    'type': ModifySupportPlanTypeEnum | null;
     /**
      * 
      * @type {ModifySupportPlanConfig}
@@ -2037,37 +1942,11 @@ export interface ModifySupportPlan {
 
 export const ModifySupportPlanTypeEnum = {
     ConsultationSupportPlanLvl1: 'consultation/support_plan_lvl1',
-    ConsultationSupportPlanLvl2: 'consultation/support_plan_lvl2',
-    Null: null as null
+    ConsultationSupportPlanLvl2: 'consultation/support_plan_lvl2'
 } as const;
 
 export type ModifySupportPlanTypeEnum = typeof ModifySupportPlanTypeEnum[keyof typeof ModifySupportPlanTypeEnum];
 
-/**
- * Options for us to modify the support plan. This is only used internally
- * @export
- * @interface ModifySupportPlanConfig
- */
-export interface ModifySupportPlanConfig {
-    /**
-     * 
-     * @type {ModifySupportPlanConfigDuration}
-     * @memberof ModifySupportPlanConfig
-     */
-    'duration'?: ModifySupportPlanConfigDuration;
-    /**
-     * An ISO formatted timestamp
-     * @type {string}
-     * @memberof ModifySupportPlanConfig
-     */
-    'createdAt'?: string;
-    /**
-     * The number of units the first charge is for
-     * @type {number}
-     * @memberof ModifySupportPlanConfig
-     */
-    'firstChargeUnits'?: number;
-}
 /**
  * 
  * @export
@@ -2572,25 +2451,6 @@ export interface RecTxMetadata {
 /**
  * 
  * @export
- * @interface RecTxMetadataAllOf
- */
-export interface RecTxMetadataAllOf {
-    /**
-     * If this recurring charge was resynced after another recurring sub was cancelled, this will be the number of units that were charged previously. 
-     * @type {number}
-     * @memberof RecTxMetadataAllOf
-     */
-    'previousChargeUnits'?: number;
-    /**
-     * Number of times this recurring charge was resynced after another recurring sub was cancelled.
-     * @type {number}
-     * @memberof RecTxMetadataAllOf
-     */
-    'nextChargeResyncs'?: number;
-}
-/**
- * 
- * @export
  * @interface RecurringConsumptionMetadata
  */
 export interface RecurringConsumptionMetadata {
@@ -2682,13 +2542,13 @@ export interface RecurringCreditConsumption {
      */
     'nextChargeAt': string;
     /**
-     * An ISO formatted timestamp
+     * The date at which this consumption ends. This is only present if the consumption is expiring.
      * @type {string}
      * @memberof RecurringCreditConsumption
      */
     'expiresAt'?: string | null;
     /**
-     * An ISO formatted timestamp
+     * The date at which this consumption ended. Present if either cancelled or ended. If this is set, the consumption is considered ended.
      * @type {string}
      * @memberof RecurringCreditConsumption
      */
@@ -3114,45 +2974,6 @@ export interface StripePaymentIntentsGet200Response {
      */
     'paymentIntents': Array<StripePaymentIntent>;
 }
-/**
- * 
- * @export
- * @interface StripePreference
- */
-export interface StripePreference {
-    /**
-     * 
-     * @type {string}
-     * @memberof StripePreference
-     */
-    'category': StripePreferenceCategoryEnum;
-    /**
-     * 
-     * @type {string}
-     * @memberof StripePreference
-     */
-    'key': StripePreferenceKeyEnum;
-    /**
-     * 
-     * @type {CreditStripePrice}
-     * @memberof StripePreference
-     */
-    'data': CreditStripePrice;
-}
-
-export const StripePreferenceCategoryEnum = {
-    Stripe: 'stripe'
-} as const;
-
-export type StripePreferenceCategoryEnum = typeof StripePreferenceCategoryEnum[keyof typeof StripePreferenceCategoryEnum];
-export const StripePreferenceKeyEnum = {
-    AutoRenewal: 'autoRenewal',
-    TopUp: 'topUp',
-    Bonus: 'bonus'
-} as const;
-
-export type StripePreferenceKeyEnum = typeof StripePreferenceKeyEnum[keyof typeof StripePreferenceKeyEnum];
-
 /**
  * 
  * @export
@@ -3730,40 +3551,6 @@ export interface WabaPricingData {
 export const AutoChargeProductsApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
-         * 
-         * @summary Fetch All Auto Charge Products
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        autoChargeProductsGet: async (options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/auto-charge-products`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication chatdaddy required
-            // oauth required
-            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", [], configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
          * - If usage < limit, then no action is taken - If usage >= limit, then:   - a metered subscription is created, if it doesn\'t exist   - fails if cannot be auto-charged
          * @summary Prepares the team for auto charge
          * @param {LimitedItem} item 
@@ -3771,7 +3558,7 @@ export const AutoChargeProductsApiAxiosParamCreator = function (configuration?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        autoChargeProductsPrepare: async (item: LimitedItem, accountId?: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        autoChargeProductsPrepare: async (item: LimitedItem, accountId?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'item' is not null or undefined
             assertParamExists('autoChargeProductsPrepare', 'item', item)
             const localVarPath = `/auto-charge-products/prepare/{item}`
@@ -3806,44 +3593,6 @@ export const AutoChargeProductsApiAxiosParamCreator = function (configuration?: 
                 options: localVarRequestOptions,
             };
         },
-        /**
-         * 
-         * @summary Sets config for auto charge product
-         * @param {AutoChargeProductSet} [autoChargeProductSet] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        autoChargeProductsSet: async (autoChargeProductSet?: AutoChargeProductSet, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/auto-charge-products`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication chatdaddy required
-            // oauth required
-            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["ADMIN_PANEL_ACCESS"], configuration)
-
-
-    
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(autoChargeProductSet, localVarRequestOptions, configuration)
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
     }
 };
 
@@ -3855,16 +3604,6 @@ export const AutoChargeProductsApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = AutoChargeProductsApiAxiosParamCreator(configuration)
     return {
         /**
-         * 
-         * @summary Fetch All Auto Charge Products
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async autoChargeProductsGet(options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AutoChargeProductsGet200Response>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.autoChargeProductsGet(options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-        /**
          * - If usage < limit, then no action is taken - If usage >= limit, then:   - a metered subscription is created, if it doesn\'t exist   - fails if cannot be auto-charged
          * @summary Prepares the team for auto charge
          * @param {LimitedItem} item 
@@ -3872,20 +3611,11 @@ export const AutoChargeProductsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async autoChargeProductsPrepare(item: LimitedItem, accountId?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AutoChargeProductsPrepare200Response>> {
+        async autoChargeProductsPrepare(item: LimitedItem, accountId?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AutoChargeProductsPrepare200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.autoChargeProductsPrepare(item, accountId, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-        /**
-         * 
-         * @summary Sets config for auto charge product
-         * @param {AutoChargeProductSet} [autoChargeProductSet] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async autoChargeProductsSet(autoChargeProductSet?: AutoChargeProductSet, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.autoChargeProductsSet(autoChargeProductSet, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['AutoChargeProductsApi.autoChargeProductsPrepare']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
     }
 };
@@ -3898,33 +3628,14 @@ export const AutoChargeProductsApiFactory = function (configuration?: Configurat
     const localVarFp = AutoChargeProductsApiFp(configuration)
     return {
         /**
-         * 
-         * @summary Fetch All Auto Charge Products
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        autoChargeProductsGet(options?: AxiosRequestConfig): AxiosPromise<AutoChargeProductsGet200Response> {
-            return localVarFp.autoChargeProductsGet(options).then((request) => request(axios, basePath));
-        },
-        /**
          * - If usage < limit, then no action is taken - If usage >= limit, then:   - a metered subscription is created, if it doesn\'t exist   - fails if cannot be auto-charged
          * @summary Prepares the team for auto charge
          * @param {AutoChargeProductsApiAutoChargeProductsPrepareRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        autoChargeProductsPrepare(requestParameters: AutoChargeProductsApiAutoChargeProductsPrepareRequest, options?: AxiosRequestConfig): AxiosPromise<AutoChargeProductsPrepare200Response> {
+        autoChargeProductsPrepare(requestParameters: AutoChargeProductsApiAutoChargeProductsPrepareRequest, options?: RawAxiosRequestConfig): AxiosPromise<AutoChargeProductsPrepare200Response> {
             return localVarFp.autoChargeProductsPrepare(requestParameters.item, requestParameters.accountId, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
-         * @summary Sets config for auto charge product
-         * @param {AutoChargeProductsApiAutoChargeProductsSetRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        autoChargeProductsSet(requestParameters: AutoChargeProductsApiAutoChargeProductsSetRequest = {}, options?: AxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.autoChargeProductsSet(requestParameters.autoChargeProductSet, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -3951,37 +3662,12 @@ export interface AutoChargeProductsApiAutoChargeProductsPrepareRequest {
 }
 
 /**
- * Request parameters for autoChargeProductsSet operation in AutoChargeProductsApi.
- * @export
- * @interface AutoChargeProductsApiAutoChargeProductsSetRequest
- */
-export interface AutoChargeProductsApiAutoChargeProductsSetRequest {
-    /**
-     * 
-     * @type {AutoChargeProductSet}
-     * @memberof AutoChargeProductsApiAutoChargeProductsSet
-     */
-    readonly autoChargeProductSet?: AutoChargeProductSet
-}
-
-/**
  * AutoChargeProductsApi - object-oriented interface
  * @export
  * @class AutoChargeProductsApi
  * @extends {BaseAPI}
  */
 export class AutoChargeProductsApi extends BaseAPI {
-    /**
-     * 
-     * @summary Fetch All Auto Charge Products
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof AutoChargeProductsApi
-     */
-    public autoChargeProductsGet(options?: AxiosRequestConfig) {
-        return AutoChargeProductsApiFp(this.configuration).autoChargeProductsGet(options).then((request) => request(this.axios, this.basePath));
-    }
-
     /**
      * - If usage < limit, then no action is taken - If usage >= limit, then:   - a metered subscription is created, if it doesn\'t exist   - fails if cannot be auto-charged
      * @summary Prepares the team for auto charge
@@ -3990,22 +3676,11 @@ export class AutoChargeProductsApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof AutoChargeProductsApi
      */
-    public autoChargeProductsPrepare(requestParameters: AutoChargeProductsApiAutoChargeProductsPrepareRequest, options?: AxiosRequestConfig) {
+    public autoChargeProductsPrepare(requestParameters: AutoChargeProductsApiAutoChargeProductsPrepareRequest, options?: RawAxiosRequestConfig) {
         return AutoChargeProductsApiFp(this.configuration).autoChargeProductsPrepare(requestParameters.item, requestParameters.accountId, options).then((request) => request(this.axios, this.basePath));
     }
-
-    /**
-     * 
-     * @summary Sets config for auto charge product
-     * @param {AutoChargeProductsApiAutoChargeProductsSetRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof AutoChargeProductsApi
-     */
-    public autoChargeProductsSet(requestParameters: AutoChargeProductsApiAutoChargeProductsSetRequest = {}, options?: AxiosRequestConfig) {
-        return AutoChargeProductsApiFp(this.configuration).autoChargeProductsSet(requestParameters.autoChargeProductSet, options).then((request) => request(this.axios, this.basePath));
-    }
 }
+
 
 
 /**
@@ -4021,7 +3696,7 @@ export const CouponCodesApiAxiosParamCreator = function (configuration?: Configu
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        couponsGet: async (code: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        couponsGet: async (code: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'code' is not null or undefined
             assertParamExists('couponsGet', 'code', code)
             const localVarPath = `/coupons`;
@@ -4056,81 +3731,6 @@ export const CouponCodesApiAxiosParamCreator = function (configuration?: Configu
             };
         },
         /**
-         * Generate a coupon code
-         * @param {CouponCodeCreateOptions} [couponCodeCreateOptions] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        couponsPost: async (couponCodeCreateOptions?: CouponCodeCreateOptions, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/coupons`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication chatdaddy required
-            // oauth required
-            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["ADMIN_PANEL_ACCESS"], configuration)
-
-
-    
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(couponCodeCreateOptions, localVarRequestOptions, configuration)
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @summary Archive a coupon code
-         * @param {CreditsCouponsArchiveRequest} [creditsCouponsArchiveRequest] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        creditsCouponsArchive: async (creditsCouponsArchiveRequest?: CreditsCouponsArchiveRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/v2/credits/coupons/archive`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication chatdaddy required
-            // oauth required
-            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["ADMIN_PANEL_ACCESS", "PARTNER_ADMIN_PANEL_ACCESS"], configuration)
-
-
-    
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(creditsCouponsArchiveRequest, localVarRequestOptions, configuration)
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
          * 
          * @summary Get Chatdaddy coupon data
          * @param {number} [count] 
@@ -4141,7 +3741,7 @@ export const CouponCodesApiAxiosParamCreator = function (configuration?: Configu
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        creditsCouponsGet: async (count?: number, returnTotal?: boolean, cursor?: string, q?: string, id?: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        creditsCouponsGet: async (count?: number, returnTotal?: boolean, cursor?: string, q?: string, id?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v2/credits/coupons`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -4196,7 +3796,7 @@ export const CouponCodesApiAxiosParamCreator = function (configuration?: Configu
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        creditsCouponsGetId: async (id: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        creditsCouponsGetId: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
             assertParamExists('creditsCouponsGetId', 'id', id)
             const localVarPath = `/v2/credits/coupons/{id}`
@@ -4224,43 +3824,6 @@ export const CouponCodesApiAxiosParamCreator = function (configuration?: Configu
             };
         },
         /**
-         * Generate a coupon code
-         * @param {CreditCouponCodeCreateOptions} [creditCouponCodeCreateOptions] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        creditsCouponsPost: async (creditCouponCodeCreateOptions?: CreditCouponCodeCreateOptions, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/v2/credits/coupons`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication chatdaddy required
-            // oauth required
-            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["ADMIN_PANEL_ACCESS", "PARTNER_ADMIN_PANEL_ACCESS"], configuration)
-
-
-    
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(creditCouponCodeCreateOptions, localVarRequestOptions, configuration)
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
          * 
          * @summary Get coupon redemptions
          * @param {number} [count] 
@@ -4271,7 +3834,7 @@ export const CouponCodesApiAxiosParamCreator = function (configuration?: Configu
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        creditsCouponsRedemptionsGet: async (count?: number, returnTotal?: boolean, cursor?: string, q?: string, couponId?: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        creditsCouponsRedemptionsGet: async (count?: number, returnTotal?: boolean, cursor?: string, q?: string, couponId?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v2/credits/coupons/redemptions`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -4336,30 +3899,11 @@ export const CouponCodesApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async couponsGet(code: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<StripeCouponData>> {
+        async couponsGet(code: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<StripeCouponData>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.couponsGet(code, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-        /**
-         * Generate a coupon code
-         * @param {CouponCodeCreateOptions} [couponCodeCreateOptions] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async couponsPost(couponCodeCreateOptions?: CouponCodeCreateOptions, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CouponsPost200Response>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.couponsPost(couponCodeCreateOptions, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-        /**
-         * 
-         * @summary Archive a coupon code
-         * @param {CreditsCouponsArchiveRequest} [creditsCouponsArchiveRequest] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async creditsCouponsArchive(creditsCouponsArchiveRequest?: CreditsCouponsArchiveRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.creditsCouponsArchive(creditsCouponsArchiveRequest, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['CouponCodesApi.couponsGet']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
          * 
@@ -4372,9 +3916,11 @@ export const CouponCodesApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async creditsCouponsGet(count?: number, returnTotal?: boolean, cursor?: string, q?: string, id?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CreditsCouponsGet200Response>> {
+        async creditsCouponsGet(count?: number, returnTotal?: boolean, cursor?: string, q?: string, id?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CreditsCouponsGet200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.creditsCouponsGet(count, returnTotal, cursor, q, id, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['CouponCodesApi.creditsCouponsGet']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
          * 
@@ -4383,19 +3929,11 @@ export const CouponCodesApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async creditsCouponsGetId(id: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Coupon>> {
+        async creditsCouponsGetId(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Coupon>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.creditsCouponsGetId(id, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-        /**
-         * Generate a coupon code
-         * @param {CreditCouponCodeCreateOptions} [creditCouponCodeCreateOptions] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async creditsCouponsPost(creditCouponCodeCreateOptions?: CreditCouponCodeCreateOptions, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Coupon>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.creditsCouponsPost(creditCouponCodeCreateOptions, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['CouponCodesApi.creditsCouponsGetId']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
          * 
@@ -4408,9 +3946,11 @@ export const CouponCodesApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async creditsCouponsRedemptionsGet(count?: number, returnTotal?: boolean, cursor?: string, q?: string, couponId?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CreditsCouponsRedemptionsGet200Response>> {
+        async creditsCouponsRedemptionsGet(count?: number, returnTotal?: boolean, cursor?: string, q?: string, couponId?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CreditsCouponsRedemptionsGet200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.creditsCouponsRedemptionsGet(count, returnTotal, cursor, q, couponId, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['CouponCodesApi.creditsCouponsRedemptionsGet']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
     }
 };
@@ -4429,27 +3969,8 @@ export const CouponCodesApiFactory = function (configuration?: Configuration, ba
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        couponsGet(requestParameters: CouponCodesApiCouponsGetRequest, options?: AxiosRequestConfig): AxiosPromise<StripeCouponData> {
+        couponsGet(requestParameters: CouponCodesApiCouponsGetRequest, options?: RawAxiosRequestConfig): AxiosPromise<StripeCouponData> {
             return localVarFp.couponsGet(requestParameters.code, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * Generate a coupon code
-         * @param {CouponCodesApiCouponsPostRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        couponsPost(requestParameters: CouponCodesApiCouponsPostRequest = {}, options?: AxiosRequestConfig): AxiosPromise<CouponsPost200Response> {
-            return localVarFp.couponsPost(requestParameters.couponCodeCreateOptions, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
-         * @summary Archive a coupon code
-         * @param {CouponCodesApiCreditsCouponsArchiveRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        creditsCouponsArchive(requestParameters: CouponCodesApiCreditsCouponsArchiveRequest = {}, options?: AxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.creditsCouponsArchive(requestParameters.creditsCouponsArchiveRequest, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -4458,7 +3979,7 @@ export const CouponCodesApiFactory = function (configuration?: Configuration, ba
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        creditsCouponsGet(requestParameters: CouponCodesApiCreditsCouponsGetRequest = {}, options?: AxiosRequestConfig): AxiosPromise<CreditsCouponsGet200Response> {
+        creditsCouponsGet(requestParameters: CouponCodesApiCreditsCouponsGetRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<CreditsCouponsGet200Response> {
             return localVarFp.creditsCouponsGet(requestParameters.count, requestParameters.returnTotal, requestParameters.cursor, requestParameters.q, requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
@@ -4468,17 +3989,8 @@ export const CouponCodesApiFactory = function (configuration?: Configuration, ba
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        creditsCouponsGetId(requestParameters: CouponCodesApiCreditsCouponsGetIdRequest, options?: AxiosRequestConfig): AxiosPromise<Coupon> {
+        creditsCouponsGetId(requestParameters: CouponCodesApiCreditsCouponsGetIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<Coupon> {
             return localVarFp.creditsCouponsGetId(requestParameters.id, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * Generate a coupon code
-         * @param {CouponCodesApiCreditsCouponsPostRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        creditsCouponsPost(requestParameters: CouponCodesApiCreditsCouponsPostRequest = {}, options?: AxiosRequestConfig): AxiosPromise<Coupon> {
-            return localVarFp.creditsCouponsPost(requestParameters.creditCouponCodeCreateOptions, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -4487,7 +3999,7 @@ export const CouponCodesApiFactory = function (configuration?: Configuration, ba
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        creditsCouponsRedemptionsGet(requestParameters: CouponCodesApiCreditsCouponsRedemptionsGetRequest = {}, options?: AxiosRequestConfig): AxiosPromise<CreditsCouponsRedemptionsGet200Response> {
+        creditsCouponsRedemptionsGet(requestParameters: CouponCodesApiCreditsCouponsRedemptionsGetRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<CreditsCouponsRedemptionsGet200Response> {
             return localVarFp.creditsCouponsRedemptionsGet(requestParameters.count, requestParameters.returnTotal, requestParameters.cursor, requestParameters.q, requestParameters.couponId, options).then((request) => request(axios, basePath));
         },
     };
@@ -4505,34 +4017,6 @@ export interface CouponCodesApiCouponsGetRequest {
      * @memberof CouponCodesApiCouponsGet
      */
     readonly code: string
-}
-
-/**
- * Request parameters for couponsPost operation in CouponCodesApi.
- * @export
- * @interface CouponCodesApiCouponsPostRequest
- */
-export interface CouponCodesApiCouponsPostRequest {
-    /**
-     * 
-     * @type {CouponCodeCreateOptions}
-     * @memberof CouponCodesApiCouponsPost
-     */
-    readonly couponCodeCreateOptions?: CouponCodeCreateOptions
-}
-
-/**
- * Request parameters for creditsCouponsArchive operation in CouponCodesApi.
- * @export
- * @interface CouponCodesApiCreditsCouponsArchiveRequest
- */
-export interface CouponCodesApiCreditsCouponsArchiveRequest {
-    /**
-     * 
-     * @type {CreditsCouponsArchiveRequest}
-     * @memberof CouponCodesApiCreditsCouponsArchive
-     */
-    readonly creditsCouponsArchiveRequest?: CreditsCouponsArchiveRequest
 }
 
 /**
@@ -4592,20 +4076,6 @@ export interface CouponCodesApiCreditsCouponsGetIdRequest {
 }
 
 /**
- * Request parameters for creditsCouponsPost operation in CouponCodesApi.
- * @export
- * @interface CouponCodesApiCreditsCouponsPostRequest
- */
-export interface CouponCodesApiCreditsCouponsPostRequest {
-    /**
-     * 
-     * @type {CreditCouponCodeCreateOptions}
-     * @memberof CouponCodesApiCreditsCouponsPost
-     */
-    readonly creditCouponCodeCreateOptions?: CreditCouponCodeCreateOptions
-}
-
-/**
  * Request parameters for creditsCouponsRedemptionsGet operation in CouponCodesApi.
  * @export
  * @interface CouponCodesApiCreditsCouponsRedemptionsGetRequest
@@ -4662,31 +4132,8 @@ export class CouponCodesApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof CouponCodesApi
      */
-    public couponsGet(requestParameters: CouponCodesApiCouponsGetRequest, options?: AxiosRequestConfig) {
+    public couponsGet(requestParameters: CouponCodesApiCouponsGetRequest, options?: RawAxiosRequestConfig) {
         return CouponCodesApiFp(this.configuration).couponsGet(requestParameters.code, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Generate a coupon code
-     * @param {CouponCodesApiCouponsPostRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof CouponCodesApi
-     */
-    public couponsPost(requestParameters: CouponCodesApiCouponsPostRequest = {}, options?: AxiosRequestConfig) {
-        return CouponCodesApiFp(this.configuration).couponsPost(requestParameters.couponCodeCreateOptions, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
-     * @summary Archive a coupon code
-     * @param {CouponCodesApiCreditsCouponsArchiveRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof CouponCodesApi
-     */
-    public creditsCouponsArchive(requestParameters: CouponCodesApiCreditsCouponsArchiveRequest = {}, options?: AxiosRequestConfig) {
-        return CouponCodesApiFp(this.configuration).creditsCouponsArchive(requestParameters.creditsCouponsArchiveRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -4697,7 +4144,7 @@ export class CouponCodesApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof CouponCodesApi
      */
-    public creditsCouponsGet(requestParameters: CouponCodesApiCreditsCouponsGetRequest = {}, options?: AxiosRequestConfig) {
+    public creditsCouponsGet(requestParameters: CouponCodesApiCreditsCouponsGetRequest = {}, options?: RawAxiosRequestConfig) {
         return CouponCodesApiFp(this.configuration).creditsCouponsGet(requestParameters.count, requestParameters.returnTotal, requestParameters.cursor, requestParameters.q, requestParameters.id, options).then((request) => request(this.axios, this.basePath));
     }
 
@@ -4709,19 +4156,8 @@ export class CouponCodesApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof CouponCodesApi
      */
-    public creditsCouponsGetId(requestParameters: CouponCodesApiCreditsCouponsGetIdRequest, options?: AxiosRequestConfig) {
+    public creditsCouponsGetId(requestParameters: CouponCodesApiCreditsCouponsGetIdRequest, options?: RawAxiosRequestConfig) {
         return CouponCodesApiFp(this.configuration).creditsCouponsGetId(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Generate a coupon code
-     * @param {CouponCodesApiCreditsCouponsPostRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof CouponCodesApi
-     */
-    public creditsCouponsPost(requestParameters: CouponCodesApiCreditsCouponsPostRequest = {}, options?: AxiosRequestConfig) {
-        return CouponCodesApiFp(this.configuration).creditsCouponsPost(requestParameters.creditCouponCodeCreateOptions, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -4732,10 +4168,11 @@ export class CouponCodesApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof CouponCodesApi
      */
-    public creditsCouponsRedemptionsGet(requestParameters: CouponCodesApiCreditsCouponsRedemptionsGetRequest = {}, options?: AxiosRequestConfig) {
+    public creditsCouponsRedemptionsGet(requestParameters: CouponCodesApiCreditsCouponsRedemptionsGetRequest = {}, options?: RawAxiosRequestConfig) {
         return CouponCodesApiFp(this.configuration).creditsCouponsRedemptionsGet(requestParameters.count, requestParameters.returnTotal, requestParameters.cursor, requestParameters.q, requestParameters.couponId, options).then((request) => request(this.axios, this.basePath));
     }
 }
+
 
 
 /**
@@ -4750,7 +4187,7 @@ export const CreditsApiAxiosParamCreator = function (configuration?: Configurati
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        autoRenewalCancel: async (options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        autoRenewalCancel: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v2/credits/auto-renewal`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -4785,7 +4222,7 @@ export const CreditsApiAxiosParamCreator = function (configuration?: Configurati
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        autoRenewalPost: async (creditAutoRenewalUpdate?: CreditAutoRenewalUpdate, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        autoRenewalPost: async (creditAutoRenewalUpdate?: CreditAutoRenewalUpdate, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v2/credits/auto-renewal`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -4825,7 +4262,7 @@ export const CreditsApiAxiosParamCreator = function (configuration?: Configurati
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        canConsumeCredits: async (type: CreditConsumptionType, quantity: number, legacyOpts?: LegacyCanConsumeOpts, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        canConsumeCredits: async (type: CreditConsumptionType, quantity: number, legacyOpts?: LegacyCanConsumeOpts, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'type' is not null or undefined
             assertParamExists('canConsumeCredits', 'type', type)
             // verify required parameter 'quantity' is not null or undefined
@@ -4855,7 +4292,9 @@ export const CreditsApiAxiosParamCreator = function (configuration?: Configurati
             }
 
             if (legacyOpts !== undefined) {
-                localVarQueryParameter['legacyOpts'] = legacyOpts;
+                for (const [key, value] of Object.entries(legacyOpts)) {
+                    localVarQueryParameter[key] = value;
+                }
             }
 
 
@@ -4877,7 +4316,7 @@ export const CreditsApiAxiosParamCreator = function (configuration?: Configurati
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        canConsumeRecurringCredits: async (type: RecurringCreditConsumptionType, legacyOpts?: LegacyCanConsumeOpts, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        canConsumeRecurringCredits: async (type: RecurringCreditConsumptionType, legacyOpts?: LegacyCanConsumeOpts, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'type' is not null or undefined
             assertParamExists('canConsumeRecurringCredits', 'type', type)
             const localVarPath = `/v2/credits/can-consume-recurring`;
@@ -4901,7 +4340,9 @@ export const CreditsApiAxiosParamCreator = function (configuration?: Configurati
             }
 
             if (legacyOpts !== undefined) {
-                localVarQueryParameter['legacyOpts'] = legacyOpts;
+                for (const [key, value] of Object.entries(legacyOpts)) {
+                    localVarQueryParameter[key] = value;
+                }
             }
 
 
@@ -4922,7 +4363,7 @@ export const CreditsApiAxiosParamCreator = function (configuration?: Configurati
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        creditConsumptionPost: async (creditConsumptionPostRequest?: CreditConsumptionPostRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        creditConsumptionPost: async (creditConsumptionPostRequest?: CreditConsumptionPostRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v2/credits/consumption`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -4966,7 +4407,7 @@ export const CreditsApiAxiosParamCreator = function (configuration?: Configurati
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        creditGainsGet: async (customerId?: string, count?: number, cursor?: string, type?: Array<CreditGainType>, createdAt?: DateRange, status?: CreditGainStatus, returnTotal?: boolean, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        creditGainsGet: async (customerId?: string, count?: number, cursor?: string, type?: Array<CreditGainType>, createdAt?: DateRange, status?: CreditGainStatus, returnTotal?: boolean, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v2/credits/gains`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -5000,7 +4441,9 @@ export const CreditsApiAxiosParamCreator = function (configuration?: Configurati
             }
 
             if (createdAt !== undefined) {
-                localVarQueryParameter['createdAt'] = createdAt;
+                for (const [key, value] of Object.entries(createdAt)) {
+                    localVarQueryParameter[key] = value;
+                }
             }
 
             if (status !== undefined) {
@@ -5024,51 +4467,13 @@ export const CreditsApiAxiosParamCreator = function (configuration?: Configurati
         },
         /**
          * 
-         * @summary Create a new credit gain
-         * @param {CreditGainCreate} [creditGainCreate] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        creditGainsPost: async (creditGainCreate?: CreditGainCreate, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/v2/credits/gains`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication chatdaddy required
-            // oauth required
-            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["ADMIN_PANEL_ACCESS"], configuration)
-
-
-    
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(creditGainCreate, localVarRequestOptions, configuration)
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
          * @summary Get transaction history
          * @param {string} [teamId] Filter by teamId
          * @param {string} [customerId] Filter by customerId
          * @param {number} [count] 
          * @param {string} [cursor] 
          * @param {Array<CreditBalanceEffectType>} [type] 
-         * @param {'gain' | 'consume'} [effectType] 
+         * @param {CreditTxsGetEffectTypeEnum} [effectType] 
          * @param {Array<string>} [id] 
          * @param {DateRange} [createdAt] 
          * @param {string} [doneBy] 
@@ -5076,7 +4481,7 @@ export const CreditsApiAxiosParamCreator = function (configuration?: Configurati
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        creditTxsGet: async (teamId?: string, customerId?: string, count?: number, cursor?: string, type?: Array<CreditBalanceEffectType>, effectType?: 'gain' | 'consume', id?: Array<string>, createdAt?: DateRange, doneBy?: string, returnTotal?: boolean, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        creditTxsGet: async (teamId?: string, customerId?: string, count?: number, cursor?: string, type?: Array<CreditBalanceEffectType>, effectType?: CreditTxsGetEffectTypeEnum, id?: Array<string>, createdAt?: DateRange, doneBy?: string, returnTotal?: boolean, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v2/credits/consumption`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -5122,7 +4527,9 @@ export const CreditsApiAxiosParamCreator = function (configuration?: Configurati
             }
 
             if (createdAt !== undefined) {
-                localVarQueryParameter['createdAt'] = createdAt;
+                for (const [key, value] of Object.entries(createdAt)) {
+                    localVarQueryParameter[key] = value;
+                }
             }
 
             if (doneBy !== undefined) {
@@ -5153,7 +4560,7 @@ export const CreditsApiAxiosParamCreator = function (configuration?: Configurati
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        creditsCustomerGet: async (returnAutoRenewal?: boolean, returnSupportPlan?: boolean, returnRecurringPlans?: boolean, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        creditsCustomerGet: async (returnAutoRenewal?: boolean, returnSupportPlan?: boolean, returnRecurringPlans?: boolean, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v2/credits/customer`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -5195,87 +4602,11 @@ export const CreditsApiAxiosParamCreator = function (configuration?: Configurati
         },
         /**
          * 
-         * @summary Migrate the customer\'s subscription & any other purchased items to the credit system
-         * @param {CreditCustomerMigrate} [creditCustomerMigrate] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        creditsCustomerMigrate: async (creditCustomerMigrate?: CreditCustomerMigrate, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/v2/credits/customer/migrate`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication chatdaddy required
-            // oauth required
-            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["ADMIN_PANEL_ACCESS", "PARTNER_ADMIN_PANEL_ACCESS"], configuration)
-
-
-    
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(creditCustomerMigrate, localVarRequestOptions, configuration)
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @summary Create a new customer, or link the team to an existing customer
-         * @param {CreditCustomerPost} [creditCustomerPost] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        creditsCustomerPost: async (creditCustomerPost?: CreditCustomerPost, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/v2/credits/customer`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication chatdaddy required
-            // oauth required
-            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["ADMIN_PANEL_ACCESS"], configuration)
-
-
-    
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(creditCustomerPost, localVarRequestOptions, configuration)
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
          * @summary Refreshes the customer\'s subscription & any other purchased items
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        creditsCustomerRefresh: async (options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        creditsCustomerRefresh: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v2/credits/customer/refresh`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -5310,7 +4641,7 @@ export const CreditsApiAxiosParamCreator = function (configuration?: Configurati
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        creditsPreferencesGet: async (region?: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        creditsPreferencesGet: async (region?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v2/credits/preferences`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -5340,84 +4671,12 @@ export const CreditsApiAxiosParamCreator = function (configuration?: Configurati
         },
         /**
          * 
-         * @summary Get the system credit preferences
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        creditsPreferencesGetAdmin: async (options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/v2/credits/preferences/admin`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication chatdaddy required
-            // oauth required
-            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["ADMIN_PANEL_ACCESS"], configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @summary Updates the given credit preferences
-         * @param {CreditsPreferencesPostRequest} [creditsPreferencesPostRequest] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        creditsPreferencesPost: async (creditsPreferencesPostRequest?: CreditsPreferencesPostRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/v2/credits/preferences/admin`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication chatdaddy required
-            // oauth required
-            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["ADMIN_PANEL_ACCESS"], configuration)
-
-
-    
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(creditsPreferencesPostRequest, localVarRequestOptions, configuration)
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
          * @summary Create/update/cancel the support plan
          * @param {ModifySupportPlan} [modifySupportPlan] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        modifySupportPlan: async (modifySupportPlan?: ModifySupportPlan, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        modifySupportPlan: async (modifySupportPlan?: ModifySupportPlan, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v2/credits/support-plan`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -5461,7 +4720,7 @@ export const CreditsApiAxiosParamCreator = function (configuration?: Configurati
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        recurringCreditsGet: async (teamId?: string, count?: number, cursor?: string, type?: RecurringCreditConsumptionType, returnTotal?: boolean, doneBy?: string, dateRage?: RecurringCreditsGetDateRageParameter, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        recurringCreditsGet: async (teamId?: string, count?: number, cursor?: string, type?: RecurringCreditConsumptionType, returnTotal?: boolean, doneBy?: string, dateRage?: RecurringCreditsGetDateRageParameter, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v2/credits/recurring`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -5503,7 +4762,9 @@ export const CreditsApiAxiosParamCreator = function (configuration?: Configurati
             }
 
             if (dateRage !== undefined) {
-                localVarQueryParameter['dateRage'] = dateRage;
+                for (const [key, value] of Object.entries(dateRage)) {
+                    localVarQueryParameter[key] = value;
+                }
             }
 
 
@@ -5524,7 +4785,7 @@ export const CreditsApiAxiosParamCreator = function (configuration?: Configurati
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        startRecurringConsumption: async (recurringCreditConsumptionCreate?: RecurringCreditConsumptionCreate, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        startRecurringConsumption: async (recurringCreditConsumptionCreate?: RecurringCreditConsumptionCreate, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v2/credits/recurring`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -5562,7 +4823,7 @@ export const CreditsApiAxiosParamCreator = function (configuration?: Configurati
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        stopRecurringConsumption: async (id: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        stopRecurringConsumption: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
             assertParamExists('stopRecurringConsumption', 'id', id)
             const localVarPath = `/v2/credits/recurring/{id}`
@@ -5600,7 +4861,7 @@ export const CreditsApiAxiosParamCreator = function (configuration?: Configurati
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        topUpCreditsPost: async (creditTopUpOptions?: CreditTopUpOptions, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        topUpCreditsPost: async (creditTopUpOptions?: CreditTopUpOptions, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v2/credits/topup`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -5647,9 +4908,11 @@ export const CreditsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async autoRenewalCancel(options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async autoRenewalCancel(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.autoRenewalCancel(options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['CreditsApi.autoRenewalCancel']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
          * 
@@ -5658,9 +4921,11 @@ export const CreditsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async autoRenewalPost(creditAutoRenewalUpdate?: CreditAutoRenewalUpdate, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PaymentRequest>> {
+        async autoRenewalPost(creditAutoRenewalUpdate?: CreditAutoRenewalUpdate, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PaymentRequest>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.autoRenewalPost(creditAutoRenewalUpdate, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['CreditsApi.autoRenewalPost']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
          * 
@@ -5671,9 +4936,11 @@ export const CreditsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async canConsumeCredits(type: CreditConsumptionType, quantity: number, legacyOpts?: LegacyCanConsumeOpts, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CreditCanConsumeResponse>> {
+        async canConsumeCredits(type: CreditConsumptionType, quantity: number, legacyOpts?: LegacyCanConsumeOpts, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CreditCanConsumeResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.canConsumeCredits(type, quantity, legacyOpts, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['CreditsApi.canConsumeCredits']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
          * 
@@ -5683,9 +4950,11 @@ export const CreditsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async canConsumeRecurringCredits(type: RecurringCreditConsumptionType, legacyOpts?: LegacyCanConsumeOpts, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CreditCanConsumeResponse>> {
+        async canConsumeRecurringCredits(type: RecurringCreditConsumptionType, legacyOpts?: LegacyCanConsumeOpts, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CreditCanConsumeResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.canConsumeRecurringCredits(type, legacyOpts, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['CreditsApi.canConsumeRecurringCredits']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
          * 
@@ -5694,9 +4963,11 @@ export const CreditsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async creditConsumptionPost(creditConsumptionPostRequest?: CreditConsumptionPostRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<CreditTransactionRecord>>> {
+        async creditConsumptionPost(creditConsumptionPostRequest?: CreditConsumptionPostRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<CreditTransactionRecord>>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.creditConsumptionPost(creditConsumptionPostRequest, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['CreditsApi.creditConsumptionPost']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
          * 
@@ -5711,20 +4982,11 @@ export const CreditsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async creditGainsGet(customerId?: string, count?: number, cursor?: string, type?: Array<CreditGainType>, createdAt?: DateRange, status?: CreditGainStatus, returnTotal?: boolean, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CreditGainsGet200Response>> {
+        async creditGainsGet(customerId?: string, count?: number, cursor?: string, type?: Array<CreditGainType>, createdAt?: DateRange, status?: CreditGainStatus, returnTotal?: boolean, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CreditGainsGet200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.creditGainsGet(customerId, count, cursor, type, createdAt, status, returnTotal, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-        /**
-         * 
-         * @summary Create a new credit gain
-         * @param {CreditGainCreate} [creditGainCreate] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async creditGainsPost(creditGainCreate?: CreditGainCreate, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CreditGain>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.creditGainsPost(creditGainCreate, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['CreditsApi.creditGainsGet']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
          * 
@@ -5734,7 +4996,7 @@ export const CreditsApiFp = function(configuration?: Configuration) {
          * @param {number} [count] 
          * @param {string} [cursor] 
          * @param {Array<CreditBalanceEffectType>} [type] 
-         * @param {'gain' | 'consume'} [effectType] 
+         * @param {CreditTxsGetEffectTypeEnum} [effectType] 
          * @param {Array<string>} [id] 
          * @param {DateRange} [createdAt] 
          * @param {string} [doneBy] 
@@ -5742,9 +5004,11 @@ export const CreditsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async creditTxsGet(teamId?: string, customerId?: string, count?: number, cursor?: string, type?: Array<CreditBalanceEffectType>, effectType?: 'gain' | 'consume', id?: Array<string>, createdAt?: DateRange, doneBy?: string, returnTotal?: boolean, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CreditTxsGet200Response>> {
+        async creditTxsGet(teamId?: string, customerId?: string, count?: number, cursor?: string, type?: Array<CreditBalanceEffectType>, effectType?: CreditTxsGetEffectTypeEnum, id?: Array<string>, createdAt?: DateRange, doneBy?: string, returnTotal?: boolean, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CreditTxsGet200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.creditTxsGet(teamId, customerId, count, cursor, type, effectType, id, createdAt, doneBy, returnTotal, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['CreditsApi.creditTxsGet']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
          * 
@@ -5755,31 +5019,11 @@ export const CreditsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async creditsCustomerGet(returnAutoRenewal?: boolean, returnSupportPlan?: boolean, returnRecurringPlans?: boolean, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CreditCustomer>> {
+        async creditsCustomerGet(returnAutoRenewal?: boolean, returnSupportPlan?: boolean, returnRecurringPlans?: boolean, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CreditCustomer>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.creditsCustomerGet(returnAutoRenewal, returnSupportPlan, returnRecurringPlans, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-        /**
-         * 
-         * @summary Migrate the customer\'s subscription & any other purchased items to the credit system
-         * @param {CreditCustomerMigrate} [creditCustomerMigrate] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async creditsCustomerMigrate(creditCustomerMigrate?: CreditCustomerMigrate, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.creditsCustomerMigrate(creditCustomerMigrate, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-        /**
-         * 
-         * @summary Create a new customer, or link the team to an existing customer
-         * @param {CreditCustomerPost} [creditCustomerPost] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async creditsCustomerPost(creditCustomerPost?: CreditCustomerPost, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CreditsCustomerPost200Response>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.creditsCustomerPost(creditCustomerPost, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['CreditsApi.creditsCustomerGet']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
          * 
@@ -5787,9 +5031,11 @@ export const CreditsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async creditsCustomerRefresh(options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async creditsCustomerRefresh(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.creditsCustomerRefresh(options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['CreditsApi.creditsCustomerRefresh']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
          * 
@@ -5798,30 +5044,11 @@ export const CreditsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async creditsPreferencesGet(region?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CreditsPreferences>> {
+        async creditsPreferencesGet(region?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CreditsPreferences>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.creditsPreferencesGet(region, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-        /**
-         * 
-         * @summary Get the system credit preferences
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async creditsPreferencesGetAdmin(options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CreditsPreferences>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.creditsPreferencesGetAdmin(options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-        /**
-         * 
-         * @summary Updates the given credit preferences
-         * @param {CreditsPreferencesPostRequest} [creditsPreferencesPostRequest] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async creditsPreferencesPost(creditsPreferencesPostRequest?: CreditsPreferencesPostRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.creditsPreferencesPost(creditsPreferencesPostRequest, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['CreditsApi.creditsPreferencesGet']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
          * 
@@ -5830,9 +5057,11 @@ export const CreditsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async modifySupportPlan(modifySupportPlan?: ModifySupportPlan, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<RecurringCreditConsumption>> {
+        async modifySupportPlan(modifySupportPlan?: ModifySupportPlan, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<RecurringCreditConsumption>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.modifySupportPlan(modifySupportPlan, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['CreditsApi.modifySupportPlan']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
          * 
@@ -5847,9 +5076,11 @@ export const CreditsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async recurringCreditsGet(teamId?: string, count?: number, cursor?: string, type?: RecurringCreditConsumptionType, returnTotal?: boolean, doneBy?: string, dateRage?: RecurringCreditsGetDateRageParameter, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<RecurringCreditsGet200Response>> {
+        async recurringCreditsGet(teamId?: string, count?: number, cursor?: string, type?: RecurringCreditConsumptionType, returnTotal?: boolean, doneBy?: string, dateRage?: RecurringCreditsGetDateRageParameter, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<RecurringCreditsGet200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.recurringCreditsGet(teamId, count, cursor, type, returnTotal, doneBy, dateRage, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['CreditsApi.recurringCreditsGet']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
          * 
@@ -5858,9 +5089,11 @@ export const CreditsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async startRecurringConsumption(recurringCreditConsumptionCreate?: RecurringCreditConsumptionCreate, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<RecurringCreditConsumption>> {
+        async startRecurringConsumption(recurringCreditConsumptionCreate?: RecurringCreditConsumptionCreate, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<RecurringCreditConsumption>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.startRecurringConsumption(recurringCreditConsumptionCreate, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['CreditsApi.startRecurringConsumption']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
          * 
@@ -5869,9 +5102,11 @@ export const CreditsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async stopRecurringConsumption(id: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async stopRecurringConsumption(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.stopRecurringConsumption(id, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['CreditsApi.stopRecurringConsumption']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
          * 
@@ -5880,9 +5115,11 @@ export const CreditsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async topUpCreditsPost(creditTopUpOptions?: CreditTopUpOptions, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PaymentRequest>> {
+        async topUpCreditsPost(creditTopUpOptions?: CreditTopUpOptions, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PaymentRequest>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.topUpCreditsPost(creditTopUpOptions, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['CreditsApi.topUpCreditsPost']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
     }
 };
@@ -5900,7 +5137,7 @@ export const CreditsApiFactory = function (configuration?: Configuration, basePa
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        autoRenewalCancel(options?: AxiosRequestConfig): AxiosPromise<void> {
+        autoRenewalCancel(options?: RawAxiosRequestConfig): AxiosPromise<void> {
             return localVarFp.autoRenewalCancel(options).then((request) => request(axios, basePath));
         },
         /**
@@ -5910,7 +5147,7 @@ export const CreditsApiFactory = function (configuration?: Configuration, basePa
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        autoRenewalPost(requestParameters: CreditsApiAutoRenewalPostRequest = {}, options?: AxiosRequestConfig): AxiosPromise<PaymentRequest> {
+        autoRenewalPost(requestParameters: CreditsApiAutoRenewalPostRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<PaymentRequest> {
             return localVarFp.autoRenewalPost(requestParameters.creditAutoRenewalUpdate, options).then((request) => request(axios, basePath));
         },
         /**
@@ -5920,7 +5157,7 @@ export const CreditsApiFactory = function (configuration?: Configuration, basePa
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        canConsumeCredits(requestParameters: CreditsApiCanConsumeCreditsRequest, options?: AxiosRequestConfig): AxiosPromise<CreditCanConsumeResponse> {
+        canConsumeCredits(requestParameters: CreditsApiCanConsumeCreditsRequest, options?: RawAxiosRequestConfig): AxiosPromise<CreditCanConsumeResponse> {
             return localVarFp.canConsumeCredits(requestParameters.type, requestParameters.quantity, requestParameters.legacyOpts, options).then((request) => request(axios, basePath));
         },
         /**
@@ -5930,7 +5167,7 @@ export const CreditsApiFactory = function (configuration?: Configuration, basePa
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        canConsumeRecurringCredits(requestParameters: CreditsApiCanConsumeRecurringCreditsRequest, options?: AxiosRequestConfig): AxiosPromise<CreditCanConsumeResponse> {
+        canConsumeRecurringCredits(requestParameters: CreditsApiCanConsumeRecurringCreditsRequest, options?: RawAxiosRequestConfig): AxiosPromise<CreditCanConsumeResponse> {
             return localVarFp.canConsumeRecurringCredits(requestParameters.type, requestParameters.legacyOpts, options).then((request) => request(axios, basePath));
         },
         /**
@@ -5940,7 +5177,7 @@ export const CreditsApiFactory = function (configuration?: Configuration, basePa
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        creditConsumptionPost(requestParameters: CreditsApiCreditConsumptionPostRequest = {}, options?: AxiosRequestConfig): AxiosPromise<Array<CreditTransactionRecord>> {
+        creditConsumptionPost(requestParameters: CreditsApiCreditConsumptionPostRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<Array<CreditTransactionRecord>> {
             return localVarFp.creditConsumptionPost(requestParameters.creditConsumptionPostRequest, options).then((request) => request(axios, basePath));
         },
         /**
@@ -5950,18 +5187,8 @@ export const CreditsApiFactory = function (configuration?: Configuration, basePa
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        creditGainsGet(requestParameters: CreditsApiCreditGainsGetRequest = {}, options?: AxiosRequestConfig): AxiosPromise<CreditGainsGet200Response> {
+        creditGainsGet(requestParameters: CreditsApiCreditGainsGetRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<CreditGainsGet200Response> {
             return localVarFp.creditGainsGet(requestParameters.customerId, requestParameters.count, requestParameters.cursor, requestParameters.type, requestParameters.createdAt, requestParameters.status, requestParameters.returnTotal, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
-         * @summary Create a new credit gain
-         * @param {CreditsApiCreditGainsPostRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        creditGainsPost(requestParameters: CreditsApiCreditGainsPostRequest = {}, options?: AxiosRequestConfig): AxiosPromise<CreditGain> {
-            return localVarFp.creditGainsPost(requestParameters.creditGainCreate, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -5970,7 +5197,7 @@ export const CreditsApiFactory = function (configuration?: Configuration, basePa
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        creditTxsGet(requestParameters: CreditsApiCreditTxsGetRequest = {}, options?: AxiosRequestConfig): AxiosPromise<CreditTxsGet200Response> {
+        creditTxsGet(requestParameters: CreditsApiCreditTxsGetRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<CreditTxsGet200Response> {
             return localVarFp.creditTxsGet(requestParameters.teamId, requestParameters.customerId, requestParameters.count, requestParameters.cursor, requestParameters.type, requestParameters.effectType, requestParameters.id, requestParameters.createdAt, requestParameters.doneBy, requestParameters.returnTotal, options).then((request) => request(axios, basePath));
         },
         /**
@@ -5980,28 +5207,8 @@ export const CreditsApiFactory = function (configuration?: Configuration, basePa
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        creditsCustomerGet(requestParameters: CreditsApiCreditsCustomerGetRequest = {}, options?: AxiosRequestConfig): AxiosPromise<CreditCustomer> {
+        creditsCustomerGet(requestParameters: CreditsApiCreditsCustomerGetRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<CreditCustomer> {
             return localVarFp.creditsCustomerGet(requestParameters.returnAutoRenewal, requestParameters.returnSupportPlan, requestParameters.returnRecurringPlans, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
-         * @summary Migrate the customer\'s subscription & any other purchased items to the credit system
-         * @param {CreditsApiCreditsCustomerMigrateRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        creditsCustomerMigrate(requestParameters: CreditsApiCreditsCustomerMigrateRequest = {}, options?: AxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.creditsCustomerMigrate(requestParameters.creditCustomerMigrate, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
-         * @summary Create a new customer, or link the team to an existing customer
-         * @param {CreditsApiCreditsCustomerPostRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        creditsCustomerPost(requestParameters: CreditsApiCreditsCustomerPostRequest = {}, options?: AxiosRequestConfig): AxiosPromise<CreditsCustomerPost200Response> {
-            return localVarFp.creditsCustomerPost(requestParameters.creditCustomerPost, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -6009,7 +5216,7 @@ export const CreditsApiFactory = function (configuration?: Configuration, basePa
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        creditsCustomerRefresh(options?: AxiosRequestConfig): AxiosPromise<void> {
+        creditsCustomerRefresh(options?: RawAxiosRequestConfig): AxiosPromise<void> {
             return localVarFp.creditsCustomerRefresh(options).then((request) => request(axios, basePath));
         },
         /**
@@ -6019,27 +5226,8 @@ export const CreditsApiFactory = function (configuration?: Configuration, basePa
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        creditsPreferencesGet(requestParameters: CreditsApiCreditsPreferencesGetRequest = {}, options?: AxiosRequestConfig): AxiosPromise<CreditsPreferences> {
+        creditsPreferencesGet(requestParameters: CreditsApiCreditsPreferencesGetRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<CreditsPreferences> {
             return localVarFp.creditsPreferencesGet(requestParameters.region, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
-         * @summary Get the system credit preferences
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        creditsPreferencesGetAdmin(options?: AxiosRequestConfig): AxiosPromise<CreditsPreferences> {
-            return localVarFp.creditsPreferencesGetAdmin(options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
-         * @summary Updates the given credit preferences
-         * @param {CreditsApiCreditsPreferencesPostRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        creditsPreferencesPost(requestParameters: CreditsApiCreditsPreferencesPostRequest = {}, options?: AxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.creditsPreferencesPost(requestParameters.creditsPreferencesPostRequest, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -6048,7 +5236,7 @@ export const CreditsApiFactory = function (configuration?: Configuration, basePa
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        modifySupportPlan(requestParameters: CreditsApiModifySupportPlanRequest = {}, options?: AxiosRequestConfig): AxiosPromise<RecurringCreditConsumption> {
+        modifySupportPlan(requestParameters: CreditsApiModifySupportPlanRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<RecurringCreditConsumption> {
             return localVarFp.modifySupportPlan(requestParameters.modifySupportPlan, options).then((request) => request(axios, basePath));
         },
         /**
@@ -6058,7 +5246,7 @@ export const CreditsApiFactory = function (configuration?: Configuration, basePa
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        recurringCreditsGet(requestParameters: CreditsApiRecurringCreditsGetRequest = {}, options?: AxiosRequestConfig): AxiosPromise<RecurringCreditsGet200Response> {
+        recurringCreditsGet(requestParameters: CreditsApiRecurringCreditsGetRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<RecurringCreditsGet200Response> {
             return localVarFp.recurringCreditsGet(requestParameters.teamId, requestParameters.count, requestParameters.cursor, requestParameters.type, requestParameters.returnTotal, requestParameters.doneBy, requestParameters.dateRage, options).then((request) => request(axios, basePath));
         },
         /**
@@ -6068,7 +5256,7 @@ export const CreditsApiFactory = function (configuration?: Configuration, basePa
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        startRecurringConsumption(requestParameters: CreditsApiStartRecurringConsumptionRequest = {}, options?: AxiosRequestConfig): AxiosPromise<RecurringCreditConsumption> {
+        startRecurringConsumption(requestParameters: CreditsApiStartRecurringConsumptionRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<RecurringCreditConsumption> {
             return localVarFp.startRecurringConsumption(requestParameters.recurringCreditConsumptionCreate, options).then((request) => request(axios, basePath));
         },
         /**
@@ -6078,7 +5266,7 @@ export const CreditsApiFactory = function (configuration?: Configuration, basePa
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        stopRecurringConsumption(requestParameters: CreditsApiStopRecurringConsumptionRequest, options?: AxiosRequestConfig): AxiosPromise<void> {
+        stopRecurringConsumption(requestParameters: CreditsApiStopRecurringConsumptionRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
             return localVarFp.stopRecurringConsumption(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
@@ -6088,7 +5276,7 @@ export const CreditsApiFactory = function (configuration?: Configuration, basePa
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        topUpCreditsPost(requestParameters: CreditsApiTopUpCreditsPostRequest = {}, options?: AxiosRequestConfig): AxiosPromise<PaymentRequest> {
+        topUpCreditsPost(requestParameters: CreditsApiTopUpCreditsPostRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<PaymentRequest> {
             return localVarFp.topUpCreditsPost(requestParameters.creditTopUpOptions, options).then((request) => request(axios, basePath));
         },
     };
@@ -6228,20 +5416,6 @@ export interface CreditsApiCreditGainsGetRequest {
 }
 
 /**
- * Request parameters for creditGainsPost operation in CreditsApi.
- * @export
- * @interface CreditsApiCreditGainsPostRequest
- */
-export interface CreditsApiCreditGainsPostRequest {
-    /**
-     * 
-     * @type {CreditGainCreate}
-     * @memberof CreditsApiCreditGainsPost
-     */
-    readonly creditGainCreate?: CreditGainCreate
-}
-
-/**
  * Request parameters for creditTxsGet operation in CreditsApi.
  * @export
  * @interface CreditsApiCreditTxsGetRequest
@@ -6287,7 +5461,7 @@ export interface CreditsApiCreditTxsGetRequest {
      * @type {'gain' | 'consume'}
      * @memberof CreditsApiCreditTxsGet
      */
-    readonly effectType?: 'gain' | 'consume'
+    readonly effectType?: CreditTxsGetEffectTypeEnum
 
     /**
      * 
@@ -6347,34 +5521,6 @@ export interface CreditsApiCreditsCustomerGetRequest {
 }
 
 /**
- * Request parameters for creditsCustomerMigrate operation in CreditsApi.
- * @export
- * @interface CreditsApiCreditsCustomerMigrateRequest
- */
-export interface CreditsApiCreditsCustomerMigrateRequest {
-    /**
-     * 
-     * @type {CreditCustomerMigrate}
-     * @memberof CreditsApiCreditsCustomerMigrate
-     */
-    readonly creditCustomerMigrate?: CreditCustomerMigrate
-}
-
-/**
- * Request parameters for creditsCustomerPost operation in CreditsApi.
- * @export
- * @interface CreditsApiCreditsCustomerPostRequest
- */
-export interface CreditsApiCreditsCustomerPostRequest {
-    /**
-     * 
-     * @type {CreditCustomerPost}
-     * @memberof CreditsApiCreditsCustomerPost
-     */
-    readonly creditCustomerPost?: CreditCustomerPost
-}
-
-/**
  * Request parameters for creditsPreferencesGet operation in CreditsApi.
  * @export
  * @interface CreditsApiCreditsPreferencesGetRequest
@@ -6386,20 +5532,6 @@ export interface CreditsApiCreditsPreferencesGetRequest {
      * @memberof CreditsApiCreditsPreferencesGet
      */
     readonly region?: string
-}
-
-/**
- * Request parameters for creditsPreferencesPost operation in CreditsApi.
- * @export
- * @interface CreditsApiCreditsPreferencesPostRequest
- */
-export interface CreditsApiCreditsPreferencesPostRequest {
-    /**
-     * 
-     * @type {CreditsPreferencesPostRequest}
-     * @memberof CreditsApiCreditsPreferencesPost
-     */
-    readonly creditsPreferencesPostRequest?: CreditsPreferencesPostRequest
 }
 
 /**
@@ -6528,7 +5660,7 @@ export class CreditsApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof CreditsApi
      */
-    public autoRenewalCancel(options?: AxiosRequestConfig) {
+    public autoRenewalCancel(options?: RawAxiosRequestConfig) {
         return CreditsApiFp(this.configuration).autoRenewalCancel(options).then((request) => request(this.axios, this.basePath));
     }
 
@@ -6540,7 +5672,7 @@ export class CreditsApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof CreditsApi
      */
-    public autoRenewalPost(requestParameters: CreditsApiAutoRenewalPostRequest = {}, options?: AxiosRequestConfig) {
+    public autoRenewalPost(requestParameters: CreditsApiAutoRenewalPostRequest = {}, options?: RawAxiosRequestConfig) {
         return CreditsApiFp(this.configuration).autoRenewalPost(requestParameters.creditAutoRenewalUpdate, options).then((request) => request(this.axios, this.basePath));
     }
 
@@ -6552,7 +5684,7 @@ export class CreditsApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof CreditsApi
      */
-    public canConsumeCredits(requestParameters: CreditsApiCanConsumeCreditsRequest, options?: AxiosRequestConfig) {
+    public canConsumeCredits(requestParameters: CreditsApiCanConsumeCreditsRequest, options?: RawAxiosRequestConfig) {
         return CreditsApiFp(this.configuration).canConsumeCredits(requestParameters.type, requestParameters.quantity, requestParameters.legacyOpts, options).then((request) => request(this.axios, this.basePath));
     }
 
@@ -6564,7 +5696,7 @@ export class CreditsApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof CreditsApi
      */
-    public canConsumeRecurringCredits(requestParameters: CreditsApiCanConsumeRecurringCreditsRequest, options?: AxiosRequestConfig) {
+    public canConsumeRecurringCredits(requestParameters: CreditsApiCanConsumeRecurringCreditsRequest, options?: RawAxiosRequestConfig) {
         return CreditsApiFp(this.configuration).canConsumeRecurringCredits(requestParameters.type, requestParameters.legacyOpts, options).then((request) => request(this.axios, this.basePath));
     }
 
@@ -6576,7 +5708,7 @@ export class CreditsApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof CreditsApi
      */
-    public creditConsumptionPost(requestParameters: CreditsApiCreditConsumptionPostRequest = {}, options?: AxiosRequestConfig) {
+    public creditConsumptionPost(requestParameters: CreditsApiCreditConsumptionPostRequest = {}, options?: RawAxiosRequestConfig) {
         return CreditsApiFp(this.configuration).creditConsumptionPost(requestParameters.creditConsumptionPostRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
@@ -6588,20 +5720,8 @@ export class CreditsApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof CreditsApi
      */
-    public creditGainsGet(requestParameters: CreditsApiCreditGainsGetRequest = {}, options?: AxiosRequestConfig) {
+    public creditGainsGet(requestParameters: CreditsApiCreditGainsGetRequest = {}, options?: RawAxiosRequestConfig) {
         return CreditsApiFp(this.configuration).creditGainsGet(requestParameters.customerId, requestParameters.count, requestParameters.cursor, requestParameters.type, requestParameters.createdAt, requestParameters.status, requestParameters.returnTotal, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
-     * @summary Create a new credit gain
-     * @param {CreditsApiCreditGainsPostRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof CreditsApi
-     */
-    public creditGainsPost(requestParameters: CreditsApiCreditGainsPostRequest = {}, options?: AxiosRequestConfig) {
-        return CreditsApiFp(this.configuration).creditGainsPost(requestParameters.creditGainCreate, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -6612,7 +5732,7 @@ export class CreditsApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof CreditsApi
      */
-    public creditTxsGet(requestParameters: CreditsApiCreditTxsGetRequest = {}, options?: AxiosRequestConfig) {
+    public creditTxsGet(requestParameters: CreditsApiCreditTxsGetRequest = {}, options?: RawAxiosRequestConfig) {
         return CreditsApiFp(this.configuration).creditTxsGet(requestParameters.teamId, requestParameters.customerId, requestParameters.count, requestParameters.cursor, requestParameters.type, requestParameters.effectType, requestParameters.id, requestParameters.createdAt, requestParameters.doneBy, requestParameters.returnTotal, options).then((request) => request(this.axios, this.basePath));
     }
 
@@ -6624,32 +5744,8 @@ export class CreditsApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof CreditsApi
      */
-    public creditsCustomerGet(requestParameters: CreditsApiCreditsCustomerGetRequest = {}, options?: AxiosRequestConfig) {
+    public creditsCustomerGet(requestParameters: CreditsApiCreditsCustomerGetRequest = {}, options?: RawAxiosRequestConfig) {
         return CreditsApiFp(this.configuration).creditsCustomerGet(requestParameters.returnAutoRenewal, requestParameters.returnSupportPlan, requestParameters.returnRecurringPlans, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
-     * @summary Migrate the customer\'s subscription & any other purchased items to the credit system
-     * @param {CreditsApiCreditsCustomerMigrateRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof CreditsApi
-     */
-    public creditsCustomerMigrate(requestParameters: CreditsApiCreditsCustomerMigrateRequest = {}, options?: AxiosRequestConfig) {
-        return CreditsApiFp(this.configuration).creditsCustomerMigrate(requestParameters.creditCustomerMigrate, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
-     * @summary Create a new customer, or link the team to an existing customer
-     * @param {CreditsApiCreditsCustomerPostRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof CreditsApi
-     */
-    public creditsCustomerPost(requestParameters: CreditsApiCreditsCustomerPostRequest = {}, options?: AxiosRequestConfig) {
-        return CreditsApiFp(this.configuration).creditsCustomerPost(requestParameters.creditCustomerPost, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -6659,7 +5755,7 @@ export class CreditsApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof CreditsApi
      */
-    public creditsCustomerRefresh(options?: AxiosRequestConfig) {
+    public creditsCustomerRefresh(options?: RawAxiosRequestConfig) {
         return CreditsApiFp(this.configuration).creditsCustomerRefresh(options).then((request) => request(this.axios, this.basePath));
     }
 
@@ -6671,31 +5767,8 @@ export class CreditsApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof CreditsApi
      */
-    public creditsPreferencesGet(requestParameters: CreditsApiCreditsPreferencesGetRequest = {}, options?: AxiosRequestConfig) {
+    public creditsPreferencesGet(requestParameters: CreditsApiCreditsPreferencesGetRequest = {}, options?: RawAxiosRequestConfig) {
         return CreditsApiFp(this.configuration).creditsPreferencesGet(requestParameters.region, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
-     * @summary Get the system credit preferences
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof CreditsApi
-     */
-    public creditsPreferencesGetAdmin(options?: AxiosRequestConfig) {
-        return CreditsApiFp(this.configuration).creditsPreferencesGetAdmin(options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
-     * @summary Updates the given credit preferences
-     * @param {CreditsApiCreditsPreferencesPostRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof CreditsApi
-     */
-    public creditsPreferencesPost(requestParameters: CreditsApiCreditsPreferencesPostRequest = {}, options?: AxiosRequestConfig) {
-        return CreditsApiFp(this.configuration).creditsPreferencesPost(requestParameters.creditsPreferencesPostRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -6706,7 +5779,7 @@ export class CreditsApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof CreditsApi
      */
-    public modifySupportPlan(requestParameters: CreditsApiModifySupportPlanRequest = {}, options?: AxiosRequestConfig) {
+    public modifySupportPlan(requestParameters: CreditsApiModifySupportPlanRequest = {}, options?: RawAxiosRequestConfig) {
         return CreditsApiFp(this.configuration).modifySupportPlan(requestParameters.modifySupportPlan, options).then((request) => request(this.axios, this.basePath));
     }
 
@@ -6718,7 +5791,7 @@ export class CreditsApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof CreditsApi
      */
-    public recurringCreditsGet(requestParameters: CreditsApiRecurringCreditsGetRequest = {}, options?: AxiosRequestConfig) {
+    public recurringCreditsGet(requestParameters: CreditsApiRecurringCreditsGetRequest = {}, options?: RawAxiosRequestConfig) {
         return CreditsApiFp(this.configuration).recurringCreditsGet(requestParameters.teamId, requestParameters.count, requestParameters.cursor, requestParameters.type, requestParameters.returnTotal, requestParameters.doneBy, requestParameters.dateRage, options).then((request) => request(this.axios, this.basePath));
     }
 
@@ -6730,7 +5803,7 @@ export class CreditsApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof CreditsApi
      */
-    public startRecurringConsumption(requestParameters: CreditsApiStartRecurringConsumptionRequest = {}, options?: AxiosRequestConfig) {
+    public startRecurringConsumption(requestParameters: CreditsApiStartRecurringConsumptionRequest = {}, options?: RawAxiosRequestConfig) {
         return CreditsApiFp(this.configuration).startRecurringConsumption(requestParameters.recurringCreditConsumptionCreate, options).then((request) => request(this.axios, this.basePath));
     }
 
@@ -6742,7 +5815,7 @@ export class CreditsApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof CreditsApi
      */
-    public stopRecurringConsumption(requestParameters: CreditsApiStopRecurringConsumptionRequest, options?: AxiosRequestConfig) {
+    public stopRecurringConsumption(requestParameters: CreditsApiStopRecurringConsumptionRequest, options?: RawAxiosRequestConfig) {
         return CreditsApiFp(this.configuration).stopRecurringConsumption(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
     }
 
@@ -6754,10 +5827,19 @@ export class CreditsApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof CreditsApi
      */
-    public topUpCreditsPost(requestParameters: CreditsApiTopUpCreditsPostRequest = {}, options?: AxiosRequestConfig) {
+    public topUpCreditsPost(requestParameters: CreditsApiTopUpCreditsPostRequest = {}, options?: RawAxiosRequestConfig) {
         return CreditsApiFp(this.configuration).topUpCreditsPost(requestParameters.creditTopUpOptions, options).then((request) => request(this.axios, this.basePath));
     }
 }
+
+/**
+ * @export
+ */
+export const CreditTxsGetEffectTypeEnum = {
+    Gain: 'gain',
+    Consume: 'consume'
+} as const;
+export type CreditTxsGetEffectTypeEnum = typeof CreditTxsGetEffectTypeEnum[keyof typeof CreditTxsGetEffectTypeEnum];
 
 
 /**
@@ -6773,7 +5855,7 @@ export const ProductsApiAxiosParamCreator = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        productsGet: async (region?: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        productsGet: async (region?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/products`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -6805,86 +5887,6 @@ export const ProductsApiAxiosParamCreator = function (configuration?: Configurat
                 options: localVarRequestOptions,
             };
         },
-        /**
-         * 
-         * @summary Update a product\'s properties
-         * @param {string} id 
-         * @param {ProductUpdate} [productUpdate] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        productsPatch: async (id: string, productUpdate?: ProductUpdate, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'id' is not null or undefined
-            assertParamExists('productsPatch', 'id', id)
-            const localVarPath = `/products/{id}`
-                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'PATCH', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication chatdaddy required
-            // oauth required
-            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["ADMIN_PANEL_ACCESS"], configuration)
-
-
-    
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(productUpdate, localVarRequestOptions, configuration)
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @summary Create a new product
-         * @param {ProductCreate} [productCreate] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        productsPost: async (productCreate?: ProductCreate, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/products`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication chatdaddy required
-            // oauth required
-            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["ADMIN_PANEL_ACCESS"], configuration)
-
-
-    
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(productCreate, localVarRequestOptions, configuration)
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
     }
 };
 
@@ -6902,32 +5904,11 @@ export const ProductsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async productsGet(region?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ProductsGet200Response>> {
+        async productsGet(region?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ProductsGet200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.productsGet(region, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-        /**
-         * 
-         * @summary Update a product\'s properties
-         * @param {string} id 
-         * @param {ProductUpdate} [productUpdate] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async productsPatch(id: string, productUpdate?: ProductUpdate, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.productsPatch(id, productUpdate, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-        /**
-         * 
-         * @summary Create a new product
-         * @param {ProductCreate} [productCreate] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async productsPost(productCreate?: ProductCreate, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Product>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.productsPost(productCreate, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['ProductsApi.productsGet']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
     }
 };
@@ -6946,28 +5927,8 @@ export const ProductsApiFactory = function (configuration?: Configuration, baseP
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        productsGet(requestParameters: ProductsApiProductsGetRequest = {}, options?: AxiosRequestConfig): AxiosPromise<ProductsGet200Response> {
+        productsGet(requestParameters: ProductsApiProductsGetRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<ProductsGet200Response> {
             return localVarFp.productsGet(requestParameters.region, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
-         * @summary Update a product\'s properties
-         * @param {ProductsApiProductsPatchRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        productsPatch(requestParameters: ProductsApiProductsPatchRequest, options?: AxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.productsPatch(requestParameters.id, requestParameters.productUpdate, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
-         * @summary Create a new product
-         * @param {ProductsApiProductsPostRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        productsPost(requestParameters: ProductsApiProductsPostRequest = {}, options?: AxiosRequestConfig): AxiosPromise<Product> {
-            return localVarFp.productsPost(requestParameters.productCreate, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -6987,41 +5948,6 @@ export interface ProductsApiProductsGetRequest {
 }
 
 /**
- * Request parameters for productsPatch operation in ProductsApi.
- * @export
- * @interface ProductsApiProductsPatchRequest
- */
-export interface ProductsApiProductsPatchRequest {
-    /**
-     * 
-     * @type {string}
-     * @memberof ProductsApiProductsPatch
-     */
-    readonly id: string
-
-    /**
-     * 
-     * @type {ProductUpdate}
-     * @memberof ProductsApiProductsPatch
-     */
-    readonly productUpdate?: ProductUpdate
-}
-
-/**
- * Request parameters for productsPost operation in ProductsApi.
- * @export
- * @interface ProductsApiProductsPostRequest
- */
-export interface ProductsApiProductsPostRequest {
-    /**
-     * 
-     * @type {ProductCreate}
-     * @memberof ProductsApiProductsPost
-     */
-    readonly productCreate?: ProductCreate
-}
-
-/**
  * ProductsApi - object-oriented interface
  * @export
  * @class ProductsApi
@@ -7036,34 +5962,11 @@ export class ProductsApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof ProductsApi
      */
-    public productsGet(requestParameters: ProductsApiProductsGetRequest = {}, options?: AxiosRequestConfig) {
+    public productsGet(requestParameters: ProductsApiProductsGetRequest = {}, options?: RawAxiosRequestConfig) {
         return ProductsApiFp(this.configuration).productsGet(requestParameters.region, options).then((request) => request(this.axios, this.basePath));
     }
-
-    /**
-     * 
-     * @summary Update a product\'s properties
-     * @param {ProductsApiProductsPatchRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof ProductsApi
-     */
-    public productsPatch(requestParameters: ProductsApiProductsPatchRequest, options?: AxiosRequestConfig) {
-        return ProductsApiFp(this.configuration).productsPatch(requestParameters.id, requestParameters.productUpdate, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
-     * @summary Create a new product
-     * @param {ProductsApiProductsPostRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof ProductsApi
-     */
-    public productsPost(requestParameters: ProductsApiProductsPostRequest = {}, options?: AxiosRequestConfig) {
-        return ProductsApiFp(this.configuration).productsPost(requestParameters.productCreate, options).then((request) => request(this.axios, this.basePath));
-    }
 }
+
 
 
 /**
@@ -7078,7 +5981,7 @@ export const ReferralsApiAxiosParamCreator = function (configuration?: Configura
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getPartner: async (referralCode: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getPartner: async (referralCode: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'referralCode' is not null or undefined
             assertParamExists('getPartner', 'referralCode', referralCode)
             const localVarPath = `/partner-referral/get-partner`;
@@ -7112,141 +6015,6 @@ export const ReferralsApiAxiosParamCreator = function (configuration?: Configura
                 options: localVarRequestOptions,
             };
         },
-        /**
-         * 
-         * @param {string} referralCode 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        partnerReferralsDelete: async (referralCode: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'referralCode' is not null or undefined
-            assertParamExists('partnerReferralsDelete', 'referralCode', referralCode)
-            const localVarPath = `/partner-referral`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication chatdaddy required
-            // oauth required
-            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["PARTNER_ADMIN_PANEL_ACCESS", "ADMIN_PANEL_ACCESS"], configuration)
-
-            if (referralCode !== undefined) {
-                localVarQueryParameter['referralCode'] = referralCode;
-            }
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @param {number} [page] The page for the cursor
-         * @param {number} [count] The numbers of items to return
-         * @param {Array<string>} [id] The array of referralCodes to be fetched
-         * @param {string} [q] Search by id, productId, etc
-         * @param {boolean} [returnTotal] Include the total number of referralCodes
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        partnerReferralsGet: async (page?: number, count?: number, id?: Array<string>, q?: string, returnTotal?: boolean, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/partner-referral`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication chatdaddy required
-            // oauth required
-            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["PARTNER_ADMIN_PANEL_ACCESS", "ADMIN_PANEL_ACCESS"], configuration)
-
-            if (page !== undefined) {
-                localVarQueryParameter['page'] = page;
-            }
-
-            if (count !== undefined) {
-                localVarQueryParameter['count'] = count;
-            }
-
-            if (id) {
-                localVarQueryParameter['id'] = id;
-            }
-
-            if (q !== undefined) {
-                localVarQueryParameter['q'] = q;
-            }
-
-            if (returnTotal !== undefined) {
-                localVarQueryParameter['returnTotal'] = returnTotal;
-            }
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @param {PartnerReferralCreateOptions} [partnerReferralCreateOptions] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        partnerReferralsPost: async (partnerReferralCreateOptions?: PartnerReferralCreateOptions, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/partner-referral`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication chatdaddy required
-            // oauth required
-            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["PARTNER_ADMIN_PANEL_ACCESS", "ADMIN_PANEL_ACCESS"], configuration)
-
-
-    
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(partnerReferralCreateOptions, localVarRequestOptions, configuration)
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
     }
 };
 
@@ -7263,43 +6031,11 @@ export const ReferralsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getPartner(referralCode: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetPartner200Response>> {
+        async getPartner(referralCode: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetPartner200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getPartner(referralCode, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-        /**
-         * 
-         * @param {string} referralCode 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async partnerReferralsDelete(referralCode: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.partnerReferralsDelete(referralCode, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-        /**
-         * 
-         * @param {number} [page] The page for the cursor
-         * @param {number} [count] The numbers of items to return
-         * @param {Array<string>} [id] The array of referralCodes to be fetched
-         * @param {string} [q] Search by id, productId, etc
-         * @param {boolean} [returnTotal] Include the total number of referralCodes
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async partnerReferralsGet(page?: number, count?: number, id?: Array<string>, q?: string, returnTotal?: boolean, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PartnerReferralsGet200Response>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.partnerReferralsGet(page, count, id, q, returnTotal, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-        /**
-         * 
-         * @param {PartnerReferralCreateOptions} [partnerReferralCreateOptions] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async partnerReferralsPost(partnerReferralCreateOptions?: PartnerReferralCreateOptions, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PartnerReferralsPost200Response>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.partnerReferralsPost(partnerReferralCreateOptions, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['ReferralsApi.getPartner']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
     }
 };
@@ -7317,35 +6053,8 @@ export const ReferralsApiFactory = function (configuration?: Configuration, base
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getPartner(requestParameters: ReferralsApiGetPartnerRequest, options?: AxiosRequestConfig): AxiosPromise<GetPartner200Response> {
+        getPartner(requestParameters: ReferralsApiGetPartnerRequest, options?: RawAxiosRequestConfig): AxiosPromise<GetPartner200Response> {
             return localVarFp.getPartner(requestParameters.referralCode, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
-         * @param {ReferralsApiPartnerReferralsDeleteRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        partnerReferralsDelete(requestParameters: ReferralsApiPartnerReferralsDeleteRequest, options?: AxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.partnerReferralsDelete(requestParameters.referralCode, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
-         * @param {ReferralsApiPartnerReferralsGetRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        partnerReferralsGet(requestParameters: ReferralsApiPartnerReferralsGetRequest = {}, options?: AxiosRequestConfig): AxiosPromise<PartnerReferralsGet200Response> {
-            return localVarFp.partnerReferralsGet(requestParameters.page, requestParameters.count, requestParameters.id, requestParameters.q, requestParameters.returnTotal, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
-         * @param {ReferralsApiPartnerReferralsPostRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        partnerReferralsPost(requestParameters: ReferralsApiPartnerReferralsPostRequest = {}, options?: AxiosRequestConfig): AxiosPromise<PartnerReferralsPost200Response> {
-            return localVarFp.partnerReferralsPost(requestParameters.partnerReferralCreateOptions, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -7365,76 +6074,6 @@ export interface ReferralsApiGetPartnerRequest {
 }
 
 /**
- * Request parameters for partnerReferralsDelete operation in ReferralsApi.
- * @export
- * @interface ReferralsApiPartnerReferralsDeleteRequest
- */
-export interface ReferralsApiPartnerReferralsDeleteRequest {
-    /**
-     * 
-     * @type {string}
-     * @memberof ReferralsApiPartnerReferralsDelete
-     */
-    readonly referralCode: string
-}
-
-/**
- * Request parameters for partnerReferralsGet operation in ReferralsApi.
- * @export
- * @interface ReferralsApiPartnerReferralsGetRequest
- */
-export interface ReferralsApiPartnerReferralsGetRequest {
-    /**
-     * The page for the cursor
-     * @type {number}
-     * @memberof ReferralsApiPartnerReferralsGet
-     */
-    readonly page?: number
-
-    /**
-     * The numbers of items to return
-     * @type {number}
-     * @memberof ReferralsApiPartnerReferralsGet
-     */
-    readonly count?: number
-
-    /**
-     * The array of referralCodes to be fetched
-     * @type {Array<string>}
-     * @memberof ReferralsApiPartnerReferralsGet
-     */
-    readonly id?: Array<string>
-
-    /**
-     * Search by id, productId, etc
-     * @type {string}
-     * @memberof ReferralsApiPartnerReferralsGet
-     */
-    readonly q?: string
-
-    /**
-     * Include the total number of referralCodes
-     * @type {boolean}
-     * @memberof ReferralsApiPartnerReferralsGet
-     */
-    readonly returnTotal?: boolean
-}
-
-/**
- * Request parameters for partnerReferralsPost operation in ReferralsApi.
- * @export
- * @interface ReferralsApiPartnerReferralsPostRequest
- */
-export interface ReferralsApiPartnerReferralsPostRequest {
-    /**
-     * 
-     * @type {PartnerReferralCreateOptions}
-     * @memberof ReferralsApiPartnerReferralsPost
-     */
-    readonly partnerReferralCreateOptions?: PartnerReferralCreateOptions
-}
-
-/**
  * ReferralsApi - object-oriented interface
  * @export
  * @class ReferralsApi
@@ -7448,43 +6087,11 @@ export class ReferralsApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof ReferralsApi
      */
-    public getPartner(requestParameters: ReferralsApiGetPartnerRequest, options?: AxiosRequestConfig) {
+    public getPartner(requestParameters: ReferralsApiGetPartnerRequest, options?: RawAxiosRequestConfig) {
         return ReferralsApiFp(this.configuration).getPartner(requestParameters.referralCode, options).then((request) => request(this.axios, this.basePath));
     }
-
-    /**
-     * 
-     * @param {ReferralsApiPartnerReferralsDeleteRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof ReferralsApi
-     */
-    public partnerReferralsDelete(requestParameters: ReferralsApiPartnerReferralsDeleteRequest, options?: AxiosRequestConfig) {
-        return ReferralsApiFp(this.configuration).partnerReferralsDelete(requestParameters.referralCode, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
-     * @param {ReferralsApiPartnerReferralsGetRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof ReferralsApi
-     */
-    public partnerReferralsGet(requestParameters: ReferralsApiPartnerReferralsGetRequest = {}, options?: AxiosRequestConfig) {
-        return ReferralsApiFp(this.configuration).partnerReferralsGet(requestParameters.page, requestParameters.count, requestParameters.id, requestParameters.q, requestParameters.returnTotal, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
-     * @param {ReferralsApiPartnerReferralsPostRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof ReferralsApi
-     */
-    public partnerReferralsPost(requestParameters: ReferralsApiPartnerReferralsPostRequest = {}, options?: AxiosRequestConfig) {
-        return ReferralsApiFp(this.configuration).partnerReferralsPost(requestParameters.partnerReferralCreateOptions, options).then((request) => request(this.axios, this.basePath));
-    }
 }
+
 
 
 /**
@@ -7500,7 +6107,7 @@ export const StripeApiAxiosParamCreator = function (configuration?: Configuratio
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        billingSessionPost: async (returnUrl: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        billingSessionPost: async (returnUrl: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'returnUrl' is not null or undefined
             assertParamExists('billingSessionPost', 'returnUrl', returnUrl)
             const localVarPath = `/billing-session`;
@@ -7541,7 +6148,7 @@ export const StripeApiAxiosParamCreator = function (configuration?: Configuratio
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        stripeCheckout: async (checkoutCreateOptions?: CheckoutCreateOptions, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        stripeCheckout: async (checkoutCreateOptions?: CheckoutCreateOptions, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/stripe/checkout`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -7572,132 +6179,6 @@ export const StripeApiAxiosParamCreator = function (configuration?: Configuratio
                 options: localVarRequestOptions,
             };
         },
-        /**
-         * 
-         * @summary Receive stripe hook
-         * @param {string} secret 
-         * @param {{ [key: string]: any; }} [requestBody] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        stripeHook: async (secret: string, requestBody?: { [key: string]: any; }, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'secret' is not null or undefined
-            assertParamExists('stripeHook', 'secret', secret)
-            const localVarPath = `/stripe/webhook/{secret}`
-                .replace(`{${"secret"}}`, encodeURIComponent(String(secret)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-
-    
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(requestBody, localVarRequestOptions, configuration)
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @summary Create a payment intent
-         * @param {string} [stripeCustomerId] The stripe customer ID
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        stripePaymentIntentsGet: async (stripeCustomerId?: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/stripe/payment-intents`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication chatdaddy required
-            // oauth required
-            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["ADMIN_PANEL_ACCESS"], configuration)
-
-            if (stripeCustomerId !== undefined) {
-                localVarQueryParameter['stripeCustomerId'] = stripeCustomerId;
-            }
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Use results from here to attach prices to products.
-         * @summary Get prices from Stripe
-         * @param {number} [count] 
-         * @param {string} [cursor] 
-         * @param {string} [q] Filter by stripe query. See https://stripe.com/docs/search#search-query-language
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        stripePricesGet: async (count?: number, cursor?: string, q?: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/stripe/prices`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication chatdaddy required
-            // oauth required
-            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["ADMIN_PANEL_ACCESS"], configuration)
-
-            if (count !== undefined) {
-                localVarQueryParameter['count'] = count;
-            }
-
-            if (cursor !== undefined) {
-                localVarQueryParameter['cursor'] = cursor;
-            }
-
-            if (q !== undefined) {
-                localVarQueryParameter['q'] = q;
-            }
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
     }
 };
 
@@ -7715,9 +6196,11 @@ export const StripeApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async billingSessionPost(returnUrl: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BillingSessionPost200Response>> {
+        async billingSessionPost(returnUrl: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BillingSessionPost200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.billingSessionPost(returnUrl, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['StripeApi.billingSessionPost']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
          * 
@@ -7726,45 +6209,11 @@ export const StripeApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async stripeCheckout(checkoutCreateOptions?: CheckoutCreateOptions, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<StripeCheckout200Response>> {
+        async stripeCheckout(checkoutCreateOptions?: CheckoutCreateOptions, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<StripeCheckout200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.stripeCheckout(checkoutCreateOptions, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-        /**
-         * 
-         * @summary Receive stripe hook
-         * @param {string} secret 
-         * @param {{ [key: string]: any; }} [requestBody] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async stripeHook(secret: string, requestBody?: { [key: string]: any; }, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.stripeHook(secret, requestBody, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-        /**
-         * 
-         * @summary Create a payment intent
-         * @param {string} [stripeCustomerId] The stripe customer ID
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async stripePaymentIntentsGet(stripeCustomerId?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<StripePaymentIntentsGet200Response>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.stripePaymentIntentsGet(stripeCustomerId, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-        /**
-         * Use results from here to attach prices to products.
-         * @summary Get prices from Stripe
-         * @param {number} [count] 
-         * @param {string} [cursor] 
-         * @param {string} [q] Filter by stripe query. See https://stripe.com/docs/search#search-query-language
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async stripePricesGet(count?: number, cursor?: string, q?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<StripePricesGet200Response>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.stripePricesGet(count, cursor, q, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['StripeApi.stripeCheckout']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
     }
 };
@@ -7783,7 +6232,7 @@ export const StripeApiFactory = function (configuration?: Configuration, basePat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        billingSessionPost(requestParameters: StripeApiBillingSessionPostRequest, options?: AxiosRequestConfig): AxiosPromise<BillingSessionPost200Response> {
+        billingSessionPost(requestParameters: StripeApiBillingSessionPostRequest, options?: RawAxiosRequestConfig): AxiosPromise<BillingSessionPost200Response> {
             return localVarFp.billingSessionPost(requestParameters.returnUrl, options).then((request) => request(axios, basePath));
         },
         /**
@@ -7793,38 +6242,8 @@ export const StripeApiFactory = function (configuration?: Configuration, basePat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        stripeCheckout(requestParameters: StripeApiStripeCheckoutRequest = {}, options?: AxiosRequestConfig): AxiosPromise<StripeCheckout200Response> {
+        stripeCheckout(requestParameters: StripeApiStripeCheckoutRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<StripeCheckout200Response> {
             return localVarFp.stripeCheckout(requestParameters.checkoutCreateOptions, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
-         * @summary Receive stripe hook
-         * @param {StripeApiStripeHookRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        stripeHook(requestParameters: StripeApiStripeHookRequest, options?: AxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.stripeHook(requestParameters.secret, requestParameters.requestBody, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
-         * @summary Create a payment intent
-         * @param {StripeApiStripePaymentIntentsGetRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        stripePaymentIntentsGet(requestParameters: StripeApiStripePaymentIntentsGetRequest = {}, options?: AxiosRequestConfig): AxiosPromise<StripePaymentIntentsGet200Response> {
-            return localVarFp.stripePaymentIntentsGet(requestParameters.stripeCustomerId, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * Use results from here to attach prices to products.
-         * @summary Get prices from Stripe
-         * @param {StripeApiStripePricesGetRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        stripePricesGet(requestParameters: StripeApiStripePricesGetRequest = {}, options?: AxiosRequestConfig): AxiosPromise<StripePricesGet200Response> {
-            return localVarFp.stripePricesGet(requestParameters.count, requestParameters.cursor, requestParameters.q, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -7858,69 +6277,6 @@ export interface StripeApiStripeCheckoutRequest {
 }
 
 /**
- * Request parameters for stripeHook operation in StripeApi.
- * @export
- * @interface StripeApiStripeHookRequest
- */
-export interface StripeApiStripeHookRequest {
-    /**
-     * 
-     * @type {string}
-     * @memberof StripeApiStripeHook
-     */
-    readonly secret: string
-
-    /**
-     * 
-     * @type {{ [key: string]: any; }}
-     * @memberof StripeApiStripeHook
-     */
-    readonly requestBody?: { [key: string]: any; }
-}
-
-/**
- * Request parameters for stripePaymentIntentsGet operation in StripeApi.
- * @export
- * @interface StripeApiStripePaymentIntentsGetRequest
- */
-export interface StripeApiStripePaymentIntentsGetRequest {
-    /**
-     * The stripe customer ID
-     * @type {string}
-     * @memberof StripeApiStripePaymentIntentsGet
-     */
-    readonly stripeCustomerId?: string
-}
-
-/**
- * Request parameters for stripePricesGet operation in StripeApi.
- * @export
- * @interface StripeApiStripePricesGetRequest
- */
-export interface StripeApiStripePricesGetRequest {
-    /**
-     * 
-     * @type {number}
-     * @memberof StripeApiStripePricesGet
-     */
-    readonly count?: number
-
-    /**
-     * 
-     * @type {string}
-     * @memberof StripeApiStripePricesGet
-     */
-    readonly cursor?: string
-
-    /**
-     * Filter by stripe query. See https://stripe.com/docs/search#search-query-language
-     * @type {string}
-     * @memberof StripeApiStripePricesGet
-     */
-    readonly q?: string
-}
-
-/**
  * StripeApi - object-oriented interface
  * @export
  * @class StripeApi
@@ -7935,7 +6291,7 @@ export class StripeApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof StripeApi
      */
-    public billingSessionPost(requestParameters: StripeApiBillingSessionPostRequest, options?: AxiosRequestConfig) {
+    public billingSessionPost(requestParameters: StripeApiBillingSessionPostRequest, options?: RawAxiosRequestConfig) {
         return StripeApiFp(this.configuration).billingSessionPost(requestParameters.returnUrl, options).then((request) => request(this.axios, this.basePath));
     }
 
@@ -7947,46 +6303,11 @@ export class StripeApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof StripeApi
      */
-    public stripeCheckout(requestParameters: StripeApiStripeCheckoutRequest = {}, options?: AxiosRequestConfig) {
+    public stripeCheckout(requestParameters: StripeApiStripeCheckoutRequest = {}, options?: RawAxiosRequestConfig) {
         return StripeApiFp(this.configuration).stripeCheckout(requestParameters.checkoutCreateOptions, options).then((request) => request(this.axios, this.basePath));
     }
-
-    /**
-     * 
-     * @summary Receive stripe hook
-     * @param {StripeApiStripeHookRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof StripeApi
-     */
-    public stripeHook(requestParameters: StripeApiStripeHookRequest, options?: AxiosRequestConfig) {
-        return StripeApiFp(this.configuration).stripeHook(requestParameters.secret, requestParameters.requestBody, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
-     * @summary Create a payment intent
-     * @param {StripeApiStripePaymentIntentsGetRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof StripeApi
-     */
-    public stripePaymentIntentsGet(requestParameters: StripeApiStripePaymentIntentsGetRequest = {}, options?: AxiosRequestConfig) {
-        return StripeApiFp(this.configuration).stripePaymentIntentsGet(requestParameters.stripeCustomerId, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Use results from here to attach prices to products.
-     * @summary Get prices from Stripe
-     * @param {StripeApiStripePricesGetRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof StripeApi
-     */
-    public stripePricesGet(requestParameters: StripeApiStripePricesGetRequest = {}, options?: AxiosRequestConfig) {
-        return StripeApiFp(this.configuration).stripePricesGet(requestParameters.count, requestParameters.cursor, requestParameters.q, options).then((request) => request(this.axios, this.basePath));
-    }
 }
+
 
 
 /**
@@ -8003,8 +6324,8 @@ export const SubscriptionsApiAxiosParamCreator = function (configuration?: Confi
          * @param {number} [page] 
          * @param {string} [q] Search by subscription ID, team ID or product name
          * @param {boolean} [includeFreeTier] Include free tier subscriptions
-         * @param {'startDate' | 'endOrNextRenewalDate'} [sortBy] Sort by the given field
-         * @param {'asc' | 'desc'} [sortDirection] Sort direction
+         * @param {SubscriptionsGetSortByEnum} [sortBy] Sort by the given field
+         * @param {SubscriptionsGetSortDirectionEnum} [sortDirection] Sort direction
          * @param {string} [endsOrRenewsAfter] Filter subscriptions that end or renew after the given date
          * @param {string} [endsOrRenewsBefore] Filter subscriptions that end or renew before the given date
          * @param {boolean} [stripeOnly] Filter subscriptions that are only in Stripe
@@ -8013,7 +6334,7 @@ export const SubscriptionsApiAxiosParamCreator = function (configuration?: Confi
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        subscriptionsGet: async (teamId?: string, count?: number, page?: number, q?: string, includeFreeTier?: boolean, sortBy?: 'startDate' | 'endOrNextRenewalDate', sortDirection?: 'asc' | 'desc', endsOrRenewsAfter?: string, endsOrRenewsBefore?: string, stripeOnly?: boolean, product?: Array<string>, returnTotal?: boolean, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        subscriptionsGet: async (teamId?: string, count?: number, page?: number, q?: string, includeFreeTier?: boolean, sortBy?: SubscriptionsGetSortByEnum, sortDirection?: SubscriptionsGetSortDirectionEnum, endsOrRenewsAfter?: string, endsOrRenewsBefore?: string, stripeOnly?: boolean, product?: Array<string>, returnTotal?: boolean, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/subscriptions`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -8101,7 +6422,7 @@ export const SubscriptionsApiAxiosParamCreator = function (configuration?: Confi
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        subscriptionsPatch: async (id: string, subscriptionUpdate?: SubscriptionUpdate, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        subscriptionsPatch: async (id: string, subscriptionUpdate?: SubscriptionUpdate, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
             assertParamExists('subscriptionsPatch', 'id', id)
             const localVarPath = `/subscriptions/{id}`
@@ -8135,44 +6456,6 @@ export const SubscriptionsApiAxiosParamCreator = function (configuration?: Confi
                 options: localVarRequestOptions,
             };
         },
-        /**
-         * Subscription created here does not get counted in revenue. Not recommended, create a payment link instead.
-         * @summary Manually create a subscription for the team
-         * @param {SubscriptionCreate} [subscriptionCreate] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        subscriptionsPost: async (subscriptionCreate?: SubscriptionCreate, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/subscriptions`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication chatdaddy required
-            // oauth required
-            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["ADMIN_PANEL_ACCESS", "PARTNER_ADMIN_PANEL_ACCESS"], configuration)
-
-
-    
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(subscriptionCreate, localVarRequestOptions, configuration)
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
     }
 };
 
@@ -8191,8 +6474,8 @@ export const SubscriptionsApiFp = function(configuration?: Configuration) {
          * @param {number} [page] 
          * @param {string} [q] Search by subscription ID, team ID or product name
          * @param {boolean} [includeFreeTier] Include free tier subscriptions
-         * @param {'startDate' | 'endOrNextRenewalDate'} [sortBy] Sort by the given field
-         * @param {'asc' | 'desc'} [sortDirection] Sort direction
+         * @param {SubscriptionsGetSortByEnum} [sortBy] Sort by the given field
+         * @param {SubscriptionsGetSortDirectionEnum} [sortDirection] Sort direction
          * @param {string} [endsOrRenewsAfter] Filter subscriptions that end or renew after the given date
          * @param {string} [endsOrRenewsBefore] Filter subscriptions that end or renew before the given date
          * @param {boolean} [stripeOnly] Filter subscriptions that are only in Stripe
@@ -8201,9 +6484,11 @@ export const SubscriptionsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async subscriptionsGet(teamId?: string, count?: number, page?: number, q?: string, includeFreeTier?: boolean, sortBy?: 'startDate' | 'endOrNextRenewalDate', sortDirection?: 'asc' | 'desc', endsOrRenewsAfter?: string, endsOrRenewsBefore?: string, stripeOnly?: boolean, product?: Array<string>, returnTotal?: boolean, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SubscriptionsGet200Response>> {
+        async subscriptionsGet(teamId?: string, count?: number, page?: number, q?: string, includeFreeTier?: boolean, sortBy?: SubscriptionsGetSortByEnum, sortDirection?: SubscriptionsGetSortDirectionEnum, endsOrRenewsAfter?: string, endsOrRenewsBefore?: string, stripeOnly?: boolean, product?: Array<string>, returnTotal?: boolean, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SubscriptionsGet200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.subscriptionsGet(teamId, count, page, q, includeFreeTier, sortBy, sortDirection, endsOrRenewsAfter, endsOrRenewsBefore, stripeOnly, product, returnTotal, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['SubscriptionsApi.subscriptionsGet']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
          * 
@@ -8213,20 +6498,11 @@ export const SubscriptionsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async subscriptionsPatch(id: string, subscriptionUpdate?: SubscriptionUpdate, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async subscriptionsPatch(id: string, subscriptionUpdate?: SubscriptionUpdate, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.subscriptionsPatch(id, subscriptionUpdate, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-        /**
-         * Subscription created here does not get counted in revenue. Not recommended, create a payment link instead.
-         * @summary Manually create a subscription for the team
-         * @param {SubscriptionCreate} [subscriptionCreate] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async subscriptionsPost(subscriptionCreate?: SubscriptionCreate, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Subscription>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.subscriptionsPost(subscriptionCreate, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['SubscriptionsApi.subscriptionsPatch']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
     }
 };
@@ -8245,7 +6521,7 @@ export const SubscriptionsApiFactory = function (configuration?: Configuration, 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        subscriptionsGet(requestParameters: SubscriptionsApiSubscriptionsGetRequest = {}, options?: AxiosRequestConfig): AxiosPromise<SubscriptionsGet200Response> {
+        subscriptionsGet(requestParameters: SubscriptionsApiSubscriptionsGetRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<SubscriptionsGet200Response> {
             return localVarFp.subscriptionsGet(requestParameters.teamId, requestParameters.count, requestParameters.page, requestParameters.q, requestParameters.includeFreeTier, requestParameters.sortBy, requestParameters.sortDirection, requestParameters.endsOrRenewsAfter, requestParameters.endsOrRenewsBefore, requestParameters.stripeOnly, requestParameters.product, requestParameters.returnTotal, options).then((request) => request(axios, basePath));
         },
         /**
@@ -8255,18 +6531,8 @@ export const SubscriptionsApiFactory = function (configuration?: Configuration, 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        subscriptionsPatch(requestParameters: SubscriptionsApiSubscriptionsPatchRequest, options?: AxiosRequestConfig): AxiosPromise<void> {
+        subscriptionsPatch(requestParameters: SubscriptionsApiSubscriptionsPatchRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
             return localVarFp.subscriptionsPatch(requestParameters.id, requestParameters.subscriptionUpdate, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * Subscription created here does not get counted in revenue. Not recommended, create a payment link instead.
-         * @summary Manually create a subscription for the team
-         * @param {SubscriptionsApiSubscriptionsPostRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        subscriptionsPost(requestParameters: SubscriptionsApiSubscriptionsPostRequest = {}, options?: AxiosRequestConfig): AxiosPromise<Subscription> {
-            return localVarFp.subscriptionsPost(requestParameters.subscriptionCreate, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -8317,14 +6583,14 @@ export interface SubscriptionsApiSubscriptionsGetRequest {
      * @type {'startDate' | 'endOrNextRenewalDate'}
      * @memberof SubscriptionsApiSubscriptionsGet
      */
-    readonly sortBy?: 'startDate' | 'endOrNextRenewalDate'
+    readonly sortBy?: SubscriptionsGetSortByEnum
 
     /**
      * Sort direction
      * @type {'asc' | 'desc'}
      * @memberof SubscriptionsApiSubscriptionsGet
      */
-    readonly sortDirection?: 'asc' | 'desc'
+    readonly sortDirection?: SubscriptionsGetSortDirectionEnum
 
     /**
      * Filter subscriptions that end or renew after the given date
@@ -8384,20 +6650,6 @@ export interface SubscriptionsApiSubscriptionsPatchRequest {
 }
 
 /**
- * Request parameters for subscriptionsPost operation in SubscriptionsApi.
- * @export
- * @interface SubscriptionsApiSubscriptionsPostRequest
- */
-export interface SubscriptionsApiSubscriptionsPostRequest {
-    /**
-     * 
-     * @type {SubscriptionCreate}
-     * @memberof SubscriptionsApiSubscriptionsPost
-     */
-    readonly subscriptionCreate?: SubscriptionCreate
-}
-
-/**
  * SubscriptionsApi - object-oriented interface
  * @export
  * @class SubscriptionsApi
@@ -8412,7 +6664,7 @@ export class SubscriptionsApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof SubscriptionsApi
      */
-    public subscriptionsGet(requestParameters: SubscriptionsApiSubscriptionsGetRequest = {}, options?: AxiosRequestConfig) {
+    public subscriptionsGet(requestParameters: SubscriptionsApiSubscriptionsGetRequest = {}, options?: RawAxiosRequestConfig) {
         return SubscriptionsApiFp(this.configuration).subscriptionsGet(requestParameters.teamId, requestParameters.count, requestParameters.page, requestParameters.q, requestParameters.includeFreeTier, requestParameters.sortBy, requestParameters.sortDirection, requestParameters.endsOrRenewsAfter, requestParameters.endsOrRenewsBefore, requestParameters.stripeOnly, requestParameters.product, requestParameters.returnTotal, options).then((request) => request(this.axios, this.basePath));
     }
 
@@ -8424,22 +6676,27 @@ export class SubscriptionsApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof SubscriptionsApi
      */
-    public subscriptionsPatch(requestParameters: SubscriptionsApiSubscriptionsPatchRequest, options?: AxiosRequestConfig) {
+    public subscriptionsPatch(requestParameters: SubscriptionsApiSubscriptionsPatchRequest, options?: RawAxiosRequestConfig) {
         return SubscriptionsApiFp(this.configuration).subscriptionsPatch(requestParameters.id, requestParameters.subscriptionUpdate, options).then((request) => request(this.axios, this.basePath));
     }
-
-    /**
-     * Subscription created here does not get counted in revenue. Not recommended, create a payment link instead.
-     * @summary Manually create a subscription for the team
-     * @param {SubscriptionsApiSubscriptionsPostRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof SubscriptionsApi
-     */
-    public subscriptionsPost(requestParameters: SubscriptionsApiSubscriptionsPostRequest = {}, options?: AxiosRequestConfig) {
-        return SubscriptionsApiFp(this.configuration).subscriptionsPost(requestParameters.subscriptionCreate, options).then((request) => request(this.axios, this.basePath));
-    }
 }
+
+/**
+ * @export
+ */
+export const SubscriptionsGetSortByEnum = {
+    StartDate: 'startDate',
+    EndOrNextRenewalDate: 'endOrNextRenewalDate'
+} as const;
+export type SubscriptionsGetSortByEnum = typeof SubscriptionsGetSortByEnum[keyof typeof SubscriptionsGetSortByEnum];
+/**
+ * @export
+ */
+export const SubscriptionsGetSortDirectionEnum = {
+    Asc: 'asc',
+    Desc: 'desc'
+} as const;
+export type SubscriptionsGetSortDirectionEnum = typeof SubscriptionsGetSortDirectionEnum[keyof typeof SubscriptionsGetSortDirectionEnum];
 
 
 /**
@@ -8455,7 +6712,7 @@ export const TeamDetailApiAxiosParamCreator = function (configuration?: Configur
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        teamDetailAccountAccessGet: async (accountId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        teamDetailAccountAccessGet: async (accountId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'accountId' is not null or undefined
             assertParamExists('teamDetailAccountAccessGet', 'accountId', accountId)
             const localVarPath = `/team-detail/account-access/{accountId}`
@@ -8492,7 +6749,7 @@ export const TeamDetailApiAxiosParamCreator = function (configuration?: Configur
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        teamDetailGet: async (options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        teamDetailGet: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/team-detail`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -8527,7 +6784,7 @@ export const TeamDetailApiAxiosParamCreator = function (configuration?: Configur
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        teamDetailPatch: async (teamDetailUpdate?: TeamDetailUpdate, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        teamDetailPatch: async (teamDetailUpdate?: TeamDetailUpdate, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/team-detail`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -8559,51 +6816,13 @@ export const TeamDetailApiAxiosParamCreator = function (configuration?: Configur
             };
         },
         /**
-         * 
-         * @summary Initialise a team with the free tier
-         * @param {TeamDetailCreate} [teamDetailCreate] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        teamDetailPost: async (teamDetailCreate?: TeamDetailCreate, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/team-detail`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication chatdaddy required
-            // oauth required
-            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["ADMIN_PANEL_ACCESS"], configuration)
-
-
-    
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(teamDetailCreate, localVarRequestOptions, configuration)
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
          * Fetches the list of active subscriptions/purchases from stripe and calculates what the current subscriptions should be. This route can be called to refresh the subscription after checkout to ensure the subscription is retreived. 
          * @summary Refreshes the access given by subscriptions
          * @param {boolean} [refreshUsage] Refreshes usage statistics as well
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        teamDetailRefreshAccess: async (refreshUsage?: boolean, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        teamDetailRefreshAccess: async (refreshUsage?: boolean, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/team-detail/refresh-access`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -8652,9 +6871,11 @@ export const TeamDetailApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async teamDetailAccountAccessGet(accountId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AccountAccessDetail>> {
+        async teamDetailAccountAccessGet(accountId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AccountAccessDetail>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.teamDetailAccountAccessGet(accountId, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['TeamDetailApi.teamDetailAccountAccessGet']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
          * 
@@ -8662,9 +6883,11 @@ export const TeamDetailApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async teamDetailGet(options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TeamDetail>> {
+        async teamDetailGet(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TeamDetail>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.teamDetailGet(options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['TeamDetailApi.teamDetailGet']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
          * 
@@ -8673,20 +6896,11 @@ export const TeamDetailApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async teamDetailPatch(teamDetailUpdate?: TeamDetailUpdate, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async teamDetailPatch(teamDetailUpdate?: TeamDetailUpdate, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.teamDetailPatch(teamDetailUpdate, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-        /**
-         * 
-         * @summary Initialise a team with the free tier
-         * @param {TeamDetailCreate} [teamDetailCreate] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async teamDetailPost(teamDetailCreate?: TeamDetailCreate, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TeamDetail>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.teamDetailPost(teamDetailCreate, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['TeamDetailApi.teamDetailPatch']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
          * Fetches the list of active subscriptions/purchases from stripe and calculates what the current subscriptions should be. This route can be called to refresh the subscription after checkout to ensure the subscription is retreived. 
@@ -8695,9 +6909,11 @@ export const TeamDetailApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async teamDetailRefreshAccess(refreshUsage?: boolean, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async teamDetailRefreshAccess(refreshUsage?: boolean, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.teamDetailRefreshAccess(refreshUsage, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['TeamDetailApi.teamDetailRefreshAccess']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
     }
 };
@@ -8716,7 +6932,7 @@ export const TeamDetailApiFactory = function (configuration?: Configuration, bas
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        teamDetailAccountAccessGet(requestParameters: TeamDetailApiTeamDetailAccountAccessGetRequest, options?: AxiosRequestConfig): AxiosPromise<AccountAccessDetail> {
+        teamDetailAccountAccessGet(requestParameters: TeamDetailApiTeamDetailAccountAccessGetRequest, options?: RawAxiosRequestConfig): AxiosPromise<AccountAccessDetail> {
             return localVarFp.teamDetailAccountAccessGet(requestParameters.accountId, options).then((request) => request(axios, basePath));
         },
         /**
@@ -8725,7 +6941,7 @@ export const TeamDetailApiFactory = function (configuration?: Configuration, bas
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        teamDetailGet(options?: AxiosRequestConfig): AxiosPromise<TeamDetail> {
+        teamDetailGet(options?: RawAxiosRequestConfig): AxiosPromise<TeamDetail> {
             return localVarFp.teamDetailGet(options).then((request) => request(axios, basePath));
         },
         /**
@@ -8735,18 +6951,8 @@ export const TeamDetailApiFactory = function (configuration?: Configuration, bas
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        teamDetailPatch(requestParameters: TeamDetailApiTeamDetailPatchRequest = {}, options?: AxiosRequestConfig): AxiosPromise<void> {
+        teamDetailPatch(requestParameters: TeamDetailApiTeamDetailPatchRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<void> {
             return localVarFp.teamDetailPatch(requestParameters.teamDetailUpdate, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
-         * @summary Initialise a team with the free tier
-         * @param {TeamDetailApiTeamDetailPostRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        teamDetailPost(requestParameters: TeamDetailApiTeamDetailPostRequest = {}, options?: AxiosRequestConfig): AxiosPromise<TeamDetail> {
-            return localVarFp.teamDetailPost(requestParameters.teamDetailCreate, options).then((request) => request(axios, basePath));
         },
         /**
          * Fetches the list of active subscriptions/purchases from stripe and calculates what the current subscriptions should be. This route can be called to refresh the subscription after checkout to ensure the subscription is retreived. 
@@ -8755,7 +6961,7 @@ export const TeamDetailApiFactory = function (configuration?: Configuration, bas
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        teamDetailRefreshAccess(requestParameters: TeamDetailApiTeamDetailRefreshAccessRequest = {}, options?: AxiosRequestConfig): AxiosPromise<void> {
+        teamDetailRefreshAccess(requestParameters: TeamDetailApiTeamDetailRefreshAccessRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<void> {
             return localVarFp.teamDetailRefreshAccess(requestParameters.refreshUsage, options).then((request) => request(axios, basePath));
         },
     };
@@ -8790,20 +6996,6 @@ export interface TeamDetailApiTeamDetailPatchRequest {
 }
 
 /**
- * Request parameters for teamDetailPost operation in TeamDetailApi.
- * @export
- * @interface TeamDetailApiTeamDetailPostRequest
- */
-export interface TeamDetailApiTeamDetailPostRequest {
-    /**
-     * 
-     * @type {TeamDetailCreate}
-     * @memberof TeamDetailApiTeamDetailPost
-     */
-    readonly teamDetailCreate?: TeamDetailCreate
-}
-
-/**
  * Request parameters for teamDetailRefreshAccess operation in TeamDetailApi.
  * @export
  * @interface TeamDetailApiTeamDetailRefreshAccessRequest
@@ -8832,7 +7024,7 @@ export class TeamDetailApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof TeamDetailApi
      */
-    public teamDetailAccountAccessGet(requestParameters: TeamDetailApiTeamDetailAccountAccessGetRequest, options?: AxiosRequestConfig) {
+    public teamDetailAccountAccessGet(requestParameters: TeamDetailApiTeamDetailAccountAccessGetRequest, options?: RawAxiosRequestConfig) {
         return TeamDetailApiFp(this.configuration).teamDetailAccountAccessGet(requestParameters.accountId, options).then((request) => request(this.axios, this.basePath));
     }
 
@@ -8843,7 +7035,7 @@ export class TeamDetailApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof TeamDetailApi
      */
-    public teamDetailGet(options?: AxiosRequestConfig) {
+    public teamDetailGet(options?: RawAxiosRequestConfig) {
         return TeamDetailApiFp(this.configuration).teamDetailGet(options).then((request) => request(this.axios, this.basePath));
     }
 
@@ -8855,20 +7047,8 @@ export class TeamDetailApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof TeamDetailApi
      */
-    public teamDetailPatch(requestParameters: TeamDetailApiTeamDetailPatchRequest = {}, options?: AxiosRequestConfig) {
+    public teamDetailPatch(requestParameters: TeamDetailApiTeamDetailPatchRequest = {}, options?: RawAxiosRequestConfig) {
         return TeamDetailApiFp(this.configuration).teamDetailPatch(requestParameters.teamDetailUpdate, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
-     * @summary Initialise a team with the free tier
-     * @param {TeamDetailApiTeamDetailPostRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof TeamDetailApi
-     */
-    public teamDetailPost(requestParameters: TeamDetailApiTeamDetailPostRequest = {}, options?: AxiosRequestConfig) {
-        return TeamDetailApiFp(this.configuration).teamDetailPost(requestParameters.teamDetailCreate, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -8879,9 +7059,10 @@ export class TeamDetailApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof TeamDetailApi
      */
-    public teamDetailRefreshAccess(requestParameters: TeamDetailApiTeamDetailRefreshAccessRequest = {}, options?: AxiosRequestConfig) {
+    public teamDetailRefreshAccess(requestParameters: TeamDetailApiTeamDetailRefreshAccessRequest = {}, options?: RawAxiosRequestConfig) {
         return TeamDetailApiFp(this.configuration).teamDetailRefreshAccess(requestParameters.refreshUsage, options).then((request) => request(this.axios, this.basePath));
     }
 }
+
 
 

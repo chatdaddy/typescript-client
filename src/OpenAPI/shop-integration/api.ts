@@ -16,14 +16,14 @@ const BASE_PATH = "https://replace.your.own.url.here".replace(/\/+$/, "");
 
 
 import type { Configuration } from '../configuration';
-import type { AxiosPromise, AxiosInstance, AxiosRequestConfig } from 'axios';
+import type { AxiosPromise, AxiosInstance, RawAxiosRequestConfig } from 'axios';
 import globalAxios from 'axios';
 // Some imports not used depending on template conditions
 // @ts-ignore
 import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObject, setBearerAuthToObject, setOAuthToObject, setSearchParams, serializeDataIfNeeded, toPathString, createRequestFunction } from '../common';
 import type { RequestArgs } from '../base';
 // @ts-ignore
-import { COLLECTION_FORMATS, BaseAPI, RequiredError } from '../base';
+import { COLLECTION_FORMATS, BaseAPI, RequiredError, operationServerMap } from '../base';
 
 /**
  * 
@@ -647,18 +647,6 @@ type ProductSyncStatus = typeof ProductSyncStatus[keyof typeof ProductSyncStatus
  */
 interface ServiceModel {
     /**
-     * Used to store and uniquely identify a service/scraper
-     * @type {string}
-     * @memberof ServiceModel
-     */
-    'id': string;
-    /**
-     * URL of the service
-     * @type {string}
-     * @memberof ServiceModel
-     */
-    'url'?: string;
-    /**
      * Name of the service/scrapper
      * @type {string}
      * @memberof ServiceModel
@@ -724,6 +712,18 @@ interface ServiceModel {
      * @memberof ServiceModel
      */
     'disabled'?: boolean;
+    /**
+     * Used to store and uniquely identify a service/scraper
+     * @type {string}
+     * @memberof ServiceModel
+     */
+    'id': string;
+    /**
+     * URL of the service
+     * @type {string}
+     * @memberof ServiceModel
+     */
+    'url'?: string;
 }
 /**
  * Model for a product on an external platform (eg. WhatsApp)
@@ -867,18 +867,6 @@ interface ShopProduct {
  */
 export interface ShopServiceSchema {
     /**
-     * Used to store and uniquely identify a service/scraper
-     * @type {string}
-     * @memberof ShopServiceSchema
-     */
-    'id': string;
-    /**
-     * URL of the service
-     * @type {string}
-     * @memberof ShopServiceSchema
-     */
-    'url'?: string;
-    /**
      * Name of the service/scrapper
      * @type {string}
      * @memberof ShopServiceSchema
@@ -944,23 +932,16 @@ export interface ShopServiceSchema {
      * @memberof ShopServiceSchema
      */
     'disabled'?: boolean;
-}
-/**
- * 
- * @export
- * @interface ShopServiceSchemaAllOf
- */
-export interface ShopServiceSchemaAllOf {
     /**
      * Used to store and uniquely identify a service/scraper
      * @type {string}
-     * @memberof ShopServiceSchemaAllOf
+     * @memberof ShopServiceSchema
      */
     'id': string;
     /**
      * URL of the service
      * @type {string}
-     * @memberof ShopServiceSchemaAllOf
+     * @memberof ShopServiceSchema
      */
     'url'?: string;
 }
@@ -979,7 +960,7 @@ export const ShopIntegrationApiAxiosParamCreator = function (configuration?: Con
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        createTracking: async (id: string, createTrackingRequest?: CreateTrackingRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        createTracking: async (id: string, createTrackingRequest?: CreateTrackingRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
             assertParamExists('createTracking', 'id', id)
             const localVarPath = `/easysend/{id}`
@@ -1020,7 +1001,7 @@ export const ShopIntegrationApiAxiosParamCreator = function (configuration?: Con
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteTracking: async (id: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        deleteTracking: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
             assertParamExists('deleteTracking', 'id', id)
             const localVarPath = `/easysend/{id}`
@@ -1057,7 +1038,7 @@ export const ShopIntegrationApiAxiosParamCreator = function (configuration?: Con
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getSchema: async (options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getSchema: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/easysend/schema`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -1090,7 +1071,7 @@ export const ShopIntegrationApiAxiosParamCreator = function (configuration?: Con
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getTrackingProducts: async (id: string, limit?: number, page?: number, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getTrackingProducts: async (id: string, limit?: number, page?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
             assertParamExists('getTrackingProducts', 'id', id)
             const localVarPath = `/easysend/{id}/products`
@@ -1147,9 +1128,11 @@ export const ShopIntegrationApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async createTracking(id: string, createTrackingRequest?: CreateTrackingRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async createTracking(id: string, createTrackingRequest?: CreateTrackingRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.createTracking(id, createTrackingRequest, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['ShopIntegrationApi.createTracking']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
          * This route is for deleting a tracking for a user  It is expected the tracking is removed from the service within 500ms of this request as the easysend service may create a new tracking with the same ID immediately after this request. 
@@ -1158,9 +1141,11 @@ export const ShopIntegrationApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteTracking(id: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async deleteTracking(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.deleteTracking(id, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['ShopIntegrationApi.deleteTracking']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
          * This route is used by easysend to determine all the specifications of the service including: - JSON schema describing the parameters each data point will contain - credentials required - an image - description & name 
@@ -1168,9 +1153,11 @@ export const ShopIntegrationApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getSchema(options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ShopServiceSchema>> {
+        async getSchema(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ShopServiceSchema>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getSchema(options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['ShopIntegrationApi.getSchema']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
          * Return products listed by the user on the provider. Eg. products listed on an ecommerce store. 
@@ -1181,9 +1168,11 @@ export const ShopIntegrationApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getTrackingProducts(id: string, limit?: number, page?: number, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetTrackingProducts200Response>> {
+        async getTrackingProducts(id: string, limit?: number, page?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetTrackingProducts200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getTrackingProducts(id, limit, page, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['ShopIntegrationApi.getTrackingProducts']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
     }
 };
@@ -1202,7 +1191,7 @@ export const ShopIntegrationApiFactory = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        createTracking(requestParameters: ShopIntegrationApiCreateTrackingRequest, options?: AxiosRequestConfig): AxiosPromise<void> {
+        createTracking(requestParameters: ShopIntegrationApiCreateTrackingRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
             return localVarFp.createTracking(requestParameters.id, requestParameters.createTrackingRequest, options).then((request) => request(axios, basePath));
         },
         /**
@@ -1212,7 +1201,7 @@ export const ShopIntegrationApiFactory = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteTracking(requestParameters: ShopIntegrationApiDeleteTrackingRequest, options?: AxiosRequestConfig): AxiosPromise<void> {
+        deleteTracking(requestParameters: ShopIntegrationApiDeleteTrackingRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
             return localVarFp.deleteTracking(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
@@ -1221,7 +1210,7 @@ export const ShopIntegrationApiFactory = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getSchema(options?: AxiosRequestConfig): AxiosPromise<ShopServiceSchema> {
+        getSchema(options?: RawAxiosRequestConfig): AxiosPromise<ShopServiceSchema> {
             return localVarFp.getSchema(options).then((request) => request(axios, basePath));
         },
         /**
@@ -1231,7 +1220,7 @@ export const ShopIntegrationApiFactory = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getTrackingProducts(requestParameters: ShopIntegrationApiGetTrackingProductsRequest, options?: AxiosRequestConfig): AxiosPromise<GetTrackingProducts200Response> {
+        getTrackingProducts(requestParameters: ShopIntegrationApiGetTrackingProductsRequest, options?: RawAxiosRequestConfig): AxiosPromise<GetTrackingProducts200Response> {
             return localVarFp.getTrackingProducts(requestParameters.id, requestParameters.limit, requestParameters.page, options).then((request) => request(axios, basePath));
         },
     };
@@ -1315,7 +1304,7 @@ export class ShopIntegrationApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof ShopIntegrationApi
      */
-    public createTracking(requestParameters: ShopIntegrationApiCreateTrackingRequest, options?: AxiosRequestConfig) {
+    public createTracking(requestParameters: ShopIntegrationApiCreateTrackingRequest, options?: RawAxiosRequestConfig) {
         return ShopIntegrationApiFp(this.configuration).createTracking(requestParameters.id, requestParameters.createTrackingRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
@@ -1327,7 +1316,7 @@ export class ShopIntegrationApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof ShopIntegrationApi
      */
-    public deleteTracking(requestParameters: ShopIntegrationApiDeleteTrackingRequest, options?: AxiosRequestConfig) {
+    public deleteTracking(requestParameters: ShopIntegrationApiDeleteTrackingRequest, options?: RawAxiosRequestConfig) {
         return ShopIntegrationApiFp(this.configuration).deleteTracking(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
     }
 
@@ -1338,7 +1327,7 @@ export class ShopIntegrationApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof ShopIntegrationApi
      */
-    public getSchema(options?: AxiosRequestConfig) {
+    public getSchema(options?: RawAxiosRequestConfig) {
         return ShopIntegrationApiFp(this.configuration).getSchema(options).then((request) => request(this.axios, this.basePath));
     }
 
@@ -1350,9 +1339,10 @@ export class ShopIntegrationApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof ShopIntegrationApi
      */
-    public getTrackingProducts(requestParameters: ShopIntegrationApiGetTrackingProductsRequest, options?: AxiosRequestConfig) {
+    public getTrackingProducts(requestParameters: ShopIntegrationApiGetTrackingProductsRequest, options?: RawAxiosRequestConfig) {
         return ShopIntegrationApiFp(this.configuration).getTrackingProducts(requestParameters.id, requestParameters.limit, requestParameters.page, options).then((request) => request(this.axios, this.basePath));
     }
 }
+
 
 

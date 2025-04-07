@@ -16,14 +16,14 @@ const BASE_PATH = "https://api.chatdaddy.tech/transcoder".replace(/\/+$/, "");
 
 
 import type { Configuration } from '../configuration';
-import type { AxiosPromise, AxiosInstance, AxiosRequestConfig } from 'axios';
+import type { AxiosPromise, AxiosInstance, RawAxiosRequestConfig } from 'axios';
 import globalAxios from 'axios';
 // Some imports not used depending on template conditions
 // @ts-ignore
 import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObject, setBearerAuthToObject, setOAuthToObject, setSearchParams, serializeDataIfNeeded, toPathString, createRequestFunction } from '../common';
 import type { RequestArgs } from '../base';
 // @ts-ignore
-import { COLLECTION_FORMATS, BaseAPI, RequiredError } from '../base';
+import { COLLECTION_FORMATS, BaseAPI, RequiredError, operationServerMap } from '../base';
 
 /**
  * 
@@ -84,7 +84,7 @@ export const TranscodeApiAxiosParamCreator = function (configuration?: Configura
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        convert: async (convertRequest: ConvertRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        convert: async (convertRequest: ConvertRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'convertRequest' is not null or undefined
             assertParamExists('convert', 'convertRequest', convertRequest)
             const localVarPath = `/convert`;
@@ -129,7 +129,7 @@ export const TranscodeApiAxiosParamCreator = function (configuration?: Configura
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        streamMessageAttachment: async (accountId: string, chatId: string, id: string, index: number, token?: string, mimetype?: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        streamMessageAttachment: async (accountId: string, chatId: string, id: string, index: number, token?: string, mimetype?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'accountId' is not null or undefined
             assertParamExists('streamMessageAttachment', 'accountId', accountId)
             // verify required parameter 'chatId' is not null or undefined
@@ -189,7 +189,7 @@ export const TranscodeApiAxiosParamCreator = function (configuration?: Configura
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        transcode: async (method: TranscodeMethod, url: string, key?: string, iv?: string, expectedMimetype?: string, token?: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        transcode: async (method: TranscodeMethod, url: string, key?: string, iv?: string, expectedMimetype?: string, token?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'method' is not null or undefined
             assertParamExists('transcode', 'method', method)
             // verify required parameter 'url' is not null or undefined
@@ -259,9 +259,11 @@ export const TranscodeApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async convert(convertRequest: ConvertRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Convert200Response>> {
+        async convert(convertRequest: ConvertRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Convert200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.convert(convertRequest, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['TranscodeApi.convert']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
          * 
@@ -275,9 +277,11 @@ export const TranscodeApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async streamMessageAttachment(accountId: string, chatId: string, id: string, index: number, token?: string, mimetype?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async streamMessageAttachment(accountId: string, chatId: string, id: string, index: number, token?: string, mimetype?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.streamMessageAttachment(accountId, chatId, id, index, token, mimetype, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['TranscodeApi.streamMessageAttachment']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
          * 
@@ -291,9 +295,11 @@ export const TranscodeApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async transcode(method: TranscodeMethod, url: string, key?: string, iv?: string, expectedMimetype?: string, token?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async transcode(method: TranscodeMethod, url: string, key?: string, iv?: string, expectedMimetype?: string, token?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.transcode(method, url, key, iv, expectedMimetype, token, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['TranscodeApi.transcode']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
     }
 };
@@ -312,7 +318,7 @@ export const TranscodeApiFactory = function (configuration?: Configuration, base
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        convert(requestParameters: TranscodeApiConvertRequest, options?: AxiosRequestConfig): AxiosPromise<Convert200Response> {
+        convert(requestParameters: TranscodeApiConvertRequest, options?: RawAxiosRequestConfig): AxiosPromise<Convert200Response> {
             return localVarFp.convert(requestParameters.convertRequest, options).then((request) => request(axios, basePath));
         },
         /**
@@ -322,7 +328,7 @@ export const TranscodeApiFactory = function (configuration?: Configuration, base
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        streamMessageAttachment(requestParameters: TranscodeApiStreamMessageAttachmentRequest, options?: AxiosRequestConfig): AxiosPromise<void> {
+        streamMessageAttachment(requestParameters: TranscodeApiStreamMessageAttachmentRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
             return localVarFp.streamMessageAttachment(requestParameters.accountId, requestParameters.chatId, requestParameters.id, requestParameters.index, requestParameters.token, requestParameters.mimetype, options).then((request) => request(axios, basePath));
         },
         /**
@@ -332,7 +338,7 @@ export const TranscodeApiFactory = function (configuration?: Configuration, base
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        transcode(requestParameters: TranscodeApiTranscodeRequest, options?: AxiosRequestConfig): AxiosPromise<void> {
+        transcode(requestParameters: TranscodeApiTranscodeRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
             return localVarFp.transcode(requestParameters.method, requestParameters.url, requestParameters.key, requestParameters.iv, requestParameters.expectedMimetype, requestParameters.token, options).then((request) => request(axios, basePath));
         },
     };
@@ -465,7 +471,7 @@ export class TranscodeApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof TranscodeApi
      */
-    public convert(requestParameters: TranscodeApiConvertRequest, options?: AxiosRequestConfig) {
+    public convert(requestParameters: TranscodeApiConvertRequest, options?: RawAxiosRequestConfig) {
         return TranscodeApiFp(this.configuration).convert(requestParameters.convertRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
@@ -477,7 +483,7 @@ export class TranscodeApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof TranscodeApi
      */
-    public streamMessageAttachment(requestParameters: TranscodeApiStreamMessageAttachmentRequest, options?: AxiosRequestConfig) {
+    public streamMessageAttachment(requestParameters: TranscodeApiStreamMessageAttachmentRequest, options?: RawAxiosRequestConfig) {
         return TranscodeApiFp(this.configuration).streamMessageAttachment(requestParameters.accountId, requestParameters.chatId, requestParameters.id, requestParameters.index, requestParameters.token, requestParameters.mimetype, options).then((request) => request(this.axios, this.basePath));
     }
 
@@ -489,9 +495,10 @@ export class TranscodeApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof TranscodeApi
      */
-    public transcode(requestParameters: TranscodeApiTranscodeRequest, options?: AxiosRequestConfig) {
+    public transcode(requestParameters: TranscodeApiTranscodeRequest, options?: RawAxiosRequestConfig) {
         return TranscodeApiFp(this.configuration).transcode(requestParameters.method, requestParameters.url, requestParameters.key, requestParameters.iv, requestParameters.expectedMimetype, requestParameters.token, options).then((request) => request(this.axios, this.basePath));
     }
 }
+
 
 
