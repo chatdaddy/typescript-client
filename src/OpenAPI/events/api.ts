@@ -4620,6 +4620,12 @@ export interface CallInsertData {
      * @memberof CallInsertData
      */
     'transcription'?: CallInsertDataTranscription | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof CallInsertData
+     */
+    'messageId'?: string;
 }
 /**
  * 
@@ -4765,6 +4771,12 @@ export interface CallUpdateData {
      * @memberof CallUpdateData
      */
     'transcription'?: CallInsertDataTranscription | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof CallUpdateData
+     */
+    'messageId'?: string;
 }
 /**
  * 

@@ -103,6 +103,12 @@ export interface Call {
      * @memberof Call
      */
     'transcription'?: CallTranscription | null;
+    /**
+     * Message Id of the note associated with this call on the IM service
+     * @type {string}
+     * @memberof Call
+     */
+    'messageId'?: string;
 }
 /**
  * 
