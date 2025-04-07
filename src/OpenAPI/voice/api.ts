@@ -881,6 +881,74 @@ export const CallsApiAxiosParamCreator = function (configuration?: Configuration
                 options: localVarRequestOptions,
             };
         },
+        /**
+         * 
+         * @summary Inbound call route which receives webhook event and forwards to chatdaddy user
+         * @param {VoiceInboundPostRequest} [voiceInboundPostRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        voiceInboundPost: async (voiceInboundPostRequest?: VoiceInboundPostRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/voice/inbound`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(voiceInboundPostRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Place the call and pass the audio stream
+         * @param {VoiceOutboundPostRequest} [voiceOutboundPostRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        voiceOutboundPost: async (voiceOutboundPostRequest?: VoiceOutboundPostRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/voice/outbound`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(voiceOutboundPostRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
     }
 };
 
@@ -1015,6 +1083,32 @@ export const CallsApiFp = function(configuration?: Configuration) {
             const localVarOperationServerBasePath = operationServerMap['CallsApi.verifyNumberPost']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
+        /**
+         * 
+         * @summary Inbound call route which receives webhook event and forwards to chatdaddy user
+         * @param {VoiceInboundPostRequest} [voiceInboundPostRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async voiceInboundPost(voiceInboundPostRequest?: VoiceInboundPostRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<string>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.voiceInboundPost(voiceInboundPostRequest, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['CallsApi.voiceInboundPost']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @summary Place the call and pass the audio stream
+         * @param {VoiceOutboundPostRequest} [voiceOutboundPostRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async voiceOutboundPost(voiceOutboundPostRequest?: VoiceOutboundPostRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<string>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.voiceOutboundPost(voiceOutboundPostRequest, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['CallsApi.voiceOutboundPost']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
     }
 };
 
@@ -1113,6 +1207,26 @@ export const CallsApiFactory = function (configuration?: Configuration, basePath
          */
         verifyNumberPost(requestParameters: CallsApiVerifyNumberPostRequest, options?: RawAxiosRequestConfig): AxiosPromise<VerifyNumberPost200Response> {
             return localVarFp.verifyNumberPost(requestParameters.accountId, requestParameters.verifyNumberPostRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Inbound call route which receives webhook event and forwards to chatdaddy user
+         * @param {CallsApiVoiceInboundPostRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        voiceInboundPost(requestParameters: CallsApiVoiceInboundPostRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<string> {
+            return localVarFp.voiceInboundPost(requestParameters.voiceInboundPostRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Place the call and pass the audio stream
+         * @param {CallsApiVoiceOutboundPostRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        voiceOutboundPost(requestParameters: CallsApiVoiceOutboundPostRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<string> {
+            return localVarFp.voiceOutboundPost(requestParameters.voiceOutboundPostRequest, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -1286,6 +1400,34 @@ export interface CallsApiVerifyNumberPostRequest {
 }
 
 /**
+ * Request parameters for voiceInboundPost operation in CallsApi.
+ * @export
+ * @interface CallsApiVoiceInboundPostRequest
+ */
+export interface CallsApiVoiceInboundPostRequest {
+    /**
+     * 
+     * @type {VoiceInboundPostRequest}
+     * @memberof CallsApiVoiceInboundPost
+     */
+    readonly voiceInboundPostRequest?: VoiceInboundPostRequest
+}
+
+/**
+ * Request parameters for voiceOutboundPost operation in CallsApi.
+ * @export
+ * @interface CallsApiVoiceOutboundPostRequest
+ */
+export interface CallsApiVoiceOutboundPostRequest {
+    /**
+     * 
+     * @type {VoiceOutboundPostRequest}
+     * @memberof CallsApiVoiceOutboundPost
+     */
+    readonly voiceOutboundPostRequest?: VoiceOutboundPostRequest
+}
+
+/**
  * CallsApi - object-oriented interface
  * @export
  * @class CallsApi
@@ -1397,6 +1539,30 @@ export class CallsApi extends BaseAPI {
      */
     public verifyNumberPost(requestParameters: CallsApiVerifyNumberPostRequest, options?: RawAxiosRequestConfig) {
         return CallsApiFp(this.configuration).verifyNumberPost(requestParameters.accountId, requestParameters.verifyNumberPostRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Inbound call route which receives webhook event and forwards to chatdaddy user
+     * @param {CallsApiVoiceInboundPostRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CallsApi
+     */
+    public voiceInboundPost(requestParameters: CallsApiVoiceInboundPostRequest = {}, options?: RawAxiosRequestConfig) {
+        return CallsApiFp(this.configuration).voiceInboundPost(requestParameters.voiceInboundPostRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Place the call and pass the audio stream
+     * @param {CallsApiVoiceOutboundPostRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CallsApi
+     */
+    public voiceOutboundPost(requestParameters: CallsApiVoiceOutboundPostRequest = {}, options?: RawAxiosRequestConfig) {
+        return CallsApiFp(this.configuration).voiceOutboundPost(requestParameters.voiceOutboundPostRequest, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

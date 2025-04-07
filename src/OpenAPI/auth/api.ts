@@ -3100,6 +3100,491 @@ export class APITokensApi extends BaseAPI {
 
 
 /**
+ * AnnouncementsApi - axios parameter creator
+ * @export
+ */
+export const AnnouncementsApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @summary Creates new announcement
+         * @param {AnnouncementPatch} [announcementPatch] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        announcementCreate: async (announcementPatch?: AnnouncementPatch, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/announcements`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", [], configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(announcementPatch, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Deletes list of announcements
+         * @param {Array<string>} ids 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        announcementDelete: async (ids: Array<string>, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'ids' is not null or undefined
+            assertParamExists('announcementDelete', 'ids', ids)
+            const localVarPath = `/announcements`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", [], configuration)
+
+            if (ids) {
+                localVarQueryParameter['ids'] = ids;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Get list of announcements
+         * @param {number} [count] Number of announcements to fetch
+         * @param {string} [before] Announcements to fetch before
+         * @param {string} [q] Search by category, title etc.
+         * @param {string} [publishedAt] Optional filter to retrieve announcements published on or before a specific date and time. If provided, only announcements published on or before the given timestamp will be returned. 
+         * @param {string | null} [expiresAt] Optional filter to retrieve announcements that are valid until a specific date and time. - If set to a specific timestamp, only announcements that expire on or after the given timestamp will be returned. - If set to &#x60;null&#x60;, only announcements with no expiration date will be returned. 
+         * @param {string} [partnership] Search by partnership
+         * @param {boolean} [returnTotalCount] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        announcementGet: async (count?: number, before?: string, q?: string, publishedAt?: string, expiresAt?: string | null, partnership?: string, returnTotalCount?: boolean, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/announcements`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", [], configuration)
+
+            if (count !== undefined) {
+                localVarQueryParameter['count'] = count;
+            }
+
+            if (before !== undefined) {
+                localVarQueryParameter['before'] = before;
+            }
+
+            if (q !== undefined) {
+                localVarQueryParameter['q'] = q;
+            }
+
+            if (publishedAt !== undefined) {
+                localVarQueryParameter['publishedAt'] = (publishedAt as any instanceof Date) ?
+                    (publishedAt as any).toISOString() :
+                    publishedAt;
+            }
+
+            if (expiresAt !== undefined) {
+                localVarQueryParameter['expiresAt'] = (expiresAt as any instanceof Date) ?
+                    (expiresAt as any).toISOString() :
+                    expiresAt;
+            }
+
+            if (partnership !== undefined) {
+                localVarQueryParameter['partnership'] = partnership;
+            }
+
+            if (returnTotalCount !== undefined) {
+                localVarQueryParameter['returnTotalCount'] = returnTotalCount;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Update an announcement
+         * @param {string} id 
+         * @param {AnnouncementPatch} [announcementPatch] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        announcementPatch: async (id: string, announcementPatch?: AnnouncementPatch, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('announcementPatch', 'id', id)
+            const localVarPath = `/announcements/{id}`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PATCH', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", [], configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(announcementPatch, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * AnnouncementsApi - functional programming interface
+ * @export
+ */
+export const AnnouncementsApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = AnnouncementsApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * 
+         * @summary Creates new announcement
+         * @param {AnnouncementPatch} [announcementPatch] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async announcementCreate(announcementPatch?: AnnouncementPatch, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AnnouncementMetadata>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.announcementCreate(announcementPatch, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['AnnouncementsApi.announcementCreate']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @summary Deletes list of announcements
+         * @param {Array<string>} ids 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async announcementDelete(ids: Array<string>, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.announcementDelete(ids, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['AnnouncementsApi.announcementDelete']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @summary Get list of announcements
+         * @param {number} [count] Number of announcements to fetch
+         * @param {string} [before] Announcements to fetch before
+         * @param {string} [q] Search by category, title etc.
+         * @param {string} [publishedAt] Optional filter to retrieve announcements published on or before a specific date and time. If provided, only announcements published on or before the given timestamp will be returned. 
+         * @param {string | null} [expiresAt] Optional filter to retrieve announcements that are valid until a specific date and time. - If set to a specific timestamp, only announcements that expire on or after the given timestamp will be returned. - If set to &#x60;null&#x60;, only announcements with no expiration date will be returned. 
+         * @param {string} [partnership] Search by partnership
+         * @param {boolean} [returnTotalCount] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async announcementGet(count?: number, before?: string, q?: string, publishedAt?: string, expiresAt?: string | null, partnership?: string, returnTotalCount?: boolean, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AnnouncementRetrievalResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.announcementGet(count, before, q, publishedAt, expiresAt, partnership, returnTotalCount, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['AnnouncementsApi.announcementGet']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @summary Update an announcement
+         * @param {string} id 
+         * @param {AnnouncementPatch} [announcementPatch] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async announcementPatch(id: string, announcementPatch?: AnnouncementPatch, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.announcementPatch(id, announcementPatch, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['AnnouncementsApi.announcementPatch']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+    }
+};
+
+/**
+ * AnnouncementsApi - factory interface
+ * @export
+ */
+export const AnnouncementsApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = AnnouncementsApiFp(configuration)
+    return {
+        /**
+         * 
+         * @summary Creates new announcement
+         * @param {AnnouncementsApiAnnouncementCreateRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        announcementCreate(requestParameters: AnnouncementsApiAnnouncementCreateRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<AnnouncementMetadata> {
+            return localVarFp.announcementCreate(requestParameters.announcementPatch, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Deletes list of announcements
+         * @param {AnnouncementsApiAnnouncementDeleteRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        announcementDelete(requestParameters: AnnouncementsApiAnnouncementDeleteRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.announcementDelete(requestParameters.ids, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Get list of announcements
+         * @param {AnnouncementsApiAnnouncementGetRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        announcementGet(requestParameters: AnnouncementsApiAnnouncementGetRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<AnnouncementRetrievalResponse> {
+            return localVarFp.announcementGet(requestParameters.count, requestParameters.before, requestParameters.q, requestParameters.publishedAt, requestParameters.expiresAt, requestParameters.partnership, requestParameters.returnTotalCount, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Update an announcement
+         * @param {AnnouncementsApiAnnouncementPatchRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        announcementPatch(requestParameters: AnnouncementsApiAnnouncementPatchRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.announcementPatch(requestParameters.id, requestParameters.announcementPatch, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * Request parameters for announcementCreate operation in AnnouncementsApi.
+ * @export
+ * @interface AnnouncementsApiAnnouncementCreateRequest
+ */
+export interface AnnouncementsApiAnnouncementCreateRequest {
+    /**
+     * 
+     * @type {AnnouncementPatch}
+     * @memberof AnnouncementsApiAnnouncementCreate
+     */
+    readonly announcementPatch?: AnnouncementPatch
+}
+
+/**
+ * Request parameters for announcementDelete operation in AnnouncementsApi.
+ * @export
+ * @interface AnnouncementsApiAnnouncementDeleteRequest
+ */
+export interface AnnouncementsApiAnnouncementDeleteRequest {
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof AnnouncementsApiAnnouncementDelete
+     */
+    readonly ids: Array<string>
+}
+
+/**
+ * Request parameters for announcementGet operation in AnnouncementsApi.
+ * @export
+ * @interface AnnouncementsApiAnnouncementGetRequest
+ */
+export interface AnnouncementsApiAnnouncementGetRequest {
+    /**
+     * Number of announcements to fetch
+     * @type {number}
+     * @memberof AnnouncementsApiAnnouncementGet
+     */
+    readonly count?: number
+
+    /**
+     * Announcements to fetch before
+     * @type {string}
+     * @memberof AnnouncementsApiAnnouncementGet
+     */
+    readonly before?: string
+
+    /**
+     * Search by category, title etc.
+     * @type {string}
+     * @memberof AnnouncementsApiAnnouncementGet
+     */
+    readonly q?: string
+
+    /**
+     * Optional filter to retrieve announcements published on or before a specific date and time. If provided, only announcements published on or before the given timestamp will be returned. 
+     * @type {string}
+     * @memberof AnnouncementsApiAnnouncementGet
+     */
+    readonly publishedAt?: string
+
+    /**
+     * Optional filter to retrieve announcements that are valid until a specific date and time. - If set to a specific timestamp, only announcements that expire on or after the given timestamp will be returned. - If set to &#x60;null&#x60;, only announcements with no expiration date will be returned. 
+     * @type {string}
+     * @memberof AnnouncementsApiAnnouncementGet
+     */
+    readonly expiresAt?: string | null
+
+    /**
+     * Search by partnership
+     * @type {string}
+     * @memberof AnnouncementsApiAnnouncementGet
+     */
+    readonly partnership?: string
+
+    /**
+     * 
+     * @type {boolean}
+     * @memberof AnnouncementsApiAnnouncementGet
+     */
+    readonly returnTotalCount?: boolean
+}
+
+/**
+ * Request parameters for announcementPatch operation in AnnouncementsApi.
+ * @export
+ * @interface AnnouncementsApiAnnouncementPatchRequest
+ */
+export interface AnnouncementsApiAnnouncementPatchRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof AnnouncementsApiAnnouncementPatch
+     */
+    readonly id: string
+
+    /**
+     * 
+     * @type {AnnouncementPatch}
+     * @memberof AnnouncementsApiAnnouncementPatch
+     */
+    readonly announcementPatch?: AnnouncementPatch
+}
+
+/**
+ * AnnouncementsApi - object-oriented interface
+ * @export
+ * @class AnnouncementsApi
+ * @extends {BaseAPI}
+ */
+export class AnnouncementsApi extends BaseAPI {
+    /**
+     * 
+     * @summary Creates new announcement
+     * @param {AnnouncementsApiAnnouncementCreateRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AnnouncementsApi
+     */
+    public announcementCreate(requestParameters: AnnouncementsApiAnnouncementCreateRequest = {}, options?: RawAxiosRequestConfig) {
+        return AnnouncementsApiFp(this.configuration).announcementCreate(requestParameters.announcementPatch, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Deletes list of announcements
+     * @param {AnnouncementsApiAnnouncementDeleteRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AnnouncementsApi
+     */
+    public announcementDelete(requestParameters: AnnouncementsApiAnnouncementDeleteRequest, options?: RawAxiosRequestConfig) {
+        return AnnouncementsApiFp(this.configuration).announcementDelete(requestParameters.ids, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Get list of announcements
+     * @param {AnnouncementsApiAnnouncementGetRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AnnouncementsApi
+     */
+    public announcementGet(requestParameters: AnnouncementsApiAnnouncementGetRequest = {}, options?: RawAxiosRequestConfig) {
+        return AnnouncementsApiFp(this.configuration).announcementGet(requestParameters.count, requestParameters.before, requestParameters.q, requestParameters.publishedAt, requestParameters.expiresAt, requestParameters.partnership, requestParameters.returnTotalCount, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Update an announcement
+     * @param {AnnouncementsApiAnnouncementPatchRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AnnouncementsApi
+     */
+    public announcementPatch(requestParameters: AnnouncementsApiAnnouncementPatchRequest, options?: RawAxiosRequestConfig) {
+        return AnnouncementsApiFp(this.configuration).announcementPatch(requestParameters.id, requestParameters.announcementPatch, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+
+/**
  * InviteLinksApi - axios parameter creator
  * @export
  */
@@ -3310,6 +3795,165 @@ export class InviteLinksApi extends BaseAPI {
     }
 }
 
+
+
+/**
+ * NotificationsApi - axios parameter creator
+ * @export
+ */
+export const NotificationsApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @summary Send a notification to a team member
+         * @param {string} userId 
+         * @param {Array<NotifyTeamMemberDestinationsEnum>} [destinations] The destinations to send the notification to
+         * @param {NotifyRequestWithContent} [notifyRequestWithContent] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        notifyTeamMember: async (userId: string, destinations?: Array<NotifyTeamMemberDestinationsEnum>, notifyRequestWithContent?: NotifyRequestWithContent, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'userId' is not null or undefined
+            assertParamExists('notifyTeamMember', 'userId', userId)
+            const localVarPath = `/notify/{userId}`
+                .replace(`{${"userId"}}`, encodeURIComponent(String(userId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["MESSAGES_SEND_TO_ALL"], configuration)
+
+            if (destinations) {
+                localVarQueryParameter['destinations'] = destinations;
+            }
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(notifyRequestWithContent, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * NotificationsApi - functional programming interface
+ * @export
+ */
+export const NotificationsApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = NotificationsApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * 
+         * @summary Send a notification to a team member
+         * @param {string} userId 
+         * @param {Array<NotifyTeamMemberDestinationsEnum>} [destinations] The destinations to send the notification to
+         * @param {NotifyRequestWithContent} [notifyRequestWithContent] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async notifyTeamMember(userId: string, destinations?: Array<NotifyTeamMemberDestinationsEnum>, notifyRequestWithContent?: NotifyRequestWithContent, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.notifyTeamMember(userId, destinations, notifyRequestWithContent, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['NotificationsApi.notifyTeamMember']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+    }
+};
+
+/**
+ * NotificationsApi - factory interface
+ * @export
+ */
+export const NotificationsApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = NotificationsApiFp(configuration)
+    return {
+        /**
+         * 
+         * @summary Send a notification to a team member
+         * @param {NotificationsApiNotifyTeamMemberRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        notifyTeamMember(requestParameters: NotificationsApiNotifyTeamMemberRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.notifyTeamMember(requestParameters.userId, requestParameters.destinations, requestParameters.notifyRequestWithContent, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * Request parameters for notifyTeamMember operation in NotificationsApi.
+ * @export
+ * @interface NotificationsApiNotifyTeamMemberRequest
+ */
+export interface NotificationsApiNotifyTeamMemberRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof NotificationsApiNotifyTeamMember
+     */
+    readonly userId: string
+
+    /**
+     * The destinations to send the notification to
+     * @type {Array<'email' | 'push'>}
+     * @memberof NotificationsApiNotifyTeamMember
+     */
+    readonly destinations?: Array<NotifyTeamMemberDestinationsEnum>
+
+    /**
+     * 
+     * @type {NotifyRequestWithContent}
+     * @memberof NotificationsApiNotifyTeamMember
+     */
+    readonly notifyRequestWithContent?: NotifyRequestWithContent
+}
+
+/**
+ * NotificationsApi - object-oriented interface
+ * @export
+ * @class NotificationsApi
+ * @extends {BaseAPI}
+ */
+export class NotificationsApi extends BaseAPI {
+    /**
+     * 
+     * @summary Send a notification to a team member
+     * @param {NotificationsApiNotifyTeamMemberRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof NotificationsApi
+     */
+    public notifyTeamMember(requestParameters: NotificationsApiNotifyTeamMemberRequest, options?: RawAxiosRequestConfig) {
+        return NotificationsApiFp(this.configuration).notifyTeamMember(requestParameters.userId, requestParameters.destinations, requestParameters.notifyRequestWithContent, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+/**
+ * @export
+ */
+export const NotifyTeamMemberDestinationsEnum = {
+    Email: 'email',
+    Push: 'push'
+} as const;
+export type NotifyTeamMemberDestinationsEnum = typeof NotifyTeamMemberDestinationsEnum[keyof typeof NotifyTeamMemberDestinationsEnum];
 
 
 /**
@@ -4638,6 +5282,48 @@ export const TeamsApiAxiosParamCreator = function (configuration?: Configuration
         },
         /**
          * 
+         * @summary Upgrade the team to \'partner\' if partner is specified, else, downgrade partner status
+         * @param {string} teamId the teamId of the team to be upgraded/downgraded
+         * @param {PartnerTeamPatchRequest} [partnerTeamPatchRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        partnerTeamPatch: async (teamId: string, partnerTeamPatchRequest?: PartnerTeamPatchRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'teamId' is not null or undefined
+            assertParamExists('partnerTeamPatch', 'teamId', teamId)
+            const localVarPath = `/teams/partner-team-status/{teamId}`
+                .replace(`{${"teamId"}}`, encodeURIComponent(String(teamId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PATCH', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["ADMIN_PANEL_ACCESS"], configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(partnerTeamPatchRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
          * @summary Mark a team as having completed an onboarding step
          * @param {OnboardingStepID} step the onboarding step to mark as completed
          * @param {*} [options] Override http request option.
@@ -4936,6 +5622,20 @@ export const TeamsApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
+         * @summary Upgrade the team to \'partner\' if partner is specified, else, downgrade partner status
+         * @param {string} teamId the teamId of the team to be upgraded/downgraded
+         * @param {PartnerTeamPatchRequest} [partnerTeamPatchRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async partnerTeamPatch(teamId: string, partnerTeamPatchRequest?: PartnerTeamPatchRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TeamsPatch200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.partnerTeamPatch(teamId, partnerTeamPatchRequest, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['TeamsApi.partnerTeamPatch']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
          * @summary Mark a team as having completed an onboarding step
          * @param {OnboardingStepID} step the onboarding step to mark as completed
          * @param {*} [options] Override http request option.
@@ -5036,6 +5736,16 @@ export const TeamsApiFactory = function (configuration?: Configuration, basePath
         },
         /**
          * 
+         * @summary Upgrade the team to \'partner\' if partner is specified, else, downgrade partner status
+         * @param {TeamsApiPartnerTeamPatchRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        partnerTeamPatch(requestParameters: TeamsApiPartnerTeamPatchRequest, options?: RawAxiosRequestConfig): AxiosPromise<TeamsPatch200Response> {
+            return localVarFp.partnerTeamPatch(requestParameters.teamId, requestParameters.partnerTeamPatchRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
          * @summary Mark a team as having completed an onboarding step
          * @param {TeamsApiTeamsCompletedOnboardingStepPostRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -5086,6 +5796,27 @@ export const TeamsApiFactory = function (configuration?: Configuration, basePath
         },
     };
 };
+
+/**
+ * Request parameters for partnerTeamPatch operation in TeamsApi.
+ * @export
+ * @interface TeamsApiPartnerTeamPatchRequest
+ */
+export interface TeamsApiPartnerTeamPatchRequest {
+    /**
+     * the teamId of the team to be upgraded/downgraded
+     * @type {string}
+     * @memberof TeamsApiPartnerTeamPatch
+     */
+    readonly teamId: string
+
+    /**
+     * 
+     * @type {PartnerTeamPatchRequest}
+     * @memberof TeamsApiPartnerTeamPatch
+     */
+    readonly partnerTeamPatchRequest?: PartnerTeamPatchRequest
+}
 
 /**
  * Request parameters for teamsCompletedOnboardingStepPost operation in TeamsApi.
@@ -5289,6 +6020,18 @@ export class TeamsApi extends BaseAPI {
 
     /**
      * 
+     * @summary Upgrade the team to \'partner\' if partner is specified, else, downgrade partner status
+     * @param {TeamsApiPartnerTeamPatchRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof TeamsApi
+     */
+    public partnerTeamPatch(requestParameters: TeamsApiPartnerTeamPatchRequest, options?: RawAxiosRequestConfig) {
+        return TeamsApiFp(this.configuration).partnerTeamPatch(requestParameters.teamId, requestParameters.partnerTeamPatchRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
      * @summary Mark a team as having completed an onboarding step
      * @param {TeamsApiTeamsCompletedOnboardingStepPostRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -5356,6 +6099,47 @@ export class TeamsApi extends BaseAPI {
  */
 export const UsersApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
+        /**
+         * Deletes the user specified
+         * @summary Delete a user
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        usersDelete: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('usersDelete', 'id', id)
+            const localVarPath = `/users`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["ADMIN_PANEL_ACCESS", "PARTNER_ADMIN_PANEL_ACCESS"], configuration)
+
+            if (id !== undefined) {
+                localVarQueryParameter['id'] = id;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
         /**
          * 
          * @summary Fetch users you have access to
@@ -5604,6 +6388,19 @@ export const UsersApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = UsersApiAxiosParamCreator(configuration)
     return {
         /**
+         * Deletes the user specified
+         * @summary Delete a user
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async usersDelete(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.usersDelete(id, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['UsersApi.usersDelete']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
          * 
          * @summary Fetch users you have access to
          * @param {string} [q] Search by name, ID, email, phone etc.
@@ -5688,6 +6485,16 @@ export const UsersApiFactory = function (configuration?: Configuration, basePath
     const localVarFp = UsersApiFp(configuration)
     return {
         /**
+         * Deletes the user specified
+         * @summary Delete a user
+         * @param {UsersApiUsersDeleteRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        usersDelete(requestParameters: UsersApiUsersDeleteRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.usersDelete(requestParameters.id, options).then((request) => request(axios, basePath));
+        },
+        /**
          * 
          * @summary Fetch users you have access to
          * @param {UsersApiUsersGetRequest} requestParameters Request parameters.
@@ -5739,6 +6546,20 @@ export const UsersApiFactory = function (configuration?: Configuration, basePath
         },
     };
 };
+
+/**
+ * Request parameters for usersDelete operation in UsersApi.
+ * @export
+ * @interface UsersApiUsersDeleteRequest
+ */
+export interface UsersApiUsersDeleteRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof UsersApiUsersDelete
+     */
+    readonly id: string
+}
 
 /**
  * Request parameters for usersGet operation in UsersApi.
@@ -5880,6 +6701,18 @@ export interface UsersApiUsersPostRequest {
  * @extends {BaseAPI}
  */
 export class UsersApi extends BaseAPI {
+    /**
+     * Deletes the user specified
+     * @summary Delete a user
+     * @param {UsersApiUsersDeleteRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof UsersApi
+     */
+    public usersDelete(requestParameters: UsersApiUsersDeleteRequest, options?: RawAxiosRequestConfig) {
+        return UsersApiFp(this.configuration).usersDelete(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    }
+
     /**
      * 
      * @summary Fetch users you have access to

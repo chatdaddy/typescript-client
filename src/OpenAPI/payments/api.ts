@@ -1107,6 +1107,12 @@ export type CreditLevelStatus = typeof CreditLevelStatus[keyof typeof CreditLeve
 
 
 /**
+ * @type CreditPreference
+ * @export
+ */
+export type CreditPreference = MiscPreference | NotificationPreference | PurchaseTierPreference | RecurringConsumptionPreference | SingleConsumptionPreference | StripePreference | UnlockPreference;
+
+/**
  * A tier of credits that can be purchased. Credits can only be purchased in multiples of the step size. The tier is to be used exactly as is for top-up purchases, and must be  multiplied by the number of months for recurring purchases.
  * @export
  * @interface CreditPurchaseTier
@@ -1947,6 +1953,31 @@ export const ModifySupportPlanTypeEnum = {
 
 export type ModifySupportPlanTypeEnum = typeof ModifySupportPlanTypeEnum[keyof typeof ModifySupportPlanTypeEnum];
 
+/**
+ * Options for us to modify the support plan. This is only used internally
+ * @export
+ * @interface ModifySupportPlanConfig
+ */
+export interface ModifySupportPlanConfig {
+    /**
+     * 
+     * @type {ModifySupportPlanConfigDuration}
+     * @memberof ModifySupportPlanConfig
+     */
+    'duration'?: ModifySupportPlanConfigDuration;
+    /**
+     * An ISO formatted timestamp
+     * @type {string}
+     * @memberof ModifySupportPlanConfig
+     */
+    'createdAt'?: string;
+    /**
+     * The number of units the first charge is for
+     * @type {number}
+     * @memberof ModifySupportPlanConfig
+     */
+    'firstChargeUnits'?: number;
+}
 /**
  * 
  * @export
@@ -2977,6 +3008,45 @@ export interface StripePaymentIntentsGet200Response {
 /**
  * 
  * @export
+ * @interface StripePreference
+ */
+export interface StripePreference {
+    /**
+     * 
+     * @type {string}
+     * @memberof StripePreference
+     */
+    'category': StripePreferenceCategoryEnum;
+    /**
+     * 
+     * @type {string}
+     * @memberof StripePreference
+     */
+    'key': StripePreferenceKeyEnum;
+    /**
+     * 
+     * @type {CreditStripePrice}
+     * @memberof StripePreference
+     */
+    'data': CreditStripePrice;
+}
+
+export const StripePreferenceCategoryEnum = {
+    Stripe: 'stripe'
+} as const;
+
+export type StripePreferenceCategoryEnum = typeof StripePreferenceCategoryEnum[keyof typeof StripePreferenceCategoryEnum];
+export const StripePreferenceKeyEnum = {
+    AutoRenewal: 'autoRenewal',
+    TopUp: 'topUp',
+    Bonus: 'bonus'
+} as const;
+
+export type StripePreferenceKeyEnum = typeof StripePreferenceKeyEnum[keyof typeof StripePreferenceKeyEnum];
+
+/**
+ * 
+ * @export
  * @interface StripePrice
  */
 export interface StripePrice {
@@ -3551,6 +3621,40 @@ export interface WabaPricingData {
 export const AutoChargeProductsApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
+         * 
+         * @summary Fetch All Auto Charge Products
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        autoChargeProductsGet: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/auto-charge-products`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", [], configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * - If usage < limit, then no action is taken - If usage >= limit, then:   - a metered subscription is created, if it doesn\'t exist   - fails if cannot be auto-charged
          * @summary Prepares the team for auto charge
          * @param {LimitedItem} item 
@@ -3593,6 +3697,44 @@ export const AutoChargeProductsApiAxiosParamCreator = function (configuration?: 
                 options: localVarRequestOptions,
             };
         },
+        /**
+         * 
+         * @summary Sets config for auto charge product
+         * @param {AutoChargeProductSet} [autoChargeProductSet] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        autoChargeProductsSet: async (autoChargeProductSet?: AutoChargeProductSet, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/auto-charge-products`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["ADMIN_PANEL_ACCESS"], configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(autoChargeProductSet, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
     }
 };
 
@@ -3603,6 +3745,18 @@ export const AutoChargeProductsApiAxiosParamCreator = function (configuration?: 
 export const AutoChargeProductsApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = AutoChargeProductsApiAxiosParamCreator(configuration)
     return {
+        /**
+         * 
+         * @summary Fetch All Auto Charge Products
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async autoChargeProductsGet(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AutoChargeProductsGet200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.autoChargeProductsGet(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['AutoChargeProductsApi.autoChargeProductsGet']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
         /**
          * - If usage < limit, then no action is taken - If usage >= limit, then:   - a metered subscription is created, if it doesn\'t exist   - fails if cannot be auto-charged
          * @summary Prepares the team for auto charge
@@ -3617,6 +3771,19 @@ export const AutoChargeProductsApiFp = function(configuration?: Configuration) {
             const localVarOperationServerBasePath = operationServerMap['AutoChargeProductsApi.autoChargeProductsPrepare']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
+        /**
+         * 
+         * @summary Sets config for auto charge product
+         * @param {AutoChargeProductSet} [autoChargeProductSet] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async autoChargeProductsSet(autoChargeProductSet?: AutoChargeProductSet, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.autoChargeProductsSet(autoChargeProductSet, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['AutoChargeProductsApi.autoChargeProductsSet']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
     }
 };
 
@@ -3628,6 +3795,15 @@ export const AutoChargeProductsApiFactory = function (configuration?: Configurat
     const localVarFp = AutoChargeProductsApiFp(configuration)
     return {
         /**
+         * 
+         * @summary Fetch All Auto Charge Products
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        autoChargeProductsGet(options?: RawAxiosRequestConfig): AxiosPromise<AutoChargeProductsGet200Response> {
+            return localVarFp.autoChargeProductsGet(options).then((request) => request(axios, basePath));
+        },
+        /**
          * - If usage < limit, then no action is taken - If usage >= limit, then:   - a metered subscription is created, if it doesn\'t exist   - fails if cannot be auto-charged
          * @summary Prepares the team for auto charge
          * @param {AutoChargeProductsApiAutoChargeProductsPrepareRequest} requestParameters Request parameters.
@@ -3636,6 +3812,16 @@ export const AutoChargeProductsApiFactory = function (configuration?: Configurat
          */
         autoChargeProductsPrepare(requestParameters: AutoChargeProductsApiAutoChargeProductsPrepareRequest, options?: RawAxiosRequestConfig): AxiosPromise<AutoChargeProductsPrepare200Response> {
             return localVarFp.autoChargeProductsPrepare(requestParameters.item, requestParameters.accountId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Sets config for auto charge product
+         * @param {AutoChargeProductsApiAutoChargeProductsSetRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        autoChargeProductsSet(requestParameters: AutoChargeProductsApiAutoChargeProductsSetRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.autoChargeProductsSet(requestParameters.autoChargeProductSet, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -3662,12 +3848,37 @@ export interface AutoChargeProductsApiAutoChargeProductsPrepareRequest {
 }
 
 /**
+ * Request parameters for autoChargeProductsSet operation in AutoChargeProductsApi.
+ * @export
+ * @interface AutoChargeProductsApiAutoChargeProductsSetRequest
+ */
+export interface AutoChargeProductsApiAutoChargeProductsSetRequest {
+    /**
+     * 
+     * @type {AutoChargeProductSet}
+     * @memberof AutoChargeProductsApiAutoChargeProductsSet
+     */
+    readonly autoChargeProductSet?: AutoChargeProductSet
+}
+
+/**
  * AutoChargeProductsApi - object-oriented interface
  * @export
  * @class AutoChargeProductsApi
  * @extends {BaseAPI}
  */
 export class AutoChargeProductsApi extends BaseAPI {
+    /**
+     * 
+     * @summary Fetch All Auto Charge Products
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AutoChargeProductsApi
+     */
+    public autoChargeProductsGet(options?: RawAxiosRequestConfig) {
+        return AutoChargeProductsApiFp(this.configuration).autoChargeProductsGet(options).then((request) => request(this.axios, this.basePath));
+    }
+
     /**
      * - If usage < limit, then no action is taken - If usage >= limit, then:   - a metered subscription is created, if it doesn\'t exist   - fails if cannot be auto-charged
      * @summary Prepares the team for auto charge
@@ -3678,6 +3889,18 @@ export class AutoChargeProductsApi extends BaseAPI {
      */
     public autoChargeProductsPrepare(requestParameters: AutoChargeProductsApiAutoChargeProductsPrepareRequest, options?: RawAxiosRequestConfig) {
         return AutoChargeProductsApiFp(this.configuration).autoChargeProductsPrepare(requestParameters.item, requestParameters.accountId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Sets config for auto charge product
+     * @param {AutoChargeProductsApiAutoChargeProductsSetRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AutoChargeProductsApi
+     */
+    public autoChargeProductsSet(requestParameters: AutoChargeProductsApiAutoChargeProductsSetRequest = {}, options?: RawAxiosRequestConfig) {
+        return AutoChargeProductsApiFp(this.configuration).autoChargeProductsSet(requestParameters.autoChargeProductSet, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
@@ -3724,6 +3947,81 @@ export const CouponCodesApiAxiosParamCreator = function (configuration?: Configu
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Generate a coupon code
+         * @param {CouponCodeCreateOptions} [couponCodeCreateOptions] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        couponsPost: async (couponCodeCreateOptions?: CouponCodeCreateOptions, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/coupons`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["ADMIN_PANEL_ACCESS"], configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(couponCodeCreateOptions, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Archive a coupon code
+         * @param {CreditsCouponsArchiveRequest} [creditsCouponsArchiveRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        creditsCouponsArchive: async (creditsCouponsArchiveRequest?: CreditsCouponsArchiveRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v2/credits/coupons/archive`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["ADMIN_PANEL_ACCESS", "PARTNER_ADMIN_PANEL_ACCESS"], configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(creditsCouponsArchiveRequest, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -3824,6 +4122,43 @@ export const CouponCodesApiAxiosParamCreator = function (configuration?: Configu
             };
         },
         /**
+         * Generate a coupon code
+         * @param {CreditCouponCodeCreateOptions} [creditCouponCodeCreateOptions] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        creditsCouponsPost: async (creditCouponCodeCreateOptions?: CreditCouponCodeCreateOptions, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v2/credits/coupons`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["ADMIN_PANEL_ACCESS", "PARTNER_ADMIN_PANEL_ACCESS"], configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(creditCouponCodeCreateOptions, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * 
          * @summary Get coupon redemptions
          * @param {number} [count] 
@@ -3906,6 +4241,31 @@ export const CouponCodesApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
+         * Generate a coupon code
+         * @param {CouponCodeCreateOptions} [couponCodeCreateOptions] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async couponsPost(couponCodeCreateOptions?: CouponCodeCreateOptions, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CouponsPost200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.couponsPost(couponCodeCreateOptions, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['CouponCodesApi.couponsPost']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @summary Archive a coupon code
+         * @param {CreditsCouponsArchiveRequest} [creditsCouponsArchiveRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async creditsCouponsArchive(creditsCouponsArchiveRequest?: CreditsCouponsArchiveRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.creditsCouponsArchive(creditsCouponsArchiveRequest, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['CouponCodesApi.creditsCouponsArchive']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
          * 
          * @summary Get Chatdaddy coupon data
          * @param {number} [count] 
@@ -3933,6 +4293,18 @@ export const CouponCodesApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.creditsCouponsGetId(id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['CouponCodesApi.creditsCouponsGetId']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Generate a coupon code
+         * @param {CreditCouponCodeCreateOptions} [creditCouponCodeCreateOptions] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async creditsCouponsPost(creditCouponCodeCreateOptions?: CreditCouponCodeCreateOptions, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Coupon>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.creditsCouponsPost(creditCouponCodeCreateOptions, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['CouponCodesApi.creditsCouponsPost']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -3973,6 +4345,25 @@ export const CouponCodesApiFactory = function (configuration?: Configuration, ba
             return localVarFp.couponsGet(requestParameters.code, options).then((request) => request(axios, basePath));
         },
         /**
+         * Generate a coupon code
+         * @param {CouponCodesApiCouponsPostRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        couponsPost(requestParameters: CouponCodesApiCouponsPostRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<CouponsPost200Response> {
+            return localVarFp.couponsPost(requestParameters.couponCodeCreateOptions, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Archive a coupon code
+         * @param {CouponCodesApiCreditsCouponsArchiveRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        creditsCouponsArchive(requestParameters: CouponCodesApiCreditsCouponsArchiveRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.creditsCouponsArchive(requestParameters.creditsCouponsArchiveRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
          * 
          * @summary Get Chatdaddy coupon data
          * @param {CouponCodesApiCreditsCouponsGetRequest} requestParameters Request parameters.
@@ -3991,6 +4382,15 @@ export const CouponCodesApiFactory = function (configuration?: Configuration, ba
          */
         creditsCouponsGetId(requestParameters: CouponCodesApiCreditsCouponsGetIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<Coupon> {
             return localVarFp.creditsCouponsGetId(requestParameters.id, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Generate a coupon code
+         * @param {CouponCodesApiCreditsCouponsPostRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        creditsCouponsPost(requestParameters: CouponCodesApiCreditsCouponsPostRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<Coupon> {
+            return localVarFp.creditsCouponsPost(requestParameters.creditCouponCodeCreateOptions, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -4017,6 +4417,34 @@ export interface CouponCodesApiCouponsGetRequest {
      * @memberof CouponCodesApiCouponsGet
      */
     readonly code: string
+}
+
+/**
+ * Request parameters for couponsPost operation in CouponCodesApi.
+ * @export
+ * @interface CouponCodesApiCouponsPostRequest
+ */
+export interface CouponCodesApiCouponsPostRequest {
+    /**
+     * 
+     * @type {CouponCodeCreateOptions}
+     * @memberof CouponCodesApiCouponsPost
+     */
+    readonly couponCodeCreateOptions?: CouponCodeCreateOptions
+}
+
+/**
+ * Request parameters for creditsCouponsArchive operation in CouponCodesApi.
+ * @export
+ * @interface CouponCodesApiCreditsCouponsArchiveRequest
+ */
+export interface CouponCodesApiCreditsCouponsArchiveRequest {
+    /**
+     * 
+     * @type {CreditsCouponsArchiveRequest}
+     * @memberof CouponCodesApiCreditsCouponsArchive
+     */
+    readonly creditsCouponsArchiveRequest?: CreditsCouponsArchiveRequest
 }
 
 /**
@@ -4073,6 +4501,20 @@ export interface CouponCodesApiCreditsCouponsGetIdRequest {
      * @memberof CouponCodesApiCreditsCouponsGetId
      */
     readonly id: string
+}
+
+/**
+ * Request parameters for creditsCouponsPost operation in CouponCodesApi.
+ * @export
+ * @interface CouponCodesApiCreditsCouponsPostRequest
+ */
+export interface CouponCodesApiCreditsCouponsPostRequest {
+    /**
+     * 
+     * @type {CreditCouponCodeCreateOptions}
+     * @memberof CouponCodesApiCreditsCouponsPost
+     */
+    readonly creditCouponCodeCreateOptions?: CreditCouponCodeCreateOptions
 }
 
 /**
@@ -4137,6 +4579,29 @@ export class CouponCodesApi extends BaseAPI {
     }
 
     /**
+     * Generate a coupon code
+     * @param {CouponCodesApiCouponsPostRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CouponCodesApi
+     */
+    public couponsPost(requestParameters: CouponCodesApiCouponsPostRequest = {}, options?: RawAxiosRequestConfig) {
+        return CouponCodesApiFp(this.configuration).couponsPost(requestParameters.couponCodeCreateOptions, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Archive a coupon code
+     * @param {CouponCodesApiCreditsCouponsArchiveRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CouponCodesApi
+     */
+    public creditsCouponsArchive(requestParameters: CouponCodesApiCreditsCouponsArchiveRequest = {}, options?: RawAxiosRequestConfig) {
+        return CouponCodesApiFp(this.configuration).creditsCouponsArchive(requestParameters.creditsCouponsArchiveRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
      * 
      * @summary Get Chatdaddy coupon data
      * @param {CouponCodesApiCreditsCouponsGetRequest} requestParameters Request parameters.
@@ -4158,6 +4623,17 @@ export class CouponCodesApi extends BaseAPI {
      */
     public creditsCouponsGetId(requestParameters: CouponCodesApiCreditsCouponsGetIdRequest, options?: RawAxiosRequestConfig) {
         return CouponCodesApiFp(this.configuration).creditsCouponsGetId(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Generate a coupon code
+     * @param {CouponCodesApiCreditsCouponsPostRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CouponCodesApi
+     */
+    public creditsCouponsPost(requestParameters: CouponCodesApiCreditsCouponsPostRequest = {}, options?: RawAxiosRequestConfig) {
+        return CouponCodesApiFp(this.configuration).creditsCouponsPost(requestParameters.creditCouponCodeCreateOptions, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -4467,6 +4943,44 @@ export const CreditsApiAxiosParamCreator = function (configuration?: Configurati
         },
         /**
          * 
+         * @summary Create a new credit gain
+         * @param {CreditGainCreate} [creditGainCreate] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        creditGainsPost: async (creditGainCreate?: CreditGainCreate, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v2/credits/gains`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["ADMIN_PANEL_ACCESS"], configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(creditGainCreate, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
          * @summary Get transaction history
          * @param {string} [teamId] Filter by teamId
          * @param {string} [customerId] Filter by customerId
@@ -4602,6 +5116,82 @@ export const CreditsApiAxiosParamCreator = function (configuration?: Configurati
         },
         /**
          * 
+         * @summary Migrate the customer\'s subscription & any other purchased items to the credit system
+         * @param {CreditCustomerMigrate} [creditCustomerMigrate] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        creditsCustomerMigrate: async (creditCustomerMigrate?: CreditCustomerMigrate, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v2/credits/customer/migrate`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["ADMIN_PANEL_ACCESS", "PARTNER_ADMIN_PANEL_ACCESS"], configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(creditCustomerMigrate, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Create a new customer, or link the team to an existing customer
+         * @param {CreditCustomerPost} [creditCustomerPost] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        creditsCustomerPost: async (creditCustomerPost?: CreditCustomerPost, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v2/credits/customer`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["ADMIN_PANEL_ACCESS"], configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(creditCustomerPost, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
          * @summary Refreshes the customer\'s subscription & any other purchased items
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -4663,6 +5253,78 @@ export const CreditsApiAxiosParamCreator = function (configuration?: Configurati
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Get the system credit preferences
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        creditsPreferencesGetAdmin: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v2/credits/preferences/admin`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["ADMIN_PANEL_ACCESS"], configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Updates the given credit preferences
+         * @param {CreditsPreferencesPostRequest} [creditsPreferencesPostRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        creditsPreferencesPost: async (creditsPreferencesPostRequest?: CreditsPreferencesPostRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v2/credits/preferences/admin`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["ADMIN_PANEL_ACCESS"], configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(creditsPreferencesPostRequest, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -4990,6 +5652,19 @@ export const CreditsApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
+         * @summary Create a new credit gain
+         * @param {CreditGainCreate} [creditGainCreate] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async creditGainsPost(creditGainCreate?: CreditGainCreate, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CreditGain>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.creditGainsPost(creditGainCreate, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['CreditsApi.creditGainsPost']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
          * @summary Get transaction history
          * @param {string} [teamId] Filter by teamId
          * @param {string} [customerId] Filter by customerId
@@ -5027,6 +5702,32 @@ export const CreditsApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
+         * @summary Migrate the customer\'s subscription & any other purchased items to the credit system
+         * @param {CreditCustomerMigrate} [creditCustomerMigrate] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async creditsCustomerMigrate(creditCustomerMigrate?: CreditCustomerMigrate, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.creditsCustomerMigrate(creditCustomerMigrate, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['CreditsApi.creditsCustomerMigrate']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @summary Create a new customer, or link the team to an existing customer
+         * @param {CreditCustomerPost} [creditCustomerPost] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async creditsCustomerPost(creditCustomerPost?: CreditCustomerPost, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CreditsCustomerPost200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.creditsCustomerPost(creditCustomerPost, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['CreditsApi.creditsCustomerPost']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
          * @summary Refreshes the customer\'s subscription & any other purchased items
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -5048,6 +5749,31 @@ export const CreditsApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.creditsPreferencesGet(region, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['CreditsApi.creditsPreferencesGet']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @summary Get the system credit preferences
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async creditsPreferencesGetAdmin(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CreditsPreferences>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.creditsPreferencesGetAdmin(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['CreditsApi.creditsPreferencesGetAdmin']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @summary Updates the given credit preferences
+         * @param {CreditsPreferencesPostRequest} [creditsPreferencesPostRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async creditsPreferencesPost(creditsPreferencesPostRequest?: CreditsPreferencesPostRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.creditsPreferencesPost(creditsPreferencesPostRequest, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['CreditsApi.creditsPreferencesPost']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -5192,6 +5918,16 @@ export const CreditsApiFactory = function (configuration?: Configuration, basePa
         },
         /**
          * 
+         * @summary Create a new credit gain
+         * @param {CreditsApiCreditGainsPostRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        creditGainsPost(requestParameters: CreditsApiCreditGainsPostRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<CreditGain> {
+            return localVarFp.creditGainsPost(requestParameters.creditGainCreate, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
          * @summary Get transaction history
          * @param {CreditsApiCreditTxsGetRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -5212,6 +5948,26 @@ export const CreditsApiFactory = function (configuration?: Configuration, basePa
         },
         /**
          * 
+         * @summary Migrate the customer\'s subscription & any other purchased items to the credit system
+         * @param {CreditsApiCreditsCustomerMigrateRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        creditsCustomerMigrate(requestParameters: CreditsApiCreditsCustomerMigrateRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.creditsCustomerMigrate(requestParameters.creditCustomerMigrate, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Create a new customer, or link the team to an existing customer
+         * @param {CreditsApiCreditsCustomerPostRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        creditsCustomerPost(requestParameters: CreditsApiCreditsCustomerPostRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<CreditsCustomerPost200Response> {
+            return localVarFp.creditsCustomerPost(requestParameters.creditCustomerPost, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
          * @summary Refreshes the customer\'s subscription & any other purchased items
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -5228,6 +5984,25 @@ export const CreditsApiFactory = function (configuration?: Configuration, basePa
          */
         creditsPreferencesGet(requestParameters: CreditsApiCreditsPreferencesGetRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<CreditsPreferences> {
             return localVarFp.creditsPreferencesGet(requestParameters.region, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Get the system credit preferences
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        creditsPreferencesGetAdmin(options?: RawAxiosRequestConfig): AxiosPromise<CreditsPreferences> {
+            return localVarFp.creditsPreferencesGetAdmin(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Updates the given credit preferences
+         * @param {CreditsApiCreditsPreferencesPostRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        creditsPreferencesPost(requestParameters: CreditsApiCreditsPreferencesPostRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.creditsPreferencesPost(requestParameters.creditsPreferencesPostRequest, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -5416,6 +6191,20 @@ export interface CreditsApiCreditGainsGetRequest {
 }
 
 /**
+ * Request parameters for creditGainsPost operation in CreditsApi.
+ * @export
+ * @interface CreditsApiCreditGainsPostRequest
+ */
+export interface CreditsApiCreditGainsPostRequest {
+    /**
+     * 
+     * @type {CreditGainCreate}
+     * @memberof CreditsApiCreditGainsPost
+     */
+    readonly creditGainCreate?: CreditGainCreate
+}
+
+/**
  * Request parameters for creditTxsGet operation in CreditsApi.
  * @export
  * @interface CreditsApiCreditTxsGetRequest
@@ -5521,6 +6310,34 @@ export interface CreditsApiCreditsCustomerGetRequest {
 }
 
 /**
+ * Request parameters for creditsCustomerMigrate operation in CreditsApi.
+ * @export
+ * @interface CreditsApiCreditsCustomerMigrateRequest
+ */
+export interface CreditsApiCreditsCustomerMigrateRequest {
+    /**
+     * 
+     * @type {CreditCustomerMigrate}
+     * @memberof CreditsApiCreditsCustomerMigrate
+     */
+    readonly creditCustomerMigrate?: CreditCustomerMigrate
+}
+
+/**
+ * Request parameters for creditsCustomerPost operation in CreditsApi.
+ * @export
+ * @interface CreditsApiCreditsCustomerPostRequest
+ */
+export interface CreditsApiCreditsCustomerPostRequest {
+    /**
+     * 
+     * @type {CreditCustomerPost}
+     * @memberof CreditsApiCreditsCustomerPost
+     */
+    readonly creditCustomerPost?: CreditCustomerPost
+}
+
+/**
  * Request parameters for creditsPreferencesGet operation in CreditsApi.
  * @export
  * @interface CreditsApiCreditsPreferencesGetRequest
@@ -5532,6 +6349,20 @@ export interface CreditsApiCreditsPreferencesGetRequest {
      * @memberof CreditsApiCreditsPreferencesGet
      */
     readonly region?: string
+}
+
+/**
+ * Request parameters for creditsPreferencesPost operation in CreditsApi.
+ * @export
+ * @interface CreditsApiCreditsPreferencesPostRequest
+ */
+export interface CreditsApiCreditsPreferencesPostRequest {
+    /**
+     * 
+     * @type {CreditsPreferencesPostRequest}
+     * @memberof CreditsApiCreditsPreferencesPost
+     */
+    readonly creditsPreferencesPostRequest?: CreditsPreferencesPostRequest
 }
 
 /**
@@ -5726,6 +6557,18 @@ export class CreditsApi extends BaseAPI {
 
     /**
      * 
+     * @summary Create a new credit gain
+     * @param {CreditsApiCreditGainsPostRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CreditsApi
+     */
+    public creditGainsPost(requestParameters: CreditsApiCreditGainsPostRequest = {}, options?: RawAxiosRequestConfig) {
+        return CreditsApiFp(this.configuration).creditGainsPost(requestParameters.creditGainCreate, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
      * @summary Get transaction history
      * @param {CreditsApiCreditTxsGetRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -5750,6 +6593,30 @@ export class CreditsApi extends BaseAPI {
 
     /**
      * 
+     * @summary Migrate the customer\'s subscription & any other purchased items to the credit system
+     * @param {CreditsApiCreditsCustomerMigrateRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CreditsApi
+     */
+    public creditsCustomerMigrate(requestParameters: CreditsApiCreditsCustomerMigrateRequest = {}, options?: RawAxiosRequestConfig) {
+        return CreditsApiFp(this.configuration).creditsCustomerMigrate(requestParameters.creditCustomerMigrate, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Create a new customer, or link the team to an existing customer
+     * @param {CreditsApiCreditsCustomerPostRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CreditsApi
+     */
+    public creditsCustomerPost(requestParameters: CreditsApiCreditsCustomerPostRequest = {}, options?: RawAxiosRequestConfig) {
+        return CreditsApiFp(this.configuration).creditsCustomerPost(requestParameters.creditCustomerPost, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
      * @summary Refreshes the customer\'s subscription & any other purchased items
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -5769,6 +6636,29 @@ export class CreditsApi extends BaseAPI {
      */
     public creditsPreferencesGet(requestParameters: CreditsApiCreditsPreferencesGetRequest = {}, options?: RawAxiosRequestConfig) {
         return CreditsApiFp(this.configuration).creditsPreferencesGet(requestParameters.region, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Get the system credit preferences
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CreditsApi
+     */
+    public creditsPreferencesGetAdmin(options?: RawAxiosRequestConfig) {
+        return CreditsApiFp(this.configuration).creditsPreferencesGetAdmin(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Updates the given credit preferences
+     * @param {CreditsApiCreditsPreferencesPostRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CreditsApi
+     */
+    public creditsPreferencesPost(requestParameters: CreditsApiCreditsPreferencesPostRequest = {}, options?: RawAxiosRequestConfig) {
+        return CreditsApiFp(this.configuration).creditsPreferencesPost(requestParameters.creditsPreferencesPostRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -5887,6 +6777,86 @@ export const ProductsApiAxiosParamCreator = function (configuration?: Configurat
                 options: localVarRequestOptions,
             };
         },
+        /**
+         * 
+         * @summary Update a product\'s properties
+         * @param {string} id 
+         * @param {ProductUpdate} [productUpdate] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        productsPatch: async (id: string, productUpdate?: ProductUpdate, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('productsPatch', 'id', id)
+            const localVarPath = `/products/{id}`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PATCH', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["ADMIN_PANEL_ACCESS"], configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(productUpdate, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Create a new product
+         * @param {ProductCreate} [productCreate] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        productsPost: async (productCreate?: ProductCreate, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/products`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["ADMIN_PANEL_ACCESS"], configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(productCreate, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
     }
 };
 
@@ -5910,6 +6880,33 @@ export const ProductsApiFp = function(configuration?: Configuration) {
             const localVarOperationServerBasePath = operationServerMap['ProductsApi.productsGet']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
+        /**
+         * 
+         * @summary Update a product\'s properties
+         * @param {string} id 
+         * @param {ProductUpdate} [productUpdate] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async productsPatch(id: string, productUpdate?: ProductUpdate, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.productsPatch(id, productUpdate, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['ProductsApi.productsPatch']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @summary Create a new product
+         * @param {ProductCreate} [productCreate] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async productsPost(productCreate?: ProductCreate, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Product>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.productsPost(productCreate, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['ProductsApi.productsPost']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
     }
 };
 
@@ -5930,6 +6927,26 @@ export const ProductsApiFactory = function (configuration?: Configuration, baseP
         productsGet(requestParameters: ProductsApiProductsGetRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<ProductsGet200Response> {
             return localVarFp.productsGet(requestParameters.region, options).then((request) => request(axios, basePath));
         },
+        /**
+         * 
+         * @summary Update a product\'s properties
+         * @param {ProductsApiProductsPatchRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        productsPatch(requestParameters: ProductsApiProductsPatchRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.productsPatch(requestParameters.id, requestParameters.productUpdate, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Create a new product
+         * @param {ProductsApiProductsPostRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        productsPost(requestParameters: ProductsApiProductsPostRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<Product> {
+            return localVarFp.productsPost(requestParameters.productCreate, options).then((request) => request(axios, basePath));
+        },
     };
 };
 
@@ -5945,6 +6962,41 @@ export interface ProductsApiProductsGetRequest {
      * @memberof ProductsApiProductsGet
      */
     readonly region?: string
+}
+
+/**
+ * Request parameters for productsPatch operation in ProductsApi.
+ * @export
+ * @interface ProductsApiProductsPatchRequest
+ */
+export interface ProductsApiProductsPatchRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof ProductsApiProductsPatch
+     */
+    readonly id: string
+
+    /**
+     * 
+     * @type {ProductUpdate}
+     * @memberof ProductsApiProductsPatch
+     */
+    readonly productUpdate?: ProductUpdate
+}
+
+/**
+ * Request parameters for productsPost operation in ProductsApi.
+ * @export
+ * @interface ProductsApiProductsPostRequest
+ */
+export interface ProductsApiProductsPostRequest {
+    /**
+     * 
+     * @type {ProductCreate}
+     * @memberof ProductsApiProductsPost
+     */
+    readonly productCreate?: ProductCreate
 }
 
 /**
@@ -5964,6 +7016,30 @@ export class ProductsApi extends BaseAPI {
      */
     public productsGet(requestParameters: ProductsApiProductsGetRequest = {}, options?: RawAxiosRequestConfig) {
         return ProductsApiFp(this.configuration).productsGet(requestParameters.region, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Update a product\'s properties
+     * @param {ProductsApiProductsPatchRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ProductsApi
+     */
+    public productsPatch(requestParameters: ProductsApiProductsPatchRequest, options?: RawAxiosRequestConfig) {
+        return ProductsApiFp(this.configuration).productsPatch(requestParameters.id, requestParameters.productUpdate, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Create a new product
+     * @param {ProductsApiProductsPostRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ProductsApi
+     */
+    public productsPost(requestParameters: ProductsApiProductsPostRequest = {}, options?: RawAxiosRequestConfig) {
+        return ProductsApiFp(this.configuration).productsPost(requestParameters.productCreate, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
@@ -6015,6 +7091,141 @@ export const ReferralsApiAxiosParamCreator = function (configuration?: Configura
                 options: localVarRequestOptions,
             };
         },
+        /**
+         * 
+         * @param {string} referralCode 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        partnerReferralsDelete: async (referralCode: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'referralCode' is not null or undefined
+            assertParamExists('partnerReferralsDelete', 'referralCode', referralCode)
+            const localVarPath = `/partner-referral`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["PARTNER_ADMIN_PANEL_ACCESS", "ADMIN_PANEL_ACCESS"], configuration)
+
+            if (referralCode !== undefined) {
+                localVarQueryParameter['referralCode'] = referralCode;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {number} [page] The page for the cursor
+         * @param {number} [count] The numbers of items to return
+         * @param {Array<string>} [id] The array of referralCodes to be fetched
+         * @param {string} [q] Search by id, productId, etc
+         * @param {boolean} [returnTotal] Include the total number of referralCodes
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        partnerReferralsGet: async (page?: number, count?: number, id?: Array<string>, q?: string, returnTotal?: boolean, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/partner-referral`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["PARTNER_ADMIN_PANEL_ACCESS", "ADMIN_PANEL_ACCESS"], configuration)
+
+            if (page !== undefined) {
+                localVarQueryParameter['page'] = page;
+            }
+
+            if (count !== undefined) {
+                localVarQueryParameter['count'] = count;
+            }
+
+            if (id) {
+                localVarQueryParameter['id'] = id;
+            }
+
+            if (q !== undefined) {
+                localVarQueryParameter['q'] = q;
+            }
+
+            if (returnTotal !== undefined) {
+                localVarQueryParameter['returnTotal'] = returnTotal;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {PartnerReferralCreateOptions} [partnerReferralCreateOptions] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        partnerReferralsPost: async (partnerReferralCreateOptions?: PartnerReferralCreateOptions, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/partner-referral`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["PARTNER_ADMIN_PANEL_ACCESS", "ADMIN_PANEL_ACCESS"], configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(partnerReferralCreateOptions, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
     }
 };
 
@@ -6037,6 +7248,46 @@ export const ReferralsApiFp = function(configuration?: Configuration) {
             const localVarOperationServerBasePath = operationServerMap['ReferralsApi.getPartner']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
+        /**
+         * 
+         * @param {string} referralCode 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async partnerReferralsDelete(referralCode: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.partnerReferralsDelete(referralCode, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['ReferralsApi.partnerReferralsDelete']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @param {number} [page] The page for the cursor
+         * @param {number} [count] The numbers of items to return
+         * @param {Array<string>} [id] The array of referralCodes to be fetched
+         * @param {string} [q] Search by id, productId, etc
+         * @param {boolean} [returnTotal] Include the total number of referralCodes
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async partnerReferralsGet(page?: number, count?: number, id?: Array<string>, q?: string, returnTotal?: boolean, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PartnerReferralsGet200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.partnerReferralsGet(page, count, id, q, returnTotal, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['ReferralsApi.partnerReferralsGet']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @param {PartnerReferralCreateOptions} [partnerReferralCreateOptions] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async partnerReferralsPost(partnerReferralCreateOptions?: PartnerReferralCreateOptions, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PartnerReferralsPost200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.partnerReferralsPost(partnerReferralCreateOptions, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['ReferralsApi.partnerReferralsPost']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
     }
 };
 
@@ -6056,6 +7307,33 @@ export const ReferralsApiFactory = function (configuration?: Configuration, base
         getPartner(requestParameters: ReferralsApiGetPartnerRequest, options?: RawAxiosRequestConfig): AxiosPromise<GetPartner200Response> {
             return localVarFp.getPartner(requestParameters.referralCode, options).then((request) => request(axios, basePath));
         },
+        /**
+         * 
+         * @param {ReferralsApiPartnerReferralsDeleteRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        partnerReferralsDelete(requestParameters: ReferralsApiPartnerReferralsDeleteRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.partnerReferralsDelete(requestParameters.referralCode, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {ReferralsApiPartnerReferralsGetRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        partnerReferralsGet(requestParameters: ReferralsApiPartnerReferralsGetRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<PartnerReferralsGet200Response> {
+            return localVarFp.partnerReferralsGet(requestParameters.page, requestParameters.count, requestParameters.id, requestParameters.q, requestParameters.returnTotal, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {ReferralsApiPartnerReferralsPostRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        partnerReferralsPost(requestParameters: ReferralsApiPartnerReferralsPostRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<PartnerReferralsPost200Response> {
+            return localVarFp.partnerReferralsPost(requestParameters.partnerReferralCreateOptions, options).then((request) => request(axios, basePath));
+        },
     };
 };
 
@@ -6074,6 +7352,76 @@ export interface ReferralsApiGetPartnerRequest {
 }
 
 /**
+ * Request parameters for partnerReferralsDelete operation in ReferralsApi.
+ * @export
+ * @interface ReferralsApiPartnerReferralsDeleteRequest
+ */
+export interface ReferralsApiPartnerReferralsDeleteRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof ReferralsApiPartnerReferralsDelete
+     */
+    readonly referralCode: string
+}
+
+/**
+ * Request parameters for partnerReferralsGet operation in ReferralsApi.
+ * @export
+ * @interface ReferralsApiPartnerReferralsGetRequest
+ */
+export interface ReferralsApiPartnerReferralsGetRequest {
+    /**
+     * The page for the cursor
+     * @type {number}
+     * @memberof ReferralsApiPartnerReferralsGet
+     */
+    readonly page?: number
+
+    /**
+     * The numbers of items to return
+     * @type {number}
+     * @memberof ReferralsApiPartnerReferralsGet
+     */
+    readonly count?: number
+
+    /**
+     * The array of referralCodes to be fetched
+     * @type {Array<string>}
+     * @memberof ReferralsApiPartnerReferralsGet
+     */
+    readonly id?: Array<string>
+
+    /**
+     * Search by id, productId, etc
+     * @type {string}
+     * @memberof ReferralsApiPartnerReferralsGet
+     */
+    readonly q?: string
+
+    /**
+     * Include the total number of referralCodes
+     * @type {boolean}
+     * @memberof ReferralsApiPartnerReferralsGet
+     */
+    readonly returnTotal?: boolean
+}
+
+/**
+ * Request parameters for partnerReferralsPost operation in ReferralsApi.
+ * @export
+ * @interface ReferralsApiPartnerReferralsPostRequest
+ */
+export interface ReferralsApiPartnerReferralsPostRequest {
+    /**
+     * 
+     * @type {PartnerReferralCreateOptions}
+     * @memberof ReferralsApiPartnerReferralsPost
+     */
+    readonly partnerReferralCreateOptions?: PartnerReferralCreateOptions
+}
+
+/**
  * ReferralsApi - object-oriented interface
  * @export
  * @class ReferralsApi
@@ -6089,6 +7437,39 @@ export class ReferralsApi extends BaseAPI {
      */
     public getPartner(requestParameters: ReferralsApiGetPartnerRequest, options?: RawAxiosRequestConfig) {
         return ReferralsApiFp(this.configuration).getPartner(requestParameters.referralCode, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {ReferralsApiPartnerReferralsDeleteRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ReferralsApi
+     */
+    public partnerReferralsDelete(requestParameters: ReferralsApiPartnerReferralsDeleteRequest, options?: RawAxiosRequestConfig) {
+        return ReferralsApiFp(this.configuration).partnerReferralsDelete(requestParameters.referralCode, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {ReferralsApiPartnerReferralsGetRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ReferralsApi
+     */
+    public partnerReferralsGet(requestParameters: ReferralsApiPartnerReferralsGetRequest = {}, options?: RawAxiosRequestConfig) {
+        return ReferralsApiFp(this.configuration).partnerReferralsGet(requestParameters.page, requestParameters.count, requestParameters.id, requestParameters.q, requestParameters.returnTotal, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {ReferralsApiPartnerReferralsPostRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ReferralsApi
+     */
+    public partnerReferralsPost(requestParameters: ReferralsApiPartnerReferralsPostRequest = {}, options?: RawAxiosRequestConfig) {
+        return ReferralsApiFp(this.configuration).partnerReferralsPost(requestParameters.partnerReferralCreateOptions, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
@@ -6179,6 +7560,132 @@ export const StripeApiAxiosParamCreator = function (configuration?: Configuratio
                 options: localVarRequestOptions,
             };
         },
+        /**
+         * 
+         * @summary Receive stripe hook
+         * @param {string} secret 
+         * @param {{ [key: string]: any; }} [requestBody] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        stripeHook: async (secret: string, requestBody?: { [key: string]: any; }, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'secret' is not null or undefined
+            assertParamExists('stripeHook', 'secret', secret)
+            const localVarPath = `/stripe/webhook/{secret}`
+                .replace(`{${"secret"}}`, encodeURIComponent(String(secret)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(requestBody, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Create a payment intent
+         * @param {string} [stripeCustomerId] The stripe customer ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        stripePaymentIntentsGet: async (stripeCustomerId?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/stripe/payment-intents`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["ADMIN_PANEL_ACCESS"], configuration)
+
+            if (stripeCustomerId !== undefined) {
+                localVarQueryParameter['stripeCustomerId'] = stripeCustomerId;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Use results from here to attach prices to products.
+         * @summary Get prices from Stripe
+         * @param {number} [count] 
+         * @param {string} [cursor] 
+         * @param {string} [q] Filter by stripe query. See https://stripe.com/docs/search#search-query-language
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        stripePricesGet: async (count?: number, cursor?: string, q?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/stripe/prices`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["ADMIN_PANEL_ACCESS"], configuration)
+
+            if (count !== undefined) {
+                localVarQueryParameter['count'] = count;
+            }
+
+            if (cursor !== undefined) {
+                localVarQueryParameter['cursor'] = cursor;
+            }
+
+            if (q !== undefined) {
+                localVarQueryParameter['q'] = q;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
     }
 };
 
@@ -6215,6 +7722,48 @@ export const StripeApiFp = function(configuration?: Configuration) {
             const localVarOperationServerBasePath = operationServerMap['StripeApi.stripeCheckout']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
+        /**
+         * 
+         * @summary Receive stripe hook
+         * @param {string} secret 
+         * @param {{ [key: string]: any; }} [requestBody] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async stripeHook(secret: string, requestBody?: { [key: string]: any; }, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.stripeHook(secret, requestBody, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['StripeApi.stripeHook']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @summary Create a payment intent
+         * @param {string} [stripeCustomerId] The stripe customer ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async stripePaymentIntentsGet(stripeCustomerId?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<StripePaymentIntentsGet200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.stripePaymentIntentsGet(stripeCustomerId, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['StripeApi.stripePaymentIntentsGet']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Use results from here to attach prices to products.
+         * @summary Get prices from Stripe
+         * @param {number} [count] 
+         * @param {string} [cursor] 
+         * @param {string} [q] Filter by stripe query. See https://stripe.com/docs/search#search-query-language
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async stripePricesGet(count?: number, cursor?: string, q?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<StripePricesGet200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.stripePricesGet(count, cursor, q, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['StripeApi.stripePricesGet']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
     }
 };
 
@@ -6244,6 +7793,36 @@ export const StripeApiFactory = function (configuration?: Configuration, basePat
          */
         stripeCheckout(requestParameters: StripeApiStripeCheckoutRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<StripeCheckout200Response> {
             return localVarFp.stripeCheckout(requestParameters.checkoutCreateOptions, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Receive stripe hook
+         * @param {StripeApiStripeHookRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        stripeHook(requestParameters: StripeApiStripeHookRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.stripeHook(requestParameters.secret, requestParameters.requestBody, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Create a payment intent
+         * @param {StripeApiStripePaymentIntentsGetRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        stripePaymentIntentsGet(requestParameters: StripeApiStripePaymentIntentsGetRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<StripePaymentIntentsGet200Response> {
+            return localVarFp.stripePaymentIntentsGet(requestParameters.stripeCustomerId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Use results from here to attach prices to products.
+         * @summary Get prices from Stripe
+         * @param {StripeApiStripePricesGetRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        stripePricesGet(requestParameters: StripeApiStripePricesGetRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<StripePricesGet200Response> {
+            return localVarFp.stripePricesGet(requestParameters.count, requestParameters.cursor, requestParameters.q, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -6277,6 +7856,69 @@ export interface StripeApiStripeCheckoutRequest {
 }
 
 /**
+ * Request parameters for stripeHook operation in StripeApi.
+ * @export
+ * @interface StripeApiStripeHookRequest
+ */
+export interface StripeApiStripeHookRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof StripeApiStripeHook
+     */
+    readonly secret: string
+
+    /**
+     * 
+     * @type {{ [key: string]: any; }}
+     * @memberof StripeApiStripeHook
+     */
+    readonly requestBody?: { [key: string]: any; }
+}
+
+/**
+ * Request parameters for stripePaymentIntentsGet operation in StripeApi.
+ * @export
+ * @interface StripeApiStripePaymentIntentsGetRequest
+ */
+export interface StripeApiStripePaymentIntentsGetRequest {
+    /**
+     * The stripe customer ID
+     * @type {string}
+     * @memberof StripeApiStripePaymentIntentsGet
+     */
+    readonly stripeCustomerId?: string
+}
+
+/**
+ * Request parameters for stripePricesGet operation in StripeApi.
+ * @export
+ * @interface StripeApiStripePricesGetRequest
+ */
+export interface StripeApiStripePricesGetRequest {
+    /**
+     * 
+     * @type {number}
+     * @memberof StripeApiStripePricesGet
+     */
+    readonly count?: number
+
+    /**
+     * 
+     * @type {string}
+     * @memberof StripeApiStripePricesGet
+     */
+    readonly cursor?: string
+
+    /**
+     * Filter by stripe query. See https://stripe.com/docs/search#search-query-language
+     * @type {string}
+     * @memberof StripeApiStripePricesGet
+     */
+    readonly q?: string
+}
+
+/**
  * StripeApi - object-oriented interface
  * @export
  * @class StripeApi
@@ -6305,6 +7947,42 @@ export class StripeApi extends BaseAPI {
      */
     public stripeCheckout(requestParameters: StripeApiStripeCheckoutRequest = {}, options?: RawAxiosRequestConfig) {
         return StripeApiFp(this.configuration).stripeCheckout(requestParameters.checkoutCreateOptions, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Receive stripe hook
+     * @param {StripeApiStripeHookRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof StripeApi
+     */
+    public stripeHook(requestParameters: StripeApiStripeHookRequest, options?: RawAxiosRequestConfig) {
+        return StripeApiFp(this.configuration).stripeHook(requestParameters.secret, requestParameters.requestBody, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Create a payment intent
+     * @param {StripeApiStripePaymentIntentsGetRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof StripeApi
+     */
+    public stripePaymentIntentsGet(requestParameters: StripeApiStripePaymentIntentsGetRequest = {}, options?: RawAxiosRequestConfig) {
+        return StripeApiFp(this.configuration).stripePaymentIntentsGet(requestParameters.stripeCustomerId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Use results from here to attach prices to products.
+     * @summary Get prices from Stripe
+     * @param {StripeApiStripePricesGetRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof StripeApi
+     */
+    public stripePricesGet(requestParameters: StripeApiStripePricesGetRequest = {}, options?: RawAxiosRequestConfig) {
+        return StripeApiFp(this.configuration).stripePricesGet(requestParameters.count, requestParameters.cursor, requestParameters.q, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
@@ -6456,6 +8134,44 @@ export const SubscriptionsApiAxiosParamCreator = function (configuration?: Confi
                 options: localVarRequestOptions,
             };
         },
+        /**
+         * Subscription created here does not get counted in revenue. Not recommended, create a payment link instead.
+         * @summary Manually create a subscription for the team
+         * @param {SubscriptionCreate} [subscriptionCreate] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        subscriptionsPost: async (subscriptionCreate?: SubscriptionCreate, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/subscriptions`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["ADMIN_PANEL_ACCESS", "PARTNER_ADMIN_PANEL_ACCESS"], configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(subscriptionCreate, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
     }
 };
 
@@ -6504,6 +8220,19 @@ export const SubscriptionsApiFp = function(configuration?: Configuration) {
             const localVarOperationServerBasePath = operationServerMap['SubscriptionsApi.subscriptionsPatch']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
+        /**
+         * Subscription created here does not get counted in revenue. Not recommended, create a payment link instead.
+         * @summary Manually create a subscription for the team
+         * @param {SubscriptionCreate} [subscriptionCreate] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async subscriptionsPost(subscriptionCreate?: SubscriptionCreate, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Subscription>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.subscriptionsPost(subscriptionCreate, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['SubscriptionsApi.subscriptionsPost']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
     }
 };
 
@@ -6533,6 +8262,16 @@ export const SubscriptionsApiFactory = function (configuration?: Configuration, 
          */
         subscriptionsPatch(requestParameters: SubscriptionsApiSubscriptionsPatchRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
             return localVarFp.subscriptionsPatch(requestParameters.id, requestParameters.subscriptionUpdate, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Subscription created here does not get counted in revenue. Not recommended, create a payment link instead.
+         * @summary Manually create a subscription for the team
+         * @param {SubscriptionsApiSubscriptionsPostRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        subscriptionsPost(requestParameters: SubscriptionsApiSubscriptionsPostRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<Subscription> {
+            return localVarFp.subscriptionsPost(requestParameters.subscriptionCreate, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -6650,6 +8389,20 @@ export interface SubscriptionsApiSubscriptionsPatchRequest {
 }
 
 /**
+ * Request parameters for subscriptionsPost operation in SubscriptionsApi.
+ * @export
+ * @interface SubscriptionsApiSubscriptionsPostRequest
+ */
+export interface SubscriptionsApiSubscriptionsPostRequest {
+    /**
+     * 
+     * @type {SubscriptionCreate}
+     * @memberof SubscriptionsApiSubscriptionsPost
+     */
+    readonly subscriptionCreate?: SubscriptionCreate
+}
+
+/**
  * SubscriptionsApi - object-oriented interface
  * @export
  * @class SubscriptionsApi
@@ -6678,6 +8431,18 @@ export class SubscriptionsApi extends BaseAPI {
      */
     public subscriptionsPatch(requestParameters: SubscriptionsApiSubscriptionsPatchRequest, options?: RawAxiosRequestConfig) {
         return SubscriptionsApiFp(this.configuration).subscriptionsPatch(requestParameters.id, requestParameters.subscriptionUpdate, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Subscription created here does not get counted in revenue. Not recommended, create a payment link instead.
+     * @summary Manually create a subscription for the team
+     * @param {SubscriptionsApiSubscriptionsPostRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof SubscriptionsApi
+     */
+    public subscriptionsPost(requestParameters: SubscriptionsApiSubscriptionsPostRequest = {}, options?: RawAxiosRequestConfig) {
+        return SubscriptionsApiFp(this.configuration).subscriptionsPost(requestParameters.subscriptionCreate, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
@@ -6816,6 +8581,44 @@ export const TeamDetailApiAxiosParamCreator = function (configuration?: Configur
             };
         },
         /**
+         * 
+         * @summary Initialise a team with the free tier
+         * @param {TeamDetailCreate} [teamDetailCreate] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        teamDetailPost: async (teamDetailCreate?: TeamDetailCreate, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/team-detail`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["ADMIN_PANEL_ACCESS"], configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(teamDetailCreate, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * Fetches the list of active subscriptions/purchases from stripe and calculates what the current subscriptions should be. This route can be called to refresh the subscription after checkout to ensure the subscription is retreived. 
          * @summary Refreshes the access given by subscriptions
          * @param {boolean} [refreshUsage] Refreshes usage statistics as well
@@ -6903,6 +8706,19 @@ export const TeamDetailApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
+         * 
+         * @summary Initialise a team with the free tier
+         * @param {TeamDetailCreate} [teamDetailCreate] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async teamDetailPost(teamDetailCreate?: TeamDetailCreate, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TeamDetail>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.teamDetailPost(teamDetailCreate, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['TeamDetailApi.teamDetailPost']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
          * Fetches the list of active subscriptions/purchases from stripe and calculates what the current subscriptions should be. This route can be called to refresh the subscription after checkout to ensure the subscription is retreived. 
          * @summary Refreshes the access given by subscriptions
          * @param {boolean} [refreshUsage] Refreshes usage statistics as well
@@ -6955,6 +8771,16 @@ export const TeamDetailApiFactory = function (configuration?: Configuration, bas
             return localVarFp.teamDetailPatch(requestParameters.teamDetailUpdate, options).then((request) => request(axios, basePath));
         },
         /**
+         * 
+         * @summary Initialise a team with the free tier
+         * @param {TeamDetailApiTeamDetailPostRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        teamDetailPost(requestParameters: TeamDetailApiTeamDetailPostRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<TeamDetail> {
+            return localVarFp.teamDetailPost(requestParameters.teamDetailCreate, options).then((request) => request(axios, basePath));
+        },
+        /**
          * Fetches the list of active subscriptions/purchases from stripe and calculates what the current subscriptions should be. This route can be called to refresh the subscription after checkout to ensure the subscription is retreived. 
          * @summary Refreshes the access given by subscriptions
          * @param {TeamDetailApiTeamDetailRefreshAccessRequest} requestParameters Request parameters.
@@ -6993,6 +8819,20 @@ export interface TeamDetailApiTeamDetailPatchRequest {
      * @memberof TeamDetailApiTeamDetailPatch
      */
     readonly teamDetailUpdate?: TeamDetailUpdate
+}
+
+/**
+ * Request parameters for teamDetailPost operation in TeamDetailApi.
+ * @export
+ * @interface TeamDetailApiTeamDetailPostRequest
+ */
+export interface TeamDetailApiTeamDetailPostRequest {
+    /**
+     * 
+     * @type {TeamDetailCreate}
+     * @memberof TeamDetailApiTeamDetailPost
+     */
+    readonly teamDetailCreate?: TeamDetailCreate
 }
 
 /**
@@ -7049,6 +8889,18 @@ export class TeamDetailApi extends BaseAPI {
      */
     public teamDetailPatch(requestParameters: TeamDetailApiTeamDetailPatchRequest = {}, options?: RawAxiosRequestConfig) {
         return TeamDetailApiFp(this.configuration).teamDetailPatch(requestParameters.teamDetailUpdate, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Initialise a team with the free tier
+     * @param {TeamDetailApiTeamDetailPostRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof TeamDetailApi
+     */
+    public teamDetailPost(requestParameters: TeamDetailApiTeamDetailPostRequest = {}, options?: RawAxiosRequestConfig) {
+        return TeamDetailApiFp(this.configuration).teamDetailPost(requestParameters.teamDetailCreate, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

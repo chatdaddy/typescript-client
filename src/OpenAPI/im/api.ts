@@ -12416,6 +12416,40 @@ export const MailApiAxiosParamCreator = function (configuration?: Configuration)
                 options: localVarRequestOptions,
             };
         },
+        /**
+         * 
+         * @summary Receive a message from the platform
+         * @param {WebhookMailPostRequest} [webhookMailPostRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        webhookMailPost: async (webhookMailPostRequest?: WebhookMailPostRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/mail/webhook`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(webhookMailPostRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
     }
 };
 
@@ -12440,6 +12474,19 @@ export const MailApiFp = function(configuration?: Configuration) {
             const localVarOperationServerBasePath = operationServerMap['MailApi.mailRegisterPost']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
+        /**
+         * 
+         * @summary Receive a message from the platform
+         * @param {WebhookMailPostRequest} [webhookMailPostRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async webhookMailPost(webhookMailPostRequest?: WebhookMailPostRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AccountsLogout200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.webhookMailPost(webhookMailPostRequest, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['MailApi.webhookMailPost']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
     }
 };
 
@@ -12459,6 +12506,16 @@ export const MailApiFactory = function (configuration?: Configuration, basePath?
          */
         mailRegisterPost(requestParameters: MailApiMailRegisterPostRequest, options?: RawAxiosRequestConfig): AxiosPromise<AccountsLogout200Response> {
             return localVarFp.mailRegisterPost(requestParameters.accountId, requestParameters.mailRegisterPostRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Receive a message from the platform
+         * @param {MailApiWebhookMailPostRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        webhookMailPost(requestParameters: MailApiWebhookMailPostRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<AccountsLogout200Response> {
+            return localVarFp.webhookMailPost(requestParameters.webhookMailPostRequest, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -12485,6 +12542,20 @@ export interface MailApiMailRegisterPostRequest {
 }
 
 /**
+ * Request parameters for webhookMailPost operation in MailApi.
+ * @export
+ * @interface MailApiWebhookMailPostRequest
+ */
+export interface MailApiWebhookMailPostRequest {
+    /**
+     * 
+     * @type {WebhookMailPostRequest}
+     * @memberof MailApiWebhookMailPost
+     */
+    readonly webhookMailPostRequest?: WebhookMailPostRequest
+}
+
+/**
  * MailApi - object-oriented interface
  * @export
  * @class MailApi
@@ -12501,6 +12572,18 @@ export class MailApi extends BaseAPI {
      */
     public mailRegisterPost(requestParameters: MailApiMailRegisterPostRequest, options?: RawAxiosRequestConfig) {
         return MailApiFp(this.configuration).mailRegisterPost(requestParameters.accountId, requestParameters.mailRegisterPostRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Receive a message from the platform
+     * @param {MailApiWebhookMailPostRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof MailApi
+     */
+    public webhookMailPost(requestParameters: MailApiWebhookMailPostRequest = {}, options?: RawAxiosRequestConfig) {
+        return MailApiFp(this.configuration).webhookMailPost(requestParameters.webhookMailPostRequest, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
@@ -15911,6 +15994,377 @@ export class ProductCategoriesApi extends BaseAPI {
 
 
 /**
+ * ProfileValidationApi - axios parameter creator
+ * @export
+ */
+export const ProfileValidationApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @summary Configure various profile settings
+         * @param {string} accountId 
+         * @param {ProfileMessengerPostRequest} [profileMessengerPostRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        profileMessengerPost: async (accountId: string, profileMessengerPostRequest?: ProfileMessengerPostRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'accountId' is not null or undefined
+            assertParamExists('profileMessengerPost', 'accountId', accountId)
+            const localVarPath = `/messenger/profile-validation/{accountId}`
+                .replace(`{${"accountId"}}`, encodeURIComponent(String(accountId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["ACCOUNT_PATCH"], configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(profileMessengerPostRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * ProfileValidationApi - functional programming interface
+ * @export
+ */
+export const ProfileValidationApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = ProfileValidationApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * 
+         * @summary Configure various profile settings
+         * @param {string} accountId 
+         * @param {ProfileMessengerPostRequest} [profileMessengerPostRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async profileMessengerPost(accountId: string, profileMessengerPostRequest?: ProfileMessengerPostRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.profileMessengerPost(accountId, profileMessengerPostRequest, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['ProfileValidationApi.profileMessengerPost']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+    }
+};
+
+/**
+ * ProfileValidationApi - factory interface
+ * @export
+ */
+export const ProfileValidationApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = ProfileValidationApiFp(configuration)
+    return {
+        /**
+         * 
+         * @summary Configure various profile settings
+         * @param {ProfileValidationApiProfileMessengerPostRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        profileMessengerPost(requestParameters: ProfileValidationApiProfileMessengerPostRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.profileMessengerPost(requestParameters.accountId, requestParameters.profileMessengerPostRequest, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * Request parameters for profileMessengerPost operation in ProfileValidationApi.
+ * @export
+ * @interface ProfileValidationApiProfileMessengerPostRequest
+ */
+export interface ProfileValidationApiProfileMessengerPostRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof ProfileValidationApiProfileMessengerPost
+     */
+    readonly accountId: string
+
+    /**
+     * 
+     * @type {ProfileMessengerPostRequest}
+     * @memberof ProfileValidationApiProfileMessengerPost
+     */
+    readonly profileMessengerPostRequest?: ProfileMessengerPostRequest
+}
+
+/**
+ * ProfileValidationApi - object-oriented interface
+ * @export
+ * @class ProfileValidationApi
+ * @extends {BaseAPI}
+ */
+export class ProfileValidationApi extends BaseAPI {
+    /**
+     * 
+     * @summary Configure various profile settings
+     * @param {ProfileValidationApiProfileMessengerPostRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ProfileValidationApi
+     */
+    public profileMessengerPost(requestParameters: ProfileValidationApiProfileMessengerPostRequest, options?: RawAxiosRequestConfig) {
+        return ProfileValidationApiFp(this.configuration).profileMessengerPost(requestParameters.accountId, requestParameters.profileMessengerPostRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+
+/**
+ * SMSApi - axios parameter creator
+ * @export
+ */
+export const SMSApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @summary Set sender Id for sms channel
+         * @param {string} accountId 
+         * @param {SmsSenderIdPostRequest} [smsSenderIdPostRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        smsSenderIdPost: async (accountId: string, smsSenderIdPostRequest?: SmsSenderIdPostRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'accountId' is not null or undefined
+            assertParamExists('smsSenderIdPost', 'accountId', accountId)
+            const localVarPath = `/sms/sender-id/{accountId}`
+                .replace(`{${"accountId"}}`, encodeURIComponent(String(accountId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["ACCOUNT_PATCH"], configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(smsSenderIdPostRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Usage trigger for SMS limit exceeded
+         * @param {string} triggerSecret 
+         * @param {WebhookSmsLimitPostRequest} [webhookSmsLimitPostRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        webhookSmsLimitPost: async (triggerSecret: string, webhookSmsLimitPostRequest?: WebhookSmsLimitPostRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'triggerSecret' is not null or undefined
+            assertParamExists('webhookSmsLimitPost', 'triggerSecret', triggerSecret)
+            const localVarPath = `/sms/webhook/limit/{triggerSecret}`
+                .replace(`{${"triggerSecret"}}`, encodeURIComponent(String(triggerSecret)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(webhookSmsLimitPostRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * SMSApi - functional programming interface
+ * @export
+ */
+export const SMSApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = SMSApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * 
+         * @summary Set sender Id for sms channel
+         * @param {string} accountId 
+         * @param {SmsSenderIdPostRequest} [smsSenderIdPostRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async smsSenderIdPost(accountId: string, smsSenderIdPostRequest?: SmsSenderIdPostRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.smsSenderIdPost(accountId, smsSenderIdPostRequest, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['SMSApi.smsSenderIdPost']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @summary Usage trigger for SMS limit exceeded
+         * @param {string} triggerSecret 
+         * @param {WebhookSmsLimitPostRequest} [webhookSmsLimitPostRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async webhookSmsLimitPost(triggerSecret: string, webhookSmsLimitPostRequest?: WebhookSmsLimitPostRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AccountsLogout200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.webhookSmsLimitPost(triggerSecret, webhookSmsLimitPostRequest, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['SMSApi.webhookSmsLimitPost']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+    }
+};
+
+/**
+ * SMSApi - factory interface
+ * @export
+ */
+export const SMSApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = SMSApiFp(configuration)
+    return {
+        /**
+         * 
+         * @summary Set sender Id for sms channel
+         * @param {SMSApiSmsSenderIdPostRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        smsSenderIdPost(requestParameters: SMSApiSmsSenderIdPostRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.smsSenderIdPost(requestParameters.accountId, requestParameters.smsSenderIdPostRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Usage trigger for SMS limit exceeded
+         * @param {SMSApiWebhookSmsLimitPostRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        webhookSmsLimitPost(requestParameters: SMSApiWebhookSmsLimitPostRequest, options?: RawAxiosRequestConfig): AxiosPromise<AccountsLogout200Response> {
+            return localVarFp.webhookSmsLimitPost(requestParameters.triggerSecret, requestParameters.webhookSmsLimitPostRequest, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * Request parameters for smsSenderIdPost operation in SMSApi.
+ * @export
+ * @interface SMSApiSmsSenderIdPostRequest
+ */
+export interface SMSApiSmsSenderIdPostRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof SMSApiSmsSenderIdPost
+     */
+    readonly accountId: string
+
+    /**
+     * 
+     * @type {SmsSenderIdPostRequest}
+     * @memberof SMSApiSmsSenderIdPost
+     */
+    readonly smsSenderIdPostRequest?: SmsSenderIdPostRequest
+}
+
+/**
+ * Request parameters for webhookSmsLimitPost operation in SMSApi.
+ * @export
+ * @interface SMSApiWebhookSmsLimitPostRequest
+ */
+export interface SMSApiWebhookSmsLimitPostRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof SMSApiWebhookSmsLimitPost
+     */
+    readonly triggerSecret: string
+
+    /**
+     * 
+     * @type {WebhookSmsLimitPostRequest}
+     * @memberof SMSApiWebhookSmsLimitPost
+     */
+    readonly webhookSmsLimitPostRequest?: WebhookSmsLimitPostRequest
+}
+
+/**
+ * SMSApi - object-oriented interface
+ * @export
+ * @class SMSApi
+ * @extends {BaseAPI}
+ */
+export class SMSApi extends BaseAPI {
+    /**
+     * 
+     * @summary Set sender Id for sms channel
+     * @param {SMSApiSmsSenderIdPostRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof SMSApi
+     */
+    public smsSenderIdPost(requestParameters: SMSApiSmsSenderIdPostRequest, options?: RawAxiosRequestConfig) {
+        return SMSApiFp(this.configuration).smsSenderIdPost(requestParameters.accountId, requestParameters.smsSenderIdPostRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Usage trigger for SMS limit exceeded
+     * @param {SMSApiWebhookSmsLimitPostRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof SMSApi
+     */
+    public webhookSmsLimitPost(requestParameters: SMSApiWebhookSmsLimitPostRequest, options?: RawAxiosRequestConfig) {
+        return SMSApiFp(this.configuration).webhookSmsLimitPost(requestParameters.triggerSecret, requestParameters.webhookSmsLimitPostRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+
+/**
  * TagsApi - axios parameter creator
  * @export
  */
@@ -16611,6 +17065,257 @@ export class TemplatesApi extends BaseAPI {
      */
     public templatesSubmitForReview(requestParameters: TemplatesApiTemplatesSubmitForReviewRequest, options?: RawAxiosRequestConfig) {
         return TemplatesApiFp(this.configuration).templatesSubmitForReview(requestParameters.accountId, requestParameters.templatesSubmitForReviewRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+
+/**
+ * WebhookApi - axios parameter creator
+ * @export
+ */
+export const WebhookApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @summary Verify and handle messaging webhook subscription
+         * @param {string} hubMode The mode parameter from the webhook request
+         * @param {string} hubVerifyToken The verify_token parameter from the webhook request
+         * @param {string} hubChallenge The challenge parameter from the webhook request
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        webhookMessengerGet: async (hubMode: string, hubVerifyToken: string, hubChallenge: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'hubMode' is not null or undefined
+            assertParamExists('webhookMessengerGet', 'hubMode', hubMode)
+            // verify required parameter 'hubVerifyToken' is not null or undefined
+            assertParamExists('webhookMessengerGet', 'hubVerifyToken', hubVerifyToken)
+            // verify required parameter 'hubChallenge' is not null or undefined
+            assertParamExists('webhookMessengerGet', 'hubChallenge', hubChallenge)
+            const localVarPath = `/messenger/webhook`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (hubMode !== undefined) {
+                localVarQueryParameter['hub.mode'] = hubMode;
+            }
+
+            if (hubVerifyToken !== undefined) {
+                localVarQueryParameter['hub.verify_token'] = hubVerifyToken;
+            }
+
+            if (hubChallenge !== undefined) {
+                localVarQueryParameter['hub.challenge'] = hubChallenge;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Receive a message from the platform
+         * @param {string} [accountId] 
+         * @param {WebhookMessengerPostRequest} [webhookMessengerPostRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        webhookMessengerPost: async (accountId?: string, webhookMessengerPostRequest?: WebhookMessengerPostRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/messenger/webhook`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (accountId !== undefined) {
+                localVarQueryParameter['accountId'] = accountId;
+            }
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(webhookMessengerPostRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * WebhookApi - functional programming interface
+ * @export
+ */
+export const WebhookApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = WebhookApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * 
+         * @summary Verify and handle messaging webhook subscription
+         * @param {string} hubMode The mode parameter from the webhook request
+         * @param {string} hubVerifyToken The verify_token parameter from the webhook request
+         * @param {string} hubChallenge The challenge parameter from the webhook request
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async webhookMessengerGet(hubMode: string, hubVerifyToken: string, hubChallenge: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<string>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.webhookMessengerGet(hubMode, hubVerifyToken, hubChallenge, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['WebhookApi.webhookMessengerGet']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @summary Receive a message from the platform
+         * @param {string} [accountId] 
+         * @param {WebhookMessengerPostRequest} [webhookMessengerPostRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async webhookMessengerPost(accountId?: string, webhookMessengerPostRequest?: WebhookMessengerPostRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AccountsLogout200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.webhookMessengerPost(accountId, webhookMessengerPostRequest, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['WebhookApi.webhookMessengerPost']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+    }
+};
+
+/**
+ * WebhookApi - factory interface
+ * @export
+ */
+export const WebhookApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = WebhookApiFp(configuration)
+    return {
+        /**
+         * 
+         * @summary Verify and handle messaging webhook subscription
+         * @param {WebhookApiWebhookMessengerGetRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        webhookMessengerGet(requestParameters: WebhookApiWebhookMessengerGetRequest, options?: RawAxiosRequestConfig): AxiosPromise<string> {
+            return localVarFp.webhookMessengerGet(requestParameters.hubMode, requestParameters.hubVerifyToken, requestParameters.hubChallenge, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Receive a message from the platform
+         * @param {WebhookApiWebhookMessengerPostRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        webhookMessengerPost(requestParameters: WebhookApiWebhookMessengerPostRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<AccountsLogout200Response> {
+            return localVarFp.webhookMessengerPost(requestParameters.accountId, requestParameters.webhookMessengerPostRequest, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * Request parameters for webhookMessengerGet operation in WebhookApi.
+ * @export
+ * @interface WebhookApiWebhookMessengerGetRequest
+ */
+export interface WebhookApiWebhookMessengerGetRequest {
+    /**
+     * The mode parameter from the webhook request
+     * @type {string}
+     * @memberof WebhookApiWebhookMessengerGet
+     */
+    readonly hubMode: string
+
+    /**
+     * The verify_token parameter from the webhook request
+     * @type {string}
+     * @memberof WebhookApiWebhookMessengerGet
+     */
+    readonly hubVerifyToken: string
+
+    /**
+     * The challenge parameter from the webhook request
+     * @type {string}
+     * @memberof WebhookApiWebhookMessengerGet
+     */
+    readonly hubChallenge: string
+}
+
+/**
+ * Request parameters for webhookMessengerPost operation in WebhookApi.
+ * @export
+ * @interface WebhookApiWebhookMessengerPostRequest
+ */
+export interface WebhookApiWebhookMessengerPostRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof WebhookApiWebhookMessengerPost
+     */
+    readonly accountId?: string
+
+    /**
+     * 
+     * @type {WebhookMessengerPostRequest}
+     * @memberof WebhookApiWebhookMessengerPost
+     */
+    readonly webhookMessengerPostRequest?: WebhookMessengerPostRequest
+}
+
+/**
+ * WebhookApi - object-oriented interface
+ * @export
+ * @class WebhookApi
+ * @extends {BaseAPI}
+ */
+export class WebhookApi extends BaseAPI {
+    /**
+     * 
+     * @summary Verify and handle messaging webhook subscription
+     * @param {WebhookApiWebhookMessengerGetRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof WebhookApi
+     */
+    public webhookMessengerGet(requestParameters: WebhookApiWebhookMessengerGetRequest, options?: RawAxiosRequestConfig) {
+        return WebhookApiFp(this.configuration).webhookMessengerGet(requestParameters.hubMode, requestParameters.hubVerifyToken, requestParameters.hubChallenge, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Receive a message from the platform
+     * @param {WebhookApiWebhookMessengerPostRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof WebhookApi
+     */
+    public webhookMessengerPost(requestParameters: WebhookApiWebhookMessengerPostRequest = {}, options?: RawAxiosRequestConfig) {
+        return WebhookApiFp(this.configuration).webhookMessengerPost(requestParameters.accountId, requestParameters.webhookMessengerPostRequest, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

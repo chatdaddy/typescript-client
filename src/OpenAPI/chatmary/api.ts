@@ -3502,6 +3502,55 @@ export const ScheduleApiAxiosParamCreator = function (configuration?: Configurat
                 options: localVarRequestOptions,
             };
         },
+        /**
+         * 
+         * @summary OAuth callback
+         * @param {string} code 
+         * @param {string} state 
+         * @param {string} [scope] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        oauthCallback: async (code: string, state: string, scope?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'code' is not null or undefined
+            assertParamExists('oauthCallback', 'code', code)
+            // verify required parameter 'state' is not null or undefined
+            assertParamExists('oauthCallback', 'state', state)
+            const localVarPath = `/oauth/callback`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (code !== undefined) {
+                localVarQueryParameter['code'] = code;
+            }
+
+            if (state !== undefined) {
+                localVarQueryParameter['state'] = state;
+            }
+
+            if (scope !== undefined) {
+                localVarQueryParameter['scope'] = scope;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
     }
 };
 
@@ -3525,6 +3574,21 @@ export const ScheduleApiFp = function(configuration?: Configuration) {
             const localVarOperationServerBasePath = operationServerMap['ScheduleApi.autocompleteCalendarEvent']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
+        /**
+         * 
+         * @summary OAuth callback
+         * @param {string} code 
+         * @param {string} state 
+         * @param {string} [scope] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async oauthCallback(code: string, state: string, scope?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<OauthCallback200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.oauthCallback(code, state, scope, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['ScheduleApi.oauthCallback']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
     }
 };
 
@@ -3545,6 +3609,16 @@ export const ScheduleApiFactory = function (configuration?: Configuration, baseP
         autocompleteCalendarEvent(requestParameters: ScheduleApiAutocompleteCalendarEventRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<CalendarEvent> {
             return localVarFp.autocompleteCalendarEvent(requestParameters.autocompleteCalendarEventRequest, options).then((request) => request(axios, basePath));
         },
+        /**
+         * 
+         * @summary OAuth callback
+         * @param {ScheduleApiOauthCallbackRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        oauthCallback(requestParameters: ScheduleApiOauthCallbackRequest, options?: RawAxiosRequestConfig): AxiosPromise<OauthCallback200Response> {
+            return localVarFp.oauthCallback(requestParameters.code, requestParameters.state, requestParameters.scope, options).then((request) => request(axios, basePath));
+        },
     };
 };
 
@@ -3560,6 +3634,34 @@ export interface ScheduleApiAutocompleteCalendarEventRequest {
      * @memberof ScheduleApiAutocompleteCalendarEvent
      */
     readonly autocompleteCalendarEventRequest?: AutocompleteCalendarEventRequest
+}
+
+/**
+ * Request parameters for oauthCallback operation in ScheduleApi.
+ * @export
+ * @interface ScheduleApiOauthCallbackRequest
+ */
+export interface ScheduleApiOauthCallbackRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof ScheduleApiOauthCallback
+     */
+    readonly code: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof ScheduleApiOauthCallback
+     */
+    readonly state: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof ScheduleApiOauthCallback
+     */
+    readonly scope?: string
 }
 
 /**
@@ -3579,6 +3681,18 @@ export class ScheduleApi extends BaseAPI {
      */
     public autocompleteCalendarEvent(requestParameters: ScheduleApiAutocompleteCalendarEventRequest = {}, options?: RawAxiosRequestConfig) {
         return ScheduleApiFp(this.configuration).autocompleteCalendarEvent(requestParameters.autocompleteCalendarEventRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary OAuth callback
+     * @param {ScheduleApiOauthCallbackRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ScheduleApi
+     */
+    public oauthCallback(requestParameters: ScheduleApiOauthCallbackRequest, options?: RawAxiosRequestConfig) {
+        return ScheduleApiFp(this.configuration).oauthCallback(requestParameters.code, requestParameters.state, requestParameters.scope, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

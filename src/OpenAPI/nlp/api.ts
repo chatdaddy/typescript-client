@@ -2206,6 +2206,55 @@ export const AutocompleteApiAxiosParamCreator = function (configuration?: Config
         },
         /**
          * 
+         * @summary OAuth callback
+         * @param {string} code 
+         * @param {string} state 
+         * @param {string} [scope] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        oauthCallback: async (code: string, state: string, scope?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'code' is not null or undefined
+            assertParamExists('oauthCallback', 'code', code)
+            // verify required parameter 'state' is not null or undefined
+            assertParamExists('oauthCallback', 'state', state)
+            const localVarPath = `/oauth/callback`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (code !== undefined) {
+                localVarQueryParameter['code'] = code;
+            }
+
+            if (state !== undefined) {
+                localVarQueryParameter['state'] = state;
+            }
+
+            if (scope !== undefined) {
+                localVarQueryParameter['scope'] = scope;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
          * @summary Returns a suggested tag name
          * @param {string} accountId 
          * @param {string} chatId 
@@ -2304,6 +2353,21 @@ export const AutocompleteApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
+         * @summary OAuth callback
+         * @param {string} code 
+         * @param {string} state 
+         * @param {string} [scope] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async oauthCallback(code: string, state: string, scope?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<OauthCallback200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.oauthCallback(code, state, scope, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['AutocompleteApi.oauthCallback']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
          * @summary Returns a suggested tag name
          * @param {string} accountId 
          * @param {string} chatId 
@@ -2356,6 +2420,16 @@ export const AutocompleteApiFactory = function (configuration?: Configuration, b
          */
         autocompleteModify(requestParameters: AutocompleteApiAutocompleteModifyRequest, options?: RawAxiosRequestConfig): AxiosPromise<AutocompleteModify200Response> {
             return localVarFp.autocompleteModify(requestParameters.modifier, requestParameters.autocompleteModifyRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary OAuth callback
+         * @param {AutocompleteApiOauthCallbackRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        oauthCallback(requestParameters: AutocompleteApiOauthCallbackRequest, options?: RawAxiosRequestConfig): AxiosPromise<OauthCallback200Response> {
+            return localVarFp.oauthCallback(requestParameters.code, requestParameters.state, requestParameters.scope, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -2427,6 +2501,34 @@ export interface AutocompleteApiAutocompleteModifyRequest {
 }
 
 /**
+ * Request parameters for oauthCallback operation in AutocompleteApi.
+ * @export
+ * @interface AutocompleteApiOauthCallbackRequest
+ */
+export interface AutocompleteApiOauthCallbackRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof AutocompleteApiOauthCallback
+     */
+    readonly code: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof AutocompleteApiOauthCallback
+     */
+    readonly state: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof AutocompleteApiOauthCallback
+     */
+    readonly scope?: string
+}
+
+/**
  * Request parameters for tagSuggest operation in AutocompleteApi.
  * @export
  * @interface AutocompleteApiTagSuggestRequest
@@ -2495,6 +2597,18 @@ export class AutocompleteApi extends BaseAPI {
      */
     public autocompleteModify(requestParameters: AutocompleteApiAutocompleteModifyRequest, options?: RawAxiosRequestConfig) {
         return AutocompleteApiFp(this.configuration).autocompleteModify(requestParameters.modifier, requestParameters.autocompleteModifyRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary OAuth callback
+     * @param {AutocompleteApiOauthCallbackRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AutocompleteApi
+     */
+    public oauthCallback(requestParameters: AutocompleteApiOauthCallbackRequest, options?: RawAxiosRequestConfig) {
+        return AutocompleteApiFp(this.configuration).oauthCallback(requestParameters.code, requestParameters.state, requestParameters.scope, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

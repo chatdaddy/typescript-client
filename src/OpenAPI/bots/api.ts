@@ -6751,6 +6751,44 @@ export class BotRecordsApi extends BaseAPI {
 export const BotTriggersApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
+         * This endpoint is used to fire a trigger via a webhook. The secret is used to authenticate the request. The endpoint will throw an error if:   - the trigger is disabled   - no recipients were obtained from the trigger config or req body   - throttle limit is reached for the trigger/all recipients
+         * @summary Fire a trigger via a webhook
+         * @param {string} secret 
+         * @param {{ [key: string]: any; }} [requestBody] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        fireTriggerWebhook: async (secret: string, requestBody?: { [key: string]: any; }, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'secret' is not null or undefined
+            assertParamExists('fireTriggerWebhook', 'secret', secret)
+            const localVarPath = `/triggers/app-webhook/{secret}`
+                .replace(`{${"secret"}}`, encodeURIComponent(String(secret)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(requestBody, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * 
          * @summary Get trigger display configuration
          * @param {*} [options] Override http request option.
@@ -6910,6 +6948,20 @@ export const BotTriggersApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = BotTriggersApiAxiosParamCreator(configuration)
     return {
         /**
+         * This endpoint is used to fire a trigger via a webhook. The secret is used to authenticate the request. The endpoint will throw an error if:   - the trigger is disabled   - no recipients were obtained from the trigger config or req body   - throttle limit is reached for the trigger/all recipients
+         * @summary Fire a trigger via a webhook
+         * @param {string} secret 
+         * @param {{ [key: string]: any; }} [requestBody] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async fireTriggerWebhook(secret: string, requestBody?: { [key: string]: any; }, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<FireTriggerWebhook200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.fireTriggerWebhook(secret, requestBody, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['BotTriggersApi.fireTriggerWebhook']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
          * 
          * @summary Get trigger display configuration
          * @param {*} [options] Override http request option.
@@ -6966,6 +7018,16 @@ export const BotTriggersApiFactory = function (configuration?: Configuration, ba
     const localVarFp = BotTriggersApiFp(configuration)
     return {
         /**
+         * This endpoint is used to fire a trigger via a webhook. The secret is used to authenticate the request. The endpoint will throw an error if:   - the trigger is disabled   - no recipients were obtained from the trigger config or req body   - throttle limit is reached for the trigger/all recipients
+         * @summary Fire a trigger via a webhook
+         * @param {BotTriggersApiFireTriggerWebhookRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        fireTriggerWebhook(requestParameters: BotTriggersApiFireTriggerWebhookRequest, options?: RawAxiosRequestConfig): AxiosPromise<FireTriggerWebhook200Response> {
+            return localVarFp.fireTriggerWebhook(requestParameters.secret, requestParameters.requestBody, options).then((request) => request(axios, basePath));
+        },
+        /**
          * 
          * @summary Get trigger display configuration
          * @param {*} [options] Override http request option.
@@ -6996,6 +7058,27 @@ export const BotTriggersApiFactory = function (configuration?: Configuration, ba
         },
     };
 };
+
+/**
+ * Request parameters for fireTriggerWebhook operation in BotTriggersApi.
+ * @export
+ * @interface BotTriggersApiFireTriggerWebhookRequest
+ */
+export interface BotTriggersApiFireTriggerWebhookRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof BotTriggersApiFireTriggerWebhook
+     */
+    readonly secret: string
+
+    /**
+     * 
+     * @type {{ [key: string]: any; }}
+     * @memberof BotTriggersApiFireTriggerWebhook
+     */
+    readonly requestBody?: { [key: string]: any; }
+}
 
 /**
  * Request parameters for getTriggerInstances operation in BotTriggersApi.
@@ -7088,6 +7171,18 @@ export interface BotTriggersApiStopTriggerInstanceRequest {
  * @extends {BaseAPI}
  */
 export class BotTriggersApi extends BaseAPI {
+    /**
+     * This endpoint is used to fire a trigger via a webhook. The secret is used to authenticate the request. The endpoint will throw an error if:   - the trigger is disabled   - no recipients were obtained from the trigger config or req body   - throttle limit is reached for the trigger/all recipients
+     * @summary Fire a trigger via a webhook
+     * @param {BotTriggersApiFireTriggerWebhookRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof BotTriggersApi
+     */
+    public fireTriggerWebhook(requestParameters: BotTriggersApiFireTriggerWebhookRequest, options?: RawAxiosRequestConfig) {
+        return BotTriggersApiFp(this.configuration).fireTriggerWebhook(requestParameters.secret, requestParameters.requestBody, options).then((request) => request(this.axios, this.basePath));
+    }
+
     /**
      * 
      * @summary Get trigger display configuration
@@ -7535,6 +7630,44 @@ export const BotsApiAxiosParamCreator = function (configuration?: Configuration)
         },
         /**
          * 
+         * @summary Update status of some templates
+         * @param {TemplateStatusUpdateRequest} [templateStatusUpdateRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        externalTemplateStatusUpdate: async (templateStatusUpdateRequest?: TemplateStatusUpdateRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/external-template-status`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["ADMIN_PANEL_ACCESS"], configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(templateStatusUpdateRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
          * @summary Returns list of action fire records
          * @param {number} [count] 
          * @param {number} [beforeId] 
@@ -7718,6 +7851,19 @@ export const BotsApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
+         * @summary Update status of some templates
+         * @param {TemplateStatusUpdateRequest} [templateStatusUpdateRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async externalTemplateStatusUpdate(templateStatusUpdateRequest?: TemplateStatusUpdateRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.externalTemplateStatusUpdate(templateStatusUpdateRequest, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['BotsApi.externalTemplateStatusUpdate']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
          * @summary Returns list of action fire records
          * @param {number} [count] 
          * @param {number} [beforeId] 
@@ -7821,6 +7967,16 @@ export const BotsApiFactory = function (configuration?: Configuration, basePath?
          */
         botsPatch(requestParameters: BotsApiBotsPatchRequest, options?: RawAxiosRequestConfig): AxiosPromise<BotData> {
             return localVarFp.botsPatch(requestParameters.id, requestParameters.botPatch, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Update status of some templates
+         * @param {BotsApiExternalTemplateStatusUpdateRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        externalTemplateStatusUpdate(requestParameters: BotsApiExternalTemplateStatusUpdateRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.externalTemplateStatusUpdate(requestParameters.templateStatusUpdateRequest, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -8081,6 +8237,20 @@ export interface BotsApiBotsPatchRequest {
 }
 
 /**
+ * Request parameters for externalTemplateStatusUpdate operation in BotsApi.
+ * @export
+ * @interface BotsApiExternalTemplateStatusUpdateRequest
+ */
+export interface BotsApiExternalTemplateStatusUpdateRequest {
+    /**
+     * 
+     * @type {TemplateStatusUpdateRequest}
+     * @memberof BotsApiExternalTemplateStatusUpdate
+     */
+    readonly templateStatusUpdateRequest?: TemplateStatusUpdateRequest
+}
+
+/**
  * Request parameters for getActionFireRecords operation in BotsApi.
  * @export
  * @interface BotsApiGetActionFireRecordsRequest
@@ -8210,6 +8380,18 @@ export class BotsApi extends BaseAPI {
      */
     public botsPatch(requestParameters: BotsApiBotsPatchRequest, options?: RawAxiosRequestConfig) {
         return BotsApiFp(this.configuration).botsPatch(requestParameters.id, requestParameters.botPatch, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Update status of some templates
+     * @param {BotsApiExternalTemplateStatusUpdateRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof BotsApi
+     */
+    public externalTemplateStatusUpdate(requestParameters: BotsApiExternalTemplateStatusUpdateRequest = {}, options?: RawAxiosRequestConfig) {
+        return BotsApiFp(this.configuration).externalTemplateStatusUpdate(requestParameters.templateStatusUpdateRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
