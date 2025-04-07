@@ -69,3 +69,6 @@ export type OrderPaymentIntegration = {
  * @example 'message-insert' => MessageInsertData
  */
 export type EventData<E extends EventName> = Extract<EventWebhookData, { event: E }>['data'][number]
+
+export type MakeRequired<T, K extends keyof T> = Omit<T, K> & Required<Pick<T, K>>
+
