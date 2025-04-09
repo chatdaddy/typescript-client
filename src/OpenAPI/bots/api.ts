@@ -993,7 +993,8 @@ export interface ActionScheduleRecord {
 export const ActionScheduleRecordStatusEnum = {
     Pending: 'pending',
     Queued: 'queued',
-    Completed: 'completed'
+    Completed: 'completed',
+    Cancelled: 'cancelled'
 } as const;
 
 export type ActionScheduleRecordStatusEnum = typeof ActionScheduleRecordStatusEnum[keyof typeof ActionScheduleRecordStatusEnum];
@@ -1638,7 +1639,7 @@ export interface BotFireRecord {
      * @type {string}
      * @memberof BotFireRecord
      */
-    'status': BotFireRecordStatusEnum;
+    'status': BotFireRecordStatusEnum | null;
     /**
      * ID of the user who fired the bot.
      * @type {string}
@@ -1680,7 +1681,8 @@ export interface BotFireRecord {
 export const BotFireRecordStatusEnum = {
     Scheduled: 'scheduled',
     Running: 'running',
-    Completed: 'completed'
+    Completed: 'completed',
+    Cancelled: 'cancelled'
 } as const;
 
 export type BotFireRecordStatusEnum = typeof BotFireRecordStatusEnum[keyof typeof BotFireRecordStatusEnum];
@@ -2204,6 +2206,63 @@ export interface BotPatch {
 /**
  * 
  * @export
+ * @interface BotRecordsCancel200Response
+ */
+export interface BotRecordsCancel200Response {
+    /**
+     * 
+     * @type {Array<BotRecordsCancel200ResponseItemsInner>}
+     * @memberof BotRecordsCancel200Response
+     */
+    'items': Array<BotRecordsCancel200ResponseItemsInner>;
+}
+/**
+ * 
+ * @export
+ * @interface BotRecordsCancel200ResponseItemsInner
+ */
+export interface BotRecordsCancel200ResponseItemsInner {
+    /**
+     * 
+     * @type {string}
+     * @memberof BotRecordsCancel200ResponseItemsInner
+     */
+    'id'?: string;
+}
+/**
+ * 
+ * @export
+ * @interface BotRecordsCancelRequest
+ */
+export interface BotRecordsCancelRequest {
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof BotRecordsCancelRequest
+     */
+    'id'?: Array<string>;
+    /**
+     * ID of the bot sequence
+     * @type {string}
+     * @memberof BotRecordsCancelRequest
+     */
+    'accountId'?: string;
+    /**
+     * 
+     * @type {IMUniqueContactID}
+     * @memberof BotRecordsCancelRequest
+     */
+    'contacts'?: IMUniqueContactID;
+    /**
+     * ID of the bot sequence
+     * @type {string}
+     * @memberof BotRecordsCancelRequest
+     */
+    'botId'?: string;
+}
+/**
+ * 
+ * @export
  * @interface BotSharePatchRequest
  */
 export interface BotSharePatchRequest {
@@ -2627,7 +2686,7 @@ export interface BotTriggerOptions {
      */
     'perContactThrottle'?: ThrottleOptions;
     /**
-     * Total throttle options for the trigger. Maximum throughput: 100 triggers/minute 
+     * Total throttle options for the trigger. Maximum throughput: 100 triggers/minute
      * @type {ThrottleOptions}
      * @memberof BotTriggerOptions
      */
@@ -4403,7 +4462,7 @@ export interface Recipient {
      */
     'sendOptions'?: MessageSendOptions;
     /**
-     * Parameters to replace in text. These can also be used to build conditions, as they\'ll be set on the \"data\" property of the payload. Internally, an app will set the parameters of a recipient with its output 
+     * Parameters to replace in text. These can also be used to build conditions, as they\'ll be set on the \"data\" property of the payload. Internally, an app will set the parameters of a recipient with its output
      * @type {{ [key: string]: any; }}
      * @memberof Recipient
      */
@@ -6409,6 +6468,44 @@ export class BotAnalyticsApi extends BaseAPI {
 export const BotRecordsApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
+         * 
+         * @summary Cancel running bots
+         * @param {BotRecordsCancelRequest} [botRecordsCancelRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        botRecordsCancel: async (botRecordsCancelRequest?: BotRecordsCancelRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/bot/records`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PATCH', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["TEMPLATES_UPDATE", "TEMPLATES_CREATE"], configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(botRecordsCancelRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * This endpoint fetches records for a bot based on provided botId parameters
          * @summary Get records for a bot
          * @param {string} [botId] The ID of the bot
@@ -6552,6 +6649,19 @@ export const BotRecordsApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = BotRecordsApiAxiosParamCreator(configuration)
     return {
         /**
+         * 
+         * @summary Cancel running bots
+         * @param {BotRecordsCancelRequest} [botRecordsCancelRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async botRecordsCancel(botRecordsCancelRequest?: BotRecordsCancelRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BotRecordsCancel200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.botRecordsCancel(botRecordsCancelRequest, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['BotRecordsApi.botRecordsCancel']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
          * This endpoint fetches records for a bot based on provided botId parameters
          * @summary Get records for a bot
          * @param {string} [botId] The ID of the bot
@@ -6597,6 +6707,16 @@ export const BotRecordsApiFactory = function (configuration?: Configuration, bas
     const localVarFp = BotRecordsApiFp(configuration)
     return {
         /**
+         * 
+         * @summary Cancel running bots
+         * @param {BotRecordsApiBotRecordsCancelRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        botRecordsCancel(requestParameters: BotRecordsApiBotRecordsCancelRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<BotRecordsCancel200Response> {
+            return localVarFp.botRecordsCancel(requestParameters.botRecordsCancelRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
          * This endpoint fetches records for a bot based on provided botId parameters
          * @summary Get records for a bot
          * @param {BotRecordsApiGetBotFireRecordsRequest} requestParameters Request parameters.
@@ -6618,6 +6738,20 @@ export const BotRecordsApiFactory = function (configuration?: Configuration, bas
         },
     };
 };
+
+/**
+ * Request parameters for botRecordsCancel operation in BotRecordsApi.
+ * @export
+ * @interface BotRecordsApiBotRecordsCancelRequest
+ */
+export interface BotRecordsApiBotRecordsCancelRequest {
+    /**
+     * 
+     * @type {BotRecordsCancelRequest}
+     * @memberof BotRecordsApiBotRecordsCancel
+     */
+    readonly botRecordsCancelRequest?: BotRecordsCancelRequest
+}
 
 /**
  * Request parameters for getBotFireRecords operation in BotRecordsApi.
@@ -6717,6 +6851,18 @@ export interface BotRecordsApiSimulateActionExecuteResultRequest {
  * @extends {BaseAPI}
  */
 export class BotRecordsApi extends BaseAPI {
+    /**
+     * 
+     * @summary Cancel running bots
+     * @param {BotRecordsApiBotRecordsCancelRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof BotRecordsApi
+     */
+    public botRecordsCancel(requestParameters: BotRecordsApiBotRecordsCancelRequest = {}, options?: RawAxiosRequestConfig) {
+        return BotRecordsApiFp(this.configuration).botRecordsCancel(requestParameters.botRecordsCancelRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
     /**
      * This endpoint fetches records for a bot based on provided botId parameters
      * @summary Get records for a bot

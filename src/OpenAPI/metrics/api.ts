@@ -724,10 +724,10 @@ export interface DefaultMetricConfigInner {
     'description'?: string | null;
     /**
      * 
-     * @type {Array<DashboardSchemaItemsInner>}
+     * @type {Array<DashboardSchemaItem>}
      * @memberof DefaultMetricConfigInner
      */
-    'items': Array<DashboardSchemaItemsInner>;
+    'items': Array<DashboardSchemaItem>;
 }
 /**
  * 
