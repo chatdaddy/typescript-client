@@ -1180,6 +1180,12 @@ export interface KnowledgeBase {
     'storageSizeBytes': number;
     /**
      * 
+     * @type {KnowledgeBaseTestConfig}
+     * @memberof KnowledgeBase
+     */
+    'defaultTestConfig'?: KnowledgeBaseTestConfig;
+    /**
+     * 
      * @type {Array<KnowledgeBaseSource>}
      * @memberof KnowledgeBase
      */
@@ -1266,6 +1272,27 @@ export const KnowledgeBaseSourceDataFileTypeEnum = {
 } as const;
 
 export type KnowledgeBaseSourceDataFileTypeEnum = typeof KnowledgeBaseSourceDataFileTypeEnum[keyof typeof KnowledgeBaseSourceDataFileTypeEnum];
+
+/**
+ * 
+ * @export
+ * @interface KnowledgeBaseTestConfig
+ */
+export interface KnowledgeBaseTestConfig {
+    /**
+     * 
+     * @type {LlmModel}
+     * @memberof KnowledgeBaseTestConfig
+     */
+    'model'?: LlmModel;
+    /**
+     * Instructions to start the conversation
+     * @type {string}
+     * @memberof KnowledgeBaseTestConfig
+     */
+    'instructions'?: string;
+}
+
 
 /**
  * 
@@ -1388,10 +1415,10 @@ export interface LlmChatRequest {
     'tools'?: Array<LlmTool>;
     /**
      * 
-     * @type {string}
+     * @type {LlmModel}
      * @memberof LlmChatRequest
      */
-    'model'?: LlmChatRequestModelEnum;
+    'model'?: LlmModel;
     /**
      * 
      * @type {Array<string>}
@@ -1412,12 +1439,6 @@ export interface LlmChatRequest {
     'clear'?: boolean;
 }
 
-export const LlmChatRequestModelEnum = {
-    Gpt4oMini: 'gpt-4o-mini',
-    Gpt4o: 'gpt-4o'
-} as const;
-
-export type LlmChatRequestModelEnum = typeof LlmChatRequestModelEnum[keyof typeof LlmChatRequestModelEnum];
 
 /**
  * @type LlmMessage
@@ -1507,6 +1528,20 @@ export const LlmMessageToolOutputTypeEnum = {
 } as const;
 
 export type LlmMessageToolOutputTypeEnum = typeof LlmMessageToolOutputTypeEnum[keyof typeof LlmMessageToolOutputTypeEnum];
+
+/**
+ * 
+ * @export
+ * @enum {string}
+ */
+
+export const LlmModel = {
+    Gpt4oMini: 'gpt-4o-mini',
+    Gpt4o: 'gpt-4o'
+} as const;
+
+export type LlmModel = typeof LlmModel[keyof typeof LlmModel];
+
 
 /**
  * 
@@ -1862,7 +1897,13 @@ export interface UpsertKnowledgeBase {
      * @type {string}
      * @memberof UpsertKnowledgeBase
      */
-    'name': string;
+    'name'?: string;
+    /**
+     * 
+     * @type {KnowledgeBaseTestConfig}
+     * @memberof UpsertKnowledgeBase
+     */
+    'defaultTestConfig'?: KnowledgeBaseTestConfig;
 }
 
 /**
