@@ -1178,6 +1178,12 @@ export interface KnowledgeBase {
      * @memberof KnowledgeBase
      */
     'storageSizeBytes': number;
+    /**
+     * 
+     * @type {Array<KnowledgeBaseSource>}
+     * @memberof KnowledgeBase
+     */
+    'sources': Array<KnowledgeBaseSource>;
 }
 /**
  * 
