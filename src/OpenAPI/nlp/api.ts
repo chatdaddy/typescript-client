@@ -1264,6 +1264,12 @@ export interface KnowledgeBaseSourceDataFile {
      * @memberof KnowledgeBaseSourceDataFile
      */
     'fileId': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof KnowledgeBaseSourceDataFile
+     */
+    'filename'?: string;
 }
 
 export const KnowledgeBaseSourceDataFileTypeEnum = {
