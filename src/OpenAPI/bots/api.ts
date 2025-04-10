@@ -1639,7 +1639,7 @@ export interface BotFireRecord {
      * @type {string}
      * @memberof BotFireRecord
      */
-    'status': BotFireRecordStatusEnum | null;
+    'status': BotFireRecordStatusEnum;
     /**
      * ID of the user who fired the bot.
      * @type {string}
