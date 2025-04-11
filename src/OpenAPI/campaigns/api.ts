@@ -155,10 +155,10 @@ export interface CampaignAsyncGet200Response {
     'status': CampaignAsyncGet200ResponseStatusEnum;
     /**
      * 
-     * @type {{ [key: string]: object; }}
+     * @type {{ [key: string]: any; }}
      * @memberof CampaignAsyncGet200Response
      */
-    'error'?: { [key: string]: object; } | null;
+    'error'?: { [key: string]: any; } | null;
     /**
      * 
      * @type {CampaignMetadata}

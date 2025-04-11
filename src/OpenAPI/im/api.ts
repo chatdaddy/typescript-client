@@ -3386,10 +3386,10 @@ export interface Message {
     'status'?: MessageStatus;
     /**
      * 
-     * @type {object}
+     * @type {MessageAllOfError}
      * @memberof Message
      */
-    'error'?: object | null;
+    'error'?: MessageAllOfError | null;
     /**
      * Only for notes, user ID of the person who resolved the note
      * @type {string}
@@ -3453,6 +3453,37 @@ export interface Message {
 }
 
 
+/**
+ * 
+ * @export
+ * @interface MessageAllOfError
+ */
+export interface MessageAllOfError {
+    /**
+     * 
+     * @type {number}
+     * @memberof MessageAllOfError
+     */
+    'statusCode': number;
+    /**
+     * What the error was
+     * @type {string}
+     * @memberof MessageAllOfError
+     */
+    'message': string;
+    /**
+     * 
+     * @type {AppErrorData}
+     * @memberof MessageAllOfError
+     */
+    'data'?: AppErrorData;
+    /**
+     * 
+     * @type {number}
+     * @memberof MessageAllOfError
+     */
+    'retries': number;
+}
 /**
  * Message describes a reaction to another message
  * @export
