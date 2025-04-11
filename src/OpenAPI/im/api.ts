@@ -8357,15 +8357,11 @@ export const CRMApiAxiosParamCreator = function (configuration?: Configuration) 
             }
 
             if (tags !== undefined) {
-                for (const [key, value] of Object.entries(tags)) {
-                    localVarQueryParameter[key] = value;
-                }
+                localVarQueryParameter['tags'] = tags;
             }
 
             if (assignee !== undefined) {
-                for (const [key, value] of Object.entries(assignee)) {
-                    localVarQueryParameter[key] = value;
-                }
+                localVarQueryParameter['assignee'] = assignee;
             }
 
 
@@ -8442,15 +8438,11 @@ export const CRMApiAxiosParamCreator = function (configuration?: Configuration) 
             }
 
             if (tags !== undefined) {
-                for (const [key, value] of Object.entries(tags)) {
-                    localVarQueryParameter[key] = value;
-                }
+                localVarQueryParameter['tags'] = tags;
             }
 
             if (assignee !== undefined) {
-                for (const [key, value] of Object.entries(assignee)) {
-                    localVarQueryParameter[key] = value;
-                }
+                localVarQueryParameter['assignee'] = assignee;
             }
 
 
@@ -9618,19 +9610,15 @@ export const ChatsApiAxiosParamCreator = function (configuration?: Configuration
             }
 
             if (tags !== undefined) {
-                for (const [key, value] of Object.entries(tags)) {
-                    localVarQueryParameter[key] = value;
-                }
+                localVarQueryParameter['tags'] = tags;
             }
 
             if (notTags) {
-                localVarQueryParameter['notTags'] = notTags;
+                localVarQueryParameter['notTags'] = notTags.join(COLLECTION_FORMATS.csv);
             }
 
             if (contacts !== undefined) {
-                for (const [key, value] of Object.entries(contacts)) {
-                    localVarQueryParameter[key] = value;
-                }
+                localVarQueryParameter['contacts'] = contacts;
             }
 
             if (q !== undefined) {
@@ -9638,9 +9626,7 @@ export const ChatsApiAxiosParamCreator = function (configuration?: Configuration
             }
 
             if (assignee !== undefined) {
-                for (const [key, value] of Object.entries(assignee)) {
-                    localVarQueryParameter[key] = value;
-                }
+                localVarQueryParameter['assignee'] = assignee;
             }
 
             if (accountId) {
@@ -9658,7 +9644,7 @@ export const ChatsApiAxiosParamCreator = function (configuration?: Configuration
             }
 
             if (notAssignee) {
-                localVarQueryParameter['notAssignee'] = notAssignee;
+                localVarQueryParameter['notAssignee'] = notAssignee.join(COLLECTION_FORMATS.csv);
             }
 
             if (returnUnreadChatCount !== undefined) {
@@ -10234,25 +10220,19 @@ export const ContactsApiAxiosParamCreator = function (configuration?: Configurat
             await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["CONTACTS_DELETE"], configuration)
 
             if (tags !== undefined) {
-                for (const [key, value] of Object.entries(tags)) {
-                    localVarQueryParameter[key] = value;
-                }
+                localVarQueryParameter['tags'] = tags;
             }
 
             if (notTags) {
-                localVarQueryParameter['notTags'] = notTags;
+                localVarQueryParameter['notTags'] = notTags.join(COLLECTION_FORMATS.csv);
             }
 
             if (contacts !== undefined) {
-                for (const [key, value] of Object.entries(contacts)) {
-                    localVarQueryParameter[key] = value;
-                }
+                localVarQueryParameter['contacts'] = contacts;
             }
 
             if (notContacts !== undefined) {
-                for (const [key, value] of Object.entries(notContacts)) {
-                    localVarQueryParameter[key] = value;
-                }
+                localVarQueryParameter['notContacts'] = notContacts;
             }
 
             if (minMessagesSent !== undefined) {
@@ -10276,13 +10256,11 @@ export const ContactsApiAxiosParamCreator = function (configuration?: Configurat
             }
 
             if (assignee !== undefined) {
-                for (const [key, value] of Object.entries(assignee)) {
-                    localVarQueryParameter[key] = value;
-                }
+                localVarQueryParameter['assignee'] = assignee;
             }
 
             if (notAssignee) {
-                localVarQueryParameter['notAssignee'] = notAssignee;
+                localVarQueryParameter['notAssignee'] = notAssignee.join(COLLECTION_FORMATS.csv);
             }
 
             if (accountId) {
@@ -10377,25 +10355,19 @@ export const ContactsApiAxiosParamCreator = function (configuration?: Configurat
             await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["CONTACTS_READ_ALL", "CONTACTS_READ_ASSIGNED"], configuration)
 
             if (tags !== undefined) {
-                for (const [key, value] of Object.entries(tags)) {
-                    localVarQueryParameter[key] = value;
-                }
+                localVarQueryParameter['tags'] = tags;
             }
 
             if (notTags) {
-                localVarQueryParameter['notTags'] = notTags;
+                localVarQueryParameter['notTags'] = notTags.join(COLLECTION_FORMATS.csv);
             }
 
             if (contacts !== undefined) {
-                for (const [key, value] of Object.entries(contacts)) {
-                    localVarQueryParameter[key] = value;
-                }
+                localVarQueryParameter['contacts'] = contacts;
             }
 
             if (notContacts !== undefined) {
-                for (const [key, value] of Object.entries(notContacts)) {
-                    localVarQueryParameter[key] = value;
-                }
+                localVarQueryParameter['notContacts'] = notContacts;
             }
 
             if (minMessagesSent !== undefined) {
@@ -10419,13 +10391,11 @@ export const ContactsApiAxiosParamCreator = function (configuration?: Configurat
             }
 
             if (assignee !== undefined) {
-                for (const [key, value] of Object.entries(assignee)) {
-                    localVarQueryParameter[key] = value;
-                }
+                localVarQueryParameter['assignee'] = assignee;
             }
 
             if (notAssignee) {
-                localVarQueryParameter['notAssignee'] = notAssignee;
+                localVarQueryParameter['notAssignee'] = notAssignee.join(COLLECTION_FORMATS.csv);
             }
 
             if (accountId) {
@@ -10583,25 +10553,19 @@ export const ContactsApiAxiosParamCreator = function (configuration?: Configurat
             await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["CONTACTS_UPDATE"], configuration)
 
             if (tags !== undefined) {
-                for (const [key, value] of Object.entries(tags)) {
-                    localVarQueryParameter[key] = value;
-                }
+                localVarQueryParameter['tags'] = tags;
             }
 
             if (notTags) {
-                localVarQueryParameter['notTags'] = notTags;
+                localVarQueryParameter['notTags'] = notTags.join(COLLECTION_FORMATS.csv);
             }
 
             if (contacts !== undefined) {
-                for (const [key, value] of Object.entries(contacts)) {
-                    localVarQueryParameter[key] = value;
-                }
+                localVarQueryParameter['contacts'] = contacts;
             }
 
             if (notContacts !== undefined) {
-                for (const [key, value] of Object.entries(notContacts)) {
-                    localVarQueryParameter[key] = value;
-                }
+                localVarQueryParameter['notContacts'] = notContacts;
             }
 
             if (minMessagesSent !== undefined) {
@@ -10625,13 +10589,11 @@ export const ContactsApiAxiosParamCreator = function (configuration?: Configurat
             }
 
             if (assignee !== undefined) {
-                for (const [key, value] of Object.entries(assignee)) {
-                    localVarQueryParameter[key] = value;
-                }
+                localVarQueryParameter['assignee'] = assignee;
             }
 
             if (notAssignee) {
-                localVarQueryParameter['notAssignee'] = notAssignee;
+                localVarQueryParameter['notAssignee'] = notAssignee.join(COLLECTION_FORMATS.csv);
             }
 
             if (accountId) {
