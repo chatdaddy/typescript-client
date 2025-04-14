@@ -2900,12 +2900,6 @@ export interface BotsGets200Response {
     'totalCount'?: number;
 }
 /**
- * @type BotsGetsTriggerTypesParameter
- * @export
- */
-export type BotsGetsTriggerTypesParameter = Array<TriggerMethodFilter> | TriggerMethodFilter;
-
-/**
  * 
  * @export
  * @interface CalendarAuth200Response
@@ -3568,12 +3562,6 @@ export interface GetBotFireRecords200Response {
      */
     'total'?: number;
 }
-/**
- * @type GetBotFireRecordsContactsParameter
- * @export
- */
-export type GetBotFireRecordsContactsParameter = Array<IMUniqueContactID> | IMUniqueContactID;
-
 /**
  * 
  * @export
@@ -6509,7 +6497,7 @@ export const BotRecordsApiAxiosParamCreator = function (configuration?: Configur
          * This endpoint fetches records for a bot based on provided botId parameters
          * @summary Get records for a bot
          * @param {string} [botId] The ID of the bot
-         * @param {GetBotFireRecordsContactsParameter} [contacts] 
+         * @param {Array<IMUniqueContactID>} [contacts] 
          * @param {number} [count] 
          * @param {string} [cursor] 
          * @param {{ [key: string]: ActionInteractionQueryItem; }} [interactions] 
@@ -6520,7 +6508,7 @@ export const BotRecordsApiAxiosParamCreator = function (configuration?: Configur
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getBotFireRecords: async (botId?: string, contacts?: GetBotFireRecordsContactsParameter, count?: number, cursor?: string, interactions?: { [key: string]: ActionInteractionQueryItem; }, scheduledActionInteraction?: ActionInteractionQueryItem, returnTotal?: boolean, instanceId?: string, triggerId?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getBotFireRecords: async (botId?: string, contacts?: Array<IMUniqueContactID>, count?: number, cursor?: string, interactions?: { [key: string]: ActionInteractionQueryItem; }, scheduledActionInteraction?: ActionInteractionQueryItem, returnTotal?: boolean, instanceId?: string, triggerId?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/bot/records`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -6541,10 +6529,8 @@ export const BotRecordsApiAxiosParamCreator = function (configuration?: Configur
                 localVarQueryParameter['botId'] = botId;
             }
 
-            if (contacts !== undefined) {
-                for (const [key, value] of Object.entries(contacts)) {
-                    localVarQueryParameter[key] = value;
-                }
+            if (contacts) {
+                localVarQueryParameter['contacts'] = contacts;
             }
 
             if (count !== undefined) {
@@ -6556,15 +6542,11 @@ export const BotRecordsApiAxiosParamCreator = function (configuration?: Configur
             }
 
             if (interactions !== undefined) {
-                for (const [key, value] of Object.entries(interactions)) {
-                    localVarQueryParameter[key] = value;
-                }
+                localVarQueryParameter['interactions'] = interactions;
             }
 
             if (scheduledActionInteraction !== undefined) {
-                for (const [key, value] of Object.entries(scheduledActionInteraction)) {
-                    localVarQueryParameter[key] = value;
-                }
+                localVarQueryParameter['scheduledActionInteraction'] = scheduledActionInteraction;
             }
 
             if (returnTotal !== undefined) {
@@ -6665,7 +6647,7 @@ export const BotRecordsApiFp = function(configuration?: Configuration) {
          * This endpoint fetches records for a bot based on provided botId parameters
          * @summary Get records for a bot
          * @param {string} [botId] The ID of the bot
-         * @param {GetBotFireRecordsContactsParameter} [contacts] 
+         * @param {Array<IMUniqueContactID>} [contacts] 
          * @param {number} [count] 
          * @param {string} [cursor] 
          * @param {{ [key: string]: ActionInteractionQueryItem; }} [interactions] 
@@ -6676,7 +6658,7 @@ export const BotRecordsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getBotFireRecords(botId?: string, contacts?: GetBotFireRecordsContactsParameter, count?: number, cursor?: string, interactions?: { [key: string]: ActionInteractionQueryItem; }, scheduledActionInteraction?: ActionInteractionQueryItem, returnTotal?: boolean, instanceId?: string, triggerId?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetBotFireRecords200Response>> {
+        async getBotFireRecords(botId?: string, contacts?: Array<IMUniqueContactID>, count?: number, cursor?: string, interactions?: { [key: string]: ActionInteractionQueryItem; }, scheduledActionInteraction?: ActionInteractionQueryItem, returnTotal?: boolean, instanceId?: string, triggerId?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetBotFireRecords200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getBotFireRecords(botId, contacts, count, cursor, interactions, scheduledActionInteraction, returnTotal, instanceId, triggerId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['BotRecordsApi.getBotFireRecords']?.[localVarOperationServerIndex]?.url;
@@ -6768,10 +6750,10 @@ export interface BotRecordsApiGetBotFireRecordsRequest {
 
     /**
      * 
-     * @type {GetBotFireRecordsContactsParameter}
+     * @type {Array<IMUniqueContactID>}
      * @memberof BotRecordsApiGetBotFireRecords
      */
-    readonly contacts?: GetBotFireRecordsContactsParameter
+    readonly contacts?: Array<IMUniqueContactID>
 
     /**
      * 
@@ -7029,9 +7011,7 @@ export const BotTriggersApiAxiosParamCreator = function (configuration?: Configu
             }
 
             if (dateRage !== undefined) {
-                for (const [key, value] of Object.entries(dateRage)) {
-                    localVarQueryParameter[key] = value;
-                }
+                localVarQueryParameter['dateRage'] = dateRage;
             }
 
 
@@ -7650,11 +7630,11 @@ export const BotsApiAxiosParamCreator = function (configuration?: Configuration)
          * @param {string} [language] 
          * @param {string} [industry] 
          * @param {boolean} [returnTotalCount] 
-         * @param {BotsGetsTriggerTypesParameter} [triggerTypes] 
+         * @param {Array<TriggerMethodFilter>} [triggerTypes] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        botsGets: async (q?: string, isForm?: boolean, before?: string, count?: number, id?: Array<string>, sortBy?: BotsGetsSortByEnum, order?: BotsGetsOrderEnum, folderId?: string, language?: string, industry?: string, returnTotalCount?: boolean, triggerTypes?: BotsGetsTriggerTypesParameter, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        botsGets: async (q?: string, isForm?: boolean, before?: string, count?: number, id?: Array<string>, sortBy?: BotsGetsSortByEnum, order?: BotsGetsOrderEnum, folderId?: string, language?: string, industry?: string, returnTotalCount?: boolean, triggerTypes?: Array<TriggerMethodFilter>, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/bots`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -7715,10 +7695,8 @@ export const BotsApiAxiosParamCreator = function (configuration?: Configuration)
                 localVarQueryParameter['returnTotalCount'] = returnTotalCount;
             }
 
-            if (triggerTypes !== undefined) {
-                for (const [key, value] of Object.entries(triggerTypes)) {
-                    localVarQueryParameter[key] = value;
-                }
+            if (triggerTypes) {
+                localVarQueryParameter['triggerTypes'] = triggerTypes;
             }
 
 
@@ -7971,11 +7949,11 @@ export const BotsApiFp = function(configuration?: Configuration) {
          * @param {string} [language] 
          * @param {string} [industry] 
          * @param {boolean} [returnTotalCount] 
-         * @param {BotsGetsTriggerTypesParameter} [triggerTypes] 
+         * @param {Array<TriggerMethodFilter>} [triggerTypes] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async botsGets(q?: string, isForm?: boolean, before?: string, count?: number, id?: Array<string>, sortBy?: BotsGetsSortByEnum, order?: BotsGetsOrderEnum, folderId?: string, language?: string, industry?: string, returnTotalCount?: boolean, triggerTypes?: BotsGetsTriggerTypesParameter, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BotsGets200Response>> {
+        async botsGets(q?: string, isForm?: boolean, before?: string, count?: number, id?: Array<string>, sortBy?: BotsGetsSortByEnum, order?: BotsGetsOrderEnum, folderId?: string, language?: string, industry?: string, returnTotalCount?: boolean, triggerTypes?: Array<TriggerMethodFilter>, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BotsGets200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.botsGets(q, isForm, before, count, id, sortBy, order, folderId, language, industry, returnTotalCount, triggerTypes, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['BotsApi.botsGets']?.[localVarOperationServerIndex]?.url;
@@ -8355,10 +8333,10 @@ export interface BotsApiBotsGetsRequest {
 
     /**
      * 
-     * @type {BotsGetsTriggerTypesParameter}
+     * @type {Array<TriggerMethodFilter>}
      * @memberof BotsApiBotsGets
      */
-    readonly triggerTypes?: BotsGetsTriggerTypesParameter
+    readonly triggerTypes?: Array<TriggerMethodFilter>
 }
 
 /**

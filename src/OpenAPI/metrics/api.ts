@@ -1556,15 +1556,11 @@ export const DashboardApiAxiosParamCreator = function (configuration?: Configura
             }
 
             if (sort !== undefined) {
-                for (const [key, value] of Object.entries(sort)) {
-                    localVarQueryParameter[key] = value;
-                }
+                localVarQueryParameter['sort'] = sort;
             }
 
             if (filters !== undefined) {
-                for (const [key, value] of Object.entries(filters)) {
-                    localVarQueryParameter[key] = value;
-                }
+                localVarQueryParameter['filters'] = filters;
             }
 
 
@@ -1582,7 +1578,7 @@ export const DashboardApiAxiosParamCreator = function (configuration?: Configura
          * 
          * @summary Get benchmarks
          * @param {DashboardPeriod} [period] 
-         * @param {AdminDashboardFilterItems} [filters] Filters to apply to the benchmarks query
+         * @param {AdminDashboardFilterItems} [filters] Filters to apply to the dashboards.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -1608,9 +1604,7 @@ export const DashboardApiAxiosParamCreator = function (configuration?: Configura
             }
 
             if (filters !== undefined) {
-                for (const [key, value] of Object.entries(filters)) {
-                    localVarQueryParameter[key] = value;
-                }
+                localVarQueryParameter['filters'] = filters;
             }
 
 
@@ -1630,12 +1624,11 @@ export const DashboardApiAxiosParamCreator = function (configuration?: Configura
          * @param {DashboardPeriod} period 
          * @param {Aggregate} aggregate Timeframe to aggregate the data in.
          * @param {string} [id] Dashboard ID to fetch data for. If not provided, the default dashboard will be returned.
-         * @param {DateRange} [customDateRange] Custom date range to query the data in. Only required if period is set to \&quot;custom\&quot;
          * @param {string} [timezoneOffset] Timezone offset to query the data in.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getDashboard: async (period: DashboardPeriod, aggregate: Aggregate, id?: string, customDateRange?: DateRange, timezoneOffset?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getDashboard: async (period: DashboardPeriod, aggregate: Aggregate, id?: string, timezoneOffset?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'period' is not null or undefined
             assertParamExists('getDashboard', 'period', period)
             // verify required parameter 'aggregate' is not null or undefined
@@ -1662,12 +1655,6 @@ export const DashboardApiAxiosParamCreator = function (configuration?: Configura
 
             if (period !== undefined) {
                 localVarQueryParameter['period'] = period;
-            }
-
-            if (customDateRange !== undefined) {
-                for (const [key, value] of Object.entries(customDateRange)) {
-                    localVarQueryParameter[key] = value;
-                }
             }
 
             if (timezoneOffset !== undefined) {
@@ -1727,9 +1714,7 @@ export const DashboardApiAxiosParamCreator = function (configuration?: Configura
             }
 
             if (customDateRange !== undefined) {
-                for (const [key, value] of Object.entries(customDateRange)) {
-                    localVarQueryParameter[key] = value;
-                }
+                localVarQueryParameter['customDateRange'] = customDateRange;
             }
 
             if (timezoneOffset !== undefined) {
@@ -1833,9 +1818,7 @@ export const DashboardApiAxiosParamCreator = function (configuration?: Configura
             }
 
             if (customDateRange !== undefined) {
-                for (const [key, value] of Object.entries(customDateRange)) {
-                    localVarQueryParameter[key] = value;
-                }
+                localVarQueryParameter['customDateRange'] = customDateRange;
             }
 
             if (timezoneOffset !== undefined) {
@@ -1959,7 +1942,7 @@ export const DashboardApiFp = function(configuration?: Configuration) {
          * 
          * @summary Get benchmarks
          * @param {DashboardPeriod} [period] 
-         * @param {AdminDashboardFilterItems} [filters] Filters to apply to the benchmarks query
+         * @param {AdminDashboardFilterItems} [filters] Filters to apply to the dashboards.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -1975,13 +1958,12 @@ export const DashboardApiFp = function(configuration?: Configuration) {
          * @param {DashboardPeriod} period 
          * @param {Aggregate} aggregate Timeframe to aggregate the data in.
          * @param {string} [id] Dashboard ID to fetch data for. If not provided, the default dashboard will be returned.
-         * @param {DateRange} [customDateRange] Custom date range to query the data in. Only required if period is set to \&quot;custom\&quot;
          * @param {string} [timezoneOffset] Timezone offset to query the data in.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getDashboard(period: DashboardPeriod, aggregate: Aggregate, id?: string, customDateRange?: DateRange, timezoneOffset?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DashboardWithData>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getDashboard(period, aggregate, id, customDateRange, timezoneOffset, options);
+        async getDashboard(period: DashboardPeriod, aggregate: Aggregate, id?: string, timezoneOffset?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DashboardWithData>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getDashboard(period, aggregate, id, timezoneOffset, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['DashboardApi.getDashboard']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -2105,7 +2087,7 @@ export const DashboardApiFactory = function (configuration?: Configuration, base
          * @throws {RequiredError}
          */
         getDashboard(requestParameters: DashboardApiGetDashboardRequest, options?: RawAxiosRequestConfig): AxiosPromise<DashboardWithData> {
-            return localVarFp.getDashboard(requestParameters.period, requestParameters.aggregate, requestParameters.id, requestParameters.customDateRange, requestParameters.timezoneOffset, options).then((request) => request(axios, basePath));
+            return localVarFp.getDashboard(requestParameters.period, requestParameters.aggregate, requestParameters.id, requestParameters.timezoneOffset, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -2254,7 +2236,7 @@ export interface DashboardApiGetBenchmarksRequest {
     readonly period?: DashboardPeriod
 
     /**
-     * Filters to apply to the benchmarks query
+     * Filters to apply to the dashboards.
      * @type {AdminDashboardFilterItems}
      * @memberof DashboardApiGetBenchmarks
      */
@@ -2287,13 +2269,6 @@ export interface DashboardApiGetDashboardRequest {
      * @memberof DashboardApiGetDashboard
      */
     readonly id?: string
-
-    /**
-     * Custom date range to query the data in. Only required if period is set to \&quot;custom\&quot;
-     * @type {DateRange}
-     * @memberof DashboardApiGetDashboard
-     */
-    readonly customDateRange?: DateRange
 
     /**
      * Timezone offset to query the data in.
@@ -2479,7 +2454,7 @@ export class DashboardApi extends BaseAPI {
      * @memberof DashboardApi
      */
     public getDashboard(requestParameters: DashboardApiGetDashboardRequest, options?: RawAxiosRequestConfig) {
-        return DashboardApiFp(this.configuration).getDashboard(requestParameters.period, requestParameters.aggregate, requestParameters.id, requestParameters.customDateRange, requestParameters.timezoneOffset, options).then((request) => request(this.axios, this.basePath));
+        return DashboardApiFp(this.configuration).getDashboard(requestParameters.period, requestParameters.aggregate, requestParameters.id, requestParameters.timezoneOffset, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

@@ -4768,9 +4768,7 @@ export const CreditsApiAxiosParamCreator = function (configuration?: Configurati
             }
 
             if (legacyOpts !== undefined) {
-                for (const [key, value] of Object.entries(legacyOpts)) {
-                    localVarQueryParameter[key] = value;
-                }
+                localVarQueryParameter['legacyOpts'] = legacyOpts;
             }
 
 
@@ -4816,9 +4814,7 @@ export const CreditsApiAxiosParamCreator = function (configuration?: Configurati
             }
 
             if (legacyOpts !== undefined) {
-                for (const [key, value] of Object.entries(legacyOpts)) {
-                    localVarQueryParameter[key] = value;
-                }
+                localVarQueryParameter['legacyOpts'] = legacyOpts;
             }
 
 
@@ -4917,9 +4913,7 @@ export const CreditsApiAxiosParamCreator = function (configuration?: Configurati
             }
 
             if (createdAt !== undefined) {
-                for (const [key, value] of Object.entries(createdAt)) {
-                    localVarQueryParameter[key] = value;
-                }
+                localVarQueryParameter['createdAt'] = createdAt;
             }
 
             if (status !== undefined) {
@@ -5041,9 +5035,7 @@ export const CreditsApiAxiosParamCreator = function (configuration?: Configurati
             }
 
             if (createdAt !== undefined) {
-                for (const [key, value] of Object.entries(createdAt)) {
-                    localVarQueryParameter[key] = value;
-                }
+                localVarQueryParameter['createdAt'] = createdAt;
             }
 
             if (doneBy !== undefined) {
@@ -5424,9 +5416,7 @@ export const CreditsApiAxiosParamCreator = function (configuration?: Configurati
             }
 
             if (dateRage !== undefined) {
-                for (const [key, value] of Object.entries(dateRage)) {
-                    localVarQueryParameter[key] = value;
-                }
+                localVarQueryParameter['dateRage'] = dateRage;
             }
 
 

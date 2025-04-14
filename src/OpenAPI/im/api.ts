@@ -8370,9 +8370,7 @@ export const CRMApiAxiosParamCreator = function (configuration?: Configuration) 
             }
 
             if (contactId !== undefined) {
-                for (const [key, value] of Object.entries(contactId)) {
-                    localVarQueryParameter[key] = value;
-                }
+                localVarQueryParameter['contactId'] = contactId;
             }
 
             if (id) {
@@ -8455,9 +8453,7 @@ export const CRMApiAxiosParamCreator = function (configuration?: Configuration) 
             }
 
             if (contactId !== undefined) {
-                for (const [key, value] of Object.entries(contactId)) {
-                    localVarQueryParameter[key] = value;
-                }
+                localVarQueryParameter['contactId'] = contactId;
             }
 
             if (returnTotalCount !== undefined) {
@@ -9669,9 +9665,7 @@ export const ChatsApiAxiosParamCreator = function (configuration?: Configuration
             }
 
             if (ticket !== undefined) {
-                for (const [key, value] of Object.entries(ticket)) {
-                    localVarQueryParameter[key] = value;
-                }
+                localVarQueryParameter['ticket'] = ticket;
             }
 
             if (notAssignee) {
@@ -10323,9 +10317,7 @@ export const ContactsApiAxiosParamCreator = function (configuration?: Configurat
             }
 
             if (ticket !== undefined) {
-                for (const [key, value] of Object.entries(ticket)) {
-                    localVarQueryParameter[key] = value;
-                }
+                localVarQueryParameter['ticket'] = ticket;
             }
 
 
@@ -10458,9 +10450,7 @@ export const ContactsApiAxiosParamCreator = function (configuration?: Configurat
             }
 
             if (ticket !== undefined) {
-                for (const [key, value] of Object.entries(ticket)) {
-                    localVarQueryParameter[key] = value;
-                }
+                localVarQueryParameter['ticket'] = ticket;
             }
 
             if (orderByTicketOrder !== undefined) {
@@ -10656,9 +10646,7 @@ export const ContactsApiAxiosParamCreator = function (configuration?: Configurat
             }
 
             if (ticket !== undefined) {
-                for (const [key, value] of Object.entries(ticket)) {
-                    localVarQueryParameter[key] = value;
-                }
+                localVarQueryParameter['ticket'] = ticket;
             }
 
 
@@ -12623,9 +12611,7 @@ export const MessagesApiAxiosParamCreator = function (configuration?: Configurat
             }
 
             if (range !== undefined) {
-                for (const [key, value] of Object.entries(range)) {
-                    localVarQueryParameter[key] = value;
-                }
+                localVarQueryParameter['range'] = range;
             }
 
             if (chatId !== undefined) {
@@ -12824,9 +12810,7 @@ export const MessagesApiAxiosParamCreator = function (configuration?: Configurat
             await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["MESSAGES_SEND_TO_ALL"], configuration)
 
             if (toChatId !== undefined) {
-                for (const [key, value] of Object.entries(toChatId)) {
-                    localVarQueryParameter[key] = value;
-                }
+                localVarQueryParameter['toChatId'] = toChatId;
             }
 
 
@@ -12882,9 +12866,7 @@ export const MessagesApiAxiosParamCreator = function (configuration?: Configurat
             await setOAuthToObject(localVarHeaderParameter, "chatdaddy", [], configuration)
 
             if (range !== undefined) {
-                for (const [key, value] of Object.entries(range)) {
-                    localVarQueryParameter[key] = value;
-                }
+                localVarQueryParameter['range'] = range;
             }
 
             if (action !== undefined) {
@@ -13171,9 +13153,7 @@ export const MessagesApiAxiosParamCreator = function (configuration?: Configurat
             }
 
             if (range !== undefined) {
-                for (const [key, value] of Object.entries(range)) {
-                    localVarQueryParameter[key] = value;
-                }
+                localVarQueryParameter['range'] = range;
             }
 
             if (q !== undefined) {
