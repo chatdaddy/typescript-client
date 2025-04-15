@@ -4559,7 +4559,7 @@ export interface CallInsertData {
      * @type {string}
      * @memberof CallInsertData
      */
-    'teamId'?: string;
+    'teamId': string;
     /**
      * 
      * @type {string}
@@ -4625,8 +4625,28 @@ export interface CallInsertData {
      * @type {string}
      * @memberof CallInsertData
      */
+    'status'?: CallInsertDataStatusEnum;
+    /**
+     * 
+     * @type {string}
+     * @memberof CallInsertData
+     */
     'messageId'?: string;
 }
+
+export const CallInsertDataStatusEnum = {
+    Queued: 'queued',
+    Ringing: 'ringing',
+    InProgress: 'in-progress',
+    Completed: 'completed',
+    Busy: 'busy',
+    Failed: 'failed',
+    NoAnswer: 'no-answer',
+    Cancelled: 'cancelled'
+} as const;
+
+export type CallInsertDataStatusEnum = typeof CallInsertDataStatusEnum[keyof typeof CallInsertDataStatusEnum];
+
 /**
  * 
  * @export
@@ -4776,8 +4796,28 @@ export interface CallUpdateData {
      * @type {string}
      * @memberof CallUpdateData
      */
+    'status'?: CallUpdateDataStatusEnum;
+    /**
+     * 
+     * @type {string}
+     * @memberof CallUpdateData
+     */
     'messageId'?: string;
 }
+
+export const CallUpdateDataStatusEnum = {
+    Queued: 'queued',
+    Ringing: 'ringing',
+    InProgress: 'in-progress',
+    Completed: 'completed',
+    Busy: 'busy',
+    Failed: 'failed',
+    NoAnswer: 'no-answer',
+    Cancelled: 'cancelled'
+} as const;
+
+export type CallUpdateDataStatusEnum = typeof CallUpdateDataStatusEnum[keyof typeof CallUpdateDataStatusEnum];
+
 /**
  * 
  * @export
@@ -4873,6 +4913,12 @@ export interface CallchannelInsertData {
      * @memberof CallchannelInsertData
      */
     'userId'?: string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof CallchannelInsertData
+     */
+    'purchasedNumber'?: boolean;
 }
 /**
  * 
@@ -4930,6 +4976,12 @@ export interface CallchannelUpdateData {
      * @memberof CallchannelUpdateData
      */
     'userId'?: string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof CallchannelUpdateData
+     */
+    'purchasedNumber'?: boolean;
 }
 /**
  * 
