@@ -38,7 +38,7 @@ export interface Account {
      */
     'accountId': string;
     /**
-     * Owner of thr account
+     * The user ID of the user on ChatDaddy
      * @type {string}
      * @memberof Account
      */
@@ -55,12 +55,6 @@ export interface Account {
      * @memberof Account
      */
     'nickname': string;
-    /**
-     * 
-     * @type {{ [key: string]: any; }}
-     * @memberof Account
-     */
-    'credentials'?: { [key: string]: any; } | null;
     /**
      * 
      * @type {AccountTier}
@@ -122,25 +116,25 @@ export interface Account {
      */
     'state': AccountState;
     /**
-     * 
+     * Last known connection error this account encountered. The presence of this field does not imply that the account is in an error state, only that this was the last error encountered. 
      * @type {AppError}
      * @memberof Account
      */
     'error'?: AppError | null;
     /**
-     * 
+     * Additional information about the current state of the account. This can be used to provide more context about the state of the account. Eg. has history sync completed, what type of  
      * @type {{ [key: string]: any; }}
      * @memberof Account
      */
     'stateInfo': { [key: string]: any; };
     /**
-     * 
+     * If true, you can call the \"accountsOpen\" endpoint and the account will be connected without any additional steps or user interaction. False means some additional steps are required to connect the account. 
      * @type {boolean}
      * @memberof Account
      */
     'canLogin': boolean;
     /**
-     * 
+     * The ID of the user who is currently logged in to this account. Eg. the phone number of the user who is currently logged in in a WhatsApp account. 
      * @type {string}
      * @memberof Account
      */
@@ -462,10 +456,11 @@ export interface AccountSettings {
      * 
      * @type {AccountSettingsNewChatsAssignee}
      * @memberof AccountSettings
+     * @deprecated
      */
     'newChatsAssignee'?: AccountSettingsNewChatsAssignee;
     /**
-     * Should polls be sent as buttons instead of a message. This is useful for the regular WhatsApp API
+     * Should polls be sent as buttons instead of a message, to avoid unreliable button msg delivery for some recipients. This is for the regular WhatsApp API only.
      * @type {boolean}
      * @memberof AccountSettings
      */
@@ -514,7 +509,7 @@ export interface AccountSettings {
     'commentsSilence'?: CommentsSilenceConfig;
 }
 /**
- * All new chats will be auto asssigned if one of the option is enabled and select any Assignee
+ * Allow assignment of new chats to a specific assignee. All new chats will be auto asssigned if one of the option is enabled and select any assignee. Deprecated: use a message flow to do this automation
  * @export
  * @interface AccountSettingsNewChatsAssignee
  */
@@ -636,6 +631,19 @@ export type AccountWaChangeLoginModeOneOf1TypeEnum = typeof AccountWaChangeLogin
 /**
  * 
  * @export
+ * @interface AccountsDelete200Response
+ */
+export interface AccountsDelete200Response {
+    /**
+     * 
+     * @type {boolean}
+     * @memberof AccountsDelete200Response
+     */
+    'success': boolean;
+}
+/**
+ * 
+ * @export
  * @interface AccountsGet200Response
  */
 export interface AccountsGet200Response {
@@ -651,19 +659,6 @@ export interface AccountsGet200Response {
      * @memberof AccountsGet200Response
      */
     'total'?: number;
-}
-/**
- * 
- * @export
- * @interface AccountsLogout200Response
- */
-export interface AccountsLogout200Response {
-    /**
-     * 
-     * @type {boolean}
-     * @memberof AccountsLogout200Response
-     */
-    'success': boolean;
 }
 /**
  * Update an account. Specifying account updates the type
@@ -1603,7 +1598,7 @@ export interface Chat {
      */
     'presences'?: Array<ChatPresence>;
     /**
-     * cursor to sort chats by
+     * Globally unique cursor to sort chats by. It\'s a simple concatenation of: - pinned status (0 or 1) - archived status (0 or 1) - last message timestamp (in hex) - partial chat ID - last 4 chars of the account ID 
      * @type {string}
      * @memberof Chat
      */
@@ -2405,7 +2400,7 @@ export interface CrmBoard {
      */
     'name': string;
     /**
-     * teamId of the owner of this CRM board
+     * The team ID of the team on ChatDaddy
      * @type {string}
      * @memberof CrmBoard
      */
@@ -2889,19 +2884,6 @@ export interface EntryItems {
 /**
  * 
  * @export
- * @interface GetChatHistory200Response
- */
-export interface GetChatHistory200Response {
-    /**
-     * 
-     * @type {string}
-     * @memberof GetChatHistory200Response
-     */
-    'requestId': string;
-}
-/**
- * 
- * @export
  * @interface GetPosts200Response
  */
 export interface GetPosts200Response {
@@ -2997,7 +2979,7 @@ export interface GroupMetadata {
      */
     'createdAt': string;
     /**
-     * 
+     * ID of the group owner
      * @type {string}
      * @memberof GroupMetadata
      */
@@ -3389,7 +3371,7 @@ export interface Message {
      * @type {MessageAllOfError}
      * @memberof Message
      */
-    'error'?: MessageAllOfError | null;
+    'error'?: MessageAllOfError;
     /**
      * Only for notes, user ID of the person who resolved the note
      * @type {string}
@@ -5254,7 +5236,7 @@ export interface PlatformProductCreate {
      * @type {string}
      * @memberof PlatformProductCreate
      */
-    'category'?: string | null;
+    'category'?: string;
     /**
      * List of URLs for images of the product
      * @type {Array<string>}
@@ -5315,7 +5297,7 @@ export interface PlatformProductUpdate {
      * @type {string}
      * @memberof PlatformProductUpdate
      */
-    'category'?: string | null;
+    'category'?: string;
     /**
      * List of URLs for images of the product
      * @type {Array<string>}
@@ -5433,34 +5415,6 @@ export interface Poll {
      */
     'maxSelections'?: number;
 }
-/**
- * 
- * @export
- * @interface PollChatHistory200Response
- */
-export interface PollChatHistory200Response {
-    /**
-     * 
-     * @type {string}
-     * @memberof PollChatHistory200Response
-     */
-    'url'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof PollChatHistory200Response
-     */
-    'status'?: PollChatHistory200ResponseStatusEnum;
-}
-
-export const PollChatHistory200ResponseStatusEnum = {
-    Success: 'success',
-    Executing: 'executing',
-    Error: 'error'
-} as const;
-
-export type PollChatHistory200ResponseStatusEnum = typeof PollChatHistory200ResponseStatusEnum[keyof typeof PollChatHistory200ResponseStatusEnum];
-
 /**
  * 
  * @export
@@ -6562,7 +6516,7 @@ export const AccountApiAxiosParamCreator = function (configuration?: Configurati
          * 
          * @summary Close connection to the account
          * @param {string} accountId 
-         * @param {boolean} [logout] Closes the account and logs out from the account
+         * @param {boolean} [logout] Closes the account and logs out from the accounts. Will require user interaction (eg. scan QR) to open it again 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -6720,44 +6674,6 @@ export const AccountApiAxiosParamCreator = function (configuration?: Configurati
         },
         /**
          * 
-         * @summary Logout and clear credentials from the account
-         * @param {string} accountId 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        accountsLogout: async (accountId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'accountId' is not null or undefined
-            assertParamExists('accountsLogout', 'accountId', accountId)
-            const localVarPath = `/accounts/{accountId}/logout`
-                .replace(`{${"accountId"}}`, encodeURIComponent(String(accountId)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication chatdaddy required
-            // oauth required
-            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["ACCOUNT_PATCH"], configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
          * @summary Open connection to the account
          * @param {string} accountId 
          * @param {*} [options] Override http request option.
@@ -6875,7 +6791,7 @@ export const AccountApiAxiosParamCreator = function (configuration?: Configurati
             };
         },
         /**
-         * 
+         * WA supports login either by QR code or by OTP. This API allows changing the login mode. 
          * @summary Change login mode of a WhatsApp account
          * @param {string} accountId 
          * @param {AccountWaChangeLoginMode} [accountWaChangeLoginMode] 
@@ -6933,7 +6849,7 @@ export const AccountApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async accountsArchive(accountId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AccountsLogout200Response>> {
+        async accountsArchive(accountId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AccountsDelete200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.accountsArchive(accountId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AccountApi.accountsArchive']?.[localVarOperationServerIndex]?.url;
@@ -6943,7 +6859,7 @@ export const AccountApiFp = function(configuration?: Configuration) {
          * 
          * @summary Close connection to the account
          * @param {string} accountId 
-         * @param {boolean} [logout] Closes the account and logs out from the account
+         * @param {boolean} [logout] Closes the account and logs out from the accounts. Will require user interaction (eg. scan QR) to open it again 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -6961,7 +6877,7 @@ export const AccountApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async accountsDelete(accountId: string, deleteNow?: boolean, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AccountsLogout200Response>> {
+        async accountsDelete(accountId: string, deleteNow?: boolean, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AccountsDelete200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.accountsDelete(accountId, deleteNow, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AccountApi.accountsDelete']?.[localVarOperationServerIndex]?.url;
@@ -6989,19 +6905,6 @@ export const AccountApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
-         * @summary Logout and clear credentials from the account
-         * @param {string} accountId 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async accountsLogout(accountId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AccountsLogout200Response>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.accountsLogout(accountId, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['AccountApi.accountsLogout']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * 
          * @summary Open connection to the account
          * @param {string} accountId 
          * @param {*} [options] Override http request option.
@@ -7021,7 +6924,7 @@ export const AccountApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async accountsPatch(accountId: string, accountsPatchRequest?: AccountsPatchRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AccountsLogout200Response>> {
+        async accountsPatch(accountId: string, accountsPatchRequest?: AccountsPatchRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AccountsDelete200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.accountsPatch(accountId, accountsPatchRequest, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AccountApi.accountsPatch']?.[localVarOperationServerIndex]?.url;
@@ -7041,14 +6944,14 @@ export const AccountApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * WA supports login either by QR code or by OTP. This API allows changing the login mode. 
          * @summary Change login mode of a WhatsApp account
          * @param {string} accountId 
          * @param {AccountWaChangeLoginMode} [accountWaChangeLoginMode] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async waChangeLoginMode(accountId: string, accountWaChangeLoginMode?: AccountWaChangeLoginMode, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AccountsLogout200Response>> {
+        async waChangeLoginMode(accountId: string, accountWaChangeLoginMode?: AccountWaChangeLoginMode, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AccountsDelete200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.waChangeLoginMode(accountId, accountWaChangeLoginMode, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AccountApi.waChangeLoginMode']?.[localVarOperationServerIndex]?.url;
@@ -7071,7 +6974,7 @@ export const AccountApiFactory = function (configuration?: Configuration, basePa
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        accountsArchive(requestParameters: AccountApiAccountsArchiveRequest, options?: RawAxiosRequestConfig): AxiosPromise<AccountsLogout200Response> {
+        accountsArchive(requestParameters: AccountApiAccountsArchiveRequest, options?: RawAxiosRequestConfig): AxiosPromise<AccountsDelete200Response> {
             return localVarFp.accountsArchive(requestParameters.accountId, options).then((request) => request(axios, basePath));
         },
         /**
@@ -7091,7 +6994,7 @@ export const AccountApiFactory = function (configuration?: Configuration, basePa
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        accountsDelete(requestParameters: AccountApiAccountsDeleteRequest, options?: RawAxiosRequestConfig): AxiosPromise<AccountsLogout200Response> {
+        accountsDelete(requestParameters: AccountApiAccountsDeleteRequest, options?: RawAxiosRequestConfig): AxiosPromise<AccountsDelete200Response> {
             return localVarFp.accountsDelete(requestParameters.accountId, requestParameters.deleteNow, options).then((request) => request(axios, basePath));
         },
         /**
@@ -7103,16 +7006,6 @@ export const AccountApiFactory = function (configuration?: Configuration, basePa
          */
         accountsGet(requestParameters: AccountApiAccountsGetRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<AccountsGet200Response> {
             return localVarFp.accountsGet(requestParameters.q, requestParameters.page, requestParameters.count, requestParameters.type, requestParameters.all, requestParameters.state, requestParameters.returnCount, requestParameters.teamId, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
-         * @summary Logout and clear credentials from the account
-         * @param {AccountApiAccountsLogoutRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        accountsLogout(requestParameters: AccountApiAccountsLogoutRequest, options?: RawAxiosRequestConfig): AxiosPromise<AccountsLogout200Response> {
-            return localVarFp.accountsLogout(requestParameters.accountId, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -7131,7 +7024,7 @@ export const AccountApiFactory = function (configuration?: Configuration, basePa
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        accountsPatch(requestParameters: AccountApiAccountsPatchRequest, options?: RawAxiosRequestConfig): AxiosPromise<AccountsLogout200Response> {
+        accountsPatch(requestParameters: AccountApiAccountsPatchRequest, options?: RawAxiosRequestConfig): AxiosPromise<AccountsDelete200Response> {
             return localVarFp.accountsPatch(requestParameters.accountId, requestParameters.accountsPatchRequest, options).then((request) => request(axios, basePath));
         },
         /**
@@ -7145,13 +7038,13 @@ export const AccountApiFactory = function (configuration?: Configuration, basePa
             return localVarFp.accountsPost(requestParameters.accountsPostRequest, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * WA supports login either by QR code or by OTP. This API allows changing the login mode. 
          * @summary Change login mode of a WhatsApp account
          * @param {AccountApiWaChangeLoginModeRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        waChangeLoginMode(requestParameters: AccountApiWaChangeLoginModeRequest, options?: RawAxiosRequestConfig): AxiosPromise<AccountsLogout200Response> {
+        waChangeLoginMode(requestParameters: AccountApiWaChangeLoginModeRequest, options?: RawAxiosRequestConfig): AxiosPromise<AccountsDelete200Response> {
             return localVarFp.waChangeLoginMode(requestParameters.accountId, requestParameters.accountWaChangeLoginMode, options).then((request) => request(axios, basePath));
         },
     };
@@ -7185,7 +7078,7 @@ export interface AccountApiAccountsCloseRequest {
     readonly accountId: string
 
     /**
-     * Closes the account and logs out from the account
+     * Closes the account and logs out from the accounts. Will require user interaction (eg. scan QR) to open it again 
      * @type {boolean}
      * @memberof AccountApiAccountsClose
      */
@@ -7274,20 +7167,6 @@ export interface AccountApiAccountsGetRequest {
      * @memberof AccountApiAccountsGet
      */
     readonly teamId?: string
-}
-
-/**
- * Request parameters for accountsLogout operation in AccountApi.
- * @export
- * @interface AccountApiAccountsLogoutRequest
- */
-export interface AccountApiAccountsLogoutRequest {
-    /**
-     * 
-     * @type {string}
-     * @memberof AccountApiAccountsLogout
-     */
-    readonly accountId: string
 }
 
 /**
@@ -7417,18 +7296,6 @@ export class AccountApi extends BaseAPI {
 
     /**
      * 
-     * @summary Logout and clear credentials from the account
-     * @param {AccountApiAccountsLogoutRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof AccountApi
-     */
-    public accountsLogout(requestParameters: AccountApiAccountsLogoutRequest, options?: RawAxiosRequestConfig) {
-        return AccountApiFp(this.configuration).accountsLogout(requestParameters.accountId, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
      * @summary Open connection to the account
      * @param {AccountApiAccountsOpenRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -7464,7 +7331,7 @@ export class AccountApi extends BaseAPI {
     }
 
     /**
-     * 
+     * WA supports login either by QR code or by OTP. This API allows changing the login mode. 
      * @summary Change login mode of a WhatsApp account
      * @param {AccountApiWaChangeLoginModeRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -7815,7 +7682,7 @@ export const AlibabaCamsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async webhookAlibabaCamsPost(accountId: string, secret: string, alibabaCAMSWebhookItem?: Array<AlibabaCAMSWebhookItem>, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AccountsLogout200Response>> {
+        async webhookAlibabaCamsPost(accountId: string, secret: string, alibabaCAMSWebhookItem?: Array<AlibabaCAMSWebhookItem>, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AccountsDelete200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.webhookAlibabaCamsPost(accountId, secret, alibabaCAMSWebhookItem, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AlibabaCamsApi.webhookAlibabaCamsPost']?.[localVarOperationServerIndex]?.url;
@@ -7887,7 +7754,7 @@ export const AlibabaCamsApiFactory = function (configuration?: Configuration, ba
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        webhookAlibabaCamsPost(requestParameters: AlibabaCamsApiWebhookAlibabaCamsPostRequest, options?: RawAxiosRequestConfig): AxiosPromise<AccountsLogout200Response> {
+        webhookAlibabaCamsPost(requestParameters: AlibabaCamsApiWebhookAlibabaCamsPostRequest, options?: RawAxiosRequestConfig): AxiosPromise<AccountsDelete200Response> {
             return localVarFp.webhookAlibabaCamsPost(requestParameters.accountId, requestParameters.secret, requestParameters.alibabaCAMSWebhookItem, options).then((request) => request(axios, basePath));
         },
     };
@@ -8170,7 +8037,7 @@ export const CRMApiAxiosParamCreator = function (configuration?: Configuration) 
         },
         /**
          * 
-         * @summary Get CRM Board data
+         * @summary Get All CRM Boards for the Team
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -8635,7 +8502,7 @@ export const CRMApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async crmBoardDelete(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AccountsLogout200Response>> {
+        async crmBoardDelete(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AccountsDelete200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.crmBoardDelete(id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['CRMApi.crmBoardDelete']?.[localVarOperationServerIndex]?.url;
@@ -8643,7 +8510,7 @@ export const CRMApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
-         * @summary Get CRM Board data
+         * @summary Get All CRM Boards for the Team
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -8687,7 +8554,7 @@ export const CRMApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteTicket(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AccountsLogout200Response>> {
+        async deleteTicket(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AccountsDelete200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.deleteTicket(id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['CRMApi.deleteTicket']?.[localVarOperationServerIndex]?.url;
@@ -8804,12 +8671,12 @@ export const CRMApiFactory = function (configuration?: Configuration, basePath?:
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        crmBoardDelete(requestParameters: CRMApiCrmBoardDeleteRequest, options?: RawAxiosRequestConfig): AxiosPromise<AccountsLogout200Response> {
+        crmBoardDelete(requestParameters: CRMApiCrmBoardDeleteRequest, options?: RawAxiosRequestConfig): AxiosPromise<AccountsDelete200Response> {
             return localVarFp.crmBoardDelete(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
          * 
-         * @summary Get CRM Board data
+         * @summary Get All CRM Boards for the Team
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -8843,7 +8710,7 @@ export const CRMApiFactory = function (configuration?: Configuration, basePath?:
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteTicket(requestParameters: CRMApiDeleteTicketRequest, options?: RawAxiosRequestConfig): AxiosPromise<AccountsLogout200Response> {
+        deleteTicket(requestParameters: CRMApiDeleteTicketRequest, options?: RawAxiosRequestConfig): AxiosPromise<AccountsDelete200Response> {
             return localVarFp.deleteTicket(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
@@ -9212,7 +9079,7 @@ export class CRMApi extends BaseAPI {
 
     /**
      * 
-     * @summary Get CRM Board data
+     * @summary Get All CRM Boards for the Team
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof CRMApi
@@ -9321,233 +9188,6 @@ export class CRMApi extends BaseAPI {
 
 
 /**
- * ChatHistoryApi - axios parameter creator
- * @export
- */
-export const ChatHistoryApiAxiosParamCreator = function (configuration?: Configuration) {
-    return {
-        /**
-         * 
-         * @summary Fetch chat history as a file
-         * @param {string} [timeZone] 
-         * @param {Array<string>} [chatId] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getChatHistory: async (timeZone?: string, chatId?: Array<string>, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/chat-history`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication chatdaddy required
-            // oauth required
-            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["CHATS_ACCESS_ALL"], configuration)
-
-            if (timeZone !== undefined) {
-                localVarQueryParameter['timeZone'] = timeZone;
-            }
-
-            if (chatId) {
-                localVarQueryParameter['chatId'] = chatId;
-            }
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @summary Poll route to see if file is done
-         * @param {string} requestId 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        pollChatHistory: async (requestId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'requestId' is not null or undefined
-            assertParamExists('pollChatHistory', 'requestId', requestId)
-            const localVarPath = `/chat-history/{requestId}`
-                .replace(`{${"requestId"}}`, encodeURIComponent(String(requestId)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication chatdaddy required
-            // oauth required
-            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["CHATS_ACCESS_ALL"], configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-    }
-};
-
-/**
- * ChatHistoryApi - functional programming interface
- * @export
- */
-export const ChatHistoryApiFp = function(configuration?: Configuration) {
-    const localVarAxiosParamCreator = ChatHistoryApiAxiosParamCreator(configuration)
-    return {
-        /**
-         * 
-         * @summary Fetch chat history as a file
-         * @param {string} [timeZone] 
-         * @param {Array<string>} [chatId] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async getChatHistory(timeZone?: string, chatId?: Array<string>, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetChatHistory200Response>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getChatHistory(timeZone, chatId, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['ChatHistoryApi.getChatHistory']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * 
-         * @summary Poll route to see if file is done
-         * @param {string} requestId 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async pollChatHistory(requestId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PollChatHistory200Response>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.pollChatHistory(requestId, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['ChatHistoryApi.pollChatHistory']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-    }
-};
-
-/**
- * ChatHistoryApi - factory interface
- * @export
- */
-export const ChatHistoryApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
-    const localVarFp = ChatHistoryApiFp(configuration)
-    return {
-        /**
-         * 
-         * @summary Fetch chat history as a file
-         * @param {ChatHistoryApiGetChatHistoryRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getChatHistory(requestParameters: ChatHistoryApiGetChatHistoryRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<GetChatHistory200Response> {
-            return localVarFp.getChatHistory(requestParameters.timeZone, requestParameters.chatId, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
-         * @summary Poll route to see if file is done
-         * @param {ChatHistoryApiPollChatHistoryRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        pollChatHistory(requestParameters: ChatHistoryApiPollChatHistoryRequest, options?: RawAxiosRequestConfig): AxiosPromise<PollChatHistory200Response> {
-            return localVarFp.pollChatHistory(requestParameters.requestId, options).then((request) => request(axios, basePath));
-        },
-    };
-};
-
-/**
- * Request parameters for getChatHistory operation in ChatHistoryApi.
- * @export
- * @interface ChatHistoryApiGetChatHistoryRequest
- */
-export interface ChatHistoryApiGetChatHistoryRequest {
-    /**
-     * 
-     * @type {string}
-     * @memberof ChatHistoryApiGetChatHistory
-     */
-    readonly timeZone?: string
-
-    /**
-     * 
-     * @type {Array<string>}
-     * @memberof ChatHistoryApiGetChatHistory
-     */
-    readonly chatId?: Array<string>
-}
-
-/**
- * Request parameters for pollChatHistory operation in ChatHistoryApi.
- * @export
- * @interface ChatHistoryApiPollChatHistoryRequest
- */
-export interface ChatHistoryApiPollChatHistoryRequest {
-    /**
-     * 
-     * @type {string}
-     * @memberof ChatHistoryApiPollChatHistory
-     */
-    readonly requestId: string
-}
-
-/**
- * ChatHistoryApi - object-oriented interface
- * @export
- * @class ChatHistoryApi
- * @extends {BaseAPI}
- */
-export class ChatHistoryApi extends BaseAPI {
-    /**
-     * 
-     * @summary Fetch chat history as a file
-     * @param {ChatHistoryApiGetChatHistoryRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof ChatHistoryApi
-     */
-    public getChatHistory(requestParameters: ChatHistoryApiGetChatHistoryRequest = {}, options?: RawAxiosRequestConfig) {
-        return ChatHistoryApiFp(this.configuration).getChatHistory(requestParameters.timeZone, requestParameters.chatId, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
-     * @summary Poll route to see if file is done
-     * @param {ChatHistoryApiPollChatHistoryRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof ChatHistoryApi
-     */
-    public pollChatHistory(requestParameters: ChatHistoryApiPollChatHistoryRequest, options?: RawAxiosRequestConfig) {
-        return ChatHistoryApiFp(this.configuration).pollChatHistory(requestParameters.requestId, options).then((request) => request(this.axios, this.basePath));
-    }
-}
-
-
-
-/**
  * ChatsApi - axios parameter creator
  * @export
  */
@@ -9641,7 +9281,7 @@ export const ChatsApiAxiosParamCreator = function (configuration?: Configuration
             }
 
             if (notTags) {
-                localVarQueryParameter['notTags'] = notTags.join(COLLECTION_FORMATS.csv);
+                localVarQueryParameter['notTags'] = notTags;
             }
 
             if (contacts !== undefined) {
@@ -9669,7 +9309,7 @@ export const ChatsApiAxiosParamCreator = function (configuration?: Configuration
             }
 
             if (notAssignee) {
-                localVarQueryParameter['notAssignee'] = notAssignee.join(COLLECTION_FORMATS.csv);
+                localVarQueryParameter['notAssignee'] = notAssignee;
             }
 
             if (returnUnreadChatCount !== undefined) {
@@ -9848,7 +9488,7 @@ export const ChatsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async chatsPresencePost(accountId: string, id: string, presence: PresenceType, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AccountsLogout200Response>> {
+        async chatsPresencePost(accountId: string, id: string, presence: PresenceType, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AccountsDelete200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.chatsPresencePost(accountId, id, presence, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['ChatsApi.chatsPresencePost']?.[localVarOperationServerIndex]?.url;
@@ -9891,7 +9531,7 @@ export const ChatsApiFactory = function (configuration?: Configuration, basePath
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        chatsPresencePost(requestParameters: ChatsApiChatsPresencePostRequest, options?: RawAxiosRequestConfig): AxiosPromise<AccountsLogout200Response> {
+        chatsPresencePost(requestParameters: ChatsApiChatsPresencePostRequest, options?: RawAxiosRequestConfig): AxiosPromise<AccountsDelete200Response> {
             return localVarFp.chatsPresencePost(requestParameters.accountId, requestParameters.id, requestParameters.presence, options).then((request) => request(axios, basePath));
         },
     };
@@ -10249,7 +9889,7 @@ export const ContactsApiAxiosParamCreator = function (configuration?: Configurat
             }
 
             if (notTags) {
-                localVarQueryParameter['notTags'] = notTags.join(COLLECTION_FORMATS.csv);
+                localVarQueryParameter['notTags'] = notTags;
             }
 
             if (contacts !== undefined) {
@@ -10285,7 +9925,7 @@ export const ContactsApiAxiosParamCreator = function (configuration?: Configurat
             }
 
             if (notAssignee) {
-                localVarQueryParameter['notAssignee'] = notAssignee.join(COLLECTION_FORMATS.csv);
+                localVarQueryParameter['notAssignee'] = notAssignee;
             }
 
             if (accountId) {
@@ -10382,7 +10022,7 @@ export const ContactsApiAxiosParamCreator = function (configuration?: Configurat
             }
 
             if (notTags) {
-                localVarQueryParameter['notTags'] = notTags.join(COLLECTION_FORMATS.csv);
+                localVarQueryParameter['notTags'] = notTags;
             }
 
             if (contacts !== undefined) {
@@ -10418,7 +10058,7 @@ export const ContactsApiAxiosParamCreator = function (configuration?: Configurat
             }
 
             if (notAssignee) {
-                localVarQueryParameter['notAssignee'] = notAssignee.join(COLLECTION_FORMATS.csv);
+                localVarQueryParameter['notAssignee'] = notAssignee;
             }
 
             if (accountId) {
@@ -10578,7 +10218,7 @@ export const ContactsApiAxiosParamCreator = function (configuration?: Configurat
             }
 
             if (notTags) {
-                localVarQueryParameter['notTags'] = notTags.join(COLLECTION_FORMATS.csv);
+                localVarQueryParameter['notTags'] = notTags;
             }
 
             if (contacts !== undefined) {
@@ -10614,7 +10254,7 @@ export const ContactsApiAxiosParamCreator = function (configuration?: Configurat
             }
 
             if (notAssignee) {
-                localVarQueryParameter['notAssignee'] = notAssignee.join(COLLECTION_FORMATS.csv);
+                localVarQueryParameter['notAssignee'] = notAssignee;
             }
 
             if (accountId) {
@@ -10750,7 +10390,7 @@ export const ContactsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async contactsDelete(tags?: ChatsGetTagsParameter, notTags?: Array<string>, contacts?: ChatsGetContactsParameter, notContacts?: ChatsGetContactsParameter, minMessagesSent?: number, minMessagesRecv?: number, maxMessagesSent?: number, maxMessagesRecv?: number, q?: string, assignee?: ChatsGetAssigneeParameter, notAssignee?: Array<string>, accountId?: Array<string>, type?: ContactType, chatLastMessageFrom?: string, chatLastMessageTo?: string, lastMessageFromMe?: boolean, unread?: boolean, ticket?: ChatsGetTicketParameter, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AccountsLogout200Response>> {
+        async contactsDelete(tags?: ChatsGetTagsParameter, notTags?: Array<string>, contacts?: ChatsGetContactsParameter, notContacts?: ChatsGetContactsParameter, minMessagesSent?: number, minMessagesRecv?: number, maxMessagesSent?: number, maxMessagesRecv?: number, q?: string, assignee?: ChatsGetAssigneeParameter, notAssignee?: Array<string>, accountId?: Array<string>, type?: ContactType, chatLastMessageFrom?: string, chatLastMessageTo?: string, lastMessageFromMe?: boolean, unread?: boolean, ticket?: ChatsGetTicketParameter, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AccountsDelete200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.contactsDelete(tags, notTags, contacts, notContacts, minMessagesSent, minMessagesRecv, maxMessagesSent, maxMessagesRecv, q, assignee, notAssignee, accountId, type, chatLastMessageFrom, chatLastMessageTo, lastMessageFromMe, unread, ticket, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['ContactsApi.contactsDelete']?.[localVarOperationServerIndex]?.url;
@@ -10844,7 +10484,7 @@ export const ContactsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async contactsPost(contactsPost?: ContactsPost, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AccountsLogout200Response>> {
+        async contactsPost(contactsPost?: ContactsPost, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AccountsDelete200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.contactsPost(contactsPost, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['ContactsApi.contactsPost']?.[localVarOperationServerIndex]?.url;
@@ -10877,7 +10517,7 @@ export const ContactsApiFactory = function (configuration?: Configuration, baseP
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        contactsDelete(requestParameters: ContactsApiContactsDeleteRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<AccountsLogout200Response> {
+        contactsDelete(requestParameters: ContactsApiContactsDeleteRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<AccountsDelete200Response> {
             return localVarFp.contactsDelete(requestParameters.tags, requestParameters.notTags, requestParameters.contacts, requestParameters.notContacts, requestParameters.minMessagesSent, requestParameters.minMessagesRecv, requestParameters.maxMessagesSent, requestParameters.maxMessagesRecv, requestParameters.q, requestParameters.assignee, requestParameters.notAssignee, requestParameters.accountId, requestParameters.type, requestParameters.chatLastMessageFrom, requestParameters.chatLastMessageTo, requestParameters.lastMessageFromMe, requestParameters.unread, requestParameters.ticket, options).then((request) => request(axios, basePath));
         },
         /**
@@ -10917,7 +10557,7 @@ export const ContactsApiFactory = function (configuration?: Configuration, baseP
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        contactsPost(requestParameters: ContactsApiContactsPostRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<AccountsLogout200Response> {
+        contactsPost(requestParameters: ContactsApiContactsPostRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<AccountsDelete200Response> {
             return localVarFp.contactsPost(requestParameters.contactsPost, options).then((request) => request(axios, basePath));
         },
     };
@@ -12449,7 +12089,7 @@ export const MailApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async mailRegisterPost(accountId: string, mailRegisterPostRequest?: MailRegisterPostRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AccountsLogout200Response>> {
+        async mailRegisterPost(accountId: string, mailRegisterPostRequest?: MailRegisterPostRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AccountsDelete200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.mailRegisterPost(accountId, mailRegisterPostRequest, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['MailApi.mailRegisterPost']?.[localVarOperationServerIndex]?.url;
@@ -12462,7 +12102,7 @@ export const MailApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async webhookMailPost(webhookMailPostRequest?: WebhookMailPostRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AccountsLogout200Response>> {
+        async webhookMailPost(webhookMailPostRequest?: WebhookMailPostRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AccountsDelete200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.webhookMailPost(webhookMailPostRequest, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['MailApi.webhookMailPost']?.[localVarOperationServerIndex]?.url;
@@ -12485,7 +12125,7 @@ export const MailApiFactory = function (configuration?: Configuration, basePath?
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        mailRegisterPost(requestParameters: MailApiMailRegisterPostRequest, options?: RawAxiosRequestConfig): AxiosPromise<AccountsLogout200Response> {
+        mailRegisterPost(requestParameters: MailApiMailRegisterPostRequest, options?: RawAxiosRequestConfig): AxiosPromise<AccountsDelete200Response> {
             return localVarFp.mailRegisterPost(requestParameters.accountId, requestParameters.mailRegisterPostRequest, options).then((request) => request(axios, basePath));
         },
         /**
@@ -12495,7 +12135,7 @@ export const MailApiFactory = function (configuration?: Configuration, basePath?
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        webhookMailPost(requestParameters: MailApiWebhookMailPostRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<AccountsLogout200Response> {
+        webhookMailPost(requestParameters: MailApiWebhookMailPostRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<AccountsDelete200Response> {
             return localVarFp.webhookMailPost(requestParameters.webhookMailPostRequest, options).then((request) => request(axios, basePath));
         },
     };
@@ -12726,7 +12366,7 @@ export const MessagesApiAxiosParamCreator = function (configuration?: Configurat
         /**
          * 
          * @summary Clears all pending/error messages. Deprecated, use the /messages/bulk-action route instead
-         * @param {MessagesDeletePendingStatusEnum} status 
+         * @param {MessagesDeletePendingStatusEnum} status Will match all messages with the given status. 
          * @param {string} [accountId] If specified, only clears messages of this account
          * @param {string} [chatId] If specified, only clears messages of this chat
          * @param {*} [options] Override http request option.
@@ -12969,7 +12609,7 @@ export const MessagesApiAxiosParamCreator = function (configuration?: Configurat
         /**
          * Retry all the messages in a given status
          * @summary Use the /messages/bulk-action route instead
-         * @param {MessagesPatchPendingStatusEnum} status 
+         * @param {MessagesPatchPendingStatusEnum} status Will match all messages with the given status. 
          * @param {MessagesPatchPendingRequest} [messagesPatchPendingRequest] 
          * @param {*} [options] Override http request option.
          * @deprecated
@@ -13013,15 +12653,13 @@ export const MessagesApiAxiosParamCreator = function (configuration?: Configurat
          * Send a message with text and/or attachments. The `text` property can be used as a [mustache](https://mustache.github.io) template which automatically prefills data from the contact\'s details including **custom fields**. Some examples:   1. `{\"text\": \"Hello there {{name}}\"}` will automatically pre-fill the contact\'s name (if present)   2. `{\"text\": \"Hello {{name}} your number is {{phoneNumber}}\"}` will automatically pre-fill the contact\'s name & phone number   3. `{\"text\": \"Hello {{name}} your pet name is {{pet name}}\"}` will automatically pre-fill `petName` if the contact has such a custom field
          * @summary Send a message
          * @param {string} accountId The account to use to send the message. Pass as the literal \&quot;random\&quot; to use a random account 
-         * @param {string} chatId The contact to send the message to.  To send to a phone number, supply the phone number with country code and no spaces. Eg. &#x60;911234534211&#x60;, &#x60;91345567543@s.whatsapp.net&#x60; 
+         * @param {string} chatId The contact to send the message to. To send to a phone number, supply the phone number with country code and no spaces. Eg. &#x60;911234534211&#x60;, &#x60;91345567543@s.whatsapp.net&#x60; 
          * @param {boolean} [requireOpenAccount] Only sends the message if the account is open, returns 428 otherwise
-         * @param {boolean} [useRandomAccountIfAccountClosed] Use random account (if available) to send the message, if the account specified is closed
-         * @param {boolean} [includeMarketingMessage] Includes the default marketing message for the account in the message
          * @param {MessageCompose} [messageCompose] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        messagesPost: async (accountId: string, chatId: string, requireOpenAccount?: boolean, useRandomAccountIfAccountClosed?: boolean, includeMarketingMessage?: boolean, messageCompose?: MessageCompose, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        messagesPost: async (accountId: string, chatId: string, requireOpenAccount?: boolean, messageCompose?: MessageCompose, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'accountId' is not null or undefined
             assertParamExists('messagesPost', 'accountId', accountId)
             // verify required parameter 'chatId' is not null or undefined
@@ -13046,14 +12684,6 @@ export const MessagesApiAxiosParamCreator = function (configuration?: Configurat
 
             if (requireOpenAccount !== undefined) {
                 localVarQueryParameter['requireOpenAccount'] = requireOpenAccount;
-            }
-
-            if (useRandomAccountIfAccountClosed !== undefined) {
-                localVarQueryParameter['useRandomAccountIfAccountClosed'] = useRandomAccountIfAccountClosed;
-            }
-
-            if (includeMarketingMessage !== undefined) {
-                localVarQueryParameter['includeMarketingMessage'] = includeMarketingMessage;
             }
 
 
@@ -13372,7 +13002,7 @@ export const MessagesApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async messagesBulkAction(status: MessagesBulkActionStatusEnum, accountId?: Array<string>, range?: MessagesGetRangeParameter, chatId?: string, messagesBulkActionRequest?: MessagesBulkActionRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AccountsLogout200Response>> {
+        async messagesBulkAction(status: MessagesBulkActionStatusEnum, accountId?: Array<string>, range?: MessagesGetRangeParameter, chatId?: string, messagesBulkActionRequest?: MessagesBulkActionRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AccountsDelete200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.messagesBulkAction(status, accountId, range, chatId, messagesBulkActionRequest, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['MessagesApi.messagesBulkAction']?.[localVarOperationServerIndex]?.url;
@@ -13400,7 +13030,7 @@ export const MessagesApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async messagesDelete(accountId: string, chatId: string, id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AccountsLogout200Response>> {
+        async messagesDelete(accountId: string, chatId: string, id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AccountsDelete200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.messagesDelete(accountId, chatId, id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['MessagesApi.messagesDelete']?.[localVarOperationServerIndex]?.url;
@@ -13409,14 +13039,14 @@ export const MessagesApiFp = function(configuration?: Configuration) {
         /**
          * 
          * @summary Clears all pending/error messages. Deprecated, use the /messages/bulk-action route instead
-         * @param {MessagesDeletePendingStatusEnum} status 
+         * @param {MessagesDeletePendingStatusEnum} status Will match all messages with the given status. 
          * @param {string} [accountId] If specified, only clears messages of this account
          * @param {string} [chatId] If specified, only clears messages of this chat
          * @param {*} [options] Override http request option.
          * @deprecated
          * @throws {RequiredError}
          */
-        async messagesDeletePending(status: MessagesDeletePendingStatusEnum, accountId?: string, chatId?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AccountsLogout200Response>> {
+        async messagesDeletePending(status: MessagesDeletePendingStatusEnum, accountId?: string, chatId?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AccountsDelete200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.messagesDeletePending(status, accountId, chatId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['MessagesApi.messagesDeletePending']?.[localVarOperationServerIndex]?.url;
@@ -13480,13 +13110,13 @@ export const MessagesApiFp = function(configuration?: Configuration) {
         /**
          * Retry all the messages in a given status
          * @summary Use the /messages/bulk-action route instead
-         * @param {MessagesPatchPendingStatusEnum} status 
+         * @param {MessagesPatchPendingStatusEnum} status Will match all messages with the given status. 
          * @param {MessagesPatchPendingRequest} [messagesPatchPendingRequest] 
          * @param {*} [options] Override http request option.
          * @deprecated
          * @throws {RequiredError}
          */
-        async messagesPatchPending(status: MessagesPatchPendingStatusEnum, messagesPatchPendingRequest?: MessagesPatchPendingRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AccountsLogout200Response>> {
+        async messagesPatchPending(status: MessagesPatchPendingStatusEnum, messagesPatchPendingRequest?: MessagesPatchPendingRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AccountsDelete200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.messagesPatchPending(status, messagesPatchPendingRequest, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['MessagesApi.messagesPatchPending']?.[localVarOperationServerIndex]?.url;
@@ -13496,16 +13126,14 @@ export const MessagesApiFp = function(configuration?: Configuration) {
          * Send a message with text and/or attachments. The `text` property can be used as a [mustache](https://mustache.github.io) template which automatically prefills data from the contact\'s details including **custom fields**. Some examples:   1. `{\"text\": \"Hello there {{name}}\"}` will automatically pre-fill the contact\'s name (if present)   2. `{\"text\": \"Hello {{name}} your number is {{phoneNumber}}\"}` will automatically pre-fill the contact\'s name & phone number   3. `{\"text\": \"Hello {{name}} your pet name is {{pet name}}\"}` will automatically pre-fill `petName` if the contact has such a custom field
          * @summary Send a message
          * @param {string} accountId The account to use to send the message. Pass as the literal \&quot;random\&quot; to use a random account 
-         * @param {string} chatId The contact to send the message to.  To send to a phone number, supply the phone number with country code and no spaces. Eg. &#x60;911234534211&#x60;, &#x60;91345567543@s.whatsapp.net&#x60; 
+         * @param {string} chatId The contact to send the message to. To send to a phone number, supply the phone number with country code and no spaces. Eg. &#x60;911234534211&#x60;, &#x60;91345567543@s.whatsapp.net&#x60; 
          * @param {boolean} [requireOpenAccount] Only sends the message if the account is open, returns 428 otherwise
-         * @param {boolean} [useRandomAccountIfAccountClosed] Use random account (if available) to send the message, if the account specified is closed
-         * @param {boolean} [includeMarketingMessage] Includes the default marketing message for the account in the message
          * @param {MessageCompose} [messageCompose] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async messagesPost(accountId: string, chatId: string, requireOpenAccount?: boolean, useRandomAccountIfAccountClosed?: boolean, includeMarketingMessage?: boolean, messageCompose?: MessageCompose, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<Message>>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.messagesPost(accountId, chatId, requireOpenAccount, useRandomAccountIfAccountClosed, includeMarketingMessage, messageCompose, options);
+        async messagesPost(accountId: string, chatId: string, requireOpenAccount?: boolean, messageCompose?: MessageCompose, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<Message>>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.messagesPost(accountId, chatId, requireOpenAccount, messageCompose, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['MessagesApi.messagesPost']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -13572,7 +13200,7 @@ export const MessagesApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async messagesTranscribe(accountId: string, chatId: string, id: string, index: number, waitForCompletion?: boolean, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AccountsLogout200Response>> {
+        async messagesTranscribe(accountId: string, chatId: string, id: string, index: number, waitForCompletion?: boolean, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AccountsDelete200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.messagesTranscribe(accountId, chatId, id, index, waitForCompletion, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['MessagesApi.messagesTranscribe']?.[localVarOperationServerIndex]?.url;
@@ -13611,7 +13239,7 @@ export const MessagesApiFactory = function (configuration?: Configuration, baseP
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        messagesBulkAction(requestParameters: MessagesApiMessagesBulkActionRequest, options?: RawAxiosRequestConfig): AxiosPromise<AccountsLogout200Response> {
+        messagesBulkAction(requestParameters: MessagesApiMessagesBulkActionRequest, options?: RawAxiosRequestConfig): AxiosPromise<AccountsDelete200Response> {
             return localVarFp.messagesBulkAction(requestParameters.status, requestParameters.accountId, requestParameters.range, requestParameters.chatId, requestParameters.messagesBulkActionRequest, options).then((request) => request(axios, basePath));
         },
         /**
@@ -13631,7 +13259,7 @@ export const MessagesApiFactory = function (configuration?: Configuration, baseP
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        messagesDelete(requestParameters: MessagesApiMessagesDeleteRequest, options?: RawAxiosRequestConfig): AxiosPromise<AccountsLogout200Response> {
+        messagesDelete(requestParameters: MessagesApiMessagesDeleteRequest, options?: RawAxiosRequestConfig): AxiosPromise<AccountsDelete200Response> {
             return localVarFp.messagesDelete(requestParameters.accountId, requestParameters.chatId, requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
@@ -13642,7 +13270,7 @@ export const MessagesApiFactory = function (configuration?: Configuration, baseP
          * @deprecated
          * @throws {RequiredError}
          */
-        messagesDeletePending(requestParameters: MessagesApiMessagesDeletePendingRequest, options?: RawAxiosRequestConfig): AxiosPromise<AccountsLogout200Response> {
+        messagesDeletePending(requestParameters: MessagesApiMessagesDeletePendingRequest, options?: RawAxiosRequestConfig): AxiosPromise<AccountsDelete200Response> {
             return localVarFp.messagesDeletePending(requestParameters.status, requestParameters.accountId, requestParameters.chatId, options).then((request) => request(axios, basePath));
         },
         /**
@@ -13682,7 +13310,7 @@ export const MessagesApiFactory = function (configuration?: Configuration, baseP
          * @deprecated
          * @throws {RequiredError}
          */
-        messagesPatchPending(requestParameters: MessagesApiMessagesPatchPendingRequest, options?: RawAxiosRequestConfig): AxiosPromise<AccountsLogout200Response> {
+        messagesPatchPending(requestParameters: MessagesApiMessagesPatchPendingRequest, options?: RawAxiosRequestConfig): AxiosPromise<AccountsDelete200Response> {
             return localVarFp.messagesPatchPending(requestParameters.status, requestParameters.messagesPatchPendingRequest, options).then((request) => request(axios, basePath));
         },
         /**
@@ -13693,7 +13321,7 @@ export const MessagesApiFactory = function (configuration?: Configuration, baseP
          * @throws {RequiredError}
          */
         messagesPost(requestParameters: MessagesApiMessagesPostRequest, options?: RawAxiosRequestConfig): AxiosPromise<Array<Message>> {
-            return localVarFp.messagesPost(requestParameters.accountId, requestParameters.chatId, requestParameters.requireOpenAccount, requestParameters.useRandomAccountIfAccountClosed, requestParameters.includeMarketingMessage, requestParameters.messageCompose, options).then((request) => request(axios, basePath));
+            return localVarFp.messagesPost(requestParameters.accountId, requestParameters.chatId, requestParameters.requireOpenAccount, requestParameters.messageCompose, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -13732,7 +13360,7 @@ export const MessagesApiFactory = function (configuration?: Configuration, baseP
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        messagesTranscribe(requestParameters: MessagesApiMessagesTranscribeRequest, options?: RawAxiosRequestConfig): AxiosPromise<AccountsLogout200Response> {
+        messagesTranscribe(requestParameters: MessagesApiMessagesTranscribeRequest, options?: RawAxiosRequestConfig): AxiosPromise<AccountsDelete200Response> {
             return localVarFp.messagesTranscribe(requestParameters.accountId, requestParameters.chatId, requestParameters.id, requestParameters.index, requestParameters.waitForCompletion, options).then((request) => request(axios, basePath));
         },
         /**
@@ -13839,7 +13467,7 @@ export interface MessagesApiMessagesDeleteRequest {
  */
 export interface MessagesApiMessagesDeletePendingRequest {
     /**
-     * 
+     * Will match all messages with the given status. 
      * @type {'pending' | 'error' | 'cancelled'}
      * @memberof MessagesApiMessagesDeletePending
      */
@@ -14028,7 +13656,7 @@ export interface MessagesApiMessagesPatchRequest {
  */
 export interface MessagesApiMessagesPatchPendingRequest {
     /**
-     * 
+     * Will match all messages with the given status. 
      * @type {'pending' | 'error' | 'cancelled'}
      * @memberof MessagesApiMessagesPatchPending
      */
@@ -14056,7 +13684,7 @@ export interface MessagesApiMessagesPostRequest {
     readonly accountId: string
 
     /**
-     * The contact to send the message to.  To send to a phone number, supply the phone number with country code and no spaces. Eg. &#x60;911234534211&#x60;, &#x60;91345567543@s.whatsapp.net&#x60; 
+     * The contact to send the message to. To send to a phone number, supply the phone number with country code and no spaces. Eg. &#x60;911234534211&#x60;, &#x60;91345567543@s.whatsapp.net&#x60; 
      * @type {string}
      * @memberof MessagesApiMessagesPost
      */
@@ -14068,20 +13696,6 @@ export interface MessagesApiMessagesPostRequest {
      * @memberof MessagesApiMessagesPost
      */
     readonly requireOpenAccount?: boolean
-
-    /**
-     * Use random account (if available) to send the message, if the account specified is closed
-     * @type {boolean}
-     * @memberof MessagesApiMessagesPost
-     */
-    readonly useRandomAccountIfAccountClosed?: boolean
-
-    /**
-     * Includes the default marketing message for the account in the message
-     * @type {boolean}
-     * @memberof MessagesApiMessagesPost
-     */
-    readonly includeMarketingMessage?: boolean
 
     /**
      * 
@@ -14407,7 +14021,7 @@ export class MessagesApi extends BaseAPI {
      * @memberof MessagesApi
      */
     public messagesPost(requestParameters: MessagesApiMessagesPostRequest, options?: RawAxiosRequestConfig) {
-        return MessagesApiFp(this.configuration).messagesPost(requestParameters.accountId, requestParameters.chatId, requestParameters.requireOpenAccount, requestParameters.useRandomAccountIfAccountClosed, requestParameters.includeMarketingMessage, requestParameters.messageCompose, options).then((request) => request(this.axios, this.basePath));
+        return MessagesApiFp(this.configuration).messagesPost(requestParameters.accountId, requestParameters.chatId, requestParameters.requireOpenAccount, requestParameters.messageCompose, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -15062,7 +14676,7 @@ export const ProductApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async platformProductsDelete(accountId: string, id?: Array<string>, notId?: Array<string>, q?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AccountsLogout200Response>> {
+        async platformProductsDelete(accountId: string, id?: Array<string>, notId?: Array<string>, q?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AccountsDelete200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.platformProductsDelete(accountId, id, notId, q, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['ProductApi.platformProductsDelete']?.[localVarOperationServerIndex]?.url;
@@ -15129,7 +14743,7 @@ export const ProductApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async platformProductsSync(accountId: string, id?: Array<string>, syncForward?: boolean, syncBackward?: boolean, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AccountsLogout200Response>> {
+        async platformProductsSync(accountId: string, id?: Array<string>, syncForward?: boolean, syncBackward?: boolean, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AccountsDelete200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.platformProductsSync(accountId, id, syncForward, syncBackward, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['ProductApi.platformProductsSync']?.[localVarOperationServerIndex]?.url;
@@ -15162,7 +14776,7 @@ export const ProductApiFactory = function (configuration?: Configuration, basePa
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        platformProductsDelete(requestParameters: ProductApiPlatformProductsDeleteRequest, options?: RawAxiosRequestConfig): AxiosPromise<AccountsLogout200Response> {
+        platformProductsDelete(requestParameters: ProductApiPlatformProductsDeleteRequest, options?: RawAxiosRequestConfig): AxiosPromise<AccountsDelete200Response> {
             return localVarFp.platformProductsDelete(requestParameters.accountId, requestParameters.id, requestParameters.notId, requestParameters.q, options).then((request) => request(axios, basePath));
         },
         /**
@@ -15201,7 +14815,7 @@ export const ProductApiFactory = function (configuration?: Configuration, basePa
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        platformProductsSync(requestParameters: ProductApiPlatformProductsSyncRequest, options?: RawAxiosRequestConfig): AxiosPromise<AccountsLogout200Response> {
+        platformProductsSync(requestParameters: ProductApiPlatformProductsSyncRequest, options?: RawAxiosRequestConfig): AxiosPromise<AccountsDelete200Response> {
             return localVarFp.platformProductsSync(requestParameters.accountId, requestParameters.id, requestParameters.syncForward, requestParameters.syncBackward, options).then((request) => request(axios, basePath));
         },
     };
@@ -15715,7 +15329,7 @@ export const ProductCategoriesApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async platformProductCategoriesDelete(accountId: string, categoryId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AccountsLogout200Response>> {
+        async platformProductCategoriesDelete(accountId: string, categoryId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AccountsDelete200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.platformProductCategoriesDelete(accountId, categoryId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['ProductCategoriesApi.platformProductCategoriesDelete']?.[localVarOperationServerIndex]?.url;
@@ -15744,7 +15358,7 @@ export const ProductCategoriesApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async platformProductCategoriesPatch(accountId: string, categoryId: string, productCategoryPatchRequest?: ProductCategoryPatchRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AccountsLogout200Response>> {
+        async platformProductCategoriesPatch(accountId: string, categoryId: string, productCategoryPatchRequest?: ProductCategoryPatchRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AccountsDelete200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.platformProductCategoriesPatch(accountId, categoryId, productCategoryPatchRequest, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['ProductCategoriesApi.platformProductCategoriesPatch']?.[localVarOperationServerIndex]?.url;
@@ -15781,7 +15395,7 @@ export const ProductCategoriesApiFactory = function (configuration?: Configurati
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        platformProductCategoriesDelete(requestParameters: ProductCategoriesApiPlatformProductCategoriesDeleteRequest, options?: RawAxiosRequestConfig): AxiosPromise<AccountsLogout200Response> {
+        platformProductCategoriesDelete(requestParameters: ProductCategoriesApiPlatformProductCategoriesDeleteRequest, options?: RawAxiosRequestConfig): AxiosPromise<AccountsDelete200Response> {
             return localVarFp.platformProductCategoriesDelete(requestParameters.accountId, requestParameters.categoryId, options).then((request) => request(axios, basePath));
         },
         /**
@@ -15801,7 +15415,7 @@ export const ProductCategoriesApiFactory = function (configuration?: Configurati
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        platformProductCategoriesPatch(requestParameters: ProductCategoriesApiPlatformProductCategoriesPatchRequest, options?: RawAxiosRequestConfig): AxiosPromise<AccountsLogout200Response> {
+        platformProductCategoriesPatch(requestParameters: ProductCategoriesApiPlatformProductCategoriesPatchRequest, options?: RawAxiosRequestConfig): AxiosPromise<AccountsDelete200Response> {
             return localVarFp.platformProductCategoriesPatch(requestParameters.accountId, requestParameters.categoryId, requestParameters.productCategoryPatchRequest, options).then((request) => request(axios, basePath));
         },
         /**
@@ -16222,7 +15836,7 @@ export const SMSApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async webhookSmsLimitPost(triggerSecret: string, webhookSmsLimitPostRequest?: WebhookSmsLimitPostRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AccountsLogout200Response>> {
+        async webhookSmsLimitPost(triggerSecret: string, webhookSmsLimitPostRequest?: WebhookSmsLimitPostRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AccountsDelete200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.webhookSmsLimitPost(triggerSecret, webhookSmsLimitPostRequest, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['SMSApi.webhookSmsLimitPost']?.[localVarOperationServerIndex]?.url;
@@ -16255,7 +15869,7 @@ export const SMSApiFactory = function (configuration?: Configuration, basePath?:
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        webhookSmsLimitPost(requestParameters: SMSApiWebhookSmsLimitPostRequest, options?: RawAxiosRequestConfig): AxiosPromise<AccountsLogout200Response> {
+        webhookSmsLimitPost(requestParameters: SMSApiWebhookSmsLimitPostRequest, options?: RawAxiosRequestConfig): AxiosPromise<AccountsDelete200Response> {
             return localVarFp.webhookSmsLimitPost(requestParameters.triggerSecret, requestParameters.webhookSmsLimitPostRequest, options).then((request) => request(axios, basePath));
         },
     };
@@ -16549,7 +16163,7 @@ export const TagsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async tagsDelete(name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AccountsLogout200Response>> {
+        async tagsDelete(name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AccountsDelete200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.tagsDelete(name, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['TagsApi.tagsDelete']?.[localVarOperationServerIndex]?.url;
@@ -16616,7 +16230,7 @@ export const TagsApiFactory = function (configuration?: Configuration, basePath?
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        tagsDelete(requestParameters: TagsApiTagsDeleteRequest, options?: RawAxiosRequestConfig): AxiosPromise<AccountsLogout200Response> {
+        tagsDelete(requestParameters: TagsApiTagsDeleteRequest, options?: RawAxiosRequestConfig): AxiosPromise<AccountsDelete200Response> {
             return localVarFp.tagsDelete(requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
@@ -17172,7 +16786,7 @@ export const WebhookApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async webhookMessengerPost(accountId?: string, webhookMessengerPostRequest?: WebhookMessengerPostRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AccountsLogout200Response>> {
+        async webhookMessengerPost(accountId?: string, webhookMessengerPostRequest?: WebhookMessengerPostRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AccountsDelete200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.webhookMessengerPost(accountId, webhookMessengerPostRequest, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['WebhookApi.webhookMessengerPost']?.[localVarOperationServerIndex]?.url;
@@ -17205,7 +16819,7 @@ export const WebhookApiFactory = function (configuration?: Configuration, basePa
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        webhookMessengerPost(requestParameters: WebhookApiWebhookMessengerPostRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<AccountsLogout200Response> {
+        webhookMessengerPost(requestParameters: WebhookApiWebhookMessengerPostRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<AccountsDelete200Response> {
             return localVarFp.webhookMessengerPost(requestParameters.accountId, requestParameters.webhookMessengerPostRequest, options).then((request) => request(axios, basePath));
         },
     };

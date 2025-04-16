@@ -122,12 +122,6 @@ export interface AccountInsertData {
     'nickname': string;
     /**
      * 
-     * @type {{ [key: string]: any; }}
-     * @memberof AccountInsertData
-     */
-    'credentials'?: { [key: string]: any; } | null;
-    /**
-     * 
      * @type {string}
      * @memberof AccountInsertData
      */
@@ -421,6 +415,7 @@ export interface AccountInsertDataSettings {
      * 
      * @type {AccountInsertDataSettingsNewChatsAssignee}
      * @memberof AccountInsertDataSettings
+     * @deprecated
      */
     'newChatsAssignee'?: AccountInsertDataSettingsNewChatsAssignee;
     /**
@@ -621,12 +616,6 @@ export interface AccountUpdateData {
      * @memberof AccountUpdateData
      */
     'nickname'?: string;
-    /**
-     * 
-     * @type {{ [key: string]: any; }}
-     * @memberof AccountUpdateData
-     */
-    'credentials'?: { [key: string]: any; } | null;
     /**
      * 
      * @type {string}
@@ -7584,7 +7573,7 @@ export interface GroupUpdateData {
      */
     'createdAt'?: string;
     /**
-     * 
+     * ID of the group owner
      * @type {string}
      * @memberof GroupUpdateData
      */
@@ -8467,7 +8456,7 @@ export interface MessageInsertData {
      * @type {MessageInsertDataError}
      * @memberof MessageInsertData
      */
-    'error'?: MessageInsertDataError | null;
+    'error'?: MessageInsertDataError;
     /**
      * 
      * @type {string}
@@ -9536,7 +9525,7 @@ export interface MessageUpdateData {
      * @type {MessageInsertDataError}
      * @memberof MessageUpdateData
      */
-    'error'?: MessageInsertDataError | null;
+    'error'?: MessageInsertDataError;
     /**
      * 
      * @type {string}
