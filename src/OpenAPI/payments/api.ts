@@ -2679,7 +2679,8 @@ export const RecurringCreditConsumptionType = {
     ConsultationSupportPlanLvl2: 'consultation/support_plan_lvl2',
     User: 'user',
     CallChannel: 'call_channel',
-    AnalyticsDashboard: 'analytics_dashboard'
+    AnalyticsDashboard: 'analytics_dashboard',
+    PrepurchasedCallChannel: 'prepurchased_call_channel'
 } as const;
 
 export type RecurringCreditConsumptionType = typeof RecurringCreditConsumptionType[keyof typeof RecurringCreditConsumptionType];
