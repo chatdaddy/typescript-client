@@ -3436,36 +3436,11 @@ export interface Message {
 
 
 /**
- * 
+ * @type MessageAllOfError
  * @export
- * @interface MessageAllOfError
  */
-export interface MessageAllOfError {
-    /**
-     * 
-     * @type {number}
-     * @memberof MessageAllOfError
-     */
-    'statusCode': number;
-    /**
-     * What the error was
-     * @type {string}
-     * @memberof MessageAllOfError
-     */
-    'message': string;
-    /**
-     * 
-     * @type {AppErrorData}
-     * @memberof MessageAllOfError
-     */
-    'data'?: AppErrorData;
-    /**
-     * 
-     * @type {number}
-     * @memberof MessageAllOfError
-     */
-    'retries': number;
-}
+export type MessageAllOfError = MessageError | object;
+
 /**
  * Message describes a reaction to another message
  * @export
@@ -4134,6 +4109,37 @@ export interface MessageContentOrder {
      * @memberof MessageContentOrder
      */
     'total': Price;
+}
+/**
+ * 
+ * @export
+ * @interface MessageError
+ */
+export interface MessageError {
+    /**
+     * 
+     * @type {number}
+     * @memberof MessageError
+     */
+    'statusCode': number;
+    /**
+     * What the error was
+     * @type {string}
+     * @memberof MessageError
+     */
+    'message': string;
+    /**
+     * 
+     * @type {AppErrorData}
+     * @memberof MessageError
+     */
+    'data'?: AppErrorData;
+    /**
+     * Number of retries that have been attempted
+     * @type {number}
+     * @memberof MessageError
+     */
+    'retries': number;
 }
 /**
  * 

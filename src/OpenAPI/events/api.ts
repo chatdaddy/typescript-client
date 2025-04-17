@@ -8828,33 +8828,39 @@ export interface MessageInsertDataConversationMetadata {
     'type': string;
 }
 /**
+ * @type MessageInsertDataError
+ * @export
+ */
+export type MessageInsertDataError = MessageInsertDataErrorOneOf | object;
+
+/**
  * 
  * @export
- * @interface MessageInsertDataError
+ * @interface MessageInsertDataErrorOneOf
  */
-export interface MessageInsertDataError {
+export interface MessageInsertDataErrorOneOf {
     /**
      * 
      * @type {number}
-     * @memberof MessageInsertDataError
+     * @memberof MessageInsertDataErrorOneOf
      */
     'statusCode': number;
     /**
      * 
      * @type {string}
-     * @memberof MessageInsertDataError
+     * @memberof MessageInsertDataErrorOneOf
      */
     'message': string;
     /**
      * 
      * @type {AccountInsertDataErrorAllOfData}
-     * @memberof MessageInsertDataError
+     * @memberof MessageInsertDataErrorOneOf
      */
     'data'?: AccountInsertDataErrorAllOfData;
     /**
-     * 
+     * Number of retries that have been attempted
      * @type {number}
-     * @memberof MessageInsertDataError
+     * @memberof MessageInsertDataErrorOneOf
      */
     'retries': number;
 }
