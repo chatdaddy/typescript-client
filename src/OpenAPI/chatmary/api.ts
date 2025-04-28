@@ -1705,10 +1705,11 @@ export const CustomBotApiAxiosParamCreator = function (configuration?: Configura
          * 
          * @summary Delete bot user
          * @param {string} userId 
+         * @param {number} [recordCount] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        botUsersPost: async (userId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        botUsersPost: async (userId: string, recordCount?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'userId' is not null or undefined
             assertParamExists('botUsersPost', 'userId', userId)
             const localVarPath = `/botUsers`;
@@ -1725,6 +1726,10 @@ export const CustomBotApiAxiosParamCreator = function (configuration?: Configura
 
             if (userId !== undefined) {
                 localVarQueryParameter['userId'] = userId;
+            }
+
+            if (recordCount !== undefined) {
+                localVarQueryParameter['recordCount'] = recordCount;
             }
 
 
@@ -2196,11 +2201,12 @@ export const CustomBotApiFp = function(configuration?: Configuration) {
          * 
          * @summary Delete bot user
          * @param {string} userId 
+         * @param {number} [recordCount] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async botUsersPost(userId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BotDetails>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.botUsersPost(userId, options);
+        async botUsersPost(userId: string, recordCount?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BotDetails>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.botUsersPost(userId, recordCount, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['CustomBotApi.botUsersPost']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -2387,7 +2393,7 @@ export const CustomBotApiFactory = function (configuration?: Configuration, base
          * @throws {RequiredError}
          */
         botUsersPost(requestParameters: CustomBotApiBotUsersPostRequest, options?: RawAxiosRequestConfig): AxiosPromise<BotDetails> {
-            return localVarFp.botUsersPost(requestParameters.userId, options).then((request) => request(axios, basePath));
+            return localVarFp.botUsersPost(requestParameters.userId, requestParameters.recordCount, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -2549,6 +2555,13 @@ export interface CustomBotApiBotUsersPostRequest {
      * @memberof CustomBotApiBotUsersPost
      */
     readonly userId: string
+
+    /**
+     * 
+     * @type {number}
+     * @memberof CustomBotApiBotUsersPost
+     */
+    readonly recordCount?: number
 }
 
 /**
@@ -2789,7 +2802,7 @@ export class CustomBotApi extends BaseAPI {
      * @memberof CustomBotApi
      */
     public botUsersPost(requestParameters: CustomBotApiBotUsersPostRequest, options?: RawAxiosRequestConfig) {
-        return CustomBotApiFp(this.configuration).botUsersPost(requestParameters.userId, options).then((request) => request(this.axios, this.basePath));
+        return CustomBotApiFp(this.configuration).botUsersPost(requestParameters.userId, requestParameters.recordCount, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
