@@ -1815,10 +1815,11 @@ export const CustomBotApiAxiosParamCreator = function (configuration?: Configura
          * @summary Delete chat flow records
          * @param {string} chatId 
          * @param {string} workflowId 
+         * @param {number} [count] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        chatFlowRecordsDelete: async (chatId: string, workflowId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        chatFlowRecordsDelete: async (chatId: string, workflowId: string, count?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'chatId' is not null or undefined
             assertParamExists('chatFlowRecordsDelete', 'chatId', chatId)
             // verify required parameter 'workflowId' is not null or undefined
@@ -1845,6 +1846,10 @@ export const CustomBotApiAxiosParamCreator = function (configuration?: Configura
 
             if (workflowId !== undefined) {
                 localVarQueryParameter['workflowId'] = workflowId;
+            }
+
+            if (count !== undefined) {
+                localVarQueryParameter['count'] = count;
             }
 
 
@@ -2230,11 +2235,12 @@ export const CustomBotApiFp = function(configuration?: Configuration) {
          * @summary Delete chat flow records
          * @param {string} chatId 
          * @param {string} workflowId 
+         * @param {number} [count] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async chatFlowRecordsDelete(chatId: string, workflowId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.chatFlowRecordsDelete(chatId, workflowId, options);
+        async chatFlowRecordsDelete(chatId: string, workflowId: string, count?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.chatFlowRecordsDelete(chatId, workflowId, count, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['CustomBotApi.chatFlowRecordsDelete']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -2410,7 +2416,7 @@ export const CustomBotApiFactory = function (configuration?: Configuration, base
          * @throws {RequiredError}
          */
         chatFlowRecordsDelete(requestParameters: CustomBotApiChatFlowRecordsDeleteRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.chatFlowRecordsDelete(requestParameters.chatId, requestParameters.workflowId, options).then((request) => request(axios, basePath));
+            return localVarFp.chatFlowRecordsDelete(requestParameters.chatId, requestParameters.workflowId, requestParameters.count, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -2578,6 +2584,13 @@ export interface CustomBotApiChatFlowRecordsDeleteRequest {
      * @memberof CustomBotApiChatFlowRecordsDelete
      */
     readonly workflowId: string
+
+    /**
+     * 
+     * @type {number}
+     * @memberof CustomBotApiChatFlowRecordsDelete
+     */
+    readonly count?: number
 }
 
 /**
@@ -2811,7 +2824,7 @@ export class CustomBotApi extends BaseAPI {
      * @memberof CustomBotApi
      */
     public chatFlowRecordsDelete(requestParameters: CustomBotApiChatFlowRecordsDeleteRequest, options?: RawAxiosRequestConfig) {
-        return CustomBotApiFp(this.configuration).chatFlowRecordsDelete(requestParameters.chatId, requestParameters.workflowId, options).then((request) => request(this.axios, this.basePath));
+        return CustomBotApiFp(this.configuration).chatFlowRecordsDelete(requestParameters.chatId, requestParameters.workflowId, requestParameters.count, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
