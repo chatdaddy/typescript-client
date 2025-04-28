@@ -895,6 +895,12 @@ interface MapPropertyDescriptor {
      * @memberof MapPropertyDescriptor
      */
     'additionalProperties'?: DataPropertyDescriptor;
+    /**
+     * (Custom extension) Specifies the type of keys for this map. For example, \'team_member\' means the keys should be selected from team members. Used by the frontend to render the correct UI for map keys.
+     * @type {string}
+     * @memberof MapPropertyDescriptor
+     */
+    'keyType'?: string;
 }
 
 const MapPropertyDescriptorTypeEnum = {
