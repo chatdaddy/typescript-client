@@ -2748,6 +2748,68 @@ export interface CrmTicket {
 /**
  * 
  * @export
+ * @interface CrmTicketBulkPost
+ */
+export interface CrmTicketBulkPost {
+    /**
+     * ID of a CRM board
+     * @type {string}
+     * @memberof CrmTicketBulkPost
+     */
+    'boardId': string;
+    /**
+     * 
+     * @type {Array<CrmTicketBulkPostItemsInner>}
+     * @memberof CrmTicketBulkPost
+     */
+    'items': Array<CrmTicketBulkPostItemsInner>;
+}
+/**
+ * 
+ * @export
+ * @interface CrmTicketBulkPostItemsInner
+ */
+export interface CrmTicketBulkPostItemsInner {
+    /**
+     * ID of a stage
+     * @type {string}
+     * @memberof CrmTicketBulkPostItemsInner
+     */
+    'stageId'?: string;
+    /**
+     * Title of the ticket
+     * @type {string}
+     * @memberof CrmTicketBulkPostItemsInner
+     */
+    'title': string;
+    /**
+     * 
+     * @type {UniqueContactID}
+     * @memberof CrmTicketBulkPostItemsInner
+     */
+    'contactId': UniqueContactID;
+    /**
+     * Order of a ticket
+     * @type {number}
+     * @memberof CrmTicketBulkPostItemsInner
+     */
+    'order'?: number;
+    /**
+     * An ISO formatted timestamp
+     * @type {string}
+     * @memberof CrmTicketBulkPostItemsInner
+     */
+    'createdAt'?: string;
+    /**
+     * 
+     * @type {TicketTimerCreate}
+     * @memberof CrmTicketBulkPostItemsInner
+     */
+    'timer'?: TicketTimerCreate;
+}
+/**
+ * 
+ * @export
  * @interface CrmTicketPatch
  */
 export interface CrmTicketPatch {
@@ -7968,6 +8030,85 @@ export const CRMApiAxiosParamCreator = function (configuration?: Configuration) 
         /**
          * 
          * @summary Create a new CRM ticket
+         * @param {CrmTicketBulkPost} [crmTicketBulkPost] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        bulkCreateTickets: async (crmTicketBulkPost?: CrmTicketBulkPost, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/crm/bulk/tickets`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", [], configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(crmTicketBulkPost, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Delete multiple CRM tickets
+         * @param {Array<string>} ids Ticket IDs to delete
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        bulkDeleteTickets: async (ids: Array<string>, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'ids' is not null or undefined
+            assertParamExists('bulkDeleteTickets', 'ids', ids)
+            const localVarPath = `/crm/bulk/tickets`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", [], configuration)
+
+            if (ids) {
+                localVarQueryParameter['ids'] = ids;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Create a new CRM ticket
          * @param {CrmTicketPost} [crmTicketPost] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -8491,6 +8632,32 @@ export const CRMApiFp = function(configuration?: Configuration) {
         /**
          * 
          * @summary Create a new CRM ticket
+         * @param {CrmTicketBulkPost} [crmTicketBulkPost] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async bulkCreateTickets(crmTicketBulkPost?: CrmTicketBulkPost, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<CrmTicket>>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.bulkCreateTickets(crmTicketBulkPost, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['CRMApi.bulkCreateTickets']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @summary Delete multiple CRM tickets
+         * @param {Array<string>} ids Ticket IDs to delete
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async bulkDeleteTickets(ids: Array<string>, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AccountsDelete200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.bulkDeleteTickets(ids, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['CRMApi.bulkDeleteTickets']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @summary Create a new CRM ticket
          * @param {CrmTicketPost} [crmTicketPost] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -8663,6 +8830,26 @@ export const CRMApiFactory = function (configuration?: Configuration, basePath?:
         /**
          * 
          * @summary Create a new CRM ticket
+         * @param {CRMApiBulkCreateTicketsRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        bulkCreateTickets(requestParameters: CRMApiBulkCreateTicketsRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<Array<CrmTicket>> {
+            return localVarFp.bulkCreateTickets(requestParameters.crmTicketBulkPost, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Delete multiple CRM tickets
+         * @param {CRMApiBulkDeleteTicketsRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        bulkDeleteTickets(requestParameters: CRMApiBulkDeleteTicketsRequest, options?: RawAxiosRequestConfig): AxiosPromise<AccountsDelete200Response> {
+            return localVarFp.bulkDeleteTickets(requestParameters.ids, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Create a new CRM ticket
          * @param {CRMApiCreateTicketRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -8771,6 +8958,34 @@ export const CRMApiFactory = function (configuration?: Configuration, basePath?:
         },
     };
 };
+
+/**
+ * Request parameters for bulkCreateTickets operation in CRMApi.
+ * @export
+ * @interface CRMApiBulkCreateTicketsRequest
+ */
+export interface CRMApiBulkCreateTicketsRequest {
+    /**
+     * 
+     * @type {CrmTicketBulkPost}
+     * @memberof CRMApiBulkCreateTickets
+     */
+    readonly crmTicketBulkPost?: CrmTicketBulkPost
+}
+
+/**
+ * Request parameters for bulkDeleteTickets operation in CRMApi.
+ * @export
+ * @interface CRMApiBulkDeleteTicketsRequest
+ */
+export interface CRMApiBulkDeleteTicketsRequest {
+    /**
+     * Ticket IDs to delete
+     * @type {Array<string>}
+     * @memberof CRMApiBulkDeleteTickets
+     */
+    readonly ids: Array<string>
+}
 
 /**
  * Request parameters for createTicket operation in CRMApi.
@@ -9059,6 +9274,30 @@ export interface CRMApiUpdateTicketRequest {
  * @extends {BaseAPI}
  */
 export class CRMApi extends BaseAPI {
+    /**
+     * 
+     * @summary Create a new CRM ticket
+     * @param {CRMApiBulkCreateTicketsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CRMApi
+     */
+    public bulkCreateTickets(requestParameters: CRMApiBulkCreateTicketsRequest = {}, options?: RawAxiosRequestConfig) {
+        return CRMApiFp(this.configuration).bulkCreateTickets(requestParameters.crmTicketBulkPost, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Delete multiple CRM tickets
+     * @param {CRMApiBulkDeleteTicketsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CRMApi
+     */
+    public bulkDeleteTickets(requestParameters: CRMApiBulkDeleteTicketsRequest, options?: RawAxiosRequestConfig) {
+        return CRMApiFp(this.configuration).bulkDeleteTickets(requestParameters.ids, options).then((request) => request(this.axios, this.basePath));
+    }
+
     /**
      * 
      * @summary Create a new CRM ticket
