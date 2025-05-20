@@ -2347,6 +2347,25 @@ export interface ContactsPost {
 /**
  * 
  * @export
+ * @interface ContactsPost200Response
+ */
+export interface ContactsPost200Response {
+    /**
+     * 
+     * @type {Array<Contact>}
+     * @memberof ContactsPost200Response
+     */
+    'contacts': Array<Contact>;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof ContactsPost200Response
+     */
+    'success': boolean;
+}
+/**
+ * 
+ * @export
  * @interface ContactsPostContactsInner
  */
 export interface ContactsPostContactsInner {
@@ -10729,7 +10748,7 @@ export const ContactsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async contactsPost(contactsPost?: ContactsPost, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AccountsDelete200Response>> {
+        async contactsPost(contactsPost?: ContactsPost, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ContactsPost200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.contactsPost(contactsPost, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['ContactsApi.contactsPost']?.[localVarOperationServerIndex]?.url;
@@ -10802,7 +10821,7 @@ export const ContactsApiFactory = function (configuration?: Configuration, baseP
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        contactsPost(requestParameters: ContactsApiContactsPostRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<AccountsDelete200Response> {
+        contactsPost(requestParameters: ContactsApiContactsPostRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<ContactsPost200Response> {
             return localVarFp.contactsPost(requestParameters.contactsPost, options).then((request) => request(axios, basePath));
         },
     };
