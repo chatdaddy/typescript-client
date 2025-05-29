@@ -1259,6 +1259,12 @@ export interface StackMessagesPost200Response {
      * @memberof StackMessagesPost200Response
      */
     'text': string;
+    /**
+     * Whether the message was debounced
+     * @type {boolean}
+     * @memberof StackMessagesPost200Response
+     */
+    'debounce': boolean;
 }
 /**
  * 
