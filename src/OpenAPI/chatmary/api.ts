@@ -1016,6 +1016,31 @@ export interface MedicalBotData {
 /**
  * 
  * @export
+ * @interface MessageStack
+ */
+export interface MessageStack {
+    /**
+     * Unique identifier for the message stack
+     * @type {string}
+     * @memberof MessageStack
+     */
+    'id'?: string;
+    /**
+     * Message to stack
+     * @type {string}
+     * @memberof MessageStack
+     */
+    'text': string;
+    /**
+     * Timestamp when the message was stacked
+     * @type {string}
+     * @memberof MessageStack
+     */
+    'createdAt'?: string;
+}
+/**
+ * 
+ * @export
  * @interface OauthCallback200Response
  */
 export interface OauthCallback200Response {
@@ -1221,6 +1246,38 @@ export interface RetrieverResourcesInnerMetadata {
      * @memberof RetrieverResourcesInnerMetadata
      */
     'position'?: number;
+}
+/**
+ * 
+ * @export
+ * @interface StackMessagesPost200Response
+ */
+export interface StackMessagesPost200Response {
+    /**
+     * Message that was stacked
+     * @type {string}
+     * @memberof StackMessagesPost200Response
+     */
+    'text': string;
+}
+/**
+ * 
+ * @export
+ * @interface StackMessagesPostRequest
+ */
+export interface StackMessagesPostRequest {
+    /**
+     * Unique identifier for the message stack
+     * @type {string}
+     * @memberof StackMessagesPostRequest
+     */
+    'id'?: string;
+    /**
+     * Message to stack
+     * @type {string}
+     * @memberof StackMessagesPostRequest
+     */
+    'text': string;
 }
 /**
  * 
@@ -2134,6 +2191,44 @@ export const CustomBotApiAxiosParamCreator = function (configuration?: Configura
                 options: localVarRequestOptions,
             };
         },
+        /**
+         * 
+         * @summary Stack incoming messages
+         * @param {StackMessagesPostRequest} [stackMessagesPostRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        stackMessagesPost: async (stackMessagesPostRequest?: StackMessagesPostRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/stackMessages`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", [], configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(stackMessagesPostRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
     }
 };
 
@@ -2336,6 +2431,19 @@ export const CustomBotApiFp = function(configuration?: Configuration) {
             const localVarOperationServerBasePath = operationServerMap['CustomBotApi.manageUserDataPost']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
+        /**
+         * 
+         * @summary Stack incoming messages
+         * @param {StackMessagesPostRequest} [stackMessagesPostRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async stackMessagesPost(stackMessagesPostRequest?: StackMessagesPostRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<StackMessagesPost200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.stackMessagesPost(stackMessagesPostRequest, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['CustomBotApi.stackMessagesPost']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
     }
 };
 
@@ -2483,6 +2591,16 @@ export const CustomBotApiFactory = function (configuration?: Configuration, base
          */
         manageUserDataPost(requestParameters: CustomBotApiManageUserDataPostRequest, options?: RawAxiosRequestConfig): AxiosPromise<BotDetails> {
             return localVarFp.manageUserDataPost(requestParameters.botApp, requestParameters.userId, requestParameters.manageUserDataPostRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Stack incoming messages
+         * @param {CustomBotApiStackMessagesPostRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        stackMessagesPost(requestParameters: CustomBotApiStackMessagesPostRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<StackMessagesPost200Response> {
+            return localVarFp.stackMessagesPost(requestParameters.stackMessagesPostRequest, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -2740,6 +2858,20 @@ export interface CustomBotApiManageUserDataPostRequest {
 }
 
 /**
+ * Request parameters for stackMessagesPost operation in CustomBotApi.
+ * @export
+ * @interface CustomBotApiStackMessagesPostRequest
+ */
+export interface CustomBotApiStackMessagesPostRequest {
+    /**
+     * 
+     * @type {StackMessagesPostRequest}
+     * @memberof CustomBotApiStackMessagesPost
+     */
+    readonly stackMessagesPostRequest?: StackMessagesPostRequest
+}
+
+/**
  * CustomBotApi - object-oriented interface
  * @export
  * @class CustomBotApi
@@ -2910,6 +3042,18 @@ export class CustomBotApi extends BaseAPI {
      */
     public manageUserDataPost(requestParameters: CustomBotApiManageUserDataPostRequest, options?: RawAxiosRequestConfig) {
         return CustomBotApiFp(this.configuration).manageUserDataPost(requestParameters.botApp, requestParameters.userId, requestParameters.manageUserDataPostRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Stack incoming messages
+     * @param {CustomBotApiStackMessagesPostRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CustomBotApi
+     */
+    public stackMessagesPost(requestParameters: CustomBotApiStackMessagesPostRequest = {}, options?: RawAxiosRequestConfig) {
+        return CustomBotApiFp(this.configuration).stackMessagesPost(requestParameters.stackMessagesPostRequest, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
