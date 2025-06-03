@@ -1284,7 +1284,69 @@ export interface StackMessagesPostRequest {
      * @memberof StackMessagesPostRequest
      */
     'text': string;
+    /**
+     * ID of the bot
+     * @type {string}
+     * @memberof StackMessagesPostRequest
+     */
+    'botId'?: string;
+    /**
+     * Access token for the bot
+     * @type {string}
+     * @memberof StackMessagesPostRequest
+     */
+    'botToken'?: string;
+    /**
+     * ID of the user stacking the message
+     * @type {string}
+     * @memberof StackMessagesPostRequest
+     */
+    'userId'?: string;
+    /**
+     * ID of the conversation
+     * @type {string}
+     * @memberof StackMessagesPostRequest
+     */
+    'conversationId'?: string;
+    /**
+     * API token for authentication
+     * @type {string}
+     * @memberof StackMessagesPostRequest
+     */
+    'apiToken'?: string;
+    /**
+     * Account ID for the user
+     * @type {string}
+     * @memberof StackMessagesPostRequest
+     */
+    'accountId'?: string;
+    /**
+     * Team ID for the user
+     * @type {string}
+     * @memberof StackMessagesPostRequest
+     */
+    'teamId'?: string;
+    /**
+     * Fallback message to use if the bot is not available
+     * @type {string}
+     * @memberof StackMessagesPostRequest
+     */
+    'fallbackMessage'?: string;
+    /**
+     * Response mode for the message
+     * @type {string}
+     * @memberof StackMessagesPostRequest
+     */
+    'responseMode'?: StackMessagesPostRequestResponseModeEnum;
 }
+
+export const StackMessagesPostRequestResponseModeEnum = {
+    Streaming: 'streaming',
+    Blocking: 'blocking'
+} as const;
+
+export type StackMessagesPostRequestResponseModeEnum = typeof StackMessagesPostRequestResponseModeEnum[keyof typeof StackMessagesPostRequestResponseModeEnum];
+
 /**
  * 
  * @export
