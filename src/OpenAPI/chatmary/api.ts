@@ -1333,6 +1333,12 @@ export interface StackMessagesPostRequest {
      */
     'fallbackMessage'?: string;
     /**
+     * Whether to suppress the reply from the bot
+     * @type {boolean}
+     * @memberof StackMessagesPostRequest
+     */
+    'suppressReply'?: boolean;
+    /**
      * Response mode for the message
      * @type {string}
      * @memberof StackMessagesPostRequest
