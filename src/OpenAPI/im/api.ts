@@ -787,6 +787,19 @@ interface ActorMetadata {
 /**
  * 
  * @export
+ * @interface AggregateDataPost200Response
+ */
+export interface AggregateDataPost200Response {
+    /**
+     * Aggregated data for the phone number
+     * @type {{ [key: string]: any; }}
+     * @memberof AggregateDataPost200Response
+     */
+    'data': { [key: string]: any; };
+}
+/**
+ * 
+ * @export
  * @interface AlibabCAMSQuotedContext
  */
 export interface AlibabCAMSQuotedContext {
@@ -7408,6 +7421,128 @@ export class AccountApi extends BaseAPI {
      */
     public waChangeLoginMode(requestParameters: AccountApiWaChangeLoginModeRequest, options?: RawAxiosRequestConfig) {
         return AccountApiFp(this.configuration).waChangeLoginMode(requestParameters.accountId, requestParameters.accountWaChangeLoginMode, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+
+/**
+ * AggregateDataApi - axios parameter creator
+ * @export
+ */
+export const AggregateDataApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @summary Aggregate data for a phone number
+         * @param {string} phoneNumber 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        aggregateDataPost: async (phoneNumber: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'phoneNumber' is not null or undefined
+            assertParamExists('aggregateDataPost', 'phoneNumber', phoneNumber)
+            const localVarPath = `/aggregate-data/{phoneNumber}`
+                .replace(`{${"phoneNumber"}}`, encodeURIComponent(String(phoneNumber)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * AggregateDataApi - functional programming interface
+ * @export
+ */
+export const AggregateDataApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = AggregateDataApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * 
+         * @summary Aggregate data for a phone number
+         * @param {string} phoneNumber 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async aggregateDataPost(phoneNumber: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AggregateDataPost200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.aggregateDataPost(phoneNumber, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['AggregateDataApi.aggregateDataPost']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+    }
+};
+
+/**
+ * AggregateDataApi - factory interface
+ * @export
+ */
+export const AggregateDataApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = AggregateDataApiFp(configuration)
+    return {
+        /**
+         * 
+         * @summary Aggregate data for a phone number
+         * @param {AggregateDataApiAggregateDataPostRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        aggregateDataPost(requestParameters: AggregateDataApiAggregateDataPostRequest, options?: RawAxiosRequestConfig): AxiosPromise<AggregateDataPost200Response> {
+            return localVarFp.aggregateDataPost(requestParameters.phoneNumber, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * Request parameters for aggregateDataPost operation in AggregateDataApi.
+ * @export
+ * @interface AggregateDataApiAggregateDataPostRequest
+ */
+export interface AggregateDataApiAggregateDataPostRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof AggregateDataApiAggregateDataPost
+     */
+    readonly phoneNumber: string
+}
+
+/**
+ * AggregateDataApi - object-oriented interface
+ * @export
+ * @class AggregateDataApi
+ * @extends {BaseAPI}
+ */
+export class AggregateDataApi extends BaseAPI {
+    /**
+     * 
+     * @summary Aggregate data for a phone number
+     * @param {AggregateDataApiAggregateDataPostRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AggregateDataApi
+     */
+    public aggregateDataPost(requestParameters: AggregateDataApiAggregateDataPostRequest, options?: RawAxiosRequestConfig) {
+        return AggregateDataApiFp(this.configuration).aggregateDataPost(requestParameters.phoneNumber, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
