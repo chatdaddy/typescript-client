@@ -408,6 +408,12 @@ export interface AccountCredentialsWaba {
      * @memberof AccountCredentialsWaba
      */
     'waBusinessId': string;
+    /**
+     * Version of the WABA build
+     * @type {string}
+     * @memberof AccountCredentialsWaba
+     */
+    'version'?: string;
 }
 
 export const AccountCredentialsWabaTypeEnum = {
