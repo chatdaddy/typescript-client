@@ -1783,7 +1783,21 @@ export interface Team {
      * @memberof Team
      */
     'creditCustomerId'?: string | null;
+    /**
+     * The variant of the team, chatdaddy or lite
+     * @type {string}
+     * @memberof Team
+     */
+    'variant'?: TeamVariantEnum;
 }
+
+export const TeamVariantEnum = {
+    Chatdaddy: 'chatdaddy',
+    Lite: 'lite'
+} as const;
+
+export type TeamVariantEnum = typeof TeamVariantEnum[keyof typeof TeamVariantEnum];
+
 /**
  * 
  * @export
@@ -2218,8 +2232,20 @@ export interface User {
      * @memberof User
      */
     'partnership'?: string | null;
+    /**
+     * The variant of the user, chatdaddy or lite
+     * @type {string}
+     * @memberof User
+     */
+    'variant'?: UserVariantEnum;
 }
 
+export const UserVariantEnum = {
+    Chatdaddy: 'chatdaddy',
+    Lite: 'lite'
+} as const;
+
+export type UserVariantEnum = typeof UserVariantEnum[keyof typeof UserVariantEnum];
 
 /**
  * 
@@ -2294,6 +2320,12 @@ export interface UserCreate {
      * @memberof UserCreate
      */
     'region'?: string;
+    /**
+     * The variant of the user to create. chatdaddy or lite
+     * @type {string}
+     * @memberof UserCreate
+     */
+    'variant'?: UserCreateVariantEnum;
 }
 
 export const UserCreateCreditCustomerEnum = {
@@ -2302,6 +2334,12 @@ export const UserCreateCreditCustomerEnum = {
 } as const;
 
 export type UserCreateCreditCustomerEnum = typeof UserCreateCreditCustomerEnum[keyof typeof UserCreateCreditCustomerEnum];
+export const UserCreateVariantEnum = {
+    Chatdaddy: 'chatdaddy',
+    Lite: 'lite'
+} as const;
+
+export type UserCreateVariantEnum = typeof UserCreateVariantEnum[keyof typeof UserCreateVariantEnum];
 
 /**
  * 
@@ -5380,10 +5418,11 @@ export const TeamsApiAxiosParamCreator = function (configuration?: Configuration
          * @param {string} [partner] string to identify user with a partner
          * @param {boolean} [returnOnboardingScore] return the onboarding score for the team
          * @param {boolean} [isCreditSystemCustomer] If true, only return teams that are credit system customers. If false, only return teams that are not credit system customers. A team is only considered a credit system customer if they have a \&quot;creditCustomerId\&quot; set.
+         * @param {TeamsGetVariantEnum} [variant] The variant of the team to return. lite or chatdaddy. If not specified, returns chatdaddy teams only. 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        teamsGet: async (q?: string, partnership?: string, onboardingScoreMin?: number, onboardingScoreMax?: number, createdAfter?: string, completedSteps?: Array<OnboardingStepID>, id?: Array<string>, userId?: string, count?: number, page?: number, includeTeamMembers?: boolean, includeInviteLinks?: boolean, includeTotal?: boolean, includeCreator?: boolean, partner?: string, returnOnboardingScore?: boolean, isCreditSystemCustomer?: boolean, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        teamsGet: async (q?: string, partnership?: string, onboardingScoreMin?: number, onboardingScoreMax?: number, createdAfter?: string, completedSteps?: Array<OnboardingStepID>, id?: Array<string>, userId?: string, count?: number, page?: number, includeTeamMembers?: boolean, includeInviteLinks?: boolean, includeTotal?: boolean, includeCreator?: boolean, partner?: string, returnOnboardingScore?: boolean, isCreditSystemCustomer?: boolean, variant?: TeamsGetVariantEnum, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/teams`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -5468,6 +5507,10 @@ export const TeamsApiAxiosParamCreator = function (configuration?: Configuration
 
             if (isCreditSystemCustomer !== undefined) {
                 localVarQueryParameter['isCreditSystemCustomer'] = isCreditSystemCustomer;
+            }
+
+            if (variant !== undefined) {
+                localVarQueryParameter['variant'] = variant;
             }
 
 
@@ -5667,11 +5710,12 @@ export const TeamsApiFp = function(configuration?: Configuration) {
          * @param {string} [partner] string to identify user with a partner
          * @param {boolean} [returnOnboardingScore] return the onboarding score for the team
          * @param {boolean} [isCreditSystemCustomer] If true, only return teams that are credit system customers. If false, only return teams that are not credit system customers. A team is only considered a credit system customer if they have a \&quot;creditCustomerId\&quot; set.
+         * @param {TeamsGetVariantEnum} [variant] The variant of the team to return. lite or chatdaddy. If not specified, returns chatdaddy teams only. 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async teamsGet(q?: string, partnership?: string, onboardingScoreMin?: number, onboardingScoreMax?: number, createdAfter?: string, completedSteps?: Array<OnboardingStepID>, id?: Array<string>, userId?: string, count?: number, page?: number, includeTeamMembers?: boolean, includeInviteLinks?: boolean, includeTotal?: boolean, includeCreator?: boolean, partner?: string, returnOnboardingScore?: boolean, isCreditSystemCustomer?: boolean, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TeamsGet200Response>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.teamsGet(q, partnership, onboardingScoreMin, onboardingScoreMax, createdAfter, completedSteps, id, userId, count, page, includeTeamMembers, includeInviteLinks, includeTotal, includeCreator, partner, returnOnboardingScore, isCreditSystemCustomer, options);
+        async teamsGet(q?: string, partnership?: string, onboardingScoreMin?: number, onboardingScoreMax?: number, createdAfter?: string, completedSteps?: Array<OnboardingStepID>, id?: Array<string>, userId?: string, count?: number, page?: number, includeTeamMembers?: boolean, includeInviteLinks?: boolean, includeTotal?: boolean, includeCreator?: boolean, partner?: string, returnOnboardingScore?: boolean, isCreditSystemCustomer?: boolean, variant?: TeamsGetVariantEnum, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TeamsGet200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.teamsGet(q, partnership, onboardingScoreMin, onboardingScoreMax, createdAfter, completedSteps, id, userId, count, page, includeTeamMembers, includeInviteLinks, includeTotal, includeCreator, partner, returnOnboardingScore, isCreditSystemCustomer, variant, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['TeamsApi.teamsGet']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -5762,7 +5806,7 @@ export const TeamsApiFactory = function (configuration?: Configuration, basePath
          * @throws {RequiredError}
          */
         teamsGet(requestParameters: TeamsApiTeamsGetRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<TeamsGet200Response> {
-            return localVarFp.teamsGet(requestParameters.q, requestParameters.partnership, requestParameters.onboardingScoreMin, requestParameters.onboardingScoreMax, requestParameters.createdAfter, requestParameters.completedSteps, requestParameters.id, requestParameters.userId, requestParameters.count, requestParameters.page, requestParameters.includeTeamMembers, requestParameters.includeInviteLinks, requestParameters.includeTotal, requestParameters.includeCreator, requestParameters.partner, requestParameters.returnOnboardingScore, requestParameters.isCreditSystemCustomer, options).then((request) => request(axios, basePath));
+            return localVarFp.teamsGet(requestParameters.q, requestParameters.partnership, requestParameters.onboardingScoreMin, requestParameters.onboardingScoreMax, requestParameters.createdAfter, requestParameters.completedSteps, requestParameters.id, requestParameters.userId, requestParameters.count, requestParameters.page, requestParameters.includeTeamMembers, requestParameters.includeInviteLinks, requestParameters.includeTotal, requestParameters.includeCreator, requestParameters.partner, requestParameters.returnOnboardingScore, requestParameters.isCreditSystemCustomer, requestParameters.variant, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -5956,6 +6000,13 @@ export interface TeamsApiTeamsGetRequest {
      * @memberof TeamsApiTeamsGet
      */
     readonly isCreditSystemCustomer?: boolean
+
+    /**
+     * The variant of the team to return. lite or chatdaddy. If not specified, returns chatdaddy teams only. 
+     * @type {'chatdaddy' | 'lite'}
+     * @memberof TeamsApiTeamsGet
+     */
+    readonly variant?: TeamsGetVariantEnum
 }
 
 /**
@@ -6051,7 +6102,7 @@ export class TeamsApi extends BaseAPI {
      * @memberof TeamsApi
      */
     public teamsGet(requestParameters: TeamsApiTeamsGetRequest = {}, options?: RawAxiosRequestConfig) {
-        return TeamsApiFp(this.configuration).teamsGet(requestParameters.q, requestParameters.partnership, requestParameters.onboardingScoreMin, requestParameters.onboardingScoreMax, requestParameters.createdAfter, requestParameters.completedSteps, requestParameters.id, requestParameters.userId, requestParameters.count, requestParameters.page, requestParameters.includeTeamMembers, requestParameters.includeInviteLinks, requestParameters.includeTotal, requestParameters.includeCreator, requestParameters.partner, requestParameters.returnOnboardingScore, requestParameters.isCreditSystemCustomer, options).then((request) => request(this.axios, this.basePath));
+        return TeamsApiFp(this.configuration).teamsGet(requestParameters.q, requestParameters.partnership, requestParameters.onboardingScoreMin, requestParameters.onboardingScoreMax, requestParameters.createdAfter, requestParameters.completedSteps, requestParameters.id, requestParameters.userId, requestParameters.count, requestParameters.page, requestParameters.includeTeamMembers, requestParameters.includeInviteLinks, requestParameters.includeTotal, requestParameters.includeCreator, requestParameters.partner, requestParameters.returnOnboardingScore, requestParameters.isCreditSystemCustomer, requestParameters.variant, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -6091,6 +6142,14 @@ export class TeamsApi extends BaseAPI {
     }
 }
 
+/**
+ * @export
+ */
+export const TeamsGetVariantEnum = {
+    Chatdaddy: 'chatdaddy',
+    Lite: 'lite'
+} as const;
+export type TeamsGetVariantEnum = typeof TeamsGetVariantEnum[keyof typeof TeamsGetVariantEnum];
 
 
 /**
@@ -6152,10 +6211,11 @@ export const UsersApiAxiosParamCreator = function (configuration?: Configuration
          * @param {boolean} [includeMemberships] Should include the user\&#39;s memberships
          * @param {boolean} [includeTotal] should return total count of accessible users
          * @param {Array<string>} [other] other internal query options
+         * @param {UsersGetVariantEnum} [variant] The variant of the user to return. lite or chatdaddy 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        usersGet: async (q?: string, partnership?: string, id?: Array<string>, originalTeamId?: Array<string>, count?: number, page?: number, includeMemberships?: boolean, includeTotal?: boolean, other?: Array<string>, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        usersGet: async (q?: string, partnership?: string, id?: Array<string>, originalTeamId?: Array<string>, count?: number, page?: number, includeMemberships?: boolean, includeTotal?: boolean, other?: Array<string>, variant?: UsersGetVariantEnum, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/users`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -6206,6 +6266,10 @@ export const UsersApiAxiosParamCreator = function (configuration?: Configuration
 
             if (other) {
                 localVarQueryParameter['other'] = other;
+            }
+
+            if (variant !== undefined) {
+                localVarQueryParameter['variant'] = variant;
             }
 
 
@@ -6412,11 +6476,12 @@ export const UsersApiFp = function(configuration?: Configuration) {
          * @param {boolean} [includeMemberships] Should include the user\&#39;s memberships
          * @param {boolean} [includeTotal] should return total count of accessible users
          * @param {Array<string>} [other] other internal query options
+         * @param {UsersGetVariantEnum} [variant] The variant of the user to return. lite or chatdaddy 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async usersGet(q?: string, partnership?: string, id?: Array<string>, originalTeamId?: Array<string>, count?: number, page?: number, includeMemberships?: boolean, includeTotal?: boolean, other?: Array<string>, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<UsersGet200Response>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.usersGet(q, partnership, id, originalTeamId, count, page, includeMemberships, includeTotal, other, options);
+        async usersGet(q?: string, partnership?: string, id?: Array<string>, originalTeamId?: Array<string>, count?: number, page?: number, includeMemberships?: boolean, includeTotal?: boolean, other?: Array<string>, variant?: UsersGetVariantEnum, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<UsersGet200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.usersGet(q, partnership, id, originalTeamId, count, page, includeMemberships, includeTotal, other, variant, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['UsersApi.usersGet']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -6502,7 +6567,7 @@ export const UsersApiFactory = function (configuration?: Configuration, basePath
          * @throws {RequiredError}
          */
         usersGet(requestParameters: UsersApiUsersGetRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<UsersGet200Response> {
-            return localVarFp.usersGet(requestParameters.q, requestParameters.partnership, requestParameters.id, requestParameters.originalTeamId, requestParameters.count, requestParameters.page, requestParameters.includeMemberships, requestParameters.includeTotal, requestParameters.other, options).then((request) => request(axios, basePath));
+            return localVarFp.usersGet(requestParameters.q, requestParameters.partnership, requestParameters.id, requestParameters.originalTeamId, requestParameters.count, requestParameters.page, requestParameters.includeMemberships, requestParameters.includeTotal, requestParameters.other, requestParameters.variant, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -6629,6 +6694,13 @@ export interface UsersApiUsersGetRequest {
      * @memberof UsersApiUsersGet
      */
     readonly other?: Array<string>
+
+    /**
+     * The variant of the user to return. lite or chatdaddy 
+     * @type {'chatdaddy' | 'lite'}
+     * @memberof UsersApiUsersGet
+     */
+    readonly variant?: UsersGetVariantEnum
 }
 
 /**
@@ -6722,7 +6794,7 @@ export class UsersApi extends BaseAPI {
      * @memberof UsersApi
      */
     public usersGet(requestParameters: UsersApiUsersGetRequest = {}, options?: RawAxiosRequestConfig) {
-        return UsersApiFp(this.configuration).usersGet(requestParameters.q, requestParameters.partnership, requestParameters.id, requestParameters.originalTeamId, requestParameters.count, requestParameters.page, requestParameters.includeMemberships, requestParameters.includeTotal, requestParameters.other, options).then((request) => request(this.axios, this.basePath));
+        return UsersApiFp(this.configuration).usersGet(requestParameters.q, requestParameters.partnership, requestParameters.id, requestParameters.originalTeamId, requestParameters.count, requestParameters.page, requestParameters.includeMemberships, requestParameters.includeTotal, requestParameters.other, requestParameters.variant, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -6774,6 +6846,14 @@ export class UsersApi extends BaseAPI {
     }
 }
 
+/**
+ * @export
+ */
+export const UsersGetVariantEnum = {
+    Chatdaddy: 'chatdaddy',
+    Lite: 'lite'
+} as const;
+export type UsersGetVariantEnum = typeof UsersGetVariantEnum[keyof typeof UsersGetVariantEnum];
 
 
 /**

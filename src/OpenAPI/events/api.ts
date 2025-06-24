@@ -11448,6 +11448,12 @@ export interface TeamInsertData {
      * @memberof TeamInsertData
      */
     'creditCustomerId'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof TeamInsertData
+     */
+    'variant'?: TeamInsertDataVariantEnum;
 }
 
 export const TeamInsertDataScopesEnum = {
@@ -11535,6 +11541,12 @@ export const TeamInsertDataScopesEnum = {
 } as const;
 
 export type TeamInsertDataScopesEnum = typeof TeamInsertDataScopesEnum[keyof typeof TeamInsertDataScopesEnum];
+export const TeamInsertDataVariantEnum = {
+    Chatdaddy: 'chatdaddy',
+    Lite: 'lite'
+} as const;
+
+export type TeamInsertDataVariantEnum = typeof TeamInsertDataVariantEnum[keyof typeof TeamInsertDataVariantEnum];
 
 /**
  * 
@@ -11633,6 +11645,12 @@ export interface TeamInsertDataCreator {
      * @memberof TeamInsertDataCreator
      */
     'partnership'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof TeamInsertDataCreator
+     */
+    'variant'?: TeamInsertDataCreatorVariantEnum;
 }
 
 export const TeamInsertDataCreatorCreatedByMethodEnum = {
@@ -11645,6 +11663,12 @@ export const TeamInsertDataCreatorCreatedByMethodEnum = {
 } as const;
 
 export type TeamInsertDataCreatorCreatedByMethodEnum = typeof TeamInsertDataCreatorCreatedByMethodEnum[keyof typeof TeamInsertDataCreatorCreatedByMethodEnum];
+export const TeamInsertDataCreatorVariantEnum = {
+    Chatdaddy: 'chatdaddy',
+    Lite: 'lite'
+} as const;
+
+export type TeamInsertDataCreatorVariantEnum = typeof TeamInsertDataCreatorVariantEnum[keyof typeof TeamInsertDataCreatorVariantEnum];
 
 /**
  * 
@@ -11881,6 +11905,12 @@ export interface TeamUpdateData {
      * @memberof TeamUpdateData
      */
     'creditCustomerId'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof TeamUpdateData
+     */
+    'variant'?: TeamUpdateDataVariantEnum;
 }
 
 export const TeamUpdateDataScopesEnum = {
@@ -11968,6 +11998,12 @@ export const TeamUpdateDataScopesEnum = {
 } as const;
 
 export type TeamUpdateDataScopesEnum = typeof TeamUpdateDataScopesEnum[keyof typeof TeamUpdateDataScopesEnum];
+export const TeamUpdateDataVariantEnum = {
+    Chatdaddy: 'chatdaddy',
+    Lite: 'lite'
+} as const;
+
+export type TeamUpdateDataVariantEnum = typeof TeamUpdateDataVariantEnum[keyof typeof TeamUpdateDataVariantEnum];
 
 /**
  * 
@@ -13153,6 +13189,12 @@ export interface UserInsertData {
      * @memberof UserInsertData
      */
     'partnership'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof UserInsertData
+     */
+    'variant'?: UserInsertDataVariantEnum;
 }
 
 export const UserInsertDataCreatedByMethodEnum = {
@@ -13165,6 +13207,12 @@ export const UserInsertDataCreatedByMethodEnum = {
 } as const;
 
 export type UserInsertDataCreatedByMethodEnum = typeof UserInsertDataCreatedByMethodEnum[keyof typeof UserInsertDataCreatedByMethodEnum];
+export const UserInsertDataVariantEnum = {
+    Chatdaddy: 'chatdaddy',
+    Lite: 'lite'
+} as const;
+
+export type UserInsertDataVariantEnum = typeof UserInsertDataVariantEnum[keyof typeof UserInsertDataVariantEnum];
 
 /**
  * 
@@ -13532,6 +13580,12 @@ export interface UserUpdateData {
      * @memberof UserUpdateData
      */
     'partnership'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof UserUpdateData
+     */
+    'variant'?: UserUpdateDataVariantEnum;
 }
 
 export const UserUpdateDataCreatedByMethodEnum = {
@@ -13544,6 +13598,12 @@ export const UserUpdateDataCreatedByMethodEnum = {
 } as const;
 
 export type UserUpdateDataCreatedByMethodEnum = typeof UserUpdateDataCreatedByMethodEnum[keyof typeof UserUpdateDataCreatedByMethodEnum];
+export const UserUpdateDataVariantEnum = {
+    Chatdaddy: 'chatdaddy',
+    Lite: 'lite'
+} as const;
+
+export type UserUpdateDataVariantEnum = typeof UserUpdateDataVariantEnum[keyof typeof UserUpdateDataVariantEnum];
 
 
 /**
