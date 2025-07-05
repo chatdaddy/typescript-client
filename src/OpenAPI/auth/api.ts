@@ -484,6 +484,12 @@ export interface BoutirTokenRequest {
      * @memberof BoutirTokenRequest
      */
     'referralCode'?: string;
+    /**
+     * The variant of the Firebase token to use. If not specified, will default to chatdaddy. 
+     * @type {string}
+     * @memberof BoutirTokenRequest
+     */
+    'variant'?: BoutirTokenRequestVariantEnum;
 }
 
 export const BoutirTokenRequestTypeEnum = {
@@ -491,6 +497,12 @@ export const BoutirTokenRequestTypeEnum = {
 } as const;
 
 export type BoutirTokenRequestTypeEnum = typeof BoutirTokenRequestTypeEnum[keyof typeof BoutirTokenRequestTypeEnum];
+export const BoutirTokenRequestVariantEnum = {
+    Chatdaddy: 'chatdaddy',
+    Lite: 'lite'
+} as const;
+
+export type BoutirTokenRequestVariantEnum = typeof BoutirTokenRequestVariantEnum[keyof typeof BoutirTokenRequestVariantEnum];
 
 /**
  * @type EitherRoleOrScopes
@@ -593,6 +605,12 @@ export interface FirebaseTokenRequest {
      * @memberof FirebaseTokenRequest
      */
     'referralCode'?: string;
+    /**
+     * The variant of the Firebase token to use. If not specified, will default to chatdaddy. 
+     * @type {string}
+     * @memberof FirebaseTokenRequest
+     */
+    'variant'?: FirebaseTokenRequestVariantEnum;
 }
 
 export const FirebaseTokenRequestTypeEnum = {
@@ -600,6 +618,12 @@ export const FirebaseTokenRequestTypeEnum = {
 } as const;
 
 export type FirebaseTokenRequestTypeEnum = typeof FirebaseTokenRequestTypeEnum[keyof typeof FirebaseTokenRequestTypeEnum];
+export const FirebaseTokenRequestVariantEnum = {
+    Chatdaddy: 'chatdaddy',
+    Lite: 'lite'
+} as const;
+
+export type FirebaseTokenRequestVariantEnum = typeof FirebaseTokenRequestVariantEnum[keyof typeof FirebaseTokenRequestVariantEnum];
 
 /**
  * 
