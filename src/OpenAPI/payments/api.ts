@@ -223,7 +223,8 @@ export interface AutoChargeProductsPrepare200Response {
 
 export const AutoRenewalPeriod = {
     Quarter: 'quarter',
-    Year: 'year'
+    Year: 'year',
+    Month: 'month'
 } as const;
 
 export type AutoRenewalPeriod = typeof AutoRenewalPeriod[keyof typeof AutoRenewalPeriod];
