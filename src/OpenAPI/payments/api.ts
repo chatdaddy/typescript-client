@@ -1181,6 +1181,12 @@ export interface CreditStripePricePriceIds {
      * @memberof CreditStripePricePriceIds
      */
     'oneTime': string;
+    /**
+     * The ID of the price in Stripe. This is used to identify the price in Stripe. For credit billing, ensure that the price ID has the following prefixs for the respective billing types: - recurring: auto_renew_credit - top_up: top_up_credit - bonus: bonus_credit
+     * @type {string}
+     * @memberof CreditStripePricePriceIds
+     */
+    'month'?: string;
 }
 /**
  * 
