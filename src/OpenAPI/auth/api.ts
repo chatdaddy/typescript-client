@@ -541,6 +541,25 @@ export interface EitherRoleOrScopesOneOf1 {
 /**
  * 
  * @export
+ * @interface EmailOtpRequest
+ */
+export interface EmailOtpRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof EmailOtpRequest
+     */
+    'email': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof EmailOtpRequest
+     */
+    'captchaToken'?: string;
+}
+/**
+ * 
+ * @export
  * @interface ExternalTokenPostResponse
  */
 export interface ExternalTokenPostResponse {
@@ -2517,6 +2536,38 @@ export interface UsersPhoneNumberPatchRequest {
 /**
  * 
  * @export
+ * @interface VerifyEmail200Response
+ */
+export interface VerifyEmail200Response {
+    /**
+     * 
+     * @type {boolean}
+     * @memberof VerifyEmail200Response
+     */
+    'success'?: boolean;
+}
+/**
+ * 
+ * @export
+ * @interface VerifyEmailRequest
+ */
+export interface VerifyEmailRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof VerifyEmailRequest
+     */
+    'email': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof VerifyEmailRequest
+     */
+    'code': string;
+}
+/**
+ * 
+ * @export
  * @interface WebPushNotification
  */
 export interface WebPushNotification {
@@ -4384,6 +4435,40 @@ export class OAuthApi extends BaseAPI {
 export const OTPApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
+         * Sends an OTP to user input email address for verification purposes.
+         * @summary Send email OTP
+         * @param {EmailOtpRequest} [emailOtpRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        emailOtpPost: async (emailOtpRequest?: EmailOtpRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/email-otp`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(emailOtpRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * Generates an OTP for the given phone number. Once generated, the OTP can be used to authenticate the user for specific APIs, i.e. signup & forget password.  A captcha token is required to generate an OTP, available only from the frontend 
          * @summary Generate an OTP
          * @param {OtpPostChannelEnum} [channel] 
@@ -4422,6 +4507,40 @@ export const OTPApiAxiosParamCreator = function (configuration?: Configuration) 
                 options: localVarRequestOptions,
             };
         },
+        /**
+         * Verifies the OTP sent to the user\'s email address.
+         * @summary Verify email OTP
+         * @param {VerifyEmailRequest} [verifyEmailRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        verifyEmail: async (verifyEmailRequest?: VerifyEmailRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/email-otp-verify`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(verifyEmailRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
     }
 };
 
@@ -4432,6 +4551,19 @@ export const OTPApiAxiosParamCreator = function (configuration?: Configuration) 
 export const OTPApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = OTPApiAxiosParamCreator(configuration)
     return {
+        /**
+         * Sends an OTP to user input email address for verification purposes.
+         * @summary Send email OTP
+         * @param {EmailOtpRequest} [emailOtpRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async emailOtpPost(emailOtpRequest?: EmailOtpRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.emailOtpPost(emailOtpRequest, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['OTPApi.emailOtpPost']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
         /**
          * Generates an OTP for the given phone number. Once generated, the OTP can be used to authenticate the user for specific APIs, i.e. signup & forget password.  A captcha token is required to generate an OTP, available only from the frontend 
          * @summary Generate an OTP
@@ -4446,6 +4578,19 @@ export const OTPApiFp = function(configuration?: Configuration) {
             const localVarOperationServerBasePath = operationServerMap['OTPApi.otpPost']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
+        /**
+         * Verifies the OTP sent to the user\'s email address.
+         * @summary Verify email OTP
+         * @param {VerifyEmailRequest} [verifyEmailRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async verifyEmail(verifyEmailRequest?: VerifyEmailRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<VerifyEmail200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.verifyEmail(verifyEmailRequest, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['OTPApi.verifyEmail']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
     }
 };
 
@@ -4457,6 +4602,16 @@ export const OTPApiFactory = function (configuration?: Configuration, basePath?:
     const localVarFp = OTPApiFp(configuration)
     return {
         /**
+         * Sends an OTP to user input email address for verification purposes.
+         * @summary Send email OTP
+         * @param {OTPApiEmailOtpPostRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        emailOtpPost(requestParameters: OTPApiEmailOtpPostRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.emailOtpPost(requestParameters.emailOtpRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
          * Generates an OTP for the given phone number. Once generated, the OTP can be used to authenticate the user for specific APIs, i.e. signup & forget password.  A captcha token is required to generate an OTP, available only from the frontend 
          * @summary Generate an OTP
          * @param {OTPApiOtpPostRequest} requestParameters Request parameters.
@@ -4466,8 +4621,32 @@ export const OTPApiFactory = function (configuration?: Configuration, basePath?:
         otpPost(requestParameters: OTPApiOtpPostRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<OTP> {
             return localVarFp.otpPost(requestParameters.channel, requestParameters.otpPostRequest, options).then((request) => request(axios, basePath));
         },
+        /**
+         * Verifies the OTP sent to the user\'s email address.
+         * @summary Verify email OTP
+         * @param {OTPApiVerifyEmailRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        verifyEmail(requestParameters: OTPApiVerifyEmailRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<VerifyEmail200Response> {
+            return localVarFp.verifyEmail(requestParameters.verifyEmailRequest, options).then((request) => request(axios, basePath));
+        },
     };
 };
+
+/**
+ * Request parameters for emailOtpPost operation in OTPApi.
+ * @export
+ * @interface OTPApiEmailOtpPostRequest
+ */
+export interface OTPApiEmailOtpPostRequest {
+    /**
+     * 
+     * @type {EmailOtpRequest}
+     * @memberof OTPApiEmailOtpPost
+     */
+    readonly emailOtpRequest?: EmailOtpRequest
+}
 
 /**
  * Request parameters for otpPost operation in OTPApi.
@@ -4491,12 +4670,38 @@ export interface OTPApiOtpPostRequest {
 }
 
 /**
+ * Request parameters for verifyEmail operation in OTPApi.
+ * @export
+ * @interface OTPApiVerifyEmailRequest
+ */
+export interface OTPApiVerifyEmailRequest {
+    /**
+     * 
+     * @type {VerifyEmailRequest}
+     * @memberof OTPApiVerifyEmail
+     */
+    readonly verifyEmailRequest?: VerifyEmailRequest
+}
+
+/**
  * OTPApi - object-oriented interface
  * @export
  * @class OTPApi
  * @extends {BaseAPI}
  */
 export class OTPApi extends BaseAPI {
+    /**
+     * Sends an OTP to user input email address for verification purposes.
+     * @summary Send email OTP
+     * @param {OTPApiEmailOtpPostRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof OTPApi
+     */
+    public emailOtpPost(requestParameters: OTPApiEmailOtpPostRequest = {}, options?: RawAxiosRequestConfig) {
+        return OTPApiFp(this.configuration).emailOtpPost(requestParameters.emailOtpRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
     /**
      * Generates an OTP for the given phone number. Once generated, the OTP can be used to authenticate the user for specific APIs, i.e. signup & forget password.  A captcha token is required to generate an OTP, available only from the frontend 
      * @summary Generate an OTP
@@ -4507,6 +4712,18 @@ export class OTPApi extends BaseAPI {
      */
     public otpPost(requestParameters: OTPApiOtpPostRequest = {}, options?: RawAxiosRequestConfig) {
         return OTPApiFp(this.configuration).otpPost(requestParameters.channel, requestParameters.otpPostRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Verifies the OTP sent to the user\'s email address.
+     * @summary Verify email OTP
+     * @param {OTPApiVerifyEmailRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof OTPApi
+     */
+    public verifyEmail(requestParameters: OTPApiVerifyEmailRequest = {}, options?: RawAxiosRequestConfig) {
+        return OTPApiFp(this.configuration).verifyEmail(requestParameters.verifyEmailRequest, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
