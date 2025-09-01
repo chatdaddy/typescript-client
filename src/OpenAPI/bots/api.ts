@@ -4459,6 +4459,19 @@ export interface Recipient {
 /**
  * 
  * @export
+ * @interface ResubmitAllTemplates200Response
+ */
+export interface ResubmitAllTemplates200Response {
+    /**
+     * 
+     * @type {string}
+     * @memberof ResubmitAllTemplates200Response
+     */
+    'message'?: string;
+}
+/**
+ * 
+ * @export
  * @interface SecondsBotMessageDelay
  */
 export interface SecondsBotMessageDelay {
@@ -5713,6 +5726,40 @@ export const ActionsApiAxiosParamCreator = function (configuration?: Configurati
                 options: localVarRequestOptions,
             };
         },
+        /**
+         * Resubmits all eligible external templates for review across all bots in the team 
+         * @summary Resubmit all templates for a team
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        resubmitAllTemplates: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/resubmit-all-templates`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["ADMIN_PANEL_ACCESS"], configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
     }
 };
 
@@ -5767,6 +5814,18 @@ export const ActionsApiFp = function(configuration?: Configuration) {
             const localVarOperationServerBasePath = operationServerMap['ActionsApi.actionsGptGenerate']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
+        /**
+         * Resubmits all eligible external templates for review across all bots in the team 
+         * @summary Resubmit all templates for a team
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async resubmitAllTemplates(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ResubmitAllTemplates200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.resubmitAllTemplates(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['ActionsApi.resubmitAllTemplates']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
     }
 };
 
@@ -5806,6 +5865,15 @@ export const ActionsApiFactory = function (configuration?: Configuration, basePa
          */
         actionsGptGenerate(requestParameters: ActionsApiActionsGptGenerateRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<ActionsGptGenerate200Response> {
             return localVarFp.actionsGptGenerate(requestParameters.actionsGptGenerateRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Resubmits all eligible external templates for review across all bots in the team 
+         * @summary Resubmit all templates for a team
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        resubmitAllTemplates(options?: RawAxiosRequestConfig): AxiosPromise<ResubmitAllTemplates200Response> {
+            return localVarFp.resubmitAllTemplates(options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -5928,6 +5996,17 @@ export class ActionsApi extends BaseAPI {
      */
     public actionsGptGenerate(requestParameters: ActionsApiActionsGptGenerateRequest = {}, options?: RawAxiosRequestConfig) {
         return ActionsApiFp(this.configuration).actionsGptGenerate(requestParameters.actionsGptGenerateRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Resubmits all eligible external templates for review across all bots in the team 
+     * @summary Resubmit all templates for a team
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApi
+     */
+    public resubmitAllTemplates(options?: RawAxiosRequestConfig) {
+        return ActionsApiFp(this.configuration).resubmitAllTemplates(options).then((request) => request(this.axios, this.basePath));
     }
 }
 
