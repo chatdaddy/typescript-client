@@ -5727,12 +5727,15 @@ export const ActionsApiAxiosParamCreator = function (configuration?: Configurati
             };
         },
         /**
-         * Resubmits all eligible external templates for review across all bots in the team 
+         * Resubmits all eligible external templates for review across all bots in the team
          * @summary Resubmit all templates for a team
+         * @param {string} teamId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        resubmitAllTemplates: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        resubmitAllTemplates: async (teamId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'teamId' is not null or undefined
+            assertParamExists('resubmitAllTemplates', 'teamId', teamId)
             const localVarPath = `/resubmit-all-templates`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -5748,6 +5751,10 @@ export const ActionsApiAxiosParamCreator = function (configuration?: Configurati
             // authentication chatdaddy required
             // oauth required
             await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["ADMIN_PANEL_ACCESS"], configuration)
+
+            if (teamId !== undefined) {
+                localVarQueryParameter['teamId'] = teamId;
+            }
 
 
     
@@ -5815,13 +5822,14 @@ export const ActionsApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Resubmits all eligible external templates for review across all bots in the team 
+         * Resubmits all eligible external templates for review across all bots in the team
          * @summary Resubmit all templates for a team
+         * @param {string} teamId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async resubmitAllTemplates(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ResubmitAllTemplates200Response>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.resubmitAllTemplates(options);
+        async resubmitAllTemplates(teamId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ResubmitAllTemplates200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.resubmitAllTemplates(teamId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['ActionsApi.resubmitAllTemplates']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -5867,13 +5875,14 @@ export const ActionsApiFactory = function (configuration?: Configuration, basePa
             return localVarFp.actionsGptGenerate(requestParameters.actionsGptGenerateRequest, options).then((request) => request(axios, basePath));
         },
         /**
-         * Resubmits all eligible external templates for review across all bots in the team 
+         * Resubmits all eligible external templates for review across all bots in the team
          * @summary Resubmit all templates for a team
+         * @param {ActionsApiResubmitAllTemplatesRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        resubmitAllTemplates(options?: RawAxiosRequestConfig): AxiosPromise<ResubmitAllTemplates200Response> {
-            return localVarFp.resubmitAllTemplates(options).then((request) => request(axios, basePath));
+        resubmitAllTemplates(requestParameters: ActionsApiResubmitAllTemplatesRequest, options?: RawAxiosRequestConfig): AxiosPromise<ResubmitAllTemplates200Response> {
+            return localVarFp.resubmitAllTemplates(requestParameters.teamId, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -5956,6 +5965,20 @@ export interface ActionsApiActionsGptGenerateRequest {
 }
 
 /**
+ * Request parameters for resubmitAllTemplates operation in ActionsApi.
+ * @export
+ * @interface ActionsApiResubmitAllTemplatesRequest
+ */
+export interface ActionsApiResubmitAllTemplatesRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof ActionsApiResubmitAllTemplates
+     */
+    readonly teamId: string
+}
+
+/**
  * ActionsApi - object-oriented interface
  * @export
  * @class ActionsApi
@@ -5999,14 +6022,15 @@ export class ActionsApi extends BaseAPI {
     }
 
     /**
-     * Resubmits all eligible external templates for review across all bots in the team 
+     * Resubmits all eligible external templates for review across all bots in the team
      * @summary Resubmit all templates for a team
+     * @param {ActionsApiResubmitAllTemplatesRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof ActionsApi
      */
-    public resubmitAllTemplates(options?: RawAxiosRequestConfig) {
-        return ActionsApiFp(this.configuration).resubmitAllTemplates(options).then((request) => request(this.axios, this.basePath));
+    public resubmitAllTemplates(requestParameters: ActionsApiResubmitAllTemplatesRequest, options?: RawAxiosRequestConfig) {
+        return ActionsApiFp(this.configuration).resubmitAllTemplates(requestParameters.teamId, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
