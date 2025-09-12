@@ -6878,6 +6878,44 @@ export const AccountApiAxiosParamCreator = function (configuration?: Configurati
             };
         },
         /**
+         * This route simulates creating a new account with the same ID. All data associated with the account is thus retained.
+         * @summary Recreate a deleted account
+         * @param {string} accountId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        accountsRecreatePost: async (accountId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'accountId' is not null or undefined
+            assertParamExists('accountsRecreatePost', 'accountId', accountId)
+            const localVarPath = `/accounts/{accountId}/recreate`
+                .replace(`{${"accountId"}}`, encodeURIComponent(String(accountId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["ACCOUNT_CREATE"], configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * WA supports login either by QR code or by OTP. This API allows changing the login mode. 
          * @summary Change login mode of a WhatsApp account
          * @param {string} accountId 
@@ -7031,6 +7069,19 @@ export const AccountApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
+         * This route simulates creating a new account with the same ID. All data associated with the account is thus retained.
+         * @summary Recreate a deleted account
+         * @param {string} accountId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async accountsRecreatePost(accountId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Account>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.accountsRecreatePost(accountId, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['AccountApi.accountsRecreatePost']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
          * WA supports login either by QR code or by OTP. This API allows changing the login mode. 
          * @summary Change login mode of a WhatsApp account
          * @param {string} accountId 
@@ -7123,6 +7174,16 @@ export const AccountApiFactory = function (configuration?: Configuration, basePa
          */
         accountsPost(requestParameters: AccountApiAccountsPostRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<Account> {
             return localVarFp.accountsPost(requestParameters.accountsPostRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * This route simulates creating a new account with the same ID. All data associated with the account is thus retained.
+         * @summary Recreate a deleted account
+         * @param {AccountApiAccountsRecreatePostRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        accountsRecreatePost(requestParameters: AccountApiAccountsRecreatePostRequest, options?: RawAxiosRequestConfig): AxiosPromise<Account> {
+            return localVarFp.accountsRecreatePost(requestParameters.accountId, options).then((request) => request(axios, basePath));
         },
         /**
          * WA supports login either by QR code or by OTP. This API allows changing the login mode. 
@@ -7306,6 +7367,20 @@ export interface AccountApiAccountsPostRequest {
 }
 
 /**
+ * Request parameters for accountsRecreatePost operation in AccountApi.
+ * @export
+ * @interface AccountApiAccountsRecreatePostRequest
+ */
+export interface AccountApiAccountsRecreatePostRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof AccountApiAccountsRecreatePost
+     */
+    readonly accountId: string
+}
+
+/**
  * Request parameters for waChangeLoginMode operation in AccountApi.
  * @export
  * @interface AccountApiWaChangeLoginModeRequest
@@ -7415,6 +7490,18 @@ export class AccountApi extends BaseAPI {
      */
     public accountsPost(requestParameters: AccountApiAccountsPostRequest = {}, options?: RawAxiosRequestConfig) {
         return AccountApiFp(this.configuration).accountsPost(requestParameters.accountsPostRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * This route simulates creating a new account with the same ID. All data associated with the account is thus retained.
+     * @summary Recreate a deleted account
+     * @param {AccountApiAccountsRecreatePostRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AccountApi
+     */
+    public accountsRecreatePost(requestParameters: AccountApiAccountsRecreatePostRequest, options?: RawAxiosRequestConfig) {
+        return AccountApiFp(this.configuration).accountsRecreatePost(requestParameters.accountId, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
