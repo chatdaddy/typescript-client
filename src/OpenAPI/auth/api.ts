@@ -647,6 +647,19 @@ export type FirebaseTokenRequestVariantEnum = typeof FirebaseTokenRequestVariant
 /**
  * 
  * @export
+ * @interface GetUsersCount200Response
+ */
+export interface GetUsersCount200Response {
+    /**
+     * Total number of users
+     * @type {number}
+     * @memberof GetUsersCount200Response
+     */
+    'count'?: number;
+}
+/**
+ * 
+ * @export
  * @interface InboxFilterData
  */
 export interface InboxFilterData {
@@ -6400,6 +6413,40 @@ export type TeamsGetVariantEnum = typeof TeamsGetVariantEnum[keyof typeof TeamsG
 export const UsersApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
+         * 
+         * @summary Get total user count
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getUsersCount: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/users/count`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", [], configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * Deletes the user specified
          * @summary Delete a user
          * @param {string} id 
@@ -6693,6 +6740,18 @@ export const UsersApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = UsersApiAxiosParamCreator(configuration)
     return {
         /**
+         * 
+         * @summary Get total user count
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getUsersCount(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetUsersCount200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getUsersCount(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['UsersApi.getUsersCount']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
          * Deletes the user specified
          * @summary Delete a user
          * @param {string} id 
@@ -6790,6 +6849,15 @@ export const UsersApiFp = function(configuration?: Configuration) {
 export const UsersApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
     const localVarFp = UsersApiFp(configuration)
     return {
+        /**
+         * 
+         * @summary Get total user count
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getUsersCount(options?: RawAxiosRequestConfig): AxiosPromise<GetUsersCount200Response> {
+            return localVarFp.getUsersCount(options).then((request) => request(axios, basePath));
+        },
         /**
          * Deletes the user specified
          * @summary Delete a user
@@ -7014,6 +7082,17 @@ export interface UsersApiUsersPostRequest {
  * @extends {BaseAPI}
  */
 export class UsersApi extends BaseAPI {
+    /**
+     * 
+     * @summary Get total user count
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof UsersApi
+     */
+    public getUsersCount(options?: RawAxiosRequestConfig) {
+        return UsersApiFp(this.configuration).getUsersCount(options).then((request) => request(this.axios, this.basePath));
+    }
+
     /**
      * Deletes the user specified
      * @summary Delete a user
