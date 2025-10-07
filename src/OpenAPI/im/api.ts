@@ -2965,6 +2965,19 @@ export interface EntryItems {
 /**
  * 
  * @export
+ * @interface GetLatestTicket200Response
+ */
+export interface GetLatestTicket200Response {
+    /**
+     * 
+     * @type {CrmTicket}
+     * @memberof GetLatestTicket200Response
+     */
+    'ticket'?: CrmTicket;
+}
+/**
+ * 
+ * @export
  * @interface GetPosts200Response
  */
 export interface GetPosts200Response {
@@ -8564,6 +8577,47 @@ export const CRMApiAxiosParamCreator = function (configuration?: Configuration) 
         },
         /**
          * 
+         * @summary Get the latest ticket for a CRM board
+         * @param {string} boardId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getLatestTicket: async (boardId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'boardId' is not null or undefined
+            assertParamExists('getLatestTicket', 'boardId', boardId)
+            const localVarPath = `/crm/getLatestTicket`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", [], configuration)
+
+            if (boardId !== undefined) {
+                localVarQueryParameter['boardId'] = boardId;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
          * @summary Get CRM tickets
          * @param {number} [count] Number of items to return
          * @param {string} [page] 
@@ -8963,6 +9017,19 @@ export const CRMApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
+         * @summary Get the latest ticket for a CRM board
+         * @param {string} boardId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getLatestTicket(boardId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetLatestTicket200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getLatestTicket(boardId, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['CRMApi.getLatestTicket']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
          * @summary Get CRM tickets
          * @param {number} [count] Number of items to return
          * @param {string} [page] 
@@ -9136,6 +9203,16 @@ export const CRMApiFactory = function (configuration?: Configuration, basePath?:
         },
         /**
          * 
+         * @summary Get the latest ticket for a CRM board
+         * @param {CRMApiGetLatestTicketRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getLatestTicket(requestParameters: CRMApiGetLatestTicketRequest, options?: RawAxiosRequestConfig): AxiosPromise<GetLatestTicket200Response> {
+            return localVarFp.getLatestTicket(requestParameters.boardId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
          * @summary Get CRM tickets
          * @param {CRMApiGetTicketsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -9290,6 +9367,20 @@ export interface CRMApiDeleteTicketRequest {
      * @memberof CRMApiDeleteTicket
      */
     readonly id: string
+}
+
+/**
+ * Request parameters for getLatestTicket operation in CRMApi.
+ * @export
+ * @interface CRMApiGetLatestTicketRequest
+ */
+export interface CRMApiGetLatestTicketRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof CRMApiGetLatestTicket
+     */
+    readonly boardId: string
 }
 
 /**
@@ -9595,6 +9686,18 @@ export class CRMApi extends BaseAPI {
      */
     public deleteTicket(requestParameters: CRMApiDeleteTicketRequest, options?: RawAxiosRequestConfig) {
         return CRMApiFp(this.configuration).deleteTicket(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Get the latest ticket for a CRM board
+     * @param {CRMApiGetLatestTicketRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CRMApi
+     */
+    public getLatestTicket(requestParameters: CRMApiGetLatestTicketRequest, options?: RawAxiosRequestConfig) {
+        return CRMApiFp(this.configuration).getLatestTicket(requestParameters.boardId, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
