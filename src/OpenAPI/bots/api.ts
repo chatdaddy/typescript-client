@@ -4233,6 +4233,12 @@ export interface NextAction {
     'groups'?: Array<NextActionGroupsInner>;
     /**
      * 
+     * @type {NextActionRandomizer}
+     * @memberof NextAction
+     */
+    'randomizer'?: NextActionRandomizer;
+    /**
+     * 
      * @type {Position}
      * @memberof NextAction
      */
@@ -4271,6 +4277,25 @@ export const NextActionGroupsInnerOperatorEnum = {
 
 export type NextActionGroupsInnerOperatorEnum = typeof NextActionGroupsInnerOperatorEnum[keyof typeof NextActionGroupsInnerOperatorEnum];
 
+/**
+ * Randomly pick one of the actions to fire
+ * @export
+ * @interface NextActionRandomizer
+ */
+export interface NextActionRandomizer {
+    /**
+     * 
+     * @type {Array<ActionTarget>}
+     * @memberof NextActionRandomizer
+     */
+    'targets'?: Array<ActionTarget>;
+    /**
+     * 
+     * @type {Array<number>}
+     * @memberof NextActionRandomizer
+     */
+    'weights'?: Array<number>;
+}
 /**
  * describe OAuth input for access tokens
  * @export

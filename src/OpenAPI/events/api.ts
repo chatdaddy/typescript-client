@@ -1878,6 +1878,12 @@ export interface BotInsertDataActionsInnerAllOfMessageButtonsInnerNextAction {
     'groups'?: Array<BotInsertDataActionsInnerAllOfMessageButtonsInnerNextActionGroupsInner>;
     /**
      * 
+     * @type {BotInsertDataActionsInnerAllOfMessageButtonsInnerNextActionRandomizer}
+     * @memberof BotInsertDataActionsInnerAllOfMessageButtonsInnerNextAction
+     */
+    'randomizer'?: BotInsertDataActionsInnerAllOfMessageButtonsInnerNextActionRandomizer;
+    /**
+     * 
      * @type {BotInsertDataActionsInnerAllOfMessageButtonsInnerPosition}
      * @memberof BotInsertDataActionsInnerAllOfMessageButtonsInnerNextAction
      */
@@ -2267,6 +2273,50 @@ export const BotInsertDataActionsInnerAllOfMessageButtonsInnerNextActionGroupsIn
 
 export type BotInsertDataActionsInnerAllOfMessageButtonsInnerNextActionGroupsInnerValidationInnerOneOf6OperatorEnum = typeof BotInsertDataActionsInnerAllOfMessageButtonsInnerNextActionGroupsInnerValidationInnerOneOf6OperatorEnum[keyof typeof BotInsertDataActionsInnerAllOfMessageButtonsInnerNextActionGroupsInnerValidationInnerOneOf6OperatorEnum];
 
+/**
+ * Randomly pick one of the actions to fire
+ * @export
+ * @interface BotInsertDataActionsInnerAllOfMessageButtonsInnerNextActionRandomizer
+ */
+export interface BotInsertDataActionsInnerAllOfMessageButtonsInnerNextActionRandomizer {
+    /**
+     * 
+     * @type {Array<BotInsertDataActionsInnerAllOfMessageButtonsInnerNextActionRandomizerTargetsInner>}
+     * @memberof BotInsertDataActionsInnerAllOfMessageButtonsInnerNextActionRandomizer
+     */
+    'targets'?: Array<BotInsertDataActionsInnerAllOfMessageButtonsInnerNextActionRandomizerTargetsInner>;
+    /**
+     * 
+     * @type {Array<number>}
+     * @memberof BotInsertDataActionsInnerAllOfMessageButtonsInnerNextActionRandomizer
+     */
+    'weights'?: Array<number>;
+}
+/**
+ * 
+ * @export
+ * @interface BotInsertDataActionsInnerAllOfMessageButtonsInnerNextActionRandomizerTargetsInner
+ */
+export interface BotInsertDataActionsInnerAllOfMessageButtonsInnerNextActionRandomizerTargetsInner {
+    /**
+     * 
+     * @type {string}
+     * @memberof BotInsertDataActionsInnerAllOfMessageButtonsInnerNextActionRandomizerTargetsInner
+     */
+    'triggerActionId': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof BotInsertDataActionsInnerAllOfMessageButtonsInnerNextActionRandomizerTargetsInner
+     */
+    'triggerBotId'?: string;
+    /**
+     * 
+     * @type {BotInsertDataActionsInnerAllOfMessageButtonsInnerPosition}
+     * @memberof BotInsertDataActionsInnerAllOfMessageButtonsInnerNextActionRandomizerTargetsInner
+     */
+    'position'?: BotInsertDataActionsInnerAllOfMessageButtonsInnerPosition | null;
+}
 /**
  * 
  * @export
@@ -3444,10 +3494,10 @@ export interface BotNodeEventDataOneOf5 {
     'type': BotNodeEventDataOneOf5TypeEnum;
     /**
      * 
-     * @type {BotInsertDataActionsInnerAllOfMessageButtonsInnerNextAction}
+     * @type {BotNodeEventDataOneOfDataAllOfMessageButtonsInnerNextAction}
      * @memberof BotNodeEventDataOneOf5
      */
-    'data': BotInsertDataActionsInnerAllOfMessageButtonsInnerNextAction;
+    'data': BotNodeEventDataOneOfDataAllOfMessageButtonsInnerNextAction;
     /**
      * 
      * @type {BotNodeEventDataOneOf5Handle}
@@ -3971,10 +4021,10 @@ export interface BotNodeEventDataOneOfData {
     'remove'?: boolean;
     /**
      * 
-     * @type {BotInsertDataActionsInnerAllOfFormRef}
+     * @type {BotNodeEventDataOneOfDataAllOfFormRef}
      * @memberof BotNodeEventDataOneOfData
      */
-    'formRef'?: BotInsertDataActionsInnerAllOfFormRef | null;
+    'formRef'?: BotNodeEventDataOneOfDataAllOfFormRef | null;
     /**
      * 
      * @type {BotInsertDataActionsInnerAllOfFormActionMetadata}
@@ -4011,6 +4061,50 @@ export type BotNodeEventDataOneOfDataMessageTypeEnum = typeof BotNodeEventDataOn
 /**
  * 
  * @export
+ * @interface BotNodeEventDataOneOfDataAllOfFormRef
+ */
+export interface BotNodeEventDataOneOfDataAllOfFormRef {
+    /**
+     * 
+     * @type {string}
+     * @memberof BotNodeEventDataOneOfDataAllOfFormRef
+     */
+    'id': string;
+    /**
+     * 
+     * @type {BotNodeEventDataOneOfDataAllOfFormRefActions}
+     * @memberof BotNodeEventDataOneOfDataAllOfFormRef
+     */
+    'actions'?: BotNodeEventDataOneOfDataAllOfFormRefActions;
+    /**
+     * 
+     * @type {BotInsertDataActionsInnerAllOfMessageButtonsInnerPosition}
+     * @memberof BotNodeEventDataOneOfDataAllOfFormRef
+     */
+    'position'?: BotInsertDataActionsInnerAllOfMessageButtonsInnerPosition | null;
+}
+/**
+ * 
+ * @export
+ * @interface BotNodeEventDataOneOfDataAllOfFormRefActions
+ */
+export interface BotNodeEventDataOneOfDataAllOfFormRefActions {
+    /**
+     * 
+     * @type {BotNodeEventDataOneOfDataAllOfMessageButtonsInnerNextAction}
+     * @memberof BotNodeEventDataOneOfDataAllOfFormRefActions
+     */
+    'onSubmit'?: BotNodeEventDataOneOfDataAllOfMessageButtonsInnerNextAction;
+    /**
+     * 
+     * @type {BotNodeEventDataOneOfDataAllOfMessageButtonsInnerNextAction}
+     * @memberof BotNodeEventDataOneOfDataAllOfFormRefActions
+     */
+    'onAbandon'?: BotNodeEventDataOneOfDataAllOfMessageButtonsInnerNextAction;
+}
+/**
+ * 
+ * @export
  * @interface BotNodeEventDataOneOfDataAllOfMessage
  */
 export interface BotNodeEventDataOneOfDataAllOfMessage {
@@ -4028,10 +4122,10 @@ export interface BotNodeEventDataOneOfDataAllOfMessage {
     'attachments'?: Array<BotNodeEventDataOneOfDataAllOfMessageAttachmentsInner>;
     /**
      * 
-     * @type {Array<BotInsertDataActionsInnerAllOfMessageButtonsInner>}
+     * @type {Array<BotNodeEventDataOneOfDataAllOfMessageButtonsInner>}
      * @memberof BotNodeEventDataOneOfDataAllOfMessage
      */
-    'buttons'?: Array<BotInsertDataActionsInnerAllOfMessageButtonsInner>;
+    'buttons'?: Array<BotNodeEventDataOneOfDataAllOfMessageButtonsInner>;
     /**
      * 
      * @type {Array<BotNodeEventDataOneOfDataAllOfMessageDelaysInner>}
@@ -4046,10 +4140,10 @@ export interface BotNodeEventDataOneOfDataAllOfMessage {
     'input'?: BotNodeEventDataOneOfDataAllOfMessageInput;
     /**
      * 
-     * @type {BotInsertDataActionsInnerAllOfMessageList}
+     * @type {BotNodeEventDataOneOfDataAllOfMessageList}
      * @memberof BotNodeEventDataOneOfDataAllOfMessage
      */
-    'list'?: BotInsertDataActionsInnerAllOfMessageList;
+    'list'?: BotNodeEventDataOneOfDataAllOfMessageList;
     /**
      * 
      * @type {string}
@@ -4134,6 +4228,81 @@ export type BotNodeEventDataOneOfDataAllOfMessageAttachmentsInnerTypeEnum = type
 /**
  * 
  * @export
+ * @interface BotNodeEventDataOneOfDataAllOfMessageButtonsInner
+ */
+export interface BotNodeEventDataOneOfDataAllOfMessageButtonsInner {
+    /**
+     * 
+     * @type {string}
+     * @memberof BotNodeEventDataOneOfDataAllOfMessageButtonsInner
+     */
+    'text': string;
+    /**
+     * Use \"nextAction\" instead
+     * @type {string}
+     * @memberof BotNodeEventDataOneOfDataAllOfMessageButtonsInner
+     * @deprecated
+     */
+    'triggerActionId'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof BotNodeEventDataOneOfDataAllOfMessageButtonsInner
+     */
+    'triggerBotId'?: string | null;
+    /**
+     * Make a button with a link
+     * @type {string}
+     * @memberof BotNodeEventDataOneOfDataAllOfMessageButtonsInner
+     */
+    'url'?: string;
+    /**
+     * Make a button with a phone number
+     * @type {string}
+     * @memberof BotNodeEventDataOneOfDataAllOfMessageButtonsInner
+     */
+    'phoneNumber'?: string;
+    /**
+     * 
+     * @type {BotInsertDataActionsInnerAllOfMessageButtonsInnerPosition}
+     * @memberof BotNodeEventDataOneOfDataAllOfMessageButtonsInner
+     */
+    'position'?: BotInsertDataActionsInnerAllOfMessageButtonsInnerPosition | null;
+    /**
+     * 
+     * @type {BotNodeEventDataOneOfDataAllOfMessageButtonsInnerNextAction}
+     * @memberof BotNodeEventDataOneOfDataAllOfMessageButtonsInner
+     */
+    'nextAction'?: BotNodeEventDataOneOfDataAllOfMessageButtonsInnerNextAction;
+}
+/**
+ * Specify the next action to be fired
+ * @export
+ * @interface BotNodeEventDataOneOfDataAllOfMessageButtonsInnerNextAction
+ */
+export interface BotNodeEventDataOneOfDataAllOfMessageButtonsInnerNextAction {
+    /**
+     * 
+     * @type {BotInsertDataActionsInnerAllOfMessageButtonsInnerNextActionDefaultAction}
+     * @memberof BotNodeEventDataOneOfDataAllOfMessageButtonsInnerNextAction
+     */
+    'defaultAction'?: BotInsertDataActionsInnerAllOfMessageButtonsInnerNextActionDefaultAction;
+    /**
+     * List of conditions to validate
+     * @type {Array<BotInsertDataActionsInnerAllOfMessageButtonsInnerNextActionGroupsInner>}
+     * @memberof BotNodeEventDataOneOfDataAllOfMessageButtonsInnerNextAction
+     */
+    'groups'?: Array<BotInsertDataActionsInnerAllOfMessageButtonsInnerNextActionGroupsInner>;
+    /**
+     * 
+     * @type {BotInsertDataActionsInnerAllOfMessageButtonsInnerPosition}
+     * @memberof BotNodeEventDataOneOfDataAllOfMessageButtonsInnerNextAction
+     */
+    'position'?: BotInsertDataActionsInnerAllOfMessageButtonsInnerPosition | null;
+}
+/**
+ * 
+ * @export
  * @interface BotNodeEventDataOneOfDataAllOfMessageDelaysInner
  */
 export interface BotNodeEventDataOneOfDataAllOfMessageDelaysInner {
@@ -4176,10 +4345,10 @@ export interface BotNodeEventDataOneOfDataAllOfMessageDelaysInner {
     'position'?: BotInsertDataActionsInnerAllOfMessageButtonsInnerPosition | null;
     /**
      * 
-     * @type {BotInsertDataActionsInnerAllOfMessageButtonsInnerNextAction}
+     * @type {BotNodeEventDataOneOfDataAllOfMessageButtonsInnerNextAction}
      * @memberof BotNodeEventDataOneOfDataAllOfMessageDelaysInner
      */
-    'nextAction'?: BotInsertDataActionsInnerAllOfMessageButtonsInnerNextAction;
+    'nextAction'?: BotNodeEventDataOneOfDataAllOfMessageButtonsInnerNextAction;
 }
 /**
  * 
@@ -4214,10 +4383,10 @@ export interface BotNodeEventDataOneOfDataAllOfMessageInput {
     'triggerBotId'?: string | null;
     /**
      * 
-     * @type {BotInsertDataActionsInnerAllOfMessageButtonsInnerNextAction}
+     * @type {BotNodeEventDataOneOfDataAllOfMessageButtonsInnerNextAction}
      * @memberof BotNodeEventDataOneOfDataAllOfMessageInput
      */
-    'nextAction'?: BotInsertDataActionsInnerAllOfMessageButtonsInnerNextAction;
+    'nextAction'?: BotNodeEventDataOneOfDataAllOfMessageButtonsInnerNextAction;
     /**
      * 
      * @type {BotInsertDataActionsInnerAllOfMessageButtonsInnerPosition}
@@ -4246,6 +4415,75 @@ export const BotNodeEventDataOneOfDataAllOfMessageInputValidationTypeEnum = {
 
 export type BotNodeEventDataOneOfDataAllOfMessageInputValidationTypeEnum = typeof BotNodeEventDataOneOfDataAllOfMessageInputValidationTypeEnum[keyof typeof BotNodeEventDataOneOfDataAllOfMessageInputValidationTypeEnum];
 
+/**
+ * 
+ * @export
+ * @interface BotNodeEventDataOneOfDataAllOfMessageList
+ */
+export interface BotNodeEventDataOneOfDataAllOfMessageList {
+    /**
+     * 
+     * @type {string}
+     * @memberof BotNodeEventDataOneOfDataAllOfMessageList
+     */
+    'title'?: string;
+    /**
+     * 
+     * @type {Array<BotNodeEventDataOneOfDataAllOfMessageListSectionsInner>}
+     * @memberof BotNodeEventDataOneOfDataAllOfMessageList
+     */
+    'sections': Array<BotNodeEventDataOneOfDataAllOfMessageListSectionsInner>;
+    /**
+     * 
+     * @type {BotInsertDataActionsInnerAllOfMessageButtonsInnerPosition}
+     * @memberof BotNodeEventDataOneOfDataAllOfMessageList
+     */
+    'position'?: BotInsertDataActionsInnerAllOfMessageButtonsInnerPosition | null;
+}
+/**
+ * 
+ * @export
+ * @interface BotNodeEventDataOneOfDataAllOfMessageListSectionsInner
+ */
+export interface BotNodeEventDataOneOfDataAllOfMessageListSectionsInner {
+    /**
+     * 
+     * @type {string}
+     * @memberof BotNodeEventDataOneOfDataAllOfMessageListSectionsInner
+     */
+    'title': string;
+    /**
+     * 
+     * @type {Array<BotNodeEventDataOneOfDataAllOfMessageListSectionsInnerOptionsInner>}
+     * @memberof BotNodeEventDataOneOfDataAllOfMessageListSectionsInner
+     */
+    'options': Array<BotNodeEventDataOneOfDataAllOfMessageListSectionsInnerOptionsInner>;
+}
+/**
+ * 
+ * @export
+ * @interface BotNodeEventDataOneOfDataAllOfMessageListSectionsInnerOptionsInner
+ */
+export interface BotNodeEventDataOneOfDataAllOfMessageListSectionsInnerOptionsInner {
+    /**
+     * 
+     * @type {string}
+     * @memberof BotNodeEventDataOneOfDataAllOfMessageListSectionsInnerOptionsInner
+     */
+    'text': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof BotNodeEventDataOneOfDataAllOfMessageListSectionsInnerOptionsInner
+     */
+    'description'?: string;
+    /**
+     * 
+     * @type {BotNodeEventDataOneOfDataAllOfMessageButtonsInnerNextAction}
+     * @memberof BotNodeEventDataOneOfDataAllOfMessageListSectionsInnerOptionsInner
+     */
+    'nextAction'?: BotNodeEventDataOneOfDataAllOfMessageButtonsInnerNextAction;
+}
 /**
  * 
  * @export
