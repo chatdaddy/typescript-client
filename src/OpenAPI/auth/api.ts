@@ -106,6 +106,44 @@ export interface ActorMetadata {
 /**
  * 
  * @export
+ * @interface AdminLogin200Response
+ */
+export interface AdminLogin200Response {
+    /**
+     * JWT token with ADMIN_PANEL_ACCESS
+     * @type {string}
+     * @memberof AdminLogin200Response
+     */
+    'token'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof AdminLogin200Response
+     */
+    'userId'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof AdminLogin200Response
+     */
+    'teamId'?: string;
+}
+/**
+ * 
+ * @export
+ * @interface AdminLoginRequest
+ */
+export interface AdminLoginRequest {
+    /**
+     * The UUID of the user trying to login as admin
+     * @type {string}
+     * @memberof AdminLoginRequest
+     */
+    'userId': string;
+}
+/**
+ * 
+ * @export
  * @interface AnnouncementButtonAction
  */
 export interface AnnouncementButtonAction {
@@ -556,6 +594,19 @@ export interface EmailOtpRequest {
      * @memberof EmailOtpRequest
      */
     'captchaToken'?: string;
+}
+/**
+ * 
+ * @export
+ * @interface ErrorResponse
+ */
+export interface ErrorResponse {
+    /**
+     * 
+     * @type {string}
+     * @memberof ErrorResponse
+     */
+    'message'?: string;
 }
 /**
  * 
@@ -3220,6 +3271,130 @@ export class APITokensApi extends BaseAPI {
      */
     public apiTokenValidatePost(requestParameters: APITokensApiApiTokenValidatePostRequest = {}, options?: RawAxiosRequestConfig) {
         return APITokensApiFp(this.configuration).apiTokenValidatePost(requestParameters.apiTokenValidatePostRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+
+/**
+ * AdminApi - axios parameter creator
+ * @export
+ */
+export const AdminApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * Verifies that the user belongs to an admin team and returns an internal JWT token with `ADMIN_PANEL_ACCESS` scope. 
+         * @summary Admin login for BI panel
+         * @param {AdminLoginRequest} adminLoginRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        adminLogin: async (adminLoginRequest: AdminLoginRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'adminLoginRequest' is not null or undefined
+            assertParamExists('adminLogin', 'adminLoginRequest', adminLoginRequest)
+            const localVarPath = `/admin-login`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(adminLoginRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * AdminApi - functional programming interface
+ * @export
+ */
+export const AdminApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = AdminApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * Verifies that the user belongs to an admin team and returns an internal JWT token with `ADMIN_PANEL_ACCESS` scope. 
+         * @summary Admin login for BI panel
+         * @param {AdminLoginRequest} adminLoginRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async adminLogin(adminLoginRequest: AdminLoginRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AdminLogin200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.adminLogin(adminLoginRequest, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['AdminApi.adminLogin']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+    }
+};
+
+/**
+ * AdminApi - factory interface
+ * @export
+ */
+export const AdminApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = AdminApiFp(configuration)
+    return {
+        /**
+         * Verifies that the user belongs to an admin team and returns an internal JWT token with `ADMIN_PANEL_ACCESS` scope. 
+         * @summary Admin login for BI panel
+         * @param {AdminApiAdminLoginRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        adminLogin(requestParameters: AdminApiAdminLoginRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminLogin200Response> {
+            return localVarFp.adminLogin(requestParameters.adminLoginRequest, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * Request parameters for adminLogin operation in AdminApi.
+ * @export
+ * @interface AdminApiAdminLoginRequest
+ */
+export interface AdminApiAdminLoginRequest {
+    /**
+     * 
+     * @type {AdminLoginRequest}
+     * @memberof AdminApiAdminLogin
+     */
+    readonly adminLoginRequest: AdminLoginRequest
+}
+
+/**
+ * AdminApi - object-oriented interface
+ * @export
+ * @class AdminApi
+ * @extends {BaseAPI}
+ */
+export class AdminApi extends BaseAPI {
+    /**
+     * Verifies that the user belongs to an admin team and returns an internal JWT token with `ADMIN_PANEL_ACCESS` scope. 
+     * @summary Admin login for BI panel
+     * @param {AdminApiAdminLoginRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AdminApi
+     */
+    public adminLogin(requestParameters: AdminApiAdminLoginRequest, options?: RawAxiosRequestConfig) {
+        return AdminApiFp(this.configuration).adminLogin(requestParameters.adminLoginRequest, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
