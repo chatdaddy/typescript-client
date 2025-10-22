@@ -702,7 +702,7 @@ export type FirebaseTokenRequestVariantEnum = typeof FirebaseTokenRequestVariant
  */
 export interface GetUsersCount200Response {
     /**
-     * Total number of users
+     * Total number of users matching the criteria
      * @type {number}
      * @memberof GetUsersCount200Response
      */
@@ -6549,12 +6549,15 @@ export type TeamsGetVariantEnum = typeof TeamsGetVariantEnum[keyof typeof TeamsG
 export const UsersApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
-         * 
+         * Get the total count of users. Can be filtered by creation date range. Supports preset filters (daily, weekly, monthly) or custom date ranges. 
          * @summary Get total user count
+         * @param {string} [createdAfter] Filter users created after this timestamp (inclusive). Can be used with createdBefore to create a custom date range. 
+         * @param {string} [createdBefore] Filter users created before this timestamp (exclusive). Can be used with createdAfter to create a custom date range. 
+         * @param {GetUsersCountPresetEnum} [preset] Preset time range filter. Calculates user count for the specified period from the current time. Overrides createdAfter/createdBefore if provided. 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getUsersCount: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getUsersCount: async (createdAfter?: string, createdBefore?: string, preset?: GetUsersCountPresetEnum, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/users/count`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -6570,6 +6573,22 @@ export const UsersApiAxiosParamCreator = function (configuration?: Configuration
             // authentication chatdaddy required
             // oauth required
             await setOAuthToObject(localVarHeaderParameter, "chatdaddy", [], configuration)
+
+            if (createdAfter !== undefined) {
+                localVarQueryParameter['createdAfter'] = (createdAfter as any instanceof Date) ?
+                    (createdAfter as any).toISOString() :
+                    createdAfter;
+            }
+
+            if (createdBefore !== undefined) {
+                localVarQueryParameter['createdBefore'] = (createdBefore as any instanceof Date) ?
+                    (createdBefore as any).toISOString() :
+                    createdBefore;
+            }
+
+            if (preset !== undefined) {
+                localVarQueryParameter['preset'] = preset;
+            }
 
 
     
@@ -6876,13 +6895,16 @@ export const UsersApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = UsersApiAxiosParamCreator(configuration)
     return {
         /**
-         * 
+         * Get the total count of users. Can be filtered by creation date range. Supports preset filters (daily, weekly, monthly) or custom date ranges. 
          * @summary Get total user count
+         * @param {string} [createdAfter] Filter users created after this timestamp (inclusive). Can be used with createdBefore to create a custom date range. 
+         * @param {string} [createdBefore] Filter users created before this timestamp (exclusive). Can be used with createdAfter to create a custom date range. 
+         * @param {GetUsersCountPresetEnum} [preset] Preset time range filter. Calculates user count for the specified period from the current time. Overrides createdAfter/createdBefore if provided. 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getUsersCount(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetUsersCount200Response>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getUsersCount(options);
+        async getUsersCount(createdAfter?: string, createdBefore?: string, preset?: GetUsersCountPresetEnum, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetUsersCount200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getUsersCount(createdAfter, createdBefore, preset, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['UsersApi.getUsersCount']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -6986,13 +7008,14 @@ export const UsersApiFactory = function (configuration?: Configuration, basePath
     const localVarFp = UsersApiFp(configuration)
     return {
         /**
-         * 
+         * Get the total count of users. Can be filtered by creation date range. Supports preset filters (daily, weekly, monthly) or custom date ranges. 
          * @summary Get total user count
+         * @param {UsersApiGetUsersCountRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getUsersCount(options?: RawAxiosRequestConfig): AxiosPromise<GetUsersCount200Response> {
-            return localVarFp.getUsersCount(options).then((request) => request(axios, basePath));
+        getUsersCount(requestParameters: UsersApiGetUsersCountRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<GetUsersCount200Response> {
+            return localVarFp.getUsersCount(requestParameters.createdAfter, requestParameters.createdBefore, requestParameters.preset, options).then((request) => request(axios, basePath));
         },
         /**
          * Deletes the user specified
@@ -7056,6 +7079,34 @@ export const UsersApiFactory = function (configuration?: Configuration, basePath
         },
     };
 };
+
+/**
+ * Request parameters for getUsersCount operation in UsersApi.
+ * @export
+ * @interface UsersApiGetUsersCountRequest
+ */
+export interface UsersApiGetUsersCountRequest {
+    /**
+     * Filter users created after this timestamp (inclusive). Can be used with createdBefore to create a custom date range. 
+     * @type {string}
+     * @memberof UsersApiGetUsersCount
+     */
+    readonly createdAfter?: string
+
+    /**
+     * Filter users created before this timestamp (exclusive). Can be used with createdAfter to create a custom date range. 
+     * @type {string}
+     * @memberof UsersApiGetUsersCount
+     */
+    readonly createdBefore?: string
+
+    /**
+     * Preset time range filter. Calculates user count for the specified period from the current time. Overrides createdAfter/createdBefore if provided. 
+     * @type {'daily' | 'weekly' | 'monthly'}
+     * @memberof UsersApiGetUsersCount
+     */
+    readonly preset?: GetUsersCountPresetEnum
+}
 
 /**
  * Request parameters for usersDelete operation in UsersApi.
@@ -7219,14 +7270,15 @@ export interface UsersApiUsersPostRequest {
  */
 export class UsersApi extends BaseAPI {
     /**
-     * 
+     * Get the total count of users. Can be filtered by creation date range. Supports preset filters (daily, weekly, monthly) or custom date ranges. 
      * @summary Get total user count
+     * @param {UsersApiGetUsersCountRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof UsersApi
      */
-    public getUsersCount(options?: RawAxiosRequestConfig) {
-        return UsersApiFp(this.configuration).getUsersCount(options).then((request) => request(this.axios, this.basePath));
+    public getUsersCount(requestParameters: UsersApiGetUsersCountRequest = {}, options?: RawAxiosRequestConfig) {
+        return UsersApiFp(this.configuration).getUsersCount(requestParameters.createdAfter, requestParameters.createdBefore, requestParameters.preset, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -7302,6 +7354,15 @@ export class UsersApi extends BaseAPI {
     }
 }
 
+/**
+ * @export
+ */
+export const GetUsersCountPresetEnum = {
+    Daily: 'daily',
+    Weekly: 'weekly',
+    Monthly: 'monthly'
+} as const;
+export type GetUsersCountPresetEnum = typeof GetUsersCountPresetEnum[keyof typeof GetUsersCountPresetEnum];
 /**
  * @export
  */
