@@ -10018,13 +10018,16 @@ export const ChatsApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
-         * 
+         * Get the total count of channels. Can be filtered by account type and creation date range. Supports preset filters (daily, weekly, monthly) or custom date ranges. 
          * @summary Get channel count
          * @param {AccountType} [type] Filter by account type
+         * @param {string} [createdAfter] Filter channels created after this timestamp (inclusive). Can be used with createdBefore to create a custom date range. 
+         * @param {string} [createdBefore] Filter channels created before this timestamp (exclusive). Can be used with createdAfter to create a custom date range. 
+         * @param {GetChannelCountPresetEnum} [preset] Preset time range filter. Calculates channel count for the specified period from the current time. Overrides createdAfter/createdBefore if provided. 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getChannelCount: async (type?: AccountType, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getChannelCount: async (type?: AccountType, createdAfter?: string, createdBefore?: string, preset?: GetChannelCountPresetEnum, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/channel-count`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -10043,6 +10046,22 @@ export const ChatsApiAxiosParamCreator = function (configuration?: Configuration
 
             if (type !== undefined) {
                 localVarQueryParameter['type'] = type;
+            }
+
+            if (createdAfter !== undefined) {
+                localVarQueryParameter['createdAfter'] = (createdAfter as any instanceof Date) ?
+                    (createdAfter as any).toISOString() :
+                    createdAfter;
+            }
+
+            if (createdBefore !== undefined) {
+                localVarQueryParameter['createdBefore'] = (createdBefore as any instanceof Date) ?
+                    (createdBefore as any).toISOString() :
+                    createdBefore;
+            }
+
+            if (preset !== undefined) {
+                localVarQueryParameter['preset'] = preset;
             }
 
 
@@ -10129,14 +10148,17 @@ export const ChatsApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Get the total count of channels. Can be filtered by account type and creation date range. Supports preset filters (daily, weekly, monthly) or custom date ranges. 
          * @summary Get channel count
          * @param {AccountType} [type] Filter by account type
+         * @param {string} [createdAfter] Filter channels created after this timestamp (inclusive). Can be used with createdBefore to create a custom date range. 
+         * @param {string} [createdBefore] Filter channels created before this timestamp (exclusive). Can be used with createdAfter to create a custom date range. 
+         * @param {GetChannelCountPresetEnum} [preset] Preset time range filter. Calculates channel count for the specified period from the current time. Overrides createdAfter/createdBefore if provided. 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getChannelCount(type?: AccountType, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetChannelCount200Response>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getChannelCount(type, options);
+        async getChannelCount(type?: AccountType, createdAfter?: string, createdBefore?: string, preset?: GetChannelCountPresetEnum, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetChannelCount200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getChannelCount(type, createdAfter, createdBefore, preset, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['ChatsApi.getChannelCount']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -10182,14 +10204,14 @@ export const ChatsApiFactory = function (configuration?: Configuration, basePath
             return localVarFp.chatsPresencePost(requestParameters.accountId, requestParameters.id, requestParameters.presence, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Get the total count of channels. Can be filtered by account type and creation date range. Supports preset filters (daily, weekly, monthly) or custom date ranges. 
          * @summary Get channel count
          * @param {ChatsApiGetChannelCountRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
         getChannelCount(requestParameters: ChatsApiGetChannelCountRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<GetChannelCount200Response> {
-            return localVarFp.getChannelCount(requestParameters.type, options).then((request) => request(axios, basePath));
+            return localVarFp.getChannelCount(requestParameters.type, requestParameters.createdAfter, requestParameters.createdBefore, requestParameters.preset, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -10409,6 +10431,27 @@ export interface ChatsApiGetChannelCountRequest {
      * @memberof ChatsApiGetChannelCount
      */
     readonly type?: AccountType
+
+    /**
+     * Filter channels created after this timestamp (inclusive). Can be used with createdBefore to create a custom date range. 
+     * @type {string}
+     * @memberof ChatsApiGetChannelCount
+     */
+    readonly createdAfter?: string
+
+    /**
+     * Filter channels created before this timestamp (exclusive). Can be used with createdAfter to create a custom date range. 
+     * @type {string}
+     * @memberof ChatsApiGetChannelCount
+     */
+    readonly createdBefore?: string
+
+    /**
+     * Preset time range filter. Calculates channel count for the specified period from the current time. Overrides createdAfter/createdBefore if provided. 
+     * @type {'daily' | 'weekly' | 'monthly'}
+     * @memberof ChatsApiGetChannelCount
+     */
+    readonly preset?: GetChannelCountPresetEnum
 }
 
 /**
@@ -10455,7 +10498,7 @@ export class ChatsApi extends BaseAPI {
     }
 
     /**
-     * 
+     * Get the total count of channels. Can be filtered by account type and creation date range. Supports preset filters (daily, weekly, monthly) or custom date ranges. 
      * @summary Get channel count
      * @param {ChatsApiGetChannelCountRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -10463,10 +10506,19 @@ export class ChatsApi extends BaseAPI {
      * @memberof ChatsApi
      */
     public getChannelCount(requestParameters: ChatsApiGetChannelCountRequest = {}, options?: RawAxiosRequestConfig) {
-        return ChatsApiFp(this.configuration).getChannelCount(requestParameters.type, options).then((request) => request(this.axios, this.basePath));
+        return ChatsApiFp(this.configuration).getChannelCount(requestParameters.type, requestParameters.createdAfter, requestParameters.createdBefore, requestParameters.preset, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
+/**
+ * @export
+ */
+export const GetChannelCountPresetEnum = {
+    Daily: 'daily',
+    Weekly: 'weekly',
+    Monthly: 'monthly'
+} as const;
+export type GetChannelCountPresetEnum = typeof GetChannelCountPresetEnum[keyof typeof GetChannelCountPresetEnum];
 
 
 /**
