@@ -1497,6 +1497,37 @@ export const BulkMessageActionOneOf1TypeEnum = {
 export type BulkMessageActionOneOf1TypeEnum = typeof BulkMessageActionOneOf1TypeEnum[keyof typeof BulkMessageActionOneOf1TypeEnum];
 
 /**
+ * Comparison data for channel counts between two dates
+ * @export
+ * @interface ChannelCountComparison
+ */
+export interface ChannelCountComparison {
+    /**
+     * Current live channel count
+     * @type {number}
+     * @memberof ChannelCountComparison
+     */
+    'currentCount'?: number;
+    /**
+     * Channel count from the comparison date
+     * @type {number}
+     * @memberof ChannelCountComparison
+     */
+    'compareCount'?: number;
+    /**
+     * Absolute difference (current - compare)
+     * @type {number}
+     * @memberof ChannelCountComparison
+     */
+    'difference'?: number;
+    /**
+     * Percentage change from compare date to current
+     * @type {number}
+     * @memberof ChannelCountComparison
+     */
+    'percentageChange'?: number;
+}
+/**
  * 
  * @export
  * @interface Chat
@@ -2932,6 +2963,55 @@ export interface CrmTicketsPage {
     'totalCount'?: number;
 }
 /**
+ * Daily snapshot of connected channel counts
+ * @export
+ * @interface DailyChannelSnapshot
+ */
+export interface DailyChannelSnapshot {
+    /**
+     * Snapshot date (YYYY-MM-DD)
+     * @type {string}
+     * @memberof DailyChannelSnapshot
+     */
+    'date'?: string;
+    /**
+     * Total connected channels
+     * @type {number}
+     * @memberof DailyChannelSnapshot
+     */
+    'totalChannels'?: number;
+    /**
+     * WhatsApp channels
+     * @type {number}
+     * @memberof DailyChannelSnapshot
+     */
+    'whatsapp'?: number;
+    /**
+     * WhatsApp Business API channels
+     * @type {number}
+     * @memberof DailyChannelSnapshot
+     */
+    'waba'?: number;
+    /**
+     * Instagram channels
+     * @type {number}
+     * @memberof DailyChannelSnapshot
+     */
+    'instagram'?: number;
+    /**
+     * Messenger channels
+     * @type {number}
+     * @memberof DailyChannelSnapshot
+     */
+    'messenger'?: number;
+    /**
+     * When this snapshot was created
+     * @type {string}
+     * @memberof DailyChannelSnapshot
+     */
+    'timestamp'?: string;
+}
+/**
  * 
  * @export
  * @interface EntryItems
@@ -2980,6 +3060,62 @@ export interface GetChannelCount200Response {
      * @memberof GetChannelCount200Response
      */
     'countByType'?: { [key: string]: number; };
+}
+/**
+ * 
+ * @export
+ * @interface GetChannelCountComparison200Response
+ */
+export interface GetChannelCountComparison200Response {
+    /**
+     * The date being compared against
+     * @type {string}
+     * @memberof GetChannelCountComparison200Response
+     */
+    'compareDate'?: string;
+    /**
+     * 
+     * @type {ChannelCountComparison}
+     * @memberof GetChannelCountComparison200Response
+     */
+    'total'?: ChannelCountComparison;
+    /**
+     * 
+     * @type {ChannelCountComparison}
+     * @memberof GetChannelCountComparison200Response
+     */
+    'whatsapp'?: ChannelCountComparison;
+    /**
+     * 
+     * @type {ChannelCountComparison}
+     * @memberof GetChannelCountComparison200Response
+     */
+    'waba'?: ChannelCountComparison;
+    /**
+     * 
+     * @type {ChannelCountComparison}
+     * @memberof GetChannelCountComparison200Response
+     */
+    'instagram'?: ChannelCountComparison;
+    /**
+     * 
+     * @type {ChannelCountComparison}
+     * @memberof GetChannelCountComparison200Response
+     */
+    'messenger'?: ChannelCountComparison;
+}
+/**
+ * 
+ * @export
+ * @interface GetDailyChannelSnapshots200Response
+ */
+export interface GetDailyChannelSnapshots200Response {
+    /**
+     * 
+     * @type {Array<DailyChannelSnapshot>}
+     * @memberof GetDailyChannelSnapshots200Response
+     */
+    'snapshots'?: Array<DailyChannelSnapshot>;
 }
 /**
  * 
@@ -5840,6 +5976,44 @@ export const ReferencedPostLiveStatusEnum = {
 
 export type ReferencedPostLiveStatusEnum = typeof ReferencedPostLiveStatusEnum[keyof typeof ReferencedPostLiveStatusEnum];
 
+/**
+ * 
+ * @export
+ * @interface SaveDailyChannelSnapshot200Response
+ */
+export interface SaveDailyChannelSnapshot200Response {
+    /**
+     * 
+     * @type {boolean}
+     * @memberof SaveDailyChannelSnapshot200Response
+     */
+    'success'?: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof SaveDailyChannelSnapshot200Response
+     */
+    'date'?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof SaveDailyChannelSnapshot200Response
+     */
+    'totalChannels'?: number;
+}
+/**
+ * 
+ * @export
+ * @interface SaveDailyChannelSnapshotRequest
+ */
+export interface SaveDailyChannelSnapshotRequest {
+    /**
+     * Date for the snapshot (YYYY-MM-DD). Defaults to today if not provided.
+     * @type {string}
+     * @memberof SaveDailyChannelSnapshotRequest
+     */
+    'date'?: string;
+}
 /**
  * 
  * @export
@@ -10075,6 +10249,135 @@ export const ChatsApiAxiosParamCreator = function (configuration?: Configuration
                 options: localVarRequestOptions,
             };
         },
+        /**
+         * Compares the current live channel counts with snapshots from a specific date. Returns comparison for total channels and each channel type (WhatsApp, WABA, Instagram, Messenger). 
+         * @summary Compare channel counts between two dates
+         * @param {string} compareDate Date to compare against (YYYY-MM-DD). Compares current counts vs this date\&#39;s snapshot.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getChannelCountComparison: async (compareDate: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'compareDate' is not null or undefined
+            assertParamExists('getChannelCountComparison', 'compareDate', compareDate)
+            const localVarPath = `/channel-count-comparison`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", [], configuration)
+
+            if (compareDate !== undefined) {
+                localVarQueryParameter['compareDate'] = (compareDate as any instanceof Date) ?
+                    (compareDate as any).toISOString().substring(0,10) :
+                    compareDate;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Retrieves historical daily channel count snapshots. Returns pre-calculated channel counts for each day, useful for displaying historical trends. 
+         * @summary Get daily channel snapshots
+         * @param {string} [startDate] Start date for snapshot range (YYYY-MM-DD)
+         * @param {string} [endDate] End date for snapshot range (YYYY-MM-DD)
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getDailyChannelSnapshots: async (startDate?: string, endDate?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/channel-snapshots`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", [], configuration)
+
+            if (startDate !== undefined) {
+                localVarQueryParameter['startDate'] = (startDate as any instanceof Date) ?
+                    (startDate as any).toISOString().substring(0,10) :
+                    startDate;
+            }
+
+            if (endDate !== undefined) {
+                localVarQueryParameter['endDate'] = (endDate as any instanceof Date) ?
+                    (endDate as any).toISOString().substring(0,10) :
+                    endDate;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Saves a snapshot of connected channel counts for a specific date. This endpoint is typically called by a cron job at the end of each day. 
+         * @summary Save daily channel snapshot
+         * @param {SaveDailyChannelSnapshotRequest} [saveDailyChannelSnapshotRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        saveDailyChannelSnapshot: async (saveDailyChannelSnapshotRequest?: SaveDailyChannelSnapshotRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/channel-snapshots`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", [], configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(saveDailyChannelSnapshotRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
     }
 };
 
@@ -10163,6 +10466,46 @@ export const ChatsApiFp = function(configuration?: Configuration) {
             const localVarOperationServerBasePath = operationServerMap['ChatsApi.getChannelCount']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
+        /**
+         * Compares the current live channel counts with snapshots from a specific date. Returns comparison for total channels and each channel type (WhatsApp, WABA, Instagram, Messenger). 
+         * @summary Compare channel counts between two dates
+         * @param {string} compareDate Date to compare against (YYYY-MM-DD). Compares current counts vs this date\&#39;s snapshot.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getChannelCountComparison(compareDate: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetChannelCountComparison200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getChannelCountComparison(compareDate, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['ChatsApi.getChannelCountComparison']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Retrieves historical daily channel count snapshots. Returns pre-calculated channel counts for each day, useful for displaying historical trends. 
+         * @summary Get daily channel snapshots
+         * @param {string} [startDate] Start date for snapshot range (YYYY-MM-DD)
+         * @param {string} [endDate] End date for snapshot range (YYYY-MM-DD)
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getDailyChannelSnapshots(startDate?: string, endDate?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetDailyChannelSnapshots200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getDailyChannelSnapshots(startDate, endDate, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['ChatsApi.getDailyChannelSnapshots']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Saves a snapshot of connected channel counts for a specific date. This endpoint is typically called by a cron job at the end of each day. 
+         * @summary Save daily channel snapshot
+         * @param {SaveDailyChannelSnapshotRequest} [saveDailyChannelSnapshotRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async saveDailyChannelSnapshot(saveDailyChannelSnapshotRequest?: SaveDailyChannelSnapshotRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SaveDailyChannelSnapshot200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.saveDailyChannelSnapshot(saveDailyChannelSnapshotRequest, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['ChatsApi.saveDailyChannelSnapshot']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
     }
 };
 
@@ -10212,6 +10555,36 @@ export const ChatsApiFactory = function (configuration?: Configuration, basePath
          */
         getChannelCount(requestParameters: ChatsApiGetChannelCountRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<GetChannelCount200Response> {
             return localVarFp.getChannelCount(requestParameters.type, requestParameters.createdAfter, requestParameters.createdBefore, requestParameters.preset, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Compares the current live channel counts with snapshots from a specific date. Returns comparison for total channels and each channel type (WhatsApp, WABA, Instagram, Messenger). 
+         * @summary Compare channel counts between two dates
+         * @param {ChatsApiGetChannelCountComparisonRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getChannelCountComparison(requestParameters: ChatsApiGetChannelCountComparisonRequest, options?: RawAxiosRequestConfig): AxiosPromise<GetChannelCountComparison200Response> {
+            return localVarFp.getChannelCountComparison(requestParameters.compareDate, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Retrieves historical daily channel count snapshots. Returns pre-calculated channel counts for each day, useful for displaying historical trends. 
+         * @summary Get daily channel snapshots
+         * @param {ChatsApiGetDailyChannelSnapshotsRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getDailyChannelSnapshots(requestParameters: ChatsApiGetDailyChannelSnapshotsRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<GetDailyChannelSnapshots200Response> {
+            return localVarFp.getDailyChannelSnapshots(requestParameters.startDate, requestParameters.endDate, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Saves a snapshot of connected channel counts for a specific date. This endpoint is typically called by a cron job at the end of each day. 
+         * @summary Save daily channel snapshot
+         * @param {ChatsApiSaveDailyChannelSnapshotRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        saveDailyChannelSnapshot(requestParameters: ChatsApiSaveDailyChannelSnapshotRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<SaveDailyChannelSnapshot200Response> {
+            return localVarFp.saveDailyChannelSnapshot(requestParameters.saveDailyChannelSnapshotRequest, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -10455,6 +10828,55 @@ export interface ChatsApiGetChannelCountRequest {
 }
 
 /**
+ * Request parameters for getChannelCountComparison operation in ChatsApi.
+ * @export
+ * @interface ChatsApiGetChannelCountComparisonRequest
+ */
+export interface ChatsApiGetChannelCountComparisonRequest {
+    /**
+     * Date to compare against (YYYY-MM-DD). Compares current counts vs this date\&#39;s snapshot.
+     * @type {string}
+     * @memberof ChatsApiGetChannelCountComparison
+     */
+    readonly compareDate: string
+}
+
+/**
+ * Request parameters for getDailyChannelSnapshots operation in ChatsApi.
+ * @export
+ * @interface ChatsApiGetDailyChannelSnapshotsRequest
+ */
+export interface ChatsApiGetDailyChannelSnapshotsRequest {
+    /**
+     * Start date for snapshot range (YYYY-MM-DD)
+     * @type {string}
+     * @memberof ChatsApiGetDailyChannelSnapshots
+     */
+    readonly startDate?: string
+
+    /**
+     * End date for snapshot range (YYYY-MM-DD)
+     * @type {string}
+     * @memberof ChatsApiGetDailyChannelSnapshots
+     */
+    readonly endDate?: string
+}
+
+/**
+ * Request parameters for saveDailyChannelSnapshot operation in ChatsApi.
+ * @export
+ * @interface ChatsApiSaveDailyChannelSnapshotRequest
+ */
+export interface ChatsApiSaveDailyChannelSnapshotRequest {
+    /**
+     * 
+     * @type {SaveDailyChannelSnapshotRequest}
+     * @memberof ChatsApiSaveDailyChannelSnapshot
+     */
+    readonly saveDailyChannelSnapshotRequest?: SaveDailyChannelSnapshotRequest
+}
+
+/**
  * ChatsApi - object-oriented interface
  * @export
  * @class ChatsApi
@@ -10507,6 +10929,42 @@ export class ChatsApi extends BaseAPI {
      */
     public getChannelCount(requestParameters: ChatsApiGetChannelCountRequest = {}, options?: RawAxiosRequestConfig) {
         return ChatsApiFp(this.configuration).getChannelCount(requestParameters.type, requestParameters.createdAfter, requestParameters.createdBefore, requestParameters.preset, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Compares the current live channel counts with snapshots from a specific date. Returns comparison for total channels and each channel type (WhatsApp, WABA, Instagram, Messenger). 
+     * @summary Compare channel counts between two dates
+     * @param {ChatsApiGetChannelCountComparisonRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ChatsApi
+     */
+    public getChannelCountComparison(requestParameters: ChatsApiGetChannelCountComparisonRequest, options?: RawAxiosRequestConfig) {
+        return ChatsApiFp(this.configuration).getChannelCountComparison(requestParameters.compareDate, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Retrieves historical daily channel count snapshots. Returns pre-calculated channel counts for each day, useful for displaying historical trends. 
+     * @summary Get daily channel snapshots
+     * @param {ChatsApiGetDailyChannelSnapshotsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ChatsApi
+     */
+    public getDailyChannelSnapshots(requestParameters: ChatsApiGetDailyChannelSnapshotsRequest = {}, options?: RawAxiosRequestConfig) {
+        return ChatsApiFp(this.configuration).getDailyChannelSnapshots(requestParameters.startDate, requestParameters.endDate, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Saves a snapshot of connected channel counts for a specific date. This endpoint is typically called by a cron job at the end of each day. 
+     * @summary Save daily channel snapshot
+     * @param {ChatsApiSaveDailyChannelSnapshotRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ChatsApi
+     */
+    public saveDailyChannelSnapshot(requestParameters: ChatsApiSaveDailyChannelSnapshotRequest = {}, options?: RawAxiosRequestConfig) {
+        return ChatsApiFp(this.configuration).saveDailyChannelSnapshot(requestParameters.saveDailyChannelSnapshotRequest, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
