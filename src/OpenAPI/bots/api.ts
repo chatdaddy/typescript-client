@@ -4031,6 +4031,43 @@ export type MapPropertyDescriptorTypeEnum = typeof MapPropertyDescriptorTypeEnum
 /**
  * 
  * @export
+ * @interface MessageFireRecord
+ */
+export interface MessageFireRecord {
+    /**
+     * 
+     * @type {string}
+     * @memberof MessageFireRecord
+     */
+    'id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof MessageFireRecord
+     */
+    'accountId'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof MessageFireRecord
+     */
+    'contactId'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof MessageFireRecord
+     */
+    'hashedText'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof MessageFireRecord
+     */
+    'createdAt': string;
+}
+/**
+ * 
+ * @export
  * @interface MessageObj
  */
 export interface MessageObj {
