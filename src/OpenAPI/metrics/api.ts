@@ -971,6 +971,12 @@ export interface MetricConfig {
     'defaultName': string;
     /**
      * 
+     * @type {MetricType}
+     * @memberof MetricConfig
+     */
+    'type'?: MetricType;
+    /**
+     * 
      * @type {string}
      * @memberof MetricConfig
      */
