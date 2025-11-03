@@ -519,6 +519,12 @@ export interface DashboardSchemaItem {
     'name': string;
     /**
      * 
+     * @type {MetricType}
+     * @memberof DashboardSchemaItem
+     */
+    'type'?: MetricType;
+    /**
+     * 
      * @type {{ [key: string]: any; }}
      * @memberof DashboardSchemaItem
      */
@@ -1043,6 +1049,22 @@ export interface MetricConfigPropertyAllOfElasticConfig {
      */
     'nestedPath'?: string;
 }
+/**
+ * 
+ * @export
+ * @enum {string}
+ */
+
+export const MetricType = {
+    ChatsPerformance: 'chats-performance',
+    MarketingPerformance: 'marketing-performance',
+    AgentPerformance: 'agent-performance',
+    SalesPerformance: 'sales-performance'
+} as const;
+
+export type MetricType = typeof MetricType[keyof typeof MetricType];
+
+
 /**
  * @type MetricsResult
  * @export
@@ -1684,11 +1706,12 @@ export const DashboardApiAxiosParamCreator = function (configuration?: Configura
          * @param {DateRange} [customDateRange] Custom date range to query the data in. Only required if period is set to \&quot;custom\&quot;
          * @param {string} [timezoneOffset] Timezone offset to query the data in.
          * @param {string} [teamId] Team ID to fetch data for.
+         * @param {MetricType} [type] Filter metrics by performance type.
          * @param {GetDashboardBySchemaRequest} [getDashboardBySchemaRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getDashboardBySchema: async (period: DashboardPeriod, aggregate: Aggregate, customDateRange?: DateRange, timezoneOffset?: string, teamId?: string, getDashboardBySchemaRequest?: GetDashboardBySchemaRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getDashboardBySchema: async (period: DashboardPeriod, aggregate: Aggregate, customDateRange?: DateRange, timezoneOffset?: string, teamId?: string, type?: MetricType, getDashboardBySchemaRequest?: GetDashboardBySchemaRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'period' is not null or undefined
             assertParamExists('getDashboardBySchema', 'period', period)
             // verify required parameter 'aggregate' is not null or undefined
@@ -1727,6 +1750,10 @@ export const DashboardApiAxiosParamCreator = function (configuration?: Configura
 
             if (teamId !== undefined) {
                 localVarQueryParameter['teamId'] = teamId;
+            }
+
+            if (type !== undefined) {
+                localVarQueryParameter['type'] = type;
             }
 
 
@@ -1976,12 +2003,13 @@ export const DashboardApiFp = function(configuration?: Configuration) {
          * @param {DateRange} [customDateRange] Custom date range to query the data in. Only required if period is set to \&quot;custom\&quot;
          * @param {string} [timezoneOffset] Timezone offset to query the data in.
          * @param {string} [teamId] Team ID to fetch data for.
+         * @param {MetricType} [type] Filter metrics by performance type.
          * @param {GetDashboardBySchemaRequest} [getDashboardBySchemaRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getDashboardBySchema(period: DashboardPeriod, aggregate: Aggregate, customDateRange?: DateRange, timezoneOffset?: string, teamId?: string, getDashboardBySchemaRequest?: GetDashboardBySchemaRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DashboardData>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getDashboardBySchema(period, aggregate, customDateRange, timezoneOffset, teamId, getDashboardBySchemaRequest, options);
+        async getDashboardBySchema(period: DashboardPeriod, aggregate: Aggregate, customDateRange?: DateRange, timezoneOffset?: string, teamId?: string, type?: MetricType, getDashboardBySchemaRequest?: GetDashboardBySchemaRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DashboardData>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getDashboardBySchema(period, aggregate, customDateRange, timezoneOffset, teamId, type, getDashboardBySchemaRequest, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['DashboardApi.getDashboardBySchema']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -2097,7 +2125,7 @@ export const DashboardApiFactory = function (configuration?: Configuration, base
          * @throws {RequiredError}
          */
         getDashboardBySchema(requestParameters: DashboardApiGetDashboardBySchemaRequest, options?: RawAxiosRequestConfig): AxiosPromise<DashboardData> {
-            return localVarFp.getDashboardBySchema(requestParameters.period, requestParameters.aggregate, requestParameters.customDateRange, requestParameters.timezoneOffset, requestParameters.teamId, requestParameters.getDashboardBySchemaRequest, options).then((request) => request(axios, basePath));
+            return localVarFp.getDashboardBySchema(requestParameters.period, requestParameters.aggregate, requestParameters.customDateRange, requestParameters.timezoneOffset, requestParameters.teamId, requestParameters.type, requestParameters.getDashboardBySchemaRequest, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -2320,6 +2348,13 @@ export interface DashboardApiGetDashboardBySchemaRequest {
     readonly teamId?: string
 
     /**
+     * Filter metrics by performance type.
+     * @type {MetricType}
+     * @memberof DashboardApiGetDashboardBySchema
+     */
+    readonly type?: MetricType
+
+    /**
      * 
      * @type {GetDashboardBySchemaRequest}
      * @memberof DashboardApiGetDashboardBySchema
@@ -2466,7 +2501,7 @@ export class DashboardApi extends BaseAPI {
      * @memberof DashboardApi
      */
     public getDashboardBySchema(requestParameters: DashboardApiGetDashboardBySchemaRequest, options?: RawAxiosRequestConfig) {
-        return DashboardApiFp(this.configuration).getDashboardBySchema(requestParameters.period, requestParameters.aggregate, requestParameters.customDateRange, requestParameters.timezoneOffset, requestParameters.teamId, requestParameters.getDashboardBySchemaRequest, options).then((request) => request(this.axios, this.basePath));
+        return DashboardApiFp(this.configuration).getDashboardBySchema(requestParameters.period, requestParameters.aggregate, requestParameters.customDateRange, requestParameters.timezoneOffset, requestParameters.teamId, requestParameters.type, requestParameters.getDashboardBySchemaRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

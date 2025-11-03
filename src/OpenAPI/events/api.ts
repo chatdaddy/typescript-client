@@ -7041,6 +7041,12 @@ export interface DashboardInsertDataSchemaItemsInnerOneOf {
     'name': string;
     /**
      * 
+     * @type {string}
+     * @memberof DashboardInsertDataSchemaItemsInnerOneOf
+     */
+    'type'?: DashboardInsertDataSchemaItemsInnerOneOfTypeEnum;
+    /**
+     * 
      * @type {{ [key: string]: any; }}
      * @memberof DashboardInsertDataSchemaItemsInnerOneOf
      */
@@ -7074,6 +7080,14 @@ export const DashboardInsertDataSchemaItemsInnerOneOfVisualizationTypeEnum = {
 } as const;
 
 export type DashboardInsertDataSchemaItemsInnerOneOfVisualizationTypeEnum = typeof DashboardInsertDataSchemaItemsInnerOneOfVisualizationTypeEnum[keyof typeof DashboardInsertDataSchemaItemsInnerOneOfVisualizationTypeEnum];
+export const DashboardInsertDataSchemaItemsInnerOneOfTypeEnum = {
+    ChatsPerformance: 'chats-performance',
+    MarketingPerformance: 'marketing-performance',
+    AgentPerformance: 'agent-performance',
+    SalesPerformance: 'sales-performance'
+} as const;
+
+export type DashboardInsertDataSchemaItemsInnerOneOfTypeEnum = typeof DashboardInsertDataSchemaItemsInnerOneOfTypeEnum[keyof typeof DashboardInsertDataSchemaItemsInnerOneOfTypeEnum];
 
 /**
  * 
