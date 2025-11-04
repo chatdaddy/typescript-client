@@ -6600,6 +6600,12 @@ export interface CrmTicketInsertData {
      * @memberof CrmTicketInsertData
      */
     'timer'?: CrmTicketInsertDataTimer;
+    /**
+     * 
+     * @type {number}
+     * @memberof CrmTicketInsertData
+     */
+    'ltv'?: number | null;
 }
 /**
  * 
@@ -6758,6 +6764,12 @@ export interface CrmTicketUpdateData {
      * @memberof CrmTicketUpdateData
      */
     'timer'?: CrmTicketInsertDataTimer;
+    /**
+     * 
+     * @type {number}
+     * @memberof CrmTicketUpdateData
+     */
+    'ltv'?: number | null;
 }
 /**
  * 

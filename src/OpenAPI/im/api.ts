@@ -2794,6 +2794,12 @@ export interface CrmTicket {
      * @memberof CrmTicket
      */
     'timer'?: TicketTimer;
+    /**
+     * Calculated Lifetime Value of the contact based on revenue tags
+     * @type {number}
+     * @memberof CrmTicket
+     */
+    'ltv'?: number | null;
 }
 /**
  * 
