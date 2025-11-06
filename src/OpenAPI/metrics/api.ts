@@ -1097,6 +1097,12 @@ export interface MetricsResultHistogram {
     'visualizationType': MetricsResultHistogramVisualizationTypeEnum;
     /**
      * 
+     * @type {MetricType}
+     * @memberof MetricsResultHistogram
+     */
+    'metricType'?: MetricType;
+    /**
+     * 
      * @type {{ [key: string]: Array<Metric>; }}
      * @memberof MetricsResultHistogram
      */
@@ -1133,6 +1139,12 @@ export interface MetricsResultTotal {
      * @memberof MetricsResultTotal
      */
     'visualizationType': MetricsResultTotalVisualizationTypeEnum;
+    /**
+     * 
+     * @type {MetricType}
+     * @memberof MetricsResultTotal
+     */
+    'metricType'?: MetricType;
     /**
      * 
      * @type {{ [key: string]: ValueObject; }}
