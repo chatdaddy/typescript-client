@@ -29,20 +29,20 @@ import { COLLECTION_FORMATS, BaseAPI, RequiredError, operationServerMap } from '
  * @type AdminDashboardFilter
  * @export
  */
-export type AdminDashboardFilter = AdminDashboardMatchFilter | AdminDashboardRangeFilter;
+type AdminDashboardFilter = AdminDashboardMatchFilter | AdminDashboardRangeFilter;
 
 /**
  * @type AdminDashboardFilterItems
  * @export
  */
-export type AdminDashboardFilterItems = AdminDashboardFilter | Array<AdminDashboardFilter>;
+type AdminDashboardFilterItems = AdminDashboardFilter | Array<AdminDashboardFilter>;
 
 /**
  * 
  * @export
  * @interface AdminDashboardMatchFilter
  */
-export interface AdminDashboardMatchFilter {
+interface AdminDashboardMatchFilter {
     /**
      * 
      * @type {string}
@@ -60,14 +60,14 @@ export interface AdminDashboardMatchFilter {
  * @type AdminDashboardMatchFilterValue
  * @export
  */
-export type AdminDashboardMatchFilterValue = Array<string> | string;
+type AdminDashboardMatchFilterValue = Array<string> | string;
 
 /**
  * 
  * @export
  * @interface AdminDashboardRangeFilter
  */
-export interface AdminDashboardRangeFilter {
+interface AdminDashboardRangeFilter {
     /**
      * 
      * @type {string}
@@ -86,7 +86,7 @@ export interface AdminDashboardRangeFilter {
  * @export
  * @interface AdminDashboardResponse
  */
-export interface AdminDashboardResponse {
+interface AdminDashboardResponse {
     /**
      * 
      * @type {Array<TeamData>}
@@ -111,7 +111,7 @@ export interface AdminDashboardResponse {
  * @export
  * @interface AdminDashboardSort
  */
-export interface AdminDashboardSort {
+interface AdminDashboardSort {
     /**
      * 
      * @type {string}
@@ -126,12 +126,12 @@ export interface AdminDashboardSort {
     'order': AdminDashboardSortOrderEnum;
 }
 
-export const AdminDashboardSortOrderEnum = {
+const AdminDashboardSortOrderEnum = {
     Asc: 'asc',
     Desc: 'desc'
 } as const;
 
-export type AdminDashboardSortOrderEnum = typeof AdminDashboardSortOrderEnum[keyof typeof AdminDashboardSortOrderEnum];
+type AdminDashboardSortOrderEnum = typeof AdminDashboardSortOrderEnum[keyof typeof AdminDashboardSortOrderEnum];
 
 /**
  * 
@@ -139,20 +139,20 @@ export type AdminDashboardSortOrderEnum = typeof AdminDashboardSortOrderEnum[key
  * @enum {string}
  */
 
-export const Aggregate = {
+const Aggregate = {
     Day: 'day',
     Week: 'week',
     Month: 'month'
 } as const;
 
-export type Aggregate = typeof Aggregate[keyof typeof Aggregate];
+type Aggregate = typeof Aggregate[keyof typeof Aggregate];
 
 
 /**
  * @type AggregateTeamDataValue
  * @export
  */
-export type AggregateTeamDataValue = BooleanValueObject | StringValueObject | ValueObject | { [key: string]: ValueObject; };
+type AggregateTeamDataValue = BooleanValueObject | StringValueObject | ValueObject | { [key: string]: ValueObject; };
 
 /**
  * Describe an array
@@ -185,7 +185,7 @@ type ArrayPropertyDescriptorTypeEnum = typeof ArrayPropertyDescriptorTypeEnum[ke
  * @export
  * @interface BenchmarkValues
  */
-export interface BenchmarkValues {
+interface BenchmarkValues {
     /**
      * 
      * @type {ValueObject}
@@ -210,7 +210,7 @@ export interface BenchmarkValues {
  * @export
  * @interface Benchmarks
  */
-export interface Benchmarks {
+interface Benchmarks {
     /**
      * 
      * @type {{ [key: string]: BenchmarkValues; }}
@@ -223,7 +223,7 @@ export interface Benchmarks {
  * @export
  * @interface BooleanValueObject
  */
-export interface BooleanValueObject {
+interface BooleanValueObject {
     /**
      * 
      * @type {boolean}
@@ -255,7 +255,7 @@ interface ConditionalPropertyOption {
  * @export
  * @interface DashboardCreate
  */
-export interface DashboardCreate {
+interface DashboardCreate {
     /**
      * 
      * @type {string}
@@ -280,7 +280,7 @@ export interface DashboardCreate {
  * @export
  * @interface DashboardData
  */
-export interface DashboardData {
+interface DashboardData {
     /**
      * 
      * @type {string}
@@ -299,7 +299,7 @@ export interface DashboardData {
  * @export
  * @interface DashboardLayoutSchema
  */
-export interface DashboardLayoutSchema {
+interface DashboardLayoutSchema {
     /**
      * 
      * @type {Array<LayoutSchema>}
@@ -330,7 +330,7 @@ export interface DashboardLayoutSchema {
  * @export
  * @interface DashboardMetadata
  */
-export interface DashboardMetadata {
+interface DashboardMetadata {
     /**
      * 
      * @type {string}
@@ -386,12 +386,12 @@ export interface DashboardMetadata {
  * @enum {string}
  */
 
-export const DashboardMetadataAccess = {
+const DashboardMetadataAccess = {
     Lvl1View: 'lvl1_view',
     Lvl2Edit: 'lvl2_edit'
 } as const;
 
-export type DashboardMetadataAccess = typeof DashboardMetadataAccess[keyof typeof DashboardMetadataAccess];
+type DashboardMetadataAccess = typeof DashboardMetadataAccess[keyof typeof DashboardMetadataAccess];
 
 
 /**
@@ -399,7 +399,7 @@ export type DashboardMetadataAccess = typeof DashboardMetadataAccess[keyof typeo
  * @export
  * @interface DashboardMetadataPermissionItem
  */
-export interface DashboardMetadataPermissionItem {
+interface DashboardMetadataPermissionItem {
     /**
      * 
      * @type {string}
@@ -420,7 +420,7 @@ export interface DashboardMetadataPermissionItem {
  * @export
  * @interface DashboardMetadataPermissions
  */
-export interface DashboardMetadataPermissions {
+interface DashboardMetadataPermissions {
     /**
      * 
      * @type {NullableDashboardMetadataAccess}
@@ -442,7 +442,7 @@ export interface DashboardMetadataPermissions {
  * @enum {string}
  */
 
-export const DashboardPeriod = {
+const DashboardPeriod = {
     MonthToDate: 'month-to-date',
     QuarterToDate: 'quarter-to-date',
     YearToDate: 'year-to-date',
@@ -452,7 +452,7 @@ export const DashboardPeriod = {
     Custom: 'custom'
 } as const;
 
-export type DashboardPeriod = typeof DashboardPeriod[keyof typeof DashboardPeriod];
+type DashboardPeriod = typeof DashboardPeriod[keyof typeof DashboardPeriod];
 
 
 /**
@@ -460,7 +460,7 @@ export type DashboardPeriod = typeof DashboardPeriod[keyof typeof DashboardPerio
  * @export
  * @interface DashboardSchema
  */
-export interface DashboardSchema {
+interface DashboardSchema {
     /**
      * 
      * @type {string}
@@ -481,18 +481,18 @@ export interface DashboardSchema {
     'layout'?: DashboardLayoutSchema;
 }
 
-export const DashboardSchemaVersionEnum = {
+const DashboardSchemaVersionEnum = {
     2: '2'
 } as const;
 
-export type DashboardSchemaVersionEnum = typeof DashboardSchemaVersionEnum[keyof typeof DashboardSchemaVersionEnum];
+type DashboardSchemaVersionEnum = typeof DashboardSchemaVersionEnum[keyof typeof DashboardSchemaVersionEnum];
 
 /**
  * 
  * @export
  * @interface DashboardSchemaItem
  */
-export interface DashboardSchemaItem {
+interface DashboardSchemaItem {
     /**
      * 
      * @type {string}
@@ -554,7 +554,7 @@ export interface DashboardSchemaItem {
  * @type DashboardSchemaItemsInner
  * @export
  */
-export type DashboardSchemaItemsInner = DashboardSchemaItem | TextSchemaItem;
+type DashboardSchemaItemsInner = DashboardSchemaItem | TextSchemaItem;
 
 /**
  * 
@@ -593,7 +593,7 @@ interface DashboardUpdate {
  * @enum {string}
  */
 
-export const DashboardVisualizationType = {
+const DashboardVisualizationType = {
     Histogram: 'histogram',
     PieChart: 'pie-chart',
     Table: 'table',
@@ -601,7 +601,7 @@ export const DashboardVisualizationType = {
     SimpleSnapshot: 'simple-snapshot'
 } as const;
 
-export type DashboardVisualizationType = typeof DashboardVisualizationType[keyof typeof DashboardVisualizationType];
+type DashboardVisualizationType = typeof DashboardVisualizationType[keyof typeof DashboardVisualizationType];
 
 
 /**
@@ -609,7 +609,7 @@ export type DashboardVisualizationType = typeof DashboardVisualizationType[keyof
  * @export
  * @interface DashboardWithData
  */
-export interface DashboardWithData {
+interface DashboardWithData {
     /**
      * 
      * @type {string}
@@ -671,12 +671,12 @@ export interface DashboardWithData {
  * @enum {string}
  */
 
-export const DataAggregateType = {
+const DataAggregateType = {
     Avg: 'avg',
     Sum: 'sum'
 } as const;
 
-export type DataAggregateType = typeof DataAggregateType[keyof typeof DataAggregateType];
+type DataAggregateType = typeof DataAggregateType[keyof typeof DataAggregateType];
 
 
 /**
@@ -696,7 +696,7 @@ type DataPropertyDescriptor = SimplePropertyDescriptor | ArrayPropertyDescriptor
  * @export
  * @interface DateRange
  */
-export interface DateRange {
+interface DateRange {
     /**
      * An ISO formatted timestamp
      * @type {string}
@@ -715,7 +715,7 @@ export interface DateRange {
  * @export
  * @interface DefaultMetricConfigInner
  */
-export interface DefaultMetricConfigInner {
+interface DefaultMetricConfigInner {
     /**
      * 
      * @type {string}
@@ -760,13 +760,13 @@ interface DisplayIcon {
  * @enum {string}
  */
 
-export const FlagState = {
+const FlagState = {
     Growth: 'growth',
     Decline: 'decline',
     Inactive: 'inactive'
 } as const;
 
-export type FlagState = typeof FlagState[keyof typeof FlagState];
+type FlagState = typeof FlagState[keyof typeof FlagState];
 
 
 /**
@@ -843,7 +843,7 @@ export interface GetInitData200Response {
  * @export
  * @interface LayoutSchema
  */
-export interface LayoutSchema {
+interface LayoutSchema {
     [key: string]: any;
 
     /**
@@ -914,7 +914,7 @@ type MapPropertyDescriptorTypeEnum = typeof MapPropertyDescriptorTypeEnum[keyof 
  * @export
  * @interface Metric
  */
-export interface Metric {
+interface Metric {
     /**
      * 
      * @type {number}
@@ -940,7 +940,7 @@ export interface Metric {
  * @enum {string}
  */
 
-export const MetricCategory = {
+const MetricCategory = {
     Message: 'message',
     ChatContact: 'chat-contact',
     Metadata: 'metadata',
@@ -948,7 +948,7 @@ export const MetricCategory = {
     TeamData: 'team-data'
 } as const;
 
-export type MetricCategory = typeof MetricCategory[keyof typeof MetricCategory];
+type MetricCategory = typeof MetricCategory[keyof typeof MetricCategory];
 
 
 /**
@@ -956,7 +956,7 @@ export type MetricCategory = typeof MetricCategory[keyof typeof MetricCategory];
  * @export
  * @interface MetricConfig
  */
-export interface MetricConfig {
+interface MetricConfig {
     /**
      * 
      * @type {string}
@@ -1013,20 +1013,20 @@ export interface MetricConfig {
     'disallowedVisualisations'?: Array<DashboardVisualizationType>;
 }
 
-export const MetricConfigValueFormatEnum = {
+const MetricConfigValueFormatEnum = {
     Count: 'count',
     DurationSeconds: 'durationSeconds',
     Percentage: 'percentage'
 } as const;
 
-export type MetricConfigValueFormatEnum = typeof MetricConfigValueFormatEnum[keyof typeof MetricConfigValueFormatEnum];
+type MetricConfigValueFormatEnum = typeof MetricConfigValueFormatEnum[keyof typeof MetricConfigValueFormatEnum];
 
 /**
  * 
  * @export
  * @interface MetricConfigProperty
  */
-export type MetricConfigProperty = DataProperty & {
+interface MetricConfigProperty extends DataProperty {
     /**
      * Title to show when the value is none. Use \"{{appName}}\" to refer to the app name. 
      * @type {string}
@@ -1047,7 +1047,7 @@ export type MetricConfigProperty = DataProperty & {
  * @export
  * @interface MetricConfigPropertyAllOfElasticConfig
  */
-export interface MetricConfigPropertyAllOfElasticConfig {
+interface MetricConfigPropertyAllOfElasticConfig {
     /**
      * The path to the nested field. If true, the metric will be nested in the query. 
      * @type {string}
@@ -1061,28 +1061,28 @@ export interface MetricConfigPropertyAllOfElasticConfig {
  * @enum {string}
  */
 
-export const MetricType = {
+const MetricType = {
     ChatsPerformance: 'chats-performance',
     MarketingPerformance: 'marketing-performance',
     AgentPerformance: 'agent-performance',
     SalesPerformance: 'sales-performance'
 } as const;
 
-export type MetricType = typeof MetricType[keyof typeof MetricType];
+type MetricType = typeof MetricType[keyof typeof MetricType];
 
 
 /**
  * @type MetricsResult
  * @export
  */
-export type MetricsResult = MetricsResultHistogram | MetricsResultTotal;
+type MetricsResult = MetricsResultHistogram | MetricsResultTotal;
 
 /**
  * 
  * @export
  * @interface MetricsResultHistogram
  */
-export interface MetricsResultHistogram {
+interface MetricsResultHistogram {
     /**
      * 
      * @type {string}
@@ -1115,18 +1115,18 @@ export interface MetricsResultHistogram {
     'previousPeriodLines'?: { [key: string]: Array<Metric>; };
 }
 
-export const MetricsResultHistogramVisualizationTypeEnum = {
+const MetricsResultHistogramVisualizationTypeEnum = {
     Histogram: 'histogram'
 } as const;
 
-export type MetricsResultHistogramVisualizationTypeEnum = typeof MetricsResultHistogramVisualizationTypeEnum[keyof typeof MetricsResultHistogramVisualizationTypeEnum];
+type MetricsResultHistogramVisualizationTypeEnum = typeof MetricsResultHistogramVisualizationTypeEnum[keyof typeof MetricsResultHistogramVisualizationTypeEnum];
 
 /**
  * 
  * @export
  * @interface MetricsResultTotal
  */
-export interface MetricsResultTotal {
+interface MetricsResultTotal {
     /**
      * 
      * @type {string}
@@ -1159,11 +1159,11 @@ export interface MetricsResultTotal {
     'previousPeriodValues'?: { [key: string]: ValueObject; };
 }
 
-export const MetricsResultTotalVisualizationTypeEnum = {
+const MetricsResultTotalVisualizationTypeEnum = {
     Total: 'total'
 } as const;
 
-export type MetricsResultTotalVisualizationTypeEnum = typeof MetricsResultTotalVisualizationTypeEnum[keyof typeof MetricsResultTotalVisualizationTypeEnum];
+type MetricsResultTotalVisualizationTypeEnum = typeof MetricsResultTotalVisualizationTypeEnum[keyof typeof MetricsResultTotalVisualizationTypeEnum];
 
 /**
  * 
@@ -1171,12 +1171,12 @@ export type MetricsResultTotalVisualizationTypeEnum = typeof MetricsResultTotalV
  * @enum {string}
  */
 
-export const NullableDashboardMetadataAccess = {
+const NullableDashboardMetadataAccess = {
     Lvl1View: 'lvl1_view',
     Lvl2Edit: 'lvl2_edit'
 } as const;
 
-export type NullableDashboardMetadataAccess = typeof NullableDashboardMetadataAccess[keyof typeof NullableDashboardMetadataAccess];
+type NullableDashboardMetadataAccess = typeof NullableDashboardMetadataAccess[keyof typeof NullableDashboardMetadataAccess];
 
 
 /**
@@ -1184,7 +1184,7 @@ export type NullableDashboardMetadataAccess = typeof NullableDashboardMetadataAc
  * @export
  * @interface NumericalRange
  */
-export interface NumericalRange {
+interface NumericalRange {
     /**
      * 
      * @type {number}
@@ -1335,7 +1335,7 @@ type SimplePropertyType = typeof SimplePropertyType[keyof typeof SimplePropertyT
  * @export
  * @interface StringValueObject
  */
-export interface StringValueObject {
+interface StringValueObject {
     /**
      * 
      * @type {string}
@@ -1348,7 +1348,7 @@ export interface StringValueObject {
  * @export
  * @interface TeamData
  */
-export interface TeamData {
+interface TeamData {
     /**
      * 
      * @type {string}
@@ -1391,7 +1391,7 @@ export interface TeamData {
  * @export
  * @interface TeamDataData
  */
-export interface TeamDataData {
+interface TeamDataData {
     /**
      * 
      * @type {{ [key: string]: AggregateTeamDataValue; }}
@@ -1422,7 +1422,7 @@ export interface TeamDataData {
  * @export
  * @interface TextSchemaItem
  */
-export interface TextSchemaItem {
+interface TextSchemaItem {
     /**
      * 
      * @type {string}
@@ -1441,7 +1441,7 @@ export interface TextSchemaItem {
  * @export
  * @interface ValueObject
  */
-export interface ValueObject {
+interface ValueObject {
     /**
      * 
      * @type {number}
