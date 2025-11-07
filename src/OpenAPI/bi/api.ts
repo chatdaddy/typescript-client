@@ -519,6 +519,12 @@ export interface DashboardSchemaItem {
     'name': string;
     /**
      * 
+     * @type {MetricType}
+     * @memberof DashboardSchemaItem
+     */
+    'type'?: MetricType;
+    /**
+     * 
      * @type {{ [key: string]: any; }}
      * @memberof DashboardSchemaItem
      */
@@ -988,6 +994,12 @@ export interface MetricConfig {
     'defaultName': string;
     /**
      * 
+     * @type {MetricType}
+     * @memberof MetricConfig
+     */
+    'type'?: MetricType;
+    /**
+     * 
      * @type {string}
      * @memberof MetricConfig
      */
@@ -1067,6 +1079,22 @@ export interface MetricConfigPropertyAllOfElasticConfig {
     'nestedPath'?: string;
 }
 /**
+ * 
+ * @export
+ * @enum {string}
+ */
+
+export const MetricType = {
+    ChatsPerformance: 'chats-performance',
+    MarketingPerformance: 'marketing-performance',
+    AgentPerformance: 'agent-performance',
+    SalesPerformance: 'sales-performance'
+} as const;
+
+export type MetricType = typeof MetricType[keyof typeof MetricType];
+
+
+/**
  * @type MetricsResult
  * @export
  */
@@ -1090,6 +1118,12 @@ export interface MetricsResultHistogram {
      * @memberof MetricsResultHistogram
      */
     'visualizationType': MetricsResultHistogramVisualizationTypeEnum;
+    /**
+     * 
+     * @type {MetricType}
+     * @memberof MetricsResultHistogram
+     */
+    'metricType'?: MetricType;
     /**
      * 
      * @type {{ [key: string]: Array<Metric>; }}
@@ -1128,6 +1162,12 @@ export interface MetricsResultTotal {
      * @memberof MetricsResultTotal
      */
     'visualizationType': MetricsResultTotalVisualizationTypeEnum;
+    /**
+     * 
+     * @type {MetricType}
+     * @memberof MetricsResultTotal
+     */
+    'metricType'?: MetricType;
     /**
      * 
      * @type {{ [key: string]: ValueObject; }}

@@ -1061,14 +1061,14 @@ interface MetricConfigPropertyAllOfElasticConfig {
  * @enum {string}
  */
 
-export const MetricType = {
+const MetricType = {
     ChatsPerformance: 'chats-performance',
     MarketingPerformance: 'marketing-performance',
     AgentPerformance: 'agent-performance',
     SalesPerformance: 'sales-performance'
 } as const;
 
-export type MetricType = typeof MetricType[keyof typeof MetricType];
+type MetricType = typeof MetricType[keyof typeof MetricType];
 
 
 /**
