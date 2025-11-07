@@ -7195,7 +7195,7 @@ export interface DashboardInsertDataSchemaLayoutXlInner {
  * @export
  * @interface DashboardUpdate
  */
-interface DashboardUpdate {
+export interface DashboardUpdate {
     /**
      * 
      * @type {string}

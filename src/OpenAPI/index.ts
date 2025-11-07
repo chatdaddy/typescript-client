@@ -1,7 +1,6 @@
 export * from './configuration'
 export * from './appstore/api'
 export * from './auth/api'
-export * from './bi/api'
 export * from './bots/api'
 export * from './campaigns/api'
 export * from './chatmary/api'
