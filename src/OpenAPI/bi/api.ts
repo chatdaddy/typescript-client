@@ -1537,10 +1537,10 @@ export interface ValueObject {
 }
 
 /**
- * MessagesApi - axios parameter creator
+ * MessagesDataApi - axios parameter creator
  * @export
  */
-export const MessagesApiAxiosParamCreator = function (configuration?: Configuration) {
+export const MessagesDataApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
          * Get total sent and received message counts across all teams within a date range
@@ -1630,11 +1630,11 @@ export const MessagesApiAxiosParamCreator = function (configuration?: Configurat
 };
 
 /**
- * MessagesApi - functional programming interface
+ * MessagesDataApi - functional programming interface
  * @export
  */
-export const MessagesApiFp = function(configuration?: Configuration) {
-    const localVarAxiosParamCreator = MessagesApiAxiosParamCreator(configuration)
+export const MessagesDataApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = MessagesDataApiAxiosParamCreator(configuration)
     return {
         /**
          * Get total sent and received message counts across all teams within a date range
@@ -1647,7 +1647,7 @@ export const MessagesApiFp = function(configuration?: Configuration) {
         async getMessageCount(startDate: string, endDate: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetMessageCount200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getMessageCount(startDate, endDate, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['MessagesApi.getMessageCount']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['MessagesDataApi.getMessageCount']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -1660,116 +1660,116 @@ export const MessagesApiFp = function(configuration?: Configuration) {
         async postMessageCount(postMessageCountRequest: PostMessageCountRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PostUserCount200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.postMessageCount(postMessageCountRequest, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['MessagesApi.postMessageCount']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['MessagesDataApi.postMessageCount']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
     }
 };
 
 /**
- * MessagesApi - factory interface
+ * MessagesDataApi - factory interface
  * @export
  */
-export const MessagesApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
-    const localVarFp = MessagesApiFp(configuration)
+export const MessagesDataApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = MessagesDataApiFp(configuration)
     return {
         /**
          * Get total sent and received message counts across all teams within a date range
          * @summary Get message count statistics
-         * @param {MessagesApiGetMessageCountRequest} requestParameters Request parameters.
+         * @param {MessagesDataApiGetMessageCountRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getMessageCount(requestParameters: MessagesApiGetMessageCountRequest, options?: RawAxiosRequestConfig): AxiosPromise<GetMessageCount200Response> {
+        getMessageCount(requestParameters: MessagesDataApiGetMessageCountRequest, options?: RawAxiosRequestConfig): AxiosPromise<GetMessageCount200Response> {
             return localVarFp.getMessageCount(requestParameters.startDate, requestParameters.endDate, options).then((request) => request(axios, basePath));
         },
         /**
          * Endpoint for service-messaging to POST message count data
          * @summary Receive message count from service-messaging
-         * @param {MessagesApiPostMessageCountRequest} requestParameters Request parameters.
+         * @param {MessagesDataApiPostMessageCountRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postMessageCount(requestParameters: MessagesApiPostMessageCountRequest, options?: RawAxiosRequestConfig): AxiosPromise<PostUserCount200Response> {
+        postMessageCount(requestParameters: MessagesDataApiPostMessageCountRequest, options?: RawAxiosRequestConfig): AxiosPromise<PostUserCount200Response> {
             return localVarFp.postMessageCount(requestParameters.postMessageCountRequest, options).then((request) => request(axios, basePath));
         },
     };
 };
 
 /**
- * Request parameters for getMessageCount operation in MessagesApi.
+ * Request parameters for getMessageCount operation in MessagesDataApi.
  * @export
- * @interface MessagesApiGetMessageCountRequest
+ * @interface MessagesDataApiGetMessageCountRequest
  */
-export interface MessagesApiGetMessageCountRequest {
+export interface MessagesDataApiGetMessageCountRequest {
     /**
      * Start date for the query range
      * @type {string}
-     * @memberof MessagesApiGetMessageCount
+     * @memberof MessagesDataApiGetMessageCount
      */
     readonly startDate: string
 
     /**
      * End date for the query range
      * @type {string}
-     * @memberof MessagesApiGetMessageCount
+     * @memberof MessagesDataApiGetMessageCount
      */
     readonly endDate: string
 }
 
 /**
- * Request parameters for postMessageCount operation in MessagesApi.
+ * Request parameters for postMessageCount operation in MessagesDataApi.
  * @export
- * @interface MessagesApiPostMessageCountRequest
+ * @interface MessagesDataApiPostMessageCountRequest
  */
-export interface MessagesApiPostMessageCountRequest {
+export interface MessagesDataApiPostMessageCountRequest {
     /**
      * 
      * @type {PostMessageCountRequest}
-     * @memberof MessagesApiPostMessageCount
+     * @memberof MessagesDataApiPostMessageCount
      */
     readonly postMessageCountRequest: PostMessageCountRequest
 }
 
 /**
- * MessagesApi - object-oriented interface
+ * MessagesDataApi - object-oriented interface
  * @export
- * @class MessagesApi
+ * @class MessagesDataApi
  * @extends {BaseAPI}
  */
-export class MessagesApi extends BaseAPI {
+export class MessagesDataApi extends BaseAPI {
     /**
      * Get total sent and received message counts across all teams within a date range
      * @summary Get message count statistics
-     * @param {MessagesApiGetMessageCountRequest} requestParameters Request parameters.
+     * @param {MessagesDataApiGetMessageCountRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof MessagesApi
+     * @memberof MessagesDataApi
      */
-    public getMessageCount(requestParameters: MessagesApiGetMessageCountRequest, options?: RawAxiosRequestConfig) {
-        return MessagesApiFp(this.configuration).getMessageCount(requestParameters.startDate, requestParameters.endDate, options).then((request) => request(this.axios, this.basePath));
+    public getMessageCount(requestParameters: MessagesDataApiGetMessageCountRequest, options?: RawAxiosRequestConfig) {
+        return MessagesDataApiFp(this.configuration).getMessageCount(requestParameters.startDate, requestParameters.endDate, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Endpoint for service-messaging to POST message count data
      * @summary Receive message count from service-messaging
-     * @param {MessagesApiPostMessageCountRequest} requestParameters Request parameters.
+     * @param {MessagesDataApiPostMessageCountRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof MessagesApi
+     * @memberof MessagesDataApi
      */
-    public postMessageCount(requestParameters: MessagesApiPostMessageCountRequest, options?: RawAxiosRequestConfig) {
-        return MessagesApiFp(this.configuration).postMessageCount(requestParameters.postMessageCountRequest, options).then((request) => request(this.axios, this.basePath));
+    public postMessageCount(requestParameters: MessagesDataApiPostMessageCountRequest, options?: RawAxiosRequestConfig) {
+        return MessagesDataApiFp(this.configuration).postMessageCount(requestParameters.postMessageCountRequest, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
 
 
 /**
- * UsersApi - axios parameter creator
+ * UsersDataApi - axios parameter creator
  * @export
  */
-const UsersApiAxiosParamCreator = function (configuration?: Configuration) {
+export const UsersDataApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
          * Endpoint for service-auth to POST user count data
@@ -1811,11 +1811,11 @@ const UsersApiAxiosParamCreator = function (configuration?: Configuration) {
 };
 
 /**
- * UsersApi - functional programming interface
+ * UsersDataApi - functional programming interface
  * @export
  */
-const UsersApiFp = function(configuration?: Configuration) {
-    const localVarAxiosParamCreator = UsersApiAxiosParamCreator(configuration)
+export const UsersDataApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = UsersDataApiAxiosParamCreator(configuration)
     return {
         /**
          * Endpoint for service-auth to POST user count data
@@ -1827,63 +1827,63 @@ const UsersApiFp = function(configuration?: Configuration) {
         async postUserCount(postUserCountRequest: PostUserCountRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PostUserCount200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.postUserCount(postUserCountRequest, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['UsersApi.postUserCount']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['UsersDataApi.postUserCount']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
     }
 };
 
 /**
- * UsersApi - factory interface
+ * UsersDataApi - factory interface
  * @export
  */
-const UsersApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
-    const localVarFp = UsersApiFp(configuration)
+export const UsersDataApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = UsersDataApiFp(configuration)
     return {
         /**
          * Endpoint for service-auth to POST user count data
          * @summary Receive user count from service-auth
-         * @param {UsersApiPostUserCountRequest} requestParameters Request parameters.
+         * @param {UsersDataApiPostUserCountRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postUserCount(requestParameters: UsersApiPostUserCountRequest, options?: RawAxiosRequestConfig): AxiosPromise<PostUserCount200Response> {
+        postUserCount(requestParameters: UsersDataApiPostUserCountRequest, options?: RawAxiosRequestConfig): AxiosPromise<PostUserCount200Response> {
             return localVarFp.postUserCount(requestParameters.postUserCountRequest, options).then((request) => request(axios, basePath));
         },
     };
 };
 
 /**
- * Request parameters for postUserCount operation in UsersApi.
+ * Request parameters for postUserCount operation in UsersDataApi.
  * @export
- * @interface UsersApiPostUserCountRequest
+ * @interface UsersDataApiPostUserCountRequest
  */
-export interface UsersApiPostUserCountRequest {
+export interface UsersDataApiPostUserCountRequest {
     /**
      * 
      * @type {PostUserCountRequest}
-     * @memberof UsersApiPostUserCount
+     * @memberof UsersDataApiPostUserCount
      */
     readonly postUserCountRequest: PostUserCountRequest
 }
 
 /**
- * UsersApi - object-oriented interface
+ * UsersDataApi - object-oriented interface
  * @export
- * @class UsersApi
+ * @class UsersDataApi
  * @extends {BaseAPI}
  */
-export class UsersApi extends BaseAPI {
+export class UsersDataApi extends BaseAPI {
     /**
      * Endpoint for service-auth to POST user count data
      * @summary Receive user count from service-auth
-     * @param {UsersApiPostUserCountRequest} requestParameters Request parameters.
+     * @param {UsersDataApiPostUserCountRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof UsersApi
+     * @memberof UsersDataApi
      */
-    public postUserCount(requestParameters: UsersApiPostUserCountRequest, options?: RawAxiosRequestConfig) {
-        return UsersApiFp(this.configuration).postUserCount(requestParameters.postUserCountRequest, options).then((request) => request(this.axios, this.basePath));
+    public postUserCount(requestParameters: UsersDataApiPostUserCountRequest, options?: RawAxiosRequestConfig) {
+        return UsersDataApiFp(this.configuration).postUserCount(requestParameters.postUserCountRequest, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
