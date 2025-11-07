@@ -1291,7 +1291,7 @@ export interface AppTriggerMethodData {
  * @export
  * @interface ArrayPropertyDescriptor
  */
-interface ArrayPropertyDescriptor {
+export interface ArrayPropertyDescriptor {
     /**
      * 
      * @type {string}
@@ -1306,11 +1306,11 @@ interface ArrayPropertyDescriptor {
     'items': DataPropertyDescriptor;
 }
 
-const ArrayPropertyDescriptorTypeEnum = {
+export const ArrayPropertyDescriptorTypeEnum = {
     Array: 'array'
 } as const;
 
-type ArrayPropertyDescriptorTypeEnum = typeof ArrayPropertyDescriptorTypeEnum[keyof typeof ArrayPropertyDescriptorTypeEnum];
+export type ArrayPropertyDescriptorTypeEnum = typeof ArrayPropertyDescriptorTypeEnum[keyof typeof ArrayPropertyDescriptorTypeEnum];
 
 /**
  * 
@@ -2923,7 +2923,7 @@ export interface CalendarAuth200Response {
  * @export
  * @interface ConditionalPropertyOption
  */
-interface ConditionalPropertyOption {
+export interface ConditionalPropertyOption {
     /**
      * Stringified value of the option.
      * @type {string}
@@ -2974,12 +2974,12 @@ export type ContactsQueryTargetTypeEnum = typeof ContactsQueryTargetTypeEnum[key
  * @export
  * @interface DataProperty
  */
-type DataProperty = DataPropertyDescriptor & PropertyMetadata
+export type DataProperty = DataPropertyDescriptor & PropertyMetadata
 /**
  * @type DataPropertyDescriptor
  * @export
  */
-type DataPropertyDescriptor = SimplePropertyDescriptor | ArrayPropertyDescriptor | MapPropertyDescriptor | OAuthPropertyDescriptor;
+export type DataPropertyDescriptor = SimplePropertyDescriptor | ArrayPropertyDescriptor | MapPropertyDescriptor | OAuthPropertyDescriptor;
 
 /**
  * 
@@ -3005,7 +3005,7 @@ export type DayOfWeek = typeof DayOfWeek[keyof typeof DayOfWeek];
  * @export
  * @interface DisplayIcon
  */
-interface DisplayIcon {
+export interface DisplayIcon {
     /**
      * Material symbol name
      * @type {string}
@@ -4001,7 +4001,7 @@ export type LinkExternalTemplateCommandTypeEnum = typeof LinkExternalTemplateCom
  * @export
  * @interface MapPropertyDescriptor
  */
-interface MapPropertyDescriptor {
+export interface MapPropertyDescriptor {
     /**
      * 
      * @type {string}
@@ -4022,11 +4022,11 @@ interface MapPropertyDescriptor {
     'additionalProperties'?: DataPropertyDescriptor;
 }
 
-const MapPropertyDescriptorTypeEnum = {
+export const MapPropertyDescriptorTypeEnum = {
     Map: 'map'
 } as const;
 
-type MapPropertyDescriptorTypeEnum = typeof MapPropertyDescriptorTypeEnum[keyof typeof MapPropertyDescriptorTypeEnum];
+export type MapPropertyDescriptorTypeEnum = typeof MapPropertyDescriptorTypeEnum[keyof typeof MapPropertyDescriptorTypeEnum];
 
 /**
  * 
@@ -4338,7 +4338,7 @@ export interface NextActionRandomizer {
  * @export
  * @interface OAuthPropertyDescriptor
  */
-interface OAuthPropertyDescriptor {
+export interface OAuthPropertyDescriptor {
     /**
      * 
      * @type {string}
@@ -4353,11 +4353,11 @@ interface OAuthPropertyDescriptor {
     'url'?: string;
 }
 
-const OAuthPropertyDescriptorTypeEnum = {
+export const OAuthPropertyDescriptorTypeEnum = {
     Oauth: 'oauth'
 } as const;
 
-type OAuthPropertyDescriptorTypeEnum = typeof OAuthPropertyDescriptorTypeEnum[keyof typeof OAuthPropertyDescriptorTypeEnum];
+export type OAuthPropertyDescriptorTypeEnum = typeof OAuthPropertyDescriptorTypeEnum[keyof typeof OAuthPropertyDescriptorTypeEnum];
 
 /**
  * 
@@ -4396,7 +4396,7 @@ export interface Position {
  * @export
  * @interface PropertyMetadata
  */
-interface PropertyMetadata {
+export interface PropertyMetadata {
     /**
      * 
      * @type {string}
@@ -4650,7 +4650,7 @@ export interface SharedSlug {
  * @export
  * @interface SimplePropertyDescriptor
  */
-interface SimplePropertyDescriptor {
+export interface SimplePropertyDescriptor {
     /**
      * 
      * @type {SimplePropertyType}
@@ -4684,7 +4684,7 @@ interface SimplePropertyDescriptor {
  * @enum {string}
  */
 
-const SimplePropertyType = {
+export const SimplePropertyType = {
     String: 'string',
     Number: 'number',
     Boolean: 'boolean',
@@ -4711,7 +4711,7 @@ const SimplePropertyType = {
     DataPropertyMap: 'data_property_map'
 } as const;
 
-type SimplePropertyType = typeof SimplePropertyType[keyof typeof SimplePropertyType];
+export type SimplePropertyType = typeof SimplePropertyType[keyof typeof SimplePropertyType];
 
 
 /**

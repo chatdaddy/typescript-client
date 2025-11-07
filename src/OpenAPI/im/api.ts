@@ -1260,6 +1260,12 @@ export interface AlibabaCamsRegisterRequest {
      */
     'selectedPhoneNumber': string;
     /**
+     * Id of the phone number to connect to the account
+     * @type {string}
+     * @memberof AlibabaCamsRegisterRequest
+     */
+    'phoneNumberId'?: string;
+    /**
      * Token from embedded sign up
      * @type {string}
      * @memberof AlibabaCamsRegisterRequest
