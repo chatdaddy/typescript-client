@@ -13413,7 +13413,7 @@ export class MailApi extends BaseAPI {
  * MessagesApi - axios parameter creator
  * @export
  */
-export const MessagesApiAxiosParamCreator = function (configuration?: Configuration) {
+const MessagesApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
          * 
@@ -14187,7 +14187,7 @@ export const MessagesApiAxiosParamCreator = function (configuration?: Configurat
  * MessagesApi - functional programming interface
  * @export
  */
-export const MessagesApiFp = function(configuration?: Configuration) {
+const MessagesApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = MessagesApiAxiosParamCreator(configuration)
     return {
         /**
@@ -14428,7 +14428,7 @@ export const MessagesApiFp = function(configuration?: Configuration) {
  * MessagesApi - factory interface
  * @export
  */
-export const MessagesApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+const MessagesApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
     const localVarFp = MessagesApiFp(configuration)
     return {
         /**
