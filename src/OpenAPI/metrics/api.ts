@@ -1548,7 +1548,7 @@ export const DashboardApiAxiosParamCreator = function (configuration?: Configura
          * @summary Get admin dashboards
          * @param {GetAdminDashboardsPeriodEnum} period 
          * @param {Array<string>} [teamIds] Fetch specific teams by ID
-         * @param {number} [count] Numboer of items to fetch.
+         * @param {number} [count] Number of items to fetch.
          * @param {string} [cursor] Cursor to fetch the next page of dashboards.
          * @param {boolean} [returnTotal] Whether to return the total number of dashboards.
          * @param {AdminDashboardSort} [sort] Sort the dashboards by a field.
@@ -1969,7 +1969,7 @@ export const DashboardApiFp = function(configuration?: Configuration) {
          * @summary Get admin dashboards
          * @param {GetAdminDashboardsPeriodEnum} period 
          * @param {Array<string>} [teamIds] Fetch specific teams by ID
-         * @param {number} [count] Numboer of items to fetch.
+         * @param {number} [count] Number of items to fetch.
          * @param {string} [cursor] Cursor to fetch the next page of dashboards.
          * @param {boolean} [returnTotal] Whether to return the total number of dashboards.
          * @param {AdminDashboardSort} [sort] Sort the dashboards by a field.
@@ -2233,7 +2233,7 @@ export interface DashboardApiGetAdminDashboardsRequest {
     readonly teamIds?: Array<string>
 
     /**
-     * Numboer of items to fetch.
+     * Number of items to fetch.
      * @type {number}
      * @memberof DashboardApiGetAdminDashboards
      */
@@ -2575,5 +2575,484 @@ export const GetAdminDashboardsPeriodEnum = {
     Last12Months: 'last-12-months'
 } as const;
 export type GetAdminDashboardsPeriodEnum = typeof GetAdminDashboardsPeriodEnum[keyof typeof GetAdminDashboardsPeriodEnum];
+
+
+/**
+ * DashboardV2Api - axios parameter creator
+ * @export
+ */
+export const DashboardV2ApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @summary Get benchmarks V2 with metric type filtering
+         * @param {DashboardPeriod} [period] 
+         * @param {MetricType} [type] Filter benchmarks by performance type.
+         * @param {AdminDashboardFilterItems} [filters] Filters to apply to the dashboards.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getBenchmarksV2: async (period?: DashboardPeriod, type?: MetricType, filters?: AdminDashboardFilterItems, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/dashboard/benchmarks/v2`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", [], configuration)
+
+            if (period !== undefined) {
+                localVarQueryParameter['period'] = period;
+            }
+
+            if (type !== undefined) {
+                localVarQueryParameter['type'] = type;
+            }
+
+            if (filters !== undefined) {
+                localVarQueryParameter['filters'] = filters;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Get dashboard data by schema with metric type filtering
+         * @param {DashboardPeriod} period 
+         * @param {Aggregate} aggregate Timeframe to aggregate the data in.
+         * @param {DateRange} [customDateRange] Custom date range to query the data in. Only required if period is set to \&quot;custom\&quot;
+         * @param {string} [timezoneOffset] Timezone offset to query the data in.
+         * @param {string} [teamId] Team ID to fetch data for.
+         * @param {MetricType} [type] Filter metrics by performance type.
+         * @param {GetDashboardBySchemaRequest} [getDashboardBySchemaRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getDashboardBySchemaV2: async (period: DashboardPeriod, aggregate: Aggregate, customDateRange?: DateRange, timezoneOffset?: string, teamId?: string, type?: MetricType, getDashboardBySchemaRequest?: GetDashboardBySchemaRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'period' is not null or undefined
+            assertParamExists('getDashboardBySchemaV2', 'period', period)
+            // verify required parameter 'aggregate' is not null or undefined
+            assertParamExists('getDashboardBySchemaV2', 'aggregate', aggregate)
+            const localVarPath = `/dashboard/get-by-schema/v2`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", [], configuration)
+
+            if (period !== undefined) {
+                localVarQueryParameter['period'] = period;
+            }
+
+            if (customDateRange !== undefined) {
+                localVarQueryParameter['customDateRange'] = customDateRange;
+            }
+
+            if (timezoneOffset !== undefined) {
+                localVarQueryParameter['timezoneOffset'] = timezoneOffset;
+            }
+
+            if (aggregate !== undefined) {
+                localVarQueryParameter['aggregate'] = aggregate;
+            }
+
+            if (teamId !== undefined) {
+                localVarQueryParameter['teamId'] = teamId;
+            }
+
+            if (type !== undefined) {
+                localVarQueryParameter['type'] = type;
+            }
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(getDashboardBySchemaRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Get initial data V2 with metric type filtering
+         * @param {DashboardPeriod} period 
+         * @param {Aggregate} aggregate Timeframe to aggregate the data in.
+         * @param {string} [id] Dashboard ID to fetch data for. If not provided, the default dashboard will be returned.
+         * @param {DateRange} [customDateRange] Custom date range to query the data in. Only required if period is set to \&quot;custom\&quot;
+         * @param {string} [timezoneOffset] Timezone offset to query the data in.
+         * @param {MetricType} [type] Filter metrics by performance type.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getInitDataV2: async (period: DashboardPeriod, aggregate: Aggregate, id?: string, customDateRange?: DateRange, timezoneOffset?: string, type?: MetricType, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'period' is not null or undefined
+            assertParamExists('getInitDataV2', 'period', period)
+            // verify required parameter 'aggregate' is not null or undefined
+            assertParamExists('getInitDataV2', 'aggregate', aggregate)
+            const localVarPath = `/initData/v2`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", [], configuration)
+
+            if (id !== undefined) {
+                localVarQueryParameter['id'] = id;
+            }
+
+            if (period !== undefined) {
+                localVarQueryParameter['period'] = period;
+            }
+
+            if (customDateRange !== undefined) {
+                localVarQueryParameter['customDateRange'] = customDateRange;
+            }
+
+            if (timezoneOffset !== undefined) {
+                localVarQueryParameter['timezoneOffset'] = timezoneOffset;
+            }
+
+            if (aggregate !== undefined) {
+                localVarQueryParameter['aggregate'] = aggregate;
+            }
+
+            if (type !== undefined) {
+                localVarQueryParameter['type'] = type;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * DashboardV2Api - functional programming interface
+ * @export
+ */
+export const DashboardV2ApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = DashboardV2ApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * 
+         * @summary Get benchmarks V2 with metric type filtering
+         * @param {DashboardPeriod} [period] 
+         * @param {MetricType} [type] Filter benchmarks by performance type.
+         * @param {AdminDashboardFilterItems} [filters] Filters to apply to the dashboards.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getBenchmarksV2(period?: DashboardPeriod, type?: MetricType, filters?: AdminDashboardFilterItems, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Benchmarks>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getBenchmarksV2(period, type, filters, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['DashboardV2Api.getBenchmarksV2']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @summary Get dashboard data by schema with metric type filtering
+         * @param {DashboardPeriod} period 
+         * @param {Aggregate} aggregate Timeframe to aggregate the data in.
+         * @param {DateRange} [customDateRange] Custom date range to query the data in. Only required if period is set to \&quot;custom\&quot;
+         * @param {string} [timezoneOffset] Timezone offset to query the data in.
+         * @param {string} [teamId] Team ID to fetch data for.
+         * @param {MetricType} [type] Filter metrics by performance type.
+         * @param {GetDashboardBySchemaRequest} [getDashboardBySchemaRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getDashboardBySchemaV2(period: DashboardPeriod, aggregate: Aggregate, customDateRange?: DateRange, timezoneOffset?: string, teamId?: string, type?: MetricType, getDashboardBySchemaRequest?: GetDashboardBySchemaRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DashboardData>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getDashboardBySchemaV2(period, aggregate, customDateRange, timezoneOffset, teamId, type, getDashboardBySchemaRequest, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['DashboardV2Api.getDashboardBySchemaV2']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @summary Get initial data V2 with metric type filtering
+         * @param {DashboardPeriod} period 
+         * @param {Aggregate} aggregate Timeframe to aggregate the data in.
+         * @param {string} [id] Dashboard ID to fetch data for. If not provided, the default dashboard will be returned.
+         * @param {DateRange} [customDateRange] Custom date range to query the data in. Only required if period is set to \&quot;custom\&quot;
+         * @param {string} [timezoneOffset] Timezone offset to query the data in.
+         * @param {MetricType} [type] Filter metrics by performance type.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getInitDataV2(period: DashboardPeriod, aggregate: Aggregate, id?: string, customDateRange?: DateRange, timezoneOffset?: string, type?: MetricType, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetInitData200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getInitDataV2(period, aggregate, id, customDateRange, timezoneOffset, type, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['DashboardV2Api.getInitDataV2']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+    }
+};
+
+/**
+ * DashboardV2Api - factory interface
+ * @export
+ */
+export const DashboardV2ApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = DashboardV2ApiFp(configuration)
+    return {
+        /**
+         * 
+         * @summary Get benchmarks V2 with metric type filtering
+         * @param {DashboardV2ApiGetBenchmarksV2Request} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getBenchmarksV2(requestParameters: DashboardV2ApiGetBenchmarksV2Request = {}, options?: RawAxiosRequestConfig): AxiosPromise<Benchmarks> {
+            return localVarFp.getBenchmarksV2(requestParameters.period, requestParameters.type, requestParameters.filters, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Get dashboard data by schema with metric type filtering
+         * @param {DashboardV2ApiGetDashboardBySchemaV2Request} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getDashboardBySchemaV2(requestParameters: DashboardV2ApiGetDashboardBySchemaV2Request, options?: RawAxiosRequestConfig): AxiosPromise<DashboardData> {
+            return localVarFp.getDashboardBySchemaV2(requestParameters.period, requestParameters.aggregate, requestParameters.customDateRange, requestParameters.timezoneOffset, requestParameters.teamId, requestParameters.type, requestParameters.getDashboardBySchemaRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Get initial data V2 with metric type filtering
+         * @param {DashboardV2ApiGetInitDataV2Request} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getInitDataV2(requestParameters: DashboardV2ApiGetInitDataV2Request, options?: RawAxiosRequestConfig): AxiosPromise<GetInitData200Response> {
+            return localVarFp.getInitDataV2(requestParameters.period, requestParameters.aggregate, requestParameters.id, requestParameters.customDateRange, requestParameters.timezoneOffset, requestParameters.type, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * Request parameters for getBenchmarksV2 operation in DashboardV2Api.
+ * @export
+ * @interface DashboardV2ApiGetBenchmarksV2Request
+ */
+export interface DashboardV2ApiGetBenchmarksV2Request {
+    /**
+     * 
+     * @type {DashboardPeriod}
+     * @memberof DashboardV2ApiGetBenchmarksV2
+     */
+    readonly period?: DashboardPeriod
+
+    /**
+     * Filter benchmarks by performance type.
+     * @type {MetricType}
+     * @memberof DashboardV2ApiGetBenchmarksV2
+     */
+    readonly type?: MetricType
+
+    /**
+     * Filters to apply to the dashboards.
+     * @type {AdminDashboardFilterItems}
+     * @memberof DashboardV2ApiGetBenchmarksV2
+     */
+    readonly filters?: AdminDashboardFilterItems
+}
+
+/**
+ * Request parameters for getDashboardBySchemaV2 operation in DashboardV2Api.
+ * @export
+ * @interface DashboardV2ApiGetDashboardBySchemaV2Request
+ */
+export interface DashboardV2ApiGetDashboardBySchemaV2Request {
+    /**
+     * 
+     * @type {DashboardPeriod}
+     * @memberof DashboardV2ApiGetDashboardBySchemaV2
+     */
+    readonly period: DashboardPeriod
+
+    /**
+     * Timeframe to aggregate the data in.
+     * @type {Aggregate}
+     * @memberof DashboardV2ApiGetDashboardBySchemaV2
+     */
+    readonly aggregate: Aggregate
+
+    /**
+     * Custom date range to query the data in. Only required if period is set to \&quot;custom\&quot;
+     * @type {DateRange}
+     * @memberof DashboardV2ApiGetDashboardBySchemaV2
+     */
+    readonly customDateRange?: DateRange
+
+    /**
+     * Timezone offset to query the data in.
+     * @type {string}
+     * @memberof DashboardV2ApiGetDashboardBySchemaV2
+     */
+    readonly timezoneOffset?: string
+
+    /**
+     * Team ID to fetch data for.
+     * @type {string}
+     * @memberof DashboardV2ApiGetDashboardBySchemaV2
+     */
+    readonly teamId?: string
+
+    /**
+     * Filter metrics by performance type.
+     * @type {MetricType}
+     * @memberof DashboardV2ApiGetDashboardBySchemaV2
+     */
+    readonly type?: MetricType
+
+    /**
+     * 
+     * @type {GetDashboardBySchemaRequest}
+     * @memberof DashboardV2ApiGetDashboardBySchemaV2
+     */
+    readonly getDashboardBySchemaRequest?: GetDashboardBySchemaRequest
+}
+
+/**
+ * Request parameters for getInitDataV2 operation in DashboardV2Api.
+ * @export
+ * @interface DashboardV2ApiGetInitDataV2Request
+ */
+export interface DashboardV2ApiGetInitDataV2Request {
+    /**
+     * 
+     * @type {DashboardPeriod}
+     * @memberof DashboardV2ApiGetInitDataV2
+     */
+    readonly period: DashboardPeriod
+
+    /**
+     * Timeframe to aggregate the data in.
+     * @type {Aggregate}
+     * @memberof DashboardV2ApiGetInitDataV2
+     */
+    readonly aggregate: Aggregate
+
+    /**
+     * Dashboard ID to fetch data for. If not provided, the default dashboard will be returned.
+     * @type {string}
+     * @memberof DashboardV2ApiGetInitDataV2
+     */
+    readonly id?: string
+
+    /**
+     * Custom date range to query the data in. Only required if period is set to \&quot;custom\&quot;
+     * @type {DateRange}
+     * @memberof DashboardV2ApiGetInitDataV2
+     */
+    readonly customDateRange?: DateRange
+
+    /**
+     * Timezone offset to query the data in.
+     * @type {string}
+     * @memberof DashboardV2ApiGetInitDataV2
+     */
+    readonly timezoneOffset?: string
+
+    /**
+     * Filter metrics by performance type.
+     * @type {MetricType}
+     * @memberof DashboardV2ApiGetInitDataV2
+     */
+    readonly type?: MetricType
+}
+
+/**
+ * DashboardV2Api - object-oriented interface
+ * @export
+ * @class DashboardV2Api
+ * @extends {BaseAPI}
+ */
+export class DashboardV2Api extends BaseAPI {
+    /**
+     * 
+     * @summary Get benchmarks V2 with metric type filtering
+     * @param {DashboardV2ApiGetBenchmarksV2Request} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DashboardV2Api
+     */
+    public getBenchmarksV2(requestParameters: DashboardV2ApiGetBenchmarksV2Request = {}, options?: RawAxiosRequestConfig) {
+        return DashboardV2ApiFp(this.configuration).getBenchmarksV2(requestParameters.period, requestParameters.type, requestParameters.filters, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Get dashboard data by schema with metric type filtering
+     * @param {DashboardV2ApiGetDashboardBySchemaV2Request} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DashboardV2Api
+     */
+    public getDashboardBySchemaV2(requestParameters: DashboardV2ApiGetDashboardBySchemaV2Request, options?: RawAxiosRequestConfig) {
+        return DashboardV2ApiFp(this.configuration).getDashboardBySchemaV2(requestParameters.period, requestParameters.aggregate, requestParameters.customDateRange, requestParameters.timezoneOffset, requestParameters.teamId, requestParameters.type, requestParameters.getDashboardBySchemaRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Get initial data V2 with metric type filtering
+     * @param {DashboardV2ApiGetInitDataV2Request} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DashboardV2Api
+     */
+    public getInitDataV2(requestParameters: DashboardV2ApiGetInitDataV2Request, options?: RawAxiosRequestConfig) {
+        return DashboardV2ApiFp(this.configuration).getInitDataV2(requestParameters.period, requestParameters.aggregate, requestParameters.id, requestParameters.customDateRange, requestParameters.timezoneOffset, requestParameters.type, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
 
 
