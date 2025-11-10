@@ -136,6 +136,171 @@ export type AdminDashboardSortOrderEnum = typeof AdminDashboardSortOrderEnum[key
 /**
  * 
  * @export
+ * @interface AgentMetrics
+ */
+export interface AgentMetrics {
+    /**
+     * Unique identifier for the agent
+     * @type {string}
+     * @memberof AgentMetrics
+     */
+    'agentId': string;
+    /**
+     * Display name of the agent
+     * @type {string}
+     * @memberof AgentMetrics
+     */
+    'agentName': string;
+    /**
+     * Current online status of the agent
+     * @type {string}
+     * @memberof AgentMetrics
+     */
+    'status': AgentMetricsStatusEnum;
+    /**
+     * Total number of chats handled in the period
+     * @type {number}
+     * @memberof AgentMetrics
+     */
+    'chatsHandled': number;
+    /**
+     * Average handle time in seconds
+     * @type {number}
+     * @memberof AgentMetrics
+     */
+    'avgHandleTime': number;
+    /**
+     * Customer satisfaction score as percentage (0-100)
+     * @type {number}
+     * @memberof AgentMetrics
+     */
+    'csat': number;
+    /**
+     * Percentage of chats not responded to within 12 hours
+     * @type {number}
+     * @memberof AgentMetrics
+     */
+    'missedChats': number;
+    /**
+     * Percentage of chats responded to within 12 hours
+     * @type {number}
+     * @memberof AgentMetrics
+     */
+    'responseRate12Hr': number;
+    /**
+     * Percentage of chats responded to within 10 minutes
+     * @type {number}
+     * @memberof AgentMetrics
+     */
+    'responseRate10Min': number;
+    /**
+     * Average first response time in seconds
+     * @type {number}
+     * @memberof AgentMetrics
+     */
+    'avgResponseTime': number;
+    /**
+     * 
+     * @type {AgentMetricsTrend}
+     * @memberof AgentMetrics
+     */
+    'trend': AgentMetricsTrend;
+}
+
+export const AgentMetricsStatusEnum = {
+    Online: 'online',
+    Offline: 'offline'
+} as const;
+
+export type AgentMetricsStatusEnum = typeof AgentMetricsStatusEnum[keyof typeof AgentMetricsStatusEnum];
+
+/**
+ * Period-over-period trend indicators
+ * @export
+ * @interface AgentMetricsTrend
+ */
+export interface AgentMetricsTrend {
+    /**
+     * Percentage change in chats handled
+     * @type {number}
+     * @memberof AgentMetricsTrend
+     */
+    'chatsHandled': number;
+    /**
+     * Percentage change in average handle time
+     * @type {number}
+     * @memberof AgentMetricsTrend
+     */
+    'avgHandleTime': number;
+    /**
+     * Percentage change in CSAT score
+     * @type {number}
+     * @memberof AgentMetricsTrend
+     */
+    'csat': number;
+}
+/**
+ * 
+ * @export
+ * @interface AgentPerformanceResponse
+ */
+export interface AgentPerformanceResponse {
+    /**
+     * 
+     * @type {Array<AgentMetrics>}
+     * @memberof AgentPerformanceResponse
+     */
+    'items': Array<AgentMetrics>;
+    /**
+     * Total number of agents
+     * @type {number}
+     * @memberof AgentPerformanceResponse
+     */
+    'total': number;
+    /**
+     * 
+     * @type {string}
+     * @memberof AgentPerformanceResponse
+     */
+    'period': AgentPerformanceResponsePeriodEnum;
+    /**
+     * 
+     * @type {AgentPerformanceResponseDateRange}
+     * @memberof AgentPerformanceResponse
+     */
+    'dateRange': AgentPerformanceResponseDateRange;
+}
+
+export const AgentPerformanceResponsePeriodEnum = {
+    Daily: 'daily',
+    Weekly: 'weekly',
+    Monthly: 'monthly'
+} as const;
+
+export type AgentPerformanceResponsePeriodEnum = typeof AgentPerformanceResponsePeriodEnum[keyof typeof AgentPerformanceResponsePeriodEnum];
+
+/**
+ * 
+ * @export
+ * @interface AgentPerformanceResponseDateRange
+ */
+export interface AgentPerformanceResponseDateRange {
+    /**
+     * 
+     * @type {string}
+     * @memberof AgentPerformanceResponseDateRange
+     */
+    'start': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof AgentPerformanceResponseDateRange
+     */
+    'end': string;
+}
+/**
+ * 
+ * @export
  * @enum {string}
  */
 
@@ -1455,6 +1620,185 @@ export interface ValueObject {
      */
     'count'?: number;
 }
+
+/**
+ * AgentApi - axios parameter creator
+ * @export
+ */
+export const AgentApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * Returns detailed performance metrics for all agents in a team including chats handled, response times, CSAT, and trends
+         * @summary Get individual agent performance metrics
+         * @param {GetAgentPerformancePeriodEnum} [period] Time period for metrics calculation
+         * @param {string} [startDate] Custom start date (ISO 8601 format). Must be used with endDate
+         * @param {string} [endDate] Custom end date (ISO 8601 format). Must be used with startDate
+         * @param {string} [teamId] Filter by specific team ID. Defaults to user\&#39;s team
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getAgentPerformance: async (period?: GetAgentPerformancePeriodEnum, startDate?: string, endDate?: string, teamId?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/agent/performance`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", [], configuration)
+
+            if (period !== undefined) {
+                localVarQueryParameter['period'] = period;
+            }
+
+            if (startDate !== undefined) {
+                localVarQueryParameter['startDate'] = (startDate as any instanceof Date) ?
+                    (startDate as any).toISOString() :
+                    startDate;
+            }
+
+            if (endDate !== undefined) {
+                localVarQueryParameter['endDate'] = (endDate as any instanceof Date) ?
+                    (endDate as any).toISOString() :
+                    endDate;
+            }
+
+            if (teamId !== undefined) {
+                localVarQueryParameter['teamId'] = teamId;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * AgentApi - functional programming interface
+ * @export
+ */
+export const AgentApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = AgentApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * Returns detailed performance metrics for all agents in a team including chats handled, response times, CSAT, and trends
+         * @summary Get individual agent performance metrics
+         * @param {GetAgentPerformancePeriodEnum} [period] Time period for metrics calculation
+         * @param {string} [startDate] Custom start date (ISO 8601 format). Must be used with endDate
+         * @param {string} [endDate] Custom end date (ISO 8601 format). Must be used with startDate
+         * @param {string} [teamId] Filter by specific team ID. Defaults to user\&#39;s team
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getAgentPerformance(period?: GetAgentPerformancePeriodEnum, startDate?: string, endDate?: string, teamId?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AgentPerformanceResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getAgentPerformance(period, startDate, endDate, teamId, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['AgentApi.getAgentPerformance']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+    }
+};
+
+/**
+ * AgentApi - factory interface
+ * @export
+ */
+export const AgentApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = AgentApiFp(configuration)
+    return {
+        /**
+         * Returns detailed performance metrics for all agents in a team including chats handled, response times, CSAT, and trends
+         * @summary Get individual agent performance metrics
+         * @param {AgentApiGetAgentPerformanceRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getAgentPerformance(requestParameters: AgentApiGetAgentPerformanceRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<AgentPerformanceResponse> {
+            return localVarFp.getAgentPerformance(requestParameters.period, requestParameters.startDate, requestParameters.endDate, requestParameters.teamId, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * Request parameters for getAgentPerformance operation in AgentApi.
+ * @export
+ * @interface AgentApiGetAgentPerformanceRequest
+ */
+export interface AgentApiGetAgentPerformanceRequest {
+    /**
+     * Time period for metrics calculation
+     * @type {'daily' | 'weekly' | 'monthly'}
+     * @memberof AgentApiGetAgentPerformance
+     */
+    readonly period?: GetAgentPerformancePeriodEnum
+
+    /**
+     * Custom start date (ISO 8601 format). Must be used with endDate
+     * @type {string}
+     * @memberof AgentApiGetAgentPerformance
+     */
+    readonly startDate?: string
+
+    /**
+     * Custom end date (ISO 8601 format). Must be used with startDate
+     * @type {string}
+     * @memberof AgentApiGetAgentPerformance
+     */
+    readonly endDate?: string
+
+    /**
+     * Filter by specific team ID. Defaults to user\&#39;s team
+     * @type {string}
+     * @memberof AgentApiGetAgentPerformance
+     */
+    readonly teamId?: string
+}
+
+/**
+ * AgentApi - object-oriented interface
+ * @export
+ * @class AgentApi
+ * @extends {BaseAPI}
+ */
+export class AgentApi extends BaseAPI {
+    /**
+     * Returns detailed performance metrics for all agents in a team including chats handled, response times, CSAT, and trends
+     * @summary Get individual agent performance metrics
+     * @param {AgentApiGetAgentPerformanceRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AgentApi
+     */
+    public getAgentPerformance(requestParameters: AgentApiGetAgentPerformanceRequest = {}, options?: RawAxiosRequestConfig) {
+        return AgentApiFp(this.configuration).getAgentPerformance(requestParameters.period, requestParameters.startDate, requestParameters.endDate, requestParameters.teamId, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+/**
+ * @export
+ */
+export const GetAgentPerformancePeriodEnum = {
+    Daily: 'daily',
+    Weekly: 'weekly',
+    Monthly: 'monthly'
+} as const;
+export type GetAgentPerformancePeriodEnum = typeof GetAgentPerformancePeriodEnum[keyof typeof GetAgentPerformancePeriodEnum];
+
 
 /**
  * DashboardApi - axios parameter creator
