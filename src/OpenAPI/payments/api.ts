@@ -323,6 +323,37 @@ export interface CheckoutCreateOptionsCallbackUrls {
 /**
  * 
  * @export
+ * @interface ConsumptionTotalsGet200Response
+ */
+export interface ConsumptionTotalsGet200Response {
+    /**
+     * Total credits consumed (positive number representing absolute consumption)
+     * @type {number}
+     * @memberof ConsumptionTotalsGet200Response
+     */
+    'totalConsumed': number;
+    /**
+     * The ID of a team
+     * @type {string}
+     * @memberof ConsumptionTotalsGet200Response
+     */
+    'teamId': string;
+    /**
+     * 
+     * @type {CreditBalanceEffectType}
+     * @memberof ConsumptionTotalsGet200Response
+     */
+    'type'?: CreditBalanceEffectType;
+    /**
+     * 
+     * @type {DateRange}
+     * @memberof ConsumptionTotalsGet200Response
+     */
+    'dateRange'?: DateRange;
+}
+/**
+ * 
+ * @export
  * @enum {string}
  */
 
@@ -4838,6 +4869,57 @@ export const CreditsApiAxiosParamCreator = function (configuration?: Configurati
         },
         /**
          * 
+         * @summary Get total credits consumed by team with optional channel filter
+         * @param {string} [teamId] Filter by teamId (optional - defaults to current user\&#39;s team)
+         * @param {CreditBalanceEffectType} [type] Filter by consumption type (e.g., channel/wa, channel/messenger) for channel-specific totals
+         * @param {DateRange} [createdAt] Optional date range filter
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        consumptionTotalsGet: async (teamId?: string, type?: CreditBalanceEffectType, createdAt?: DateRange, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v2/credits/consumption-totals`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", [], configuration)
+
+            if (teamId !== undefined) {
+                localVarQueryParameter['teamId'] = teamId;
+            }
+
+            if (type !== undefined) {
+                for (const [key, value] of Object.entries(type)) {
+                    localVarQueryParameter[key] = value;
+                }
+            }
+
+            if (createdAt !== undefined) {
+                localVarQueryParameter['createdAt'] = createdAt;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
          * @summary Create a new single use credit consumption record
          * @param {CreditConsumptionPostRequest} [creditConsumptionPostRequest] 
          * @param {*} [options] Override http request option.
@@ -5618,6 +5700,21 @@ export const CreditsApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
+         * @summary Get total credits consumed by team with optional channel filter
+         * @param {string} [teamId] Filter by teamId (optional - defaults to current user\&#39;s team)
+         * @param {CreditBalanceEffectType} [type] Filter by consumption type (e.g., channel/wa, channel/messenger) for channel-specific totals
+         * @param {DateRange} [createdAt] Optional date range filter
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async consumptionTotalsGet(teamId?: string, type?: CreditBalanceEffectType, createdAt?: DateRange, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ConsumptionTotalsGet200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.consumptionTotalsGet(teamId, type, createdAt, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['CreditsApi.consumptionTotalsGet']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
          * @summary Create a new single use credit consumption record
          * @param {CreditConsumptionPostRequest} [creditConsumptionPostRequest] 
          * @param {*} [options] Override http request option.
@@ -5896,6 +5993,16 @@ export const CreditsApiFactory = function (configuration?: Configuration, basePa
         },
         /**
          * 
+         * @summary Get total credits consumed by team with optional channel filter
+         * @param {CreditsApiConsumptionTotalsGetRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        consumptionTotalsGet(requestParameters: CreditsApiConsumptionTotalsGetRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<ConsumptionTotalsGet200Response> {
+            return localVarFp.consumptionTotalsGet(requestParameters.teamId, requestParameters.type, requestParameters.createdAt, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
          * @summary Create a new single use credit consumption record
          * @param {CreditsApiCreditConsumptionPostRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -6116,6 +6223,34 @@ export interface CreditsApiCanConsumeRecurringCreditsRequest {
      * @memberof CreditsApiCanConsumeRecurringCredits
      */
     readonly legacyOpts?: LegacyCanConsumeOpts
+}
+
+/**
+ * Request parameters for consumptionTotalsGet operation in CreditsApi.
+ * @export
+ * @interface CreditsApiConsumptionTotalsGetRequest
+ */
+export interface CreditsApiConsumptionTotalsGetRequest {
+    /**
+     * Filter by teamId (optional - defaults to current user\&#39;s team)
+     * @type {string}
+     * @memberof CreditsApiConsumptionTotalsGet
+     */
+    readonly teamId?: string
+
+    /**
+     * Filter by consumption type (e.g., channel/wa, channel/messenger) for channel-specific totals
+     * @type {CreditBalanceEffectType}
+     * @memberof CreditsApiConsumptionTotalsGet
+     */
+    readonly type?: CreditBalanceEffectType
+
+    /**
+     * Optional date range filter
+     * @type {DateRange}
+     * @memberof CreditsApiConsumptionTotalsGet
+     */
+    readonly createdAt?: DateRange
 }
 
 /**
@@ -6527,6 +6662,18 @@ export class CreditsApi extends BaseAPI {
      */
     public canConsumeRecurringCredits(requestParameters: CreditsApiCanConsumeRecurringCreditsRequest, options?: RawAxiosRequestConfig) {
         return CreditsApiFp(this.configuration).canConsumeRecurringCredits(requestParameters.type, requestParameters.legacyOpts, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Get total credits consumed by team with optional channel filter
+     * @param {CreditsApiConsumptionTotalsGetRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CreditsApi
+     */
+    public consumptionTotalsGet(requestParameters: CreditsApiConsumptionTotalsGetRequest = {}, options?: RawAxiosRequestConfig) {
+        return CreditsApiFp(this.configuration).consumptionTotalsGet(requestParameters.teamId, requestParameters.type, requestParameters.createdAt, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
