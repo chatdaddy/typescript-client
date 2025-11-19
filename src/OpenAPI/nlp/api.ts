@@ -447,6 +447,208 @@ export interface ChatbotMessageResponse {
     'isFallback': boolean;
 }
 /**
+ * AI-generated insights about the contact
+ * @export
+ * @interface ContactAiInsights
+ */
+export interface ContactAiInsights {
+    /**
+     * Overall sentiment of the client
+     * @type {string}
+     * @memberof ContactAiInsights
+     */
+    'clientSentiment': ContactAiInsightsClientSentimentEnum;
+    /**
+     * Sales opportunity level
+     * @type {string}
+     * @memberof ContactAiInsights
+     */
+    'opportunity': ContactAiInsightsOpportunityEnum;
+    /**
+     * DISC personality profile
+     * @type {string}
+     * @memberof ContactAiInsights
+     */
+    'discProfile': string;
+}
+
+export const ContactAiInsightsClientSentimentEnum = {
+    Positive: 'Positive',
+    Neutral: 'Neutral',
+    Negative: 'Negative'
+} as const;
+
+export type ContactAiInsightsClientSentimentEnum = typeof ContactAiInsightsClientSentimentEnum[keyof typeof ContactAiInsightsClientSentimentEnum];
+export const ContactAiInsightsOpportunityEnum = {
+    HighPotential: 'High Potential',
+    MediumPotential: 'Medium Potential',
+    LowPotential: 'Low Potential'
+} as const;
+
+export type ContactAiInsightsOpportunityEnum = typeof ContactAiInsightsOpportunityEnum[keyof typeof ContactAiInsightsOpportunityEnum];
+
+/**
+ * Request to analyze contact information from chat history
+ * @export
+ * @interface ContactAnalysisRequest
+ */
+export interface ContactAnalysisRequest {
+    /**
+     * Account ID
+     * @type {string}
+     * @memberof ContactAnalysisRequest
+     */
+    'accountId': string;
+    /**
+     * 
+     * @type {UniqueContactID}
+     * @memberof ContactAnalysisRequest
+     */
+    'contactId': UniqueContactID;
+    /**
+     * 
+     * @type {ContactAnalysisRequestRange}
+     * @memberof ContactAnalysisRequest
+     */
+    'range'?: ContactAnalysisRequestRange;
+}
+/**
+ * Optional time range to filter messages
+ * @export
+ * @interface ContactAnalysisRequestRange
+ */
+export interface ContactAnalysisRequestRange {
+    /**
+     * Start time for message range
+     * @type {string}
+     * @memberof ContactAnalysisRequestRange
+     */
+    'start'?: string;
+    /**
+     * End time for message range
+     * @type {string}
+     * @memberof ContactAnalysisRequestRange
+     */
+    'end'?: string;
+}
+/**
+ * AI-analyzed contact information extracted from chat history
+ * @export
+ * @interface ContactAnalysisResponse
+ */
+export interface ContactAnalysisResponse {
+    /**
+     * 
+     * @type {ContactDemographics}
+     * @memberof ContactAnalysisResponse
+     */
+    'demographics': ContactDemographics;
+    /**
+     * 
+     * @type {ContactIndustryFields}
+     * @memberof ContactAnalysisResponse
+     */
+    'industryFields': ContactIndustryFields;
+    /**
+     * 
+     * @type {ContactAiInsights}
+     * @memberof ContactAnalysisResponse
+     */
+    'aiInsights': ContactAiInsights;
+}
+/**
+ * Demographic information about the contact
+ * @export
+ * @interface ContactDemographics
+ */
+export interface ContactDemographics {
+    /**
+     * Customer lifetime value or tier
+     * @type {string}
+     * @memberof ContactDemographics
+     */
+    'value': string;
+    /**
+     * Age of the contact
+     * @type {string}
+     * @memberof ContactDemographics
+     */
+    'age': string;
+    /**
+     * Gender of the contact
+     * @type {string}
+     * @memberof ContactDemographics
+     */
+    'gender': string;
+    /**
+     * Location or country
+     * @type {string}
+     * @memberof ContactDemographics
+     */
+    'location': string;
+    /**
+     * Timezone
+     * @type {string}
+     * @memberof ContactDemographics
+     */
+    'timezone': string;
+    /**
+     * Primary language
+     * @type {string}
+     * @memberof ContactDemographics
+     */
+    'language': string;
+    /**
+     * Date of first interaction
+     * @type {string}
+     * @memberof ContactDemographics
+     */
+    'joinDate': string;
+}
+/**
+ * Industry-specific information about the contact
+ * @export
+ * @interface ContactIndustryFields
+ */
+export interface ContactIndustryFields {
+    /**
+     * Company name
+     * @type {string}
+     * @memberof ContactIndustryFields
+     */
+    'company': string;
+    /**
+     * Industry or sector
+     * @type {string}
+     * @memberof ContactIndustryFields
+     */
+    'industry': string;
+    /**
+     * Job role or position
+     * @type {string}
+     * @memberof ContactIndustryFields
+     */
+    'role': string;
+    /**
+     * Team or company size
+     * @type {string}
+     * @memberof ContactIndustryFields
+     */
+    'teamSize': string;
+    /**
+     * Budget range
+     * @type {string}
+     * @memberof ContactIndustryFields
+     */
+    'budget': string;
+    /**
+     * Urgency or priority level
+     * @type {string}
+     * @memberof ContactIndustryFields
+     */
+    'priority': string;
+}
+/**
  * 
  * @export
  * @interface ContactToken
@@ -1779,6 +1981,25 @@ export type TriggerType = typeof TriggerType[keyof typeof TriggerType];
 /**
  * 
  * @export
+ * @interface UniqueContactID
+ */
+interface UniqueContactID {
+    /**
+     * Account ID
+     * @type {string}
+     * @memberof UniqueContactID
+     */
+    'accountId': string;
+    /**
+     * Contact ID (e.g., WhatsApp JID)
+     * @type {string}
+     * @memberof UniqueContactID
+     */
+    'id': string;
+}
+/**
+ * 
+ * @export
  * @interface UpdatableChatbotProperties
  */
 export interface UpdatableChatbotProperties {
@@ -2674,6 +2895,134 @@ export class AutocompleteApi extends BaseAPI {
      */
     public tagSuggest(requestParameters: AutocompleteApiTagSuggestRequest, options?: RawAxiosRequestConfig) {
         return AutocompleteApiFp(this.configuration).tagSuggest(requestParameters.accountId, requestParameters.chatId, requestParameters.isCustomField, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+
+/**
+ * CRMApi - axios parameter creator
+ * @export
+ */
+const CRMApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * Uses AI to extract and analyze contact information from chat message history. Returns demographics, industry-specific fields, and AI-generated insights.
+         * @summary Analyze contact information from chat history
+         * @param {ContactAnalysisRequest} contactAnalysisRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        analyzeContact: async (contactAnalysisRequest: ContactAnalysisRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'contactAnalysisRequest' is not null or undefined
+            assertParamExists('analyzeContact', 'contactAnalysisRequest', contactAnalysisRequest)
+            const localVarPath = `/crm/contacts/analyze`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", [], configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(contactAnalysisRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * CRMApi - functional programming interface
+ * @export
+ */
+const CRMApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = CRMApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * Uses AI to extract and analyze contact information from chat message history. Returns demographics, industry-specific fields, and AI-generated insights.
+         * @summary Analyze contact information from chat history
+         * @param {ContactAnalysisRequest} contactAnalysisRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async analyzeContact(contactAnalysisRequest: ContactAnalysisRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ContactAnalysisResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.analyzeContact(contactAnalysisRequest, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['CRMApi.analyzeContact']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+    }
+};
+
+/**
+ * CRMApi - factory interface
+ * @export
+ */
+const CRMApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = CRMApiFp(configuration)
+    return {
+        /**
+         * Uses AI to extract and analyze contact information from chat message history. Returns demographics, industry-specific fields, and AI-generated insights.
+         * @summary Analyze contact information from chat history
+         * @param {CRMApiAnalyzeContactRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        analyzeContact(requestParameters: CRMApiAnalyzeContactRequest, options?: RawAxiosRequestConfig): AxiosPromise<ContactAnalysisResponse> {
+            return localVarFp.analyzeContact(requestParameters.contactAnalysisRequest, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * Request parameters for analyzeContact operation in CRMApi.
+ * @export
+ * @interface CRMApiAnalyzeContactRequest
+ */
+export interface CRMApiAnalyzeContactRequest {
+    /**
+     * 
+     * @type {ContactAnalysisRequest}
+     * @memberof CRMApiAnalyzeContact
+     */
+    readonly contactAnalysisRequest: ContactAnalysisRequest
+}
+
+/**
+ * CRMApi - object-oriented interface
+ * @export
+ * @class CRMApi
+ * @extends {BaseAPI}
+ */
+export class CRMApi extends BaseAPI {
+    /**
+     * Uses AI to extract and analyze contact information from chat message history. Returns demographics, industry-specific fields, and AI-generated insights.
+     * @summary Analyze contact information from chat history
+     * @param {CRMApiAnalyzeContactRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CRMApi
+     */
+    public analyzeContact(requestParameters: CRMApiAnalyzeContactRequest, options?: RawAxiosRequestConfig) {
+        return CRMApiFp(this.configuration).analyzeContact(requestParameters.contactAnalysisRequest, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
