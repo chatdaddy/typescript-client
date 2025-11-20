@@ -333,17 +333,23 @@ export interface ConsumptionTotalsGet200Response {
      */
     'totalConsumed': number;
     /**
+     * Breakdown of consumption by type (only present when \'type\' parameter is not provided). Keys are consumption types (e.g., \'message_sent/wa\', \'message_sent/sms\'), values are consumption amounts.
+     * @type {{ [key: string]: number; }}
+     * @memberof ConsumptionTotalsGet200Response
+     */
+    'breakdown'?: { [key: string]: number; };
+    /**
      * The ID of a team
      * @type {string}
      * @memberof ConsumptionTotalsGet200Response
      */
     'teamId': string;
     /**
-     * 
-     * @type {CreditBalanceEffectType}
+     * The specific consumption type requested (only present when \'type\' parameter is provided)
+     * @type {string}
      * @memberof ConsumptionTotalsGet200Response
      */
-    'type'?: CreditBalanceEffectType;
+    'type'?: string;
     /**
      * 
      * @type {DateRange}
@@ -4871,12 +4877,12 @@ export const CreditsApiAxiosParamCreator = function (configuration?: Configurati
          * 
          * @summary Get total credits consumed by team with optional channel filter
          * @param {string} [teamId] Filter by teamId (optional - defaults to current user\&#39;s team)
-         * @param {CreditBalanceEffectType} [type] Filter by consumption type (e.g., channel/wa, channel/messenger) for channel-specific totals
+         * @param {string} [type] Filter by channel/messaging consumption type. Only these types appear in the breakdown response.
          * @param {DateRange} [createdAt] Optional date range filter
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        consumptionTotalsGet: async (teamId?: string, type?: CreditBalanceEffectType, createdAt?: DateRange, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        consumptionTotalsGet: async (teamId?: string, type?: string, createdAt?: DateRange, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v2/credits/consumption-totals`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -4898,9 +4904,7 @@ export const CreditsApiAxiosParamCreator = function (configuration?: Configurati
             }
 
             if (type !== undefined) {
-                for (const [key, value] of Object.entries(type)) {
-                    localVarQueryParameter[key] = value;
-                }
+                localVarQueryParameter['type'] = type;
             }
 
             if (createdAt !== undefined) {
@@ -5702,12 +5706,12 @@ export const CreditsApiFp = function(configuration?: Configuration) {
          * 
          * @summary Get total credits consumed by team with optional channel filter
          * @param {string} [teamId] Filter by teamId (optional - defaults to current user\&#39;s team)
-         * @param {CreditBalanceEffectType} [type] Filter by consumption type (e.g., channel/wa, channel/messenger) for channel-specific totals
+         * @param {string} [type] Filter by channel/messaging consumption type. Only these types appear in the breakdown response.
          * @param {DateRange} [createdAt] Optional date range filter
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async consumptionTotalsGet(teamId?: string, type?: CreditBalanceEffectType, createdAt?: DateRange, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ConsumptionTotalsGet200Response>> {
+        async consumptionTotalsGet(teamId?: string, type?: string, createdAt?: DateRange, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ConsumptionTotalsGet200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.consumptionTotalsGet(teamId, type, createdAt, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['CreditsApi.consumptionTotalsGet']?.[localVarOperationServerIndex]?.url;
@@ -6239,11 +6243,11 @@ export interface CreditsApiConsumptionTotalsGetRequest {
     readonly teamId?: string
 
     /**
-     * Filter by consumption type (e.g., channel/wa, channel/messenger) for channel-specific totals
-     * @type {CreditBalanceEffectType}
+     * Filter by channel/messaging consumption type. Only these types appear in the breakdown response.
+     * @type {string}
      * @memberof CreditsApiConsumptionTotalsGet
      */
-    readonly type?: CreditBalanceEffectType
+    readonly type?: string
 
     /**
      * Optional date range filter
