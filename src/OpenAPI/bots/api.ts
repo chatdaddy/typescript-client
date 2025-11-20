@@ -1446,6 +1446,12 @@ export interface Bot {
      */
     'industries'?: Array<string>;
     /**
+     * Number of times the bot has been fired
+     * @type {number}
+     * @memberof Bot
+     */
+    'fireCount'?: number;
+    /**
      * 
      * @type {Array<BotTriggersInner>}
      * @memberof Bot

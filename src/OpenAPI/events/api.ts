@@ -1255,6 +1255,12 @@ export interface BotInsertData {
     'industries'?: Array<string>;
     /**
      * 
+     * @type {number}
+     * @memberof BotInsertData
+     */
+    'fireCount'?: number;
+    /**
+     * 
      * @type {Array<BotInsertDataTriggersInner>}
      * @memberof BotInsertData
      */
@@ -4643,6 +4649,12 @@ export interface BotUpdateData {
      * @memberof BotUpdateData
      */
     'industries'?: Array<string>;
+    /**
+     * 
+     * @type {number}
+     * @memberof BotUpdateData
+     */
+    'fireCount'?: number;
     /**
      * 
      * @type {Array<BotInsertDataTriggersInner>}
