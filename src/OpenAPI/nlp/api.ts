@@ -2901,10 +2901,10 @@ export class AutocompleteApi extends BaseAPI {
 
 
 /**
- * CRMApi - axios parameter creator
+ * ChatbotApi - axios parameter creator
  * @export
  */
-const CRMApiAxiosParamCreator = function (configuration?: Configuration) {
+export const ChatbotApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
          * Uses AI to extract and analyze contact information from chat message history. Returns demographics, industry-specific fields, and AI-generated insights.
@@ -2946,94 +2946,6 @@ const CRMApiAxiosParamCreator = function (configuration?: Configuration) {
                 options: localVarRequestOptions,
             };
         },
-    }
-};
-
-/**
- * CRMApi - functional programming interface
- * @export
- */
-const CRMApiFp = function(configuration?: Configuration) {
-    const localVarAxiosParamCreator = CRMApiAxiosParamCreator(configuration)
-    return {
-        /**
-         * Uses AI to extract and analyze contact information from chat message history. Returns demographics, industry-specific fields, and AI-generated insights.
-         * @summary Analyze contact information from chat history
-         * @param {ContactAnalysisRequest} contactAnalysisRequest 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async analyzeContact(contactAnalysisRequest: ContactAnalysisRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ContactAnalysisResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.analyzeContact(contactAnalysisRequest, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['CRMApi.analyzeContact']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-    }
-};
-
-/**
- * CRMApi - factory interface
- * @export
- */
-const CRMApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
-    const localVarFp = CRMApiFp(configuration)
-    return {
-        /**
-         * Uses AI to extract and analyze contact information from chat message history. Returns demographics, industry-specific fields, and AI-generated insights.
-         * @summary Analyze contact information from chat history
-         * @param {CRMApiAnalyzeContactRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        analyzeContact(requestParameters: CRMApiAnalyzeContactRequest, options?: RawAxiosRequestConfig): AxiosPromise<ContactAnalysisResponse> {
-            return localVarFp.analyzeContact(requestParameters.contactAnalysisRequest, options).then((request) => request(axios, basePath));
-        },
-    };
-};
-
-/**
- * Request parameters for analyzeContact operation in CRMApi.
- * @export
- * @interface CRMApiAnalyzeContactRequest
- */
-export interface CRMApiAnalyzeContactRequest {
-    /**
-     * 
-     * @type {ContactAnalysisRequest}
-     * @memberof CRMApiAnalyzeContact
-     */
-    readonly contactAnalysisRequest: ContactAnalysisRequest
-}
-
-/**
- * CRMApi - object-oriented interface
- * @export
- * @class CRMApi
- * @extends {BaseAPI}
- */
-export class CRMApi extends BaseAPI {
-    /**
-     * Uses AI to extract and analyze contact information from chat message history. Returns demographics, industry-specific fields, and AI-generated insights.
-     * @summary Analyze contact information from chat history
-     * @param {CRMApiAnalyzeContactRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof CRMApi
-     */
-    public analyzeContact(requestParameters: CRMApiAnalyzeContactRequest, options?: RawAxiosRequestConfig) {
-        return CRMApiFp(this.configuration).analyzeContact(requestParameters.contactAnalysisRequest, options).then((request) => request(this.axios, this.basePath));
-    }
-}
-
-
-
-/**
- * ChatbotApi - axios parameter creator
- * @export
- */
-export const ChatbotApiAxiosParamCreator = function (configuration?: Configuration) {
-    return {
         /**
          * 
          * @summary Refresh Chatbot data
@@ -3406,6 +3318,19 @@ export const ChatbotApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = ChatbotApiAxiosParamCreator(configuration)
     return {
         /**
+         * Uses AI to extract and analyze contact information from chat message history. Returns demographics, industry-specific fields, and AI-generated insights.
+         * @summary Analyze contact information from chat history
+         * @param {ContactAnalysisRequest} contactAnalysisRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async analyzeContact(contactAnalysisRequest: ContactAnalysisRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ContactAnalysisResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.analyzeContact(contactAnalysisRequest, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['ChatbotApi.analyzeContact']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
          * 
          * @summary Refresh Chatbot data
          * @param {string} id ID of the chatbot
@@ -3537,6 +3462,16 @@ export const ChatbotApiFactory = function (configuration?: Configuration, basePa
     const localVarFp = ChatbotApiFp(configuration)
     return {
         /**
+         * Uses AI to extract and analyze contact information from chat message history. Returns demographics, industry-specific fields, and AI-generated insights.
+         * @summary Analyze contact information from chat history
+         * @param {ChatbotApiAnalyzeContactRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        analyzeContact(requestParameters: ChatbotApiAnalyzeContactRequest, options?: RawAxiosRequestConfig): AxiosPromise<ContactAnalysisResponse> {
+            return localVarFp.analyzeContact(requestParameters.contactAnalysisRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
          * 
          * @summary Refresh Chatbot data
          * @param {ChatbotApiChatbotRefreshRequest} requestParameters Request parameters.
@@ -3628,6 +3563,20 @@ export const ChatbotApiFactory = function (configuration?: Configuration, basePa
         },
     };
 };
+
+/**
+ * Request parameters for analyzeContact operation in ChatbotApi.
+ * @export
+ * @interface ChatbotApiAnalyzeContactRequest
+ */
+export interface ChatbotApiAnalyzeContactRequest {
+    /**
+     * 
+     * @type {ContactAnalysisRequest}
+     * @memberof ChatbotApiAnalyzeContact
+     */
+    readonly contactAnalysisRequest: ContactAnalysisRequest
+}
 
 /**
  * Request parameters for chatbotRefresh operation in ChatbotApi.
@@ -3790,6 +3739,18 @@ export interface ChatbotApiUpdateBotRequest {
  * @extends {BaseAPI}
  */
 export class ChatbotApi extends BaseAPI {
+    /**
+     * Uses AI to extract and analyze contact information from chat message history. Returns demographics, industry-specific fields, and AI-generated insights.
+     * @summary Analyze contact information from chat history
+     * @param {ChatbotApiAnalyzeContactRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ChatbotApi
+     */
+    public analyzeContact(requestParameters: ChatbotApiAnalyzeContactRequest, options?: RawAxiosRequestConfig) {
+        return ChatbotApiFp(this.configuration).analyzeContact(requestParameters.contactAnalysisRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
     /**
      * 
      * @summary Refresh Chatbot data
