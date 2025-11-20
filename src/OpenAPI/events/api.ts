@@ -7589,7 +7589,7 @@ export type DashboardwithdataInsertDataAllOfSchemaItemsVisualizationTypeEnum = t
  * @enum {string}
  */
 
-export const EventName = {
+const EventName = {
     GroupUpdate: 'group-update',
     PresenceUpdate: 'presence-update',
     OrderInsert: 'order-insert',
@@ -7654,7 +7654,7 @@ export const EventName = {
     CallchannelDelete: 'callchannel-delete'
 } as const;
 
-export type EventName = typeof EventName[keyof typeof EventName];
+type EventName = typeof EventName[keyof typeof EventName];
 
 
 /**
