@@ -2908,6 +2908,56 @@ export interface BotsGets200Response {
 /**
  * 
  * @export
+ * @interface BotsGptGenerate200Response
+ */
+export interface BotsGptGenerate200Response {
+    /**
+     * 
+     * @type {Bot}
+     * @memberof BotsGptGenerate200Response
+     */
+    'bot': Bot;
+    /**
+     * 
+     * @type {string}
+     * @memberof BotsGptGenerate200Response
+     */
+    'message': string;
+}
+/**
+ * 
+ * @export
+ * @interface BotsGptGenerateRequest
+ */
+export interface BotsGptGenerateRequest {
+    /**
+     * Natural language description of the bot flow to generate
+     * @type {string}
+     * @memberof BotsGptGenerateRequest
+     */
+    'prompt': string;
+    /**
+     * Language for the bot messages
+     * @type {string}
+     * @memberof BotsGptGenerateRequest
+     */
+    'language'?: string;
+    /**
+     * Industry context for the bot
+     * @type {string}
+     * @memberof BotsGptGenerateRequest
+     */
+    'industry'?: string;
+    /**
+     * Additional context or requirements for the bot flow
+     * @type {string}
+     * @memberof BotsGptGenerateRequest
+     */
+    'additionalContext'?: string;
+}
+/**
+ * 
+ * @export
  * @interface CalendarAuth200Response
  */
 export interface CalendarAuth200Response {
@@ -7882,6 +7932,44 @@ export const BotsApiAxiosParamCreator = function (configuration?: Configuration)
             };
         },
         /**
+         * This endpoint takes a natural language prompt and generates a complete bot  message flow with actions, triggers, and nodes using GPT. The generated bot is automatically saved to the database.
+         * @summary Generate a complete bot flow using AI
+         * @param {BotsGptGenerateRequest} [botsGptGenerateRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        botsGptGenerate: async (botsGptGenerateRequest?: BotsGptGenerateRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/bots/gpt-generate`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", [], configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(botsGptGenerateRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * 
          * @summary Update an action
          * @param {string} id 
@@ -8131,6 +8219,19 @@ export const BotsApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
+         * This endpoint takes a natural language prompt and generates a complete bot  message flow with actions, triggers, and nodes using GPT. The generated bot is automatically saved to the database.
+         * @summary Generate a complete bot flow using AI
+         * @param {BotsGptGenerateRequest} [botsGptGenerateRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async botsGptGenerate(botsGptGenerateRequest?: BotsGptGenerateRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BotsGptGenerate200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.botsGptGenerate(botsGptGenerateRequest, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['BotsApi.botsGptGenerate']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
          * 
          * @summary Update an action
          * @param {string} id 
@@ -8252,6 +8353,16 @@ export const BotsApiFactory = function (configuration?: Configuration, basePath?
          */
         botsGets(requestParameters: BotsApiBotsGetsRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<BotsGets200Response> {
             return localVarFp.botsGets(requestParameters.q, requestParameters.isForm, requestParameters.before, requestParameters.count, requestParameters.id, requestParameters.sortBy, requestParameters.order, requestParameters.folderId, requestParameters.language, requestParameters.industry, requestParameters.returnTotalCount, requestParameters.triggerTypes, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * This endpoint takes a natural language prompt and generates a complete bot  message flow with actions, triggers, and nodes using GPT. The generated bot is automatically saved to the database.
+         * @summary Generate a complete bot flow using AI
+         * @param {BotsApiBotsGptGenerateRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        botsGptGenerate(requestParameters: BotsApiBotsGptGenerateRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<BotsGptGenerate200Response> {
+            return localVarFp.botsGptGenerate(requestParameters.botsGptGenerateRequest, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -8511,6 +8622,20 @@ export interface BotsApiBotsGetsRequest {
 }
 
 /**
+ * Request parameters for botsGptGenerate operation in BotsApi.
+ * @export
+ * @interface BotsApiBotsGptGenerateRequest
+ */
+export interface BotsApiBotsGptGenerateRequest {
+    /**
+     * 
+     * @type {BotsGptGenerateRequest}
+     * @memberof BotsApiBotsGptGenerate
+     */
+    readonly botsGptGenerateRequest?: BotsGptGenerateRequest
+}
+
+/**
  * Request parameters for botsPatch operation in BotsApi.
  * @export
  * @interface BotsApiBotsPatchRequest
@@ -8663,6 +8788,18 @@ export class BotsApi extends BaseAPI {
      */
     public botsGets(requestParameters: BotsApiBotsGetsRequest = {}, options?: RawAxiosRequestConfig) {
         return BotsApiFp(this.configuration).botsGets(requestParameters.q, requestParameters.isForm, requestParameters.before, requestParameters.count, requestParameters.id, requestParameters.sortBy, requestParameters.order, requestParameters.folderId, requestParameters.language, requestParameters.industry, requestParameters.returnTotalCount, requestParameters.triggerTypes, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * This endpoint takes a natural language prompt and generates a complete bot  message flow with actions, triggers, and nodes using GPT. The generated bot is automatically saved to the database.
+     * @summary Generate a complete bot flow using AI
+     * @param {BotsApiBotsGptGenerateRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof BotsApi
+     */
+    public botsGptGenerate(requestParameters: BotsApiBotsGptGenerateRequest = {}, options?: RawAxiosRequestConfig) {
+        return BotsApiFp(this.configuration).botsGptGenerate(requestParameters.botsGptGenerateRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
