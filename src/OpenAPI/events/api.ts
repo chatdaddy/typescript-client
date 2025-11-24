@@ -13586,6 +13586,7 @@ export interface UserInsertDataNotificationPreferencesAccountDisconnected {
 export const UserInsertDataNotificationPreferencesAccountDisconnectedDestinationsEnum = {
     Push: 'push',
     Email: 'email',
+    Sms: 'sms',
     Whatsapp: 'whatsapp'
 } as const;
 
@@ -13621,6 +13622,7 @@ export interface UserInsertDataNotificationPreferencesContactAssignedToMe {
 export const UserInsertDataNotificationPreferencesContactAssignedToMeDestinationsEnum = {
     Push: 'push',
     Email: 'email',
+    Sms: 'sms',
     Whatsapp: 'whatsapp'
 } as const;
 

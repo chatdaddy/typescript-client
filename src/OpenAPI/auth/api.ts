@@ -949,6 +949,7 @@ export type NewMessageNotificationType = Array<string> | string;
 export const NotificationDestination = {
     Push: 'push',
     Email: 'email',
+    Sms: 'sms',
     Whatsapp: 'whatsapp'
 } as const;
 
