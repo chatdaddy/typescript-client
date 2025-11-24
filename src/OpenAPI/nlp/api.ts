@@ -1754,6 +1754,58 @@ export type LlmModel = typeof LlmModel[keyof typeof LlmModel];
 /**
  * 
  * @export
+ * @interface LlmPrompt200Response
+ */
+export interface LlmPrompt200Response {
+    /**
+     * 
+     * @type {string}
+     * @memberof LlmPrompt200Response
+     */
+    'text': string;
+}
+/**
+ * Stateless single prompt request. Sends a raw prompt and returns one text response; no thread persistence.
+ * @export
+ * @interface LlmPromptRequest
+ */
+export interface LlmPromptRequest {
+    /**
+     * Raw prompt text to send to the model.
+     * @type {string}
+     * @memberof LlmPromptRequest
+     */
+    'prompt': string;
+    /**
+     * 
+     * @type {LlmModel}
+     * @memberof LlmPromptRequest
+     */
+    'model'?: LlmModel;
+    /**
+     * Sampling temperature (0-2, higher is more random).
+     * @type {number}
+     * @memberof LlmPromptRequest
+     */
+    'temperature'?: number;
+    /**
+     * Optional knowledge bases to use for retrieval augmented generation.
+     * @type {Array<string>}
+     * @memberof LlmPromptRequest
+     */
+    'knowledgeBaseIds'?: Array<string>;
+    /**
+     * 
+     * @type {AiCreditUseMetadata}
+     * @memberof LlmPromptRequest
+     */
+    'metadata'?: AiCreditUseMetadata;
+}
+
+
+/**
+ * 
+ * @export
  * @interface LlmTool
  */
 export interface LlmTool {
@@ -3186,6 +3238,42 @@ export const ChatbotApiAxiosParamCreator = function (configuration?: Configurati
             };
         },
         /**
+         * Directly send a raw prompt & receive one text response. No thread persistence.
+         * @summary Stateless single prompt -> text
+         * @param {LlmPromptRequest} llmPromptRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        llmPrompt: async (llmPromptRequest: LlmPromptRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'llmPromptRequest' is not null or undefined
+            assertParamExists('llmPrompt', 'llmPromptRequest', llmPromptRequest)
+            const localVarPath = `/llm-prompt`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(llmPromptRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * 
          * @summary Send message to the chatbot
          * @param {string} id ID of the chatbot
@@ -3411,6 +3499,19 @@ export const ChatbotApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
+         * Directly send a raw prompt & receive one text response. No thread persistence.
+         * @summary Stateless single prompt -> text
+         * @param {LlmPromptRequest} llmPromptRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async llmPrompt(llmPromptRequest: LlmPromptRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<LlmPrompt200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.llmPrompt(llmPromptRequest, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['ChatbotApi.llmPrompt']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
          * 
          * @summary Send message to the chatbot
          * @param {string} id ID of the chatbot
@@ -3530,6 +3631,16 @@ export const ChatbotApiFactory = function (configuration?: Configuration, basePa
          */
         llmChat(requestParameters: ChatbotApiLlmChatRequest, options?: RawAxiosRequestConfig): AxiosPromise<LlmChat200Response> {
             return localVarFp.llmChat(requestParameters.llmChatRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Directly send a raw prompt & receive one text response. No thread persistence.
+         * @summary Stateless single prompt -> text
+         * @param {ChatbotApiLlmPromptRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        llmPrompt(requestParameters: ChatbotApiLlmPromptRequest, options?: RawAxiosRequestConfig): AxiosPromise<LlmPrompt200Response> {
+            return localVarFp.llmPrompt(requestParameters.llmPromptRequest, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -3677,6 +3788,20 @@ export interface ChatbotApiLlmChatRequest {
 }
 
 /**
+ * Request parameters for llmPrompt operation in ChatbotApi.
+ * @export
+ * @interface ChatbotApiLlmPromptRequest
+ */
+export interface ChatbotApiLlmPromptRequest {
+    /**
+     * 
+     * @type {LlmPromptRequest}
+     * @memberof ChatbotApiLlmPrompt
+     */
+    readonly llmPromptRequest: LlmPromptRequest
+}
+
+/**
  * Request parameters for messageBot operation in ChatbotApi.
  * @export
  * @interface ChatbotApiMessageBotRequest
@@ -3821,6 +3946,18 @@ export class ChatbotApi extends BaseAPI {
      */
     public llmChat(requestParameters: ChatbotApiLlmChatRequest, options?: RawAxiosRequestConfig) {
         return ChatbotApiFp(this.configuration).llmChat(requestParameters.llmChatRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Directly send a raw prompt & receive one text response. No thread persistence.
+     * @summary Stateless single prompt -> text
+     * @param {ChatbotApiLlmPromptRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ChatbotApi
+     */
+    public llmPrompt(requestParameters: ChatbotApiLlmPromptRequest, options?: RawAxiosRequestConfig) {
+        return ChatbotApiFp(this.configuration).llmPrompt(requestParameters.llmPromptRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
