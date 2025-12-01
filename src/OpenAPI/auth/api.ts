@@ -553,7 +553,7 @@ export interface DisabledFeatureGet200Response {
      * @type {Array<string>}
      * @memberof DisabledFeatureGet200Response
      */
-    'disabledFeatures': Array<string>;
+    'disabledFeatures'?: Array<string>;
 }
 /**
  * 
