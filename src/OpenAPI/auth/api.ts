@@ -545,19 +545,32 @@ export type BoutirTokenRequestVariantEnum = typeof BoutirTokenRequestVariantEnum
 /**
  * 
  * @export
- * @interface DisableFeatureRequest
+ * @interface DisabledFeatureGet200Response
  */
-export interface DisableFeatureRequest {
+export interface DisabledFeatureGet200Response {
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof DisabledFeatureGet200Response
+     */
+    'disabledFeatures': Array<string>;
+}
+/**
+ * 
+ * @export
+ * @interface DisabledFeaturePostRequest
+ */
+export interface DisabledFeaturePostRequest {
     /**
      * Unique identifier for a team
      * @type {string}
-     * @memberof DisableFeatureRequest
+     * @memberof DisabledFeaturePostRequest
      */
     'teamId': string;
     /**
      * 
      * @type {string}
-     * @memberof DisableFeatureRequest
+     * @memberof DisabledFeaturePostRequest
      */
     'feature': string;
 }
@@ -3782,132 +3795,6 @@ export class AnnouncementsApi extends BaseAPI {
 
 
 /**
- * FeaturesApi - axios parameter creator
- * @export
- */
-export const FeaturesApiAxiosParamCreator = function (configuration?: Configuration) {
-    return {
-        /**
-         * 
-         * @summary Disable a feature for a team
-         * @param {DisableFeatureRequest} [disableFeatureRequest] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        disableFeature: async (disableFeatureRequest?: DisableFeatureRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/disable/feature`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication chatdaddy required
-            // oauth required
-            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["ADMIN_PANEL_ACCESS"], configuration)
-
-
-    
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(disableFeatureRequest, localVarRequestOptions, configuration)
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-    }
-};
-
-/**
- * FeaturesApi - functional programming interface
- * @export
- */
-export const FeaturesApiFp = function(configuration?: Configuration) {
-    const localVarAxiosParamCreator = FeaturesApiAxiosParamCreator(configuration)
-    return {
-        /**
-         * 
-         * @summary Disable a feature for a team
-         * @param {DisableFeatureRequest} [disableFeatureRequest] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async disableFeature(disableFeatureRequest?: DisableFeatureRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.disableFeature(disableFeatureRequest, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['FeaturesApi.disableFeature']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-    }
-};
-
-/**
- * FeaturesApi - factory interface
- * @export
- */
-export const FeaturesApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
-    const localVarFp = FeaturesApiFp(configuration)
-    return {
-        /**
-         * 
-         * @summary Disable a feature for a team
-         * @param {FeaturesApiDisableFeatureRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        disableFeature(requestParameters: FeaturesApiDisableFeatureRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.disableFeature(requestParameters.disableFeatureRequest, options).then((request) => request(axios, basePath));
-        },
-    };
-};
-
-/**
- * Request parameters for disableFeature operation in FeaturesApi.
- * @export
- * @interface FeaturesApiDisableFeatureRequest
- */
-export interface FeaturesApiDisableFeatureRequest {
-    /**
-     * 
-     * @type {DisableFeatureRequest}
-     * @memberof FeaturesApiDisableFeature
-     */
-    readonly disableFeatureRequest?: DisableFeatureRequest
-}
-
-/**
- * FeaturesApi - object-oriented interface
- * @export
- * @class FeaturesApi
- * @extends {BaseAPI}
- */
-export class FeaturesApi extends BaseAPI {
-    /**
-     * 
-     * @summary Disable a feature for a team
-     * @param {FeaturesApiDisableFeatureRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof FeaturesApi
-     */
-    public disableFeature(requestParameters: FeaturesApiDisableFeatureRequest = {}, options?: RawAxiosRequestConfig) {
-        return FeaturesApiFp(this.configuration).disableFeature(requestParameters.disableFeatureRequest, options).then((request) => request(this.axios, this.basePath));
-    }
-}
-
-
-
-/**
  * InviteLinksApi - axios parameter creator
  * @export
  */
@@ -5822,6 +5709,85 @@ export const TeamsApiAxiosParamCreator = function (configuration?: Configuration
     return {
         /**
          * 
+         * @summary Get disabled features for a team
+         * @param {string} teamId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        disabledFeatureGet: async (teamId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'teamId' is not null or undefined
+            assertParamExists('disabledFeatureGet', 'teamId', teamId)
+            const localVarPath = `/disable/feature`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["ADMIN_PANEL_ACCESS"], configuration)
+
+            if (teamId !== undefined) {
+                localVarQueryParameter['teamId'] = teamId;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Disable a feature for a team
+         * @param {DisabledFeaturePostRequest} [disabledFeaturePostRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        disabledFeaturePost: async (disabledFeaturePostRequest?: DisabledFeaturePostRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/disable/feature`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["ADMIN_PANEL_ACCESS"], configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(disabledFeaturePostRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
          * @summary Fetch partner admin teamIds
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -6189,6 +6155,32 @@ export const TeamsApiFp = function(configuration?: Configuration) {
     return {
         /**
          * 
+         * @summary Get disabled features for a team
+         * @param {string} teamId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async disabledFeatureGet(teamId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DisabledFeatureGet200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.disabledFeatureGet(teamId, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['TeamsApi.disabledFeatureGet']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @summary Disable a feature for a team
+         * @param {DisabledFeaturePostRequest} [disabledFeaturePostRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async disabledFeaturePost(disabledFeaturePostRequest?: DisabledFeaturePostRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.disabledFeaturePost(disabledFeaturePostRequest, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['TeamsApi.disabledFeaturePost']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
          * @summary Fetch partner admin teamIds
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -6307,6 +6299,26 @@ export const TeamsApiFactory = function (configuration?: Configuration, basePath
     return {
         /**
          * 
+         * @summary Get disabled features for a team
+         * @param {TeamsApiDisabledFeatureGetRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        disabledFeatureGet(requestParameters: TeamsApiDisabledFeatureGetRequest, options?: RawAxiosRequestConfig): AxiosPromise<DisabledFeatureGet200Response> {
+            return localVarFp.disabledFeatureGet(requestParameters.teamId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Disable a feature for a team
+         * @param {TeamsApiDisabledFeaturePostRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        disabledFeaturePost(requestParameters: TeamsApiDisabledFeaturePostRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.disabledFeaturePost(requestParameters.disabledFeaturePostRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
          * @summary Fetch partner admin teamIds
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -6376,6 +6388,34 @@ export const TeamsApiFactory = function (configuration?: Configuration, basePath
         },
     };
 };
+
+/**
+ * Request parameters for disabledFeatureGet operation in TeamsApi.
+ * @export
+ * @interface TeamsApiDisabledFeatureGetRequest
+ */
+export interface TeamsApiDisabledFeatureGetRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof TeamsApiDisabledFeatureGet
+     */
+    readonly teamId: string
+}
+
+/**
+ * Request parameters for disabledFeaturePost operation in TeamsApi.
+ * @export
+ * @interface TeamsApiDisabledFeaturePostRequest
+ */
+export interface TeamsApiDisabledFeaturePostRequest {
+    /**
+     * 
+     * @type {DisabledFeaturePostRequest}
+     * @memberof TeamsApiDisabledFeaturePost
+     */
+    readonly disabledFeaturePostRequest?: DisabledFeaturePostRequest
+}
 
 /**
  * Request parameters for partnerTeamPatch operation in TeamsApi.
@@ -6594,6 +6634,30 @@ export interface TeamsApiTeamsPatchRequest {
  * @extends {BaseAPI}
  */
 export class TeamsApi extends BaseAPI {
+    /**
+     * 
+     * @summary Get disabled features for a team
+     * @param {TeamsApiDisabledFeatureGetRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof TeamsApi
+     */
+    public disabledFeatureGet(requestParameters: TeamsApiDisabledFeatureGetRequest, options?: RawAxiosRequestConfig) {
+        return TeamsApiFp(this.configuration).disabledFeatureGet(requestParameters.teamId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Disable a feature for a team
+     * @param {TeamsApiDisabledFeaturePostRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof TeamsApi
+     */
+    public disabledFeaturePost(requestParameters: TeamsApiDisabledFeaturePostRequest = {}, options?: RawAxiosRequestConfig) {
+        return TeamsApiFp(this.configuration).disabledFeaturePost(requestParameters.disabledFeaturePostRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
     /**
      * 
      * @summary Fetch partner admin teamIds
