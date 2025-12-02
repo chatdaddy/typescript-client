@@ -4390,6 +4390,37 @@ export interface NextActionRandomizer {
     'weights'?: Array<number>;
 }
 /**
+ * 
+ * @export
+ * @interface NotionAuth200Response
+ */
+export interface NotionAuth200Response {
+    /**
+     * 
+     * @type {string}
+     * @memberof NotionAuth200Response
+     */
+    'accessToken': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof NotionAuth200Response
+     */
+    'workspaceId': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof NotionAuth200Response
+     */
+    'workspaceName': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof NotionAuth200Response
+     */
+    'botId': string;
+}
+/**
  * describe OAuth input for access tokens
  * @export
  * @interface OAuthPropertyDescriptor
@@ -6315,6 +6346,43 @@ export const AppIntegrationApiAxiosParamCreator = function (configuration?: Conf
                 options: localVarRequestOptions,
             };
         },
+        /**
+         * 
+         * @summary Get access token for Notion OAuth
+         * @param {string} authCode 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        notionAuth: async (authCode: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'authCode' is not null or undefined
+            assertParamExists('notionAuth', 'authCode', authCode)
+            const localVarPath = `/notion`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (authCode !== undefined) {
+                localVarQueryParameter['authCode'] = authCode;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
     }
 };
 
@@ -6377,6 +6445,19 @@ export const AppIntegrationApiFp = function(configuration?: Configuration) {
             const localVarOperationServerBasePath = operationServerMap['AppIntegrationApi.integrationsGet']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
+        /**
+         * 
+         * @summary Get access token for Notion OAuth
+         * @param {string} authCode 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async notionAuth(authCode: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<NotionAuth200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.notionAuth(authCode, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['AppIntegrationApi.notionAuth']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
     }
 };
 
@@ -6426,6 +6507,16 @@ export const AppIntegrationApiFactory = function (configuration?: Configuration,
          */
         integrationsGet(requestParameters: AppIntegrationApiIntegrationsGetRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<IntegrationsGet200Response> {
             return localVarFp.integrationsGet(requestParameters.appGroupId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Get access token for Notion OAuth
+         * @param {AppIntegrationApiNotionAuthRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        notionAuth(requestParameters: AppIntegrationApiNotionAuthRequest, options?: RawAxiosRequestConfig): AxiosPromise<NotionAuth200Response> {
+            return localVarFp.notionAuth(requestParameters.authCode, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -6487,6 +6578,20 @@ export interface AppIntegrationApiIntegrationsGetRequest {
 }
 
 /**
+ * Request parameters for notionAuth operation in AppIntegrationApi.
+ * @export
+ * @interface AppIntegrationApiNotionAuthRequest
+ */
+export interface AppIntegrationApiNotionAuthRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof AppIntegrationApiNotionAuth
+     */
+    readonly authCode: string
+}
+
+/**
  * AppIntegrationApi - object-oriented interface
  * @export
  * @class AppIntegrationApi
@@ -6539,6 +6644,18 @@ export class AppIntegrationApi extends BaseAPI {
      */
     public integrationsGet(requestParameters: AppIntegrationApiIntegrationsGetRequest = {}, options?: RawAxiosRequestConfig) {
         return AppIntegrationApiFp(this.configuration).integrationsGet(requestParameters.appGroupId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Get access token for Notion OAuth
+     * @param {AppIntegrationApiNotionAuthRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AppIntegrationApi
+     */
+    public notionAuth(requestParameters: AppIntegrationApiNotionAuthRequest, options?: RawAxiosRequestConfig) {
+        return AppIntegrationApiFp(this.configuration).notionAuth(requestParameters.authCode, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
