@@ -4419,6 +4419,12 @@ export interface NotionAuth200Response {
      * @memberof NotionAuth200Response
      */
     'botId': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof NotionAuth200Response
+     */
+    'userId': string;
 }
 /**
  * describe OAuth input for access tokens
