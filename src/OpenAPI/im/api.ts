@@ -6276,6 +6276,18 @@ export interface TemplateCreate {
      */
     'text': string | null;
     /**
+     * Optional header text for the WABA message template
+     * @type {string}
+     * @memberof TemplateCreate
+     */
+    'header'?: string;
+    /**
+     * Optional footer text for the WABA message template
+     * @type {string}
+     * @memberof TemplateCreate
+     */
+    'footer'?: string;
+    /**
      * 
      * @type {Array<MessageButton>}
      * @memberof TemplateCreate
