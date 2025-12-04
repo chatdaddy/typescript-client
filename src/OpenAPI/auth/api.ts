@@ -545,6 +545,38 @@ export type BoutirTokenRequestVariantEnum = typeof BoutirTokenRequestVariantEnum
 /**
  * 
  * @export
+ * @interface CheckPhoneExists200Response
+ */
+export interface CheckPhoneExists200Response {
+    /**
+     * Whether a user with this phone number exists
+     * @type {boolean}
+     * @memberof CheckPhoneExists200Response
+     */
+    'exists'?: boolean;
+}
+/**
+ * 
+ * @export
+ * @interface CheckPhoneExistsRequest
+ */
+export interface CheckPhoneExistsRequest {
+    /**
+     * Phone number to check (without + prefix, e.g., \"6591234567\")
+     * @type {string}
+     * @memberof CheckPhoneExistsRequest
+     */
+    'phoneNumber': string;
+    /**
+     * Recaptcha token to prevent abuse
+     * @type {string}
+     * @memberof CheckPhoneExistsRequest
+     */
+    'captchaToken'?: string;
+}
+/**
+ * 
+ * @export
  * @interface DisabledFeatureGet200Response
  */
 export interface DisabledFeatureGet200Response {
@@ -6759,6 +6791,42 @@ export type TeamsGetVariantEnum = typeof TeamsGetVariantEnum[keyof typeof TeamsG
 export const UsersApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
+         * Validates whether a user account exists for the given phone number. This endpoint is intended for the forgot password flow to verify the phone number before sending an OTP.  Requires a captcha token to prevent abuse. 
+         * @summary Check if a user exists by phone number
+         * @param {CheckPhoneExistsRequest} checkPhoneExistsRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        checkPhoneExists: async (checkPhoneExistsRequest: CheckPhoneExistsRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'checkPhoneExistsRequest' is not null or undefined
+            assertParamExists('checkPhoneExists', 'checkPhoneExistsRequest', checkPhoneExistsRequest)
+            const localVarPath = `/users/check-phone`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(checkPhoneExistsRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * Get the total count of users. Can be filtered by creation date range. Supports preset filters (daily, weekly, monthly) or custom date ranges. 
          * @summary Get total user count
          * @param {string} [createdAfter] Filter users created after this timestamp (inclusive). Can be used with createdBefore to create a custom date range. 
@@ -7105,6 +7173,19 @@ export const UsersApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = UsersApiAxiosParamCreator(configuration)
     return {
         /**
+         * Validates whether a user account exists for the given phone number. This endpoint is intended for the forgot password flow to verify the phone number before sending an OTP.  Requires a captcha token to prevent abuse. 
+         * @summary Check if a user exists by phone number
+         * @param {CheckPhoneExistsRequest} checkPhoneExistsRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async checkPhoneExists(checkPhoneExistsRequest: CheckPhoneExistsRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CheckPhoneExists200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.checkPhoneExists(checkPhoneExistsRequest, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['UsersApi.checkPhoneExists']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
          * Get the total count of users. Can be filtered by creation date range. Supports preset filters (daily, weekly, monthly) or custom date ranges. 
          * @summary Get total user count
          * @param {string} [createdAfter] Filter users created after this timestamp (inclusive). Can be used with createdBefore to create a custom date range. 
@@ -7218,6 +7299,16 @@ export const UsersApiFactory = function (configuration?: Configuration, basePath
     const localVarFp = UsersApiFp(configuration)
     return {
         /**
+         * Validates whether a user account exists for the given phone number. This endpoint is intended for the forgot password flow to verify the phone number before sending an OTP.  Requires a captcha token to prevent abuse. 
+         * @summary Check if a user exists by phone number
+         * @param {UsersApiCheckPhoneExistsRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        checkPhoneExists(requestParameters: UsersApiCheckPhoneExistsRequest, options?: RawAxiosRequestConfig): AxiosPromise<CheckPhoneExists200Response> {
+            return localVarFp.checkPhoneExists(requestParameters.checkPhoneExistsRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
          * Get the total count of users. Can be filtered by creation date range. Supports preset filters (daily, weekly, monthly) or custom date ranges. 
          * @summary Get total user count
          * @param {UsersApiGetUsersCountRequest} requestParameters Request parameters.
@@ -7289,6 +7380,20 @@ export const UsersApiFactory = function (configuration?: Configuration, basePath
         },
     };
 };
+
+/**
+ * Request parameters for checkPhoneExists operation in UsersApi.
+ * @export
+ * @interface UsersApiCheckPhoneExistsRequest
+ */
+export interface UsersApiCheckPhoneExistsRequest {
+    /**
+     * 
+     * @type {CheckPhoneExistsRequest}
+     * @memberof UsersApiCheckPhoneExists
+     */
+    readonly checkPhoneExistsRequest: CheckPhoneExistsRequest
+}
 
 /**
  * Request parameters for getUsersCount operation in UsersApi.
@@ -7479,6 +7584,18 @@ export interface UsersApiUsersPostRequest {
  * @extends {BaseAPI}
  */
 export class UsersApi extends BaseAPI {
+    /**
+     * Validates whether a user account exists for the given phone number. This endpoint is intended for the forgot password flow to verify the phone number before sending an OTP.  Requires a captcha token to prevent abuse. 
+     * @summary Check if a user exists by phone number
+     * @param {UsersApiCheckPhoneExistsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof UsersApi
+     */
+    public checkPhoneExists(requestParameters: UsersApiCheckPhoneExistsRequest, options?: RawAxiosRequestConfig) {
+        return UsersApiFp(this.configuration).checkPhoneExists(requestParameters.checkPhoneExistsRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
     /**
      * Get the total count of users. Can be filtered by creation date range. Supports preset filters (daily, weekly, monthly) or custom date ranges. 
      * @summary Get total user count
