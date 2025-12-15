@@ -1476,6 +1476,75 @@ export interface OtpPostRequest {
 /**
  * 
  * @export
+ * @interface OtpVerify200Response
+ */
+export interface OtpVerify200Response {
+    /**
+     * 
+     * @type {boolean}
+     * @memberof OtpVerify200Response
+     */
+    'success'?: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof OtpVerify200Response
+     */
+    'message'?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof OtpVerify200Response
+     */
+    'phoneNumber'?: number;
+}
+/**
+ * 
+ * @export
+ * @interface OtpVerify400Response
+ */
+export interface OtpVerify400Response {
+    /**
+     * 
+     * @type {boolean}
+     * @memberof OtpVerify400Response
+     */
+    'success'?: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof OtpVerify400Response
+     */
+    'error'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof OtpVerify400Response
+     */
+    'message'?: string;
+}
+/**
+ * 
+ * @export
+ * @interface OtpVerifyRequest
+ */
+export interface OtpVerifyRequest {
+    /**
+     * Phone number (e.g., 6591234567)
+     * @type {string}
+     * @memberof OtpVerifyRequest
+     */
+    'phoneNumber': string;
+    /**
+     * 6-digit OTP code
+     * @type {string}
+     * @memberof OtpVerifyRequest
+     */
+    'otp': string;
+}
+/**
+ * 
+ * @export
  * @interface PartnerAdminGet200Response
  */
 export interface PartnerAdminGet200Response {
@@ -4722,6 +4791,40 @@ export const OTPApiAxiosParamCreator = function (configuration?: Configuration) 
             };
         },
         /**
+         * Verifies the OTP sent to the user\'s phone number without side effects. This endpoint allows standalone verification before proceeding with operations like password reset or account creation. 
+         * @summary Verify phone OTP
+         * @param {OtpVerifyRequest} [otpVerifyRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        otpVerify: async (otpVerifyRequest?: OtpVerifyRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/otp/verify`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(otpVerifyRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * Verifies the OTP sent to the user\'s email address.
          * @summary Verify email OTP
          * @param {VerifyEmailRequest} [verifyEmailRequest] 
@@ -4793,6 +4896,19 @@ export const OTPApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
+         * Verifies the OTP sent to the user\'s phone number without side effects. This endpoint allows standalone verification before proceeding with operations like password reset or account creation. 
+         * @summary Verify phone OTP
+         * @param {OtpVerifyRequest} [otpVerifyRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async otpVerify(otpVerifyRequest?: OtpVerifyRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<OtpVerify200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.otpVerify(otpVerifyRequest, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['OTPApi.otpVerify']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
          * Verifies the OTP sent to the user\'s email address.
          * @summary Verify email OTP
          * @param {VerifyEmailRequest} [verifyEmailRequest] 
@@ -4834,6 +4950,16 @@ export const OTPApiFactory = function (configuration?: Configuration, basePath?:
          */
         otpPost(requestParameters: OTPApiOtpPostRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<OTP> {
             return localVarFp.otpPost(requestParameters.channel, requestParameters.otpPostRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Verifies the OTP sent to the user\'s phone number without side effects. This endpoint allows standalone verification before proceeding with operations like password reset or account creation. 
+         * @summary Verify phone OTP
+         * @param {OTPApiOtpVerifyRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        otpVerify(requestParameters: OTPApiOtpVerifyRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<OtpVerify200Response> {
+            return localVarFp.otpVerify(requestParameters.otpVerifyRequest, options).then((request) => request(axios, basePath));
         },
         /**
          * Verifies the OTP sent to the user\'s email address.
@@ -4884,6 +5010,20 @@ export interface OTPApiOtpPostRequest {
 }
 
 /**
+ * Request parameters for otpVerify operation in OTPApi.
+ * @export
+ * @interface OTPApiOtpVerifyRequest
+ */
+export interface OTPApiOtpVerifyRequest {
+    /**
+     * 
+     * @type {OtpVerifyRequest}
+     * @memberof OTPApiOtpVerify
+     */
+    readonly otpVerifyRequest?: OtpVerifyRequest
+}
+
+/**
  * Request parameters for verifyEmail operation in OTPApi.
  * @export
  * @interface OTPApiVerifyEmailRequest
@@ -4926,6 +5066,18 @@ export class OTPApi extends BaseAPI {
      */
     public otpPost(requestParameters: OTPApiOtpPostRequest = {}, options?: RawAxiosRequestConfig) {
         return OTPApiFp(this.configuration).otpPost(requestParameters.channel, requestParameters.otpPostRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Verifies the OTP sent to the user\'s phone number without side effects. This endpoint allows standalone verification before proceeding with operations like password reset or account creation. 
+     * @summary Verify phone OTP
+     * @param {OTPApiOtpVerifyRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof OTPApi
+     */
+    public otpVerify(requestParameters: OTPApiOtpVerifyRequest = {}, options?: RawAxiosRequestConfig) {
+        return OTPApiFp(this.configuration).otpVerify(requestParameters.otpVerifyRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
