@@ -62,6 +62,12 @@ export interface Call {
      */
     'to'?: string;
     /**
+     * UserId of the user making the call
+     * @type {string}
+     * @memberof Call
+     */
+    'userId'?: string;
+    /**
      * Name of the contact
      * @type {string}
      * @memberof Call

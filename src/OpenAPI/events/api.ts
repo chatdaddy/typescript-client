@@ -4822,6 +4822,12 @@ export interface CallInsertData {
      * @type {string}
      * @memberof CallInsertData
      */
+    'userId'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof CallInsertData
+     */
     'contactName'?: string;
     /**
      * 
@@ -4988,6 +4994,12 @@ export interface CallUpdateData {
      * @memberof CallUpdateData
      */
     'to'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof CallUpdateData
+     */
+    'userId'?: string;
     /**
      * 
      * @type {string}
