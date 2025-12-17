@@ -549,6 +549,12 @@ export interface TwilioOutboundParameters {
      */
     'teamId': string;
     /**
+     * UserId of the user making the call
+     * @type {string}
+     * @memberof TwilioOutboundParameters
+     */
+    'userId'?: string;
+    /**
      * Flag for whether or not call should be recorded
      * @type {string}
      * @memberof TwilioOutboundParameters
