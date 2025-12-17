@@ -2567,6 +2567,12 @@ export interface UserCreate {
      * @memberof UserCreate
      */
     'variant'?: UserCreateVariantEnum;
+    /**
+     * Whether to create a dedicated team for the user. When false, only the user is created without a team. This flag is ignored if inviteLinkId or subUser is provided. Defaults to true for backward compatibility.
+     * @type {boolean}
+     * @memberof UserCreate
+     */
+    'shouldCreateTeam'?: boolean;
 }
 
 export const UserCreateCreditCustomerEnum = {
