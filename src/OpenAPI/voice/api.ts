@@ -757,10 +757,11 @@ export const CallsApiAxiosParamCreator = function (configuration?: Configuration
          * @param {number} [count] 
          * @param {boolean} [returnTotal] 
          * @param {boolean} [isTeamData] If true, returns all team calls. If false, returns only calls created by the current user.
+         * @param {string} [agentId] Filter calls by specific user/agent ID
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        callsGet: async (q?: string, phoneNumbers?: Array<string>, callsDateRangeFrom?: string, callsDateRangeTo?: string, id?: Array<string>, before?: string, count?: number, returnTotal?: boolean, isTeamData?: boolean, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        callsGet: async (q?: string, phoneNumbers?: Array<string>, callsDateRangeFrom?: string, callsDateRangeTo?: string, id?: Array<string>, before?: string, count?: number, returnTotal?: boolean, isTeamData?: boolean, agentId?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/calls`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -815,6 +816,10 @@ export const CallsApiAxiosParamCreator = function (configuration?: Configuration
 
             if (isTeamData !== undefined) {
                 localVarQueryParameter['isTeamData'] = isTeamData;
+            }
+
+            if (agentId !== undefined) {
+                localVarQueryParameter['agentId'] = agentId;
             }
 
 
@@ -1231,11 +1236,12 @@ export const CallsApiFp = function(configuration?: Configuration) {
          * @param {number} [count] 
          * @param {boolean} [returnTotal] 
          * @param {boolean} [isTeamData] If true, returns all team calls. If false, returns only calls created by the current user.
+         * @param {string} [agentId] Filter calls by specific user/agent ID
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async callsGet(q?: string, phoneNumbers?: Array<string>, callsDateRangeFrom?: string, callsDateRangeTo?: string, id?: Array<string>, before?: string, count?: number, returnTotal?: boolean, isTeamData?: boolean, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CallsGet200Response>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.callsGet(q, phoneNumbers, callsDateRangeFrom, callsDateRangeTo, id, before, count, returnTotal, isTeamData, options);
+        async callsGet(q?: string, phoneNumbers?: Array<string>, callsDateRangeFrom?: string, callsDateRangeTo?: string, id?: Array<string>, before?: string, count?: number, returnTotal?: boolean, isTeamData?: boolean, agentId?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CallsGet200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.callsGet(q, phoneNumbers, callsDateRangeFrom, callsDateRangeTo, id, before, count, returnTotal, isTeamData, agentId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['CallsApi.callsGet']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -1397,7 +1403,7 @@ export const CallsApiFactory = function (configuration?: Configuration, basePath
          * @throws {RequiredError}
          */
         callsGet(requestParameters: CallsApiCallsGetRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<CallsGet200Response> {
-            return localVarFp.callsGet(requestParameters.q, requestParameters.phoneNumbers, requestParameters.callsDateRangeFrom, requestParameters.callsDateRangeTo, requestParameters.id, requestParameters.before, requestParameters.count, requestParameters.returnTotal, requestParameters.isTeamData, options).then((request) => request(axios, basePath));
+            return localVarFp.callsGet(requestParameters.q, requestParameters.phoneNumbers, requestParameters.callsDateRangeFrom, requestParameters.callsDateRangeTo, requestParameters.id, requestParameters.before, requestParameters.count, requestParameters.returnTotal, requestParameters.isTeamData, requestParameters.agentId, options).then((request) => request(axios, basePath));
         },
         /**
          * Transcribe the call and return the transcript
@@ -1581,6 +1587,13 @@ export interface CallsApiCallsGetRequest {
      * @memberof CallsApiCallsGet
      */
     readonly isTeamData?: boolean
+
+    /**
+     * Filter calls by specific user/agent ID
+     * @type {string}
+     * @memberof CallsApiCallsGet
+     */
+    readonly agentId?: string
 }
 
 /**
@@ -1751,7 +1764,7 @@ export class CallsApi extends BaseAPI {
      * @memberof CallsApi
      */
     public callsGet(requestParameters: CallsApiCallsGetRequest = {}, options?: RawAxiosRequestConfig) {
-        return CallsApiFp(this.configuration).callsGet(requestParameters.q, requestParameters.phoneNumbers, requestParameters.callsDateRangeFrom, requestParameters.callsDateRangeTo, requestParameters.id, requestParameters.before, requestParameters.count, requestParameters.returnTotal, requestParameters.isTeamData, options).then((request) => request(this.axios, this.basePath));
+        return CallsApiFp(this.configuration).callsGet(requestParameters.q, requestParameters.phoneNumbers, requestParameters.callsDateRangeFrom, requestParameters.callsDateRangeTo, requestParameters.id, requestParameters.before, requestParameters.count, requestParameters.returnTotal, requestParameters.isTeamData, requestParameters.agentId, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
