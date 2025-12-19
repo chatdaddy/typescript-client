@@ -1472,7 +1472,21 @@ export interface OtpPostRequest {
      * @memberof OtpPostRequest
      */
     'captchaToken'?: string;
+    /**
+     * Purpose of requesting the OTP. If \'password-reset\', the phone number must exist in the system. If \'signup\' or not specified, OTP will be sent without user existence check.
+     * @type {string}
+     * @memberof OtpPostRequest
+     */
+    'otpPurpose'?: OtpPostRequestOtpPurposeEnum;
 }
+
+export const OtpPostRequestOtpPurposeEnum = {
+    Signup: 'signup',
+    PasswordReset: 'password-reset'
+} as const;
+
+export type OtpPostRequestOtpPurposeEnum = typeof OtpPostRequestOtpPurposeEnum[keyof typeof OtpPostRequestOtpPurposeEnum];
+
 /**
  * 
  * @export
