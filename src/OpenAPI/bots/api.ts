@@ -194,6 +194,12 @@ export interface Action {
     'zapierAction'?: ActionContentZapierAction | null;
     /**
      * 
+     * @type {ActionContentPabblyAction}
+     * @memberof Action
+     */
+    'pabblyAction'?: ActionContentPabblyAction | null;
+    /**
+     * 
      * @type {AppAction}
      * @memberof Action
      */
@@ -411,6 +417,12 @@ export interface ActionContent {
     'zapierAction'?: ActionContentZapierAction | null;
     /**
      * 
+     * @type {ActionContentPabblyAction}
+     * @memberof ActionContent
+     */
+    'pabblyAction'?: ActionContentPabblyAction | null;
+    /**
+     * 
      * @type {AppAction}
      * @memberof ActionContent
      */
@@ -424,6 +436,25 @@ export const ActionContentMessageTypeEnum = {
 
 export type ActionContentMessageTypeEnum = typeof ActionContentMessageTypeEnum[keyof typeof ActionContentMessageTypeEnum];
 
+/**
+ * 
+ * @export
+ * @interface ActionContentPabblyAction
+ */
+export interface ActionContentPabblyAction {
+    /**
+     * 
+     * @type {string}
+     * @memberof ActionContentPabblyAction
+     */
+    'workflowId'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ActionContentPabblyAction
+     */
+    'editWorkflowURL'?: string;
+}
 /**
  * 
  * @export

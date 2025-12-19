@@ -1054,6 +1054,31 @@ export interface OauthCallback200Response {
 /**
  * 
  * @export
+ * @interface PabblyToken
+ */
+export interface PabblyToken {
+    /**
+     * Pabbly API token
+     * @type {string}
+     * @memberof PabblyToken
+     */
+    'token': string;
+    /**
+     * Token expiration timestamp
+     * @type {string}
+     * @memberof PabblyToken
+     */
+    'expiresAt': string;
+}
+/**
+ * @type PabblyTokenGet200Response
+ * @export
+ */
+export type PabblyTokenGet200Response = PabblyToken | object;
+
+/**
+ * 
+ * @export
  * @interface Question
  */
 export interface Question {
@@ -3697,6 +3722,264 @@ export class LocaleBotApi extends BaseAPI {
      */
     public translateTextPost(requestParameters: LocaleBotApiTranslateTextPostRequest = {}, options?: RawAxiosRequestConfig) {
         return LocaleBotApiFp(this.configuration).translateTextPost(requestParameters.translateTextPostRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+
+/**
+ * PabblyApi - axios parameter creator
+ * @export
+ */
+export const PabblyApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @summary Remove Pabbly token for the current team
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        pabblyTokenDelete: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/pabbly/token`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", [], configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Get Pabbly token for the current team
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        pabblyTokenGet: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/pabbly/token`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", [], configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Store or update Pabbly token for the current team
+         * @param {PabblyToken} [pabblyToken] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        pabblyTokenPost: async (pabblyToken?: PabblyToken, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/pabbly/token`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", [], configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(pabblyToken, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * PabblyApi - functional programming interface
+ * @export
+ */
+export const PabblyApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = PabblyApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * 
+         * @summary Remove Pabbly token for the current team
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async pabblyTokenDelete(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<WebhookLarkGet200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.pabblyTokenDelete(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['PabblyApi.pabblyTokenDelete']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @summary Get Pabbly token for the current team
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async pabblyTokenGet(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PabblyTokenGet200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.pabblyTokenGet(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['PabblyApi.pabblyTokenGet']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @summary Store or update Pabbly token for the current team
+         * @param {PabblyToken} [pabblyToken] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async pabblyTokenPost(pabblyToken?: PabblyToken, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<WebhookLarkGet200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.pabblyTokenPost(pabblyToken, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['PabblyApi.pabblyTokenPost']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+    }
+};
+
+/**
+ * PabblyApi - factory interface
+ * @export
+ */
+export const PabblyApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = PabblyApiFp(configuration)
+    return {
+        /**
+         * 
+         * @summary Remove Pabbly token for the current team
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        pabblyTokenDelete(options?: RawAxiosRequestConfig): AxiosPromise<WebhookLarkGet200Response> {
+            return localVarFp.pabblyTokenDelete(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Get Pabbly token for the current team
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        pabblyTokenGet(options?: RawAxiosRequestConfig): AxiosPromise<PabblyTokenGet200Response> {
+            return localVarFp.pabblyTokenGet(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Store or update Pabbly token for the current team
+         * @param {PabblyApiPabblyTokenPostRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        pabblyTokenPost(requestParameters: PabblyApiPabblyTokenPostRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<WebhookLarkGet200Response> {
+            return localVarFp.pabblyTokenPost(requestParameters.pabblyToken, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * Request parameters for pabblyTokenPost operation in PabblyApi.
+ * @export
+ * @interface PabblyApiPabblyTokenPostRequest
+ */
+export interface PabblyApiPabblyTokenPostRequest {
+    /**
+     * 
+     * @type {PabblyToken}
+     * @memberof PabblyApiPabblyTokenPost
+     */
+    readonly pabblyToken?: PabblyToken
+}
+
+/**
+ * PabblyApi - object-oriented interface
+ * @export
+ * @class PabblyApi
+ * @extends {BaseAPI}
+ */
+export class PabblyApi extends BaseAPI {
+    /**
+     * 
+     * @summary Remove Pabbly token for the current team
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof PabblyApi
+     */
+    public pabblyTokenDelete(options?: RawAxiosRequestConfig) {
+        return PabblyApiFp(this.configuration).pabblyTokenDelete(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Get Pabbly token for the current team
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof PabblyApi
+     */
+    public pabblyTokenGet(options?: RawAxiosRequestConfig) {
+        return PabblyApiFp(this.configuration).pabblyTokenGet(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Store or update Pabbly token for the current team
+     * @param {PabblyApiPabblyTokenPostRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof PabblyApi
+     */
+    public pabblyTokenPost(requestParameters: PabblyApiPabblyTokenPostRequest = {}, options?: RawAxiosRequestConfig) {
+        return PabblyApiFp(this.configuration).pabblyTokenPost(requestParameters.pabblyToken, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

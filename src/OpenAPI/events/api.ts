@@ -1437,6 +1437,12 @@ export interface BotInsertDataActionsInner {
     'zapierAction'?: BotInsertDataActionsInnerAllOfZapierAction | null;
     /**
      * 
+     * @type {BotInsertDataActionsInnerAllOfPabblyAction}
+     * @memberof BotInsertDataActionsInner
+     */
+    'pabblyAction'?: BotInsertDataActionsInnerAllOfPabblyAction | null;
+    /**
+     * 
      * @type {BotInsertDataActionsInnerAllOfApp}
      * @memberof BotInsertDataActionsInner
      */
@@ -2786,6 +2792,25 @@ export interface BotInsertDataActionsInnerAllOfMessageProductsInner {
      * @memberof BotInsertDataActionsInnerAllOfMessageProductsInner
      */
     'accountId': string;
+}
+/**
+ * 
+ * @export
+ * @interface BotInsertDataActionsInnerAllOfPabblyAction
+ */
+export interface BotInsertDataActionsInnerAllOfPabblyAction {
+    /**
+     * 
+     * @type {string}
+     * @memberof BotInsertDataActionsInnerAllOfPabblyAction
+     */
+    'workflowId'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof BotInsertDataActionsInnerAllOfPabblyAction
+     */
+    'editWorkflowURL'?: string;
 }
 /**
  * 
