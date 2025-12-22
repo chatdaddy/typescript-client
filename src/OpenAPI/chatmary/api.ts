@@ -3864,6 +3864,158 @@ export const N8nApiAxiosParamCreator = function (configuration?: Configuration) 
                 options: localVarRequestOptions,
             };
         },
+        /**
+         * 
+         * @summary Delete an n8n workflow (proxied through backend)
+         * @param {string} workflowId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        n8nWorkflowsDelete: async (workflowId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'workflowId' is not null or undefined
+            assertParamExists('n8nWorkflowsDelete', 'workflowId', workflowId)
+            const localVarPath = `/n8n/workflows/{workflowId}`
+                .replace(`{${"workflowId"}}`, encodeURIComponent(String(workflowId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", [], configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Get n8n workflows for the current team (proxied through backend)
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        n8nWorkflowsGet: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/n8n/workflows`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", [], configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Update an n8n workflow (proxied through backend)
+         * @param {string} workflowId 
+         * @param {{ [key: string]: any; }} [requestBody] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        n8nWorkflowsPatch: async (workflowId: string, requestBody?: { [key: string]: any; }, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'workflowId' is not null or undefined
+            assertParamExists('n8nWorkflowsPatch', 'workflowId', workflowId)
+            const localVarPath = `/n8n/workflows/{workflowId}`
+                .replace(`{${"workflowId"}}`, encodeURIComponent(String(workflowId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PATCH', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", [], configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(requestBody, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Create a new n8n workflow (proxied through backend)
+         * @param {{ [key: string]: any; }} [requestBody] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        n8nWorkflowsPost: async (requestBody?: { [key: string]: any; }, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/n8n/workflows`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", [], configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(requestBody, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
     }
 };
 
@@ -3911,6 +4063,58 @@ export const N8nApiFp = function(configuration?: Configuration) {
             const localVarOperationServerBasePath = operationServerMap['N8nApi.n8nTokenPost']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
+        /**
+         * 
+         * @summary Delete an n8n workflow (proxied through backend)
+         * @param {string} workflowId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async n8nWorkflowsDelete(workflowId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<WebhookLarkGet200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.n8nWorkflowsDelete(workflowId, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['N8nApi.n8nWorkflowsDelete']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @summary Get n8n workflows for the current team (proxied through backend)
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async n8nWorkflowsGet(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<object>>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.n8nWorkflowsGet(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['N8nApi.n8nWorkflowsGet']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @summary Update an n8n workflow (proxied through backend)
+         * @param {string} workflowId 
+         * @param {{ [key: string]: any; }} [requestBody] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async n8nWorkflowsPatch(workflowId: string, requestBody?: { [key: string]: any; }, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<{ [key: string]: any; }>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.n8nWorkflowsPatch(workflowId, requestBody, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['N8nApi.n8nWorkflowsPatch']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @summary Create a new n8n workflow (proxied through backend)
+         * @param {{ [key: string]: any; }} [requestBody] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async n8nWorkflowsPost(requestBody?: { [key: string]: any; }, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<{ [key: string]: any; }>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.n8nWorkflowsPost(requestBody, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['N8nApi.n8nWorkflowsPost']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
     }
 };
 
@@ -3949,6 +4153,45 @@ export const N8nApiFactory = function (configuration?: Configuration, basePath?:
         n8nTokenPost(requestParameters: N8nApiN8nTokenPostRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<WebhookLarkGet200Response> {
             return localVarFp.n8nTokenPost(requestParameters.n8nToken, options).then((request) => request(axios, basePath));
         },
+        /**
+         * 
+         * @summary Delete an n8n workflow (proxied through backend)
+         * @param {N8nApiN8nWorkflowsDeleteRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        n8nWorkflowsDelete(requestParameters: N8nApiN8nWorkflowsDeleteRequest, options?: RawAxiosRequestConfig): AxiosPromise<WebhookLarkGet200Response> {
+            return localVarFp.n8nWorkflowsDelete(requestParameters.workflowId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Get n8n workflows for the current team (proxied through backend)
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        n8nWorkflowsGet(options?: RawAxiosRequestConfig): AxiosPromise<Array<object>> {
+            return localVarFp.n8nWorkflowsGet(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Update an n8n workflow (proxied through backend)
+         * @param {N8nApiN8nWorkflowsPatchRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        n8nWorkflowsPatch(requestParameters: N8nApiN8nWorkflowsPatchRequest, options?: RawAxiosRequestConfig): AxiosPromise<{ [key: string]: any; }> {
+            return localVarFp.n8nWorkflowsPatch(requestParameters.workflowId, requestParameters.requestBody, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Create a new n8n workflow (proxied through backend)
+         * @param {N8nApiN8nWorkflowsPostRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        n8nWorkflowsPost(requestParameters: N8nApiN8nWorkflowsPostRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<{ [key: string]: any; }> {
+            return localVarFp.n8nWorkflowsPost(requestParameters.requestBody, options).then((request) => request(axios, basePath));
+        },
     };
 };
 
@@ -3964,6 +4207,55 @@ export interface N8nApiN8nTokenPostRequest {
      * @memberof N8nApiN8nTokenPost
      */
     readonly n8nToken?: N8nToken
+}
+
+/**
+ * Request parameters for n8nWorkflowsDelete operation in N8nApi.
+ * @export
+ * @interface N8nApiN8nWorkflowsDeleteRequest
+ */
+export interface N8nApiN8nWorkflowsDeleteRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof N8nApiN8nWorkflowsDelete
+     */
+    readonly workflowId: string
+}
+
+/**
+ * Request parameters for n8nWorkflowsPatch operation in N8nApi.
+ * @export
+ * @interface N8nApiN8nWorkflowsPatchRequest
+ */
+export interface N8nApiN8nWorkflowsPatchRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof N8nApiN8nWorkflowsPatch
+     */
+    readonly workflowId: string
+
+    /**
+     * 
+     * @type {{ [key: string]: any; }}
+     * @memberof N8nApiN8nWorkflowsPatch
+     */
+    readonly requestBody?: { [key: string]: any; }
+}
+
+/**
+ * Request parameters for n8nWorkflowsPost operation in N8nApi.
+ * @export
+ * @interface N8nApiN8nWorkflowsPostRequest
+ */
+export interface N8nApiN8nWorkflowsPostRequest {
+    /**
+     * 
+     * @type {{ [key: string]: any; }}
+     * @memberof N8nApiN8nWorkflowsPost
+     */
+    readonly requestBody?: { [key: string]: any; }
 }
 
 /**
@@ -4005,6 +4297,53 @@ export class N8nApi extends BaseAPI {
      */
     public n8nTokenPost(requestParameters: N8nApiN8nTokenPostRequest = {}, options?: RawAxiosRequestConfig) {
         return N8nApiFp(this.configuration).n8nTokenPost(requestParameters.n8nToken, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Delete an n8n workflow (proxied through backend)
+     * @param {N8nApiN8nWorkflowsDeleteRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof N8nApi
+     */
+    public n8nWorkflowsDelete(requestParameters: N8nApiN8nWorkflowsDeleteRequest, options?: RawAxiosRequestConfig) {
+        return N8nApiFp(this.configuration).n8nWorkflowsDelete(requestParameters.workflowId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Get n8n workflows for the current team (proxied through backend)
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof N8nApi
+     */
+    public n8nWorkflowsGet(options?: RawAxiosRequestConfig) {
+        return N8nApiFp(this.configuration).n8nWorkflowsGet(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Update an n8n workflow (proxied through backend)
+     * @param {N8nApiN8nWorkflowsPatchRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof N8nApi
+     */
+    public n8nWorkflowsPatch(requestParameters: N8nApiN8nWorkflowsPatchRequest, options?: RawAxiosRequestConfig) {
+        return N8nApiFp(this.configuration).n8nWorkflowsPatch(requestParameters.workflowId, requestParameters.requestBody, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Create a new n8n workflow (proxied through backend)
+     * @param {N8nApiN8nWorkflowsPostRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof N8nApi
+     */
+    public n8nWorkflowsPost(requestParameters: N8nApiN8nWorkflowsPostRequest = {}, options?: RawAxiosRequestConfig) {
+        return N8nApiFp(this.configuration).n8nWorkflowsPost(requestParameters.requestBody, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
