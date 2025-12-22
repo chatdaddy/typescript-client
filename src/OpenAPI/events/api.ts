@@ -1443,6 +1443,12 @@ export interface BotInsertDataActionsInner {
     'pabblyAction'?: BotInsertDataActionsInnerAllOfPabblyAction | null;
     /**
      * 
+     * @type {BotInsertDataActionsInnerAllOfN8nAction}
+     * @memberof BotInsertDataActionsInner
+     */
+    'n8nAction'?: BotInsertDataActionsInnerAllOfN8nAction | null;
+    /**
+     * 
      * @type {BotInsertDataActionsInnerAllOfApp}
      * @memberof BotInsertDataActionsInner
      */
@@ -2792,6 +2798,25 @@ export interface BotInsertDataActionsInnerAllOfMessageProductsInner {
      * @memberof BotInsertDataActionsInnerAllOfMessageProductsInner
      */
     'accountId': string;
+}
+/**
+ * 
+ * @export
+ * @interface BotInsertDataActionsInnerAllOfN8nAction
+ */
+export interface BotInsertDataActionsInnerAllOfN8nAction {
+    /**
+     * 
+     * @type {string}
+     * @memberof BotInsertDataActionsInnerAllOfN8nAction
+     */
+    'workflowId'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof BotInsertDataActionsInnerAllOfN8nAction
+     */
+    'workflowName'?: string;
 }
 /**
  * 

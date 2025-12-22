@@ -200,6 +200,12 @@ export interface Action {
     'pabblyAction'?: ActionContentPabblyAction | null;
     /**
      * 
+     * @type {ActionContentN8nAction}
+     * @memberof Action
+     */
+    'n8nAction'?: ActionContentN8nAction | null;
+    /**
+     * 
      * @type {AppAction}
      * @memberof Action
      */
@@ -423,6 +429,12 @@ export interface ActionContent {
     'pabblyAction'?: ActionContentPabblyAction | null;
     /**
      * 
+     * @type {ActionContentN8nAction}
+     * @memberof ActionContent
+     */
+    'n8nAction'?: ActionContentN8nAction | null;
+    /**
+     * 
      * @type {AppAction}
      * @memberof ActionContent
      */
@@ -436,6 +448,25 @@ export const ActionContentMessageTypeEnum = {
 
 export type ActionContentMessageTypeEnum = typeof ActionContentMessageTypeEnum[keyof typeof ActionContentMessageTypeEnum];
 
+/**
+ * 
+ * @export
+ * @interface ActionContentN8nAction
+ */
+export interface ActionContentN8nAction {
+    /**
+     * 
+     * @type {string}
+     * @memberof ActionContentN8nAction
+     */
+    'workflowId'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ActionContentN8nAction
+     */
+    'workflowName'?: string;
+}
 /**
  * 
  * @export

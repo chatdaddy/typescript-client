@@ -1041,6 +1041,31 @@ export interface MessageStack {
 /**
  * 
  * @export
+ * @interface N8nToken
+ */
+export interface N8nToken {
+    /**
+     * n8n API key
+     * @type {string}
+     * @memberof N8nToken
+     */
+    'token': string;
+    /**
+     * n8n instance URL
+     * @type {string}
+     * @memberof N8nToken
+     */
+    'instanceUrl': string;
+}
+/**
+ * @type N8nTokenGet200Response
+ * @export
+ */
+export type N8nTokenGet200Response = N8nToken | object;
+
+/**
+ * 
+ * @export
  * @interface OauthCallback200Response
  */
 export interface OauthCallback200Response {
@@ -3722,6 +3747,264 @@ export class LocaleBotApi extends BaseAPI {
      */
     public translateTextPost(requestParameters: LocaleBotApiTranslateTextPostRequest = {}, options?: RawAxiosRequestConfig) {
         return LocaleBotApiFp(this.configuration).translateTextPost(requestParameters.translateTextPostRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+
+/**
+ * N8nApi - axios parameter creator
+ * @export
+ */
+export const N8nApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @summary Remove n8n token for the current team
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        n8nTokenDelete: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/n8n/token`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", [], configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Get n8n token for the current team
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        n8nTokenGet: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/n8n/token`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", [], configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Store or update n8n token for the current team
+         * @param {N8nToken} [n8nToken] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        n8nTokenPost: async (n8nToken?: N8nToken, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/n8n/token`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", [], configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(n8nToken, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * N8nApi - functional programming interface
+ * @export
+ */
+export const N8nApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = N8nApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * 
+         * @summary Remove n8n token for the current team
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async n8nTokenDelete(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<WebhookLarkGet200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.n8nTokenDelete(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['N8nApi.n8nTokenDelete']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @summary Get n8n token for the current team
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async n8nTokenGet(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<N8nTokenGet200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.n8nTokenGet(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['N8nApi.n8nTokenGet']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @summary Store or update n8n token for the current team
+         * @param {N8nToken} [n8nToken] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async n8nTokenPost(n8nToken?: N8nToken, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<WebhookLarkGet200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.n8nTokenPost(n8nToken, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['N8nApi.n8nTokenPost']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+    }
+};
+
+/**
+ * N8nApi - factory interface
+ * @export
+ */
+export const N8nApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = N8nApiFp(configuration)
+    return {
+        /**
+         * 
+         * @summary Remove n8n token for the current team
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        n8nTokenDelete(options?: RawAxiosRequestConfig): AxiosPromise<WebhookLarkGet200Response> {
+            return localVarFp.n8nTokenDelete(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Get n8n token for the current team
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        n8nTokenGet(options?: RawAxiosRequestConfig): AxiosPromise<N8nTokenGet200Response> {
+            return localVarFp.n8nTokenGet(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Store or update n8n token for the current team
+         * @param {N8nApiN8nTokenPostRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        n8nTokenPost(requestParameters: N8nApiN8nTokenPostRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<WebhookLarkGet200Response> {
+            return localVarFp.n8nTokenPost(requestParameters.n8nToken, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * Request parameters for n8nTokenPost operation in N8nApi.
+ * @export
+ * @interface N8nApiN8nTokenPostRequest
+ */
+export interface N8nApiN8nTokenPostRequest {
+    /**
+     * 
+     * @type {N8nToken}
+     * @memberof N8nApiN8nTokenPost
+     */
+    readonly n8nToken?: N8nToken
+}
+
+/**
+ * N8nApi - object-oriented interface
+ * @export
+ * @class N8nApi
+ * @extends {BaseAPI}
+ */
+export class N8nApi extends BaseAPI {
+    /**
+     * 
+     * @summary Remove n8n token for the current team
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof N8nApi
+     */
+    public n8nTokenDelete(options?: RawAxiosRequestConfig) {
+        return N8nApiFp(this.configuration).n8nTokenDelete(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Get n8n token for the current team
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof N8nApi
+     */
+    public n8nTokenGet(options?: RawAxiosRequestConfig) {
+        return N8nApiFp(this.configuration).n8nTokenGet(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Store or update n8n token for the current team
+     * @param {N8nApiN8nTokenPostRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof N8nApi
+     */
+    public n8nTokenPost(requestParameters: N8nApiN8nTokenPostRequest = {}, options?: RawAxiosRequestConfig) {
+        return N8nApiFp(this.configuration).n8nTokenPost(requestParameters.n8nToken, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
