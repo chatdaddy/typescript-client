@@ -3940,13 +3940,15 @@ export const N8nApiAxiosParamCreator = function (configuration?: Configuration) 
          * 
          * @summary Update an n8n workflow (proxied through backend)
          * @param {string} workflowId 
-         * @param {{ [key: string]: any; }} [requestBody] 
+         * @param {{ [key: string]: any; }} requestBody 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        n8nWorkflowsPatch: async (workflowId: string, requestBody?: { [key: string]: any; }, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        n8nWorkflowsPatch: async (workflowId: string, requestBody: { [key: string]: any; }, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'workflowId' is not null or undefined
             assertParamExists('n8nWorkflowsPatch', 'workflowId', workflowId)
+            // verify required parameter 'requestBody' is not null or undefined
+            assertParamExists('n8nWorkflowsPatch', 'requestBody', requestBody)
             const localVarPath = `/n8n/workflows/{workflowId}`
                 .replace(`{${"workflowId"}}`, encodeURIComponent(String(workflowId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -4092,11 +4094,11 @@ export const N8nApiFp = function(configuration?: Configuration) {
          * 
          * @summary Update an n8n workflow (proxied through backend)
          * @param {string} workflowId 
-         * @param {{ [key: string]: any; }} [requestBody] 
+         * @param {{ [key: string]: any; }} requestBody 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async n8nWorkflowsPatch(workflowId: string, requestBody?: { [key: string]: any; }, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<{ [key: string]: any; }>> {
+        async n8nWorkflowsPatch(workflowId: string, requestBody: { [key: string]: any; }, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<{ [key: string]: any; }>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.n8nWorkflowsPatch(workflowId, requestBody, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['N8nApi.n8nWorkflowsPatch']?.[localVarOperationServerIndex]?.url;
@@ -4241,7 +4243,7 @@ export interface N8nApiN8nWorkflowsPatchRequest {
      * @type {{ [key: string]: any; }}
      * @memberof N8nApiN8nWorkflowsPatch
      */
-    readonly requestBody?: { [key: string]: any; }
+    readonly requestBody: { [key: string]: any; }
 }
 
 /**
