@@ -1064,21 +1064,6 @@ export interface N8nToken {
 export type N8nTokenGet200Response = N8nToken | object;
 
 /**
- * Complete n8n workflow object (backend merges with existing workflow and sends PUT to n8n). Accepts any properties as n8n workflows have dynamic structure.
- * @export
- * @interface N8nWorkflowsPatchRequest
- */
-export interface N8nWorkflowsPatchRequest {
-    [key: string]: any;
-
-    /**
-     * Name of the workflow
-     * @type {string}
-     * @memberof N8nWorkflowsPatchRequest
-     */
-    'name': string;
-}
-/**
  * 
  * @export
  * @interface OauthCallback200Response
@@ -3955,15 +3940,13 @@ export const N8nApiAxiosParamCreator = function (configuration?: Configuration) 
          * 
          * @summary Update an n8n workflow (proxied through backend)
          * @param {string} workflowId 
-         * @param {N8nWorkflowsPatchRequest} n8nWorkflowsPatchRequest 
+         * @param {{ [key: string]: any; }} [requestBody] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        n8nWorkflowsPatch: async (workflowId: string, n8nWorkflowsPatchRequest: N8nWorkflowsPatchRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        n8nWorkflowsPatch: async (workflowId: string, requestBody?: { [key: string]: any; }, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'workflowId' is not null or undefined
             assertParamExists('n8nWorkflowsPatch', 'workflowId', workflowId)
-            // verify required parameter 'n8nWorkflowsPatchRequest' is not null or undefined
-            assertParamExists('n8nWorkflowsPatch', 'n8nWorkflowsPatchRequest', n8nWorkflowsPatchRequest)
             const localVarPath = `/n8n/workflows/{workflowId}`
                 .replace(`{${"workflowId"}}`, encodeURIComponent(String(workflowId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -3988,7 +3971,7 @@ export const N8nApiAxiosParamCreator = function (configuration?: Configuration) 
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(n8nWorkflowsPatchRequest, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(requestBody, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -4109,12 +4092,12 @@ export const N8nApiFp = function(configuration?: Configuration) {
          * 
          * @summary Update an n8n workflow (proxied through backend)
          * @param {string} workflowId 
-         * @param {N8nWorkflowsPatchRequest} n8nWorkflowsPatchRequest 
+         * @param {{ [key: string]: any; }} [requestBody] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async n8nWorkflowsPatch(workflowId: string, n8nWorkflowsPatchRequest: N8nWorkflowsPatchRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<{ [key: string]: any; }>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.n8nWorkflowsPatch(workflowId, n8nWorkflowsPatchRequest, options);
+        async n8nWorkflowsPatch(workflowId: string, requestBody?: { [key: string]: any; }, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<{ [key: string]: any; }>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.n8nWorkflowsPatch(workflowId, requestBody, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['N8nApi.n8nWorkflowsPatch']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -4197,7 +4180,7 @@ export const N8nApiFactory = function (configuration?: Configuration, basePath?:
          * @throws {RequiredError}
          */
         n8nWorkflowsPatch(requestParameters: N8nApiN8nWorkflowsPatchRequest, options?: RawAxiosRequestConfig): AxiosPromise<{ [key: string]: any; }> {
-            return localVarFp.n8nWorkflowsPatch(requestParameters.workflowId, requestParameters.n8nWorkflowsPatchRequest, options).then((request) => request(axios, basePath));
+            return localVarFp.n8nWorkflowsPatch(requestParameters.workflowId, requestParameters.requestBody, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -4255,10 +4238,10 @@ export interface N8nApiN8nWorkflowsPatchRequest {
 
     /**
      * 
-     * @type {N8nWorkflowsPatchRequest}
+     * @type {{ [key: string]: any; }}
      * @memberof N8nApiN8nWorkflowsPatch
      */
-    readonly n8nWorkflowsPatchRequest: N8nWorkflowsPatchRequest
+    readonly requestBody?: { [key: string]: any; }
 }
 
 /**
@@ -4348,7 +4331,7 @@ export class N8nApi extends BaseAPI {
      * @memberof N8nApi
      */
     public n8nWorkflowsPatch(requestParameters: N8nApiN8nWorkflowsPatchRequest, options?: RawAxiosRequestConfig) {
-        return N8nApiFp(this.configuration).n8nWorkflowsPatch(requestParameters.workflowId, requestParameters.n8nWorkflowsPatchRequest, options).then((request) => request(this.axios, this.basePath));
+        return N8nApiFp(this.configuration).n8nWorkflowsPatch(requestParameters.workflowId, requestParameters.requestBody, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
