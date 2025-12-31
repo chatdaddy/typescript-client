@@ -740,6 +740,12 @@ export interface FirebaseTokenRequest {
      */
     'referralCode'?: string;
     /**
+     * The region of the user 
+     * @type {string}
+     * @memberof FirebaseTokenRequest
+     */
+    'region'?: string;
+    /**
      * The variant of the Firebase token to use. If not specified, will default to chatdaddy. 
      * @type {string}
      * @memberof FirebaseTokenRequest
