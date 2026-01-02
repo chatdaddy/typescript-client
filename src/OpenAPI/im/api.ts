@@ -1552,6 +1552,12 @@ export interface Chat {
      */
     'id': string;
     /**
+     * Alternate ID (LID) for the chat when phone number is hidden
+     * @type {string}
+     * @memberof Chat
+     */
+    'altId'?: string | null;
+    /**
      * An ISO formatted timestamp
      * @type {string}
      * @memberof Chat
@@ -1894,6 +1900,12 @@ export interface Contact {
      * @memberof Contact
      */
     'accountId': string;
+    /**
+     * Alternate ID (LID) for the contact when phone number is hidden
+     * @type {string}
+     * @memberof Contact
+     */
+    'altId'?: string | null;
     /**
      * 
      * @type {string}

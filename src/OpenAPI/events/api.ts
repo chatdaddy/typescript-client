@@ -5592,6 +5592,12 @@ export interface ChatInsertData {
      * @type {string}
      * @memberof ChatInsertData
      */
+    'altId'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof ChatInsertData
+     */
     'lastMessage': string;
     /**
      * 
@@ -5722,6 +5728,12 @@ export interface ChatUpdateData {
      * @memberof ChatUpdateData
      */
     'id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ChatUpdateData
+     */
+    'altId'?: string | null;
     /**
      * 
      * @type {string}
@@ -6150,6 +6162,12 @@ export interface ContactInsertData {
      * @type {string}
      * @memberof ContactInsertData
      */
+    'altId'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof ContactInsertData
+     */
     'cursor': string;
     /**
      * 
@@ -6303,6 +6321,12 @@ export interface ContactUpdateData {
      * @memberof ContactUpdateData
      */
     'accountId': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ContactUpdateData
+     */
+    'altId'?: string | null;
     /**
      * 
      * @type {string}
@@ -7965,6 +7989,12 @@ export interface GroupUpdateDataOwner {
      * @memberof GroupUpdateDataOwner
      */
     'accountId': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof GroupUpdateDataOwner
+     */
+    'altId'?: string | null;
     /**
      * 
      * @type {string}
