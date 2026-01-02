@@ -12906,6 +12906,12 @@ export interface TrackingInsertData {
     'events'?: Array<TrackingInsertDataEventsInner>;
     /**
      * 
+     * @type {Array<TrackingInsertDataActionsInner>}
+     * @memberof TrackingInsertData
+     */
+    'actions'?: Array<TrackingInsertDataActionsInner>;
+    /**
+     * 
      * @type {string}
      * @memberof TrackingInsertData
      */
@@ -12970,6 +12976,119 @@ export interface TrackingInsertData {
      * @memberof TrackingInsertData
      */
     'updatedAt': string;
+}
+/**
+ * 
+ * @export
+ * @interface TrackingInsertDataActionsInner
+ */
+export interface TrackingInsertDataActionsInner {
+    /**
+     * Action ID (for updates/deletes)
+     * @type {number}
+     * @memberof TrackingInsertDataActionsInner
+     */
+    'id'?: number;
+    /**
+     * Passed in the body to mark for deletion
+     * @type {boolean}
+     * @memberof TrackingInsertDataActionsInner
+     */
+    'delete'?: boolean;
+    /**
+     * Action name
+     * @type {string}
+     * @memberof TrackingInsertDataActionsInner
+     */
+    'name'?: string;
+    /**
+     * Tags to set on this contact
+     * @type {Array<TrackingInsertDataActionsInnerAllOfTagsInner>}
+     * @memberof TrackingInsertDataActionsInner
+     */
+    'tags'?: Array<TrackingInsertDataActionsInnerAllOfTagsInner> | null;
+    /**
+     * User ID to assign to
+     * @type {string}
+     * @memberof TrackingInsertDataActionsInner
+     */
+    'assignee'?: string | null;
+    /**
+     * Array of user IDs to notify
+     * @type {Array<string>}
+     * @memberof TrackingInsertDataActionsInner
+     */
+    'notifyUsers'?: Array<string> | null;
+    /**
+     * HTTP requests to make
+     * @type {Array<TrackingInsertDataActionsInnerAllOfHttpRequestInner>}
+     * @memberof TrackingInsertDataActionsInner
+     */
+    'httpRequest'?: Array<TrackingInsertDataActionsInnerAllOfHttpRequestInner> | null;
+    /**
+     * Whether the action is enabled
+     * @type {boolean}
+     * @memberof TrackingInsertDataActionsInner
+     */
+    'enabled'?: boolean;
+}
+/**
+ * 
+ * @export
+ * @interface TrackingInsertDataActionsInnerAllOfHttpRequestInner
+ */
+export interface TrackingInsertDataActionsInnerAllOfHttpRequestInner {
+    /**
+     * 
+     * @type {string}
+     * @memberof TrackingInsertDataActionsInnerAllOfHttpRequestInner
+     */
+    'method': TrackingInsertDataActionsInnerAllOfHttpRequestInnerMethodEnum;
+    /**
+     * 
+     * @type {string}
+     * @memberof TrackingInsertDataActionsInnerAllOfHttpRequestInner
+     */
+    'url': string;
+    /**
+     * 
+     * @type {{ [key: string]: string; }}
+     * @memberof TrackingInsertDataActionsInnerAllOfHttpRequestInner
+     */
+    'headers': { [key: string]: string; };
+    /**
+     * 
+     * @type {string}
+     * @memberof TrackingInsertDataActionsInnerAllOfHttpRequestInner
+     */
+    'body'?: string | null;
+}
+
+export const TrackingInsertDataActionsInnerAllOfHttpRequestInnerMethodEnum = {
+    Get: 'GET',
+    Post: 'POST'
+} as const;
+
+export type TrackingInsertDataActionsInnerAllOfHttpRequestInnerMethodEnum = typeof TrackingInsertDataActionsInnerAllOfHttpRequestInnerMethodEnum[keyof typeof TrackingInsertDataActionsInnerAllOfHttpRequestInnerMethodEnum];
+
+/**
+ * 
+ * @export
+ * @interface TrackingInsertDataActionsInnerAllOfTagsInner
+ */
+export interface TrackingInsertDataActionsInnerAllOfTagsInner {
+    /**
+     * 
+     * @type {string}
+     * @memberof TrackingInsertDataActionsInnerAllOfTagsInner
+     */
+    'name'?: string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof TrackingInsertDataActionsInnerAllOfTagsInner
+     */
+    'remove'?: boolean;
 }
 /**
  * 
@@ -13272,6 +13391,12 @@ export interface TrackingUpdateData {
      * @memberof TrackingUpdateData
      */
     'events'?: Array<TrackingInsertDataEventsInner>;
+    /**
+     * 
+     * @type {Array<TrackingInsertDataActionsInner>}
+     * @memberof TrackingUpdateData
+     */
+    'actions'?: Array<TrackingInsertDataActionsInner>;
     /**
      * 
      * @type {string}

@@ -617,6 +617,162 @@ export interface ErrorState {
 /**
  * 
  * @export
+ * @interface EventAction
+ */
+export interface EventAction {
+    /**
+     * Action name
+     * @type {string}
+     * @memberof EventAction
+     */
+    'name'?: string;
+    /**
+     * Tags to set on this contact
+     * @type {Array<EventActionCreateTagsInner>}
+     * @memberof EventAction
+     */
+    'tags'?: Array<EventActionCreateTagsInner> | null;
+    /**
+     * User ID to assign to
+     * @type {string}
+     * @memberof EventAction
+     */
+    'assignee'?: string | null;
+    /**
+     * Array of user IDs to notify
+     * @type {Array<string>}
+     * @memberof EventAction
+     */
+    'notifyUsers'?: Array<string> | null;
+    /**
+     * HTTP requests to make
+     * @type {Array<EventActionCreateHttpRequestInner>}
+     * @memberof EventAction
+     */
+    'httpRequest'?: Array<EventActionCreateHttpRequestInner> | null;
+    /**
+     * Whether the action is enabled
+     * @type {boolean}
+     * @memberof EventAction
+     */
+    'enabled'?: boolean;
+    /**
+     * Action ID (for updates/deletes)
+     * @type {number}
+     * @memberof EventAction
+     */
+    'id'?: number;
+    /**
+     * Passed in the body to mark for deletion
+     * @type {boolean}
+     * @memberof EventAction
+     */
+    'delete'?: boolean;
+}
+/**
+ * 
+ * @export
+ * @interface EventActionCreate
+ */
+export interface EventActionCreate {
+    /**
+     * Action name
+     * @type {string}
+     * @memberof EventActionCreate
+     */
+    'name'?: string;
+    /**
+     * Tags to set on this contact
+     * @type {Array<EventActionCreateTagsInner>}
+     * @memberof EventActionCreate
+     */
+    'tags'?: Array<EventActionCreateTagsInner> | null;
+    /**
+     * User ID to assign to
+     * @type {string}
+     * @memberof EventActionCreate
+     */
+    'assignee'?: string | null;
+    /**
+     * Array of user IDs to notify
+     * @type {Array<string>}
+     * @memberof EventActionCreate
+     */
+    'notifyUsers'?: Array<string> | null;
+    /**
+     * HTTP requests to make
+     * @type {Array<EventActionCreateHttpRequestInner>}
+     * @memberof EventActionCreate
+     */
+    'httpRequest'?: Array<EventActionCreateHttpRequestInner> | null;
+    /**
+     * Whether the action is enabled
+     * @type {boolean}
+     * @memberof EventActionCreate
+     */
+    'enabled'?: boolean;
+}
+/**
+ * 
+ * @export
+ * @interface EventActionCreateHttpRequestInner
+ */
+export interface EventActionCreateHttpRequestInner {
+    /**
+     * 
+     * @type {string}
+     * @memberof EventActionCreateHttpRequestInner
+     */
+    'method': EventActionCreateHttpRequestInnerMethodEnum;
+    /**
+     * 
+     * @type {string}
+     * @memberof EventActionCreateHttpRequestInner
+     */
+    'url': string;
+    /**
+     * 
+     * @type {{ [key: string]: string; }}
+     * @memberof EventActionCreateHttpRequestInner
+     */
+    'headers': { [key: string]: string; };
+    /**
+     * 
+     * @type {string}
+     * @memberof EventActionCreateHttpRequestInner
+     */
+    'body'?: string | null;
+}
+
+export const EventActionCreateHttpRequestInnerMethodEnum = {
+    Get: 'GET',
+    Post: 'POST'
+} as const;
+
+export type EventActionCreateHttpRequestInnerMethodEnum = typeof EventActionCreateHttpRequestInnerMethodEnum[keyof typeof EventActionCreateHttpRequestInnerMethodEnum];
+
+/**
+ * 
+ * @export
+ * @interface EventActionCreateTagsInner
+ */
+export interface EventActionCreateTagsInner {
+    /**
+     * 
+     * @type {string}
+     * @memberof EventActionCreateTagsInner
+     */
+    'name'?: string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof EventActionCreateTagsInner
+     */
+    'remove'?: boolean;
+}
+/**
+ * 
+ * @export
  * @interface EventTrigger
  */
 export interface EventTrigger {
@@ -1653,6 +1809,12 @@ export interface PostTracking {
      */
     'events': Array<EventTriggerCreate>;
     /**
+     * The actions configured for this service
+     * @type {Array<EventActionCreate>}
+     * @memberof PostTracking
+     */
+    'actions'?: Array<EventActionCreate>;
+    /**
      * 
      * @type {{ [key: string]: any; }}
      * @memberof PostTracking
@@ -2565,6 +2727,12 @@ export interface TrackServiceModel {
      */
     'events'?: Array<EventTrigger>;
     /**
+     * The actions configured for this service
+     * @type {Array<EventAction>}
+     * @memberof TrackServiceModel
+     */
+    'actions'?: Array<EventAction>;
+    /**
      * An ISO formatted timestamp
      * @type {string}
      * @memberof TrackServiceModel
@@ -2819,6 +2987,12 @@ export interface UpdateTracking {
      * @memberof UpdateTracking
      */
     'events'?: Array<EventTrigger>;
+    /**
+     * The actions configured for this service
+     * @type {Array<EventAction>}
+     * @memberof UpdateTracking
+     */
+    'actions'?: Array<EventAction>;
     /**
      * 
      * @type {boolean}
