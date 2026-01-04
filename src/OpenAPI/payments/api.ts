@@ -541,6 +541,12 @@ export interface CreditAutoRenewalUpdate {
      */
     'options'?: MiscBillingOptions;
     /**
+     * 
+     * @type {string}
+     * @memberof CreditAutoRenewalUpdate
+     */
+    'planType'?: CreditAutoRenewalUpdatePlanTypeEnum;
+    /**
      * These actions are executed after the payment is successful
      * @type {Array<PostPaymentAction>}
      * @memberof CreditAutoRenewalUpdate
@@ -548,6 +554,14 @@ export interface CreditAutoRenewalUpdate {
     'postPaymentActions'?: Array<PostPaymentAction>;
 }
 
+export const CreditAutoRenewalUpdatePlanTypeEnum = {
+    Mini: 'mini',
+    Pro: 'pro',
+    Max: 'max',
+    Enterprise: 'enterprise'
+} as const;
+
+export type CreditAutoRenewalUpdatePlanTypeEnum = typeof CreditAutoRenewalUpdatePlanTypeEnum[keyof typeof CreditAutoRenewalUpdatePlanTypeEnum];
 
 /**
  * @type CreditBalanceEffectType
@@ -832,8 +846,64 @@ export interface CreditCustomer {
      * @memberof CreditCustomer
      */
     'recurringPlans'?: CreditCustomerRecurringPlans;
+    /**
+     * Number of paid credits available for consumption
+     * @type {number}
+     * @memberof CreditCustomer
+     */
+    'paidCreditsAvailable'?: number;
+    /**
+     * Number of trial credits available for consumption
+     * @type {number}
+     * @memberof CreditCustomer
+     */
+    'trialCreditsAvailable'?: number;
+    /**
+     * Number of WhatsApp message credits available for consumption
+     * @type {number}
+     * @memberof CreditCustomer
+     */
+    'whatsappMessageCreditsAvailable'?: number;
+    /**
+     * Number of SMS message credits available for consumption
+     * @type {number}
+     * @memberof CreditCustomer
+     */
+    'smsMesageCreditsAvailable'?: number;
+    /**
+     * Number of Email message credits available for consumption
+     * @type {number}
+     * @memberof CreditCustomer
+     */
+    'emailMessageCreditsAvailable'?: number;
+    /**
+     * Number of WABA message credits available for consumption
+     * @type {number}
+     * @memberof CreditCustomer
+     */
+    'wabaMessageCreditsAvailable'?: number;
+    /**
+     * Number of Messenger message credits available for consumption
+     * @type {number}
+     * @memberof CreditCustomer
+     */
+    'messengerMessageCreditsAvailable'?: number;
+    /**
+     * Type of plan the customer is on
+     * @type {string}
+     * @memberof CreditCustomer
+     */
+    'planType'?: CreditCustomerPlanTypeEnum;
 }
 
+export const CreditCustomerPlanTypeEnum = {
+    Mini: 'mini',
+    Pro: 'pro',
+    Max: 'max',
+    Enterprise: 'enterprise'
+} as const;
+
+export type CreditCustomerPlanTypeEnum = typeof CreditCustomerPlanTypeEnum[keyof typeof CreditCustomerPlanTypeEnum];
 
 /**
  * 
