@@ -5146,6 +5146,12 @@ export interface MiscOptions {
      * @memberof MiscOptions
      */
     'cancelIfReplyReceived'?: boolean;
+    /**
+     * FEP (Future Expiration Point) expiry timestamp in milliseconds
+     * @type {number}
+     * @memberof MiscOptions
+     */
+    'fepExpiryTime'?: number;
 }
 /**
  * the message being forwarded

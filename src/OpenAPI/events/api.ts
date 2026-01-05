@@ -9410,6 +9410,12 @@ export interface MessageInsertDataMiscOptions {
      * @memberof MessageInsertDataMiscOptions
      */
     'cancelIfReplyReceived'?: boolean;
+    /**
+     * 
+     * @type {number}
+     * @memberof MessageInsertDataMiscOptions
+     */
+    'fepExpiryTime'?: number;
 }
 /**
  * 
