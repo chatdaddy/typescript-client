@@ -717,6 +717,44 @@ export interface GenerateFlowWithGenkitPostRequest {
 /**
  * 
  * @export
+ * @interface HostplatformWebhookPost200Response
+ */
+export interface HostplatformWebhookPost200Response {
+    /**
+     * ID of the stored webhook
+     * @type {string}
+     * @memberof HostplatformWebhookPost200Response
+     */
+    'webhookId': string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof HostplatformWebhookPost200Response
+     */
+    'success': boolean;
+}
+/**
+ * 
+ * @export
+ * @interface HostplatformWebhookPostRequest
+ */
+export interface HostplatformWebhookPostRequest {
+    /**
+     * Tracking ID from HostPlatform
+     * @type {string}
+     * @memberof HostplatformWebhookPostRequest
+     */
+    'trackingId': string;
+    /**
+     * Full webhook payload from HostPlatform
+     * @type {{ [key: string]: any; }}
+     * @memberof HostplatformWebhookPostRequest
+     */
+    'payload': { [key: string]: any; };
+}
+/**
+ * 
+ * @export
  * @interface KnowledgeBaseGet200Response
  */
 export interface KnowledgeBaseGet200Response {
@@ -3304,6 +3342,132 @@ export class GenkitApi extends BaseAPI {
      */
     public generateFlowWithGenkitPost(requestParameters: GenkitApiGenerateFlowWithGenkitPostRequest = {}, options?: RawAxiosRequestConfig) {
         return GenkitApiFp(this.configuration).generateFlowWithGenkitPost(requestParameters.generateFlowWithGenkitPostRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+
+/**
+ * HostPlatformWebhookApi - axios parameter creator
+ * @export
+ */
+export const HostPlatformWebhookApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @summary Store HostPlatform webhook for async processing
+         * @param {HostplatformWebhookPostRequest} [hostplatformWebhookPostRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        hostplatformWebhookPost: async (hostplatformWebhookPostRequest?: HostplatformWebhookPostRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/hostplatform-webhook`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", [], configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(hostplatformWebhookPostRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * HostPlatformWebhookApi - functional programming interface
+ * @export
+ */
+export const HostPlatformWebhookApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = HostPlatformWebhookApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * 
+         * @summary Store HostPlatform webhook for async processing
+         * @param {HostplatformWebhookPostRequest} [hostplatformWebhookPostRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async hostplatformWebhookPost(hostplatformWebhookPostRequest?: HostplatformWebhookPostRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<HostplatformWebhookPost200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.hostplatformWebhookPost(hostplatformWebhookPostRequest, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['HostPlatformWebhookApi.hostplatformWebhookPost']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+    }
+};
+
+/**
+ * HostPlatformWebhookApi - factory interface
+ * @export
+ */
+export const HostPlatformWebhookApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = HostPlatformWebhookApiFp(configuration)
+    return {
+        /**
+         * 
+         * @summary Store HostPlatform webhook for async processing
+         * @param {HostPlatformWebhookApiHostplatformWebhookPostRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        hostplatformWebhookPost(requestParameters: HostPlatformWebhookApiHostplatformWebhookPostRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<HostplatformWebhookPost200Response> {
+            return localVarFp.hostplatformWebhookPost(requestParameters.hostplatformWebhookPostRequest, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * Request parameters for hostplatformWebhookPost operation in HostPlatformWebhookApi.
+ * @export
+ * @interface HostPlatformWebhookApiHostplatformWebhookPostRequest
+ */
+export interface HostPlatformWebhookApiHostplatformWebhookPostRequest {
+    /**
+     * 
+     * @type {HostplatformWebhookPostRequest}
+     * @memberof HostPlatformWebhookApiHostplatformWebhookPost
+     */
+    readonly hostplatformWebhookPostRequest?: HostplatformWebhookPostRequest
+}
+
+/**
+ * HostPlatformWebhookApi - object-oriented interface
+ * @export
+ * @class HostPlatformWebhookApi
+ * @extends {BaseAPI}
+ */
+export class HostPlatformWebhookApi extends BaseAPI {
+    /**
+     * 
+     * @summary Store HostPlatform webhook for async processing
+     * @param {HostPlatformWebhookApiHostplatformWebhookPostRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof HostPlatformWebhookApi
+     */
+    public hostplatformWebhookPost(requestParameters: HostPlatformWebhookApiHostplatformWebhookPostRequest = {}, options?: RawAxiosRequestConfig) {
+        return HostPlatformWebhookApiFp(this.configuration).hostplatformWebhookPost(requestParameters.hostplatformWebhookPostRequest, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
