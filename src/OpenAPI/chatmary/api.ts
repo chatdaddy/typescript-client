@@ -3373,10 +3373,6 @@ export const HostPlatformWebhookApiAxiosParamCreator = function (configuration?:
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
-            // authentication chatdaddy required
-            // oauth required
-            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", [], configuration)
-
 
     
             localVarHeaderParameter['Content-Type'] = 'application/json';
