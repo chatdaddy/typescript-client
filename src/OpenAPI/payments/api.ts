@@ -547,6 +547,12 @@ export interface CreditAutoRenewalUpdate {
      */
     'planType'?: CreditAutoRenewalUpdatePlanTypeEnum;
     /**
+     * 
+     * @type {ExtraMessages}
+     * @memberof CreditAutoRenewalUpdate
+     */
+    'extraMessages'?: ExtraMessages;
+    /**
      * These actions are executed after the payment is successful
      * @type {Array<PostPaymentAction>}
      * @memberof CreditAutoRenewalUpdate
@@ -1674,6 +1680,12 @@ export interface CustomerAutoRenewal {
      * @memberof CustomerAutoRenewal
      */
     'currentRedeemedCouponId'?: string;
+    /**
+     * 
+     * @type {ExtraMessages}
+     * @memberof CustomerAutoRenewal
+     */
+    'extraMessages'?: ExtraMessages;
 }
 
 export const CustomerAutoRenewalStatusEnum = {
@@ -1738,6 +1750,12 @@ export interface CustomerAutoRenewalWRedeemedCoupon {
      * @memberof CustomerAutoRenewalWRedeemedCoupon
      */
     'currentRedeemedCouponId'?: string;
+    /**
+     * 
+     * @type {ExtraMessages}
+     * @memberof CustomerAutoRenewalWRedeemedCoupon
+     */
+    'extraMessages'?: ExtraMessages;
     /**
      * 
      * @type {CustomerAutoRenewalWRedeemedCouponAllOfCurrentRedeemedCoupon}
@@ -1834,6 +1852,43 @@ export interface DefinedSingleConsumptionMetadata {
      * @memberof DefinedSingleConsumptionMetadata
      */
     'perUnitCost': number;
+}
+/**
+ * 
+ * @export
+ * @interface ExtraMessages
+ */
+export interface ExtraMessages {
+    /**
+     * Number of WhatsApp messages included
+     * @type {number}
+     * @memberof ExtraMessages
+     */
+    'waMessages'?: number;
+    /**
+     * Number of Email messages included
+     * @type {number}
+     * @memberof ExtraMessages
+     */
+    'emailMessages'?: number;
+    /**
+     * Number of SMS messages included
+     * @type {number}
+     * @memberof ExtraMessages
+     */
+    'smsMessages'?: number;
+    /**
+     * Number of Messenger messages included
+     * @type {number}
+     * @memberof ExtraMessages
+     */
+    'messengerMessages'?: number;
+    /**
+     * Number of WABA messages included
+     * @type {number}
+     * @memberof ExtraMessages
+     */
+    'waBusinessMessages'?: number;
 }
 /**
  * List of features
