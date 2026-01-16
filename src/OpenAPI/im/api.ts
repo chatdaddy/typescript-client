@@ -3384,6 +3384,32 @@ export interface GroupsInviteCode200Response {
 /**
  * 
  * @export
+ * @interface IncognitoModeLogPost200Response
+ */
+export interface IncognitoModeLogPost200Response {
+    /**
+     * 
+     * @type {boolean}
+     * @memberof IncognitoModeLogPost200Response
+     */
+    'success'?: boolean;
+}
+/**
+ * 
+ * @export
+ * @interface IncognitoModeLogPostRequest
+ */
+export interface IncognitoModeLogPostRequest {
+    /**
+     * Whether incognito mode is being enabled or disabled
+     * @type {boolean}
+     * @memberof IncognitoModeLogPostRequest
+     */
+    'enabled': boolean;
+}
+/**
+ * 
+ * @export
  * @interface KeepDeletedMessagesSettings
  */
 export interface KeepDeletedMessagesSettings {
@@ -10383,6 +10409,44 @@ export const ChatsApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
+         * Logs when a user enables or disables incognito mode. This is used to track incognito mode usage for debugging purposes. Incognito mode prevents marking chats as read. 
+         * @summary Log incognito mode toggle
+         * @param {IncognitoModeLogPostRequest} [incognitoModeLogPostRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        incognitoModeLogPost: async (incognitoModeLogPostRequest?: IncognitoModeLogPostRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/incognito-mode-log`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", [], configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(incognitoModeLogPostRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * Saves a snapshot of connected channel counts for a specific date. This endpoint is typically called by a cron job at the end of each day. 
          * @summary Save daily channel snapshot
          * @param {SaveDailyChannelSnapshotRequest} [saveDailyChannelSnapshotRequest] 
@@ -10536,6 +10600,19 @@ export const ChatsApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
+         * Logs when a user enables or disables incognito mode. This is used to track incognito mode usage for debugging purposes. Incognito mode prevents marking chats as read. 
+         * @summary Log incognito mode toggle
+         * @param {IncognitoModeLogPostRequest} [incognitoModeLogPostRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async incognitoModeLogPost(incognitoModeLogPostRequest?: IncognitoModeLogPostRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IncognitoModeLogPost200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.incognitoModeLogPost(incognitoModeLogPostRequest, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['ChatsApi.incognitoModeLogPost']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
          * Saves a snapshot of connected channel counts for a specific date. This endpoint is typically called by a cron job at the end of each day. 
          * @summary Save daily channel snapshot
          * @param {SaveDailyChannelSnapshotRequest} [saveDailyChannelSnapshotRequest] 
@@ -10617,6 +10694,16 @@ export const ChatsApiFactory = function (configuration?: Configuration, basePath
          */
         getDailyChannelSnapshots(requestParameters: ChatsApiGetDailyChannelSnapshotsRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<GetDailyChannelSnapshots200Response> {
             return localVarFp.getDailyChannelSnapshots(requestParameters.startDate, requestParameters.endDate, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Logs when a user enables or disables incognito mode. This is used to track incognito mode usage for debugging purposes. Incognito mode prevents marking chats as read. 
+         * @summary Log incognito mode toggle
+         * @param {ChatsApiIncognitoModeLogPostRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        incognitoModeLogPost(requestParameters: ChatsApiIncognitoModeLogPostRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<IncognitoModeLogPost200Response> {
+            return localVarFp.incognitoModeLogPost(requestParameters.incognitoModeLogPostRequest, options).then((request) => request(axios, basePath));
         },
         /**
          * Saves a snapshot of connected channel counts for a specific date. This endpoint is typically called by a cron job at the end of each day. 
@@ -10905,6 +10992,20 @@ export interface ChatsApiGetDailyChannelSnapshotsRequest {
 }
 
 /**
+ * Request parameters for incognitoModeLogPost operation in ChatsApi.
+ * @export
+ * @interface ChatsApiIncognitoModeLogPostRequest
+ */
+export interface ChatsApiIncognitoModeLogPostRequest {
+    /**
+     * 
+     * @type {IncognitoModeLogPostRequest}
+     * @memberof ChatsApiIncognitoModeLogPost
+     */
+    readonly incognitoModeLogPostRequest?: IncognitoModeLogPostRequest
+}
+
+/**
  * Request parameters for saveDailyChannelSnapshot operation in ChatsApi.
  * @export
  * @interface ChatsApiSaveDailyChannelSnapshotRequest
@@ -10995,6 +11096,18 @@ export class ChatsApi extends BaseAPI {
      */
     public getDailyChannelSnapshots(requestParameters: ChatsApiGetDailyChannelSnapshotsRequest = {}, options?: RawAxiosRequestConfig) {
         return ChatsApiFp(this.configuration).getDailyChannelSnapshots(requestParameters.startDate, requestParameters.endDate, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Logs when a user enables or disables incognito mode. This is used to track incognito mode usage for debugging purposes. Incognito mode prevents marking chats as read. 
+     * @summary Log incognito mode toggle
+     * @param {ChatsApiIncognitoModeLogPostRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ChatsApi
+     */
+    public incognitoModeLogPost(requestParameters: ChatsApiIncognitoModeLogPostRequest = {}, options?: RawAxiosRequestConfig) {
+        return ChatsApiFp(this.configuration).incognitoModeLogPost(requestParameters.incognitoModeLogPostRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
