@@ -8887,6 +8887,18 @@ export interface MessageInsertData {
     'referencedPost'?: MessageInsertDataReferencedPost;
     /**
      * 
+     * @type {string}
+     * @memberof MessageInsertData
+     */
+    'readBy'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof MessageInsertData
+     */
+    'readAt'?: string | null;
+    /**
+     * 
      * @type {Array<string>}
      * @memberof MessageInsertData
      */
@@ -9966,6 +9978,18 @@ export interface MessageUpdateData {
      * @memberof MessageUpdateData
      */
     'referencedPost'?: MessageInsertDataReferencedPost;
+    /**
+     * 
+     * @type {string}
+     * @memberof MessageUpdateData
+     */
+    'readBy'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof MessageUpdateData
+     */
+    'readAt'?: string | null;
     /**
      * 
      * @type {Array<string>}

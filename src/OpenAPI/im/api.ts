@@ -3731,6 +3731,18 @@ export interface Message {
      * @memberof Message
      */
     'referencedPost'?: ReferencedPost;
+    /**
+     * ID of the entity that first read this message. - For manual user reads: \"user:{userId}\" - For bot reads: \"bot:{botId}\" - For keyword replies: \"keyword:{keywordId}\" 
+     * @type {string}
+     * @memberof Message
+     */
+    'readBy'?: string | null;
+    /**
+     * Timestamp when the message was first marked as read
+     * @type {string}
+     * @memberof Message
+     */
+    'readAt'?: string | null;
 }
 
 
