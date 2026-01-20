@@ -523,11 +523,11 @@ export interface BoutirTokenRequest {
      */
     'referralCode'?: string;
     /**
-     * The variant of the Firebase token to use. If not specified, will default to chatdaddy. 
-     * @type {string}
+     * 
+     * @type {UserVariant}
      * @memberof BoutirTokenRequest
      */
-    'variant'?: BoutirTokenRequestVariantEnum;
+    'variant'?: UserVariant;
 }
 
 export const BoutirTokenRequestTypeEnum = {
@@ -535,12 +535,6 @@ export const BoutirTokenRequestTypeEnum = {
 } as const;
 
 export type BoutirTokenRequestTypeEnum = typeof BoutirTokenRequestTypeEnum[keyof typeof BoutirTokenRequestTypeEnum];
-export const BoutirTokenRequestVariantEnum = {
-    Chatdaddy: 'chatdaddy',
-    Lite: 'lite'
-} as const;
-
-export type BoutirTokenRequestVariantEnum = typeof BoutirTokenRequestVariantEnum[keyof typeof BoutirTokenRequestVariantEnum];
 
 /**
  * 
@@ -746,11 +740,11 @@ export interface FirebaseTokenRequest {
      */
     'region'?: string;
     /**
-     * The variant of the Firebase token to use. If not specified, will default to chatdaddy. 
-     * @type {string}
+     * 
+     * @type {UserVariant}
      * @memberof FirebaseTokenRequest
      */
-    'variant'?: FirebaseTokenRequestVariantEnum;
+    'variant'?: UserVariant;
 }
 
 export const FirebaseTokenRequestTypeEnum = {
@@ -758,12 +752,6 @@ export const FirebaseTokenRequestTypeEnum = {
 } as const;
 
 export type FirebaseTokenRequestTypeEnum = typeof FirebaseTokenRequestTypeEnum[keyof typeof FirebaseTokenRequestTypeEnum];
-export const FirebaseTokenRequestVariantEnum = {
-    Chatdaddy: 'chatdaddy',
-    Lite: 'lite'
-} as const;
-
-export type FirebaseTokenRequestVariantEnum = typeof FirebaseTokenRequestVariantEnum[keyof typeof FirebaseTokenRequestVariantEnum];
 
 /**
  * 
@@ -2045,19 +2033,13 @@ export interface Team {
      */
     'creditCustomerId'?: string | null;
     /**
-     * The variant of the team, chatdaddy or lite
-     * @type {string}
+     * 
+     * @type {UserVariant}
      * @memberof Team
      */
-    'variant'?: TeamVariantEnum;
+    'variant'?: UserVariant;
 }
 
-export const TeamVariantEnum = {
-    Chatdaddy: 'chatdaddy',
-    Lite: 'lite'
-} as const;
-
-export type TeamVariantEnum = typeof TeamVariantEnum[keyof typeof TeamVariantEnum];
 
 /**
  * 
@@ -2494,19 +2476,13 @@ export interface User {
      */
     'partnership'?: string | null;
     /**
-     * The variant of the user, chatdaddy or lite
-     * @type {string}
+     * 
+     * @type {UserVariant}
      * @memberof User
      */
-    'variant'?: UserVariantEnum;
+    'variant'?: UserVariant;
 }
 
-export const UserVariantEnum = {
-    Chatdaddy: 'chatdaddy',
-    Lite: 'lite'
-} as const;
-
-export type UserVariantEnum = typeof UserVariantEnum[keyof typeof UserVariantEnum];
 
 /**
  * 
@@ -2582,11 +2558,11 @@ export interface UserCreate {
      */
     'region'?: string;
     /**
-     * The variant of the user to create. chatdaddy or lite
-     * @type {string}
+     * 
+     * @type {UserVariant}
      * @memberof UserCreate
      */
-    'variant'?: UserCreateVariantEnum;
+    'variant'?: UserVariant;
     /**
      * Whether to create a dedicated team for the user. When false, only the user is created without a team. This flag is ignored if inviteLinkId or subUser is provided. Defaults to true for backward compatibility.
      * @type {boolean}
@@ -2601,12 +2577,6 @@ export const UserCreateCreditCustomerEnum = {
 } as const;
 
 export type UserCreateCreditCustomerEnum = typeof UserCreateCreditCustomerEnum[keyof typeof UserCreateCreditCustomerEnum];
-export const UserCreateVariantEnum = {
-    Chatdaddy: 'chatdaddy',
-    Lite: 'lite'
-} as const;
-
-export type UserCreateVariantEnum = typeof UserCreateVariantEnum[keyof typeof UserCreateVariantEnum];
 
 /**
  * 
@@ -2718,6 +2688,21 @@ export const UserPatchCreditCustomerEnum = {
 } as const;
 
 export type UserPatchCreditCustomerEnum = typeof UserPatchCreditCustomerEnum[keyof typeof UserPatchCreditCustomerEnum];
+
+/**
+ * The variant of the user, chatdaddy or lite
+ * @export
+ * @enum {string}
+ */
+
+export const UserVariant = {
+    Chatdaddy: 'chatdaddy',
+    Lite: 'lite',
+    Syntra: 'syntra'
+} as const;
+
+export type UserVariant = typeof UserVariant[keyof typeof UserVariant];
+
 
 /**
  * 

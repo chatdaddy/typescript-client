@@ -11941,7 +11941,8 @@ export const TeamInsertDataScopesEnum = {
 export type TeamInsertDataScopesEnum = typeof TeamInsertDataScopesEnum[keyof typeof TeamInsertDataScopesEnum];
 export const TeamInsertDataVariantEnum = {
     Chatdaddy: 'chatdaddy',
-    Lite: 'lite'
+    Lite: 'lite',
+    Syntra: 'syntra'
 } as const;
 
 export type TeamInsertDataVariantEnum = typeof TeamInsertDataVariantEnum[keyof typeof TeamInsertDataVariantEnum];
@@ -12063,7 +12064,8 @@ export const TeamInsertDataCreatorCreatedByMethodEnum = {
 export type TeamInsertDataCreatorCreatedByMethodEnum = typeof TeamInsertDataCreatorCreatedByMethodEnum[keyof typeof TeamInsertDataCreatorCreatedByMethodEnum];
 export const TeamInsertDataCreatorVariantEnum = {
     Chatdaddy: 'chatdaddy',
-    Lite: 'lite'
+    Lite: 'lite',
+    Syntra: 'syntra'
 } as const;
 
 export type TeamInsertDataCreatorVariantEnum = typeof TeamInsertDataCreatorVariantEnum[keyof typeof TeamInsertDataCreatorVariantEnum];
@@ -12398,7 +12400,8 @@ export const TeamUpdateDataScopesEnum = {
 export type TeamUpdateDataScopesEnum = typeof TeamUpdateDataScopesEnum[keyof typeof TeamUpdateDataScopesEnum];
 export const TeamUpdateDataVariantEnum = {
     Chatdaddy: 'chatdaddy',
-    Lite: 'lite'
+    Lite: 'lite',
+    Syntra: 'syntra'
 } as const;
 
 export type TeamUpdateDataVariantEnum = typeof TeamUpdateDataVariantEnum[keyof typeof TeamUpdateDataVariantEnum];
@@ -13732,7 +13735,8 @@ export const UserInsertDataCreatedByMethodEnum = {
 export type UserInsertDataCreatedByMethodEnum = typeof UserInsertDataCreatedByMethodEnum[keyof typeof UserInsertDataCreatedByMethodEnum];
 export const UserInsertDataVariantEnum = {
     Chatdaddy: 'chatdaddy',
-    Lite: 'lite'
+    Lite: 'lite',
+    Syntra: 'syntra'
 } as const;
 
 export type UserInsertDataVariantEnum = typeof UserInsertDataVariantEnum[keyof typeof UserInsertDataVariantEnum];
@@ -14125,7 +14129,8 @@ export const UserUpdateDataCreatedByMethodEnum = {
 export type UserUpdateDataCreatedByMethodEnum = typeof UserUpdateDataCreatedByMethodEnum[keyof typeof UserUpdateDataCreatedByMethodEnum];
 export const UserUpdateDataVariantEnum = {
     Chatdaddy: 'chatdaddy',
-    Lite: 'lite'
+    Lite: 'lite',
+    Syntra: 'syntra'
 } as const;
 
 export type UserUpdateDataVariantEnum = typeof UserUpdateDataVariantEnum[keyof typeof UserUpdateDataVariantEnum];
