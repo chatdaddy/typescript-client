@@ -2697,8 +2697,7 @@ export type UserPatchCreditCustomerEnum = typeof UserPatchCreditCustomerEnum[key
 
 export const UserVariant = {
     Chatdaddy: 'chatdaddy',
-    Lite: 'lite',
-    Syntra: 'syntra'
+    Lite: 'lite'
 } as const;
 
 export type UserVariant = typeof UserVariant[keyof typeof UserVariant];
@@ -7052,7 +7051,7 @@ export const UsersApiAxiosParamCreator = function (configuration?: Configuration
         usersDelete: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
             assertParamExists('usersDelete', 'id', id)
-            const localVarPath = `/users`;
+            const localVarPath = `/users/signup`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -7213,7 +7212,7 @@ export const UsersApiAxiosParamCreator = function (configuration?: Configuration
          * @throws {RequiredError}
          */
         usersPatch: async (userId?: string, userPatch?: UserPatch, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/users`;
+            const localVarPath = `/users/signup`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -7310,6 +7309,40 @@ export const UsersApiAxiosParamCreator = function (configuration?: Configuration
             // authentication chatdaddy required
             // oauth required
             await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["ADMIN_PANEL_ACCESS", "PARTNER_ADMIN_PANEL_ACCESS"], configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(userCreate, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Public endpoint for user registration without OTP verification. Users can create an account by simply filling out a signup form.
+         * @summary Create a new user account via form signup
+         * @param {UserCreate} [userCreate] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        usersSignup: async (userCreate?: UserCreate, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/users/signup`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
 
 
     
@@ -7451,6 +7484,19 @@ export const UsersApiFp = function(configuration?: Configuration) {
             const localVarOperationServerBasePath = operationServerMap['UsersApi.usersPost']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
+        /**
+         * Public endpoint for user registration without OTP verification. Users can create an account by simply filling out a signup form.
+         * @summary Create a new user account via form signup
+         * @param {UserCreate} [userCreate] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async usersSignup(userCreate?: UserCreate, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<User>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.usersSignup(userCreate, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['UsersApi.usersSignup']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
     }
 };
 
@@ -7540,6 +7586,16 @@ export const UsersApiFactory = function (configuration?: Configuration, basePath
          */
         usersPost(requestParameters: UsersApiUsersPostRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<User> {
             return localVarFp.usersPost(requestParameters.userCreate, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Public endpoint for user registration without OTP verification. Users can create an account by simply filling out a signup form.
+         * @summary Create a new user account via form signup
+         * @param {UsersApiUsersSignupRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        usersSignup(requestParameters: UsersApiUsersSignupRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<User> {
+            return localVarFp.usersSignup(requestParameters.userCreate, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -7741,6 +7797,20 @@ export interface UsersApiUsersPostRequest {
 }
 
 /**
+ * Request parameters for usersSignup operation in UsersApi.
+ * @export
+ * @interface UsersApiUsersSignupRequest
+ */
+export interface UsersApiUsersSignupRequest {
+    /**
+     * 
+     * @type {UserCreate}
+     * @memberof UsersApiUsersSignup
+     */
+    readonly userCreate?: UserCreate
+}
+
+/**
  * UsersApi - object-oriented interface
  * @export
  * @class UsersApi
@@ -7841,6 +7911,18 @@ export class UsersApi extends BaseAPI {
      */
     public usersPost(requestParameters: UsersApiUsersPostRequest = {}, options?: RawAxiosRequestConfig) {
         return UsersApiFp(this.configuration).usersPost(requestParameters.userCreate, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Public endpoint for user registration without OTP verification. Users can create an account by simply filling out a signup form.
+     * @summary Create a new user account via form signup
+     * @param {UsersApiUsersSignupRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof UsersApi
+     */
+    public usersSignup(requestParameters: UsersApiUsersSignupRequest = {}, options?: RawAxiosRequestConfig) {
+        return UsersApiFp(this.configuration).usersSignup(requestParameters.userCreate, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
