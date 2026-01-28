@@ -553,6 +553,12 @@ export interface CreditAutoRenewalUpdate {
      */
     'extraMessages'?: ExtraMessages;
     /**
+     * 
+     * @type {string}
+     * @memberof CreditAutoRenewalUpdate
+     */
+    'currency'?: string;
+    /**
      * These actions are executed after the payment is successful
      * @type {Array<PostPaymentAction>}
      * @memberof CreditAutoRenewalUpdate
