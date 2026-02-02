@@ -1333,6 +1333,25 @@ export type MetricsResultTotalVisualizationTypeEnum = typeof MetricsResultTotalV
 /**
  * 
  * @export
+ * @interface MigrateDashboardToV2200Response
+ */
+export interface MigrateDashboardToV2200Response {
+    /**
+     * Number of dashboards deleted
+     * @type {number}
+     * @memberof MigrateDashboardToV2200Response
+     */
+    'deletedCount': number;
+    /**
+     * 
+     * @type {DashboardMetadata}
+     * @memberof MigrateDashboardToV2200Response
+     */
+    'dashboard': DashboardMetadata;
+}
+/**
+ * 
+ * @export
  * @enum {string}
  */
 
@@ -3116,6 +3135,40 @@ export const DashboardV2ApiAxiosParamCreator = function (configuration?: Configu
                 options: localVarRequestOptions,
             };
         },
+        /**
+         * Deletes all existing dashboards and creates a single V2 dashboard. Does not deduct credits.
+         * @summary Migrate team to V2 dashboard
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        migrateDashboardToV2: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/dashboard/migrate-to-v2`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["DASHBOARD_CREATE", "DASHBOARD_DELETE"], configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
     }
 };
 
@@ -3178,6 +3231,18 @@ export const DashboardV2ApiFp = function(configuration?: Configuration) {
             const localVarOperationServerBasePath = operationServerMap['DashboardV2Api.getInitDataV2']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
+        /**
+         * Deletes all existing dashboards and creates a single V2 dashboard. Does not deduct credits.
+         * @summary Migrate team to V2 dashboard
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async migrateDashboardToV2(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MigrateDashboardToV2200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.migrateDashboardToV2(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['DashboardV2Api.migrateDashboardToV2']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
     }
 };
 
@@ -3217,6 +3282,15 @@ export const DashboardV2ApiFactory = function (configuration?: Configuration, ba
          */
         getInitDataV2(requestParameters: DashboardV2ApiGetInitDataV2Request, options?: RawAxiosRequestConfig): AxiosPromise<GetInitData200Response> {
             return localVarFp.getInitDataV2(requestParameters.period, requestParameters.aggregate, requestParameters.id, requestParameters.customDateRange, requestParameters.timezoneOffset, requestParameters.type, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Deletes all existing dashboards and creates a single V2 dashboard. Does not deduct credits.
+         * @summary Migrate team to V2 dashboard
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        migrateDashboardToV2(options?: RawAxiosRequestConfig): AxiosPromise<MigrateDashboardToV2200Response> {
+            return localVarFp.migrateDashboardToV2(options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -3395,6 +3469,17 @@ export class DashboardV2Api extends BaseAPI {
      */
     public getInitDataV2(requestParameters: DashboardV2ApiGetInitDataV2Request, options?: RawAxiosRequestConfig) {
         return DashboardV2ApiFp(this.configuration).getInitDataV2(requestParameters.period, requestParameters.aggregate, requestParameters.id, requestParameters.customDateRange, requestParameters.timezoneOffset, requestParameters.type, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Deletes all existing dashboards and creates a single V2 dashboard. Does not deduct credits.
+     * @summary Migrate team to V2 dashboard
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DashboardV2Api
+     */
+    public migrateDashboardToV2(options?: RawAxiosRequestConfig) {
+        return DashboardV2ApiFp(this.configuration).migrateDashboardToV2(options).then((request) => request(this.axios, this.basePath));
     }
 }
 
