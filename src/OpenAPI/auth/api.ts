@@ -2319,6 +2319,47 @@ export interface TeamsPatch200Response {
 /**
  * 
  * @export
+ * @interface TeamsUpgradeVariant200Response
+ */
+export interface TeamsUpgradeVariant200Response {
+    /**
+     * 
+     * @type {boolean}
+     * @memberof TeamsUpgradeVariant200Response
+     */
+    'success': boolean;
+    /**
+     * 
+     * @type {UserVariant}
+     * @memberof TeamsUpgradeVariant200Response
+     */
+    'variant': UserVariant;
+}
+
+
+/**
+ * 
+ * @export
+ * @interface TeamsUpgradeVariantRequest
+ */
+export interface TeamsUpgradeVariantRequest {
+    /**
+     * The variant to upgrade to (currently only \'syntra\' is supported)
+     * @type {string}
+     * @memberof TeamsUpgradeVariantRequest
+     */
+    'targetVariant': TeamsUpgradeVariantRequestTargetVariantEnum;
+}
+
+export const TeamsUpgradeVariantRequestTargetVariantEnum = {
+    Syntra: 'syntra'
+} as const;
+
+export type TeamsUpgradeVariantRequestTargetVariantEnum = typeof TeamsUpgradeVariantRequestTargetVariantEnum[keyof typeof TeamsUpgradeVariantRequestTargetVariantEnum];
+
+/**
+ * 
+ * @export
  * @interface TokenPost200Response
  */
 export interface TokenPost200Response {
@@ -2690,7 +2731,7 @@ export const UserPatchCreditCustomerEnum = {
 export type UserPatchCreditCustomerEnum = typeof UserPatchCreditCustomerEnum[keyof typeof UserPatchCreditCustomerEnum];
 
 /**
- * The variant of the user, chatdaddy or lite
+ * The variant of the user - chatdaddy, lite, syntra, or instaengage
  * @export
  * @enum {string}
  */
@@ -6339,6 +6380,44 @@ export const TeamsApiAxiosParamCreator = function (configuration?: Configuration
                 options: localVarRequestOptions,
             };
         },
+        /**
+         * Upgrades the team\'s variant from \'instaengage\' to \'syntra\', removing channel restrictions and disabled features. This endpoint is only available for teams with the \'instaengage\' variant. 
+         * @summary Upgrade team variant from instaengage to syntra
+         * @param {TeamsUpgradeVariantRequest} [teamsUpgradeVariantRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        teamsUpgradeVariant: async (teamsUpgradeVariantRequest?: TeamsUpgradeVariantRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/teams/upgrade-variant`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", [], configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(teamsUpgradeVariantRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
     }
 };
 
@@ -6483,6 +6562,19 @@ export const TeamsApiFp = function(configuration?: Configuration) {
             const localVarOperationServerBasePath = operationServerMap['TeamsApi.teamsPatch']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
+        /**
+         * Upgrades the team\'s variant from \'instaengage\' to \'syntra\', removing channel restrictions and disabled features. This endpoint is only available for teams with the \'instaengage\' variant. 
+         * @summary Upgrade team variant from instaengage to syntra
+         * @param {TeamsUpgradeVariantRequest} [teamsUpgradeVariantRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async teamsUpgradeVariant(teamsUpgradeVariantRequest?: TeamsUpgradeVariantRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TeamsUpgradeVariant200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.teamsUpgradeVariant(teamsUpgradeVariantRequest, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['TeamsApi.teamsUpgradeVariant']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
     }
 };
 
@@ -6581,6 +6673,16 @@ export const TeamsApiFactory = function (configuration?: Configuration, basePath
          */
         teamsPatch(requestParameters: TeamsApiTeamsPatchRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<TeamsPatch200Response> {
             return localVarFp.teamsPatch(requestParameters.teamPatchRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Upgrades the team\'s variant from \'instaengage\' to \'syntra\', removing channel restrictions and disabled features. This endpoint is only available for teams with the \'instaengage\' variant. 
+         * @summary Upgrade team variant from instaengage to syntra
+         * @param {TeamsApiTeamsUpgradeVariantRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        teamsUpgradeVariant(requestParameters: TeamsApiTeamsUpgradeVariantRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<TeamsUpgradeVariant200Response> {
+            return localVarFp.teamsUpgradeVariant(requestParameters.teamsUpgradeVariantRequest, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -6824,6 +6926,20 @@ export interface TeamsApiTeamsPatchRequest {
 }
 
 /**
+ * Request parameters for teamsUpgradeVariant operation in TeamsApi.
+ * @export
+ * @interface TeamsApiTeamsUpgradeVariantRequest
+ */
+export interface TeamsApiTeamsUpgradeVariantRequest {
+    /**
+     * 
+     * @type {TeamsUpgradeVariantRequest}
+     * @memberof TeamsApiTeamsUpgradeVariant
+     */
+    readonly teamsUpgradeVariantRequest?: TeamsUpgradeVariantRequest
+}
+
+/**
  * TeamsApi - object-oriented interface
  * @export
  * @class TeamsApi
@@ -6935,6 +7051,18 @@ export class TeamsApi extends BaseAPI {
      */
     public teamsPatch(requestParameters: TeamsApiTeamsPatchRequest = {}, options?: RawAxiosRequestConfig) {
         return TeamsApiFp(this.configuration).teamsPatch(requestParameters.teamPatchRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Upgrades the team\'s variant from \'instaengage\' to \'syntra\', removing channel restrictions and disabled features. This endpoint is only available for teams with the \'instaengage\' variant. 
+     * @summary Upgrade team variant from instaengage to syntra
+     * @param {TeamsApiTeamsUpgradeVariantRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof TeamsApi
+     */
+    public teamsUpgradeVariant(requestParameters: TeamsApiTeamsUpgradeVariantRequest = {}, options?: RawAxiosRequestConfig) {
+        return TeamsApiFp(this.configuration).teamsUpgradeVariant(requestParameters.teamsUpgradeVariantRequest, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
