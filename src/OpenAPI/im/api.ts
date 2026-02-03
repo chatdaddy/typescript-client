@@ -932,6 +932,18 @@ export interface AlibabaCAMSStateInfo {
      * @memberof AlibabaCAMSStateInfo
      */
     'enabledWelcomeMessage'?: boolean;
+    /**
+     * The messaging limit tier from WhatsApp Business API (e.g., TIER_250, TIER_2K, TIER_10K, TIER_100K, TIER_UNLIMITED)
+     * @type {string}
+     * @memberof AlibabaCAMSStateInfo
+     */
+    'messagingLimitTier'?: string;
+    /**
+     * Number of template messages sent since the last analytics sync
+     * @type {number}
+     * @memberof AlibabaCAMSStateInfo
+     */
+    'messagesSentSinceLastSync'?: number;
 }
 
 export const AlibabaCAMSStateInfoVersionEnum = {
