@@ -11942,7 +11942,8 @@ export type TeamInsertDataScopesEnum = typeof TeamInsertDataScopesEnum[keyof typ
 export const TeamInsertDataVariantEnum = {
     Chatdaddy: 'chatdaddy',
     Lite: 'lite',
-    Syntra: 'syntra'
+    Syntra: 'syntra',
+    Instaengage: 'instaengage'
 } as const;
 
 export type TeamInsertDataVariantEnum = typeof TeamInsertDataVariantEnum[keyof typeof TeamInsertDataVariantEnum];
@@ -12065,7 +12066,8 @@ export type TeamInsertDataCreatorCreatedByMethodEnum = typeof TeamInsertDataCrea
 export const TeamInsertDataCreatorVariantEnum = {
     Chatdaddy: 'chatdaddy',
     Lite: 'lite',
-    Syntra: 'syntra'
+    Syntra: 'syntra',
+    Instaengage: 'instaengage'
 } as const;
 
 export type TeamInsertDataCreatorVariantEnum = typeof TeamInsertDataCreatorVariantEnum[keyof typeof TeamInsertDataCreatorVariantEnum];
@@ -12401,7 +12403,8 @@ export type TeamUpdateDataScopesEnum = typeof TeamUpdateDataScopesEnum[keyof typ
 export const TeamUpdateDataVariantEnum = {
     Chatdaddy: 'chatdaddy',
     Lite: 'lite',
-    Syntra: 'syntra'
+    Syntra: 'syntra',
+    Instaengage: 'instaengage'
 } as const;
 
 export type TeamUpdateDataVariantEnum = typeof TeamUpdateDataVariantEnum[keyof typeof TeamUpdateDataVariantEnum];
@@ -13736,7 +13739,8 @@ export type UserInsertDataCreatedByMethodEnum = typeof UserInsertDataCreatedByMe
 export const UserInsertDataVariantEnum = {
     Chatdaddy: 'chatdaddy',
     Lite: 'lite',
-    Syntra: 'syntra'
+    Syntra: 'syntra',
+    Instaengage: 'instaengage'
 } as const;
 
 export type UserInsertDataVariantEnum = typeof UserInsertDataVariantEnum[keyof typeof UserInsertDataVariantEnum];
@@ -14130,7 +14134,8 @@ export type UserUpdateDataCreatedByMethodEnum = typeof UserUpdateDataCreatedByMe
 export const UserUpdateDataVariantEnum = {
     Chatdaddy: 'chatdaddy',
     Lite: 'lite',
-    Syntra: 'syntra'
+    Syntra: 'syntra',
+    Instaengage: 'instaengage'
 } as const;
 
 export type UserUpdateDataVariantEnum = typeof UserUpdateDataVariantEnum[keyof typeof UserUpdateDataVariantEnum];

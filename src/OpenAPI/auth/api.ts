@@ -2698,7 +2698,8 @@ export type UserPatchCreditCustomerEnum = typeof UserPatchCreditCustomerEnum[key
 export const UserVariant = {
     Chatdaddy: 'chatdaddy',
     Lite: 'lite',
-    Syntra: 'syntra'
+    Syntra: 'syntra',
+    Instaengage: 'instaengage'
 } as const;
 
 export type UserVariant = typeof UserVariant[keyof typeof UserVariant];
