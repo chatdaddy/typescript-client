@@ -1482,6 +1482,50 @@ export interface TranslateTextPostRequest {
 /**
  * 
  * @export
+ * @interface WabaMessageCount
+ */
+export interface WabaMessageCount {
+    /**
+     * Account ID
+     * @type {string}
+     * @memberof WabaMessageCount
+     */
+    'accountId': string;
+    /**
+     * Message count for the account
+     * @type {number}
+     * @memberof WabaMessageCount
+     */
+    'count': number;
+    /**
+     * Timestamp when the record was created
+     * @type {string}
+     * @memberof WabaMessageCount
+     */
+    'createdAt'?: string;
+    /**
+     * Timestamp when the record was last updated
+     * @type {string}
+     * @memberof WabaMessageCount
+     */
+    'updatedAt'?: string;
+}
+/**
+ * 
+ * @export
+ * @interface WabaMessageCountPostRequest
+ */
+export interface WabaMessageCountPostRequest {
+    /**
+     * Count value to set
+     * @type {number}
+     * @memberof WabaMessageCountPostRequest
+     */
+    'count': number;
+}
+/**
+ * 
+ * @export
  * @interface WebhookLarkGet200Response
  */
 export interface WebhookLarkGet200Response {
@@ -5002,6 +5046,231 @@ export class ScheduleApi extends BaseAPI {
      */
     public oauthCallback(requestParameters: ScheduleApiOauthCallbackRequest, options?: RawAxiosRequestConfig) {
         return ScheduleApiFp(this.configuration).oauthCallback(requestParameters.code, requestParameters.state, requestParameters.scope, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+
+/**
+ * WabaMessageCountApi - axios parameter creator
+ * @export
+ */
+export const WabaMessageCountApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @summary Get WABA message count for an account
+         * @param {string} accountId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        wabaMessageCountGet: async (accountId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'accountId' is not null or undefined
+            assertParamExists('wabaMessageCountGet', 'accountId', accountId)
+            const localVarPath = `/waba-message-count/{accountId}`
+                .replace(`{${"accountId"}}`, encodeURIComponent(String(accountId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", [], configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Set WABA message count for an account (upsert)
+         * @param {string} accountId 
+         * @param {WabaMessageCountPostRequest} [wabaMessageCountPostRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        wabaMessageCountPost: async (accountId: string, wabaMessageCountPostRequest?: WabaMessageCountPostRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'accountId' is not null or undefined
+            assertParamExists('wabaMessageCountPost', 'accountId', accountId)
+            const localVarPath = `/waba-message-count/{accountId}`
+                .replace(`{${"accountId"}}`, encodeURIComponent(String(accountId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", [], configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(wabaMessageCountPostRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * WabaMessageCountApi - functional programming interface
+ * @export
+ */
+export const WabaMessageCountApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = WabaMessageCountApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * 
+         * @summary Get WABA message count for an account
+         * @param {string} accountId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async wabaMessageCountGet(accountId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<WabaMessageCount>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.wabaMessageCountGet(accountId, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['WabaMessageCountApi.wabaMessageCountGet']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @summary Set WABA message count for an account (upsert)
+         * @param {string} accountId 
+         * @param {WabaMessageCountPostRequest} [wabaMessageCountPostRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async wabaMessageCountPost(accountId: string, wabaMessageCountPostRequest?: WabaMessageCountPostRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<WabaMessageCount>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.wabaMessageCountPost(accountId, wabaMessageCountPostRequest, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['WabaMessageCountApi.wabaMessageCountPost']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+    }
+};
+
+/**
+ * WabaMessageCountApi - factory interface
+ * @export
+ */
+export const WabaMessageCountApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = WabaMessageCountApiFp(configuration)
+    return {
+        /**
+         * 
+         * @summary Get WABA message count for an account
+         * @param {WabaMessageCountApiWabaMessageCountGetRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        wabaMessageCountGet(requestParameters: WabaMessageCountApiWabaMessageCountGetRequest, options?: RawAxiosRequestConfig): AxiosPromise<WabaMessageCount> {
+            return localVarFp.wabaMessageCountGet(requestParameters.accountId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Set WABA message count for an account (upsert)
+         * @param {WabaMessageCountApiWabaMessageCountPostRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        wabaMessageCountPost(requestParameters: WabaMessageCountApiWabaMessageCountPostRequest, options?: RawAxiosRequestConfig): AxiosPromise<WabaMessageCount> {
+            return localVarFp.wabaMessageCountPost(requestParameters.accountId, requestParameters.wabaMessageCountPostRequest, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * Request parameters for wabaMessageCountGet operation in WabaMessageCountApi.
+ * @export
+ * @interface WabaMessageCountApiWabaMessageCountGetRequest
+ */
+export interface WabaMessageCountApiWabaMessageCountGetRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof WabaMessageCountApiWabaMessageCountGet
+     */
+    readonly accountId: string
+}
+
+/**
+ * Request parameters for wabaMessageCountPost operation in WabaMessageCountApi.
+ * @export
+ * @interface WabaMessageCountApiWabaMessageCountPostRequest
+ */
+export interface WabaMessageCountApiWabaMessageCountPostRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof WabaMessageCountApiWabaMessageCountPost
+     */
+    readonly accountId: string
+
+    /**
+     * 
+     * @type {WabaMessageCountPostRequest}
+     * @memberof WabaMessageCountApiWabaMessageCountPost
+     */
+    readonly wabaMessageCountPostRequest?: WabaMessageCountPostRequest
+}
+
+/**
+ * WabaMessageCountApi - object-oriented interface
+ * @export
+ * @class WabaMessageCountApi
+ * @extends {BaseAPI}
+ */
+export class WabaMessageCountApi extends BaseAPI {
+    /**
+     * 
+     * @summary Get WABA message count for an account
+     * @param {WabaMessageCountApiWabaMessageCountGetRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof WabaMessageCountApi
+     */
+    public wabaMessageCountGet(requestParameters: WabaMessageCountApiWabaMessageCountGetRequest, options?: RawAxiosRequestConfig) {
+        return WabaMessageCountApiFp(this.configuration).wabaMessageCountGet(requestParameters.accountId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Set WABA message count for an account (upsert)
+     * @param {WabaMessageCountApiWabaMessageCountPostRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof WabaMessageCountApi
+     */
+    public wabaMessageCountPost(requestParameters: WabaMessageCountApiWabaMessageCountPostRequest, options?: RawAxiosRequestConfig) {
+        return WabaMessageCountApiFp(this.configuration).wabaMessageCountPost(requestParameters.accountId, requestParameters.wabaMessageCountPostRequest, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
