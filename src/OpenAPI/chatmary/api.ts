@@ -1523,11 +1523,17 @@ export interface WabaMessageWindow {
  */
 export interface WabaMessageWindowGet200Response {
     /**
-     * 
-     * @type {Array<WabaMessageWindow>}
+     * Account ID
+     * @type {string}
      * @memberof WabaMessageWindowGet200Response
      */
-    'records'?: Array<WabaMessageWindow>;
+    'accountId': string;
+    /**
+     * Total count of message window records
+     * @type {number}
+     * @memberof WabaMessageWindowGet200Response
+     */
+    'count': number;
 }
 /**
  * 
