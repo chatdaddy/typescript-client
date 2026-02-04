@@ -743,6 +743,25 @@ export type AccountUpdateDataStateEnum = typeof AccountUpdateDataStateEnum[keyof
 /**
  * 
  * @export
+ * @interface AccountWabaStateUpdateData
+ */
+export interface AccountWabaStateUpdateData {
+    /**
+     * 
+     * @type {string}
+     * @memberof AccountWabaStateUpdateData
+     */
+    'accountId': string;
+    /**
+     * The remaining messaging limit for this WABA account for the current day
+     * @type {number}
+     * @memberof AccountWabaStateUpdateData
+     */
+    'messagingLimit': number;
+}
+/**
+ * 
+ * @export
  * @interface ActionExecute
  */
 export interface ActionExecute {
