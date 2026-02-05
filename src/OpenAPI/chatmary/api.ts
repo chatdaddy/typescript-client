@@ -1444,6 +1444,75 @@ export type StackMessagesPostRequestResponseModeEnum = typeof StackMessagesPostR
 /**
  * 
  * @export
+ * @interface TrackPageHit
+ */
+export interface TrackPageHit {
+    /**
+     * Unique record ID
+     * @type {string}
+     * @memberof TrackPageHit
+     */
+    'id': string;
+    /**
+     * Team ID
+     * @type {string}
+     * @memberof TrackPageHit
+     */
+    'teamId': string;
+    /**
+     * Source identifier for the page hit
+     * @type {string}
+     * @memberof TrackPageHit
+     */
+    'source'?: string;
+    /**
+     * Total page hit count
+     * @type {number}
+     * @memberof TrackPageHit
+     */
+    'count': number;
+    /**
+     * 
+     * @type {string}
+     * @memberof TrackPageHit
+     */
+    'createdAt'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof TrackPageHit
+     */
+    'updatedAt'?: string;
+}
+/**
+ * 
+ * @export
+ * @interface TrackPageHitsGet200Response
+ */
+export interface TrackPageHitsGet200Response {
+    /**
+     * 
+     * @type {Array<TrackPageHit>}
+     * @memberof TrackPageHitsGet200Response
+     */
+    'records'?: Array<TrackPageHit>;
+}
+/**
+ * 
+ * @export
+ * @interface TrackPageHitsPostRequest
+ */
+export interface TrackPageHitsPostRequest {
+    /**
+     * Source identifier for the page hit
+     * @type {string}
+     * @memberof TrackPageHitsPostRequest
+     */
+    'source'?: string;
+}
+/**
+ * 
+ * @export
  * @interface TranslateTextPost200Response
  */
 export interface TranslateTextPost200Response {
@@ -5089,6 +5158,220 @@ export class ScheduleApi extends BaseAPI {
      */
     public oauthCallback(requestParameters: ScheduleApiOauthCallbackRequest, options?: RawAxiosRequestConfig) {
         return ScheduleApiFp(this.configuration).oauthCallback(requestParameters.code, requestParameters.state, requestParameters.scope, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+
+/**
+ * TrackPageHitsApi - axios parameter creator
+ * @export
+ */
+export const TrackPageHitsApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @summary Get page hit records for the current team
+         * @param {string} [source] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        trackPageHitsGet: async (source?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/track-page-hits`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", [], configuration)
+
+            if (source !== undefined) {
+                localVarQueryParameter['source'] = source;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Increment page hit count for the current team
+         * @param {TrackPageHitsPostRequest} [trackPageHitsPostRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        trackPageHitsPost: async (trackPageHitsPostRequest?: TrackPageHitsPostRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/track-page-hits`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", [], configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(trackPageHitsPostRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * TrackPageHitsApi - functional programming interface
+ * @export
+ */
+export const TrackPageHitsApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = TrackPageHitsApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * 
+         * @summary Get page hit records for the current team
+         * @param {string} [source] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async trackPageHitsGet(source?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TrackPageHitsGet200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.trackPageHitsGet(source, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['TrackPageHitsApi.trackPageHitsGet']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @summary Increment page hit count for the current team
+         * @param {TrackPageHitsPostRequest} [trackPageHitsPostRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async trackPageHitsPost(trackPageHitsPostRequest?: TrackPageHitsPostRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TrackPageHit>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.trackPageHitsPost(trackPageHitsPostRequest, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['TrackPageHitsApi.trackPageHitsPost']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+    }
+};
+
+/**
+ * TrackPageHitsApi - factory interface
+ * @export
+ */
+export const TrackPageHitsApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = TrackPageHitsApiFp(configuration)
+    return {
+        /**
+         * 
+         * @summary Get page hit records for the current team
+         * @param {TrackPageHitsApiTrackPageHitsGetRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        trackPageHitsGet(requestParameters: TrackPageHitsApiTrackPageHitsGetRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<TrackPageHitsGet200Response> {
+            return localVarFp.trackPageHitsGet(requestParameters.source, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Increment page hit count for the current team
+         * @param {TrackPageHitsApiTrackPageHitsPostRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        trackPageHitsPost(requestParameters: TrackPageHitsApiTrackPageHitsPostRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<TrackPageHit> {
+            return localVarFp.trackPageHitsPost(requestParameters.trackPageHitsPostRequest, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * Request parameters for trackPageHitsGet operation in TrackPageHitsApi.
+ * @export
+ * @interface TrackPageHitsApiTrackPageHitsGetRequest
+ */
+export interface TrackPageHitsApiTrackPageHitsGetRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof TrackPageHitsApiTrackPageHitsGet
+     */
+    readonly source?: string
+}
+
+/**
+ * Request parameters for trackPageHitsPost operation in TrackPageHitsApi.
+ * @export
+ * @interface TrackPageHitsApiTrackPageHitsPostRequest
+ */
+export interface TrackPageHitsApiTrackPageHitsPostRequest {
+    /**
+     * 
+     * @type {TrackPageHitsPostRequest}
+     * @memberof TrackPageHitsApiTrackPageHitsPost
+     */
+    readonly trackPageHitsPostRequest?: TrackPageHitsPostRequest
+}
+
+/**
+ * TrackPageHitsApi - object-oriented interface
+ * @export
+ * @class TrackPageHitsApi
+ * @extends {BaseAPI}
+ */
+export class TrackPageHitsApi extends BaseAPI {
+    /**
+     * 
+     * @summary Get page hit records for the current team
+     * @param {TrackPageHitsApiTrackPageHitsGetRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof TrackPageHitsApi
+     */
+    public trackPageHitsGet(requestParameters: TrackPageHitsApiTrackPageHitsGetRequest = {}, options?: RawAxiosRequestConfig) {
+        return TrackPageHitsApiFp(this.configuration).trackPageHitsGet(requestParameters.source, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Increment page hit count for the current team
+     * @param {TrackPageHitsApiTrackPageHitsPostRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof TrackPageHitsApi
+     */
+    public trackPageHitsPost(requestParameters: TrackPageHitsApiTrackPageHitsPostRequest = {}, options?: RawAxiosRequestConfig) {
+        return TrackPageHitsApiFp(this.configuration).trackPageHitsPost(requestParameters.trackPageHitsPostRequest, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
