@@ -743,6 +743,32 @@ export type AccountUpdateDataStateEnum = typeof AccountUpdateDataStateEnum[keyof
 /**
  * 
  * @export
+ * @interface AccountWabaStateUpdate
+ */
+export interface AccountWabaStateUpdate {
+    /**
+     * 
+     * @type {string}
+     * @memberof AccountWabaStateUpdate
+     */
+    'event': AccountWabaStateUpdateEventEnum;
+    /**
+     * 
+     * @type {Array<AccountWabaStateUpdateData>}
+     * @memberof AccountWabaStateUpdate
+     */
+    'data': Array<AccountWabaStateUpdateData>;
+}
+
+export const AccountWabaStateUpdateEventEnum = {
+    AccountWabaStateUpdate: 'account-waba-state-update'
+} as const;
+
+export type AccountWabaStateUpdateEventEnum = typeof AccountWabaStateUpdateEventEnum[keyof typeof AccountWabaStateUpdateEventEnum];
+
+/**
+ * 
+ * @export
  * @interface AccountWabaStateUpdateData
  */
 export interface AccountWabaStateUpdateData {
@@ -7724,6 +7750,7 @@ export const EventName = {
     ShopproductInsert: 'shopproduct-insert',
     TeammemberLogout: 'teammember-logout',
     AiCreditUse: 'ai-credit-use',
+    AccountWabaStateUpdate: 'account-waba-state-update',
     DashboardInsert: 'dashboard-insert',
     DashboardUpdate: 'dashboard-update',
     DashboardDelete: 'dashboard-delete',
@@ -7862,7 +7889,7 @@ export type EventSubscriptionType = typeof EventSubscriptionType[keyof typeof Ev
  * The request body you\'ll receive in a webhook
  * @export
  */
-export type EventWebhookData = AccountDelete | AccountInsert | AccountUpdate | ActionExecute | ActionSchedule | AiCreditUse | BotDelete | BotInsert | BotUpdate | CallDelete | CallInsert | CallUpdate | CallchannelDelete | CallchannelInsert | CallchannelUpdate | CampaignInsert | ChatDelete | ChatInsert | ChatUpdate | ChatbotInsert | ContactDelete | ContactInsert | ContactUpdate | CredittransactionrecordInsert | CrmTicketDelete | CrmTicketInsert | CrmTicketUpdate | CustomerCreditsLevelUpdate | DashboardDelete | DashboardInsert | DashboardUpdate | FewMessagesLeft | GroupUpdate | KeywordbasedactionInsert | MessageDelete | MessageInsert | MessageUpdate | OrderInsert | PaymentintegrationInsert | PlatformproductDelete | PlatformproductInsert | PlatformproductUpdate | PresenceUpdate | PushNotification | ShopproductInsert | StaleAccountNotification | TagDelete | TagInsert | TagUpdate | TeamDelete | TeamInsert | TeamUpdate | TeammemberDelete | TeammemberInsert | TeammemberLogout | TeammemberUpdate | TrackingDelete | TrackingInsert | TrackingUpdate | UserDelete | UserInsert | UserUpdate;
+export type EventWebhookData = AccountDelete | AccountInsert | AccountUpdate | AccountWabaStateUpdate | ActionExecute | ActionSchedule | AiCreditUse | BotDelete | BotInsert | BotUpdate | CallDelete | CallInsert | CallUpdate | CallchannelDelete | CallchannelInsert | CallchannelUpdate | CampaignInsert | ChatDelete | ChatInsert | ChatUpdate | ChatbotInsert | ContactDelete | ContactInsert | ContactUpdate | CredittransactionrecordInsert | CrmTicketDelete | CrmTicketInsert | CrmTicketUpdate | CustomerCreditsLevelUpdate | DashboardDelete | DashboardInsert | DashboardUpdate | FewMessagesLeft | GroupUpdate | KeywordbasedactionInsert | MessageDelete | MessageInsert | MessageUpdate | OrderInsert | PaymentintegrationInsert | PlatformproductDelete | PlatformproductInsert | PlatformproductUpdate | PresenceUpdate | PushNotification | ShopproductInsert | StaleAccountNotification | TagDelete | TagInsert | TagUpdate | TeamDelete | TeamInsert | TeamUpdate | TeammemberDelete | TeammemberInsert | TeammemberLogout | TeammemberUpdate | TrackingDelete | TrackingInsert | TrackingUpdate | UserDelete | UserInsert | UserUpdate;
 
 /**
  * 
