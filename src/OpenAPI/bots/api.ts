@@ -5061,6 +5061,38 @@ export interface SubmitFormRequest {
 /**
  * 
  * @export
+ * @interface TemplateApprovalStatsGet200Response
+ */
+export interface TemplateApprovalStatsGet200Response {
+    /**
+     * 
+     * @type {{ [key: string]: TemplateApprovalStatsGet200ResponseStatsValue; }}
+     * @memberof TemplateApprovalStatsGet200Response
+     */
+    'stats': { [key: string]: TemplateApprovalStatsGet200ResponseStatsValue; };
+}
+/**
+ * 
+ * @export
+ * @interface TemplateApprovalStatsGet200ResponseStatsValue
+ */
+export interface TemplateApprovalStatsGet200ResponseStatsValue {
+    /**
+     * Number of templates approved for this category
+     * @type {number}
+     * @memberof TemplateApprovalStatsGet200ResponseStatsValue
+     */
+    'approved': number;
+    /**
+     * Total templates submitted (approved + rejected) for this category
+     * @type {number}
+     * @memberof TemplateApprovalStatsGet200ResponseStatsValue
+     */
+    'total': number;
+}
+/**
+ * 
+ * @export
  * @enum {string}
  */
 
@@ -6007,6 +6039,47 @@ export const ActionsApiAxiosParamCreator = function (configuration?: Configurati
                 options: localVarRequestOptions,
             };
         },
+        /**
+         * 
+         * @summary Get template approval statistics by category for an account
+         * @param {string} accountId WABA account ID to get stats for
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        templateApprovalStatsGet: async (accountId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'accountId' is not null or undefined
+            assertParamExists('templateApprovalStatsGet', 'accountId', accountId)
+            const localVarPath = `/template-approval-stats`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", [], configuration)
+
+            if (accountId !== undefined) {
+                localVarQueryParameter['accountId'] = accountId;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
     }
 };
 
@@ -6075,6 +6148,19 @@ export const ActionsApiFp = function(configuration?: Configuration) {
             const localVarOperationServerBasePath = operationServerMap['ActionsApi.resubmitAllTemplates']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
+        /**
+         * 
+         * @summary Get template approval statistics by category for an account
+         * @param {string} accountId WABA account ID to get stats for
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async templateApprovalStatsGet(accountId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TemplateApprovalStatsGet200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.templateApprovalStatsGet(accountId, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['ActionsApi.templateApprovalStatsGet']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
     }
 };
 
@@ -6124,6 +6210,16 @@ export const ActionsApiFactory = function (configuration?: Configuration, basePa
          */
         resubmitAllTemplates(requestParameters: ActionsApiResubmitAllTemplatesRequest, options?: RawAxiosRequestConfig): AxiosPromise<ResubmitAllTemplates200Response> {
             return localVarFp.resubmitAllTemplates(requestParameters.teamId, requestParameters.resubmitAllTemplatesRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Get template approval statistics by category for an account
+         * @param {ActionsApiTemplateApprovalStatsGetRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        templateApprovalStatsGet(requestParameters: ActionsApiTemplateApprovalStatsGetRequest, options?: RawAxiosRequestConfig): AxiosPromise<TemplateApprovalStatsGet200Response> {
+            return localVarFp.templateApprovalStatsGet(requestParameters.accountId, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -6227,6 +6323,20 @@ export interface ActionsApiResubmitAllTemplatesRequest {
 }
 
 /**
+ * Request parameters for templateApprovalStatsGet operation in ActionsApi.
+ * @export
+ * @interface ActionsApiTemplateApprovalStatsGetRequest
+ */
+export interface ActionsApiTemplateApprovalStatsGetRequest {
+    /**
+     * WABA account ID to get stats for
+     * @type {string}
+     * @memberof ActionsApiTemplateApprovalStatsGet
+     */
+    readonly accountId: string
+}
+
+/**
  * ActionsApi - object-oriented interface
  * @export
  * @class ActionsApi
@@ -6279,6 +6389,18 @@ export class ActionsApi extends BaseAPI {
      */
     public resubmitAllTemplates(requestParameters: ActionsApiResubmitAllTemplatesRequest, options?: RawAxiosRequestConfig) {
         return ActionsApiFp(this.configuration).resubmitAllTemplates(requestParameters.teamId, requestParameters.resubmitAllTemplatesRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Get template approval statistics by category for an account
+     * @param {ActionsApiTemplateApprovalStatsGetRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApi
+     */
+    public templateApprovalStatsGet(requestParameters: ActionsApiTemplateApprovalStatsGetRequest, options?: RawAxiosRequestConfig) {
+        return ActionsApiFp(this.configuration).templateApprovalStatsGet(requestParameters.accountId, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
