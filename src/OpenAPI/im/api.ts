@@ -10068,10 +10068,12 @@ export const ChatsApiAxiosParamCreator = function (configuration?: Configuration
          * @param {boolean} [hasFailedMessage] 
          * @param {boolean} [lastMessageFromMe] Only get chats where the last message was sent by me/not me
          * @param {ChatsGetTagsParameter} [tags] Get contacts who fall in either of these tags
+         * @param {ChatsGetTagsFilterOperatorEnum} [tagsFilterOperator] How to combine multiple tag filters. Use \&#39;AND\&#39; to require all tags to match, or \&#39;OR\&#39; to match any tag. Defaults to \&#39;OR\&#39;.
          * @param {Array<string>} [notTags] Get contacts who are not in any of these tags
          * @param {ChatsGetContactsParameter} [contacts] Get these specific contact ids
          * @param {string} [q] Search items by this string
          * @param {ChatsGetAssigneeParameter} [assignee] Get contacts assigned to the specified users
+         * @param {ChatsGetAssigneeFilterOperatorEnum} [assigneeFilterOperator] How to combine multiple assignee filters. Use \&#39;AND\&#39; to require all assignees to match, or \&#39;OR\&#39; to match any assignee. Defaults to \&#39;OR\&#39;.
          * @param {Array<string>} [accountId] Get contacts only belonging to this account
          * @param {ContactType} [type] only get contacts of type
          * @param {ChatsGetTicketParameter} [ticket] Query the status of a ticket
@@ -10080,7 +10082,7 @@ export const ChatsApiAxiosParamCreator = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        chatsGet: async (count?: number, page?: string, archive?: boolean, unread?: boolean, returnTotalCount?: boolean, hasPendingMessage?: boolean, mentioned?: string, hasUnsolvedNote?: boolean, hasFailedMessage?: boolean, lastMessageFromMe?: boolean, tags?: ChatsGetTagsParameter, notTags?: Array<string>, contacts?: ChatsGetContactsParameter, q?: string, assignee?: ChatsGetAssigneeParameter, accountId?: Array<string>, type?: ContactType, ticket?: ChatsGetTicketParameter, notAssignee?: Array<string>, returnUnreadChatCount?: boolean, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        chatsGet: async (count?: number, page?: string, archive?: boolean, unread?: boolean, returnTotalCount?: boolean, hasPendingMessage?: boolean, mentioned?: string, hasUnsolvedNote?: boolean, hasFailedMessage?: boolean, lastMessageFromMe?: boolean, tags?: ChatsGetTagsParameter, tagsFilterOperator?: ChatsGetTagsFilterOperatorEnum, notTags?: Array<string>, contacts?: ChatsGetContactsParameter, q?: string, assignee?: ChatsGetAssigneeParameter, assigneeFilterOperator?: ChatsGetAssigneeFilterOperatorEnum, accountId?: Array<string>, type?: ContactType, ticket?: ChatsGetTicketParameter, notAssignee?: Array<string>, returnUnreadChatCount?: boolean, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/chats`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -10141,6 +10143,10 @@ export const ChatsApiAxiosParamCreator = function (configuration?: Configuration
                 localVarQueryParameter['tags'] = tags;
             }
 
+            if (tagsFilterOperator !== undefined) {
+                localVarQueryParameter['tagsFilterOperator'] = tagsFilterOperator;
+            }
+
             if (notTags) {
                 localVarQueryParameter['notTags'] = notTags;
             }
@@ -10155,6 +10161,10 @@ export const ChatsApiAxiosParamCreator = function (configuration?: Configuration
 
             if (assignee !== undefined) {
                 localVarQueryParameter['assignee'] = assignee;
+            }
+
+            if (assigneeFilterOperator !== undefined) {
+                localVarQueryParameter['assigneeFilterOperator'] = assigneeFilterOperator;
             }
 
             if (accountId) {
@@ -10532,10 +10542,12 @@ export const ChatsApiFp = function(configuration?: Configuration) {
          * @param {boolean} [hasFailedMessage] 
          * @param {boolean} [lastMessageFromMe] Only get chats where the last message was sent by me/not me
          * @param {ChatsGetTagsParameter} [tags] Get contacts who fall in either of these tags
+         * @param {ChatsGetTagsFilterOperatorEnum} [tagsFilterOperator] How to combine multiple tag filters. Use \&#39;AND\&#39; to require all tags to match, or \&#39;OR\&#39; to match any tag. Defaults to \&#39;OR\&#39;.
          * @param {Array<string>} [notTags] Get contacts who are not in any of these tags
          * @param {ChatsGetContactsParameter} [contacts] Get these specific contact ids
          * @param {string} [q] Search items by this string
          * @param {ChatsGetAssigneeParameter} [assignee] Get contacts assigned to the specified users
+         * @param {ChatsGetAssigneeFilterOperatorEnum} [assigneeFilterOperator] How to combine multiple assignee filters. Use \&#39;AND\&#39; to require all assignees to match, or \&#39;OR\&#39; to match any assignee. Defaults to \&#39;OR\&#39;.
          * @param {Array<string>} [accountId] Get contacts only belonging to this account
          * @param {ContactType} [type] only get contacts of type
          * @param {ChatsGetTicketParameter} [ticket] Query the status of a ticket
@@ -10544,8 +10556,8 @@ export const ChatsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async chatsGet(count?: number, page?: string, archive?: boolean, unread?: boolean, returnTotalCount?: boolean, hasPendingMessage?: boolean, mentioned?: string, hasUnsolvedNote?: boolean, hasFailedMessage?: boolean, lastMessageFromMe?: boolean, tags?: ChatsGetTagsParameter, notTags?: Array<string>, contacts?: ChatsGetContactsParameter, q?: string, assignee?: ChatsGetAssigneeParameter, accountId?: Array<string>, type?: ContactType, ticket?: ChatsGetTicketParameter, notAssignee?: Array<string>, returnUnreadChatCount?: boolean, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ChatsGet200Response>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.chatsGet(count, page, archive, unread, returnTotalCount, hasPendingMessage, mentioned, hasUnsolvedNote, hasFailedMessage, lastMessageFromMe, tags, notTags, contacts, q, assignee, accountId, type, ticket, notAssignee, returnUnreadChatCount, options);
+        async chatsGet(count?: number, page?: string, archive?: boolean, unread?: boolean, returnTotalCount?: boolean, hasPendingMessage?: boolean, mentioned?: string, hasUnsolvedNote?: boolean, hasFailedMessage?: boolean, lastMessageFromMe?: boolean, tags?: ChatsGetTagsParameter, tagsFilterOperator?: ChatsGetTagsFilterOperatorEnum, notTags?: Array<string>, contacts?: ChatsGetContactsParameter, q?: string, assignee?: ChatsGetAssigneeParameter, assigneeFilterOperator?: ChatsGetAssigneeFilterOperatorEnum, accountId?: Array<string>, type?: ContactType, ticket?: ChatsGetTicketParameter, notAssignee?: Array<string>, returnUnreadChatCount?: boolean, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ChatsGet200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.chatsGet(count, page, archive, unread, returnTotalCount, hasPendingMessage, mentioned, hasUnsolvedNote, hasFailedMessage, lastMessageFromMe, tags, tagsFilterOperator, notTags, contacts, q, assignee, assigneeFilterOperator, accountId, type, ticket, notAssignee, returnUnreadChatCount, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['ChatsApi.chatsGet']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -10667,7 +10679,7 @@ export const ChatsApiFactory = function (configuration?: Configuration, basePath
          * @throws {RequiredError}
          */
         chatsGet(requestParameters: ChatsApiChatsGetRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<ChatsGet200Response> {
-            return localVarFp.chatsGet(requestParameters.count, requestParameters.page, requestParameters.archive, requestParameters.unread, requestParameters.returnTotalCount, requestParameters.hasPendingMessage, requestParameters.mentioned, requestParameters.hasUnsolvedNote, requestParameters.hasFailedMessage, requestParameters.lastMessageFromMe, requestParameters.tags, requestParameters.notTags, requestParameters.contacts, requestParameters.q, requestParameters.assignee, requestParameters.accountId, requestParameters.type, requestParameters.ticket, requestParameters.notAssignee, requestParameters.returnUnreadChatCount, options).then((request) => request(axios, basePath));
+            return localVarFp.chatsGet(requestParameters.count, requestParameters.page, requestParameters.archive, requestParameters.unread, requestParameters.returnTotalCount, requestParameters.hasPendingMessage, requestParameters.mentioned, requestParameters.hasUnsolvedNote, requestParameters.hasFailedMessage, requestParameters.lastMessageFromMe, requestParameters.tags, requestParameters.tagsFilterOperator, requestParameters.notTags, requestParameters.contacts, requestParameters.q, requestParameters.assignee, requestParameters.assigneeFilterOperator, requestParameters.accountId, requestParameters.type, requestParameters.ticket, requestParameters.notAssignee, requestParameters.returnUnreadChatCount, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -10826,6 +10838,13 @@ export interface ChatsApiChatsGetRequest {
     readonly tags?: ChatsGetTagsParameter
 
     /**
+     * How to combine multiple tag filters. Use \&#39;AND\&#39; to require all tags to match, or \&#39;OR\&#39; to match any tag. Defaults to \&#39;OR\&#39;.
+     * @type {'AND' | 'OR'}
+     * @memberof ChatsApiChatsGet
+     */
+    readonly tagsFilterOperator?: ChatsGetTagsFilterOperatorEnum
+
+    /**
      * Get contacts who are not in any of these tags
      * @type {Array<string>}
      * @memberof ChatsApiChatsGet
@@ -10852,6 +10871,13 @@ export interface ChatsApiChatsGetRequest {
      * @memberof ChatsApiChatsGet
      */
     readonly assignee?: ChatsGetAssigneeParameter
+
+    /**
+     * How to combine multiple assignee filters. Use \&#39;AND\&#39; to require all assignees to match, or \&#39;OR\&#39; to match any assignee. Defaults to \&#39;OR\&#39;.
+     * @type {'AND' | 'OR'}
+     * @memberof ChatsApiChatsGet
+     */
+    readonly assigneeFilterOperator?: ChatsGetAssigneeFilterOperatorEnum
 
     /**
      * Get contacts only belonging to this account
@@ -11059,7 +11085,7 @@ export class ChatsApi extends BaseAPI {
      * @memberof ChatsApi
      */
     public chatsGet(requestParameters: ChatsApiChatsGetRequest = {}, options?: RawAxiosRequestConfig) {
-        return ChatsApiFp(this.configuration).chatsGet(requestParameters.count, requestParameters.page, requestParameters.archive, requestParameters.unread, requestParameters.returnTotalCount, requestParameters.hasPendingMessage, requestParameters.mentioned, requestParameters.hasUnsolvedNote, requestParameters.hasFailedMessage, requestParameters.lastMessageFromMe, requestParameters.tags, requestParameters.notTags, requestParameters.contacts, requestParameters.q, requestParameters.assignee, requestParameters.accountId, requestParameters.type, requestParameters.ticket, requestParameters.notAssignee, requestParameters.returnUnreadChatCount, options).then((request) => request(this.axios, this.basePath));
+        return ChatsApiFp(this.configuration).chatsGet(requestParameters.count, requestParameters.page, requestParameters.archive, requestParameters.unread, requestParameters.returnTotalCount, requestParameters.hasPendingMessage, requestParameters.mentioned, requestParameters.hasUnsolvedNote, requestParameters.hasFailedMessage, requestParameters.lastMessageFromMe, requestParameters.tags, requestParameters.tagsFilterOperator, requestParameters.notTags, requestParameters.contacts, requestParameters.q, requestParameters.assignee, requestParameters.assigneeFilterOperator, requestParameters.accountId, requestParameters.type, requestParameters.ticket, requestParameters.notAssignee, requestParameters.returnUnreadChatCount, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -11150,6 +11176,22 @@ export class ChatsApi extends BaseAPI {
 /**
  * @export
  */
+export const ChatsGetTagsFilterOperatorEnum = {
+    And: 'AND',
+    Or: 'OR'
+} as const;
+export type ChatsGetTagsFilterOperatorEnum = typeof ChatsGetTagsFilterOperatorEnum[keyof typeof ChatsGetTagsFilterOperatorEnum];
+/**
+ * @export
+ */
+export const ChatsGetAssigneeFilterOperatorEnum = {
+    And: 'AND',
+    Or: 'OR'
+} as const;
+export type ChatsGetAssigneeFilterOperatorEnum = typeof ChatsGetAssigneeFilterOperatorEnum[keyof typeof ChatsGetAssigneeFilterOperatorEnum];
+/**
+ * @export
+ */
 export const GetChannelCountPresetEnum = {
     Daily: 'daily',
     Weekly: 'weekly',
@@ -11219,6 +11261,7 @@ export const ContactsApiAxiosParamCreator = function (configuration?: Configurat
          * 
          * @summary Delete contacts
          * @param {ChatsGetTagsParameter} [tags] Get contacts who fall in either of these tags
+         * @param {ContactsDeleteTagsFilterOperatorEnum} [tagsFilterOperator] How to combine multiple tag filters. Use \&#39;AND\&#39; to require all tags to match, or \&#39;OR\&#39; to match any tag. Defaults to \&#39;OR\&#39;.
          * @param {Array<string>} [notTags] Get contacts who are not in any of these tags
          * @param {ChatsGetContactsParameter} [contacts] Get these specific contact ids
          * @param {ChatsGetContactsParameter} [notContacts] Do not get these specific contacts
@@ -11228,6 +11271,7 @@ export const ContactsApiAxiosParamCreator = function (configuration?: Configurat
          * @param {number} [maxMessagesRecv] Maximum messages received
          * @param {string} [q] Search items by this string
          * @param {ChatsGetAssigneeParameter} [assignee] Get contacts assigned to the specified users
+         * @param {ContactsDeleteAssigneeFilterOperatorEnum} [assigneeFilterOperator] How to combine multiple assignee filters. Use \&#39;AND\&#39; to require all assignees to match, or \&#39;OR\&#39; to match any assignee. Defaults to \&#39;OR\&#39;.
          * @param {Array<string>} [notAssignee] Exclude contacts assigned to the specified users
          * @param {Array<string>} [accountId] Get contacts only belonging to this account
          * @param {ContactType} [type] only get contacts of type
@@ -11239,7 +11283,7 @@ export const ContactsApiAxiosParamCreator = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        contactsDelete: async (tags?: ChatsGetTagsParameter, notTags?: Array<string>, contacts?: ChatsGetContactsParameter, notContacts?: ChatsGetContactsParameter, minMessagesSent?: number, minMessagesRecv?: number, maxMessagesSent?: number, maxMessagesRecv?: number, q?: string, assignee?: ChatsGetAssigneeParameter, notAssignee?: Array<string>, accountId?: Array<string>, type?: ContactType, chatLastMessageFrom?: string, chatLastMessageTo?: string, lastMessageFromMe?: boolean, unread?: boolean, ticket?: ChatsGetTicketParameter, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        contactsDelete: async (tags?: ChatsGetTagsParameter, tagsFilterOperator?: ContactsDeleteTagsFilterOperatorEnum, notTags?: Array<string>, contacts?: ChatsGetContactsParameter, notContacts?: ChatsGetContactsParameter, minMessagesSent?: number, minMessagesRecv?: number, maxMessagesSent?: number, maxMessagesRecv?: number, q?: string, assignee?: ChatsGetAssigneeParameter, assigneeFilterOperator?: ContactsDeleteAssigneeFilterOperatorEnum, notAssignee?: Array<string>, accountId?: Array<string>, type?: ContactType, chatLastMessageFrom?: string, chatLastMessageTo?: string, lastMessageFromMe?: boolean, unread?: boolean, ticket?: ChatsGetTicketParameter, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/contacts`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -11258,6 +11302,10 @@ export const ContactsApiAxiosParamCreator = function (configuration?: Configurat
 
             if (tags !== undefined) {
                 localVarQueryParameter['tags'] = tags;
+            }
+
+            if (tagsFilterOperator !== undefined) {
+                localVarQueryParameter['tagsFilterOperator'] = tagsFilterOperator;
             }
 
             if (notTags) {
@@ -11294,6 +11342,10 @@ export const ContactsApiAxiosParamCreator = function (configuration?: Configurat
 
             if (assignee !== undefined) {
                 localVarQueryParameter['assignee'] = assignee;
+            }
+
+            if (assigneeFilterOperator !== undefined) {
+                localVarQueryParameter['assigneeFilterOperator'] = assigneeFilterOperator;
             }
 
             if (notAssignee) {
@@ -11347,6 +11399,7 @@ export const ContactsApiAxiosParamCreator = function (configuration?: Configurat
          * 
          * @summary Get contacts
          * @param {ChatsGetTagsParameter} [tags] Get contacts who fall in either of these tags
+         * @param {ContactsGetTagsFilterOperatorEnum} [tagsFilterOperator] How to combine multiple tag filters. Use \&#39;AND\&#39; to require all tags to match, or \&#39;OR\&#39; to match any tag. Defaults to \&#39;OR\&#39;.
          * @param {Array<string>} [notTags] Get contacts who are not in any of these tags
          * @param {ChatsGetContactsParameter} [contacts] Get these specific contact ids
          * @param {ChatsGetContactsParameter} [notContacts] Do not get these specific contacts
@@ -11356,6 +11409,7 @@ export const ContactsApiAxiosParamCreator = function (configuration?: Configurat
          * @param {number} [maxMessagesRecv] Maximum messages received
          * @param {string} [q] Search items by this string
          * @param {ChatsGetAssigneeParameter} [assignee] Get contacts assigned to the specified users
+         * @param {ContactsGetAssigneeFilterOperatorEnum} [assigneeFilterOperator] How to combine multiple assignee filters. Use \&#39;AND\&#39; to require all assignees to match, or \&#39;OR\&#39; to match any assignee. Defaults to \&#39;OR\&#39;.
          * @param {Array<string>} [notAssignee] Exclude contacts assigned to the specified users
          * @param {Array<string>} [accountId] Get contacts only belonging to this account
          * @param {ContactType} [type] only get contacts of type
@@ -11372,7 +11426,7 @@ export const ContactsApiAxiosParamCreator = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        contactsGet: async (tags?: ChatsGetTagsParameter, notTags?: Array<string>, contacts?: ChatsGetContactsParameter, notContacts?: ChatsGetContactsParameter, minMessagesSent?: number, minMessagesRecv?: number, maxMessagesSent?: number, maxMessagesRecv?: number, q?: string, assignee?: ChatsGetAssigneeParameter, notAssignee?: Array<string>, accountId?: Array<string>, type?: ContactType, chatLastMessageFrom?: string, chatLastMessageTo?: string, lastMessageFromMe?: boolean, unread?: boolean, ticket?: ChatsGetTicketParameter, orderByTicketOrder?: boolean, returnTotalCount?: boolean, returnLastMessage?: boolean, page?: string, count?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        contactsGet: async (tags?: ChatsGetTagsParameter, tagsFilterOperator?: ContactsGetTagsFilterOperatorEnum, notTags?: Array<string>, contacts?: ChatsGetContactsParameter, notContacts?: ChatsGetContactsParameter, minMessagesSent?: number, minMessagesRecv?: number, maxMessagesSent?: number, maxMessagesRecv?: number, q?: string, assignee?: ChatsGetAssigneeParameter, assigneeFilterOperator?: ContactsGetAssigneeFilterOperatorEnum, notAssignee?: Array<string>, accountId?: Array<string>, type?: ContactType, chatLastMessageFrom?: string, chatLastMessageTo?: string, lastMessageFromMe?: boolean, unread?: boolean, ticket?: ChatsGetTicketParameter, orderByTicketOrder?: boolean, returnTotalCount?: boolean, returnLastMessage?: boolean, page?: string, count?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/contacts`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -11391,6 +11445,10 @@ export const ContactsApiAxiosParamCreator = function (configuration?: Configurat
 
             if (tags !== undefined) {
                 localVarQueryParameter['tags'] = tags;
+            }
+
+            if (tagsFilterOperator !== undefined) {
+                localVarQueryParameter['tagsFilterOperator'] = tagsFilterOperator;
             }
 
             if (notTags) {
@@ -11427,6 +11485,10 @@ export const ContactsApiAxiosParamCreator = function (configuration?: Configurat
 
             if (assignee !== undefined) {
                 localVarQueryParameter['assignee'] = assignee;
+            }
+
+            if (assigneeFilterOperator !== undefined) {
+                localVarQueryParameter['assigneeFilterOperator'] = assigneeFilterOperator;
             }
 
             if (notAssignee) {
@@ -11547,6 +11609,7 @@ export const ContactsApiAxiosParamCreator = function (configuration?: Configurat
          * 
          * @summary Update contacts
          * @param {ChatsGetTagsParameter} [tags] Get contacts who fall in either of these tags
+         * @param {ContactsPatchTagsFilterOperatorEnum} [tagsFilterOperator] How to combine multiple tag filters. Use \&#39;AND\&#39; to require all tags to match, or \&#39;OR\&#39; to match any tag. Defaults to \&#39;OR\&#39;.
          * @param {Array<string>} [notTags] Get contacts who are not in any of these tags
          * @param {ChatsGetContactsParameter} [contacts] Get these specific contact ids
          * @param {ChatsGetContactsParameter} [notContacts] Do not get these specific contacts
@@ -11556,6 +11619,7 @@ export const ContactsApiAxiosParamCreator = function (configuration?: Configurat
          * @param {number} [maxMessagesRecv] Maximum messages received
          * @param {string} [q] Search items by this string
          * @param {ChatsGetAssigneeParameter} [assignee] Get contacts assigned to the specified users
+         * @param {ContactsPatchAssigneeFilterOperatorEnum} [assigneeFilterOperator] How to combine multiple assignee filters. Use \&#39;AND\&#39; to require all assignees to match, or \&#39;OR\&#39; to match any assignee. Defaults to \&#39;OR\&#39;.
          * @param {Array<string>} [notAssignee] Exclude contacts assigned to the specified users
          * @param {Array<string>} [accountId] Get contacts only belonging to this account
          * @param {ContactType} [type] only get contacts of type
@@ -11568,7 +11632,7 @@ export const ContactsApiAxiosParamCreator = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        contactsPatch: async (tags?: ChatsGetTagsParameter, notTags?: Array<string>, contacts?: ChatsGetContactsParameter, notContacts?: ChatsGetContactsParameter, minMessagesSent?: number, minMessagesRecv?: number, maxMessagesSent?: number, maxMessagesRecv?: number, q?: string, assignee?: ChatsGetAssigneeParameter, notAssignee?: Array<string>, accountId?: Array<string>, type?: ContactType, chatLastMessageFrom?: string, chatLastMessageTo?: string, lastMessageFromMe?: boolean, unread?: boolean, ticket?: ChatsGetTicketParameter, contactsPatch?: ContactsPatch, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        contactsPatch: async (tags?: ChatsGetTagsParameter, tagsFilterOperator?: ContactsPatchTagsFilterOperatorEnum, notTags?: Array<string>, contacts?: ChatsGetContactsParameter, notContacts?: ChatsGetContactsParameter, minMessagesSent?: number, minMessagesRecv?: number, maxMessagesSent?: number, maxMessagesRecv?: number, q?: string, assignee?: ChatsGetAssigneeParameter, assigneeFilterOperator?: ContactsPatchAssigneeFilterOperatorEnum, notAssignee?: Array<string>, accountId?: Array<string>, type?: ContactType, chatLastMessageFrom?: string, chatLastMessageTo?: string, lastMessageFromMe?: boolean, unread?: boolean, ticket?: ChatsGetTicketParameter, contactsPatch?: ContactsPatch, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/contacts`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -11587,6 +11651,10 @@ export const ContactsApiAxiosParamCreator = function (configuration?: Configurat
 
             if (tags !== undefined) {
                 localVarQueryParameter['tags'] = tags;
+            }
+
+            if (tagsFilterOperator !== undefined) {
+                localVarQueryParameter['tagsFilterOperator'] = tagsFilterOperator;
             }
 
             if (notTags) {
@@ -11623,6 +11691,10 @@ export const ContactsApiAxiosParamCreator = function (configuration?: Configurat
 
             if (assignee !== undefined) {
                 localVarQueryParameter['assignee'] = assignee;
+            }
+
+            if (assigneeFilterOperator !== undefined) {
+                localVarQueryParameter['assigneeFilterOperator'] = assigneeFilterOperator;
             }
 
             if (notAssignee) {
@@ -11742,6 +11814,7 @@ export const ContactsApiFp = function(configuration?: Configuration) {
          * 
          * @summary Delete contacts
          * @param {ChatsGetTagsParameter} [tags] Get contacts who fall in either of these tags
+         * @param {ContactsDeleteTagsFilterOperatorEnum} [tagsFilterOperator] How to combine multiple tag filters. Use \&#39;AND\&#39; to require all tags to match, or \&#39;OR\&#39; to match any tag. Defaults to \&#39;OR\&#39;.
          * @param {Array<string>} [notTags] Get contacts who are not in any of these tags
          * @param {ChatsGetContactsParameter} [contacts] Get these specific contact ids
          * @param {ChatsGetContactsParameter} [notContacts] Do not get these specific contacts
@@ -11751,6 +11824,7 @@ export const ContactsApiFp = function(configuration?: Configuration) {
          * @param {number} [maxMessagesRecv] Maximum messages received
          * @param {string} [q] Search items by this string
          * @param {ChatsGetAssigneeParameter} [assignee] Get contacts assigned to the specified users
+         * @param {ContactsDeleteAssigneeFilterOperatorEnum} [assigneeFilterOperator] How to combine multiple assignee filters. Use \&#39;AND\&#39; to require all assignees to match, or \&#39;OR\&#39; to match any assignee. Defaults to \&#39;OR\&#39;.
          * @param {Array<string>} [notAssignee] Exclude contacts assigned to the specified users
          * @param {Array<string>} [accountId] Get contacts only belonging to this account
          * @param {ContactType} [type] only get contacts of type
@@ -11762,8 +11836,8 @@ export const ContactsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async contactsDelete(tags?: ChatsGetTagsParameter, notTags?: Array<string>, contacts?: ChatsGetContactsParameter, notContacts?: ChatsGetContactsParameter, minMessagesSent?: number, minMessagesRecv?: number, maxMessagesSent?: number, maxMessagesRecv?: number, q?: string, assignee?: ChatsGetAssigneeParameter, notAssignee?: Array<string>, accountId?: Array<string>, type?: ContactType, chatLastMessageFrom?: string, chatLastMessageTo?: string, lastMessageFromMe?: boolean, unread?: boolean, ticket?: ChatsGetTicketParameter, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AccountsDelete200Response>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.contactsDelete(tags, notTags, contacts, notContacts, minMessagesSent, minMessagesRecv, maxMessagesSent, maxMessagesRecv, q, assignee, notAssignee, accountId, type, chatLastMessageFrom, chatLastMessageTo, lastMessageFromMe, unread, ticket, options);
+        async contactsDelete(tags?: ChatsGetTagsParameter, tagsFilterOperator?: ContactsDeleteTagsFilterOperatorEnum, notTags?: Array<string>, contacts?: ChatsGetContactsParameter, notContacts?: ChatsGetContactsParameter, minMessagesSent?: number, minMessagesRecv?: number, maxMessagesSent?: number, maxMessagesRecv?: number, q?: string, assignee?: ChatsGetAssigneeParameter, assigneeFilterOperator?: ContactsDeleteAssigneeFilterOperatorEnum, notAssignee?: Array<string>, accountId?: Array<string>, type?: ContactType, chatLastMessageFrom?: string, chatLastMessageTo?: string, lastMessageFromMe?: boolean, unread?: boolean, ticket?: ChatsGetTicketParameter, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AccountsDelete200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.contactsDelete(tags, tagsFilterOperator, notTags, contacts, notContacts, minMessagesSent, minMessagesRecv, maxMessagesSent, maxMessagesRecv, q, assignee, assigneeFilterOperator, notAssignee, accountId, type, chatLastMessageFrom, chatLastMessageTo, lastMessageFromMe, unread, ticket, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['ContactsApi.contactsDelete']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -11772,6 +11846,7 @@ export const ContactsApiFp = function(configuration?: Configuration) {
          * 
          * @summary Get contacts
          * @param {ChatsGetTagsParameter} [tags] Get contacts who fall in either of these tags
+         * @param {ContactsGetTagsFilterOperatorEnum} [tagsFilterOperator] How to combine multiple tag filters. Use \&#39;AND\&#39; to require all tags to match, or \&#39;OR\&#39; to match any tag. Defaults to \&#39;OR\&#39;.
          * @param {Array<string>} [notTags] Get contacts who are not in any of these tags
          * @param {ChatsGetContactsParameter} [contacts] Get these specific contact ids
          * @param {ChatsGetContactsParameter} [notContacts] Do not get these specific contacts
@@ -11781,6 +11856,7 @@ export const ContactsApiFp = function(configuration?: Configuration) {
          * @param {number} [maxMessagesRecv] Maximum messages received
          * @param {string} [q] Search items by this string
          * @param {ChatsGetAssigneeParameter} [assignee] Get contacts assigned to the specified users
+         * @param {ContactsGetAssigneeFilterOperatorEnum} [assigneeFilterOperator] How to combine multiple assignee filters. Use \&#39;AND\&#39; to require all assignees to match, or \&#39;OR\&#39; to match any assignee. Defaults to \&#39;OR\&#39;.
          * @param {Array<string>} [notAssignee] Exclude contacts assigned to the specified users
          * @param {Array<string>} [accountId] Get contacts only belonging to this account
          * @param {ContactType} [type] only get contacts of type
@@ -11797,8 +11873,8 @@ export const ContactsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async contactsGet(tags?: ChatsGetTagsParameter, notTags?: Array<string>, contacts?: ChatsGetContactsParameter, notContacts?: ChatsGetContactsParameter, minMessagesSent?: number, minMessagesRecv?: number, maxMessagesSent?: number, maxMessagesRecv?: number, q?: string, assignee?: ChatsGetAssigneeParameter, notAssignee?: Array<string>, accountId?: Array<string>, type?: ContactType, chatLastMessageFrom?: string, chatLastMessageTo?: string, lastMessageFromMe?: boolean, unread?: boolean, ticket?: ChatsGetTicketParameter, orderByTicketOrder?: boolean, returnTotalCount?: boolean, returnLastMessage?: boolean, page?: string, count?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ContactsGet200Response>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.contactsGet(tags, notTags, contacts, notContacts, minMessagesSent, minMessagesRecv, maxMessagesSent, maxMessagesRecv, q, assignee, notAssignee, accountId, type, chatLastMessageFrom, chatLastMessageTo, lastMessageFromMe, unread, ticket, orderByTicketOrder, returnTotalCount, returnLastMessage, page, count, options);
+        async contactsGet(tags?: ChatsGetTagsParameter, tagsFilterOperator?: ContactsGetTagsFilterOperatorEnum, notTags?: Array<string>, contacts?: ChatsGetContactsParameter, notContacts?: ChatsGetContactsParameter, minMessagesSent?: number, minMessagesRecv?: number, maxMessagesSent?: number, maxMessagesRecv?: number, q?: string, assignee?: ChatsGetAssigneeParameter, assigneeFilterOperator?: ContactsGetAssigneeFilterOperatorEnum, notAssignee?: Array<string>, accountId?: Array<string>, type?: ContactType, chatLastMessageFrom?: string, chatLastMessageTo?: string, lastMessageFromMe?: boolean, unread?: boolean, ticket?: ChatsGetTicketParameter, orderByTicketOrder?: boolean, returnTotalCount?: boolean, returnLastMessage?: boolean, page?: string, count?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ContactsGet200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.contactsGet(tags, tagsFilterOperator, notTags, contacts, notContacts, minMessagesSent, minMessagesRecv, maxMessagesSent, maxMessagesRecv, q, assignee, assigneeFilterOperator, notAssignee, accountId, type, chatLastMessageFrom, chatLastMessageTo, lastMessageFromMe, unread, ticket, orderByTicketOrder, returnTotalCount, returnLastMessage, page, count, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['ContactsApi.contactsGet']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -11822,6 +11898,7 @@ export const ContactsApiFp = function(configuration?: Configuration) {
          * 
          * @summary Update contacts
          * @param {ChatsGetTagsParameter} [tags] Get contacts who fall in either of these tags
+         * @param {ContactsPatchTagsFilterOperatorEnum} [tagsFilterOperator] How to combine multiple tag filters. Use \&#39;AND\&#39; to require all tags to match, or \&#39;OR\&#39; to match any tag. Defaults to \&#39;OR\&#39;.
          * @param {Array<string>} [notTags] Get contacts who are not in any of these tags
          * @param {ChatsGetContactsParameter} [contacts] Get these specific contact ids
          * @param {ChatsGetContactsParameter} [notContacts] Do not get these specific contacts
@@ -11831,6 +11908,7 @@ export const ContactsApiFp = function(configuration?: Configuration) {
          * @param {number} [maxMessagesRecv] Maximum messages received
          * @param {string} [q] Search items by this string
          * @param {ChatsGetAssigneeParameter} [assignee] Get contacts assigned to the specified users
+         * @param {ContactsPatchAssigneeFilterOperatorEnum} [assigneeFilterOperator] How to combine multiple assignee filters. Use \&#39;AND\&#39; to require all assignees to match, or \&#39;OR\&#39; to match any assignee. Defaults to \&#39;OR\&#39;.
          * @param {Array<string>} [notAssignee] Exclude contacts assigned to the specified users
          * @param {Array<string>} [accountId] Get contacts only belonging to this account
          * @param {ContactType} [type] only get contacts of type
@@ -11843,8 +11921,8 @@ export const ContactsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async contactsPatch(tags?: ChatsGetTagsParameter, notTags?: Array<string>, contacts?: ChatsGetContactsParameter, notContacts?: ChatsGetContactsParameter, minMessagesSent?: number, minMessagesRecv?: number, maxMessagesSent?: number, maxMessagesRecv?: number, q?: string, assignee?: ChatsGetAssigneeParameter, notAssignee?: Array<string>, accountId?: Array<string>, type?: ContactType, chatLastMessageFrom?: string, chatLastMessageTo?: string, lastMessageFromMe?: boolean, unread?: boolean, ticket?: ChatsGetTicketParameter, contactsPatch?: ContactsPatch, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ContactsPatch200Response>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.contactsPatch(tags, notTags, contacts, notContacts, minMessagesSent, minMessagesRecv, maxMessagesSent, maxMessagesRecv, q, assignee, notAssignee, accountId, type, chatLastMessageFrom, chatLastMessageTo, lastMessageFromMe, unread, ticket, contactsPatch, options);
+        async contactsPatch(tags?: ChatsGetTagsParameter, tagsFilterOperator?: ContactsPatchTagsFilterOperatorEnum, notTags?: Array<string>, contacts?: ChatsGetContactsParameter, notContacts?: ChatsGetContactsParameter, minMessagesSent?: number, minMessagesRecv?: number, maxMessagesSent?: number, maxMessagesRecv?: number, q?: string, assignee?: ChatsGetAssigneeParameter, assigneeFilterOperator?: ContactsPatchAssigneeFilterOperatorEnum, notAssignee?: Array<string>, accountId?: Array<string>, type?: ContactType, chatLastMessageFrom?: string, chatLastMessageTo?: string, lastMessageFromMe?: boolean, unread?: boolean, ticket?: ChatsGetTicketParameter, contactsPatch?: ContactsPatch, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ContactsPatch200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.contactsPatch(tags, tagsFilterOperator, notTags, contacts, notContacts, minMessagesSent, minMessagesRecv, maxMessagesSent, maxMessagesRecv, q, assignee, assigneeFilterOperator, notAssignee, accountId, type, chatLastMessageFrom, chatLastMessageTo, lastMessageFromMe, unread, ticket, contactsPatch, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['ContactsApi.contactsPatch']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -11890,7 +11968,7 @@ export const ContactsApiFactory = function (configuration?: Configuration, baseP
          * @throws {RequiredError}
          */
         contactsDelete(requestParameters: ContactsApiContactsDeleteRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<AccountsDelete200Response> {
-            return localVarFp.contactsDelete(requestParameters.tags, requestParameters.notTags, requestParameters.contacts, requestParameters.notContacts, requestParameters.minMessagesSent, requestParameters.minMessagesRecv, requestParameters.maxMessagesSent, requestParameters.maxMessagesRecv, requestParameters.q, requestParameters.assignee, requestParameters.notAssignee, requestParameters.accountId, requestParameters.type, requestParameters.chatLastMessageFrom, requestParameters.chatLastMessageTo, requestParameters.lastMessageFromMe, requestParameters.unread, requestParameters.ticket, options).then((request) => request(axios, basePath));
+            return localVarFp.contactsDelete(requestParameters.tags, requestParameters.tagsFilterOperator, requestParameters.notTags, requestParameters.contacts, requestParameters.notContacts, requestParameters.minMessagesSent, requestParameters.minMessagesRecv, requestParameters.maxMessagesSent, requestParameters.maxMessagesRecv, requestParameters.q, requestParameters.assignee, requestParameters.assigneeFilterOperator, requestParameters.notAssignee, requestParameters.accountId, requestParameters.type, requestParameters.chatLastMessageFrom, requestParameters.chatLastMessageTo, requestParameters.lastMessageFromMe, requestParameters.unread, requestParameters.ticket, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -11900,7 +11978,7 @@ export const ContactsApiFactory = function (configuration?: Configuration, baseP
          * @throws {RequiredError}
          */
         contactsGet(requestParameters: ContactsApiContactsGetRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<ContactsGet200Response> {
-            return localVarFp.contactsGet(requestParameters.tags, requestParameters.notTags, requestParameters.contacts, requestParameters.notContacts, requestParameters.minMessagesSent, requestParameters.minMessagesRecv, requestParameters.maxMessagesSent, requestParameters.maxMessagesRecv, requestParameters.q, requestParameters.assignee, requestParameters.notAssignee, requestParameters.accountId, requestParameters.type, requestParameters.chatLastMessageFrom, requestParameters.chatLastMessageTo, requestParameters.lastMessageFromMe, requestParameters.unread, requestParameters.ticket, requestParameters.orderByTicketOrder, requestParameters.returnTotalCount, requestParameters.returnLastMessage, requestParameters.page, requestParameters.count, options).then((request) => request(axios, basePath));
+            return localVarFp.contactsGet(requestParameters.tags, requestParameters.tagsFilterOperator, requestParameters.notTags, requestParameters.contacts, requestParameters.notContacts, requestParameters.minMessagesSent, requestParameters.minMessagesRecv, requestParameters.maxMessagesSent, requestParameters.maxMessagesRecv, requestParameters.q, requestParameters.assignee, requestParameters.assigneeFilterOperator, requestParameters.notAssignee, requestParameters.accountId, requestParameters.type, requestParameters.chatLastMessageFrom, requestParameters.chatLastMessageTo, requestParameters.lastMessageFromMe, requestParameters.unread, requestParameters.ticket, requestParameters.orderByTicketOrder, requestParameters.returnTotalCount, requestParameters.returnLastMessage, requestParameters.page, requestParameters.count, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -11920,7 +11998,7 @@ export const ContactsApiFactory = function (configuration?: Configuration, baseP
          * @throws {RequiredError}
          */
         contactsPatch(requestParameters: ContactsApiContactsPatchRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<ContactsPatch200Response> {
-            return localVarFp.contactsPatch(requestParameters.tags, requestParameters.notTags, requestParameters.contacts, requestParameters.notContacts, requestParameters.minMessagesSent, requestParameters.minMessagesRecv, requestParameters.maxMessagesSent, requestParameters.maxMessagesRecv, requestParameters.q, requestParameters.assignee, requestParameters.notAssignee, requestParameters.accountId, requestParameters.type, requestParameters.chatLastMessageFrom, requestParameters.chatLastMessageTo, requestParameters.lastMessageFromMe, requestParameters.unread, requestParameters.ticket, requestParameters.contactsPatch, options).then((request) => request(axios, basePath));
+            return localVarFp.contactsPatch(requestParameters.tags, requestParameters.tagsFilterOperator, requestParameters.notTags, requestParameters.contacts, requestParameters.notContacts, requestParameters.minMessagesSent, requestParameters.minMessagesRecv, requestParameters.maxMessagesSent, requestParameters.maxMessagesRecv, requestParameters.q, requestParameters.assignee, requestParameters.assigneeFilterOperator, requestParameters.notAssignee, requestParameters.accountId, requestParameters.type, requestParameters.chatLastMessageFrom, requestParameters.chatLastMessageTo, requestParameters.lastMessageFromMe, requestParameters.unread, requestParameters.ticket, requestParameters.contactsPatch, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -11975,6 +12053,13 @@ export interface ContactsApiContactsDeleteRequest {
      * @memberof ContactsApiContactsDelete
      */
     readonly tags?: ChatsGetTagsParameter
+
+    /**
+     * How to combine multiple tag filters. Use \&#39;AND\&#39; to require all tags to match, or \&#39;OR\&#39; to match any tag. Defaults to \&#39;OR\&#39;.
+     * @type {'AND' | 'OR'}
+     * @memberof ContactsApiContactsDelete
+     */
+    readonly tagsFilterOperator?: ContactsDeleteTagsFilterOperatorEnum
 
     /**
      * Get contacts who are not in any of these tags
@@ -12038,6 +12123,13 @@ export interface ContactsApiContactsDeleteRequest {
      * @memberof ContactsApiContactsDelete
      */
     readonly assignee?: ChatsGetAssigneeParameter
+
+    /**
+     * How to combine multiple assignee filters. Use \&#39;AND\&#39; to require all assignees to match, or \&#39;OR\&#39; to match any assignee. Defaults to \&#39;OR\&#39;.
+     * @type {'AND' | 'OR'}
+     * @memberof ContactsApiContactsDelete
+     */
+    readonly assigneeFilterOperator?: ContactsDeleteAssigneeFilterOperatorEnum
 
     /**
      * Exclude contacts assigned to the specified users
@@ -12110,6 +12202,13 @@ export interface ContactsApiContactsGetRequest {
     readonly tags?: ChatsGetTagsParameter
 
     /**
+     * How to combine multiple tag filters. Use \&#39;AND\&#39; to require all tags to match, or \&#39;OR\&#39; to match any tag. Defaults to \&#39;OR\&#39;.
+     * @type {'AND' | 'OR'}
+     * @memberof ContactsApiContactsGet
+     */
+    readonly tagsFilterOperator?: ContactsGetTagsFilterOperatorEnum
+
+    /**
      * Get contacts who are not in any of these tags
      * @type {Array<string>}
      * @memberof ContactsApiContactsGet
@@ -12171,6 +12270,13 @@ export interface ContactsApiContactsGetRequest {
      * @memberof ContactsApiContactsGet
      */
     readonly assignee?: ChatsGetAssigneeParameter
+
+    /**
+     * How to combine multiple assignee filters. Use \&#39;AND\&#39; to require all assignees to match, or \&#39;OR\&#39; to match any assignee. Defaults to \&#39;OR\&#39;.
+     * @type {'AND' | 'OR'}
+     * @memberof ContactsApiContactsGet
+     */
+    readonly assigneeFilterOperator?: ContactsGetAssigneeFilterOperatorEnum
 
     /**
      * Exclude contacts assigned to the specified users
@@ -12306,6 +12412,13 @@ export interface ContactsApiContactsPatchRequest {
     readonly tags?: ChatsGetTagsParameter
 
     /**
+     * How to combine multiple tag filters. Use \&#39;AND\&#39; to require all tags to match, or \&#39;OR\&#39; to match any tag. Defaults to \&#39;OR\&#39;.
+     * @type {'AND' | 'OR'}
+     * @memberof ContactsApiContactsPatch
+     */
+    readonly tagsFilterOperator?: ContactsPatchTagsFilterOperatorEnum
+
+    /**
      * Get contacts who are not in any of these tags
      * @type {Array<string>}
      * @memberof ContactsApiContactsPatch
@@ -12367,6 +12480,13 @@ export interface ContactsApiContactsPatchRequest {
      * @memberof ContactsApiContactsPatch
      */
     readonly assignee?: ChatsGetAssigneeParameter
+
+    /**
+     * How to combine multiple assignee filters. Use \&#39;AND\&#39; to require all assignees to match, or \&#39;OR\&#39; to match any assignee. Defaults to \&#39;OR\&#39;.
+     * @type {'AND' | 'OR'}
+     * @memberof ContactsApiContactsPatch
+     */
+    readonly assigneeFilterOperator?: ContactsPatchAssigneeFilterOperatorEnum
 
     /**
      * Exclude contacts assigned to the specified users
@@ -12474,7 +12594,7 @@ export class ContactsApi extends BaseAPI {
      * @memberof ContactsApi
      */
     public contactsDelete(requestParameters: ContactsApiContactsDeleteRequest = {}, options?: RawAxiosRequestConfig) {
-        return ContactsApiFp(this.configuration).contactsDelete(requestParameters.tags, requestParameters.notTags, requestParameters.contacts, requestParameters.notContacts, requestParameters.minMessagesSent, requestParameters.minMessagesRecv, requestParameters.maxMessagesSent, requestParameters.maxMessagesRecv, requestParameters.q, requestParameters.assignee, requestParameters.notAssignee, requestParameters.accountId, requestParameters.type, requestParameters.chatLastMessageFrom, requestParameters.chatLastMessageTo, requestParameters.lastMessageFromMe, requestParameters.unread, requestParameters.ticket, options).then((request) => request(this.axios, this.basePath));
+        return ContactsApiFp(this.configuration).contactsDelete(requestParameters.tags, requestParameters.tagsFilterOperator, requestParameters.notTags, requestParameters.contacts, requestParameters.notContacts, requestParameters.minMessagesSent, requestParameters.minMessagesRecv, requestParameters.maxMessagesSent, requestParameters.maxMessagesRecv, requestParameters.q, requestParameters.assignee, requestParameters.assigneeFilterOperator, requestParameters.notAssignee, requestParameters.accountId, requestParameters.type, requestParameters.chatLastMessageFrom, requestParameters.chatLastMessageTo, requestParameters.lastMessageFromMe, requestParameters.unread, requestParameters.ticket, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -12486,7 +12606,7 @@ export class ContactsApi extends BaseAPI {
      * @memberof ContactsApi
      */
     public contactsGet(requestParameters: ContactsApiContactsGetRequest = {}, options?: RawAxiosRequestConfig) {
-        return ContactsApiFp(this.configuration).contactsGet(requestParameters.tags, requestParameters.notTags, requestParameters.contacts, requestParameters.notContacts, requestParameters.minMessagesSent, requestParameters.minMessagesRecv, requestParameters.maxMessagesSent, requestParameters.maxMessagesRecv, requestParameters.q, requestParameters.assignee, requestParameters.notAssignee, requestParameters.accountId, requestParameters.type, requestParameters.chatLastMessageFrom, requestParameters.chatLastMessageTo, requestParameters.lastMessageFromMe, requestParameters.unread, requestParameters.ticket, requestParameters.orderByTicketOrder, requestParameters.returnTotalCount, requestParameters.returnLastMessage, requestParameters.page, requestParameters.count, options).then((request) => request(this.axios, this.basePath));
+        return ContactsApiFp(this.configuration).contactsGet(requestParameters.tags, requestParameters.tagsFilterOperator, requestParameters.notTags, requestParameters.contacts, requestParameters.notContacts, requestParameters.minMessagesSent, requestParameters.minMessagesRecv, requestParameters.maxMessagesSent, requestParameters.maxMessagesRecv, requestParameters.q, requestParameters.assignee, requestParameters.assigneeFilterOperator, requestParameters.notAssignee, requestParameters.accountId, requestParameters.type, requestParameters.chatLastMessageFrom, requestParameters.chatLastMessageTo, requestParameters.lastMessageFromMe, requestParameters.unread, requestParameters.ticket, requestParameters.orderByTicketOrder, requestParameters.returnTotalCount, requestParameters.returnLastMessage, requestParameters.page, requestParameters.count, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -12510,7 +12630,7 @@ export class ContactsApi extends BaseAPI {
      * @memberof ContactsApi
      */
     public contactsPatch(requestParameters: ContactsApiContactsPatchRequest = {}, options?: RawAxiosRequestConfig) {
-        return ContactsApiFp(this.configuration).contactsPatch(requestParameters.tags, requestParameters.notTags, requestParameters.contacts, requestParameters.notContacts, requestParameters.minMessagesSent, requestParameters.minMessagesRecv, requestParameters.maxMessagesSent, requestParameters.maxMessagesRecv, requestParameters.q, requestParameters.assignee, requestParameters.notAssignee, requestParameters.accountId, requestParameters.type, requestParameters.chatLastMessageFrom, requestParameters.chatLastMessageTo, requestParameters.lastMessageFromMe, requestParameters.unread, requestParameters.ticket, requestParameters.contactsPatch, options).then((request) => request(this.axios, this.basePath));
+        return ContactsApiFp(this.configuration).contactsPatch(requestParameters.tags, requestParameters.tagsFilterOperator, requestParameters.notTags, requestParameters.contacts, requestParameters.notContacts, requestParameters.minMessagesSent, requestParameters.minMessagesRecv, requestParameters.maxMessagesSent, requestParameters.maxMessagesRecv, requestParameters.q, requestParameters.assignee, requestParameters.assigneeFilterOperator, requestParameters.notAssignee, requestParameters.accountId, requestParameters.type, requestParameters.chatLastMessageFrom, requestParameters.chatLastMessageTo, requestParameters.lastMessageFromMe, requestParameters.unread, requestParameters.ticket, requestParameters.contactsPatch, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -12537,11 +12657,59 @@ export type ContactsCheckExistsTypeEnum = typeof ContactsCheckExistsTypeEnum[key
 /**
  * @export
  */
+export const ContactsDeleteTagsFilterOperatorEnum = {
+    And: 'AND',
+    Or: 'OR'
+} as const;
+export type ContactsDeleteTagsFilterOperatorEnum = typeof ContactsDeleteTagsFilterOperatorEnum[keyof typeof ContactsDeleteTagsFilterOperatorEnum];
+/**
+ * @export
+ */
+export const ContactsDeleteAssigneeFilterOperatorEnum = {
+    And: 'AND',
+    Or: 'OR'
+} as const;
+export type ContactsDeleteAssigneeFilterOperatorEnum = typeof ContactsDeleteAssigneeFilterOperatorEnum[keyof typeof ContactsDeleteAssigneeFilterOperatorEnum];
+/**
+ * @export
+ */
+export const ContactsGetTagsFilterOperatorEnum = {
+    And: 'AND',
+    Or: 'OR'
+} as const;
+export type ContactsGetTagsFilterOperatorEnum = typeof ContactsGetTagsFilterOperatorEnum[keyof typeof ContactsGetTagsFilterOperatorEnum];
+/**
+ * @export
+ */
+export const ContactsGetAssigneeFilterOperatorEnum = {
+    And: 'AND',
+    Or: 'OR'
+} as const;
+export type ContactsGetAssigneeFilterOperatorEnum = typeof ContactsGetAssigneeFilterOperatorEnum[keyof typeof ContactsGetAssigneeFilterOperatorEnum];
+/**
+ * @export
+ */
 export const ContactsImageGetTypeEnum = {
     Preview: 'preview',
     Full: 'full'
 } as const;
 export type ContactsImageGetTypeEnum = typeof ContactsImageGetTypeEnum[keyof typeof ContactsImageGetTypeEnum];
+/**
+ * @export
+ */
+export const ContactsPatchTagsFilterOperatorEnum = {
+    And: 'AND',
+    Or: 'OR'
+} as const;
+export type ContactsPatchTagsFilterOperatorEnum = typeof ContactsPatchTagsFilterOperatorEnum[keyof typeof ContactsPatchTagsFilterOperatorEnum];
+/**
+ * @export
+ */
+export const ContactsPatchAssigneeFilterOperatorEnum = {
+    And: 'AND',
+    Or: 'OR'
+} as const;
+export type ContactsPatchAssigneeFilterOperatorEnum = typeof ContactsPatchAssigneeFilterOperatorEnum[keyof typeof ContactsPatchAssigneeFilterOperatorEnum];
 
 
 /**
