@@ -5055,6 +5055,44 @@ export const CreditsApiAxiosParamCreator = function (configuration?: Configurati
         },
         /**
          * 
+         * @summary Create a new credit gain
+         * @param {CreditGainCreate} [creditGainCreate] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        creditBoostPost: async (creditGainCreate?: CreditGainCreate, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v2/credits/boost`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", [], configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(creditGainCreate, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
          * @summary Create a new single use credit consumption record
          * @param {CreditConsumptionPostRequest} [creditConsumptionPostRequest] 
          * @param {*} [options] Override http request option.
@@ -5850,6 +5888,19 @@ export const CreditsApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
+         * @summary Create a new credit gain
+         * @param {CreditGainCreate} [creditGainCreate] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async creditBoostPost(creditGainCreate?: CreditGainCreate, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CreditGain>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.creditBoostPost(creditGainCreate, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['CreditsApi.creditBoostPost']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
          * @summary Create a new single use credit consumption record
          * @param {CreditConsumptionPostRequest} [creditConsumptionPostRequest] 
          * @param {*} [options] Override http request option.
@@ -6138,6 +6189,16 @@ export const CreditsApiFactory = function (configuration?: Configuration, basePa
         },
         /**
          * 
+         * @summary Create a new credit gain
+         * @param {CreditsApiCreditBoostPostRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        creditBoostPost(requestParameters: CreditsApiCreditBoostPostRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<CreditGain> {
+            return localVarFp.creditBoostPost(requestParameters.creditGainCreate, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
          * @summary Create a new single use credit consumption record
          * @param {CreditsApiCreditConsumptionPostRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -6386,6 +6447,20 @@ export interface CreditsApiConsumptionTotalsGetRequest {
      * @memberof CreditsApiConsumptionTotalsGet
      */
     readonly createdAt?: DateRange
+}
+
+/**
+ * Request parameters for creditBoostPost operation in CreditsApi.
+ * @export
+ * @interface CreditsApiCreditBoostPostRequest
+ */
+export interface CreditsApiCreditBoostPostRequest {
+    /**
+     * 
+     * @type {CreditGainCreate}
+     * @memberof CreditsApiCreditBoostPost
+     */
+    readonly creditGainCreate?: CreditGainCreate
 }
 
 /**
@@ -6809,6 +6884,18 @@ export class CreditsApi extends BaseAPI {
      */
     public consumptionTotalsGet(requestParameters: CreditsApiConsumptionTotalsGetRequest = {}, options?: RawAxiosRequestConfig) {
         return CreditsApiFp(this.configuration).consumptionTotalsGet(requestParameters.teamId, requestParameters.type, requestParameters.createdAt, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Create a new credit gain
+     * @param {CreditsApiCreditBoostPostRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CreditsApi
+     */
+    public creditBoostPost(requestParameters: CreditsApiCreditBoostPostRequest = {}, options?: RawAxiosRequestConfig) {
+        return CreditsApiFp(this.configuration).creditBoostPost(requestParameters.creditGainCreate, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
