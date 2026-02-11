@@ -6157,7 +6157,7 @@ export const TeamsApiAxiosParamCreator = function (configuration?: Configuration
          * @param {string} [partner] string to identify user with a partner
          * @param {boolean} [returnOnboardingScore] return the onboarding score for the team
          * @param {boolean} [isCreditSystemCustomer] If true, only return teams that are credit system customers. If false, only return teams that are not credit system customers. A team is only considered a credit system customer if they have a \&quot;creditCustomerId\&quot; set.
-         * @param {TeamsGetVariantEnum} [variant] The variant of the team to return. lite or chatdaddy. If not specified, returns chatdaddy teams only. 
+         * @param {TeamsGetVariantEnum} [variant] The variant of the team to return. If not specified, returns chatdaddy teams only. 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -6513,7 +6513,7 @@ export const TeamsApiFp = function(configuration?: Configuration) {
          * @param {string} [partner] string to identify user with a partner
          * @param {boolean} [returnOnboardingScore] return the onboarding score for the team
          * @param {boolean} [isCreditSystemCustomer] If true, only return teams that are credit system customers. If false, only return teams that are not credit system customers. A team is only considered a credit system customer if they have a \&quot;creditCustomerId\&quot; set.
-         * @param {TeamsGetVariantEnum} [variant] The variant of the team to return. lite or chatdaddy. If not specified, returns chatdaddy teams only. 
+         * @param {TeamsGetVariantEnum} [variant] The variant of the team to return. If not specified, returns chatdaddy teams only. 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -6876,8 +6876,8 @@ export interface TeamsApiTeamsGetRequest {
     readonly isCreditSystemCustomer?: boolean
 
     /**
-     * The variant of the team to return. lite or chatdaddy. If not specified, returns chatdaddy teams only. 
-     * @type {'chatdaddy' | 'lite'}
+     * The variant of the team to return. If not specified, returns chatdaddy teams only. 
+     * @type {'chatdaddy' | 'lite' | 'syntra' | 'instaengage'}
      * @memberof TeamsApiTeamsGet
      */
     readonly variant?: TeamsGetVariantEnum
@@ -7071,7 +7071,9 @@ export class TeamsApi extends BaseAPI {
  */
 export const TeamsGetVariantEnum = {
     Chatdaddy: 'chatdaddy',
-    Lite: 'lite'
+    Lite: 'lite',
+    Syntra: 'syntra',
+    Instaengage: 'instaengage'
 } as const;
 export type TeamsGetVariantEnum = typeof TeamsGetVariantEnum[keyof typeof TeamsGetVariantEnum];
 
@@ -7224,7 +7226,7 @@ export const UsersApiAxiosParamCreator = function (configuration?: Configuration
          * @param {boolean} [includeMemberships] Should include the user\&#39;s memberships
          * @param {boolean} [includeTotal] should return total count of accessible users
          * @param {Array<string>} [other] other internal query options
-         * @param {UsersGetVariantEnum} [variant] The variant of the user to return. lite or chatdaddy 
+         * @param {UsersGetVariantEnum} [variant] The variant of the user to return 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -7551,7 +7553,7 @@ export const UsersApiFp = function(configuration?: Configuration) {
          * @param {boolean} [includeMemberships] Should include the user\&#39;s memberships
          * @param {boolean} [includeTotal] should return total count of accessible users
          * @param {Array<string>} [other] other internal query options
-         * @param {UsersGetVariantEnum} [variant] The variant of the user to return. lite or chatdaddy 
+         * @param {UsersGetVariantEnum} [variant] The variant of the user to return 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -7856,8 +7858,8 @@ export interface UsersApiUsersGetRequest {
     readonly other?: Array<string>
 
     /**
-     * The variant of the user to return. lite or chatdaddy 
-     * @type {'chatdaddy' | 'lite'}
+     * The variant of the user to return 
+     * @type {'chatdaddy' | 'lite' | 'syntra' | 'instaengage'}
      * @memberof UsersApiUsersGet
      */
     readonly variant?: UsersGetVariantEnum
@@ -8070,7 +8072,9 @@ export type GetUsersCountPresetEnum = typeof GetUsersCountPresetEnum[keyof typeo
  */
 export const UsersGetVariantEnum = {
     Chatdaddy: 'chatdaddy',
-    Lite: 'lite'
+    Lite: 'lite',
+    Syntra: 'syntra',
+    Instaengage: 'instaengage'
 } as const;
 export type UsersGetVariantEnum = typeof UsersGetVariantEnum[keyof typeof UsersGetVariantEnum];
 
