@@ -466,6 +466,12 @@ export interface AccountInsertDataSettings {
      * @memberof AccountInsertDataSettings
      */
     'commentsSilence'?: AccountInsertDataSettingsCommentsSilence;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof AccountInsertDataSettings
+     */
+    'show24HrWindowTooltip'?: boolean;
 }
 /**
  * 

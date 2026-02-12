@@ -513,6 +513,12 @@ export interface AccountSettings {
      * @memberof AccountSettings
      */
     'commentsSilence'?: CommentsSilenceConfig;
+    /**
+     * When true, show the 24-hour and FEP window status tooltips in the inbox. When false, hide them. Omit or undefined is treated as true. WABA only.
+     * @type {boolean}
+     * @memberof AccountSettings
+     */
+    'show24HrWindowTooltip'?: boolean;
 }
 /**
  * Allow assignment of new chats to a specific assignee. All new chats will be auto asssigned if one of the option is enabled and select any assignee. Deprecated: use a message flow to do this automation

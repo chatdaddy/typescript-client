@@ -1103,11 +1103,12 @@ export const CallsApiAxiosParamCreator = function (configuration?: Configuration
         },
         /**
          * 
+         * @param {string} [parentCallSid] The parent call SID, included when this webhook is fired for a child call (outbound leg to recipient). Used to map the child call status back to the parent call record.
          * @param {TwilioCallParameters} [twilioCallParameters] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        voiceCallStatusPost: async (twilioCallParameters?: TwilioCallParameters, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        voiceCallStatusPost: async (parentCallSid?: string, twilioCallParameters?: TwilioCallParameters, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/voice/callStatus`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -1119,6 +1120,10 @@ export const CallsApiAxiosParamCreator = function (configuration?: Configuration
             const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
+
+            if (parentCallSid !== undefined) {
+                localVarQueryParameter['parentCallSid'] = parentCallSid;
+            }
 
 
     
@@ -1340,12 +1345,13 @@ export const CallsApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
+         * @param {string} [parentCallSid] The parent call SID, included when this webhook is fired for a child call (outbound leg to recipient). Used to map the child call status back to the parent call record.
          * @param {TwilioCallParameters} [twilioCallParameters] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async voiceCallStatusPost(twilioCallParameters?: TwilioCallParameters, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.voiceCallStatusPost(twilioCallParameters, options);
+        async voiceCallStatusPost(parentCallSid?: string, twilioCallParameters?: TwilioCallParameters, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.voiceCallStatusPost(parentCallSid, twilioCallParameters, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['CallsApi.voiceCallStatusPost']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -1481,7 +1487,7 @@ export const CallsApiFactory = function (configuration?: Configuration, basePath
          * @throws {RequiredError}
          */
         voiceCallStatusPost(requestParameters: CallsApiVoiceCallStatusPostRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.voiceCallStatusPost(requestParameters.twilioCallParameters, options).then((request) => request(axios, basePath));
+            return localVarFp.voiceCallStatusPost(requestParameters.parentCallSid, requestParameters.twilioCallParameters, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -1701,6 +1707,13 @@ export interface CallsApiVerifyNumberPostRequest {
  */
 export interface CallsApiVoiceCallStatusPostRequest {
     /**
+     * The parent call SID, included when this webhook is fired for a child call (outbound leg to recipient). Used to map the child call status back to the parent call record.
+     * @type {string}
+     * @memberof CallsApiVoiceCallStatusPost
+     */
+    readonly parentCallSid?: string
+
+    /**
      * 
      * @type {TwilioCallParameters}
      * @memberof CallsApiVoiceCallStatusPost
@@ -1858,7 +1871,7 @@ export class CallsApi extends BaseAPI {
      * @memberof CallsApi
      */
     public voiceCallStatusPost(requestParameters: CallsApiVoiceCallStatusPostRequest = {}, options?: RawAxiosRequestConfig) {
-        return CallsApiFp(this.configuration).voiceCallStatusPost(requestParameters.twilioCallParameters, options).then((request) => request(this.axios, this.basePath));
+        return CallsApiFp(this.configuration).voiceCallStatusPost(requestParameters.parentCallSid, requestParameters.twilioCallParameters, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
