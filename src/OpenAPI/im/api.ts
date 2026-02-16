@@ -387,6 +387,56 @@ export type AccountCredentialsTikTokTypeEnum = typeof AccountCredentialsTikTokTy
 /**
  * 
  * @export
+ * @interface AccountCredentialsTikTokShop
+ */
+export interface AccountCredentialsTikTokShop {
+    /**
+     * 
+     * @type {string}
+     * @memberof AccountCredentialsTikTokShop
+     */
+    'type': AccountCredentialsTikTokShopTypeEnum;
+    /**
+     * OAuth access token for TikTok Shop API
+     * @type {string}
+     * @memberof AccountCredentialsTikTokShop
+     */
+    'accessToken': string;
+    /**
+     * OAuth refresh token for TikTok Shop API
+     * @type {string}
+     * @memberof AccountCredentialsTikTokShop
+     */
+    'refreshToken': string;
+    /**
+     * Timestamp when the access token expires
+     * @type {number}
+     * @memberof AccountCredentialsTikTokShop
+     */
+    'expiresAt': number;
+    /**
+     * TikTok Shop ID
+     * @type {string}
+     * @memberof AccountCredentialsTikTokShop
+     */
+    'shopId': string;
+    /**
+     * TikTok Shop name
+     * @type {string}
+     * @memberof AccountCredentialsTikTokShop
+     */
+    'shopName'?: string;
+}
+
+export const AccountCredentialsTikTokShopTypeEnum = {
+    TiktokShop: 'tiktok-shop'
+} as const;
+
+export type AccountCredentialsTikTokShopTypeEnum = typeof AccountCredentialsTikTokShopTypeEnum[keyof typeof AccountCredentialsTikTokShopTypeEnum];
+
+/**
+ * 
+ * @export
  * @interface AccountCredentialsWaba
  */
 export interface AccountCredentialsWaba {
@@ -579,6 +629,7 @@ export const AccountType = {
     WaBusinessApi: 'wa-business-api',
     Mock: 'mock',
     Tiktok: 'tiktok',
+    TiktokShop: 'tiktok-shop',
     Messenger: 'messenger',
     Mail: 'mail',
     Sms: 'sms',
@@ -715,7 +766,7 @@ export interface AccountsPatchRequest {
  * @type AccountsPatchRequestCredentials
  * @export
  */
-export type AccountsPatchRequestCredentials = AccountCredentialsAlibaba | AccountCredentialsAlibabaV2 | AccountCredentialsMail | AccountCredentialsMeta | AccountCredentialsSms | AccountCredentialsTikTok;
+export type AccountsPatchRequestCredentials = AccountCredentialsAlibaba | AccountCredentialsAlibabaV2 | AccountCredentialsMail | AccountCredentialsMeta | AccountCredentialsSms | AccountCredentialsTikTok | AccountCredentialsTikTokShop;
 
 /**
  * 
@@ -6549,6 +6600,56 @@ export interface TikTokChatState {
 /**
  * 
  * @export
+ * @interface TikTokShopStateInfo
+ */
+export interface TikTokShopStateInfo {
+    /**
+     * 
+     * @type {TikTokShopStateInfoShopInfo}
+     * @memberof TikTokShopStateInfo
+     */
+    'shopInfo'?: TikTokShopStateInfoShopInfo;
+    /**
+     * Registered webhook ID
+     * @type {string}
+     * @memberof TikTokShopStateInfo
+     */
+    'webhookId'?: string;
+    /**
+     * An ISO formatted timestamp
+     * @type {string}
+     * @memberof TikTokShopStateInfo
+     */
+    'syncCompletedAt'?: string;
+}
+/**
+ * 
+ * @export
+ * @interface TikTokShopStateInfoShopInfo
+ */
+export interface TikTokShopStateInfoShopInfo {
+    /**
+     * Shop name
+     * @type {string}
+     * @memberof TikTokShopStateInfoShopInfo
+     */
+    'name'?: string;
+    /**
+     * Shop logo URL
+     * @type {string}
+     * @memberof TikTokShopStateInfoShopInfo
+     */
+    'logo'?: string;
+    /**
+     * Shop region code
+     * @type {string}
+     * @memberof TikTokShopStateInfoShopInfo
+     */
+    'region'?: string;
+}
+/**
+ * 
+ * @export
  * @interface TikTokStateInfo
  */
 export interface TikTokStateInfo {
@@ -6858,6 +6959,97 @@ export interface WebhookSmsLimitPostRequest {
      */
     'AccountSid'?: string;
 }
+/**
+ * 
+ * @export
+ * @interface WebhookTikTokShopPostRequest
+ */
+export interface WebhookTikTokShopPostRequest {
+    /**
+     * Type of webhook event
+     * @type {string}
+     * @memberof WebhookTikTokShopPostRequest
+     */
+    'event_type'?: WebhookTikTokShopPostRequestEventTypeEnum;
+    /**
+     * Conversation ID
+     * @type {string}
+     * @memberof WebhookTikTokShopPostRequest
+     */
+    'conversation_id'?: string;
+    /**
+     * Shop ID
+     * @type {string}
+     * @memberof WebhookTikTokShopPostRequest
+     */
+    'shop_id'?: string;
+    /**
+     * 
+     * @type {WebhookTikTokShopPostRequestMessage}
+     * @memberof WebhookTikTokShopPostRequest
+     */
+    'message'?: WebhookTikTokShopPostRequestMessage;
+}
+
+export const WebhookTikTokShopPostRequestEventTypeEnum = {
+    MessageSent: 'MESSAGE_SENT',
+    MessageUpdated: 'MESSAGE_UPDATED',
+    ConversationUpdated: 'CONVERSATION_UPDATED'
+} as const;
+
+export type WebhookTikTokShopPostRequestEventTypeEnum = typeof WebhookTikTokShopPostRequestEventTypeEnum[keyof typeof WebhookTikTokShopPostRequestEventTypeEnum];
+
+/**
+ * Message data
+ * @export
+ * @interface WebhookTikTokShopPostRequestMessage
+ */
+export interface WebhookTikTokShopPostRequestMessage {
+    /**
+     * 
+     * @type {string}
+     * @memberof WebhookTikTokShopPostRequestMessage
+     */
+    'message_id'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof WebhookTikTokShopPostRequestMessage
+     */
+    'sender_id'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof WebhookTikTokShopPostRequestMessage
+     */
+    'sender_type'?: WebhookTikTokShopPostRequestMessageSenderTypeEnum;
+    /**
+     * 
+     * @type {string}
+     * @memberof WebhookTikTokShopPostRequestMessage
+     */
+    'content'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof WebhookTikTokShopPostRequestMessage
+     */
+    'message_type'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof WebhookTikTokShopPostRequestMessage
+     */
+    'timestamp'?: string;
+}
+
+export const WebhookTikTokShopPostRequestMessageSenderTypeEnum = {
+    Buyer: 'BUYER',
+    Seller: 'SELLER'
+} as const;
+
+export type WebhookTikTokShopPostRequestMessageSenderTypeEnum = typeof WebhookTikTokShopPostRequestMessageSenderTypeEnum[keyof typeof WebhookTikTokShopPostRequestMessageSenderTypeEnum];
+
 
 /**
  * AccountApi - axios parameter creator
@@ -18198,6 +18390,328 @@ export class TemplatesApi extends BaseAPI {
      */
     public templatesSubmitForReview(requestParameters: TemplatesApiTemplatesSubmitForReviewRequest, options?: RawAxiosRequestConfig) {
         return TemplatesApiFp(this.configuration).templatesSubmitForReview(requestParameters.accountId, requestParameters.templatesSubmitForReviewRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+
+/**
+ * TikTokShopApi - axios parameter creator
+ * @export
+ */
+export const TikTokShopApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * Processes OAuth callback and stores credentials
+         * @summary Handle TikTok Shop OAuth callback
+         * @param {string} code OAuth authorization code
+         * @param {string} state State parameter containing accountId
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        oauthTikTokShopCallback: async (code: string, state: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'code' is not null or undefined
+            assertParamExists('oauthTikTokShopCallback', 'code', code)
+            // verify required parameter 'state' is not null or undefined
+            assertParamExists('oauthTikTokShopCallback', 'state', state)
+            const localVarPath = `/oauth/tiktok-shop/callback`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (code !== undefined) {
+                localVarQueryParameter['code'] = code;
+            }
+
+            if (state !== undefined) {
+                localVarQueryParameter['state'] = state;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Redirects to TikTok Shop authorization page
+         * @summary Start TikTok Shop OAuth flow
+         * @param {string} accountId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        oauthTikTokShopStart: async (accountId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'accountId' is not null or undefined
+            assertParamExists('oauthTikTokShopStart', 'accountId', accountId)
+            const localVarPath = `/oauth/tiktok-shop/start/{accountId}`
+                .replace(`{${"accountId"}}`, encodeURIComponent(String(accountId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["ACCOUNT_PATCH"], configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Handles incoming message and conversation events from TikTok Shop
+         * @summary Receive TikTok Shop webhook events
+         * @param {string} accountId 
+         * @param {WebhookTikTokShopPostRequest} [webhookTikTokShopPostRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        webhookTikTokShopPost: async (accountId: string, webhookTikTokShopPostRequest?: WebhookTikTokShopPostRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'accountId' is not null or undefined
+            assertParamExists('webhookTikTokShopPost', 'accountId', accountId)
+            const localVarPath = `/webhook/tiktok-shop/{accountId}`
+                .replace(`{${"accountId"}}`, encodeURIComponent(String(accountId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(webhookTikTokShopPostRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * TikTokShopApi - functional programming interface
+ * @export
+ */
+export const TikTokShopApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = TikTokShopApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * Processes OAuth callback and stores credentials
+         * @summary Handle TikTok Shop OAuth callback
+         * @param {string} code OAuth authorization code
+         * @param {string} state State parameter containing accountId
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async oauthTikTokShopCallback(code: string, state: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.oauthTikTokShopCallback(code, state, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['TikTokShopApi.oauthTikTokShopCallback']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Redirects to TikTok Shop authorization page
+         * @summary Start TikTok Shop OAuth flow
+         * @param {string} accountId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async oauthTikTokShopStart(accountId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.oauthTikTokShopStart(accountId, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['TikTokShopApi.oauthTikTokShopStart']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Handles incoming message and conversation events from TikTok Shop
+         * @summary Receive TikTok Shop webhook events
+         * @param {string} accountId 
+         * @param {WebhookTikTokShopPostRequest} [webhookTikTokShopPostRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async webhookTikTokShopPost(accountId: string, webhookTikTokShopPostRequest?: WebhookTikTokShopPostRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AccountsDelete200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.webhookTikTokShopPost(accountId, webhookTikTokShopPostRequest, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['TikTokShopApi.webhookTikTokShopPost']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+    }
+};
+
+/**
+ * TikTokShopApi - factory interface
+ * @export
+ */
+export const TikTokShopApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = TikTokShopApiFp(configuration)
+    return {
+        /**
+         * Processes OAuth callback and stores credentials
+         * @summary Handle TikTok Shop OAuth callback
+         * @param {TikTokShopApiOauthTikTokShopCallbackRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        oauthTikTokShopCallback(requestParameters: TikTokShopApiOauthTikTokShopCallbackRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.oauthTikTokShopCallback(requestParameters.code, requestParameters.state, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Redirects to TikTok Shop authorization page
+         * @summary Start TikTok Shop OAuth flow
+         * @param {TikTokShopApiOauthTikTokShopStartRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        oauthTikTokShopStart(requestParameters: TikTokShopApiOauthTikTokShopStartRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.oauthTikTokShopStart(requestParameters.accountId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Handles incoming message and conversation events from TikTok Shop
+         * @summary Receive TikTok Shop webhook events
+         * @param {TikTokShopApiWebhookTikTokShopPostRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        webhookTikTokShopPost(requestParameters: TikTokShopApiWebhookTikTokShopPostRequest, options?: RawAxiosRequestConfig): AxiosPromise<AccountsDelete200Response> {
+            return localVarFp.webhookTikTokShopPost(requestParameters.accountId, requestParameters.webhookTikTokShopPostRequest, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * Request parameters for oauthTikTokShopCallback operation in TikTokShopApi.
+ * @export
+ * @interface TikTokShopApiOauthTikTokShopCallbackRequest
+ */
+export interface TikTokShopApiOauthTikTokShopCallbackRequest {
+    /**
+     * OAuth authorization code
+     * @type {string}
+     * @memberof TikTokShopApiOauthTikTokShopCallback
+     */
+    readonly code: string
+
+    /**
+     * State parameter containing accountId
+     * @type {string}
+     * @memberof TikTokShopApiOauthTikTokShopCallback
+     */
+    readonly state: string
+}
+
+/**
+ * Request parameters for oauthTikTokShopStart operation in TikTokShopApi.
+ * @export
+ * @interface TikTokShopApiOauthTikTokShopStartRequest
+ */
+export interface TikTokShopApiOauthTikTokShopStartRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof TikTokShopApiOauthTikTokShopStart
+     */
+    readonly accountId: string
+}
+
+/**
+ * Request parameters for webhookTikTokShopPost operation in TikTokShopApi.
+ * @export
+ * @interface TikTokShopApiWebhookTikTokShopPostRequest
+ */
+export interface TikTokShopApiWebhookTikTokShopPostRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof TikTokShopApiWebhookTikTokShopPost
+     */
+    readonly accountId: string
+
+    /**
+     * 
+     * @type {WebhookTikTokShopPostRequest}
+     * @memberof TikTokShopApiWebhookTikTokShopPost
+     */
+    readonly webhookTikTokShopPostRequest?: WebhookTikTokShopPostRequest
+}
+
+/**
+ * TikTokShopApi - object-oriented interface
+ * @export
+ * @class TikTokShopApi
+ * @extends {BaseAPI}
+ */
+export class TikTokShopApi extends BaseAPI {
+    /**
+     * Processes OAuth callback and stores credentials
+     * @summary Handle TikTok Shop OAuth callback
+     * @param {TikTokShopApiOauthTikTokShopCallbackRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof TikTokShopApi
+     */
+    public oauthTikTokShopCallback(requestParameters: TikTokShopApiOauthTikTokShopCallbackRequest, options?: RawAxiosRequestConfig) {
+        return TikTokShopApiFp(this.configuration).oauthTikTokShopCallback(requestParameters.code, requestParameters.state, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Redirects to TikTok Shop authorization page
+     * @summary Start TikTok Shop OAuth flow
+     * @param {TikTokShopApiOauthTikTokShopStartRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof TikTokShopApi
+     */
+    public oauthTikTokShopStart(requestParameters: TikTokShopApiOauthTikTokShopStartRequest, options?: RawAxiosRequestConfig) {
+        return TikTokShopApiFp(this.configuration).oauthTikTokShopStart(requestParameters.accountId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Handles incoming message and conversation events from TikTok Shop
+     * @summary Receive TikTok Shop webhook events
+     * @param {TikTokShopApiWebhookTikTokShopPostRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof TikTokShopApi
+     */
+    public webhookTikTokShopPost(requestParameters: TikTokShopApiWebhookTikTokShopPostRequest, options?: RawAxiosRequestConfig) {
+        return TikTokShopApiFp(this.configuration).webhookTikTokShopPost(requestParameters.accountId, requestParameters.webhookTikTokShopPostRequest, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
