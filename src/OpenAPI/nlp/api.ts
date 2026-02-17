@@ -728,6 +728,32 @@ export interface DeleteTriggers200Response {
 /**
  * 
  * @export
+ * @interface DetectLanguage200Response
+ */
+export interface DetectLanguage200Response {
+    /**
+     * Detected language as an ISO 639-1 code (e.g. en, zh_CN, ms, id, es, pt_BR, zh_HK)
+     * @type {string}
+     * @memberof DetectLanguage200Response
+     */
+    'language': string;
+}
+/**
+ * 
+ * @export
+ * @interface DetectLanguageRequest
+ */
+export interface DetectLanguageRequest {
+    /**
+     * The text to detect the language of
+     * @type {string}
+     * @memberof DetectLanguageRequest
+     */
+    'text': string;
+}
+/**
+ * 
+ * @export
  * @interface Document
  */
 export interface Document {
@@ -5249,6 +5275,134 @@ export class KnowledgebaseApi extends BaseAPI {
      */
     public updateKnowledgeBase(requestParameters: KnowledgebaseApiUpdateKnowledgeBaseRequest, options?: RawAxiosRequestConfig) {
         return KnowledgebaseApiFp(this.configuration).updateKnowledgeBase(requestParameters.id, requestParameters.upsertKnowledgeBase, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+
+/**
+ * LanguageApi - axios parameter creator
+ * @export
+ */
+export const LanguageApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * Sends the provided text to an AI model and returns the detected language as an ISO 639-1 code. Useful for auto-detecting WABA template language before submission.
+         * @summary Detect the language of a given text
+         * @param {DetectLanguageRequest} detectLanguageRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        detectLanguage: async (detectLanguageRequest: DetectLanguageRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'detectLanguageRequest' is not null or undefined
+            assertParamExists('detectLanguage', 'detectLanguageRequest', detectLanguageRequest)
+            const localVarPath = `/language/detect`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", [], configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(detectLanguageRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * LanguageApi - functional programming interface
+ * @export
+ */
+export const LanguageApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = LanguageApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * Sends the provided text to an AI model and returns the detected language as an ISO 639-1 code. Useful for auto-detecting WABA template language before submission.
+         * @summary Detect the language of a given text
+         * @param {DetectLanguageRequest} detectLanguageRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async detectLanguage(detectLanguageRequest: DetectLanguageRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DetectLanguage200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.detectLanguage(detectLanguageRequest, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['LanguageApi.detectLanguage']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+    }
+};
+
+/**
+ * LanguageApi - factory interface
+ * @export
+ */
+export const LanguageApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = LanguageApiFp(configuration)
+    return {
+        /**
+         * Sends the provided text to an AI model and returns the detected language as an ISO 639-1 code. Useful for auto-detecting WABA template language before submission.
+         * @summary Detect the language of a given text
+         * @param {LanguageApiDetectLanguageRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        detectLanguage(requestParameters: LanguageApiDetectLanguageRequest, options?: RawAxiosRequestConfig): AxiosPromise<DetectLanguage200Response> {
+            return localVarFp.detectLanguage(requestParameters.detectLanguageRequest, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * Request parameters for detectLanguage operation in LanguageApi.
+ * @export
+ * @interface LanguageApiDetectLanguageRequest
+ */
+export interface LanguageApiDetectLanguageRequest {
+    /**
+     * 
+     * @type {DetectLanguageRequest}
+     * @memberof LanguageApiDetectLanguage
+     */
+    readonly detectLanguageRequest: DetectLanguageRequest
+}
+
+/**
+ * LanguageApi - object-oriented interface
+ * @export
+ * @class LanguageApi
+ * @extends {BaseAPI}
+ */
+export class LanguageApi extends BaseAPI {
+    /**
+     * Sends the provided text to an AI model and returns the detected language as an ISO 639-1 code. Useful for auto-detecting WABA template language before submission.
+     * @summary Detect the language of a given text
+     * @param {LanguageApiDetectLanguageRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof LanguageApi
+     */
+    public detectLanguage(requestParameters: LanguageApiDetectLanguageRequest, options?: RawAxiosRequestConfig) {
+        return LanguageApiFp(this.configuration).detectLanguage(requestParameters.detectLanguageRequest, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
