@@ -5335,6 +5335,19 @@ export type NLPTranscriptionJobStatusEnum = typeof NLPTranscriptionJobStatusEnum
 /**
  * 
  * @export
+ * @interface OauthTikTokShopStart200Response
+ */
+export interface OauthTikTokShopStart200Response {
+    /**
+     * URL to redirect to
+     * @type {string}
+     * @memberof OauthTikTokShopStart200Response
+     */
+    '__redirect'?: string;
+}
+/**
+ * 
+ * @export
  * @interface OrderDetails
  */
 export interface OrderDetails {
@@ -18539,7 +18552,7 @@ export const TikTokShopApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async oauthTikTokShopCallback(code: string, state: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async oauthTikTokShopCallback(code: string, state: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<OauthTikTokShopStart200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.oauthTikTokShopCallback(code, state, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['TikTokShopApi.oauthTikTokShopCallback']?.[localVarOperationServerIndex]?.url;
@@ -18552,7 +18565,7 @@ export const TikTokShopApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async oauthTikTokShopStart(accountId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async oauthTikTokShopStart(accountId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<OauthTikTokShopStart200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.oauthTikTokShopStart(accountId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['TikTokShopApi.oauthTikTokShopStart']?.[localVarOperationServerIndex]?.url;
@@ -18589,7 +18602,7 @@ export const TikTokShopApiFactory = function (configuration?: Configuration, bas
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        oauthTikTokShopCallback(requestParameters: TikTokShopApiOauthTikTokShopCallbackRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        oauthTikTokShopCallback(requestParameters: TikTokShopApiOauthTikTokShopCallbackRequest, options?: RawAxiosRequestConfig): AxiosPromise<OauthTikTokShopStart200Response> {
             return localVarFp.oauthTikTokShopCallback(requestParameters.code, requestParameters.state, options).then((request) => request(axios, basePath));
         },
         /**
@@ -18599,7 +18612,7 @@ export const TikTokShopApiFactory = function (configuration?: Configuration, bas
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        oauthTikTokShopStart(requestParameters: TikTokShopApiOauthTikTokShopStartRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        oauthTikTokShopStart(requestParameters: TikTokShopApiOauthTikTokShopStartRequest, options?: RawAxiosRequestConfig): AxiosPromise<OauthTikTokShopStart200Response> {
             return localVarFp.oauthTikTokShopStart(requestParameters.accountId, options).then((request) => request(axios, basePath));
         },
         /**
