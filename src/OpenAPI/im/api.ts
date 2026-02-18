@@ -426,6 +426,12 @@ export interface AccountCredentialsTikTokShop {
      * @memberof AccountCredentialsTikTokShop
      */
     'shopName'?: string;
+    /**
+     * Encrypted shop identifier required for API request signing
+     * @type {string}
+     * @memberof AccountCredentialsTikTokShop
+     */
+    'shopCipher'?: string;
 }
 
 export const AccountCredentialsTikTokShopTypeEnum = {
@@ -6617,11 +6623,23 @@ export interface TikTokChatState {
  */
 export interface TikTokShopStateInfo {
     /**
-     * 
-     * @type {TikTokShopStateInfoShopInfo}
+     * Shop name
+     * @type {string}
      * @memberof TikTokShopStateInfo
      */
-    'shopInfo'?: TikTokShopStateInfoShopInfo;
+    'name'?: string;
+    /**
+     * Shop logo URL
+     * @type {string}
+     * @memberof TikTokShopStateInfo
+     */
+    'logo'?: string;
+    /**
+     * Shop region code
+     * @type {string}
+     * @memberof TikTokShopStateInfo
+     */
+    'region'?: string;
     /**
      * Registered webhook ID
      * @type {string}
@@ -6634,31 +6652,6 @@ export interface TikTokShopStateInfo {
      * @memberof TikTokShopStateInfo
      */
     'syncCompletedAt'?: string;
-}
-/**
- * 
- * @export
- * @interface TikTokShopStateInfoShopInfo
- */
-export interface TikTokShopStateInfoShopInfo {
-    /**
-     * Shop name
-     * @type {string}
-     * @memberof TikTokShopStateInfoShopInfo
-     */
-    'name'?: string;
-    /**
-     * Shop logo URL
-     * @type {string}
-     * @memberof TikTokShopStateInfoShopInfo
-     */
-    'logo'?: string;
-    /**
-     * Shop region code
-     * @type {string}
-     * @memberof TikTokShopStateInfoShopInfo
-     */
-    'region'?: string;
 }
 /**
  * 
@@ -6973,95 +6966,158 @@ export interface WebhookSmsLimitPostRequest {
     'AccountSid'?: string;
 }
 /**
- * 
+ * TikTok Shop push notification payload
  * @export
  * @interface WebhookTikTokShopPostRequest
  */
 export interface WebhookTikTokShopPostRequest {
     /**
-     * Type of webhook event
+     * Event type code (e.g. 1 for new message)
+     * @type {number}
+     * @memberof WebhookTikTokShopPostRequest
+     */
+    'type'?: number;
+    /**
+     * Shop ID used to resolve the ChatDaddy account
      * @type {string}
      * @memberof WebhookTikTokShopPostRequest
      */
-    'event_type'?: WebhookTikTokShopPostRequestEventTypeEnum;
+    'shop_id': string;
+    /**
+     * Unix timestamp in seconds
+     * @type {number}
+     * @memberof WebhookTikTokShopPostRequest
+     */
+    'timestamp'?: number;
+    /**
+     * 
+     * @type {WebhookTikTokShopPostRequestData}
+     * @memberof WebhookTikTokShopPostRequest
+     */
+    'data'?: WebhookTikTokShopPostRequestData;
+}
+/**
+ * Event data payload
+ * @export
+ * @interface WebhookTikTokShopPostRequestData
+ */
+export interface WebhookTikTokShopPostRequestData {
     /**
      * Conversation ID
      * @type {string}
-     * @memberof WebhookTikTokShopPostRequest
+     * @memberof WebhookTikTokShopPostRequestData
      */
     'conversation_id'?: string;
     /**
-     * Shop ID
-     * @type {string}
-     * @memberof WebhookTikTokShopPostRequest
+     * 
+     * @type {WebhookTikTokShopPostRequestDataMessage}
+     * @memberof WebhookTikTokShopPostRequestData
      */
-    'shop_id'?: string;
+    'message'?: WebhookTikTokShopPostRequestDataMessage;
+}
+/**
+ * Message data (present for message events)
+ * @export
+ * @interface WebhookTikTokShopPostRequestDataMessage
+ */
+export interface WebhookTikTokShopPostRequestDataMessage {
+    /**
+     * Message ID
+     * @type {string}
+     * @memberof WebhookTikTokShopPostRequestDataMessage
+     */
+    'id'?: string;
+    /**
+     * Message creation time (Unix timestamp in seconds)
+     * @type {number}
+     * @memberof WebhookTikTokShopPostRequestDataMessage
+     */
+    'create_time'?: number;
+    /**
+     * Message content type
+     * @type {string}
+     * @memberof WebhookTikTokShopPostRequestDataMessage
+     */
+    'type'?: WebhookTikTokShopPostRequestDataMessageTypeEnum;
     /**
      * 
-     * @type {WebhookTikTokShopPostRequestMessage}
-     * @memberof WebhookTikTokShopPostRequest
+     * @type {WebhookTikTokShopPostRequestDataMessageContent}
+     * @memberof WebhookTikTokShopPostRequestDataMessage
      */
-    'message'?: WebhookTikTokShopPostRequestMessage;
+    'content'?: WebhookTikTokShopPostRequestDataMessageContent;
+    /**
+     * 
+     * @type {WebhookTikTokShopPostRequestDataMessageSender}
+     * @memberof WebhookTikTokShopPostRequestDataMessage
+     */
+    'sender'?: WebhookTikTokShopPostRequestDataMessageSender;
 }
 
-export const WebhookTikTokShopPostRequestEventTypeEnum = {
-    MessageSent: 'MESSAGE_SENT',
-    MessageUpdated: 'MESSAGE_UPDATED',
-    ConversationUpdated: 'CONVERSATION_UPDATED'
+export const WebhookTikTokShopPostRequestDataMessageTypeEnum = {
+    Text: 'TEXT',
+    Image: 'IMAGE'
 } as const;
 
-export type WebhookTikTokShopPostRequestEventTypeEnum = typeof WebhookTikTokShopPostRequestEventTypeEnum[keyof typeof WebhookTikTokShopPostRequestEventTypeEnum];
+export type WebhookTikTokShopPostRequestDataMessageTypeEnum = typeof WebhookTikTokShopPostRequestDataMessageTypeEnum[keyof typeof WebhookTikTokShopPostRequestDataMessageTypeEnum];
 
 /**
- * Message data
+ * Message content
  * @export
- * @interface WebhookTikTokShopPostRequestMessage
+ * @interface WebhookTikTokShopPostRequestDataMessageContent
  */
-export interface WebhookTikTokShopPostRequestMessage {
+export interface WebhookTikTokShopPostRequestDataMessageContent {
     /**
      * 
-     * @type {string}
-     * @memberof WebhookTikTokShopPostRequestMessage
+     * @type {WebhookTikTokShopPostRequestDataMessageContentText}
+     * @memberof WebhookTikTokShopPostRequestDataMessageContent
      */
-    'message_id'?: string;
+    'text'?: WebhookTikTokShopPostRequestDataMessageContentText;
     /**
      * 
      * @type {string}
-     * @memberof WebhookTikTokShopPostRequestMessage
+     * @memberof WebhookTikTokShopPostRequestDataMessageContent
      */
-    'sender_id'?: string;
+    'image_url'?: string;
+}
+/**
+ * 
+ * @export
+ * @interface WebhookTikTokShopPostRequestDataMessageContentText
+ */
+export interface WebhookTikTokShopPostRequestDataMessageContentText {
     /**
      * 
      * @type {string}
-     * @memberof WebhookTikTokShopPostRequestMessage
-     */
-    'sender_type'?: WebhookTikTokShopPostRequestMessageSenderTypeEnum;
-    /**
-     * 
-     * @type {string}
-     * @memberof WebhookTikTokShopPostRequestMessage
+     * @memberof WebhookTikTokShopPostRequestDataMessageContentText
      */
     'content'?: string;
+}
+/**
+ * Sender information
+ * @export
+ * @interface WebhookTikTokShopPostRequestDataMessageSender
+ */
+export interface WebhookTikTokShopPostRequestDataMessageSender {
     /**
      * 
      * @type {string}
-     * @memberof WebhookTikTokShopPostRequestMessage
+     * @memberof WebhookTikTokShopPostRequestDataMessageSender
      */
-    'message_type'?: string;
+    'user_id'?: string;
     /**
      * 
      * @type {string}
-     * @memberof WebhookTikTokShopPostRequestMessage
+     * @memberof WebhookTikTokShopPostRequestDataMessageSender
      */
-    'timestamp'?: string;
+    'type'?: WebhookTikTokShopPostRequestDataMessageSenderTypeEnum;
 }
 
-export const WebhookTikTokShopPostRequestMessageSenderTypeEnum = {
+export const WebhookTikTokShopPostRequestDataMessageSenderTypeEnum = {
     Buyer: 'BUYER',
     Seller: 'SELLER'
 } as const;
 
-export type WebhookTikTokShopPostRequestMessageSenderTypeEnum = typeof WebhookTikTokShopPostRequestMessageSenderTypeEnum[keyof typeof WebhookTikTokShopPostRequestMessageSenderTypeEnum];
+export type WebhookTikTokShopPostRequestDataMessageSenderTypeEnum = typeof WebhookTikTokShopPostRequestDataMessageSenderTypeEnum[keyof typeof WebhookTikTokShopPostRequestDataMessageSenderTypeEnum];
 
 
 /**
@@ -18497,18 +18553,14 @@ export const TikTokShopApiAxiosParamCreator = function (configuration?: Configur
             };
         },
         /**
-         * Handles incoming message and conversation events from TikTok Shop
+         * Global webhook endpoint for all TikTok Shop events. Configured once in the TikTok Shop Partner Center dashboard. The account is resolved from the shop_id field in the payload body.
          * @summary Receive TikTok Shop webhook events
-         * @param {string} accountId 
          * @param {WebhookTikTokShopPostRequest} [webhookTikTokShopPostRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        webhookTikTokShopPost: async (accountId: string, webhookTikTokShopPostRequest?: WebhookTikTokShopPostRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'accountId' is not null or undefined
-            assertParamExists('webhookTikTokShopPost', 'accountId', accountId)
-            const localVarPath = `/webhook/tiktok-shop/{accountId}`
-                .replace(`{${"accountId"}}`, encodeURIComponent(String(accountId)));
+        webhookTikTokShopPost: async (webhookTikTokShopPostRequest?: WebhookTikTokShopPostRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/webhook/tiktok-shop`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -18572,15 +18624,14 @@ export const TikTokShopApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Handles incoming message and conversation events from TikTok Shop
+         * Global webhook endpoint for all TikTok Shop events. Configured once in the TikTok Shop Partner Center dashboard. The account is resolved from the shop_id field in the payload body.
          * @summary Receive TikTok Shop webhook events
-         * @param {string} accountId 
          * @param {WebhookTikTokShopPostRequest} [webhookTikTokShopPostRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async webhookTikTokShopPost(accountId: string, webhookTikTokShopPostRequest?: WebhookTikTokShopPostRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AccountsDelete200Response>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.webhookTikTokShopPost(accountId, webhookTikTokShopPostRequest, options);
+        async webhookTikTokShopPost(webhookTikTokShopPostRequest?: WebhookTikTokShopPostRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AccountsDelete200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.webhookTikTokShopPost(webhookTikTokShopPostRequest, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['TikTokShopApi.webhookTikTokShopPost']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -18616,14 +18667,14 @@ export const TikTokShopApiFactory = function (configuration?: Configuration, bas
             return localVarFp.oauthTikTokShopStart(requestParameters.accountId, options).then((request) => request(axios, basePath));
         },
         /**
-         * Handles incoming message and conversation events from TikTok Shop
+         * Global webhook endpoint for all TikTok Shop events. Configured once in the TikTok Shop Partner Center dashboard. The account is resolved from the shop_id field in the payload body.
          * @summary Receive TikTok Shop webhook events
          * @param {TikTokShopApiWebhookTikTokShopPostRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        webhookTikTokShopPost(requestParameters: TikTokShopApiWebhookTikTokShopPostRequest, options?: RawAxiosRequestConfig): AxiosPromise<AccountsDelete200Response> {
-            return localVarFp.webhookTikTokShopPost(requestParameters.accountId, requestParameters.webhookTikTokShopPostRequest, options).then((request) => request(axios, basePath));
+        webhookTikTokShopPost(requestParameters: TikTokShopApiWebhookTikTokShopPostRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<AccountsDelete200Response> {
+            return localVarFp.webhookTikTokShopPost(requestParameters.webhookTikTokShopPostRequest, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -18671,13 +18722,6 @@ export interface TikTokShopApiOauthTikTokShopStartRequest {
 export interface TikTokShopApiWebhookTikTokShopPostRequest {
     /**
      * 
-     * @type {string}
-     * @memberof TikTokShopApiWebhookTikTokShopPost
-     */
-    readonly accountId: string
-
-    /**
-     * 
      * @type {WebhookTikTokShopPostRequest}
      * @memberof TikTokShopApiWebhookTikTokShopPost
      */
@@ -18716,15 +18760,15 @@ export class TikTokShopApi extends BaseAPI {
     }
 
     /**
-     * Handles incoming message and conversation events from TikTok Shop
+     * Global webhook endpoint for all TikTok Shop events. Configured once in the TikTok Shop Partner Center dashboard. The account is resolved from the shop_id field in the payload body.
      * @summary Receive TikTok Shop webhook events
      * @param {TikTokShopApiWebhookTikTokShopPostRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof TikTokShopApi
      */
-    public webhookTikTokShopPost(requestParameters: TikTokShopApiWebhookTikTokShopPostRequest, options?: RawAxiosRequestConfig) {
-        return TikTokShopApiFp(this.configuration).webhookTikTokShopPost(requestParameters.accountId, requestParameters.webhookTikTokShopPostRequest, options).then((request) => request(this.axios, this.basePath));
+    public webhookTikTokShopPost(requestParameters: TikTokShopApiWebhookTikTokShopPostRequest = {}, options?: RawAxiosRequestConfig) {
+        return TikTokShopApiFp(this.configuration).webhookTikTokShopPost(requestParameters.webhookTikTokShopPostRequest, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
