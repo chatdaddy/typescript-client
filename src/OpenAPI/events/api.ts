@@ -1757,6 +1757,18 @@ export interface BotInsertDataActionsInnerAllOfMessage {
      */
     'text': string | null;
     /**
+     * Optional header text (Meta template style, e.g. for WABA)
+     * @type {string}
+     * @memberof BotInsertDataActionsInnerAllOfMessage
+     */
+    'header'?: string | null;
+    /**
+     * Optional footer text (Meta template style, e.g. for WABA)
+     * @type {string}
+     * @memberof BotInsertDataActionsInnerAllOfMessage
+     */
+    'footer'?: string | null;
+    /**
      * array of attachments for the template
      * @type {Array<BotInsertDataActionsInnerAllOfMessageAttachmentsInner>}
      * @memberof BotInsertDataActionsInnerAllOfMessage

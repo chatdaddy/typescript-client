@@ -4196,6 +4196,18 @@ export interface MessageObj {
      */
     'text': string | null;
     /**
+     * Optional header text (Meta template style, e.g. for WABA)
+     * @type {string}
+     * @memberof MessageObj
+     */
+    'header'?: string | null;
+    /**
+     * Optional footer text (Meta template style, e.g. for WABA)
+     * @type {string}
+     * @memberof MessageObj
+     */
+    'footer'?: string | null;
+    /**
      * array of attachments for the template
      * @type {Array<IMMessageAttachment>}
      * @memberof MessageObj
