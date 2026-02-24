@@ -9259,7 +9259,7 @@ export interface MessageInsertDataConversationMetadata {
      * @type {string}
      * @memberof MessageInsertDataConversationMetadata
      */
-    'id': string;
+    'id'?: string;
     /**
      * 
      * @type {string}
@@ -9272,6 +9272,36 @@ export interface MessageInsertDataConversationMetadata {
      * @memberof MessageInsertDataConversationMetadata
      */
     'type': string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof MessageInsertDataConversationMetadata
+     */
+    'billable'?: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof MessageInsertDataConversationMetadata
+     */
+    'pricingCategory'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof MessageInsertDataConversationMetadata
+     */
+    'pricingModel'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof MessageInsertDataConversationMetadata
+     */
+    'pricingType'?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof MessageInsertDataConversationMetadata
+     */
+    'estimatedCost'?: number;
 }
 /**
  * @type MessageInsertDataError

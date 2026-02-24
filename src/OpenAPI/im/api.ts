@@ -6741,17 +6741,17 @@ export interface UpsertMetadata {
     'actor'?: ActorMetadata;
 }
 /**
- * Metadata about a WABA conversation. This is set on the message when a new conversation is created.
+ * Metadata about a WABA conversation and its pricing. Set on message status updates from Me
  * @export
  * @interface WABAConversationMetadata
  */
 export interface WABAConversationMetadata {
     /**
-     * ID of the conversation
+     * Conversation ID from Meta (not always present on every status update)
      * @type {string}
      * @memberof WABAConversationMetadata
      */
-    'id': string;
+    'id'?: string;
     /**
      * An ISO formatted timestamp
      * @type {string}
@@ -6759,11 +6759,41 @@ export interface WABAConversationMetadata {
      */
     'createdAt'?: string;
     /**
-     * 
+     * Conversation origin type from Meta, e.g. service, marketing, utility, authentication, referral_conversion
      * @type {string}
      * @memberof WABAConversationMetadata
      */
     'type': string;
+    /**
+     * Whether this message incurs a charge from Meta
+     * @type {boolean}
+     * @memberof WABAConversationMetadata
+     */
+    'billable'?: boolean;
+    /**
+     * Pricing category from Meta: marketing, utility, service, authentication, referral_conversion
+     * @type {string}
+     * @memberof WABAConversationMetadata
+     */
+    'pricingCategory'?: string;
+    /**
+     * Pricing model from Meta, e.g. PMP (per-message pricing)
+     * @type {string}
+     * @memberof WABAConversationMetadata
+     */
+    'pricingModel'?: string;
+    /**
+     * Specific pricing type: regular (billable), free_customer_service, free_entry_point
+     * @type {string}
+     * @memberof WABAConversationMetadata
+     */
+    'pricingType'?: string;
+    /**
+     * Estimated cost in USD based on contact country + conversation category. 0 if not billable.
+     * @type {number}
+     * @memberof WABAConversationMetadata
+     */
+    'estimatedCost'?: number;
 }
 /**
  * 
