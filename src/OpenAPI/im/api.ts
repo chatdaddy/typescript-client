@@ -1007,6 +1007,12 @@ export interface AlibabaCAMSStateInfo {
      * @memberof AlibabaCAMSStateInfo
      */
     'messagesSentSinceLastSync'?: number;
+    /**
+     * Whether this WABA account is using coexistence mode (phone number is also connected to WhatsApp mobile app). True when status is CONNECTED during initial sync.
+     * @type {boolean}
+     * @memberof AlibabaCAMSStateInfo
+     */
+    'isCoexistence'?: boolean;
 }
 
 export const AlibabaCAMSStateInfoVersionEnum = {
