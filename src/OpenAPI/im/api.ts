@@ -1013,6 +1013,12 @@ export interface AlibabaCAMSStateInfo {
      * @memberof AlibabaCAMSStateInfo
      */
     'isCoexistence'?: boolean;
+    /**
+     * 
+     * @type {CoexistDetails}
+     * @memberof AlibabaCAMSStateInfo
+     */
+    'coexistDetails'?: CoexistDetails;
 }
 
 export const AlibabaCAMSStateInfoVersionEnum = {
@@ -1941,6 +1947,57 @@ export interface ChatsGetTicketParameter {
      */
     'stageId'?: string;
 }
+/**
+ * Details collected from the coexist onboarding flow (steps 1-3)
+ * @export
+ * @interface CoexistDetails
+ */
+export interface CoexistDetails {
+    /**
+     * Step 1: Whether user is currently using WhatsApp Business API or the WhatsApp App
+     * @type {string}
+     * @memberof CoexistDetails
+     */
+    'coexistWhatsappType'?: CoexistDetailsCoexistWhatsappTypeEnum;
+    /**
+     * Step 2: Which platform the user is currently using (e.g. WATI, Sleekflow, Respond.io, Omnichat, WhatsApp Business, WhatsApp Personal, Not Sure, Others)
+     * @type {string}
+     * @memberof CoexistDetails
+     */
+    'coexistPlatform'?: string;
+    /**
+     * Step 3: The WhatsApp phone number(s) entered with country code
+     * @type {string}
+     * @memberof CoexistDetails
+     */
+    'phoneNumber'?: string;
+    /**
+     * Step 3: User\'s full name
+     * @type {string}
+     * @memberof CoexistDetails
+     */
+    'fullName'?: string;
+    /**
+     * Step 3: User\'s email address
+     * @type {string}
+     * @memberof CoexistDetails
+     */
+    'emailAddress'?: string;
+    /**
+     * Step 3: Country code prefix (e.g. +852)
+     * @type {string}
+     * @memberof CoexistDetails
+     */
+    'countryCode'?: string;
+}
+
+export const CoexistDetailsCoexistWhatsappTypeEnum = {
+    Waba: 'waba',
+    Whatsapp: 'whatsapp'
+} as const;
+
+export type CoexistDetailsCoexistWhatsappTypeEnum = typeof CoexistDetailsCoexistWhatsappTypeEnum[keyof typeof CoexistDetailsCoexistWhatsappTypeEnum];
+
 /**
  * 
  * @export
