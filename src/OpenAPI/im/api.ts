@@ -1359,6 +1359,12 @@ export interface AlibabaCamsRegisterRequest {
      * @deprecated
      */
     'token'?: string;
+    /**
+     * 
+     * @type {CoexistDetails}
+     * @memberof AlibabaCamsRegisterRequest
+     */
+    'coexistDetails'?: CoexistDetails;
 }
 
 export const AlibabaCamsRegisterRequestVersionEnum = {
