@@ -18575,10 +18575,12 @@ export const TikTokShopApiAxiosParamCreator = function (configuration?: Configur
          * @param {string} code OAuth authorization code
          * @param {string} state State parameter containing accountId and origin
          * @param {string} [appKey] App key sent by TikTok Shop in the callback
+         * @param {string} [locale] Locale sent by TikTok Shop in the callback
+         * @param {string} [shopRegion] Shop region sent by TikTok Shop in the callback
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        oauthTikTokShopCallback: async (code: string, state: string, appKey?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        oauthTikTokShopCallback: async (code: string, state: string, appKey?: string, locale?: string, shopRegion?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'code' is not null or undefined
             assertParamExists('oauthTikTokShopCallback', 'code', code)
             // verify required parameter 'state' is not null or undefined
@@ -18605,6 +18607,14 @@ export const TikTokShopApiAxiosParamCreator = function (configuration?: Configur
 
             if (appKey !== undefined) {
                 localVarQueryParameter['app_key'] = appKey;
+            }
+
+            if (locale !== undefined) {
+                localVarQueryParameter['locale'] = locale;
+            }
+
+            if (shopRegion !== undefined) {
+                localVarQueryParameter['shop_region'] = shopRegion;
             }
 
 
@@ -18706,11 +18716,13 @@ export const TikTokShopApiFp = function(configuration?: Configuration) {
          * @param {string} code OAuth authorization code
          * @param {string} state State parameter containing accountId and origin
          * @param {string} [appKey] App key sent by TikTok Shop in the callback
+         * @param {string} [locale] Locale sent by TikTok Shop in the callback
+         * @param {string} [shopRegion] Shop region sent by TikTok Shop in the callback
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async oauthTikTokShopCallback(code: string, state: string, appKey?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<OauthTikTokShopStart200Response>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.oauthTikTokShopCallback(code, state, appKey, options);
+        async oauthTikTokShopCallback(code: string, state: string, appKey?: string, locale?: string, shopRegion?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<OauthTikTokShopStart200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.oauthTikTokShopCallback(code, state, appKey, locale, shopRegion, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['TikTokShopApi.oauthTikTokShopCallback']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -18759,7 +18771,7 @@ export const TikTokShopApiFactory = function (configuration?: Configuration, bas
          * @throws {RequiredError}
          */
         oauthTikTokShopCallback(requestParameters: TikTokShopApiOauthTikTokShopCallbackRequest, options?: RawAxiosRequestConfig): AxiosPromise<OauthTikTokShopStart200Response> {
-            return localVarFp.oauthTikTokShopCallback(requestParameters.code, requestParameters.state, requestParameters.appKey, options).then((request) => request(axios, basePath));
+            return localVarFp.oauthTikTokShopCallback(requestParameters.code, requestParameters.state, requestParameters.appKey, requestParameters.locale, requestParameters.shopRegion, options).then((request) => request(axios, basePath));
         },
         /**
          * Redirects to TikTok Shop authorization page
@@ -18810,6 +18822,20 @@ export interface TikTokShopApiOauthTikTokShopCallbackRequest {
      * @memberof TikTokShopApiOauthTikTokShopCallback
      */
     readonly appKey?: string
+
+    /**
+     * Locale sent by TikTok Shop in the callback
+     * @type {string}
+     * @memberof TikTokShopApiOauthTikTokShopCallback
+     */
+    readonly locale?: string
+
+    /**
+     * Shop region sent by TikTok Shop in the callback
+     * @type {string}
+     * @memberof TikTokShopApiOauthTikTokShopCallback
+     */
+    readonly shopRegion?: string
 }
 
 /**
@@ -18856,7 +18882,7 @@ export class TikTokShopApi extends BaseAPI {
      * @memberof TikTokShopApi
      */
     public oauthTikTokShopCallback(requestParameters: TikTokShopApiOauthTikTokShopCallbackRequest, options?: RawAxiosRequestConfig) {
-        return TikTokShopApiFp(this.configuration).oauthTikTokShopCallback(requestParameters.code, requestParameters.state, requestParameters.appKey, options).then((request) => request(this.axios, this.basePath));
+        return TikTokShopApiFp(this.configuration).oauthTikTokShopCallback(requestParameters.code, requestParameters.state, requestParameters.appKey, requestParameters.locale, requestParameters.shopRegion, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
