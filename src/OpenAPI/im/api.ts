@@ -18573,11 +18573,12 @@ export const TikTokShopApiAxiosParamCreator = function (configuration?: Configur
          * Processes OAuth callback and stores credentials
          * @summary Handle TikTok Shop OAuth callback
          * @param {string} code OAuth authorization code
-         * @param {string} state State parameter containing accountId
+         * @param {string} state State parameter containing accountId and origin
+         * @param {string} [appKey] App key sent by TikTok Shop in the callback
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        oauthTikTokShopCallback: async (code: string, state: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        oauthTikTokShopCallback: async (code: string, state: string, appKey?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'code' is not null or undefined
             assertParamExists('oauthTikTokShopCallback', 'code', code)
             // verify required parameter 'state' is not null or undefined
@@ -18600,6 +18601,10 @@ export const TikTokShopApiAxiosParamCreator = function (configuration?: Configur
 
             if (state !== undefined) {
                 localVarQueryParameter['state'] = state;
+            }
+
+            if (appKey !== undefined) {
+                localVarQueryParameter['app_key'] = appKey;
             }
 
 
@@ -18699,12 +18704,13 @@ export const TikTokShopApiFp = function(configuration?: Configuration) {
          * Processes OAuth callback and stores credentials
          * @summary Handle TikTok Shop OAuth callback
          * @param {string} code OAuth authorization code
-         * @param {string} state State parameter containing accountId
+         * @param {string} state State parameter containing accountId and origin
+         * @param {string} [appKey] App key sent by TikTok Shop in the callback
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async oauthTikTokShopCallback(code: string, state: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<OauthTikTokShopStart200Response>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.oauthTikTokShopCallback(code, state, options);
+        async oauthTikTokShopCallback(code: string, state: string, appKey?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<OauthTikTokShopStart200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.oauthTikTokShopCallback(code, state, appKey, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['TikTokShopApi.oauthTikTokShopCallback']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -18753,7 +18759,7 @@ export const TikTokShopApiFactory = function (configuration?: Configuration, bas
          * @throws {RequiredError}
          */
         oauthTikTokShopCallback(requestParameters: TikTokShopApiOauthTikTokShopCallbackRequest, options?: RawAxiosRequestConfig): AxiosPromise<OauthTikTokShopStart200Response> {
-            return localVarFp.oauthTikTokShopCallback(requestParameters.code, requestParameters.state, options).then((request) => request(axios, basePath));
+            return localVarFp.oauthTikTokShopCallback(requestParameters.code, requestParameters.state, requestParameters.appKey, options).then((request) => request(axios, basePath));
         },
         /**
          * Redirects to TikTok Shop authorization page
@@ -18792,11 +18798,18 @@ export interface TikTokShopApiOauthTikTokShopCallbackRequest {
     readonly code: string
 
     /**
-     * State parameter containing accountId
+     * State parameter containing accountId and origin
      * @type {string}
      * @memberof TikTokShopApiOauthTikTokShopCallback
      */
     readonly state: string
+
+    /**
+     * App key sent by TikTok Shop in the callback
+     * @type {string}
+     * @memberof TikTokShopApiOauthTikTokShopCallback
+     */
+    readonly appKey?: string
 }
 
 /**
@@ -18843,7 +18856,7 @@ export class TikTokShopApi extends BaseAPI {
      * @memberof TikTokShopApi
      */
     public oauthTikTokShopCallback(requestParameters: TikTokShopApiOauthTikTokShopCallbackRequest, options?: RawAxiosRequestConfig) {
-        return TikTokShopApiFp(this.configuration).oauthTikTokShopCallback(requestParameters.code, requestParameters.state, options).then((request) => request(this.axios, this.basePath));
+        return TikTokShopApiFp(this.configuration).oauthTikTokShopCallback(requestParameters.code, requestParameters.state, requestParameters.appKey, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
