@@ -1638,6 +1638,92 @@ export interface WabaMessageWindowPostRequest {
 /**
  * 
  * @export
+ * @interface WabaPlgTracking
+ */
+export interface WabaPlgTracking {
+    /**
+     * Unique record ID
+     * @type {string}
+     * @memberof WabaPlgTracking
+     */
+    'id': string;
+    /**
+     * User ID (may not be available until all steps are completed)
+     * @type {string}
+     * @memberof WabaPlgTracking
+     */
+    'userId'?: string | null;
+    /**
+     * Name of the PLG funnel step
+     * @type {string}
+     * @memberof WabaPlgTracking
+     */
+    'stepName': string;
+    /**
+     * Step number in the funnel
+     * @type {number}
+     * @memberof WabaPlgTracking
+     */
+    'stepNumber': number;
+    /**
+     * Whether the step was completed successfully
+     * @type {boolean}
+     * @memberof WabaPlgTracking
+     */
+    'passed': boolean;
+    /**
+     * Stringified JSON with arbitrary details
+     * @type {string}
+     * @memberof WabaPlgTracking
+     */
+    'data'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof WabaPlgTracking
+     */
+    'createdAt'?: string;
+}
+/**
+ * 
+ * @export
+ * @interface WabaPlgTrackingPostRequest
+ */
+export interface WabaPlgTrackingPostRequest {
+    /**
+     * User ID (optional, may not be available until all steps are completed)
+     * @type {string}
+     * @memberof WabaPlgTrackingPostRequest
+     */
+    'userId'?: string;
+    /**
+     * Name of the PLG funnel step
+     * @type {string}
+     * @memberof WabaPlgTrackingPostRequest
+     */
+    'stepName': string;
+    /**
+     * Step number in the funnel
+     * @type {number}
+     * @memberof WabaPlgTrackingPostRequest
+     */
+    'stepNumber': number;
+    /**
+     * Whether the step was completed successfully
+     * @type {boolean}
+     * @memberof WabaPlgTrackingPostRequest
+     */
+    'passed': boolean;
+    /**
+     * Arbitrary details about the step event
+     * @type {{ [key: string]: any; }}
+     * @memberof WabaPlgTrackingPostRequest
+     */
+    'data'?: { [key: string]: any; };
+}
+/**
+ * 
+ * @export
  * @interface WebhookLarkGet200Response
  */
 export interface WebhookLarkGet200Response {
@@ -5599,6 +5685,128 @@ export class WabaMessageWindowApi extends BaseAPI {
      */
     public wabaMessageWindowPost(requestParameters: WabaMessageWindowApiWabaMessageWindowPostRequest = {}, options?: RawAxiosRequestConfig) {
         return WabaMessageWindowApiFp(this.configuration).wabaMessageWindowPost(requestParameters.wabaMessageWindowPostRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+
+/**
+ * WabaPlgTrackingApi - axios parameter creator
+ * @export
+ */
+export const WabaPlgTrackingApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @summary Track WABA PLG funnel step
+         * @param {WabaPlgTrackingPostRequest} [wabaPlgTrackingPostRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        wabaPlgTrackingPost: async (wabaPlgTrackingPostRequest?: WabaPlgTrackingPostRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/waba-plg`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(wabaPlgTrackingPostRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * WabaPlgTrackingApi - functional programming interface
+ * @export
+ */
+export const WabaPlgTrackingApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = WabaPlgTrackingApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * 
+         * @summary Track WABA PLG funnel step
+         * @param {WabaPlgTrackingPostRequest} [wabaPlgTrackingPostRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async wabaPlgTrackingPost(wabaPlgTrackingPostRequest?: WabaPlgTrackingPostRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<WebhookLarkGet200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.wabaPlgTrackingPost(wabaPlgTrackingPostRequest, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['WabaPlgTrackingApi.wabaPlgTrackingPost']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+    }
+};
+
+/**
+ * WabaPlgTrackingApi - factory interface
+ * @export
+ */
+export const WabaPlgTrackingApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = WabaPlgTrackingApiFp(configuration)
+    return {
+        /**
+         * 
+         * @summary Track WABA PLG funnel step
+         * @param {WabaPlgTrackingApiWabaPlgTrackingPostRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        wabaPlgTrackingPost(requestParameters: WabaPlgTrackingApiWabaPlgTrackingPostRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<WebhookLarkGet200Response> {
+            return localVarFp.wabaPlgTrackingPost(requestParameters.wabaPlgTrackingPostRequest, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * Request parameters for wabaPlgTrackingPost operation in WabaPlgTrackingApi.
+ * @export
+ * @interface WabaPlgTrackingApiWabaPlgTrackingPostRequest
+ */
+export interface WabaPlgTrackingApiWabaPlgTrackingPostRequest {
+    /**
+     * 
+     * @type {WabaPlgTrackingPostRequest}
+     * @memberof WabaPlgTrackingApiWabaPlgTrackingPost
+     */
+    readonly wabaPlgTrackingPostRequest?: WabaPlgTrackingPostRequest
+}
+
+/**
+ * WabaPlgTrackingApi - object-oriented interface
+ * @export
+ * @class WabaPlgTrackingApi
+ * @extends {BaseAPI}
+ */
+export class WabaPlgTrackingApi extends BaseAPI {
+    /**
+     * 
+     * @summary Track WABA PLG funnel step
+     * @param {WabaPlgTrackingApiWabaPlgTrackingPostRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof WabaPlgTrackingApi
+     */
+    public wabaPlgTrackingPost(requestParameters: WabaPlgTrackingApiWabaPlgTrackingPostRequest = {}, options?: RawAxiosRequestConfig) {
+        return WabaPlgTrackingApiFp(this.configuration).wabaPlgTrackingPost(requestParameters.wabaPlgTrackingPostRequest, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
