@@ -4888,6 +4888,25 @@ export interface MessagesGetRangeParameter {
 /**
  * 
  * @export
+ * @interface MessagesLast24hrGet200Response
+ */
+export interface MessagesLast24hrGet200Response {
+    /**
+     * Number of messages sent in the last 24 hours
+     * @type {number}
+     * @memberof MessagesLast24hrGet200Response
+     */
+    'messagesSent': number;
+    /**
+     * Number of messages received in the last 24 hours
+     * @type {number}
+     * @memberof MessagesLast24hrGet200Response
+     */
+    'messagesReceived': number;
+}
+/**
+ * 
+ * @export
  * @interface MessagesPatchPendingRequest
  */
 export interface MessagesPatchPendingRequest {
@@ -14463,6 +14482,47 @@ export const MessagesApiAxiosParamCreator = function (configuration?: Configurat
             };
         },
         /**
+         * Returns the count of messages sent and received in the last 24 hours for the specified team. 
+         * @summary Get messages sent and received in last 24 hours
+         * @param {string} teamId The team ID to query messages for
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        messagesLast24hrGet: async (teamId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'teamId' is not null or undefined
+            assertParamExists('messagesLast24hrGet', 'teamId', teamId)
+            const localVarPath = `/messages/last-24hr`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", [], configuration)
+
+            if (teamId !== undefined) {
+                localVarQueryParameter['teamId'] = teamId;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * Can reschedule a message, update the content of a note or mark it as resolved 
          * @summary Modify a message/note
          * @param {string} accountId 
@@ -14998,6 +15058,19 @@ export const MessagesApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
+         * Returns the count of messages sent and received in the last 24 hours for the specified team. 
+         * @summary Get messages sent and received in last 24 hours
+         * @param {string} teamId The team ID to query messages for
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async messagesLast24hrGet(teamId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MessagesLast24hrGet200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.messagesLast24hrGet(teamId, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['MessagesApi.messagesLast24hrGet']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
          * Can reschedule a message, update the content of a note or mark it as resolved 
          * @summary Modify a message/note
          * @param {string} accountId 
@@ -15197,6 +15270,16 @@ export const MessagesApiFactory = function (configuration?: Configuration, baseP
          */
         messagesGet(requestParameters: MessagesApiMessagesGetRequest, options?: RawAxiosRequestConfig): AxiosPromise<MessagesGet200Response> {
             return localVarFp.messagesGet(requestParameters.accountId, requestParameters.chatId, requestParameters.range, requestParameters.action, requestParameters.beforeId, requestParameters.count, requestParameters.forceReload, requestParameters.fetchFromPlatform, requestParameters.status, requestParameters.fromMe, requestParameters.attachmentType, requestParameters.includeCursorMessage, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Returns the count of messages sent and received in the last 24 hours for the specified team. 
+         * @summary Get messages sent and received in last 24 hours
+         * @param {MessagesApiMessagesLast24hrGetRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        messagesLast24hrGet(requestParameters: MessagesApiMessagesLast24hrGetRequest, options?: RawAxiosRequestConfig): AxiosPromise<MessagesLast24hrGet200Response> {
+            return localVarFp.messagesLast24hrGet(requestParameters.teamId, options).then((request) => request(axios, basePath));
         },
         /**
          * Can reschedule a message, update the content of a note or mark it as resolved 
@@ -15518,6 +15601,20 @@ export interface MessagesApiMessagesGetRequest {
      * @memberof MessagesApiMessagesGet
      */
     readonly includeCursorMessage?: boolean
+}
+
+/**
+ * Request parameters for messagesLast24hrGet operation in MessagesApi.
+ * @export
+ * @interface MessagesApiMessagesLast24hrGetRequest
+ */
+export interface MessagesApiMessagesLast24hrGetRequest {
+    /**
+     * The team ID to query messages for
+     * @type {string}
+     * @memberof MessagesApiMessagesLast24hrGet
+     */
+    readonly teamId: string
 }
 
 /**
@@ -15891,6 +15988,18 @@ export class MessagesApi extends BaseAPI {
      */
     public messagesGet(requestParameters: MessagesApiMessagesGetRequest, options?: RawAxiosRequestConfig) {
         return MessagesApiFp(this.configuration).messagesGet(requestParameters.accountId, requestParameters.chatId, requestParameters.range, requestParameters.action, requestParameters.beforeId, requestParameters.count, requestParameters.forceReload, requestParameters.fetchFromPlatform, requestParameters.status, requestParameters.fromMe, requestParameters.attachmentType, requestParameters.includeCursorMessage, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Returns the count of messages sent and received in the last 24 hours for the specified team. 
+     * @summary Get messages sent and received in last 24 hours
+     * @param {MessagesApiMessagesLast24hrGetRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof MessagesApi
+     */
+    public messagesLast24hrGet(requestParameters: MessagesApiMessagesLast24hrGetRequest, options?: RawAxiosRequestConfig) {
+        return MessagesApiFp(this.configuration).messagesLast24hrGet(requestParameters.teamId, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
