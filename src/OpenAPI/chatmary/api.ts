@@ -5250,6 +5250,131 @@ export class ScheduleApi extends BaseAPI {
 
 
 /**
+ * TeamApi - axios parameter creator
+ * @export
+ */
+export const TeamApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @summary Fetch team data
+         * @param {string} teamId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        fetchTeamDataGet: async (teamId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'teamId' is not null or undefined
+            assertParamExists('fetchTeamDataGet', 'teamId', teamId)
+            const localVarPath = `/fetch-team-data`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (teamId !== undefined) {
+                localVarQueryParameter['teamId'] = teamId;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * TeamApi - functional programming interface
+ * @export
+ */
+export const TeamApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = TeamApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * 
+         * @summary Fetch team data
+         * @param {string} teamId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async fetchTeamDataGet(teamId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<{ [key: string]: any; }>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.fetchTeamDataGet(teamId, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['TeamApi.fetchTeamDataGet']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+    }
+};
+
+/**
+ * TeamApi - factory interface
+ * @export
+ */
+export const TeamApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = TeamApiFp(configuration)
+    return {
+        /**
+         * 
+         * @summary Fetch team data
+         * @param {TeamApiFetchTeamDataGetRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        fetchTeamDataGet(requestParameters: TeamApiFetchTeamDataGetRequest, options?: RawAxiosRequestConfig): AxiosPromise<{ [key: string]: any; }> {
+            return localVarFp.fetchTeamDataGet(requestParameters.teamId, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * Request parameters for fetchTeamDataGet operation in TeamApi.
+ * @export
+ * @interface TeamApiFetchTeamDataGetRequest
+ */
+export interface TeamApiFetchTeamDataGetRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof TeamApiFetchTeamDataGet
+     */
+    readonly teamId: string
+}
+
+/**
+ * TeamApi - object-oriented interface
+ * @export
+ * @class TeamApi
+ * @extends {BaseAPI}
+ */
+export class TeamApi extends BaseAPI {
+    /**
+     * 
+     * @summary Fetch team data
+     * @param {TeamApiFetchTeamDataGetRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof TeamApi
+     */
+    public fetchTeamDataGet(requestParameters: TeamApiFetchTeamDataGetRequest, options?: RawAxiosRequestConfig) {
+        return TeamApiFp(this.configuration).fetchTeamDataGet(requestParameters.teamId, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+
+/**
  * TrackPageHitsApi - axios parameter creator
  * @export
  */
