@@ -7379,10 +7379,11 @@ export const AccountApiAxiosParamCreator = function (configuration?: Configurati
          * @param {AccountState} [state] only fetch accounts with a state
          * @param {boolean} [returnCount] return total count of accounts
          * @param {string} [teamId] If specified, only fetches accounts that are part of the given team. If not specified, fetches all accounts
+         * @param {boolean} [isCoexistence] If true, only fetches WABA accounts that are using coexistence mode. If false, only fetches WABA accounts that are not using coexistence mode.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        accountsGet: async (q?: string, page?: number, count?: number, type?: AccountType, all?: boolean, state?: AccountState, returnCount?: boolean, teamId?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        accountsGet: async (q?: string, page?: number, count?: number, type?: AccountType, all?: boolean, state?: AccountState, returnCount?: boolean, teamId?: string, isCoexistence?: boolean, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/accounts`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -7429,6 +7430,10 @@ export const AccountApiAxiosParamCreator = function (configuration?: Configurati
 
             if (teamId !== undefined) {
                 localVarQueryParameter['teamId'] = teamId;
+            }
+
+            if (isCoexistence !== undefined) {
+                localVarQueryParameter['isCoexistence'] = isCoexistence;
             }
 
 
@@ -7702,11 +7707,12 @@ export const AccountApiFp = function(configuration?: Configuration) {
          * @param {AccountState} [state] only fetch accounts with a state
          * @param {boolean} [returnCount] return total count of accounts
          * @param {string} [teamId] If specified, only fetches accounts that are part of the given team. If not specified, fetches all accounts
+         * @param {boolean} [isCoexistence] If true, only fetches WABA accounts that are using coexistence mode. If false, only fetches WABA accounts that are not using coexistence mode.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async accountsGet(q?: string, page?: number, count?: number, type?: AccountType, all?: boolean, state?: AccountState, returnCount?: boolean, teamId?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AccountsGet200Response>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.accountsGet(q, page, count, type, all, state, returnCount, teamId, options);
+        async accountsGet(q?: string, page?: number, count?: number, type?: AccountType, all?: boolean, state?: AccountState, returnCount?: boolean, teamId?: string, isCoexistence?: boolean, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AccountsGet200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.accountsGet(q, page, count, type, all, state, returnCount, teamId, isCoexistence, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AccountApi.accountsGet']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -7826,7 +7832,7 @@ export const AccountApiFactory = function (configuration?: Configuration, basePa
          * @throws {RequiredError}
          */
         accountsGet(requestParameters: AccountApiAccountsGetRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<AccountsGet200Response> {
-            return localVarFp.accountsGet(requestParameters.q, requestParameters.page, requestParameters.count, requestParameters.type, requestParameters.all, requestParameters.state, requestParameters.returnCount, requestParameters.teamId, options).then((request) => request(axios, basePath));
+            return localVarFp.accountsGet(requestParameters.q, requestParameters.page, requestParameters.count, requestParameters.type, requestParameters.all, requestParameters.state, requestParameters.returnCount, requestParameters.teamId, requestParameters.isCoexistence, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -7998,6 +8004,13 @@ export interface AccountApiAccountsGetRequest {
      * @memberof AccountApiAccountsGet
      */
     readonly teamId?: string
+
+    /**
+     * If true, only fetches WABA accounts that are using coexistence mode. If false, only fetches WABA accounts that are not using coexistence mode.
+     * @type {boolean}
+     * @memberof AccountApiAccountsGet
+     */
+    readonly isCoexistence?: boolean
 }
 
 /**
@@ -8136,7 +8149,7 @@ export class AccountApi extends BaseAPI {
      * @memberof AccountApi
      */
     public accountsGet(requestParameters: AccountApiAccountsGetRequest = {}, options?: RawAxiosRequestConfig) {
-        return AccountApiFp(this.configuration).accountsGet(requestParameters.q, requestParameters.page, requestParameters.count, requestParameters.type, requestParameters.all, requestParameters.state, requestParameters.returnCount, requestParameters.teamId, options).then((request) => request(this.axios, this.basePath));
+        return AccountApiFp(this.configuration).accountsGet(requestParameters.q, requestParameters.page, requestParameters.count, requestParameters.type, requestParameters.all, requestParameters.state, requestParameters.returnCount, requestParameters.teamId, requestParameters.isCoexistence, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
