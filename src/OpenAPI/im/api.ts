@@ -6481,6 +6481,56 @@ export interface TagsPostRequest {
     'color'?: string;
 }
 /**
+ * 
+ * @export
+ * @interface TagsUsageGet200Response
+ */
+export interface TagsUsageGet200Response {
+    /**
+     * Total number of tags created for this team
+     * @type {number}
+     * @memberof TagsUsageGet200Response
+     */
+    'totalTags': number;
+    /**
+     * Number of tags applied on at least one contact
+     * @type {number}
+     * @memberof TagsUsageGet200Response
+     */
+    'usedTags': number;
+    /**
+     * Average number of tags applied per contact
+     * @type {number}
+     * @memberof TagsUsageGet200Response
+     */
+    'averageTagsPerContact': number;
+    /**
+     * Top tags sorted by usage count (descending)
+     * @type {Array<TagsUsageGet200ResponseTopTagsInner>}
+     * @memberof TagsUsageGet200Response
+     */
+    'topTags': Array<TagsUsageGet200ResponseTopTagsInner>;
+}
+/**
+ * 
+ * @export
+ * @interface TagsUsageGet200ResponseTopTagsInner
+ */
+export interface TagsUsageGet200ResponseTopTagsInner {
+    /**
+     * 
+     * @type {string}
+     * @memberof TagsUsageGet200ResponseTopTagsInner
+     */
+    'name': string;
+    /**
+     * 
+     * @type {number}
+     * @memberof TagsUsageGet200ResponseTopTagsInner
+     */
+    'count': number;
+}
+/**
  * Description of the category of the template
  * @export
  * @enum {string}
@@ -18174,6 +18224,48 @@ export const TagsApiAxiosParamCreator = function (configuration?: Configuration)
                 options: localVarRequestOptions,
             };
         },
+        /**
+         * Returns analytics on how tags are being used for a given team, including total tags, how many have been applied to contacts, average tags per contact, and the most-used tags. 
+         * @summary Get tag usage analytics for a team
+         * @param {string} teamId The team ID to analyse tag usage for
+         * @param {number} [topTagsLimit] How many top tags to return (by usage count)
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        tagsUsageGet: async (teamId: string, topTagsLimit?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'teamId' is not null or undefined
+            assertParamExists('tagsUsageGet', 'teamId', teamId)
+            const localVarPath = `/tags/usage`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (teamId !== undefined) {
+                localVarQueryParameter['teamId'] = teamId;
+            }
+
+            if (topTagsLimit !== undefined) {
+                localVarQueryParameter['topTagsLimit'] = topTagsLimit;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
     }
 };
 
@@ -18241,6 +18333,20 @@ export const TagsApiFp = function(configuration?: Configuration) {
             const localVarOperationServerBasePath = operationServerMap['TagsApi.tagsPost']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
+        /**
+         * Returns analytics on how tags are being used for a given team, including total tags, how many have been applied to contacts, average tags per contact, and the most-used tags. 
+         * @summary Get tag usage analytics for a team
+         * @param {string} teamId The team ID to analyse tag usage for
+         * @param {number} [topTagsLimit] How many top tags to return (by usage count)
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async tagsUsageGet(teamId: string, topTagsLimit?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TagsUsageGet200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.tagsUsageGet(teamId, topTagsLimit, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['TagsApi.tagsUsageGet']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
     }
 };
 
@@ -18289,6 +18395,16 @@ export const TagsApiFactory = function (configuration?: Configuration, basePath?
          */
         tagsPost(requestParameters: TagsApiTagsPostRequest, options?: RawAxiosRequestConfig): AxiosPromise<Tag> {
             return localVarFp.tagsPost(requestParameters.name, requestParameters.tagsPostRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Returns analytics on how tags are being used for a given team, including total tags, how many have been applied to contacts, average tags per contact, and the most-used tags. 
+         * @summary Get tag usage analytics for a team
+         * @param {TagsApiTagsUsageGetRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        tagsUsageGet(requestParameters: TagsApiTagsUsageGetRequest, options?: RawAxiosRequestConfig): AxiosPromise<TagsUsageGet200Response> {
+            return localVarFp.tagsUsageGet(requestParameters.teamId, requestParameters.topTagsLimit, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -18392,6 +18508,27 @@ export interface TagsApiTagsPostRequest {
 }
 
 /**
+ * Request parameters for tagsUsageGet operation in TagsApi.
+ * @export
+ * @interface TagsApiTagsUsageGetRequest
+ */
+export interface TagsApiTagsUsageGetRequest {
+    /**
+     * The team ID to analyse tag usage for
+     * @type {string}
+     * @memberof TagsApiTagsUsageGet
+     */
+    readonly teamId: string
+
+    /**
+     * How many top tags to return (by usage count)
+     * @type {number}
+     * @memberof TagsApiTagsUsageGet
+     */
+    readonly topTagsLimit?: number
+}
+
+/**
  * TagsApi - object-oriented interface
  * @export
  * @class TagsApi
@@ -18443,6 +18580,18 @@ export class TagsApi extends BaseAPI {
      */
     public tagsPost(requestParameters: TagsApiTagsPostRequest, options?: RawAxiosRequestConfig) {
         return TagsApiFp(this.configuration).tagsPost(requestParameters.name, requestParameters.tagsPostRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Returns analytics on how tags are being used for a given team, including total tags, how many have been applied to contacts, average tags per contact, and the most-used tags. 
+     * @summary Get tag usage analytics for a team
+     * @param {TagsApiTagsUsageGetRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof TagsApi
+     */
+    public tagsUsageGet(requestParameters: TagsApiTagsUsageGetRequest, options?: RawAxiosRequestConfig) {
+        return TagsApiFp(this.configuration).tagsUsageGet(requestParameters.teamId, requestParameters.topTagsLimit, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
