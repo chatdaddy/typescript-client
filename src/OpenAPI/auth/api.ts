@@ -704,6 +704,50 @@ export interface ExternalTokenPostResponse {
 export type ExternalTokenRequest = BoutirTokenRequest | FirebaseTokenRequest;
 
 /**
+ * 
+ * @export
+ * @interface FailedCoexistenceConnectionCreate
+ */
+export interface FailedCoexistenceConnectionCreate {
+    /**
+     * Name of the user
+     * @type {string}
+     * @memberof FailedCoexistenceConnectionCreate
+     */
+    'name': string;
+    /**
+     * Email address of the user
+     * @type {string}
+     * @memberof FailedCoexistenceConnectionCreate
+     */
+    'email': string;
+    /**
+     * Phone number of the user
+     * @type {string}
+     * @memberof FailedCoexistenceConnectionCreate
+     */
+    'phoneNumber'?: string;
+}
+/**
+ * 
+ * @export
+ * @interface FailedCoexistenceConnectionPost200Response
+ */
+export interface FailedCoexistenceConnectionPost200Response {
+    /**
+     * 
+     * @type {boolean}
+     * @memberof FailedCoexistenceConnectionPost200Response
+     */
+    'success'?: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof FailedCoexistenceConnectionPost200Response
+     */
+    'id'?: string;
+}
+/**
  * Login with Firebase
  * @export
  * @interface FirebaseTokenRequest
@@ -3943,6 +3987,134 @@ export class AnnouncementsApi extends BaseAPI {
      */
     public announcementPatch(requestParameters: AnnouncementsApiAnnouncementPatchRequest, options?: RawAxiosRequestConfig) {
         return AnnouncementsApiFp(this.configuration).announcementPatch(requestParameters.id, requestParameters.announcementPatch, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+
+/**
+ * CoexistenceApi - axios parameter creator
+ * @export
+ */
+export const CoexistenceApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * Saves user details when they fail to connect with Meta during the coexistence PLG flow. A follow-up email will be sent later via a cron job. 
+         * @summary Save a failed coexistence connection attempt
+         * @param {FailedCoexistenceConnectionCreate} failedCoexistenceConnectionCreate 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        failedCoexistenceConnectionPost: async (failedCoexistenceConnectionCreate: FailedCoexistenceConnectionCreate, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'failedCoexistenceConnectionCreate' is not null or undefined
+            assertParamExists('failedCoexistenceConnectionPost', 'failedCoexistenceConnectionCreate', failedCoexistenceConnectionCreate)
+            const localVarPath = `/failed-coexistence-connections`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", [], configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(failedCoexistenceConnectionCreate, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * CoexistenceApi - functional programming interface
+ * @export
+ */
+export const CoexistenceApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = CoexistenceApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * Saves user details when they fail to connect with Meta during the coexistence PLG flow. A follow-up email will be sent later via a cron job. 
+         * @summary Save a failed coexistence connection attempt
+         * @param {FailedCoexistenceConnectionCreate} failedCoexistenceConnectionCreate 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async failedCoexistenceConnectionPost(failedCoexistenceConnectionCreate: FailedCoexistenceConnectionCreate, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<FailedCoexistenceConnectionPost200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.failedCoexistenceConnectionPost(failedCoexistenceConnectionCreate, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['CoexistenceApi.failedCoexistenceConnectionPost']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+    }
+};
+
+/**
+ * CoexistenceApi - factory interface
+ * @export
+ */
+export const CoexistenceApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = CoexistenceApiFp(configuration)
+    return {
+        /**
+         * Saves user details when they fail to connect with Meta during the coexistence PLG flow. A follow-up email will be sent later via a cron job. 
+         * @summary Save a failed coexistence connection attempt
+         * @param {CoexistenceApiFailedCoexistenceConnectionPostRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        failedCoexistenceConnectionPost(requestParameters: CoexistenceApiFailedCoexistenceConnectionPostRequest, options?: RawAxiosRequestConfig): AxiosPromise<FailedCoexistenceConnectionPost200Response> {
+            return localVarFp.failedCoexistenceConnectionPost(requestParameters.failedCoexistenceConnectionCreate, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * Request parameters for failedCoexistenceConnectionPost operation in CoexistenceApi.
+ * @export
+ * @interface CoexistenceApiFailedCoexistenceConnectionPostRequest
+ */
+export interface CoexistenceApiFailedCoexistenceConnectionPostRequest {
+    /**
+     * 
+     * @type {FailedCoexistenceConnectionCreate}
+     * @memberof CoexistenceApiFailedCoexistenceConnectionPost
+     */
+    readonly failedCoexistenceConnectionCreate: FailedCoexistenceConnectionCreate
+}
+
+/**
+ * CoexistenceApi - object-oriented interface
+ * @export
+ * @class CoexistenceApi
+ * @extends {BaseAPI}
+ */
+export class CoexistenceApi extends BaseAPI {
+    /**
+     * Saves user details when they fail to connect with Meta during the coexistence PLG flow. A follow-up email will be sent later via a cron job. 
+     * @summary Save a failed coexistence connection attempt
+     * @param {CoexistenceApiFailedCoexistenceConnectionPostRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CoexistenceApi
+     */
+    public failedCoexistenceConnectionPost(requestParameters: CoexistenceApiFailedCoexistenceConnectionPostRequest, options?: RawAxiosRequestConfig) {
+        return CoexistenceApiFp(this.configuration).failedCoexistenceConnectionPost(requestParameters.failedCoexistenceConnectionCreate, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
