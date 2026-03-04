@@ -7065,6 +7065,12 @@ export interface WASyncStateInfo {
  */
 export interface WabaTeamStatsGet200Response {
     /**
+     * Total number of wa-business-api channels
+     * @type {number}
+     * @memberof WabaTeamStatsGet200Response
+     */
+    'totalWabaChannels'?: number;
+    /**
      * Number of unique teams that have at least one wa-business-api account 
      * @type {number}
      * @memberof WabaTeamStatsGet200Response
