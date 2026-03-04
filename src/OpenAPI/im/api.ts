@@ -7720,6 +7720,36 @@ export const AccountApiAxiosParamCreator = function (configuration?: Configurati
                 options: localVarRequestOptions,
             };
         },
+        /**
+         * Returns the number of unique teams (ownerIds) that have at least one wa-business-api account, and the number of unique teams that have no wa-business-api account at all. 
+         * @summary Get WABA team adoption stats
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        wabaTeamStatsGet: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/accounts/waba-team-stats`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
     }
 };
 
@@ -7859,6 +7889,18 @@ export const AccountApiFp = function(configuration?: Configuration) {
             const localVarOperationServerBasePath = operationServerMap['AccountApi.waChangeLoginMode']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
+        /**
+         * Returns the number of unique teams (ownerIds) that have at least one wa-business-api account, and the number of unique teams that have no wa-business-api account at all. 
+         * @summary Get WABA team adoption stats
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async wabaTeamStatsGet(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<WabaTeamStatsGet200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.wabaTeamStatsGet(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['AccountApi.wabaTeamStatsGet']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
     }
 };
 
@@ -7958,6 +8000,15 @@ export const AccountApiFactory = function (configuration?: Configuration, basePa
          */
         waChangeLoginMode(requestParameters: AccountApiWaChangeLoginModeRequest, options?: RawAxiosRequestConfig): AxiosPromise<AccountsDelete200Response> {
             return localVarFp.waChangeLoginMode(requestParameters.accountId, requestParameters.accountWaChangeLoginMode, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Returns the number of unique teams (ownerIds) that have at least one wa-business-api account, and the number of unique teams that have no wa-business-api account at all. 
+         * @summary Get WABA team adoption stats
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        wabaTeamStatsGet(options?: RawAxiosRequestConfig): AxiosPromise<WabaTeamStatsGet200Response> {
+            return localVarFp.wabaTeamStatsGet(options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -8286,106 +8337,16 @@ export class AccountApi extends BaseAPI {
     public waChangeLoginMode(requestParameters: AccountApiWaChangeLoginModeRequest, options?: RawAxiosRequestConfig) {
         return AccountApiFp(this.configuration).waChangeLoginMode(requestParameters.accountId, requestParameters.accountWaChangeLoginMode, options).then((request) => request(this.axios, this.basePath));
     }
-}
 
-
-
-/**
- * AccountsApi - axios parameter creator
- * @export
- */
-export const AccountsApiAxiosParamCreator = function (configuration?: Configuration) {
-    return {
-        /**
-         * Returns the number of unique teams (ownerIds) that have at least one wa-business-api account, and the number of unique teams that have no wa-business-api account at all. 
-         * @summary Get WABA team adoption stats
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        wabaTeamStatsGet: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/accounts/waba-team-stats`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-    }
-};
-
-/**
- * AccountsApi - functional programming interface
- * @export
- */
-export const AccountsApiFp = function(configuration?: Configuration) {
-    const localVarAxiosParamCreator = AccountsApiAxiosParamCreator(configuration)
-    return {
-        /**
-         * Returns the number of unique teams (ownerIds) that have at least one wa-business-api account, and the number of unique teams that have no wa-business-api account at all. 
-         * @summary Get WABA team adoption stats
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async wabaTeamStatsGet(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<WabaTeamStatsGet200Response>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.wabaTeamStatsGet(options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['AccountsApi.wabaTeamStatsGet']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-    }
-};
-
-/**
- * AccountsApi - factory interface
- * @export
- */
-export const AccountsApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
-    const localVarFp = AccountsApiFp(configuration)
-    return {
-        /**
-         * Returns the number of unique teams (ownerIds) that have at least one wa-business-api account, and the number of unique teams that have no wa-business-api account at all. 
-         * @summary Get WABA team adoption stats
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        wabaTeamStatsGet(options?: RawAxiosRequestConfig): AxiosPromise<WabaTeamStatsGet200Response> {
-            return localVarFp.wabaTeamStatsGet(options).then((request) => request(axios, basePath));
-        },
-    };
-};
-
-/**
- * AccountsApi - object-oriented interface
- * @export
- * @class AccountsApi
- * @extends {BaseAPI}
- */
-export class AccountsApi extends BaseAPI {
     /**
      * Returns the number of unique teams (ownerIds) that have at least one wa-business-api account, and the number of unique teams that have no wa-business-api account at all. 
      * @summary Get WABA team adoption stats
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof AccountsApi
+     * @memberof AccountApi
      */
     public wabaTeamStatsGet(options?: RawAxiosRequestConfig) {
-        return AccountsApiFp(this.configuration).wabaTeamStatsGet(options).then((request) => request(this.axios, this.basePath));
+        return AccountApiFp(this.configuration).wabaTeamStatsGet(options).then((request) => request(this.axios, this.basePath));
     }
 }
 
