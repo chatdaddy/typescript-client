@@ -1946,6 +1946,19 @@ export interface FloatAmountWithCurrency {
 /**
  * 
  * @export
+ * @interface GetCustomerData200Response
+ */
+export interface GetCustomerData200Response {
+    /**
+     * Number of customers with active auto-renewal status
+     * @type {number}
+     * @memberof GetCustomerData200Response
+     */
+    'activeAutoRenewalCount': number;
+}
+/**
+ * 
+ * @export
  * @interface GetPartner200Response
  */
 export interface GetPartner200Response {
@@ -5588,6 +5601,36 @@ export const CreditsApiAxiosParamCreator = function (configuration?: Configurati
         },
         /**
          * 
+         * @summary Get count of active auto-renewal customers
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getCustomerData: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v2/get-customer-data`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
          * @summary Create/update/cancel the support plan
          * @param {ModifySupportPlan} [modifySupportPlan] 
          * @param {*} [options] Override http request option.
@@ -6059,6 +6102,18 @@ export const CreditsApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
+         * @summary Get count of active auto-renewal customers
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getCustomerData(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetCustomerData200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getCustomerData(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['CreditsApi.getCustomerData']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
          * @summary Create/update/cancel the support plan
          * @param {ModifySupportPlan} [modifySupportPlan] 
          * @param {*} [options] Override http request option.
@@ -6304,6 +6359,15 @@ export const CreditsApiFactory = function (configuration?: Configuration, basePa
          */
         creditsPreferencesPost(requestParameters: CreditsApiCreditsPreferencesPostRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<void> {
             return localVarFp.creditsPreferencesPost(requestParameters.creditsPreferencesPostRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Get count of active auto-renewal customers
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getCustomerData(options?: RawAxiosRequestConfig): AxiosPromise<GetCustomerData200Response> {
+            return localVarFp.getCustomerData(options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -7026,6 +7090,17 @@ export class CreditsApi extends BaseAPI {
      */
     public creditsPreferencesPost(requestParameters: CreditsApiCreditsPreferencesPostRequest = {}, options?: RawAxiosRequestConfig) {
         return CreditsApiFp(this.configuration).creditsPreferencesPost(requestParameters.creditsPreferencesPostRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Get count of active auto-renewal customers
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CreditsApi
+     */
+    public getCustomerData(options?: RawAxiosRequestConfig) {
+        return CreditsApiFp(this.configuration).getCustomerData(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
