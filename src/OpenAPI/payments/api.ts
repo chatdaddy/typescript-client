@@ -1979,6 +1979,12 @@ export interface GetCustomerData200Response {
      * @memberof GetCustomerData200Response
      */
     'total'?: number;
+    /**
+     * All team IDs matching the status (returned when returnTeamIds is true)
+     * @type {Array<string>}
+     * @memberof GetCustomerData200Response
+     */
+    'teamIdsList'?: Array<string>;
 }
 /**
  * 
@@ -5681,10 +5687,12 @@ export const CreditsApiAxiosParamCreator = function (configuration?: Configurati
          * @param {GetCustomerDataStatusEnum} [status] When provided, returns the list of teams with this auto-renewal status
          * @param {number} [page] Page number for team list pagination
          * @param {number} [count] Number of teams per page
+         * @param {boolean} [returnTeamIds] When true with a status, returns only the list of team IDs (no pagination)
+         * @param {string} [searchTeamId] Search filter -- only return teams whose ID contains this substring
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getCustomerData: async (status?: GetCustomerDataStatusEnum, page?: number, count?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getCustomerData: async (status?: GetCustomerDataStatusEnum, page?: number, count?: number, returnTeamIds?: boolean, searchTeamId?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v2/get-customer-data`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -5711,6 +5719,14 @@ export const CreditsApiAxiosParamCreator = function (configuration?: Configurati
 
             if (count !== undefined) {
                 localVarQueryParameter['count'] = count;
+            }
+
+            if (returnTeamIds !== undefined) {
+                localVarQueryParameter['returnTeamIds'] = returnTeamIds;
+            }
+
+            if (searchTeamId !== undefined) {
+                localVarQueryParameter['searchTeamId'] = searchTeamId;
             }
 
 
@@ -6201,11 +6217,13 @@ export const CreditsApiFp = function(configuration?: Configuration) {
          * @param {GetCustomerDataStatusEnum} [status] When provided, returns the list of teams with this auto-renewal status
          * @param {number} [page] Page number for team list pagination
          * @param {number} [count] Number of teams per page
+         * @param {boolean} [returnTeamIds] When true with a status, returns only the list of team IDs (no pagination)
+         * @param {string} [searchTeamId] Search filter -- only return teams whose ID contains this substring
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getCustomerData(status?: GetCustomerDataStatusEnum, page?: number, count?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetCustomerData200Response>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getCustomerData(status, page, count, options);
+        async getCustomerData(status?: GetCustomerDataStatusEnum, page?: number, count?: number, returnTeamIds?: boolean, searchTeamId?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetCustomerData200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getCustomerData(status, page, count, returnTeamIds, searchTeamId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['CreditsApi.getCustomerData']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -6466,7 +6484,7 @@ export const CreditsApiFactory = function (configuration?: Configuration, basePa
          * @throws {RequiredError}
          */
         getCustomerData(requestParameters: CreditsApiGetCustomerDataRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<GetCustomerData200Response> {
-            return localVarFp.getCustomerData(requestParameters.status, requestParameters.page, requestParameters.count, options).then((request) => request(axios, basePath));
+            return localVarFp.getCustomerData(requestParameters.status, requestParameters.page, requestParameters.count, requestParameters.returnTeamIds, requestParameters.searchTeamId, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -6897,6 +6915,20 @@ export interface CreditsApiGetCustomerDataRequest {
      * @memberof CreditsApiGetCustomerData
      */
     readonly count?: number
+
+    /**
+     * When true with a status, returns only the list of team IDs (no pagination)
+     * @type {boolean}
+     * @memberof CreditsApiGetCustomerData
+     */
+    readonly returnTeamIds?: boolean
+
+    /**
+     * Search filter -- only return teams whose ID contains this substring
+     * @type {string}
+     * @memberof CreditsApiGetCustomerData
+     */
+    readonly searchTeamId?: string
 }
 
 /**
@@ -7228,7 +7260,7 @@ export class CreditsApi extends BaseAPI {
      * @memberof CreditsApi
      */
     public getCustomerData(requestParameters: CreditsApiGetCustomerDataRequest = {}, options?: RawAxiosRequestConfig) {
-        return CreditsApiFp(this.configuration).getCustomerData(requestParameters.status, requestParameters.page, requestParameters.count, options).then((request) => request(this.axios, this.basePath));
+        return CreditsApiFp(this.configuration).getCustomerData(requestParameters.status, requestParameters.page, requestParameters.count, requestParameters.returnTeamIds, requestParameters.searchTeamId, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

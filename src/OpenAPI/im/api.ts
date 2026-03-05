@@ -7890,10 +7890,12 @@ export const AccountApiAxiosParamCreator = function (configuration?: Configurati
          * @param {boolean} [hasWaba] Filter teams that have (true) or don\&#39;t have (false) WABA channels
          * @param {number} [page] Page number for team details pagination
          * @param {number} [count] Number of teams per page
+         * @param {string} [teamIds] Comma-separated list of team IDs to restrict results to (for cross-filtering by payment status)
+         * @param {string} [searchTeamId] Search filter -- only return teams whose ID contains this substring
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        wabaTeamStatsGet: async (returnTeamDetails?: boolean, hasWaba?: boolean, page?: number, count?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        wabaTeamStatsGet: async (returnTeamDetails?: boolean, hasWaba?: boolean, page?: number, count?: number, teamIds?: string, searchTeamId?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/accounts/waba-team-stats`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -7920,6 +7922,14 @@ export const AccountApiAxiosParamCreator = function (configuration?: Configurati
 
             if (count !== undefined) {
                 localVarQueryParameter['count'] = count;
+            }
+
+            if (teamIds !== undefined) {
+                localVarQueryParameter['teamIds'] = teamIds;
+            }
+
+            if (searchTeamId !== undefined) {
+                localVarQueryParameter['searchTeamId'] = searchTeamId;
             }
 
 
@@ -8091,11 +8101,13 @@ export const AccountApiFp = function(configuration?: Configuration) {
          * @param {boolean} [hasWaba] Filter teams that have (true) or don\&#39;t have (false) WABA channels
          * @param {number} [page] Page number for team details pagination
          * @param {number} [count] Number of teams per page
+         * @param {string} [teamIds] Comma-separated list of team IDs to restrict results to (for cross-filtering by payment status)
+         * @param {string} [searchTeamId] Search filter -- only return teams whose ID contains this substring
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async wabaTeamStatsGet(returnTeamDetails?: boolean, hasWaba?: boolean, page?: number, count?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<WabaTeamStatsGet200Response>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.wabaTeamStatsGet(returnTeamDetails, hasWaba, page, count, options);
+        async wabaTeamStatsGet(returnTeamDetails?: boolean, hasWaba?: boolean, page?: number, count?: number, teamIds?: string, searchTeamId?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<WabaTeamStatsGet200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.wabaTeamStatsGet(returnTeamDetails, hasWaba, page, count, teamIds, searchTeamId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AccountApi.wabaTeamStatsGet']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -8217,7 +8229,7 @@ export const AccountApiFactory = function (configuration?: Configuration, basePa
          * @throws {RequiredError}
          */
         wabaTeamStatsGet(requestParameters: AccountApiWabaTeamStatsGetRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<WabaTeamStatsGet200Response> {
-            return localVarFp.wabaTeamStatsGet(requestParameters.returnTeamDetails, requestParameters.hasWaba, requestParameters.page, requestParameters.count, options).then((request) => request(axios, basePath));
+            return localVarFp.wabaTeamStatsGet(requestParameters.returnTeamDetails, requestParameters.hasWaba, requestParameters.page, requestParameters.count, requestParameters.teamIds, requestParameters.searchTeamId, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -8465,6 +8477,20 @@ export interface AccountApiWabaTeamStatsGetRequest {
      * @memberof AccountApiWabaTeamStatsGet
      */
     readonly count?: number
+
+    /**
+     * Comma-separated list of team IDs to restrict results to (for cross-filtering by payment status)
+     * @type {string}
+     * @memberof AccountApiWabaTeamStatsGet
+     */
+    readonly teamIds?: string
+
+    /**
+     * Search filter -- only return teams whose ID contains this substring
+     * @type {string}
+     * @memberof AccountApiWabaTeamStatsGet
+     */
+    readonly searchTeamId?: string
 }
 
 /**
@@ -8602,7 +8628,7 @@ export class AccountApi extends BaseAPI {
      * @memberof AccountApi
      */
     public wabaTeamStatsGet(requestParameters: AccountApiWabaTeamStatsGetRequest = {}, options?: RawAxiosRequestConfig) {
-        return AccountApiFp(this.configuration).wabaTeamStatsGet(requestParameters.returnTeamDetails, requestParameters.hasWaba, requestParameters.page, requestParameters.count, options).then((request) => request(this.axios, this.basePath));
+        return AccountApiFp(this.configuration).wabaTeamStatsGet(requestParameters.returnTeamDetails, requestParameters.hasWaba, requestParameters.page, requestParameters.count, requestParameters.teamIds, requestParameters.searchTeamId, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
