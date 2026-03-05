@@ -7900,10 +7900,6 @@ export const AccountApiAxiosParamCreator = function (configuration?: Configurati
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
-            // authentication chatdaddy required
-            // oauth required
-            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", [], configuration)
-
             if (returnTeamDetails !== undefined) {
                 localVarQueryParameter['returnTeamDetails'] = returnTeamDetails;
             }
