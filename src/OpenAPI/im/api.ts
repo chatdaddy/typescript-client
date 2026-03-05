@@ -713,6 +713,19 @@ export interface AccountsDelete200Response {
 /**
  * 
  * @export
+ * @interface AccountsFetchByType200Response
+ */
+export interface AccountsFetchByType200Response {
+    /**
+     * 
+     * @type {Array<Account>}
+     * @memberof AccountsFetchByType200Response
+     */
+    'accounts': Array<Account>;
+}
+/**
+ * 
+ * @export
  * @interface AccountsGet200Response
  */
 export interface AccountsGet200Response {
@@ -7573,6 +7586,43 @@ export const AccountApiAxiosParamCreator = function (configuration?: Configurati
             };
         },
         /**
+         * Returns all accounts matching the given account type, sorted by lastMessageSentAt descending (most recently active first). This endpoint requires no authentication. 
+         * @summary Fetch accounts by type
+         * @param {AccountType} type The account type to filter by
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        accountsFetchByType: async (type: AccountType, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'type' is not null or undefined
+            assertParamExists('accountsFetchByType', 'type', type)
+            const localVarPath = `/accounts/fetch-by-type`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (type !== undefined) {
+                localVarQueryParameter['type'] = type;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * 
          * @summary Get the list of all accounts
          * @param {string} [q] Search items by this string
@@ -8000,6 +8050,19 @@ export const AccountApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
+         * Returns all accounts matching the given account type, sorted by lastMessageSentAt descending (most recently active first). This endpoint requires no authentication. 
+         * @summary Fetch accounts by type
+         * @param {AccountType} type The account type to filter by
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async accountsFetchByType(type: AccountType, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AccountsFetchByType200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.accountsFetchByType(type, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['AccountApi.accountsFetchByType']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
          * 
          * @summary Get the list of all accounts
          * @param {string} [q] Search items by this string
@@ -8159,6 +8222,16 @@ export const AccountApiFactory = function (configuration?: Configuration, basePa
             return localVarFp.accountsDelete(requestParameters.accountId, requestParameters.deleteNow, options).then((request) => request(axios, basePath));
         },
         /**
+         * Returns all accounts matching the given account type, sorted by lastMessageSentAt descending (most recently active first). This endpoint requires no authentication. 
+         * @summary Fetch accounts by type
+         * @param {AccountApiAccountsFetchByTypeRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        accountsFetchByType(requestParameters: AccountApiAccountsFetchByTypeRequest, options?: RawAxiosRequestConfig): AxiosPromise<AccountsFetchByType200Response> {
+            return localVarFp.accountsFetchByType(requestParameters.type, options).then((request) => request(axios, basePath));
+        },
+        /**
          * 
          * @summary Get the list of all accounts
          * @param {AccountApiAccountsGetRequest} requestParameters Request parameters.
@@ -8294,6 +8367,20 @@ export interface AccountApiAccountsDeleteRequest {
      * @memberof AccountApiAccountsDelete
      */
     readonly deleteNow?: boolean
+}
+
+/**
+ * Request parameters for accountsFetchByType operation in AccountApi.
+ * @export
+ * @interface AccountApiAccountsFetchByTypeRequest
+ */
+export interface AccountApiAccountsFetchByTypeRequest {
+    /**
+     * The account type to filter by
+     * @type {AccountType}
+     * @memberof AccountApiAccountsFetchByType
+     */
+    readonly type: AccountType
 }
 
 /**
@@ -8547,6 +8634,18 @@ export class AccountApi extends BaseAPI {
      */
     public accountsDelete(requestParameters: AccountApiAccountsDeleteRequest, options?: RawAxiosRequestConfig) {
         return AccountApiFp(this.configuration).accountsDelete(requestParameters.accountId, requestParameters.deleteNow, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Returns all accounts matching the given account type, sorted by lastMessageSentAt descending (most recently active first). This endpoint requires no authentication. 
+     * @summary Fetch accounts by type
+     * @param {AccountApiAccountsFetchByTypeRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AccountApi
+     */
+    public accountsFetchByType(requestParameters: AccountApiAccountsFetchByTypeRequest, options?: RawAxiosRequestConfig) {
+        return AccountApiFp(this.configuration).accountsFetchByType(requestParameters.type, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
