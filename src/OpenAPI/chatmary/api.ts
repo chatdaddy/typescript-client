@@ -1054,6 +1054,49 @@ export interface MedicalBotData {
 /**
  * 
  * @export
+ * @interface MessageAnalytics
+ */
+export interface MessageAnalytics {
+    /**
+     * Number of active channels in the last 7 days
+     * @type {number}
+     * @memberof MessageAnalytics
+     */
+    'channels7d': number;
+    /**
+     * Number of active channels in the last 30 days
+     * @type {number}
+     * @memberof MessageAnalytics
+     */
+    'channels30d': number;
+    /**
+     * Average messages per active channel in the last 7 days
+     * @type {number}
+     * @memberof MessageAnalytics
+     */
+    'avgMessages7d': number;
+    /**
+     * Average messages per active channel in the last 30 days
+     * @type {number}
+     * @memberof MessageAnalytics
+     */
+    'avgMessages30d': number;
+    /**
+     * Total sent messages from API accounts in the last 30 days
+     * @type {number}
+     * @memberof MessageAnalytics
+     */
+    'apiSent': number;
+    /**
+     * Total sent messages from non-API accounts in the last 30 days
+     * @type {number}
+     * @memberof MessageAnalytics
+     */
+    'nonApiSent': number;
+}
+/**
+ * 
+ * @export
  * @interface MessageStack
  */
 export interface MessageStack {
@@ -1766,6 +1809,135 @@ export interface WebhookNotionPostRequestData {
      */
     'properties'?: { [key: string]: any; };
 }
+
+/**
+ * AnalyticsApi - axios parameter creator
+ * @export
+ */
+export const AnalyticsApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @summary Get message analytics dashboard stats
+         * @param {string} teamId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        messageAnalyticsGet: async (teamId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'teamId' is not null or undefined
+            assertParamExists('messageAnalyticsGet', 'teamId', teamId)
+            const localVarPath = `/message-analytics`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", [], configuration)
+
+            if (teamId !== undefined) {
+                localVarQueryParameter['teamId'] = teamId;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * AnalyticsApi - functional programming interface
+ * @export
+ */
+export const AnalyticsApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = AnalyticsApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * 
+         * @summary Get message analytics dashboard stats
+         * @param {string} teamId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async messageAnalyticsGet(teamId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MessageAnalytics>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.messageAnalyticsGet(teamId, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['AnalyticsApi.messageAnalyticsGet']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+    }
+};
+
+/**
+ * AnalyticsApi - factory interface
+ * @export
+ */
+export const AnalyticsApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = AnalyticsApiFp(configuration)
+    return {
+        /**
+         * 
+         * @summary Get message analytics dashboard stats
+         * @param {AnalyticsApiMessageAnalyticsGetRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        messageAnalyticsGet(requestParameters: AnalyticsApiMessageAnalyticsGetRequest, options?: RawAxiosRequestConfig): AxiosPromise<MessageAnalytics> {
+            return localVarFp.messageAnalyticsGet(requestParameters.teamId, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * Request parameters for messageAnalyticsGet operation in AnalyticsApi.
+ * @export
+ * @interface AnalyticsApiMessageAnalyticsGetRequest
+ */
+export interface AnalyticsApiMessageAnalyticsGetRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof AnalyticsApiMessageAnalyticsGet
+     */
+    readonly teamId: string
+}
+
+/**
+ * AnalyticsApi - object-oriented interface
+ * @export
+ * @class AnalyticsApi
+ * @extends {BaseAPI}
+ */
+export class AnalyticsApi extends BaseAPI {
+    /**
+     * 
+     * @summary Get message analytics dashboard stats
+     * @param {AnalyticsApiMessageAnalyticsGetRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AnalyticsApi
+     */
+    public messageAnalyticsGet(requestParameters: AnalyticsApiMessageAnalyticsGetRequest, options?: RawAxiosRequestConfig) {
+        return AnalyticsApiFp(this.configuration).messageAnalyticsGet(requestParameters.teamId, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
 
 /**
  * ChatmaryWebhookApi - axios parameter creator
