@@ -7892,10 +7892,11 @@ export const AccountApiAxiosParamCreator = function (configuration?: Configurati
          * @param {number} [count] Number of teams per page
          * @param {string} [teamIds] Comma-separated list of team IDs to restrict results to (for cross-filtering by payment status)
          * @param {string} [searchTeamId] Search filter -- only return teams whose ID contains this substring
+         * @param {WabaTeamStatsGetPaymentStatusEnum} [paymentStatus] Filter by payment auto-renewal status (calls payments service internally to resolve team IDs)
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        wabaTeamStatsGet: async (returnTeamDetails?: boolean, hasWaba?: boolean, page?: number, count?: number, teamIds?: string, searchTeamId?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        wabaTeamStatsGet: async (returnTeamDetails?: boolean, hasWaba?: boolean, page?: number, count?: number, teamIds?: string, searchTeamId?: string, paymentStatus?: WabaTeamStatsGetPaymentStatusEnum, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/accounts/waba-team-stats`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -7930,6 +7931,10 @@ export const AccountApiAxiosParamCreator = function (configuration?: Configurati
 
             if (searchTeamId !== undefined) {
                 localVarQueryParameter['searchTeamId'] = searchTeamId;
+            }
+
+            if (paymentStatus !== undefined) {
+                localVarQueryParameter['paymentStatus'] = paymentStatus;
             }
 
 
@@ -8103,11 +8108,12 @@ export const AccountApiFp = function(configuration?: Configuration) {
          * @param {number} [count] Number of teams per page
          * @param {string} [teamIds] Comma-separated list of team IDs to restrict results to (for cross-filtering by payment status)
          * @param {string} [searchTeamId] Search filter -- only return teams whose ID contains this substring
+         * @param {WabaTeamStatsGetPaymentStatusEnum} [paymentStatus] Filter by payment auto-renewal status (calls payments service internally to resolve team IDs)
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async wabaTeamStatsGet(returnTeamDetails?: boolean, hasWaba?: boolean, page?: number, count?: number, teamIds?: string, searchTeamId?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<WabaTeamStatsGet200Response>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.wabaTeamStatsGet(returnTeamDetails, hasWaba, page, count, teamIds, searchTeamId, options);
+        async wabaTeamStatsGet(returnTeamDetails?: boolean, hasWaba?: boolean, page?: number, count?: number, teamIds?: string, searchTeamId?: string, paymentStatus?: WabaTeamStatsGetPaymentStatusEnum, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<WabaTeamStatsGet200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.wabaTeamStatsGet(returnTeamDetails, hasWaba, page, count, teamIds, searchTeamId, paymentStatus, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AccountApi.wabaTeamStatsGet']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -8229,7 +8235,7 @@ export const AccountApiFactory = function (configuration?: Configuration, basePa
          * @throws {RequiredError}
          */
         wabaTeamStatsGet(requestParameters: AccountApiWabaTeamStatsGetRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<WabaTeamStatsGet200Response> {
-            return localVarFp.wabaTeamStatsGet(requestParameters.returnTeamDetails, requestParameters.hasWaba, requestParameters.page, requestParameters.count, requestParameters.teamIds, requestParameters.searchTeamId, options).then((request) => request(axios, basePath));
+            return localVarFp.wabaTeamStatsGet(requestParameters.returnTeamDetails, requestParameters.hasWaba, requestParameters.page, requestParameters.count, requestParameters.teamIds, requestParameters.searchTeamId, requestParameters.paymentStatus, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -8491,6 +8497,13 @@ export interface AccountApiWabaTeamStatsGetRequest {
      * @memberof AccountApiWabaTeamStatsGet
      */
     readonly searchTeamId?: string
+
+    /**
+     * Filter by payment auto-renewal status (calls payments service internally to resolve team IDs)
+     * @type {'active' | 'overdue' | 'cancelled'}
+     * @memberof AccountApiWabaTeamStatsGet
+     */
+    readonly paymentStatus?: WabaTeamStatsGetPaymentStatusEnum
 }
 
 /**
@@ -8628,10 +8641,19 @@ export class AccountApi extends BaseAPI {
      * @memberof AccountApi
      */
     public wabaTeamStatsGet(requestParameters: AccountApiWabaTeamStatsGetRequest = {}, options?: RawAxiosRequestConfig) {
-        return AccountApiFp(this.configuration).wabaTeamStatsGet(requestParameters.returnTeamDetails, requestParameters.hasWaba, requestParameters.page, requestParameters.count, requestParameters.teamIds, requestParameters.searchTeamId, options).then((request) => request(this.axios, this.basePath));
+        return AccountApiFp(this.configuration).wabaTeamStatsGet(requestParameters.returnTeamDetails, requestParameters.hasWaba, requestParameters.page, requestParameters.count, requestParameters.teamIds, requestParameters.searchTeamId, requestParameters.paymentStatus, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
+/**
+ * @export
+ */
+export const WabaTeamStatsGetPaymentStatusEnum = {
+    Active: 'active',
+    Overdue: 'overdue',
+    Cancelled: 'cancelled'
+} as const;
+export type WabaTeamStatsGetPaymentStatusEnum = typeof WabaTeamStatsGetPaymentStatusEnum[keyof typeof WabaTeamStatsGetPaymentStatusEnum];
 
 
 /**
