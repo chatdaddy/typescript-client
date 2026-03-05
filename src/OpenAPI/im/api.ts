@@ -3182,6 +3182,56 @@ export interface DailyChannelSnapshot {
 /**
  * 
  * @export
+ * @interface DashboardStatsGet200Response
+ */
+export interface DashboardStatsGet200Response {
+    /**
+     * Number of channels (accounts) that sent a message within the last 7 days 
+     * @type {number}
+     * @memberof DashboardStatsGet200Response
+     */
+    'channelsActive7d': number;
+    /**
+     * Number of channels (accounts) that sent a message within the last 30 days 
+     * @type {number}
+     * @memberof DashboardStatsGet200Response
+     */
+    'channelsActive30d': number;
+    /**
+     * Average number of messages sent per account in the last 30 days 
+     * @type {number}
+     * @memberof DashboardStatsGet200Response
+     */
+    'avgMessagesPerAccount': number;
+    /**
+     * 
+     * @type {DashboardStatsGet200ResponseTotalMessagesSentMonthly}
+     * @memberof DashboardStatsGet200Response
+     */
+    'totalMessagesSentMonthly': DashboardStatsGet200ResponseTotalMessagesSentMonthly;
+}
+/**
+ * 
+ * @export
+ * @interface DashboardStatsGet200ResponseTotalMessagesSentMonthly
+ */
+export interface DashboardStatsGet200ResponseTotalMessagesSentMonthly {
+    /**
+     * Total messages sent by wa-business-api accounts in the current month 
+     * @type {number}
+     * @memberof DashboardStatsGet200ResponseTotalMessagesSentMonthly
+     */
+    'apiAccounts': number;
+    /**
+     * Total messages sent by non-wa-business-api accounts in the current month 
+     * @type {number}
+     * @memberof DashboardStatsGet200ResponseTotalMessagesSentMonthly
+     */
+    'nonApiAccounts': number;
+}
+/**
+ * 
+ * @export
  * @interface EntryItems
  */
 export interface EntryItems {
@@ -7752,6 +7802,40 @@ export const AccountApiAxiosParamCreator = function (configuration?: Configurati
             };
         },
         /**
+         * Returns dashboard metrics including channels active in the last 7 and 30 days, average messages per account, and monthly message totals split by API vs non-API accounts. 
+         * @summary Get dashboard analytics stats
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        dashboardStatsGet: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/accounts/dashboard-stats`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", [], configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * WA supports login either by QR code or by OTP. This API allows changing the login mode. 
          * @summary Change login mode of a WhatsApp account
          * @param {string} accountId 
@@ -7973,6 +8057,18 @@ export const AccountApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
+         * Returns dashboard metrics including channels active in the last 7 and 30 days, average messages per account, and monthly message totals split by API vs non-API accounts. 
+         * @summary Get dashboard analytics stats
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async dashboardStatsGet(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DashboardStatsGet200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.dashboardStatsGet(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['AccountApi.dashboardStatsGet']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
          * WA supports login either by QR code or by OTP. This API allows changing the login mode. 
          * @summary Change login mode of a WhatsApp account
          * @param {string} accountId 
@@ -8091,6 +8187,15 @@ export const AccountApiFactory = function (configuration?: Configuration, basePa
          */
         accountsRecreatePost(requestParameters: AccountApiAccountsRecreatePostRequest, options?: RawAxiosRequestConfig): AxiosPromise<Account> {
             return localVarFp.accountsRecreatePost(requestParameters.accountId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Returns dashboard metrics including channels active in the last 7 and 30 days, average messages per account, and monthly message totals split by API vs non-API accounts. 
+         * @summary Get dashboard analytics stats
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        dashboardStatsGet(options?: RawAxiosRequestConfig): AxiosPromise<DashboardStatsGet200Response> {
+            return localVarFp.dashboardStatsGet(options).then((request) => request(axios, basePath));
         },
         /**
          * WA supports login either by QR code or by OTP. This API allows changing the login mode. 
@@ -8461,6 +8566,17 @@ export class AccountApi extends BaseAPI {
      */
     public accountsRecreatePost(requestParameters: AccountApiAccountsRecreatePostRequest, options?: RawAxiosRequestConfig) {
         return AccountApiFp(this.configuration).accountsRecreatePost(requestParameters.accountId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Returns dashboard metrics including channels active in the last 7 and 30 days, average messages per account, and monthly message totals split by API vs non-API accounts. 
+     * @summary Get dashboard analytics stats
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AccountApi
+     */
+    public dashboardStatsGet(options?: RawAxiosRequestConfig) {
+        return AccountApiFp(this.configuration).dashboardStatsGet(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
