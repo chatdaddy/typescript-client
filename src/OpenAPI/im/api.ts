@@ -3202,7 +3202,13 @@ export interface DashboardStatsGet200Response {
      * @type {number}
      * @memberof DashboardStatsGet200Response
      */
-    'avgMessagesPerAccount': number;
+    'avgMessagesPerAccount30d': number;
+    /**
+     * Average number of messages sent per account in the last 7 days 
+     * @type {number}
+     * @memberof DashboardStatsGet200Response
+     */
+    'avgMessagesPerAccount7d': number;
     /**
      * 
      * @type {DashboardStatsGet200ResponseTotalMessagesSentMonthly}
