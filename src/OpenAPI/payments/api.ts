@@ -1955,7 +1955,83 @@ export interface GetCustomerData200Response {
      * @memberof GetCustomerData200Response
      */
     'activeAutoRenewalCount': number;
+    /**
+     * Number of customers with overdue auto-renewal status
+     * @type {number}
+     * @memberof GetCustomerData200Response
+     */
+    'overdueAutoRenewalCount': number;
+    /**
+     * Number of customers with cancelled auto-renewal status
+     * @type {number}
+     * @memberof GetCustomerData200Response
+     */
+    'cancelledAutoRenewalCount': number;
+    /**
+     * List of teams matching the status filter (only returned when status param is provided)
+     * @type {Array<GetCustomerData200ResponseTeamsInner>}
+     * @memberof GetCustomerData200Response
+     */
+    'teams'?: Array<GetCustomerData200ResponseTeamsInner>;
+    /**
+     * Total number of teams matching the status filter
+     * @type {number}
+     * @memberof GetCustomerData200Response
+     */
+    'total'?: number;
 }
+/**
+ * 
+ * @export
+ * @interface GetCustomerData200ResponseTeamsInner
+ */
+export interface GetCustomerData200ResponseTeamsInner {
+    /**
+     * 
+     * @type {string}
+     * @memberof GetCustomerData200ResponseTeamsInner
+     */
+    'teamId': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof GetCustomerData200ResponseTeamsInner
+     */
+    'customerId': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof GetCustomerData200ResponseTeamsInner
+     */
+    'status': GetCustomerData200ResponseTeamsInnerStatusEnum;
+    /**
+     * 
+     * @type {number}
+     * @memberof GetCustomerData200ResponseTeamsInner
+     */
+    'units': number;
+    /**
+     * 
+     * @type {string}
+     * @memberof GetCustomerData200ResponseTeamsInner
+     */
+    'period': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof GetCustomerData200ResponseTeamsInner
+     */
+    'nextChargeAt': string;
+}
+
+export const GetCustomerData200ResponseTeamsInnerStatusEnum = {
+    Active: 'active',
+    Overdue: 'overdue',
+    Cancelled: 'cancelled'
+} as const;
+
+export type GetCustomerData200ResponseTeamsInnerStatusEnum = typeof GetCustomerData200ResponseTeamsInnerStatusEnum[keyof typeof GetCustomerData200ResponseTeamsInnerStatusEnum];
+
 /**
  * 
  * @export
@@ -5601,11 +5677,14 @@ export const CreditsApiAxiosParamCreator = function (configuration?: Configurati
         },
         /**
          * 
-         * @summary Get count of active auto-renewal customers
+         * @summary Get auto-renewal customer data with optional team listing
+         * @param {GetCustomerDataStatusEnum} [status] When provided, returns the list of teams with this auto-renewal status
+         * @param {number} [page] Page number for team list pagination
+         * @param {number} [count] Number of teams per page
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getCustomerData: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getCustomerData: async (status?: GetCustomerDataStatusEnum, page?: number, count?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v2/get-customer-data`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -5617,6 +5696,22 @@ export const CreditsApiAxiosParamCreator = function (configuration?: Configurati
             const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["ADMIN_PANEL_ACCESS", "PARTNER_ADMIN_PANEL_ACCESS"], configuration)
+
+            if (status !== undefined) {
+                localVarQueryParameter['status'] = status;
+            }
+
+            if (page !== undefined) {
+                localVarQueryParameter['page'] = page;
+            }
+
+            if (count !== undefined) {
+                localVarQueryParameter['count'] = count;
+            }
 
 
     
@@ -6102,12 +6197,15 @@ export const CreditsApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
-         * @summary Get count of active auto-renewal customers
+         * @summary Get auto-renewal customer data with optional team listing
+         * @param {GetCustomerDataStatusEnum} [status] When provided, returns the list of teams with this auto-renewal status
+         * @param {number} [page] Page number for team list pagination
+         * @param {number} [count] Number of teams per page
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getCustomerData(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetCustomerData200Response>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getCustomerData(options);
+        async getCustomerData(status?: GetCustomerDataStatusEnum, page?: number, count?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetCustomerData200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getCustomerData(status, page, count, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['CreditsApi.getCustomerData']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -6362,12 +6460,13 @@ export const CreditsApiFactory = function (configuration?: Configuration, basePa
         },
         /**
          * 
-         * @summary Get count of active auto-renewal customers
+         * @summary Get auto-renewal customer data with optional team listing
+         * @param {CreditsApiGetCustomerDataRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getCustomerData(options?: RawAxiosRequestConfig): AxiosPromise<GetCustomerData200Response> {
-            return localVarFp.getCustomerData(options).then((request) => request(axios, basePath));
+        getCustomerData(requestParameters: CreditsApiGetCustomerDataRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<GetCustomerData200Response> {
+            return localVarFp.getCustomerData(requestParameters.status, requestParameters.page, requestParameters.count, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -6773,6 +6872,34 @@ export interface CreditsApiCreditsPreferencesPostRequest {
 }
 
 /**
+ * Request parameters for getCustomerData operation in CreditsApi.
+ * @export
+ * @interface CreditsApiGetCustomerDataRequest
+ */
+export interface CreditsApiGetCustomerDataRequest {
+    /**
+     * When provided, returns the list of teams with this auto-renewal status
+     * @type {'active' | 'overdue' | 'cancelled'}
+     * @memberof CreditsApiGetCustomerData
+     */
+    readonly status?: GetCustomerDataStatusEnum
+
+    /**
+     * Page number for team list pagination
+     * @type {number}
+     * @memberof CreditsApiGetCustomerData
+     */
+    readonly page?: number
+
+    /**
+     * Number of teams per page
+     * @type {number}
+     * @memberof CreditsApiGetCustomerData
+     */
+    readonly count?: number
+}
+
+/**
  * Request parameters for modifySupportPlan operation in CreditsApi.
  * @export
  * @interface CreditsApiModifySupportPlanRequest
@@ -7094,13 +7221,14 @@ export class CreditsApi extends BaseAPI {
 
     /**
      * 
-     * @summary Get count of active auto-renewal customers
+     * @summary Get auto-renewal customer data with optional team listing
+     * @param {CreditsApiGetCustomerDataRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof CreditsApi
      */
-    public getCustomerData(options?: RawAxiosRequestConfig) {
-        return CreditsApiFp(this.configuration).getCustomerData(options).then((request) => request(this.axios, this.basePath));
+    public getCustomerData(requestParameters: CreditsApiGetCustomerDataRequest = {}, options?: RawAxiosRequestConfig) {
+        return CreditsApiFp(this.configuration).getCustomerData(requestParameters.status, requestParameters.page, requestParameters.count, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -7172,6 +7300,15 @@ export const CreditTxsGetEffectTypeEnum = {
     Consume: 'consume'
 } as const;
 export type CreditTxsGetEffectTypeEnum = typeof CreditTxsGetEffectTypeEnum[keyof typeof CreditTxsGetEffectTypeEnum];
+/**
+ * @export
+ */
+export const GetCustomerDataStatusEnum = {
+    Active: 'active',
+    Overdue: 'overdue',
+    Cancelled: 'cancelled'
+} as const;
+export type GetCustomerDataStatusEnum = typeof GetCustomerDataStatusEnum[keyof typeof GetCustomerDataStatusEnum];
 
 
 /**

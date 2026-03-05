@@ -7082,6 +7082,79 @@ export interface WabaTeamStatsGet200Response {
      * @memberof WabaTeamStatsGet200Response
      */
     'teamsWithoutWaba': number;
+    /**
+     * Per-team details (only returned when returnTeamDetails is true)
+     * @type {Array<WabaTeamStatsGet200ResponseTeamsInner>}
+     * @memberof WabaTeamStatsGet200Response
+     */
+    'teams'?: Array<WabaTeamStatsGet200ResponseTeamsInner>;
+    /**
+     * Total number of teams matching the filter
+     * @type {number}
+     * @memberof WabaTeamStatsGet200Response
+     */
+    'total'?: number;
+}
+/**
+ * 
+ * @export
+ * @interface WabaTeamStatsGet200ResponseTeamsInner
+ */
+export interface WabaTeamStatsGet200ResponseTeamsInner {
+    /**
+     * 
+     * @type {string}
+     * @memberof WabaTeamStatsGet200ResponseTeamsInner
+     */
+    'teamId': string;
+    /**
+     * 
+     * @type {number}
+     * @memberof WabaTeamStatsGet200ResponseTeamsInner
+     */
+    'wabaChannelCount': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof WabaTeamStatsGet200ResponseTeamsInner
+     */
+    'totalChannelCount': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof WabaTeamStatsGet200ResponseTeamsInner
+     */
+    'messagesSent24h': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof WabaTeamStatsGet200ResponseTeamsInner
+     */
+    'messagesReceived24h': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof WabaTeamStatsGet200ResponseTeamsInner
+     */
+    'messagesSent7d': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof WabaTeamStatsGet200ResponseTeamsInner
+     */
+    'messagesReceived7d': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof WabaTeamStatsGet200ResponseTeamsInner
+     */
+    'messagesSent30d': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof WabaTeamStatsGet200ResponseTeamsInner
+     */
+    'messagesReceived30d': number;
 }
 /**
  * 
@@ -7721,12 +7794,16 @@ export const AccountApiAxiosParamCreator = function (configuration?: Configurati
             };
         },
         /**
-         * Returns the number of unique teams (ownerIds) that have at least one wa-business-api account, and the number of unique teams that have no wa-business-api account at all. 
-         * @summary Get WABA team adoption stats
+         * Returns the number of unique teams (ownerIds) that have at least one wa-business-api account, and the number of unique teams that have no wa-business-api account at all. When returnTeamDetails is true, also returns per-team channel counts and message statistics. 
+         * @summary Get WABA team adoption stats with optional per-team details
+         * @param {boolean} [returnTeamDetails] When true, returns per-team WABA channel counts and message stats
+         * @param {boolean} [hasWaba] Filter teams that have (true) or don\&#39;t have (false) WABA channels
+         * @param {number} [page] Page number for team details pagination
+         * @param {number} [count] Number of teams per page
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        wabaTeamStatsGet: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        wabaTeamStatsGet: async (returnTeamDetails?: boolean, hasWaba?: boolean, page?: number, count?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/accounts/waba-team-stats`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -7738,6 +7815,26 @@ export const AccountApiAxiosParamCreator = function (configuration?: Configurati
             const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", [], configuration)
+
+            if (returnTeamDetails !== undefined) {
+                localVarQueryParameter['returnTeamDetails'] = returnTeamDetails;
+            }
+
+            if (hasWaba !== undefined) {
+                localVarQueryParameter['hasWaba'] = hasWaba;
+            }
+
+            if (page !== undefined) {
+                localVarQueryParameter['page'] = page;
+            }
+
+            if (count !== undefined) {
+                localVarQueryParameter['count'] = count;
+            }
 
 
     
@@ -7890,13 +7987,17 @@ export const AccountApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Returns the number of unique teams (ownerIds) that have at least one wa-business-api account, and the number of unique teams that have no wa-business-api account at all. 
-         * @summary Get WABA team adoption stats
+         * Returns the number of unique teams (ownerIds) that have at least one wa-business-api account, and the number of unique teams that have no wa-business-api account at all. When returnTeamDetails is true, also returns per-team channel counts and message statistics. 
+         * @summary Get WABA team adoption stats with optional per-team details
+         * @param {boolean} [returnTeamDetails] When true, returns per-team WABA channel counts and message stats
+         * @param {boolean} [hasWaba] Filter teams that have (true) or don\&#39;t have (false) WABA channels
+         * @param {number} [page] Page number for team details pagination
+         * @param {number} [count] Number of teams per page
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async wabaTeamStatsGet(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<WabaTeamStatsGet200Response>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.wabaTeamStatsGet(options);
+        async wabaTeamStatsGet(returnTeamDetails?: boolean, hasWaba?: boolean, page?: number, count?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<WabaTeamStatsGet200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.wabaTeamStatsGet(returnTeamDetails, hasWaba, page, count, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AccountApi.wabaTeamStatsGet']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -8002,13 +8103,14 @@ export const AccountApiFactory = function (configuration?: Configuration, basePa
             return localVarFp.waChangeLoginMode(requestParameters.accountId, requestParameters.accountWaChangeLoginMode, options).then((request) => request(axios, basePath));
         },
         /**
-         * Returns the number of unique teams (ownerIds) that have at least one wa-business-api account, and the number of unique teams that have no wa-business-api account at all. 
-         * @summary Get WABA team adoption stats
+         * Returns the number of unique teams (ownerIds) that have at least one wa-business-api account, and the number of unique teams that have no wa-business-api account at all. When returnTeamDetails is true, also returns per-team channel counts and message statistics. 
+         * @summary Get WABA team adoption stats with optional per-team details
+         * @param {AccountApiWabaTeamStatsGetRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        wabaTeamStatsGet(options?: RawAxiosRequestConfig): AxiosPromise<WabaTeamStatsGet200Response> {
-            return localVarFp.wabaTeamStatsGet(options).then((request) => request(axios, basePath));
+        wabaTeamStatsGet(requestParameters: AccountApiWabaTeamStatsGetRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<WabaTeamStatsGet200Response> {
+            return localVarFp.wabaTeamStatsGet(requestParameters.returnTeamDetails, requestParameters.hasWaba, requestParameters.page, requestParameters.count, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -8224,6 +8326,41 @@ export interface AccountApiWaChangeLoginModeRequest {
 }
 
 /**
+ * Request parameters for wabaTeamStatsGet operation in AccountApi.
+ * @export
+ * @interface AccountApiWabaTeamStatsGetRequest
+ */
+export interface AccountApiWabaTeamStatsGetRequest {
+    /**
+     * When true, returns per-team WABA channel counts and message stats
+     * @type {boolean}
+     * @memberof AccountApiWabaTeamStatsGet
+     */
+    readonly returnTeamDetails?: boolean
+
+    /**
+     * Filter teams that have (true) or don\&#39;t have (false) WABA channels
+     * @type {boolean}
+     * @memberof AccountApiWabaTeamStatsGet
+     */
+    readonly hasWaba?: boolean
+
+    /**
+     * Page number for team details pagination
+     * @type {number}
+     * @memberof AccountApiWabaTeamStatsGet
+     */
+    readonly page?: number
+
+    /**
+     * Number of teams per page
+     * @type {number}
+     * @memberof AccountApiWabaTeamStatsGet
+     */
+    readonly count?: number
+}
+
+/**
  * AccountApi - object-oriented interface
  * @export
  * @class AccountApi
@@ -8339,14 +8476,15 @@ export class AccountApi extends BaseAPI {
     }
 
     /**
-     * Returns the number of unique teams (ownerIds) that have at least one wa-business-api account, and the number of unique teams that have no wa-business-api account at all. 
-     * @summary Get WABA team adoption stats
+     * Returns the number of unique teams (ownerIds) that have at least one wa-business-api account, and the number of unique teams that have no wa-business-api account at all. When returnTeamDetails is true, also returns per-team channel counts and message statistics. 
+     * @summary Get WABA team adoption stats with optional per-team details
+     * @param {AccountApiWabaTeamStatsGetRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AccountApi
      */
-    public wabaTeamStatsGet(options?: RawAxiosRequestConfig) {
-        return AccountApiFp(this.configuration).wabaTeamStatsGet(options).then((request) => request(this.axios, this.basePath));
+    public wabaTeamStatsGet(requestParameters: AccountApiWabaTeamStatsGetRequest = {}, options?: RawAxiosRequestConfig) {
+        return AccountApiFp(this.configuration).wabaTeamStatsGet(requestParameters.returnTeamDetails, requestParameters.hasWaba, requestParameters.page, requestParameters.count, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
