@@ -2819,6 +2819,44 @@ export interface BotTriggersInner {
 /**
  * 
  * @export
+ * @interface BotsAnalyticsBatchGet200Response
+ */
+export interface BotsAnalyticsBatchGet200Response {
+    /**
+     * Map of botId to array of action execution counts. Keys are bot IDs, values are arrays of ActionExecuteCount.
+     * @type {{ [key: string]: Array<ActionExecuteCount>; }}
+     * @memberof BotsAnalyticsBatchGet200Response
+     */
+    'analytics': { [key: string]: Array<ActionExecuteCount>; };
+}
+/**
+ * 
+ * @export
+ * @interface BotsAnalyticsBatchGetRequest
+ */
+export interface BotsAnalyticsBatchGetRequest {
+    /**
+     * Array of bot IDs to fetch analytics for. If omitted, returns all team bots.
+     * @type {Array<string>}
+     * @memberof BotsAnalyticsBatchGetRequest
+     */
+    'botIds'?: Array<string>;
+    /**
+     * Start date filter (inclusive) for analytics records
+     * @type {string}
+     * @memberof BotsAnalyticsBatchGetRequest
+     */
+    'startDate'?: string;
+    /**
+     * End date filter (inclusive) for analytics records
+     * @type {string}
+     * @memberof BotsAnalyticsBatchGetRequest
+     */
+    'endDate'?: string;
+}
+/**
+ * 
+ * @export
  * @interface BotsAnalyticsGet200Response
  */
 export interface BotsAnalyticsGet200Response {
@@ -6901,6 +6939,46 @@ export class AppIntegrationApi extends BaseAPI {
 export const BotAnalyticsApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
+         * Fetches analytics for multiple bots in a single request. If botIds is omitted, returns analytics for all bots owned by the team.
+         * @summary Get analytics for multiple bots
+         * @param {BotsAnalyticsBatchGetRequest} botsAnalyticsBatchGetRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        botsAnalyticsBatchGet: async (botsAnalyticsBatchGetRequest: BotsAnalyticsBatchGetRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'botsAnalyticsBatchGetRequest' is not null or undefined
+            assertParamExists('botsAnalyticsBatchGet', 'botsAnalyticsBatchGetRequest', botsAnalyticsBatchGetRequest)
+            const localVarPath = `/bot/analytics`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["TEMPLATES_READ"], configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(botsAnalyticsBatchGetRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * This endpoint fetches analytics for a bot based on provided botId parameters
          * @summary Get analytics for a bot
          * @param {string} botId The ID of the bot
@@ -6949,6 +7027,19 @@ export const BotAnalyticsApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = BotAnalyticsApiAxiosParamCreator(configuration)
     return {
         /**
+         * Fetches analytics for multiple bots in a single request. If botIds is omitted, returns analytics for all bots owned by the team.
+         * @summary Get analytics for multiple bots
+         * @param {BotsAnalyticsBatchGetRequest} botsAnalyticsBatchGetRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async botsAnalyticsBatchGet(botsAnalyticsBatchGetRequest: BotsAnalyticsBatchGetRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BotsAnalyticsBatchGet200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.botsAnalyticsBatchGet(botsAnalyticsBatchGetRequest, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['BotAnalyticsApi.botsAnalyticsBatchGet']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
          * This endpoint fetches analytics for a bot based on provided botId parameters
          * @summary Get analytics for a bot
          * @param {string} botId The ID of the bot
@@ -6972,6 +7063,16 @@ export const BotAnalyticsApiFactory = function (configuration?: Configuration, b
     const localVarFp = BotAnalyticsApiFp(configuration)
     return {
         /**
+         * Fetches analytics for multiple bots in a single request. If botIds is omitted, returns analytics for all bots owned by the team.
+         * @summary Get analytics for multiple bots
+         * @param {BotAnalyticsApiBotsAnalyticsBatchGetRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        botsAnalyticsBatchGet(requestParameters: BotAnalyticsApiBotsAnalyticsBatchGetRequest, options?: RawAxiosRequestConfig): AxiosPromise<BotsAnalyticsBatchGet200Response> {
+            return localVarFp.botsAnalyticsBatchGet(requestParameters.botsAnalyticsBatchGetRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
          * This endpoint fetches analytics for a bot based on provided botId parameters
          * @summary Get analytics for a bot
          * @param {BotAnalyticsApiBotsAnalyticsGetRequest} requestParameters Request parameters.
@@ -6983,6 +7084,20 @@ export const BotAnalyticsApiFactory = function (configuration?: Configuration, b
         },
     };
 };
+
+/**
+ * Request parameters for botsAnalyticsBatchGet operation in BotAnalyticsApi.
+ * @export
+ * @interface BotAnalyticsApiBotsAnalyticsBatchGetRequest
+ */
+export interface BotAnalyticsApiBotsAnalyticsBatchGetRequest {
+    /**
+     * 
+     * @type {BotsAnalyticsBatchGetRequest}
+     * @memberof BotAnalyticsApiBotsAnalyticsBatchGet
+     */
+    readonly botsAnalyticsBatchGetRequest: BotsAnalyticsBatchGetRequest
+}
 
 /**
  * Request parameters for botsAnalyticsGet operation in BotAnalyticsApi.
@@ -7005,6 +7120,18 @@ export interface BotAnalyticsApiBotsAnalyticsGetRequest {
  * @extends {BaseAPI}
  */
 export class BotAnalyticsApi extends BaseAPI {
+    /**
+     * Fetches analytics for multiple bots in a single request. If botIds is omitted, returns analytics for all bots owned by the team.
+     * @summary Get analytics for multiple bots
+     * @param {BotAnalyticsApiBotsAnalyticsBatchGetRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof BotAnalyticsApi
+     */
+    public botsAnalyticsBatchGet(requestParameters: BotAnalyticsApiBotsAnalyticsBatchGetRequest, options?: RawAxiosRequestConfig) {
+        return BotAnalyticsApiFp(this.configuration).botsAnalyticsBatchGet(requestParameters.botsAnalyticsBatchGetRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
     /**
      * This endpoint fetches analytics for a bot based on provided botId parameters
      * @summary Get analytics for a bot
