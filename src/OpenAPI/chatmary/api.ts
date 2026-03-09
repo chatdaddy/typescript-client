@@ -1594,6 +1594,61 @@ export interface TranslateTextPostRequest {
 /**
  * 
  * @export
+ * @interface WabaHealthFlagPostRequest
+ */
+export interface WabaHealthFlagPostRequest {
+    /**
+     * IM account ID
+     * @type {string}
+     * @memberof WabaHealthFlagPostRequest
+     */
+    'accountId': string;
+    /**
+     * WABA ID
+     * @type {string}
+     * @memberof WabaHealthFlagPostRequest
+     */
+    'wabaId': string;
+    /**
+     * Meta phone number ID
+     * @type {string}
+     * @memberof WabaHealthFlagPostRequest
+     */
+    'phoneNumberId': string;
+    /**
+     * Display phone number
+     * @type {string}
+     * @memberof WabaHealthFlagPostRequest
+     */
+    'phoneNumber'?: string;
+    /**
+     * Meta WA Business Account ID
+     * @type {string}
+     * @memberof WabaHealthFlagPostRequest
+     */
+    'waBusinessId': string;
+    /**
+     * Team/owner ID
+     * @type {string}
+     * @memberof WabaHealthFlagPostRequest
+     */
+    'teamId'?: string;
+    /**
+     * API version
+     * @type {string}
+     * @memberof WabaHealthFlagPostRequest
+     */
+    'version'?: string;
+    /**
+     * Error message that triggered the flag
+     * @type {string}
+     * @memberof WabaHealthFlagPostRequest
+     */
+    'errorMessage'?: string;
+}
+/**
+ * 
+ * @export
  * @interface WabaMessageWindow
  */
 export interface WabaMessageWindow {
@@ -5751,6 +5806,134 @@ export class TrackPageHitsApi extends BaseAPI {
      */
     public trackPageHitsPost(requestParameters: TrackPageHitsApiTrackPageHitsPostRequest = {}, options?: RawAxiosRequestConfig) {
         return TrackPageHitsApiFp(this.configuration).trackPageHitsPost(requestParameters.trackPageHitsPostRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+
+/**
+ * WabaHealthApi - axios parameter creator
+ * @export
+ */
+export const WabaHealthApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @summary Flag a WABA account for health monitoring
+         * @param {WabaHealthFlagPostRequest} wabaHealthFlagPostRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        wabaHealthFlagPost: async (wabaHealthFlagPostRequest: WabaHealthFlagPostRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'wabaHealthFlagPostRequest' is not null or undefined
+            assertParamExists('wabaHealthFlagPost', 'wabaHealthFlagPostRequest', wabaHealthFlagPostRequest)
+            const localVarPath = `/waba-health-flag`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", [], configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(wabaHealthFlagPostRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * WabaHealthApi - functional programming interface
+ * @export
+ */
+export const WabaHealthApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = WabaHealthApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * 
+         * @summary Flag a WABA account for health monitoring
+         * @param {WabaHealthFlagPostRequest} wabaHealthFlagPostRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async wabaHealthFlagPost(wabaHealthFlagPostRequest: WabaHealthFlagPostRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<WebhookLarkGet200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.wabaHealthFlagPost(wabaHealthFlagPostRequest, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['WabaHealthApi.wabaHealthFlagPost']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+    }
+};
+
+/**
+ * WabaHealthApi - factory interface
+ * @export
+ */
+export const WabaHealthApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = WabaHealthApiFp(configuration)
+    return {
+        /**
+         * 
+         * @summary Flag a WABA account for health monitoring
+         * @param {WabaHealthApiWabaHealthFlagPostRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        wabaHealthFlagPost(requestParameters: WabaHealthApiWabaHealthFlagPostRequest, options?: RawAxiosRequestConfig): AxiosPromise<WebhookLarkGet200Response> {
+            return localVarFp.wabaHealthFlagPost(requestParameters.wabaHealthFlagPostRequest, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * Request parameters for wabaHealthFlagPost operation in WabaHealthApi.
+ * @export
+ * @interface WabaHealthApiWabaHealthFlagPostRequest
+ */
+export interface WabaHealthApiWabaHealthFlagPostRequest {
+    /**
+     * 
+     * @type {WabaHealthFlagPostRequest}
+     * @memberof WabaHealthApiWabaHealthFlagPost
+     */
+    readonly wabaHealthFlagPostRequest: WabaHealthFlagPostRequest
+}
+
+/**
+ * WabaHealthApi - object-oriented interface
+ * @export
+ * @class WabaHealthApi
+ * @extends {BaseAPI}
+ */
+export class WabaHealthApi extends BaseAPI {
+    /**
+     * 
+     * @summary Flag a WABA account for health monitoring
+     * @param {WabaHealthApiWabaHealthFlagPostRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof WabaHealthApi
+     */
+    public wabaHealthFlagPost(requestParameters: WabaHealthApiWabaHealthFlagPostRequest, options?: RawAxiosRequestConfig) {
+        return WabaHealthApiFp(this.configuration).wabaHealthFlagPost(requestParameters.wabaHealthFlagPostRequest, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
