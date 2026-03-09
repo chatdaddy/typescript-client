@@ -1874,13 +1874,11 @@ export const AnalyticsApiAxiosParamCreator = function (configuration?: Configura
         /**
          * 
          * @summary Get message analytics dashboard stats
-         * @param {string} teamId 
+         * @param {string} [teamId] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        messageAnalyticsGet: async (teamId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'teamId' is not null or undefined
-            assertParamExists('messageAnalyticsGet', 'teamId', teamId)
+        messageAnalyticsGet: async (teamId?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/message-analytics`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -1921,11 +1919,11 @@ export const AnalyticsApiFp = function(configuration?: Configuration) {
         /**
          * 
          * @summary Get message analytics dashboard stats
-         * @param {string} teamId 
+         * @param {string} [teamId] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async messageAnalyticsGet(teamId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MessageAnalytics>> {
+        async messageAnalyticsGet(teamId?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MessageAnalytics>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.messageAnalyticsGet(teamId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AnalyticsApi.messageAnalyticsGet']?.[localVarOperationServerIndex]?.url;
@@ -1948,7 +1946,7 @@ export const AnalyticsApiFactory = function (configuration?: Configuration, base
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        messageAnalyticsGet(requestParameters: AnalyticsApiMessageAnalyticsGetRequest, options?: RawAxiosRequestConfig): AxiosPromise<MessageAnalytics> {
+        messageAnalyticsGet(requestParameters: AnalyticsApiMessageAnalyticsGetRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<MessageAnalytics> {
             return localVarFp.messageAnalyticsGet(requestParameters.teamId, options).then((request) => request(axios, basePath));
         },
     };
@@ -1965,7 +1963,7 @@ export interface AnalyticsApiMessageAnalyticsGetRequest {
      * @type {string}
      * @memberof AnalyticsApiMessageAnalyticsGet
      */
-    readonly teamId: string
+    readonly teamId?: string
 }
 
 /**
@@ -1983,7 +1981,7 @@ export class AnalyticsApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof AnalyticsApi
      */
-    public messageAnalyticsGet(requestParameters: AnalyticsApiMessageAnalyticsGetRequest, options?: RawAxiosRequestConfig) {
+    public messageAnalyticsGet(requestParameters: AnalyticsApiMessageAnalyticsGetRequest = {}, options?: RawAxiosRequestConfig) {
         return AnalyticsApiFp(this.configuration).messageAnalyticsGet(requestParameters.teamId, options).then((request) => request(this.axios, this.basePath));
     }
 }
