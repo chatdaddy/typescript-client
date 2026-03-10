@@ -1184,6 +1184,50 @@ export interface MessageStack {
 /**
  * 
  * @export
+ * @interface MessageTrendEntry
+ */
+export interface MessageTrendEntry {
+    /**
+     * Start of the period (day or week Monday)
+     * @type {string}
+     * @memberof MessageTrendEntry
+     */
+    'date': string;
+    /**
+     * Messages sent from API accounts during this period
+     * @type {number}
+     * @memberof MessageTrendEntry
+     */
+    'apiSent': number;
+    /**
+     * Messages sent from non-API accounts during this period
+     * @type {number}
+     * @memberof MessageTrendEntry
+     */
+    'nonApiSent': number;
+}
+/**
+ * 
+ * @export
+ * @interface MessageTrends
+ */
+export interface MessageTrends {
+    /**
+     * Last 4 weeks bucketed by ISO week
+     * @type {Array<MessageTrendEntry>}
+     * @memberof MessageTrends
+     */
+    'weekly': Array<MessageTrendEntry>;
+    /**
+     * Last 30 days bucketed by day
+     * @type {Array<MessageTrendEntry>}
+     * @memberof MessageTrends
+     */
+    'daily': Array<MessageTrendEntry>;
+}
+/**
+ * 
+ * @export
  * @interface N8nToken
  */
 export interface N8nToken {
@@ -1926,44 +1970,6 @@ export interface WebhookNotionPostRequestData {
      */
     'properties'?: { [key: string]: any; };
 }
-/**
- * 
- * @export
- * @interface WeeklyMessageStatEntry
- */
-export interface WeeklyMessageStatEntry {
-    /**
-     * Start of the ISO week (Monday)
-     * @type {string}
-     * @memberof WeeklyMessageStatEntry
-     */
-    'weekStart': string;
-    /**
-     * Messages sent from API accounts during this week
-     * @type {number}
-     * @memberof WeeklyMessageStatEntry
-     */
-    'apiSent': number;
-    /**
-     * Messages sent from non-API accounts during this week
-     * @type {number}
-     * @memberof WeeklyMessageStatEntry
-     */
-    'nonApiSent': number;
-}
-/**
- * 
- * @export
- * @interface WeeklyMessageStats
- */
-export interface WeeklyMessageStats {
-    /**
-     * 
-     * @type {Array<WeeklyMessageStatEntry>}
-     * @memberof WeeklyMessageStats
-     */
-    'weeks': Array<WeeklyMessageStatEntry>;
-}
 
 /**
  * AnalyticsApi - axios parameter creator
@@ -2054,13 +2060,13 @@ export const AnalyticsApiAxiosParamCreator = function (configuration?: Configura
         },
         /**
          * 
-         * @summary Get weekly message counts (API vs non-API) for the last 4 weeks
+         * @summary Get daily and weekly message count trends (API vs non-API)
          * @param {string} [teamId] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        weeklyMessageStatsGet: async (teamId?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/weekly-message-stats`;
+        messageTrendsGet: async (teamId?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/message-trends`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -2130,15 +2136,15 @@ export const AnalyticsApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
-         * @summary Get weekly message counts (API vs non-API) for the last 4 weeks
+         * @summary Get daily and weekly message count trends (API vs non-API)
          * @param {string} [teamId] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async weeklyMessageStatsGet(teamId?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<WeeklyMessageStats>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.weeklyMessageStatsGet(teamId, options);
+        async messageTrendsGet(teamId?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MessageTrends>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.messageTrendsGet(teamId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['AnalyticsApi.weeklyMessageStatsGet']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['AnalyticsApi.messageTrendsGet']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
     }
@@ -2173,13 +2179,13 @@ export const AnalyticsApiFactory = function (configuration?: Configuration, base
         },
         /**
          * 
-         * @summary Get weekly message counts (API vs non-API) for the last 4 weeks
-         * @param {AnalyticsApiWeeklyMessageStatsGetRequest} requestParameters Request parameters.
+         * @summary Get daily and weekly message count trends (API vs non-API)
+         * @param {AnalyticsApiMessageTrendsGetRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        weeklyMessageStatsGet(requestParameters: AnalyticsApiWeeklyMessageStatsGetRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<WeeklyMessageStats> {
-            return localVarFp.weeklyMessageStatsGet(requestParameters.teamId, options).then((request) => request(axios, basePath));
+        messageTrendsGet(requestParameters: AnalyticsApiMessageTrendsGetRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<MessageTrends> {
+            return localVarFp.messageTrendsGet(requestParameters.teamId, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -2220,15 +2226,15 @@ export interface AnalyticsApiMessageAnalyticsGetRequest {
 }
 
 /**
- * Request parameters for weeklyMessageStatsGet operation in AnalyticsApi.
+ * Request parameters for messageTrendsGet operation in AnalyticsApi.
  * @export
- * @interface AnalyticsApiWeeklyMessageStatsGetRequest
+ * @interface AnalyticsApiMessageTrendsGetRequest
  */
-export interface AnalyticsApiWeeklyMessageStatsGetRequest {
+export interface AnalyticsApiMessageTrendsGetRequest {
     /**
      * 
      * @type {string}
-     * @memberof AnalyticsApiWeeklyMessageStatsGet
+     * @memberof AnalyticsApiMessageTrendsGet
      */
     readonly teamId?: string
 }
@@ -2266,14 +2272,14 @@ export class AnalyticsApi extends BaseAPI {
 
     /**
      * 
-     * @summary Get weekly message counts (API vs non-API) for the last 4 weeks
-     * @param {AnalyticsApiWeeklyMessageStatsGetRequest} requestParameters Request parameters.
+     * @summary Get daily and weekly message count trends (API vs non-API)
+     * @param {AnalyticsApiMessageTrendsGetRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AnalyticsApi
      */
-    public weeklyMessageStatsGet(requestParameters: AnalyticsApiWeeklyMessageStatsGetRequest = {}, options?: RawAxiosRequestConfig) {
-        return AnalyticsApiFp(this.configuration).weeklyMessageStatsGet(requestParameters.teamId, options).then((request) => request(this.axios, this.basePath));
+    public messageTrendsGet(requestParameters: AnalyticsApiMessageTrendsGetRequest = {}, options?: RawAxiosRequestConfig) {
+        return AnalyticsApiFp(this.configuration).messageTrendsGet(requestParameters.teamId, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
