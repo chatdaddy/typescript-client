@@ -28,6 +28,68 @@ import { COLLECTION_FORMATS, BaseAPI, RequiredError, operationServerMap } from '
 /**
  * 
  * @export
+ * @interface ActiveChannel
+ */
+export interface ActiveChannel {
+    /**
+     * Account/channel ID
+     * @type {string}
+     * @memberof ActiveChannel
+     */
+    'accountId': string;
+    /**
+     * Team/owner ID
+     * @type {string}
+     * @memberof ActiveChannel
+     */
+    'teamId': string;
+    /**
+     * Type of account (e.g. wa-business-api, wa-web)
+     * @type {string}
+     * @memberof ActiveChannel
+     */
+    'accountType': string;
+    /**
+     * Assigned worker ID
+     * @type {string}
+     * @memberof ActiveChannel
+     */
+    'workerId'?: string | null;
+    /**
+     * Timestamp of last sent message
+     * @type {string}
+     * @memberof ActiveChannel
+     */
+    'lastMessageSentAt'?: string | null;
+    /**
+     * Last update timestamp
+     * @type {string}
+     * @memberof ActiveChannel
+     */
+    'updatedAt'?: string;
+}
+/**
+ * 
+ * @export
+ * @interface ActiveChannelsGet200Response
+ */
+export interface ActiveChannelsGet200Response {
+    /**
+     * 
+     * @type {Array<ActiveChannel>}
+     * @memberof ActiveChannelsGet200Response
+     */
+    'channels': Array<ActiveChannel>;
+    /**
+     * Total number of active channels
+     * @type {number}
+     * @memberof ActiveChannelsGet200Response
+     */
+    'total': number;
+}
+/**
+ * 
+ * @export
  * @interface AutocompleteCalendarEventRequest
  */
 export interface AutocompleteCalendarEventRequest {
@@ -1864,6 +1926,44 @@ export interface WebhookNotionPostRequestData {
      */
     'properties'?: { [key: string]: any; };
 }
+/**
+ * 
+ * @export
+ * @interface WeeklyMessageStatEntry
+ */
+export interface WeeklyMessageStatEntry {
+    /**
+     * Start of the ISO week (Monday)
+     * @type {string}
+     * @memberof WeeklyMessageStatEntry
+     */
+    'weekStart': string;
+    /**
+     * Messages sent from API accounts during this week
+     * @type {number}
+     * @memberof WeeklyMessageStatEntry
+     */
+    'apiSent': number;
+    /**
+     * Messages sent from non-API accounts during this week
+     * @type {number}
+     * @memberof WeeklyMessageStatEntry
+     */
+    'nonApiSent': number;
+}
+/**
+ * 
+ * @export
+ * @interface WeeklyMessageStats
+ */
+export interface WeeklyMessageStats {
+    /**
+     * 
+     * @type {Array<WeeklyMessageStatEntry>}
+     * @memberof WeeklyMessageStats
+     */
+    'weeks': Array<WeeklyMessageStatEntry>;
+}
 
 /**
  * AnalyticsApi - axios parameter creator
@@ -1871,6 +1971,52 @@ export interface WebhookNotionPostRequestData {
  */
 export const AnalyticsApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
+        /**
+         * 
+         * @summary Get active channels with full details for a given time window
+         * @param {ActiveChannelsGetDaysEnum} days 
+         * @param {string} [teamId] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        activeChannelsGet: async (days: ActiveChannelsGetDaysEnum, teamId?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'days' is not null or undefined
+            assertParamExists('activeChannelsGet', 'days', days)
+            const localVarPath = `/active-channels`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", [], configuration)
+
+            if (teamId !== undefined) {
+                localVarQueryParameter['teamId'] = teamId;
+            }
+
+            if (days !== undefined) {
+                localVarQueryParameter['days'] = days;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
         /**
          * 
          * @summary Get message analytics dashboard stats
@@ -1906,6 +2052,45 @@ export const AnalyticsApiAxiosParamCreator = function (configuration?: Configura
                 options: localVarRequestOptions,
             };
         },
+        /**
+         * 
+         * @summary Get weekly message counts (API vs non-API) for the last 4 weeks
+         * @param {string} [teamId] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        weeklyMessageStatsGet: async (teamId?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/weekly-message-stats`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", [], configuration)
+
+            if (teamId !== undefined) {
+                localVarQueryParameter['teamId'] = teamId;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
     }
 };
 
@@ -1918,6 +2103,20 @@ export const AnalyticsApiFp = function(configuration?: Configuration) {
     return {
         /**
          * 
+         * @summary Get active channels with full details for a given time window
+         * @param {ActiveChannelsGetDaysEnum} days 
+         * @param {string} [teamId] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async activeChannelsGet(days: ActiveChannelsGetDaysEnum, teamId?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ActiveChannelsGet200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.activeChannelsGet(days, teamId, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['AnalyticsApi.activeChannelsGet']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
          * @summary Get message analytics dashboard stats
          * @param {string} [teamId] 
          * @param {*} [options] Override http request option.
@@ -1927,6 +2126,19 @@ export const AnalyticsApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.messageAnalyticsGet(teamId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AnalyticsApi.messageAnalyticsGet']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @summary Get weekly message counts (API vs non-API) for the last 4 weeks
+         * @param {string} [teamId] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async weeklyMessageStatsGet(teamId?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<WeeklyMessageStats>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.weeklyMessageStatsGet(teamId, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['AnalyticsApi.weeklyMessageStatsGet']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
     }
@@ -1941,6 +2153,16 @@ export const AnalyticsApiFactory = function (configuration?: Configuration, base
     return {
         /**
          * 
+         * @summary Get active channels with full details for a given time window
+         * @param {AnalyticsApiActiveChannelsGetRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        activeChannelsGet(requestParameters: AnalyticsApiActiveChannelsGetRequest, options?: RawAxiosRequestConfig): AxiosPromise<ActiveChannelsGet200Response> {
+            return localVarFp.activeChannelsGet(requestParameters.days, requestParameters.teamId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
          * @summary Get message analytics dashboard stats
          * @param {AnalyticsApiMessageAnalyticsGetRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -1949,8 +2171,39 @@ export const AnalyticsApiFactory = function (configuration?: Configuration, base
         messageAnalyticsGet(requestParameters: AnalyticsApiMessageAnalyticsGetRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<MessageAnalytics> {
             return localVarFp.messageAnalyticsGet(requestParameters.teamId, options).then((request) => request(axios, basePath));
         },
+        /**
+         * 
+         * @summary Get weekly message counts (API vs non-API) for the last 4 weeks
+         * @param {AnalyticsApiWeeklyMessageStatsGetRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        weeklyMessageStatsGet(requestParameters: AnalyticsApiWeeklyMessageStatsGetRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<WeeklyMessageStats> {
+            return localVarFp.weeklyMessageStatsGet(requestParameters.teamId, options).then((request) => request(axios, basePath));
+        },
     };
 };
+
+/**
+ * Request parameters for activeChannelsGet operation in AnalyticsApi.
+ * @export
+ * @interface AnalyticsApiActiveChannelsGetRequest
+ */
+export interface AnalyticsApiActiveChannelsGetRequest {
+    /**
+     * 
+     * @type {7 | 30}
+     * @memberof AnalyticsApiActiveChannelsGet
+     */
+    readonly days: ActiveChannelsGetDaysEnum
+
+    /**
+     * 
+     * @type {string}
+     * @memberof AnalyticsApiActiveChannelsGet
+     */
+    readonly teamId?: string
+}
 
 /**
  * Request parameters for messageAnalyticsGet operation in AnalyticsApi.
@@ -1967,12 +2220,38 @@ export interface AnalyticsApiMessageAnalyticsGetRequest {
 }
 
 /**
+ * Request parameters for weeklyMessageStatsGet operation in AnalyticsApi.
+ * @export
+ * @interface AnalyticsApiWeeklyMessageStatsGetRequest
+ */
+export interface AnalyticsApiWeeklyMessageStatsGetRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof AnalyticsApiWeeklyMessageStatsGet
+     */
+    readonly teamId?: string
+}
+
+/**
  * AnalyticsApi - object-oriented interface
  * @export
  * @class AnalyticsApi
  * @extends {BaseAPI}
  */
 export class AnalyticsApi extends BaseAPI {
+    /**
+     * 
+     * @summary Get active channels with full details for a given time window
+     * @param {AnalyticsApiActiveChannelsGetRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AnalyticsApi
+     */
+    public activeChannelsGet(requestParameters: AnalyticsApiActiveChannelsGetRequest, options?: RawAxiosRequestConfig) {
+        return AnalyticsApiFp(this.configuration).activeChannelsGet(requestParameters.days, requestParameters.teamId, options).then((request) => request(this.axios, this.basePath));
+    }
+
     /**
      * 
      * @summary Get message analytics dashboard stats
@@ -1984,8 +2263,28 @@ export class AnalyticsApi extends BaseAPI {
     public messageAnalyticsGet(requestParameters: AnalyticsApiMessageAnalyticsGetRequest = {}, options?: RawAxiosRequestConfig) {
         return AnalyticsApiFp(this.configuration).messageAnalyticsGet(requestParameters.teamId, options).then((request) => request(this.axios, this.basePath));
     }
+
+    /**
+     * 
+     * @summary Get weekly message counts (API vs non-API) for the last 4 weeks
+     * @param {AnalyticsApiWeeklyMessageStatsGetRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AnalyticsApi
+     */
+    public weeklyMessageStatsGet(requestParameters: AnalyticsApiWeeklyMessageStatsGetRequest = {}, options?: RawAxiosRequestConfig) {
+        return AnalyticsApiFp(this.configuration).weeklyMessageStatsGet(requestParameters.teamId, options).then((request) => request(this.axios, this.basePath));
+    }
 }
 
+/**
+ * @export
+ */
+export const ActiveChannelsGetDaysEnum = {
+    NUMBER_7: 7,
+    NUMBER_30: 30
+} as const;
+export type ActiveChannelsGetDaysEnum = typeof ActiveChannelsGetDaysEnum[keyof typeof ActiveChannelsGetDaysEnum];
 
 
 /**
