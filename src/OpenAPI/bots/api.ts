@@ -5229,6 +5229,12 @@ export interface TemplateStatusUpdateRequestTemplatesInner {
      * @memberof TemplateStatusUpdateRequestTemplatesInner
      */
     'rejectionReason': string;
+    /**
+     * Account ID the template belongs to, for targeted update
+     * @type {string}
+     * @memberof TemplateStatusUpdateRequestTemplatesInner
+     */
+    'accountId'?: string;
 }
 
 export const TemplateStatusUpdateRequestTemplatesInnerStatusEnum = {
