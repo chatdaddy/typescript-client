@@ -11081,6 +11081,8 @@ export const ChatsApiAxiosParamCreator = function (configuration?: Configuration
          * @param {boolean} [hasUnsolvedNote] 
          * @param {boolean} [hasFailedMessage] 
          * @param {boolean} [lastMessageFromMe] Only get chats where the last message was sent by me/not me
+         * @param {string} [chatLastMessageFrom] 
+         * @param {string} [chatLastMessageTo] 
          * @param {ChatsGetTagsParameter} [tags] Get contacts who fall in either of these tags
          * @param {ChatsGetTagsFilterOperatorEnum} [tagsFilterOperator] How to combine multiple tag filters. Use \&#39;AND\&#39; to require all tags to match, or \&#39;OR\&#39; to match any tag. Defaults to \&#39;OR\&#39;.
          * @param {Array<string>} [notTags] Get contacts who are not in any of these tags
@@ -11097,7 +11099,7 @@ export const ChatsApiAxiosParamCreator = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        chatsGet: async (count?: number, page?: string, archive?: boolean, unread?: boolean, returnTotalCount?: boolean, hasPendingMessage?: boolean, mentioned?: string, hasUnsolvedNote?: boolean, hasFailedMessage?: boolean, lastMessageFromMe?: boolean, tags?: ChatsGetTagsParameter, tagsFilterOperator?: ChatsGetTagsFilterOperatorEnum, notTags?: Array<string>, contacts?: ChatsGetContactsParameter, q?: string, assignee?: ChatsGetAssigneeParameter, assigneeFilterOperator?: ChatsGetAssigneeFilterOperatorEnum, accountId?: Array<string>, type?: ContactType, ticket?: ChatsGetTicketParameter, notAssignee?: Array<string>, orGroups?: string, returnUnreadChatCount?: boolean, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        chatsGet: async (count?: number, page?: string, archive?: boolean, unread?: boolean, returnTotalCount?: boolean, hasPendingMessage?: boolean, mentioned?: string, hasUnsolvedNote?: boolean, hasFailedMessage?: boolean, lastMessageFromMe?: boolean, chatLastMessageFrom?: string, chatLastMessageTo?: string, tags?: ChatsGetTagsParameter, tagsFilterOperator?: ChatsGetTagsFilterOperatorEnum, notTags?: Array<string>, contacts?: ChatsGetContactsParameter, q?: string, assignee?: ChatsGetAssigneeParameter, assigneeFilterOperator?: ChatsGetAssigneeFilterOperatorEnum, accountId?: Array<string>, type?: ContactType, ticket?: ChatsGetTicketParameter, notAssignee?: Array<string>, orGroups?: string, returnUnreadChatCount?: boolean, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/chats`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -11152,6 +11154,18 @@ export const ChatsApiAxiosParamCreator = function (configuration?: Configuration
 
             if (lastMessageFromMe !== undefined) {
                 localVarQueryParameter['lastMessageFromMe'] = lastMessageFromMe;
+            }
+
+            if (chatLastMessageFrom !== undefined) {
+                localVarQueryParameter['chatLastMessageFrom'] = (chatLastMessageFrom as any instanceof Date) ?
+                    (chatLastMessageFrom as any).toISOString() :
+                    chatLastMessageFrom;
+            }
+
+            if (chatLastMessageTo !== undefined) {
+                localVarQueryParameter['chatLastMessageTo'] = (chatLastMessageTo as any instanceof Date) ?
+                    (chatLastMessageTo as any).toISOString() :
+                    chatLastMessageTo;
             }
 
             if (tags !== undefined) {
@@ -11560,6 +11574,8 @@ export const ChatsApiFp = function(configuration?: Configuration) {
          * @param {boolean} [hasUnsolvedNote] 
          * @param {boolean} [hasFailedMessage] 
          * @param {boolean} [lastMessageFromMe] Only get chats where the last message was sent by me/not me
+         * @param {string} [chatLastMessageFrom] 
+         * @param {string} [chatLastMessageTo] 
          * @param {ChatsGetTagsParameter} [tags] Get contacts who fall in either of these tags
          * @param {ChatsGetTagsFilterOperatorEnum} [tagsFilterOperator] How to combine multiple tag filters. Use \&#39;AND\&#39; to require all tags to match, or \&#39;OR\&#39; to match any tag. Defaults to \&#39;OR\&#39;.
          * @param {Array<string>} [notTags] Get contacts who are not in any of these tags
@@ -11576,8 +11592,8 @@ export const ChatsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async chatsGet(count?: number, page?: string, archive?: boolean, unread?: boolean, returnTotalCount?: boolean, hasPendingMessage?: boolean, mentioned?: string, hasUnsolvedNote?: boolean, hasFailedMessage?: boolean, lastMessageFromMe?: boolean, tags?: ChatsGetTagsParameter, tagsFilterOperator?: ChatsGetTagsFilterOperatorEnum, notTags?: Array<string>, contacts?: ChatsGetContactsParameter, q?: string, assignee?: ChatsGetAssigneeParameter, assigneeFilterOperator?: ChatsGetAssigneeFilterOperatorEnum, accountId?: Array<string>, type?: ContactType, ticket?: ChatsGetTicketParameter, notAssignee?: Array<string>, orGroups?: string, returnUnreadChatCount?: boolean, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ChatsGet200Response>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.chatsGet(count, page, archive, unread, returnTotalCount, hasPendingMessage, mentioned, hasUnsolvedNote, hasFailedMessage, lastMessageFromMe, tags, tagsFilterOperator, notTags, contacts, q, assignee, assigneeFilterOperator, accountId, type, ticket, notAssignee, orGroups, returnUnreadChatCount, options);
+        async chatsGet(count?: number, page?: string, archive?: boolean, unread?: boolean, returnTotalCount?: boolean, hasPendingMessage?: boolean, mentioned?: string, hasUnsolvedNote?: boolean, hasFailedMessage?: boolean, lastMessageFromMe?: boolean, chatLastMessageFrom?: string, chatLastMessageTo?: string, tags?: ChatsGetTagsParameter, tagsFilterOperator?: ChatsGetTagsFilterOperatorEnum, notTags?: Array<string>, contacts?: ChatsGetContactsParameter, q?: string, assignee?: ChatsGetAssigneeParameter, assigneeFilterOperator?: ChatsGetAssigneeFilterOperatorEnum, accountId?: Array<string>, type?: ContactType, ticket?: ChatsGetTicketParameter, notAssignee?: Array<string>, orGroups?: string, returnUnreadChatCount?: boolean, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ChatsGet200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.chatsGet(count, page, archive, unread, returnTotalCount, hasPendingMessage, mentioned, hasUnsolvedNote, hasFailedMessage, lastMessageFromMe, chatLastMessageFrom, chatLastMessageTo, tags, tagsFilterOperator, notTags, contacts, q, assignee, assigneeFilterOperator, accountId, type, ticket, notAssignee, orGroups, returnUnreadChatCount, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['ChatsApi.chatsGet']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -11699,7 +11715,7 @@ export const ChatsApiFactory = function (configuration?: Configuration, basePath
          * @throws {RequiredError}
          */
         chatsGet(requestParameters: ChatsApiChatsGetRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<ChatsGet200Response> {
-            return localVarFp.chatsGet(requestParameters.count, requestParameters.page, requestParameters.archive, requestParameters.unread, requestParameters.returnTotalCount, requestParameters.hasPendingMessage, requestParameters.mentioned, requestParameters.hasUnsolvedNote, requestParameters.hasFailedMessage, requestParameters.lastMessageFromMe, requestParameters.tags, requestParameters.tagsFilterOperator, requestParameters.notTags, requestParameters.contacts, requestParameters.q, requestParameters.assignee, requestParameters.assigneeFilterOperator, requestParameters.accountId, requestParameters.type, requestParameters.ticket, requestParameters.notAssignee, requestParameters.orGroups, requestParameters.returnUnreadChatCount, options).then((request) => request(axios, basePath));
+            return localVarFp.chatsGet(requestParameters.count, requestParameters.page, requestParameters.archive, requestParameters.unread, requestParameters.returnTotalCount, requestParameters.hasPendingMessage, requestParameters.mentioned, requestParameters.hasUnsolvedNote, requestParameters.hasFailedMessage, requestParameters.lastMessageFromMe, requestParameters.chatLastMessageFrom, requestParameters.chatLastMessageTo, requestParameters.tags, requestParameters.tagsFilterOperator, requestParameters.notTags, requestParameters.contacts, requestParameters.q, requestParameters.assignee, requestParameters.assigneeFilterOperator, requestParameters.accountId, requestParameters.type, requestParameters.ticket, requestParameters.notAssignee, requestParameters.orGroups, requestParameters.returnUnreadChatCount, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -11849,6 +11865,20 @@ export interface ChatsApiChatsGetRequest {
      * @memberof ChatsApiChatsGet
      */
     readonly lastMessageFromMe?: boolean
+
+    /**
+     * 
+     * @type {string}
+     * @memberof ChatsApiChatsGet
+     */
+    readonly chatLastMessageFrom?: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof ChatsApiChatsGet
+     */
+    readonly chatLastMessageTo?: string
 
     /**
      * Get contacts who fall in either of these tags
@@ -12112,7 +12142,7 @@ export class ChatsApi extends BaseAPI {
      * @memberof ChatsApi
      */
     public chatsGet(requestParameters: ChatsApiChatsGetRequest = {}, options?: RawAxiosRequestConfig) {
-        return ChatsApiFp(this.configuration).chatsGet(requestParameters.count, requestParameters.page, requestParameters.archive, requestParameters.unread, requestParameters.returnTotalCount, requestParameters.hasPendingMessage, requestParameters.mentioned, requestParameters.hasUnsolvedNote, requestParameters.hasFailedMessage, requestParameters.lastMessageFromMe, requestParameters.tags, requestParameters.tagsFilterOperator, requestParameters.notTags, requestParameters.contacts, requestParameters.q, requestParameters.assignee, requestParameters.assigneeFilterOperator, requestParameters.accountId, requestParameters.type, requestParameters.ticket, requestParameters.notAssignee, requestParameters.orGroups, requestParameters.returnUnreadChatCount, options).then((request) => request(this.axios, this.basePath));
+        return ChatsApiFp(this.configuration).chatsGet(requestParameters.count, requestParameters.page, requestParameters.archive, requestParameters.unread, requestParameters.returnTotalCount, requestParameters.hasPendingMessage, requestParameters.mentioned, requestParameters.hasUnsolvedNote, requestParameters.hasFailedMessage, requestParameters.lastMessageFromMe, requestParameters.chatLastMessageFrom, requestParameters.chatLastMessageTo, requestParameters.tags, requestParameters.tagsFilterOperator, requestParameters.notTags, requestParameters.contacts, requestParameters.q, requestParameters.assignee, requestParameters.assigneeFilterOperator, requestParameters.accountId, requestParameters.type, requestParameters.ticket, requestParameters.notAssignee, requestParameters.orGroups, requestParameters.returnUnreadChatCount, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
