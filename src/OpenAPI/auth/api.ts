@@ -2755,6 +2755,18 @@ export interface UserPatch {
      */
     'webPushSubscriptions'?: Array<WebPushSubscription>;
     /**
+     * FCM device token for mobile push notifications
+     * @type {string}
+     * @memberof UserPatch
+     */
+    'fcmToken'?: string;
+    /**
+     * Platform of the device registering the FCM token
+     * @type {string}
+     * @memberof UserPatch
+     */
+    'fcmPlatform'?: UserPatchFcmPlatformEnum;
+    /**
      * add a user to a partnership manually
      * @type {string}
      * @memberof UserPatch
@@ -2768,6 +2780,12 @@ export interface UserPatch {
     'creditCustomer'?: UserPatchCreditCustomerEnum;
 }
 
+export const UserPatchFcmPlatformEnum = {
+    Android: 'android',
+    Ios: 'ios'
+} as const;
+
+export type UserPatchFcmPlatformEnum = typeof UserPatchFcmPlatformEnum[keyof typeof UserPatchFcmPlatformEnum];
 export const UserPatchCreditCustomerEnum = {
     Production: 'production'
 } as const;
