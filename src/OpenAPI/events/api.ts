@@ -6320,6 +6320,12 @@ export interface ContactInsertData {
     'firstAssignedAt'?: string;
     /**
      * 
+     * @type {string}
+     * @memberof ContactInsertData
+     */
+    'assignedByFlowId'?: string | null;
+    /**
+     * 
      * @type {number}
      * @memberof ContactInsertData
      */
@@ -6482,6 +6488,12 @@ export interface ContactUpdateData {
      * @memberof ContactUpdateData
      */
     'firstAssignedAt'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ContactUpdateData
+     */
+    'assignedByFlowId'?: string | null;
     /**
      * 
      * @type {number}
@@ -8151,6 +8163,12 @@ export interface GroupUpdateDataOwner {
      * @memberof GroupUpdateDataOwner
      */
     'firstAssignedAt'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof GroupUpdateDataOwner
+     */
+    'assignedByFlowId'?: string | null;
     /**
      * 
      * @type {number}

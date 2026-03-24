@@ -2154,6 +2154,12 @@ export interface Contact {
      */
     'firstAssignedAt'?: string;
     /**
+     * The botId/actionId of the message flow that last assigned this contact, formatted as \'{botId}/{actionId}\'. Null if last assigned manually by a user.
+     * @type {string}
+     * @memberof Contact
+     */
+    'assignedByFlowId'?: string | null;
+    /**
      * 
      * @type {number}
      * @memberof Contact
@@ -4579,7 +4585,7 @@ export interface MessageContent {
  */
 export interface MessageContentAction {
     /**
-     * 
+     * The action type. Common types include: ASSIGNEE_CHANGED (parameters: [assignee, assigner, flowId?] where flowId is \'{botId}/{actionId}\' if assigned by a message flow), TICKET_CREATED, TICKET_UPDATED, CALL_PLACED, CALL_ENDED, etc.
      * @type {string}
      * @memberof MessageContentAction
      */
