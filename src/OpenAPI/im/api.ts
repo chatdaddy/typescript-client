@@ -2154,6 +2154,12 @@ export interface Contact {
      */
     'firstAssignedAt'?: string;
     /**
+     * Whether this contact is blocked
+     * @type {boolean}
+     * @memberof Contact
+     */
+    'blocked'?: boolean;
+    /**
      * The botId/actionId of the message flow that last assigned this contact, formatted as \'{botId}/{actionId}\'. Null if last assigned manually by a user.
      * @type {string}
      * @memberof Contact
@@ -2436,6 +2442,31 @@ export const ContactType = {
 export type ContactType = typeof ContactType[keyof typeof ContactType];
 
 
+/**
+ * 
+ * @export
+ * @interface ContactsBlockPostRequest
+ */
+export interface ContactsBlockPostRequest {
+    /**
+     * The IM account ID
+     * @type {string}
+     * @memberof ContactsBlockPostRequest
+     */
+    'accountId': string;
+    /**
+     * The contact ID to block/unblock
+     * @type {string}
+     * @memberof ContactsBlockPostRequest
+     */
+    'contactId': string;
+    /**
+     * true to block, false to unblock
+     * @type {boolean}
+     * @memberof ContactsBlockPostRequest
+     */
+    'blocked': boolean;
+}
 /**
  * 
  * @export
@@ -12270,6 +12301,46 @@ export type GetChannelCountPresetEnum = typeof GetChannelCountPresetEnum[keyof t
 export const ContactsApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
+         * Blocks or unblocks a contact on the underlying IM platform (e.g. WhatsApp) and updates the contact\'s blocked status.
+         * @summary Block or unblock a contact
+         * @param {ContactsBlockPostRequest} contactsBlockPostRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        contactsBlockPost: async (contactsBlockPostRequest: ContactsBlockPostRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'contactsBlockPostRequest' is not null or undefined
+            assertParamExists('contactsBlockPost', 'contactsBlockPostRequest', contactsBlockPostRequest)
+            const localVarPath = `/contacts/block`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["CONTACTS_UPDATE"], configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(contactsBlockPostRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * Eg. provide a phone number to check whether the user is registered on WhatsApp
          * @summary Check a given user exists on the IM platform
          * @param {ContactsCheckExistsTypeEnum} type which account type to check from
@@ -12874,6 +12945,19 @@ export const ContactsApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = ContactsApiAxiosParamCreator(configuration)
     return {
         /**
+         * Blocks or unblocks a contact on the underlying IM platform (e.g. WhatsApp) and updates the contact\'s blocked status.
+         * @summary Block or unblock a contact
+         * @param {ContactsBlockPostRequest} contactsBlockPostRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async contactsBlockPost(contactsBlockPostRequest: ContactsBlockPostRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AccountsDelete200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.contactsBlockPost(contactsBlockPostRequest, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['ContactsApi.contactsBlockPost']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
          * Eg. provide a phone number to check whether the user is registered on WhatsApp
          * @summary Check a given user exists on the IM platform
          * @param {ContactsCheckExistsTypeEnum} type which account type to check from
@@ -13032,6 +13116,16 @@ export const ContactsApiFactory = function (configuration?: Configuration, baseP
     const localVarFp = ContactsApiFp(configuration)
     return {
         /**
+         * Blocks or unblocks a contact on the underlying IM platform (e.g. WhatsApp) and updates the contact\'s blocked status.
+         * @summary Block or unblock a contact
+         * @param {ContactsApiContactsBlockPostRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        contactsBlockPost(requestParameters: ContactsApiContactsBlockPostRequest, options?: RawAxiosRequestConfig): AxiosPromise<AccountsDelete200Response> {
+            return localVarFp.contactsBlockPost(requestParameters.contactsBlockPostRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
          * Eg. provide a phone number to check whether the user is registered on WhatsApp
          * @summary Check a given user exists on the IM platform
          * @param {ContactsApiContactsCheckExistsRequest} requestParameters Request parameters.
@@ -13093,6 +13187,20 @@ export const ContactsApiFactory = function (configuration?: Configuration, baseP
         },
     };
 };
+
+/**
+ * Request parameters for contactsBlockPost operation in ContactsApi.
+ * @export
+ * @interface ContactsApiContactsBlockPostRequest
+ */
+export interface ContactsApiContactsBlockPostRequest {
+    /**
+     * 
+     * @type {ContactsBlockPostRequest}
+     * @memberof ContactsApiContactsBlockPost
+     */
+    readonly contactsBlockPostRequest: ContactsBlockPostRequest
+}
 
 /**
  * Request parameters for contactsCheckExists operation in ContactsApi.
@@ -13675,6 +13783,18 @@ export interface ContactsApiContactsPostRequest {
  * @extends {BaseAPI}
  */
 export class ContactsApi extends BaseAPI {
+    /**
+     * Blocks or unblocks a contact on the underlying IM platform (e.g. WhatsApp) and updates the contact\'s blocked status.
+     * @summary Block or unblock a contact
+     * @param {ContactsApiContactsBlockPostRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ContactsApi
+     */
+    public contactsBlockPost(requestParameters: ContactsApiContactsBlockPostRequest, options?: RawAxiosRequestConfig) {
+        return ContactsApiFp(this.configuration).contactsBlockPost(requestParameters.contactsBlockPostRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
     /**
      * Eg. provide a phone number to check whether the user is registered on WhatsApp
      * @summary Check a given user exists on the IM platform

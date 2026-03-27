@@ -6320,6 +6320,12 @@ export interface ContactInsertData {
     'firstAssignedAt'?: string;
     /**
      * 
+     * @type {boolean}
+     * @memberof ContactInsertData
+     */
+    'blocked'?: boolean;
+    /**
+     * 
      * @type {string}
      * @memberof ContactInsertData
      */
@@ -6488,6 +6494,12 @@ export interface ContactUpdateData {
      * @memberof ContactUpdateData
      */
     'firstAssignedAt'?: string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof ContactUpdateData
+     */
+    'blocked'?: boolean;
     /**
      * 
      * @type {string}
@@ -8163,6 +8175,12 @@ export interface GroupUpdateDataOwner {
      * @memberof GroupUpdateDataOwner
      */
     'firstAssignedAt'?: string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof GroupUpdateDataOwner
+     */
+    'blocked'?: boolean;
     /**
      * 
      * @type {string}
