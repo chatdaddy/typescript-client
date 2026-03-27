@@ -144,6 +144,25 @@ export type AnyCreditConsumptionType = CreditConsumptionType | RecurringCreditCo
 /**
  * 
  * @export
+ * @interface AutoChargeConfig
+ */
+export interface AutoChargeConfig {
+    /**
+     * When unitsAvailable drops below this value, an automatic top-up is triggered. Set to null to disable.
+     * @type {number}
+     * @memberof AutoChargeConfig
+     */
+    'threshold'?: number | null;
+    /**
+     * Number of credits to purchase when the auto top-up triggers. Set to null to disable.
+     * @type {number}
+     * @memberof AutoChargeConfig
+     */
+    'topUpAmount'?: number | null;
+}
+/**
+ * 
+ * @export
  * @interface AutoChargeProduct
  */
 export interface AutoChargeProduct {
@@ -530,10 +549,16 @@ export interface CreditAutoRenewalUpdate {
     'period': AutoRenewalPeriod;
     /**
      * 
+     * @type {PlanId}
+     * @memberof CreditAutoRenewalUpdate
+     */
+    'planId'?: PlanId;
+    /**
+     * 
      * @type {CreditUnitsPurchaseOpts}
      * @memberof CreditAutoRenewalUpdate
      */
-    'units': CreditUnitsPurchaseOpts;
+    'units'?: CreditUnitsPurchaseOpts;
     /**
      * 
      * @type {MiscBillingOptions}
@@ -1692,6 +1717,12 @@ export interface CustomerAutoRenewal {
      * @memberof CustomerAutoRenewal
      */
     'extraMessages'?: ExtraMessages;
+    /**
+     * 
+     * @type {PlanId}
+     * @memberof CustomerAutoRenewal
+     */
+    'planId'?: PlanId;
 }
 
 export const CustomerAutoRenewalStatusEnum = {
@@ -1762,6 +1793,12 @@ export interface CustomerAutoRenewalWRedeemedCoupon {
      * @memberof CustomerAutoRenewalWRedeemedCoupon
      */
     'extraMessages'?: ExtraMessages;
+    /**
+     * 
+     * @type {PlanId}
+     * @memberof CustomerAutoRenewalWRedeemedCoupon
+     */
+    'planId'?: PlanId;
     /**
      * 
      * @type {CustomerAutoRenewalWRedeemedCouponAllOfCurrentRedeemedCoupon}
@@ -2509,6 +2546,178 @@ export interface PaymentRequest {
      * @memberof PaymentRequest
      */
     'paymentUrl': string;
+}
+/**
+ * 
+ * @export
+ * @enum {string}
+ */
+
+export const PlanId = {
+    Mini: 'mini',
+    Pro: 'pro',
+    Max: 'max',
+    Enterprise: 'enterprise'
+} as const;
+
+export type PlanId = typeof PlanId[keyof typeof PlanId];
+
+
+/**
+ * 
+ * @export
+ * @interface PlanLimitStatus
+ */
+export interface PlanLimitStatus {
+    /**
+     * -1 means unlimited
+     * @type {number}
+     * @memberof PlanLimitStatus
+     */
+    'limit': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof PlanLimitStatus
+     */
+    'current': number;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof PlanLimitStatus
+     */
+    'allowed': boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof PlanLimitStatus
+     */
+    'reason'?: string;
+}
+/**
+ * 
+ * @export
+ * @interface PlanMigrationCompleteRequest
+ */
+export interface PlanMigrationCompleteRequest {
+    /**
+     * 
+     * @type {PlanId}
+     * @memberof PlanMigrationCompleteRequest
+     */
+    'planId': PlanId;
+    /**
+     * 
+     * @type {string}
+     * @memberof PlanMigrationCompleteRequest
+     */
+    'period': PlanMigrationCompleteRequestPeriodEnum;
+}
+
+export const PlanMigrationCompleteRequestPeriodEnum = {
+    Month: 'month',
+    Year: 'year'
+} as const;
+
+export type PlanMigrationCompleteRequestPeriodEnum = typeof PlanMigrationCompleteRequestPeriodEnum[keyof typeof PlanMigrationCompleteRequestPeriodEnum];
+
+/**
+ * 
+ * @export
+ * @interface PlanMigrationInfo
+ */
+export interface PlanMigrationInfo {
+    /**
+     * null = legacy user not yet offered migration
+     * @type {string}
+     * @memberof PlanMigrationInfo
+     */
+    'migrationStatus': PlanMigrationInfoMigrationStatusEnum | null;
+    /**
+     * Number of active channels at time of query
+     * @type {number}
+     * @memberof PlanMigrationInfo
+     */
+    'currentChannels': number;
+    /**
+     * Number of active teammates at time of query
+     * @type {number}
+     * @memberof PlanMigrationInfo
+     */
+    'currentTeammates': number;
+    /**
+     * Current general credit balance (will become top-up pool after migration)
+     * @type {number}
+     * @memberof PlanMigrationInfo
+     */
+    'unitsAvailable': number;
+    /**
+     * 
+     * @type {PlanId}
+     * @memberof PlanMigrationInfo
+     */
+    'suggestedPlanId': PlanId;
+    /**
+     * 
+     * @type {PlanMigrationInfoCurrentAutoRenewal}
+     * @memberof PlanMigrationInfo
+     */
+    'currentAutoRenewal'?: PlanMigrationInfoCurrentAutoRenewal;
+}
+
+export const PlanMigrationInfoMigrationStatusEnum = {
+    Pending: 'pending',
+    Completed: 'completed'
+} as const;
+
+export type PlanMigrationInfoMigrationStatusEnum = typeof PlanMigrationInfoMigrationStatusEnum[keyof typeof PlanMigrationInfoMigrationStatusEnum];
+
+/**
+ * 
+ * @export
+ * @interface PlanMigrationInfoCurrentAutoRenewal
+ */
+export interface PlanMigrationInfoCurrentAutoRenewal {
+    /**
+     * 
+     * @type {number}
+     * @memberof PlanMigrationInfoCurrentAutoRenewal
+     */
+    'units'?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof PlanMigrationInfoCurrentAutoRenewal
+     */
+    'period'?: PlanMigrationInfoCurrentAutoRenewalPeriodEnum;
+    /**
+     * 
+     * @type {string}
+     * @memberof PlanMigrationInfoCurrentAutoRenewal
+     */
+    'status'?: string;
+}
+
+export const PlanMigrationInfoCurrentAutoRenewalPeriodEnum = {
+    Month: 'month',
+    Quarter: 'quarter',
+    Year: 'year'
+} as const;
+
+export type PlanMigrationInfoCurrentAutoRenewalPeriodEnum = typeof PlanMigrationInfoCurrentAutoRenewalPeriodEnum[keyof typeof PlanMigrationInfoCurrentAutoRenewalPeriodEnum];
+
+/**
+ * 
+ * @export
+ * @interface PlanMigrationInitiateRequest
+ */
+export interface PlanMigrationInitiateRequest {
+    /**
+     * The team to initiate migration for
+     * @type {string}
+     * @memberof PlanMigrationInitiateRequest
+     */
+    'teamId': string;
 }
 /**
  * 
@@ -4930,6 +5139,78 @@ export const CreditsApiAxiosParamCreator = function (configuration?: Configurati
     return {
         /**
          * 
+         * @summary Get the auto top-up threshold and amount for the team
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        autoChargeConfigGet: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v2/credits/customer/auto-charge-config`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["PAYMENTS_READ"], configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Set or clear the auto top-up threshold and amount
+         * @param {AutoChargeConfig} [autoChargeConfig] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        autoChargeConfigPatch: async (autoChargeConfig?: AutoChargeConfig, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v2/credits/customer/auto-charge-config`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PATCH', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["PAYMENTS_UPDATE"], configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(autoChargeConfig, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
          * @summary Cancel the current auto-renewal credit sub
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -5973,6 +6254,31 @@ export const CreditsApiFp = function(configuration?: Configuration) {
     return {
         /**
          * 
+         * @summary Get the auto top-up threshold and amount for the team
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async autoChargeConfigGet(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AutoChargeConfig>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.autoChargeConfigGet(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['CreditsApi.autoChargeConfigGet']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @summary Set or clear the auto top-up threshold and amount
+         * @param {AutoChargeConfig} [autoChargeConfig] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async autoChargeConfigPatch(autoChargeConfig?: AutoChargeConfig, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AutoChargeConfig>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.autoChargeConfigPatch(autoChargeConfig, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['CreditsApi.autoChargeConfigPatch']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
          * @summary Cancel the current auto-renewal credit sub
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -6311,6 +6617,25 @@ export const CreditsApiFactory = function (configuration?: Configuration, basePa
     return {
         /**
          * 
+         * @summary Get the auto top-up threshold and amount for the team
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        autoChargeConfigGet(options?: RawAxiosRequestConfig): AxiosPromise<AutoChargeConfig> {
+            return localVarFp.autoChargeConfigGet(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Set or clear the auto top-up threshold and amount
+         * @param {CreditsApiAutoChargeConfigPatchRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        autoChargeConfigPatch(requestParameters: CreditsApiAutoChargeConfigPatchRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<AutoChargeConfig> {
+            return localVarFp.autoChargeConfigPatch(requestParameters.autoChargeConfig, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
          * @summary Cancel the current auto-renewal credit sub
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -6538,6 +6863,20 @@ export const CreditsApiFactory = function (configuration?: Configuration, basePa
         },
     };
 };
+
+/**
+ * Request parameters for autoChargeConfigPatch operation in CreditsApi.
+ * @export
+ * @interface CreditsApiAutoChargeConfigPatchRequest
+ */
+export interface CreditsApiAutoChargeConfigPatchRequest {
+    /**
+     * 
+     * @type {AutoChargeConfig}
+     * @memberof CreditsApiAutoChargeConfigPatch
+     */
+    readonly autoChargeConfig?: AutoChargeConfig
+}
 
 /**
  * Request parameters for autoRenewalPost operation in CreditsApi.
@@ -7052,6 +7391,29 @@ export interface CreditsApiTopUpCreditsPostRequest {
 export class CreditsApi extends BaseAPI {
     /**
      * 
+     * @summary Get the auto top-up threshold and amount for the team
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CreditsApi
+     */
+    public autoChargeConfigGet(options?: RawAxiosRequestConfig) {
+        return CreditsApiFp(this.configuration).autoChargeConfigGet(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Set or clear the auto top-up threshold and amount
+     * @param {CreditsApiAutoChargeConfigPatchRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CreditsApi
+     */
+    public autoChargeConfigPatch(requestParameters: CreditsApiAutoChargeConfigPatchRequest = {}, options?: RawAxiosRequestConfig) {
+        return CreditsApiFp(this.configuration).autoChargeConfigPatch(requestParameters.autoChargeConfig, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
      * @summary Cancel the current auto-renewal credit sub
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -7341,6 +7703,289 @@ export const GetCustomerDataStatusEnum = {
     Cancelled: 'cancelled'
 } as const;
 export type GetCustomerDataStatusEnum = typeof GetCustomerDataStatusEnum[keyof typeof GetCustomerDataStatusEnum];
+
+
+/**
+ * PlanMigrationApi - axios parameter creator
+ * @export
+ */
+export const PlanMigrationApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @summary Complete the migration to the new fixed+usage plan model. Cancels the old credit-based subscription, creates a new plan subscription, ends channel/teammate recurring consumptions, and loads included message credits.
+         * @param {PlanMigrationCompleteRequest} planMigrationCompleteRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        planMigrationComplete: async (planMigrationCompleteRequest: PlanMigrationCompleteRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'planMigrationCompleteRequest' is not null or undefined
+            assertParamExists('planMigrationComplete', 'planMigrationCompleteRequest', planMigrationCompleteRequest)
+            const localVarPath = `/v2/credits/plan-migration/complete`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["PAYMENTS_UPDATE"], configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(planMigrationCompleteRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Get migration info and plan recommendation for the current team
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        planMigrationInfo: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v2/credits/plan-migration/info`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["PAYMENTS_READ"], configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Admin/sales trigger to initiate the migration flow for a team. Sets migrationStatus to pending and fires a remote event so the UI can display the migration wizard.
+         * @param {PlanMigrationInitiateRequest} planMigrationInitiateRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        planMigrationInitiate: async (planMigrationInitiateRequest: PlanMigrationInitiateRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'planMigrationInitiateRequest' is not null or undefined
+            assertParamExists('planMigrationInitiate', 'planMigrationInitiateRequest', planMigrationInitiateRequest)
+            const localVarPath = `/v2/credits/plan-migration/initiate`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["ADMIN_PANEL_ACCESS", "PARTNER_ADMIN_PANEL_ACCESS"], configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(planMigrationInitiateRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * PlanMigrationApi - functional programming interface
+ * @export
+ */
+export const PlanMigrationApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = PlanMigrationApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * 
+         * @summary Complete the migration to the new fixed+usage plan model. Cancels the old credit-based subscription, creates a new plan subscription, ends channel/teammate recurring consumptions, and loads included message credits.
+         * @param {PlanMigrationCompleteRequest} planMigrationCompleteRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async planMigrationComplete(planMigrationCompleteRequest: PlanMigrationCompleteRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PaymentRequest>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.planMigrationComplete(planMigrationCompleteRequest, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['PlanMigrationApi.planMigrationComplete']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @summary Get migration info and plan recommendation for the current team
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async planMigrationInfo(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PlanMigrationInfo>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.planMigrationInfo(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['PlanMigrationApi.planMigrationInfo']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @summary Admin/sales trigger to initiate the migration flow for a team. Sets migrationStatus to pending and fires a remote event so the UI can display the migration wizard.
+         * @param {PlanMigrationInitiateRequest} planMigrationInitiateRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async planMigrationInitiate(planMigrationInitiateRequest: PlanMigrationInitiateRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PlanMigrationInfo>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.planMigrationInitiate(planMigrationInitiateRequest, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['PlanMigrationApi.planMigrationInitiate']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+    }
+};
+
+/**
+ * PlanMigrationApi - factory interface
+ * @export
+ */
+export const PlanMigrationApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = PlanMigrationApiFp(configuration)
+    return {
+        /**
+         * 
+         * @summary Complete the migration to the new fixed+usage plan model. Cancels the old credit-based subscription, creates a new plan subscription, ends channel/teammate recurring consumptions, and loads included message credits.
+         * @param {PlanMigrationApiPlanMigrationCompleteRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        planMigrationComplete(requestParameters: PlanMigrationApiPlanMigrationCompleteRequest, options?: RawAxiosRequestConfig): AxiosPromise<PaymentRequest> {
+            return localVarFp.planMigrationComplete(requestParameters.planMigrationCompleteRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Get migration info and plan recommendation for the current team
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        planMigrationInfo(options?: RawAxiosRequestConfig): AxiosPromise<PlanMigrationInfo> {
+            return localVarFp.planMigrationInfo(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Admin/sales trigger to initiate the migration flow for a team. Sets migrationStatus to pending and fires a remote event so the UI can display the migration wizard.
+         * @param {PlanMigrationApiPlanMigrationInitiateRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        planMigrationInitiate(requestParameters: PlanMigrationApiPlanMigrationInitiateRequest, options?: RawAxiosRequestConfig): AxiosPromise<PlanMigrationInfo> {
+            return localVarFp.planMigrationInitiate(requestParameters.planMigrationInitiateRequest, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * Request parameters for planMigrationComplete operation in PlanMigrationApi.
+ * @export
+ * @interface PlanMigrationApiPlanMigrationCompleteRequest
+ */
+export interface PlanMigrationApiPlanMigrationCompleteRequest {
+    /**
+     * 
+     * @type {PlanMigrationCompleteRequest}
+     * @memberof PlanMigrationApiPlanMigrationComplete
+     */
+    readonly planMigrationCompleteRequest: PlanMigrationCompleteRequest
+}
+
+/**
+ * Request parameters for planMigrationInitiate operation in PlanMigrationApi.
+ * @export
+ * @interface PlanMigrationApiPlanMigrationInitiateRequest
+ */
+export interface PlanMigrationApiPlanMigrationInitiateRequest {
+    /**
+     * 
+     * @type {PlanMigrationInitiateRequest}
+     * @memberof PlanMigrationApiPlanMigrationInitiate
+     */
+    readonly planMigrationInitiateRequest: PlanMigrationInitiateRequest
+}
+
+/**
+ * PlanMigrationApi - object-oriented interface
+ * @export
+ * @class PlanMigrationApi
+ * @extends {BaseAPI}
+ */
+export class PlanMigrationApi extends BaseAPI {
+    /**
+     * 
+     * @summary Complete the migration to the new fixed+usage plan model. Cancels the old credit-based subscription, creates a new plan subscription, ends channel/teammate recurring consumptions, and loads included message credits.
+     * @param {PlanMigrationApiPlanMigrationCompleteRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof PlanMigrationApi
+     */
+    public planMigrationComplete(requestParameters: PlanMigrationApiPlanMigrationCompleteRequest, options?: RawAxiosRequestConfig) {
+        return PlanMigrationApiFp(this.configuration).planMigrationComplete(requestParameters.planMigrationCompleteRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Get migration info and plan recommendation for the current team
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof PlanMigrationApi
+     */
+    public planMigrationInfo(options?: RawAxiosRequestConfig) {
+        return PlanMigrationApiFp(this.configuration).planMigrationInfo(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Admin/sales trigger to initiate the migration flow for a team. Sets migrationStatus to pending and fires a remote event so the UI can display the migration wizard.
+     * @param {PlanMigrationApiPlanMigrationInitiateRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof PlanMigrationApi
+     */
+    public planMigrationInitiate(requestParameters: PlanMigrationApiPlanMigrationInitiateRequest, options?: RawAxiosRequestConfig) {
+        return PlanMigrationApiFp(this.configuration).planMigrationInitiate(requestParameters.planMigrationInitiateRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
 
 
 /**
