@@ -346,35 +346,54 @@ export interface CheckoutCreateOptionsCallbackUrls {
  */
 export interface ConsumptionTotalsGet200Response {
     /**
-     * Total credits consumed (positive number representing absolute consumption)
-     * @type {number}
-     * @memberof ConsumptionTotalsGet200Response
-     */
-    'totalConsumed': number;
-    /**
-     * Breakdown of consumption by type (only present when \'type\' parameter is not provided). Keys are consumption types (e.g., \'message_sent/wa\', \'message_sent/sms\'), values are consumption amounts.
-     * @type {{ [key: string]: number; }}
-     * @memberof ConsumptionTotalsGet200Response
-     */
-    'breakdown'?: { [key: string]: number; };
-    /**
-     * The ID of a team
+     * The customer\'s plan ID, or null if not on a plan
      * @type {string}
      * @memberof ConsumptionTotalsGet200Response
      */
-    'teamId': string;
-    /**
-     * The specific consumption type requested (only present when \'type\' parameter is provided)
-     * @type {string}
-     * @memberof ConsumptionTotalsGet200Response
-     */
-    'type'?: string;
+    'planId': string | null;
     /**
      * 
-     * @type {DateRange}
+     * @type {ConsumptionTotalsGet200ResponseConsumption}
      * @memberof ConsumptionTotalsGet200Response
      */
-    'dateRange'?: DateRange;
+    'consumption': ConsumptionTotalsGet200ResponseConsumption | null;
+}
+/**
+ * Message credit consumption by type, or null if not on a plan
+ * @export
+ * @interface ConsumptionTotalsGet200ResponseConsumption
+ */
+export interface ConsumptionTotalsGet200ResponseConsumption {
+    /**
+     * 
+     * @type {MessageCreditConsumption}
+     * @memberof ConsumptionTotalsGet200ResponseConsumption
+     */
+    'whatsapp'?: MessageCreditConsumption;
+    /**
+     * 
+     * @type {MessageCreditConsumption}
+     * @memberof ConsumptionTotalsGet200ResponseConsumption
+     */
+    'sms'?: MessageCreditConsumption;
+    /**
+     * 
+     * @type {MessageCreditConsumption}
+     * @memberof ConsumptionTotalsGet200ResponseConsumption
+     */
+    'email'?: MessageCreditConsumption;
+    /**
+     * 
+     * @type {MessageCreditConsumption}
+     * @memberof ConsumptionTotalsGet200ResponseConsumption
+     */
+    'waba'?: MessageCreditConsumption;
+    /**
+     * 
+     * @type {MessageCreditConsumption}
+     * @memberof ConsumptionTotalsGet200ResponseConsumption
+     */
+    'messenger'?: MessageCreditConsumption;
 }
 /**
  * 
@@ -2163,6 +2182,31 @@ export const LimitedItem = {
 export type LimitedItem = typeof LimitedItem[keyof typeof LimitedItem];
 
 
+/**
+ * Message credit consumption details for a specific channel type
+ * @export
+ * @interface MessageCreditConsumption
+ */
+export interface MessageCreditConsumption {
+    /**
+     * Number of message credits used in current billing cycle
+     * @type {number}
+     * @memberof MessageCreditConsumption
+     */
+    'used': number;
+    /**
+     * Total message credits included in the plan for this type
+     * @type {number}
+     * @memberof MessageCreditConsumption
+     */
+    'limit': number;
+    /**
+     * Percentage of message credits used (0-100)
+     * @type {number}
+     * @memberof MessageCreditConsumption
+     */
+    'percentage': number;
+}
 /**
  * 
  * @export
@@ -5382,14 +5426,12 @@ export const CreditsApiAxiosParamCreator = function (configuration?: Configurati
         },
         /**
          * 
-         * @summary Get total credits consumed by team with optional channel filter
+         * @summary Get message credit consumption for plan customers
          * @param {string} [teamId] Filter by teamId (optional - defaults to current user\&#39;s team)
-         * @param {string} [type] Filter by channel/messaging consumption type. Only these types appear in the breakdown response.
-         * @param {DateRange} [createdAt] Optional date range filter
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        consumptionTotalsGet: async (teamId?: string, type?: string, createdAt?: DateRange, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        consumptionTotalsGet: async (teamId?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v2/credits/consumption-totals`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -5408,14 +5450,6 @@ export const CreditsApiAxiosParamCreator = function (configuration?: Configurati
 
             if (teamId !== undefined) {
                 localVarQueryParameter['teamId'] = teamId;
-            }
-
-            if (type !== undefined) {
-                localVarQueryParameter['type'] = type;
-            }
-
-            if (createdAt !== undefined) {
-                localVarQueryParameter['createdAt'] = createdAt;
             }
 
 
@@ -6333,15 +6367,13 @@ export const CreditsApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
-         * @summary Get total credits consumed by team with optional channel filter
+         * @summary Get message credit consumption for plan customers
          * @param {string} [teamId] Filter by teamId (optional - defaults to current user\&#39;s team)
-         * @param {string} [type] Filter by channel/messaging consumption type. Only these types appear in the breakdown response.
-         * @param {DateRange} [createdAt] Optional date range filter
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async consumptionTotalsGet(teamId?: string, type?: string, createdAt?: DateRange, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ConsumptionTotalsGet200Response>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.consumptionTotalsGet(teamId, type, createdAt, options);
+        async consumptionTotalsGet(teamId?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ConsumptionTotalsGet200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.consumptionTotalsGet(teamId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['CreditsApi.consumptionTotalsGet']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -6675,13 +6707,13 @@ export const CreditsApiFactory = function (configuration?: Configuration, basePa
         },
         /**
          * 
-         * @summary Get total credits consumed by team with optional channel filter
+         * @summary Get message credit consumption for plan customers
          * @param {CreditsApiConsumptionTotalsGetRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
         consumptionTotalsGet(requestParameters: CreditsApiConsumptionTotalsGetRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<ConsumptionTotalsGet200Response> {
-            return localVarFp.consumptionTotalsGet(requestParameters.teamId, requestParameters.type, requestParameters.createdAt, options).then((request) => request(axios, basePath));
+            return localVarFp.consumptionTotalsGet(requestParameters.teamId, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -6953,20 +6985,6 @@ export interface CreditsApiConsumptionTotalsGetRequest {
      * @memberof CreditsApiConsumptionTotalsGet
      */
     readonly teamId?: string
-
-    /**
-     * Filter by channel/messaging consumption type. Only these types appear in the breakdown response.
-     * @type {string}
-     * @memberof CreditsApiConsumptionTotalsGet
-     */
-    readonly type?: string
-
-    /**
-     * Optional date range filter
-     * @type {DateRange}
-     * @memberof CreditsApiConsumptionTotalsGet
-     */
-    readonly createdAt?: DateRange
 }
 
 /**
@@ -7461,14 +7479,14 @@ export class CreditsApi extends BaseAPI {
 
     /**
      * 
-     * @summary Get total credits consumed by team with optional channel filter
+     * @summary Get message credit consumption for plan customers
      * @param {CreditsApiConsumptionTotalsGetRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof CreditsApi
      */
     public consumptionTotalsGet(requestParameters: CreditsApiConsumptionTotalsGetRequest = {}, options?: RawAxiosRequestConfig) {
-        return CreditsApiFp(this.configuration).consumptionTotalsGet(requestParameters.teamId, requestParameters.type, requestParameters.createdAt, options).then((request) => request(this.axios, this.basePath));
+        return CreditsApiFp(this.configuration).consumptionTotalsGet(requestParameters.teamId, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
