@@ -586,10 +586,10 @@ export interface CreditAutoRenewalUpdate {
     'options'?: MiscBillingOptions;
     /**
      * 
-     * @type {string}
+     * @type {PlanId}
      * @memberof CreditAutoRenewalUpdate
      */
-    'planType'?: CreditAutoRenewalUpdatePlanTypeEnum;
+    'planType'?: PlanId;
     /**
      * 
      * @type {ExtraMessages}
@@ -610,14 +610,6 @@ export interface CreditAutoRenewalUpdate {
     'postPaymentActions'?: Array<PostPaymentAction>;
 }
 
-export const CreditAutoRenewalUpdatePlanTypeEnum = {
-    Mini: 'mini',
-    Pro: 'pro',
-    Max: 'max',
-    Enterprise: 'enterprise'
-} as const;
-
-export type CreditAutoRenewalUpdatePlanTypeEnum = typeof CreditAutoRenewalUpdatePlanTypeEnum[keyof typeof CreditAutoRenewalUpdatePlanTypeEnum];
 
 /**
  * @type CreditBalanceEffectType
@@ -945,21 +937,13 @@ export interface CreditCustomer {
      */
     'messengerMessageCreditsAvailable'?: number;
     /**
-     * Type of plan the customer is on
-     * @type {string}
+     * 
+     * @type {PlanId}
      * @memberof CreditCustomer
      */
-    'planType'?: CreditCustomerPlanTypeEnum;
+    'planType'?: PlanId;
 }
 
-export const CreditCustomerPlanTypeEnum = {
-    Mini: 'mini',
-    Pro: 'pro',
-    Max: 'max',
-    Enterprise: 'enterprise'
-} as const;
-
-export type CreditCustomerPlanTypeEnum = typeof CreditCustomerPlanTypeEnum[keyof typeof CreditCustomerPlanTypeEnum];
 
 /**
  * 
@@ -2599,6 +2583,7 @@ export interface PaymentRequest {
 
 export const PlanId = {
     Mini: 'mini',
+    Basic: 'basic',
     Pro: 'pro',
     Max: 'max',
     Enterprise: 'enterprise'
