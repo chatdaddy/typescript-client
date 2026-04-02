@@ -1593,6 +1593,217 @@ export type StackMessagesPostRequestResponseModeEnum = typeof StackMessagesPostR
 /**
  * 
  * @export
+ * @interface SurveyResponse
+ */
+export interface SurveyResponse {
+    /**
+     * Unique survey response ID
+     * @type {string}
+     * @memberof SurveyResponse
+     */
+    'id': string;
+    /**
+     * Team ID
+     * @type {string}
+     * @memberof SurveyResponse
+     */
+    'teamId': string;
+    /**
+     * User ID who submitted the survey
+     * @type {string}
+     * @memberof SurveyResponse
+     */
+    'userId': string;
+    /**
+     * Display name of the user
+     * @type {string}
+     * @memberof SurveyResponse
+     */
+    'userName'?: string | null;
+    /**
+     * Feature being reviewed
+     * @type {string}
+     * @memberof SurveyResponse
+     */
+    'feature'?: string;
+    /**
+     * Rating from 1 to 5
+     * @type {number}
+     * @memberof SurveyResponse
+     */
+    'rating': number;
+    /**
+     * User feedback text
+     * @type {string}
+     * @memberof SurveyResponse
+     */
+    'feedback'?: string | null;
+    /**
+     * When the survey was submitted
+     * @type {string}
+     * @memberof SurveyResponse
+     */
+    'timestamp': string;
+    /**
+     * 
+     * @type {SurveyResponsesPostRequestSession}
+     * @memberof SurveyResponse
+     */
+    'session'?: SurveyResponsesPostRequestSession | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof SurveyResponse
+     */
+    'createdAt'?: string;
+}
+/**
+ * 
+ * @export
+ * @interface SurveyResponsesDelete200Response
+ */
+export interface SurveyResponsesDelete200Response {
+    /**
+     * Number of records deleted
+     * @type {number}
+     * @memberof SurveyResponsesDelete200Response
+     */
+    'deleted': number;
+}
+/**
+ * 
+ * @export
+ * @interface SurveyResponsesDeleteRequest
+ */
+export interface SurveyResponsesDeleteRequest {
+    /**
+     * List of survey response IDs to delete
+     * @type {Array<string>}
+     * @memberof SurveyResponsesDeleteRequest
+     */
+    'ids': Array<string>;
+}
+/**
+ * 
+ * @export
+ * @interface SurveyResponsesGet200Response
+ */
+export interface SurveyResponsesGet200Response {
+    /**
+     * 
+     * @type {Array<SurveyResponse>}
+     * @memberof SurveyResponsesGet200Response
+     */
+    'records'?: Array<SurveyResponse>;
+    /**
+     * 
+     * @type {string}
+     * @memberof SurveyResponsesGet200Response
+     */
+    'nextPageCursor'?: string | null;
+}
+/**
+ * 
+ * @export
+ * @interface SurveyResponsesPostRequest
+ */
+export interface SurveyResponsesPostRequest {
+    /**
+     * User ID submitting the survey
+     * @type {string}
+     * @memberof SurveyResponsesPostRequest
+     */
+    'userId'?: string;
+    /**
+     * Display name of the user
+     * @type {string}
+     * @memberof SurveyResponsesPostRequest
+     */
+    'userName'?: string;
+    /**
+     * Feature being reviewed
+     * @type {string}
+     * @memberof SurveyResponsesPostRequest
+     */
+    'feature'?: string;
+    /**
+     * Rating from 1 to 5
+     * @type {number}
+     * @memberof SurveyResponsesPostRequest
+     */
+    'rating': number;
+    /**
+     * User feedback text
+     * @type {string}
+     * @memberof SurveyResponsesPostRequest
+     */
+    'feedback'?: string;
+    /**
+     * When the survey was submitted
+     * @type {string}
+     * @memberof SurveyResponsesPostRequest
+     */
+    'timestamp'?: string;
+    /**
+     * 
+     * @type {SurveyResponsesPostRequestSession}
+     * @memberof SurveyResponsesPostRequest
+     */
+    'session'?: SurveyResponsesPostRequestSession | null;
+}
+/**
+ * Session tracking data
+ * @export
+ * @interface SurveyResponsesPostRequestSession
+ */
+export interface SurveyResponsesPostRequestSession {
+    /**
+     * 
+     * @type {number}
+     * @memberof SurveyResponsesPostRequestSession
+     */
+    'durationSeconds'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof SurveyResponsesPostRequestSession
+     */
+    'totalClicks'?: number;
+    /**
+     * 
+     * @type {Array<SurveyResponsesPostRequestSessionComponentsInner>}
+     * @memberof SurveyResponsesPostRequestSession
+     */
+    'components'?: Array<SurveyResponsesPostRequestSessionComponentsInner>;
+}
+/**
+ * 
+ * @export
+ * @interface SurveyResponsesPostRequestSessionComponentsInner
+ */
+export interface SurveyResponsesPostRequestSessionComponentsInner {
+    /**
+     * 
+     * @type {string}
+     * @memberof SurveyResponsesPostRequestSessionComponentsInner
+     */
+    'component'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof SurveyResponsesPostRequestSessionComponentsInner
+     */
+    'label'?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof SurveyResponsesPostRequestSessionComponentsInner
+     */
+    'count'?: number;
+}
+/**
+ * 
+ * @export
  * @interface TrackPageHit
  */
 export interface TrackPageHit {
@@ -5770,6 +5981,333 @@ export class ScheduleApi extends BaseAPI {
      */
     public oauthCallback(requestParameters: ScheduleApiOauthCallbackRequest, options?: RawAxiosRequestConfig) {
         return ScheduleApiFp(this.configuration).oauthCallback(requestParameters.code, requestParameters.state, requestParameters.scope, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+
+/**
+ * SurveyResponsesApi - axios parameter creator
+ * @export
+ */
+export const SurveyResponsesApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @summary Delete survey responses by IDs
+         * @param {SurveyResponsesDeleteRequest} [surveyResponsesDeleteRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        surveyResponsesDelete: async (surveyResponsesDeleteRequest?: SurveyResponsesDeleteRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/survey-responses`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", [], configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(surveyResponsesDeleteRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Get survey responses for the current team
+         * @param {string} [q] 
+         * @param {number} [count] 
+         * @param {string} [cursor] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        surveyResponsesGet: async (q?: string, count?: number, cursor?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/survey-responses`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", [], configuration)
+
+            if (q !== undefined) {
+                localVarQueryParameter['q'] = q;
+            }
+
+            if (count !== undefined) {
+                localVarQueryParameter['count'] = count;
+            }
+
+            if (cursor !== undefined) {
+                localVarQueryParameter['cursor'] = cursor;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Submit a survey response
+         * @param {SurveyResponsesPostRequest} [surveyResponsesPostRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        surveyResponsesPost: async (surveyResponsesPostRequest?: SurveyResponsesPostRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/survey-responses`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", [], configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(surveyResponsesPostRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * SurveyResponsesApi - functional programming interface
+ * @export
+ */
+export const SurveyResponsesApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = SurveyResponsesApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * 
+         * @summary Delete survey responses by IDs
+         * @param {SurveyResponsesDeleteRequest} [surveyResponsesDeleteRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async surveyResponsesDelete(surveyResponsesDeleteRequest?: SurveyResponsesDeleteRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SurveyResponsesDelete200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.surveyResponsesDelete(surveyResponsesDeleteRequest, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['SurveyResponsesApi.surveyResponsesDelete']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @summary Get survey responses for the current team
+         * @param {string} [q] 
+         * @param {number} [count] 
+         * @param {string} [cursor] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async surveyResponsesGet(q?: string, count?: number, cursor?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SurveyResponsesGet200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.surveyResponsesGet(q, count, cursor, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['SurveyResponsesApi.surveyResponsesGet']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @summary Submit a survey response
+         * @param {SurveyResponsesPostRequest} [surveyResponsesPostRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async surveyResponsesPost(surveyResponsesPostRequest?: SurveyResponsesPostRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SurveyResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.surveyResponsesPost(surveyResponsesPostRequest, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['SurveyResponsesApi.surveyResponsesPost']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+    }
+};
+
+/**
+ * SurveyResponsesApi - factory interface
+ * @export
+ */
+export const SurveyResponsesApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = SurveyResponsesApiFp(configuration)
+    return {
+        /**
+         * 
+         * @summary Delete survey responses by IDs
+         * @param {SurveyResponsesApiSurveyResponsesDeleteRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        surveyResponsesDelete(requestParameters: SurveyResponsesApiSurveyResponsesDeleteRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<SurveyResponsesDelete200Response> {
+            return localVarFp.surveyResponsesDelete(requestParameters.surveyResponsesDeleteRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Get survey responses for the current team
+         * @param {SurveyResponsesApiSurveyResponsesGetRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        surveyResponsesGet(requestParameters: SurveyResponsesApiSurveyResponsesGetRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<SurveyResponsesGet200Response> {
+            return localVarFp.surveyResponsesGet(requestParameters.q, requestParameters.count, requestParameters.cursor, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Submit a survey response
+         * @param {SurveyResponsesApiSurveyResponsesPostRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        surveyResponsesPost(requestParameters: SurveyResponsesApiSurveyResponsesPostRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<SurveyResponse> {
+            return localVarFp.surveyResponsesPost(requestParameters.surveyResponsesPostRequest, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * Request parameters for surveyResponsesDelete operation in SurveyResponsesApi.
+ * @export
+ * @interface SurveyResponsesApiSurveyResponsesDeleteRequest
+ */
+export interface SurveyResponsesApiSurveyResponsesDeleteRequest {
+    /**
+     * 
+     * @type {SurveyResponsesDeleteRequest}
+     * @memberof SurveyResponsesApiSurveyResponsesDelete
+     */
+    readonly surveyResponsesDeleteRequest?: SurveyResponsesDeleteRequest
+}
+
+/**
+ * Request parameters for surveyResponsesGet operation in SurveyResponsesApi.
+ * @export
+ * @interface SurveyResponsesApiSurveyResponsesGetRequest
+ */
+export interface SurveyResponsesApiSurveyResponsesGetRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof SurveyResponsesApiSurveyResponsesGet
+     */
+    readonly q?: string
+
+    /**
+     * 
+     * @type {number}
+     * @memberof SurveyResponsesApiSurveyResponsesGet
+     */
+    readonly count?: number
+
+    /**
+     * 
+     * @type {string}
+     * @memberof SurveyResponsesApiSurveyResponsesGet
+     */
+    readonly cursor?: string
+}
+
+/**
+ * Request parameters for surveyResponsesPost operation in SurveyResponsesApi.
+ * @export
+ * @interface SurveyResponsesApiSurveyResponsesPostRequest
+ */
+export interface SurveyResponsesApiSurveyResponsesPostRequest {
+    /**
+     * 
+     * @type {SurveyResponsesPostRequest}
+     * @memberof SurveyResponsesApiSurveyResponsesPost
+     */
+    readonly surveyResponsesPostRequest?: SurveyResponsesPostRequest
+}
+
+/**
+ * SurveyResponsesApi - object-oriented interface
+ * @export
+ * @class SurveyResponsesApi
+ * @extends {BaseAPI}
+ */
+export class SurveyResponsesApi extends BaseAPI {
+    /**
+     * 
+     * @summary Delete survey responses by IDs
+     * @param {SurveyResponsesApiSurveyResponsesDeleteRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof SurveyResponsesApi
+     */
+    public surveyResponsesDelete(requestParameters: SurveyResponsesApiSurveyResponsesDeleteRequest = {}, options?: RawAxiosRequestConfig) {
+        return SurveyResponsesApiFp(this.configuration).surveyResponsesDelete(requestParameters.surveyResponsesDeleteRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Get survey responses for the current team
+     * @param {SurveyResponsesApiSurveyResponsesGetRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof SurveyResponsesApi
+     */
+    public surveyResponsesGet(requestParameters: SurveyResponsesApiSurveyResponsesGetRequest = {}, options?: RawAxiosRequestConfig) {
+        return SurveyResponsesApiFp(this.configuration).surveyResponsesGet(requestParameters.q, requestParameters.count, requestParameters.cursor, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Submit a survey response
+     * @param {SurveyResponsesApiSurveyResponsesPostRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof SurveyResponsesApi
+     */
+    public surveyResponsesPost(requestParameters: SurveyResponsesApiSurveyResponsesPostRequest = {}, options?: RawAxiosRequestConfig) {
+        return SurveyResponsesApiFp(this.configuration).surveyResponsesPost(requestParameters.surveyResponsesPostRequest, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
