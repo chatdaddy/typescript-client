@@ -5412,11 +5412,12 @@ export const CreditsApiAxiosParamCreator = function (configuration?: Configurati
         /**
          * 
          * @summary Get message credit consumption for plan customers
+         * @param {string} [customerId] Filter by customerId (optional - defaults to current customer\&#39;s ID)
          * @param {string} [teamId] Filter by teamId (optional - defaults to current user\&#39;s team)
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        consumptionTotalsGet: async (teamId?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        consumptionTotalsGet: async (customerId?: string, teamId?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v2/credits/consumption-totals`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -5432,6 +5433,10 @@ export const CreditsApiAxiosParamCreator = function (configuration?: Configurati
             // authentication chatdaddy required
             // oauth required
             await setOAuthToObject(localVarHeaderParameter, "chatdaddy", [], configuration)
+
+            if (customerId !== undefined) {
+                localVarQueryParameter['customerId'] = customerId;
+            }
 
             if (teamId !== undefined) {
                 localVarQueryParameter['teamId'] = teamId;
@@ -6353,12 +6358,13 @@ export const CreditsApiFp = function(configuration?: Configuration) {
         /**
          * 
          * @summary Get message credit consumption for plan customers
+         * @param {string} [customerId] Filter by customerId (optional - defaults to current customer\&#39;s ID)
          * @param {string} [teamId] Filter by teamId (optional - defaults to current user\&#39;s team)
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async consumptionTotalsGet(teamId?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ConsumptionTotalsGet200Response>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.consumptionTotalsGet(teamId, options);
+        async consumptionTotalsGet(customerId?: string, teamId?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ConsumptionTotalsGet200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.consumptionTotalsGet(customerId, teamId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['CreditsApi.consumptionTotalsGet']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -6698,7 +6704,7 @@ export const CreditsApiFactory = function (configuration?: Configuration, basePa
          * @throws {RequiredError}
          */
         consumptionTotalsGet(requestParameters: CreditsApiConsumptionTotalsGetRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<ConsumptionTotalsGet200Response> {
-            return localVarFp.consumptionTotalsGet(requestParameters.teamId, options).then((request) => request(axios, basePath));
+            return localVarFp.consumptionTotalsGet(requestParameters.customerId, requestParameters.teamId, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -6964,6 +6970,13 @@ export interface CreditsApiCanConsumeRecurringCreditsRequest {
  * @interface CreditsApiConsumptionTotalsGetRequest
  */
 export interface CreditsApiConsumptionTotalsGetRequest {
+    /**
+     * Filter by customerId (optional - defaults to current customer\&#39;s ID)
+     * @type {string}
+     * @memberof CreditsApiConsumptionTotalsGet
+     */
+    readonly customerId?: string
+
     /**
      * Filter by teamId (optional - defaults to current user\&#39;s team)
      * @type {string}
@@ -7471,7 +7484,7 @@ export class CreditsApi extends BaseAPI {
      * @memberof CreditsApi
      */
     public consumptionTotalsGet(requestParameters: CreditsApiConsumptionTotalsGetRequest = {}, options?: RawAxiosRequestConfig) {
-        return CreditsApiFp(this.configuration).consumptionTotalsGet(requestParameters.teamId, options).then((request) => request(this.axios, this.basePath));
+        return CreditsApiFp(this.configuration).consumptionTotalsGet(requestParameters.customerId, requestParameters.teamId, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
