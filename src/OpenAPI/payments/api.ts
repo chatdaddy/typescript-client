@@ -942,6 +942,12 @@ export interface CreditCustomer {
      * @memberof CreditCustomer
      */
     'planType'?: PlanId;
+    /**
+     * Whether the export feature has been unlocked via a one-time payment.
+     * @type {boolean}
+     * @memberof CreditCustomer
+     */
+    'exportUnlocked'?: boolean;
 }
 
 
@@ -5988,6 +5994,40 @@ export const CreditsApiAxiosParamCreator = function (configuration?: Configurati
         },
         /**
          * 
+         * @summary Unlock export feature with a one-time $499 payment
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        exportUnlockPost: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v2/credits/export-unlock`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["PAYMENTS_UPDATE"], configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
          * @summary Get auto-renewal customer data with optional team listing
          * @param {GetCustomerDataStatusEnum} [status] When provided, returns the list of teams with this auto-renewal status
          * @param {number} [page] Page number for team list pagination
@@ -6542,6 +6582,18 @@ export const CreditsApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
+         * @summary Unlock export feature with a one-time $499 payment
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async exportUnlockPost(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PaymentRequest>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.exportUnlockPost(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['CreditsApi.exportUnlockPost']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
          * @summary Get auto-renewal customer data with optional team listing
          * @param {GetCustomerDataStatusEnum} [status] When provided, returns the list of teams with this auto-renewal status
          * @param {number} [page] Page number for team list pagination
@@ -6823,6 +6875,15 @@ export const CreditsApiFactory = function (configuration?: Configuration, basePa
          */
         creditsPreferencesPost(requestParameters: CreditsApiCreditsPreferencesPostRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<void> {
             return localVarFp.creditsPreferencesPost(requestParameters.creditsPreferencesPostRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Unlock export feature with a one-time $499 payment
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        exportUnlockPost(options?: RawAxiosRequestConfig): AxiosPromise<PaymentRequest> {
+            return localVarFp.exportUnlockPost(options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -7627,6 +7688,17 @@ export class CreditsApi extends BaseAPI {
      */
     public creditsPreferencesPost(requestParameters: CreditsApiCreditsPreferencesPostRequest = {}, options?: RawAxiosRequestConfig) {
         return CreditsApiFp(this.configuration).creditsPreferencesPost(requestParameters.creditsPreferencesPostRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Unlock export feature with a one-time $499 payment
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CreditsApi
+     */
+    public exportUnlockPost(options?: RawAxiosRequestConfig) {
+        return CreditsApiFp(this.configuration).exportUnlockPost(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
