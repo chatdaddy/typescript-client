@@ -597,6 +597,18 @@ export interface CreditAutoRenewalUpdate {
      */
     'extraMessages'?: ExtraMessages;
     /**
+     * Number of extra channels to add to the subscription
+     * @type {number}
+     * @memberof CreditAutoRenewalUpdate
+     */
+    'extraChannels'?: number;
+    /**
+     * Number of extra teammates to add to the subscription
+     * @type {number}
+     * @memberof CreditAutoRenewalUpdate
+     */
+    'extraTeammates'?: number;
+    /**
      * 
      * @type {string}
      * @memberof CreditAutoRenewalUpdate
@@ -1732,6 +1744,18 @@ export interface CustomerAutoRenewal {
      * @memberof CustomerAutoRenewal
      */
     'planId'?: PlanId;
+    /**
+     * Number of extra channels in the subscription
+     * @type {number}
+     * @memberof CustomerAutoRenewal
+     */
+    'extraChannels'?: number;
+    /**
+     * Number of extra teammates in the subscription
+     * @type {number}
+     * @memberof CustomerAutoRenewal
+     */
+    'extraTeammates'?: number;
 }
 
 export const CustomerAutoRenewalStatusEnum = {
@@ -1808,6 +1832,18 @@ export interface CustomerAutoRenewalWRedeemedCoupon {
      * @memberof CustomerAutoRenewalWRedeemedCoupon
      */
     'planId'?: PlanId;
+    /**
+     * Number of extra channels in the subscription
+     * @type {number}
+     * @memberof CustomerAutoRenewalWRedeemedCoupon
+     */
+    'extraChannels'?: number;
+    /**
+     * Number of extra teammates in the subscription
+     * @type {number}
+     * @memberof CustomerAutoRenewalWRedeemedCoupon
+     */
+    'extraTeammates'?: number;
     /**
      * 
      * @type {CustomerAutoRenewalWRedeemedCouponAllOfCurrentRedeemedCoupon}
