@@ -286,6 +286,437 @@ export interface BillingSessionPost200Response {
 /**
  * 
  * @export
+ * @interface BillingSummaryGet200Response
+ */
+export interface BillingSummaryGet200Response {
+    /**
+     * 
+     * @type {BillingSummaryGet200ResponsePlan}
+     * @memberof BillingSummaryGet200Response
+     */
+    'plan'?: BillingSummaryGet200ResponsePlan | null;
+    /**
+     * 
+     * @type {BillingSummaryGet200ResponseUsage}
+     * @memberof BillingSummaryGet200Response
+     */
+    'usage'?: BillingSummaryGet200ResponseUsage;
+    /**
+     * 
+     * @type {BillingSummaryGet200ResponseBilling}
+     * @memberof BillingSummaryGet200Response
+     */
+    'billing'?: BillingSummaryGet200ResponseBilling;
+    /**
+     * 
+     * @type {BillingSummaryGet200ResponseAddons}
+     * @memberof BillingSummaryGet200Response
+     */
+    'addons'?: BillingSummaryGet200ResponseAddons;
+    /**
+     * 
+     * @type {BillingSummaryGet200ResponseSubscription}
+     * @memberof BillingSummaryGet200Response
+     */
+    'subscription'?: BillingSummaryGet200ResponseSubscription | null;
+    /**
+     * 
+     * @type {BillingSummaryGet200ResponseSupportPlan}
+     * @memberof BillingSummaryGet200Response
+     */
+    'supportPlan'?: BillingSummaryGet200ResponseSupportPlan | null;
+}
+/**
+ * 
+ * @export
+ * @interface BillingSummaryGet200ResponseAddons
+ */
+export interface BillingSummaryGet200ResponseAddons {
+    /**
+     * 
+     * @type {number}
+     * @memberof BillingSummaryGet200ResponseAddons
+     */
+    'extraChannels'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof BillingSummaryGet200ResponseAddons
+     */
+    'extraTeammates'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof BillingSummaryGet200ResponseAddons
+     */
+    'channelPrice'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof BillingSummaryGet200ResponseAddons
+     */
+    'teammatePrice'?: number;
+}
+/**
+ * 
+ * @export
+ * @interface BillingSummaryGet200ResponseBilling
+ */
+export interface BillingSummaryGet200ResponseBilling {
+    /**
+     * 
+     * @type {string}
+     * @memberof BillingSummaryGet200ResponseBilling
+     */
+    'status'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof BillingSummaryGet200ResponseBilling
+     */
+    'nextChargeDate'?: string | null;
+    /**
+     * 
+     * @type {number}
+     * @memberof BillingSummaryGet200ResponseBilling
+     */
+    'nextChargeAmount'?: number;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof BillingSummaryGet200ResponseBilling
+     */
+    'isOverdue'?: boolean;
+    /**
+     * 
+     * @type {number}
+     * @memberof BillingSummaryGet200ResponseBilling
+     */
+    'overdueAmount'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof BillingSummaryGet200ResponseBilling
+     */
+    'creditsAvailable'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof BillingSummaryGet200ResponseBilling
+     */
+    'paidCreditsAvailable'?: number;
+}
+/**
+ * 
+ * @export
+ * @interface BillingSummaryGet200ResponsePlan
+ */
+export interface BillingSummaryGet200ResponsePlan {
+    /**
+     * 
+     * @type {string}
+     * @memberof BillingSummaryGet200ResponsePlan
+     */
+    'id'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof BillingSummaryGet200ResponsePlan
+     */
+    'name'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof BillingSummaryGet200ResponsePlan
+     */
+    'period'?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof BillingSummaryGet200ResponsePlan
+     */
+    'pricePerMonth'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof BillingSummaryGet200ResponsePlan
+     */
+    'totalPeriodPrice'?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof BillingSummaryGet200ResponsePlan
+     */
+    'tier'?: string;
+    /**
+     * 
+     * @type {BillingSummaryGet200ResponsePlanLimits}
+     * @memberof BillingSummaryGet200ResponsePlan
+     */
+    'limits'?: BillingSummaryGet200ResponsePlanLimits;
+    /**
+     * 
+     * @type {{ [key: string]: number; }}
+     * @memberof BillingSummaryGet200ResponsePlan
+     */
+    'includedMessages'?: { [key: string]: number; };
+}
+/**
+ * 
+ * @export
+ * @interface BillingSummaryGet200ResponsePlanLimits
+ */
+export interface BillingSummaryGet200ResponsePlanLimits {
+    /**
+     * 
+     * @type {number}
+     * @memberof BillingSummaryGet200ResponsePlanLimits
+     */
+    'teammates'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof BillingSummaryGet200ResponsePlanLimits
+     */
+    'channels'?: number;
+}
+/**
+ * 
+ * @export
+ * @interface BillingSummaryGet200ResponseSubscription
+ */
+export interface BillingSummaryGet200ResponseSubscription {
+    /**
+     * 
+     * @type {number}
+     * @memberof BillingSummaryGet200ResponseSubscription
+     */
+    'units'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof BillingSummaryGet200ResponseSubscription
+     */
+    'bonusUnits'?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof BillingSummaryGet200ResponseSubscription
+     */
+    'period'?: string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof BillingSummaryGet200ResponseSubscription
+     */
+    'hasEverPaid'?: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof BillingSummaryGet200ResponseSubscription
+     */
+    'subscriptionId'?: string;
+}
+/**
+ * 
+ * @export
+ * @interface BillingSummaryGet200ResponseSupportPlan
+ */
+export interface BillingSummaryGet200ResponseSupportPlan {
+    /**
+     * 
+     * @type {string}
+     * @memberof BillingSummaryGet200ResponseSupportPlan
+     */
+    'type'?: string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof BillingSummaryGet200ResponseSupportPlan
+     */
+    'active'?: boolean;
+}
+/**
+ * 
+ * @export
+ * @interface BillingSummaryGet200ResponseUsage
+ */
+export interface BillingSummaryGet200ResponseUsage {
+    /**
+     * 
+     * @type {BillingSummaryGet200ResponseUsageChannels}
+     * @memberof BillingSummaryGet200ResponseUsage
+     */
+    'channels'?: BillingSummaryGet200ResponseUsageChannels;
+    /**
+     * 
+     * @type {BillingSummaryGet200ResponseUsageTeammates}
+     * @memberof BillingSummaryGet200ResponseUsage
+     */
+    'teammates'?: BillingSummaryGet200ResponseUsageTeammates;
+    /**
+     * 
+     * @type {{ [key: string]: BillingSummaryGet200ResponseUsageMessagesValue; }}
+     * @memberof BillingSummaryGet200ResponseUsage
+     */
+    'messages'?: { [key: string]: BillingSummaryGet200ResponseUsageMessagesValue; };
+}
+/**
+ * 
+ * @export
+ * @interface BillingSummaryGet200ResponseUsageChannels
+ */
+export interface BillingSummaryGet200ResponseUsageChannels {
+    /**
+     * 
+     * @type {number}
+     * @memberof BillingSummaryGet200ResponseUsageChannels
+     */
+    'total'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof BillingSummaryGet200ResponseUsageChannels
+     */
+    'limit'?: number;
+    /**
+     * 
+     * @type {{ [key: string]: number; }}
+     * @memberof BillingSummaryGet200ResponseUsageChannels
+     */
+    'byType'?: { [key: string]: number; };
+}
+/**
+ * 
+ * @export
+ * @interface BillingSummaryGet200ResponseUsageMessagesValue
+ */
+export interface BillingSummaryGet200ResponseUsageMessagesValue {
+    /**
+     * 
+     * @type {number}
+     * @memberof BillingSummaryGet200ResponseUsageMessagesValue
+     */
+    'used'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof BillingSummaryGet200ResponseUsageMessagesValue
+     */
+    'limit'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof BillingSummaryGet200ResponseUsageMessagesValue
+     */
+    'percentage'?: number;
+}
+/**
+ * 
+ * @export
+ * @interface BillingSummaryGet200ResponseUsageTeammates
+ */
+export interface BillingSummaryGet200ResponseUsageTeammates {
+    /**
+     * 
+     * @type {number}
+     * @memberof BillingSummaryGet200ResponseUsageTeammates
+     */
+    'total'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof BillingSummaryGet200ResponseUsageTeammates
+     */
+    'limit'?: number;
+}
+/**
+ * 
+ * @export
+ * @interface ChangePlanPreview200Response
+ */
+export interface ChangePlanPreview200Response {
+    /**
+     * 
+     * @type {string}
+     * @memberof ChangePlanPreview200Response
+     */
+    'currentPlan'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof ChangePlanPreview200Response
+     */
+    'newPlan'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ChangePlanPreview200Response
+     */
+    'action'?: ChangePlanPreview200ResponseActionEnum;
+    /**
+     * 
+     * @type {string}
+     * @memberof ChangePlanPreview200Response
+     */
+    'period'?: string;
+    /**
+     * Exact amount that will be charged immediately
+     * @type {number}
+     * @memberof ChangePlanPreview200Response
+     */
+    'chargeNow'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof ChangePlanPreview200Response
+     */
+    'newMonthlyRate'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof ChangePlanPreview200Response
+     */
+    'newTotalPrice'?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof ChangePlanPreview200Response
+     */
+    'effectiveDate'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ChangePlanPreview200Response
+     */
+    'description'?: string;
+    /**
+     * 
+     * @type {BillingSummaryGet200ResponsePlanLimits}
+     * @memberof ChangePlanPreview200Response
+     */
+    'newPlanLimits'?: BillingSummaryGet200ResponsePlanLimits;
+    /**
+     * 
+     * @type {{ [key: string]: number; }}
+     * @memberof ChangePlanPreview200Response
+     */
+    'newPlanMessages'?: { [key: string]: number; };
+}
+
+export const ChangePlanPreview200ResponseActionEnum = {
+    New: 'new',
+    Upgrade: 'upgrade',
+    Downgrade: 'downgrade',
+    Same: 'same',
+    PeriodChange: 'period_change'
+} as const;
+
+export type ChangePlanPreview200ResponseActionEnum = typeof ChangePlanPreview200ResponseActionEnum[keyof typeof ChangePlanPreview200ResponseActionEnum];
+
+/**
+ * 
+ * @export
  * @interface CheckoutCreateOptions
  */
 export interface CheckoutCreateOptions {
@@ -5354,6 +5785,40 @@ export const CreditsApiAxiosParamCreator = function (configuration?: Configurati
         },
         /**
          * 
+         * @summary Get complete billing summary including plan, usage, billing status, and addons in a single call
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        billingSummaryGet: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v2/credits/billing-summary`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["PAYMENTS_READ"], configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
          * @summary Check if the team can consume the given quantity of credits
          * @param {CreditConsumptionType} type The type of consumption
          * @param {number} quantity The number of times to consume the given type
@@ -5438,6 +5903,54 @@ export const CreditsApiAxiosParamCreator = function (configuration?: Configurati
 
             if (legacyOpts !== undefined) {
                 localVarQueryParameter['legacyOpts'] = legacyOpts;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Preview what will happen when changing plans - returns exact charge amount and effective date
+         * @param {PlanId} planId 
+         * @param {AutoRenewalPeriod} period 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        changePlanPreview: async (planId: PlanId, period: AutoRenewalPeriod, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'planId' is not null or undefined
+            assertParamExists('changePlanPreview', 'planId', planId)
+            // verify required parameter 'period' is not null or undefined
+            assertParamExists('changePlanPreview', 'period', period)
+            const localVarPath = `/v2/credits/change-plan-preview`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["PAYMENTS_READ"], configuration)
+
+            if (planId !== undefined) {
+                localVarQueryParameter['planId'] = planId;
+            }
+
+            if (period !== undefined) {
+                localVarQueryParameter['period'] = period;
             }
 
 
@@ -6404,6 +6917,18 @@ export const CreditsApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
+         * @summary Get complete billing summary including plan, usage, billing status, and addons in a single call
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async billingSummaryGet(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BillingSummaryGet200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.billingSummaryGet(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['CreditsApi.billingSummaryGet']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
          * @summary Check if the team can consume the given quantity of credits
          * @param {CreditConsumptionType} type The type of consumption
          * @param {number} quantity The number of times to consume the given type
@@ -6429,6 +6954,20 @@ export const CreditsApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.canConsumeRecurringCredits(type, legacyOpts, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['CreditsApi.canConsumeRecurringCredits']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @summary Preview what will happen when changing plans - returns exact charge amount and effective date
+         * @param {PlanId} planId 
+         * @param {AutoRenewalPeriod} period 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async changePlanPreview(planId: PlanId, period: AutoRenewalPeriod, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ChangePlanPreview200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.changePlanPreview(planId, period, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['CreditsApi.changePlanPreview']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -6766,6 +7305,15 @@ export const CreditsApiFactory = function (configuration?: Configuration, basePa
         },
         /**
          * 
+         * @summary Get complete billing summary including plan, usage, billing status, and addons in a single call
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        billingSummaryGet(options?: RawAxiosRequestConfig): AxiosPromise<BillingSummaryGet200Response> {
+            return localVarFp.billingSummaryGet(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
          * @summary Check if the team can consume the given quantity of credits
          * @param {CreditsApiCanConsumeCreditsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -6783,6 +7331,16 @@ export const CreditsApiFactory = function (configuration?: Configuration, basePa
          */
         canConsumeRecurringCredits(requestParameters: CreditsApiCanConsumeRecurringCreditsRequest, options?: RawAxiosRequestConfig): AxiosPromise<CreditCanConsumeResponse> {
             return localVarFp.canConsumeRecurringCredits(requestParameters.type, requestParameters.legacyOpts, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Preview what will happen when changing plans - returns exact charge amount and effective date
+         * @param {CreditsApiChangePlanPreviewRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        changePlanPreview(requestParameters: CreditsApiChangePlanPreviewRequest, options?: RawAxiosRequestConfig): AxiosPromise<ChangePlanPreview200Response> {
+            return localVarFp.changePlanPreview(requestParameters.planId, requestParameters.period, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -7059,6 +7617,27 @@ export interface CreditsApiCanConsumeRecurringCreditsRequest {
      * @memberof CreditsApiCanConsumeRecurringCredits
      */
     readonly legacyOpts?: LegacyCanConsumeOpts
+}
+
+/**
+ * Request parameters for changePlanPreview operation in CreditsApi.
+ * @export
+ * @interface CreditsApiChangePlanPreviewRequest
+ */
+export interface CreditsApiChangePlanPreviewRequest {
+    /**
+     * 
+     * @type {PlanId}
+     * @memberof CreditsApiChangePlanPreview
+     */
+    readonly planId: PlanId
+
+    /**
+     * 
+     * @type {AutoRenewalPeriod}
+     * @memberof CreditsApiChangePlanPreview
+     */
+    readonly period: AutoRenewalPeriod
 }
 
 /**
@@ -7550,6 +8129,17 @@ export class CreditsApi extends BaseAPI {
 
     /**
      * 
+     * @summary Get complete billing summary including plan, usage, billing status, and addons in a single call
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CreditsApi
+     */
+    public billingSummaryGet(options?: RawAxiosRequestConfig) {
+        return CreditsApiFp(this.configuration).billingSummaryGet(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
      * @summary Check if the team can consume the given quantity of credits
      * @param {CreditsApiCanConsumeCreditsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -7570,6 +8160,18 @@ export class CreditsApi extends BaseAPI {
      */
     public canConsumeRecurringCredits(requestParameters: CreditsApiCanConsumeRecurringCreditsRequest, options?: RawAxiosRequestConfig) {
         return CreditsApiFp(this.configuration).canConsumeRecurringCredits(requestParameters.type, requestParameters.legacyOpts, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Preview what will happen when changing plans - returns exact charge amount and effective date
+     * @param {CreditsApiChangePlanPreviewRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CreditsApi
+     */
+    public changePlanPreview(requestParameters: CreditsApiChangePlanPreviewRequest, options?: RawAxiosRequestConfig) {
+        return CreditsApiFp(this.configuration).changePlanPreview(requestParameters.planId, requestParameters.period, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
