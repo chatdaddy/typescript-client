@@ -473,6 +473,18 @@ export interface AccountInsertDataSettings {
      * @memberof AccountInsertDataSettings
      */
     'show24HrWindowTooltip'?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof AccountInsertDataSettings
+     */
+    'combineWaAndWabaContacts'?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof AccountInsertDataSettings
+     */
+    'coexistenceContactsSynced'?: boolean;
 }
 /**
  * 

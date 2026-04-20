@@ -575,6 +575,18 @@ export interface AccountSettings {
      * @memberof AccountSettings
      */
     'show24HrWindowTooltip'?: boolean;
+    /**
+     * When true, contact metadata (assignee, tags, custom fields) is automatically synced in real-time between this WABA account and its coexistence WA sibling (same phone number, same team). Set on the WABA account. Chats and messages remain separate per channel.
+     * @type {boolean}
+     * @memberof AccountSettings
+     */
+    'combineWaAndWabaContacts'?: boolean;
+    /**
+     * Internal flag. Set to true by the coexistence-contact-sync cron after the one-time historical backfill has completed for this WABA account. Reset to false if combineWaAndWabaContacts is toggled off and back on. Do not set manually.
+     * @type {boolean}
+     * @memberof AccountSettings
+     */
+    'coexistenceContactsSynced'?: boolean;
 }
 /**
  * Allow assignment of new chats to a specific assignee. All new chats will be auto asssigned if one of the option is enabled and select any assignee. Deprecated: use a message flow to do this automation
