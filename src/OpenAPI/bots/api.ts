@@ -880,7 +880,8 @@ export interface ActionInteractionOneOf1 {
 
 export const ActionInteractionOneOf1TypeEnum = {
     Sent: 'sent',
-    Delivered: 'delivered'
+    Delivered: 'delivered',
+    Skipped: 'skipped'
 } as const;
 
 export type ActionInteractionOneOf1TypeEnum = typeof ActionInteractionOneOf1TypeEnum[keyof typeof ActionInteractionOneOf1TypeEnum];
@@ -1002,7 +1003,8 @@ export const ActionInteractionType = {
     UserInput: 'user_input',
     Error: 'error',
     Scheduled: 'scheduled',
-    Exists: 'exists'
+    Exists: 'exists',
+    Skipped: 'skipped'
 } as const;
 
 export type ActionInteractionType = typeof ActionInteractionType[keyof typeof ActionInteractionType];
