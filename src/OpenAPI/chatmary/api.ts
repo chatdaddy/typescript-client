@@ -1826,6 +1826,12 @@ export interface TrackPageHit {
      */
     'source'?: string;
     /**
+     * Error message when tracking an oops/error page
+     * @type {string}
+     * @memberof TrackPageHit
+     */
+    'errorMessage'?: string;
+    /**
      * Total page hit count
      * @type {number}
      * @memberof TrackPageHit
@@ -1869,6 +1875,12 @@ export interface TrackPageHitsPostRequest {
      * @memberof TrackPageHitsPostRequest
      */
     'source'?: string;
+    /**
+     * Error message when tracking an oops/error page
+     * @type {string}
+     * @memberof TrackPageHitsPostRequest
+     */
+    'errorMessage'?: string;
 }
 /**
  * 
