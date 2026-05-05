@@ -2501,6 +2501,31 @@ export interface ContactsCheckExists200Response {
 /**
  * 
  * @export
+ * @interface ContactsExportReportRequest
+ */
+export interface ContactsExportReportRequest {
+    /**
+     * Unique export ID for idempotency
+     * @type {string}
+     * @memberof ContactsExportReportRequest
+     */
+    'id': string;
+    /**
+     * 
+     * @type {number}
+     * @memberof ContactsExportReportRequest
+     */
+    'contactCount': number;
+    /**
+     * Credits to deduct (positive). 0 for free tier.
+     * @type {number}
+     * @memberof ContactsExportReportRequest
+     */
+    'costInCredits': number;
+}
+/**
+ * 
+ * @export
  * @interface ContactsGet200Response
  */
 export interface ContactsGet200Response {
@@ -12566,6 +12591,46 @@ export const ContactsApiAxiosParamCreator = function (configuration?: Configurat
         },
         /**
          * 
+         * @summary Report a completed contact export. Publishes the `export-contact` event to the bus so the payments service can deduct the agreed credits from the team\'s balance. Should be called by the dashboard after a successful client-side export. Idempotent on `id`.
+         * @param {ContactsExportReportRequest} contactsExportReportRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        contactsExportReport: async (contactsExportReportRequest: ContactsExportReportRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'contactsExportReportRequest' is not null or undefined
+            assertParamExists('contactsExportReport', 'contactsExportReportRequest', contactsExportReportRequest)
+            const localVarPath = `/contacts/export-report`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["CONTACTS_READ_ASSIGNED"], configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(contactsExportReportRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
          * @summary Get contacts
          * @param {ChatsGetTagsParameter} [tags] Get contacts who fall in either of these tags
          * @param {ContactsGetTagsFilterOperatorEnum} [tagsFilterOperator] How to combine multiple tag filters. Use \&#39;AND\&#39; to require all tags to match, or \&#39;OR\&#39; to match any tag. Defaults to \&#39;OR\&#39;.
@@ -13048,6 +13113,19 @@ export const ContactsApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
+         * @summary Report a completed contact export. Publishes the `export-contact` event to the bus so the payments service can deduct the agreed credits from the team\'s balance. Should be called by the dashboard after a successful client-side export. Idempotent on `id`.
+         * @param {ContactsExportReportRequest} contactsExportReportRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async contactsExportReport(contactsExportReportRequest: ContactsExportReportRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AccountsDelete200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.contactsExportReport(contactsExportReportRequest, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['ContactsApi.contactsExportReport']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
          * @summary Get contacts
          * @param {ChatsGetTagsParameter} [tags] Get contacts who fall in either of these tags
          * @param {ContactsGetTagsFilterOperatorEnum} [tagsFilterOperator] How to combine multiple tag filters. Use \&#39;AND\&#39; to require all tags to match, or \&#39;OR\&#39; to match any tag. Defaults to \&#39;OR\&#39;.
@@ -13187,6 +13265,16 @@ export const ContactsApiFactory = function (configuration?: Configuration, baseP
          */
         contactsDelete(requestParameters: ContactsApiContactsDeleteRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<AccountsDelete200Response> {
             return localVarFp.contactsDelete(requestParameters.tags, requestParameters.tagsFilterOperator, requestParameters.notTags, requestParameters.contacts, requestParameters.notContacts, requestParameters.minMessagesSent, requestParameters.minMessagesRecv, requestParameters.maxMessagesSent, requestParameters.maxMessagesRecv, requestParameters.q, requestParameters.assignee, requestParameters.assigneeFilterOperator, requestParameters.notAssignee, requestParameters.accountId, requestParameters.type, requestParameters.chatLastMessageFrom, requestParameters.chatLastMessageTo, requestParameters.lastMessageFromMe, requestParameters.unread, requestParameters.ticket, requestParameters.isNewGroup, requestParameters.orGroups, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Report a completed contact export. Publishes the `export-contact` event to the bus so the payments service can deduct the agreed credits from the team\'s balance. Should be called by the dashboard after a successful client-side export. Idempotent on `id`.
+         * @param {ContactsApiContactsExportReportRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        contactsExportReport(requestParameters: ContactsApiContactsExportReportRequest, options?: RawAxiosRequestConfig): AxiosPromise<AccountsDelete200Response> {
+            return localVarFp.contactsExportReport(requestParameters.contactsExportReportRequest, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -13432,6 +13520,20 @@ export interface ContactsApiContactsDeleteRequest {
      * @memberof ContactsApiContactsDelete
      */
     readonly orGroups?: string
+}
+
+/**
+ * Request parameters for contactsExportReport operation in ContactsApi.
+ * @export
+ * @interface ContactsApiContactsExportReportRequest
+ */
+export interface ContactsApiContactsExportReportRequest {
+    /**
+     * 
+     * @type {ContactsExportReportRequest}
+     * @memberof ContactsApiContactsExportReport
+     */
+    readonly contactsExportReportRequest: ContactsExportReportRequest
 }
 
 /**
@@ -13881,6 +13983,18 @@ export class ContactsApi extends BaseAPI {
      */
     public contactsDelete(requestParameters: ContactsApiContactsDeleteRequest = {}, options?: RawAxiosRequestConfig) {
         return ContactsApiFp(this.configuration).contactsDelete(requestParameters.tags, requestParameters.tagsFilterOperator, requestParameters.notTags, requestParameters.contacts, requestParameters.notContacts, requestParameters.minMessagesSent, requestParameters.minMessagesRecv, requestParameters.maxMessagesSent, requestParameters.maxMessagesRecv, requestParameters.q, requestParameters.assignee, requestParameters.assigneeFilterOperator, requestParameters.notAssignee, requestParameters.accountId, requestParameters.type, requestParameters.chatLastMessageFrom, requestParameters.chatLastMessageTo, requestParameters.lastMessageFromMe, requestParameters.unread, requestParameters.ticket, requestParameters.isNewGroup, requestParameters.orGroups, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Report a completed contact export. Publishes the `export-contact` event to the bus so the payments service can deduct the agreed credits from the team\'s balance. Should be called by the dashboard after a successful client-side export. Idempotent on `id`.
+     * @param {ContactsApiContactsExportReportRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ContactsApi
+     */
+    public contactsExportReport(requestParameters: ContactsApiContactsExportReportRequest, options?: RawAxiosRequestConfig) {
+        return ContactsApiFp(this.configuration).contactsExportReport(requestParameters.contactsExportReportRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

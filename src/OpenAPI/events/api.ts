@@ -7807,6 +7807,7 @@ export const EventName = {
     TeammemberLogout: 'teammember-logout',
     AiCreditUse: 'ai-credit-use',
     AccountWabaStateUpdate: 'account-waba-state-update',
+    ExportContact: 'export-contact',
     DashboardInsert: 'dashboard-insert',
     DashboardUpdate: 'dashboard-update',
     DashboardDelete: 'dashboard-delete',
@@ -7945,8 +7946,71 @@ export type EventSubscriptionType = typeof EventSubscriptionType[keyof typeof Ev
  * The request body you\'ll receive in a webhook
  * @export
  */
-export type EventWebhookData = AccountDelete | AccountInsert | AccountUpdate | AccountWabaStateUpdate | ActionExecute | ActionSchedule | AiCreditUse | BotDelete | BotInsert | BotUpdate | CallDelete | CallInsert | CallUpdate | CallchannelDelete | CallchannelInsert | CallchannelUpdate | CampaignInsert | ChatDelete | ChatInsert | ChatUpdate | ChatbotInsert | ContactDelete | ContactInsert | ContactUpdate | CredittransactionrecordInsert | CrmTicketDelete | CrmTicketInsert | CrmTicketUpdate | CustomerCreditsLevelUpdate | DashboardDelete | DashboardInsert | DashboardUpdate | FewMessagesLeft | GroupUpdate | KeywordbasedactionInsert | MessageDelete | MessageInsert | MessageUpdate | OrderInsert | PaymentintegrationInsert | PlatformproductDelete | PlatformproductInsert | PlatformproductUpdate | PresenceUpdate | PushNotification | ShopproductInsert | StaleAccountNotification | TagDelete | TagInsert | TagUpdate | TeamDelete | TeamInsert | TeamUpdate | TeammemberDelete | TeammemberInsert | TeammemberLogout | TeammemberUpdate | TrackingDelete | TrackingInsert | TrackingUpdate | UserDelete | UserInsert | UserUpdate;
+export type EventWebhookData = AccountDelete | AccountInsert | AccountUpdate | AccountWabaStateUpdate | ActionExecute | ActionSchedule | AiCreditUse | BotDelete | BotInsert | BotUpdate | CallDelete | CallInsert | CallUpdate | CallchannelDelete | CallchannelInsert | CallchannelUpdate | CampaignInsert | ChatDelete | ChatInsert | ChatUpdate | ChatbotInsert | ContactDelete | ContactInsert | ContactUpdate | CredittransactionrecordInsert | CrmTicketDelete | CrmTicketInsert | CrmTicketUpdate | CustomerCreditsLevelUpdate | DashboardDelete | DashboardInsert | DashboardUpdate | ExportContact | FewMessagesLeft | GroupUpdate | KeywordbasedactionInsert | MessageDelete | MessageInsert | MessageUpdate | OrderInsert | PaymentintegrationInsert | PlatformproductDelete | PlatformproductInsert | PlatformproductUpdate | PresenceUpdate | PushNotification | ShopproductInsert | StaleAccountNotification | TagDelete | TagInsert | TagUpdate | TeamDelete | TeamInsert | TeamUpdate | TeammemberDelete | TeammemberInsert | TeammemberLogout | TeammemberUpdate | TrackingDelete | TrackingInsert | TrackingUpdate | UserDelete | UserInsert | UserUpdate;
 
+/**
+ * 
+ * @export
+ * @interface ExportContact
+ */
+export interface ExportContact {
+    /**
+     * 
+     * @type {string}
+     * @memberof ExportContact
+     */
+    'event': ExportContactEventEnum;
+    /**
+     * 
+     * @type {Array<ExportContactData>}
+     * @memberof ExportContact
+     */
+    'data': Array<ExportContactData>;
+}
+
+export const ExportContactEventEnum = {
+    ExportContact: 'export-contact'
+} as const;
+
+export type ExportContactEventEnum = typeof ExportContactEventEnum[keyof typeof ExportContactEventEnum];
+
+/**
+ * Published when a team exports contacts. The payments service listens for this event and deducts the specified credits from the team\'s balance.
+ * @export
+ * @interface ExportContactData
+ */
+export interface ExportContactData {
+    /**
+     * Unique export ID for idempotency (e.g. `export_<timestamp>_<random>`)
+     * @type {string}
+     * @memberof ExportContactData
+     */
+    'id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ExportContactData
+     */
+    'teamId': string;
+    /**
+     * Number of contacts in the export
+     * @type {number}
+     * @memberof ExportContactData
+     */
+    'contactCount': number;
+    /**
+     * Credits to deduct for this export (positive integer). Frontend determines this based on the chosen tier (e.g. 9000 for Standard, 99000 for Full). Free tier passes 0.
+     * @type {number}
+     * @memberof ExportContactData
+     */
+    'costInCredits': number;
+    /**
+     * User ID who triggered the export
+     * @type {string}
+     * @memberof ExportContactData
+     */
+    'exportedBy'?: string;
+}
 /**
  * 
  * @export
