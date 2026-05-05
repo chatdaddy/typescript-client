@@ -1270,7 +1270,8 @@ export const CreditConsumptionType = {
     ConsultationTraining: 'consultation/training',
     ActiveChat: 'active_chat',
     AiCreditUse: 'ai_credit_use',
-    AiTranscription: 'ai_transcription'
+    AiTranscription: 'ai_transcription',
+    ExportContacts: 'export_contacts'
 } as const;
 
 export type CreditConsumptionType = typeof CreditConsumptionType[keyof typeof CreditConsumptionType];
@@ -4601,124 +4602,6 @@ export type UnlockPreferenceCategoryEnum = typeof UnlockPreferenceCategoryEnum[k
 /**
  * 
  * @export
- * @interface UsageSummary
- */
-export interface UsageSummary {
-    /**
-     * Sum of units across the whole range (sign-normalised)
-     * @type {number}
-     * @memberof UsageSummary
-     */
-    'totalUnits': number;
-    /**
-     * Total transaction count in the range
-     * @type {number}
-     * @memberof UsageSummary
-     */
-    'totalRequests': number;
-    /**
-     * Top-level time series, one entry per bucket
-     * @type {Array<UsageSummaryBucket>}
-     * @memberof UsageSummary
-     */
-    'series': Array<UsageSummaryBucket>;
-    /**
-     * Per-type rollup. Capped at 50 types — types beyond that are grouped into the \"Other\" bucket on the UI side.
-     * @type {Array<UsageSummaryByType>}
-     * @memberof UsageSummary
-     */
-    'byType': Array<UsageSummaryByType>;
-    /**
-     * Top 10 users by total spend in the range
-     * @type {Array<UsageSummaryByUser>}
-     * @memberof UsageSummary
-     */
-    'byUser': Array<UsageSummaryByUser>;
-}
-/**
- * A single time-bucket of credit usage
- * @export
- * @interface UsageSummaryBucket
- */
-export interface UsageSummaryBucket {
-    /**
-     * ISO timestamp at the start of the bucket
-     * @type {string}
-     * @memberof UsageSummaryBucket
-     */
-    'bucket': string;
-    /**
-     * Total credits in the bucket. Sign is normalised to positive when effectType=consume so the UI can plot directly.
-     * @type {number}
-     * @memberof UsageSummaryBucket
-     */
-    'units': number;
-    /**
-     * Number of transaction records in the bucket
-     * @type {number}
-     * @memberof UsageSummaryBucket
-     */
-    'requests': number;
-}
-/**
- * 
- * @export
- * @interface UsageSummaryByType
- */
-export interface UsageSummaryByType {
-    /**
-     * Credit consumption type, e.g. `message_sent/wa`, `ai_chatbot`
-     * @type {string}
-     * @memberof UsageSummaryByType
-     */
-    'type': string;
-    /**
-     * Total credits for this type across the whole range
-     * @type {number}
-     * @memberof UsageSummaryByType
-     */
-    'units': number;
-    /**
-     * Total transaction count for this type
-     * @type {number}
-     * @memberof UsageSummaryByType
-     */
-    'requests': number;
-    /**
-     * Per-bucket breakdown for this type, same shape as top-level series
-     * @type {Array<UsageSummaryBucket>}
-     * @memberof UsageSummaryByType
-     */
-    'series': Array<UsageSummaryBucket>;
-}
-/**
- * 
- * @export
- * @interface UsageSummaryByUser
- */
-export interface UsageSummaryByUser {
-    /**
-     * User ID (UUID). The caller resolves this to a name client-side.
-     * @type {string}
-     * @memberof UsageSummaryByUser
-     */
-    'doneBy': string;
-    /**
-     * Total credits attributed to this user
-     * @type {number}
-     * @memberof UsageSummaryByUser
-     */
-    'units': number;
-    /**
-     * Total transaction count for this user
-     * @type {number}
-     * @memberof UsageSummaryByUser
-     */
-    'requests': number;
-}
-/**
- * 
- * @export
  * @interface VariableSingleConsumptionMetadata
  */
 export interface VariableSingleConsumptionMetadata {
@@ -7073,83 +6956,6 @@ export const CreditsApiAxiosParamCreator = function (configuration?: Configurati
                 options: localVarRequestOptions,
             };
         },
-        /**
-         * 
-         * @summary Aggregated credit usage analytics over a date range — daily series, per-type breakdown, and top users in a single response. Built for the billing usage dashboard so the UI doesn\'t paginate the tx ledger.
-         * @param {string} from ISO timestamp (inclusive lower bound)
-         * @param {string} to ISO timestamp (inclusive upper bound)
-         * @param {UsageSummaryGetIntervalEnum} [interval] Bucket size for time-series aggregations
-         * @param {UsageSummaryGetEffectTypeEnum} [effectType] Filter by transaction effect. &#x60;consume&#x60; (default) returns spend analytics with positive numbers; &#x60;gain&#x60; returns positive deposits.
-         * @param {Array<CreditBalanceEffectType>} [type] Optional credit type filter (subset of CreditBalanceEffectType)
-         * @param {string} [teamId] 
-         * @param {string} [customerId] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        usageSummaryGet: async (from: string, to: string, interval?: UsageSummaryGetIntervalEnum, effectType?: UsageSummaryGetEffectTypeEnum, type?: Array<CreditBalanceEffectType>, teamId?: string, customerId?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'from' is not null or undefined
-            assertParamExists('usageSummaryGet', 'from', from)
-            // verify required parameter 'to' is not null or undefined
-            assertParamExists('usageSummaryGet', 'to', to)
-            const localVarPath = `/v2/credits/usage-summary`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication chatdaddy required
-            // oauth required
-            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["PAYMENTS_READ"], configuration)
-
-            if (from !== undefined) {
-                localVarQueryParameter['from'] = (from as any instanceof Date) ?
-                    (from as any).toISOString() :
-                    from;
-            }
-
-            if (to !== undefined) {
-                localVarQueryParameter['to'] = (to as any instanceof Date) ?
-                    (to as any).toISOString() :
-                    to;
-            }
-
-            if (interval !== undefined) {
-                localVarQueryParameter['interval'] = interval;
-            }
-
-            if (effectType !== undefined) {
-                localVarQueryParameter['effectType'] = effectType;
-            }
-
-            if (type) {
-                localVarQueryParameter['type'] = type;
-            }
-
-            if (teamId !== undefined) {
-                localVarQueryParameter['teamId'] = teamId;
-            }
-
-            if (customerId !== undefined) {
-                localVarQueryParameter['customerId'] = customerId;
-            }
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
     }
 };
 
@@ -7563,25 +7369,6 @@ export const CreditsApiFp = function(configuration?: Configuration) {
             const localVarOperationServerBasePath = operationServerMap['CreditsApi.topUpCreditsPost']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
-        /**
-         * 
-         * @summary Aggregated credit usage analytics over a date range — daily series, per-type breakdown, and top users in a single response. Built for the billing usage dashboard so the UI doesn\'t paginate the tx ledger.
-         * @param {string} from ISO timestamp (inclusive lower bound)
-         * @param {string} to ISO timestamp (inclusive upper bound)
-         * @param {UsageSummaryGetIntervalEnum} [interval] Bucket size for time-series aggregations
-         * @param {UsageSummaryGetEffectTypeEnum} [effectType] Filter by transaction effect. &#x60;consume&#x60; (default) returns spend analytics with positive numbers; &#x60;gain&#x60; returns positive deposits.
-         * @param {Array<CreditBalanceEffectType>} [type] Optional credit type filter (subset of CreditBalanceEffectType)
-         * @param {string} [teamId] 
-         * @param {string} [customerId] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async usageSummaryGet(from: string, to: string, interval?: UsageSummaryGetIntervalEnum, effectType?: UsageSummaryGetEffectTypeEnum, type?: Array<CreditBalanceEffectType>, teamId?: string, customerId?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<UsageSummary>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.usageSummaryGet(from, to, interval, effectType, type, teamId, customerId, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['CreditsApi.usageSummaryGet']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
     }
 };
 
@@ -7875,16 +7662,6 @@ export const CreditsApiFactory = function (configuration?: Configuration, basePa
          */
         topUpCreditsPost(requestParameters: CreditsApiTopUpCreditsPostRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<PaymentRequest> {
             return localVarFp.topUpCreditsPost(requestParameters.creditTopUpOptions, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
-         * @summary Aggregated credit usage analytics over a date range — daily series, per-type breakdown, and top users in a single response. Built for the billing usage dashboard so the UI doesn\'t paginate the tx ledger.
-         * @param {CreditsApiUsageSummaryGetRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        usageSummaryGet(requestParameters: CreditsApiUsageSummaryGetRequest, options?: RawAxiosRequestConfig): AxiosPromise<UsageSummary> {
-            return localVarFp.usageSummaryGet(requestParameters.from, requestParameters.to, requestParameters.interval, requestParameters.effectType, requestParameters.type, requestParameters.teamId, requestParameters.customerId, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -8436,62 +8213,6 @@ export interface CreditsApiTopUpCreditsPostRequest {
 }
 
 /**
- * Request parameters for usageSummaryGet operation in CreditsApi.
- * @export
- * @interface CreditsApiUsageSummaryGetRequest
- */
-export interface CreditsApiUsageSummaryGetRequest {
-    /**
-     * ISO timestamp (inclusive lower bound)
-     * @type {string}
-     * @memberof CreditsApiUsageSummaryGet
-     */
-    readonly from: string
-
-    /**
-     * ISO timestamp (inclusive upper bound)
-     * @type {string}
-     * @memberof CreditsApiUsageSummaryGet
-     */
-    readonly to: string
-
-    /**
-     * Bucket size for time-series aggregations
-     * @type {'hour' | 'day' | 'week' | 'month'}
-     * @memberof CreditsApiUsageSummaryGet
-     */
-    readonly interval?: UsageSummaryGetIntervalEnum
-
-    /**
-     * Filter by transaction effect. &#x60;consume&#x60; (default) returns spend analytics with positive numbers; &#x60;gain&#x60; returns positive deposits.
-     * @type {'gain' | 'consume'}
-     * @memberof CreditsApiUsageSummaryGet
-     */
-    readonly effectType?: UsageSummaryGetEffectTypeEnum
-
-    /**
-     * Optional credit type filter (subset of CreditBalanceEffectType)
-     * @type {Array<CreditBalanceEffectType>}
-     * @memberof CreditsApiUsageSummaryGet
-     */
-    readonly type?: Array<CreditBalanceEffectType>
-
-    /**
-     * 
-     * @type {string}
-     * @memberof CreditsApiUsageSummaryGet
-     */
-    readonly teamId?: string
-
-    /**
-     * 
-     * @type {string}
-     * @memberof CreditsApiUsageSummaryGet
-     */
-    readonly customerId?: string
-}
-
-/**
  * CreditsApi - object-oriented interface
  * @export
  * @class CreditsApi
@@ -8839,18 +8560,6 @@ export class CreditsApi extends BaseAPI {
     public topUpCreditsPost(requestParameters: CreditsApiTopUpCreditsPostRequest = {}, options?: RawAxiosRequestConfig) {
         return CreditsApiFp(this.configuration).topUpCreditsPost(requestParameters.creditTopUpOptions, options).then((request) => request(this.axios, this.basePath));
     }
-
-    /**
-     * 
-     * @summary Aggregated credit usage analytics over a date range — daily series, per-type breakdown, and top users in a single response. Built for the billing usage dashboard so the UI doesn\'t paginate the tx ledger.
-     * @param {CreditsApiUsageSummaryGetRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof CreditsApi
-     */
-    public usageSummaryGet(requestParameters: CreditsApiUsageSummaryGetRequest, options?: RawAxiosRequestConfig) {
-        return CreditsApiFp(this.configuration).usageSummaryGet(requestParameters.from, requestParameters.to, requestParameters.interval, requestParameters.effectType, requestParameters.type, requestParameters.teamId, requestParameters.customerId, options).then((request) => request(this.axios, this.basePath));
-    }
 }
 
 /**
@@ -8870,24 +8579,6 @@ export const GetCustomerDataStatusEnum = {
     Cancelled: 'cancelled'
 } as const;
 export type GetCustomerDataStatusEnum = typeof GetCustomerDataStatusEnum[keyof typeof GetCustomerDataStatusEnum];
-/**
- * @export
- */
-export const UsageSummaryGetIntervalEnum = {
-    Hour: 'hour',
-    Day: 'day',
-    Week: 'week',
-    Month: 'month'
-} as const;
-export type UsageSummaryGetIntervalEnum = typeof UsageSummaryGetIntervalEnum[keyof typeof UsageSummaryGetIntervalEnum];
-/**
- * @export
- */
-export const UsageSummaryGetEffectTypeEnum = {
-    Gain: 'gain',
-    Consume: 'consume'
-} as const;
-export type UsageSummaryGetEffectTypeEnum = typeof UsageSummaryGetEffectTypeEnum[keyof typeof UsageSummaryGetEffectTypeEnum];
 
 
 /**
