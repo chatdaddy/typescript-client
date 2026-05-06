@@ -712,6 +712,12 @@ export interface DashboardSchemaItem {
      * @memberof DashboardSchemaItem
      */
     'includePreviousPeriod'?: boolean;
+    /**
+     * Ordered list of funnel layers used when `visualizationType` is `funnel`. Each layer groups one or more breakdown values (tags or assignees) into a single stage of the funnel. Order is significant — the first layer is the top of the funnel and stages flow downward. Ignored for non-funnel visualization types. 
+     * @type {Array<FunnelLayer>}
+     * @memberof DashboardSchemaItem
+     */
+    'funnelLayers'?: Array<FunnelLayer>;
 }
 
 
@@ -763,7 +769,9 @@ export const DashboardVisualizationType = {
     PieChart: 'pie-chart',
     Table: 'table',
     Snapshot: 'snapshot',
-    SimpleSnapshot: 'simple-snapshot'
+    SimpleSnapshot: 'simple-snapshot',
+    Funnel: 'funnel',
+    Metrics: 'metrics'
 } as const;
 
 export type DashboardVisualizationType = typeof DashboardVisualizationType[keyof typeof DashboardVisualizationType];
@@ -932,6 +940,72 @@ export const FlagState = {
 } as const;
 
 export type FlagState = typeof FlagState[keyof typeof FlagState];
+
+
+/**
+ * 
+ * @export
+ * @interface FunnelLayer
+ */
+export interface FunnelLayer {
+    /**
+     * Stable identifier for a funnel layer
+     * @type {string}
+     * @memberof FunnelLayer
+     */
+    'id': string;
+    /**
+     * Display name for this funnel layer
+     * @type {string}
+     * @memberof FunnelLayer
+     */
+    'name': string;
+    /**
+     * Multi-source match rules. A breakdown entry counts toward this layer if any matcher matches it (OR semantics across matchers). Use this to combine tag and assignee groupings in a single layer. 
+     * @type {Array<FunnelLayerMatcher>}
+     * @memberof FunnelLayer
+     */
+    'matchers'?: Array<FunnelLayerMatcher>;
+    /**
+     * Convenience shorthand for a single `tag`-source matcher. The frontend treats this as equivalent to a matcher with `source: tag`. Kept alongside `matchers` for backward compatibility and simple single-source layers. 
+     * @type {Array<string>}
+     * @memberof FunnelLayer
+     */
+    'tags'?: Array<string>;
+}
+/**
+ * 
+ * @export
+ * @interface FunnelLayerMatcher
+ */
+export interface FunnelLayerMatcher {
+    /**
+     * 
+     * @type {FunnelLayerSource}
+     * @memberof FunnelLayerMatcher
+     */
+    'source': FunnelLayerSource;
+    /**
+     * Breakdown values (id or display name) grouped under this matcher. Matching is case-insensitive against the breakdown result. 
+     * @type {Array<string>}
+     * @memberof FunnelLayerMatcher
+     */
+    'values': Array<string>;
+}
+
+
+/**
+ * Which breakdown dimension a layer\'s values are matched against. - `tag`: match against tag id or tag name - `assignee`: match against assignee user id 
+ * @export
+ * @enum {string}
+ */
+
+export const FunnelLayerSource = {
+    Tag: 'tag',
+    Assignee: 'assignee'
+} as const;
+
+export type FunnelLayerSource = typeof FunnelLayerSource[keyof typeof FunnelLayerSource];
 
 
 /**

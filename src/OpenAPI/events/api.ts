@@ -7280,6 +7280,12 @@ export interface DashboardInsertDataSchemaItemsInnerOneOf {
      * @memberof DashboardInsertDataSchemaItemsInnerOneOf
      */
     'includePreviousPeriod'?: boolean;
+    /**
+     * Ordered list of funnel layers used when `visualizationType` is `funnel`. Each layer groups one or more breakdown values (tags or assignees) into a single stage of the funnel. Order is significant — the first layer is the top of the funnel and stages flow downward. Ignored for non-funnel visualization types. 
+     * @type {Array<DashboardInsertDataSchemaItemsInnerOneOfFunnelLayersInner>}
+     * @memberof DashboardInsertDataSchemaItemsInnerOneOf
+     */
+    'funnelLayers'?: Array<DashboardInsertDataSchemaItemsInnerOneOfFunnelLayersInner>;
 }
 
 export const DashboardInsertDataSchemaItemsInnerOneOfVisualizationTypeEnum = {
@@ -7287,7 +7293,9 @@ export const DashboardInsertDataSchemaItemsInnerOneOfVisualizationTypeEnum = {
     PieChart: 'pie-chart',
     Table: 'table',
     Snapshot: 'snapshot',
-    SimpleSnapshot: 'simple-snapshot'
+    SimpleSnapshot: 'simple-snapshot',
+    Funnel: 'funnel',
+    Metrics: 'metrics'
 } as const;
 
 export type DashboardInsertDataSchemaItemsInnerOneOfVisualizationTypeEnum = typeof DashboardInsertDataSchemaItemsInnerOneOfVisualizationTypeEnum[keyof typeof DashboardInsertDataSchemaItemsInnerOneOfVisualizationTypeEnum];
@@ -7319,6 +7327,64 @@ export interface DashboardInsertDataSchemaItemsInnerOneOf1 {
      */
     'title': string;
 }
+/**
+ * 
+ * @export
+ * @interface DashboardInsertDataSchemaItemsInnerOneOfFunnelLayersInner
+ */
+export interface DashboardInsertDataSchemaItemsInnerOneOfFunnelLayersInner {
+    /**
+     * Stable identifier for a funnel layer
+     * @type {string}
+     * @memberof DashboardInsertDataSchemaItemsInnerOneOfFunnelLayersInner
+     */
+    'id': string;
+    /**
+     * Display name for this funnel layer
+     * @type {string}
+     * @memberof DashboardInsertDataSchemaItemsInnerOneOfFunnelLayersInner
+     */
+    'name': string;
+    /**
+     * Multi-source match rules. A breakdown entry counts toward this layer if any matcher matches it (OR semantics across matchers). Use this to combine tag and assignee groupings in a single layer. 
+     * @type {Array<DashboardInsertDataSchemaItemsInnerOneOfFunnelLayersInnerMatchersInner>}
+     * @memberof DashboardInsertDataSchemaItemsInnerOneOfFunnelLayersInner
+     */
+    'matchers'?: Array<DashboardInsertDataSchemaItemsInnerOneOfFunnelLayersInnerMatchersInner>;
+    /**
+     * Convenience shorthand for a single `tag`-source matcher. The frontend treats this as equivalent to a matcher with `source: tag`. Kept alongside `matchers` for backward compatibility and simple single-source layers. 
+     * @type {Array<string>}
+     * @memberof DashboardInsertDataSchemaItemsInnerOneOfFunnelLayersInner
+     */
+    'tags'?: Array<string>;
+}
+/**
+ * 
+ * @export
+ * @interface DashboardInsertDataSchemaItemsInnerOneOfFunnelLayersInnerMatchersInner
+ */
+export interface DashboardInsertDataSchemaItemsInnerOneOfFunnelLayersInnerMatchersInner {
+    /**
+     * Which breakdown dimension a layer\'s values are matched against. - `tag`: match against tag id or tag name - `assignee`: match against assignee user id 
+     * @type {string}
+     * @memberof DashboardInsertDataSchemaItemsInnerOneOfFunnelLayersInnerMatchersInner
+     */
+    'source': DashboardInsertDataSchemaItemsInnerOneOfFunnelLayersInnerMatchersInnerSourceEnum;
+    /**
+     * Breakdown values (id or display name) grouped under this matcher. Matching is case-insensitive against the breakdown result. 
+     * @type {Array<string>}
+     * @memberof DashboardInsertDataSchemaItemsInnerOneOfFunnelLayersInnerMatchersInner
+     */
+    'values': Array<string>;
+}
+
+export const DashboardInsertDataSchemaItemsInnerOneOfFunnelLayersInnerMatchersInnerSourceEnum = {
+    Tag: 'tag',
+    Assignee: 'assignee'
+} as const;
+
+export type DashboardInsertDataSchemaItemsInnerOneOfFunnelLayersInnerMatchersInnerSourceEnum = typeof DashboardInsertDataSchemaItemsInnerOneOfFunnelLayersInnerMatchersInnerSourceEnum[keyof typeof DashboardInsertDataSchemaItemsInnerOneOfFunnelLayersInnerMatchersInnerSourceEnum];
+
 /**
  * 
  * @export
