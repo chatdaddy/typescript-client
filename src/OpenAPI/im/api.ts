@@ -5496,6 +5496,12 @@ export interface MiscOptions {
      * @memberof MiscOptions
      */
     'fepExpiryTime'?: number;
+    /**
+     * Meta call Id for messages related to calls
+     * @type {string}
+     * @memberof MiscOptions
+     */
+    'callId'?: string;
 }
 /**
  * the message being forwarded

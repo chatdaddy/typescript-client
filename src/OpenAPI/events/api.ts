@@ -9702,6 +9702,12 @@ export interface MessageInsertDataMiscOptions {
      * @memberof MessageInsertDataMiscOptions
      */
     'fepExpiryTime'?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof MessageInsertDataMiscOptions
+     */
+    'callId'?: string;
 }
 /**
  * 
