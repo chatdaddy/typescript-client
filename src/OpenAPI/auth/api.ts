@@ -2566,6 +2566,12 @@ export interface User {
      * @memberof User
      */
     'variant'?: UserVariant;
+    /**
+     * Whether the user has been migrated to Theo
+     * @type {boolean}
+     * @memberof User
+     */
+    'migratedToTheo'?: boolean;
 }
 
 
@@ -2826,6 +2832,19 @@ export interface UsersGet200Response {
      * @memberof UsersGet200Response
      */
     'users': Array<User>;
+}
+/**
+ * 
+ * @export
+ * @interface UsersMigrateToTheoPostRequest
+ */
+export interface UsersMigrateToTheoPostRequest {
+    /**
+     * The ID of the user to mark as migrated
+     * @type {string}
+     * @memberof UsersMigrateToTheoPostRequest
+     */
+    'userId': string;
 }
 /**
  * 
@@ -7490,6 +7509,46 @@ export const UsersApiAxiosParamCreator = function (configuration?: Configuration
         },
         /**
          * 
+         * @summary Mark user as migrated to Theo
+         * @param {UsersMigrateToTheoPostRequest} usersMigrateToTheoPostRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        usersMigrateToTheoPost: async (usersMigrateToTheoPostRequest: UsersMigrateToTheoPostRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'usersMigrateToTheoPostRequest' is not null or undefined
+            assertParamExists('usersMigrateToTheoPost', 'usersMigrateToTheoPostRequest', usersMigrateToTheoPostRequest)
+            const localVarPath = `/users/migrate-to-theo`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", [], configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(usersMigrateToTheoPostRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
          * @summary Reset user password
          * @param {ResetPassword} [resetPassword] 
          * @param {*} [options] Override http request option.
@@ -7755,6 +7814,19 @@ export const UsersApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
+         * @summary Mark user as migrated to Theo
+         * @param {UsersMigrateToTheoPostRequest} usersMigrateToTheoPostRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async usersMigrateToTheoPost(usersMigrateToTheoPostRequest: UsersMigrateToTheoPostRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<User>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.usersMigrateToTheoPost(usersMigrateToTheoPostRequest, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['UsersApi.usersMigrateToTheoPost']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
          * @summary Reset user password
          * @param {ResetPassword} [resetPassword] 
          * @param {*} [options] Override http request option.
@@ -7868,6 +7940,16 @@ export const UsersApiFactory = function (configuration?: Configuration, basePath
          */
         usersGet(requestParameters: UsersApiUsersGetRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<UsersGet200Response> {
             return localVarFp.usersGet(requestParameters.q, requestParameters.partnership, requestParameters.id, requestParameters.originalTeamId, requestParameters.count, requestParameters.page, requestParameters.includeMemberships, requestParameters.includeTotal, requestParameters.other, requestParameters.variant, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Mark user as migrated to Theo
+         * @param {UsersApiUsersMigrateToTheoPostRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        usersMigrateToTheoPost(requestParameters: UsersApiUsersMigrateToTheoPostRequest, options?: RawAxiosRequestConfig): AxiosPromise<User> {
+            return localVarFp.usersMigrateToTheoPost(requestParameters.usersMigrateToTheoPostRequest, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -8056,6 +8138,20 @@ export interface UsersApiUsersGetRequest {
 }
 
 /**
+ * Request parameters for usersMigrateToTheoPost operation in UsersApi.
+ * @export
+ * @interface UsersApiUsersMigrateToTheoPostRequest
+ */
+export interface UsersApiUsersMigrateToTheoPostRequest {
+    /**
+     * 
+     * @type {UsersMigrateToTheoPostRequest}
+     * @memberof UsersApiUsersMigrateToTheoPost
+     */
+    readonly usersMigrateToTheoPostRequest: UsersMigrateToTheoPostRequest
+}
+
+/**
  * Request parameters for usersPasswordPatch operation in UsersApi.
  * @export
  * @interface UsersApiUsersPasswordPatchRequest
@@ -8185,6 +8281,18 @@ export class UsersApi extends BaseAPI {
      */
     public usersGet(requestParameters: UsersApiUsersGetRequest = {}, options?: RawAxiosRequestConfig) {
         return UsersApiFp(this.configuration).usersGet(requestParameters.q, requestParameters.partnership, requestParameters.id, requestParameters.originalTeamId, requestParameters.count, requestParameters.page, requestParameters.includeMemberships, requestParameters.includeTotal, requestParameters.other, requestParameters.variant, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Mark user as migrated to Theo
+     * @param {UsersApiUsersMigrateToTheoPostRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof UsersApi
+     */
+    public usersMigrateToTheoPost(requestParameters: UsersApiUsersMigrateToTheoPostRequest, options?: RawAxiosRequestConfig) {
+        return UsersApiFp(this.configuration).usersMigrateToTheoPost(requestParameters.usersMigrateToTheoPostRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

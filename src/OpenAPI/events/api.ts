@@ -12331,6 +12331,12 @@ export interface TeamInsertDataCreator {
      * @memberof TeamInsertDataCreator
      */
     'variant'?: TeamInsertDataCreatorVariantEnum;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof TeamInsertDataCreator
+     */
+    'migratedToTheo'?: boolean;
 }
 
 export const TeamInsertDataCreatorCreatedByMethodEnum = {
@@ -14004,6 +14010,12 @@ export interface UserInsertData {
      * @memberof UserInsertData
      */
     'variant'?: UserInsertDataVariantEnum;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof UserInsertData
+     */
+    'migratedToTheo'?: boolean;
 }
 
 export const UserInsertDataCreatedByMethodEnum = {
@@ -14399,6 +14411,12 @@ export interface UserUpdateData {
      * @memberof UserUpdateData
      */
     'variant'?: UserUpdateDataVariantEnum;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof UserUpdateData
+     */
+    'migratedToTheo'?: boolean;
 }
 
 export const UserUpdateDataCreatedByMethodEnum = {
