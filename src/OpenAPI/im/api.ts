@@ -7236,6 +7236,19 @@ export interface WabaCallPostRequest {
 /**
  * 
  * @export
+ * @interface WabaCallSessionGet200Response
+ */
+export interface WabaCallSessionGet200Response {
+    /**
+     * WebRTC SDP answer from Meta
+     * @type {string}
+     * @memberof WabaCallSessionGet200Response
+     */
+    'sdp': string;
+}
+/**
+ * 
+ * @export
  * @interface WabaDisconnectPost200Response
  */
 export interface WabaDisconnectPost200Response {
@@ -20218,6 +20231,48 @@ export const WABAApiAxiosParamCreator = function (configuration?: Configuration)
             };
         },
         /**
+         * Returns the WebRTC SDP answer Meta sends back via webhook after a call is initiated. Returns 404 until the answer arrives — frontend should poll until it gets a 200.
+         * @summary Poll for SDP answer after initiating a call
+         * @param {string} accountId 
+         * @param {string} callId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        wabaCallSessionGet: async (accountId: string, callId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'accountId' is not null or undefined
+            assertParamExists('wabaCallSessionGet', 'accountId', accountId)
+            // verify required parameter 'callId' is not null or undefined
+            assertParamExists('wabaCallSessionGet', 'callId', callId)
+            const localVarPath = `/waba/call/{accountId}/{callId}/session`
+                .replace(`{${"accountId"}}`, encodeURIComponent(String(accountId)))
+                .replace(`{${"callId"}}`, encodeURIComponent(String(callId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", [], configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * Enables the calling feature on the WABA phone number via Meta\'s settings API. Must be called once before business-initiated calls can be placed.
          * @summary Enable WhatsApp calling on a WABA phone number
          * @param {string} accountId 
@@ -20280,6 +20335,20 @@ export const WABAApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
+         * Returns the WebRTC SDP answer Meta sends back via webhook after a call is initiated. Returns 404 until the answer arrives — frontend should poll until it gets a 200.
+         * @summary Poll for SDP answer after initiating a call
+         * @param {string} accountId 
+         * @param {string} callId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async wabaCallSessionGet(accountId: string, callId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<WabaCallSessionGet200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.wabaCallSessionGet(accountId, callId, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['WABAApi.wabaCallSessionGet']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
          * Enables the calling feature on the WABA phone number via Meta\'s settings API. Must be called once before business-initiated calls can be placed.
          * @summary Enable WhatsApp calling on a WABA phone number
          * @param {string} accountId 
@@ -20311,6 +20380,16 @@ export const WABAApiFactory = function (configuration?: Configuration, basePath?
          */
         wabaCallPost(requestParameters: WABAApiWabaCallPostRequest, options?: RawAxiosRequestConfig): AxiosPromise<WabaCallPost200Response> {
             return localVarFp.wabaCallPost(requestParameters.accountId, requestParameters.wabaCallPostRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Returns the WebRTC SDP answer Meta sends back via webhook after a call is initiated. Returns 404 until the answer arrives — frontend should poll until it gets a 200.
+         * @summary Poll for SDP answer after initiating a call
+         * @param {WABAApiWabaCallSessionGetRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        wabaCallSessionGet(requestParameters: WABAApiWabaCallSessionGetRequest, options?: RawAxiosRequestConfig): AxiosPromise<WabaCallSessionGet200Response> {
+            return localVarFp.wabaCallSessionGet(requestParameters.accountId, requestParameters.callId, options).then((request) => request(axios, basePath));
         },
         /**
          * Enables the calling feature on the WABA phone number via Meta\'s settings API. Must be called once before business-initiated calls can be placed.
@@ -20347,6 +20426,27 @@ export interface WABAApiWabaCallPostRequest {
 }
 
 /**
+ * Request parameters for wabaCallSessionGet operation in WABAApi.
+ * @export
+ * @interface WABAApiWabaCallSessionGetRequest
+ */
+export interface WABAApiWabaCallSessionGetRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof WABAApiWabaCallSessionGet
+     */
+    readonly accountId: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof WABAApiWabaCallSessionGet
+     */
+    readonly callId: string
+}
+
+/**
  * Request parameters for wabaEnableCallingPost operation in WABAApi.
  * @export
  * @interface WABAApiWabaEnableCallingPostRequest
@@ -20377,6 +20477,18 @@ export class WABAApi extends BaseAPI {
      */
     public wabaCallPost(requestParameters: WABAApiWabaCallPostRequest, options?: RawAxiosRequestConfig) {
         return WABAApiFp(this.configuration).wabaCallPost(requestParameters.accountId, requestParameters.wabaCallPostRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Returns the WebRTC SDP answer Meta sends back via webhook after a call is initiated. Returns 404 until the answer arrives — frontend should poll until it gets a 200.
+     * @summary Poll for SDP answer after initiating a call
+     * @param {WABAApiWabaCallSessionGetRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof WABAApi
+     */
+    public wabaCallSessionGet(requestParameters: WABAApiWabaCallSessionGetRequest, options?: RawAxiosRequestConfig) {
+        return WABAApiFp(this.configuration).wabaCallSessionGet(requestParameters.accountId, requestParameters.callId, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
