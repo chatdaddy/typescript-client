@@ -7235,6 +7235,78 @@ export interface WASyncStateInfo {
 /**
  * 
  * @export
+ * @interface WabaCallPermissionRequestPost200Response
+ */
+export interface WabaCallPermissionRequestPost200Response {
+    /**
+     * 
+     * @type {string}
+     * @memberof WabaCallPermissionRequestPost200Response
+     */
+    'messageId': string;
+}
+/**
+ * 
+ * @export
+ * @interface WabaCallPermissionRequestPostRequest
+ */
+export interface WabaCallPermissionRequestPostRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof WabaCallPermissionRequestPostRequest
+     */
+    'chatId': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof WabaCallPermissionRequestPostRequest
+     */
+    'bodyText'?: string;
+}
+/**
+ * 
+ * @export
+ * @interface WabaCallPermissionsGet200Response
+ */
+export interface WabaCallPermissionsGet200Response {
+    /**
+     * 
+     * @type {string}
+     * @memberof WabaCallPermissionsGet200Response
+     */
+    'status': WabaCallPermissionsGet200ResponseStatusEnum;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof WabaCallPermissionsGet200Response
+     */
+    'canCall': boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof WabaCallPermissionsGet200Response
+     */
+    'canRequestPermission': boolean;
+    /**
+     * 
+     * @type {number}
+     * @memberof WabaCallPermissionsGet200Response
+     */
+    'expirationTime'?: number;
+}
+
+export const WabaCallPermissionsGet200ResponseStatusEnum = {
+    NoPermission: 'no_permission',
+    Temporary: 'temporary',
+    Permanent: 'permanent'
+} as const;
+
+export type WabaCallPermissionsGet200ResponseStatusEnum = typeof WabaCallPermissionsGet200ResponseStatusEnum[keyof typeof WabaCallPermissionsGet200ResponseStatusEnum];
+
+/**
+ * 
+ * @export
  * @interface WabaCallPost200Response
  */
 export interface WabaCallPost200Response {
@@ -20307,6 +20379,95 @@ export class TikTokShopApi extends BaseAPI {
 export const WABAApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
+         * 
+         * @summary Send a call permission request to a WhatsApp user
+         * @param {string} accountId 
+         * @param {WabaCallPermissionRequestPostRequest} wabaCallPermissionRequestPostRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        wabaCallPermissionRequestPost: async (accountId: string, wabaCallPermissionRequestPostRequest: WabaCallPermissionRequestPostRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'accountId' is not null or undefined
+            assertParamExists('wabaCallPermissionRequestPost', 'accountId', accountId)
+            // verify required parameter 'wabaCallPermissionRequestPostRequest' is not null or undefined
+            assertParamExists('wabaCallPermissionRequestPost', 'wabaCallPermissionRequestPostRequest', wabaCallPermissionRequestPostRequest)
+            const localVarPath = `/waba/call-permission-request/{accountId}`
+                .replace(`{${"accountId"}}`, encodeURIComponent(String(accountId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", [], configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(wabaCallPermissionRequestPostRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Get call permission state for a WhatsApp user
+         * @param {string} accountId 
+         * @param {string} chatId Phone number or chat ID of the WhatsApp user
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        wabaCallPermissionsGet: async (accountId: string, chatId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'accountId' is not null or undefined
+            assertParamExists('wabaCallPermissionsGet', 'accountId', accountId)
+            // verify required parameter 'chatId' is not null or undefined
+            assertParamExists('wabaCallPermissionsGet', 'chatId', chatId)
+            const localVarPath = `/waba/call-permissions/{accountId}`
+                .replace(`{${"accountId"}}`, encodeURIComponent(String(accountId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", [], configuration)
+
+            if (chatId !== undefined) {
+                localVarQueryParameter['chatId'] = chatId;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * Initiates a business-initiated WhatsApp call to a contact via Meta\'s Cloud API. Requires the calling feature to be enabled on the WABA.
          * @summary Initiate a WhatsApp voice call to a contact
          * @param {string} accountId 
@@ -20441,6 +20602,34 @@ export const WABAApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = WABAApiAxiosParamCreator(configuration)
     return {
         /**
+         * 
+         * @summary Send a call permission request to a WhatsApp user
+         * @param {string} accountId 
+         * @param {WabaCallPermissionRequestPostRequest} wabaCallPermissionRequestPostRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async wabaCallPermissionRequestPost(accountId: string, wabaCallPermissionRequestPostRequest: WabaCallPermissionRequestPostRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<WabaCallPermissionRequestPost200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.wabaCallPermissionRequestPost(accountId, wabaCallPermissionRequestPostRequest, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['WABAApi.wabaCallPermissionRequestPost']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @summary Get call permission state for a WhatsApp user
+         * @param {string} accountId 
+         * @param {string} chatId Phone number or chat ID of the WhatsApp user
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async wabaCallPermissionsGet(accountId: string, chatId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<WabaCallPermissionsGet200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.wabaCallPermissionsGet(accountId, chatId, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['WABAApi.wabaCallPermissionsGet']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
          * Initiates a business-initiated WhatsApp call to a contact via Meta\'s Cloud API. Requires the calling feature to be enabled on the WABA.
          * @summary Initiate a WhatsApp voice call to a contact
          * @param {string} accountId 
@@ -20492,6 +20681,26 @@ export const WABAApiFactory = function (configuration?: Configuration, basePath?
     const localVarFp = WABAApiFp(configuration)
     return {
         /**
+         * 
+         * @summary Send a call permission request to a WhatsApp user
+         * @param {WABAApiWabaCallPermissionRequestPostRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        wabaCallPermissionRequestPost(requestParameters: WABAApiWabaCallPermissionRequestPostRequest, options?: RawAxiosRequestConfig): AxiosPromise<WabaCallPermissionRequestPost200Response> {
+            return localVarFp.wabaCallPermissionRequestPost(requestParameters.accountId, requestParameters.wabaCallPermissionRequestPostRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Get call permission state for a WhatsApp user
+         * @param {WABAApiWabaCallPermissionsGetRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        wabaCallPermissionsGet(requestParameters: WABAApiWabaCallPermissionsGetRequest, options?: RawAxiosRequestConfig): AxiosPromise<WabaCallPermissionsGet200Response> {
+            return localVarFp.wabaCallPermissionsGet(requestParameters.accountId, requestParameters.chatId, options).then((request) => request(axios, basePath));
+        },
+        /**
          * Initiates a business-initiated WhatsApp call to a contact via Meta\'s Cloud API. Requires the calling feature to be enabled on the WABA.
          * @summary Initiate a WhatsApp voice call to a contact
          * @param {WABAApiWabaCallPostRequest} requestParameters Request parameters.
@@ -20523,6 +20732,48 @@ export const WABAApiFactory = function (configuration?: Configuration, basePath?
         },
     };
 };
+
+/**
+ * Request parameters for wabaCallPermissionRequestPost operation in WABAApi.
+ * @export
+ * @interface WABAApiWabaCallPermissionRequestPostRequest
+ */
+export interface WABAApiWabaCallPermissionRequestPostRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof WABAApiWabaCallPermissionRequestPost
+     */
+    readonly accountId: string
+
+    /**
+     * 
+     * @type {WabaCallPermissionRequestPostRequest}
+     * @memberof WABAApiWabaCallPermissionRequestPost
+     */
+    readonly wabaCallPermissionRequestPostRequest: WabaCallPermissionRequestPostRequest
+}
+
+/**
+ * Request parameters for wabaCallPermissionsGet operation in WABAApi.
+ * @export
+ * @interface WABAApiWabaCallPermissionsGetRequest
+ */
+export interface WABAApiWabaCallPermissionsGetRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof WABAApiWabaCallPermissionsGet
+     */
+    readonly accountId: string
+
+    /**
+     * Phone number or chat ID of the WhatsApp user
+     * @type {string}
+     * @memberof WABAApiWabaCallPermissionsGet
+     */
+    readonly chatId: string
+}
 
 /**
  * Request parameters for wabaCallPost operation in WABAApi.
@@ -20587,6 +20838,30 @@ export interface WABAApiWabaEnableCallingPostRequest {
  * @extends {BaseAPI}
  */
 export class WABAApi extends BaseAPI {
+    /**
+     * 
+     * @summary Send a call permission request to a WhatsApp user
+     * @param {WABAApiWabaCallPermissionRequestPostRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof WABAApi
+     */
+    public wabaCallPermissionRequestPost(requestParameters: WABAApiWabaCallPermissionRequestPostRequest, options?: RawAxiosRequestConfig) {
+        return WABAApiFp(this.configuration).wabaCallPermissionRequestPost(requestParameters.accountId, requestParameters.wabaCallPermissionRequestPostRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Get call permission state for a WhatsApp user
+     * @param {WABAApiWabaCallPermissionsGetRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof WABAApi
+     */
+    public wabaCallPermissionsGet(requestParameters: WABAApiWabaCallPermissionsGetRequest, options?: RawAxiosRequestConfig) {
+        return WABAApiFp(this.configuration).wabaCallPermissionsGet(requestParameters.accountId, requestParameters.chatId, options).then((request) => request(this.axios, this.basePath));
+    }
+
     /**
      * Initiates a business-initiated WhatsApp call to a contact via Meta\'s Cloud API. Requires the calling feature to be enabled on the WABA.
      * @summary Initiate a WhatsApp voice call to a contact
