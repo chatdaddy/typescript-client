@@ -7874,6 +7874,7 @@ export const EventName = {
     AiCreditUse: 'ai-credit-use',
     AccountWabaStateUpdate: 'account-waba-state-update',
     ExportContact: 'export-contact',
+    ExportChat: 'export-chat',
     DashboardInsert: 'dashboard-insert',
     DashboardUpdate: 'dashboard-update',
     DashboardDelete: 'dashboard-delete',
@@ -8012,8 +8013,71 @@ export type EventSubscriptionType = typeof EventSubscriptionType[keyof typeof Ev
  * The request body you\'ll receive in a webhook
  * @export
  */
-export type EventWebhookData = AccountDelete | AccountInsert | AccountUpdate | AccountWabaStateUpdate | ActionExecute | ActionSchedule | AiCreditUse | BotDelete | BotInsert | BotUpdate | CallDelete | CallInsert | CallUpdate | CallchannelDelete | CallchannelInsert | CallchannelUpdate | CampaignInsert | ChatDelete | ChatInsert | ChatUpdate | ChatbotInsert | ContactDelete | ContactInsert | ContactUpdate | CredittransactionrecordInsert | CrmTicketDelete | CrmTicketInsert | CrmTicketUpdate | CustomerCreditsLevelUpdate | DashboardDelete | DashboardInsert | DashboardUpdate | ExportContact | FewMessagesLeft | GroupUpdate | KeywordbasedactionInsert | MessageDelete | MessageInsert | MessageUpdate | OrderInsert | PaymentintegrationInsert | PlatformproductDelete | PlatformproductInsert | PlatformproductUpdate | PresenceUpdate | PushNotification | ShopproductInsert | StaleAccountNotification | TagDelete | TagInsert | TagUpdate | TeamDelete | TeamInsert | TeamUpdate | TeammemberDelete | TeammemberInsert | TeammemberLogout | TeammemberUpdate | TrackingDelete | TrackingInsert | TrackingUpdate | UserDelete | UserInsert | UserUpdate;
+export type EventWebhookData = AccountDelete | AccountInsert | AccountUpdate | AccountWabaStateUpdate | ActionExecute | ActionSchedule | AiCreditUse | BotDelete | BotInsert | BotUpdate | CallDelete | CallInsert | CallUpdate | CallchannelDelete | CallchannelInsert | CallchannelUpdate | CampaignInsert | ChatDelete | ChatInsert | ChatUpdate | ChatbotInsert | ContactDelete | ContactInsert | ContactUpdate | CredittransactionrecordInsert | CrmTicketDelete | CrmTicketInsert | CrmTicketUpdate | CustomerCreditsLevelUpdate | DashboardDelete | DashboardInsert | DashboardUpdate | ExportChat | ExportContact | FewMessagesLeft | GroupUpdate | KeywordbasedactionInsert | MessageDelete | MessageInsert | MessageUpdate | OrderInsert | PaymentintegrationInsert | PlatformproductDelete | PlatformproductInsert | PlatformproductUpdate | PresenceUpdate | PushNotification | ShopproductInsert | StaleAccountNotification | TagDelete | TagInsert | TagUpdate | TeamDelete | TeamInsert | TeamUpdate | TeammemberDelete | TeammemberInsert | TeammemberLogout | TeammemberUpdate | TrackingDelete | TrackingInsert | TrackingUpdate | UserDelete | UserInsert | UserUpdate;
 
+/**
+ * 
+ * @export
+ * @interface ExportChat
+ */
+export interface ExportChat {
+    /**
+     * 
+     * @type {string}
+     * @memberof ExportChat
+     */
+    'event': ExportChatEventEnum;
+    /**
+     * 
+     * @type {Array<ExportChatData>}
+     * @memberof ExportChat
+     */
+    'data': Array<ExportChatData>;
+}
+
+export const ExportChatEventEnum = {
+    ExportChat: 'export-chat'
+} as const;
+
+export type ExportChatEventEnum = typeof ExportChatEventEnum[keyof typeof ExportChatEventEnum];
+
+/**
+ * Published when a team exports chat history in bulk. The payments service listens for this event and deducts the agreed credits from the team\'s balance.
+ * @export
+ * @interface ExportChatData
+ */
+export interface ExportChatData {
+    /**
+     * Unique export ID for idempotency (e.g. `chat_export_<timestamp>_<random>`)
+     * @type {string}
+     * @memberof ExportChatData
+     */
+    'id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ExportChatData
+     */
+    'teamId': string;
+    /**
+     * Number of contacts whose chat history was exported
+     * @type {number}
+     * @memberof ExportChatData
+     */
+    'contactCount': number;
+    /**
+     * Credits to deduct for this export (positive integer). Frontend determines this based on the chosen tier (17273 for Standard ≤10 chats, 453636 for Full ≤500 chats). Server enforces tier ladder.
+     * @type {number}
+     * @memberof ExportChatData
+     */
+    'costInCredits': number;
+    /**
+     * User ID who triggered the export
+     * @type {string}
+     * @memberof ExportChatData
+     */
+    'exportedBy'?: string;
+}
 /**
  * 
  * @export

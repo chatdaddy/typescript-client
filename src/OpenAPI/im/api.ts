@@ -1895,6 +1895,31 @@ export interface ChatPresence {
 /**
  * 
  * @export
+ * @interface ChatsExportReportRequest
+ */
+export interface ChatsExportReportRequest {
+    /**
+     * Unique export ID for idempotency
+     * @type {string}
+     * @memberof ChatsExportReportRequest
+     */
+    'id': string;
+    /**
+     * Number of contacts whose chats were exported
+     * @type {number}
+     * @memberof ChatsExportReportRequest
+     */
+    'contactCount': number;
+    /**
+     * Credits to deduct (positive integer).
+     * @type {number}
+     * @memberof ChatsExportReportRequest
+     */
+    'costInCredits': number;
+}
+/**
+ * 
+ * @export
  * @interface ChatsGet200Response
  */
 export interface ChatsGet200Response {
@@ -11195,6 +11220,46 @@ export const ChatsApiAxiosParamCreator = function (configuration?: Configuration
     return {
         /**
          * 
+         * @summary Report a completed bulk chat-history export. Publishes the `export-chat` event so the payments service can deduct the agreed credits from the team\'s balance. Should be called by the dashboard after a successful client-side export. Idempotent on `id`.
+         * @param {ChatsExportReportRequest} chatsExportReportRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        chatsExportReport: async (chatsExportReportRequest: ChatsExportReportRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'chatsExportReportRequest' is not null or undefined
+            assertParamExists('chatsExportReport', 'chatsExportReportRequest', chatsExportReportRequest)
+            const localVarPath = `/chats/export-report`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["CHATS_ACCESS_ALL"], configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(chatsExportReportRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
          * @summary Get chats
          * @param {number} [count] Number of items to return
          * @param {string} [page] 
@@ -11693,6 +11758,19 @@ export const ChatsApiFp = function(configuration?: Configuration) {
     return {
         /**
          * 
+         * @summary Report a completed bulk chat-history export. Publishes the `export-chat` event so the payments service can deduct the agreed credits from the team\'s balance. Should be called by the dashboard after a successful client-side export. Idempotent on `id`.
+         * @param {ChatsExportReportRequest} chatsExportReportRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async chatsExportReport(chatsExportReportRequest: ChatsExportReportRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AccountsDelete200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.chatsExportReport(chatsExportReportRequest, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['ChatsApi.chatsExportReport']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
          * @summary Get chats
          * @param {number} [count] Number of items to return
          * @param {string} [page] 
@@ -11840,6 +11918,16 @@ export const ChatsApiFactory = function (configuration?: Configuration, basePath
     return {
         /**
          * 
+         * @summary Report a completed bulk chat-history export. Publishes the `export-chat` event so the payments service can deduct the agreed credits from the team\'s balance. Should be called by the dashboard after a successful client-side export. Idempotent on `id`.
+         * @param {ChatsApiChatsExportReportRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        chatsExportReport(requestParameters: ChatsApiChatsExportReportRequest, options?: RawAxiosRequestConfig): AxiosPromise<AccountsDelete200Response> {
+            return localVarFp.chatsExportReport(requestParameters.chatsExportReportRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
          * @summary Get chats
          * @param {ChatsApiChatsGetRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -11920,6 +12008,20 @@ export const ChatsApiFactory = function (configuration?: Configuration, basePath
         },
     };
 };
+
+/**
+ * Request parameters for chatsExportReport operation in ChatsApi.
+ * @export
+ * @interface ChatsApiChatsExportReportRequest
+ */
+export interface ChatsApiChatsExportReportRequest {
+    /**
+     * 
+     * @type {ChatsExportReportRequest}
+     * @memberof ChatsApiChatsExportReport
+     */
+    readonly chatsExportReportRequest: ChatsExportReportRequest
+}
 
 /**
  * Request parameters for chatsGet operation in ChatsApi.
@@ -12271,6 +12373,18 @@ export interface ChatsApiSaveDailyChannelSnapshotRequest {
  * @extends {BaseAPI}
  */
 export class ChatsApi extends BaseAPI {
+    /**
+     * 
+     * @summary Report a completed bulk chat-history export. Publishes the `export-chat` event so the payments service can deduct the agreed credits from the team\'s balance. Should be called by the dashboard after a successful client-side export. Idempotent on `id`.
+     * @param {ChatsApiChatsExportReportRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ChatsApi
+     */
+    public chatsExportReport(requestParameters: ChatsApiChatsExportReportRequest, options?: RawAxiosRequestConfig) {
+        return ChatsApiFp(this.configuration).chatsExportReport(requestParameters.chatsExportReportRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
     /**
      * 
      * @summary Get chats

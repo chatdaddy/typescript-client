@@ -1274,7 +1274,8 @@ export const CreditConsumptionType = {
     ActiveChat: 'active_chat',
     AiCreditUse: 'ai_credit_use',
     AiTranscription: 'ai_transcription',
-    ExportContacts: 'export_contacts'
+    ExportContacts: 'export_contacts',
+    ExportChats: 'export_chats'
 } as const;
 
 export type CreditConsumptionType = typeof CreditConsumptionType[keyof typeof CreditConsumptionType];
