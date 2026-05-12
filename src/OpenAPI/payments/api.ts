@@ -465,6 +465,12 @@ export interface BillingSummaryGet200ResponseBilling {
      * @memberof BillingSummaryGet200ResponseBilling
      */
     'paidCreditsAvailable'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof BillingSummaryGet200ResponseBilling
+     */
+    'callCreditsAvailable'?: number;
 }
 /**
  * 
@@ -689,6 +695,106 @@ export interface BillingSummaryGet200ResponseUsageTeammates {
      * @memberof BillingSummaryGet200ResponseUsageTeammates
      */
     'limit'?: number;
+}
+/**
+ * 
+ * @export
+ * @interface CallCreditsGrant200Response
+ */
+export interface CallCreditsGrant200Response {
+    /**
+     * 
+     * @type {string}
+     * @memberof CallCreditsGrant200Response
+     */
+    'customerId': string;
+    /**
+     * 
+     * @type {number}
+     * @memberof CallCreditsGrant200Response
+     */
+    'callCreditsAvailable': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof CallCreditsGrant200Response
+     */
+    'granted': number;
+}
+/**
+ * 
+ * @export
+ * @interface CallCreditsGrantRequest
+ */
+export interface CallCreditsGrantRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof CallCreditsGrantRequest
+     */
+    'customerId': string;
+    /**
+     * Credits to add (positive). Use the dedicated wallet endpoint, not unitsAvailable.
+     * @type {number}
+     * @memberof CallCreditsGrantRequest
+     */
+    'units': number;
+}
+/**
+ * 
+ * @export
+ * @interface CanMakeCallRequest
+ */
+export interface CanMakeCallRequest {
+    /**
+     * E.164 phone number (without leading +) of the callee.
+     * @type {string}
+     * @memberof CanMakeCallRequest
+     */
+    'destinationPhoneNumber': string;
+    /**
+     * Minimum minutes the call wallet must cover for the gate to pass. Defaults to 1.
+     * @type {number}
+     * @memberof CanMakeCallRequest
+     */
+    'minMinutes'?: number;
+}
+/**
+ * 
+ * @export
+ * @interface CanMakeCallResponse
+ */
+export interface CanMakeCallResponse {
+    /**
+     * 
+     * @type {boolean}
+     * @memberof CanMakeCallResponse
+     */
+    'allowed': boolean;
+    /**
+     * Current callCreditsAvailable balance.
+     * @type {number}
+     * @memberof CanMakeCallResponse
+     */
+    'balance': number;
+    /**
+     * Region-specific per-minute cost in credits for the destination.
+     * @type {number}
+     * @memberof CanMakeCallResponse
+     */
+    'perMinuteCost': number;
+    /**
+     * Total credits required to cover `minMinutes` at the per-minute rate.
+     * @type {number}
+     * @memberof CanMakeCallResponse
+     */
+    'minCostRequired': number;
+    /**
+     * ISO 3166-1 alpha-2 country code resolved for the destination.
+     * @type {string}
+     * @memberof CanMakeCallResponse
+     */
+    'region'?: string;
 }
 /**
  * 
@@ -1444,6 +1550,12 @@ export interface CreditCustomer {
      * @memberof CreditCustomer
      */
     'messengerMessageCreditsAvailable'?: number;
+    /**
+     * Dedicated wallet for voice-call per-minute consumption. Calls are blocked when this hits zero — does not fall back to general credits. Plan-agnostic.
+     * @type {number}
+     * @memberof CreditCustomer
+     */
+    'callCreditsAvailable'?: number;
     /**
      * 
      * @type {PlanId}
@@ -2903,7 +3015,9 @@ export const NotificationPreferenceCategoryEnum = {
 export type NotificationPreferenceCategoryEnum = typeof NotificationPreferenceCategoryEnum[keyof typeof NotificationPreferenceCategoryEnum];
 export const NotificationPreferenceKeyEnum = {
     Subscribed: 'subscribed',
-    Unsubscribed: 'unsubscribed'
+    Unsubscribed: 'unsubscribed',
+    CallCreditsSubscribed: 'call_credits_subscribed',
+    CallCreditsUnsubscribed: 'call_credits_unsubscribed'
 } as const;
 
 export type NotificationPreferenceKeyEnum = typeof NotificationPreferenceKeyEnum[keyof typeof NotificationPreferenceKeyEnum];
@@ -6042,6 +6156,46 @@ export const CreditsApiAxiosParamCreator = function (configuration?: Configurati
         },
         /**
          * 
+         * @summary Admin-only — manually grant call credits to a customer. Bypasses Stripe. Used for trial/seed credits, support compensation, or manual reconciliation. Requires ADMIN_PANEL_ACCESS scope (internal admins only — partner admins are not authorized).
+         * @param {CallCreditsGrantRequest} callCreditsGrantRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        callCreditsGrant: async (callCreditsGrantRequest: CallCreditsGrantRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'callCreditsGrantRequest' is not null or undefined
+            assertParamExists('callCreditsGrant', 'callCreditsGrantRequest', callCreditsGrantRequest)
+            const localVarPath = `/v2/credits/call-credits-grant`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["ADMIN_PANEL_ACCESS"], configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(callCreditsGrantRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
          * @summary Check if the team can consume the given quantity of credits
          * @param {CreditConsumptionType} type The type of consumption
          * @param {number} quantity The number of times to consume the given type
@@ -6133,6 +6287,46 @@ export const CreditsApiAxiosParamCreator = function (configuration?: Configurati
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Pre-call balance gate. Checks whether the team\'s dedicated call credits wallet can cover at least `minMinutes` of a voice call to the given destination. Returns 402 if insufficient.
+         * @param {CanMakeCallRequest} canMakeCallRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        canMakeCall: async (canMakeCallRequest: CanMakeCallRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'canMakeCallRequest' is not null or undefined
+            assertParamExists('canMakeCall', 'canMakeCallRequest', canMakeCallRequest)
+            const localVarPath = `/v2/credits/can-make-call`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", [], configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(canMakeCallRequest, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -7242,6 +7436,19 @@ export const CreditsApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
+         * @summary Admin-only — manually grant call credits to a customer. Bypasses Stripe. Used for trial/seed credits, support compensation, or manual reconciliation. Requires ADMIN_PANEL_ACCESS scope (internal admins only — partner admins are not authorized).
+         * @param {CallCreditsGrantRequest} callCreditsGrantRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async callCreditsGrant(callCreditsGrantRequest: CallCreditsGrantRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CallCreditsGrant200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.callCreditsGrant(callCreditsGrantRequest, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['CreditsApi.callCreditsGrant']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
          * @summary Check if the team can consume the given quantity of credits
          * @param {CreditConsumptionType} type The type of consumption
          * @param {number} quantity The number of times to consume the given type
@@ -7267,6 +7474,19 @@ export const CreditsApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.canConsumeRecurringCredits(type, legacyOpts, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['CreditsApi.canConsumeRecurringCredits']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @summary Pre-call balance gate. Checks whether the team\'s dedicated call credits wallet can cover at least `minMinutes` of a voice call to the given destination. Returns 402 if insufficient.
+         * @param {CanMakeCallRequest} canMakeCallRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async canMakeCall(canMakeCallRequest: CanMakeCallRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CanMakeCallResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.canMakeCall(canMakeCallRequest, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['CreditsApi.canMakeCall']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -7656,6 +7876,16 @@ export const CreditsApiFactory = function (configuration?: Configuration, basePa
         },
         /**
          * 
+         * @summary Admin-only — manually grant call credits to a customer. Bypasses Stripe. Used for trial/seed credits, support compensation, or manual reconciliation. Requires ADMIN_PANEL_ACCESS scope (internal admins only — partner admins are not authorized).
+         * @param {CreditsApiCallCreditsGrantRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        callCreditsGrant(requestParameters: CreditsApiCallCreditsGrantRequest, options?: RawAxiosRequestConfig): AxiosPromise<CallCreditsGrant200Response> {
+            return localVarFp.callCreditsGrant(requestParameters.callCreditsGrantRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
          * @summary Check if the team can consume the given quantity of credits
          * @param {CreditsApiCanConsumeCreditsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -7673,6 +7903,16 @@ export const CreditsApiFactory = function (configuration?: Configuration, basePa
          */
         canConsumeRecurringCredits(requestParameters: CreditsApiCanConsumeRecurringCreditsRequest, options?: RawAxiosRequestConfig): AxiosPromise<CreditCanConsumeResponse> {
             return localVarFp.canConsumeRecurringCredits(requestParameters.type, requestParameters.legacyOpts, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Pre-call balance gate. Checks whether the team\'s dedicated call credits wallet can cover at least `minMinutes` of a voice call to the given destination. Returns 402 if insufficient.
+         * @param {CreditsApiCanMakeCallRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        canMakeCall(requestParameters: CreditsApiCanMakeCallRequest, options?: RawAxiosRequestConfig): AxiosPromise<CanMakeCallResponse> {
+            return localVarFp.canMakeCall(requestParameters.canMakeCallRequest, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -7937,6 +8177,20 @@ export interface CreditsApiAutoRenewalPostRequest {
 }
 
 /**
+ * Request parameters for callCreditsGrant operation in CreditsApi.
+ * @export
+ * @interface CreditsApiCallCreditsGrantRequest
+ */
+export interface CreditsApiCallCreditsGrantRequest {
+    /**
+     * 
+     * @type {CallCreditsGrantRequest}
+     * @memberof CreditsApiCallCreditsGrant
+     */
+    readonly callCreditsGrantRequest: CallCreditsGrantRequest
+}
+
+/**
  * Request parameters for canConsumeCredits operation in CreditsApi.
  * @export
  * @interface CreditsApiCanConsumeCreditsRequest
@@ -7983,6 +8237,20 @@ export interface CreditsApiCanConsumeRecurringCreditsRequest {
      * @memberof CreditsApiCanConsumeRecurringCredits
      */
     readonly legacyOpts?: LegacyCanConsumeOpts
+}
+
+/**
+ * Request parameters for canMakeCall operation in CreditsApi.
+ * @export
+ * @interface CreditsApiCanMakeCallRequest
+ */
+export interface CreditsApiCanMakeCallRequest {
+    /**
+     * 
+     * @type {CanMakeCallRequest}
+     * @memberof CreditsApiCanMakeCall
+     */
+    readonly canMakeCallRequest: CanMakeCallRequest
 }
 
 /**
@@ -8574,6 +8842,18 @@ export class CreditsApi extends BaseAPI {
 
     /**
      * 
+     * @summary Admin-only — manually grant call credits to a customer. Bypasses Stripe. Used for trial/seed credits, support compensation, or manual reconciliation. Requires ADMIN_PANEL_ACCESS scope (internal admins only — partner admins are not authorized).
+     * @param {CreditsApiCallCreditsGrantRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CreditsApi
+     */
+    public callCreditsGrant(requestParameters: CreditsApiCallCreditsGrantRequest, options?: RawAxiosRequestConfig) {
+        return CreditsApiFp(this.configuration).callCreditsGrant(requestParameters.callCreditsGrantRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
      * @summary Check if the team can consume the given quantity of credits
      * @param {CreditsApiCanConsumeCreditsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -8594,6 +8874,18 @@ export class CreditsApi extends BaseAPI {
      */
     public canConsumeRecurringCredits(requestParameters: CreditsApiCanConsumeRecurringCreditsRequest, options?: RawAxiosRequestConfig) {
         return CreditsApiFp(this.configuration).canConsumeRecurringCredits(requestParameters.type, requestParameters.legacyOpts, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Pre-call balance gate. Checks whether the team\'s dedicated call credits wallet can cover at least `minMinutes` of a voice call to the given destination. Returns 402 if insufficient.
+     * @param {CreditsApiCanMakeCallRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CreditsApi
+     */
+    public canMakeCall(requestParameters: CreditsApiCanMakeCallRequest, options?: RawAxiosRequestConfig) {
+        return CreditsApiFp(this.configuration).canMakeCall(requestParameters.canMakeCallRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
