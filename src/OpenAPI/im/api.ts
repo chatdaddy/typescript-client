@@ -7418,42 +7418,36 @@ export interface WabaIncomingCallGet200Response {
      * @type {WabaIncomingCallGet200ResponseCall}
      * @memberof WabaIncomingCallGet200Response
      */
-    'call': WabaIncomingCallGet200ResponseCall;
+    'call': WabaIncomingCallGet200ResponseCall | null;
 }
-/**
- * @type WabaIncomingCallGet200ResponseCall
- * @export
- */
-export type WabaIncomingCallGet200ResponseCall = WabaIncomingCallGet200ResponseCallOneOf;
-
 /**
  * 
  * @export
- * @interface WabaIncomingCallGet200ResponseCallOneOf
+ * @interface WabaIncomingCallGet200ResponseCall
  */
-export interface WabaIncomingCallGet200ResponseCallOneOf {
+export interface WabaIncomingCallGet200ResponseCall {
     /**
      * 
      * @type {string}
-     * @memberof WabaIncomingCallGet200ResponseCallOneOf
+     * @memberof WabaIncomingCallGet200ResponseCall
      */
     'callId': string;
     /**
      * 
      * @type {string}
-     * @memberof WabaIncomingCallGet200ResponseCallOneOf
+     * @memberof WabaIncomingCallGet200ResponseCall
      */
     'fromPhone': string;
     /**
      * 
      * @type {string}
-     * @memberof WabaIncomingCallGet200ResponseCallOneOf
+     * @memberof WabaIncomingCallGet200ResponseCall
      */
     'sdpOffer': string;
     /**
      * 
      * @type {number}
-     * @memberof WabaIncomingCallGet200ResponseCallOneOf
+     * @memberof WabaIncomingCallGet200ResponseCall
      */
     'timestamp': number;
 }
