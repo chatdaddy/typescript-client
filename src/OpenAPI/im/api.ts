@@ -7378,25 +7378,6 @@ export interface WabaDisconnectPostRequest {
 /**
  * 
  * @export
- * @interface WabaIncomingCallClaimPost200Response
- */
-export interface WabaIncomingCallClaimPost200Response {
-    /**
-     * 
-     * @type {boolean}
-     * @memberof WabaIncomingCallClaimPost200Response
-     */
-    'success': boolean;
-    /**
-     * 
-     * @type {string}
-     * @memberof WabaIncomingCallClaimPost200Response
-     */
-    'fromPhone': string;
-}
-/**
- * 
- * @export
  * @interface WabaIncomingCallClaimPostRequest
  */
 export interface WabaIncomingCallClaimPostRequest {
@@ -20855,7 +20836,7 @@ export const WABAApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async wabaIncomingCallClaimPost(accountId: string, callId: string, wabaIncomingCallClaimPostRequest: WabaIncomingCallClaimPostRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<WabaIncomingCallClaimPost200Response>> {
+        async wabaIncomingCallClaimPost(accountId: string, callId: string, wabaIncomingCallClaimPostRequest: WabaIncomingCallClaimPostRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AccountsDelete200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.wabaIncomingCallClaimPost(accountId, callId, wabaIncomingCallClaimPostRequest, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['WABAApi.wabaIncomingCallClaimPost']?.[localVarOperationServerIndex]?.url;
@@ -20941,7 +20922,7 @@ export const WABAApiFactory = function (configuration?: Configuration, basePath?
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        wabaIncomingCallClaimPost(requestParameters: WABAApiWabaIncomingCallClaimPostRequest, options?: RawAxiosRequestConfig): AxiosPromise<WabaIncomingCallClaimPost200Response> {
+        wabaIncomingCallClaimPost(requestParameters: WABAApiWabaIncomingCallClaimPostRequest, options?: RawAxiosRequestConfig): AxiosPromise<AccountsDelete200Response> {
             return localVarFp.wabaIncomingCallClaimPost(requestParameters.accountId, requestParameters.callId, requestParameters.wabaIncomingCallClaimPostRequest, options).then((request) => request(axios, basePath));
         },
         /**
