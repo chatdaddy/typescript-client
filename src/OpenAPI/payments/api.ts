@@ -743,6 +743,25 @@ export interface CallCreditsGrantRequest {
 /**
  * 
  * @export
+ * @interface CallCreditsTopUpPostRequest
+ */
+export interface CallCreditsTopUpPostRequest {
+    /**
+     * Call credits to purchase (1 USD = 1,000 credits).
+     * @type {number}
+     * @memberof CallCreditsTopUpPostRequest
+     */
+    'units': number;
+    /**
+     * 
+     * @type {MiscBillingOptions}
+     * @memberof CallCreditsTopUpPostRequest
+     */
+    'options'?: MiscBillingOptions;
+}
+/**
+ * 
+ * @export
  * @interface CanMakeCallRequest
  */
 export interface CanMakeCallRequest {
@@ -6196,6 +6215,46 @@ export const CreditsApiAxiosParamCreator = function (configuration?: Configurati
         },
         /**
          * 
+         * @summary Top up the dedicated call credits wallet. Creates a Stripe one-time invoice tagged so the webhook routes payment into callCreditsAvailable instead of the general balance. Minimum 10,000 credits (~$10 USD).
+         * @param {CallCreditsTopUpPostRequest} callCreditsTopUpPostRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        callCreditsTopUpPost: async (callCreditsTopUpPostRequest: CallCreditsTopUpPostRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'callCreditsTopUpPostRequest' is not null or undefined
+            assertParamExists('callCreditsTopUpPost', 'callCreditsTopUpPostRequest', callCreditsTopUpPostRequest)
+            const localVarPath = `/v2/credits/call-credits-topup`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["PAYMENTS_UPDATE"], configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(callCreditsTopUpPostRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
          * @summary Check if the team can consume the given quantity of credits
          * @param {CreditConsumptionType} type The type of consumption
          * @param {number} quantity The number of times to consume the given type
@@ -7449,6 +7508,19 @@ export const CreditsApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
+         * @summary Top up the dedicated call credits wallet. Creates a Stripe one-time invoice tagged so the webhook routes payment into callCreditsAvailable instead of the general balance. Minimum 10,000 credits (~$10 USD).
+         * @param {CallCreditsTopUpPostRequest} callCreditsTopUpPostRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async callCreditsTopUpPost(callCreditsTopUpPostRequest: CallCreditsTopUpPostRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PaymentRequest>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.callCreditsTopUpPost(callCreditsTopUpPostRequest, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['CreditsApi.callCreditsTopUpPost']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
          * @summary Check if the team can consume the given quantity of credits
          * @param {CreditConsumptionType} type The type of consumption
          * @param {number} quantity The number of times to consume the given type
@@ -7886,6 +7958,16 @@ export const CreditsApiFactory = function (configuration?: Configuration, basePa
         },
         /**
          * 
+         * @summary Top up the dedicated call credits wallet. Creates a Stripe one-time invoice tagged so the webhook routes payment into callCreditsAvailable instead of the general balance. Minimum 10,000 credits (~$10 USD).
+         * @param {CreditsApiCallCreditsTopUpPostRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        callCreditsTopUpPost(requestParameters: CreditsApiCallCreditsTopUpPostRequest, options?: RawAxiosRequestConfig): AxiosPromise<PaymentRequest> {
+            return localVarFp.callCreditsTopUpPost(requestParameters.callCreditsTopUpPostRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
          * @summary Check if the team can consume the given quantity of credits
          * @param {CreditsApiCanConsumeCreditsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -8188,6 +8270,20 @@ export interface CreditsApiCallCreditsGrantRequest {
      * @memberof CreditsApiCallCreditsGrant
      */
     readonly callCreditsGrantRequest: CallCreditsGrantRequest
+}
+
+/**
+ * Request parameters for callCreditsTopUpPost operation in CreditsApi.
+ * @export
+ * @interface CreditsApiCallCreditsTopUpPostRequest
+ */
+export interface CreditsApiCallCreditsTopUpPostRequest {
+    /**
+     * 
+     * @type {CallCreditsTopUpPostRequest}
+     * @memberof CreditsApiCallCreditsTopUpPost
+     */
+    readonly callCreditsTopUpPostRequest: CallCreditsTopUpPostRequest
 }
 
 /**
@@ -8850,6 +8946,18 @@ export class CreditsApi extends BaseAPI {
      */
     public callCreditsGrant(requestParameters: CreditsApiCallCreditsGrantRequest, options?: RawAxiosRequestConfig) {
         return CreditsApiFp(this.configuration).callCreditsGrant(requestParameters.callCreditsGrantRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Top up the dedicated call credits wallet. Creates a Stripe one-time invoice tagged so the webhook routes payment into callCreditsAvailable instead of the general balance. Minimum 10,000 credits (~$10 USD).
+     * @param {CreditsApiCallCreditsTopUpPostRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CreditsApi
+     */
+    public callCreditsTopUpPost(requestParameters: CreditsApiCallCreditsTopUpPostRequest, options?: RawAxiosRequestConfig) {
+        return CreditsApiFp(this.configuration).callCreditsTopUpPost(requestParameters.callCreditsTopUpPostRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
