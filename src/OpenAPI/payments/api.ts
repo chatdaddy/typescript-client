@@ -1752,10 +1752,10 @@ export interface CreditGain {
     'doneBy': string;
     /**
      * 
-     * @type {{ [key: string]: any; }}
+     * @type {CreditGainMetadata}
      * @memberof CreditGain
      */
-    'metadata'?: { [key: string]: any; };
+    'metadata'?: CreditGainMetadata | null;
     /**
      * 
      * @type {StripeMetadata}
@@ -1791,11 +1791,63 @@ export interface CreditGainCreate {
     'units': number;
     /**
      * 
-     * @type {{ [key: string]: any; }}
+     * @type {CreditGainMetadata}
      * @memberof CreditGainCreate
      */
-    'metadata'?: { [key: string]: any; };
+    'metadata'?: CreditGainMetadata | null;
 }
+/**
+ * Free-form metadata stored with a credit gain.
+ * @export
+ * @interface CreditGainMetadata
+ */
+export interface CreditGainMetadata {
+    [key: string]: any;
+
+    /**
+     * 
+     * @type {CreditGainReason}
+     * @memberof CreditGainMetadata
+     */
+    'reason'?: CreditGainReason;
+    /**
+     * Admin-entered note explaining the bonus credit grant. Required when `reason` is `other`.
+     * @type {string}
+     * @memberof CreditGainMetadata
+     */
+    'comment'?: string;
+}
+
+
+/**
+ * 
+ * @export
+ * @interface CreditGainPatch
+ */
+export interface CreditGainPatch {
+    /**
+     * 
+     * @type {CreditGainMetadata}
+     * @memberof CreditGainPatch
+     */
+    'metadata': CreditGainMetadata | null;
+}
+/**
+ * Structured reason for a bonus credit grant. `other` requires a free-text `comment` to be supplied alongside.
+ * @export
+ * @enum {string}
+ */
+
+export const CreditGainReason = {
+    CreditRefund: 'credit_refund',
+    AdminTopUp: 'admin_top_up',
+    PaidOffline: 'paid_offline',
+    Other: 'other'
+} as const;
+
+export type CreditGainReason = typeof CreditGainReason[keyof typeof CreditGainReason];
+
+
 /**
  * 
  * @export
@@ -6631,6 +6683,48 @@ export const CreditsApiAxiosParamCreator = function (configuration?: Configurati
         },
         /**
          * 
+         * @summary Update an existing credit gain\'s metadata (admin only)
+         * @param {string} id 
+         * @param {CreditGainPatch} [creditGainPatch] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        creditGainsPatch: async (id: string, creditGainPatch?: CreditGainPatch, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('creditGainsPatch', 'id', id)
+            const localVarPath = `/v2/credits/gains/{id}`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PATCH', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["ADMIN_PANEL_ACCESS"], configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(creditGainPatch, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
          * @summary Create a new credit gain
          * @param {CreditGainCreate} [creditGainCreate] 
          * @param {*} [options] Override http request option.
@@ -7636,6 +7730,20 @@ export const CreditsApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
+         * @summary Update an existing credit gain\'s metadata (admin only)
+         * @param {string} id 
+         * @param {CreditGainPatch} [creditGainPatch] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async creditGainsPatch(id: string, creditGainPatch?: CreditGainPatch, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CreditGain>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.creditGainsPatch(id, creditGainPatch, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['CreditsApi.creditGainsPatch']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
          * @summary Create a new credit gain
          * @param {CreditGainCreate} [creditGainCreate] 
          * @param {*} [options] Override http request option.
@@ -8045,6 +8153,16 @@ export const CreditsApiFactory = function (configuration?: Configuration, basePa
          */
         creditGainsGet(requestParameters: CreditsApiCreditGainsGetRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<CreditGainsGet200Response> {
             return localVarFp.creditGainsGet(requestParameters.customerId, requestParameters.count, requestParameters.cursor, requestParameters.type, requestParameters.createdAt, requestParameters.status, requestParameters.returnTotal, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Update an existing credit gain\'s metadata (admin only)
+         * @param {CreditsApiCreditGainsPatchRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        creditGainsPatch(requestParameters: CreditsApiCreditGainsPatchRequest, options?: RawAxiosRequestConfig): AxiosPromise<CreditGain> {
+            return localVarFp.creditGainsPatch(requestParameters.id, requestParameters.creditGainPatch, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -8473,6 +8591,27 @@ export interface CreditsApiCreditGainsGetRequest {
      * @memberof CreditsApiCreditGainsGet
      */
     readonly returnTotal?: boolean
+}
+
+/**
+ * Request parameters for creditGainsPatch operation in CreditsApi.
+ * @export
+ * @interface CreditsApiCreditGainsPatchRequest
+ */
+export interface CreditsApiCreditGainsPatchRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof CreditsApiCreditGainsPatch
+     */
+    readonly id: string
+
+    /**
+     * 
+     * @type {CreditGainPatch}
+     * @memberof CreditsApiCreditGainsPatch
+     */
+    readonly creditGainPatch?: CreditGainPatch
 }
 
 /**
@@ -9054,6 +9193,18 @@ export class CreditsApi extends BaseAPI {
      */
     public creditGainsGet(requestParameters: CreditsApiCreditGainsGetRequest = {}, options?: RawAxiosRequestConfig) {
         return CreditsApiFp(this.configuration).creditGainsGet(requestParameters.customerId, requestParameters.count, requestParameters.cursor, requestParameters.type, requestParameters.createdAt, requestParameters.status, requestParameters.returnTotal, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Update an existing credit gain\'s metadata (admin only)
+     * @param {CreditsApiCreditGainsPatchRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CreditsApi
+     */
+    public creditGainsPatch(requestParameters: CreditsApiCreditGainsPatchRequest, options?: RawAxiosRequestConfig) {
+        return CreditsApiFp(this.configuration).creditGainsPatch(requestParameters.id, requestParameters.creditGainPatch, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
