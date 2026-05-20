@@ -755,6 +755,70 @@ export interface AccountsGet200Response {
     'total'?: number;
 }
 /**
+ * 
+ * @export
+ * @interface AccountsHealthCheckDueGet200Response
+ */
+export interface AccountsHealthCheckDueGet200Response {
+    /**
+     * 
+     * @type {Array<AccountsHealthCheckDueGet200ResponseAccountsInner>}
+     * @memberof AccountsHealthCheckDueGet200Response
+     */
+    'accounts': Array<AccountsHealthCheckDueGet200ResponseAccountsInner>;
+    /**
+     * 
+     * @type {string}
+     * @memberof AccountsHealthCheckDueGet200Response
+     */
+    'nextCursor'?: string | null;
+}
+/**
+ * 
+ * @export
+ * @interface AccountsHealthCheckDueGet200ResponseAccountsInner
+ */
+export interface AccountsHealthCheckDueGet200ResponseAccountsInner {
+    /**
+     * 
+     * @type {string}
+     * @memberof AccountsHealthCheckDueGet200ResponseAccountsInner
+     */
+    'accountId': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof AccountsHealthCheckDueGet200ResponseAccountsInner
+     */
+    'teamId': string;
+    /**
+     * 
+     * @type {AccountType}
+     * @memberof AccountsHealthCheckDueGet200ResponseAccountsInner
+     */
+    'type': AccountType;
+    /**
+     * 
+     * @type {string}
+     * @memberof AccountsHealthCheckDueGet200ResponseAccountsInner
+     */
+    'pageId'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof AccountsHealthCheckDueGet200ResponseAccountsInner
+     */
+    'phoneNumberId'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof AccountsHealthCheckDueGet200ResponseAccountsInner
+     */
+    'waBusinessId'?: string | null;
+}
+
+
+/**
  * Update an account. Specifying account updates the type
  * @export
  * @interface AccountsPatchRequest
@@ -5353,6 +5417,38 @@ export interface MessengerAttachmentItemsPayload {
 /**
  * 
  * @export
+ * @interface MetaResubscribePost200Response
+ */
+export interface MetaResubscribePost200Response {
+    /**
+     * 
+     * @type {boolean}
+     * @memberof MetaResubscribePost200Response
+     */
+    'resubscribed': boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof MetaResubscribePost200Response
+     */
+    'errorMessage'?: string | null;
+}
+/**
+ * 
+ * @export
+ * @interface MetaResubscribePostRequest
+ */
+export interface MetaResubscribePostRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof MetaResubscribePostRequest
+     */
+    'accountId': string;
+}
+/**
+ * 
+ * @export
  * @interface MetaStateInfo
  */
 export interface MetaStateInfo {
@@ -5374,6 +5470,74 @@ export interface MetaStateInfo {
      * @memberof MetaStateInfo
      */
     'businessName'?: string;
+}
+/**
+ * 
+ * @export
+ * @interface MetaStatusCheckPost200Response
+ */
+export interface MetaStatusCheckPost200Response {
+    /**
+     * True if the account appears healthy and able to send / receive
+     * @type {boolean}
+     * @memberof MetaStatusCheckPost200Response
+     */
+    'connected': boolean;
+    /**
+     * Categorised probe outcome — one of OK, APP_UNSUBSCRIBED, TOKEN_REVOKED, PAGE_DELETED, BUSINESS_LOCKED, DATA_ACCESS_FAILED, TOKEN_UNKNOWN_FAIL, ACCOUNT_NOT_META, ACCOUNT_NOT_FOUND, MISSING_CREDENTIALS, UNKNOWN
+     * @type {string}
+     * @memberof MetaStatusCheckPost200Response
+     */
+    'kind': string;
+    /**
+     * Whether our app is currently subscribed to this page\'s webhooks
+     * @type {boolean}
+     * @memberof MetaStatusCheckPost200Response
+     */
+    'appSubscribed'?: boolean | null;
+    /**
+     * True if a heartbeat message was actually fired in this call
+     * @type {boolean}
+     * @memberof MetaStatusCheckPost200Response
+     */
+    'heartbeatSent'?: boolean;
+    /**
+     * True if the failure mode can be auto-healed (eg. silent app unsubscribe is recoverable via re-POST to /subscribed_apps).
+     * @type {boolean}
+     * @memberof MetaStatusCheckPost200Response
+     */
+    'recoverable'?: boolean;
+    /**
+     * Raw Meta error code if the probe failed
+     * @type {number}
+     * @memberof MetaStatusCheckPost200Response
+     */
+    'errorCode'?: number | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof MetaStatusCheckPost200Response
+     */
+    'errorMessage'?: string | null;
+}
+/**
+ * 
+ * @export
+ * @interface MetaStatusCheckPostRequest
+ */
+export interface MetaStatusCheckPostRequest {
+    /**
+     * The IM account ID to probe
+     * @type {string}
+     * @memberof MetaStatusCheckPostRequest
+     */
+    'accountId': string;
+    /**
+     * Override — skip the heartbeat send for this call even if globally enabled. The dispatcher passes this when the account has sent a real message recently.
+     * @type {boolean}
+     * @memberof MetaStatusCheckPostRequest
+     */
+    'skipHeartbeat'?: boolean;
 }
 /**
  * 
@@ -7478,17 +7642,17 @@ export interface WabaStatusCheckPostRequest {
      */
     'accountId': string;
     /**
-     * Meta phone number ID
+     * Meta phone number ID. Optional — resolved from the account\'s own credentials when omitted.
      * @type {string}
      * @memberof WabaStatusCheckPostRequest
      */
-    'phoneNumberId': string;
+    'phoneNumberId'?: string;
     /**
-     * Meta WA Business Account ID
+     * Meta WA Business Account ID. Optional — resolved from the account\'s own credentials when omitted.
      * @type {string}
      * @memberof WabaStatusCheckPostRequest
      */
-    'waBusinessId': string;
+    'waBusinessId'?: string;
     /**
      * API version (v2 for direct Meta)
      * @type {string}
@@ -17459,6 +17623,337 @@ export const MessagesSearchStatusEnum = {
     Error: 'error'
 } as const;
 export type MessagesSearchStatusEnum = typeof MessagesSearchStatusEnum[keyof typeof MessagesSearchStatusEnum];
+
+
+/**
+ * MetaHealthApi - axios parameter creator
+ * @export
+ */
+export const MetaHealthApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * Returns a paginated list of open Meta/WABA accounts (by accountId cursor) — the account universe the watchdog probes. Does NOT decide due-ness; chatmary owns that cursor in ChannelHealthFlag.lastCheckedAt.
+         * @summary List open Meta/WABA accounts for the channel watchdog
+         * @param {number} [count] 
+         * @param {string | null} [cursor] 
+         * @param {Array<AccountType>} [types] Channel types to include. Defaults to &#x60;messenger,instagram,wa-business-api&#x60;.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        accountsHealthCheckDueGet: async (count?: number, cursor?: string | null, types?: Array<AccountType>, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/accounts-health-check-due`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", [], configuration)
+
+            if (count !== undefined) {
+                localVarQueryParameter['count'] = count;
+            }
+
+            if (cursor !== undefined) {
+                localVarQueryParameter['cursor'] = cursor;
+            }
+
+            if (types) {
+                localVarQueryParameter['types'] = types;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Used by the watchdog to auto-heal Meta\'s silent app-unsubscribe case. Idempotent on the Meta side. Returns a boolean and an optional error.
+         * @summary Re-subscribe our app to an IG/Messenger page\'s webhooks
+         * @param {MetaResubscribePostRequest} metaResubscribePostRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        metaResubscribePost: async (metaResubscribePostRequest: MetaResubscribePostRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'metaResubscribePostRequest' is not null or undefined
+            assertParamExists('metaResubscribePost', 'metaResubscribePostRequest', metaResubscribePostRequest)
+            const localVarPath = `/meta-resubscribe`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", [], configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(metaResubscribePostRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Probe sequence: (1) /debug_token, (2) /<pageId>/subscribed_apps, (3) read-heartbeat — a data read signed with the page token that catches the silent 90-day data-access expiry (returns DATA_ACCESS_FAILED), gated by META_HEALTH_CHECK.READ_HEARTBEAT_ENABLED, (4) optional send-heartbeat to a curated receiver when META_HEALTH_CHECK.SEND_HEARTBEAT_ENABLED is true and this account is a configured sender pair.
+         * @summary Probe an IG/Messenger account\'s connection health
+         * @param {MetaStatusCheckPostRequest} metaStatusCheckPostRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        metaStatusCheckPost: async (metaStatusCheckPostRequest: MetaStatusCheckPostRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'metaStatusCheckPostRequest' is not null or undefined
+            assertParamExists('metaStatusCheckPost', 'metaStatusCheckPostRequest', metaStatusCheckPostRequest)
+            const localVarPath = `/meta-status-check`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", [], configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(metaStatusCheckPostRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * MetaHealthApi - functional programming interface
+ * @export
+ */
+export const MetaHealthApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = MetaHealthApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * Returns a paginated list of open Meta/WABA accounts (by accountId cursor) — the account universe the watchdog probes. Does NOT decide due-ness; chatmary owns that cursor in ChannelHealthFlag.lastCheckedAt.
+         * @summary List open Meta/WABA accounts for the channel watchdog
+         * @param {number} [count] 
+         * @param {string | null} [cursor] 
+         * @param {Array<AccountType>} [types] Channel types to include. Defaults to &#x60;messenger,instagram,wa-business-api&#x60;.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async accountsHealthCheckDueGet(count?: number, cursor?: string | null, types?: Array<AccountType>, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AccountsHealthCheckDueGet200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.accountsHealthCheckDueGet(count, cursor, types, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['MetaHealthApi.accountsHealthCheckDueGet']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Used by the watchdog to auto-heal Meta\'s silent app-unsubscribe case. Idempotent on the Meta side. Returns a boolean and an optional error.
+         * @summary Re-subscribe our app to an IG/Messenger page\'s webhooks
+         * @param {MetaResubscribePostRequest} metaResubscribePostRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async metaResubscribePost(metaResubscribePostRequest: MetaResubscribePostRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MetaResubscribePost200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.metaResubscribePost(metaResubscribePostRequest, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['MetaHealthApi.metaResubscribePost']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Probe sequence: (1) /debug_token, (2) /<pageId>/subscribed_apps, (3) read-heartbeat — a data read signed with the page token that catches the silent 90-day data-access expiry (returns DATA_ACCESS_FAILED), gated by META_HEALTH_CHECK.READ_HEARTBEAT_ENABLED, (4) optional send-heartbeat to a curated receiver when META_HEALTH_CHECK.SEND_HEARTBEAT_ENABLED is true and this account is a configured sender pair.
+         * @summary Probe an IG/Messenger account\'s connection health
+         * @param {MetaStatusCheckPostRequest} metaStatusCheckPostRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async metaStatusCheckPost(metaStatusCheckPostRequest: MetaStatusCheckPostRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MetaStatusCheckPost200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.metaStatusCheckPost(metaStatusCheckPostRequest, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['MetaHealthApi.metaStatusCheckPost']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+    }
+};
+
+/**
+ * MetaHealthApi - factory interface
+ * @export
+ */
+export const MetaHealthApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = MetaHealthApiFp(configuration)
+    return {
+        /**
+         * Returns a paginated list of open Meta/WABA accounts (by accountId cursor) — the account universe the watchdog probes. Does NOT decide due-ness; chatmary owns that cursor in ChannelHealthFlag.lastCheckedAt.
+         * @summary List open Meta/WABA accounts for the channel watchdog
+         * @param {MetaHealthApiAccountsHealthCheckDueGetRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        accountsHealthCheckDueGet(requestParameters: MetaHealthApiAccountsHealthCheckDueGetRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<AccountsHealthCheckDueGet200Response> {
+            return localVarFp.accountsHealthCheckDueGet(requestParameters.count, requestParameters.cursor, requestParameters.types, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Used by the watchdog to auto-heal Meta\'s silent app-unsubscribe case. Idempotent on the Meta side. Returns a boolean and an optional error.
+         * @summary Re-subscribe our app to an IG/Messenger page\'s webhooks
+         * @param {MetaHealthApiMetaResubscribePostRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        metaResubscribePost(requestParameters: MetaHealthApiMetaResubscribePostRequest, options?: RawAxiosRequestConfig): AxiosPromise<MetaResubscribePost200Response> {
+            return localVarFp.metaResubscribePost(requestParameters.metaResubscribePostRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Probe sequence: (1) /debug_token, (2) /<pageId>/subscribed_apps, (3) read-heartbeat — a data read signed with the page token that catches the silent 90-day data-access expiry (returns DATA_ACCESS_FAILED), gated by META_HEALTH_CHECK.READ_HEARTBEAT_ENABLED, (4) optional send-heartbeat to a curated receiver when META_HEALTH_CHECK.SEND_HEARTBEAT_ENABLED is true and this account is a configured sender pair.
+         * @summary Probe an IG/Messenger account\'s connection health
+         * @param {MetaHealthApiMetaStatusCheckPostRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        metaStatusCheckPost(requestParameters: MetaHealthApiMetaStatusCheckPostRequest, options?: RawAxiosRequestConfig): AxiosPromise<MetaStatusCheckPost200Response> {
+            return localVarFp.metaStatusCheckPost(requestParameters.metaStatusCheckPostRequest, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * Request parameters for accountsHealthCheckDueGet operation in MetaHealthApi.
+ * @export
+ * @interface MetaHealthApiAccountsHealthCheckDueGetRequest
+ */
+export interface MetaHealthApiAccountsHealthCheckDueGetRequest {
+    /**
+     * 
+     * @type {number}
+     * @memberof MetaHealthApiAccountsHealthCheckDueGet
+     */
+    readonly count?: number
+
+    /**
+     * 
+     * @type {string}
+     * @memberof MetaHealthApiAccountsHealthCheckDueGet
+     */
+    readonly cursor?: string | null
+
+    /**
+     * Channel types to include. Defaults to &#x60;messenger,instagram,wa-business-api&#x60;.
+     * @type {Array<AccountType>}
+     * @memberof MetaHealthApiAccountsHealthCheckDueGet
+     */
+    readonly types?: Array<AccountType>
+}
+
+/**
+ * Request parameters for metaResubscribePost operation in MetaHealthApi.
+ * @export
+ * @interface MetaHealthApiMetaResubscribePostRequest
+ */
+export interface MetaHealthApiMetaResubscribePostRequest {
+    /**
+     * 
+     * @type {MetaResubscribePostRequest}
+     * @memberof MetaHealthApiMetaResubscribePost
+     */
+    readonly metaResubscribePostRequest: MetaResubscribePostRequest
+}
+
+/**
+ * Request parameters for metaStatusCheckPost operation in MetaHealthApi.
+ * @export
+ * @interface MetaHealthApiMetaStatusCheckPostRequest
+ */
+export interface MetaHealthApiMetaStatusCheckPostRequest {
+    /**
+     * 
+     * @type {MetaStatusCheckPostRequest}
+     * @memberof MetaHealthApiMetaStatusCheckPost
+     */
+    readonly metaStatusCheckPostRequest: MetaStatusCheckPostRequest
+}
+
+/**
+ * MetaHealthApi - object-oriented interface
+ * @export
+ * @class MetaHealthApi
+ * @extends {BaseAPI}
+ */
+export class MetaHealthApi extends BaseAPI {
+    /**
+     * Returns a paginated list of open Meta/WABA accounts (by accountId cursor) — the account universe the watchdog probes. Does NOT decide due-ness; chatmary owns that cursor in ChannelHealthFlag.lastCheckedAt.
+     * @summary List open Meta/WABA accounts for the channel watchdog
+     * @param {MetaHealthApiAccountsHealthCheckDueGetRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof MetaHealthApi
+     */
+    public accountsHealthCheckDueGet(requestParameters: MetaHealthApiAccountsHealthCheckDueGetRequest = {}, options?: RawAxiosRequestConfig) {
+        return MetaHealthApiFp(this.configuration).accountsHealthCheckDueGet(requestParameters.count, requestParameters.cursor, requestParameters.types, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Used by the watchdog to auto-heal Meta\'s silent app-unsubscribe case. Idempotent on the Meta side. Returns a boolean and an optional error.
+     * @summary Re-subscribe our app to an IG/Messenger page\'s webhooks
+     * @param {MetaHealthApiMetaResubscribePostRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof MetaHealthApi
+     */
+    public metaResubscribePost(requestParameters: MetaHealthApiMetaResubscribePostRequest, options?: RawAxiosRequestConfig) {
+        return MetaHealthApiFp(this.configuration).metaResubscribePost(requestParameters.metaResubscribePostRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Probe sequence: (1) /debug_token, (2) /<pageId>/subscribed_apps, (3) read-heartbeat — a data read signed with the page token that catches the silent 90-day data-access expiry (returns DATA_ACCESS_FAILED), gated by META_HEALTH_CHECK.READ_HEARTBEAT_ENABLED, (4) optional send-heartbeat to a curated receiver when META_HEALTH_CHECK.SEND_HEARTBEAT_ENABLED is true and this account is a configured sender pair.
+     * @summary Probe an IG/Messenger account\'s connection health
+     * @param {MetaHealthApiMetaStatusCheckPostRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof MetaHealthApi
+     */
+    public metaStatusCheckPost(requestParameters: MetaHealthApiMetaStatusCheckPostRequest, options?: RawAxiosRequestConfig) {
+        return MetaHealthApiFp(this.configuration).metaStatusCheckPost(requestParameters.metaStatusCheckPostRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
 
 
 /**
