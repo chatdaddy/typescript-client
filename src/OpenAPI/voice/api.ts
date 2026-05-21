@@ -790,6 +790,12 @@ export interface WabaCall {
      * @memberof WabaCall
      */
     'endedAt'?: string | null;
+    /**
+     * Permanent S3 URL of the call recording
+     * @type {string}
+     * @memberof WabaCall
+     */
+    'recordingUrl'?: string | null;
 }
 
 export const WabaCallDirectionEnum = {
