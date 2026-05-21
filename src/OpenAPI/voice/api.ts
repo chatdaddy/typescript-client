@@ -796,6 +796,18 @@ export interface WabaCall {
      * @memberof WabaCall
      */
     'recordingUrl'?: string | null;
+    /**
+     * Plain-text transcript of the recording
+     * @type {string}
+     * @memberof WabaCall
+     */
+    'transcriptionText'?: string | null;
+    /**
+     * Diarized transcript utterances
+     * @type {Array<WabaCallsTranscribePost200ResponseUtterancesInner>}
+     * @memberof WabaCall
+     */
+    'transcriptionUtterances'?: Array<WabaCallsTranscribePost200ResponseUtterancesInner> | null;
 }
 
 export const WabaCallDirectionEnum = {
@@ -823,6 +835,44 @@ export interface WabaCallsGet200Response {
      * @memberof WabaCallsGet200Response
      */
     'nextPageCursor'?: string;
+}
+/**
+ * 
+ * @export
+ * @interface WabaCallsTranscribePost200Response
+ */
+export interface WabaCallsTranscribePost200Response {
+    /**
+     * 
+     * @type {Array<WabaCallsTranscribePost200ResponseUtterancesInner>}
+     * @memberof WabaCallsTranscribePost200Response
+     */
+    'utterances': Array<WabaCallsTranscribePost200ResponseUtterancesInner>;
+    /**
+     * 
+     * @type {string}
+     * @memberof WabaCallsTranscribePost200Response
+     */
+    'fullText': string;
+}
+/**
+ * 
+ * @export
+ * @interface WabaCallsTranscribePost200ResponseUtterancesInner
+ */
+export interface WabaCallsTranscribePost200ResponseUtterancesInner {
+    /**
+     * 
+     * @type {string}
+     * @memberof WabaCallsTranscribePost200ResponseUtterancesInner
+     */
+    'speaker': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof WabaCallsTranscribePost200ResponseUtterancesInner
+     */
+    'text': string;
 }
 
 /**
@@ -2151,6 +2201,44 @@ export const WabaCallsApiAxiosParamCreator = function (configuration?: Configura
                 options: localVarRequestOptions,
             };
         },
+        /**
+         * 
+         * @summary Transcribe a WABA call recording using AI with speaker diarization
+         * @param {string} callId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        wabaCallsTranscribePost: async (callId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'callId' is not null or undefined
+            assertParamExists('wabaCallsTranscribePost', 'callId', callId)
+            const localVarPath = `/waba-calls/{callId}/transcribe`
+                .replace(`{${"callId"}}`, encodeURIComponent(String(callId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["CALL_PHONE_CREATE"], configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
     }
 };
 
@@ -2195,6 +2283,19 @@ export const WabaCallsApiFp = function(configuration?: Configuration) {
             const localVarOperationServerBasePath = operationServerMap['WabaCallsApi.wabaCallsPost']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
+        /**
+         * 
+         * @summary Transcribe a WABA call recording using AI with speaker diarization
+         * @param {string} callId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async wabaCallsTranscribePost(callId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<WabaCallsTranscribePost200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.wabaCallsTranscribePost(callId, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['WabaCallsApi.wabaCallsTranscribePost']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
     }
 };
 
@@ -2224,6 +2325,16 @@ export const WabaCallsApiFactory = function (configuration?: Configuration, base
          */
         wabaCallsPost(requestParameters: WabaCallsApiWabaCallsPostRequest, options?: RawAxiosRequestConfig): AxiosPromise<WabaCall> {
             return localVarFp.wabaCallsPost(requestParameters.wabaCall, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Transcribe a WABA call recording using AI with speaker diarization
+         * @param {WabaCallsApiWabaCallsTranscribePostRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        wabaCallsTranscribePost(requestParameters: WabaCallsApiWabaCallsTranscribePostRequest, options?: RawAxiosRequestConfig): AxiosPromise<WabaCallsTranscribePost200Response> {
+            return localVarFp.wabaCallsTranscribePost(requestParameters.callId, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -2313,6 +2424,20 @@ export interface WabaCallsApiWabaCallsPostRequest {
 }
 
 /**
+ * Request parameters for wabaCallsTranscribePost operation in WabaCallsApi.
+ * @export
+ * @interface WabaCallsApiWabaCallsTranscribePostRequest
+ */
+export interface WabaCallsApiWabaCallsTranscribePostRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof WabaCallsApiWabaCallsTranscribePost
+     */
+    readonly callId: string
+}
+
+/**
  * WabaCallsApi - object-oriented interface
  * @export
  * @class WabaCallsApi
@@ -2341,6 +2466,18 @@ export class WabaCallsApi extends BaseAPI {
      */
     public wabaCallsPost(requestParameters: WabaCallsApiWabaCallsPostRequest, options?: RawAxiosRequestConfig) {
         return WabaCallsApiFp(this.configuration).wabaCallsPost(requestParameters.wabaCall, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Transcribe a WABA call recording using AI with speaker diarization
+     * @param {WabaCallsApiWabaCallsTranscribePostRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof WabaCallsApi
+     */
+    public wabaCallsTranscribePost(requestParameters: WabaCallsApiWabaCallsTranscribePostRequest, options?: RawAxiosRequestConfig) {
+        return WabaCallsApiFp(this.configuration).wabaCallsTranscribePost(requestParameters.callId, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
