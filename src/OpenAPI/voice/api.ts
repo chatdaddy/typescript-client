@@ -839,6 +839,111 @@ export interface WabaCallsGet200Response {
 /**
  * 
  * @export
+ * @interface WabaCallsPostRequest
+ */
+export interface WabaCallsPostRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof WabaCallsPostRequest
+     */
+    'callId': string;
+    /**
+     * TeamId of the user making the call
+     * @type {string}
+     * @memberof WabaCallsPostRequest
+     */
+    'teamId'?: string;
+    /**
+     * AccountId of the user making the call
+     * @type {string}
+     * @memberof WabaCallsPostRequest
+     */
+    'accountId'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof WabaCallsPostRequest
+     */
+    'phoneNumber'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof WabaCallsPostRequest
+     */
+    'to'?: string;
+    /**
+     * Name of the contact
+     * @type {string}
+     * @memberof WabaCallsPostRequest
+     */
+    'contactName'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof WabaCallsPostRequest
+     */
+    'direction'?: WabaCallsPostRequestDirectionEnum;
+    /**
+     * 
+     * @type {CallStatus}
+     * @memberof WabaCallsPostRequest
+     */
+    'status'?: CallStatus;
+    /**
+     * 
+     * @type {number}
+     * @memberof WabaCallsPostRequest
+     */
+    'durationSeconds'?: number | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof WabaCallsPostRequest
+     */
+    'userId'?: string;
+    /**
+     * ChatId of the recipient
+     * @type {string}
+     * @memberof WabaCallsPostRequest
+     */
+    'chatId'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof WabaCallsPostRequest
+     */
+    'messageId'?: string;
+    /**
+     * An ISO formatted timestamp
+     * @type {string}
+     * @memberof WabaCallsPostRequest
+     */
+    'createdAt'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof WabaCallsPostRequest
+     */
+    'endedAt'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof WabaCallsPostRequest
+     */
+    'recordingUrl'?: string | null;
+}
+
+export const WabaCallsPostRequestDirectionEnum = {
+    Inbound: 'inbound',
+    Outbound: 'outbound'
+} as const;
+
+export type WabaCallsPostRequestDirectionEnum = typeof WabaCallsPostRequestDirectionEnum[keyof typeof WabaCallsPostRequestDirectionEnum];
+
+/**
+ * 
+ * @export
  * @interface WabaCallsTranscribePost200Response
  */
 export interface WabaCallsTranscribePost200Response {
@@ -2168,13 +2273,13 @@ export const WabaCallsApiAxiosParamCreator = function (configuration?: Configura
         /**
          * 
          * @summary Upsert a WABA call log (internal, called by IM service)
-         * @param {WabaCall} wabaCall 
+         * @param {WabaCallsPostRequest} wabaCallsPostRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        wabaCallsPost: async (wabaCall: WabaCall, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'wabaCall' is not null or undefined
-            assertParamExists('wabaCallsPost', 'wabaCall', wabaCall)
+        wabaCallsPost: async (wabaCallsPostRequest: WabaCallsPostRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'wabaCallsPostRequest' is not null or undefined
+            assertParamExists('wabaCallsPost', 'wabaCallsPostRequest', wabaCallsPostRequest)
             const localVarPath = `/waba-calls`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -2194,7 +2299,7 @@ export const WabaCallsApiAxiosParamCreator = function (configuration?: Configura
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(wabaCall, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(wabaCallsPostRequest, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -2273,12 +2378,12 @@ export const WabaCallsApiFp = function(configuration?: Configuration) {
         /**
          * 
          * @summary Upsert a WABA call log (internal, called by IM service)
-         * @param {WabaCall} wabaCall 
+         * @param {WabaCallsPostRequest} wabaCallsPostRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async wabaCallsPost(wabaCall: WabaCall, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<WabaCall>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.wabaCallsPost(wabaCall, options);
+        async wabaCallsPost(wabaCallsPostRequest: WabaCallsPostRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<WabaCall>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.wabaCallsPost(wabaCallsPostRequest, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['WabaCallsApi.wabaCallsPost']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -2324,7 +2429,7 @@ export const WabaCallsApiFactory = function (configuration?: Configuration, base
          * @throws {RequiredError}
          */
         wabaCallsPost(requestParameters: WabaCallsApiWabaCallsPostRequest, options?: RawAxiosRequestConfig): AxiosPromise<WabaCall> {
-            return localVarFp.wabaCallsPost(requestParameters.wabaCall, options).then((request) => request(axios, basePath));
+            return localVarFp.wabaCallsPost(requestParameters.wabaCallsPostRequest, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -2417,10 +2522,10 @@ export interface WabaCallsApiWabaCallsGetRequest {
 export interface WabaCallsApiWabaCallsPostRequest {
     /**
      * 
-     * @type {WabaCall}
+     * @type {WabaCallsPostRequest}
      * @memberof WabaCallsApiWabaCallsPost
      */
-    readonly wabaCall: WabaCall
+    readonly wabaCallsPostRequest: WabaCallsPostRequest
 }
 
 /**
@@ -2465,7 +2570,7 @@ export class WabaCallsApi extends BaseAPI {
      * @memberof WabaCallsApi
      */
     public wabaCallsPost(requestParameters: WabaCallsApiWabaCallsPostRequest, options?: RawAxiosRequestConfig) {
-        return WabaCallsApiFp(this.configuration).wabaCallsPost(requestParameters.wabaCall, options).then((request) => request(this.axios, this.basePath));
+        return WabaCallsApiFp(this.configuration).wabaCallsPost(requestParameters.wabaCallsPostRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
