@@ -5074,6 +5074,19 @@ export interface MessagesBulkActionRequest {
     'action': BulkMessageAction;
 }
 /**
+ * 
+ * @export
+ * @interface MessagesCountGet200Response
+ */
+export interface MessagesCountGet200Response {
+    /**
+     * Total number of messages for the team
+     * @type {number}
+     * @memberof MessagesCountGet200Response
+     */
+    'count': number;
+}
+/**
  * @type MessagesForwardToChatIdParameter
  * @export
  */
@@ -15730,6 +15743,40 @@ export const MessagesApiAxiosParamCreator = function (configuration?: Configurat
             };
         },
         /**
+         * Returns the total number of messages for the authenticated user\'s team. The count is computed server-side via a `countDocuments` on the indexed `teamIdPrefix` (with non-message statuses note/pending/error/cancelled excluded), so it stays within the existing index and never fetches documents.  Intended for lightweight usage summaries (e.g. the workspace-restricted page), not exact analytics. Counts the hot message store only; archived (cold) messages are not included. 
+         * @summary Get the total message count for the caller\'s team
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        messagesCountGet: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/messages/count`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["MESSAGES_SEARCH"], configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * 
          * @summary Delete a message
          * @param {string} accountId 
@@ -16475,6 +16522,18 @@ export const MessagesApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
+         * Returns the total number of messages for the authenticated user\'s team. The count is computed server-side via a `countDocuments` on the indexed `teamIdPrefix` (with non-message statuses note/pending/error/cancelled excluded), so it stays within the existing index and never fetches documents.  Intended for lightweight usage summaries (e.g. the workspace-restricted page), not exact analytics. Counts the hot message store only; archived (cold) messages are not included. 
+         * @summary Get the total message count for the caller\'s team
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async messagesCountGet(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MessagesCountGet200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.messagesCountGet(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['MessagesApi.messagesCountGet']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
          * 
          * @summary Delete a message
          * @param {string} accountId 
@@ -16717,6 +16776,15 @@ export const MessagesApiFactory = function (configuration?: Configuration, baseP
          */
         messagesBulkGet(requestParameters: MessagesApiMessagesBulkGetRequest, options?: RawAxiosRequestConfig): AxiosPromise<Array<Message>> {
             return localVarFp.messagesBulkGet(requestParameters.ids, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Returns the total number of messages for the authenticated user\'s team. The count is computed server-side via a `countDocuments` on the indexed `teamIdPrefix` (with non-message statuses note/pending/error/cancelled excluded), so it stays within the existing index and never fetches documents.  Intended for lightweight usage summaries (e.g. the workspace-restricted page), not exact analytics. Counts the hot message store only; archived (cold) messages are not included. 
+         * @summary Get the total message count for the caller\'s team
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        messagesCountGet(options?: RawAxiosRequestConfig): AxiosPromise<MessagesCountGet200Response> {
+            return localVarFp.messagesCountGet(options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -17427,6 +17495,17 @@ export class MessagesApi extends BaseAPI {
      */
     public messagesBulkGet(requestParameters: MessagesApiMessagesBulkGetRequest, options?: RawAxiosRequestConfig) {
         return MessagesApiFp(this.configuration).messagesBulkGet(requestParameters.ids, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Returns the total number of messages for the authenticated user\'s team. The count is computed server-side via a `countDocuments` on the indexed `teamIdPrefix` (with non-message statuses note/pending/error/cancelled excluded), so it stays within the existing index and never fetches documents.  Intended for lightweight usage summaries (e.g. the workspace-restricted page), not exact analytics. Counts the hot message store only; archived (cold) messages are not included. 
+     * @summary Get the total message count for the caller\'s team
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof MessagesApi
+     */
+    public messagesCountGet(options?: RawAxiosRequestConfig) {
+        return MessagesApiFp(this.configuration).messagesCountGet(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
