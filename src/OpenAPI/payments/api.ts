@@ -1587,6 +1587,12 @@ export interface CreditCustomer {
      * @memberof CreditCustomer
      */
     'exportUnlocked'?: boolean;
+    /**
+     * Whether the customer\'s account is locked due to non-payment. If true, all API calls that would consume credits will be blocked.
+     * @type {boolean}
+     * @memberof CreditCustomer
+     */
+    'lockAccount'?: boolean;
 }
 
 
