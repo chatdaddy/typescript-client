@@ -1190,6 +1190,19 @@ export interface NotifyModel {
 /**
  * 
  * @export
+ * @interface NotifyPaymentOverdue200Response
+ */
+export interface NotifyPaymentOverdue200Response {
+    /**
+     * Number of emails successfully sent
+     * @type {number}
+     * @memberof NotifyPaymentOverdue200Response
+     */
+    'emailsSent': number;
+}
+/**
+ * 
+ * @export
  * @interface NotifyRequestWithContent
  */
 export interface NotifyRequestWithContent {
@@ -6233,6 +6246,47 @@ export const TeamsApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
+         * Admin-only — sends a \"Workspace Access Restricted\" warning email to all members of the given team, informing them their payment is overdue and their workspace is about to be restricted.
+         * @summary Send payment overdue email to all team members
+         * @param {string} teamId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        notifyPaymentOverdue: async (teamId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'teamId' is not null or undefined
+            assertParamExists('notifyPaymentOverdue', 'teamId', teamId)
+            const localVarPath = `/admin/notify-payment-overdue`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["ADMIN_PANEL_ACCESS"], configuration)
+
+            if (teamId !== undefined) {
+                localVarQueryParameter['teamId'] = teamId;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * 
          * @summary Fetch partner admin teamIds
          * @param {*} [options] Override http request option.
@@ -6664,6 +6718,19 @@ export const TeamsApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
+         * Admin-only — sends a \"Workspace Access Restricted\" warning email to all members of the given team, informing them their payment is overdue and their workspace is about to be restricted.
+         * @summary Send payment overdue email to all team members
+         * @param {string} teamId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async notifyPaymentOverdue(teamId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<NotifyPaymentOverdue200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.notifyPaymentOverdue(teamId, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['TeamsApi.notifyPaymentOverdue']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
          * 
          * @summary Fetch partner admin teamIds
          * @param {*} [options] Override http request option.
@@ -6815,6 +6882,16 @@ export const TeamsApiFactory = function (configuration?: Configuration, basePath
             return localVarFp.disabledFeaturePost(requestParameters.disabledFeaturePostRequest, options).then((request) => request(axios, basePath));
         },
         /**
+         * Admin-only — sends a \"Workspace Access Restricted\" warning email to all members of the given team, informing them their payment is overdue and their workspace is about to be restricted.
+         * @summary Send payment overdue email to all team members
+         * @param {TeamsApiNotifyPaymentOverdueRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        notifyPaymentOverdue(requestParameters: TeamsApiNotifyPaymentOverdueRequest, options?: RawAxiosRequestConfig): AxiosPromise<NotifyPaymentOverdue200Response> {
+            return localVarFp.notifyPaymentOverdue(requestParameters.teamId, options).then((request) => request(axios, basePath));
+        },
+        /**
          * 
          * @summary Fetch partner admin teamIds
          * @param {*} [options] Override http request option.
@@ -6922,6 +6999,20 @@ export interface TeamsApiDisabledFeaturePostRequest {
      * @memberof TeamsApiDisabledFeaturePost
      */
     readonly disabledFeaturePostRequest?: DisabledFeaturePostRequest
+}
+
+/**
+ * Request parameters for notifyPaymentOverdue operation in TeamsApi.
+ * @export
+ * @interface TeamsApiNotifyPaymentOverdueRequest
+ */
+export interface TeamsApiNotifyPaymentOverdueRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof TeamsApiNotifyPaymentOverdue
+     */
+    readonly teamId: string
 }
 
 /**
@@ -7177,6 +7268,18 @@ export class TeamsApi extends BaseAPI {
      */
     public disabledFeaturePost(requestParameters: TeamsApiDisabledFeaturePostRequest = {}, options?: RawAxiosRequestConfig) {
         return TeamsApiFp(this.configuration).disabledFeaturePost(requestParameters.disabledFeaturePostRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Admin-only — sends a \"Workspace Access Restricted\" warning email to all members of the given team, informing them their payment is overdue and their workspace is about to be restricted.
+     * @summary Send payment overdue email to all team members
+     * @param {TeamsApiNotifyPaymentOverdueRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof TeamsApi
+     */
+    public notifyPaymentOverdue(requestParameters: TeamsApiNotifyPaymentOverdueRequest, options?: RawAxiosRequestConfig) {
+        return TeamsApiFp(this.configuration).notifyPaymentOverdue(requestParameters.teamId, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
