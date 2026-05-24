@@ -2894,6 +2894,44 @@ export type LimitedItem = typeof LimitedItem[keyof typeof LimitedItem];
 
 
 /**
+ * 
+ * @export
+ * @interface LockAccountPost200Response
+ */
+export interface LockAccountPost200Response {
+    /**
+     * ID of a customer. All credits are linked to a customer. Multiple teams can be linked to the same customer & thus share credits.
+     * @type {string}
+     * @memberof LockAccountPost200Response
+     */
+    'customerId': string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof LockAccountPost200Response
+     */
+    'lockAccount': boolean;
+}
+/**
+ * 
+ * @export
+ * @interface LockAccountPostRequest
+ */
+export interface LockAccountPostRequest {
+    /**
+     * ID of a customer. All credits are linked to a customer. Multiple teams can be linked to the same customer & thus share credits.
+     * @type {string}
+     * @memberof LockAccountPostRequest
+     */
+    'customerId': string;
+    /**
+     * true to lock the account, false to unlock
+     * @type {boolean}
+     * @memberof LockAccountPostRequest
+     */
+    'lock': boolean;
+}
+/**
  * Message credit consumption details for a specific channel type
  * @export
  * @interface MessageCreditConsumption
@@ -7211,6 +7249,46 @@ export const CreditsApiAxiosParamCreator = function (configuration?: Configurati
             };
         },
         /**
+         * Admin-only — set or clear the lockAccount flag on a credit customer. When locked, the workspace is blocked regardless of subscription status.
+         * @summary Lock or unlock a customer\'s account
+         * @param {LockAccountPostRequest} lockAccountPostRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        lockAccountPost: async (lockAccountPostRequest: LockAccountPostRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'lockAccountPostRequest' is not null or undefined
+            assertParamExists('lockAccountPost', 'lockAccountPostRequest', lockAccountPostRequest)
+            const localVarPath = `/v2/credits/customer/lock-account`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["ADMIN_PANEL_ACCESS"], configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(lockAccountPostRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * 
          * @summary Create/update/cancel the support plan
          * @param {ModifySupportPlan} [modifySupportPlan] 
@@ -7904,6 +7982,19 @@ export const CreditsApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
+         * Admin-only — set or clear the lockAccount flag on a credit customer. When locked, the workspace is blocked regardless of subscription status.
+         * @summary Lock or unlock a customer\'s account
+         * @param {LockAccountPostRequest} lockAccountPostRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async lockAccountPost(lockAccountPostRequest: LockAccountPostRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<LockAccountPost200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.lockAccountPost(lockAccountPostRequest, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['CreditsApi.lockAccountPost']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
          * 
          * @summary Create/update/cancel the support plan
          * @param {ModifySupportPlan} [modifySupportPlan] 
@@ -8276,6 +8367,16 @@ export const CreditsApiFactory = function (configuration?: Configuration, basePa
          */
         getCustomerData(requestParameters: CreditsApiGetCustomerDataRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<GetCustomerData200Response> {
             return localVarFp.getCustomerData(requestParameters.status, requestParameters.page, requestParameters.count, requestParameters.returnTeamIds, requestParameters.searchTeamId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Admin-only — set or clear the lockAccount flag on a credit customer. When locked, the workspace is blocked regardless of subscription status.
+         * @summary Lock or unlock a customer\'s account
+         * @param {CreditsApiLockAccountPostRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        lockAccountPost(requestParameters: CreditsApiLockAccountPostRequest, options?: RawAxiosRequestConfig): AxiosPromise<LockAccountPost200Response> {
+            return localVarFp.lockAccountPost(requestParameters.lockAccountPostRequest, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -8838,6 +8939,20 @@ export interface CreditsApiGetCustomerDataRequest {
 }
 
 /**
+ * Request parameters for lockAccountPost operation in CreditsApi.
+ * @export
+ * @interface CreditsApiLockAccountPostRequest
+ */
+export interface CreditsApiLockAccountPostRequest {
+    /**
+     * 
+     * @type {LockAccountPostRequest}
+     * @memberof CreditsApiLockAccountPost
+     */
+    readonly lockAccountPostRequest: LockAccountPostRequest
+}
+
+/**
  * Request parameters for modifySupportPlan operation in CreditsApi.
  * @export
  * @interface CreditsApiModifySupportPlanRequest
@@ -9340,6 +9455,18 @@ export class CreditsApi extends BaseAPI {
      */
     public getCustomerData(requestParameters: CreditsApiGetCustomerDataRequest = {}, options?: RawAxiosRequestConfig) {
         return CreditsApiFp(this.configuration).getCustomerData(requestParameters.status, requestParameters.page, requestParameters.count, requestParameters.returnTeamIds, requestParameters.searchTeamId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Admin-only — set or clear the lockAccount flag on a credit customer. When locked, the workspace is blocked regardless of subscription status.
+     * @summary Lock or unlock a customer\'s account
+     * @param {CreditsApiLockAccountPostRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CreditsApi
+     */
+    public lockAccountPost(requestParameters: CreditsApiLockAccountPostRequest, options?: RawAxiosRequestConfig) {
+        return CreditsApiFp(this.configuration).lockAccountPost(requestParameters.lockAccountPostRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
