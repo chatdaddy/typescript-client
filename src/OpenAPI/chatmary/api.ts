@@ -1804,6 +1804,125 @@ export interface SurveyResponsesPostRequestSessionComponentsInner {
 /**
  * 
  * @export
+ * @interface TeamStorageGet200Response
+ */
+export interface TeamStorageGet200Response {
+    /**
+     * 
+     * @type {Array<TeamStorageItem>}
+     * @memberof TeamStorageGet200Response
+     */
+    'items': Array<TeamStorageItem>;
+}
+/**
+ * 
+ * @export
+ * @interface TeamStorageItem
+ */
+export interface TeamStorageItem {
+    /**
+     * Composite primary key in the form `${teamId}:${key}`
+     * @type {string}
+     * @memberof TeamStorageItem
+     */
+    'id': string;
+    /**
+     * Team ID
+     * @type {string}
+     * @memberof TeamStorageItem
+     */
+    'teamId': string;
+    /**
+     * Storage key
+     * @type {string}
+     * @memberof TeamStorageItem
+     */
+    'key': string;
+    /**
+     * Stored JSON value
+     * @type {any}
+     * @memberof TeamStorageItem
+     */
+    'value'?: any | null;
+    /**
+     * Expiry timestamp; null means the item never expires
+     * @type {string}
+     * @memberof TeamStorageItem
+     */
+    'expiresAt'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof TeamStorageItem
+     */
+    'createdAt'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof TeamStorageItem
+     */
+    'updatedAt'?: string;
+}
+/**
+ * 
+ * @export
+ * @interface TeamStorageKeyDelete200Response
+ */
+export interface TeamStorageKeyDelete200Response {
+    /**
+     * 
+     * @type {number}
+     * @memberof TeamStorageKeyDelete200Response
+     */
+    'deleted': number;
+}
+/**
+ * 
+ * @export
+ * @interface TeamStorageKeyGet200Response
+ */
+export interface TeamStorageKeyGet200Response {
+    /**
+     * 
+     * @type {string}
+     * @memberof TeamStorageKeyGet200Response
+     */
+    'key': string;
+    /**
+     * Stored JSON value, or null when absent/expired
+     * @type {any}
+     * @memberof TeamStorageKeyGet200Response
+     */
+    'value': any | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof TeamStorageKeyGet200Response
+     */
+    'expiresAt'?: string | null;
+}
+/**
+ * 
+ * @export
+ * @interface TeamStorageKeyPutRequest
+ */
+export interface TeamStorageKeyPutRequest {
+    /**
+     * JSON value to store
+     * @type {any}
+     * @memberof TeamStorageKeyPutRequest
+     */
+    'value'?: any | null;
+    /**
+     * Optional expiry; omit or null for a permanent item
+     * @type {string}
+     * @memberof TeamStorageKeyPutRequest
+     */
+    'expiresAt'?: string | null;
+}
+/**
+ * 
+ * @export
  * @interface TrackPageHit
  */
 export interface TrackPageHit {
@@ -6445,6 +6564,384 @@ export class TeamApi extends BaseAPI {
      */
     public fetchTeamDataGet(requestParameters: TeamApiFetchTeamDataGetRequest, options?: RawAxiosRequestConfig) {
         return TeamApiFp(this.configuration).fetchTeamDataGet(requestParameters.teamId, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+
+/**
+ * TeamStorageApi - axios parameter creator
+ * @export
+ */
+export const TeamStorageApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @summary List all non-expired persisted storage items for the current team
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        teamStorageGet: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/team-storage`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", [], configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Delete a persisted storage item by key for the current team
+         * @param {string} key Storage key
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        teamStorageKeyDelete: async (key: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'key' is not null or undefined
+            assertParamExists('teamStorageKeyDelete', 'key', key)
+            const localVarPath = `/team-storage/{key}`
+                .replace(`{${"key"}}`, encodeURIComponent(String(key)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", [], configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Get a single persisted storage item by key for the current team
+         * @param {string} key Storage key
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        teamStorageKeyGet: async (key: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'key' is not null or undefined
+            assertParamExists('teamStorageKeyGet', 'key', key)
+            const localVarPath = `/team-storage/{key}`
+                .replace(`{${"key"}}`, encodeURIComponent(String(key)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", [], configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Upsert a persisted storage item by key for the current team
+         * @param {string} key Storage key
+         * @param {TeamStorageKeyPutRequest} [teamStorageKeyPutRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        teamStorageKeyPut: async (key: string, teamStorageKeyPutRequest?: TeamStorageKeyPutRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'key' is not null or undefined
+            assertParamExists('teamStorageKeyPut', 'key', key)
+            const localVarPath = `/team-storage/{key}`
+                .replace(`{${"key"}}`, encodeURIComponent(String(key)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", [], configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(teamStorageKeyPutRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * TeamStorageApi - functional programming interface
+ * @export
+ */
+export const TeamStorageApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = TeamStorageApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * 
+         * @summary List all non-expired persisted storage items for the current team
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async teamStorageGet(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TeamStorageGet200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.teamStorageGet(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['TeamStorageApi.teamStorageGet']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @summary Delete a persisted storage item by key for the current team
+         * @param {string} key Storage key
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async teamStorageKeyDelete(key: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TeamStorageKeyDelete200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.teamStorageKeyDelete(key, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['TeamStorageApi.teamStorageKeyDelete']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @summary Get a single persisted storage item by key for the current team
+         * @param {string} key Storage key
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async teamStorageKeyGet(key: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TeamStorageKeyGet200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.teamStorageKeyGet(key, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['TeamStorageApi.teamStorageKeyGet']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @summary Upsert a persisted storage item by key for the current team
+         * @param {string} key Storage key
+         * @param {TeamStorageKeyPutRequest} [teamStorageKeyPutRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async teamStorageKeyPut(key: string, teamStorageKeyPutRequest?: TeamStorageKeyPutRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TeamStorageItem>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.teamStorageKeyPut(key, teamStorageKeyPutRequest, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['TeamStorageApi.teamStorageKeyPut']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+    }
+};
+
+/**
+ * TeamStorageApi - factory interface
+ * @export
+ */
+export const TeamStorageApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = TeamStorageApiFp(configuration)
+    return {
+        /**
+         * 
+         * @summary List all non-expired persisted storage items for the current team
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        teamStorageGet(options?: RawAxiosRequestConfig): AxiosPromise<TeamStorageGet200Response> {
+            return localVarFp.teamStorageGet(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Delete a persisted storage item by key for the current team
+         * @param {TeamStorageApiTeamStorageKeyDeleteRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        teamStorageKeyDelete(requestParameters: TeamStorageApiTeamStorageKeyDeleteRequest, options?: RawAxiosRequestConfig): AxiosPromise<TeamStorageKeyDelete200Response> {
+            return localVarFp.teamStorageKeyDelete(requestParameters.key, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Get a single persisted storage item by key for the current team
+         * @param {TeamStorageApiTeamStorageKeyGetRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        teamStorageKeyGet(requestParameters: TeamStorageApiTeamStorageKeyGetRequest, options?: RawAxiosRequestConfig): AxiosPromise<TeamStorageKeyGet200Response> {
+            return localVarFp.teamStorageKeyGet(requestParameters.key, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Upsert a persisted storage item by key for the current team
+         * @param {TeamStorageApiTeamStorageKeyPutRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        teamStorageKeyPut(requestParameters: TeamStorageApiTeamStorageKeyPutRequest, options?: RawAxiosRequestConfig): AxiosPromise<TeamStorageItem> {
+            return localVarFp.teamStorageKeyPut(requestParameters.key, requestParameters.teamStorageKeyPutRequest, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * Request parameters for teamStorageKeyDelete operation in TeamStorageApi.
+ * @export
+ * @interface TeamStorageApiTeamStorageKeyDeleteRequest
+ */
+export interface TeamStorageApiTeamStorageKeyDeleteRequest {
+    /**
+     * Storage key
+     * @type {string}
+     * @memberof TeamStorageApiTeamStorageKeyDelete
+     */
+    readonly key: string
+}
+
+/**
+ * Request parameters for teamStorageKeyGet operation in TeamStorageApi.
+ * @export
+ * @interface TeamStorageApiTeamStorageKeyGetRequest
+ */
+export interface TeamStorageApiTeamStorageKeyGetRequest {
+    /**
+     * Storage key
+     * @type {string}
+     * @memberof TeamStorageApiTeamStorageKeyGet
+     */
+    readonly key: string
+}
+
+/**
+ * Request parameters for teamStorageKeyPut operation in TeamStorageApi.
+ * @export
+ * @interface TeamStorageApiTeamStorageKeyPutRequest
+ */
+export interface TeamStorageApiTeamStorageKeyPutRequest {
+    /**
+     * Storage key
+     * @type {string}
+     * @memberof TeamStorageApiTeamStorageKeyPut
+     */
+    readonly key: string
+
+    /**
+     * 
+     * @type {TeamStorageKeyPutRequest}
+     * @memberof TeamStorageApiTeamStorageKeyPut
+     */
+    readonly teamStorageKeyPutRequest?: TeamStorageKeyPutRequest
+}
+
+/**
+ * TeamStorageApi - object-oriented interface
+ * @export
+ * @class TeamStorageApi
+ * @extends {BaseAPI}
+ */
+export class TeamStorageApi extends BaseAPI {
+    /**
+     * 
+     * @summary List all non-expired persisted storage items for the current team
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof TeamStorageApi
+     */
+    public teamStorageGet(options?: RawAxiosRequestConfig) {
+        return TeamStorageApiFp(this.configuration).teamStorageGet(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Delete a persisted storage item by key for the current team
+     * @param {TeamStorageApiTeamStorageKeyDeleteRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof TeamStorageApi
+     */
+    public teamStorageKeyDelete(requestParameters: TeamStorageApiTeamStorageKeyDeleteRequest, options?: RawAxiosRequestConfig) {
+        return TeamStorageApiFp(this.configuration).teamStorageKeyDelete(requestParameters.key, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Get a single persisted storage item by key for the current team
+     * @param {TeamStorageApiTeamStorageKeyGetRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof TeamStorageApi
+     */
+    public teamStorageKeyGet(requestParameters: TeamStorageApiTeamStorageKeyGetRequest, options?: RawAxiosRequestConfig) {
+        return TeamStorageApiFp(this.configuration).teamStorageKeyGet(requestParameters.key, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Upsert a persisted storage item by key for the current team
+     * @param {TeamStorageApiTeamStorageKeyPutRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof TeamStorageApi
+     */
+    public teamStorageKeyPut(requestParameters: TeamStorageApiTeamStorageKeyPutRequest, options?: RawAxiosRequestConfig) {
+        return TeamStorageApiFp(this.configuration).teamStorageKeyPut(requestParameters.key, requestParameters.teamStorageKeyPutRequest, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
