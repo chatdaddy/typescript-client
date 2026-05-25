@@ -961,7 +961,7 @@ export interface FunnelLayer {
      */
     'name': string;
     /**
-     * Multi-source match rules. A breakdown entry counts toward this layer if any matcher matches it (OR semantics across matchers). Use this to combine tag and assignee groupings in a single layer. 
+     * Multi-source match rules. Default is OR semantics across matchers (a breakdown entry counts toward the layer if any matcher matches). When the parent layer\'s `op` is set, that operator applies to all matcher values across all matchers in this layer. 
      * @type {Array<FunnelLayerMatcher>}
      * @memberof FunnelLayer
      */
@@ -972,7 +972,15 @@ export interface FunnelLayer {
      * @memberof FunnelLayer
      */
     'tags'?: Array<string>;
+    /**
+     * 
+     * @type {FunnelLayerOp}
+     * @memberof FunnelLayer
+     */
+    'op'?: FunnelLayerOp;
 }
+
+
 /**
  * 
  * @export
@@ -992,6 +1000,20 @@ export interface FunnelLayerMatcher {
      */
     'values': Array<string>;
 }
+
+
+/**
+ * How multiple tag/matcher values inside a single layer are combined. - `OR`  (default): a chat counts toward the layer if it matches ANY value - `AND`          : a chat counts only if it matches ALL values When this field is ABSENT, the legacy sum-of-per-tag-counts path is used (may double-count chats with multiple matching tags). Setting `op` explicitly opts the card into the dedup-aware backend path. 
+ * @export
+ * @enum {string}
+ */
+
+export const FunnelLayerOp = {
+    And: 'AND',
+    Or: 'OR'
+} as const;
+
+export type FunnelLayerOp = typeof FunnelLayerOp[keyof typeof FunnelLayerOp];
 
 
 /**

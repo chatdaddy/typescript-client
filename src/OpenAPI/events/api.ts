@@ -7346,7 +7346,7 @@ export interface DashboardInsertDataSchemaItemsInnerOneOfFunnelLayersInner {
      */
     'name': string;
     /**
-     * Multi-source match rules. A breakdown entry counts toward this layer if any matcher matches it (OR semantics across matchers). Use this to combine tag and assignee groupings in a single layer. 
+     * Multi-source match rules. Default is OR semantics across matchers (a breakdown entry counts toward the layer if any matcher matches). When the parent layer\'s `op` is set, that operator applies to all matcher values across all matchers in this layer. 
      * @type {Array<DashboardInsertDataSchemaItemsInnerOneOfFunnelLayersInnerMatchersInner>}
      * @memberof DashboardInsertDataSchemaItemsInnerOneOfFunnelLayersInner
      */
@@ -7357,7 +7357,21 @@ export interface DashboardInsertDataSchemaItemsInnerOneOfFunnelLayersInner {
      * @memberof DashboardInsertDataSchemaItemsInnerOneOfFunnelLayersInner
      */
     'tags'?: Array<string>;
+    /**
+     * How multiple tag/matcher values inside a single layer are combined. - `OR`  (default): a chat counts toward the layer if it matches ANY value - `AND`          : a chat counts only if it matches ALL values When this field is ABSENT, the legacy sum-of-per-tag-counts path is used (may double-count chats with multiple matching tags). Setting `op` explicitly opts the card into the dedup-aware backend path. 
+     * @type {string}
+     * @memberof DashboardInsertDataSchemaItemsInnerOneOfFunnelLayersInner
+     */
+    'op'?: DashboardInsertDataSchemaItemsInnerOneOfFunnelLayersInnerOpEnum;
 }
+
+export const DashboardInsertDataSchemaItemsInnerOneOfFunnelLayersInnerOpEnum = {
+    And: 'AND',
+    Or: 'OR'
+} as const;
+
+export type DashboardInsertDataSchemaItemsInnerOneOfFunnelLayersInnerOpEnum = typeof DashboardInsertDataSchemaItemsInnerOneOfFunnelLayersInnerOpEnum[keyof typeof DashboardInsertDataSchemaItemsInnerOneOfFunnelLayersInnerOpEnum];
+
 /**
  * 
  * @export
