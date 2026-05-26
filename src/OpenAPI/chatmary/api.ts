@@ -1840,10 +1840,10 @@ export interface TeamStorageItem {
     'key': string;
     /**
      * Stored JSON value
-     * @type {any}
+     * @type {{ [key: string]: any; }}
      * @memberof TeamStorageItem
      */
-    'value'?: any | null;
+    'value'?: { [key: string]: any; } | null;
     /**
      * Expiry timestamp; null means the item never expires
      * @type {string}
@@ -1890,10 +1890,10 @@ export interface TeamStorageKeyGet200Response {
     'key': string;
     /**
      * Stored JSON value, or null when absent/expired
-     * @type {any}
+     * @type {{ [key: string]: any; }}
      * @memberof TeamStorageKeyGet200Response
      */
-    'value': any | null;
+    'value': { [key: string]: any; } | null;
     /**
      * 
      * @type {string}
@@ -1909,10 +1909,10 @@ export interface TeamStorageKeyGet200Response {
 export interface TeamStorageKeyPutRequest {
     /**
      * JSON value to store
-     * @type {any}
+     * @type {{ [key: string]: any; }}
      * @memberof TeamStorageKeyPutRequest
      */
-    'value'?: any | null;
+    'value'?: { [key: string]: any; } | null;
     /**
      * Optional expiry; omit or null for a permanent item
      * @type {string}
