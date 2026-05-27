@@ -2474,10 +2474,10 @@ export interface WebhookNotionPostRequestData {
 }
 
 /**
- * AdminApi - axios parameter creator
+ * AdminChatmaryApi - axios parameter creator
  * @export
  */
-export const AdminApiAxiosParamCreator = function (configuration?: Configuration) {
+export const AdminChatmaryApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
          * Returns the latest watchdog probe outcome for each monitored channel account, with filters for team, channel type, and probe kind. Designed to power a read-only admin triage view. Tokens are never returned — only their metadata is exposed via the probe result.
@@ -2547,11 +2547,11 @@ export const AdminApiAxiosParamCreator = function (configuration?: Configuration
 };
 
 /**
- * AdminApi - functional programming interface
+ * AdminChatmaryApi - functional programming interface
  * @export
  */
-export const AdminApiFp = function(configuration?: Configuration) {
-    const localVarAxiosParamCreator = AdminApiAxiosParamCreator(configuration)
+export const AdminChatmaryApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = AdminChatmaryApiAxiosParamCreator(configuration)
     return {
         /**
          * Returns the latest watchdog probe outcome for each monitored channel account, with filters for team, channel type, and probe kind. Designed to power a read-only admin triage view. Tokens are never returned — only their metadata is exposed via the probe result.
@@ -2568,98 +2568,98 @@ export const AdminApiFp = function(configuration?: Configuration) {
         async channelHealthAdminGet(team?: string, type?: ChannelHealthAdminGetTypeEnum, kind?: ChannelHealthAdminGetKindEnum, failingOnly?: boolean, limit?: number, cursor?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ChannelHealthListResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.channelHealthAdminGet(team, type, kind, failingOnly, limit, cursor, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['AdminApi.channelHealthAdminGet']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['AdminChatmaryApi.channelHealthAdminGet']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
     }
 };
 
 /**
- * AdminApi - factory interface
+ * AdminChatmaryApi - factory interface
  * @export
  */
-export const AdminApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
-    const localVarFp = AdminApiFp(configuration)
+export const AdminChatmaryApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = AdminChatmaryApiFp(configuration)
     return {
         /**
          * Returns the latest watchdog probe outcome for each monitored channel account, with filters for team, channel type, and probe kind. Designed to power a read-only admin triage view. Tokens are never returned — only their metadata is exposed via the probe result.
          * @summary List ChannelHealthFlag rows for the admin panel
-         * @param {AdminApiChannelHealthAdminGetRequest} requestParameters Request parameters.
+         * @param {AdminChatmaryApiChannelHealthAdminGetRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        channelHealthAdminGet(requestParameters: AdminApiChannelHealthAdminGetRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<ChannelHealthListResponse> {
+        channelHealthAdminGet(requestParameters: AdminChatmaryApiChannelHealthAdminGetRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<ChannelHealthListResponse> {
             return localVarFp.channelHealthAdminGet(requestParameters.team, requestParameters.type, requestParameters.kind, requestParameters.failingOnly, requestParameters.limit, requestParameters.cursor, options).then((request) => request(axios, basePath));
         },
     };
 };
 
 /**
- * Request parameters for channelHealthAdminGet operation in AdminApi.
+ * Request parameters for channelHealthAdminGet operation in AdminChatmaryApi.
  * @export
- * @interface AdminApiChannelHealthAdminGetRequest
+ * @interface AdminChatmaryApiChannelHealthAdminGetRequest
  */
-export interface AdminApiChannelHealthAdminGetRequest {
+export interface AdminChatmaryApiChannelHealthAdminGetRequest {
     /**
      * 
      * @type {string}
-     * @memberof AdminApiChannelHealthAdminGet
+     * @memberof AdminChatmaryApiChannelHealthAdminGet
      */
     readonly team?: string
 
     /**
      * 
      * @type {'messenger' | 'instagram' | 'wa-business-api' | 'wa' | 'sms' | 'mail' | 'tiktok' | 'tiktok-shop'}
-     * @memberof AdminApiChannelHealthAdminGet
+     * @memberof AdminChatmaryApiChannelHealthAdminGet
      */
     readonly type?: ChannelHealthAdminGetTypeEnum
 
     /**
      * 
      * @type {'OK' | 'APP_UNSUBSCRIBED' | 'APP_RESUBSCRIBED' | 'TOKEN_REVOKED' | 'PAGE_DELETED' | 'BUSINESS_LOCKED' | 'DATA_ACCESS_FAILED' | 'TOKEN_UNKNOWN_FAIL' | 'WABA_UNLINKED' | 'GLOBAL_TOKEN_DEAD' | 'OBJECT_NOT_FOUND' | 'PHONE_STATUS_BAD' | 'PROBE_ERROR' | 'UNKNOWN'}
-     * @memberof AdminApiChannelHealthAdminGet
+     * @memberof AdminChatmaryApiChannelHealthAdminGet
      */
     readonly kind?: ChannelHealthAdminGetKindEnum
 
     /**
      * 
      * @type {boolean}
-     * @memberof AdminApiChannelHealthAdminGet
+     * @memberof AdminChatmaryApiChannelHealthAdminGet
      */
     readonly failingOnly?: boolean
 
     /**
      * 
      * @type {number}
-     * @memberof AdminApiChannelHealthAdminGet
+     * @memberof AdminChatmaryApiChannelHealthAdminGet
      */
     readonly limit?: number
 
     /**
      * 
      * @type {string}
-     * @memberof AdminApiChannelHealthAdminGet
+     * @memberof AdminChatmaryApiChannelHealthAdminGet
      */
     readonly cursor?: string
 }
 
 /**
- * AdminApi - object-oriented interface
+ * AdminChatmaryApi - object-oriented interface
  * @export
- * @class AdminApi
+ * @class AdminChatmaryApi
  * @extends {BaseAPI}
  */
-export class AdminApi extends BaseAPI {
+export class AdminChatmaryApi extends BaseAPI {
     /**
      * Returns the latest watchdog probe outcome for each monitored channel account, with filters for team, channel type, and probe kind. Designed to power a read-only admin triage view. Tokens are never returned — only their metadata is exposed via the probe result.
      * @summary List ChannelHealthFlag rows for the admin panel
-     * @param {AdminApiChannelHealthAdminGetRequest} requestParameters Request parameters.
+     * @param {AdminChatmaryApiChannelHealthAdminGetRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof AdminApi
+     * @memberof AdminChatmaryApi
      */
-    public channelHealthAdminGet(requestParameters: AdminApiChannelHealthAdminGetRequest = {}, options?: RawAxiosRequestConfig) {
-        return AdminApiFp(this.configuration).channelHealthAdminGet(requestParameters.team, requestParameters.type, requestParameters.kind, requestParameters.failingOnly, requestParameters.limit, requestParameters.cursor, options).then((request) => request(this.axios, this.basePath));
+    public channelHealthAdminGet(requestParameters: AdminChatmaryApiChannelHealthAdminGetRequest = {}, options?: RawAxiosRequestConfig) {
+        return AdminChatmaryApiFp(this.configuration).channelHealthAdminGet(requestParameters.team, requestParameters.type, requestParameters.kind, requestParameters.failingOnly, requestParameters.limit, requestParameters.cursor, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

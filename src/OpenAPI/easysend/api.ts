@@ -3030,7 +3030,7 @@ export interface UpdateTrackingErrorState {
  * AdminApi - axios parameter creator
  * @export
  */
-const AdminApiAxiosParamCreator = function (configuration?: Configuration) {
+export const AdminApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
          * 
@@ -3121,7 +3121,7 @@ const AdminApiAxiosParamCreator = function (configuration?: Configuration) {
  * AdminApi - functional programming interface
  * @export
  */
-const AdminApiFp = function(configuration?: Configuration) {
+export const AdminApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = AdminApiAxiosParamCreator(configuration)
     return {
         /**
@@ -3158,7 +3158,7 @@ const AdminApiFp = function(configuration?: Configuration) {
  * AdminApi - factory interface
  * @export
  */
-const AdminApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+export const AdminApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
     const localVarFp = AdminApiFp(configuration)
     return {
         /**
