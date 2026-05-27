@@ -308,6 +308,166 @@ export interface CalendarEvent {
 /**
  * 
  * @export
+ * @interface ChannelHealthListItem
+ */
+export interface ChannelHealthListItem {
+    /**
+     * 
+     * @type {string}
+     * @memberof ChannelHealthListItem
+     */
+    'accountId': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ChannelHealthListItem
+     */
+    'teamId': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ChannelHealthListItem
+     */
+    'channelType': ChannelHealthListItemChannelTypeEnum;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof ChannelHealthListItem
+     */
+    'ok': boolean;
+    /**
+     * 
+     * @type {number}
+     * @memberof ChannelHealthListItem
+     */
+    'consecutiveFailures': number;
+    /**
+     * 
+     * @type {string}
+     * @memberof ChannelHealthListItem
+     */
+    'lastErrorCode'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof ChannelHealthListItem
+     */
+    'lastErrorMessage'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof ChannelHealthListItem
+     */
+    'lastProbeKind'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof ChannelHealthListItem
+     */
+    'lastOkAt'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof ChannelHealthListItem
+     */
+    'lastErrorAt'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof ChannelHealthListItem
+     */
+    'autoRecoveredAt'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof ChannelHealthListItem
+     */
+    'lastCheckedAt'?: string | null;
+    /**
+     * FB Page id (messenger) or IG id (instagram)
+     * @type {string}
+     * @memberof ChannelHealthListItem
+     */
+    'pageId'?: string | null;
+    /**
+     * WABA phone number id
+     * @type {string}
+     * @memberof ChannelHealthListItem
+     */
+    'phoneNumberId'?: string | null;
+    /**
+     * WABA business id
+     * @type {string}
+     * @memberof ChannelHealthListItem
+     */
+    'waBusinessId'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof ChannelHealthListItem
+     */
+    'createdAt': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ChannelHealthListItem
+     */
+    'updatedAt': string;
+    /**
+     * Computed; null if lastOkAt is null
+     * @type {number}
+     * @memberof ChannelHealthListItem
+     */
+    'daysSinceLastOk'?: number | null;
+    /**
+     * Computed; null if lastCheckedAt is null
+     * @type {number}
+     * @memberof ChannelHealthListItem
+     */
+    'daysSinceLastChecked'?: number | null;
+}
+
+export const ChannelHealthListItemChannelTypeEnum = {
+    Messenger: 'messenger',
+    Instagram: 'instagram',
+    WaBusinessApi: 'wa-business-api',
+    Wa: 'wa',
+    Sms: 'sms',
+    Mail: 'mail',
+    Tiktok: 'tiktok',
+    TiktokShop: 'tiktok-shop'
+} as const;
+
+export type ChannelHealthListItemChannelTypeEnum = typeof ChannelHealthListItemChannelTypeEnum[keyof typeof ChannelHealthListItemChannelTypeEnum];
+
+/**
+ * 
+ * @export
+ * @interface ChannelHealthListResponse
+ */
+export interface ChannelHealthListResponse {
+    /**
+     * 
+     * @type {Array<ChannelHealthListItem>}
+     * @memberof ChannelHealthListResponse
+     */
+    'items': Array<ChannelHealthListItem>;
+    /**
+     * Pass back as `cursor` to fetch the next page; null when no more rows
+     * @type {string}
+     * @memberof ChannelHealthListResponse
+     */
+    'nextCursor'?: string | null;
+    /**
+     * Counts grouped by lastProbeKind, scoped by the team and type filters (kind and failingOnly filters NOT applied)
+     * @type {{ [key: string]: number; }}
+     * @memberof ChannelHealthListResponse
+     */
+    'counts': { [key: string]: number; };
+}
+/**
+ * 
+ * @export
  * @interface ChatFlowHistory
  */
 export interface ChatFlowHistory {
@@ -2312,6 +2472,232 @@ export interface WebhookNotionPostRequestData {
      */
     'properties'?: { [key: string]: any; };
 }
+
+/**
+ * AdminApi - axios parameter creator
+ * @export
+ */
+export const AdminApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * Returns the latest watchdog probe outcome for each monitored channel account, with filters for team, channel type, and probe kind. Designed to power a read-only admin triage view. Tokens are never returned — only their metadata is exposed via the probe result.
+         * @summary List ChannelHealthFlag rows for the admin panel
+         * @param {string} [team] 
+         * @param {ChannelHealthAdminGetTypeEnum} [type] 
+         * @param {ChannelHealthAdminGetKindEnum} [kind] 
+         * @param {boolean} [failingOnly] 
+         * @param {number} [limit] 
+         * @param {string} [cursor] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        channelHealthAdminGet: async (team?: string, type?: ChannelHealthAdminGetTypeEnum, kind?: ChannelHealthAdminGetKindEnum, failingOnly?: boolean, limit?: number, cursor?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/admin/channel-health`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["ADMIN_PANEL_ACCESS"], configuration)
+
+            if (team !== undefined) {
+                localVarQueryParameter['team'] = team;
+            }
+
+            if (type !== undefined) {
+                localVarQueryParameter['type'] = type;
+            }
+
+            if (kind !== undefined) {
+                localVarQueryParameter['kind'] = kind;
+            }
+
+            if (failingOnly !== undefined) {
+                localVarQueryParameter['failingOnly'] = failingOnly;
+            }
+
+            if (limit !== undefined) {
+                localVarQueryParameter['limit'] = limit;
+            }
+
+            if (cursor !== undefined) {
+                localVarQueryParameter['cursor'] = cursor;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * AdminApi - functional programming interface
+ * @export
+ */
+export const AdminApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = AdminApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * Returns the latest watchdog probe outcome for each monitored channel account, with filters for team, channel type, and probe kind. Designed to power a read-only admin triage view. Tokens are never returned — only their metadata is exposed via the probe result.
+         * @summary List ChannelHealthFlag rows for the admin panel
+         * @param {string} [team] 
+         * @param {ChannelHealthAdminGetTypeEnum} [type] 
+         * @param {ChannelHealthAdminGetKindEnum} [kind] 
+         * @param {boolean} [failingOnly] 
+         * @param {number} [limit] 
+         * @param {string} [cursor] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async channelHealthAdminGet(team?: string, type?: ChannelHealthAdminGetTypeEnum, kind?: ChannelHealthAdminGetKindEnum, failingOnly?: boolean, limit?: number, cursor?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ChannelHealthListResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.channelHealthAdminGet(team, type, kind, failingOnly, limit, cursor, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['AdminApi.channelHealthAdminGet']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+    }
+};
+
+/**
+ * AdminApi - factory interface
+ * @export
+ */
+export const AdminApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = AdminApiFp(configuration)
+    return {
+        /**
+         * Returns the latest watchdog probe outcome for each monitored channel account, with filters for team, channel type, and probe kind. Designed to power a read-only admin triage view. Tokens are never returned — only their metadata is exposed via the probe result.
+         * @summary List ChannelHealthFlag rows for the admin panel
+         * @param {AdminApiChannelHealthAdminGetRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        channelHealthAdminGet(requestParameters: AdminApiChannelHealthAdminGetRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<ChannelHealthListResponse> {
+            return localVarFp.channelHealthAdminGet(requestParameters.team, requestParameters.type, requestParameters.kind, requestParameters.failingOnly, requestParameters.limit, requestParameters.cursor, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * Request parameters for channelHealthAdminGet operation in AdminApi.
+ * @export
+ * @interface AdminApiChannelHealthAdminGetRequest
+ */
+export interface AdminApiChannelHealthAdminGetRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof AdminApiChannelHealthAdminGet
+     */
+    readonly team?: string
+
+    /**
+     * 
+     * @type {'messenger' | 'instagram' | 'wa-business-api' | 'wa' | 'sms' | 'mail' | 'tiktok' | 'tiktok-shop'}
+     * @memberof AdminApiChannelHealthAdminGet
+     */
+    readonly type?: ChannelHealthAdminGetTypeEnum
+
+    /**
+     * 
+     * @type {'OK' | 'APP_UNSUBSCRIBED' | 'APP_RESUBSCRIBED' | 'TOKEN_REVOKED' | 'PAGE_DELETED' | 'BUSINESS_LOCKED' | 'DATA_ACCESS_FAILED' | 'TOKEN_UNKNOWN_FAIL' | 'WABA_UNLINKED' | 'GLOBAL_TOKEN_DEAD' | 'OBJECT_NOT_FOUND' | 'PHONE_STATUS_BAD' | 'PROBE_ERROR' | 'UNKNOWN'}
+     * @memberof AdminApiChannelHealthAdminGet
+     */
+    readonly kind?: ChannelHealthAdminGetKindEnum
+
+    /**
+     * 
+     * @type {boolean}
+     * @memberof AdminApiChannelHealthAdminGet
+     */
+    readonly failingOnly?: boolean
+
+    /**
+     * 
+     * @type {number}
+     * @memberof AdminApiChannelHealthAdminGet
+     */
+    readonly limit?: number
+
+    /**
+     * 
+     * @type {string}
+     * @memberof AdminApiChannelHealthAdminGet
+     */
+    readonly cursor?: string
+}
+
+/**
+ * AdminApi - object-oriented interface
+ * @export
+ * @class AdminApi
+ * @extends {BaseAPI}
+ */
+export class AdminApi extends BaseAPI {
+    /**
+     * Returns the latest watchdog probe outcome for each monitored channel account, with filters for team, channel type, and probe kind. Designed to power a read-only admin triage view. Tokens are never returned — only their metadata is exposed via the probe result.
+     * @summary List ChannelHealthFlag rows for the admin panel
+     * @param {AdminApiChannelHealthAdminGetRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AdminApi
+     */
+    public channelHealthAdminGet(requestParameters: AdminApiChannelHealthAdminGetRequest = {}, options?: RawAxiosRequestConfig) {
+        return AdminApiFp(this.configuration).channelHealthAdminGet(requestParameters.team, requestParameters.type, requestParameters.kind, requestParameters.failingOnly, requestParameters.limit, requestParameters.cursor, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+/**
+ * @export
+ */
+export const ChannelHealthAdminGetTypeEnum = {
+    Messenger: 'messenger',
+    Instagram: 'instagram',
+    WaBusinessApi: 'wa-business-api',
+    Wa: 'wa',
+    Sms: 'sms',
+    Mail: 'mail',
+    Tiktok: 'tiktok',
+    TiktokShop: 'tiktok-shop'
+} as const;
+export type ChannelHealthAdminGetTypeEnum = typeof ChannelHealthAdminGetTypeEnum[keyof typeof ChannelHealthAdminGetTypeEnum];
+/**
+ * @export
+ */
+export const ChannelHealthAdminGetKindEnum = {
+    Ok: 'OK',
+    AppUnsubscribed: 'APP_UNSUBSCRIBED',
+    AppResubscribed: 'APP_RESUBSCRIBED',
+    TokenRevoked: 'TOKEN_REVOKED',
+    PageDeleted: 'PAGE_DELETED',
+    BusinessLocked: 'BUSINESS_LOCKED',
+    DataAccessFailed: 'DATA_ACCESS_FAILED',
+    TokenUnknownFail: 'TOKEN_UNKNOWN_FAIL',
+    WabaUnlinked: 'WABA_UNLINKED',
+    GlobalTokenDead: 'GLOBAL_TOKEN_DEAD',
+    ObjectNotFound: 'OBJECT_NOT_FOUND',
+    PhoneStatusBad: 'PHONE_STATUS_BAD',
+    ProbeError: 'PROBE_ERROR',
+    Unknown: 'UNKNOWN'
+} as const;
+export type ChannelHealthAdminGetKindEnum = typeof ChannelHealthAdminGetKindEnum[keyof typeof ChannelHealthAdminGetKindEnum];
+
 
 /**
  * AnalyticsApi - axios parameter creator
