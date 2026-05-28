@@ -2616,7 +2616,7 @@ export interface AdminChatmaryApiChannelHealthAdminGetRequest {
 
     /**
      * 
-     * @type {'OK' | 'APP_UNSUBSCRIBED' | 'APP_RESUBSCRIBED' | 'TOKEN_REVOKED' | 'PAGE_DELETED' | 'BUSINESS_LOCKED' | 'DATA_ACCESS_FAILED' | 'TOKEN_UNKNOWN_FAIL' | 'WABA_UNLINKED' | 'GLOBAL_TOKEN_DEAD' | 'OBJECT_NOT_FOUND' | 'PHONE_STATUS_BAD' | 'PROBE_ERROR' | 'UNKNOWN'}
+     * @type {'OK' | 'APP_UNSUBSCRIBED' | 'APP_RESUBSCRIBED' | 'TOKEN_REVOKED' | 'PAGE_DELETED' | 'BUSINESS_LOCKED' | 'DATA_ACCESS_FAILED' | 'TOKEN_UNKNOWN_FAIL' | 'WABA_UNLINKED' | 'GLOBAL_TOKEN_DEAD' | 'OBJECT_NOT_FOUND' | 'PHONE_STATUS_BAD' | 'PROBE_ERROR' | 'ACCOUNT_CLOSED' | 'UNKNOWN'}
      * @memberof AdminChatmaryApiChannelHealthAdminGet
      */
     readonly kind?: ChannelHealthAdminGetKindEnum
@@ -2694,6 +2694,7 @@ export const ChannelHealthAdminGetKindEnum = {
     ObjectNotFound: 'OBJECT_NOT_FOUND',
     PhoneStatusBad: 'PHONE_STATUS_BAD',
     ProbeError: 'PROBE_ERROR',
+    AccountClosed: 'ACCOUNT_CLOSED',
     Unknown: 'UNKNOWN'
 } as const;
 export type ChannelHealthAdminGetKindEnum = typeof ChannelHealthAdminGetKindEnum[keyof typeof ChannelHealthAdminGetKindEnum];
