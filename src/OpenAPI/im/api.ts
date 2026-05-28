@@ -4889,6 +4889,24 @@ export interface MessageLinkPreview {
      * @memberof MessageLinkPreview
      */
     'matchedText'?: string;
+    /**
+     * Meta ad/post ID for a Click-to-WhatsApp (CTWA) referral. Present only when the message originates from a Facebook/Instagram ad or post.
+     * @type {string}
+     * @memberof MessageLinkPreview
+     */
+    'sourceId'?: string;
+    /**
+     * CTWA referral source type, e.g. \"ad\" or \"post\". Present only for ad/post-originated messages.
+     * @type {string}
+     * @memberof MessageLinkPreview
+     */
+    'sourceType'?: string;
+    /**
+     * Click-to-WhatsApp Click ID. Unique per click; used to report conversions back to Meta via the Conversions API for ad attribution.
+     * @type {string}
+     * @memberof MessageLinkPreview
+     */
+    'ctwaClid'?: string;
 }
 /**
  * 

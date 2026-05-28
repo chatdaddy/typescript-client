@@ -9632,6 +9632,24 @@ export interface MessageInsertDataLinkPreview {
      * @memberof MessageInsertDataLinkPreview
      */
     'matchedText'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof MessageInsertDataLinkPreview
+     */
+    'sourceId'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof MessageInsertDataLinkPreview
+     */
+    'sourceType'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof MessageInsertDataLinkPreview
+     */
+    'ctwaClid'?: string;
 }
 /**
  * 
