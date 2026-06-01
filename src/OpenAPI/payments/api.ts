@@ -117,6 +117,53 @@ export interface AccountLimitationMap {
     'messages'?: number;
 }
 /**
+ * 
+ * @export
+ * @interface AdminCancelPlanRequest
+ */
+export interface AdminCancelPlanRequest {
+    /**
+     * The ID of a team
+     * @type {string}
+     * @memberof AdminCancelPlanRequest
+     */
+    'teamId': string;
+}
+/**
+ * 
+ * @export
+ * @interface AdminCancelPlanResponse
+ */
+export interface AdminCancelPlanResponse {
+    /**
+     * ID of a customer. All credits are linked to a customer. Multiple teams can be linked to the same customer & thus share credits.
+     * @type {string}
+     * @memberof AdminCancelPlanResponse
+     */
+    'customerId': string;
+    /**
+     * The ID of a team
+     * @type {string}
+     * @memberof AdminCancelPlanResponse
+     */
+    'teamId': string;
+    /**
+     * The auto-renewal status before this cancellation. If already \'cancelled\', this call was a no-op.
+     * @type {string}
+     * @memberof AdminCancelPlanResponse
+     */
+    'previousStatus': AdminCancelPlanResponsePreviousStatusEnum;
+}
+
+export const AdminCancelPlanResponsePreviousStatusEnum = {
+    Active: 'active',
+    Cancelled: 'cancelled',
+    Overdue: 'overdue'
+} as const;
+
+export type AdminCancelPlanResponsePreviousStatusEnum = typeof AdminCancelPlanResponsePreviousStatusEnum[keyof typeof AdminCancelPlanResponsePreviousStatusEnum];
+
+/**
  * Fields an admin sets to put a team on a plan without Stripe. Applies the same side-effects as a paid subscription — planType, included message credits, recurring consumption cleanup, CustomerAutoRenewal record — minus the payment flow. The period field defaults to \"year\" when omitted.
  * @export
  * @interface AdminCustomerPlanUpdateRequest
@@ -6053,6 +6100,46 @@ export const CreditsApiAxiosParamCreator = function (configuration?: Configurati
     return {
         /**
          * 
+         * @summary Admin-only — cancel a team\'s current plan subscription. Cancels the Stripe subscription, marks the local CustomerAutoRenewal as `cancelled`, and expires the redeemed coupon (if any). Credit balances and bucket balances are NOT touched. Used to clean up a broken subscription before creating a new one for the same team.
+         * @param {AdminCancelPlanRequest} adminCancelPlanRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        adminCancelPlan: async (adminCancelPlanRequest: AdminCancelPlanRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'adminCancelPlanRequest' is not null or undefined
+            assertParamExists('adminCancelPlan', 'adminCancelPlanRequest', adminCancelPlanRequest)
+            const localVarPath = `/v2/credits/admin/cancel-plan`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["ADMIN_PANEL_ACCESS"], configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(adminCancelPlanRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
          * @summary Admin-only — put a team on a BillingV3 plan without going through Stripe. Mirrors every side-effect of a paid subscription (sets planType, loads included message credits, ends channel/user recurring consumptions, creates an active CustomerAutoRenewal record, marks migration complete) but skips payment and Stripe entirely. Used to grant enterprise plans or override plan assignments for specific teams from the admin panel.
          * @param {AdminCustomerPlanUpdateRequest} adminCustomerPlanUpdateRequest 
          * @param {*} [options] Override http request option.
@@ -7598,6 +7685,19 @@ export const CreditsApiFp = function(configuration?: Configuration) {
     return {
         /**
          * 
+         * @summary Admin-only — cancel a team\'s current plan subscription. Cancels the Stripe subscription, marks the local CustomerAutoRenewal as `cancelled`, and expires the redeemed coupon (if any). Credit balances and bucket balances are NOT touched. Used to clean up a broken subscription before creating a new one for the same team.
+         * @param {AdminCancelPlanRequest} adminCancelPlanRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async adminCancelPlan(adminCancelPlanRequest: AdminCancelPlanRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AdminCancelPlanResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.adminCancelPlan(adminCancelPlanRequest, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['CreditsApi.adminCancelPlan']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
          * @summary Admin-only — put a team on a BillingV3 plan without going through Stripe. Mirrors every side-effect of a paid subscription (sets planType, loads included message credits, ends channel/user recurring consumptions, creates an active CustomerAutoRenewal record, marks migration complete) but skips payment and Stripe entirely. Used to grant enterprise plans or override plan assignments for specific teams from the admin panel.
          * @param {AdminCustomerPlanUpdateRequest} adminCustomerPlanUpdateRequest 
          * @param {*} [options] Override http request option.
@@ -8096,6 +8196,16 @@ export const CreditsApiFactory = function (configuration?: Configuration, basePa
     return {
         /**
          * 
+         * @summary Admin-only — cancel a team\'s current plan subscription. Cancels the Stripe subscription, marks the local CustomerAutoRenewal as `cancelled`, and expires the redeemed coupon (if any). Credit balances and bucket balances are NOT touched. Used to clean up a broken subscription before creating a new one for the same team.
+         * @param {CreditsApiAdminCancelPlanRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        adminCancelPlan(requestParameters: CreditsApiAdminCancelPlanRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminCancelPlanResponse> {
+            return localVarFp.adminCancelPlan(requestParameters.adminCancelPlanRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
          * @summary Admin-only — put a team on a BillingV3 plan without going through Stripe. Mirrors every side-effect of a paid subscription (sets planType, loads included message credits, ends channel/user recurring consumptions, creates an active CustomerAutoRenewal record, marks migration complete) but skips payment and Stripe entirely. Used to grant enterprise plans or override plan assignments for specific teams from the admin panel.
          * @param {CreditsApiAdminCustomerPlanUpdateRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -8440,6 +8550,20 @@ export const CreditsApiFactory = function (configuration?: Configuration, basePa
         },
     };
 };
+
+/**
+ * Request parameters for adminCancelPlan operation in CreditsApi.
+ * @export
+ * @interface CreditsApiAdminCancelPlanRequest
+ */
+export interface CreditsApiAdminCancelPlanRequest {
+    /**
+     * 
+     * @type {AdminCancelPlanRequest}
+     * @memberof CreditsApiAdminCancelPlan
+     */
+    readonly adminCancelPlanRequest: AdminCancelPlanRequest
+}
 
 /**
  * Request parameters for adminCustomerPlanUpdate operation in CreditsApi.
@@ -9127,6 +9251,18 @@ export interface CreditsApiUsageSummaryGetRequest {
  * @extends {BaseAPI}
  */
 export class CreditsApi extends BaseAPI {
+    /**
+     * 
+     * @summary Admin-only — cancel a team\'s current plan subscription. Cancels the Stripe subscription, marks the local CustomerAutoRenewal as `cancelled`, and expires the redeemed coupon (if any). Credit balances and bucket balances are NOT touched. Used to clean up a broken subscription before creating a new one for the same team.
+     * @param {CreditsApiAdminCancelPlanRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CreditsApi
+     */
+    public adminCancelPlan(requestParameters: CreditsApiAdminCancelPlanRequest, options?: RawAxiosRequestConfig) {
+        return CreditsApiFp(this.configuration).adminCancelPlan(requestParameters.adminCancelPlanRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
     /**
      * 
      * @summary Admin-only — put a team on a BillingV3 plan without going through Stripe. Mirrors every side-effect of a paid subscription (sets planType, loads included message credits, ends channel/user recurring consumptions, creates an active CustomerAutoRenewal record, marks migration complete) but skips payment and Stripe entirely. Used to grant enterprise plans or override plan assignments for specific teams from the admin panel.
