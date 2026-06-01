@@ -6249,10 +6249,11 @@ export const TeamsApiAxiosParamCreator = function (configuration?: Configuration
          * Admin-only — sends a \"Workspace Access Restricted\" warning email to all members of the given team, informing them their payment is overdue and their workspace is about to be restricted.
          * @summary Send payment overdue email to all team members
          * @param {string} teamId 
+         * @param {boolean} [legacy] If true, sends the legacy re-engagement email instead of the payment overdue email
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        notifyPaymentOverdue: async (teamId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        notifyPaymentOverdue: async (teamId: string, legacy?: boolean, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'teamId' is not null or undefined
             assertParamExists('notifyPaymentOverdue', 'teamId', teamId)
             const localVarPath = `/admin/notify-payment-overdue`;
@@ -6273,6 +6274,10 @@ export const TeamsApiAxiosParamCreator = function (configuration?: Configuration
 
             if (teamId !== undefined) {
                 localVarQueryParameter['teamId'] = teamId;
+            }
+
+            if (legacy !== undefined) {
+                localVarQueryParameter['legacy'] = legacy;
             }
 
 
@@ -6721,11 +6726,12 @@ export const TeamsApiFp = function(configuration?: Configuration) {
          * Admin-only — sends a \"Workspace Access Restricted\" warning email to all members of the given team, informing them their payment is overdue and their workspace is about to be restricted.
          * @summary Send payment overdue email to all team members
          * @param {string} teamId 
+         * @param {boolean} [legacy] If true, sends the legacy re-engagement email instead of the payment overdue email
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async notifyPaymentOverdue(teamId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<NotifyPaymentOverdue200Response>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.notifyPaymentOverdue(teamId, options);
+        async notifyPaymentOverdue(teamId: string, legacy?: boolean, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<NotifyPaymentOverdue200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.notifyPaymentOverdue(teamId, legacy, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['TeamsApi.notifyPaymentOverdue']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -6889,7 +6895,7 @@ export const TeamsApiFactory = function (configuration?: Configuration, basePath
          * @throws {RequiredError}
          */
         notifyPaymentOverdue(requestParameters: TeamsApiNotifyPaymentOverdueRequest, options?: RawAxiosRequestConfig): AxiosPromise<NotifyPaymentOverdue200Response> {
-            return localVarFp.notifyPaymentOverdue(requestParameters.teamId, options).then((request) => request(axios, basePath));
+            return localVarFp.notifyPaymentOverdue(requestParameters.teamId, requestParameters.legacy, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -7013,6 +7019,13 @@ export interface TeamsApiNotifyPaymentOverdueRequest {
      * @memberof TeamsApiNotifyPaymentOverdue
      */
     readonly teamId: string
+
+    /**
+     * If true, sends the legacy re-engagement email instead of the payment overdue email
+     * @type {boolean}
+     * @memberof TeamsApiNotifyPaymentOverdue
+     */
+    readonly legacy?: boolean
 }
 
 /**
@@ -7279,7 +7292,7 @@ export class TeamsApi extends BaseAPI {
      * @memberof TeamsApi
      */
     public notifyPaymentOverdue(requestParameters: TeamsApiNotifyPaymentOverdueRequest, options?: RawAxiosRequestConfig) {
-        return TeamsApiFp(this.configuration).notifyPaymentOverdue(requestParameters.teamId, options).then((request) => request(this.axios, this.basePath));
+        return TeamsApiFp(this.configuration).notifyPaymentOverdue(requestParameters.teamId, requestParameters.legacy, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
