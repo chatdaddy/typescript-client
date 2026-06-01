@@ -4751,6 +4751,12 @@ export interface TeamDetail {
      * @memberof TeamDetail
      */
     'partnership'?: string;
+    /**
+     * Whether the team\'s account is locked due to non-payment. If true, all API calls that would consume credits will be blocked.
+     * @type {boolean}
+     * @memberof TeamDetail
+     */
+    'lockAccount'?: boolean;
 }
 /**
  * 
@@ -4813,6 +4819,12 @@ export interface TeamDetailUpdate {
      * @memberof TeamDetailUpdate
      */
     'usage'?: LimitationMap;
+    /**
+     * Whether to lock the team\'s account due to non-payment. If true, all API calls that would consume credits will be blocked.
+     * @type {boolean}
+     * @memberof TeamDetailUpdate
+     */
+    'lockAccount'?: boolean;
 }
 /**
  * 
