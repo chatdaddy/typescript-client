@@ -1617,6 +1617,12 @@ export interface CreditCustomer {
      */
     'messengerMessageCreditsAvailable'?: number;
     /**
+     * Active chats remaining this billing cycle (count-based bucket). One first-reply-per-contact-per-month event decrements by 1; overage burns from unitsAvailable at planOverageMultiplier×.
+     * @type {number}
+     * @memberof CreditCustomer
+     */
+    'activeChatsCreditsAvailable'?: number;
+    /**
      * Dedicated wallet for voice-call per-minute consumption. Calls are blocked when this hits zero — does not fall back to general credits. Plan-agnostic.
      * @type {number}
      * @memberof CreditCustomer
