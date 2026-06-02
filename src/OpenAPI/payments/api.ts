@@ -2715,6 +2715,12 @@ export interface ExtraMessages {
      * @memberof ExtraMessages
      */
     'waBusinessMessages'?: number;
+    /**
+     * Number of additional Active Chats per renewal. Counted in chats (one first-reply-per-contact-per-month event = 1).
+     * @type {number}
+     * @memberof ExtraMessages
+     */
+    'activeChats'?: number;
 }
 /**
  * List of features
