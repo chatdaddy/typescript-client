@@ -3412,7 +3412,8 @@ export const PlanId = {
     Basic: 'basic',
     Pro: 'pro',
     Max: 'max',
-    Enterprise: 'enterprise'
+    Enterprise: 'enterprise',
+    Api: 'api'
 } as const;
 
 export type PlanId = typeof PlanId[keyof typeof PlanId];
