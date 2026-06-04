@@ -2109,6 +2109,12 @@ export interface CreditTopUpOptions {
      * @memberof CreditTopUpOptions
      */
     'options'?: MiscBillingOptions;
+    /**
+     * When true, performs API plan signup: sets planType to \'api\' before charging and bypasses the \"must have plan or active sub\" precondition. Used by the API plan registration wizard for the initial top-up.
+     * @type {boolean}
+     * @memberof CreditTopUpOptions
+     */
+    'apiPlanSignup'?: boolean;
 }
 /**
  * 
