@@ -117,6 +117,95 @@ export interface AccountLimitationMap {
     'messages'?: number;
 }
 /**
+ * Admin-only update of a team\'s active auto-renewal. `units` changes the credits granted per renewal (reusing the upgrade/downgrade flow, which adjusts the Stripe subscription and charges the prorated difference now). `nextChargeAt` moves the next charge date. At least one must be provided.
+ * @export
+ * @interface AdminAutoRenewalUpdateRequest
+ */
+export interface AdminAutoRenewalUpdateRequest {
+    /**
+     * The ID of a team
+     * @type {string}
+     * @memberof AdminAutoRenewalUpdateRequest
+     */
+    'teamId': string;
+    /**
+     * New credits granted per renewal cycle. Routed through the existing auto-renewal upgrade/downgrade flow (downgrade-below-usage guard + immediate prorated charge for an increase).
+     * @type {number}
+     * @memberof AdminAutoRenewalUpdateRequest
+     */
+    'units'?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof AdminAutoRenewalUpdateRequest
+     */
+    'nextChargeAt'?: string;
+}
+/**
+ * 
+ * @export
+ * @interface AdminAutoRenewalUpdateResponse
+ */
+export interface AdminAutoRenewalUpdateResponse {
+    /**
+     * ID of a customer. All credits are linked to a customer. Multiple teams can be linked to the same customer & thus share credits.
+     * @type {string}
+     * @memberof AdminAutoRenewalUpdateResponse
+     */
+    'customerId': string;
+    /**
+     * The ID of a team
+     * @type {string}
+     * @memberof AdminAutoRenewalUpdateResponse
+     */
+    'teamId': string;
+    /**
+     * The Stripe subscription id that was updated.
+     * @type {string}
+     * @memberof AdminAutoRenewalUpdateResponse
+     */
+    'subscriptionId': string;
+    /**
+     * Credits granted per renewal after the update.
+     * @type {number}
+     * @memberof AdminAutoRenewalUpdateResponse
+     */
+    'units': number;
+    /**
+     * An ISO formatted timestamp
+     * @type {string}
+     * @memberof AdminAutoRenewalUpdateResponse
+     */
+    'nextChargeAt': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof AdminAutoRenewalUpdateResponse
+     */
+    'status': AdminAutoRenewalUpdateResponseStatusEnum;
+    /**
+     * 
+     * @type {AutoRenewalPeriod}
+     * @memberof AdminAutoRenewalUpdateResponse
+     */
+    'period': AutoRenewalPeriod;
+    /**
+     * Hosted Stripe invoice URL when a `units` increase could not be auto-charged (e.g. the card on file failed) and the customer must pay it. Empty when the change was applied/charged without action needed.
+     * @type {string}
+     * @memberof AdminAutoRenewalUpdateResponse
+     */
+    'paymentUrl'?: string;
+}
+
+export const AdminAutoRenewalUpdateResponseStatusEnum = {
+    Active: 'active',
+    Cancelled: 'cancelled',
+    Overdue: 'overdue'
+} as const;
+
+export type AdminAutoRenewalUpdateResponseStatusEnum = typeof AdminAutoRenewalUpdateResponseStatusEnum[keyof typeof AdminAutoRenewalUpdateResponseStatusEnum];
+
+/**
  * 
  * @export
  * @interface AdminCancelPlanRequest
@@ -6131,6 +6220,46 @@ export const CreditsApiAxiosParamCreator = function (configuration?: Configurati
     return {
         /**
          * 
+         * @summary Admin-only — update a team\'s auto-renewal credits-per-cycle (`units`) and/or next charge date. The amount change reuses the existing upgrade/downgrade flow (Stripe subscription update + immediate prorated charge, with the downgrade-below-usage guard); the date change moves the subscription\'s next charge. The local CustomerAutoRenewal record is synced from Stripe. Used from the admin panel.
+         * @param {AdminAutoRenewalUpdateRequest} adminAutoRenewalUpdateRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        adminAutoRenewalUpdate: async (adminAutoRenewalUpdateRequest: AdminAutoRenewalUpdateRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'adminAutoRenewalUpdateRequest' is not null or undefined
+            assertParamExists('adminAutoRenewalUpdate', 'adminAutoRenewalUpdateRequest', adminAutoRenewalUpdateRequest)
+            const localVarPath = `/v2/credits/admin/auto-renewal`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["ADMIN_PANEL_ACCESS"], configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(adminAutoRenewalUpdateRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
          * @summary Admin-only — cancel a team\'s current plan subscription. Cancels the Stripe subscription, marks the local CustomerAutoRenewal as `cancelled`, and expires the redeemed coupon (if any). Credit balances and bucket balances are NOT touched. Used to clean up a broken subscription before creating a new one for the same team.
          * @param {AdminCancelPlanRequest} adminCancelPlanRequest 
          * @param {*} [options] Override http request option.
@@ -7716,6 +7845,19 @@ export const CreditsApiFp = function(configuration?: Configuration) {
     return {
         /**
          * 
+         * @summary Admin-only — update a team\'s auto-renewal credits-per-cycle (`units`) and/or next charge date. The amount change reuses the existing upgrade/downgrade flow (Stripe subscription update + immediate prorated charge, with the downgrade-below-usage guard); the date change moves the subscription\'s next charge. The local CustomerAutoRenewal record is synced from Stripe. Used from the admin panel.
+         * @param {AdminAutoRenewalUpdateRequest} adminAutoRenewalUpdateRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async adminAutoRenewalUpdate(adminAutoRenewalUpdateRequest: AdminAutoRenewalUpdateRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AdminAutoRenewalUpdateResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.adminAutoRenewalUpdate(adminAutoRenewalUpdateRequest, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['CreditsApi.adminAutoRenewalUpdate']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
          * @summary Admin-only — cancel a team\'s current plan subscription. Cancels the Stripe subscription, marks the local CustomerAutoRenewal as `cancelled`, and expires the redeemed coupon (if any). Credit balances and bucket balances are NOT touched. Used to clean up a broken subscription before creating a new one for the same team.
          * @param {AdminCancelPlanRequest} adminCancelPlanRequest 
          * @param {*} [options] Override http request option.
@@ -8227,6 +8369,16 @@ export const CreditsApiFactory = function (configuration?: Configuration, basePa
     return {
         /**
          * 
+         * @summary Admin-only — update a team\'s auto-renewal credits-per-cycle (`units`) and/or next charge date. The amount change reuses the existing upgrade/downgrade flow (Stripe subscription update + immediate prorated charge, with the downgrade-below-usage guard); the date change moves the subscription\'s next charge. The local CustomerAutoRenewal record is synced from Stripe. Used from the admin panel.
+         * @param {CreditsApiAdminAutoRenewalUpdateRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        adminAutoRenewalUpdate(requestParameters: CreditsApiAdminAutoRenewalUpdateRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminAutoRenewalUpdateResponse> {
+            return localVarFp.adminAutoRenewalUpdate(requestParameters.adminAutoRenewalUpdateRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
          * @summary Admin-only — cancel a team\'s current plan subscription. Cancels the Stripe subscription, marks the local CustomerAutoRenewal as `cancelled`, and expires the redeemed coupon (if any). Credit balances and bucket balances are NOT touched. Used to clean up a broken subscription before creating a new one for the same team.
          * @param {CreditsApiAdminCancelPlanRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -8581,6 +8733,20 @@ export const CreditsApiFactory = function (configuration?: Configuration, basePa
         },
     };
 };
+
+/**
+ * Request parameters for adminAutoRenewalUpdate operation in CreditsApi.
+ * @export
+ * @interface CreditsApiAdminAutoRenewalUpdateRequest
+ */
+export interface CreditsApiAdminAutoRenewalUpdateRequest {
+    /**
+     * 
+     * @type {AdminAutoRenewalUpdateRequest}
+     * @memberof CreditsApiAdminAutoRenewalUpdate
+     */
+    readonly adminAutoRenewalUpdateRequest: AdminAutoRenewalUpdateRequest
+}
 
 /**
  * Request parameters for adminCancelPlan operation in CreditsApi.
@@ -9282,6 +9448,18 @@ export interface CreditsApiUsageSummaryGetRequest {
  * @extends {BaseAPI}
  */
 export class CreditsApi extends BaseAPI {
+    /**
+     * 
+     * @summary Admin-only — update a team\'s auto-renewal credits-per-cycle (`units`) and/or next charge date. The amount change reuses the existing upgrade/downgrade flow (Stripe subscription update + immediate prorated charge, with the downgrade-below-usage guard); the date change moves the subscription\'s next charge. The local CustomerAutoRenewal record is synced from Stripe. Used from the admin panel.
+     * @param {CreditsApiAdminAutoRenewalUpdateRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CreditsApi
+     */
+    public adminAutoRenewalUpdate(requestParameters: CreditsApiAdminAutoRenewalUpdateRequest, options?: RawAxiosRequestConfig) {
+        return CreditsApiFp(this.configuration).adminAutoRenewalUpdate(requestParameters.adminAutoRenewalUpdateRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
     /**
      * 
      * @summary Admin-only — cancel a team\'s current plan subscription. Cancels the Stripe subscription, marks the local CustomerAutoRenewal as `cancelled`, and expires the redeemed coupon (if any). Credit balances and bucket balances are NOT touched. Used to clean up a broken subscription before creating a new one for the same team.
