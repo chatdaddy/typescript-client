@@ -1148,7 +1148,7 @@ export interface ConsumptionTotalsGet200ResponseConsumption {
     'messenger'?: MessageCreditConsumption;
 }
 /**
- * 
+ * Region tier used for both country-based legacy pricing and as the pricing override for plan customers. tier1-tier4 are country tiers (see country-tier-map.json). tier5 is a synthetic tier that no country maps to — used to encode the flat pricing for plan customers without disturbing legacy tier1-tier4 rates.
  * @export
  * @enum {string}
  */
@@ -1157,7 +1157,8 @@ export const CountryTier = {
     Tier1: 'tier1',
     Tier2: 'tier2',
     Tier3: 'tier3',
-    Tier4: 'tier4'
+    Tier4: 'tier4',
+    Tier5: 'tier5'
 } as const;
 
 export type CountryTier = typeof CountryTier[keyof typeof CountryTier];
