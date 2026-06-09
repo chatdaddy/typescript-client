@@ -4471,6 +4471,7 @@ export type StripePreferenceCategoryEnum = typeof StripePreferenceCategoryEnum[k
 export const StripePreferenceKeyEnum = {
     AutoRenewal: 'autoRenewal',
     TopUp: 'topUp',
+    TopUpMarkedUp: 'topUpMarkedUp',
     Bonus: 'bonus'
 } as const;
 
