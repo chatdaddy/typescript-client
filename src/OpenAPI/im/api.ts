@@ -7014,6 +7014,62 @@ export interface TemplateParams {
 /**
  * 
  * @export
+ * @interface TemplatesMetaList200Response
+ */
+export interface TemplatesMetaList200Response {
+    /**
+     * 
+     * @type {Array<TemplatesMetaList200ResponseTemplatesInner>}
+     * @memberof TemplatesMetaList200Response
+     */
+    'templates': Array<TemplatesMetaList200ResponseTemplatesInner>;
+}
+/**
+ * 
+ * @export
+ * @interface TemplatesMetaList200ResponseTemplatesInner
+ */
+export interface TemplatesMetaList200ResponseTemplatesInner {
+    /**
+     * ChatDaddy account ID the template belongs to
+     * @type {string}
+     * @memberof TemplatesMetaList200ResponseTemplatesInner
+     */
+    'accountId': string;
+    /**
+     * Meta\'s numeric template ID
+     * @type {string}
+     * @memberof TemplatesMetaList200ResponseTemplatesInner
+     */
+    'metaId': string;
+    /**
+     * Meta template name (bot_{botId}_{actionId} for flow-created templates) — the Meta billing join key
+     * @type {string}
+     * @memberof TemplatesMetaList200ResponseTemplatesInner
+     */
+    'name': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof TemplatesMetaList200ResponseTemplatesInner
+     */
+    'status'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof TemplatesMetaList200ResponseTemplatesInner
+     */
+    'category'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof TemplatesMetaList200ResponseTemplatesInner
+     */
+    'language'?: string;
+}
+/**
+ * 
+ * @export
  * @interface TemplatesSubmitForReview200Response
  */
 export interface TemplatesSubmitForReview200Response {
@@ -20499,6 +20555,45 @@ export const TemplatesApiAxiosParamCreator = function (configuration?: Configura
         },
         /**
          * 
+         * @summary List every WhatsApp template that actually exists on Meta for the team\'s WABA account(s). Source of truth for reconciling Meta billing against message flows. Templates created by flows are named bot_{botId}_{actionId}.
+         * @param {string} [teamId] Team to fetch templates for. Defaults to the caller\&#39;s team. Querying another team requires ADMIN_PANEL_ACCESS.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        templatesMetaList: async (teamId?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/templates/meta-list`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["TEMPLATES_READ"], configuration)
+
+            if (teamId !== undefined) {
+                localVarQueryParameter['teamId'] = teamId;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
          * @summary Submit a template for review
          * @param {string} accountId 
          * @param {TemplatesSubmitForReviewRequest} [templatesSubmitForReviewRequest] 
@@ -20565,6 +20660,19 @@ export const TemplatesApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
+         * @summary List every WhatsApp template that actually exists on Meta for the team\'s WABA account(s). Source of truth for reconciling Meta billing against message flows. Templates created by flows are named bot_{botId}_{actionId}.
+         * @param {string} [teamId] Team to fetch templates for. Defaults to the caller\&#39;s team. Querying another team requires ADMIN_PANEL_ACCESS.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async templatesMetaList(teamId?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TemplatesMetaList200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.templatesMetaList(teamId, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['TemplatesApi.templatesMetaList']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
          * @summary Submit a template for review
          * @param {string} accountId 
          * @param {TemplatesSubmitForReviewRequest} [templatesSubmitForReviewRequest] 
@@ -20599,6 +20707,16 @@ export const TemplatesApiFactory = function (configuration?: Configuration, base
         },
         /**
          * 
+         * @summary List every WhatsApp template that actually exists on Meta for the team\'s WABA account(s). Source of truth for reconciling Meta billing against message flows. Templates created by flows are named bot_{botId}_{actionId}.
+         * @param {TemplatesApiTemplatesMetaListRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        templatesMetaList(requestParameters: TemplatesApiTemplatesMetaListRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<TemplatesMetaList200Response> {
+            return localVarFp.templatesMetaList(requestParameters.teamId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
          * @summary Submit a template for review
          * @param {TemplatesApiTemplatesSubmitForReviewRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -20629,6 +20747,20 @@ export interface TemplatesApiTemplatesDeleteRequest {
      * @memberof TemplatesApiTemplatesDelete
      */
     readonly templateId: string
+}
+
+/**
+ * Request parameters for templatesMetaList operation in TemplatesApi.
+ * @export
+ * @interface TemplatesApiTemplatesMetaListRequest
+ */
+export interface TemplatesApiTemplatesMetaListRequest {
+    /**
+     * Team to fetch templates for. Defaults to the caller\&#39;s team. Querying another team requires ADMIN_PANEL_ACCESS.
+     * @type {string}
+     * @memberof TemplatesApiTemplatesMetaList
+     */
+    readonly teamId?: string
 }
 
 /**
@@ -20669,6 +20801,18 @@ export class TemplatesApi extends BaseAPI {
      */
     public templatesDelete(requestParameters: TemplatesApiTemplatesDeleteRequest, options?: RawAxiosRequestConfig) {
         return TemplatesApiFp(this.configuration).templatesDelete(requestParameters.accountId, requestParameters.templateId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary List every WhatsApp template that actually exists on Meta for the team\'s WABA account(s). Source of truth for reconciling Meta billing against message flows. Templates created by flows are named bot_{botId}_{actionId}.
+     * @param {TemplatesApiTemplatesMetaListRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof TemplatesApi
+     */
+    public templatesMetaList(requestParameters: TemplatesApiTemplatesMetaListRequest = {}, options?: RawAxiosRequestConfig) {
+        return TemplatesApiFp(this.configuration).templatesMetaList(requestParameters.teamId, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
