@@ -7629,6 +7629,119 @@ export interface WabaDisconnectPostRequest {
 /**
  * 
  * @export
+ * @interface WabaHealthBlocker
+ */
+export interface WabaHealthBlocker {
+    /**
+     * Which layer raised it: WABA, BUSINESS, APP, PHONE_NUMBER, ...
+     * @type {string}
+     * @memberof WabaHealthBlocker
+     */
+    'entityType': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof WabaHealthBlocker
+     */
+    'entityId'?: string;
+    /**
+     * Meta error code (e.g. 141006 payment issue, 141010 unverified business, 131031 account locked).
+     * @type {number}
+     * @memberof WabaHealthBlocker
+     */
+    'code'?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof WabaHealthBlocker
+     */
+    'description'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof WabaHealthBlocker
+     */
+    'solution'?: string;
+}
+/**
+ * 
+ * @export
+ * @interface WabaHealthStatusGet200Response
+ */
+export interface WabaHealthStatusGet200Response {
+    /**
+     * Overall verdict for sending from this phone number
+     * @type {string}
+     * @memberof WabaHealthStatusGet200Response
+     */
+    'canSendMessage': WabaHealthStatusGet200ResponseCanSendMessageEnum;
+    /**
+     * 
+     * @type {WabaHealthStatusGet200ResponsePhoneNumber}
+     * @memberof WabaHealthStatusGet200Response
+     */
+    'phoneNumber': WabaHealthStatusGet200ResponsePhoneNumber;
+    /**
+     * 
+     * @type {WabaHealthStatusGet200ResponsePhoneNumber}
+     * @memberof WabaHealthStatusGet200Response
+     */
+    'businessAccount': WabaHealthStatusGet200ResponsePhoneNumber;
+    /**
+     * Every blocker across all entities (WABA, BUSINESS, APP, ...), flattened — the quick \"is anything wrong?\" list.
+     * @type {Array<WabaHealthBlocker>}
+     * @memberof WabaHealthStatusGet200Response
+     */
+    'blockers'?: Array<WabaHealthBlocker>;
+    /**
+     * Raw entities array returned by Meta
+     * @type {Array<{ [key: string]: any; }>}
+     * @memberof WabaHealthStatusGet200Response
+     */
+    'entities'?: Array<{ [key: string]: any; }>;
+}
+
+export const WabaHealthStatusGet200ResponseCanSendMessageEnum = {
+    Available: 'AVAILABLE',
+    Limited: 'LIMITED',
+    Blocked: 'BLOCKED',
+    Unknown: 'UNKNOWN'
+} as const;
+
+export type WabaHealthStatusGet200ResponseCanSendMessageEnum = typeof WabaHealthStatusGet200ResponseCanSendMessageEnum[keyof typeof WabaHealthStatusGet200ResponseCanSendMessageEnum];
+
+/**
+ * 
+ * @export
+ * @interface WabaHealthStatusGet200ResponsePhoneNumber
+ */
+export interface WabaHealthStatusGet200ResponsePhoneNumber {
+    /**
+     * 
+     * @type {string}
+     * @memberof WabaHealthStatusGet200ResponsePhoneNumber
+     */
+    'canSendMessage': WabaHealthStatusGet200ResponsePhoneNumberCanSendMessageEnum;
+    /**
+     * 
+     * @type {Array<WabaHealthBlocker>}
+     * @memberof WabaHealthStatusGet200ResponsePhoneNumber
+     */
+    'blockers': Array<WabaHealthBlocker>;
+}
+
+export const WabaHealthStatusGet200ResponsePhoneNumberCanSendMessageEnum = {
+    Available: 'AVAILABLE',
+    Limited: 'LIMITED',
+    Blocked: 'BLOCKED',
+    Unknown: 'UNKNOWN'
+} as const;
+
+export type WabaHealthStatusGet200ResponsePhoneNumberCanSendMessageEnum = typeof WabaHealthStatusGet200ResponsePhoneNumberCanSendMessageEnum[keyof typeof WabaHealthStatusGet200ResponsePhoneNumberCanSendMessageEnum];
+
+/**
+ * 
+ * @export
  * @interface WabaIncomingCallClaimPostRequest
  */
 export interface WabaIncomingCallClaimPostRequest {
@@ -21955,6 +22068,44 @@ export const WABAHealthApiAxiosParamCreator = function (configuration?: Configur
             };
         },
         /**
+         * Reads Meta\'s health_status field for the account\'s phone number (GET /{phoneNumberId}?fields=health_status). Returns a per-layer verdict (AVAILABLE / LIMITED / BLOCKED) for both the phone number and the owning business account, plus any blockers Meta reports (e.g. payment, account locked, unverified business).
+         * @summary Get Meta health_status for a WABA phone number and its business account
+         * @param {string} accountId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        wabaHealthStatusGet: async (accountId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'accountId' is not null or undefined
+            assertParamExists('wabaHealthStatusGet', 'accountId', accountId)
+            const localVarPath = `/waba/health-status/{accountId}`
+                .replace(`{${"accountId"}}`, encodeURIComponent(String(accountId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", [], configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * 
          * @summary Check if a WABA phone number is connected on Meta
          * @param {WabaStatusCheckPostRequest} wabaStatusCheckPostRequest 
@@ -22018,6 +22169,19 @@ export const WABAHealthApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
+         * Reads Meta\'s health_status field for the account\'s phone number (GET /{phoneNumberId}?fields=health_status). Returns a per-layer verdict (AVAILABLE / LIMITED / BLOCKED) for both the phone number and the owning business account, plus any blockers Meta reports (e.g. payment, account locked, unverified business).
+         * @summary Get Meta health_status for a WABA phone number and its business account
+         * @param {string} accountId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async wabaHealthStatusGet(accountId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<WabaHealthStatusGet200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.wabaHealthStatusGet(accountId, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['WABAHealthApi.wabaHealthStatusGet']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
          * 
          * @summary Check if a WABA phone number is connected on Meta
          * @param {WabaStatusCheckPostRequest} wabaStatusCheckPostRequest 
@@ -22051,6 +22215,16 @@ export const WABAHealthApiFactory = function (configuration?: Configuration, bas
             return localVarFp.wabaDisconnectPost(requestParameters.wabaDisconnectPostRequest, options).then((request) => request(axios, basePath));
         },
         /**
+         * Reads Meta\'s health_status field for the account\'s phone number (GET /{phoneNumberId}?fields=health_status). Returns a per-layer verdict (AVAILABLE / LIMITED / BLOCKED) for both the phone number and the owning business account, plus any blockers Meta reports (e.g. payment, account locked, unverified business).
+         * @summary Get Meta health_status for a WABA phone number and its business account
+         * @param {WABAHealthApiWabaHealthStatusGetRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        wabaHealthStatusGet(requestParameters: WABAHealthApiWabaHealthStatusGetRequest, options?: RawAxiosRequestConfig): AxiosPromise<WabaHealthStatusGet200Response> {
+            return localVarFp.wabaHealthStatusGet(requestParameters.accountId, options).then((request) => request(axios, basePath));
+        },
+        /**
          * 
          * @summary Check if a WABA phone number is connected on Meta
          * @param {WABAHealthApiWabaStatusCheckPostRequest} requestParameters Request parameters.
@@ -22075,6 +22249,20 @@ export interface WABAHealthApiWabaDisconnectPostRequest {
      * @memberof WABAHealthApiWabaDisconnectPost
      */
     readonly wabaDisconnectPostRequest: WabaDisconnectPostRequest
+}
+
+/**
+ * Request parameters for wabaHealthStatusGet operation in WABAHealthApi.
+ * @export
+ * @interface WABAHealthApiWabaHealthStatusGetRequest
+ */
+export interface WABAHealthApiWabaHealthStatusGetRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof WABAHealthApiWabaHealthStatusGet
+     */
+    readonly accountId: string
 }
 
 /**
@@ -22108,6 +22296,18 @@ export class WABAHealthApi extends BaseAPI {
      */
     public wabaDisconnectPost(requestParameters: WABAHealthApiWabaDisconnectPostRequest, options?: RawAxiosRequestConfig) {
         return WABAHealthApiFp(this.configuration).wabaDisconnectPost(requestParameters.wabaDisconnectPostRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Reads Meta\'s health_status field for the account\'s phone number (GET /{phoneNumberId}?fields=health_status). Returns a per-layer verdict (AVAILABLE / LIMITED / BLOCKED) for both the phone number and the owning business account, plus any blockers Meta reports (e.g. payment, account locked, unverified business).
+     * @summary Get Meta health_status for a WABA phone number and its business account
+     * @param {WABAHealthApiWabaHealthStatusGetRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof WABAHealthApi
+     */
+    public wabaHealthStatusGet(requestParameters: WABAHealthApiWabaHealthStatusGetRequest, options?: RawAxiosRequestConfig) {
+        return WABAHealthApiFp(this.configuration).wabaHealthStatusGet(requestParameters.accountId, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
