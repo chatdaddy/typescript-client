@@ -1537,7 +1537,8 @@ export const CreditConsumptionType = {
     AiCreditUse: 'ai_credit_use',
     AiTranscription: 'ai_transcription',
     ExportContacts: 'export_contacts',
-    ExportChats: 'export_chats'
+    ExportChats: 'export_chats',
+    AnalyticsReport: 'analytics_report'
 } as const;
 
 export type CreditConsumptionType = typeof CreditConsumptionType[keyof typeof CreditConsumptionType];
