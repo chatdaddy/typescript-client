@@ -2075,6 +2075,50 @@ export const DashboardApiAxiosParamCreator = function (configuration?: Configura
         },
         /**
          * 
+         * @summary V2 analytics metrics (chats-performance + agent-performance) for a team over the last 24h vs the previous 24h. Powers the daily AI report cron.
+         * @param {string} [teamId] Team ID to fetch data for. Admin token required when it differs from the caller\&#39;s team.
+         * @param {string} [timezoneOffset] Timezone offset to query the data in.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getAnalyticsReportData: async (teamId?: string, timezoneOffset?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/analytics-report-data`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["METRICS_GET"], configuration)
+
+            if (teamId !== undefined) {
+                localVarQueryParameter['teamId'] = teamId;
+            }
+
+            if (timezoneOffset !== undefined) {
+                localVarQueryParameter['timezoneOffset'] = timezoneOffset;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
          * @summary Get benchmarks
          * @param {DashboardPeriod} [period] 
          * @param {AdminDashboardFilterItems} [filters] Filters to apply to the dashboards.
@@ -2444,6 +2488,20 @@ export const DashboardApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
+         * @summary V2 analytics metrics (chats-performance + agent-performance) for a team over the last 24h vs the previous 24h. Powers the daily AI report cron.
+         * @param {string} [teamId] Team ID to fetch data for. Admin token required when it differs from the caller\&#39;s team.
+         * @param {string} [timezoneOffset] Timezone offset to query the data in.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getAnalyticsReportData(teamId?: string, timezoneOffset?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DashboardData>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getAnalyticsReportData(teamId, timezoneOffset, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['DashboardApi.getAnalyticsReportData']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
          * @summary Get benchmarks
          * @param {DashboardPeriod} [period] 
          * @param {AdminDashboardFilterItems} [filters] Filters to apply to the dashboards.
@@ -2573,6 +2631,16 @@ export const DashboardApiFactory = function (configuration?: Configuration, base
          */
         getAdminDashboards(requestParameters: DashboardApiGetAdminDashboardsRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminDashboardResponse> {
             return localVarFp.getAdminDashboards(requestParameters.period, requestParameters.teamIds, requestParameters.count, requestParameters.cursor, requestParameters.returnTotal, requestParameters.sort, requestParameters.filters, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary V2 analytics metrics (chats-performance + agent-performance) for a team over the last 24h vs the previous 24h. Powers the daily AI report cron.
+         * @param {DashboardApiGetAnalyticsReportDataRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getAnalyticsReportData(requestParameters: DashboardApiGetAnalyticsReportDataRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<DashboardData> {
+            return localVarFp.getAnalyticsReportData(requestParameters.teamId, requestParameters.timezoneOffset, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -2725,6 +2793,27 @@ export interface DashboardApiGetAdminDashboardsRequest {
      * @memberof DashboardApiGetAdminDashboards
      */
     readonly filters?: AdminDashboardFilterItems
+}
+
+/**
+ * Request parameters for getAnalyticsReportData operation in DashboardApi.
+ * @export
+ * @interface DashboardApiGetAnalyticsReportDataRequest
+ */
+export interface DashboardApiGetAnalyticsReportDataRequest {
+    /**
+     * Team ID to fetch data for. Admin token required when it differs from the caller\&#39;s team.
+     * @type {string}
+     * @memberof DashboardApiGetAnalyticsReportData
+     */
+    readonly teamId?: string
+
+    /**
+     * Timezone offset to query the data in.
+     * @type {string}
+     * @memberof DashboardApiGetAnalyticsReportData
+     */
+    readonly timezoneOffset?: string
 }
 
 /**
@@ -2943,6 +3032,18 @@ export class DashboardApi extends BaseAPI {
      */
     public getAdminDashboards(requestParameters: DashboardApiGetAdminDashboardsRequest, options?: RawAxiosRequestConfig) {
         return DashboardApiFp(this.configuration).getAdminDashboards(requestParameters.period, requestParameters.teamIds, requestParameters.count, requestParameters.cursor, requestParameters.returnTotal, requestParameters.sort, requestParameters.filters, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary V2 analytics metrics (chats-performance + agent-performance) for a team over the last 24h vs the previous 24h. Powers the daily AI report cron.
+     * @param {DashboardApiGetAnalyticsReportDataRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DashboardApi
+     */
+    public getAnalyticsReportData(requestParameters: DashboardApiGetAnalyticsReportDataRequest = {}, options?: RawAxiosRequestConfig) {
+        return DashboardApiFp(this.configuration).getAnalyticsReportData(requestParameters.teamId, requestParameters.timezoneOffset, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
