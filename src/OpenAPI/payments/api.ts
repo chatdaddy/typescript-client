@@ -2220,7 +2220,7 @@ export interface CreditTransactionBase {
      */
     'id': string;
     /**
-     * Number of units consumed/credited. Positive for credit, negative for consumption.
+     * Number of units consumed/credited. Positive for credit, negative for consumption. ALWAYS 0 when `consumptionStream = \'plan\'` (the event was absorbed by a plan bucket, no wallet movement).
      * @type {number}
      * @memberof CreditTransactionBase
      */
@@ -2238,11 +2238,17 @@ export interface CreditTransactionBase {
      */
     'createdAt': string;
     /**
-     * The ID of the object that was consumed, or the ID of the gain that created this tx record. (createdAt, objectId) will be enforced to be unique.
+     * The ID of the object that was consumed, or the ID of the gain that created this tx record. (createdAt, objectId, consumptionStream) is enforced to be unique.
      * @type {string}
      * @memberof CreditTransactionBase
      */
     'objectId': string;
+    /**
+     * Which budget covered this row. `wallet` (default): debited from unitsAvailable — overage, top-ups, recurring charges, refunds, etc. `plan`: absorbed by a plan bucket (whatsapp/sms/email/active-chats); `units` is 0 and the real per-event spend is in `metadata.realCost` / `metadata.delta` / `metadata.bucketField`.
+     * @type {string}
+     * @memberof CreditTransactionBase
+     */
+    'consumptionStream'?: CreditTransactionBaseConsumptionStreamEnum;
     /**
      * 
      * @type {TxMetadata}
@@ -2250,6 +2256,14 @@ export interface CreditTransactionBase {
      */
     'metadata'?: TxMetadata | null;
 }
+
+export const CreditTransactionBaseConsumptionStreamEnum = {
+    Wallet: 'wallet',
+    Plan: 'plan'
+} as const;
+
+export type CreditTransactionBaseConsumptionStreamEnum = typeof CreditTransactionBaseConsumptionStreamEnum[keyof typeof CreditTransactionBaseConsumptionStreamEnum];
+
 /**
  * A record of a credit transaction. This could be a gain or a consumption record & is immutable.
  * @export
@@ -2263,7 +2277,7 @@ export interface CreditTransactionRecord {
      */
     'id': string;
     /**
-     * Number of units consumed/credited. Positive for credit, negative for consumption.
+     * Number of units consumed/credited. Positive for credit, negative for consumption. ALWAYS 0 when `consumptionStream = \'plan\'` (the event was absorbed by a plan bucket, no wallet movement).
      * @type {number}
      * @memberof CreditTransactionRecord
      */
@@ -2281,11 +2295,17 @@ export interface CreditTransactionRecord {
      */
     'createdAt': string;
     /**
-     * The ID of the object that was consumed, or the ID of the gain that created this tx record. (createdAt, objectId) will be enforced to be unique.
+     * The ID of the object that was consumed, or the ID of the gain that created this tx record. (createdAt, objectId, consumptionStream) is enforced to be unique.
      * @type {string}
      * @memberof CreditTransactionRecord
      */
     'objectId': string;
+    /**
+     * Which budget covered this row. `wallet` (default): debited from unitsAvailable — overage, top-ups, recurring charges, refunds, etc. `plan`: absorbed by a plan bucket (whatsapp/sms/email/active-chats); `units` is 0 and the real per-event spend is in `metadata.realCost` / `metadata.delta` / `metadata.bucketField`.
+     * @type {string}
+     * @memberof CreditTransactionRecord
+     */
+    'consumptionStream'?: CreditTransactionRecordConsumptionStreamEnum;
     /**
      * 
      * @type {TxMetadata}
@@ -2317,6 +2337,14 @@ export interface CreditTransactionRecord {
      */
     'recurringConsumptionId'?: string;
 }
+
+export const CreditTransactionRecordConsumptionStreamEnum = {
+    Wallet: 'wallet',
+    Plan: 'plan'
+} as const;
+
+export type CreditTransactionRecordConsumptionStreamEnum = typeof CreditTransactionRecordConsumptionStreamEnum[keyof typeof CreditTransactionRecordConsumptionStreamEnum];
+
 /**
  * 
  * @export
@@ -3899,6 +3927,30 @@ export interface RecTxMetadata {
      */
     'couponId'?: string;
     /**
+     * Plan-row only. The CreditCustomer column that was decremented (e.g. \'whatsappMessageCreditsAvailable\').
+     * @type {string}
+     * @memberof RecTxMetadata
+     */
+    'bucketField'?: string;
+    /**
+     * Plan-row only. Units removed from the bucket (1 for count-buckets; min(currentBucket, realCost) for credit-buckets).
+     * @type {number}
+     * @memberof RecTxMetadata
+     */
+    'delta'?: number;
+    /**
+     * Plan-row only. What the wallet would have been charged in credits if the bucket weren\'t there — used by the UI to render \"n credits covered by your plan\".
+     * @type {number}
+     * @memberof RecTxMetadata
+     */
+    'realCost'?: number;
+    /**
+     * Wallet-row only, partial-coverage case. The real per-event cost; the row pairs with a plan row on the same `objectId` whose `delta` captures the slice the bucket absorbed.
+     * @type {number}
+     * @memberof RecTxMetadata
+     */
+    'overageOf'?: number;
+    /**
      * If this recurring charge was resynced after another recurring sub was cancelled, this will be the number of units that were charged previously. 
      * @type {number}
      * @memberof RecTxMetadata
@@ -4963,6 +5015,30 @@ export interface TxMetadata {
      * @memberof TxMetadata
      */
     'couponId'?: string;
+    /**
+     * Plan-row only. The CreditCustomer column that was decremented (e.g. \'whatsappMessageCreditsAvailable\').
+     * @type {string}
+     * @memberof TxMetadata
+     */
+    'bucketField'?: string;
+    /**
+     * Plan-row only. Units removed from the bucket (1 for count-buckets; min(currentBucket, realCost) for credit-buckets).
+     * @type {number}
+     * @memberof TxMetadata
+     */
+    'delta'?: number;
+    /**
+     * Plan-row only. What the wallet would have been charged in credits if the bucket weren\'t there — used by the UI to render \"n credits covered by your plan\".
+     * @type {number}
+     * @memberof TxMetadata
+     */
+    'realCost'?: number;
+    /**
+     * Wallet-row only, partial-coverage case. The real per-event cost; the row pairs with a plan row on the same `objectId` whose `delta` captures the slice the bucket absorbed.
+     * @type {number}
+     * @memberof TxMetadata
+     */
+    'overageOf'?: number;
 }
 /**
  * 
@@ -7064,6 +7140,7 @@ export const CreditsApiAxiosParamCreator = function (configuration?: Configurati
          * @param {string} [cursor] 
          * @param {Array<CreditBalanceEffectType>} [type] 
          * @param {CreditTxsGetEffectTypeEnum} [effectType] 
+         * @param {CreditTxsGetConsumptionStreamEnum} [consumptionStream] Filter by which budget covered the row. &#x60;wallet&#x60; (default if omitted): only wallet movements — preserves historical behaviour for every existing client. &#x60;plan&#x60;: only rows absorbed by a plan bucket. &#x60;all&#x60;: both, useful for a combined view.
          * @param {Array<string>} [id] 
          * @param {DateRange} [createdAt] 
          * @param {string} [doneBy] 
@@ -7071,7 +7148,7 @@ export const CreditsApiAxiosParamCreator = function (configuration?: Configurati
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        creditTxsGet: async (teamId?: string, customerId?: string, count?: number, cursor?: string, type?: Array<CreditBalanceEffectType>, effectType?: CreditTxsGetEffectTypeEnum, id?: Array<string>, createdAt?: DateRange, doneBy?: string, returnTotal?: boolean, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        creditTxsGet: async (teamId?: string, customerId?: string, count?: number, cursor?: string, type?: Array<CreditBalanceEffectType>, effectType?: CreditTxsGetEffectTypeEnum, consumptionStream?: CreditTxsGetConsumptionStreamEnum, id?: Array<string>, createdAt?: DateRange, doneBy?: string, returnTotal?: boolean, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v2/credits/consumption`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -7110,6 +7187,10 @@ export const CreditsApiAxiosParamCreator = function (configuration?: Configurati
 
             if (effectType !== undefined) {
                 localVarQueryParameter['effectType'] = effectType;
+            }
+
+            if (consumptionStream !== undefined) {
+                localVarQueryParameter['consumptionStream'] = consumptionStream;
             }
 
             if (id) {
@@ -8124,6 +8205,7 @@ export const CreditsApiFp = function(configuration?: Configuration) {
          * @param {string} [cursor] 
          * @param {Array<CreditBalanceEffectType>} [type] 
          * @param {CreditTxsGetEffectTypeEnum} [effectType] 
+         * @param {CreditTxsGetConsumptionStreamEnum} [consumptionStream] Filter by which budget covered the row. &#x60;wallet&#x60; (default if omitted): only wallet movements — preserves historical behaviour for every existing client. &#x60;plan&#x60;: only rows absorbed by a plan bucket. &#x60;all&#x60;: both, useful for a combined view.
          * @param {Array<string>} [id] 
          * @param {DateRange} [createdAt] 
          * @param {string} [doneBy] 
@@ -8131,8 +8213,8 @@ export const CreditsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async creditTxsGet(teamId?: string, customerId?: string, count?: number, cursor?: string, type?: Array<CreditBalanceEffectType>, effectType?: CreditTxsGetEffectTypeEnum, id?: Array<string>, createdAt?: DateRange, doneBy?: string, returnTotal?: boolean, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CreditTxsGet200Response>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.creditTxsGet(teamId, customerId, count, cursor, type, effectType, id, createdAt, doneBy, returnTotal, options);
+        async creditTxsGet(teamId?: string, customerId?: string, count?: number, cursor?: string, type?: Array<CreditBalanceEffectType>, effectType?: CreditTxsGetEffectTypeEnum, consumptionStream?: CreditTxsGetConsumptionStreamEnum, id?: Array<string>, createdAt?: DateRange, doneBy?: string, returnTotal?: boolean, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CreditTxsGet200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.creditTxsGet(teamId, customerId, count, cursor, type, effectType, consumptionStream, id, createdAt, doneBy, returnTotal, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['CreditsApi.creditTxsGet']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -8575,7 +8657,7 @@ export const CreditsApiFactory = function (configuration?: Configuration, basePa
          * @throws {RequiredError}
          */
         creditTxsGet(requestParameters: CreditsApiCreditTxsGetRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<CreditTxsGet200Response> {
-            return localVarFp.creditTxsGet(requestParameters.teamId, requestParameters.customerId, requestParameters.count, requestParameters.cursor, requestParameters.type, requestParameters.effectType, requestParameters.id, requestParameters.createdAt, requestParameters.doneBy, requestParameters.returnTotal, options).then((request) => request(axios, basePath));
+            return localVarFp.creditTxsGet(requestParameters.teamId, requestParameters.customerId, requestParameters.count, requestParameters.cursor, requestParameters.type, requestParameters.effectType, requestParameters.consumptionStream, requestParameters.id, requestParameters.createdAt, requestParameters.doneBy, requestParameters.returnTotal, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -9106,6 +9188,13 @@ export interface CreditsApiCreditTxsGetRequest {
      * @memberof CreditsApiCreditTxsGet
      */
     readonly effectType?: CreditTxsGetEffectTypeEnum
+
+    /**
+     * Filter by which budget covered the row. &#x60;wallet&#x60; (default if omitted): only wallet movements — preserves historical behaviour for every existing client. &#x60;plan&#x60;: only rows absorbed by a plan bucket. &#x60;all&#x60;: both, useful for a combined view.
+     * @type {'wallet' | 'plan' | 'all'}
+     * @memberof CreditsApiCreditTxsGet
+     */
+    readonly consumptionStream?: CreditTxsGetConsumptionStreamEnum
 
     /**
      * 
@@ -9697,7 +9786,7 @@ export class CreditsApi extends BaseAPI {
      * @memberof CreditsApi
      */
     public creditTxsGet(requestParameters: CreditsApiCreditTxsGetRequest = {}, options?: RawAxiosRequestConfig) {
-        return CreditsApiFp(this.configuration).creditTxsGet(requestParameters.teamId, requestParameters.customerId, requestParameters.count, requestParameters.cursor, requestParameters.type, requestParameters.effectType, requestParameters.id, requestParameters.createdAt, requestParameters.doneBy, requestParameters.returnTotal, options).then((request) => request(this.axios, this.basePath));
+        return CreditsApiFp(this.configuration).creditTxsGet(requestParameters.teamId, requestParameters.customerId, requestParameters.count, requestParameters.cursor, requestParameters.type, requestParameters.effectType, requestParameters.consumptionStream, requestParameters.id, requestParameters.createdAt, requestParameters.doneBy, requestParameters.returnTotal, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -9898,6 +9987,15 @@ export const CreditTxsGetEffectTypeEnum = {
     Consume: 'consume'
 } as const;
 export type CreditTxsGetEffectTypeEnum = typeof CreditTxsGetEffectTypeEnum[keyof typeof CreditTxsGetEffectTypeEnum];
+/**
+ * @export
+ */
+export const CreditTxsGetConsumptionStreamEnum = {
+    Wallet: 'wallet',
+    Plan: 'plan',
+    All: 'all'
+} as const;
+export type CreditTxsGetConsumptionStreamEnum = typeof CreditTxsGetConsumptionStreamEnum[keyof typeof CreditTxsGetConsumptionStreamEnum];
 /**
  * @export
  */

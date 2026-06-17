@@ -6581,7 +6581,7 @@ export interface CredittransactionrecordInsertData {
      */
     'id': string;
     /**
-     * Number of units consumed/credited. Positive for credit, negative for consumption.
+     * Number of units consumed/credited. Positive for credit, negative for consumption. ALWAYS 0 when `consumptionStream = \'plan\'` (the event was absorbed by a plan bucket, no wallet movement).
      * @type {number}
      * @memberof CredittransactionrecordInsertData
      */
@@ -6599,11 +6599,17 @@ export interface CredittransactionrecordInsertData {
      */
     'createdAt': string;
     /**
-     * The ID of the object that was consumed, or the ID of the gain that created this tx record. (createdAt, objectId) will be enforced to be unique.
+     * The ID of the object that was consumed, or the ID of the gain that created this tx record. (createdAt, objectId, consumptionStream) is enforced to be unique.
      * @type {string}
      * @memberof CredittransactionrecordInsertData
      */
     'objectId': string;
+    /**
+     * Which budget covered this row. `wallet` (default): debited from unitsAvailable — overage, top-ups, recurring charges, refunds, etc. `plan`: absorbed by a plan bucket (whatsapp/sms/email/active-chats); `units` is 0 and the real per-event spend is in `metadata.realCost` / `metadata.delta` / `metadata.bucketField`.
+     * @type {string}
+     * @memberof CredittransactionrecordInsertData
+     */
+    'consumptionStream'?: CredittransactionrecordInsertDataConsumptionStreamEnum;
     /**
      * 
      * @type {CredittransactionrecordInsertDataAllOfMetadata}
@@ -6635,6 +6641,14 @@ export interface CredittransactionrecordInsertData {
      */
     'recurringConsumptionId'?: string;
 }
+
+export const CredittransactionrecordInsertDataConsumptionStreamEnum = {
+    Wallet: 'wallet',
+    Plan: 'plan'
+} as const;
+
+export type CredittransactionrecordInsertDataConsumptionStreamEnum = typeof CredittransactionrecordInsertDataConsumptionStreamEnum[keyof typeof CredittransactionrecordInsertDataConsumptionStreamEnum];
+
 /**
  * 
  * @export
@@ -6661,6 +6675,30 @@ export interface CredittransactionrecordInsertDataAllOfMetadata {
      * @memberof CredittransactionrecordInsertDataAllOfMetadata
      */
     'couponId'?: string;
+    /**
+     * Plan-row only. The CreditCustomer column that was decremented (e.g. \'whatsappMessageCreditsAvailable\').
+     * @type {string}
+     * @memberof CredittransactionrecordInsertDataAllOfMetadata
+     */
+    'bucketField'?: string;
+    /**
+     * Plan-row only. Units removed from the bucket (1 for count-buckets; min(currentBucket, realCost) for credit-buckets).
+     * @type {number}
+     * @memberof CredittransactionrecordInsertDataAllOfMetadata
+     */
+    'delta'?: number;
+    /**
+     * Plan-row only. What the wallet would have been charged in credits if the bucket weren\'t there — used by the UI to render \"n credits covered by your plan\".
+     * @type {number}
+     * @memberof CredittransactionrecordInsertDataAllOfMetadata
+     */
+    'realCost'?: number;
+    /**
+     * Wallet-row only, partial-coverage case. The real per-event cost; the row pairs with a plan row on the same `objectId` whose `delta` captures the slice the bucket absorbed.
+     * @type {number}
+     * @memberof CredittransactionrecordInsertDataAllOfMetadata
+     */
+    'overageOf'?: number;
 }
 /**
  * 

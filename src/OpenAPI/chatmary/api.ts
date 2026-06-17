@@ -90,6 +90,200 @@ export interface ActiveChannelsGet200Response {
 /**
  * 
  * @export
+ * @interface AnalyticsReport
+ */
+export interface AnalyticsReport {
+    /**
+     * 
+     * @type {string}
+     * @memberof AnalyticsReport
+     */
+    'id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof AnalyticsReport
+     */
+    'teamId': string;
+    /**
+     * The team-local calendar date this report covers
+     * @type {string}
+     * @memberof AnalyticsReport
+     */
+    'localDate': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof AnalyticsReport
+     */
+    'periodStart'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof AnalyticsReport
+     */
+    'periodEnd'?: string | null;
+    /**
+     * current + previous + deltas
+     * @type {{ [key: string]: any; }}
+     * @memberof AnalyticsReport
+     */
+    'metricsSnapshot'?: { [key: string]: any; } | null;
+    /**
+     * AI narrative as markdown / plain text
+     * @type {string}
+     * @memberof AnalyticsReport
+     */
+    'reportText'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof AnalyticsReport
+     */
+    'status': AnalyticsReportStatusEnum;
+    /**
+     * 
+     * @type {number}
+     * @memberof AnalyticsReport
+     */
+    'creditsCharged'?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof AnalyticsReport
+     */
+    'emailedAt'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof AnalyticsReport
+     */
+    'createdAt'?: string;
+}
+
+export const AnalyticsReportStatusEnum = {
+    Generated: 'generated',
+    GeneratedFallback: 'generated_fallback',
+    Failed: 'failed',
+    SkippedInsufficientCredits: 'skipped_insufficient_credits'
+} as const;
+
+export type AnalyticsReportStatusEnum = typeof AnalyticsReportStatusEnum[keyof typeof AnalyticsReportStatusEnum];
+
+/**
+ * 
+ * @export
+ * @interface AnalyticsReportConfig
+ */
+export interface AnalyticsReportConfig {
+    /**
+     * Team ID (primary key)
+     * @type {string}
+     * @memberof AnalyticsReportConfig
+     */
+    'teamId': string;
+    /**
+     * Whether the daily report is generated for this team
+     * @type {boolean}
+     * @memberof AnalyticsReportConfig
+     */
+    'enabled': boolean;
+    /**
+     * Local time of day to generate, \'HH:MM\' (24h), 15-min granularity
+     * @type {string}
+     * @memberof AnalyticsReportConfig
+     */
+    'generationTimeLocal': string;
+    /**
+     * IANA timezone the generation time is interpreted in
+     * @type {string}
+     * @memberof AnalyticsReportConfig
+     */
+    'timezone': string;
+    /**
+     * Whether to email the report on generation
+     * @type {boolean}
+     * @memberof AnalyticsReportConfig
+     */
+    'emailEnabled': boolean;
+    /**
+     * Override recipient emails; null = team creator + admins
+     * @type {Array<string>}
+     * @memberof AnalyticsReportConfig
+     */
+    'emailRecipients'?: Array<string> | null;
+    /**
+     * True once a user explicitly set a preference (so the 500k default-on never overrides it)
+     * @type {boolean}
+     * @memberof AnalyticsReportConfig
+     */
+    'userOverride'?: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof AnalyticsReportConfig
+     */
+    'createdAt'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof AnalyticsReportConfig
+     */
+    'updatedAt'?: string;
+}
+/**
+ * Partial update of a team\'s daily-report settings
+ * @export
+ * @interface AnalyticsReportConfigUpdate
+ */
+export interface AnalyticsReportConfigUpdate {
+    /**
+     * 
+     * @type {boolean}
+     * @memberof AnalyticsReportConfigUpdate
+     */
+    'enabled'?: boolean | null;
+    /**
+     * Local time \'HH:MM\' (24h)
+     * @type {string}
+     * @memberof AnalyticsReportConfigUpdate
+     */
+    'generationTimeLocal'?: string | null;
+    /**
+     * IANA timezone
+     * @type {string}
+     * @memberof AnalyticsReportConfigUpdate
+     */
+    'timezone'?: string | null;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof AnalyticsReportConfigUpdate
+     */
+    'emailEnabled'?: boolean | null;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof AnalyticsReportConfigUpdate
+     */
+    'emailRecipients'?: Array<string> | null;
+}
+/**
+ * 
+ * @export
+ * @interface AnalyticsReportGet200Response
+ */
+export interface AnalyticsReportGet200Response {
+    /**
+     * 
+     * @type {Array<AnalyticsReport>}
+     * @memberof AnalyticsReportGet200Response
+     */
+    'items': Array<AnalyticsReport>;
+}
+/**
+ * 
+ * @export
  * @interface AutocompleteCalendarEventRequest
  */
 export interface AutocompleteCalendarEventRequest {
@@ -3020,6 +3214,288 @@ export const ActiveChannelsGetDaysEnum = {
     NUMBER_30: 30
 } as const;
 export type ActiveChannelsGetDaysEnum = typeof ActiveChannelsGetDaysEnum[keyof typeof ActiveChannelsGetDaysEnum];
+
+
+/**
+ * AnalyticsReportApi - axios parameter creator
+ * @export
+ */
+export const AnalyticsReportApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @summary Get the daily AI analytics-report settings for the current team
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        analyticsReportConfigGet: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/analytics-report/config`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", [], configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Update the daily AI analytics-report settings for the current team
+         * @param {AnalyticsReportConfigUpdate} analyticsReportConfigUpdate 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        analyticsReportConfigPatch: async (analyticsReportConfigUpdate: AnalyticsReportConfigUpdate, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'analyticsReportConfigUpdate' is not null or undefined
+            assertParamExists('analyticsReportConfigPatch', 'analyticsReportConfigUpdate', analyticsReportConfigUpdate)
+            const localVarPath = `/analytics-report/config`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PATCH', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", [], configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(analyticsReportConfigUpdate, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary List recent daily AI analytics reports for the current team
+         * @param {number} [count] Max number of reports to return (most recent first)
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        analyticsReportGet: async (count?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/analytics-report`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", [], configuration)
+
+            if (count !== undefined) {
+                localVarQueryParameter['count'] = count;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * AnalyticsReportApi - functional programming interface
+ * @export
+ */
+export const AnalyticsReportApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = AnalyticsReportApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * 
+         * @summary Get the daily AI analytics-report settings for the current team
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async analyticsReportConfigGet(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AnalyticsReportConfig>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.analyticsReportConfigGet(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['AnalyticsReportApi.analyticsReportConfigGet']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @summary Update the daily AI analytics-report settings for the current team
+         * @param {AnalyticsReportConfigUpdate} analyticsReportConfigUpdate 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async analyticsReportConfigPatch(analyticsReportConfigUpdate: AnalyticsReportConfigUpdate, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AnalyticsReportConfig>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.analyticsReportConfigPatch(analyticsReportConfigUpdate, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['AnalyticsReportApi.analyticsReportConfigPatch']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @summary List recent daily AI analytics reports for the current team
+         * @param {number} [count] Max number of reports to return (most recent first)
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async analyticsReportGet(count?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AnalyticsReportGet200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.analyticsReportGet(count, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['AnalyticsReportApi.analyticsReportGet']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+    }
+};
+
+/**
+ * AnalyticsReportApi - factory interface
+ * @export
+ */
+export const AnalyticsReportApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = AnalyticsReportApiFp(configuration)
+    return {
+        /**
+         * 
+         * @summary Get the daily AI analytics-report settings for the current team
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        analyticsReportConfigGet(options?: RawAxiosRequestConfig): AxiosPromise<AnalyticsReportConfig> {
+            return localVarFp.analyticsReportConfigGet(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Update the daily AI analytics-report settings for the current team
+         * @param {AnalyticsReportApiAnalyticsReportConfigPatchRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        analyticsReportConfigPatch(requestParameters: AnalyticsReportApiAnalyticsReportConfigPatchRequest, options?: RawAxiosRequestConfig): AxiosPromise<AnalyticsReportConfig> {
+            return localVarFp.analyticsReportConfigPatch(requestParameters.analyticsReportConfigUpdate, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary List recent daily AI analytics reports for the current team
+         * @param {AnalyticsReportApiAnalyticsReportGetRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        analyticsReportGet(requestParameters: AnalyticsReportApiAnalyticsReportGetRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<AnalyticsReportGet200Response> {
+            return localVarFp.analyticsReportGet(requestParameters.count, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * Request parameters for analyticsReportConfigPatch operation in AnalyticsReportApi.
+ * @export
+ * @interface AnalyticsReportApiAnalyticsReportConfigPatchRequest
+ */
+export interface AnalyticsReportApiAnalyticsReportConfigPatchRequest {
+    /**
+     * 
+     * @type {AnalyticsReportConfigUpdate}
+     * @memberof AnalyticsReportApiAnalyticsReportConfigPatch
+     */
+    readonly analyticsReportConfigUpdate: AnalyticsReportConfigUpdate
+}
+
+/**
+ * Request parameters for analyticsReportGet operation in AnalyticsReportApi.
+ * @export
+ * @interface AnalyticsReportApiAnalyticsReportGetRequest
+ */
+export interface AnalyticsReportApiAnalyticsReportGetRequest {
+    /**
+     * Max number of reports to return (most recent first)
+     * @type {number}
+     * @memberof AnalyticsReportApiAnalyticsReportGet
+     */
+    readonly count?: number
+}
+
+/**
+ * AnalyticsReportApi - object-oriented interface
+ * @export
+ * @class AnalyticsReportApi
+ * @extends {BaseAPI}
+ */
+export class AnalyticsReportApi extends BaseAPI {
+    /**
+     * 
+     * @summary Get the daily AI analytics-report settings for the current team
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AnalyticsReportApi
+     */
+    public analyticsReportConfigGet(options?: RawAxiosRequestConfig) {
+        return AnalyticsReportApiFp(this.configuration).analyticsReportConfigGet(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Update the daily AI analytics-report settings for the current team
+     * @param {AnalyticsReportApiAnalyticsReportConfigPatchRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AnalyticsReportApi
+     */
+    public analyticsReportConfigPatch(requestParameters: AnalyticsReportApiAnalyticsReportConfigPatchRequest, options?: RawAxiosRequestConfig) {
+        return AnalyticsReportApiFp(this.configuration).analyticsReportConfigPatch(requestParameters.analyticsReportConfigUpdate, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary List recent daily AI analytics reports for the current team
+     * @param {AnalyticsReportApiAnalyticsReportGetRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AnalyticsReportApi
+     */
+    public analyticsReportGet(requestParameters: AnalyticsReportApiAnalyticsReportGetRequest = {}, options?: RawAxiosRequestConfig) {
+        return AnalyticsReportApiFp(this.configuration).analyticsReportGet(requestParameters.count, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
 
 
 /**
