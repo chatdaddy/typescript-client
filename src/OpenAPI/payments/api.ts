@@ -7850,10 +7850,11 @@ export const CreditsApiAxiosParamCreator = function (configuration?: Configurati
          * @param {Array<CreditBalanceEffectType>} [type] Optional credit type filter (subset of CreditBalanceEffectType)
          * @param {string} [teamId] 
          * @param {string} [customerId] 
+         * @param {UsageSummaryGetConsumptionStreamEnum} [consumptionStream] Filter rows by which budget covered them. &#x60;wallet&#x60; (default if omitted): only wallet movements — preserves historical behaviour for every existing caller. Inclusive of legacy rows that predate the consumption_stream column. &#x60;plan&#x60;: only rows absorbed by a plan bucket. &#x60;all&#x60;: both — useful for a combined view.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        usageSummaryGet: async (from: string, to: string, interval?: UsageSummaryGetIntervalEnum, effectType?: UsageSummaryGetEffectTypeEnum, type?: Array<CreditBalanceEffectType>, teamId?: string, customerId?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        usageSummaryGet: async (from: string, to: string, interval?: UsageSummaryGetIntervalEnum, effectType?: UsageSummaryGetEffectTypeEnum, type?: Array<CreditBalanceEffectType>, teamId?: string, customerId?: string, consumptionStream?: UsageSummaryGetConsumptionStreamEnum, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'from' is not null or undefined
             assertParamExists('usageSummaryGet', 'from', from)
             // verify required parameter 'to' is not null or undefined
@@ -7904,6 +7905,10 @@ export const CreditsApiAxiosParamCreator = function (configuration?: Configurati
 
             if (customerId !== undefined) {
                 localVarQueryParameter['customerId'] = customerId;
+            }
+
+            if (consumptionStream !== undefined) {
+                localVarQueryParameter['consumptionStream'] = consumptionStream;
             }
 
 
@@ -8433,11 +8438,12 @@ export const CreditsApiFp = function(configuration?: Configuration) {
          * @param {Array<CreditBalanceEffectType>} [type] Optional credit type filter (subset of CreditBalanceEffectType)
          * @param {string} [teamId] 
          * @param {string} [customerId] 
+         * @param {UsageSummaryGetConsumptionStreamEnum} [consumptionStream] Filter rows by which budget covered them. &#x60;wallet&#x60; (default if omitted): only wallet movements — preserves historical behaviour for every existing caller. Inclusive of legacy rows that predate the consumption_stream column. &#x60;plan&#x60;: only rows absorbed by a plan bucket. &#x60;all&#x60;: both — useful for a combined view.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async usageSummaryGet(from: string, to: string, interval?: UsageSummaryGetIntervalEnum, effectType?: UsageSummaryGetEffectTypeEnum, type?: Array<CreditBalanceEffectType>, teamId?: string, customerId?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<UsageSummary>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.usageSummaryGet(from, to, interval, effectType, type, teamId, customerId, options);
+        async usageSummaryGet(from: string, to: string, interval?: UsageSummaryGetIntervalEnum, effectType?: UsageSummaryGetEffectTypeEnum, type?: Array<CreditBalanceEffectType>, teamId?: string, customerId?: string, consumptionStream?: UsageSummaryGetConsumptionStreamEnum, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<UsageSummary>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.usageSummaryGet(from, to, interval, effectType, type, teamId, customerId, consumptionStream, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['CreditsApi.usageSummaryGet']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -8814,7 +8820,7 @@ export const CreditsApiFactory = function (configuration?: Configuration, basePa
          * @throws {RequiredError}
          */
         usageSummaryGet(requestParameters: CreditsApiUsageSummaryGetRequest, options?: RawAxiosRequestConfig): AxiosPromise<UsageSummary> {
-            return localVarFp.usageSummaryGet(requestParameters.from, requestParameters.to, requestParameters.interval, requestParameters.effectType, requestParameters.type, requestParameters.teamId, requestParameters.customerId, options).then((request) => request(axios, basePath));
+            return localVarFp.usageSummaryGet(requestParameters.from, requestParameters.to, requestParameters.interval, requestParameters.effectType, requestParameters.type, requestParameters.teamId, requestParameters.customerId, requestParameters.consumptionStream, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -9531,6 +9537,13 @@ export interface CreditsApiUsageSummaryGetRequest {
      * @memberof CreditsApiUsageSummaryGet
      */
     readonly customerId?: string
+
+    /**
+     * Filter rows by which budget covered them. &#x60;wallet&#x60; (default if omitted): only wallet movements — preserves historical behaviour for every existing caller. Inclusive of legacy rows that predate the consumption_stream column. &#x60;plan&#x60;: only rows absorbed by a plan bucket. &#x60;all&#x60;: both — useful for a combined view.
+     * @type {'wallet' | 'plan' | 'all'}
+     * @memberof CreditsApiUsageSummaryGet
+     */
+    readonly consumptionStream?: UsageSummaryGetConsumptionStreamEnum
 }
 
 /**
@@ -9975,7 +9988,7 @@ export class CreditsApi extends BaseAPI {
      * @memberof CreditsApi
      */
     public usageSummaryGet(requestParameters: CreditsApiUsageSummaryGetRequest, options?: RawAxiosRequestConfig) {
-        return CreditsApiFp(this.configuration).usageSummaryGet(requestParameters.from, requestParameters.to, requestParameters.interval, requestParameters.effectType, requestParameters.type, requestParameters.teamId, requestParameters.customerId, options).then((request) => request(this.axios, this.basePath));
+        return CreditsApiFp(this.configuration).usageSummaryGet(requestParameters.from, requestParameters.to, requestParameters.interval, requestParameters.effectType, requestParameters.type, requestParameters.teamId, requestParameters.customerId, requestParameters.consumptionStream, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
@@ -10023,6 +10036,15 @@ export const UsageSummaryGetEffectTypeEnum = {
     Consume: 'consume'
 } as const;
 export type UsageSummaryGetEffectTypeEnum = typeof UsageSummaryGetEffectTypeEnum[keyof typeof UsageSummaryGetEffectTypeEnum];
+/**
+ * @export
+ */
+export const UsageSummaryGetConsumptionStreamEnum = {
+    Wallet: 'wallet',
+    Plan: 'plan',
+    All: 'all'
+} as const;
+export type UsageSummaryGetConsumptionStreamEnum = typeof UsageSummaryGetConsumptionStreamEnum[keyof typeof UsageSummaryGetConsumptionStreamEnum];
 
 
 /**
