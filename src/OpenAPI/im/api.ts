@@ -313,17 +313,23 @@ export interface AccountCredentialsMeta {
      */
     'type': AccountCredentialsMetaTypeEnum;
     /**
-     * Page ID of the Facebook page
+     * Facebook Page ID for Facebook-login channels, or the Instagram user ID for direct Instagram Business Login channels (loginType=instagram).
      * @type {string}
      * @memberof AccountCredentialsMeta
      */
     'pageId': string;
     /**
-     * Page access token of the Facebook page
+     * Facebook Page access token, or the long-lived Instagram user token for direct Instagram Business Login channels (loginType=instagram).
      * @type {string}
      * @memberof AccountCredentialsMeta
      */
     'pageAccessToken': string;
+    /**
+     * How the channel was connected. Absent/`facebook` (default) = Facebook Login; calls go to graph.facebook.com. `instagram` = direct Instagram Business Login; pageAccessToken is an Instagram user token and calls go to graph.instagram.com.
+     * @type {string}
+     * @memberof AccountCredentialsMeta
+     */
+    'loginType'?: AccountCredentialsMetaLoginTypeEnum;
 }
 
 export const AccountCredentialsMetaTypeEnum = {
@@ -331,6 +337,12 @@ export const AccountCredentialsMetaTypeEnum = {
 } as const;
 
 export type AccountCredentialsMetaTypeEnum = typeof AccountCredentialsMetaTypeEnum[keyof typeof AccountCredentialsMetaTypeEnum];
+export const AccountCredentialsMetaLoginTypeEnum = {
+    Facebook: 'facebook',
+    Instagram: 'instagram'
+} as const;
+
+export type AccountCredentialsMetaLoginTypeEnum = typeof AccountCredentialsMetaLoginTypeEnum[keyof typeof AccountCredentialsMetaLoginTypeEnum];
 
 /**
  * 
@@ -3445,6 +3457,51 @@ export interface EntryItems {
 /**
  * 
  * @export
+ * @interface FacebookLogin
+ */
+export interface FacebookLogin {
+    /**
+     * 
+     * @type {string}
+     * @memberof FacebookLogin
+     */
+    'pageId': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof FacebookLogin
+     */
+    'pageAccessToken': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof FacebookLogin
+     */
+    'userAccessToken': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof FacebookLogin
+     */
+    'fbPageId'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof FacebookLogin
+     */
+    'type'?: FacebookLoginTypeEnum;
+}
+
+export const FacebookLoginTypeEnum = {
+    Messenger: 'messenger',
+    Instagram: 'instagram'
+} as const;
+
+export type FacebookLoginTypeEnum = typeof FacebookLoginTypeEnum[keyof typeof FacebookLoginTypeEnum];
+
+/**
+ * 
+ * @export
  * @interface GetChannelCount200Response
  */
 export interface GetChannelCount200Response {
@@ -3782,6 +3839,25 @@ export interface IncognitoModeLogPostRequest {
      * @memberof IncognitoModeLogPostRequest
      */
     'enabled': boolean;
+}
+/**
+ * 
+ * @export
+ * @interface InstagramBusinessLogin
+ */
+export interface InstagramBusinessLogin {
+    /**
+     * Direct Instagram Business Login — the OAuth authorization code. Exchanged server-side for a long-lived Instagram user token (no Facebook Page); the account is stored with credentials.loginType = instagram.
+     * @type {string}
+     * @memberof InstagramBusinessLogin
+     */
+    'code': string;
+    /**
+     * The redirect_uri used in the authorize request; must match exactly (Instagram validates it during the code exchange).
+     * @type {string}
+     * @memberof InstagramBusinessLogin
+     */
+    'redirectUri': string;
 }
 /**
  * 
@@ -6444,49 +6520,10 @@ type ProductSyncStatus = typeof ProductSyncStatus[keyof typeof ProductSyncStatus
 
 
 /**
- * 
+ * @type ProfileMessengerPostRequest
  * @export
- * @interface ProfileMessengerPostRequest
  */
-export interface ProfileMessengerPostRequest {
-    /**
-     * 
-     * @type {string}
-     * @memberof ProfileMessengerPostRequest
-     */
-    'pageId': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ProfileMessengerPostRequest
-     */
-    'pageAccessToken': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ProfileMessengerPostRequest
-     */
-    'userAccessToken': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ProfileMessengerPostRequest
-     */
-    'fbPageId'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ProfileMessengerPostRequest
-     */
-    'type'?: ProfileMessengerPostRequestTypeEnum;
-}
-
-export const ProfileMessengerPostRequestTypeEnum = {
-    Messenger: 'messenger',
-    Instagram: 'instagram'
-} as const;
-
-export type ProfileMessengerPostRequestTypeEnum = typeof ProfileMessengerPostRequestTypeEnum[keyof typeof ProfileMessengerPostRequestTypeEnum];
+export type ProfileMessengerPostRequest = FacebookLogin | InstagramBusinessLogin;
 
 /**
  * 
