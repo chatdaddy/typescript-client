@@ -1520,6 +1520,7 @@ export const CreditConsumptionType = {
     MessageSentWa: 'message_sent/wa',
     MessageSentMail: 'message_sent/mail',
     MessageSentSms: 'message_sent/sms',
+    MessageSentWaBusinessApi: 'message_sent/wa-business-api',
     ConversationWaBusinessApi: 'conversation/wa-business-api',
     VoiceCall: 'voice_call',
     WabaCallMinute: 'waba_call_minute',
