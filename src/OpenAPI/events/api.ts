@@ -6723,6 +6723,31 @@ export interface CredittransactionrecordInsertDataAllOfMetadata {
      * @memberof CredittransactionrecordInsertDataAllOfMetadata
      */
     'overageOf'?: number;
+    /**
+     * 
+     * @type {CredittransactionrecordInsertDataAllOfMetadataProRated}
+     * @memberof CredittransactionrecordInsertDataAllOfMetadata
+     */
+    'proRated'?: CredittransactionrecordInsertDataAllOfMetadataProRated;
+}
+/**
+ * Set only on the first-charge transaction for a recurring add-on (channel / teammate) that a plan customer added mid-month. The subsequent monthly cron charges fire at the full rate and do NOT carry this field, so its presence cleanly distinguishes \"first month, partial billing\" from any later full-rate charge of the same row.
+ * @export
+ * @interface CredittransactionrecordInsertDataAllOfMetadataProRated
+ */
+export interface CredittransactionrecordInsertDataAllOfMetadataProRated {
+    /**
+     * Actual prorated amount debited for the first cycle.
+     * @type {number}
+     * @memberof CredittransactionrecordInsertDataAllOfMetadataProRated
+     */
+    'firstChargeUnits'?: number;
+    /**
+     * Full monthly rate charged from the next 1st-of-month onward.
+     * @type {number}
+     * @memberof CredittransactionrecordInsertDataAllOfMetadataProRated
+     */
+    'fullMonthlyRate'?: number;
 }
 /**
  * 

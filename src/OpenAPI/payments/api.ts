@@ -3952,6 +3952,12 @@ export interface RecTxMetadata {
      */
     'overageOf'?: number;
     /**
+     * 
+     * @type {TxMetadataProRated}
+     * @memberof RecTxMetadata
+     */
+    'proRated'?: TxMetadataProRated;
+    /**
      * If this recurring charge was resynced after another recurring sub was cancelled, this will be the number of units that were charged previously. 
      * @type {number}
      * @memberof RecTxMetadata
@@ -5040,6 +5046,31 @@ export interface TxMetadata {
      * @memberof TxMetadata
      */
     'overageOf'?: number;
+    /**
+     * 
+     * @type {TxMetadataProRated}
+     * @memberof TxMetadata
+     */
+    'proRated'?: TxMetadataProRated;
+}
+/**
+ * Set only on the first-charge transaction for a recurring add-on (channel / teammate) that a plan customer added mid-month. The subsequent monthly cron charges fire at the full rate and do NOT carry this field, so its presence cleanly distinguishes \"first month, partial billing\" from any later full-rate charge of the same row.
+ * @export
+ * @interface TxMetadataProRated
+ */
+export interface TxMetadataProRated {
+    /**
+     * Actual prorated amount debited for the first cycle.
+     * @type {number}
+     * @memberof TxMetadataProRated
+     */
+    'firstChargeUnits'?: number;
+    /**
+     * Full monthly rate charged from the next 1st-of-month onward.
+     * @type {number}
+     * @memberof TxMetadataProRated
+     */
+    'fullMonthlyRate'?: number;
 }
 /**
  * 
