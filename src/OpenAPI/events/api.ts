@@ -206,6 +206,12 @@ export interface AccountInsertData {
     'userId'?: string | null;
     /**
      * 
+     * @type {string}
+     * @memberof AccountInsertData
+     */
+    'loginType'?: AccountInsertDataLoginTypeEnum;
+    /**
+     * 
      * @type {AccountInsertDataSettings}
      * @memberof AccountInsertData
      */
@@ -244,6 +250,12 @@ export const AccountInsertDataStateEnum = {
 } as const;
 
 export type AccountInsertDataStateEnum = typeof AccountInsertDataStateEnum[keyof typeof AccountInsertDataStateEnum];
+export const AccountInsertDataLoginTypeEnum = {
+    Facebook: 'facebook',
+    Instagram: 'instagram'
+} as const;
+
+export type AccountInsertDataLoginTypeEnum = typeof AccountInsertDataLoginTypeEnum[keyof typeof AccountInsertDataLoginTypeEnum];
 
 /**
  * 
@@ -721,6 +733,12 @@ export interface AccountUpdateData {
     'userId'?: string | null;
     /**
      * 
+     * @type {string}
+     * @memberof AccountUpdateData
+     */
+    'loginType'?: AccountUpdateDataLoginTypeEnum;
+    /**
+     * 
      * @type {AccountInsertDataSettings}
      * @memberof AccountUpdateData
      */
@@ -759,6 +777,12 @@ export const AccountUpdateDataStateEnum = {
 } as const;
 
 export type AccountUpdateDataStateEnum = typeof AccountUpdateDataStateEnum[keyof typeof AccountUpdateDataStateEnum];
+export const AccountUpdateDataLoginTypeEnum = {
+    Facebook: 'facebook',
+    Instagram: 'instagram'
+} as const;
+
+export type AccountUpdateDataLoginTypeEnum = typeof AccountUpdateDataLoginTypeEnum[keyof typeof AccountUpdateDataLoginTypeEnum];
 
 /**
  * 

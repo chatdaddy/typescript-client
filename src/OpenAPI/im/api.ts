@@ -140,6 +140,12 @@ export interface Account {
      */
     'userId'?: string | null;
     /**
+     * For Meta (Instagram/Messenger) accounts: how the channel was connected. `instagram` = direct Instagram Business Login (no Facebook Page). Absent / `facebook` = Facebook Login. Lets the UI distinguish direct-login Instagram channels from Facebook-linked ones.
+     * @type {string}
+     * @memberof Account
+     */
+    'loginType'?: AccountLoginTypeEnum;
+    /**
      * 
      * @type {Contact}
      * @memberof Account
@@ -159,6 +165,12 @@ export interface Account {
     'archiveState'?: ArchiveState;
 }
 
+export const AccountLoginTypeEnum = {
+    Facebook: 'facebook',
+    Instagram: 'instagram'
+} as const;
+
+export type AccountLoginTypeEnum = typeof AccountLoginTypeEnum[keyof typeof AccountLoginTypeEnum];
 
 /**
  * 
