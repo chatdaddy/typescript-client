@@ -917,8 +917,20 @@ export interface AccountsPostRequest {
      * @memberof AccountsPostRequest
      */
     'settings'?: AccountSettings;
+    /**
+     * For Instagram channels: `instagram` marks a direct Instagram Business Login channel (no Facebook Page) from creation, so the UI shows the right connect/relink action even before login completes.
+     * @type {string}
+     * @memberof AccountsPostRequest
+     */
+    'loginType'?: AccountsPostRequestLoginTypeEnum;
 }
 
+export const AccountsPostRequestLoginTypeEnum = {
+    Facebook: 'facebook',
+    Instagram: 'instagram'
+} as const;
+
+export type AccountsPostRequestLoginTypeEnum = typeof AccountsPostRequestLoginTypeEnum[keyof typeof AccountsPostRequestLoginTypeEnum];
 
 /**
  * 
