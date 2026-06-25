@@ -992,6 +992,12 @@ export interface WabaCallsPostRequest {
      * @memberof WabaCallsPostRequest
      */
     'recordingUrl'?: string | null;
+    /**
+     * Missed-call follow-up lifecycle state
+     * @type {WABACallFollowUp}
+     * @memberof WabaCallsPostRequest
+     */
+    'followUp'?: WABACallFollowUp | null;
 }
 
 export const WabaCallsPostRequestDirectionEnum = {
