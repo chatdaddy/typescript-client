@@ -703,6 +703,60 @@ export interface VerifyNumberPostRequest {
 /**
  * 
  * @export
+ * @interface WABACallFollowUp
+ */
+export interface WABACallFollowUp {
+    /**
+     * 
+     * @type {WABAFollowUpState}
+     * @memberof WABACallFollowUp
+     */
+    'state': WABAFollowUpState;
+    /**
+     * User ID of the teammate who actioned the follow-up
+     * @type {string}
+     * @memberof WABACallFollowUp
+     */
+    'byUserId'?: string;
+    /**
+     * Display name of the teammate
+     * @type {string}
+     * @memberof WABACallFollowUp
+     */
+    'byName'?: string;
+    /**
+     * ISO timestamp of the last follow-up action
+     * @type {string}
+     * @memberof WABACallFollowUp
+     */
+    'at'?: string;
+    /**
+     * Optional free-text outcome note
+     * @type {string}
+     * @memberof WABACallFollowUp
+     */
+    'outcome'?: string;
+}
+
+
+/**
+ * Lifecycle state of a missed-call follow-up
+ * @export
+ * @enum {string}
+ */
+
+export const WABAFollowUpState = {
+    NotContacted: 'notContacted',
+    CalledBack: 'calledBack',
+    Resolved: 'resolved'
+} as const;
+
+export type WABAFollowUpState = typeof WABAFollowUpState[keyof typeof WABAFollowUpState];
+
+
+/**
+ * 
+ * @export
  * @interface WabaCall
  */
 export interface WabaCall {
@@ -808,6 +862,12 @@ export interface WabaCall {
      * @memberof WabaCall
      */
     'transcriptionUtterances'?: Array<WabaCallsTranscribePost200ResponseUtterancesInner> | null;
+    /**
+     * Missed-call follow-up lifecycle state
+     * @type {WABACallFollowUp}
+     * @memberof WabaCall
+     */
+    'followUp'?: WABACallFollowUp | null;
 }
 
 export const WabaCallDirectionEnum = {
