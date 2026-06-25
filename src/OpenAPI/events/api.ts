@@ -14621,6 +14621,175 @@ export const UserUpdateDataVariantEnum = {
 
 export type UserUpdateDataVariantEnum = typeof UserUpdateDataVariantEnum[keyof typeof UserUpdateDataVariantEnum];
 
+/**
+ * Sparse update payload emitted whenever a waba_calls row is saved. Always contains the primary key (callId) plus only the columns that changed in that write. The followUp field is included when an agent marks a missed call as called-back or resolved.
+ * @export
+ * @interface WabacallUpdateData
+ */
+export interface WabacallUpdateData {
+    /**
+     * Unique call ID from Meta (primary key)
+     * @type {string}
+     * @memberof WabacallUpdateData
+     */
+    'callId': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof WabacallUpdateData
+     */
+    'teamId'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof WabacallUpdateData
+     */
+    'accountId'?: string;
+    /**
+     * Channel (business) phone number
+     * @type {string}
+     * @memberof WabacallUpdateData
+     */
+    'phoneNumber'?: string;
+    /**
+     * Contact phone number
+     * @type {string}
+     * @memberof WabacallUpdateData
+     */
+    'to'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof WabacallUpdateData
+     */
+    'contactName'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof WabacallUpdateData
+     */
+    'direction'?: WabacallUpdateDataDirectionEnum;
+    /**
+     * 
+     * @type {string}
+     * @memberof WabacallUpdateData
+     */
+    'status'?: WabacallUpdateDataStatusEnum;
+    /**
+     * 
+     * @type {number}
+     * @memberof WabacallUpdateData
+     */
+    'durationSeconds'?: number | null;
+    /**
+     * Agent who handled the call
+     * @type {string}
+     * @memberof WabacallUpdateData
+     */
+    'userId'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof WabacallUpdateData
+     */
+    'chatId'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof WabacallUpdateData
+     */
+    'messageId'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof WabacallUpdateData
+     */
+    'createdAt'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof WabacallUpdateData
+     */
+    'endedAt'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof WabacallUpdateData
+     */
+    'recordingUrl'?: string | null;
+    /**
+     * 
+     * @type {WabacallUpdateDataFollowUp}
+     * @memberof WabacallUpdateData
+     */
+    'followUp'?: WabacallUpdateDataFollowUp | null;
+}
+
+export const WabacallUpdateDataDirectionEnum = {
+    Inbound: 'inbound',
+    Outbound: 'outbound'
+} as const;
+
+export type WabacallUpdateDataDirectionEnum = typeof WabacallUpdateDataDirectionEnum[keyof typeof WabacallUpdateDataDirectionEnum];
+export const WabacallUpdateDataStatusEnum = {
+    InProgress: 'in-progress',
+    Completed: 'completed',
+    Cancelled: 'cancelled',
+    Failed: 'failed',
+    Busy: 'busy',
+    NoAnswer: 'no-answer',
+    Ringing: 'ringing',
+    Queued: 'queued'
+} as const;
+
+export type WabacallUpdateDataStatusEnum = typeof WabacallUpdateDataStatusEnum[keyof typeof WabacallUpdateDataStatusEnum];
+
+/**
+ * Missed-call follow-up lifecycle state
+ * @export
+ * @interface WabacallUpdateDataFollowUp
+ */
+export interface WabacallUpdateDataFollowUp {
+    /**
+     * 
+     * @type {string}
+     * @memberof WabacallUpdateDataFollowUp
+     */
+    'state': WabacallUpdateDataFollowUpStateEnum;
+    /**
+     * User ID of the teammate who actioned the follow-up
+     * @type {string}
+     * @memberof WabacallUpdateDataFollowUp
+     */
+    'byUserId'?: string;
+    /**
+     * Display name of the teammate
+     * @type {string}
+     * @memberof WabacallUpdateDataFollowUp
+     */
+    'byName'?: string;
+    /**
+     * ISO timestamp of the last follow-up action
+     * @type {string}
+     * @memberof WabacallUpdateDataFollowUp
+     */
+    'at'?: string;
+    /**
+     * Optional free-text outcome note
+     * @type {string}
+     * @memberof WabacallUpdateDataFollowUp
+     */
+    'outcome'?: string;
+}
+
+export const WabacallUpdateDataFollowUpStateEnum = {
+    NotContacted: 'notContacted',
+    CalledBack: 'calledBack',
+    Resolved: 'resolved'
+} as const;
+
+export type WabacallUpdateDataFollowUpStateEnum = typeof WabacallUpdateDataFollowUpStateEnum[keyof typeof WabacallUpdateDataFollowUpStateEnum];
+
 
 /**
  * AlarmsApi - axios parameter creator
