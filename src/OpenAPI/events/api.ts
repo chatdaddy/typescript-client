@@ -8020,7 +8020,10 @@ export const EventName = {
     CallDelete: 'call-delete',
     CallchannelInsert: 'callchannel-insert',
     CallchannelUpdate: 'callchannel-update',
-    CallchannelDelete: 'callchannel-delete'
+    CallchannelDelete: 'callchannel-delete',
+    WabacallInsert: 'wabacall-insert',
+    WabacallUpdate: 'wabacall-update',
+    WabacallDelete: 'wabacall-delete'
 } as const;
 
 export type EventName = typeof EventName[keyof typeof EventName];
@@ -8114,7 +8117,7 @@ export type EventSubscriptionType = typeof EventSubscriptionType[keyof typeof Ev
  * The request body you\'ll receive in a webhook
  * @export
  */
-export type EventWebhookData = AccountDelete | AccountInsert | AccountUpdate | AccountWabaStateUpdate | ActionExecute | ActionSchedule | AiCreditUse | BotDelete | BotInsert | BotUpdate | CallDelete | CallInsert | CallUpdate | CallchannelDelete | CallchannelInsert | CallchannelUpdate | CampaignInsert | ChatDelete | ChatInsert | ChatUpdate | ChatbotInsert | ContactDelete | ContactInsert | ContactUpdate | CredittransactionrecordInsert | CrmTicketDelete | CrmTicketInsert | CrmTicketUpdate | CustomerCreditsLevelUpdate | DashboardDelete | DashboardInsert | DashboardUpdate | ExportChat | ExportContact | FewMessagesLeft | GroupUpdate | KeywordbasedactionInsert | MessageDelete | MessageInsert | MessageUpdate | OrderInsert | PaymentintegrationInsert | PlatformproductDelete | PlatformproductInsert | PlatformproductUpdate | PresenceUpdate | PushNotification | ShopproductInsert | StaleAccountNotification | TagDelete | TagInsert | TagUpdate | TeamDelete | TeamInsert | TeamUpdate | TeammemberDelete | TeammemberInsert | TeammemberLogout | TeammemberUpdate | TrackingDelete | TrackingInsert | TrackingUpdate | UserDelete | UserInsert | UserUpdate;
+export type EventWebhookData = AccountDelete | AccountInsert | AccountUpdate | AccountWabaStateUpdate | ActionExecute | ActionSchedule | AiCreditUse | BotDelete | BotInsert | BotUpdate | CallDelete | CallInsert | CallUpdate | CallchannelDelete | CallchannelInsert | CallchannelUpdate | CampaignInsert | ChatDelete | ChatInsert | ChatUpdate | ChatbotInsert | ContactDelete | ContactInsert | ContactUpdate | CredittransactionrecordInsert | CrmTicketDelete | CrmTicketInsert | CrmTicketUpdate | CustomerCreditsLevelUpdate | DashboardDelete | DashboardInsert | DashboardUpdate | ExportChat | ExportContact | FewMessagesLeft | GroupUpdate | KeywordbasedactionInsert | MessageDelete | MessageInsert | MessageUpdate | OrderInsert | PaymentintegrationInsert | PlatformproductDelete | PlatformproductInsert | PlatformproductUpdate | PresenceUpdate | PushNotification | ShopproductInsert | StaleAccountNotification | TagDelete | TagInsert | TagUpdate | TeamDelete | TeamInsert | TeamUpdate | TeammemberDelete | TeammemberInsert | TeammemberLogout | TeammemberUpdate | TrackingDelete | TrackingInsert | TrackingUpdate | UserDelete | UserInsert | UserUpdate | WabacallDelete | WabacallInsert | WabacallUpdate;
 
 /**
  * 
@@ -14622,13 +14625,233 @@ export const UserUpdateDataVariantEnum = {
 export type UserUpdateDataVariantEnum = typeof UserUpdateDataVariantEnum[keyof typeof UserUpdateDataVariantEnum];
 
 /**
- * Sparse update payload emitted whenever a waba_calls row is saved. Always contains the primary key (callId) plus only the columns that changed in that write. The followUp field is included when an agent marks a missed call as called-back or resolved.
+ * 
+ * @export
+ * @interface WabacallDelete
+ */
+export interface WabacallDelete {
+    /**
+     * 
+     * @type {string}
+     * @memberof WabacallDelete
+     */
+    'event': WabacallDeleteEventEnum;
+    /**
+     * 
+     * @type {Array<WabacallDeleteData>}
+     * @memberof WabacallDelete
+     */
+    'data': Array<WabacallDeleteData>;
+}
+
+export const WabacallDeleteEventEnum = {
+    WabacallDelete: 'wabacall-delete'
+} as const;
+
+export type WabacallDeleteEventEnum = typeof WabacallDeleteEventEnum[keyof typeof WabacallDeleteEventEnum];
+
+/**
+ * 
+ * @export
+ * @interface WabacallDeleteData
+ */
+export interface WabacallDeleteData {
+    /**
+     * 
+     * @type {string}
+     * @memberof WabacallDeleteData
+     */
+    'callId': string;
+}
+/**
+ * 
+ * @export
+ * @interface WabacallInsert
+ */
+export interface WabacallInsert {
+    /**
+     * 
+     * @type {string}
+     * @memberof WabacallInsert
+     */
+    'event': WabacallInsertEventEnum;
+    /**
+     * 
+     * @type {Array<WabacallInsertData>}
+     * @memberof WabacallInsert
+     */
+    'data': Array<WabacallInsertData>;
+}
+
+export const WabacallInsertEventEnum = {
+    WabacallInsert: 'wabacall-insert'
+} as const;
+
+export type WabacallInsertEventEnum = typeof WabacallInsertEventEnum[keyof typeof WabacallInsertEventEnum];
+
+/**
+ * 
+ * @export
+ * @interface WabacallInsertData
+ */
+export interface WabacallInsertData {
+    /**
+     * 
+     * @type {string}
+     * @memberof WabacallInsertData
+     */
+    'callId': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof WabacallInsertData
+     */
+    'teamId': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof WabacallInsertData
+     */
+    'accountId': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof WabacallInsertData
+     */
+    'phoneNumber'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof WabacallInsertData
+     */
+    'to'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof WabacallInsertData
+     */
+    'contactName'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof WabacallInsertData
+     */
+    'direction': WabacallInsertDataDirectionEnum;
+    /**
+     * 
+     * @type {string}
+     * @memberof WabacallInsertData
+     */
+    'status'?: WabacallInsertDataStatusEnum;
+    /**
+     * 
+     * @type {number}
+     * @memberof WabacallInsertData
+     */
+    'durationSeconds'?: number | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof WabacallInsertData
+     */
+    'userId'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof WabacallInsertData
+     */
+    'chatId'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof WabacallInsertData
+     */
+    'messageId'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof WabacallInsertData
+     */
+    'createdAt': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof WabacallInsertData
+     */
+    'endedAt'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof WabacallInsertData
+     */
+    'recordingUrl'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof WabacallInsertData
+     */
+    'transcriptionText'?: string | null;
+    /**
+     * 
+     * @type {WabacallUpdateDataFollowUp}
+     * @memberof WabacallInsertData
+     */
+    'followUp'?: WabacallUpdateDataFollowUp | null;
+}
+
+export const WabacallInsertDataDirectionEnum = {
+    Inbound: 'inbound',
+    Outbound: 'outbound'
+} as const;
+
+export type WabacallInsertDataDirectionEnum = typeof WabacallInsertDataDirectionEnum[keyof typeof WabacallInsertDataDirectionEnum];
+export const WabacallInsertDataStatusEnum = {
+    Queued: 'queued',
+    Ringing: 'ringing',
+    InProgress: 'in-progress',
+    Completed: 'completed',
+    Busy: 'busy',
+    Failed: 'failed',
+    NoAnswer: 'no-answer',
+    Cancelled: 'cancelled'
+} as const;
+
+export type WabacallInsertDataStatusEnum = typeof WabacallInsertDataStatusEnum[keyof typeof WabacallInsertDataStatusEnum];
+
+/**
+ * 
+ * @export
+ * @interface WabacallUpdate
+ */
+export interface WabacallUpdate {
+    /**
+     * 
+     * @type {string}
+     * @memberof WabacallUpdate
+     */
+    'event': WabacallUpdateEventEnum;
+    /**
+     * 
+     * @type {Array<WabacallUpdateData>}
+     * @memberof WabacallUpdate
+     */
+    'data': Array<WabacallUpdateData>;
+}
+
+export const WabacallUpdateEventEnum = {
+    WabacallUpdate: 'wabacall-update'
+} as const;
+
+export type WabacallUpdateEventEnum = typeof WabacallUpdateEventEnum[keyof typeof WabacallUpdateEventEnum];
+
+/**
+ * 
  * @export
  * @interface WabacallUpdateData
  */
 export interface WabacallUpdateData {
     /**
-     * Unique call ID from Meta (primary key)
+     * 
      * @type {string}
      * @memberof WabacallUpdateData
      */
@@ -14646,13 +14869,13 @@ export interface WabacallUpdateData {
      */
     'accountId'?: string;
     /**
-     * Channel (business) phone number
+     * 
      * @type {string}
      * @memberof WabacallUpdateData
      */
     'phoneNumber'?: string;
     /**
-     * Contact phone number
+     * 
      * @type {string}
      * @memberof WabacallUpdateData
      */
@@ -14682,7 +14905,7 @@ export interface WabacallUpdateData {
      */
     'durationSeconds'?: number | null;
     /**
-     * Agent who handled the call
+     * 
      * @type {string}
      * @memberof WabacallUpdateData
      */
@@ -14719,6 +14942,12 @@ export interface WabacallUpdateData {
     'recordingUrl'?: string | null;
     /**
      * 
+     * @type {string}
+     * @memberof WabacallUpdateData
+     */
+    'transcriptionText'?: string | null;
+    /**
+     * 
      * @type {WabacallUpdateDataFollowUp}
      * @memberof WabacallUpdateData
      */
@@ -14732,26 +14961,26 @@ export const WabacallUpdateDataDirectionEnum = {
 
 export type WabacallUpdateDataDirectionEnum = typeof WabacallUpdateDataDirectionEnum[keyof typeof WabacallUpdateDataDirectionEnum];
 export const WabacallUpdateDataStatusEnum = {
+    Queued: 'queued',
+    Ringing: 'ringing',
     InProgress: 'in-progress',
     Completed: 'completed',
-    Cancelled: 'cancelled',
-    Failed: 'failed',
     Busy: 'busy',
+    Failed: 'failed',
     NoAnswer: 'no-answer',
-    Ringing: 'ringing',
-    Queued: 'queued'
+    Cancelled: 'cancelled'
 } as const;
 
 export type WabacallUpdateDataStatusEnum = typeof WabacallUpdateDataStatusEnum[keyof typeof WabacallUpdateDataStatusEnum];
 
 /**
- * Missed-call follow-up lifecycle state
+ * 
  * @export
  * @interface WabacallUpdateDataFollowUp
  */
 export interface WabacallUpdateDataFollowUp {
     /**
-     * 
+     * Lifecycle state of a missed-call follow-up
      * @type {string}
      * @memberof WabacallUpdateDataFollowUp
      */
