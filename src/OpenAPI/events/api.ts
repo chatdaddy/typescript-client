@@ -6326,6 +6326,12 @@ export interface ContactInsertData {
     'tags': Array<GroupUpdateDataOwnerTagsInner>;
     /**
      * 
+     * @type {Array<GroupUpdateDataOwnerTagsInner>}
+     * @memberof ContactInsertData
+     */
+    'removedTags'?: Array<GroupUpdateDataOwnerTagsInner>;
+    /**
+     * 
      * @type {Array<GroupUpdateDataOwnerTicketsInner>}
      * @memberof ContactInsertData
      */
@@ -6500,6 +6506,12 @@ export interface ContactUpdateData {
      * @memberof ContactUpdateData
      */
     'tags'?: Array<GroupUpdateDataOwnerTagsInner>;
+    /**
+     * 
+     * @type {Array<GroupUpdateDataOwnerTagsInner>}
+     * @memberof ContactUpdateData
+     */
+    'removedTags'?: Array<GroupUpdateDataOwnerTagsInner>;
     /**
      * 
      * @type {Array<GroupUpdateDataOwnerTicketsInner>}
@@ -8457,6 +8469,12 @@ export interface GroupUpdateDataOwner {
     'tags': Array<GroupUpdateDataOwnerTagsInner>;
     /**
      * 
+     * @type {Array<GroupUpdateDataOwnerTagsInner>}
+     * @memberof GroupUpdateDataOwner
+     */
+    'removedTags'?: Array<GroupUpdateDataOwnerTagsInner>;
+    /**
+     * 
      * @type {Array<GroupUpdateDataOwnerTicketsInner>}
      * @memberof GroupUpdateDataOwner
      */
@@ -8588,6 +8606,12 @@ export interface GroupUpdateDataOwnerTagsInner {
      * @memberof GroupUpdateDataOwnerTagsInner
      */
     'updatedMetadata'?: GroupUpdateDataOwnerTagsInnerAllOfAddedMetadata;
+    /**
+     * 
+     * @type {GroupUpdateDataOwnerTagsInnerAllOfAddedMetadata}
+     * @memberof GroupUpdateDataOwnerTagsInner
+     */
+    'removedMetadata'?: GroupUpdateDataOwnerTagsInnerAllOfAddedMetadata;
 }
 /**
  * 

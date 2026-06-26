@@ -2261,6 +2261,12 @@ export interface Contact {
      */
     'tags': Array<ContactTag>;
     /**
+     * Tags that have been removed from this contact, retained with removedMetadata so we can track when (and by whom) each tag was removed. Capped to the most recently removed tags.
+     * @type {Array<ContactTag>}
+     * @memberof Contact
+     */
+    'removedTags'?: Array<ContactTag>;
+    /**
      * CRM Board Tickets associated with this contact
      * @type {Array<ContactTicket>}
      * @memberof Contact
@@ -2459,6 +2465,12 @@ export interface ContactTag {
      * @memberof ContactTag
      */
     'updatedMetadata'?: UpsertMetadata;
+    /**
+     * 
+     * @type {UpsertMetadata}
+     * @memberof ContactTag
+     */
+    'removedMetadata'?: UpsertMetadata;
 }
 /**
  * 
