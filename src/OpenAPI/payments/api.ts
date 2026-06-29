@@ -1146,6 +1146,12 @@ export interface ConsumptionTotalsGet200ResponseConsumption {
      * @memberof ConsumptionTotalsGet200ResponseConsumption
      */
     'messenger'?: MessageCreditConsumption;
+    /**
+     * 
+     * @type {MessageCreditConsumption}
+     * @memberof ConsumptionTotalsGet200ResponseConsumption
+     */
+    'activeChats'?: MessageCreditConsumption;
 }
 /**
  * Region tier used for both country-based legacy pricing and as the pricing override for plan customers. tier1-tier4 are country tiers (see country-tier-map.json). tier5 is a synthetic tier that no country maps to — used to encode the flat pricing for plan customers without disturbing legacy tier1-tier4 rates.
@@ -3140,6 +3146,12 @@ export interface MessageCreditConsumption {
      * @memberof MessageCreditConsumption
      */
     'percentage': number;
+    /**
+     * Count of over-plan messages billed to the wallet in the current cycle. WhatsApp and active-chats are count-denominated so this is a message count; for credit-denominated buckets (mail/sms/waba/ messenger) it\'s the number of overage events recorded against the wallet.
+     * @type {number}
+     * @memberof MessageCreditConsumption
+     */
+    'overage': number;
 }
 /**
  * 
