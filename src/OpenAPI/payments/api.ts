@@ -1744,6 +1744,12 @@ export interface CreditCustomer {
      * @memberof CreditCustomer
      */
     'lockAccount'?: boolean;
+    /**
+     * 
+     * @type {CreditCustomerOverdueInvoice}
+     * @memberof CreditCustomer
+     */
+    'overdueInvoice'?: CreditCustomerOverdueInvoice;
 }
 
 
@@ -1802,6 +1808,37 @@ export interface CreditCustomerMigrate {
      * @memberof CreditCustomerMigrate
      */
     'autoRenewal'?: CreditAutoRenewalUpdate;
+}
+/**
+ * Present when the customer\'s Stripe subscription is in a payable-open state (past_due / unpaid / incomplete). Points at THE specific open invoice so the UI can open a one-click hosted checkout for it, instead of routing through the Stripe billing portal. Absent for active or cancelled subs, no-sub customers, and Stripe API errors (which are swallowed server-side — UI falls back to the portal link).
+ * @export
+ * @interface CreditCustomerOverdueInvoice
+ */
+export interface CreditCustomerOverdueInvoice {
+    /**
+     * Stripe-hosted invoice URL. Open in a new tab for a one-click pay experience on the exact overdue invoice.
+     * @type {string}
+     * @memberof CreditCustomerOverdueInvoice
+     */
+    'hostedInvoiceUrl': string;
+    /**
+     * Amount due on this invoice, in the smallest currency unit (cents).
+     * @type {number}
+     * @memberof CreditCustomerOverdueInvoice
+     */
+    'amountDueCents': number;
+    /**
+     * ISO 4217 currency code of the invoice. Stripe returns this lowercase (e.g. \"usd\").
+     * @type {string}
+     * @memberof CreditCustomerOverdueInvoice
+     */
+    'currency': string;
+    /**
+     * ISO 8601 timestamp when the invoice is due, if Stripe set one.
+     * @type {string}
+     * @memberof CreditCustomerOverdueInvoice
+     */
+    'dueDate'?: string;
 }
 /**
  * 
