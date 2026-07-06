@@ -26,24 +26,6 @@ import type { RequestArgs } from '../base';
 import { COLLECTION_FORMATS, BaseAPI, RequiredError, operationServerMap } from '../base';
 
 /**
- * Channel account type for the campaign; values match the IM service account type. Global-address types (wa, wa-business-api, sms, mail — recipient is a global address reachable from any account) round-robin across the selected accounts; wa-business-api reaches beyond the 24h window via approved templates, so no audience window is applied. Page/ account-scoped types (messenger, instagram) use scoped recipient ids (PSID / IG-scoped id) tied to one owning account, so the campaign must target exactly one account and may only broadcast inside the 24h messaging window.
- * @export
- * @enum {string}
- */
-
-export const AccountType = {
-    Wa: 'wa',
-    WaBusinessApi: 'wa-business-api',
-    Messenger: 'messenger',
-    Instagram: 'instagram',
-    Sms: 'sms',
-    Mail: 'mail'
-} as const;
-
-export type AccountType = typeof AccountType[keyof typeof AccountType];
-
-
-/**
  * 
  * @export
  * @interface ActivationTimeRange
@@ -134,6 +116,24 @@ export interface AppErrorDataHelpLinkOneOf1 {
      */
     'url': string;
 }
+/**
+ * Channel account type for the campaign; values match the IM service account type. Global-address types (wa, wa-business-api, sms, mail — recipient is a global address reachable from any account) round-robin across the selected accounts; wa-business-api reaches beyond the 24h window via approved templates, so no audience window is applied. Page/ account-scoped types (messenger, instagram) use scoped recipient ids (PSID / IG-scoped id) tied to one owning account, so the campaign must target exactly one account and may only broadcast inside the 24h messaging window.
+ * @export
+ * @enum {string}
+ */
+
+export const CampaignAccountType = {
+    Wa: 'wa',
+    WaBusinessApi: 'wa-business-api',
+    Messenger: 'messenger',
+    Instagram: 'instagram',
+    Sms: 'sms',
+    Mail: 'mail'
+} as const;
+
+export type CampaignAccountType = typeof CampaignAccountType[keyof typeof CampaignAccountType];
+
+
 /**
  * 
  * @export
@@ -268,10 +268,10 @@ export interface CampaignCreateAsync {
     'contactFilters'?: { [key: string]: any; };
     /**
      * 
-     * @type {AccountType}
+     * @type {CampaignAccountType}
      * @memberof CampaignCreateAsync
      */
-    'accountType'?: AccountType;
+    'accountType'?: CampaignAccountType;
     /**
      * 
      * @type {string}
@@ -409,10 +409,10 @@ export interface CampaignEdit {
     'contactFilters'?: { [key: string]: any; };
     /**
      * 
-     * @type {AccountType}
+     * @type {CampaignAccountType}
      * @memberof CampaignEdit
      */
-    'accountType'?: AccountType;
+    'accountType'?: CampaignAccountType;
 }
 
 

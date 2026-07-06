@@ -666,7 +666,7 @@ export type AccountTier = typeof AccountTier[keyof typeof AccountTier];
  * @enum {string}
  */
 
-const AccountType = {
+export const AccountType = {
     Wa: 'wa',
     WaBusinessApi: 'wa-business-api',
     Mock: 'mock',
@@ -678,7 +678,7 @@ const AccountType = {
     Instagram: 'instagram'
 } as const;
 
-type AccountType = typeof AccountType[keyof typeof AccountType];
+export type AccountType = typeof AccountType[keyof typeof AccountType];
 
 
 /**
