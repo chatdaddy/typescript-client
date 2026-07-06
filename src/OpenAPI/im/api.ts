@@ -2201,6 +2201,12 @@ export interface Contact {
      */
     'altId'?: string | null;
     /**
+     * Business-Scoped User ID (BSUID) for WhatsApp Cloud API contacts; a stable per-portfolio identifier used to message the user when their phone number is hidden
+     * @type {string}
+     * @memberof Contact
+     */
+    'bsuid'?: string | null;
+    /**
      * 
      * @type {string}
      * @memberof Contact
