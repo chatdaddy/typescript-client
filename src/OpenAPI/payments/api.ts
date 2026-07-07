@@ -3023,6 +3023,24 @@ export interface GetCustomerData200ResponseTeamsInner {
      * @memberof GetCustomerData200ResponseTeamsInner
      */
     'nextChargeAt': string;
+    /**
+     * creditCustomer.planType (null for legacy customers).
+     * @type {string}
+     * @memberof GetCustomerData200ResponseTeamsInner
+     */
+    'planType'?: string | null;
+    /**
+     * autoRenewal.planId — the Stripe product they pay on. null for legacy per-credit subscriptions.
+     * @type {string}
+     * @memberof GetCustomerData200ResponseTeamsInner
+     */
+    'planId'?: string | null;
+    /**
+     * creditCustomer.region.
+     * @type {string}
+     * @memberof GetCustomerData200ResponseTeamsInner
+     */
+    'region'?: string | null;
 }
 
 export const GetCustomerData200ResponseTeamsInnerStatusEnum = {
@@ -7664,10 +7682,12 @@ export const CreditsApiAxiosParamCreator = function (configuration?: Configurati
          * @param {number} [count] Number of teams per page
          * @param {boolean} [returnTeamIds] When true with a status, returns only the list of team IDs (no pagination)
          * @param {string} [searchTeamId] Search filter -- only return teams whose ID contains this substring
+         * @param {boolean} [hasPlanType] When true, restricts to teams whose creditCustomer.planType is set (mini / basic / pro / max / enterprise). Powers the migration dashboard\&#39;s \&quot;On Latest Plan\&quot; drill-down.
+         * @param {boolean} [hasPlanId] When true, restricts to teams whose autoRenewal.planId is set — anyone paying on new pricing. Powers the migration dashboard\&#39;s \&quot;Have Paid\&quot; drill-down and its status-scoped subsets.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getCustomerData: async (status?: GetCustomerDataStatusEnum, page?: number, count?: number, returnTeamIds?: boolean, searchTeamId?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getCustomerData: async (status?: GetCustomerDataStatusEnum, page?: number, count?: number, returnTeamIds?: boolean, searchTeamId?: string, hasPlanType?: boolean, hasPlanId?: boolean, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v2/get-customer-data`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -7702,6 +7722,14 @@ export const CreditsApiAxiosParamCreator = function (configuration?: Configurati
 
             if (searchTeamId !== undefined) {
                 localVarQueryParameter['searchTeamId'] = searchTeamId;
+            }
+
+            if (hasPlanType !== undefined) {
+                localVarQueryParameter['hasPlanType'] = hasPlanType;
+            }
+
+            if (hasPlanId !== undefined) {
+                localVarQueryParameter['hasPlanId'] = hasPlanId;
             }
 
 
@@ -8505,11 +8533,13 @@ export const CreditsApiFp = function(configuration?: Configuration) {
          * @param {number} [count] Number of teams per page
          * @param {boolean} [returnTeamIds] When true with a status, returns only the list of team IDs (no pagination)
          * @param {string} [searchTeamId] Search filter -- only return teams whose ID contains this substring
+         * @param {boolean} [hasPlanType] When true, restricts to teams whose creditCustomer.planType is set (mini / basic / pro / max / enterprise). Powers the migration dashboard\&#39;s \&quot;On Latest Plan\&quot; drill-down.
+         * @param {boolean} [hasPlanId] When true, restricts to teams whose autoRenewal.planId is set — anyone paying on new pricing. Powers the migration dashboard\&#39;s \&quot;Have Paid\&quot; drill-down and its status-scoped subsets.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getCustomerData(status?: GetCustomerDataStatusEnum, page?: number, count?: number, returnTeamIds?: boolean, searchTeamId?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetCustomerData200Response>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getCustomerData(status, page, count, returnTeamIds, searchTeamId, options);
+        async getCustomerData(status?: GetCustomerDataStatusEnum, page?: number, count?: number, returnTeamIds?: boolean, searchTeamId?: string, hasPlanType?: boolean, hasPlanId?: boolean, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetCustomerData200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getCustomerData(status, page, count, returnTeamIds, searchTeamId, hasPlanType, hasPlanId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['CreditsApi.getCustomerData']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -8932,7 +8962,7 @@ export const CreditsApiFactory = function (configuration?: Configuration, basePa
          * @throws {RequiredError}
          */
         getCustomerData(requestParameters: CreditsApiGetCustomerDataRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<GetCustomerData200Response> {
-            return localVarFp.getCustomerData(requestParameters.status, requestParameters.page, requestParameters.count, requestParameters.returnTeamIds, requestParameters.searchTeamId, options).then((request) => request(axios, basePath));
+            return localVarFp.getCustomerData(requestParameters.status, requestParameters.page, requestParameters.count, requestParameters.returnTeamIds, requestParameters.searchTeamId, requestParameters.hasPlanType, requestParameters.hasPlanId, options).then((request) => request(axios, basePath));
         },
         /**
          * Admin-only — set or clear the lockAccount flag on a credit customer. When locked, the workspace is blocked regardless of subscription status.
@@ -9546,6 +9576,20 @@ export interface CreditsApiGetCustomerDataRequest {
      * @memberof CreditsApiGetCustomerData
      */
     readonly searchTeamId?: string
+
+    /**
+     * When true, restricts to teams whose creditCustomer.planType is set (mini / basic / pro / max / enterprise). Powers the migration dashboard\&#39;s \&quot;On Latest Plan\&quot; drill-down.
+     * @type {boolean}
+     * @memberof CreditsApiGetCustomerData
+     */
+    readonly hasPlanType?: boolean
+
+    /**
+     * When true, restricts to teams whose autoRenewal.planId is set — anyone paying on new pricing. Powers the migration dashboard\&#39;s \&quot;Have Paid\&quot; drill-down and its status-scoped subsets.
+     * @type {boolean}
+     * @memberof CreditsApiGetCustomerData
+     */
+    readonly hasPlanId?: boolean
 }
 
 /**
@@ -10095,7 +10139,7 @@ export class CreditsApi extends BaseAPI {
      * @memberof CreditsApi
      */
     public getCustomerData(requestParameters: CreditsApiGetCustomerDataRequest = {}, options?: RawAxiosRequestConfig) {
-        return CreditsApiFp(this.configuration).getCustomerData(requestParameters.status, requestParameters.page, requestParameters.count, requestParameters.returnTeamIds, requestParameters.searchTeamId, options).then((request) => request(this.axios, this.basePath));
+        return CreditsApiFp(this.configuration).getCustomerData(requestParameters.status, requestParameters.page, requestParameters.count, requestParameters.returnTeamIds, requestParameters.searchTeamId, requestParameters.hasPlanType, requestParameters.hasPlanId, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
