@@ -3193,6 +3193,61 @@ export interface MessageCreditConsumption {
 /**
  * 
  * @export
+ * @interface MigrationStatusGet200Response
+ */
+export interface MigrationStatusGet200Response {
+    /**
+     * customerAutoRenewal rows with status=\'active\'.
+     * @type {number}
+     * @memberof MigrationStatusGet200Response
+     */
+    'activeAutoRenewalCount': number;
+    /**
+     * customerAutoRenewal rows with status=\'overdue\'.
+     * @type {number}
+     * @memberof MigrationStatusGet200Response
+     */
+    'overdueAutoRenewalCount': number;
+    /**
+     * customerAutoRenewal rows with status=\'cancelled\'.
+     * @type {number}
+     * @memberof MigrationStatusGet200Response
+     */
+    'cancelledAutoRenewalCount': number;
+    /**
+     * Teams whose creditCustomer.planType is set (mini / basic / pro / max / enterprise). Product-side migration flag — does NOT guarantee Stripe billing on new pricing.
+     * @type {number}
+     * @memberof MigrationStatusGet200Response
+     */
+    'onLatestPlanCount': number;
+    /**
+     * Teams whose autoRenewal.planId is set — anyone who has ever paid on new pricing. Includes active + overdue + cancelled statuses.
+     * @type {number}
+     * @memberof MigrationStatusGet200Response
+     */
+    'hasPaidCount': number;
+    /**
+     * Subset of hasPaidCount whose autoRenewal.status=\'active\'.
+     * @type {number}
+     * @memberof MigrationStatusGet200Response
+     */
+    'activePlanIdCount': number;
+    /**
+     * Subset of hasPaidCount whose autoRenewal.status=\'overdue\'.
+     * @type {number}
+     * @memberof MigrationStatusGet200Response
+     */
+    'overduePlanIdCount': number;
+    /**
+     * Subset of hasPaidCount whose autoRenewal.status=\'cancelled\'.
+     * @type {number}
+     * @memberof MigrationStatusGet200Response
+     */
+    'cancelledPlanIdCount': number;
+}
+/**
+ * 
+ * @export
  * @interface MiscBillingOptions
  */
 export interface MiscBillingOptions {
@@ -7702,6 +7757,40 @@ export const CreditsApiAxiosParamCreator = function (configuration?: Configurati
         },
         /**
          * 
+         * @summary Aggregate migration counts for the admin dashboard — all 8 numbers in a single Postgres query. Replaces the client-side per-team loop that was calling creditsCustomerGet in a batch fan-out.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        migrationStatusGet: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v2/credits/migration-status`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["ADMIN_PANEL_ACCESS"], configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
          * @summary Create/update/cancel the support plan
          * @param {ModifySupportPlan} [modifySupportPlan] 
          * @param {*} [options] Override http request option.
@@ -8440,6 +8529,18 @@ export const CreditsApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
+         * @summary Aggregate migration counts for the admin dashboard — all 8 numbers in a single Postgres query. Replaces the client-side per-team loop that was calling creditsCustomerGet in a batch fan-out.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async migrationStatusGet(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MigrationStatusGet200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.migrationStatusGet(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['CreditsApi.migrationStatusGet']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
          * @summary Create/update/cancel the support plan
          * @param {ModifySupportPlan} [modifySupportPlan] 
          * @param {*} [options] Override http request option.
@@ -8842,6 +8943,15 @@ export const CreditsApiFactory = function (configuration?: Configuration, basePa
          */
         lockAccountPost(requestParameters: CreditsApiLockAccountPostRequest, options?: RawAxiosRequestConfig): AxiosPromise<LockAccountPost200Response> {
             return localVarFp.lockAccountPost(requestParameters.lockAccountPostRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Aggregate migration counts for the admin dashboard — all 8 numbers in a single Postgres query. Replaces the client-side per-team loop that was calling creditsCustomerGet in a batch fan-out.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        migrationStatusGet(options?: RawAxiosRequestConfig): AxiosPromise<MigrationStatusGet200Response> {
+            return localVarFp.migrationStatusGet(options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -9998,6 +10108,17 @@ export class CreditsApi extends BaseAPI {
      */
     public lockAccountPost(requestParameters: CreditsApiLockAccountPostRequest, options?: RawAxiosRequestConfig) {
         return CreditsApiFp(this.configuration).lockAccountPost(requestParameters.lockAccountPostRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Aggregate migration counts for the admin dashboard — all 8 numbers in a single Postgres query. Replaces the client-side per-team loop that was calling creditsCustomerGet in a batch fan-out.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CreditsApi
+     */
+    public migrationStatusGet(options?: RawAxiosRequestConfig) {
+        return CreditsApiFp(this.configuration).migrationStatusGet(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
