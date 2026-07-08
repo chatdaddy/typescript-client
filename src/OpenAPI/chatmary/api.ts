@@ -2624,6 +2624,25 @@ export interface WabaPlgTrackingPostRequest {
 /**
  * 
  * @export
+ * @interface WabaTierProgressGet200Response
+ */
+export interface WabaTierProgressGet200Response {
+    /**
+     * Account ID
+     * @type {string}
+     * @memberof WabaTierProgressGet200Response
+     */
+    'accountId': string;
+    /**
+     * Distinct customers (chatIds) this account sent business-initiated template messages to in the last 7 days
+     * @type {number}
+     * @memberof WabaTierProgressGet200Response
+     */
+    'uniqueRecipients7d': number;
+}
+/**
+ * 
+ * @export
  * @interface WebhookLarkGet200Response
  */
 export interface WebhookLarkGet200Response {
@@ -8240,6 +8259,47 @@ export const WabaMessageWindowApiAxiosParamCreator = function (configuration?: C
                 options: localVarRequestOptions,
             };
         },
+        /**
+         * Returns the number of distinct customers this WABA account sent business-initiated template messages to in the last 7 days (COUNT(DISTINCT chatId)). Drives the tier-up assistant progress bar. The current tier and quality rating come from the account\'s stateInfo.
+         * @summary WABA tier-up progress — unique customers messaged in the last 7 days
+         * @param {string} accountId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        wabaTierProgressGet: async (accountId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'accountId' is not null or undefined
+            assertParamExists('wabaTierProgressGet', 'accountId', accountId)
+            const localVarPath = `/waba-tier-progress`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", [], configuration)
+
+            if (accountId !== undefined) {
+                localVarQueryParameter['accountId'] = accountId;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
     }
 };
 
@@ -8277,6 +8337,19 @@ export const WabaMessageWindowApiFp = function(configuration?: Configuration) {
             const localVarOperationServerBasePath = operationServerMap['WabaMessageWindowApi.wabaMessageWindowPost']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
+        /**
+         * Returns the number of distinct customers this WABA account sent business-initiated template messages to in the last 7 days (COUNT(DISTINCT chatId)). Drives the tier-up assistant progress bar. The current tier and quality rating come from the account\'s stateInfo.
+         * @summary WABA tier-up progress — unique customers messaged in the last 7 days
+         * @param {string} accountId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async wabaTierProgressGet(accountId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<WabaTierProgressGet200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.wabaTierProgressGet(accountId, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['WabaMessageWindowApi.wabaTierProgressGet']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
     }
 };
 
@@ -8306,6 +8379,16 @@ export const WabaMessageWindowApiFactory = function (configuration?: Configurati
          */
         wabaMessageWindowPost(requestParameters: WabaMessageWindowApiWabaMessageWindowPostRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<WabaMessageWindow> {
             return localVarFp.wabaMessageWindowPost(requestParameters.wabaMessageWindowPostRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Returns the number of distinct customers this WABA account sent business-initiated template messages to in the last 7 days (COUNT(DISTINCT chatId)). Drives the tier-up assistant progress bar. The current tier and quality rating come from the account\'s stateInfo.
+         * @summary WABA tier-up progress — unique customers messaged in the last 7 days
+         * @param {WabaMessageWindowApiWabaTierProgressGetRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        wabaTierProgressGet(requestParameters: WabaMessageWindowApiWabaTierProgressGetRequest, options?: RawAxiosRequestConfig): AxiosPromise<WabaTierProgressGet200Response> {
+            return localVarFp.wabaTierProgressGet(requestParameters.accountId, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -8346,6 +8429,20 @@ export interface WabaMessageWindowApiWabaMessageWindowPostRequest {
 }
 
 /**
+ * Request parameters for wabaTierProgressGet operation in WabaMessageWindowApi.
+ * @export
+ * @interface WabaMessageWindowApiWabaTierProgressGetRequest
+ */
+export interface WabaMessageWindowApiWabaTierProgressGetRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof WabaMessageWindowApiWabaTierProgressGet
+     */
+    readonly accountId: string
+}
+
+/**
  * WabaMessageWindowApi - object-oriented interface
  * @export
  * @class WabaMessageWindowApi
@@ -8374,6 +8471,18 @@ export class WabaMessageWindowApi extends BaseAPI {
      */
     public wabaMessageWindowPost(requestParameters: WabaMessageWindowApiWabaMessageWindowPostRequest = {}, options?: RawAxiosRequestConfig) {
         return WabaMessageWindowApiFp(this.configuration).wabaMessageWindowPost(requestParameters.wabaMessageWindowPostRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Returns the number of distinct customers this WABA account sent business-initiated template messages to in the last 7 days (COUNT(DISTINCT chatId)). Drives the tier-up assistant progress bar. The current tier and quality rating come from the account\'s stateInfo.
+     * @summary WABA tier-up progress — unique customers messaged in the last 7 days
+     * @param {WabaMessageWindowApiWabaTierProgressGetRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof WabaMessageWindowApi
+     */
+    public wabaTierProgressGet(requestParameters: WabaMessageWindowApiWabaTierProgressGetRequest, options?: RawAxiosRequestConfig) {
+        return WabaMessageWindowApiFp(this.configuration).wabaTierProgressGet(requestParameters.accountId, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
