@@ -2104,6 +2104,52 @@ export interface ChatsGetTicketParameter {
     'stageId'?: string;
 }
 /**
+ * 
+ * @export
+ * @interface ChatsSummaryGet200Response
+ */
+export interface ChatsSummaryGet200Response {
+    /**
+     * Total incoming chats across all channels in the period
+     * @type {number}
+     * @memberof ChatsSummaryGet200Response
+     */
+    'totalIncoming': number;
+    /**
+     * 
+     * @type {Array<ChatsSummaryGet200ResponseByChannelInner>}
+     * @memberof ChatsSummaryGet200Response
+     */
+    'byChannel': Array<ChatsSummaryGet200ResponseByChannelInner>;
+}
+/**
+ * 
+ * @export
+ * @interface ChatsSummaryGet200ResponseByChannelInner
+ */
+export interface ChatsSummaryGet200ResponseByChannelInner {
+    /**
+     * 
+     * @type {AccountType}
+     * @memberof ChatsSummaryGet200ResponseByChannelInner
+     */
+    'type': AccountType;
+    /**
+     * Human-friendly channel name
+     * @type {string}
+     * @memberof ChatsSummaryGet200ResponseByChannelInner
+     */
+    'label': string;
+    /**
+     * Incoming chat count for this channel type
+     * @type {number}
+     * @memberof ChatsSummaryGet200ResponseByChannelInner
+     */
+    'count': number;
+}
+
+
+/**
  * Details collected from the coexist onboarding flow (steps 1-3)
  * @export
  * @interface CoexistDetails
@@ -12108,6 +12154,45 @@ export const ChatsApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
+         * Returns the count of new incoming chats grouped by channel type for the specified time period. Used to power the lead qualifier home-screen widget and ongoing notification. 
+         * @summary Get incoming chat summary grouped by channel type
+         * @param {ChatsSummaryGetPresetEnum} [preset] Time period for the summary. Defaults to daily. 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        chatsSummaryGet: async (preset?: ChatsSummaryGetPresetEnum, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/chats/summary`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", [], configuration)
+
+            if (preset !== undefined) {
+                localVarQueryParameter['preset'] = preset;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * Get the total count of channels. Can be filtered by account type and creation date range. Supports preset filters (daily, weekly, monthly) or custom date ranges. 
          * @summary Get channel count
          * @param {AccountType} [type] Filter by account type
@@ -12424,6 +12509,19 @@ export const ChatsApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
+         * Returns the count of new incoming chats grouped by channel type for the specified time period. Used to power the lead qualifier home-screen widget and ongoing notification. 
+         * @summary Get incoming chat summary grouped by channel type
+         * @param {ChatsSummaryGetPresetEnum} [preset] Time period for the summary. Defaults to daily. 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async chatsSummaryGet(preset?: ChatsSummaryGetPresetEnum, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ChatsSummaryGet200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.chatsSummaryGet(preset, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['ChatsApi.chatsSummaryGet']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
          * Get the total count of channels. Can be filtered by account type and creation date range. Supports preset filters (daily, weekly, monthly) or custom date ranges. 
          * @summary Get channel count
          * @param {AccountType} [type] Filter by account type
@@ -12541,6 +12639,16 @@ export const ChatsApiFactory = function (configuration?: Configuration, basePath
          */
         chatsPresencePost(requestParameters: ChatsApiChatsPresencePostRequest, options?: RawAxiosRequestConfig): AxiosPromise<AccountsDelete200Response> {
             return localVarFp.chatsPresencePost(requestParameters.accountId, requestParameters.id, requestParameters.presence, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Returns the count of new incoming chats grouped by channel type for the specified time period. Used to power the lead qualifier home-screen widget and ongoing notification. 
+         * @summary Get incoming chat summary grouped by channel type
+         * @param {ChatsApiChatsSummaryGetRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        chatsSummaryGet(requestParameters: ChatsApiChatsSummaryGetRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<ChatsSummaryGet200Response> {
+            return localVarFp.chatsSummaryGet(requestParameters.preset, options).then((request) => request(axios, basePath));
         },
         /**
          * Get the total count of channels. Can be filtered by account type and creation date range. Supports preset filters (daily, weekly, monthly) or custom date ranges. 
@@ -12855,6 +12963,20 @@ export interface ChatsApiChatsPresencePostRequest {
 }
 
 /**
+ * Request parameters for chatsSummaryGet operation in ChatsApi.
+ * @export
+ * @interface ChatsApiChatsSummaryGetRequest
+ */
+export interface ChatsApiChatsSummaryGetRequest {
+    /**
+     * Time period for the summary. Defaults to daily. 
+     * @type {'daily' | 'weekly' | 'monthly'}
+     * @memberof ChatsApiChatsSummaryGet
+     */
+    readonly preset?: ChatsSummaryGetPresetEnum
+}
+
+/**
  * Request parameters for getChannelCount operation in ChatsApi.
  * @export
  * @interface ChatsApiGetChannelCountRequest
@@ -13008,6 +13130,18 @@ export class ChatsApi extends BaseAPI {
     }
 
     /**
+     * Returns the count of new incoming chats grouped by channel type for the specified time period. Used to power the lead qualifier home-screen widget and ongoing notification. 
+     * @summary Get incoming chat summary grouped by channel type
+     * @param {ChatsApiChatsSummaryGetRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ChatsApi
+     */
+    public chatsSummaryGet(requestParameters: ChatsApiChatsSummaryGetRequest = {}, options?: RawAxiosRequestConfig) {
+        return ChatsApiFp(this.configuration).chatsSummaryGet(requestParameters.preset, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
      * Get the total count of channels. Can be filtered by account type and creation date range. Supports preset filters (daily, weekly, monthly) or custom date ranges. 
      * @summary Get channel count
      * @param {ChatsApiGetChannelCountRequest} requestParameters Request parameters.
@@ -13084,6 +13218,15 @@ export const ChatsGetAssigneeFilterOperatorEnum = {
     Or: 'OR'
 } as const;
 export type ChatsGetAssigneeFilterOperatorEnum = typeof ChatsGetAssigneeFilterOperatorEnum[keyof typeof ChatsGetAssigneeFilterOperatorEnum];
+/**
+ * @export
+ */
+export const ChatsSummaryGetPresetEnum = {
+    Daily: 'daily',
+    Weekly: 'weekly',
+    Monthly: 'monthly'
+} as const;
+export type ChatsSummaryGetPresetEnum = typeof ChatsSummaryGetPresetEnum[keyof typeof ChatsSummaryGetPresetEnum];
 /**
  * @export
  */
