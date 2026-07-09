@@ -2639,6 +2639,12 @@ export interface WabaTierProgressGet200Response {
      * @memberof WabaTierProgressGet200Response
      */
     'uniqueRecipients7d': number;
+    /**
+     * AI-written diagnosis of this account\'s recent sending pattern plus one next step, regenerated at most daily and cached. Null when it has not been generated yet or the LLM call failed — clients fall back to static guidance.
+     * @type {string}
+     * @memberof WabaTierProgressGet200Response
+     */
+    'aiInsight'?: string | null;
 }
 /**
  * 
