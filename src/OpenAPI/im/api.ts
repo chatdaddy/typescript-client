@@ -1073,6 +1073,12 @@ export interface AlibabaCAMSISVTerms {
  */
 export interface AlibabaCAMSStateInfo {
     /**
+     * True when the account was closed and the customer has not yet been told. Set by every account-close path; cleared when the account is re-opened or when the customer acknowledges the in-app popup via `accountsDisconnectAck`. Absent means the channel has never been disconnected. 
+     * @type {boolean}
+     * @memberof AlibabaCAMSStateInfo
+     */
+    'disconnectFlag'?: boolean;
+    /**
      * 
      * @type {string}
      * @memberof AlibabaCAMSStateInfo
@@ -5665,6 +5671,12 @@ export interface MetaStateInfo {
      * @memberof MetaStateInfo
      */
     'businessName'?: string;
+    /**
+     * True when the account was closed and the customer has not yet been told. Set by every account-close path; cleared when the account is re-opened or when the customer acknowledges the in-app popup via `accountsDisconnectAck`. Absent means the channel has never been disconnected. 
+     * @type {boolean}
+     * @memberof MetaStateInfo
+     */
+    'disconnectFlag'?: boolean;
 }
 /**
  * 
@@ -7509,6 +7521,12 @@ export interface WAPhonePairingState {
  */
 export interface WAStateInfo {
     /**
+     * True when the account was closed and the customer has not yet been told. Set by every account-close path; cleared when the account is re-opened or when the customer acknowledges the in-app popup via `accountsDisconnectAck`. Absent means the channel has never been disconnected. 
+     * @type {boolean}
+     * @memberof WAStateInfo
+     */
+    'disconnectFlag'?: boolean;
+    /**
      * The QR to scan to log into the account
      * @type {string}
      * @memberof WAStateInfo
@@ -8444,6 +8462,44 @@ export const AccountApiAxiosParamCreator = function (configuration?: Configurati
             };
         },
         /**
+         * Clears `stateInfo.disconnectFlag`, which the dashboard uses to decide whether to show the \"channel disconnected\" popup. Called when the customer dismisses that popup.  Acknowledgement is team-wide: the flag lives on the account, so the first team member to acknowledge clears it for everyone. Idempotent — acknowledging an account that is not flagged is a no-op. 
+         * @summary Acknowledge the disconnect alert for an account
+         * @param {string} accountId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        accountsDisconnectAck: async (accountId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'accountId' is not null or undefined
+            assertParamExists('accountsDisconnectAck', 'accountId', accountId)
+            const localVarPath = `/accounts/{accountId}/disconnect-ack`
+                .replace(`{${"accountId"}}`, encodeURIComponent(String(accountId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", [], configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * Returns all accounts matching the given account type, sorted by lastMessageSentAt descending (most recently active first). This endpoint requires no authentication. 
          * @summary Fetch accounts by type
          * @param {AccountType} type The account type to filter by
@@ -8908,6 +8964,19 @@ export const AccountApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
+         * Clears `stateInfo.disconnectFlag`, which the dashboard uses to decide whether to show the \"channel disconnected\" popup. Called when the customer dismisses that popup.  Acknowledgement is team-wide: the flag lives on the account, so the first team member to acknowledge clears it for everyone. Idempotent — acknowledging an account that is not flagged is a no-op. 
+         * @summary Acknowledge the disconnect alert for an account
+         * @param {string} accountId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async accountsDisconnectAck(accountId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.accountsDisconnectAck(accountId, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['AccountApi.accountsDisconnectAck']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
          * Returns all accounts matching the given account type, sorted by lastMessageSentAt descending (most recently active first). This endpoint requires no authentication. 
          * @summary Fetch accounts by type
          * @param {AccountType} type The account type to filter by
@@ -9080,6 +9149,16 @@ export const AccountApiFactory = function (configuration?: Configuration, basePa
             return localVarFp.accountsDelete(requestParameters.accountId, requestParameters.deleteNow, options).then((request) => request(axios, basePath));
         },
         /**
+         * Clears `stateInfo.disconnectFlag`, which the dashboard uses to decide whether to show the \"channel disconnected\" popup. Called when the customer dismisses that popup.  Acknowledgement is team-wide: the flag lives on the account, so the first team member to acknowledge clears it for everyone. Idempotent — acknowledging an account that is not flagged is a no-op. 
+         * @summary Acknowledge the disconnect alert for an account
+         * @param {AccountApiAccountsDisconnectAckRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        accountsDisconnectAck(requestParameters: AccountApiAccountsDisconnectAckRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.accountsDisconnectAck(requestParameters.accountId, options).then((request) => request(axios, basePath));
+        },
+        /**
          * Returns all accounts matching the given account type, sorted by lastMessageSentAt descending (most recently active first). This endpoint requires no authentication. 
          * @summary Fetch accounts by type
          * @param {AccountApiAccountsFetchByTypeRequest} requestParameters Request parameters.
@@ -9225,6 +9304,20 @@ export interface AccountApiAccountsDeleteRequest {
      * @memberof AccountApiAccountsDelete
      */
     readonly deleteNow?: boolean
+}
+
+/**
+ * Request parameters for accountsDisconnectAck operation in AccountApi.
+ * @export
+ * @interface AccountApiAccountsDisconnectAckRequest
+ */
+export interface AccountApiAccountsDisconnectAckRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof AccountApiAccountsDisconnectAck
+     */
+    readonly accountId: string
 }
 
 /**
@@ -9492,6 +9585,18 @@ export class AccountApi extends BaseAPI {
      */
     public accountsDelete(requestParameters: AccountApiAccountsDeleteRequest, options?: RawAxiosRequestConfig) {
         return AccountApiFp(this.configuration).accountsDelete(requestParameters.accountId, requestParameters.deleteNow, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Clears `stateInfo.disconnectFlag`, which the dashboard uses to decide whether to show the \"channel disconnected\" popup. Called when the customer dismisses that popup.  Acknowledgement is team-wide: the flag lives on the account, so the first team member to acknowledge clears it for everyone. Idempotent — acknowledging an account that is not flagged is a no-op. 
+     * @summary Acknowledge the disconnect alert for an account
+     * @param {AccountApiAccountsDisconnectAckRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AccountApi
+     */
+    public accountsDisconnectAck(requestParameters: AccountApiAccountsDisconnectAckRequest, options?: RawAxiosRequestConfig) {
+        return AccountApiFp(this.configuration).accountsDisconnectAck(requestParameters.accountId, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
