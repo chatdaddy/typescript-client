@@ -2585,8 +2585,26 @@ export interface User {
      * @memberof User
      */
     'migratedToTheo'?: boolean;
+    /**
+     * Whether the user has ever signed in on the mobile app. Sticky: set true on first mobile sign-in and never set back to false.
+     * @type {boolean}
+     * @memberof User
+     */
+    'isMobileUser'?: boolean;
+    /**
+     * Platform of the last mobile device the user signed in on
+     * @type {string}
+     * @memberof User
+     */
+    'mobilePlatform'?: UserMobilePlatformEnum | null;
 }
 
+export const UserMobilePlatformEnum = {
+    Android: 'android',
+    Ios: 'ios'
+} as const;
+
+export type UserMobilePlatformEnum = typeof UserMobilePlatformEnum[keyof typeof UserMobilePlatformEnum];
 
 /**
  * 
@@ -2786,6 +2804,12 @@ export interface UserPatch {
      */
     'fcmPlatform'?: UserPatchFcmPlatformEnum;
     /**
+     * Sent by the mobile app on every sign-in, independent of push permission. Marks the user as a mobile user server-side. The isMobileUser flag is derived from this and can never be unset by a client.
+     * @type {string}
+     * @memberof UserPatch
+     */
+    'mobilePlatform'?: UserPatchMobilePlatformEnum;
+    /**
      * add a user to a partnership manually
      * @type {string}
      * @memberof UserPatch
@@ -2805,6 +2829,12 @@ export const UserPatchFcmPlatformEnum = {
 } as const;
 
 export type UserPatchFcmPlatformEnum = typeof UserPatchFcmPlatformEnum[keyof typeof UserPatchFcmPlatformEnum];
+export const UserPatchMobilePlatformEnum = {
+    Android: 'android',
+    Ios: 'ios'
+} as const;
+
+export type UserPatchMobilePlatformEnum = typeof UserPatchMobilePlatformEnum[keyof typeof UserPatchMobilePlatformEnum];
 export const UserPatchCreditCustomerEnum = {
     Production: 'production'
 } as const;

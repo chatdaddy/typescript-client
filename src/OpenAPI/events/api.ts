@@ -12565,6 +12565,18 @@ export interface TeamInsertDataCreator {
      * @memberof TeamInsertDataCreator
      */
     'migratedToTheo'?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof TeamInsertDataCreator
+     */
+    'isMobileUser'?: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof TeamInsertDataCreator
+     */
+    'mobilePlatform'?: TeamInsertDataCreatorMobilePlatformEnum | null;
 }
 
 export const TeamInsertDataCreatorCreatedByMethodEnum = {
@@ -12585,6 +12597,12 @@ export const TeamInsertDataCreatorVariantEnum = {
 } as const;
 
 export type TeamInsertDataCreatorVariantEnum = typeof TeamInsertDataCreatorVariantEnum[keyof typeof TeamInsertDataCreatorVariantEnum];
+export const TeamInsertDataCreatorMobilePlatformEnum = {
+    Android: 'android',
+    Ios: 'ios'
+} as const;
+
+export type TeamInsertDataCreatorMobilePlatformEnum = typeof TeamInsertDataCreatorMobilePlatformEnum[keyof typeof TeamInsertDataCreatorMobilePlatformEnum];
 
 /**
  * 
@@ -14244,6 +14262,18 @@ export interface UserInsertData {
      * @memberof UserInsertData
      */
     'migratedToTheo'?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof UserInsertData
+     */
+    'isMobileUser'?: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof UserInsertData
+     */
+    'mobilePlatform'?: UserInsertDataMobilePlatformEnum | null;
 }
 
 export const UserInsertDataCreatedByMethodEnum = {
@@ -14264,6 +14294,12 @@ export const UserInsertDataVariantEnum = {
 } as const;
 
 export type UserInsertDataVariantEnum = typeof UserInsertDataVariantEnum[keyof typeof UserInsertDataVariantEnum];
+export const UserInsertDataMobilePlatformEnum = {
+    Android: 'android',
+    Ios: 'ios'
+} as const;
+
+export type UserInsertDataMobilePlatformEnum = typeof UserInsertDataMobilePlatformEnum[keyof typeof UserInsertDataMobilePlatformEnum];
 
 /**
  * 
@@ -14645,6 +14681,18 @@ export interface UserUpdateData {
      * @memberof UserUpdateData
      */
     'migratedToTheo'?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof UserUpdateData
+     */
+    'isMobileUser'?: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof UserUpdateData
+     */
+    'mobilePlatform'?: UserUpdateDataMobilePlatformEnum | null;
 }
 
 export const UserUpdateDataCreatedByMethodEnum = {
@@ -14665,6 +14713,12 @@ export const UserUpdateDataVariantEnum = {
 } as const;
 
 export type UserUpdateDataVariantEnum = typeof UserUpdateDataVariantEnum[keyof typeof UserUpdateDataVariantEnum];
+export const UserUpdateDataMobilePlatformEnum = {
+    Android: 'android',
+    Ios: 'ios'
+} as const;
+
+export type UserUpdateDataMobilePlatformEnum = typeof UserUpdateDataMobilePlatformEnum[keyof typeof UserUpdateDataMobilePlatformEnum];
 
 /**
  * 
