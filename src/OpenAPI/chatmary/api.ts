@@ -136,6 +136,12 @@ export interface AnalyticsReport {
      */
     'reportText'?: string | null;
     /**
+     * Top tags added today — per tag, contacts tagged in the last 24h (current) vs the previous 24h (previous). Neutral breakdown; may be absent/null when the metrics service returns no breakdown.
+     * @type {Array<AnalyticsReportTagsAddedInner>}
+     * @memberof AnalyticsReport
+     */
+    'tagsAdded'?: Array<AnalyticsReportTagsAddedInner> | null;
+    /**
      * 
      * @type {string}
      * @memberof AnalyticsReport
@@ -280,6 +286,31 @@ export interface AnalyticsReportGet200Response {
      * @memberof AnalyticsReportGet200Response
      */
     'items': Array<AnalyticsReport>;
+}
+/**
+ * 
+ * @export
+ * @interface AnalyticsReportTagsAddedInner
+ */
+export interface AnalyticsReportTagsAddedInner {
+    /**
+     * 
+     * @type {string}
+     * @memberof AnalyticsReportTagsAddedInner
+     */
+    'name': string;
+    /**
+     * 
+     * @type {number}
+     * @memberof AnalyticsReportTagsAddedInner
+     */
+    'current': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof AnalyticsReportTagsAddedInner
+     */
+    'previous': number;
 }
 /**
  * 
