@@ -1745,6 +1745,12 @@ export interface CreditCustomer {
      */
     'lockAccount'?: boolean;
     /**
+     * Whether the customer has accepted the Terms of Service at checkout. Set to true when the user checks the ToS checkbox before proceeding to payment.
+     * @type {boolean}
+     * @memberof CreditCustomer
+     */
+    'acceptedToS'?: boolean;
+    /**
      * 
      * @type {CreditCustomerOverdueInvoice}
      * @memberof CreditCustomer
