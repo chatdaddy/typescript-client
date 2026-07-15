@@ -3355,7 +3355,8 @@ export interface ModifySupportPlan {
 
 export const ModifySupportPlanTypeEnum = {
     ConsultationSupportPlanLvl1: 'consultation/support_plan_lvl1',
-    ConsultationSupportPlanLvl2: 'consultation/support_plan_lvl2'
+    ConsultationSupportPlanLvl2: 'consultation/support_plan_lvl2',
+    ConsultationSupportPlanLvl3: 'consultation/support_plan_lvl3'
 } as const;
 
 export type ModifySupportPlanTypeEnum = typeof ModifySupportPlanTypeEnum[keyof typeof ModifySupportPlanTypeEnum];
@@ -4290,6 +4291,7 @@ export const RecurringCreditConsumptionType = {
     ChannelSms: 'channel/sms',
     ConsultationSupportPlanLvl1: 'consultation/support_plan_lvl1',
     ConsultationSupportPlanLvl2: 'consultation/support_plan_lvl2',
+    ConsultationSupportPlanLvl3: 'consultation/support_plan_lvl3',
     User: 'user',
     CallChannel: 'call_channel',
     AnalyticsDashboard: 'analytics_dashboard',
