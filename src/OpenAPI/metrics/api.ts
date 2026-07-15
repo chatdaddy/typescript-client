@@ -320,6 +320,31 @@ export type Aggregate = typeof Aggregate[keyof typeof Aggregate];
 export type AggregateTeamDataValue = BooleanValueObject | StringValueObject | ValueObject | { [key: string]: ValueObject; };
 
 /**
+ * 
+ * @export
+ * @interface AnalyticsReportData
+ */
+export interface AnalyticsReportData {
+    /**
+     * 
+     * @type {string}
+     * @memberof AnalyticsReportData
+     */
+    'id': string;
+    /**
+     * 
+     * @type {Array<MetricsResult>}
+     * @memberof AnalyticsReportData
+     */
+    'dataV2': Array<MetricsResult>;
+    /**
+     * Per-tag-name breakdown of how many distinct contacts had the tag added in the last 24h vs the previous 24h. Sorted by current desc then previous desc, capped to the top 8. Omitted/empty when no tags were added in either window.
+     * @type {Array<TagsAddedItem>}
+     * @memberof AnalyticsReportData
+     */
+    'tagsAdded'?: Array<TagsAddedItem>;
+}
+/**
  * Describe an array
  * @export
  * @interface ArrayPropertyDescriptor
@@ -1626,6 +1651,31 @@ export interface StringValueObject {
 /**
  * 
  * @export
+ * @interface TagsAddedItem
+ */
+export interface TagsAddedItem {
+    /**
+     * The tag\'s name.
+     * @type {string}
+     * @memberof TagsAddedItem
+     */
+    'name': string;
+    /**
+     * Distinct contacts that had this tag added in the last 24h.
+     * @type {number}
+     * @memberof TagsAddedItem
+     */
+    'current': number;
+    /**
+     * Distinct contacts that had this tag added in the previous 24h (the 24h before the current window).
+     * @type {number}
+     * @memberof TagsAddedItem
+     */
+    'previous': number;
+}
+/**
+ * 
+ * @export
  * @interface TeamData
  */
 export interface TeamData {
@@ -2494,7 +2544,7 @@ export const DashboardApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getAnalyticsReportData(teamId?: string, timezoneOffset?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DashboardData>> {
+        async getAnalyticsReportData(teamId?: string, timezoneOffset?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AnalyticsReportData>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getAnalyticsReportData(teamId, timezoneOffset, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['DashboardApi.getAnalyticsReportData']?.[localVarOperationServerIndex]?.url;
@@ -2639,7 +2689,7 @@ export const DashboardApiFactory = function (configuration?: Configuration, base
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getAnalyticsReportData(requestParameters: DashboardApiGetAnalyticsReportDataRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<DashboardData> {
+        getAnalyticsReportData(requestParameters: DashboardApiGetAnalyticsReportDataRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<AnalyticsReportData> {
             return localVarFp.getAnalyticsReportData(requestParameters.teamId, requestParameters.timezoneOffset, options).then((request) => request(axios, basePath));
         },
         /**
