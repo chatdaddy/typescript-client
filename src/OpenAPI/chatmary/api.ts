@@ -2427,6 +2427,83 @@ export interface TranslateTextPostRequest {
 /**
  * 
  * @export
+ * @interface UiClicksAggregated
+ */
+export interface UiClicksAggregated {
+    /**
+     * 
+     * @type {string}
+     * @memberof UiClicksAggregated
+     */
+    'computedAt'?: string | null;
+    /**
+     * 
+     * @type {{ [key: string]: UiClicksAggregatedElementsValue; }}
+     * @memberof UiClicksAggregated
+     */
+    'elements': { [key: string]: UiClicksAggregatedElementsValue; };
+}
+/**
+ * 
+ * @export
+ * @interface UiClicksAggregatedElementsValue
+ */
+export interface UiClicksAggregatedElementsValue {
+    /**
+     * Total clicks across all teams in last 7 days
+     * @type {number}
+     * @memberof UiClicksAggregatedElementsValue
+     */
+    'total': number;
+    /**
+     * Click count broken down by teamId
+     * @type {{ [key: string]: number; }}
+     * @memberof UiClicksAggregatedElementsValue
+     */
+    'byTeam': { [key: string]: number; };
+}
+/**
+ * 
+ * @export
+ * @interface UiClicksBatchPost200Response
+ */
+export interface UiClicksBatchPost200Response {
+    /**
+     * 
+     * @type {number}
+     * @memberof UiClicksBatchPost200Response
+     */
+    'processed': number;
+}
+/**
+ * 
+ * @export
+ * @interface UiClicksBatchPostRequest
+ */
+export interface UiClicksBatchPostRequest {
+    /**
+     * 
+     * @type {Array<UiClicksBatchPostRequestEventsInner>}
+     * @memberof UiClicksBatchPostRequest
+     */
+    'events': Array<UiClicksBatchPostRequestEventsInner>;
+}
+/**
+ * 
+ * @export
+ * @interface UiClicksBatchPostRequestEventsInner
+ */
+export interface UiClicksBatchPostRequestEventsInner {
+    /**
+     * Tracking ID of the clicked element, format: page__action
+     * @type {string}
+     * @memberof UiClicksBatchPostRequestEventsInner
+     */
+    'elementId': string;
+}
+/**
+ * 
+ * @export
  * @interface WabaHealthFlagPostRequest
  */
 export interface WabaHealthFlagPostRequest {
@@ -8075,6 +8152,285 @@ export class TrackPageHitsApi extends BaseAPI {
      */
     public trackPageHitsPost(requestParameters: TrackPageHitsApiTrackPageHitsPostRequest = {}, options?: RawAxiosRequestConfig) {
         return TrackPageHitsApiFp(this.configuration).trackPageHitsPost(requestParameters.trackPageHitsPostRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+
+/**
+ * UiClicksApi - axios parameter creator
+ * @export
+ */
+export const UiClicksApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @summary Get pre-computed 7-day UI click aggregates (admin only)
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        uiClicksAggregatedGet: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/ui-clicks/aggregated`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", [], configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Batch ingest UI click events (authenticated users)
+         * @param {UiClicksBatchPostRequest} uiClicksBatchPostRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        uiClicksBatchPost: async (uiClicksBatchPostRequest: UiClicksBatchPostRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'uiClicksBatchPostRequest' is not null or undefined
+            assertParamExists('uiClicksBatchPost', 'uiClicksBatchPostRequest', uiClicksBatchPostRequest)
+            const localVarPath = `/ui-clicks/batch`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", [], configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(uiClicksBatchPostRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Batch ingest UI click events (unauthenticated pages)
+         * @param {UiClicksBatchPostRequest} uiClicksBatchPostRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        uiClicksPublicBatchPost: async (uiClicksBatchPostRequest: UiClicksBatchPostRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'uiClicksBatchPostRequest' is not null or undefined
+            assertParamExists('uiClicksPublicBatchPost', 'uiClicksBatchPostRequest', uiClicksBatchPostRequest)
+            const localVarPath = `/ui-clicks/public-batch`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(uiClicksBatchPostRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * UiClicksApi - functional programming interface
+ * @export
+ */
+export const UiClicksApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = UiClicksApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * 
+         * @summary Get pre-computed 7-day UI click aggregates (admin only)
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async uiClicksAggregatedGet(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<UiClicksAggregated>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.uiClicksAggregatedGet(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['UiClicksApi.uiClicksAggregatedGet']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @summary Batch ingest UI click events (authenticated users)
+         * @param {UiClicksBatchPostRequest} uiClicksBatchPostRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async uiClicksBatchPost(uiClicksBatchPostRequest: UiClicksBatchPostRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<UiClicksBatchPost200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.uiClicksBatchPost(uiClicksBatchPostRequest, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['UiClicksApi.uiClicksBatchPost']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @summary Batch ingest UI click events (unauthenticated pages)
+         * @param {UiClicksBatchPostRequest} uiClicksBatchPostRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async uiClicksPublicBatchPost(uiClicksBatchPostRequest: UiClicksBatchPostRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<UiClicksBatchPost200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.uiClicksPublicBatchPost(uiClicksBatchPostRequest, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['UiClicksApi.uiClicksPublicBatchPost']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+    }
+};
+
+/**
+ * UiClicksApi - factory interface
+ * @export
+ */
+export const UiClicksApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = UiClicksApiFp(configuration)
+    return {
+        /**
+         * 
+         * @summary Get pre-computed 7-day UI click aggregates (admin only)
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        uiClicksAggregatedGet(options?: RawAxiosRequestConfig): AxiosPromise<UiClicksAggregated> {
+            return localVarFp.uiClicksAggregatedGet(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Batch ingest UI click events (authenticated users)
+         * @param {UiClicksApiUiClicksBatchPostRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        uiClicksBatchPost(requestParameters: UiClicksApiUiClicksBatchPostRequest, options?: RawAxiosRequestConfig): AxiosPromise<UiClicksBatchPost200Response> {
+            return localVarFp.uiClicksBatchPost(requestParameters.uiClicksBatchPostRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Batch ingest UI click events (unauthenticated pages)
+         * @param {UiClicksApiUiClicksPublicBatchPostRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        uiClicksPublicBatchPost(requestParameters: UiClicksApiUiClicksPublicBatchPostRequest, options?: RawAxiosRequestConfig): AxiosPromise<UiClicksBatchPost200Response> {
+            return localVarFp.uiClicksPublicBatchPost(requestParameters.uiClicksBatchPostRequest, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * Request parameters for uiClicksBatchPost operation in UiClicksApi.
+ * @export
+ * @interface UiClicksApiUiClicksBatchPostRequest
+ */
+export interface UiClicksApiUiClicksBatchPostRequest {
+    /**
+     * 
+     * @type {UiClicksBatchPostRequest}
+     * @memberof UiClicksApiUiClicksBatchPost
+     */
+    readonly uiClicksBatchPostRequest: UiClicksBatchPostRequest
+}
+
+/**
+ * Request parameters for uiClicksPublicBatchPost operation in UiClicksApi.
+ * @export
+ * @interface UiClicksApiUiClicksPublicBatchPostRequest
+ */
+export interface UiClicksApiUiClicksPublicBatchPostRequest {
+    /**
+     * 
+     * @type {UiClicksBatchPostRequest}
+     * @memberof UiClicksApiUiClicksPublicBatchPost
+     */
+    readonly uiClicksBatchPostRequest: UiClicksBatchPostRequest
+}
+
+/**
+ * UiClicksApi - object-oriented interface
+ * @export
+ * @class UiClicksApi
+ * @extends {BaseAPI}
+ */
+export class UiClicksApi extends BaseAPI {
+    /**
+     * 
+     * @summary Get pre-computed 7-day UI click aggregates (admin only)
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof UiClicksApi
+     */
+    public uiClicksAggregatedGet(options?: RawAxiosRequestConfig) {
+        return UiClicksApiFp(this.configuration).uiClicksAggregatedGet(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Batch ingest UI click events (authenticated users)
+     * @param {UiClicksApiUiClicksBatchPostRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof UiClicksApi
+     */
+    public uiClicksBatchPost(requestParameters: UiClicksApiUiClicksBatchPostRequest, options?: RawAxiosRequestConfig) {
+        return UiClicksApiFp(this.configuration).uiClicksBatchPost(requestParameters.uiClicksBatchPostRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Batch ingest UI click events (unauthenticated pages)
+     * @param {UiClicksApiUiClicksPublicBatchPostRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof UiClicksApi
+     */
+    public uiClicksPublicBatchPost(requestParameters: UiClicksApiUiClicksPublicBatchPostRequest, options?: RawAxiosRequestConfig) {
+        return UiClicksApiFp(this.configuration).uiClicksPublicBatchPost(requestParameters.uiClicksBatchPostRequest, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
