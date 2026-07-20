@@ -3841,6 +3841,12 @@ export interface PlanMigrationInitiateRequest {
      * @memberof PlanMigrationInitiateRequest
      */
     'teamId': string;
+    /**
+     * When true, un-arm the team — sets migrationStatus back to null so the migration popup stops showing. Defaults to false (arm → \'pending\').
+     * @type {boolean}
+     * @memberof PlanMigrationInitiateRequest
+     */
+    'disarm'?: boolean;
 }
 /**
  * 
@@ -7704,10 +7710,11 @@ export const CreditsApiAxiosParamCreator = function (configuration?: Configurati
          * @param {string} [searchTeamId] Search filter -- only return teams whose ID contains this substring
          * @param {boolean} [hasPlanType] When true, restricts to teams whose creditCustomer.planType is set (mini / basic / pro / max / enterprise). Powers the migration dashboard\&#39;s \&quot;On Latest Plan\&quot; drill-down.
          * @param {boolean} [hasPlanId] When true, restricts to teams whose autoRenewal.planId is set — anyone paying on new pricing. Powers the migration dashboard\&#39;s \&quot;Have Paid\&quot; drill-down and its status-scoped subsets.
+         * @param {GetCustomerDataMigrationStatusEnum} [migrationStatus] Restrict to teams whose creditCustomer.migrationStatus matches (e.g. \&#39;pending\&#39; &#x3D; armed for migration). Keys off the customer, so it also returns armed teams with no auto-renewal — used with returnTeamIds to list the armed cohort for the admin panel.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getCustomerData: async (status?: GetCustomerDataStatusEnum, page?: number, count?: number, returnTeamIds?: boolean, searchTeamId?: string, hasPlanType?: boolean, hasPlanId?: boolean, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getCustomerData: async (status?: GetCustomerDataStatusEnum, page?: number, count?: number, returnTeamIds?: boolean, searchTeamId?: string, hasPlanType?: boolean, hasPlanId?: boolean, migrationStatus?: GetCustomerDataMigrationStatusEnum, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v2/get-customer-data`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -7750,6 +7757,10 @@ export const CreditsApiAxiosParamCreator = function (configuration?: Configurati
 
             if (hasPlanId !== undefined) {
                 localVarQueryParameter['hasPlanId'] = hasPlanId;
+            }
+
+            if (migrationStatus !== undefined) {
+                localVarQueryParameter['migrationStatus'] = migrationStatus;
             }
 
 
@@ -8555,11 +8566,12 @@ export const CreditsApiFp = function(configuration?: Configuration) {
          * @param {string} [searchTeamId] Search filter -- only return teams whose ID contains this substring
          * @param {boolean} [hasPlanType] When true, restricts to teams whose creditCustomer.planType is set (mini / basic / pro / max / enterprise). Powers the migration dashboard\&#39;s \&quot;On Latest Plan\&quot; drill-down.
          * @param {boolean} [hasPlanId] When true, restricts to teams whose autoRenewal.planId is set — anyone paying on new pricing. Powers the migration dashboard\&#39;s \&quot;Have Paid\&quot; drill-down and its status-scoped subsets.
+         * @param {GetCustomerDataMigrationStatusEnum} [migrationStatus] Restrict to teams whose creditCustomer.migrationStatus matches (e.g. \&#39;pending\&#39; &#x3D; armed for migration). Keys off the customer, so it also returns armed teams with no auto-renewal — used with returnTeamIds to list the armed cohort for the admin panel.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getCustomerData(status?: GetCustomerDataStatusEnum, page?: number, count?: number, returnTeamIds?: boolean, searchTeamId?: string, hasPlanType?: boolean, hasPlanId?: boolean, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetCustomerData200Response>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getCustomerData(status, page, count, returnTeamIds, searchTeamId, hasPlanType, hasPlanId, options);
+        async getCustomerData(status?: GetCustomerDataStatusEnum, page?: number, count?: number, returnTeamIds?: boolean, searchTeamId?: string, hasPlanType?: boolean, hasPlanId?: boolean, migrationStatus?: GetCustomerDataMigrationStatusEnum, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetCustomerData200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getCustomerData(status, page, count, returnTeamIds, searchTeamId, hasPlanType, hasPlanId, migrationStatus, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['CreditsApi.getCustomerData']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -8982,7 +8994,7 @@ export const CreditsApiFactory = function (configuration?: Configuration, basePa
          * @throws {RequiredError}
          */
         getCustomerData(requestParameters: CreditsApiGetCustomerDataRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<GetCustomerData200Response> {
-            return localVarFp.getCustomerData(requestParameters.status, requestParameters.page, requestParameters.count, requestParameters.returnTeamIds, requestParameters.searchTeamId, requestParameters.hasPlanType, requestParameters.hasPlanId, options).then((request) => request(axios, basePath));
+            return localVarFp.getCustomerData(requestParameters.status, requestParameters.page, requestParameters.count, requestParameters.returnTeamIds, requestParameters.searchTeamId, requestParameters.hasPlanType, requestParameters.hasPlanId, requestParameters.migrationStatus, options).then((request) => request(axios, basePath));
         },
         /**
          * Admin-only — set or clear the lockAccount flag on a credit customer. When locked, the workspace is blocked regardless of subscription status.
@@ -9610,6 +9622,13 @@ export interface CreditsApiGetCustomerDataRequest {
      * @memberof CreditsApiGetCustomerData
      */
     readonly hasPlanId?: boolean
+
+    /**
+     * Restrict to teams whose creditCustomer.migrationStatus matches (e.g. \&#39;pending\&#39; &#x3D; armed for migration). Keys off the customer, so it also returns armed teams with no auto-renewal — used with returnTeamIds to list the armed cohort for the admin panel.
+     * @type {'pending' | 'completed'}
+     * @memberof CreditsApiGetCustomerData
+     */
+    readonly migrationStatus?: GetCustomerDataMigrationStatusEnum
 }
 
 /**
@@ -10159,7 +10178,7 @@ export class CreditsApi extends BaseAPI {
      * @memberof CreditsApi
      */
     public getCustomerData(requestParameters: CreditsApiGetCustomerDataRequest = {}, options?: RawAxiosRequestConfig) {
-        return CreditsApiFp(this.configuration).getCustomerData(requestParameters.status, requestParameters.page, requestParameters.count, requestParameters.returnTeamIds, requestParameters.searchTeamId, requestParameters.hasPlanType, requestParameters.hasPlanId, options).then((request) => request(this.axios, this.basePath));
+        return CreditsApiFp(this.configuration).getCustomerData(requestParameters.status, requestParameters.page, requestParameters.count, requestParameters.returnTeamIds, requestParameters.searchTeamId, requestParameters.hasPlanType, requestParameters.hasPlanId, requestParameters.migrationStatus, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -10287,6 +10306,14 @@ export type GetCustomerDataStatusEnum = typeof GetCustomerDataStatusEnum[keyof t
 /**
  * @export
  */
+export const GetCustomerDataMigrationStatusEnum = {
+    Pending: 'pending',
+    Completed: 'completed'
+} as const;
+export type GetCustomerDataMigrationStatusEnum = typeof GetCustomerDataMigrationStatusEnum[keyof typeof GetCustomerDataMigrationStatusEnum];
+/**
+ * @export
+ */
 export const UsageSummaryGetIntervalEnum = {
     Hour: 'hour',
     Day: 'day',
@@ -10395,7 +10422,7 @@ export const PlanMigrationApiAxiosParamCreator = function (configuration?: Confi
         },
         /**
          * 
-         * @summary Admin/sales trigger to initiate the migration flow for a team. Sets migrationStatus to pending and fires a remote event so the UI can display the migration wizard.
+         * @summary Admin/sales trigger to arm (or un-arm) the migration flow for a team. Sets migrationStatus to \'pending\' and fires a remote event so the UI can display the migration wizard. Pass disarm=true to un-arm — sets migrationStatus back to null so the migration popup no longer shows.
          * @param {PlanMigrationInitiateRequest} planMigrationInitiateRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -10470,7 +10497,7 @@ export const PlanMigrationApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
-         * @summary Admin/sales trigger to initiate the migration flow for a team. Sets migrationStatus to pending and fires a remote event so the UI can display the migration wizard.
+         * @summary Admin/sales trigger to arm (or un-arm) the migration flow for a team. Sets migrationStatus to \'pending\' and fires a remote event so the UI can display the migration wizard. Pass disarm=true to un-arm — sets migrationStatus back to null so the migration popup no longer shows.
          * @param {PlanMigrationInitiateRequest} planMigrationInitiateRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -10512,7 +10539,7 @@ export const PlanMigrationApiFactory = function (configuration?: Configuration, 
         },
         /**
          * 
-         * @summary Admin/sales trigger to initiate the migration flow for a team. Sets migrationStatus to pending and fires a remote event so the UI can display the migration wizard.
+         * @summary Admin/sales trigger to arm (or un-arm) the migration flow for a team. Sets migrationStatus to \'pending\' and fires a remote event so the UI can display the migration wizard. Pass disarm=true to un-arm — sets migrationStatus back to null so the migration popup no longer shows.
          * @param {PlanMigrationApiPlanMigrationInitiateRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -10583,7 +10610,7 @@ export class PlanMigrationApi extends BaseAPI {
 
     /**
      * 
-     * @summary Admin/sales trigger to initiate the migration flow for a team. Sets migrationStatus to pending and fires a remote event so the UI can display the migration wizard.
+     * @summary Admin/sales trigger to arm (or un-arm) the migration flow for a team. Sets migrationStatus to \'pending\' and fires a remote event so the UI can display the migration wizard. Pass disarm=true to un-arm — sets migrationStatus back to null so the migration popup no longer shows.
      * @param {PlanMigrationApiPlanMigrationInitiateRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
