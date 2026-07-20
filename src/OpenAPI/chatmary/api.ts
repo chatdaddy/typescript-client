@@ -2308,6 +2308,80 @@ export interface TeamStorageKeyPutRequest {
 /**
  * 
  * @export
+ * @interface TrackEvent
+ */
+export interface TrackEvent {
+    /**
+     * Tracking ID of the element, format: page__action
+     * @type {string}
+     * @memberof TrackEvent
+     */
+    'elementId': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof TrackEvent
+     */
+    'eventType'?: TrackEventEventTypeEnum;
+    /**
+     * Browser session ID — resets after 30 min inactivity
+     * @type {string}
+     * @memberof TrackEvent
+     */
+    'sessionId'?: string | null;
+    /**
+     * Monotonically increasing sequence number within session
+     * @type {number}
+     * @memberof TrackEvent
+     */
+    'seq'?: number | null;
+    /**
+     * URL pathname at time of event
+     * @type {string}
+     * @memberof TrackEvent
+     */
+    'page'?: string | null;
+    /**
+     * elementId of the immediately preceding click in this session
+     * @type {string}
+     * @memberof TrackEvent
+     */
+    'prevElementId'?: string | null;
+    /**
+     * Unix millisecond timestamp from the frontend clock
+     * @type {number}
+     * @memberof TrackEvent
+     */
+    'ts'?: number | null;
+    /**
+     * Event-specific metadata (close reason, visibility ratio, etc.)
+     * @type {{ [key: string]: TrackEventPropertiesValue; }}
+     * @memberof TrackEvent
+     */
+    'properties'?: { [key: string]: TrackEventPropertiesValue; } | null;
+}
+
+export const TrackEventEventTypeEnum = {
+    Click: 'click',
+    PageView: 'page_view',
+    RageClick: 'rage_click',
+    ModalOpen: 'modal_open',
+    ModalClose: 'modal_close',
+    ModalComplete: 'modal_complete',
+    FeatureSeen: 'feature_seen'
+} as const;
+
+export type TrackEventEventTypeEnum = typeof TrackEventEventTypeEnum[keyof typeof TrackEventEventTypeEnum];
+
+/**
+ * @type TrackEventPropertiesValue
+ * @export
+ */
+export type TrackEventPropertiesValue = boolean | number | string;
+
+/**
+ * 
+ * @export
  * @interface TrackPageHit
  */
 export interface TrackPageHit {
@@ -2427,6 +2501,49 @@ export interface TranslateTextPostRequest {
 /**
  * 
  * @export
+ * @interface UiClickElementStats
+ */
+export interface UiClickElementStats {
+    /**
+     * Total clicks across all teams in last 7 days
+     * @type {number}
+     * @memberof UiClickElementStats
+     */
+    'total': number;
+    /**
+     * Click count broken down by teamId
+     * @type {{ [key: string]: number; }}
+     * @memberof UiClickElementStats
+     */
+    'byTeam': { [key: string]: number; };
+    /**
+     * Number of rage-click events (3+ rapid clicks) in last 7 days
+     * @type {number}
+     * @memberof UiClickElementStats
+     */
+    'rageCount'?: number;
+    /**
+     * Number of feature_seen events (element hit 50% viewport) in last 7 days
+     * @type {number}
+     * @memberof UiClickElementStats
+     */
+    'seenCount'?: number;
+    /**
+     * Number of modal_open events in last 7 days
+     * @type {number}
+     * @memberof UiClickElementStats
+     */
+    'modalOpenCount'?: number;
+    /**
+     * Number of modal_close events in last 7 days
+     * @type {number}
+     * @memberof UiClickElementStats
+     */
+    'modalCloseCount'?: number;
+}
+/**
+ * 
+ * @export
  * @interface UiClicksAggregated
  */
 export interface UiClicksAggregated {
@@ -2438,29 +2555,10 @@ export interface UiClicksAggregated {
     'computedAt'?: string | null;
     /**
      * 
-     * @type {{ [key: string]: UiClicksAggregatedElementsValue; }}
+     * @type {{ [key: string]: UiClickElementStats; }}
      * @memberof UiClicksAggregated
      */
-    'elements': { [key: string]: UiClicksAggregatedElementsValue; };
-}
-/**
- * 
- * @export
- * @interface UiClicksAggregatedElementsValue
- */
-export interface UiClicksAggregatedElementsValue {
-    /**
-     * Total clicks across all teams in last 7 days
-     * @type {number}
-     * @memberof UiClicksAggregatedElementsValue
-     */
-    'total': number;
-    /**
-     * Click count broken down by teamId
-     * @type {{ [key: string]: number; }}
-     * @memberof UiClicksAggregatedElementsValue
-     */
-    'byTeam': { [key: string]: number; };
+    'elements': { [key: string]: UiClickElementStats; };
 }
 /**
  * 
@@ -2483,23 +2581,47 @@ export interface UiClicksBatchPost200Response {
 export interface UiClicksBatchPostRequest {
     /**
      * 
-     * @type {Array<UiClicksBatchPostRequestEventsInner>}
+     * @type {Array<TrackEvent>}
      * @memberof UiClicksBatchPostRequest
      */
-    'events': Array<UiClicksBatchPostRequestEventsInner>;
+    'events': Array<TrackEvent>;
 }
 /**
  * 
  * @export
- * @interface UiClicksBatchPostRequestEventsInner
+ * @interface UiClicksFunnel
  */
-export interface UiClicksBatchPostRequestEventsInner {
+export interface UiClicksFunnel {
     /**
-     * Tracking ID of the clicked element, format: page__action
+     * 
      * @type {string}
-     * @memberof UiClicksBatchPostRequestEventsInner
+     * @memberof UiClicksFunnel
      */
-    'elementId': string;
+    'fromId': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof UiClicksFunnel
+     */
+    'toId': string;
+    /**
+     * Sessions that included fromId in last 30 days
+     * @type {number}
+     * @memberof UiClicksFunnel
+     */
+    'fromSessions': number;
+    /**
+     * Of those sessions, how many also included toId
+     * @type {number}
+     * @memberof UiClicksFunnel
+     */
+    'convertedSessions': number;
+    /**
+     * convertedSessions / fromSessions (0–1)
+     * @type {number}
+     * @memberof UiClicksFunnel
+     */
+    'conversionRate': number;
 }
 /**
  * 
@@ -8238,6 +8360,54 @@ export const UiClicksApiAxiosParamCreator = function (configuration?: Configurat
             };
         },
         /**
+         * Of all sessions (last 30 days) that included fromId, what percentage also included toId? Uses raw ui_click_event data.
+         * @summary Session-based funnel conversion between two tracked elements (admin only)
+         * @param {string} fromId 
+         * @param {string} toId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        uiClicksFunnelGet: async (fromId: string, toId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'fromId' is not null or undefined
+            assertParamExists('uiClicksFunnelGet', 'fromId', fromId)
+            // verify required parameter 'toId' is not null or undefined
+            assertParamExists('uiClicksFunnelGet', 'toId', toId)
+            const localVarPath = `/ui-clicks/funnel`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", [], configuration)
+
+            if (fromId !== undefined) {
+                localVarQueryParameter['fromId'] = fromId;
+            }
+
+            if (toId !== undefined) {
+                localVarQueryParameter['toId'] = toId;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * 
          * @summary Batch ingest UI click events (unauthenticated pages)
          * @param {UiClicksBatchPostRequest} uiClicksBatchPostRequest 
@@ -8309,6 +8479,20 @@ export const UiClicksApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
+         * Of all sessions (last 30 days) that included fromId, what percentage also included toId? Uses raw ui_click_event data.
+         * @summary Session-based funnel conversion between two tracked elements (admin only)
+         * @param {string} fromId 
+         * @param {string} toId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async uiClicksFunnelGet(fromId: string, toId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<UiClicksFunnel>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.uiClicksFunnelGet(fromId, toId, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['UiClicksApi.uiClicksFunnelGet']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
          * 
          * @summary Batch ingest UI click events (unauthenticated pages)
          * @param {UiClicksBatchPostRequest} uiClicksBatchPostRequest 
@@ -8351,6 +8535,16 @@ export const UiClicksApiFactory = function (configuration?: Configuration, baseP
             return localVarFp.uiClicksBatchPost(requestParameters.uiClicksBatchPostRequest, options).then((request) => request(axios, basePath));
         },
         /**
+         * Of all sessions (last 30 days) that included fromId, what percentage also included toId? Uses raw ui_click_event data.
+         * @summary Session-based funnel conversion between two tracked elements (admin only)
+         * @param {UiClicksApiUiClicksFunnelGetRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        uiClicksFunnelGet(requestParameters: UiClicksApiUiClicksFunnelGetRequest, options?: RawAxiosRequestConfig): AxiosPromise<UiClicksFunnel> {
+            return localVarFp.uiClicksFunnelGet(requestParameters.fromId, requestParameters.toId, options).then((request) => request(axios, basePath));
+        },
+        /**
          * 
          * @summary Batch ingest UI click events (unauthenticated pages)
          * @param {UiClicksApiUiClicksPublicBatchPostRequest} requestParameters Request parameters.
@@ -8375,6 +8569,27 @@ export interface UiClicksApiUiClicksBatchPostRequest {
      * @memberof UiClicksApiUiClicksBatchPost
      */
     readonly uiClicksBatchPostRequest: UiClicksBatchPostRequest
+}
+
+/**
+ * Request parameters for uiClicksFunnelGet operation in UiClicksApi.
+ * @export
+ * @interface UiClicksApiUiClicksFunnelGetRequest
+ */
+export interface UiClicksApiUiClicksFunnelGetRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof UiClicksApiUiClicksFunnelGet
+     */
+    readonly fromId: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof UiClicksApiUiClicksFunnelGet
+     */
+    readonly toId: string
 }
 
 /**
@@ -8419,6 +8634,18 @@ export class UiClicksApi extends BaseAPI {
      */
     public uiClicksBatchPost(requestParameters: UiClicksApiUiClicksBatchPostRequest, options?: RawAxiosRequestConfig) {
         return UiClicksApiFp(this.configuration).uiClicksBatchPost(requestParameters.uiClicksBatchPostRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Of all sessions (last 30 days) that included fromId, what percentage also included toId? Uses raw ui_click_event data.
+     * @summary Session-based funnel conversion between two tracked elements (admin only)
+     * @param {UiClicksApiUiClicksFunnelGetRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof UiClicksApi
+     */
+    public uiClicksFunnelGet(requestParameters: UiClicksApiUiClicksFunnelGetRequest, options?: RawAxiosRequestConfig) {
+        return UiClicksApiFp(this.configuration).uiClicksFunnelGet(requestParameters.fromId, requestParameters.toId, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
