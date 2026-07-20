@@ -3047,6 +3047,12 @@ export interface GetCustomerData200ResponseTeamsInner {
      * @memberof GetCustomerData200ResponseTeamsInner
      */
     'region'?: string | null;
+    /**
+     * creditCustomer.migrationStatus — null = not offered migration, \'pending\' = admin has armed the migration popup for this team, \'completed\' = already migrated.
+     * @type {string}
+     * @memberof GetCustomerData200ResponseTeamsInner
+     */
+    'migrationStatus'?: GetCustomerData200ResponseTeamsInnerMigrationStatusEnum | null;
 }
 
 export const GetCustomerData200ResponseTeamsInnerStatusEnum = {
@@ -3056,6 +3062,12 @@ export const GetCustomerData200ResponseTeamsInnerStatusEnum = {
 } as const;
 
 export type GetCustomerData200ResponseTeamsInnerStatusEnum = typeof GetCustomerData200ResponseTeamsInnerStatusEnum[keyof typeof GetCustomerData200ResponseTeamsInnerStatusEnum];
+export const GetCustomerData200ResponseTeamsInnerMigrationStatusEnum = {
+    Pending: 'pending',
+    Completed: 'completed'
+} as const;
+
+export type GetCustomerData200ResponseTeamsInnerMigrationStatusEnum = typeof GetCustomerData200ResponseTeamsInnerMigrationStatusEnum[keyof typeof GetCustomerData200ResponseTeamsInnerMigrationStatusEnum];
 
 /**
  * 
