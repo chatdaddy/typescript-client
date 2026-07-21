@@ -1751,6 +1751,18 @@ export interface CreditCustomer {
      */
     'acceptedToS'?: boolean;
     /**
+     * How the customer reached the plan model: \'self\' = self-serve migration checkout, \'admin\' = migrated by an admin/sales via adminCustomerPlanUpdate. null = not migrated. Admin-migrated customers are shown a non-dismissable success popup that requires accepting the ToS.
+     * @type {string}
+     * @memberof CreditCustomer
+     */
+    'migrationSource'?: CreditCustomerMigrationSourceEnum | null;
+    /**
+     * When an admin-migrated customer acknowledged the success popup by accepting the ToS. null = not yet acknowledged, so the popup keeps showing.
+     * @type {string}
+     * @memberof CreditCustomer
+     */
+    'migrationSuccessSeenAt'?: string | null;
+    /**
      * 
      * @type {CreditCustomerOverdueInvoice}
      * @memberof CreditCustomer
@@ -1758,6 +1770,12 @@ export interface CreditCustomer {
     'overdueInvoice'?: CreditCustomerOverdueInvoice;
 }
 
+export const CreditCustomerMigrationSourceEnum = {
+    Self: 'self',
+    Admin: 'admin'
+} as const;
+
+export type CreditCustomerMigrationSourceEnum = typeof CreditCustomerMigrationSourceEnum[keyof typeof CreditCustomerMigrationSourceEnum];
 
 /**
  * 
@@ -3847,6 +3865,19 @@ export interface PlanMigrationInitiateRequest {
      * @memberof PlanMigrationInitiateRequest
      */
     'disarm'?: boolean;
+}
+/**
+ * 
+ * @export
+ * @interface PlanMigrationSuccessAck200Response
+ */
+export interface PlanMigrationSuccessAck200Response {
+    /**
+     * 
+     * @type {boolean}
+     * @memberof PlanMigrationSuccessAck200Response
+     */
+    'acknowledged': boolean;
 }
 /**
  * 
@@ -10460,6 +10491,40 @@ export const PlanMigrationApiAxiosParamCreator = function (configuration?: Confi
                 options: localVarRequestOptions,
             };
         },
+        /**
+         * 
+         * @summary Customer-facing acknowledgement of the post-migration success popup. Admin-migrated customers see a non-dismissable success popup that requires accepting the Terms of Service (they were migrated without their consent). Accepting sets acceptedToS=true and stamps migrationSuccessSeenAt so the popup stops showing. Idempotent and harmless for customers who were not admin-migrated.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        planMigrationSuccessAck: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v2/credits/plan-migration/success-ack`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["PAYMENTS_UPDATE"], configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
     }
 };
 
@@ -10508,6 +10573,18 @@ export const PlanMigrationApiFp = function(configuration?: Configuration) {
             const localVarOperationServerBasePath = operationServerMap['PlanMigrationApi.planMigrationInitiate']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
+        /**
+         * 
+         * @summary Customer-facing acknowledgement of the post-migration success popup. Admin-migrated customers see a non-dismissable success popup that requires accepting the Terms of Service (they were migrated without their consent). Accepting sets acceptedToS=true and stamps migrationSuccessSeenAt so the popup stops showing. Idempotent and harmless for customers who were not admin-migrated.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async planMigrationSuccessAck(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PlanMigrationSuccessAck200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.planMigrationSuccessAck(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['PlanMigrationApi.planMigrationSuccessAck']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
     }
 };
 
@@ -10546,6 +10623,15 @@ export const PlanMigrationApiFactory = function (configuration?: Configuration, 
          */
         planMigrationInitiate(requestParameters: PlanMigrationApiPlanMigrationInitiateRequest, options?: RawAxiosRequestConfig): AxiosPromise<PlanMigrationInfo> {
             return localVarFp.planMigrationInitiate(requestParameters.planMigrationInitiateRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Customer-facing acknowledgement of the post-migration success popup. Admin-migrated customers see a non-dismissable success popup that requires accepting the Terms of Service (they were migrated without their consent). Accepting sets acceptedToS=true and stamps migrationSuccessSeenAt so the popup stops showing. Idempotent and harmless for customers who were not admin-migrated.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        planMigrationSuccessAck(options?: RawAxiosRequestConfig): AxiosPromise<PlanMigrationSuccessAck200Response> {
+            return localVarFp.planMigrationSuccessAck(options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -10618,6 +10704,17 @@ export class PlanMigrationApi extends BaseAPI {
      */
     public planMigrationInitiate(requestParameters: PlanMigrationApiPlanMigrationInitiateRequest, options?: RawAxiosRequestConfig) {
         return PlanMigrationApiFp(this.configuration).planMigrationInitiate(requestParameters.planMigrationInitiateRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Customer-facing acknowledgement of the post-migration success popup. Admin-migrated customers see a non-dismissable success popup that requires accepting the Terms of Service (they were migrated without their consent). Accepting sets acceptedToS=true and stamps migrationSuccessSeenAt so the popup stops showing. Idempotent and harmless for customers who were not admin-migrated.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof PlanMigrationApi
+     */
+    public planMigrationSuccessAck(options?: RawAxiosRequestConfig) {
+        return PlanMigrationApiFp(this.configuration).planMigrationSuccessAck(options).then((request) => request(this.axios, this.basePath));
     }
 }
 
