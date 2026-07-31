@@ -4486,6 +4486,12 @@ export interface MessageButton {
      * @memberof MessageButton
      */
     'phoneNumber'?: string;
+    /**
+     * Make a \"Request Phone Number\" button that asks the WhatsApp user to share their phone number. Supported on Utility/Marketing templates.
+     * @type {boolean}
+     * @memberof MessageButton
+     */
+    'requestContactInfo'?: boolean;
 }
 /**
  * 
@@ -5898,6 +5904,12 @@ export interface MiscOptions {
      * @memberof MiscOptions
      */
     'callId'?: string;
+    /**
+     * Send this message as a \"request_contact_info\" interactive message, asking the WhatsApp user to share their phone number.
+     * @type {boolean}
+     * @memberof MiscOptions
+     */
+    'requestContactInfo'?: boolean;
 }
 /**
  * the message being forwarded

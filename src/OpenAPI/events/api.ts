@@ -9635,6 +9635,12 @@ export interface MessageInsertDataButtonsInner {
      * @memberof MessageInsertDataButtonsInner
      */
     'phoneNumber'?: string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof MessageInsertDataButtonsInner
+     */
+    'requestContactInfo'?: boolean;
 }
 /**
  * 
@@ -9936,6 +9942,12 @@ export interface MessageInsertDataMiscOptions {
      * @memberof MessageInsertDataMiscOptions
      */
     'callId'?: string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof MessageInsertDataMiscOptions
+     */
+    'requestContactInfo'?: boolean;
 }
 /**
  * 
