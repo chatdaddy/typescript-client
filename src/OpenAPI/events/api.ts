@@ -6281,6 +6281,12 @@ export interface ContactInsertData {
      * @type {string}
      * @memberof ContactInsertData
      */
+    'username'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof ContactInsertData
+     */
     'cursor': string;
     /**
      * 
@@ -6464,6 +6470,12 @@ export interface ContactUpdateData {
      * @memberof ContactUpdateData
      */
     'bsuid'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof ContactUpdateData
+     */
+    'username'?: string | null;
     /**
      * 
      * @type {string}
@@ -8431,6 +8443,12 @@ export interface GroupUpdateDataOwner {
      * @memberof GroupUpdateDataOwner
      */
     'bsuid'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof GroupUpdateDataOwner
+     */
+    'username'?: string | null;
     /**
      * 
      * @type {string}

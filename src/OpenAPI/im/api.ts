@@ -2259,6 +2259,12 @@ export interface Contact {
      */
     'bsuid'?: string | null;
     /**
+     * WhatsApp username of the contact (display-only identity — cannot be used to send or receive messages). Present when the user has created a username on WhatsApp
+     * @type {string}
+     * @memberof Contact
+     */
+    'username'?: string | null;
+    /**
      * 
      * @type {string}
      * @memberof Contact
