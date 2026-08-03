@@ -1843,6 +1843,12 @@ export interface BotMessageButton {
      */
     'phoneNumber'?: string;
     /**
+     * Make a \"Request Phone Number\" button that asks the WhatsApp user to share their phone number. Label is fixed by Meta.
+     * @type {boolean}
+     * @memberof BotMessageButton
+     */
+    'requestContactInfo'?: boolean;
+    /**
      * 
      * @type {Position}
      * @memberof BotMessageButton

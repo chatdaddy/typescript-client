@@ -1965,6 +1965,12 @@ export interface BotInsertDataActionsInnerAllOfMessageButtonsInner {
      */
     'phoneNumber'?: string;
     /**
+     * Make a \"Request Phone Number\" button that asks the WhatsApp user to share their phone number. Label is fixed by Meta.
+     * @type {boolean}
+     * @memberof BotInsertDataActionsInnerAllOfMessageButtonsInner
+     */
+    'requestContactInfo'?: boolean;
+    /**
      * 
      * @type {BotInsertDataActionsInnerAllOfMessageButtonsInnerPosition}
      * @memberof BotInsertDataActionsInnerAllOfMessageButtonsInner
