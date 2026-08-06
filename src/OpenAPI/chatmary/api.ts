@@ -2585,6 +2585,18 @@ export interface UiClicksBatchPostRequest {
      * @memberof UiClicksBatchPostRequest
      */
     'events': Array<TrackEvent>;
+    /**
+     * App semver the client is running (APP_VERSION), e.g. \"v4.10.13\". Constant per session; drives per-team version/adoption tracking.
+     * @type {string}
+     * @memberof UiClicksBatchPostRequest
+     */
+    'version'?: string;
+    /**
+     * Deployed commit SHA (buildId) the browser is running. Stable per deploy; also distinguishes prod/overlay/beta.
+     * @type {string}
+     * @memberof UiClicksBatchPostRequest
+     */
+    'build'?: string;
 }
 /**
  * 
@@ -2622,6 +2634,19 @@ export interface UiClicksFunnel {
      * @memberof UiClicksFunnel
      */
     'conversionRate': number;
+}
+/**
+ * 
+ * @export
+ * @interface UiClicksPublicBatchPostRequest
+ */
+export interface UiClicksPublicBatchPostRequest {
+    /**
+     * 
+     * @type {Array<TrackEvent>}
+     * @memberof UiClicksPublicBatchPostRequest
+     */
+    'events': Array<TrackEvent>;
 }
 /**
  * 
@@ -8410,13 +8435,13 @@ export const UiClicksApiAxiosParamCreator = function (configuration?: Configurat
         /**
          * 
          * @summary Batch ingest UI click events (unauthenticated pages)
-         * @param {UiClicksBatchPostRequest} uiClicksBatchPostRequest 
+         * @param {UiClicksPublicBatchPostRequest} uiClicksPublicBatchPostRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        uiClicksPublicBatchPost: async (uiClicksBatchPostRequest: UiClicksBatchPostRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'uiClicksBatchPostRequest' is not null or undefined
-            assertParamExists('uiClicksPublicBatchPost', 'uiClicksBatchPostRequest', uiClicksBatchPostRequest)
+        uiClicksPublicBatchPost: async (uiClicksPublicBatchPostRequest: UiClicksPublicBatchPostRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'uiClicksPublicBatchPostRequest' is not null or undefined
+            assertParamExists('uiClicksPublicBatchPost', 'uiClicksPublicBatchPostRequest', uiClicksPublicBatchPostRequest)
             const localVarPath = `/ui-clicks/public-batch`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -8436,7 +8461,7 @@ export const UiClicksApiAxiosParamCreator = function (configuration?: Configurat
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(uiClicksBatchPostRequest, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(uiClicksPublicBatchPostRequest, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -8495,12 +8520,12 @@ export const UiClicksApiFp = function(configuration?: Configuration) {
         /**
          * 
          * @summary Batch ingest UI click events (unauthenticated pages)
-         * @param {UiClicksBatchPostRequest} uiClicksBatchPostRequest 
+         * @param {UiClicksPublicBatchPostRequest} uiClicksPublicBatchPostRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async uiClicksPublicBatchPost(uiClicksBatchPostRequest: UiClicksBatchPostRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<UiClicksBatchPost200Response>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.uiClicksPublicBatchPost(uiClicksBatchPostRequest, options);
+        async uiClicksPublicBatchPost(uiClicksPublicBatchPostRequest: UiClicksPublicBatchPostRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<UiClicksBatchPost200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.uiClicksPublicBatchPost(uiClicksPublicBatchPostRequest, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['UiClicksApi.uiClicksPublicBatchPost']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -8552,7 +8577,7 @@ export const UiClicksApiFactory = function (configuration?: Configuration, baseP
          * @throws {RequiredError}
          */
         uiClicksPublicBatchPost(requestParameters: UiClicksApiUiClicksPublicBatchPostRequest, options?: RawAxiosRequestConfig): AxiosPromise<UiClicksBatchPost200Response> {
-            return localVarFp.uiClicksPublicBatchPost(requestParameters.uiClicksBatchPostRequest, options).then((request) => request(axios, basePath));
+            return localVarFp.uiClicksPublicBatchPost(requestParameters.uiClicksPublicBatchPostRequest, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -8600,10 +8625,10 @@ export interface UiClicksApiUiClicksFunnelGetRequest {
 export interface UiClicksApiUiClicksPublicBatchPostRequest {
     /**
      * 
-     * @type {UiClicksBatchPostRequest}
+     * @type {UiClicksPublicBatchPostRequest}
      * @memberof UiClicksApiUiClicksPublicBatchPost
      */
-    readonly uiClicksBatchPostRequest: UiClicksBatchPostRequest
+    readonly uiClicksPublicBatchPostRequest: UiClicksPublicBatchPostRequest
 }
 
 /**
@@ -8657,7 +8682,7 @@ export class UiClicksApi extends BaseAPI {
      * @memberof UiClicksApi
      */
     public uiClicksPublicBatchPost(requestParameters: UiClicksApiUiClicksPublicBatchPostRequest, options?: RawAxiosRequestConfig) {
-        return UiClicksApiFp(this.configuration).uiClicksPublicBatchPost(requestParameters.uiClicksBatchPostRequest, options).then((request) => request(this.axios, this.basePath));
+        return UiClicksApiFp(this.configuration).uiClicksPublicBatchPost(requestParameters.uiClicksPublicBatchPostRequest, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
