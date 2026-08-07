@@ -3754,6 +3754,12 @@ export interface GroupCreate {
      */
     'name': string;
     /**
+     * Optional group description. Applied at creation for WABA (Meta Groups API) groups; ignored for native WhatsApp groups, which do not accept a description at creation.
+     * @type {string}
+     * @memberof GroupCreate
+     */
+    'description'?: string;
+    /**
      * 
      * @type {Array<string>}
      * @memberof GroupCreate
@@ -3814,6 +3820,12 @@ export interface GroupMetadata {
      * @memberof GroupMetadata
      */
     'announce': boolean;
+    /**
+     * Invite code of the group (append to https://chat.whatsapp.com/). For WABA groups this is the only way members can join; captured from the group_create webhook and backfilled on invite-code reads.
+     * @type {string}
+     * @memberof GroupMetadata
+     */
+    'inviteCode'?: string | null;
     /**
      * 
      * @type {Array<GroupParticipant>}
