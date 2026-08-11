@@ -2765,6 +2765,32 @@ export interface ContactsImageGet200Response {
 /**
  * 
  * @export
+ * @interface ContactsLinkPhone
+ */
+export interface ContactsLinkPhone {
+    /**
+     * The contact\'s real phone number — international format, digits only, no \"+\" (e.g. \"60135364007\")
+     * @type {string}
+     * @memberof ContactsLinkPhone
+     */
+    'phoneNumber': string;
+}
+/**
+ * 
+ * @export
+ * @interface ContactsLinkPhone200Response
+ */
+export interface ContactsLinkPhone200Response {
+    /**
+     * The phone-keyed chat the conversation was merged into
+     * @type {string}
+     * @memberof ContactsLinkPhone200Response
+     */
+    'chatId': string;
+}
+/**
+ * 
+ * @export
  * @interface ContactsPatch
  */
 export interface ContactsPatch {
@@ -13879,6 +13905,54 @@ export const ContactsApiAxiosParamCreator = function (configuration?: Configurat
             };
         },
         /**
+         * Re-keys a BSUID-keyed contact & chat onto the given phone number — clones the contact (tags, assignee, name), moves the full message history, and removes the orphaned BSUID-keyed docs. Same operation the system performs automatically when Meta reveals the phone via the Request Phone Number flow. Idempotent — safe to call again if a previous attempt failed midway; it resumes the move.
+         * @summary Merge a hidden-number (BSUID) contact onto a phone number
+         * @param {string} accountId 
+         * @param {string} id The BSUID-keyed contact id (e.g. \&quot;MY.2293834224778292\&quot;)
+         * @param {ContactsLinkPhone} contactsLinkPhone 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        contactsLinkPhone: async (accountId: string, id: string, contactsLinkPhone: ContactsLinkPhone, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'accountId' is not null or undefined
+            assertParamExists('contactsLinkPhone', 'accountId', accountId)
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('contactsLinkPhone', 'id', id)
+            // verify required parameter 'contactsLinkPhone' is not null or undefined
+            assertParamExists('contactsLinkPhone', 'contactsLinkPhone', contactsLinkPhone)
+            const localVarPath = `/contacts/{accountId}/{id}/link-phone`
+                .replace(`{${"accountId"}}`, encodeURIComponent(String(accountId)))
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["CONTACTS_UPDATE"], configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(contactsLinkPhone, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * 
          * @summary Update contacts
          * @param {ChatsGetTagsParameter} [tags] Get contacts who fall in either of these tags
@@ -14208,6 +14282,21 @@ export const ContactsApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
+         * Re-keys a BSUID-keyed contact & chat onto the given phone number — clones the contact (tags, assignee, name), moves the full message history, and removes the orphaned BSUID-keyed docs. Same operation the system performs automatically when Meta reveals the phone via the Request Phone Number flow. Idempotent — safe to call again if a previous attempt failed midway; it resumes the move.
+         * @summary Merge a hidden-number (BSUID) contact onto a phone number
+         * @param {string} accountId 
+         * @param {string} id The BSUID-keyed contact id (e.g. \&quot;MY.2293834224778292\&quot;)
+         * @param {ContactsLinkPhone} contactsLinkPhone 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async contactsLinkPhone(accountId: string, id: string, contactsLinkPhone: ContactsLinkPhone, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ContactsLinkPhone200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.contactsLinkPhone(accountId, id, contactsLinkPhone, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['ContactsApi.contactsLinkPhone']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
          * 
          * @summary Update contacts
          * @param {ChatsGetTagsParameter} [tags] Get contacts who fall in either of these tags
@@ -14324,6 +14413,16 @@ export const ContactsApiFactory = function (configuration?: Configuration, baseP
          */
         contactsImageGet(requestParameters: ContactsApiContactsImageGetRequest, options?: RawAxiosRequestConfig): AxiosPromise<ContactsImageGet200Response> {
             return localVarFp.contactsImageGet(requestParameters.id, requestParameters.accountId, requestParameters.type, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Re-keys a BSUID-keyed contact & chat onto the given phone number — clones the contact (tags, assignee, name), moves the full message history, and removes the orphaned BSUID-keyed docs. Same operation the system performs automatically when Meta reveals the phone via the Request Phone Number flow. Idempotent — safe to call again if a previous attempt failed midway; it resumes the move.
+         * @summary Merge a hidden-number (BSUID) contact onto a phone number
+         * @param {ContactsApiContactsLinkPhoneRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        contactsLinkPhone(requestParameters: ContactsApiContactsLinkPhoneRequest, options?: RawAxiosRequestConfig): AxiosPromise<ContactsLinkPhone200Response> {
+            return localVarFp.contactsLinkPhone(requestParameters.accountId, requestParameters.id, requestParameters.contactsLinkPhone, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -14790,6 +14889,34 @@ export interface ContactsApiContactsImageGetRequest {
 }
 
 /**
+ * Request parameters for contactsLinkPhone operation in ContactsApi.
+ * @export
+ * @interface ContactsApiContactsLinkPhoneRequest
+ */
+export interface ContactsApiContactsLinkPhoneRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof ContactsApiContactsLinkPhone
+     */
+    readonly accountId: string
+
+    /**
+     * The BSUID-keyed contact id (e.g. \&quot;MY.2293834224778292\&quot;)
+     * @type {string}
+     * @memberof ContactsApiContactsLinkPhone
+     */
+    readonly id: string
+
+    /**
+     * 
+     * @type {ContactsLinkPhone}
+     * @memberof ContactsApiContactsLinkPhone
+     */
+    readonly contactsLinkPhone: ContactsLinkPhone
+}
+
+/**
  * Request parameters for contactsPatch operation in ContactsApi.
  * @export
  * @interface ContactsApiContactsPatchRequest
@@ -15048,6 +15175,18 @@ export class ContactsApi extends BaseAPI {
      */
     public contactsImageGet(requestParameters: ContactsApiContactsImageGetRequest, options?: RawAxiosRequestConfig) {
         return ContactsApiFp(this.configuration).contactsImageGet(requestParameters.id, requestParameters.accountId, requestParameters.type, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Re-keys a BSUID-keyed contact & chat onto the given phone number — clones the contact (tags, assignee, name), moves the full message history, and removes the orphaned BSUID-keyed docs. Same operation the system performs automatically when Meta reveals the phone via the Request Phone Number flow. Idempotent — safe to call again if a previous attempt failed midway; it resumes the move.
+     * @summary Merge a hidden-number (BSUID) contact onto a phone number
+     * @param {ContactsApiContactsLinkPhoneRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ContactsApi
+     */
+    public contactsLinkPhone(requestParameters: ContactsApiContactsLinkPhoneRequest, options?: RawAxiosRequestConfig) {
+        return ContactsApiFp(this.configuration).contactsLinkPhone(requestParameters.accountId, requestParameters.id, requestParameters.contactsLinkPhone, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
