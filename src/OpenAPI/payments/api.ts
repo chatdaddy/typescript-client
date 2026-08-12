@@ -3775,6 +3775,18 @@ export interface PlanMigrationInfo {
      */
     'migrationStatus': PlanMigrationInfoMigrationStatusEnum | null;
     /**
+     * Which surface the admin armed. \'notice\' → one-time \"we\'ll migrate you\" popup; \'self_serve\' (or null, back-compat) → existing \"Migrate now\" flow.
+     * @type {string}
+     * @memberof PlanMigrationInfo
+     */
+    'migrationMode'?: PlanMigrationInfoMigrationModeEnum | null;
+    /**
+     * When the customer acknowledged the \'notice\' popup (\"Got it\"). null = not yet seen → the notice still shows (once).
+     * @type {string}
+     * @memberof PlanMigrationInfo
+     */
+    'migrationNoticeSeenAt'?: string | null;
+    /**
      * Number of active channels at time of query
      * @type {number}
      * @memberof PlanMigrationInfo
@@ -3812,6 +3824,12 @@ export const PlanMigrationInfoMigrationStatusEnum = {
 } as const;
 
 export type PlanMigrationInfoMigrationStatusEnum = typeof PlanMigrationInfoMigrationStatusEnum[keyof typeof PlanMigrationInfoMigrationStatusEnum];
+export const PlanMigrationInfoMigrationModeEnum = {
+    Notice: 'notice',
+    SelfServe: 'self_serve'
+} as const;
+
+export type PlanMigrationInfoMigrationModeEnum = typeof PlanMigrationInfoMigrationModeEnum[keyof typeof PlanMigrationInfoMigrationModeEnum];
 
 /**
  * 
@@ -3865,7 +3883,21 @@ export interface PlanMigrationInitiateRequest {
      * @memberof PlanMigrationInitiateRequest
      */
     'disarm'?: boolean;
+    /**
+     * Which migration surface to arm. \'self_serve\' (default) shows the existing \"Migrate now\" announcement + 3-step modal so the customer migrates themselves. \'notice\' shows a one-time \"we\'ll migrate you\" heads-up popup instead (admin-driven batches). Ignored when disarm=true.
+     * @type {string}
+     * @memberof PlanMigrationInitiateRequest
+     */
+    'mode'?: PlanMigrationInitiateRequestModeEnum;
 }
+
+export const PlanMigrationInitiateRequestModeEnum = {
+    Notice: 'notice',
+    SelfServe: 'self_serve'
+} as const;
+
+export type PlanMigrationInitiateRequestModeEnum = typeof PlanMigrationInitiateRequestModeEnum[keyof typeof PlanMigrationInitiateRequestModeEnum];
+
 /**
  * 
  * @export
@@ -10493,6 +10525,40 @@ export const PlanMigrationApiAxiosParamCreator = function (configuration?: Confi
         },
         /**
          * 
+         * @summary Customer-facing acknowledgement of the admin-driven \"we\'ll migrate you\" notice popup (migrationMode=\'notice\'). Clicking \"Got it\" stamps migrationNoticeSeenAt so the one-time notice never shows again. Idempotent and harmless for customers who were never armed with the notice.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        planMigrationNoticeAck: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v2/credits/plan-migration/notice-ack`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["PAYMENTS_UPDATE"], configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
          * @summary Customer-facing acknowledgement of the post-migration success popup. Admin-migrated customers see a non-dismissable success popup that requires accepting the Terms of Service (they were migrated without their consent). Accepting sets acceptedToS=true and stamps migrationSuccessSeenAt so the popup stops showing. Idempotent and harmless for customers who were not admin-migrated.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -10575,6 +10641,18 @@ export const PlanMigrationApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
+         * @summary Customer-facing acknowledgement of the admin-driven \"we\'ll migrate you\" notice popup (migrationMode=\'notice\'). Clicking \"Got it\" stamps migrationNoticeSeenAt so the one-time notice never shows again. Idempotent and harmless for customers who were never armed with the notice.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async planMigrationNoticeAck(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PlanMigrationSuccessAck200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.planMigrationNoticeAck(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['PlanMigrationApi.planMigrationNoticeAck']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
          * @summary Customer-facing acknowledgement of the post-migration success popup. Admin-migrated customers see a non-dismissable success popup that requires accepting the Terms of Service (they were migrated without their consent). Accepting sets acceptedToS=true and stamps migrationSuccessSeenAt so the popup stops showing. Idempotent and harmless for customers who were not admin-migrated.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -10623,6 +10701,15 @@ export const PlanMigrationApiFactory = function (configuration?: Configuration, 
          */
         planMigrationInitiate(requestParameters: PlanMigrationApiPlanMigrationInitiateRequest, options?: RawAxiosRequestConfig): AxiosPromise<PlanMigrationInfo> {
             return localVarFp.planMigrationInitiate(requestParameters.planMigrationInitiateRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Customer-facing acknowledgement of the admin-driven \"we\'ll migrate you\" notice popup (migrationMode=\'notice\'). Clicking \"Got it\" stamps migrationNoticeSeenAt so the one-time notice never shows again. Idempotent and harmless for customers who were never armed with the notice.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        planMigrationNoticeAck(options?: RawAxiosRequestConfig): AxiosPromise<PlanMigrationSuccessAck200Response> {
+            return localVarFp.planMigrationNoticeAck(options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -10704,6 +10791,17 @@ export class PlanMigrationApi extends BaseAPI {
      */
     public planMigrationInitiate(requestParameters: PlanMigrationApiPlanMigrationInitiateRequest, options?: RawAxiosRequestConfig) {
         return PlanMigrationApiFp(this.configuration).planMigrationInitiate(requestParameters.planMigrationInitiateRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Customer-facing acknowledgement of the admin-driven \"we\'ll migrate you\" notice popup (migrationMode=\'notice\'). Clicking \"Got it\" stamps migrationNoticeSeenAt so the one-time notice never shows again. Idempotent and harmless for customers who were never armed with the notice.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof PlanMigrationApi
+     */
+    public planMigrationNoticeAck(options?: RawAxiosRequestConfig) {
+        return PlanMigrationApiFp(this.configuration).planMigrationNoticeAck(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
