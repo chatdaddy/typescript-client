@@ -12682,6 +12682,12 @@ export interface TeamInsertDataMetadata {
      * @memberof TeamInsertDataMetadata
      */
     'subIndustry'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof TeamInsertDataMetadata
+     */
+    'teamSize'?: string;
 }
 /**
  * 

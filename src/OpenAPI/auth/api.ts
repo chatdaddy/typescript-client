@@ -2226,6 +2226,12 @@ export interface TeamMetadata {
      * @memberof TeamMetadata
      */
     'subIndustry'?: string;
+    /**
+     * Team size bracket captured during onboarding, eg. \"11-50\"
+     * @type {string}
+     * @memberof TeamMetadata
+     */
+    'teamSize'?: string;
 }
 /**
  * 
@@ -2785,6 +2791,12 @@ export interface UserPatch {
      * @memberof UserPatch
      */
     'signature'?: string;
+    /**
+     * Free-form answers captured during signup/onboarding, eg. role, sources, goals. Shallow-merged into the existing value, never replaces it, so each onboarding step can send only its own key.
+     * @type {{ [key: string]: any; }}
+     * @memberof UserPatch
+     */
+    'signupMetadata'?: { [key: string]: any; };
     /**
      * 
      * @type {Array<WebPushSubscription>}
