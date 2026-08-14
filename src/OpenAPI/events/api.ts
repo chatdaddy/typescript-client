@@ -9353,6 +9353,12 @@ export interface MessageInsertData {
     'conversationMetadata'?: MessageInsertDataConversationMetadata;
     /**
      * 
+     * @type {MessageInsertDataAdReferral}
+     * @memberof MessageInsertData
+     */
+    'adReferral'?: MessageInsertDataAdReferral;
+    /**
+     * 
      * @type {MessageInsertDataTranscription}
      * @memberof MessageInsertData
      */
@@ -9509,6 +9515,67 @@ export interface MessageInsertDataAction {
      * @memberof MessageInsertDataAction
      */
     'parameters'?: Array<string>;
+}
+/**
+ * 
+ * @export
+ * @interface MessageInsertDataAdReferral
+ */
+export interface MessageInsertDataAdReferral {
+    /**
+     * 
+     * @type {string}
+     * @memberof MessageInsertDataAdReferral
+     */
+    'adId': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof MessageInsertDataAdReferral
+     */
+    'adTitle'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof MessageInsertDataAdReferral
+     */
+    'postId'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof MessageInsertDataAdReferral
+     */
+    'mediaUrl'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof MessageInsertDataAdReferral
+     */
+    'source'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof MessageInsertDataAdReferral
+     */
+    'type'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof MessageInsertDataAdReferral
+     */
+    'productId'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof MessageInsertDataAdReferral
+     */
+    'retailerId'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof MessageInsertDataAdReferral
+     */
+    'flowId'?: string;
 }
 /**
  * 
@@ -10510,6 +10577,12 @@ export interface MessageUpdateData {
      * @memberof MessageUpdateData
      */
     'conversationMetadata'?: MessageInsertDataConversationMetadata;
+    /**
+     * 
+     * @type {MessageInsertDataAdReferral}
+     * @memberof MessageUpdateData
+     */
+    'adReferral'?: MessageInsertDataAdReferral;
     /**
      * 
      * @type {MessageInsertDataTranscription}

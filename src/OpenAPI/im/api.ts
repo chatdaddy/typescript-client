@@ -4305,6 +4305,12 @@ export interface Message {
     'conversationMetadata'?: WABAConversationMetadata;
     /**
      * 
+     * @type {MessageAdReferral}
+     * @memberof Message
+     */
+    'adReferral'?: MessageAdReferral;
+    /**
+     * 
      * @type {NLPTranscriptionJob}
      * @memberof Message
      */
@@ -4336,6 +4342,67 @@ export interface Message {
 }
 
 
+/**
+ * Ad attribution for a message that originated from a click-to-message ad. Populated for Messenger and Instagram (object \"page\"/\"instagram\", where Meta nests the referral under message/postback) so that the ad a lead came from is recoverable. The Click-to-WhatsApp equivalent is carried on linkPreview.sourceId/sourceType/ctwaClid.
+ * @export
+ * @interface MessageAdReferral
+ */
+export interface MessageAdReferral {
+    /**
+     * Meta ad ID the click came from.
+     * @type {string}
+     * @memberof MessageAdReferral
+     */
+    'adId': string;
+    /**
+     * Ad name as configured in Ads Manager.
+     * @type {string}
+     * @memberof MessageAdReferral
+     */
+    'adTitle'?: string;
+    /**
+     * Underlying post ID, when the ad was built from a post.
+     * @type {string}
+     * @memberof MessageAdReferral
+     */
+    'postId'?: string;
+    /**
+     * Creative preview — Meta sends either video_url or photo_url.
+     * @type {string}
+     * @memberof MessageAdReferral
+     */
+    'mediaUrl'?: string;
+    /**
+     * Referral source as sent by Meta, e.g. \"ADS\".
+     * @type {string}
+     * @memberof MessageAdReferral
+     */
+    'source'?: string;
+    /**
+     * Referral type as sent by Meta, e.g. \"OPEN_THREAD\".
+     * @type {string}
+     * @memberof MessageAdReferral
+     */
+    'type'?: string;
+    /**
+     * Product ID, for ads pointing at a catalogue item.
+     * @type {string}
+     * @memberof MessageAdReferral
+     */
+    'productId'?: string;
+    /**
+     * Retailer ID, for ads pointing at a catalogue item.
+     * @type {string}
+     * @memberof MessageAdReferral
+     */
+    'retailerId'?: string;
+    /**
+     * Flow ID, when the ad opens a Meta flow.
+     * @type {string}
+     * @memberof MessageAdReferral
+     */
+    'flowId'?: string;
+}
 /**
  * @type MessageAllOfError
  * @export
@@ -5488,6 +5555,12 @@ export interface MessagingItems {
     'timestamp'?: number;
     /**
      * 
+     * @type {MessengerReferral}
+     * @memberof MessagingItems
+     */
+    'referral'?: MessengerReferral;
+    /**
+     * 
      * @type {MessagingItemsMessage}
      * @memberof MessagingItems
      */
@@ -5532,6 +5605,12 @@ export interface MessagingItemsDelivery {
  * @interface MessagingItemsMessage
  */
 export interface MessagingItemsMessage {
+    /**
+     * 
+     * @type {MessengerReferral}
+     * @memberof MessagingItemsMessage
+     */
+    'referral'?: MessengerReferral;
     /**
      * 
      * @type {string}
@@ -5596,6 +5675,12 @@ export interface MessagingItemsPostback {
      * @memberof MessagingItemsPostback
      */
     'payload'?: string;
+    /**
+     * 
+     * @type {MessengerReferral}
+     * @memberof MessagingItemsPostback
+     */
+    'referral'?: MessengerReferral;
 }
 /**
  * 
@@ -5664,6 +5749,92 @@ export interface MessengerAttachmentItemsPayload {
      * @memberof MessengerAttachmentItemsPayload
      */
     'url'?: string;
+}
+/**
+ * Ad/link referral Meta attaches to Messenger and Instagram events. Arrives either as a standalone messaging item (the thread was opened from an ad), or nested inside message/postback once the lead actually engages.
+ * @export
+ * @interface MessengerReferral
+ */
+export interface MessengerReferral {
+    /**
+     * 
+     * @type {string}
+     * @memberof MessengerReferral
+     */
+    'source'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof MessengerReferral
+     */
+    'type'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof MessengerReferral
+     */
+    'ad_id'?: string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof MessengerReferral
+     */
+    'is_guest_user'?: boolean;
+    /**
+     * 
+     * @type {MessengerReferralAdsContextData}
+     * @memberof MessengerReferral
+     */
+    'ads_context_data'?: MessengerReferralAdsContextData;
+}
+/**
+ * 
+ * @export
+ * @interface MessengerReferralAdsContextData
+ */
+export interface MessengerReferralAdsContextData {
+    /**
+     * 
+     * @type {string}
+     * @memberof MessengerReferralAdsContextData
+     */
+    'ad_title'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof MessengerReferralAdsContextData
+     */
+    'post_id'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof MessengerReferralAdsContextData
+     */
+    'video_url'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof MessengerReferralAdsContextData
+     */
+    'photo_url'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof MessengerReferralAdsContextData
+     */
+    'product_id'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof MessengerReferralAdsContextData
+     */
+    'retailer_id'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof MessengerReferralAdsContextData
+     */
+    'flow_id'?: string;
 }
 /**
  * 
