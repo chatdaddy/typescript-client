@@ -9981,6 +9981,12 @@ export interface MessageInsertDataMiscOptions {
     'templateParams'?: { [key: string]: string; };
     /**
      * 
+     * @type {Array<MessageInsertDataMiscOptionsTemplateCardsInner>}
+     * @memberof MessageInsertDataMiscOptions
+     */
+    'templateCards'?: Array<MessageInsertDataMiscOptionsTemplateCardsInner>;
+    /**
+     * 
      * @type {boolean}
      * @memberof MessageInsertDataMiscOptions
      */
@@ -10068,6 +10074,82 @@ export interface MessageInsertDataMiscOptionsForwarded {
      * 
      * @type {string}
      * @memberof MessageInsertDataMiscOptionsForwarded
+     */
+    'id': string;
+}
+/**
+ * 
+ * @export
+ * @interface MessageInsertDataMiscOptionsTemplateCardsInner
+ */
+export interface MessageInsertDataMiscOptionsTemplateCardsInner {
+    /**
+     * 
+     * @type {MessageInsertDataMiscOptionsTemplateCardsInnerAttachment}
+     * @memberof MessageInsertDataMiscOptionsTemplateCardsInner
+     */
+    'attachment'?: MessageInsertDataMiscOptionsTemplateCardsInnerAttachment;
+    /**
+     * 
+     * @type {{ [key: string]: string; }}
+     * @memberof MessageInsertDataMiscOptionsTemplateCardsInner
+     */
+    'params'?: { [key: string]: string; };
+    /**
+     * 
+     * @type {Array<MessageInsertDataMiscOptionsTemplateCardsInnerButtonsInner>}
+     * @memberof MessageInsertDataMiscOptionsTemplateCardsInner
+     */
+    'buttons'?: Array<MessageInsertDataMiscOptionsTemplateCardsInnerButtonsInner>;
+}
+/**
+ * 
+ * @export
+ * @interface MessageInsertDataMiscOptionsTemplateCardsInnerAttachment
+ */
+export interface MessageInsertDataMiscOptionsTemplateCardsInnerAttachment {
+    /**
+     * 
+     * @type {string}
+     * @memberof MessageInsertDataMiscOptionsTemplateCardsInnerAttachment
+     */
+    'type': MessageInsertDataMiscOptionsTemplateCardsInnerAttachmentTypeEnum;
+    /**
+     * 
+     * @type {string}
+     * @memberof MessageInsertDataMiscOptionsTemplateCardsInnerAttachment
+     */
+    'url': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof MessageInsertDataMiscOptionsTemplateCardsInnerAttachment
+     */
+    'filename'?: string;
+}
+
+export const MessageInsertDataMiscOptionsTemplateCardsInnerAttachmentTypeEnum = {
+    Image: 'image',
+    Video: 'video',
+    Contact: 'contact',
+    Sticker: 'sticker',
+    Audio: 'audio',
+    Document: 'document',
+    Location: 'location'
+} as const;
+
+export type MessageInsertDataMiscOptionsTemplateCardsInnerAttachmentTypeEnum = typeof MessageInsertDataMiscOptionsTemplateCardsInnerAttachmentTypeEnum[keyof typeof MessageInsertDataMiscOptionsTemplateCardsInnerAttachmentTypeEnum];
+
+/**
+ * 
+ * @export
+ * @interface MessageInsertDataMiscOptionsTemplateCardsInnerButtonsInner
+ */
+export interface MessageInsertDataMiscOptionsTemplateCardsInnerButtonsInner {
+    /**
+     * 
+     * @type {string}
+     * @memberof MessageInsertDataMiscOptionsTemplateCardsInnerButtonsInner
      */
     'id': string;
 }

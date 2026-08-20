@@ -6060,6 +6060,12 @@ export interface MiscOptions {
      */
     'templateParams'?: { [key: string]: string; };
     /**
+     * Per-card send-time values for a CAROUSEL template, index-aligned with the cards the template was approved with. Meta requires a media parameter on every card header at send time, so this must be populated when sending a carousel template.
+     * @type {Array<MiscOptionsTemplateCardsInner>}
+     * @memberof MiscOptions
+     */
+    'templateCards'?: Array<MiscOptionsTemplateCardsInner>;
+    /**
      * Emulate typing behaviour before send
      * @type {boolean}
      * @memberof MiscOptions
@@ -6148,6 +6154,71 @@ export interface MiscOptionsForwarded {
      * 
      * @type {string}
      * @memberof MiscOptionsForwarded
+     */
+    'id': string;
+}
+/**
+ * 
+ * @export
+ * @interface MiscOptionsTemplateCardsInner
+ */
+export interface MiscOptionsTemplateCardsInner {
+    /**
+     * 
+     * @type {MiscOptionsTemplateCardsInnerAttachment}
+     * @memberof MiscOptionsTemplateCardsInner
+     */
+    'attachment'?: MiscOptionsTemplateCardsInnerAttachment;
+    /**
+     * Variable values for this card\'s body text and URL button
+     * @type {{ [key: string]: string; }}
+     * @memberof MiscOptionsTemplateCardsInner
+     */
+    'params'?: { [key: string]: string; };
+    /**
+     * Per-card buttons, index-aligned with the buttons this card was approved with. `id` is sent to Meta as the quick-reply payload and comes back on the webhook when the button is tapped, so it must not contain `__`.
+     * @type {Array<MiscOptionsTemplateCardsInnerButtonsInner>}
+     * @memberof MiscOptionsTemplateCardsInner
+     */
+    'buttons'?: Array<MiscOptionsTemplateCardsInnerButtonsInner>;
+}
+/**
+ * 
+ * @export
+ * @interface MiscOptionsTemplateCardsInnerAttachment
+ */
+export interface MiscOptionsTemplateCardsInnerAttachment {
+    /**
+     * 
+     * @type {MessageAttachmentType}
+     * @memberof MiscOptionsTemplateCardsInnerAttachment
+     */
+    'type': MessageAttachmentType;
+    /**
+     * 
+     * @type {string}
+     * @memberof MiscOptionsTemplateCardsInnerAttachment
+     */
+    'url': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof MiscOptionsTemplateCardsInnerAttachment
+     */
+    'filename'?: string;
+}
+
+
+/**
+ * 
+ * @export
+ * @interface MiscOptionsTemplateCardsInnerButtonsInner
+ */
+export interface MiscOptionsTemplateCardsInnerButtonsInner {
+    /**
+     * 
+     * @type {string}
+     * @memberof MiscOptionsTemplateCardsInnerButtonsInner
      */
     'id': string;
 }
@@ -7264,6 +7335,58 @@ export interface TagsUsageGet200ResponseTopTagsInner {
     'count': number;
 }
 /**
+ * 
+ * @export
+ * @interface TemplateCarouselCard
+ */
+export interface TemplateCarouselCard {
+    /**
+     * Card body text. Meta caps carousel card bodies at 160 characters.
+     * @type {string}
+     * @memberof TemplateCarouselCard
+     */
+    'text'?: string;
+    /**
+     * 
+     * @type {TemplateCarouselCardAttachment}
+     * @memberof TemplateCarouselCard
+     */
+    'attachment': TemplateCarouselCardAttachment;
+    /**
+     * Up to 2 buttons per card, identical in type and order across every card in the carousel.
+     * @type {Array<MessageButton>}
+     * @memberof TemplateCarouselCard
+     */
+    'buttons'?: Array<MessageButton>;
+}
+/**
+ * Card media header. Meta supports only image or video on carousel cards, and every card must use the same one.
+ * @export
+ * @interface TemplateCarouselCardAttachment
+ */
+export interface TemplateCarouselCardAttachment {
+    /**
+     * 
+     * @type {MessageAttachmentType}
+     * @memberof TemplateCarouselCardAttachment
+     */
+    'type': MessageAttachmentType;
+    /**
+     * 
+     * @type {string}
+     * @memberof TemplateCarouselCardAttachment
+     */
+    'url': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof TemplateCarouselCardAttachment
+     */
+    'filename'?: string;
+}
+
+
+/**
  * Description of the category of the template
  * @export
  * @enum {string}
@@ -7320,6 +7443,12 @@ export interface TemplateCreate {
      * @memberof TemplateCreate
      */
     'attachments'?: Array<TemplateCreateAttachmentsInner>;
+    /**
+     * Carousel cards. When present the template is submitted to Meta as a CAROUSEL template and `text` becomes the bubble body shown above the cards. Meta requires every card to carry the same header format and the same button types in the same order.
+     * @type {Array<TemplateCarouselCard>}
+     * @memberof TemplateCreate
+     */
+    'cards'?: Array<TemplateCarouselCard>;
 }
 /**
  * 
