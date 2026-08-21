@@ -1847,6 +1847,12 @@ export interface BotInsertDataActionsInnerAllOfMessage {
      */
     'products'?: Array<BotInsertDataActionsInnerAllOfMessageProductsInner>;
     /**
+     * Carousel cards. When present the action is submitted to Meta as a media card carousel template, and `text` becomes the bubble body shown above the cards. Meta requires every card to carry the same header format and the same button types in the same order.
+     * @type {Array<BotInsertDataActionsInnerAllOfMessageCardsInner>}
+     * @memberof BotInsertDataActionsInnerAllOfMessage
+     */
+    'cards'?: Array<BotInsertDataActionsInnerAllOfMessageCardsInner>;
+    /**
      * the subject of the message, if applicable
      * @type {string}
      * @memberof BotInsertDataActionsInnerAllOfMessage
@@ -2460,6 +2466,31 @@ export interface BotInsertDataActionsInnerAllOfMessageButtonsInnerPosition {
      * @memberof BotInsertDataActionsInnerAllOfMessageButtonsInnerPosition
      */
     'y': number;
+}
+/**
+ * One card in a media card carousel. `attachment` is the card\'s media header -- Meta supports only image or video there, and every card in the carousel must use the same one.
+ * @export
+ * @interface BotInsertDataActionsInnerAllOfMessageCardsInner
+ */
+export interface BotInsertDataActionsInnerAllOfMessageCardsInner {
+    /**
+     * Card body text. Meta caps carousel card bodies at 160 characters.
+     * @type {string}
+     * @memberof BotInsertDataActionsInnerAllOfMessageCardsInner
+     */
+    'text'?: string | null;
+    /**
+     * 
+     * @type {BotInsertDataActionsInnerAllOfMessageAttachmentsInner}
+     * @memberof BotInsertDataActionsInnerAllOfMessageCardsInner
+     */
+    'attachment': BotInsertDataActionsInnerAllOfMessageAttachmentsInner;
+    /**
+     * Up to 2 buttons per card, identical in type and order across every card in the carousel.
+     * @type {Array<BotInsertDataActionsInnerAllOfMessageButtonsInner>}
+     * @memberof BotInsertDataActionsInnerAllOfMessageCardsInner
+     */
+    'buttons'?: Array<BotInsertDataActionsInnerAllOfMessageButtonsInner>;
 }
 /**
  * Minimal default send options for the message

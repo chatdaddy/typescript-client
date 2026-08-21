@@ -1862,6 +1862,31 @@ export interface BotMessageButton {
     'nextAction'?: NextAction;
 }
 /**
+ * One card in a media card carousel. `attachment` is the card\'s media header -- Meta supports only image or video there, and every card in the carousel must use the same one.
+ * @export
+ * @interface BotMessageCard
+ */
+export interface BotMessageCard {
+    /**
+     * Card body text. Meta caps carousel card bodies at 160 characters.
+     * @type {string}
+     * @memberof BotMessageCard
+     */
+    'text'?: string | null;
+    /**
+     * 
+     * @type {IMMessageAttachment}
+     * @memberof BotMessageCard
+     */
+    'attachment': IMMessageAttachment;
+    /**
+     * Up to 2 buttons per card, identical in type and order across every card in the carousel.
+     * @type {Array<BotMessageButton>}
+     * @memberof BotMessageCard
+     */
+    'buttons'?: Array<BotMessageButton>;
+}
+/**
  * @type BotMessageDelay
  * @export
  */
@@ -4295,6 +4320,12 @@ export interface MessageObj {
      * @memberof MessageObj
      */
     'products'?: Array<IMMessageProduct>;
+    /**
+     * Carousel cards. When present the action is submitted to Meta as a media card carousel template, and `text` becomes the bubble body shown above the cards. Meta requires every card to carry the same header format and the same button types in the same order.
+     * @type {Array<BotMessageCard>}
+     * @memberof MessageObj
+     */
+    'cards'?: Array<BotMessageCard>;
     /**
      * the subject of the message, if applicable
      * @type {string}
