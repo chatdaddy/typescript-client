@@ -10128,6 +10128,12 @@ export interface MessageInsertDataMiscOptionsTemplateCardsInner {
     'params'?: { [key: string]: string; };
     /**
      * 
+     * @type {string}
+     * @memberof MessageInsertDataMiscOptionsTemplateCardsInner
+     */
+    'text'?: string | null;
+    /**
+     * 
      * @type {Array<MessageInsertDataMiscOptionsTemplateCardsInnerButtonsInner>}
      * @memberof MessageInsertDataMiscOptionsTemplateCardsInner
      */
@@ -10183,6 +10189,12 @@ export interface MessageInsertDataMiscOptionsTemplateCardsInnerButtonsInner {
      * @memberof MessageInsertDataMiscOptionsTemplateCardsInnerButtonsInner
      */
     'id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof MessageInsertDataMiscOptionsTemplateCardsInnerButtonsInner
+     */
+    'text'?: string;
 }
 /**
  * 

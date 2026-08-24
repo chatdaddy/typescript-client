@@ -6176,6 +6176,12 @@ export interface MiscOptionsTemplateCardsInner {
      */
     'params'?: { [key: string]: string; };
     /**
+     * The card\'s body text as it was sent. Meta keeps the wording in the approved template and never returns it on the message, so it is stored here for the inbox to redraw what the customer saw.
+     * @type {string}
+     * @memberof MiscOptionsTemplateCardsInner
+     */
+    'text'?: string | null;
+    /**
      * Per-card buttons, index-aligned with the buttons this card was approved with. `id` is sent to Meta as the quick-reply payload and comes back on the webhook when the button is tapped, so it must not contain `__`.
      * @type {Array<MiscOptionsTemplateCardsInnerButtonsInner>}
      * @memberof MiscOptionsTemplateCardsInner
@@ -6221,6 +6227,12 @@ export interface MiscOptionsTemplateCardsInnerButtonsInner {
      * @memberof MiscOptionsTemplateCardsInnerButtonsInner
      */
     'id': string;
+    /**
+     * The button\'s label as sent. Stored for the same reason as the card text -- Meta holds it in the approved template.
+     * @type {string}
+     * @memberof MiscOptionsTemplateCardsInnerButtonsInner
+     */
+    'text'?: string;
 }
 /**
  * Use to send 1 or more messages in a single request. You can override the default compose options for each message by passing in the compose options in the recipient object
