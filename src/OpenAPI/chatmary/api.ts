@@ -650,6 +650,36 @@ export interface ChannelHealthListItem {
      * @memberof ChannelHealthListItem
      */
     'daysSinceLastChecked'?: number | null;
+    /**
+     * Lifetime count of customer notification emails sent for this channel. Never reset — not even when the channel recovers.
+     * @type {number}
+     * @memberof ChannelHealthListItem
+     */
+    'notifyCount'?: number;
+    /**
+     * When we last emailed the customer about this channel. Doubles as the re-notify cooldown floor.
+     * @type {string}
+     * @memberof ChannelHealthListItem
+     */
+    'lastCustomerNotifiedAt'?: string | null;
+    /**
+     * The probe kind we last emailed about; gates re-sends for the same outage
+     * @type {string}
+     * @memberof ChannelHealthListItem
+     */
+    'lastCustomerNotifiedKind'?: string | null;
+    /**
+     * While this is in the future no customer email is sent for the channel, whatever its state.
+     * @type {string}
+     * @memberof ChannelHealthListItem
+     */
+    'suppressedUntil'?: string | null;
+    /**
+     * Why notifications are muted. INACTIVE_14D / NEVER_HEALTHY are channel-level and clear on recovery; HARD_BOUNCED / SPAM_COMPLAINT / UNSUBSCRIBED / MANUAL are recipient-level and survive recovery.
+     * @type {string}
+     * @memberof ChannelHealthListItem
+     */
+    'suppressReason'?: string | null;
 }
 
 export const ChannelHealthListItemChannelTypeEnum = {
