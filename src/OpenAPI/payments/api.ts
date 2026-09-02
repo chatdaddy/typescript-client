@@ -276,6 +276,18 @@ export interface AdminCustomerPlanUpdateRequest {
      * @memberof AdminCustomerPlanUpdateRequest
      */
     'period'?: AutoRenewalPeriod;
+    /**
+     * API plan only. Wallet auto-refill threshold in credits — when the balance drops below this, the customer\'s card is auto-charged. Both this and autoChargeTopUpAmount are required (> 0) to migrate a team onto the API plan (it has no subscription — the wallet + auto-charge is the entire billing model). Ignored for the other plans. If omitted, the customer\'s existing auto-charge config is reused, and it must already be > 0.
+     * @type {number}
+     * @memberof AdminCustomerPlanUpdateRequest
+     */
+    'autoChargeThreshold'?: number;
+    /**
+     * API plan only. Number of credits purchased on each auto-refill. See autoChargeThreshold.
+     * @type {number}
+     * @memberof AdminCustomerPlanUpdateRequest
+     */
+    'autoChargeTopUpAmount'?: number;
 }
 
 
