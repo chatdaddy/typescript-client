@@ -1127,6 +1127,12 @@ export interface AlibabaCAMSStateInfo {
      */
     'enabledWelcomeMessage'?: boolean;
     /**
+     * Commerce Manager catalog this channel\'s products are managed in. A catalog is a Business asset that exists independently of WhatsApp, so this points at one rather than owning it -- Meta allows one catalog per WABA, and the same catalog may serve several phone numbers. Set explicitly because both `/{business-id}/owned_whatsapp_business_accounts` and `/{waba-id}/product_catalogs` are rejected on SMB-type business portfolios with \"(#10) This operation can not be performed on SMB business type\". Product management switches on for the account only once this is set.
+     * @type {string}
+     * @memberof AlibabaCAMSStateInfo
+     */
+    'catalogId'?: string;
+    /**
      * The messaging limit tier from WhatsApp Business API (e.g., TIER_250, TIER_2K, TIER_10K, TIER_100K, TIER_UNLIMITED)
      * @type {string}
      * @memberof AlibabaCAMSStateInfo
@@ -1439,6 +1445,12 @@ export interface AlibabaCamsProfileUpdateRequest {
      * @memberof AlibabaCamsProfileUpdateRequest
      */
     'enabledWelcomeMessage'?: boolean;
+    /**
+     * Commerce Manager catalog this channel\'s products are managed in. Send an empty string to disconnect, which also turns product management back off. WABA accounts only.
+     * @type {string}
+     * @memberof AlibabaCamsProfileUpdateRequest
+     */
+    'catalogId'?: string;
 }
 /**
  * 
