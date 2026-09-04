@@ -7582,6 +7582,40 @@ export const UsersApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
+         * Permanently deletes the authenticated user\'s account and any teams they created. Self-service account deletion for the mobile & web apps (App Store Guideline 5.1.1(v) / Google Play). Takes no parameters and requires only a valid user access token, so a user can only ever delete their own account.
+         * @summary Delete the signed-in user\'s own account
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        usersDeleteMe: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/users/me`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", [], configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * 
          * @summary Fetch users you have access to
          * @param {string} [q] Search by name, ID, email, phone etc.
@@ -7949,6 +7983,18 @@ export const UsersApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
+         * Permanently deletes the authenticated user\'s account and any teams they created. Self-service account deletion for the mobile & web apps (App Store Guideline 5.1.1(v) / Google Play). Takes no parameters and requires only a valid user access token, so a user can only ever delete their own account.
+         * @summary Delete the signed-in user\'s own account
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async usersDeleteMe(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.usersDeleteMe(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['UsersApi.usersDeleteMe']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
          * 
          * @summary Fetch users you have access to
          * @param {string} [q] Search by name, ID, email, phone etc.
@@ -8088,6 +8134,15 @@ export const UsersApiFactory = function (configuration?: Configuration, basePath
          */
         usersDelete(requestParameters: UsersApiUsersDeleteRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
             return localVarFp.usersDelete(requestParameters.id, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Permanently deletes the authenticated user\'s account and any teams they created. Self-service account deletion for the mobile & web apps (App Store Guideline 5.1.1(v) / Google Play). Takes no parameters and requires only a valid user access token, so a user can only ever delete their own account.
+         * @summary Delete the signed-in user\'s own account
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        usersDeleteMe(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.usersDeleteMe(options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -8427,6 +8482,17 @@ export class UsersApi extends BaseAPI {
      */
     public usersDelete(requestParameters: UsersApiUsersDeleteRequest, options?: RawAxiosRequestConfig) {
         return UsersApiFp(this.configuration).usersDelete(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Permanently deletes the authenticated user\'s account and any teams they created. Self-service account deletion for the mobile & web apps (App Store Guideline 5.1.1(v) / Google Play). Takes no parameters and requires only a valid user access token, so a user can only ever delete their own account.
+     * @summary Delete the signed-in user\'s own account
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof UsersApi
+     */
+    public usersDeleteMe(options?: RawAxiosRequestConfig) {
+        return UsersApiFp(this.configuration).usersDeleteMe(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
