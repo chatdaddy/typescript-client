@@ -4388,6 +4388,7 @@ export const RecurringCreditConsumptionType = {
     ChannelWaBusinessApi: 'channel/wa-business-api',
     ChannelMail: 'channel/mail',
     ChannelSms: 'channel/sms',
+    ChannelWebchat: 'channel/webchat',
     ConsultationSupportPlanLvl1: 'consultation/support_plan_lvl1',
     ConsultationSupportPlanLvl2: 'consultation/support_plan_lvl2',
     ConsultationSupportPlanLvl3: 'consultation/support_plan_lvl3',

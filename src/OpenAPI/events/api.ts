@@ -239,7 +239,8 @@ export const AccountInsertDataTypeEnum = {
     Messenger: 'messenger',
     Mail: 'mail',
     Sms: 'sms',
-    Instagram: 'instagram'
+    Instagram: 'instagram',
+    Webchat: 'webchat'
 } as const;
 
 export type AccountInsertDataTypeEnum = typeof AccountInsertDataTypeEnum[keyof typeof AccountInsertDataTypeEnum];
@@ -394,6 +395,12 @@ export interface AccountInsertDataErrorAllOfDataHelpLinkOneOf1 {
  * @interface AccountInsertDataSettings
  */
 export interface AccountInsertDataSettings {
+    /**
+     * 
+     * @type {AccountInsertDataSettingsWebChat}
+     * @memberof AccountInsertDataSettings
+     */
+    'webChat'?: AccountInsertDataSettingsWebChat;
     /**
      * 
      * @type {Array<string>}
@@ -594,6 +601,140 @@ export type AccountInsertDataSettingsNewChatsAssigneeIncomingAssignTypeEnum = ty
 /**
  * 
  * @export
+ * @interface AccountInsertDataSettingsWebChat
+ */
+export interface AccountInsertDataSettingsWebChat {
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof AccountInsertDataSettingsWebChat
+     */
+    'allowedDomains'?: Array<string>;
+    /**
+     * 
+     * @type {string}
+     * @memberof AccountInsertDataSettingsWebChat
+     */
+    'brandName'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof AccountInsertDataSettingsWebChat
+     */
+    'brandIconUrl'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof AccountInsertDataSettingsWebChat
+     */
+    'headerColor'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof AccountInsertDataSettingsWebChat
+     */
+    'bubbleColor'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof AccountInsertDataSettingsWebChat
+     */
+    'position'?: AccountInsertDataSettingsWebChatPositionEnum;
+    /**
+     * 
+     * @type {string}
+     * @memberof AccountInsertDataSettingsWebChat
+     */
+    'welcomeMessage'?: string;
+    /**
+     * 
+     * @type {AccountInsertDataSettingsWebChatAwayReply}
+     * @memberof AccountInsertDataSettingsWebChat
+     */
+    'awayReply'?: AccountInsertDataSettingsWebChatAwayReply;
+    /**
+     * 
+     * @type {AccountInsertDataSettingsWebChatPreChatForm}
+     * @memberof AccountInsertDataSettingsWebChat
+     */
+    'preChatForm'?: AccountInsertDataSettingsWebChatPreChatForm;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof AccountInsertDataSettingsWebChat
+     */
+    'showPoweredBy'?: boolean;
+}
+
+export const AccountInsertDataSettingsWebChatPositionEnum = {
+    Right: 'right',
+    Left: 'left'
+} as const;
+
+export type AccountInsertDataSettingsWebChatPositionEnum = typeof AccountInsertDataSettingsWebChatPositionEnum[keyof typeof AccountInsertDataSettingsWebChatPositionEnum];
+
+/**
+ * 
+ * @export
+ * @interface AccountInsertDataSettingsWebChatAwayReply
+ */
+export interface AccountInsertDataSettingsWebChatAwayReply {
+    /**
+     * 
+     * @type {boolean}
+     * @memberof AccountInsertDataSettingsWebChatAwayReply
+     */
+    'enabled'?: boolean;
+    /**
+     * 
+     * @type {number}
+     * @memberof AccountInsertDataSettingsWebChatAwayReply
+     */
+    'delaySec'?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof AccountInsertDataSettingsWebChatAwayReply
+     */
+    'text'?: string;
+}
+/**
+ * 
+ * @export
+ * @interface AccountInsertDataSettingsWebChatPreChatForm
+ */
+export interface AccountInsertDataSettingsWebChatPreChatForm {
+    /**
+     * 
+     * @type {boolean}
+     * @memberof AccountInsertDataSettingsWebChatPreChatForm
+     */
+    'enabled'?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof AccountInsertDataSettingsWebChatPreChatForm
+     */
+    'required'?: boolean;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof AccountInsertDataSettingsWebChatPreChatForm
+     */
+    'fields'?: Array<AccountInsertDataSettingsWebChatPreChatFormFieldsEnum>;
+}
+
+export const AccountInsertDataSettingsWebChatPreChatFormFieldsEnum = {
+    Name: 'name',
+    Phone: 'phone',
+    Email: 'email'
+} as const;
+
+export type AccountInsertDataSettingsWebChatPreChatFormFieldsEnum = typeof AccountInsertDataSettingsWebChatPreChatFormFieldsEnum[keyof typeof AccountInsertDataSettingsWebChatPreChatFormFieldsEnum];
+
+/**
+ * 
+ * @export
  * @interface AccountUpdate
  */
 export interface AccountUpdate {
@@ -766,7 +907,8 @@ export const AccountUpdateDataTypeEnum = {
     Messenger: 'messenger',
     Mail: 'mail',
     Sms: 'sms',
-    Instagram: 'instagram'
+    Instagram: 'instagram',
+    Webchat: 'webchat'
 } as const;
 
 export type AccountUpdateDataTypeEnum = typeof AccountUpdateDataTypeEnum[keyof typeof AccountUpdateDataTypeEnum];
