@@ -8060,6 +8060,19 @@ export interface WASyncStateInfo {
 /**
  * 
  * @export
+ * @interface WabaCallDeleteRequest
+ */
+export interface WabaCallDeleteRequest {
+    /**
+     * Client-measured call duration in seconds. Logged for diagnostics only — the calls webhook stays the source of truth for the call log.
+     * @type {number}
+     * @memberof WabaCallDeleteRequest
+     */
+    'duration'?: number;
+}
+/**
+ * 
+ * @export
  * @interface WabaCallPermissionRequestPost200Response
  */
 export interface WabaCallPermissionRequestPost200Response {
@@ -22671,6 +22684,52 @@ export class TikTokShopApi extends BaseAPI {
 export const WABAApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
+         * Terminates the call at Meta so the other party\'s handset stops ringing. Covers both the business hanging up an outbound call it placed and an agent ending an inbound call they had already answered. Ending a call Meta has already torn down counts as success, so hanging up is always safe to call and safe to retry.
+         * @summary End an in-progress or still-ringing WhatsApp call
+         * @param {string} accountId 
+         * @param {string} callId 
+         * @param {WabaCallDeleteRequest} [wabaCallDeleteRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        wabaCallDelete: async (accountId: string, callId: string, wabaCallDeleteRequest?: WabaCallDeleteRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'accountId' is not null or undefined
+            assertParamExists('wabaCallDelete', 'accountId', accountId)
+            // verify required parameter 'callId' is not null or undefined
+            assertParamExists('wabaCallDelete', 'callId', callId)
+            const localVarPath = `/waba/call/{accountId}/{callId}`
+                .replace(`{${"accountId"}}`, encodeURIComponent(String(accountId)))
+                .replace(`{${"callId"}}`, encodeURIComponent(String(callId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", [], configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(wabaCallDeleteRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * 
          * @summary Send a call permission request to a WhatsApp user
          * @param {string} accountId 
@@ -22969,6 +23028,52 @@ export const WABAApiAxiosParamCreator = function (configuration?: Configuration)
                 options: localVarRequestOptions,
             };
         },
+        /**
+         * Declines a ringing inbound call at Meta so the caller\'s handset stops ringing immediately instead of waiting out Meta\'s ring timeout. Rejecting a call Meta has already ended counts as success.
+         * @summary Reject an unanswered incoming WhatsApp call
+         * @param {string} accountId 
+         * @param {string} callId 
+         * @param {object} [body] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        wabaIncomingCallRejectPost: async (accountId: string, callId: string, body?: object, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'accountId' is not null or undefined
+            assertParamExists('wabaIncomingCallRejectPost', 'accountId', accountId)
+            // verify required parameter 'callId' is not null or undefined
+            assertParamExists('wabaIncomingCallRejectPost', 'callId', callId)
+            const localVarPath = `/waba/incoming-call/{accountId}/{callId}/reject`
+                .replace(`{${"accountId"}}`, encodeURIComponent(String(accountId)))
+                .replace(`{${"callId"}}`, encodeURIComponent(String(callId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", [], configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(body, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
     }
 };
 
@@ -22979,6 +23084,21 @@ export const WABAApiAxiosParamCreator = function (configuration?: Configuration)
 export const WABAApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = WABAApiAxiosParamCreator(configuration)
     return {
+        /**
+         * Terminates the call at Meta so the other party\'s handset stops ringing. Covers both the business hanging up an outbound call it placed and an agent ending an inbound call they had already answered. Ending a call Meta has already torn down counts as success, so hanging up is always safe to call and safe to retry.
+         * @summary End an in-progress or still-ringing WhatsApp call
+         * @param {string} accountId 
+         * @param {string} callId 
+         * @param {WabaCallDeleteRequest} [wabaCallDeleteRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async wabaCallDelete(accountId: string, callId: string, wabaCallDeleteRequest?: WabaCallDeleteRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AccountsDelete200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.wabaCallDelete(accountId, callId, wabaCallDeleteRequest, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['WABAApi.wabaCallDelete']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
         /**
          * 
          * @summary Send a call permission request to a WhatsApp user
@@ -23076,6 +23196,21 @@ export const WABAApiFp = function(configuration?: Configuration) {
             const localVarOperationServerBasePath = operationServerMap['WABAApi.wabaIncomingCallGet']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
+        /**
+         * Declines a ringing inbound call at Meta so the caller\'s handset stops ringing immediately instead of waiting out Meta\'s ring timeout. Rejecting a call Meta has already ended counts as success.
+         * @summary Reject an unanswered incoming WhatsApp call
+         * @param {string} accountId 
+         * @param {string} callId 
+         * @param {object} [body] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async wabaIncomingCallRejectPost(accountId: string, callId: string, body?: object, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AccountsDelete200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.wabaIncomingCallRejectPost(accountId, callId, body, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['WABAApi.wabaIncomingCallRejectPost']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
     }
 };
 
@@ -23086,6 +23221,16 @@ export const WABAApiFp = function(configuration?: Configuration) {
 export const WABAApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
     const localVarFp = WABAApiFp(configuration)
     return {
+        /**
+         * Terminates the call at Meta so the other party\'s handset stops ringing. Covers both the business hanging up an outbound call it placed and an agent ending an inbound call they had already answered. Ending a call Meta has already torn down counts as success, so hanging up is always safe to call and safe to retry.
+         * @summary End an in-progress or still-ringing WhatsApp call
+         * @param {WABAApiWabaCallDeleteRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        wabaCallDelete(requestParameters: WABAApiWabaCallDeleteRequest, options?: RawAxiosRequestConfig): AxiosPromise<AccountsDelete200Response> {
+            return localVarFp.wabaCallDelete(requestParameters.accountId, requestParameters.callId, requestParameters.wabaCallDeleteRequest, options).then((request) => request(axios, basePath));
+        },
         /**
          * 
          * @summary Send a call permission request to a WhatsApp user
@@ -23156,8 +23301,46 @@ export const WABAApiFactory = function (configuration?: Configuration, basePath?
         wabaIncomingCallGet(requestParameters: WABAApiWabaIncomingCallGetRequest, options?: RawAxiosRequestConfig): AxiosPromise<WabaIncomingCallGet200Response> {
             return localVarFp.wabaIncomingCallGet(requestParameters.accountId, options).then((request) => request(axios, basePath));
         },
+        /**
+         * Declines a ringing inbound call at Meta so the caller\'s handset stops ringing immediately instead of waiting out Meta\'s ring timeout. Rejecting a call Meta has already ended counts as success.
+         * @summary Reject an unanswered incoming WhatsApp call
+         * @param {WABAApiWabaIncomingCallRejectPostRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        wabaIncomingCallRejectPost(requestParameters: WABAApiWabaIncomingCallRejectPostRequest, options?: RawAxiosRequestConfig): AxiosPromise<AccountsDelete200Response> {
+            return localVarFp.wabaIncomingCallRejectPost(requestParameters.accountId, requestParameters.callId, requestParameters.body, options).then((request) => request(axios, basePath));
+        },
     };
 };
+
+/**
+ * Request parameters for wabaCallDelete operation in WABAApi.
+ * @export
+ * @interface WABAApiWabaCallDeleteRequest
+ */
+export interface WABAApiWabaCallDeleteRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof WABAApiWabaCallDelete
+     */
+    readonly accountId: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof WABAApiWabaCallDelete
+     */
+    readonly callId: string
+
+    /**
+     * 
+     * @type {WabaCallDeleteRequest}
+     * @memberof WABAApiWabaCallDelete
+     */
+    readonly wabaCallDeleteRequest?: WabaCallDeleteRequest
+}
 
 /**
  * Request parameters for wabaCallPermissionRequestPost operation in WABAApi.
@@ -23300,12 +23483,52 @@ export interface WABAApiWabaIncomingCallGetRequest {
 }
 
 /**
+ * Request parameters for wabaIncomingCallRejectPost operation in WABAApi.
+ * @export
+ * @interface WABAApiWabaIncomingCallRejectPostRequest
+ */
+export interface WABAApiWabaIncomingCallRejectPostRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof WABAApiWabaIncomingCallRejectPost
+     */
+    readonly accountId: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof WABAApiWabaIncomingCallRejectPost
+     */
+    readonly callId: string
+
+    /**
+     * 
+     * @type {object}
+     * @memberof WABAApiWabaIncomingCallRejectPost
+     */
+    readonly body?: object
+}
+
+/**
  * WABAApi - object-oriented interface
  * @export
  * @class WABAApi
  * @extends {BaseAPI}
  */
 export class WABAApi extends BaseAPI {
+    /**
+     * Terminates the call at Meta so the other party\'s handset stops ringing. Covers both the business hanging up an outbound call it placed and an agent ending an inbound call they had already answered. Ending a call Meta has already torn down counts as success, so hanging up is always safe to call and safe to retry.
+     * @summary End an in-progress or still-ringing WhatsApp call
+     * @param {WABAApiWabaCallDeleteRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof WABAApi
+     */
+    public wabaCallDelete(requestParameters: WABAApiWabaCallDeleteRequest, options?: RawAxiosRequestConfig) {
+        return WABAApiFp(this.configuration).wabaCallDelete(requestParameters.accountId, requestParameters.callId, requestParameters.wabaCallDeleteRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
     /**
      * 
      * @summary Send a call permission request to a WhatsApp user
@@ -23388,6 +23611,18 @@ export class WABAApi extends BaseAPI {
      */
     public wabaIncomingCallGet(requestParameters: WABAApiWabaIncomingCallGetRequest, options?: RawAxiosRequestConfig) {
         return WABAApiFp(this.configuration).wabaIncomingCallGet(requestParameters.accountId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Declines a ringing inbound call at Meta so the caller\'s handset stops ringing immediately instead of waiting out Meta\'s ring timeout. Rejecting a call Meta has already ended counts as success.
+     * @summary Reject an unanswered incoming WhatsApp call
+     * @param {WABAApiWabaIncomingCallRejectPostRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof WABAApi
+     */
+    public wabaIncomingCallRejectPost(requestParameters: WABAApiWabaIncomingCallRejectPostRequest, options?: RawAxiosRequestConfig) {
+        return WABAApiFp(this.configuration).wabaIncomingCallRejectPost(requestParameters.accountId, requestParameters.callId, requestParameters.body, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
