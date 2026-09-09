@@ -327,6 +327,19 @@ export interface AdminCustomerPlanUpdateResponse {
 /**
  * 
  * @export
+ * @interface AdminPartnerBillingGet200Response
+ */
+export interface AdminPartnerBillingGet200Response {
+    /**
+     * 
+     * @type {Array<PartnerBillingConfig>}
+     * @memberof AdminPartnerBillingGet200Response
+     */
+    'items': Array<PartnerBillingConfig>;
+}
+/**
+ * 
+ * @export
  * @interface AmountWithCurrency
  */
 export interface AmountWithCurrency {
@@ -3513,6 +3526,313 @@ export interface NotificationPreferenceData {
     'warning': number;
 }
 /**
+ * 
+ * @export
+ * @interface PartnerBillingConfig
+ */
+export interface PartnerBillingConfig {
+    /**
+     * The partnership tag (matches team.partnerAdmin / credit_customer.partnership).
+     * @type {string}
+     * @memberof PartnerBillingConfig
+     */
+    'partnerAdmin': string;
+    /**
+     * ID of a customer. All credits are linked to a customer. Multiple teams can be linked to the same customer & thus share credits.
+     * @type {string}
+     * @memberof PartnerBillingConfig
+     */
+    'masterCustomerId': string;
+    /**
+     * 
+     * @type {number}
+     * @memberof PartnerBillingConfig
+     */
+    'wholesalePct': number;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof PartnerBillingConfig
+     */
+    'enabled': boolean;
+    /**
+     * An ISO formatted timestamp
+     * @type {string}
+     * @memberof PartnerBillingConfig
+     */
+    'createdAt'?: string;
+}
+/**
+ * 
+ * @export
+ * @interface PartnerBillingConfigUpsert
+ */
+export interface PartnerBillingConfigUpsert {
+    /**
+     * 
+     * @type {string}
+     * @memberof PartnerBillingConfigUpsert
+     */
+    'partnerAdmin': string;
+    /**
+     * ID of a customer. All credits are linked to a customer. Multiple teams can be linked to the same customer & thus share credits.
+     * @type {string}
+     * @memberof PartnerBillingConfigUpsert
+     */
+    'masterCustomerId': string;
+    /**
+     * 
+     * @type {number}
+     * @memberof PartnerBillingConfigUpsert
+     */
+    'wholesalePct': number;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof PartnerBillingConfigUpsert
+     */
+    'enabled'?: boolean;
+}
+/**
+ * 
+ * @export
+ * @interface PartnerBillingSummary
+ */
+export interface PartnerBillingSummary {
+    /**
+     * The partnership tag this summary is for.
+     * @type {string}
+     * @memberof PartnerBillingSummary
+     */
+    'partnerAdmin': string;
+    /**
+     * ID of a customer. All credits are linked to a customer. Multiple teams can be linked to the same customer & thus share credits.
+     * @type {string}
+     * @memberof PartnerBillingSummary
+     */
+    'masterCustomerId': string;
+    /**
+     * Master wallet balance, in credits ($0.001/credit).
+     * @type {number}
+     * @memberof PartnerBillingSummary
+     */
+    'walletBalance': number;
+    /**
+     * Wholesale discount applied to every value-delivering debit (0-1).
+     * @type {number}
+     * @memberof PartnerBillingSummary
+     */
+    'wholesalePct': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof PartnerBillingSummary
+     */
+    'clientCount': number;
+    /**
+     * Credits debited from the master wallet this calendar month.
+     * @type {number}
+     * @memberof PartnerBillingSummary
+     */
+    'monthSpend'?: number;
+    /**
+     * 
+     * @type {AutoChargeConfig}
+     * @memberof PartnerBillingSummary
+     */
+    'autoCharge'?: AutoChargeConfig;
+    /**
+     * Whether wholesale billing is live for this partner.
+     * @type {boolean}
+     * @memberof PartnerBillingSummary
+     */
+    'enabled': boolean;
+}
+/**
+ * 
+ * @export
+ * @interface PartnerClient
+ */
+export interface PartnerClient {
+    /**
+     * The ID of a team
+     * @type {string}
+     * @memberof PartnerClient
+     */
+    'teamId': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof PartnerClient
+     */
+    'name': string;
+    /**
+     * 
+     * @type {PlanId}
+     * @memberof PartnerClient
+     */
+    'planType'?: PlanId;
+    /**
+     * Client wallet (unitsAvailable), in credits. Funded by transfers.
+     * @type {number}
+     * @memberof PartnerClient
+     */
+    'walletBalance': number;
+    /**
+     * 
+     * @type {Array<PartnerClientBucket>}
+     * @memberof PartnerClient
+     */
+    'buckets'?: Array<PartnerClientBucket>;
+    /**
+     * active | low | trial | cancelled
+     * @type {string}
+     * @memberof PartnerClient
+     */
+    'status': string;
+    /**
+     * An ISO formatted timestamp
+     * @type {string}
+     * @memberof PartnerClient
+     */
+    'createdAt'?: string;
+}
+
+
+/**
+ * 
+ * @export
+ * @interface PartnerClientBucket
+ */
+export interface PartnerClientBucket {
+    /**
+     * e.g. whatsapp, activeChats
+     * @type {string}
+     * @memberof PartnerClientBucket
+     */
+    'channel': string;
+    /**
+     * 
+     * @type {number}
+     * @memberof PartnerClientBucket
+     */
+    'used': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof PartnerClientBucket
+     */
+    'limit': number;
+}
+/**
+ * 
+ * @export
+ * @interface PartnerClientPlanRequest
+ */
+export interface PartnerClientPlanRequest {
+    /**
+     * 
+     * @type {PlanId}
+     * @memberof PartnerClientPlanRequest
+     */
+    'planId': PlanId;
+    /**
+     * Renewal cadence. Restricted to year/quarter so the existing bucket refill cron resets the client monthly with no Stripe.
+     * @type {string}
+     * @memberof PartnerClientPlanRequest
+     */
+    'period'?: PartnerClientPlanRequestPeriodEnum;
+}
+
+export const PartnerClientPlanRequestPeriodEnum = {
+    Year: 'year',
+    Quarter: 'quarter'
+} as const;
+
+export type PartnerClientPlanRequestPeriodEnum = typeof PartnerClientPlanRequestPeriodEnum[keyof typeof PartnerClientPlanRequestPeriodEnum];
+
+/**
+ * 
+ * @export
+ * @interface PartnerClientsGet200Response
+ */
+export interface PartnerClientsGet200Response {
+    /**
+     * 
+     * @type {Array<PartnerClient>}
+     * @memberof PartnerClientsGet200Response
+     */
+    'items': Array<PartnerClient>;
+    /**
+     * 
+     * @type {number}
+     * @memberof PartnerClientsGet200Response
+     */
+    'nextPageCursor'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof PartnerClientsGet200Response
+     */
+    'total'?: number;
+}
+/**
+ * 
+ * @export
+ * @interface PartnerCreditTransferRequest
+ */
+export interface PartnerCreditTransferRequest {
+    /**
+     * Credits to add to the client\'s wallet.
+     * @type {number}
+     * @memberof PartnerCreditTransferRequest
+     */
+    'units': number;
+    /**
+     * Client-supplied key to make the transfer idempotent.
+     * @type {string}
+     * @memberof PartnerCreditTransferRequest
+     */
+    'idempotencyKey'?: string;
+}
+/**
+ * 
+ * @export
+ * @interface PartnerCreditTransferResult
+ */
+export interface PartnerCreditTransferResult {
+    /**
+     * 
+     * @type {string}
+     * @memberof PartnerCreditTransferResult
+     */
+    'transferId': string;
+    /**
+     * 
+     * @type {number}
+     * @memberof PartnerCreditTransferResult
+     */
+    'unitsTransferred': number;
+    /**
+     * Credits debited from the master wallet (units x wholesale).
+     * @type {number}
+     * @memberof PartnerCreditTransferResult
+     */
+    'masterDebit'?: number;
+    /**
+     * Client wallet balance after the transfer.
+     * @type {number}
+     * @memberof PartnerCreditTransferResult
+     */
+    'clientBalance': number;
+    /**
+     * Master wallet balance after the transfer.
+     * @type {number}
+     * @memberof PartnerCreditTransferResult
+     */
+    'masterBalance': number;
+}
+/**
  * Object which stores referral code details
  * @export
  * @interface PartnerReferral
@@ -3654,6 +3974,100 @@ export interface PartnerReferralsPost200Response {
      */
     'referralCode': string;
 }
+/**
+ * 
+ * @export
+ * @interface PartnerStatement
+ */
+export interface PartnerStatement {
+    /**
+     * YYYY-MM
+     * @type {string}
+     * @memberof PartnerStatement
+     */
+    'month': string;
+    /**
+     * 
+     * @type {Array<PartnerStatementLine>}
+     * @memberof PartnerStatement
+     */
+    'lines'?: Array<PartnerStatementLine>;
+    /**
+     * 
+     * @type {number}
+     * @memberof PartnerStatement
+     */
+    'planFeesTotal'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof PartnerStatement
+     */
+    'transfersTotal'?: number;
+    /**
+     * Total credits drawn from the master wallet this month.
+     * @type {number}
+     * @memberof PartnerStatement
+     */
+    'total': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof PartnerStatement
+     */
+    'wholesalePct'?: number;
+}
+/**
+ * 
+ * @export
+ * @interface PartnerStatementLine
+ */
+export interface PartnerStatementLine {
+    /**
+     * 
+     * @type {string}
+     * @memberof PartnerStatementLine
+     */
+    'kind': PartnerStatementLineKindEnum;
+    /**
+     * The ID of a team
+     * @type {string}
+     * @memberof PartnerStatementLine
+     */
+    'teamId'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof PartnerStatementLine
+     */
+    'clientName'?: string;
+    /**
+     * 
+     * @type {PlanId}
+     * @memberof PartnerStatementLine
+     */
+    'planType'?: PlanId;
+    /**
+     * Undiscounted amount, in credits.
+     * @type {number}
+     * @memberof PartnerStatementLine
+     */
+    'listAmount'?: number;
+    /**
+     * Amount debited from the master wallet, in credits (list x wholesale).
+     * @type {number}
+     * @memberof PartnerStatementLine
+     */
+    'wholesaleAmount': number;
+}
+
+export const PartnerStatementLineKindEnum = {
+    PlanFee: 'plan_fee',
+    Transfer: 'transfer'
+} as const;
+
+export type PartnerStatementLineKindEnum = typeof PartnerStatementLineKindEnum[keyof typeof PartnerStatementLineKindEnum];
+
 /**
  * 
  * @export
@@ -10414,6 +10828,926 @@ export const UsageSummaryGetConsumptionStreamEnum = {
     All: 'all'
 } as const;
 export type UsageSummaryGetConsumptionStreamEnum = typeof UsageSummaryGetConsumptionStreamEnum[keyof typeof UsageSummaryGetConsumptionStreamEnum];
+
+
+/**
+ * PartnerBillingApi - axios parameter creator
+ * @export
+ */
+export const PartnerBillingApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * Admin-only. List partner billing enrolments (which partners are wholesale billed, their master wallet customer and wholesale rate).
+         * @param {string} [partnerAdmin] Filter to a single partnerAdmin tag
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        adminPartnerBillingGet: async (partnerAdmin?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v2/credits/admin/partner-billing`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["ADMIN_PANEL_ACCESS"], configuration)
+
+            if (partnerAdmin !== undefined) {
+                localVarQueryParameter['partnerAdmin'] = partnerAdmin;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Admin-only. Enrol or update a partner for wholesale billing: designate the master wallet customer, set the wholesale rate, and enable/disable. The whole feature is inert for any partner not enrolled and enabled.
+         * @param {PartnerBillingConfigUpsert} partnerBillingConfigUpsert 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        adminPartnerBillingUpsert: async (partnerBillingConfigUpsert: PartnerBillingConfigUpsert, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'partnerBillingConfigUpsert' is not null or undefined
+            assertParamExists('adminPartnerBillingUpsert', 'partnerBillingConfigUpsert', partnerBillingConfigUpsert)
+            const localVarPath = `/v2/credits/admin/partner-billing`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["ADMIN_PANEL_ACCESS"], configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(partnerBillingConfigUpsert, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Transfer credits from the partner\'s master wallet into a client\'s wallet. Atomic: debits the master wallet (at the wholesale rate) and credits the client in one transaction. No Stripe. Returns 402 if the master wallet is short.
+         * @param {string} teamId 
+         * @param {PartnerCreditTransferRequest} partnerCreditTransferRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        partnerClientCreditsTransfer: async (teamId: string, partnerCreditTransferRequest: PartnerCreditTransferRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'teamId' is not null or undefined
+            assertParamExists('partnerClientCreditsTransfer', 'teamId', teamId)
+            // verify required parameter 'partnerCreditTransferRequest' is not null or undefined
+            assertParamExists('partnerClientCreditsTransfer', 'partnerCreditTransferRequest', partnerCreditTransferRequest)
+            const localVarPath = `/v2/partner/clients/{teamId}/credits`
+                .replace(`{${"teamId"}}`, encodeURIComponent(String(teamId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["PARTNER_ADMIN_PANEL_ACCESS", "ADMIN_PANEL_ACCESS"], configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(partnerCreditTransferRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Fetch a single client account belonging to the caller\'s partnership.
+         * @param {string} teamId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        partnerClientGet: async (teamId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'teamId' is not null or undefined
+            assertParamExists('partnerClientGet', 'teamId', teamId)
+            const localVarPath = `/v2/partner/clients/{teamId}`
+                .replace(`{${"teamId"}}`, encodeURIComponent(String(teamId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["PARTNER_ADMIN_PANEL_ACCESS", "ADMIN_PANEL_ACCESS"], configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Cancel a client\'s plan. Stops future monthly wallet debits; the client\'s entitlements lapse at the end of the current cycle. No Stripe involved.
+         * @param {string} teamId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        partnerClientPlanCancel: async (teamId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'teamId' is not null or undefined
+            assertParamExists('partnerClientPlanCancel', 'teamId', teamId)
+            const localVarPath = `/v2/partner/clients/{teamId}/plan`
+                .replace(`{${"teamId"}}`, encodeURIComponent(String(teamId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["PARTNER_ADMIN_PANEL_ACCESS", "ADMIN_PANEL_ACCESS"], configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Provision or change a client\'s base plan. Grants plan entitlements internally with no Stripe object (a stripe-null subscription with a year/quarter renewal so the existing refill cron resets buckets). Debits the master wallet the plan fee at the wholesale rate.
+         * @param {string} teamId 
+         * @param {PartnerClientPlanRequest} partnerClientPlanRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        partnerClientPlanSet: async (teamId: string, partnerClientPlanRequest: PartnerClientPlanRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'teamId' is not null or undefined
+            assertParamExists('partnerClientPlanSet', 'teamId', teamId)
+            // verify required parameter 'partnerClientPlanRequest' is not null or undefined
+            assertParamExists('partnerClientPlanSet', 'partnerClientPlanRequest', partnerClientPlanRequest)
+            const localVarPath = `/v2/partner/clients/{teamId}/plan`
+                .replace(`{${"teamId"}}`, encodeURIComponent(String(teamId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["PARTNER_ADMIN_PANEL_ACCESS", "ADMIN_PANEL_ACCESS"], configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(partnerClientPlanRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * List the partner\'s client accounts with plan, usage and wallet balance.
+         * @param {number} [page] The page for the cursor
+         * @param {number} [count] The number of items to return
+         * @param {string} [q] Search by client name or team id
+         * @param {boolean} [returnTotal] Include the total number of clients
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        partnerClientsGet: async (page?: number, count?: number, q?: string, returnTotal?: boolean, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v2/partner/clients`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["PARTNER_ADMIN_PANEL_ACCESS", "ADMIN_PANEL_ACCESS"], configuration)
+
+            if (page !== undefined) {
+                localVarQueryParameter['page'] = page;
+            }
+
+            if (count !== undefined) {
+                localVarQueryParameter['count'] = count;
+            }
+
+            if (q !== undefined) {
+                localVarQueryParameter['q'] = q;
+            }
+
+            if (returnTotal !== undefined) {
+                localVarQueryParameter['returnTotal'] = returnTotal;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Reverse a prior credit transfer, returning unspent units to the master wallet. Only unspent units can be reversed (partial allowed).
+         * @param {string} transferId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        partnerCreditTransferReverse: async (transferId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'transferId' is not null or undefined
+            assertParamExists('partnerCreditTransferReverse', 'transferId', transferId)
+            const localVarPath = `/v2/partner/transfers/{transferId}/reverse`
+                .replace(`{${"transferId"}}`, encodeURIComponent(String(transferId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["PARTNER_ADMIN_PANEL_ACCESS", "ADMIN_PANEL_ACCESS"], configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * The partner\'s monthly statement: base-plan fees + credit transfers, at the wholesale rate, drawn from the master wallet.
+         * @param {string} [month] Statement month as YYYY-MM. Defaults to the current month.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        partnerStatementGet: async (month?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v2/partner/statement`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["PARTNER_ADMIN_PANEL_ACCESS", "ADMIN_PANEL_ACCESS"], configuration)
+
+            if (month !== undefined) {
+                localVarQueryParameter['month'] = month;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Partner billing summary for the calling partner admin: master wallet balance, wholesale rate, client count and this-month spend. Scoped to the caller\'s own partnership.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        partnerSummaryGet: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v2/partner/me`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["PARTNER_ADMIN_PANEL_ACCESS", "ADMIN_PANEL_ACCESS"], configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * PartnerBillingApi - functional programming interface
+ * @export
+ */
+export const PartnerBillingApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = PartnerBillingApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * Admin-only. List partner billing enrolments (which partners are wholesale billed, their master wallet customer and wholesale rate).
+         * @param {string} [partnerAdmin] Filter to a single partnerAdmin tag
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async adminPartnerBillingGet(partnerAdmin?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AdminPartnerBillingGet200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.adminPartnerBillingGet(partnerAdmin, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['PartnerBillingApi.adminPartnerBillingGet']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Admin-only. Enrol or update a partner for wholesale billing: designate the master wallet customer, set the wholesale rate, and enable/disable. The whole feature is inert for any partner not enrolled and enabled.
+         * @param {PartnerBillingConfigUpsert} partnerBillingConfigUpsert 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async adminPartnerBillingUpsert(partnerBillingConfigUpsert: PartnerBillingConfigUpsert, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PartnerBillingConfig>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.adminPartnerBillingUpsert(partnerBillingConfigUpsert, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['PartnerBillingApi.adminPartnerBillingUpsert']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Transfer credits from the partner\'s master wallet into a client\'s wallet. Atomic: debits the master wallet (at the wholesale rate) and credits the client in one transaction. No Stripe. Returns 402 if the master wallet is short.
+         * @param {string} teamId 
+         * @param {PartnerCreditTransferRequest} partnerCreditTransferRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async partnerClientCreditsTransfer(teamId: string, partnerCreditTransferRequest: PartnerCreditTransferRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PartnerCreditTransferResult>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.partnerClientCreditsTransfer(teamId, partnerCreditTransferRequest, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['PartnerBillingApi.partnerClientCreditsTransfer']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Fetch a single client account belonging to the caller\'s partnership.
+         * @param {string} teamId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async partnerClientGet(teamId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PartnerClient>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.partnerClientGet(teamId, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['PartnerBillingApi.partnerClientGet']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Cancel a client\'s plan. Stops future monthly wallet debits; the client\'s entitlements lapse at the end of the current cycle. No Stripe involved.
+         * @param {string} teamId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async partnerClientPlanCancel(teamId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PartnerClient>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.partnerClientPlanCancel(teamId, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['PartnerBillingApi.partnerClientPlanCancel']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Provision or change a client\'s base plan. Grants plan entitlements internally with no Stripe object (a stripe-null subscription with a year/quarter renewal so the existing refill cron resets buckets). Debits the master wallet the plan fee at the wholesale rate.
+         * @param {string} teamId 
+         * @param {PartnerClientPlanRequest} partnerClientPlanRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async partnerClientPlanSet(teamId: string, partnerClientPlanRequest: PartnerClientPlanRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PartnerClient>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.partnerClientPlanSet(teamId, partnerClientPlanRequest, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['PartnerBillingApi.partnerClientPlanSet']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * List the partner\'s client accounts with plan, usage and wallet balance.
+         * @param {number} [page] The page for the cursor
+         * @param {number} [count] The number of items to return
+         * @param {string} [q] Search by client name or team id
+         * @param {boolean} [returnTotal] Include the total number of clients
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async partnerClientsGet(page?: number, count?: number, q?: string, returnTotal?: boolean, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PartnerClientsGet200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.partnerClientsGet(page, count, q, returnTotal, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['PartnerBillingApi.partnerClientsGet']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Reverse a prior credit transfer, returning unspent units to the master wallet. Only unspent units can be reversed (partial allowed).
+         * @param {string} transferId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async partnerCreditTransferReverse(transferId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PartnerCreditTransferResult>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.partnerCreditTransferReverse(transferId, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['PartnerBillingApi.partnerCreditTransferReverse']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * The partner\'s monthly statement: base-plan fees + credit transfers, at the wholesale rate, drawn from the master wallet.
+         * @param {string} [month] Statement month as YYYY-MM. Defaults to the current month.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async partnerStatementGet(month?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PartnerStatement>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.partnerStatementGet(month, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['PartnerBillingApi.partnerStatementGet']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Partner billing summary for the calling partner admin: master wallet balance, wholesale rate, client count and this-month spend. Scoped to the caller\'s own partnership.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async partnerSummaryGet(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PartnerBillingSummary>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.partnerSummaryGet(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['PartnerBillingApi.partnerSummaryGet']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+    }
+};
+
+/**
+ * PartnerBillingApi - factory interface
+ * @export
+ */
+export const PartnerBillingApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = PartnerBillingApiFp(configuration)
+    return {
+        /**
+         * Admin-only. List partner billing enrolments (which partners are wholesale billed, their master wallet customer and wholesale rate).
+         * @param {PartnerBillingApiAdminPartnerBillingGetRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        adminPartnerBillingGet(requestParameters: PartnerBillingApiAdminPartnerBillingGetRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<AdminPartnerBillingGet200Response> {
+            return localVarFp.adminPartnerBillingGet(requestParameters.partnerAdmin, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Admin-only. Enrol or update a partner for wholesale billing: designate the master wallet customer, set the wholesale rate, and enable/disable. The whole feature is inert for any partner not enrolled and enabled.
+         * @param {PartnerBillingApiAdminPartnerBillingUpsertRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        adminPartnerBillingUpsert(requestParameters: PartnerBillingApiAdminPartnerBillingUpsertRequest, options?: RawAxiosRequestConfig): AxiosPromise<PartnerBillingConfig> {
+            return localVarFp.adminPartnerBillingUpsert(requestParameters.partnerBillingConfigUpsert, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Transfer credits from the partner\'s master wallet into a client\'s wallet. Atomic: debits the master wallet (at the wholesale rate) and credits the client in one transaction. No Stripe. Returns 402 if the master wallet is short.
+         * @param {PartnerBillingApiPartnerClientCreditsTransferRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        partnerClientCreditsTransfer(requestParameters: PartnerBillingApiPartnerClientCreditsTransferRequest, options?: RawAxiosRequestConfig): AxiosPromise<PartnerCreditTransferResult> {
+            return localVarFp.partnerClientCreditsTransfer(requestParameters.teamId, requestParameters.partnerCreditTransferRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Fetch a single client account belonging to the caller\'s partnership.
+         * @param {PartnerBillingApiPartnerClientGetRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        partnerClientGet(requestParameters: PartnerBillingApiPartnerClientGetRequest, options?: RawAxiosRequestConfig): AxiosPromise<PartnerClient> {
+            return localVarFp.partnerClientGet(requestParameters.teamId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Cancel a client\'s plan. Stops future monthly wallet debits; the client\'s entitlements lapse at the end of the current cycle. No Stripe involved.
+         * @param {PartnerBillingApiPartnerClientPlanCancelRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        partnerClientPlanCancel(requestParameters: PartnerBillingApiPartnerClientPlanCancelRequest, options?: RawAxiosRequestConfig): AxiosPromise<PartnerClient> {
+            return localVarFp.partnerClientPlanCancel(requestParameters.teamId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Provision or change a client\'s base plan. Grants plan entitlements internally with no Stripe object (a stripe-null subscription with a year/quarter renewal so the existing refill cron resets buckets). Debits the master wallet the plan fee at the wholesale rate.
+         * @param {PartnerBillingApiPartnerClientPlanSetRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        partnerClientPlanSet(requestParameters: PartnerBillingApiPartnerClientPlanSetRequest, options?: RawAxiosRequestConfig): AxiosPromise<PartnerClient> {
+            return localVarFp.partnerClientPlanSet(requestParameters.teamId, requestParameters.partnerClientPlanRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * List the partner\'s client accounts with plan, usage and wallet balance.
+         * @param {PartnerBillingApiPartnerClientsGetRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        partnerClientsGet(requestParameters: PartnerBillingApiPartnerClientsGetRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<PartnerClientsGet200Response> {
+            return localVarFp.partnerClientsGet(requestParameters.page, requestParameters.count, requestParameters.q, requestParameters.returnTotal, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Reverse a prior credit transfer, returning unspent units to the master wallet. Only unspent units can be reversed (partial allowed).
+         * @param {PartnerBillingApiPartnerCreditTransferReverseRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        partnerCreditTransferReverse(requestParameters: PartnerBillingApiPartnerCreditTransferReverseRequest, options?: RawAxiosRequestConfig): AxiosPromise<PartnerCreditTransferResult> {
+            return localVarFp.partnerCreditTransferReverse(requestParameters.transferId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * The partner\'s monthly statement: base-plan fees + credit transfers, at the wholesale rate, drawn from the master wallet.
+         * @param {PartnerBillingApiPartnerStatementGetRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        partnerStatementGet(requestParameters: PartnerBillingApiPartnerStatementGetRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<PartnerStatement> {
+            return localVarFp.partnerStatementGet(requestParameters.month, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Partner billing summary for the calling partner admin: master wallet balance, wholesale rate, client count and this-month spend. Scoped to the caller\'s own partnership.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        partnerSummaryGet(options?: RawAxiosRequestConfig): AxiosPromise<PartnerBillingSummary> {
+            return localVarFp.partnerSummaryGet(options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * Request parameters for adminPartnerBillingGet operation in PartnerBillingApi.
+ * @export
+ * @interface PartnerBillingApiAdminPartnerBillingGetRequest
+ */
+export interface PartnerBillingApiAdminPartnerBillingGetRequest {
+    /**
+     * Filter to a single partnerAdmin tag
+     * @type {string}
+     * @memberof PartnerBillingApiAdminPartnerBillingGet
+     */
+    readonly partnerAdmin?: string
+}
+
+/**
+ * Request parameters for adminPartnerBillingUpsert operation in PartnerBillingApi.
+ * @export
+ * @interface PartnerBillingApiAdminPartnerBillingUpsertRequest
+ */
+export interface PartnerBillingApiAdminPartnerBillingUpsertRequest {
+    /**
+     * 
+     * @type {PartnerBillingConfigUpsert}
+     * @memberof PartnerBillingApiAdminPartnerBillingUpsert
+     */
+    readonly partnerBillingConfigUpsert: PartnerBillingConfigUpsert
+}
+
+/**
+ * Request parameters for partnerClientCreditsTransfer operation in PartnerBillingApi.
+ * @export
+ * @interface PartnerBillingApiPartnerClientCreditsTransferRequest
+ */
+export interface PartnerBillingApiPartnerClientCreditsTransferRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof PartnerBillingApiPartnerClientCreditsTransfer
+     */
+    readonly teamId: string
+
+    /**
+     * 
+     * @type {PartnerCreditTransferRequest}
+     * @memberof PartnerBillingApiPartnerClientCreditsTransfer
+     */
+    readonly partnerCreditTransferRequest: PartnerCreditTransferRequest
+}
+
+/**
+ * Request parameters for partnerClientGet operation in PartnerBillingApi.
+ * @export
+ * @interface PartnerBillingApiPartnerClientGetRequest
+ */
+export interface PartnerBillingApiPartnerClientGetRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof PartnerBillingApiPartnerClientGet
+     */
+    readonly teamId: string
+}
+
+/**
+ * Request parameters for partnerClientPlanCancel operation in PartnerBillingApi.
+ * @export
+ * @interface PartnerBillingApiPartnerClientPlanCancelRequest
+ */
+export interface PartnerBillingApiPartnerClientPlanCancelRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof PartnerBillingApiPartnerClientPlanCancel
+     */
+    readonly teamId: string
+}
+
+/**
+ * Request parameters for partnerClientPlanSet operation in PartnerBillingApi.
+ * @export
+ * @interface PartnerBillingApiPartnerClientPlanSetRequest
+ */
+export interface PartnerBillingApiPartnerClientPlanSetRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof PartnerBillingApiPartnerClientPlanSet
+     */
+    readonly teamId: string
+
+    /**
+     * 
+     * @type {PartnerClientPlanRequest}
+     * @memberof PartnerBillingApiPartnerClientPlanSet
+     */
+    readonly partnerClientPlanRequest: PartnerClientPlanRequest
+}
+
+/**
+ * Request parameters for partnerClientsGet operation in PartnerBillingApi.
+ * @export
+ * @interface PartnerBillingApiPartnerClientsGetRequest
+ */
+export interface PartnerBillingApiPartnerClientsGetRequest {
+    /**
+     * The page for the cursor
+     * @type {number}
+     * @memberof PartnerBillingApiPartnerClientsGet
+     */
+    readonly page?: number
+
+    /**
+     * The number of items to return
+     * @type {number}
+     * @memberof PartnerBillingApiPartnerClientsGet
+     */
+    readonly count?: number
+
+    /**
+     * Search by client name or team id
+     * @type {string}
+     * @memberof PartnerBillingApiPartnerClientsGet
+     */
+    readonly q?: string
+
+    /**
+     * Include the total number of clients
+     * @type {boolean}
+     * @memberof PartnerBillingApiPartnerClientsGet
+     */
+    readonly returnTotal?: boolean
+}
+
+/**
+ * Request parameters for partnerCreditTransferReverse operation in PartnerBillingApi.
+ * @export
+ * @interface PartnerBillingApiPartnerCreditTransferReverseRequest
+ */
+export interface PartnerBillingApiPartnerCreditTransferReverseRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof PartnerBillingApiPartnerCreditTransferReverse
+     */
+    readonly transferId: string
+}
+
+/**
+ * Request parameters for partnerStatementGet operation in PartnerBillingApi.
+ * @export
+ * @interface PartnerBillingApiPartnerStatementGetRequest
+ */
+export interface PartnerBillingApiPartnerStatementGetRequest {
+    /**
+     * Statement month as YYYY-MM. Defaults to the current month.
+     * @type {string}
+     * @memberof PartnerBillingApiPartnerStatementGet
+     */
+    readonly month?: string
+}
+
+/**
+ * PartnerBillingApi - object-oriented interface
+ * @export
+ * @class PartnerBillingApi
+ * @extends {BaseAPI}
+ */
+export class PartnerBillingApi extends BaseAPI {
+    /**
+     * Admin-only. List partner billing enrolments (which partners are wholesale billed, their master wallet customer and wholesale rate).
+     * @param {PartnerBillingApiAdminPartnerBillingGetRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof PartnerBillingApi
+     */
+    public adminPartnerBillingGet(requestParameters: PartnerBillingApiAdminPartnerBillingGetRequest = {}, options?: RawAxiosRequestConfig) {
+        return PartnerBillingApiFp(this.configuration).adminPartnerBillingGet(requestParameters.partnerAdmin, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Admin-only. Enrol or update a partner for wholesale billing: designate the master wallet customer, set the wholesale rate, and enable/disable. The whole feature is inert for any partner not enrolled and enabled.
+     * @param {PartnerBillingApiAdminPartnerBillingUpsertRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof PartnerBillingApi
+     */
+    public adminPartnerBillingUpsert(requestParameters: PartnerBillingApiAdminPartnerBillingUpsertRequest, options?: RawAxiosRequestConfig) {
+        return PartnerBillingApiFp(this.configuration).adminPartnerBillingUpsert(requestParameters.partnerBillingConfigUpsert, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Transfer credits from the partner\'s master wallet into a client\'s wallet. Atomic: debits the master wallet (at the wholesale rate) and credits the client in one transaction. No Stripe. Returns 402 if the master wallet is short.
+     * @param {PartnerBillingApiPartnerClientCreditsTransferRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof PartnerBillingApi
+     */
+    public partnerClientCreditsTransfer(requestParameters: PartnerBillingApiPartnerClientCreditsTransferRequest, options?: RawAxiosRequestConfig) {
+        return PartnerBillingApiFp(this.configuration).partnerClientCreditsTransfer(requestParameters.teamId, requestParameters.partnerCreditTransferRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Fetch a single client account belonging to the caller\'s partnership.
+     * @param {PartnerBillingApiPartnerClientGetRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof PartnerBillingApi
+     */
+    public partnerClientGet(requestParameters: PartnerBillingApiPartnerClientGetRequest, options?: RawAxiosRequestConfig) {
+        return PartnerBillingApiFp(this.configuration).partnerClientGet(requestParameters.teamId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Cancel a client\'s plan. Stops future monthly wallet debits; the client\'s entitlements lapse at the end of the current cycle. No Stripe involved.
+     * @param {PartnerBillingApiPartnerClientPlanCancelRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof PartnerBillingApi
+     */
+    public partnerClientPlanCancel(requestParameters: PartnerBillingApiPartnerClientPlanCancelRequest, options?: RawAxiosRequestConfig) {
+        return PartnerBillingApiFp(this.configuration).partnerClientPlanCancel(requestParameters.teamId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Provision or change a client\'s base plan. Grants plan entitlements internally with no Stripe object (a stripe-null subscription with a year/quarter renewal so the existing refill cron resets buckets). Debits the master wallet the plan fee at the wholesale rate.
+     * @param {PartnerBillingApiPartnerClientPlanSetRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof PartnerBillingApi
+     */
+    public partnerClientPlanSet(requestParameters: PartnerBillingApiPartnerClientPlanSetRequest, options?: RawAxiosRequestConfig) {
+        return PartnerBillingApiFp(this.configuration).partnerClientPlanSet(requestParameters.teamId, requestParameters.partnerClientPlanRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * List the partner\'s client accounts with plan, usage and wallet balance.
+     * @param {PartnerBillingApiPartnerClientsGetRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof PartnerBillingApi
+     */
+    public partnerClientsGet(requestParameters: PartnerBillingApiPartnerClientsGetRequest = {}, options?: RawAxiosRequestConfig) {
+        return PartnerBillingApiFp(this.configuration).partnerClientsGet(requestParameters.page, requestParameters.count, requestParameters.q, requestParameters.returnTotal, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Reverse a prior credit transfer, returning unspent units to the master wallet. Only unspent units can be reversed (partial allowed).
+     * @param {PartnerBillingApiPartnerCreditTransferReverseRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof PartnerBillingApi
+     */
+    public partnerCreditTransferReverse(requestParameters: PartnerBillingApiPartnerCreditTransferReverseRequest, options?: RawAxiosRequestConfig) {
+        return PartnerBillingApiFp(this.configuration).partnerCreditTransferReverse(requestParameters.transferId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * The partner\'s monthly statement: base-plan fees + credit transfers, at the wholesale rate, drawn from the master wallet.
+     * @param {PartnerBillingApiPartnerStatementGetRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof PartnerBillingApi
+     */
+    public partnerStatementGet(requestParameters: PartnerBillingApiPartnerStatementGetRequest = {}, options?: RawAxiosRequestConfig) {
+        return PartnerBillingApiFp(this.configuration).partnerStatementGet(requestParameters.month, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Partner billing summary for the calling partner admin: master wallet balance, wholesale rate, client count and this-month spend. Scoped to the caller\'s own partnership.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof PartnerBillingApi
+     */
+    public partnerSummaryGet(options?: RawAxiosRequestConfig) {
+        return PartnerBillingApiFp(this.configuration).partnerSummaryGet(options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
 
 
 /**
