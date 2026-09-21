@@ -3673,6 +3673,12 @@ export interface PartnerClient {
      */
     'planType'?: PlanId;
     /**
+     * month | year - billing cadence of a partner-provisioned plan
+     * @type {string}
+     * @memberof PartnerClient
+     */
+    'planPeriod'?: string;
+    /**
      * Client wallet (unitsAvailable), in credits. Funded by transfers.
      * @type {number}
      * @memberof PartnerClient
@@ -3685,7 +3691,7 @@ export interface PartnerClient {
      */
     'buckets'?: Array<PartnerClientBucket>;
     /**
-     * active | low | trial | cancelled
+     * none | active | low | cancelling
      * @type {string}
      * @memberof PartnerClient
      */
@@ -3695,10 +3701,66 @@ export interface PartnerClient {
      * @type {string}
      * @memberof PartnerClient
      */
+    'planCancelsAt'?: string;
+    /**
+     * An ISO formatted timestamp
+     * @type {string}
+     * @memberof PartnerClient
+     */
+    'nextChargeAt'?: string;
+    /**
+     * 
+     * @type {PartnerClientAutoCharge}
+     * @memberof PartnerClient
+     */
+    'autoCharge'?: PartnerClientAutoCharge;
+    /**
+     * An ISO formatted timestamp
+     * @type {string}
+     * @memberof PartnerClient
+     */
     'createdAt'?: string;
 }
 
 
+/**
+ * Per-client auto top-up config (partner-managed). null = off.
+ * @export
+ * @interface PartnerClientAutoCharge
+ */
+export interface PartnerClientAutoCharge {
+    /**
+     * 
+     * @type {number}
+     * @memberof PartnerClientAutoCharge
+     */
+    'threshold'?: number | null;
+    /**
+     * 
+     * @type {number}
+     * @memberof PartnerClientAutoCharge
+     */
+    'topUpAmount'?: number | null;
+}
+/**
+ * 
+ * @export
+ * @interface PartnerClientAutoChargeRequest
+ */
+export interface PartnerClientAutoChargeRequest {
+    /**
+     * Pull from the master when the client wallet drops below this. null = off.
+     * @type {number}
+     * @memberof PartnerClientAutoChargeRequest
+     */
+    'threshold'?: number | null;
+    /**
+     * How many credits to pull each time. null = off.
+     * @type {number}
+     * @memberof PartnerClientAutoChargeRequest
+     */
+    'topUpAmount'?: number | null;
+}
 /**
  * 
  * @export
@@ -3831,6 +3893,49 @@ export interface PartnerCreditTransferResult {
      * @memberof PartnerCreditTransferResult
      */
     'masterBalance': number;
+}
+/**
+ * 
+ * @export
+ * @interface PartnerLedgerEntry
+ */
+export interface PartnerLedgerEntry {
+    /**
+     * 
+     * @type {string}
+     * @memberof PartnerLedgerEntry
+     */
+    'id': string;
+    /**
+     * Signed credits - positive = into the master, negative = out.
+     * @type {number}
+     * @memberof PartnerLedgerEntry
+     */
+    'amount': number;
+    /**
+     * plan_fee | transfer | refund
+     * @type {string}
+     * @memberof PartnerLedgerEntry
+     */
+    'kind': string;
+    /**
+     * The client team this action moved money to/from (transfer / plan_fee), if any.
+     * @type {string}
+     * @memberof PartnerLedgerEntry
+     */
+    'clientTeamId'?: string;
+    /**
+     * Underlying objectId (gain id, partner-plan key, etc.)
+     * @type {string}
+     * @memberof PartnerLedgerEntry
+     */
+    'reference'?: string;
+    /**
+     * An ISO formatted timestamp
+     * @type {string}
+     * @memberof PartnerLedgerEntry
+     */
+    'createdAt': string;
 }
 /**
  * Object which stores referral code details
@@ -4068,6 +4173,31 @@ export const PartnerStatementLineKindEnum = {
 
 export type PartnerStatementLineKindEnum = typeof PartnerStatementLineKindEnum[keyof typeof PartnerStatementLineKindEnum];
 
+/**
+ * 
+ * @export
+ * @interface PartnerTransactionsGet200Response
+ */
+export interface PartnerTransactionsGet200Response {
+    /**
+     * 
+     * @type {Array<PartnerLedgerEntry>}
+     * @memberof PartnerTransactionsGet200Response
+     */
+    'items': Array<PartnerLedgerEntry>;
+    /**
+     * 
+     * @type {string}
+     * @memberof PartnerTransactionsGet200Response
+     */
+    'nextPageCursor'?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof PartnerTransactionsGet200Response
+     */
+    'total'?: number;
+}
 /**
  * 
  * @export
@@ -10914,6 +11044,49 @@ export const PartnerBillingApiAxiosParamCreator = function (configuration?: Conf
             };
         },
         /**
+         * Set or clear a client\'s wallet auto-top-up FROM the master (pull when the wallet drops below threshold). Both null disables it. Partner-managed.
+         * @param {string} teamId 
+         * @param {PartnerClientAutoChargeRequest} partnerClientAutoChargeRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        partnerClientAutoChargeSet: async (teamId: string, partnerClientAutoChargeRequest: PartnerClientAutoChargeRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'teamId' is not null or undefined
+            assertParamExists('partnerClientAutoChargeSet', 'teamId', teamId)
+            // verify required parameter 'partnerClientAutoChargeRequest' is not null or undefined
+            assertParamExists('partnerClientAutoChargeSet', 'partnerClientAutoChargeRequest', partnerClientAutoChargeRequest)
+            const localVarPath = `/v2/partner/clients/{teamId}/auto-charge`
+                .replace(`{${"teamId"}}`, encodeURIComponent(String(teamId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["PARTNER_ADMIN_PANEL_ACCESS", "ADMIN_PANEL_ACCESS"], configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(partnerClientAutoChargeRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * Transfer credits from the partner\'s master wallet into a client\'s wallet. Atomic: debits the master wallet (at the wholesale rate) and credits the client in one transaction. No Stripe. Returns 402 if the master wallet is short.
          * @param {string} teamId 
          * @param {PartnerCreditTransferRequest} partnerCreditTransferRequest 
@@ -11234,6 +11407,54 @@ export const PartnerBillingApiAxiosParamCreator = function (configuration?: Conf
                 options: localVarRequestOptions,
             };
         },
+        /**
+         * The partner master wallet ledger of money actions - plan fees, transfers and refunds (card top-ups live in credit_gain / the Stripe portal). Scoped to the caller\'s own master customer.
+         * @param {number} [count] 
+         * @param {number} [page] 1-based page number
+         * @param {boolean} [returnTotal] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        partnerTransactionsGet: async (count?: number, page?: number, returnTotal?: boolean, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v2/partner/transactions`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["PARTNER_ADMIN_PANEL_ACCESS", "ADMIN_PANEL_ACCESS"], configuration)
+
+            if (count !== undefined) {
+                localVarQueryParameter['count'] = count;
+            }
+
+            if (page !== undefined) {
+                localVarQueryParameter['page'] = page;
+            }
+
+            if (returnTotal !== undefined) {
+                localVarQueryParameter['returnTotal'] = returnTotal;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
     }
 };
 
@@ -11266,6 +11487,19 @@ export const PartnerBillingApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.adminPartnerBillingUpsert(partnerBillingConfigUpsert, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['PartnerBillingApi.adminPartnerBillingUpsert']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Set or clear a client\'s wallet auto-top-up FROM the master (pull when the wallet drops below threshold). Both null disables it. Partner-managed.
+         * @param {string} teamId 
+         * @param {PartnerClientAutoChargeRequest} partnerClientAutoChargeRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async partnerClientAutoChargeSet(teamId: string, partnerClientAutoChargeRequest: PartnerClientAutoChargeRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PartnerClient>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.partnerClientAutoChargeSet(teamId, partnerClientAutoChargeRequest, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['PartnerBillingApi.partnerClientAutoChargeSet']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -11368,6 +11602,20 @@ export const PartnerBillingApiFp = function(configuration?: Configuration) {
             const localVarOperationServerBasePath = operationServerMap['PartnerBillingApi.partnerSummaryGet']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
+        /**
+         * The partner master wallet ledger of money actions - plan fees, transfers and refunds (card top-ups live in credit_gain / the Stripe portal). Scoped to the caller\'s own master customer.
+         * @param {number} [count] 
+         * @param {number} [page] 1-based page number
+         * @param {boolean} [returnTotal] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async partnerTransactionsGet(count?: number, page?: number, returnTotal?: boolean, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PartnerTransactionsGet200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.partnerTransactionsGet(count, page, returnTotal, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['PartnerBillingApi.partnerTransactionsGet']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
     }
 };
 
@@ -11395,6 +11643,15 @@ export const PartnerBillingApiFactory = function (configuration?: Configuration,
          */
         adminPartnerBillingUpsert(requestParameters: PartnerBillingApiAdminPartnerBillingUpsertRequest, options?: RawAxiosRequestConfig): AxiosPromise<PartnerBillingConfig> {
             return localVarFp.adminPartnerBillingUpsert(requestParameters.partnerBillingConfigUpsert, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Set or clear a client\'s wallet auto-top-up FROM the master (pull when the wallet drops below threshold). Both null disables it. Partner-managed.
+         * @param {PartnerBillingApiPartnerClientAutoChargeSetRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        partnerClientAutoChargeSet(requestParameters: PartnerBillingApiPartnerClientAutoChargeSetRequest, options?: RawAxiosRequestConfig): AxiosPromise<PartnerClient> {
+            return localVarFp.partnerClientAutoChargeSet(requestParameters.teamId, requestParameters.partnerClientAutoChargeRequest, options).then((request) => request(axios, basePath));
         },
         /**
          * Transfer credits from the partner\'s master wallet into a client\'s wallet. Atomic: debits the master wallet (at the wholesale rate) and credits the client in one transaction. No Stripe. Returns 402 if the master wallet is short.
@@ -11467,6 +11724,15 @@ export const PartnerBillingApiFactory = function (configuration?: Configuration,
         partnerSummaryGet(options?: RawAxiosRequestConfig): AxiosPromise<PartnerBillingSummary> {
             return localVarFp.partnerSummaryGet(options).then((request) => request(axios, basePath));
         },
+        /**
+         * The partner master wallet ledger of money actions - plan fees, transfers and refunds (card top-ups live in credit_gain / the Stripe portal). Scoped to the caller\'s own master customer.
+         * @param {PartnerBillingApiPartnerTransactionsGetRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        partnerTransactionsGet(requestParameters: PartnerBillingApiPartnerTransactionsGetRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<PartnerTransactionsGet200Response> {
+            return localVarFp.partnerTransactionsGet(requestParameters.count, requestParameters.page, requestParameters.returnTotal, options).then((request) => request(axios, basePath));
+        },
     };
 };
 
@@ -11496,6 +11762,27 @@ export interface PartnerBillingApiAdminPartnerBillingUpsertRequest {
      * @memberof PartnerBillingApiAdminPartnerBillingUpsert
      */
     readonly partnerBillingConfigUpsert: PartnerBillingConfigUpsert
+}
+
+/**
+ * Request parameters for partnerClientAutoChargeSet operation in PartnerBillingApi.
+ * @export
+ * @interface PartnerBillingApiPartnerClientAutoChargeSetRequest
+ */
+export interface PartnerBillingApiPartnerClientAutoChargeSetRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof PartnerBillingApiPartnerClientAutoChargeSet
+     */
+    readonly teamId: string
+
+    /**
+     * 
+     * @type {PartnerClientAutoChargeRequest}
+     * @memberof PartnerBillingApiPartnerClientAutoChargeSet
+     */
+    readonly partnerClientAutoChargeRequest: PartnerClientAutoChargeRequest
 }
 
 /**
@@ -11632,6 +11919,34 @@ export interface PartnerBillingApiPartnerStatementGetRequest {
 }
 
 /**
+ * Request parameters for partnerTransactionsGet operation in PartnerBillingApi.
+ * @export
+ * @interface PartnerBillingApiPartnerTransactionsGetRequest
+ */
+export interface PartnerBillingApiPartnerTransactionsGetRequest {
+    /**
+     * 
+     * @type {number}
+     * @memberof PartnerBillingApiPartnerTransactionsGet
+     */
+    readonly count?: number
+
+    /**
+     * 1-based page number
+     * @type {number}
+     * @memberof PartnerBillingApiPartnerTransactionsGet
+     */
+    readonly page?: number
+
+    /**
+     * 
+     * @type {boolean}
+     * @memberof PartnerBillingApiPartnerTransactionsGet
+     */
+    readonly returnTotal?: boolean
+}
+
+/**
  * PartnerBillingApi - object-oriented interface
  * @export
  * @class PartnerBillingApi
@@ -11658,6 +11973,17 @@ export class PartnerBillingApi extends BaseAPI {
      */
     public adminPartnerBillingUpsert(requestParameters: PartnerBillingApiAdminPartnerBillingUpsertRequest, options?: RawAxiosRequestConfig) {
         return PartnerBillingApiFp(this.configuration).adminPartnerBillingUpsert(requestParameters.partnerBillingConfigUpsert, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Set or clear a client\'s wallet auto-top-up FROM the master (pull when the wallet drops below threshold). Both null disables it. Partner-managed.
+     * @param {PartnerBillingApiPartnerClientAutoChargeSetRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof PartnerBillingApi
+     */
+    public partnerClientAutoChargeSet(requestParameters: PartnerBillingApiPartnerClientAutoChargeSetRequest, options?: RawAxiosRequestConfig) {
+        return PartnerBillingApiFp(this.configuration).partnerClientAutoChargeSet(requestParameters.teamId, requestParameters.partnerClientAutoChargeRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -11745,6 +12071,17 @@ export class PartnerBillingApi extends BaseAPI {
      */
     public partnerSummaryGet(options?: RawAxiosRequestConfig) {
         return PartnerBillingApiFp(this.configuration).partnerSummaryGet(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * The partner master wallet ledger of money actions - plan fees, transfers and refunds (card top-ups live in credit_gain / the Stripe portal). Scoped to the caller\'s own master customer.
+     * @param {PartnerBillingApiPartnerTransactionsGetRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof PartnerBillingApi
+     */
+    public partnerTransactionsGet(requestParameters: PartnerBillingApiPartnerTransactionsGetRequest = {}, options?: RawAxiosRequestConfig) {
+        return PartnerBillingApiFp(this.configuration).partnerTransactionsGet(requestParameters.count, requestParameters.page, requestParameters.returnTotal, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
