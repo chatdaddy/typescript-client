@@ -132,6 +132,128 @@ export interface AiCreditUseTranscriptionMetadata {
 /**
  * 
  * @export
+ * @interface AiExecutePendingCall
+ */
+export interface AiExecutePendingCall {
+    /**
+     * Send in approvedCallIds to approve this action.
+     * @type {string}
+     * @memberof AiExecutePendingCall
+     */
+    'callId': string;
+    /**
+     * Name of the tool the model wants to run.
+     * @type {string}
+     * @memberof AiExecutePendingCall
+     */
+    'tool': string;
+    /**
+     * The exact arguments that will be used if approved.
+     * @type {{ [key: string]: any; }}
+     * @memberof AiExecutePendingCall
+     */
+    'arguments': { [key: string]: any; };
+}
+/**
+ * One turn of the dashboard command box. Send input to say something and previousResponseId to continue an existing conversation. After a confirm_required response, send approvedCallIds (input is optional).
+ * @export
+ * @interface AiExecuteRequest
+ */
+export interface AiExecuteRequest {
+    /**
+     * The user\'s message. May be omitted when only answering an approval prompt.
+     * @type {string}
+     * @memberof AiExecuteRequest
+     */
+    'input'?: string;
+    /**
+     * The responseId returned by the previous call in this conversation. Omit to start a new one.
+     * @type {string}
+     * @memberof AiExecuteRequest
+     */
+    'previousResponseId'?: string;
+    /**
+     * After a confirm_required response, the callIds the user approved. Pending calls not listed are declined, and the model is told so.
+     * @type {Array<string>}
+     * @memberof AiExecuteRequest
+     */
+    'approvedCallIds'?: Array<string>;
+    /**
+     * 
+     * @type {LlmModel}
+     * @memberof AiExecuteRequest
+     */
+    'model'?: LlmModel;
+}
+
+
+/**
+ * 
+ * @export
+ * @interface AiExecuteResponse
+ */
+export interface AiExecuteResponse {
+    /**
+     * done - the model finished and text holds its reply. confirm_required - the model wants to run actions that need the user\'s approval; see pending.
+     * @type {string}
+     * @memberof AiExecuteResponse
+     */
+    'status': AiExecuteResponseStatusEnum;
+    /**
+     * Pass back as previousResponseId on the next call.
+     * @type {string}
+     * @memberof AiExecuteResponse
+     */
+    'responseId': string;
+    /**
+     * The assistant\'s reply. Present when status is done.
+     * @type {string}
+     * @memberof AiExecuteResponse
+     */
+    'text'?: string;
+    /**
+     * Tools that ran during this request, in order.
+     * @type {Array<AiExecuteStep>}
+     * @memberof AiExecuteResponse
+     */
+    'steps': Array<AiExecuteStep>;
+    /**
+     * Actions awaiting approval. Present when status is confirm_required.
+     * @type {Array<AiExecutePendingCall>}
+     * @memberof AiExecuteResponse
+     */
+    'pending'?: Array<AiExecutePendingCall>;
+}
+
+export const AiExecuteResponseStatusEnum = {
+    Done: 'done',
+    ConfirmRequired: 'confirm_required'
+} as const;
+
+export type AiExecuteResponseStatusEnum = typeof AiExecuteResponseStatusEnum[keyof typeof AiExecuteResponseStatusEnum];
+
+/**
+ * 
+ * @export
+ * @interface AiExecuteStep
+ */
+export interface AiExecuteStep {
+    /**
+     * Name of the tool that ran.
+     * @type {string}
+     * @memberof AiExecuteStep
+     */
+    'tool': string;
+    /**
+     * Present and true only when the tool failed. The API strips false values from responses, so treat an absent field as success.
+     * @type {boolean}
+     * @memberof AiExecuteStep
+     */
+    'isError'?: boolean;
+}
+/**
+ * 
+ * @export
  * @interface AutocompleteCalendarEventRequest
  */
 interface AutocompleteCalendarEventRequest {
@@ -2985,6 +3107,46 @@ export class AutocompleteApi extends BaseAPI {
 export const ChatbotApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
+         * Powers the dashboard command box. The model plans and calls the same tools the ChatDaddy MCP server exposes, each one running as the calling user with that user\'s permissions. Actions that send, delete or can\'t be undone never run directly: the response comes back with status confirm_required and the exact pending calls, and they run only when the next request lists their callIds in approvedCallIds. Stateless: pass the returned responseId back as previousResponseId to continue.
+         * @summary Run a natural-language command against the user\'s workspace
+         * @param {AiExecuteRequest} aiExecuteRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        aiExecute: async (aiExecuteRequest: AiExecuteRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'aiExecuteRequest' is not null or undefined
+            assertParamExists('aiExecute', 'aiExecuteRequest', aiExecuteRequest)
+            const localVarPath = `/ai/execute`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", [], configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(aiExecuteRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * Uses AI to extract and analyze contact information from chat message history. Returns demographics, industry-specific fields, and AI-generated insights.
          * @summary Analyze contact information from chat history
          * @param {ContactAnalysisRequest} contactAnalysisRequest 
@@ -3432,6 +3594,19 @@ export const ChatbotApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = ChatbotApiAxiosParamCreator(configuration)
     return {
         /**
+         * Powers the dashboard command box. The model plans and calls the same tools the ChatDaddy MCP server exposes, each one running as the calling user with that user\'s permissions. Actions that send, delete or can\'t be undone never run directly: the response comes back with status confirm_required and the exact pending calls, and they run only when the next request lists their callIds in approvedCallIds. Stateless: pass the returned responseId back as previousResponseId to continue.
+         * @summary Run a natural-language command against the user\'s workspace
+         * @param {AiExecuteRequest} aiExecuteRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async aiExecute(aiExecuteRequest: AiExecuteRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AiExecuteResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.aiExecute(aiExecuteRequest, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['ChatbotApi.aiExecute']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
          * Uses AI to extract and analyze contact information from chat message history. Returns demographics, industry-specific fields, and AI-generated insights.
          * @summary Analyze contact information from chat history
          * @param {ContactAnalysisRequest} contactAnalysisRequest 
@@ -3589,6 +3764,16 @@ export const ChatbotApiFactory = function (configuration?: Configuration, basePa
     const localVarFp = ChatbotApiFp(configuration)
     return {
         /**
+         * Powers the dashboard command box. The model plans and calls the same tools the ChatDaddy MCP server exposes, each one running as the calling user with that user\'s permissions. Actions that send, delete or can\'t be undone never run directly: the response comes back with status confirm_required and the exact pending calls, and they run only when the next request lists their callIds in approvedCallIds. Stateless: pass the returned responseId back as previousResponseId to continue.
+         * @summary Run a natural-language command against the user\'s workspace
+         * @param {ChatbotApiAiExecuteRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        aiExecute(requestParameters: ChatbotApiAiExecuteRequest, options?: RawAxiosRequestConfig): AxiosPromise<AiExecuteResponse> {
+            return localVarFp.aiExecute(requestParameters.aiExecuteRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
          * Uses AI to extract and analyze contact information from chat message history. Returns demographics, industry-specific fields, and AI-generated insights.
          * @summary Analyze contact information from chat history
          * @param {ChatbotApiAnalyzeContactRequest} requestParameters Request parameters.
@@ -3700,6 +3885,20 @@ export const ChatbotApiFactory = function (configuration?: Configuration, basePa
         },
     };
 };
+
+/**
+ * Request parameters for aiExecute operation in ChatbotApi.
+ * @export
+ * @interface ChatbotApiAiExecuteRequest
+ */
+export interface ChatbotApiAiExecuteRequest {
+    /**
+     * 
+     * @type {AiExecuteRequest}
+     * @memberof ChatbotApiAiExecute
+     */
+    readonly aiExecuteRequest: AiExecuteRequest
+}
 
 /**
  * Request parameters for analyzeContact operation in ChatbotApi.
@@ -3890,6 +4089,18 @@ export interface ChatbotApiUpdateBotRequest {
  * @extends {BaseAPI}
  */
 export class ChatbotApi extends BaseAPI {
+    /**
+     * Powers the dashboard command box. The model plans and calls the same tools the ChatDaddy MCP server exposes, each one running as the calling user with that user\'s permissions. Actions that send, delete or can\'t be undone never run directly: the response comes back with status confirm_required and the exact pending calls, and they run only when the next request lists their callIds in approvedCallIds. Stateless: pass the returned responseId back as previousResponseId to continue.
+     * @summary Run a natural-language command against the user\'s workspace
+     * @param {ChatbotApiAiExecuteRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ChatbotApi
+     */
+    public aiExecute(requestParameters: ChatbotApiAiExecuteRequest, options?: RawAxiosRequestConfig) {
+        return ChatbotApiFp(this.configuration).aiExecute(requestParameters.aiExecuteRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
     /**
      * Uses AI to extract and analyze contact information from chat message history. Returns demographics, industry-specific fields, and AI-generated insights.
      * @summary Analyze contact information from chat history
