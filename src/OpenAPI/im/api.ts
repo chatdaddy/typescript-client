@@ -1201,6 +1201,12 @@ export interface AlibabaCAMSStateInfo {
      * @memberof AlibabaCAMSStateInfo
      */
     'coexistDetails'?: CoexistDetails;
+    /**
+     * 
+     * @type {WabaDisplayNameChange}
+     * @memberof AlibabaCAMSStateInfo
+     */
+    'displayNameChange'?: WabaDisplayNameChange;
 }
 
 export const AlibabaCAMSStateInfoVersionEnum = {
@@ -1450,6 +1456,19 @@ export type AlibabaCAMSWebhookTemplateItemAuditStatusEnum = typeof AlibabaCAMSWe
 /**
  * 
  * @export
+ * @interface AlibabaCamsDisplayNamePostRequest
+ */
+export interface AlibabaCamsDisplayNamePostRequest {
+    /**
+     * The new display name
+     * @type {string}
+     * @memberof AlibabaCamsDisplayNamePostRequest
+     */
+    'displayName': string;
+}
+/**
+ * 
+ * @export
  * @interface AlibabaCamsMetadata200Response
  */
 export interface AlibabaCamsMetadata200Response {
@@ -1479,11 +1498,41 @@ export interface AlibabaCamsProfileUpdateRequest {
      */
     'profilePictureUrl'?: string;
     /**
-     * Business description
+     * Business description. Send an empty string to clear it.
      * @type {string}
      * @memberof AlibabaCamsProfileUpdateRequest
      */
     'description'?: string;
+    /**
+     * Text shown in the \"About\" section of the WhatsApp profile. WABA accounts only.
+     * @type {string}
+     * @memberof AlibabaCamsProfileUpdateRequest
+     */
+    'about'?: string;
+    /**
+     * Business address. Send an empty string to clear it. WABA accounts only.
+     * @type {string}
+     * @memberof AlibabaCamsProfileUpdateRequest
+     */
+    'address'?: string;
+    /**
+     * Contact email. Send an empty string to clear it. WABA accounts only.
+     * @type {string}
+     * @memberof AlibabaCamsProfileUpdateRequest
+     */
+    'email'?: string;
+    /**
+     * Up to 2 website URLs, including http:// or https://. Send an empty array to clear them. WABA accounts only.
+     * @type {Array<string>}
+     * @memberof AlibabaCamsProfileUpdateRequest
+     */
+    'websites'?: Array<string>;
+    /**
+     * 
+     * @type {WabaBusinessVertical}
+     * @memberof AlibabaCamsProfileUpdateRequest
+     */
+    'vertical'?: WabaBusinessVertical;
     /**
      * Enable welcome message
      * @type {boolean}
@@ -1497,6 +1546,8 @@ export interface AlibabaCamsProfileUpdateRequest {
      */
     'catalogId'?: string;
 }
+
+
 /**
  * 
  * @export
@@ -8060,6 +8111,114 @@ export interface WASyncStateInfo {
 /**
  * 
  * @export
+ * @interface WabaBusinessProfile
+ */
+export interface WabaBusinessProfile {
+    /**
+     * `meta` when read live from Meta, `stored` when Meta couldn\'t be reached and the last values stored on the channel were returned
+     * @type {string}
+     * @memberof WabaBusinessProfile
+     */
+    'source': WabaBusinessProfileSourceEnum;
+    /**
+     * The display name currently shown on WhatsApp
+     * @type {string}
+     * @memberof WabaBusinessProfile
+     */
+    'displayName'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof WabaBusinessProfile
+     */
+    'about'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof WabaBusinessProfile
+     */
+    'description'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof WabaBusinessProfile
+     */
+    'address'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof WabaBusinessProfile
+     */
+    'email'?: string;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof WabaBusinessProfile
+     */
+    'websites'?: Array<string>;
+    /**
+     * One of WabaBusinessVertical, or empty when not set
+     * @type {string}
+     * @memberof WabaBusinessProfile
+     */
+    'vertical'?: string;
+    /**
+     * Current profile picture. Links read from Meta are signed and expire, so don\'t store them.
+     * @type {string}
+     * @memberof WabaBusinessProfile
+     */
+    'profilePictureUrl'?: string;
+    /**
+     * 
+     * @type {WabaDisplayNameChange}
+     * @memberof WabaBusinessProfile
+     */
+    'displayNameChange'?: WabaDisplayNameChange;
+}
+
+export const WabaBusinessProfileSourceEnum = {
+    Meta: 'meta',
+    Stored: 'stored'
+} as const;
+
+export type WabaBusinessProfileSourceEnum = typeof WabaBusinessProfileSourceEnum[keyof typeof WabaBusinessProfileSourceEnum];
+
+/**
+ * Industry of the business, as shown on the WhatsApp profile
+ * @export
+ * @enum {string}
+ */
+
+export const WabaBusinessVertical = {
+    Other: 'OTHER',
+    Auto: 'AUTO',
+    Beauty: 'BEAUTY',
+    Apparel: 'APPAREL',
+    Edu: 'EDU',
+    Entertain: 'ENTERTAIN',
+    EventPlan: 'EVENT_PLAN',
+    Finance: 'FINANCE',
+    Grocery: 'GROCERY',
+    Govt: 'GOVT',
+    Hotel: 'HOTEL',
+    Health: 'HEALTH',
+    Nonprofit: 'NONPROFIT',
+    ProfServices: 'PROF_SERVICES',
+    Retail: 'RETAIL',
+    Travel: 'TRAVEL',
+    Restaurant: 'RESTAURANT',
+    Alcohol: 'ALCOHOL',
+    OnlineGambling: 'ONLINE_GAMBLING',
+    PhysicalGambling: 'PHYSICAL_GAMBLING',
+    OtcDrugs: 'OTC_DRUGS'
+} as const;
+
+export type WabaBusinessVertical = typeof WabaBusinessVertical[keyof typeof WabaBusinessVertical];
+
+
+/**
+ * 
+ * @export
  * @interface WabaCallDeleteRequest
  */
 export interface WabaCallDeleteRequest {
@@ -8213,6 +8372,53 @@ export interface WabaDisconnectPostRequest {
      */
     'accountId': string;
 }
+/**
+ * The latest display name change requested through ChatDaddy
+ * @export
+ * @interface WabaDisplayNameChange
+ */
+export interface WabaDisplayNameChange {
+    /**
+     * The name submitted to Meta
+     * @type {string}
+     * @memberof WabaDisplayNameChange
+     */
+    'requestedName': string;
+    /**
+     * Meta\'s review decision
+     * @type {string}
+     * @memberof WabaDisplayNameChange
+     */
+    'status': WabaDisplayNameChangeStatusEnum;
+    /**
+     * Meta\'s rejection reason, e.g. NAME_FORMAT_UNACCEPTABLE or NAME_NOT_CONSISTENT
+     * @type {string}
+     * @memberof WabaDisplayNameChange
+     */
+    'rejectionReason'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof WabaDisplayNameChange
+     */
+    'requestedAt': string;
+    /**
+     * Whether the number was re-registered after approval, which is what makes the new name take effect. Not done for coexistence numbers.
+     * @type {boolean}
+     * @memberof WabaDisplayNameChange
+     */
+    'reregistered'?: boolean;
+}
+
+export const WabaDisplayNameChangeStatusEnum = {
+    PendingReview: 'PENDING_REVIEW',
+    Approved: 'APPROVED',
+    Rejected: 'REJECTED',
+    Deferred: 'DEFERRED'
+} as const;
+
+export type WabaDisplayNameChangeStatusEnum = typeof WabaDisplayNameChangeStatusEnum[keyof typeof WabaDisplayNameChangeStatusEnum];
+
 /**
  * 
  * @export
@@ -10792,6 +10998,50 @@ export class AggregateDataApi extends BaseAPI {
 export const AlibabaCamsApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
+         * Submits the name to Meta for review. The number keeps working under the current name until Meta approves it; the channel then switches to the new name on its own. Meta allows 10 changes per 30 days and a request can\'t be withdrawn. Meta\'s own error is returned when it refuses the request.
+         * @summary Request a new display name for a WABA channel
+         * @param {string} accountId 
+         * @param {AlibabaCamsDisplayNamePostRequest} alibabaCamsDisplayNamePostRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        alibabaCamsDisplayNamePost: async (accountId: string, alibabaCamsDisplayNamePostRequest: AlibabaCamsDisplayNamePostRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'accountId' is not null or undefined
+            assertParamExists('alibabaCamsDisplayNamePost', 'accountId', accountId)
+            // verify required parameter 'alibabaCamsDisplayNamePostRequest' is not null or undefined
+            assertParamExists('alibabaCamsDisplayNamePost', 'alibabaCamsDisplayNamePostRequest', alibabaCamsDisplayNamePostRequest)
+            const localVarPath = `/alibaba-cams/profile/{accountId}/display-name`
+                .replace(`{${"accountId"}}`, encodeURIComponent(String(accountId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["ACCOUNT_PATCH"], configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(alibabaCamsDisplayNamePostRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * 
          * @summary Submit ISV terms to Alibaba CAMS API
          * @param {string} accountId 
@@ -10855,6 +11105,44 @@ export const AlibabaCamsApiAxiosParamCreator = function (configuration?: Configu
             // authentication chatdaddy required
             // oauth required
             await setOAuthToObject(localVarHeaderParameter, "chatdaddy", [], configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Reads the profile live from Meta. If Meta can\'t be reached, the values last stored on the channel are returned instead.
+         * @summary Get the WhatsApp business profile of a WABA channel
+         * @param {string} accountId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        alibabaCamsProfileGet: async (accountId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'accountId' is not null or undefined
+            assertParamExists('alibabaCamsProfileGet', 'accountId', accountId)
+            const localVarPath = `/alibaba-cams/profile/{accountId}`
+                .replace(`{${"accountId"}}`, encodeURIComponent(String(accountId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["ACCOUNT_PATCH"], configuration)
 
 
     
@@ -11046,6 +11334,20 @@ export const AlibabaCamsApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = AlibabaCamsApiAxiosParamCreator(configuration)
     return {
         /**
+         * Submits the name to Meta for review. The number keeps working under the current name until Meta approves it; the channel then switches to the new name on its own. Meta allows 10 changes per 30 days and a request can\'t be withdrawn. Meta\'s own error is returned when it refuses the request.
+         * @summary Request a new display name for a WABA channel
+         * @param {string} accountId 
+         * @param {AlibabaCamsDisplayNamePostRequest} alibabaCamsDisplayNamePostRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async alibabaCamsDisplayNamePost(accountId: string, alibabaCamsDisplayNamePostRequest: AlibabaCamsDisplayNamePostRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<WabaDisplayNameChange>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.alibabaCamsDisplayNamePost(accountId, alibabaCamsDisplayNamePostRequest, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['AlibabaCamsApi.alibabaCamsDisplayNamePost']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
          * 
          * @summary Submit ISV terms to Alibaba CAMS API
          * @param {string} accountId 
@@ -11069,6 +11371,19 @@ export const AlibabaCamsApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.alibabaCamsMetadata(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AlibabaCamsApi.alibabaCamsMetadata']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Reads the profile live from Meta. If Meta can\'t be reached, the values last stored on the channel are returned instead.
+         * @summary Get the WhatsApp business profile of a WABA channel
+         * @param {string} accountId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async alibabaCamsProfileGet(accountId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<WabaBusinessProfile>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.alibabaCamsProfileGet(accountId, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['AlibabaCamsApi.alibabaCamsProfileGet']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -11139,6 +11454,16 @@ export const AlibabaCamsApiFactory = function (configuration?: Configuration, ba
     const localVarFp = AlibabaCamsApiFp(configuration)
     return {
         /**
+         * Submits the name to Meta for review. The number keeps working under the current name until Meta approves it; the channel then switches to the new name on its own. Meta allows 10 changes per 30 days and a request can\'t be withdrawn. Meta\'s own error is returned when it refuses the request.
+         * @summary Request a new display name for a WABA channel
+         * @param {AlibabaCamsApiAlibabaCamsDisplayNamePostRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        alibabaCamsDisplayNamePost(requestParameters: AlibabaCamsApiAlibabaCamsDisplayNamePostRequest, options?: RawAxiosRequestConfig): AxiosPromise<WabaDisplayNameChange> {
+            return localVarFp.alibabaCamsDisplayNamePost(requestParameters.accountId, requestParameters.alibabaCamsDisplayNamePostRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
          * 
          * @summary Submit ISV terms to Alibaba CAMS API
          * @param {AlibabaCamsApiAlibabaCamsIsvTermsRequest} requestParameters Request parameters.
@@ -11156,6 +11481,16 @@ export const AlibabaCamsApiFactory = function (configuration?: Configuration, ba
          */
         alibabaCamsMetadata(options?: RawAxiosRequestConfig): AxiosPromise<AlibabaCamsMetadata200Response> {
             return localVarFp.alibabaCamsMetadata(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Reads the profile live from Meta. If Meta can\'t be reached, the values last stored on the channel are returned instead.
+         * @summary Get the WhatsApp business profile of a WABA channel
+         * @param {AlibabaCamsApiAlibabaCamsProfileGetRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        alibabaCamsProfileGet(requestParameters: AlibabaCamsApiAlibabaCamsProfileGetRequest, options?: RawAxiosRequestConfig): AxiosPromise<WabaBusinessProfile> {
+            return localVarFp.alibabaCamsProfileGet(requestParameters.accountId, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -11201,6 +11536,27 @@ export const AlibabaCamsApiFactory = function (configuration?: Configuration, ba
 };
 
 /**
+ * Request parameters for alibabaCamsDisplayNamePost operation in AlibabaCamsApi.
+ * @export
+ * @interface AlibabaCamsApiAlibabaCamsDisplayNamePostRequest
+ */
+export interface AlibabaCamsApiAlibabaCamsDisplayNamePostRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof AlibabaCamsApiAlibabaCamsDisplayNamePost
+     */
+    readonly accountId: string
+
+    /**
+     * 
+     * @type {AlibabaCamsDisplayNamePostRequest}
+     * @memberof AlibabaCamsApiAlibabaCamsDisplayNamePost
+     */
+    readonly alibabaCamsDisplayNamePostRequest: AlibabaCamsDisplayNamePostRequest
+}
+
+/**
  * Request parameters for alibabaCamsIsvTerms operation in AlibabaCamsApi.
  * @export
  * @interface AlibabaCamsApiAlibabaCamsIsvTermsRequest
@@ -11219,6 +11575,20 @@ export interface AlibabaCamsApiAlibabaCamsIsvTermsRequest {
      * @memberof AlibabaCamsApiAlibabaCamsIsvTerms
      */
     readonly alibabaCAMSISVTerms?: AlibabaCAMSISVTerms
+}
+
+/**
+ * Request parameters for alibabaCamsProfileGet operation in AlibabaCamsApi.
+ * @export
+ * @interface AlibabaCamsApiAlibabaCamsProfileGetRequest
+ */
+export interface AlibabaCamsApiAlibabaCamsProfileGetRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof AlibabaCamsApiAlibabaCamsProfileGet
+     */
+    readonly accountId: string
 }
 
 /**
@@ -11320,6 +11690,18 @@ export interface AlibabaCamsApiWebhookAlibabaCamsPostRequest {
  */
 export class AlibabaCamsApi extends BaseAPI {
     /**
+     * Submits the name to Meta for review. The number keeps working under the current name until Meta approves it; the channel then switches to the new name on its own. Meta allows 10 changes per 30 days and a request can\'t be withdrawn. Meta\'s own error is returned when it refuses the request.
+     * @summary Request a new display name for a WABA channel
+     * @param {AlibabaCamsApiAlibabaCamsDisplayNamePostRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AlibabaCamsApi
+     */
+    public alibabaCamsDisplayNamePost(requestParameters: AlibabaCamsApiAlibabaCamsDisplayNamePostRequest, options?: RawAxiosRequestConfig) {
+        return AlibabaCamsApiFp(this.configuration).alibabaCamsDisplayNamePost(requestParameters.accountId, requestParameters.alibabaCamsDisplayNamePostRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
      * 
      * @summary Submit ISV terms to Alibaba CAMS API
      * @param {AlibabaCamsApiAlibabaCamsIsvTermsRequest} requestParameters Request parameters.
@@ -11340,6 +11722,18 @@ export class AlibabaCamsApi extends BaseAPI {
      */
     public alibabaCamsMetadata(options?: RawAxiosRequestConfig) {
         return AlibabaCamsApiFp(this.configuration).alibabaCamsMetadata(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Reads the profile live from Meta. If Meta can\'t be reached, the values last stored on the channel are returned instead.
+     * @summary Get the WhatsApp business profile of a WABA channel
+     * @param {AlibabaCamsApiAlibabaCamsProfileGetRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AlibabaCamsApi
+     */
+    public alibabaCamsProfileGet(requestParameters: AlibabaCamsApiAlibabaCamsProfileGetRequest, options?: RawAxiosRequestConfig) {
+        return AlibabaCamsApiFp(this.configuration).alibabaCamsProfileGet(requestParameters.accountId, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
