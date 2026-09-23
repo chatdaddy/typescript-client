@@ -4176,6 +4176,74 @@ export type PartnerStatementLineKindEnum = typeof PartnerStatementLineKindEnum[k
 /**
  * 
  * @export
+ * @interface PartnerTopup
+ */
+export interface PartnerTopup {
+    /**
+     * 
+     * @type {string}
+     * @memberof PartnerTopup
+     */
+    'id': string;
+    /**
+     * Credits purchased (full face value).
+     * @type {number}
+     * @memberof PartnerTopup
+     */
+    'units': number;
+    /**
+     * pending_payment | paid | expired | void
+     * @type {string}
+     * @memberof PartnerTopup
+     */
+    'status': string;
+    /**
+     * Amount charged to the card in the paid currency (after wholesale discount).
+     * @type {number}
+     * @memberof PartnerTopup
+     */
+    'amountPaid'?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof PartnerTopup
+     */
+    'currency'?: string;
+    /**
+     * An ISO formatted timestamp
+     * @type {string}
+     * @memberof PartnerTopup
+     */
+    'createdAt': string;
+}
+/**
+ * 
+ * @export
+ * @interface PartnerTopupsGet200Response
+ */
+export interface PartnerTopupsGet200Response {
+    /**
+     * 
+     * @type {Array<PartnerTopup>}
+     * @memberof PartnerTopupsGet200Response
+     */
+    'items': Array<PartnerTopup>;
+    /**
+     * 
+     * @type {string}
+     * @memberof PartnerTopupsGet200Response
+     */
+    'nextPageCursor'?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof PartnerTopupsGet200Response
+     */
+    'total'?: number;
+}
+/**
+ * 
+ * @export
  * @interface PartnerTransactionsGet200Response
  */
 export interface PartnerTransactionsGet200Response {
@@ -11408,6 +11476,54 @@ export const PartnerBillingApiAxiosParamCreator = function (configuration?: Conf
             };
         },
         /**
+         * The partner master wallet TOP-UPS (money in from the partner\'s card), read from credit_gain with payment status - so a partner sees which top-ups funded the wallet vs which are still awaiting payment. Scoped to the caller\'s own master customer.
+         * @param {number} [count] 
+         * @param {number} [page] 1-based page number
+         * @param {boolean} [returnTotal] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        partnerTopupsGet: async (count?: number, page?: number, returnTotal?: boolean, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v2/partner/topups`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["PARTNER_ADMIN_PANEL_ACCESS", "ADMIN_PANEL_ACCESS"], configuration)
+
+            if (count !== undefined) {
+                localVarQueryParameter['count'] = count;
+            }
+
+            if (page !== undefined) {
+                localVarQueryParameter['page'] = page;
+            }
+
+            if (returnTotal !== undefined) {
+                localVarQueryParameter['returnTotal'] = returnTotal;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * The partner master wallet ledger of money actions - plan fees, transfers and refunds (card top-ups live in credit_gain / the Stripe portal). Scoped to the caller\'s own master customer.
          * @param {number} [count] 
          * @param {number} [page] 1-based page number
@@ -11603,6 +11719,20 @@ export const PartnerBillingApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
+         * The partner master wallet TOP-UPS (money in from the partner\'s card), read from credit_gain with payment status - so a partner sees which top-ups funded the wallet vs which are still awaiting payment. Scoped to the caller\'s own master customer.
+         * @param {number} [count] 
+         * @param {number} [page] 1-based page number
+         * @param {boolean} [returnTotal] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async partnerTopupsGet(count?: number, page?: number, returnTotal?: boolean, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PartnerTopupsGet200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.partnerTopupsGet(count, page, returnTotal, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['PartnerBillingApi.partnerTopupsGet']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
          * The partner master wallet ledger of money actions - plan fees, transfers and refunds (card top-ups live in credit_gain / the Stripe portal). Scoped to the caller\'s own master customer.
          * @param {number} [count] 
          * @param {number} [page] 1-based page number
@@ -11723,6 +11853,15 @@ export const PartnerBillingApiFactory = function (configuration?: Configuration,
          */
         partnerSummaryGet(options?: RawAxiosRequestConfig): AxiosPromise<PartnerBillingSummary> {
             return localVarFp.partnerSummaryGet(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * The partner master wallet TOP-UPS (money in from the partner\'s card), read from credit_gain with payment status - so a partner sees which top-ups funded the wallet vs which are still awaiting payment. Scoped to the caller\'s own master customer.
+         * @param {PartnerBillingApiPartnerTopupsGetRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        partnerTopupsGet(requestParameters: PartnerBillingApiPartnerTopupsGetRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<PartnerTopupsGet200Response> {
+            return localVarFp.partnerTopupsGet(requestParameters.count, requestParameters.page, requestParameters.returnTotal, options).then((request) => request(axios, basePath));
         },
         /**
          * The partner master wallet ledger of money actions - plan fees, transfers and refunds (card top-ups live in credit_gain / the Stripe portal). Scoped to the caller\'s own master customer.
@@ -11919,6 +12058,34 @@ export interface PartnerBillingApiPartnerStatementGetRequest {
 }
 
 /**
+ * Request parameters for partnerTopupsGet operation in PartnerBillingApi.
+ * @export
+ * @interface PartnerBillingApiPartnerTopupsGetRequest
+ */
+export interface PartnerBillingApiPartnerTopupsGetRequest {
+    /**
+     * 
+     * @type {number}
+     * @memberof PartnerBillingApiPartnerTopupsGet
+     */
+    readonly count?: number
+
+    /**
+     * 1-based page number
+     * @type {number}
+     * @memberof PartnerBillingApiPartnerTopupsGet
+     */
+    readonly page?: number
+
+    /**
+     * 
+     * @type {boolean}
+     * @memberof PartnerBillingApiPartnerTopupsGet
+     */
+    readonly returnTotal?: boolean
+}
+
+/**
  * Request parameters for partnerTransactionsGet operation in PartnerBillingApi.
  * @export
  * @interface PartnerBillingApiPartnerTransactionsGetRequest
@@ -12071,6 +12238,17 @@ export class PartnerBillingApi extends BaseAPI {
      */
     public partnerSummaryGet(options?: RawAxiosRequestConfig) {
         return PartnerBillingApiFp(this.configuration).partnerSummaryGet(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * The partner master wallet TOP-UPS (money in from the partner\'s card), read from credit_gain with payment status - so a partner sees which top-ups funded the wallet vs which are still awaiting payment. Scoped to the caller\'s own master customer.
+     * @param {PartnerBillingApiPartnerTopupsGetRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof PartnerBillingApi
+     */
+    public partnerTopupsGet(requestParameters: PartnerBillingApiPartnerTopupsGetRequest = {}, options?: RawAxiosRequestConfig) {
+        return PartnerBillingApiFp(this.configuration).partnerTopupsGet(requestParameters.count, requestParameters.page, requestParameters.returnTotal, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
