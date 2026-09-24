@@ -2415,7 +2415,8 @@ export interface TeamsUpgradeVariantRequest {
 }
 
 export const TeamsUpgradeVariantRequestTargetVariantEnum = {
-    Syntra: 'syntra'
+    Syntra: 'syntra',
+    Leadpulse: 'leadpulse'
 } as const;
 
 export type TeamsUpgradeVariantRequestTargetVariantEnum = typeof TeamsUpgradeVariantRequestTargetVariantEnum[keyof typeof TeamsUpgradeVariantRequestTargetVariantEnum];
@@ -2863,7 +2864,8 @@ export const UserVariant = {
     Chatdaddy: 'chatdaddy',
     Lite: 'lite',
     Syntra: 'syntra',
-    Instaengage: 'instaengage'
+    Instaengage: 'instaengage',
+    Leadpulse: 'leadpulse'
 } as const;
 
 export type UserVariant = typeof UserVariant[keyof typeof UserVariant];
@@ -7232,7 +7234,7 @@ export interface TeamsApiTeamsGetRequest {
 
     /**
      * The variant of the team to return. If not specified, returns chatdaddy teams only. 
-     * @type {'chatdaddy' | 'lite' | 'syntra' | 'instaengage'}
+     * @type {'chatdaddy' | 'lite' | 'syntra' | 'instaengage' | 'leadpulse'}
      * @memberof TeamsApiTeamsGet
      */
     readonly variant?: TeamsGetVariantEnum
@@ -7440,7 +7442,8 @@ export const TeamsGetVariantEnum = {
     Chatdaddy: 'chatdaddy',
     Lite: 'lite',
     Syntra: 'syntra',
-    Instaengage: 'instaengage'
+    Instaengage: 'instaengage',
+    Leadpulse: 'leadpulse'
 } as const;
 export type TeamsGetVariantEnum = typeof TeamsGetVariantEnum[keyof typeof TeamsGetVariantEnum];
 
