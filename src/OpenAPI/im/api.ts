@@ -3891,7 +3891,8 @@ export interface FlowMessage {
 }
 
 export const FlowMessageModeEnum = {
-    Draft: 'draft'
+    Draft: 'draft',
+    Published: 'published'
 } as const;
 
 export type FlowMessageModeEnum = typeof FlowMessageModeEnum[keyof typeof FlowMessageModeEnum];
@@ -5582,6 +5583,18 @@ export interface MessageProductDetails {
      * @memberof MessageProductDetails
      */
     'businessOwnerId'?: string;
+    /**
+     * Content ID of the product in Commerce Manager / the catalog connected to the WABA
+     * @type {string}
+     * @memberof MessageProductDetails
+     */
+    'retailerId'?: string;
+    /**
+     * ID of the catalog this product belongs to on Meta
+     * @type {string}
+     * @memberof MessageProductDetails
+     */
+    'catalogId'?: string;
 }
 /**
  * 
@@ -6397,6 +6410,12 @@ export interface MiscOptions {
      */
     'listReplyId'?: string;
     /**
+     * Answers submitted through a WhatsApp Flow (in-chat form), parsed from Meta\'s nfm_reply.response_json
+     * @type {{ [key: string]: any; }}
+     * @memberof MiscOptions
+     */
+    'flowResponse'?: { [key: string]: any; };
+    /**
      * the option of the poll that was clicked
      * @type {Array<string>}
      * @memberof MiscOptions
@@ -6426,6 +6445,18 @@ export interface MiscOptions {
      * @memberof MiscOptions
      */
     'requestContactInfo'?: boolean;
+    /**
+     * Send the entire WABA catalog as an interactive catalog_message instead of individual products.
+     * @type {boolean}
+     * @memberof MiscOptions
+     */
+    'sendCatalog'?: boolean;
+    /**
+     * Header text for a product_list interactive message. Defaults to a generic header if not provided.
+     * @type {string}
+     * @memberof MiscOptions
+     */
+    'productListHeader'?: string;
 }
 /**
  * the message being forwarded

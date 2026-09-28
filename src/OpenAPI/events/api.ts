@@ -10181,7 +10181,8 @@ export interface MessageInsertDataFlow {
 }
 
 export const MessageInsertDataFlowModeEnum = {
-    Draft: 'draft'
+    Draft: 'draft',
+    Published: 'published'
 } as const;
 
 export type MessageInsertDataFlowModeEnum = typeof MessageInsertDataFlowModeEnum[keyof typeof MessageInsertDataFlowModeEnum];
@@ -10378,6 +10379,12 @@ export interface MessageInsertDataMiscOptions {
     'listReplyId'?: string;
     /**
      * 
+     * @type {{ [key: string]: any; }}
+     * @memberof MessageInsertDataMiscOptions
+     */
+    'flowResponse'?: { [key: string]: any; };
+    /**
+     * 
      * @type {Array<string>}
      * @memberof MessageInsertDataMiscOptions
      */
@@ -10406,6 +10413,18 @@ export interface MessageInsertDataMiscOptions {
      * @memberof MessageInsertDataMiscOptions
      */
     'requestContactInfo'?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof MessageInsertDataMiscOptions
+     */
+    'sendCatalog'?: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof MessageInsertDataMiscOptions
+     */
+    'productListHeader'?: string;
 }
 /**
  * 
@@ -10693,6 +10712,18 @@ export interface MessageInsertDataProductsInnerDetails {
      * @memberof MessageInsertDataProductsInnerDetails
      */
     'businessOwnerId'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof MessageInsertDataProductsInnerDetails
+     */
+    'retailerId'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof MessageInsertDataProductsInnerDetails
+     */
+    'catalogId'?: string;
 }
 /**
  * 
