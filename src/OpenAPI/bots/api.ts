@@ -238,7 +238,8 @@ export interface Action {
 
 export const ActionMessageTypeEnum = {
     Message: 'message',
-    Email: 'email'
+    Email: 'email',
+    WhatsappForm: 'whatsappForm'
 } as const;
 
 export type ActionMessageTypeEnum = typeof ActionMessageTypeEnum[keyof typeof ActionMessageTypeEnum];
@@ -443,7 +444,8 @@ export interface ActionContent {
 
 export const ActionContentMessageTypeEnum = {
     Message: 'message',
-    Email: 'email'
+    Email: 'email',
+    WhatsappForm: 'whatsappForm'
 } as const;
 
 export type ActionContentMessageTypeEnum = typeof ActionContentMessageTypeEnum[keyof typeof ActionContentMessageTypeEnum];
@@ -4338,6 +4340,12 @@ export interface MessageObj {
      * @memberof MessageObj
      */
     'defaultSendOptions'?: MinMessageSendOptions;
+    /**
+     * 
+     * @type {WhatsAppForm}
+     * @memberof MessageObj
+     */
+    'whatsappForm'?: WhatsAppForm;
 }
 /**
  * Optional parameters to send a message
@@ -5943,6 +5951,119 @@ export interface WeekdayDelayValue {
  * @export
  */
 export type WeekdayDelayValueDay = DayOfWeek | string;
+
+/**
+ * A form that opens inside WhatsApp (Meta calls these \"WhatsApp Flows\"). When the action fires on a WABA channel, the form is converted to Meta\'s Flow JSON, published to the channel\'s WABA and sent as an interactive message. `text` of the message is shown above the button that opens it.
+ * @export
+ * @interface WhatsAppForm
+ */
+export interface WhatsAppForm {
+    /**
+     * heading at the top of the form
+     * @type {string}
+     * @memberof WhatsAppForm
+     */
+    'title': string;
+    /**
+     * text on the chat button that opens the form
+     * @type {string}
+     * @memberof WhatsAppForm
+     */
+    'ctaText': string;
+    /**
+     * text on the button that submits the form
+     * @type {string}
+     * @memberof WhatsAppForm
+     */
+    'submitText': string;
+    /**
+     * 
+     * @type {Array<WhatsAppFormField>}
+     * @memberof WhatsAppForm
+     */
+    'fields': Array<WhatsAppFormField>;
+    /**
+     * Legacy connector, prefer nextAction
+     * @type {string}
+     * @memberof WhatsAppForm
+     */
+    'triggerActionId'?: string | null;
+    /**
+     * Legacy connector, prefer nextAction
+     * @type {string}
+     * @memberof WhatsAppForm
+     */
+    'triggerBotId'?: string | null;
+    /**
+     * 
+     * @type {NextAction}
+     * @memberof WhatsAppForm
+     */
+    'nextAction'?: NextAction;
+    /**
+     * 
+     * @type {Position}
+     * @memberof WhatsAppForm
+     */
+    'position'?: Position | null;
+}
+/**
+ * 
+ * @export
+ * @interface WhatsAppFormField
+ */
+export interface WhatsAppFormField {
+    /**
+     * key the answer is returned under
+     * @type {string}
+     * @memberof WhatsAppFormField
+     */
+    'id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof WhatsAppFormField
+     */
+    'label': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof WhatsAppFormField
+     */
+    'type': WhatsAppFormFieldTypeEnum;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof WhatsAppFormField
+     */
+    'required'?: boolean;
+    /**
+     * only for dropdown, radio & checkbox
+     * @type {Array<string>}
+     * @memberof WhatsAppFormField
+     */
+    'options'?: Array<string>;
+    /**
+     * name of the contact custom field to save the answer to
+     * @type {string}
+     * @memberof WhatsAppFormField
+     */
+    'saveTo'?: string;
+}
+
+export const WhatsAppFormFieldTypeEnum = {
+    Text: 'text',
+    Email: 'email',
+    Phone: 'phone',
+    Number: 'number',
+    Textarea: 'textarea',
+    Dropdown: 'dropdown',
+    Radio: 'radio',
+    Checkbox: 'checkbox',
+    Date: 'date'
+} as const;
+
+export type WhatsAppFormFieldTypeEnum = typeof WhatsAppFormFieldTypeEnum[keyof typeof WhatsAppFormFieldTypeEnum];
 
 
 /**

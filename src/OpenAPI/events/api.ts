@@ -1688,7 +1688,8 @@ export interface BotInsertDataActionsInner {
 
 export const BotInsertDataActionsInnerMessageTypeEnum = {
     Message: 'message',
-    Email: 'email'
+    Email: 'email',
+    WhatsappForm: 'whatsappForm'
 } as const;
 
 export type BotInsertDataActionsInnerMessageTypeEnum = typeof BotInsertDataActionsInnerMessageTypeEnum[keyof typeof BotInsertDataActionsInnerMessageTypeEnum];
@@ -2006,6 +2007,12 @@ export interface BotInsertDataActionsInnerAllOfMessage {
      * @memberof BotInsertDataActionsInnerAllOfMessage
      */
     'defaultSendOptions'?: BotInsertDataActionsInnerAllOfMessageDefaultSendOptions;
+    /**
+     * 
+     * @type {BotInsertDataActionsInnerAllOfMessageWhatsappForm}
+     * @memberof BotInsertDataActionsInnerAllOfMessage
+     */
+    'whatsappForm'?: BotInsertDataActionsInnerAllOfMessageWhatsappForm;
 }
 /**
  * 
@@ -3079,6 +3086,119 @@ export interface BotInsertDataActionsInnerAllOfMessageProductsInner {
      */
     'accountId': string;
 }
+/**
+ * A form that opens inside WhatsApp (Meta calls these \"WhatsApp Flows\"). When the action fires on a WABA channel, the form is converted to Meta\'s Flow JSON, published to the channel\'s WABA and sent as an interactive message. `text` of the message is shown above the button that opens it.
+ * @export
+ * @interface BotInsertDataActionsInnerAllOfMessageWhatsappForm
+ */
+export interface BotInsertDataActionsInnerAllOfMessageWhatsappForm {
+    /**
+     * heading at the top of the form
+     * @type {string}
+     * @memberof BotInsertDataActionsInnerAllOfMessageWhatsappForm
+     */
+    'title': string;
+    /**
+     * text on the chat button that opens the form
+     * @type {string}
+     * @memberof BotInsertDataActionsInnerAllOfMessageWhatsappForm
+     */
+    'ctaText': string;
+    /**
+     * text on the button that submits the form
+     * @type {string}
+     * @memberof BotInsertDataActionsInnerAllOfMessageWhatsappForm
+     */
+    'submitText': string;
+    /**
+     * 
+     * @type {Array<BotInsertDataActionsInnerAllOfMessageWhatsappFormFieldsInner>}
+     * @memberof BotInsertDataActionsInnerAllOfMessageWhatsappForm
+     */
+    'fields': Array<BotInsertDataActionsInnerAllOfMessageWhatsappFormFieldsInner>;
+    /**
+     * Legacy connector, prefer nextAction
+     * @type {string}
+     * @memberof BotInsertDataActionsInnerAllOfMessageWhatsappForm
+     */
+    'triggerActionId'?: string | null;
+    /**
+     * Legacy connector, prefer nextAction
+     * @type {string}
+     * @memberof BotInsertDataActionsInnerAllOfMessageWhatsappForm
+     */
+    'triggerBotId'?: string | null;
+    /**
+     * 
+     * @type {BotInsertDataActionsInnerAllOfMessageButtonsInnerNextAction}
+     * @memberof BotInsertDataActionsInnerAllOfMessageWhatsappForm
+     */
+    'nextAction'?: BotInsertDataActionsInnerAllOfMessageButtonsInnerNextAction;
+    /**
+     * 
+     * @type {BotInsertDataActionsInnerAllOfMessageButtonsInnerPosition}
+     * @memberof BotInsertDataActionsInnerAllOfMessageWhatsappForm
+     */
+    'position'?: BotInsertDataActionsInnerAllOfMessageButtonsInnerPosition | null;
+}
+/**
+ * 
+ * @export
+ * @interface BotInsertDataActionsInnerAllOfMessageWhatsappFormFieldsInner
+ */
+export interface BotInsertDataActionsInnerAllOfMessageWhatsappFormFieldsInner {
+    /**
+     * key the answer is returned under
+     * @type {string}
+     * @memberof BotInsertDataActionsInnerAllOfMessageWhatsappFormFieldsInner
+     */
+    'id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof BotInsertDataActionsInnerAllOfMessageWhatsappFormFieldsInner
+     */
+    'label': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof BotInsertDataActionsInnerAllOfMessageWhatsappFormFieldsInner
+     */
+    'type': BotInsertDataActionsInnerAllOfMessageWhatsappFormFieldsInnerTypeEnum;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof BotInsertDataActionsInnerAllOfMessageWhatsappFormFieldsInner
+     */
+    'required'?: boolean;
+    /**
+     * only for dropdown, radio & checkbox
+     * @type {Array<string>}
+     * @memberof BotInsertDataActionsInnerAllOfMessageWhatsappFormFieldsInner
+     */
+    'options'?: Array<string>;
+    /**
+     * name of the contact custom field to save the answer to
+     * @type {string}
+     * @memberof BotInsertDataActionsInnerAllOfMessageWhatsappFormFieldsInner
+     */
+    'saveTo'?: string;
+}
+
+export const BotInsertDataActionsInnerAllOfMessageWhatsappFormFieldsInnerTypeEnum = {
+    Text: 'text',
+    Email: 'email',
+    Phone: 'phone',
+    Number: 'number',
+    Textarea: 'textarea',
+    Dropdown: 'dropdown',
+    Radio: 'radio',
+    Checkbox: 'checkbox',
+    Date: 'date'
+} as const;
+
+export type BotInsertDataActionsInnerAllOfMessageWhatsappFormFieldsInnerTypeEnum = typeof BotInsertDataActionsInnerAllOfMessageWhatsappFormFieldsInnerTypeEnum[keyof typeof BotInsertDataActionsInnerAllOfMessageWhatsappFormFieldsInnerTypeEnum];
+
 /**
  * 
  * @export
