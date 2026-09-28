@@ -980,6 +980,107 @@ export type AccountsPostRequestLoginTypeEnum = typeof AccountsPostRequestLoginTy
 /**
  * 
  * @export
+ * @interface AccountsSiblingMigrate
+ */
+export interface AccountsSiblingMigrate {
+    /**
+     * 
+     * @type {SiblingMigrateDirection}
+     * @memberof AccountsSiblingMigrate
+     */
+    'direction'?: SiblingMigrateDirection;
+    /**
+     * What to copy. Defaults to both.
+     * @type {Set<SiblingMigrateField>}
+     * @memberof AccountsSiblingMigrate
+     */
+    'fields'?: Set<SiblingMigrateField>;
+    /**
+     * Compute the changes without writing them
+     * @type {boolean}
+     * @memberof AccountsSiblingMigrate
+     */
+    'dryRun'?: boolean;
+    /**
+     * Unique identifier for an account.  The account ID is constructed from the first 21 characters of the team ID, prefixed by \"acc\" and suffixed by 4 random hex characters. This helps uniquely identify each account as well as establish a connection between the account\'s team by embedding the partial team ID in it.
+     * @type {string}
+     * @memberof AccountsSiblingMigrate
+     */
+    'siblingAccountId'?: string;
+    /**
+     * Continue the latest `stalled` or `failed` job from where it stopped. The other fields are ignored; the job keeps its own. Required unless resuming: `direction`. 
+     * @type {boolean}
+     * @memberof AccountsSiblingMigrate
+     */
+    'resume'?: boolean;
+    /**
+     * Start a new job even though the latest one is `stalled` or `failed`, throwing away its progress. Without this (or `resume`) starting over a stopped job returns 409. 
+     * @type {boolean}
+     * @memberof AccountsSiblingMigrate
+     */
+    'restart'?: boolean;
+}
+
+
+/**
+ * 
+ * @export
+ * @interface AccountsSiblingMigrateChanges
+ */
+export interface AccountsSiblingMigrateChanges {
+    /**
+     * Unique identifier for an account.  The account ID is constructed from the first 21 characters of the team ID, prefixed by \"acc\" and suffixed by 4 random hex characters. This helps uniquely identify each account as well as establish a connection between the account\'s team by embedding the partial team ID in it.
+     * @type {string}
+     * @memberof AccountsSiblingMigrateChanges
+     */
+    'accountId': string;
+    /**
+     * Contacts on this account that got at least one tag or an assignee
+     * @type {number}
+     * @memberof AccountsSiblingMigrateChanges
+     */
+    'contactsUpdated': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof AccountsSiblingMigrateChanges
+     */
+    'tagsAdded': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof AccountsSiblingMigrateChanges
+     */
+    'assigneesSet': number;
+    /**
+     * Tags this account\'s contact already had with a different value. Left unchanged.
+     * @type {number}
+     * @memberof AccountsSiblingMigrateChanges
+     */
+    'tagConflicts': number;
+    /**
+     * Contacts already assigned to a different team member. Left unchanged.
+     * @type {number}
+     * @memberof AccountsSiblingMigrateChanges
+     */
+    'assigneeConflicts': number;
+}
+/**
+ * 
+ * @export
+ * @interface AccountsSiblingMigrateGet200Response
+ */
+export interface AccountsSiblingMigrateGet200Response {
+    /**
+     * 
+     * @type {SiblingMigrateJob}
+     * @memberof AccountsSiblingMigrateGet200Response
+     */
+    'job': SiblingMigrateJob | null;
+}
+/**
+ * 
+ * @export
  * @enum {string}
  */
 
@@ -7269,6 +7370,130 @@ export interface SaveDailyChannelSnapshotRequest {
     'date'?: string;
 }
 /**
+ * Relative to the account in the path. `from-sibling` copies onto this account\'s contacts, `to-sibling` copies onto the sibling\'s contacts, `both` does both. 
+ * @export
+ * @enum {string}
+ */
+
+export const SiblingMigrateDirection = {
+    FromSibling: 'from-sibling',
+    ToSibling: 'to-sibling',
+    Both: 'both'
+} as const;
+
+export type SiblingMigrateDirection = typeof SiblingMigrateDirection[keyof typeof SiblingMigrateDirection];
+
+
+/**
+ * 
+ * @export
+ * @enum {string}
+ */
+
+export const SiblingMigrateField = {
+    Tags: 'tags',
+    Assignee: 'assignee'
+} as const;
+
+export type SiblingMigrateField = typeof SiblingMigrateField[keyof typeof SiblingMigrateField];
+
+
+/**
+ * 
+ * @export
+ * @interface SiblingMigrateJob
+ */
+export interface SiblingMigrateJob {
+    /**
+     * `stalled` = still marked running but no progress for 2 minutes, usually because the server restarted. Resume it. 
+     * @type {string}
+     * @memberof SiblingMigrateJob
+     */
+    'status': SiblingMigrateJobStatusEnum;
+    /**
+     * 
+     * @type {SiblingMigrateDirection}
+     * @memberof SiblingMigrateJob
+     */
+    'direction': SiblingMigrateDirection;
+    /**
+     * 
+     * @type {Array<SiblingMigrateField>}
+     * @memberof SiblingMigrateJob
+     */
+    'fields': Array<SiblingMigrateField>;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof SiblingMigrateJob
+     */
+    'dryRun': boolean;
+    /**
+     * Unique identifier for an account.  The account ID is constructed from the first 21 characters of the team ID, prefixed by \"acc\" and suffixed by 4 random hex characters. This helps uniquely identify each account as well as establish a connection between the account\'s team by embedding the partial team ID in it.
+     * @type {string}
+     * @memberof SiblingMigrateJob
+     */
+    'siblingAccountId': string;
+    /**
+     * Contacts on this account when the job started. For the progress bar.
+     * @type {number}
+     * @memberof SiblingMigrateJob
+     */
+    'total': number;
+    /**
+     * Contacts of this account processed so far
+     * @type {number}
+     * @memberof SiblingMigrateJob
+     */
+    'scanned': number;
+    /**
+     * Of those, how many have a contact with the same number on the sibling
+     * @type {number}
+     * @memberof SiblingMigrateJob
+     */
+    'matched': number;
+    /**
+     * One entry per account that receives data
+     * @type {Array<AccountsSiblingMigrateChanges>}
+     * @memberof SiblingMigrateJob
+     */
+    'changes': Array<AccountsSiblingMigrateChanges>;
+    /**
+     * 
+     * @type {string}
+     * @memberof SiblingMigrateJob
+     */
+    'startedAt': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof SiblingMigrateJob
+     */
+    'updatedAt': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof SiblingMigrateJob
+     */
+    'finishedAt'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof SiblingMigrateJob
+     */
+    'error'?: string;
+}
+
+export const SiblingMigrateJobStatusEnum = {
+    Running: 'running',
+    Completed: 'completed',
+    Failed: 'failed',
+    Stalled: 'stalled'
+} as const;
+
+export type SiblingMigrateJobStatusEnum = typeof SiblingMigrateJobStatusEnum[keyof typeof SiblingMigrateJobStatusEnum];
+
+/**
  * 
  * @export
  * @interface SmsSenderIdPostRequest
@@ -10003,6 +10228,88 @@ export const AccountApiAxiosParamCreator = function (configuration?: Configurati
             };
         },
         /**
+         * Starts an on-demand, additive copy of contact tags and assignees between this account and its sibling: the other WhatsApp account (QR `wa` <-> `wa-business-api`) on the same team with the same phone number, as with Coexistence.  Returns immediately; the copy runs in the background. Poll `accountsSiblingMigrateGet` for progress. Only one job per account runs at a time. If the job shows `stalled` (the server restarted while it ran) or `failed`, call again with `resume: true` to continue where it stopped, or `restart: true` to start over.  Only enabled for allowlisted teams for now; others get 403.  Contacts are matched by phone number. Only contacts that exist on both accounts are touched; nothing is created. Groups, LID and hidden-number (BSUID) contacts are never matched.  Additive only: - a tag is added only when the target contact does not have it. A tag   the target already has is never changed, even if its value differs   (counted as a conflict). Tags are never removed. - the assignee is set only when the target contact is unassigned. A   contact already assigned to someone else is left as is (counted as   a conflict).  Writes do not emit events, so no flows, auto-assign or webhooks fire. Use `dryRun` to get the numbers without writing. Safe to re-run: a second run changes nothing. 
+         * @summary Copy tags and assignees between a WhatsApp and a WhatsApp Business API account on the same number
+         * @param {string} accountId 
+         * @param {AccountsSiblingMigrate} accountsSiblingMigrate 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        accountsSiblingMigrate: async (accountId: string, accountsSiblingMigrate: AccountsSiblingMigrate, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'accountId' is not null or undefined
+            assertParamExists('accountsSiblingMigrate', 'accountId', accountId)
+            // verify required parameter 'accountsSiblingMigrate' is not null or undefined
+            assertParamExists('accountsSiblingMigrate', 'accountsSiblingMigrate', accountsSiblingMigrate)
+            const localVarPath = `/accounts/{accountId}/sibling-migrate`
+                .replace(`{${"accountId"}}`, encodeURIComponent(String(accountId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["CONTACTS_UPDATE", "ACCOUNT_PATCH"], configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(accountsSiblingMigrate, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Returns the latest job started with `accountsSiblingMigrate` on this account, or `null` if none was ever started. Poll this while `status` is `running`. 
+         * @summary Progress of the latest tag and assignee migration for this account
+         * @param {string} accountId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        accountsSiblingMigrateGet: async (accountId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'accountId' is not null or undefined
+            assertParamExists('accountsSiblingMigrateGet', 'accountId', accountId)
+            const localVarPath = `/accounts/{accountId}/sibling-migrate`
+                .replace(`{${"accountId"}}`, encodeURIComponent(String(accountId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", [], configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * Returns dashboard metrics including channels active in the last 7 and 30 days, average messages per account, and monthly message totals split by API vs non-API accounts. 
          * @summary Get dashboard analytics stats
          * @param {*} [options] Override http request option.
@@ -10295,6 +10602,33 @@ export const AccountApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
+         * Starts an on-demand, additive copy of contact tags and assignees between this account and its sibling: the other WhatsApp account (QR `wa` <-> `wa-business-api`) on the same team with the same phone number, as with Coexistence.  Returns immediately; the copy runs in the background. Poll `accountsSiblingMigrateGet` for progress. Only one job per account runs at a time. If the job shows `stalled` (the server restarted while it ran) or `failed`, call again with `resume: true` to continue where it stopped, or `restart: true` to start over.  Only enabled for allowlisted teams for now; others get 403.  Contacts are matched by phone number. Only contacts that exist on both accounts are touched; nothing is created. Groups, LID and hidden-number (BSUID) contacts are never matched.  Additive only: - a tag is added only when the target contact does not have it. A tag   the target already has is never changed, even if its value differs   (counted as a conflict). Tags are never removed. - the assignee is set only when the target contact is unassigned. A   contact already assigned to someone else is left as is (counted as   a conflict).  Writes do not emit events, so no flows, auto-assign or webhooks fire. Use `dryRun` to get the numbers without writing. Safe to re-run: a second run changes nothing. 
+         * @summary Copy tags and assignees between a WhatsApp and a WhatsApp Business API account on the same number
+         * @param {string} accountId 
+         * @param {AccountsSiblingMigrate} accountsSiblingMigrate 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async accountsSiblingMigrate(accountId: string, accountsSiblingMigrate: AccountsSiblingMigrate, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SiblingMigrateJob>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.accountsSiblingMigrate(accountId, accountsSiblingMigrate, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['AccountApi.accountsSiblingMigrate']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Returns the latest job started with `accountsSiblingMigrate` on this account, or `null` if none was ever started. Poll this while `status` is `running`. 
+         * @summary Progress of the latest tag and assignee migration for this account
+         * @param {string} accountId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async accountsSiblingMigrateGet(accountId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AccountsSiblingMigrateGet200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.accountsSiblingMigrateGet(accountId, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['AccountApi.accountsSiblingMigrateGet']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
          * Returns dashboard metrics including channels active in the last 7 and 30 days, average messages per account, and monthly message totals split by API vs non-API accounts. 
          * @summary Get dashboard analytics stats
          * @param {*} [options] Override http request option.
@@ -10448,6 +10782,26 @@ export const AccountApiFactory = function (configuration?: Configuration, basePa
          */
         accountsRecreatePost(requestParameters: AccountApiAccountsRecreatePostRequest, options?: RawAxiosRequestConfig): AxiosPromise<Account> {
             return localVarFp.accountsRecreatePost(requestParameters.accountId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Starts an on-demand, additive copy of contact tags and assignees between this account and its sibling: the other WhatsApp account (QR `wa` <-> `wa-business-api`) on the same team with the same phone number, as with Coexistence.  Returns immediately; the copy runs in the background. Poll `accountsSiblingMigrateGet` for progress. Only one job per account runs at a time. If the job shows `stalled` (the server restarted while it ran) or `failed`, call again with `resume: true` to continue where it stopped, or `restart: true` to start over.  Only enabled for allowlisted teams for now; others get 403.  Contacts are matched by phone number. Only contacts that exist on both accounts are touched; nothing is created. Groups, LID and hidden-number (BSUID) contacts are never matched.  Additive only: - a tag is added only when the target contact does not have it. A tag   the target already has is never changed, even if its value differs   (counted as a conflict). Tags are never removed. - the assignee is set only when the target contact is unassigned. A   contact already assigned to someone else is left as is (counted as   a conflict).  Writes do not emit events, so no flows, auto-assign or webhooks fire. Use `dryRun` to get the numbers without writing. Safe to re-run: a second run changes nothing. 
+         * @summary Copy tags and assignees between a WhatsApp and a WhatsApp Business API account on the same number
+         * @param {AccountApiAccountsSiblingMigrateRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        accountsSiblingMigrate(requestParameters: AccountApiAccountsSiblingMigrateRequest, options?: RawAxiosRequestConfig): AxiosPromise<SiblingMigrateJob> {
+            return localVarFp.accountsSiblingMigrate(requestParameters.accountId, requestParameters.accountsSiblingMigrate, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Returns the latest job started with `accountsSiblingMigrate` on this account, or `null` if none was ever started. Poll this while `status` is `running`. 
+         * @summary Progress of the latest tag and assignee migration for this account
+         * @param {AccountApiAccountsSiblingMigrateGetRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        accountsSiblingMigrateGet(requestParameters: AccountApiAccountsSiblingMigrateGetRequest, options?: RawAxiosRequestConfig): AxiosPromise<AccountsSiblingMigrateGet200Response> {
+            return localVarFp.accountsSiblingMigrateGet(requestParameters.accountId, options).then((request) => request(axios, basePath));
         },
         /**
          * Returns dashboard metrics including channels active in the last 7 and 30 days, average messages per account, and monthly message totals split by API vs non-API accounts. 
@@ -10699,6 +11053,41 @@ export interface AccountApiAccountsRecreatePostRequest {
 }
 
 /**
+ * Request parameters for accountsSiblingMigrate operation in AccountApi.
+ * @export
+ * @interface AccountApiAccountsSiblingMigrateRequest
+ */
+export interface AccountApiAccountsSiblingMigrateRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof AccountApiAccountsSiblingMigrate
+     */
+    readonly accountId: string
+
+    /**
+     * 
+     * @type {AccountsSiblingMigrate}
+     * @memberof AccountApiAccountsSiblingMigrate
+     */
+    readonly accountsSiblingMigrate: AccountsSiblingMigrate
+}
+
+/**
+ * Request parameters for accountsSiblingMigrateGet operation in AccountApi.
+ * @export
+ * @interface AccountApiAccountsSiblingMigrateGetRequest
+ */
+export interface AccountApiAccountsSiblingMigrateGetRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof AccountApiAccountsSiblingMigrateGet
+     */
+    readonly accountId: string
+}
+
+/**
  * Request parameters for waChangeLoginMode operation in AccountApi.
  * @export
  * @interface AccountApiWaChangeLoginModeRequest
@@ -10900,6 +11289,30 @@ export class AccountApi extends BaseAPI {
      */
     public accountsRecreatePost(requestParameters: AccountApiAccountsRecreatePostRequest, options?: RawAxiosRequestConfig) {
         return AccountApiFp(this.configuration).accountsRecreatePost(requestParameters.accountId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Starts an on-demand, additive copy of contact tags and assignees between this account and its sibling: the other WhatsApp account (QR `wa` <-> `wa-business-api`) on the same team with the same phone number, as with Coexistence.  Returns immediately; the copy runs in the background. Poll `accountsSiblingMigrateGet` for progress. Only one job per account runs at a time. If the job shows `stalled` (the server restarted while it ran) or `failed`, call again with `resume: true` to continue where it stopped, or `restart: true` to start over.  Only enabled for allowlisted teams for now; others get 403.  Contacts are matched by phone number. Only contacts that exist on both accounts are touched; nothing is created. Groups, LID and hidden-number (BSUID) contacts are never matched.  Additive only: - a tag is added only when the target contact does not have it. A tag   the target already has is never changed, even if its value differs   (counted as a conflict). Tags are never removed. - the assignee is set only when the target contact is unassigned. A   contact already assigned to someone else is left as is (counted as   a conflict).  Writes do not emit events, so no flows, auto-assign or webhooks fire. Use `dryRun` to get the numbers without writing. Safe to re-run: a second run changes nothing. 
+     * @summary Copy tags and assignees between a WhatsApp and a WhatsApp Business API account on the same number
+     * @param {AccountApiAccountsSiblingMigrateRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AccountApi
+     */
+    public accountsSiblingMigrate(requestParameters: AccountApiAccountsSiblingMigrateRequest, options?: RawAxiosRequestConfig) {
+        return AccountApiFp(this.configuration).accountsSiblingMigrate(requestParameters.accountId, requestParameters.accountsSiblingMigrate, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Returns the latest job started with `accountsSiblingMigrate` on this account, or `null` if none was ever started. Poll this while `status` is `running`. 
+     * @summary Progress of the latest tag and assignee migration for this account
+     * @param {AccountApiAccountsSiblingMigrateGetRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AccountApi
+     */
+    public accountsSiblingMigrateGet(requestParameters: AccountApiAccountsSiblingMigrateGetRequest, options?: RawAxiosRequestConfig) {
+        return AccountApiFp(this.configuration).accountsSiblingMigrateGet(requestParameters.accountId, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
