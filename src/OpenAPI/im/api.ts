@@ -3740,6 +3740,62 @@ export const FacebookLoginTypeEnum = {
 export type FacebookLoginTypeEnum = typeof FacebookLoginTypeEnum[keyof typeof FacebookLoginTypeEnum];
 
 /**
+ * A WhatsApp Flow (in-chat form) sent as an interactive message. WABA channels only, inside the 24h customer service window. The Flow itself is built and published in Meta\'s WhatsApp Manager.
+ * @export
+ * @interface FlowMessage
+ */
+export interface FlowMessage {
+    /**
+     * ID of a published Flow in WhatsApp Manager. Give either this or `flowJson`
+     * @type {string}
+     * @memberof FlowMessage
+     */
+    'flowId'?: string;
+    /**
+     * Flow JSON of a form built in ChatDaddy. It\'s published to the channel\'s WABA on first send & reused while it\'s unchanged
+     * @type {{ [key: string]: any; }}
+     * @memberof FlowMessage
+     */
+    'flowJson'?: { [key: string]: any; };
+    /**
+     * Name for the Flow in WhatsApp Manager, when publishing `flowJson`
+     * @type {string}
+     * @memberof FlowMessage
+     */
+    'flowName'?: string;
+    /**
+     * Text on the button that opens the form
+     * @type {string}
+     * @memberof FlowMessage
+     */
+    'ctaText': string;
+    /**
+     * ID of the first screen of the Flow, e.g. QUESTION_ONE
+     * @type {string}
+     * @memberof FlowMessage
+     */
+    'screen': string;
+    /**
+     * Echoed back with the submitted answers. Defaults to the message ID
+     * @type {string}
+     * @memberof FlowMessage
+     */
+    'flowToken'?: string;
+    /**
+     * Send a draft Flow for testing. Only numbers on the WABA\'s test list receive draft Flows
+     * @type {string}
+     * @memberof FlowMessage
+     */
+    'mode'?: FlowMessageModeEnum;
+}
+
+export const FlowMessageModeEnum = {
+    Draft: 'draft'
+} as const;
+
+export type FlowMessageModeEnum = typeof FlowMessageModeEnum[keyof typeof FlowMessageModeEnum];
+
+/**
  * 
  * @export
  * @interface GetChannelCount200Response
@@ -4299,6 +4355,12 @@ export interface Message {
     'list'?: ListMessage;
     /**
      * 
+     * @type {FlowMessage}
+     * @memberof Message
+     */
+    'flow'?: FlowMessage;
+    /**
+     * 
      * @type {Array<MessageProduct>}
      * @memberof Message
      */
@@ -4798,6 +4860,12 @@ export interface MessageCompose {
     'list'?: ListMessage;
     /**
      * 
+     * @type {FlowMessage}
+     * @memberof MessageCompose
+     */
+    'flow'?: FlowMessage;
+    /**
+     * 
      * @type {Array<MessageProduct>}
      * @memberof MessageCompose
      */
@@ -4996,6 +5064,12 @@ export interface MessageComposeWChatID {
     'list'?: ListMessage;
     /**
      * 
+     * @type {FlowMessage}
+     * @memberof MessageComposeWChatID
+     */
+    'flow'?: FlowMessage;
+    /**
+     * 
      * @type {Array<MessageProduct>}
      * @memberof MessageComposeWChatID
      */
@@ -5111,6 +5185,12 @@ export interface MessageContent {
      * @memberof MessageContent
      */
     'list'?: ListMessage;
+    /**
+     * 
+     * @type {FlowMessage}
+     * @memberof MessageContent
+     */
+    'flow'?: FlowMessage;
     /**
      * 
      * @type {Array<MessageProduct>}

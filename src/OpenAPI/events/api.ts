@@ -9634,6 +9634,12 @@ export interface MessageInsertData {
     'list'?: MessageInsertDataList;
     /**
      * 
+     * @type {MessageInsertDataFlow}
+     * @memberof MessageInsertData
+     */
+    'flow'?: MessageInsertDataFlow;
+    /**
+     * 
      * @type {Array<MessageInsertDataProductsInner>}
      * @memberof MessageInsertData
      */
@@ -10004,6 +10010,62 @@ export interface MessageInsertDataErrorOneOf {
      */
     'retries': number;
 }
+/**
+ * 
+ * @export
+ * @interface MessageInsertDataFlow
+ */
+export interface MessageInsertDataFlow {
+    /**
+     * 
+     * @type {string}
+     * @memberof MessageInsertDataFlow
+     */
+    'flowId'?: string;
+    /**
+     * 
+     * @type {{ [key: string]: any; }}
+     * @memberof MessageInsertDataFlow
+     */
+    'flowJson'?: { [key: string]: any; };
+    /**
+     * 
+     * @type {string}
+     * @memberof MessageInsertDataFlow
+     */
+    'flowName'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof MessageInsertDataFlow
+     */
+    'ctaText': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof MessageInsertDataFlow
+     */
+    'screen': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof MessageInsertDataFlow
+     */
+    'flowToken'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof MessageInsertDataFlow
+     */
+    'mode'?: MessageInsertDataFlowModeEnum;
+}
+
+export const MessageInsertDataFlowModeEnum = {
+    Draft: 'draft'
+} as const;
+
+export type MessageInsertDataFlowModeEnum = typeof MessageInsertDataFlowModeEnum[keyof typeof MessageInsertDataFlowModeEnum];
+
 /**
  * 
  * @export
@@ -10952,6 +11014,12 @@ export interface MessageUpdateData {
      * @memberof MessageUpdateData
      */
     'list'?: MessageInsertDataList;
+    /**
+     * 
+     * @type {MessageInsertDataFlow}
+     * @memberof MessageUpdateData
+     */
+    'flow'?: MessageInsertDataFlow;
     /**
      * 
      * @type {Array<MessageInsertDataProductsInner>}
