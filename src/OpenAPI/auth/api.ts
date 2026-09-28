@@ -789,6 +789,24 @@ export interface FirebaseTokenRequest {
      * @memberof FirebaseTokenRequest
      */
     'variant'?: UserVariant;
+    /**
+     * Full name for a new account. Used by native phone signup (Firebase Phone Auth) so the account is created with the name the user typed. Ignored for returning logins. 
+     * @type {string}
+     * @memberof FirebaseTokenRequest
+     */
+    'fullName'?: string;
+    /**
+     * Password for a new account, so a native phone-signup user can also sign in later with phone + password. Plaintext unless passwordEncoding says otherwise. Ignored for returning logins. 
+     * @type {string}
+     * @memberof FirebaseTokenRequest
+     */
+    'password'?: string;
+    /**
+     * 
+     * @type {PasswordEncoding}
+     * @memberof FirebaseTokenRequest
+     */
+    'passwordEncoding'?: PasswordEncoding;
 }
 
 export const FirebaseTokenRequestTypeEnum = {
