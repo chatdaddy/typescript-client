@@ -3112,6 +3112,371 @@ export interface CalendarAuth200Response {
 /**
  * 
  * @export
+ * @interface CalendarBooking
+ */
+export interface CalendarBooking {
+    /**
+     * ID of a calendar booking
+     * @type {string}
+     * @memberof CalendarBooking
+     */
+    'id': string;
+    /**
+     * randomly generated id for an integration
+     * @type {string}
+     * @memberof CalendarBooking
+     */
+    'integrationId': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof CalendarBooking
+     */
+    'googleEventId': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof CalendarBooking
+     */
+    'title': string;
+    /**
+     * An ISO formatted timestamp
+     * @type {string}
+     * @memberof CalendarBooking
+     */
+    'startAt': string;
+    /**
+     * An ISO formatted timestamp
+     * @type {string}
+     * @memberof CalendarBooking
+     */
+    'endAt': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof CalendarBooking
+     */
+    'timezone'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof CalendarBooking
+     */
+    'meetingLink'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof CalendarBooking
+     */
+    'attendeeName'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof CalendarBooking
+     */
+    'attendeeEmail'?: string | null;
+    /**
+     * Phone number of the booker, digits only with country code
+     * @type {string}
+     * @memberof CalendarBooking
+     */
+    'phone'?: string | null;
+    /**
+     * Where the phone number of the booking was found. Same values as CalendarPhoneSource, inlined as nullable needs a type
+     * @type {string}
+     * @memberof CalendarBooking
+     */
+    'phoneSource'?: CalendarBookingPhoneSourceEnum | null;
+    /**
+     * 
+     * @type {CalendarBookingStatus}
+     * @memberof CalendarBooking
+     */
+    'status': CalendarBookingStatus;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof CalendarBooking
+     */
+    'remindersPaused': boolean;
+    /**
+     * Trigger instances (flow runs) created for this booking
+     * @type {Array<string>}
+     * @memberof CalendarBooking
+     */
+    'triggerInstanceIds': Array<string>;
+    /**
+     * An ISO formatted timestamp
+     * @type {string}
+     * @memberof CalendarBooking
+     */
+    'createdAt': string;
+    /**
+     * An ISO formatted timestamp
+     * @type {string}
+     * @memberof CalendarBooking
+     */
+    'updatedAt': string;
+}
+
+export const CalendarBookingPhoneSourceEnum = {
+    Location: 'location',
+    Description: 'description',
+    ContactEmail: 'contact_email',
+    Manual: 'manual'
+} as const;
+
+export type CalendarBookingPhoneSourceEnum = typeof CalendarBookingPhoneSourceEnum[keyof typeof CalendarBookingPhoneSourceEnum];
+
+/**
+ * 
+ * @export
+ * @interface CalendarBookingPatchRequest
+ */
+export interface CalendarBookingPatchRequest {
+    /**
+     * Phone number with country code, a leading \"+\" & spaces or dashes are optional. Stored as digits only, like CalendarBooking.phone
+     * @type {string}
+     * @memberof CalendarBookingPatchRequest
+     */
+    'phone'?: string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof CalendarBookingPatchRequest
+     */
+    'remindersPaused'?: boolean;
+}
+/**
+ * scheduled = flows fired & reminders pending/sent, missing_phone = no phone found on the event -- set one to fire the flows, cancelled = the event was cancelled/deleted, completed = the event start time has passed
+ * @export
+ * @enum {string}
+ */
+
+export const CalendarBookingStatus = {
+    Scheduled: 'scheduled',
+    MissingPhone: 'missing_phone',
+    Cancelled: 'cancelled',
+    Completed: 'completed'
+} as const;
+
+export type CalendarBookingStatus = typeof CalendarBookingStatus[keyof typeof CalendarBookingStatus];
+
+
+/**
+ * 
+ * @export
+ * @interface CalendarBookingsGet200Response
+ */
+export interface CalendarBookingsGet200Response {
+    /**
+     * 
+     * @type {Array<CalendarBooking>}
+     * @memberof CalendarBookingsGet200Response
+     */
+    'items': Array<CalendarBooking>;
+    /**
+     * Cursor to use to fetch next page of results
+     * @type {string}
+     * @memberof CalendarBookingsGet200Response
+     */
+    'nextPageCursor'?: string;
+}
+/**
+ * 
+ * @export
+ * @interface CalendarEventItem
+ */
+export interface CalendarEventItem {
+    /**
+     * 
+     * @type {string}
+     * @memberof CalendarEventItem
+     */
+    'id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof CalendarEventItem
+     */
+    'title': string;
+    /**
+     * An ISO formatted timestamp
+     * @type {string}
+     * @memberof CalendarEventItem
+     */
+    'startAt': string;
+    /**
+     * An ISO formatted timestamp
+     * @type {string}
+     * @memberof CalendarEventItem
+     */
+    'endAt': string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof CalendarEventItem
+     */
+    'allDay': boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof CalendarEventItem
+     */
+    'meetingLink'?: string;
+    /**
+     * Link to open the event in Google Calendar
+     * @type {string}
+     * @memberof CalendarEventItem
+     */
+    'htmlLink'?: string;
+    /**
+     * 
+     * @type {Array<CalendarEventItemAttendeesInner>}
+     * @memberof CalendarEventItem
+     */
+    'attendees'?: Array<CalendarEventItemAttendeesInner>;
+    /**
+     * ID of a calendar booking
+     * @type {string}
+     * @memberof CalendarEventItem
+     */
+    'bookingId'?: string;
+    /**
+     * 
+     * @type {CalendarBookingStatus}
+     * @memberof CalendarEventItem
+     */
+    'bookingStatus'?: CalendarBookingStatus;
+}
+
+
+/**
+ * 
+ * @export
+ * @interface CalendarEventItemAttendeesInner
+ */
+export interface CalendarEventItemAttendeesInner {
+    /**
+     * 
+     * @type {string}
+     * @memberof CalendarEventItemAttendeesInner
+     */
+    'email': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof CalendarEventItemAttendeesInner
+     */
+    'name'?: string;
+}
+/**
+ * 
+ * @export
+ * @interface CalendarEventsGet200Response
+ */
+export interface CalendarEventsGet200Response {
+    /**
+     * 
+     * @type {Array<CalendarEventItem>}
+     * @memberof CalendarEventsGet200Response
+     */
+    'items': Array<CalendarEventItem>;
+    /**
+     * Cursor to use to fetch next page of results
+     * @type {string}
+     * @memberof CalendarEventsGet200Response
+     */
+    'nextPageCursor'?: string;
+}
+/**
+ * 
+ * @export
+ * @interface CalendarGoogleNotify200Response
+ */
+export interface CalendarGoogleNotify200Response {
+    /**
+     * 
+     * @type {boolean}
+     * @memberof CalendarGoogleNotify200Response
+     */
+    'success': boolean;
+}
+/**
+ * Where the phone number of the booking was found
+ * @export
+ * @enum {string}
+ */
+
+export const CalendarPhoneSource = {
+    Location: 'location',
+    Description: 'description',
+    ContactEmail: 'contact_email',
+    Manual: 'manual'
+} as const;
+
+export type CalendarPhoneSource = typeof CalendarPhoneSource[keyof typeof CalendarPhoneSource];
+
+
+/**
+ * 
+ * @export
+ * @interface CalendarSyncStartRequest
+ */
+export interface CalendarSyncStartRequest {
+    /**
+     * randomly generated id for an integration
+     * @type {string}
+     * @memberof CalendarSyncStartRequest
+     */
+    'integrationId': string;
+    /**
+     * Google calendar to watch. Defaults to the primary calendar
+     * @type {string}
+     * @memberof CalendarSyncStartRequest
+     */
+    'calendarId'?: string;
+}
+/**
+ * 
+ * @export
+ * @interface CalendarSyncStatus
+ */
+export interface CalendarSyncStatus {
+    /**
+     * 
+     * @type {boolean}
+     * @memberof CalendarSyncStatus
+     */
+    'enabled': boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof CalendarSyncStatus
+     */
+    'calendarId'?: string;
+    /**
+     * An ISO formatted timestamp
+     * @type {string}
+     * @memberof CalendarSyncStatus
+     */
+    'watchExpiresAt'?: string;
+    /**
+     * An ISO formatted timestamp
+     * @type {string}
+     * @memberof CalendarSyncStatus
+     */
+    'lastSyncAt'?: string;
+    /**
+     * Last error while syncing, if any
+     * @type {string}
+     * @memberof CalendarSyncStatus
+     */
+    'lastError'?: string;
+}
+/**
+ * 
+ * @export
  * @interface ConditionalPropertyOption
  */
 export interface ConditionalPropertyOption {
@@ -5578,6 +5943,12 @@ export interface TriggerDelayOneOf1 {
      * @memberof TriggerDelayOneOf1
      */
     'value': PropertyPathValue;
+    /**
+     * Seconds to add to the timestamp. Use a negative value to fire before it, e.g. -86400 = 1 day before
+     * @type {number}
+     * @memberof TriggerDelayOneOf1
+     */
+    'offsetSeconds'?: number;
     /**
      * 
      * @type {Position}
@@ -9498,6 +9869,784 @@ export const BotsGetsOrderEnum = {
     Desc: 'DESC'
 } as const;
 export type BotsGetsOrderEnum = typeof BotsGetsOrderEnum[keyof typeof BotsGetsOrderEnum];
+
+
+/**
+ * CalendarApi - axios parameter creator
+ * @export
+ */
+export const CalendarApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * Set the phone number of a booking (e.g. one that is missing a phone), or pause/resume its reminders. Setting a phone on a booking that has not fired yet fires its flows.
+         * @summary Update a booking
+         * @param {string} id 
+         * @param {CalendarBookingPatchRequest} calendarBookingPatchRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        calendarBookingPatch: async (id: string, calendarBookingPatchRequest: CalendarBookingPatchRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('calendarBookingPatch', 'id', id)
+            // verify required parameter 'calendarBookingPatchRequest' is not null or undefined
+            assertParamExists('calendarBookingPatch', 'calendarBookingPatchRequest', calendarBookingPatchRequest)
+            const localVarPath = `/calendar/bookings/{id}`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PATCH', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["TEMPLATES_UPDATE"], configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(calendarBookingPatchRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary List bookings received from connected calendars
+         * @param {string} [integrationId] 
+         * @param {Array<CalendarBookingStatus>} [status] 
+         * @param {string} [from] Only bookings starting at or after this time
+         * @param {string} [to] Only bookings starting before this time
+         * @param {number} [count] 
+         * @param {string} [cursor] nextPageCursor from the previous page
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        calendarBookingsGet: async (integrationId?: string, status?: Array<CalendarBookingStatus>, from?: string, to?: string, count?: number, cursor?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/calendar/bookings`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["TEMPLATES_READ"], configuration)
+
+            if (integrationId !== undefined) {
+                localVarQueryParameter['integrationId'] = integrationId;
+            }
+
+            if (status) {
+                localVarQueryParameter['status'] = status;
+            }
+
+            if (from !== undefined) {
+                localVarQueryParameter['from'] = (from as any instanceof Date) ?
+                    (from as any).toISOString() :
+                    from;
+            }
+
+            if (to !== undefined) {
+                localVarQueryParameter['to'] = (to as any instanceof Date) ?
+                    (to as any).toISOString() :
+                    to;
+            }
+
+            if (count !== undefined) {
+                localVarQueryParameter['count'] = count;
+            }
+
+            if (cursor !== undefined) {
+                localVarQueryParameter['cursor'] = cursor;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary List events of a connected Google Calendar in a time range
+         * @param {string} integrationId 
+         * @param {string} from 
+         * @param {string} to 
+         * @param {number} [count] 
+         * @param {string} [cursor] nextPageCursor from the previous page
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        calendarEventsGet: async (integrationId: string, from: string, to: string, count?: number, cursor?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'integrationId' is not null or undefined
+            assertParamExists('calendarEventsGet', 'integrationId', integrationId)
+            // verify required parameter 'from' is not null or undefined
+            assertParamExists('calendarEventsGet', 'from', from)
+            // verify required parameter 'to' is not null or undefined
+            assertParamExists('calendarEventsGet', 'to', to)
+            const localVarPath = `/calendar/events`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["TEMPLATES_READ"], configuration)
+
+            if (integrationId !== undefined) {
+                localVarQueryParameter['integrationId'] = integrationId;
+            }
+
+            if (from !== undefined) {
+                localVarQueryParameter['from'] = (from as any instanceof Date) ?
+                    (from as any).toISOString() :
+                    from;
+            }
+
+            if (to !== undefined) {
+                localVarQueryParameter['to'] = (to as any instanceof Date) ?
+                    (to as any).toISOString() :
+                    to;
+            }
+
+            if (count !== undefined) {
+                localVarQueryParameter['count'] = count;
+            }
+
+            if (cursor !== undefined) {
+                localVarQueryParameter['cursor'] = cursor;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Google calls this endpoint whenever a watched calendar changes. The request has no body -- the channel is identified by the X-Goog-Channel-ID & X-Goog-Channel-Token headers. The changed events are then pulled using the stored sync token.
+         * @summary Receive Google Calendar push notifications
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        calendarGoogleNotify: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/calendar/google/notifications`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Get the booking sync status of a Google Calendar integration
+         * @param {string} integrationId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        calendarSyncGet: async (integrationId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'integrationId' is not null or undefined
+            assertParamExists('calendarSyncGet', 'integrationId', integrationId)
+            const localVarPath = `/calendar/sync`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["TEMPLATES_READ"], configuration)
+
+            if (integrationId !== undefined) {
+                localVarQueryParameter['integrationId'] = integrationId;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Starts watching the calendar for changes & imports upcoming events. Events that already exist when sync starts are recorded as bookings but do not fire any flow.
+         * @summary Start syncing bookings from a Google Calendar integration
+         * @param {CalendarSyncStartRequest} calendarSyncStartRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        calendarSyncStart: async (calendarSyncStartRequest: CalendarSyncStartRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'calendarSyncStartRequest' is not null or undefined
+            assertParamExists('calendarSyncStart', 'calendarSyncStartRequest', calendarSyncStartRequest)
+            const localVarPath = `/calendar/sync`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["TEMPLATES_UPDATE"], configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(calendarSyncStartRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Stops watching the calendar & stops all pending reminders of its bookings
+         * @summary Stop syncing bookings from a Google Calendar integration
+         * @param {string} integrationId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        calendarSyncStop: async (integrationId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'integrationId' is not null or undefined
+            assertParamExists('calendarSyncStop', 'integrationId', integrationId)
+            const localVarPath = `/calendar/sync`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["TEMPLATES_UPDATE"], configuration)
+
+            if (integrationId !== undefined) {
+                localVarQueryParameter['integrationId'] = integrationId;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * CalendarApi - functional programming interface
+ * @export
+ */
+export const CalendarApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = CalendarApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * Set the phone number of a booking (e.g. one that is missing a phone), or pause/resume its reminders. Setting a phone on a booking that has not fired yet fires its flows.
+         * @summary Update a booking
+         * @param {string} id 
+         * @param {CalendarBookingPatchRequest} calendarBookingPatchRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async calendarBookingPatch(id: string, calendarBookingPatchRequest: CalendarBookingPatchRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CalendarBooking>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.calendarBookingPatch(id, calendarBookingPatchRequest, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['CalendarApi.calendarBookingPatch']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @summary List bookings received from connected calendars
+         * @param {string} [integrationId] 
+         * @param {Array<CalendarBookingStatus>} [status] 
+         * @param {string} [from] Only bookings starting at or after this time
+         * @param {string} [to] Only bookings starting before this time
+         * @param {number} [count] 
+         * @param {string} [cursor] nextPageCursor from the previous page
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async calendarBookingsGet(integrationId?: string, status?: Array<CalendarBookingStatus>, from?: string, to?: string, count?: number, cursor?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CalendarBookingsGet200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.calendarBookingsGet(integrationId, status, from, to, count, cursor, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['CalendarApi.calendarBookingsGet']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @summary List events of a connected Google Calendar in a time range
+         * @param {string} integrationId 
+         * @param {string} from 
+         * @param {string} to 
+         * @param {number} [count] 
+         * @param {string} [cursor] nextPageCursor from the previous page
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async calendarEventsGet(integrationId: string, from: string, to: string, count?: number, cursor?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CalendarEventsGet200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.calendarEventsGet(integrationId, from, to, count, cursor, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['CalendarApi.calendarEventsGet']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Google calls this endpoint whenever a watched calendar changes. The request has no body -- the channel is identified by the X-Goog-Channel-ID & X-Goog-Channel-Token headers. The changed events are then pulled using the stored sync token.
+         * @summary Receive Google Calendar push notifications
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async calendarGoogleNotify(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CalendarGoogleNotify200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.calendarGoogleNotify(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['CalendarApi.calendarGoogleNotify']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @summary Get the booking sync status of a Google Calendar integration
+         * @param {string} integrationId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async calendarSyncGet(integrationId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CalendarSyncStatus>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.calendarSyncGet(integrationId, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['CalendarApi.calendarSyncGet']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Starts watching the calendar for changes & imports upcoming events. Events that already exist when sync starts are recorded as bookings but do not fire any flow.
+         * @summary Start syncing bookings from a Google Calendar integration
+         * @param {CalendarSyncStartRequest} calendarSyncStartRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async calendarSyncStart(calendarSyncStartRequest: CalendarSyncStartRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CalendarSyncStatus>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.calendarSyncStart(calendarSyncStartRequest, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['CalendarApi.calendarSyncStart']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Stops watching the calendar & stops all pending reminders of its bookings
+         * @summary Stop syncing bookings from a Google Calendar integration
+         * @param {string} integrationId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async calendarSyncStop(integrationId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.calendarSyncStop(integrationId, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['CalendarApi.calendarSyncStop']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+    }
+};
+
+/**
+ * CalendarApi - factory interface
+ * @export
+ */
+export const CalendarApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = CalendarApiFp(configuration)
+    return {
+        /**
+         * Set the phone number of a booking (e.g. one that is missing a phone), or pause/resume its reminders. Setting a phone on a booking that has not fired yet fires its flows.
+         * @summary Update a booking
+         * @param {CalendarApiCalendarBookingPatchRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        calendarBookingPatch(requestParameters: CalendarApiCalendarBookingPatchRequest, options?: RawAxiosRequestConfig): AxiosPromise<CalendarBooking> {
+            return localVarFp.calendarBookingPatch(requestParameters.id, requestParameters.calendarBookingPatchRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary List bookings received from connected calendars
+         * @param {CalendarApiCalendarBookingsGetRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        calendarBookingsGet(requestParameters: CalendarApiCalendarBookingsGetRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<CalendarBookingsGet200Response> {
+            return localVarFp.calendarBookingsGet(requestParameters.integrationId, requestParameters.status, requestParameters.from, requestParameters.to, requestParameters.count, requestParameters.cursor, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary List events of a connected Google Calendar in a time range
+         * @param {CalendarApiCalendarEventsGetRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        calendarEventsGet(requestParameters: CalendarApiCalendarEventsGetRequest, options?: RawAxiosRequestConfig): AxiosPromise<CalendarEventsGet200Response> {
+            return localVarFp.calendarEventsGet(requestParameters.integrationId, requestParameters.from, requestParameters.to, requestParameters.count, requestParameters.cursor, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Google calls this endpoint whenever a watched calendar changes. The request has no body -- the channel is identified by the X-Goog-Channel-ID & X-Goog-Channel-Token headers. The changed events are then pulled using the stored sync token.
+         * @summary Receive Google Calendar push notifications
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        calendarGoogleNotify(options?: RawAxiosRequestConfig): AxiosPromise<CalendarGoogleNotify200Response> {
+            return localVarFp.calendarGoogleNotify(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Get the booking sync status of a Google Calendar integration
+         * @param {CalendarApiCalendarSyncGetRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        calendarSyncGet(requestParameters: CalendarApiCalendarSyncGetRequest, options?: RawAxiosRequestConfig): AxiosPromise<CalendarSyncStatus> {
+            return localVarFp.calendarSyncGet(requestParameters.integrationId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Starts watching the calendar for changes & imports upcoming events. Events that already exist when sync starts are recorded as bookings but do not fire any flow.
+         * @summary Start syncing bookings from a Google Calendar integration
+         * @param {CalendarApiCalendarSyncStartRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        calendarSyncStart(requestParameters: CalendarApiCalendarSyncStartRequest, options?: RawAxiosRequestConfig): AxiosPromise<CalendarSyncStatus> {
+            return localVarFp.calendarSyncStart(requestParameters.calendarSyncStartRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Stops watching the calendar & stops all pending reminders of its bookings
+         * @summary Stop syncing bookings from a Google Calendar integration
+         * @param {CalendarApiCalendarSyncStopRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        calendarSyncStop(requestParameters: CalendarApiCalendarSyncStopRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.calendarSyncStop(requestParameters.integrationId, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * Request parameters for calendarBookingPatch operation in CalendarApi.
+ * @export
+ * @interface CalendarApiCalendarBookingPatchRequest
+ */
+export interface CalendarApiCalendarBookingPatchRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof CalendarApiCalendarBookingPatch
+     */
+    readonly id: string
+
+    /**
+     * 
+     * @type {CalendarBookingPatchRequest}
+     * @memberof CalendarApiCalendarBookingPatch
+     */
+    readonly calendarBookingPatchRequest: CalendarBookingPatchRequest
+}
+
+/**
+ * Request parameters for calendarBookingsGet operation in CalendarApi.
+ * @export
+ * @interface CalendarApiCalendarBookingsGetRequest
+ */
+export interface CalendarApiCalendarBookingsGetRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof CalendarApiCalendarBookingsGet
+     */
+    readonly integrationId?: string
+
+    /**
+     * 
+     * @type {Array<CalendarBookingStatus>}
+     * @memberof CalendarApiCalendarBookingsGet
+     */
+    readonly status?: Array<CalendarBookingStatus>
+
+    /**
+     * Only bookings starting at or after this time
+     * @type {string}
+     * @memberof CalendarApiCalendarBookingsGet
+     */
+    readonly from?: string
+
+    /**
+     * Only bookings starting before this time
+     * @type {string}
+     * @memberof CalendarApiCalendarBookingsGet
+     */
+    readonly to?: string
+
+    /**
+     * 
+     * @type {number}
+     * @memberof CalendarApiCalendarBookingsGet
+     */
+    readonly count?: number
+
+    /**
+     * nextPageCursor from the previous page
+     * @type {string}
+     * @memberof CalendarApiCalendarBookingsGet
+     */
+    readonly cursor?: string
+}
+
+/**
+ * Request parameters for calendarEventsGet operation in CalendarApi.
+ * @export
+ * @interface CalendarApiCalendarEventsGetRequest
+ */
+export interface CalendarApiCalendarEventsGetRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof CalendarApiCalendarEventsGet
+     */
+    readonly integrationId: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof CalendarApiCalendarEventsGet
+     */
+    readonly from: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof CalendarApiCalendarEventsGet
+     */
+    readonly to: string
+
+    /**
+     * 
+     * @type {number}
+     * @memberof CalendarApiCalendarEventsGet
+     */
+    readonly count?: number
+
+    /**
+     * nextPageCursor from the previous page
+     * @type {string}
+     * @memberof CalendarApiCalendarEventsGet
+     */
+    readonly cursor?: string
+}
+
+/**
+ * Request parameters for calendarSyncGet operation in CalendarApi.
+ * @export
+ * @interface CalendarApiCalendarSyncGetRequest
+ */
+export interface CalendarApiCalendarSyncGetRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof CalendarApiCalendarSyncGet
+     */
+    readonly integrationId: string
+}
+
+/**
+ * Request parameters for calendarSyncStart operation in CalendarApi.
+ * @export
+ * @interface CalendarApiCalendarSyncStartRequest
+ */
+export interface CalendarApiCalendarSyncStartRequest {
+    /**
+     * 
+     * @type {CalendarSyncStartRequest}
+     * @memberof CalendarApiCalendarSyncStart
+     */
+    readonly calendarSyncStartRequest: CalendarSyncStartRequest
+}
+
+/**
+ * Request parameters for calendarSyncStop operation in CalendarApi.
+ * @export
+ * @interface CalendarApiCalendarSyncStopRequest
+ */
+export interface CalendarApiCalendarSyncStopRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof CalendarApiCalendarSyncStop
+     */
+    readonly integrationId: string
+}
+
+/**
+ * CalendarApi - object-oriented interface
+ * @export
+ * @class CalendarApi
+ * @extends {BaseAPI}
+ */
+export class CalendarApi extends BaseAPI {
+    /**
+     * Set the phone number of a booking (e.g. one that is missing a phone), or pause/resume its reminders. Setting a phone on a booking that has not fired yet fires its flows.
+     * @summary Update a booking
+     * @param {CalendarApiCalendarBookingPatchRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CalendarApi
+     */
+    public calendarBookingPatch(requestParameters: CalendarApiCalendarBookingPatchRequest, options?: RawAxiosRequestConfig) {
+        return CalendarApiFp(this.configuration).calendarBookingPatch(requestParameters.id, requestParameters.calendarBookingPatchRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary List bookings received from connected calendars
+     * @param {CalendarApiCalendarBookingsGetRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CalendarApi
+     */
+    public calendarBookingsGet(requestParameters: CalendarApiCalendarBookingsGetRequest = {}, options?: RawAxiosRequestConfig) {
+        return CalendarApiFp(this.configuration).calendarBookingsGet(requestParameters.integrationId, requestParameters.status, requestParameters.from, requestParameters.to, requestParameters.count, requestParameters.cursor, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary List events of a connected Google Calendar in a time range
+     * @param {CalendarApiCalendarEventsGetRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CalendarApi
+     */
+    public calendarEventsGet(requestParameters: CalendarApiCalendarEventsGetRequest, options?: RawAxiosRequestConfig) {
+        return CalendarApiFp(this.configuration).calendarEventsGet(requestParameters.integrationId, requestParameters.from, requestParameters.to, requestParameters.count, requestParameters.cursor, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Google calls this endpoint whenever a watched calendar changes. The request has no body -- the channel is identified by the X-Goog-Channel-ID & X-Goog-Channel-Token headers. The changed events are then pulled using the stored sync token.
+     * @summary Receive Google Calendar push notifications
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CalendarApi
+     */
+    public calendarGoogleNotify(options?: RawAxiosRequestConfig) {
+        return CalendarApiFp(this.configuration).calendarGoogleNotify(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Get the booking sync status of a Google Calendar integration
+     * @param {CalendarApiCalendarSyncGetRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CalendarApi
+     */
+    public calendarSyncGet(requestParameters: CalendarApiCalendarSyncGetRequest, options?: RawAxiosRequestConfig) {
+        return CalendarApiFp(this.configuration).calendarSyncGet(requestParameters.integrationId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Starts watching the calendar for changes & imports upcoming events. Events that already exist when sync starts are recorded as bookings but do not fire any flow.
+     * @summary Start syncing bookings from a Google Calendar integration
+     * @param {CalendarApiCalendarSyncStartRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CalendarApi
+     */
+    public calendarSyncStart(requestParameters: CalendarApiCalendarSyncStartRequest, options?: RawAxiosRequestConfig) {
+        return CalendarApiFp(this.configuration).calendarSyncStart(requestParameters.calendarSyncStartRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Stops watching the calendar & stops all pending reminders of its bookings
+     * @summary Stop syncing bookings from a Google Calendar integration
+     * @param {CalendarApiCalendarSyncStopRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CalendarApi
+     */
+    public calendarSyncStop(requestParameters: CalendarApiCalendarSyncStopRequest, options?: RawAxiosRequestConfig) {
+        return CalendarApiFp(this.configuration).calendarSyncStop(requestParameters.integrationId, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
 
 
 /**
