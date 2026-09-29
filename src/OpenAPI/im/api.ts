@@ -4881,6 +4881,30 @@ export interface MessageButton {
      * @memberof MessageButton
      */
     'requestContactInfo'?: boolean;
+    /**
+     * Make a \"Copy code\" button (COPY_CODE) carrying a coupon code. May name a template parameter instead, which is resolved at send time. Marketing templates only.
+     * @type {string}
+     * @memberof MessageButton
+     */
+    'copyCode'?: string;
+    /**
+     * Make a \"View catalog\" button (CATALOG), opening the catalog connected to the WhatsApp Business Account. Marketing only.
+     * @type {boolean}
+     * @memberof MessageButton
+     */
+    'catalog'?: boolean;
+    /**
+     * Make a \"View items\" button (MPM), opening a list of products from the connected catalog. Marketing only.
+     * @type {boolean}
+     * @memberof MessageButton
+     */
+    'mpm'?: boolean;
+    /**
+     * Make a \"View\" button (SPM) on a product carousel card, opening the product that card was sent with.
+     * @type {boolean}
+     * @memberof MessageButton
+     */
+    'viewProduct'?: boolean;
 }
 /**
  * 
@@ -6452,6 +6476,12 @@ export interface MiscOptions {
      */
     'sendCatalog'?: boolean;
     /**
+     * When a limited-time offer template\'s offer expires, in milliseconds since the epoch. Needed when the offer was created with an expiry.
+     * @type {number}
+     * @memberof MiscOptions
+     */
+    'offerExpiryTime'?: number;
+    /**
      * Header text for a product_list interactive message. Defaults to a generic header if not provided.
      * @type {string}
      * @memberof MiscOptions
@@ -7911,6 +7941,18 @@ export interface TemplateCreate {
      * @memberof TemplateCreate
      */
     'cards'?: Array<TemplateCarouselCard>;
+    /**
+     * Product carousel cards. Each card shows one product from the connected catalog, picked when the template is sent, so the card only carries its button here. `text` becomes the bubble body above the cards.
+     * @type {Array<TemplateProductCard>}
+     * @memberof TemplateCreate
+     */
+    'productCards'?: Array<TemplateProductCard>;
+    /**
+     * 
+     * @type {TemplateCreateOffer}
+     * @memberof TemplateCreate
+     */
+    'offer'?: TemplateCreateOffer;
 }
 /**
  * 
@@ -7940,6 +7982,25 @@ export interface TemplateCreateAttachmentsInner {
 
 
 /**
+ * Limited-time offer banner (LIMITED_TIME_OFFER). Marketing only, and Meta does not allow a footer alongside it.
+ * @export
+ * @interface TemplateCreateOffer
+ */
+export interface TemplateCreateOffer {
+    /**
+     * 
+     * @type {string}
+     * @memberof TemplateCreateOffer
+     */
+    'text': string;
+    /**
+     * Count down to the offer\'s expiry in the message.
+     * @type {boolean}
+     * @memberof TemplateCreateOffer
+     */
+    'hasExpiration'?: boolean;
+}
+/**
  * 
  * @export
  * @interface TemplateParams
@@ -7966,6 +8027,19 @@ export interface TemplateParams {
 }
 
 
+/**
+ * 
+ * @export
+ * @interface TemplateProductCard
+ */
+export interface TemplateProductCard {
+    /**
+     * One button per card -- a \"View\" (SPM) or a URL button.
+     * @type {Array<MessageButton>}
+     * @memberof TemplateProductCard
+     */
+    'buttons': Array<MessageButton>;
+}
 /**
  * 
  * @export

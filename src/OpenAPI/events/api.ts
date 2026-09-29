@@ -10037,6 +10037,30 @@ export interface MessageInsertDataButtonsInner {
      * @memberof MessageInsertDataButtonsInner
      */
     'requestContactInfo'?: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof MessageInsertDataButtonsInner
+     */
+    'copyCode'?: string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof MessageInsertDataButtonsInner
+     */
+    'catalog'?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof MessageInsertDataButtonsInner
+     */
+    'mpm'?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof MessageInsertDataButtonsInner
+     */
+    'viewProduct'?: boolean;
 }
 /**
  * 
@@ -10419,6 +10443,12 @@ export interface MessageInsertDataMiscOptions {
      * @memberof MessageInsertDataMiscOptions
      */
     'sendCatalog'?: boolean;
+    /**
+     * 
+     * @type {number}
+     * @memberof MessageInsertDataMiscOptions
+     */
+    'offerExpiryTime'?: number;
     /**
      * 
      * @type {string}
