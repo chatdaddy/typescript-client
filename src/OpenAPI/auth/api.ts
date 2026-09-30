@@ -399,6 +399,12 @@ export interface AnnouncementUser {
  */
 export interface ApiToken {
     /**
+     * Non-secret identifier of the token, use it to reference the token
+     * @type {string}
+     * @memberof ApiToken
+     */
+    'id': string;
+    /**
      * The reason for the token
      * @type {string}
      * @memberof ApiToken
@@ -434,6 +440,19 @@ export interface ApiToken {
      * @memberof ApiToken
      */
     'scopes': Array<Scope>;
+}
+/**
+ * 
+ * @export
+ * @interface ApiTokenDelete200Response
+ */
+export interface ApiTokenDelete200Response {
+    /**
+     * 
+     * @type {number}
+     * @memberof ApiTokenDelete200Response
+     */
+    'affected': number;
 }
 /**
  * 
@@ -3292,15 +3311,14 @@ export interface WidgetDialogParams {
 export const APITokensApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
-         * 
-         * @summary Delete an API token
-         * @param {Array<string>} tokens 
+         * Deletes tokens by value (`tokens`) and/or by id (`ids`). Only tokens of the caller\'s team are affected. Members can delete their own tokens; team admins can delete any token of their team. 
+         * @summary Delete API tokens
+         * @param {Array<string>} [tokens] 
+         * @param {Array<string>} [ids] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        apiTokenDelete: async (tokens: Array<string>, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'tokens' is not null or undefined
-            assertParamExists('apiTokenDelete', 'tokens', tokens)
+        apiTokenDelete: async (tokens?: Array<string>, ids?: Array<string>, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/api-token`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -3321,6 +3339,10 @@ export const APITokensApiAxiosParamCreator = function (configuration?: Configura
                 localVarQueryParameter['tokens'] = tokens;
             }
 
+            if (ids) {
+                localVarQueryParameter['ids'] = ids;
+            }
+
 
     
             setSearchParams(localVarUrlObj, localVarQueryParameter);
@@ -3334,7 +3356,7 @@ export const APITokensApiAxiosParamCreator = function (configuration?: Configura
         },
         /**
          * 
-         * @summary Fetch API tokens
+         * @summary Fetch the caller\'s own API tokens
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -3449,21 +3471,22 @@ export const APITokensApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = APITokensApiAxiosParamCreator(configuration)
     return {
         /**
-         * 
-         * @summary Delete an API token
-         * @param {Array<string>} tokens 
+         * Deletes tokens by value (`tokens`) and/or by id (`ids`). Only tokens of the caller\'s team are affected. Members can delete their own tokens; team admins can delete any token of their team. 
+         * @summary Delete API tokens
+         * @param {Array<string>} [tokens] 
+         * @param {Array<string>} [ids] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async apiTokenDelete(tokens: Array<string>, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.apiTokenDelete(tokens, options);
+        async apiTokenDelete(tokens?: Array<string>, ids?: Array<string>, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ApiTokenDelete200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.apiTokenDelete(tokens, ids, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['APITokensApi.apiTokenDelete']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
          * 
-         * @summary Fetch API tokens
+         * @summary Fetch the caller\'s own API tokens
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -3510,18 +3533,18 @@ export const APITokensApiFactory = function (configuration?: Configuration, base
     const localVarFp = APITokensApiFp(configuration)
     return {
         /**
-         * 
-         * @summary Delete an API token
+         * Deletes tokens by value (`tokens`) and/or by id (`ids`). Only tokens of the caller\'s team are affected. Members can delete their own tokens; team admins can delete any token of their team. 
+         * @summary Delete API tokens
          * @param {APITokensApiApiTokenDeleteRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        apiTokenDelete(requestParameters: APITokensApiApiTokenDeleteRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.apiTokenDelete(requestParameters.tokens, options).then((request) => request(axios, basePath));
+        apiTokenDelete(requestParameters: APITokensApiApiTokenDeleteRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<ApiTokenDelete200Response> {
+            return localVarFp.apiTokenDelete(requestParameters.tokens, requestParameters.ids, options).then((request) => request(axios, basePath));
         },
         /**
          * 
-         * @summary Fetch API tokens
+         * @summary Fetch the caller\'s own API tokens
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -3562,7 +3585,14 @@ export interface APITokensApiApiTokenDeleteRequest {
      * @type {Array<string>}
      * @memberof APITokensApiApiTokenDelete
      */
-    readonly tokens: Array<string>
+    readonly tokens?: Array<string>
+
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof APITokensApiApiTokenDelete
+     */
+    readonly ids?: Array<string>
 }
 
 /**
@@ -3601,20 +3631,20 @@ export interface APITokensApiApiTokenValidatePostRequest {
  */
 export class APITokensApi extends BaseAPI {
     /**
-     * 
-     * @summary Delete an API token
+     * Deletes tokens by value (`tokens`) and/or by id (`ids`). Only tokens of the caller\'s team are affected. Members can delete their own tokens; team admins can delete any token of their team. 
+     * @summary Delete API tokens
      * @param {APITokensApiApiTokenDeleteRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof APITokensApi
      */
-    public apiTokenDelete(requestParameters: APITokensApiApiTokenDeleteRequest, options?: RawAxiosRequestConfig) {
-        return APITokensApiFp(this.configuration).apiTokenDelete(requestParameters.tokens, options).then((request) => request(this.axios, this.basePath));
+    public apiTokenDelete(requestParameters: APITokensApiApiTokenDeleteRequest = {}, options?: RawAxiosRequestConfig) {
+        return APITokensApiFp(this.configuration).apiTokenDelete(requestParameters.tokens, requestParameters.ids, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * 
-     * @summary Fetch API tokens
+     * @summary Fetch the caller\'s own API tokens
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof APITokensApi

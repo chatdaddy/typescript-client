@@ -8522,6 +8522,81 @@ export type EventSubscriptionType = typeof EventSubscriptionType[keyof typeof Ev
 
 
 /**
+ * EventSubscription plus its signing secret. Keep the properties in sync with EventSubscription
+ * @export
+ * @interface EventSubscriptionWithSigningSecret
+ */
+export interface EventSubscriptionWithSigningSecret {
+    /**
+     * The subscription ID
+     * @type {string}
+     * @memberof EventSubscriptionWithSigningSecret
+     */
+    'id': string;
+    /**
+     * Whether the subscription is enabled
+     * @type {boolean}
+     * @memberof EventSubscriptionWithSigningSecret
+     */
+    'enabled': boolean;
+    /**
+     * The owner id the connection
+     * @type {string}
+     * @memberof EventSubscriptionWithSigningSecret
+     */
+    'ownerId'?: string;
+    /**
+     * The User ID that created the subscription
+     * @type {string}
+     * @memberof EventSubscriptionWithSigningSecret
+     */
+    'userId': string;
+    /**
+     * An ISO formatted timestamp
+     * @type {string}
+     * @memberof EventSubscriptionWithSigningSecret
+     */
+    'createdAt'?: string;
+    /**
+     * the events to subscribe to
+     * @type {Array<EventName>}
+     * @memberof EventSubscriptionWithSigningSecret
+     */
+    'events': Array<EventName>;
+    /**
+     * the IM accounts to receive events from
+     * @type {Array<string>}
+     * @memberof EventSubscriptionWithSigningSecret
+     */
+    'accounts'?: Array<string>;
+    /**
+     * 
+     * @type {{ [key: string]: any; }}
+     * @memberof EventSubscriptionWithSigningSecret
+     */
+    'schema'?: { [key: string]: any; } | null;
+    /**
+     * 
+     * @type {EventSubscriptionType}
+     * @memberof EventSubscriptionWithSigningSecret
+     */
+    'type': EventSubscriptionType;
+    /**
+     * Web hook url to fire to
+     * @type {string}
+     * @memberof EventSubscriptionWithSigningSecret
+     */
+    'url'?: string;
+    /**
+     * Secret used to HMAC-sign webhook deliveries. Only returned when the subscription is created or the secret is rotated -- store it
+     * @type {string}
+     * @memberof EventSubscriptionWithSigningSecret
+     */
+    'signingSecret': string;
+}
+
+
+/**
  * @type EventWebhookData
  * The request body you\'ll receive in a webhook
  * @export
@@ -12648,6 +12723,19 @@ export interface SubscriptionsGet200Response {
 /**
  * 
  * @export
+ * @interface SubscriptionsSigningSecretRotate200Response
+ */
+export interface SubscriptionsSigningSecretRotate200Response {
+    /**
+     * Secret used to HMAC-sign webhook deliveries. Only returned when the subscription is created or the secret is rotated -- store it
+     * @type {string}
+     * @memberof SubscriptionsSigningSecretRotate200Response
+     */
+    'signingSecret': string;
+}
+/**
+ * 
+ * @export
  * @interface TagDelete
  */
 export interface TagDelete {
@@ -16226,6 +16314,44 @@ export const EventSubscriptionApiAxiosParamCreator = function (configuration?: C
                 options: localVarRequestOptions,
             };
         },
+        /**
+         * Generates a new secret used to sign deliveries to this webhook (see the `x-chatdaddy-signature` header on the webhook example). The previous secret stops working immediately. Use this to obtain a secret for webhooks created before signing was introduced -- those are delivered unsigned until then. 
+         * @summary Issue a new signing secret for a webhook subscription
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        subscriptionsSigningSecretRotate: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('subscriptionsSigningSecretRotate', 'id', id)
+            const localVarPath = `/subscriptions/{id}/signing-secret`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["CHATDADDY_HOOK"], configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
     }
 };
 
@@ -16315,10 +16441,23 @@ export const EventSubscriptionApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async subscriptionsPost(postEventSubscription?: PostEventSubscription, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<EventSubscription>> {
+        async subscriptionsPost(postEventSubscription?: PostEventSubscription, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<EventSubscriptionWithSigningSecret>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.subscriptionsPost(postEventSubscription, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['EventSubscriptionApi.subscriptionsPost']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Generates a new secret used to sign deliveries to this webhook (see the `x-chatdaddy-signature` header on the webhook example). The previous secret stops working immediately. Use this to obtain a secret for webhooks created before signing was introduced -- those are delivered unsigned until then. 
+         * @summary Issue a new signing secret for a webhook subscription
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async subscriptionsSigningSecretRotate(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SubscriptionsSigningSecretRotate200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.subscriptionsSigningSecretRotate(id, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['EventSubscriptionApi.subscriptionsSigningSecretRotate']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
     }
@@ -16388,8 +16527,18 @@ export const EventSubscriptionApiFactory = function (configuration?: Configurati
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        subscriptionsPost(requestParameters: EventSubscriptionApiSubscriptionsPostRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<EventSubscription> {
+        subscriptionsPost(requestParameters: EventSubscriptionApiSubscriptionsPostRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<EventSubscriptionWithSigningSecret> {
             return localVarFp.subscriptionsPost(requestParameters.postEventSubscription, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Generates a new secret used to sign deliveries to this webhook (see the `x-chatdaddy-signature` header on the webhook example). The previous secret stops working immediately. Use this to obtain a secret for webhooks created before signing was introduced -- those are delivered unsigned until then. 
+         * @summary Issue a new signing secret for a webhook subscription
+         * @param {EventSubscriptionApiSubscriptionsSigningSecretRotateRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        subscriptionsSigningSecretRotate(requestParameters: EventSubscriptionApiSubscriptionsSigningSecretRotateRequest, options?: RawAxiosRequestConfig): AxiosPromise<SubscriptionsSigningSecretRotate200Response> {
+            return localVarFp.subscriptionsSigningSecretRotate(requestParameters.id, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -16528,6 +16677,20 @@ export interface EventSubscriptionApiSubscriptionsPostRequest {
 }
 
 /**
+ * Request parameters for subscriptionsSigningSecretRotate operation in EventSubscriptionApi.
+ * @export
+ * @interface EventSubscriptionApiSubscriptionsSigningSecretRotateRequest
+ */
+export interface EventSubscriptionApiSubscriptionsSigningSecretRotateRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof EventSubscriptionApiSubscriptionsSigningSecretRotate
+     */
+    readonly id: string
+}
+
+/**
  * EventSubscriptionApi - object-oriented interface
  * @export
  * @class EventSubscriptionApi
@@ -16604,6 +16767,18 @@ export class EventSubscriptionApi extends BaseAPI {
      */
     public subscriptionsPost(requestParameters: EventSubscriptionApiSubscriptionsPostRequest = {}, options?: RawAxiosRequestConfig) {
         return EventSubscriptionApiFp(this.configuration).subscriptionsPost(requestParameters.postEventSubscription, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Generates a new secret used to sign deliveries to this webhook (see the `x-chatdaddy-signature` header on the webhook example). The previous secret stops working immediately. Use this to obtain a secret for webhooks created before signing was introduced -- those are delivered unsigned until then. 
+     * @summary Issue a new signing secret for a webhook subscription
+     * @param {EventSubscriptionApiSubscriptionsSigningSecretRotateRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof EventSubscriptionApi
+     */
+    public subscriptionsSigningSecretRotate(requestParameters: EventSubscriptionApiSubscriptionsSigningSecretRotateRequest, options?: RawAxiosRequestConfig) {
+        return EventSubscriptionApiFp(this.configuration).subscriptionsSigningSecretRotate(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
@@ -16895,7 +17070,7 @@ export class WebSocketApi extends BaseAPI {
 export const WebhookExampleApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
-         * Example of what to expect from a ChatDaddy Webhook, this is not a real route. Points to keep in mind: - the request body you\'ll receive in the webhook will   match the request body shown in this route - there will be a chatdaddy token in the headers with no scopes - a POST request will be made to the url - ChatDaddy expects a 200 response to mark a successful delivery 
+         * Example of what to expect from a ChatDaddy Webhook, this is not a real route. Points to keep in mind: - the request body you\'ll receive in the webhook will   match the request body shown in this route - a POST request will be made to the url - ChatDaddy expects a 200 response to mark a successful delivery - every delivery is signed in the `x-chatdaddy-signature` header,   formatted `t=<unix seconds>,v1=<signature>`, where `signature` is   the hex HMAC-SHA256 of `<t>.<raw request body>` keyed by the   subscription\'s signing secret. Verify it against the raw body   (before JSON parsing), compare in constant time, and reject   timestamps older than 5 minutes to prevent replays - the signing secret is returned when the subscription is created;   webhooks created before signing existed get one via   `subscriptionsSigningSecretRotate` and are unsigned until then - DEPRECATED: a chatdaddy token with no scopes is currently also sent   in the `authorization` header. Do not rely on it -- it will be   removed from webhook deliveries. Verify the signature instead 
          * @param {EventWebhookData} [eventWebhookData] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -16938,7 +17113,7 @@ export const WebhookExampleApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = WebhookExampleApiAxiosParamCreator(configuration)
     return {
         /**
-         * Example of what to expect from a ChatDaddy Webhook, this is not a real route. Points to keep in mind: - the request body you\'ll receive in the webhook will   match the request body shown in this route - there will be a chatdaddy token in the headers with no scopes - a POST request will be made to the url - ChatDaddy expects a 200 response to mark a successful delivery 
+         * Example of what to expect from a ChatDaddy Webhook, this is not a real route. Points to keep in mind: - the request body you\'ll receive in the webhook will   match the request body shown in this route - a POST request will be made to the url - ChatDaddy expects a 200 response to mark a successful delivery - every delivery is signed in the `x-chatdaddy-signature` header,   formatted `t=<unix seconds>,v1=<signature>`, where `signature` is   the hex HMAC-SHA256 of `<t>.<raw request body>` keyed by the   subscription\'s signing secret. Verify it against the raw body   (before JSON parsing), compare in constant time, and reject   timestamps older than 5 minutes to prevent replays - the signing secret is returned when the subscription is created;   webhooks created before signing existed get one via   `subscriptionsSigningSecretRotate` and are unsigned until then - DEPRECATED: a chatdaddy token with no scopes is currently also sent   in the `authorization` header. Do not rely on it -- it will be   removed from webhook deliveries. Verify the signature instead 
          * @param {EventWebhookData} [eventWebhookData] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -16960,7 +17135,7 @@ export const WebhookExampleApiFactory = function (configuration?: Configuration,
     const localVarFp = WebhookExampleApiFp(configuration)
     return {
         /**
-         * Example of what to expect from a ChatDaddy Webhook, this is not a real route. Points to keep in mind: - the request body you\'ll receive in the webhook will   match the request body shown in this route - there will be a chatdaddy token in the headers with no scopes - a POST request will be made to the url - ChatDaddy expects a 200 response to mark a successful delivery 
+         * Example of what to expect from a ChatDaddy Webhook, this is not a real route. Points to keep in mind: - the request body you\'ll receive in the webhook will   match the request body shown in this route - a POST request will be made to the url - ChatDaddy expects a 200 response to mark a successful delivery - every delivery is signed in the `x-chatdaddy-signature` header,   formatted `t=<unix seconds>,v1=<signature>`, where `signature` is   the hex HMAC-SHA256 of `<t>.<raw request body>` keyed by the   subscription\'s signing secret. Verify it against the raw body   (before JSON parsing), compare in constant time, and reject   timestamps older than 5 minutes to prevent replays - the signing secret is returned when the subscription is created;   webhooks created before signing existed get one via   `subscriptionsSigningSecretRotate` and are unsigned until then - DEPRECATED: a chatdaddy token with no scopes is currently also sent   in the `authorization` header. Do not rely on it -- it will be   removed from webhook deliveries. Verify the signature instead 
          * @param {WebhookExampleApiWebhookExampleRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -16993,7 +17168,7 @@ export interface WebhookExampleApiWebhookExampleRequest {
  */
 export class WebhookExampleApi extends BaseAPI {
     /**
-     * Example of what to expect from a ChatDaddy Webhook, this is not a real route. Points to keep in mind: - the request body you\'ll receive in the webhook will   match the request body shown in this route - there will be a chatdaddy token in the headers with no scopes - a POST request will be made to the url - ChatDaddy expects a 200 response to mark a successful delivery 
+     * Example of what to expect from a ChatDaddy Webhook, this is not a real route. Points to keep in mind: - the request body you\'ll receive in the webhook will   match the request body shown in this route - a POST request will be made to the url - ChatDaddy expects a 200 response to mark a successful delivery - every delivery is signed in the `x-chatdaddy-signature` header,   formatted `t=<unix seconds>,v1=<signature>`, where `signature` is   the hex HMAC-SHA256 of `<t>.<raw request body>` keyed by the   subscription\'s signing secret. Verify it against the raw body   (before JSON parsing), compare in constant time, and reject   timestamps older than 5 minutes to prevent replays - the signing secret is returned when the subscription is created;   webhooks created before signing existed get one via   `subscriptionsSigningSecretRotate` and are unsigned until then - DEPRECATED: a chatdaddy token with no scopes is currently also sent   in the `authorization` header. Do not rely on it -- it will be   removed from webhook deliveries. Verify the signature instead 
      * @param {WebhookExampleApiWebhookExampleRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
