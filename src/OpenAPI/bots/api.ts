@@ -1851,6 +1851,30 @@ export interface BotMessageButton {
      */
     'requestContactInfo'?: boolean;
     /**
+     * Make a \"View catalog\" button, opening the catalog connected to the WhatsApp Business Account. Marketing templates only.
+     * @type {boolean}
+     * @memberof BotMessageButton
+     */
+    'catalog'?: boolean;
+    /**
+     * Make a \"View items\" button, opening a list of the products on this message. Marketing templates only.
+     * @type {boolean}
+     * @memberof BotMessageButton
+     */
+    'mpm'?: boolean;
+    /**
+     * Make a \"View\" button on a product carousel card, opening the product that card was sent with.
+     * @type {boolean}
+     * @memberof BotMessageButton
+     */
+    'viewProduct'?: boolean;
+    /**
+     * Make a \"Copy code\" button carrying a coupon code. May name a parameter instead, resolved when the message is sent.
+     * @type {string}
+     * @memberof BotMessageButton
+     */
+    'copyCode'?: string;
+    /**
      * 
      * @type {Position}
      * @memberof BotMessageButton
@@ -2036,6 +2060,19 @@ export interface BotMessageListSectionsInnerOptionsInner {
      * @memberof BotMessageListSectionsInnerOptionsInner
      */
     'nextAction'?: NextAction;
+}
+/**
+ * One card in a product card carousel. The product it shows is taken from the message when it is sent, so the card only carries its button.
+ * @export
+ * @interface BotMessageProductCard
+ */
+export interface BotMessageProductCard {
+    /**
+     * One button per card -- a \"View\" or a URL button.
+     * @type {Array<BotMessageButton>}
+     * @memberof BotMessageProductCard
+     */
+    'buttons': Array<BotMessageButton>;
 }
 /**
  * 
@@ -4694,6 +4731,18 @@ export interface MessageObj {
      */
     'cards'?: Array<BotMessageCard>;
     /**
+     * Product carousel cards. When present the action is submitted to Meta as a product card carousel, each card showing one of the message\'s products, and `text` becomes the bubble body above them.
+     * @type {Array<BotMessageProductCard>}
+     * @memberof MessageObj
+     */
+    'productCards'?: Array<BotMessageProductCard>;
+    /**
+     * 
+     * @type {MessageObjOffer}
+     * @memberof MessageObj
+     */
+    'offer'?: MessageObjOffer;
+    /**
      * the subject of the message, if applicable
      * @type {string}
      * @memberof MessageObj
@@ -4711,6 +4760,31 @@ export interface MessageObj {
      * @memberof MessageObj
      */
     'whatsappForm'?: WhatsAppForm;
+}
+/**
+ * Limited-time offer banner. Marketing only, and Meta does not allow a footer alongside it.
+ * @export
+ * @interface MessageObjOffer
+ */
+export interface MessageObjOffer {
+    /**
+     * 
+     * @type {string}
+     * @memberof MessageObjOffer
+     */
+    'text': string;
+    /**
+     * Count down to the offer\'s expiry in the message. Requires `expiryMinutes`, since a countdown needs an end time; the action fails to fire without it.
+     * @type {boolean}
+     * @memberof MessageObjOffer
+     */
+    'hasExpiration'?: boolean;
+    /**
+     * How long the offer lasts from the moment the action fires. The absolute expiry is worked out at send time, because a flow fires again and again. Required when `hasExpiration` is true, and ignored otherwise.
+     * @type {number}
+     * @memberof MessageObjOffer
+     */
+    'expiryMinutes'?: number;
 }
 /**
  * Optional parameters to send a message

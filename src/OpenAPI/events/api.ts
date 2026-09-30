@@ -1996,6 +1996,18 @@ export interface BotInsertDataActionsInnerAllOfMessage {
      */
     'cards'?: Array<BotInsertDataActionsInnerAllOfMessageCardsInner>;
     /**
+     * Product carousel cards. When present the action is submitted to Meta as a product card carousel, each card showing one of the message\'s products, and `text` becomes the bubble body above them.
+     * @type {Array<BotInsertDataActionsInnerAllOfMessageProductCardsInner>}
+     * @memberof BotInsertDataActionsInnerAllOfMessage
+     */
+    'productCards'?: Array<BotInsertDataActionsInnerAllOfMessageProductCardsInner>;
+    /**
+     * 
+     * @type {BotInsertDataActionsInnerAllOfMessageOffer}
+     * @memberof BotInsertDataActionsInnerAllOfMessage
+     */
+    'offer'?: BotInsertDataActionsInnerAllOfMessageOffer;
+    /**
      * the subject of the message, if applicable
      * @type {string}
      * @memberof BotInsertDataActionsInnerAllOfMessage
@@ -2125,6 +2137,30 @@ export interface BotInsertDataActionsInnerAllOfMessageButtonsInner {
      * @memberof BotInsertDataActionsInnerAllOfMessageButtonsInner
      */
     'requestContactInfo'?: boolean;
+    /**
+     * Make a \"View catalog\" button, opening the catalog connected to the WhatsApp Business Account. Marketing templates only.
+     * @type {boolean}
+     * @memberof BotInsertDataActionsInnerAllOfMessageButtonsInner
+     */
+    'catalog'?: boolean;
+    /**
+     * Make a \"View items\" button, opening a list of the products on this message. Marketing templates only.
+     * @type {boolean}
+     * @memberof BotInsertDataActionsInnerAllOfMessageButtonsInner
+     */
+    'mpm'?: boolean;
+    /**
+     * Make a \"View\" button on a product carousel card, opening the product that card was sent with.
+     * @type {boolean}
+     * @memberof BotInsertDataActionsInnerAllOfMessageButtonsInner
+     */
+    'viewProduct'?: boolean;
+    /**
+     * Make a \"Copy code\" button carrying a coupon code. May name a parameter instead, resolved when the message is sent.
+     * @type {string}
+     * @memberof BotInsertDataActionsInnerAllOfMessageButtonsInner
+     */
+    'copyCode'?: string;
     /**
      * 
      * @type {BotInsertDataActionsInnerAllOfMessageButtonsInnerPosition}
@@ -3066,6 +3102,44 @@ export interface BotInsertDataActionsInnerAllOfMessageListSectionsInnerOptionsIn
      * @memberof BotInsertDataActionsInnerAllOfMessageListSectionsInnerOptionsInner
      */
     'nextAction'?: BotInsertDataActionsInnerAllOfMessageButtonsInnerNextAction;
+}
+/**
+ * Limited-time offer banner. Marketing only, and Meta does not allow a footer alongside it.
+ * @export
+ * @interface BotInsertDataActionsInnerAllOfMessageOffer
+ */
+export interface BotInsertDataActionsInnerAllOfMessageOffer {
+    /**
+     * 
+     * @type {string}
+     * @memberof BotInsertDataActionsInnerAllOfMessageOffer
+     */
+    'text': string;
+    /**
+     * Count down to the offer\'s expiry in the message. Requires `expiryMinutes`, since a countdown needs an end time; the action fails to fire without it.
+     * @type {boolean}
+     * @memberof BotInsertDataActionsInnerAllOfMessageOffer
+     */
+    'hasExpiration'?: boolean;
+    /**
+     * How long the offer lasts from the moment the action fires. The absolute expiry is worked out at send time, because a flow fires again and again. Required when `hasExpiration` is true, and ignored otherwise.
+     * @type {number}
+     * @memberof BotInsertDataActionsInnerAllOfMessageOffer
+     */
+    'expiryMinutes'?: number;
+}
+/**
+ * One card in a product card carousel. The product it shows is taken from the message when it is sent, so the card only carries its button.
+ * @export
+ * @interface BotInsertDataActionsInnerAllOfMessageProductCardsInner
+ */
+export interface BotInsertDataActionsInnerAllOfMessageProductCardsInner {
+    /**
+     * One button per card -- a \"View\" or a URL button.
+     * @type {Array<BotInsertDataActionsInnerAllOfMessageButtonsInner>}
+     * @memberof BotInsertDataActionsInnerAllOfMessageProductCardsInner
+     */
+    'buttons': Array<BotInsertDataActionsInnerAllOfMessageButtonsInner>;
 }
 /**
  * 
