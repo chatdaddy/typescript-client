@@ -13340,6 +13340,12 @@ export interface TeamInsertDataMetadata {
      * @type {string}
      * @memberof TeamInsertDataMetadata
      */
+    'companyLogoUrl'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof TeamInsertDataMetadata
+     */
     'industry'?: string;
     /**
      * 

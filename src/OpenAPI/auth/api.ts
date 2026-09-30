@@ -2233,6 +2233,12 @@ export interface TeamMetadata {
      */
     'companyWebsite'?: string;
     /**
+     * Logo read from the company website during onboarding (see /website-preview)
+     * @type {string}
+     * @memberof TeamMetadata
+     */
+    'companyLogoUrl'?: string;
+    /**
      * 
      * @type {string}
      * @memberof TeamMetadata
@@ -3045,6 +3051,31 @@ export interface WebPushSubscription {
      * @memberof WebPushSubscription
      */
     'p256dhKey': string;
+}
+/**
+ * 
+ * @export
+ * @interface WebsitePreview
+ */
+export interface WebsitePreview {
+    /**
+     * The page that was read, after redirects
+     * @type {string}
+     * @memberof WebsitePreview
+     */
+    'url': string;
+    /**
+     * The business name the site declares
+     * @type {string}
+     * @memberof WebsitePreview
+     */
+    'name'?: string;
+    /**
+     * The best logo or icon the site declares
+     * @type {string}
+     * @memberof WebsitePreview
+     */
+    'logoUrl'?: string;
 }
 /**
  * 
@@ -6748,6 +6779,47 @@ export const TeamsApiAxiosParamCreator = function (configuration?: Configuration
                 options: localVarRequestOptions,
             };
         },
+        /**
+         * Fetches a public website (the user\'s own business site, e.g. during onboarding) and returns the business name and the best logo it declares. Private and internal addresses are refused. 
+         * @summary Read a website\'s business name and logo
+         * @param {string} url The website, with or without https://
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        websitePreviewGet: async (url: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'url' is not null or undefined
+            assertParamExists('websitePreviewGet', 'url', url)
+            const localVarPath = `/website-preview`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", [], configuration)
+
+            if (url !== undefined) {
+                localVarQueryParameter['url'] = url;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
     }
 };
 
@@ -6919,6 +6991,19 @@ export const TeamsApiFp = function(configuration?: Configuration) {
             const localVarOperationServerBasePath = operationServerMap['TeamsApi.teamsUpgradeVariant']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
+        /**
+         * Fetches a public website (the user\'s own business site, e.g. during onboarding) and returns the business name and the best logo it declares. Private and internal addresses are refused. 
+         * @summary Read a website\'s business name and logo
+         * @param {string} url The website, with or without https://
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async websitePreviewGet(url: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<WebsitePreview>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.websitePreviewGet(url, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['TeamsApi.websitePreviewGet']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
     }
 };
 
@@ -7037,6 +7122,16 @@ export const TeamsApiFactory = function (configuration?: Configuration, basePath
          */
         teamsUpgradeVariant(requestParameters: TeamsApiTeamsUpgradeVariantRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<TeamsUpgradeVariant200Response> {
             return localVarFp.teamsUpgradeVariant(requestParameters.teamsUpgradeVariantRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Fetches a public website (the user\'s own business site, e.g. during onboarding) and returns the business name and the best logo it declares. Private and internal addresses are refused. 
+         * @summary Read a website\'s business name and logo
+         * @param {TeamsApiWebsitePreviewGetRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        websitePreviewGet(requestParameters: TeamsApiWebsitePreviewGetRequest, options?: RawAxiosRequestConfig): AxiosPromise<WebsitePreview> {
+            return localVarFp.websitePreviewGet(requestParameters.url, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -7315,6 +7410,20 @@ export interface TeamsApiTeamsUpgradeVariantRequest {
 }
 
 /**
+ * Request parameters for websitePreviewGet operation in TeamsApi.
+ * @export
+ * @interface TeamsApiWebsitePreviewGetRequest
+ */
+export interface TeamsApiWebsitePreviewGetRequest {
+    /**
+     * The website, with or without https://
+     * @type {string}
+     * @memberof TeamsApiWebsitePreviewGet
+     */
+    readonly url: string
+}
+
+/**
  * TeamsApi - object-oriented interface
  * @export
  * @class TeamsApi
@@ -7450,6 +7559,18 @@ export class TeamsApi extends BaseAPI {
      */
     public teamsUpgradeVariant(requestParameters: TeamsApiTeamsUpgradeVariantRequest = {}, options?: RawAxiosRequestConfig) {
         return TeamsApiFp(this.configuration).teamsUpgradeVariant(requestParameters.teamsUpgradeVariantRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Fetches a public website (the user\'s own business site, e.g. during onboarding) and returns the business name and the best logo it declares. Private and internal addresses are refused. 
+     * @summary Read a website\'s business name and logo
+     * @param {TeamsApiWebsitePreviewGetRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof TeamsApi
+     */
+    public websitePreviewGet(requestParameters: TeamsApiWebsitePreviewGetRequest, options?: RawAxiosRequestConfig) {
+        return TeamsApiFp(this.configuration).websitePreviewGet(requestParameters.url, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
