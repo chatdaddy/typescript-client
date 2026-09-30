@@ -1091,7 +1091,8 @@ const ActorAutomationType = {
     Notifications: 'notifications',
     Bot: 'bot',
     AiChatbot: 'ai-chatbot',
-    Trigger: 'trigger'
+    Trigger: 'trigger',
+    App: 'app'
 } as const;
 
 type ActorAutomationType = typeof ActorAutomationType[keyof typeof ActorAutomationType];
@@ -1110,7 +1111,7 @@ interface ActorMetadata {
      */
     'type': ActorAutomationType;
     /**
-     * ID of the object that sent the message. For example, the campaign ID or keyword reply ID. Separate sub-objects with a `/`. For example, to specify the action of a bot -- use `bot_id/action_id`
+     * ID of the object that sent the message. For example, the campaign ID or keyword reply ID. Separate sub-objects with a `/`. For example, to specify the action of a bot -- use `bot_id/action_id`. For an installed app, use `app_<appId>/inst_<installationId>`, built by the platform from the installation, never supplied by the app
      * @type {string}
      * @memberof ActorMetadata
      */
@@ -5664,7 +5665,7 @@ export interface MessageSenderContext {
      */
     'type': ActorAutomationType;
     /**
-     * ID of the object that sent the message. For example, the campaign ID or keyword reply ID. Separate sub-objects with a `/`. For example, to specify the action of a bot -- use `bot_id/action_id`
+     * ID of the object that sent the message. For example, the campaign ID or keyword reply ID. Separate sub-objects with a `/`. For example, to specify the action of a bot -- use `bot_id/action_id`. For an installed app, use `app_<appId>/inst_<installationId>`, built by the platform from the installation, never supplied by the app
      * @type {string}
      * @memberof MessageSenderContext
      */

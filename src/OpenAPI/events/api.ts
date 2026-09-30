@@ -9161,7 +9161,8 @@ export const GroupUpdateDataOwnerTagsInnerAllOfAddedMetadataActorTypeEnum = {
     Notifications: 'notifications',
     Bot: 'bot',
     AiChatbot: 'ai-chatbot',
-    Trigger: 'trigger'
+    Trigger: 'trigger',
+    App: 'app'
 } as const;
 
 export type GroupUpdateDataOwnerTagsInnerAllOfAddedMetadataActorTypeEnum = typeof GroupUpdateDataOwnerTagsInnerAllOfAddedMetadataActorTypeEnum[keyof typeof GroupUpdateDataOwnerTagsInnerAllOfAddedMetadataActorTypeEnum];
