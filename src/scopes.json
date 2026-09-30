@@ -12,7 +12,8 @@
 		],
 		"hidden": true,
 		"section": "crm",
-		"group": "Contact"
+		"group": "Contact",
+		"appGrantable": true
 	},
 	"CONTACTS_READ_ALL": {
 		"number": 3,
@@ -28,7 +29,8 @@
 			"viewer"
 		],
 		"section": "crm",
-		"group": "Contact"
+		"group": "Contact",
+		"appGrantable": true
 	},
 	"CONTACTS_CREATE": {
 		"number": 4,
@@ -41,7 +43,8 @@
 			"editor"
 		],
 		"section": "crm",
-		"group": "Contact"
+		"group": "Contact",
+		"appGrantable": true
 	},
 	"CONTACTS_DELETE": {
 		"number": 5,
@@ -67,7 +70,8 @@
 			"editor"
 		],
 		"section": "crm",
-		"group": "Contact"
+		"group": "Contact",
+		"appGrantable": true
 	},
 	"CAMPAIGNS_READ": {
 		"number": 7,
@@ -187,7 +191,8 @@
 			"viewer"
 		],
 		"section": "automation",
-		"group": "Message Flows"
+		"group": "Message Flows",
+		"appGrantable": true
 	},
 	"TEMPLATES_CREATE": {
 		"number": 16,
@@ -240,7 +245,8 @@
 			"viewer"
 		],
 		"section": "crm",
-		"group": "Tags"
+		"group": "Tags",
+		"appGrantable": true
 	},
 	"TAGS_CREATE": {
 		"number": 20,
@@ -253,7 +259,8 @@
 			"editor"
 		],
 		"section": "crm",
-		"group": "Tags"
+		"group": "Tags",
+		"appGrantable": true
 	},
 	"TAGS_DELETE": {
 		"number": 21,
@@ -385,7 +392,8 @@
 			"agent"
 		],
 		"section": "inbox",
-		"group": "Channels"
+		"group": "Channels",
+		"appGrantable": true
 	},
 	"CREATE_SUB_USER": {
 		"number": 37,
@@ -454,7 +462,8 @@
 			"viewer"
 		],
 		"section": "inbox",
-		"group": "Chat"
+		"group": "Chat",
+		"appGrantable": true
 	},
 	"CHATS_ACCESS_ASSIGNED": {
 		"number": 56,
@@ -469,7 +478,8 @@
 		],
 		"hidden": true,
 		"section": "inbox",
-		"group": "Chat"
+		"group": "Chat",
+		"appGrantable": true
 	},
 	"CHATS_DELETE": {
 		"number": 57,
@@ -498,7 +508,8 @@
 		],
 		"hidden": true,
 		"section": "inbox",
-		"group": "Messages"
+		"group": "Messages",
+		"appGrantable": true
 	},
 	"MESSAGES_SEND_TO_ALL": {
 		"number": 59,
@@ -513,7 +524,8 @@
 			"editor"
 		],
 		"section": "inbox",
-		"group": "Messages"
+		"group": "Messages",
+		"appGrantable": true
 	},
 	"EDIT_NOTES": {
 		"number": 60,
@@ -583,7 +595,8 @@
 			"editor"
 		],
 		"section": "inbox",
-		"group": "Notes"
+		"group": "Notes",
+		"appGrantable": true
 	},
 	"CHATDADDY_HOOK": {
 		"number": 65,
@@ -756,7 +769,8 @@
 			"admin"
 		],
 		"section": "shop",
-		"group": "Product"
+		"group": "Product",
+		"appGrantable": true
 	},
 	"PRODUCTS_CREATE": {
 		"number": 83,
@@ -769,7 +783,8 @@
 			"editor"
 		],
 		"section": "shop",
-		"group": "Product"
+		"group": "Product",
+		"appGrantable": true
 	},
 	"PRODUCTS_UPDATE": {
 		"number": 84,
@@ -782,7 +797,8 @@
 			"editor"
 		],
 		"section": "shop",
-		"group": "Product"
+		"group": "Product",
+		"appGrantable": true
 	},
 	"PRODUCTS_DELETE": {
 		"number": 85,
@@ -836,7 +852,8 @@
 			"viewer"
 		],
 		"section": "shop",
-		"group": "Payment"
+		"group": "Payment",
+		"appGrantable": true
 	},
 	"PAYMENT_RECORDS_WRITE": {
 		"number": 89,
@@ -899,7 +916,8 @@
 			"editor"
 		],
 		"section": "inbox",
-		"group": "Messages"
+		"group": "Messages",
+		"appGrantable": true
 	},
 	"WIDGET_EDIT": {
 		"number": 94,
