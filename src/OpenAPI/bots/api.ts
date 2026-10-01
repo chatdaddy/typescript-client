@@ -4584,6 +4584,38 @@ export interface InstallationsGet200Response {
     'cursor'?: string;
 }
 /**
+ * 
+ * @export
+ * @interface InstallationsSuspend200Response
+ */
+export interface InstallationsSuspend200Response {
+    /**
+     * 
+     * @type {number}
+     * @memberof InstallationsSuspend200Response
+     */
+    'suspended': number;
+}
+/**
+ * 
+ * @export
+ * @interface InstallationsSuspendRequest
+ */
+export interface InstallationsSuspendRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof InstallationsSuspendRequest
+     */
+    'appId': string;
+    /**
+     * Only this version\'s installations
+     * @type {string}
+     * @memberof InstallationsSuspendRequest
+     */
+    'appVersion'?: string;
+}
+/**
  * Describes how many contacts are in each status for the first action sent in a trigger instance. Keyed by ActionInteractionType
  * @export
  * @interface InstanceFirstActionStatusCounts
@@ -8035,6 +8067,46 @@ export const AppStoreApiAxiosParamCreator = function (configuration?: Configurat
                 options: localVarRequestOptions,
             };
         },
+        /**
+         * THE one deliberately cross-team route in bots: it acts on every team\'s installations of `appId` (or of that one `appVersion`), not the caller\'s team. One batched update sets every `pending-handshake`, `failed-handshake`, `active` or `pending-reconsent` installation to `suspended` (`uninstalled` and already-`suspended` ones are untouched), and one `suspend` InstallationAudit row per installation records the caller as the actor, in the same transaction. The token and signing-secret caches of this replica are evicted; every other replica is stopped by the per-call status check. Returns how many installations were suspended (0 when none matched). Requires `ADMIN_PANEL_ACCESS`. 
+         * @summary Kill switch, suspend an app\'s installations in every team (ChatDaddy staff)
+         * @param {InstallationsSuspendRequest} installationsSuspendRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        installationsSuspend: async (installationsSuspendRequest: InstallationsSuspendRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'installationsSuspendRequest' is not null or undefined
+            assertParamExists('installationsSuspend', 'installationsSuspendRequest', installationsSuspendRequest)
+            const localVarPath = `/installations/suspend`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["ADMIN_PANEL_ACCESS"], configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(installationsSuspendRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
     }
 };
 
@@ -8129,6 +8201,19 @@ export const AppStoreApiFp = function(configuration?: Configuration) {
             const localVarOperationServerBasePath = operationServerMap['AppStoreApi.installationsPost']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
+        /**
+         * THE one deliberately cross-team route in bots: it acts on every team\'s installations of `appId` (or of that one `appVersion`), not the caller\'s team. One batched update sets every `pending-handshake`, `failed-handshake`, `active` or `pending-reconsent` installation to `suspended` (`uninstalled` and already-`suspended` ones are untouched), and one `suspend` InstallationAudit row per installation records the caller as the actor, in the same transaction. The token and signing-secret caches of this replica are evicted; every other replica is stopped by the per-call status check. Returns how many installations were suspended (0 when none matched). Requires `ADMIN_PANEL_ACCESS`. 
+         * @summary Kill switch, suspend an app\'s installations in every team (ChatDaddy staff)
+         * @param {InstallationsSuspendRequest} installationsSuspendRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async installationsSuspend(installationsSuspendRequest: InstallationsSuspendRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<InstallationsSuspend200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.installationsSuspend(installationsSuspendRequest, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['AppStoreApi.installationsSuspend']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
     }
 };
 
@@ -8198,6 +8283,16 @@ export const AppStoreApiFactory = function (configuration?: Configuration, baseP
          */
         installationsPost(requestParameters: AppStoreApiInstallationsPostRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<Installation> {
             return localVarFp.installationsPost(requestParameters.installationCreate, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * THE one deliberately cross-team route in bots: it acts on every team\'s installations of `appId` (or of that one `appVersion`), not the caller\'s team. One batched update sets every `pending-handshake`, `failed-handshake`, `active` or `pending-reconsent` installation to `suspended` (`uninstalled` and already-`suspended` ones are untouched), and one `suspend` InstallationAudit row per installation records the caller as the actor, in the same transaction. The token and signing-secret caches of this replica are evicted; every other replica is stopped by the per-call status check. Returns how many installations were suspended (0 when none matched). Requires `ADMIN_PANEL_ACCESS`. 
+         * @summary Kill switch, suspend an app\'s installations in every team (ChatDaddy staff)
+         * @param {AppStoreApiInstallationsSuspendRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        installationsSuspend(requestParameters: AppStoreApiInstallationsSuspendRequest, options?: RawAxiosRequestConfig): AxiosPromise<InstallationsSuspend200Response> {
+            return localVarFp.installationsSuspend(requestParameters.installationsSuspendRequest, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -8329,6 +8424,20 @@ export interface AppStoreApiInstallationsPostRequest {
 }
 
 /**
+ * Request parameters for installationsSuspend operation in AppStoreApi.
+ * @export
+ * @interface AppStoreApiInstallationsSuspendRequest
+ */
+export interface AppStoreApiInstallationsSuspendRequest {
+    /**
+     * 
+     * @type {InstallationsSuspendRequest}
+     * @memberof AppStoreApiInstallationsSuspend
+     */
+    readonly installationsSuspendRequest: InstallationsSuspendRequest
+}
+
+/**
  * AppStoreApi - object-oriented interface
  * @export
  * @class AppStoreApi
@@ -8405,6 +8514,18 @@ export class AppStoreApi extends BaseAPI {
      */
     public installationsPost(requestParameters: AppStoreApiInstallationsPostRequest = {}, options?: RawAxiosRequestConfig) {
         return AppStoreApiFp(this.configuration).installationsPost(requestParameters.installationCreate, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * THE one deliberately cross-team route in bots: it acts on every team\'s installations of `appId` (or of that one `appVersion`), not the caller\'s team. One batched update sets every `pending-handshake`, `failed-handshake`, `active` or `pending-reconsent` installation to `suspended` (`uninstalled` and already-`suspended` ones are untouched), and one `suspend` InstallationAudit row per installation records the caller as the actor, in the same transaction. The token and signing-secret caches of this replica are evicted; every other replica is stopped by the per-call status check. Returns how many installations were suspended (0 when none matched). Requires `ADMIN_PANEL_ACCESS`. 
+     * @summary Kill switch, suspend an app\'s installations in every team (ChatDaddy staff)
+     * @param {AppStoreApiInstallationsSuspendRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AppStoreApi
+     */
+    public installationsSuspend(requestParameters: AppStoreApiInstallationsSuspendRequest, options?: RawAxiosRequestConfig) {
+        return AppStoreApiFp(this.configuration).installationsSuspend(requestParameters.installationsSuspendRequest, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
