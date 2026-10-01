@@ -501,6 +501,50 @@ export interface ApiTokenValidatePostRequest {
     'token': string;
 }
 /**
+ * 
+ * @export
+ * @interface AppAccessTokenPost200Response
+ */
+export interface AppAccessTokenPost200Response {
+    /**
+     * 
+     * @type {string}
+     * @memberof AppAccessTokenPost200Response
+     */
+    'access_token': string;
+}
+/**
+ * 
+ * @export
+ * @interface AppAccessTokenRequest
+ */
+export interface AppAccessTokenRequest {
+    /**
+     * Unique identifier for a team
+     * @type {string}
+     * @memberof AppAccessTokenRequest
+     */
+    'teamId': string;
+    /**
+     * 
+     * @type {Array<Scope>}
+     * @memberof AppAccessTokenRequest
+     */
+    'scopes': Array<Scope>;
+    /**
+     * ID of the app installation the token is minted for
+     * @type {string}
+     * @memberof AppAccessTokenRequest
+     */
+    'installationId': string;
+    /**
+     * The app\'s slug, as registered in the app store
+     * @type {string}
+     * @memberof AppAccessTokenRequest
+     */
+    'appId': string;
+}
+/**
  * @type AuthRequest
  * @export
  */
@@ -4710,6 +4754,46 @@ export const OAuthApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
+         * Platform callers only (ADMIN_PANEL_ACCESS -- the platform service accounts and members of the platform admin team). Mints a 5 minute access token for the target team on behalf of an installed app. The token metadata (`type: app`, `objectId: app_<appId>/inst_<installationId>`) is built here, never taken from the caller.  Scopes are clamped in this order: 1. any scope not marked `appGrantable` in the scope catalogue is    refused with a 400 2. the rest are intersected with the target team\'s plan, dropping    (and logging) scopes the plan does not allow 3. if nothing remains, the request is refused with a 403 
+         * @summary Mint a short-lived access token for an installed app
+         * @param {AppAccessTokenRequest} appAccessTokenRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        appAccessTokenPost: async (appAccessTokenRequest: AppAccessTokenRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'appAccessTokenRequest' is not null or undefined
+            assertParamExists('appAccessTokenPost', 'appAccessTokenRequest', appAccessTokenRequest)
+            const localVarPath = `/token/app`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["ADMIN_PANEL_ACCESS"], configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(appAccessTokenRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * If the token is not specified, all tokens of the user are revoked
          * @summary Revoke refresh tokens
          * @param {string} [token] 
@@ -4874,6 +4958,19 @@ export const OAuthApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
+         * Platform callers only (ADMIN_PANEL_ACCESS -- the platform service accounts and members of the platform admin team). Mints a 5 minute access token for the target team on behalf of an installed app. The token metadata (`type: app`, `objectId: app_<appId>/inst_<installationId>`) is built here, never taken from the caller.  Scopes are clamped in this order: 1. any scope not marked `appGrantable` in the scope catalogue is    refused with a 400 2. the rest are intersected with the target team\'s plan, dropping    (and logging) scopes the plan does not allow 3. if nothing remains, the request is refused with a 403 
+         * @summary Mint a short-lived access token for an installed app
+         * @param {AppAccessTokenRequest} appAccessTokenRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async appAccessTokenPost(appAccessTokenRequest: AppAccessTokenRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AppAccessTokenPost200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.appAccessTokenPost(appAccessTokenRequest, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['OAuthApi.appAccessTokenPost']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
          * If the token is not specified, all tokens of the user are revoked
          * @summary Revoke refresh tokens
          * @param {string} [token] 
@@ -4945,6 +5042,16 @@ export const OAuthApiFactory = function (configuration?: Configuration, basePath
             return localVarFp.adminLogin(requestParameters.adminLoginRequest, options).then((request) => request(axios, basePath));
         },
         /**
+         * Platform callers only (ADMIN_PANEL_ACCESS -- the platform service accounts and members of the platform admin team). Mints a 5 minute access token for the target team on behalf of an installed app. The token metadata (`type: app`, `objectId: app_<appId>/inst_<installationId>`) is built here, never taken from the caller.  Scopes are clamped in this order: 1. any scope not marked `appGrantable` in the scope catalogue is    refused with a 400 2. the rest are intersected with the target team\'s plan, dropping    (and logging) scopes the plan does not allow 3. if nothing remains, the request is refused with a 403 
+         * @summary Mint a short-lived access token for an installed app
+         * @param {OAuthApiAppAccessTokenPostRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        appAccessTokenPost(requestParameters: OAuthApiAppAccessTokenPostRequest, options?: RawAxiosRequestConfig): AxiosPromise<AppAccessTokenPost200Response> {
+            return localVarFp.appAccessTokenPost(requestParameters.appAccessTokenRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
          * If the token is not specified, all tokens of the user are revoked
          * @summary Revoke refresh tokens
          * @param {OAuthApiTokenDeleteRequest} requestParameters Request parameters.
@@ -4998,6 +5105,20 @@ export interface OAuthApiAdminLoginRequest {
      * @memberof OAuthApiAdminLogin
      */
     readonly adminLoginRequest: AdminLoginRequest
+}
+
+/**
+ * Request parameters for appAccessTokenPost operation in OAuthApi.
+ * @export
+ * @interface OAuthApiAppAccessTokenPostRequest
+ */
+export interface OAuthApiAppAccessTokenPostRequest {
+    /**
+     * 
+     * @type {AppAccessTokenRequest}
+     * @memberof OAuthApiAppAccessTokenPost
+     */
+    readonly appAccessTokenRequest: AppAccessTokenRequest
 }
 
 /**
@@ -5059,6 +5180,18 @@ export class OAuthApi extends BaseAPI {
      */
     public adminLogin(requestParameters: OAuthApiAdminLoginRequest, options?: RawAxiosRequestConfig) {
         return OAuthApiFp(this.configuration).adminLogin(requestParameters.adminLoginRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Platform callers only (ADMIN_PANEL_ACCESS -- the platform service accounts and members of the platform admin team). Mints a 5 minute access token for the target team on behalf of an installed app. The token metadata (`type: app`, `objectId: app_<appId>/inst_<installationId>`) is built here, never taken from the caller.  Scopes are clamped in this order: 1. any scope not marked `appGrantable` in the scope catalogue is    refused with a 400 2. the rest are intersected with the target team\'s plan, dropping    (and logging) scopes the plan does not allow 3. if nothing remains, the request is refused with a 403 
+     * @summary Mint a short-lived access token for an installed app
+     * @param {OAuthApiAppAccessTokenPostRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof OAuthApi
+     */
+    public appAccessTokenPost(requestParameters: OAuthApiAppAccessTokenPostRequest, options?: RawAxiosRequestConfig) {
+        return OAuthApiFp(this.configuration).appAccessTokenPost(requestParameters.appAccessTokenRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
