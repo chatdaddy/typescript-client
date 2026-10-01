@@ -1061,5 +1061,16 @@
 		],
 		"section": "calls",
 		"group": "Call Notes"
+	},
+	"APPS_DEVELOP": {
+		"number": 105,
+		"description": "Build and publish apps for your team",
+		"features": [],
+		"roles": [
+			"admin",
+			"editor"
+		],
+		"section": "appstoreAndApi",
+		"group": "Apps"
 	}
 }

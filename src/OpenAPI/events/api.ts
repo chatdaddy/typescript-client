@@ -13237,7 +13237,8 @@ export const TeamInsertDataScopesEnum = {
     CallPhoneCreate: 'CALL_PHONE_CREATE',
     CallPhoneDelete: 'CALL_PHONE_DELETE',
     MakeCalls: 'MAKE_CALLS',
-    CallLogsRead: 'CALL_LOGS_READ'
+    CallLogsRead: 'CALL_LOGS_READ',
+    AppsDevelop: 'APPS_DEVELOP'
 } as const;
 
 export type TeamInsertDataScopesEnum = typeof TeamInsertDataScopesEnum[keyof typeof TeamInsertDataScopesEnum];
@@ -13736,7 +13737,8 @@ export const TeamUpdateDataScopesEnum = {
     CallPhoneCreate: 'CALL_PHONE_CREATE',
     CallPhoneDelete: 'CALL_PHONE_DELETE',
     MakeCalls: 'MAKE_CALLS',
-    CallLogsRead: 'CALL_LOGS_READ'
+    CallLogsRead: 'CALL_LOGS_READ',
+    AppsDevelop: 'APPS_DEVELOP'
 } as const;
 
 export type TeamUpdateDataScopesEnum = typeof TeamUpdateDataScopesEnum[keyof typeof TeamUpdateDataScopesEnum];
@@ -13946,7 +13948,8 @@ export const TeammemberInsertDataScopesEnum = {
     CallPhoneCreate: 'CALL_PHONE_CREATE',
     CallPhoneDelete: 'CALL_PHONE_DELETE',
     MakeCalls: 'MAKE_CALLS',
-    CallLogsRead: 'CALL_LOGS_READ'
+    CallLogsRead: 'CALL_LOGS_READ',
+    AppsDevelop: 'APPS_DEVELOP'
 } as const;
 
 export type TeammemberInsertDataScopesEnum = typeof TeammemberInsertDataScopesEnum[keyof typeof TeammemberInsertDataScopesEnum];
@@ -14155,7 +14158,8 @@ export const TeammemberUpdateDataScopesEnum = {
     CallPhoneCreate: 'CALL_PHONE_CREATE',
     CallPhoneDelete: 'CALL_PHONE_DELETE',
     MakeCalls: 'MAKE_CALLS',
-    CallLogsRead: 'CALL_LOGS_READ'
+    CallLogsRead: 'CALL_LOGS_READ',
+    AppsDevelop: 'APPS_DEVELOP'
 } as const;
 
 export type TeammemberUpdateDataScopesEnum = typeof TeammemberUpdateDataScopesEnum[keyof typeof TeammemberUpdateDataScopesEnum];

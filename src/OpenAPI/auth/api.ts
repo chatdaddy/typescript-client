@@ -1955,7 +1955,8 @@ export const Scope = {
     CallPhoneCreate: 'CALL_PHONE_CREATE',
     CallPhoneDelete: 'CALL_PHONE_DELETE',
     MakeCalls: 'MAKE_CALLS',
-    CallLogsRead: 'CALL_LOGS_READ'
+    CallLogsRead: 'CALL_LOGS_READ',
+    AppsDevelop: 'APPS_DEVELOP'
 } as const;
 
 export type Scope = typeof Scope[keyof typeof Scope];
