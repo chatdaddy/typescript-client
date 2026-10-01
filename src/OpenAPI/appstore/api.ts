@@ -26,6 +26,74 @@ import type { RequestArgs } from '../base';
 import { COLLECTION_FORMATS, BaseAPI, RequiredError, operationServerMap } from '../base';
 
 /**
+ * A registered app (P1-2, \"registry (private tier only)\"). Lives in service-appstore; installation lives in service-bots (design rev1 S1).
+ * @export
+ * @interface App
+ */
+export interface App {
+    /**
+     * The app\'s slug. Matches manifest.id on every AppVersion.
+     * @type {string}
+     * @memberof App
+     */
+    'id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof App
+     */
+    'teamId': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof App
+     */
+    'name': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof App
+     */
+    'description'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof App
+     */
+    'createdAt': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof App
+     */
+    'updatedAt': string;
+}
+/**
+ * 
+ * @export
+ * @interface AppCreate
+ */
+export interface AppCreate {
+    /**
+     * 
+     * @type {string}
+     * @memberof AppCreate
+     */
+    'id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof AppCreate
+     */
+    'name': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof AppCreate
+     */
+    'description'?: string;
+}
+/**
  * 
  * @export
  * @enum {string}
@@ -55,6 +123,120 @@ export const AppType = {
 export type AppType = typeof AppType[keyof typeof AppType];
 
 
+/**
+ * Immutable once created - there is no update route (design rev1 S6).
+ * @export
+ * @interface AppVersion
+ */
+export interface AppVersion {
+    /**
+     * 
+     * @type {number}
+     * @memberof AppVersion
+     */
+    'id': number;
+    /**
+     * 
+     * @type {string}
+     * @memberof AppVersion
+     */
+    'appId': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof AppVersion
+     */
+    'version': string;
+    /**
+     * Schema v1 manifest. The top-level required fields are declared here so generated clients are typed; the full contract (field shapes, formats and semantic checks) is validated at appVersionCreate time.
+     * @type {{ [key: string]: any; }}
+     * @memberof AppVersion
+     */
+    'manifest': { [key: string]: any; };
+    /**
+     * 
+     * @type {number}
+     * @memberof AppVersion
+     */
+    'manifestSchemaVersion': number;
+    /**
+     * 
+     * @type {string}
+     * @memberof AppVersion
+     */
+    'handlerType': AppVersionHandlerTypeEnum;
+    /**
+     * 
+     * @type {string}
+     * @memberof AppVersion
+     */
+    'createdAt': string;
+}
+
+export const AppVersionHandlerTypeEnum = {
+    Hosted: 'hosted',
+    Url: 'url'
+} as const;
+
+export type AppVersionHandlerTypeEnum = typeof AppVersionHandlerTypeEnum[keyof typeof AppVersionHandlerTypeEnum];
+
+/**
+ * 
+ * @export
+ * @interface AppVersionCreate
+ */
+export interface AppVersionCreate {
+    /**
+     * Free-form version string, unique per app (e.g. semver).
+     * @type {string}
+     * @memberof AppVersionCreate
+     */
+    'version': string;
+    /**
+     * Schema v1 manifest. The top-level required fields are declared here so generated clients are typed; the full contract (field shapes, formats and semantic checks) is validated at appVersionCreate time.
+     * @type {{ [key: string]: any; }}
+     * @memberof AppVersionCreate
+     */
+    'manifest': { [key: string]: any; };
+}
+/**
+ * 
+ * @export
+ * @interface AppVersionsGet200Response
+ */
+export interface AppVersionsGet200Response {
+    /**
+     * 
+     * @type {Array<AppVersion>}
+     * @memberof AppVersionsGet200Response
+     */
+    'items': Array<AppVersion>;
+    /**
+     * 
+     * @type {string}
+     * @memberof AppVersionsGet200Response
+     */
+    'cursor'?: string;
+}
+/**
+ * 
+ * @export
+ * @interface AppsGet200Response
+ */
+export interface AppsGet200Response {
+    /**
+     * 
+     * @type {Array<App>}
+     * @memberof AppsGet200Response
+     */
+    'items': Array<App>;
+    /**
+     * 
+     * @type {string}
+     * @memberof AppsGet200Response
+     */
+    'cursor'?: string;
+}
 /**
  * 
  * @export
@@ -1154,6 +1336,536 @@ export interface PublishedMessageFlow {
      */
     'publishedAt'?: string;
 }
+
+/**
+ * AppsApi - axios parameter creator
+ * @export
+ */
+export const AppsApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @summary Register a new app (id/slug reserved for the caller\'s team)
+         * @param {AppCreate} appCreate The app to create
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        appCreate: async (appCreate: AppCreate, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'appCreate' is not null or undefined
+            assertParamExists('appCreate', 'appCreate', appCreate)
+            const localVarPath = `/apps`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["INTEGRATIONS_UPDATE"], configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(appCreate, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Get a single app owned by the caller\'s team
+         * @param {string} id The app id (slug)
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        appGet: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('appGet', 'id', id)
+            const localVarPath = `/apps/{id}`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["INTEGRATIONS_UPDATE"], configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * There is no update route for versions, because flows pin the version they run against. A mistake means publishing a new version, never editing one.
+         * @summary Publish a new, immutable version of an app
+         * @param {string} appId The app id (slug)
+         * @param {AppVersionCreate} appVersionCreate The version to create
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        appVersionCreate: async (appId: string, appVersionCreate: AppVersionCreate, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'appId' is not null or undefined
+            assertParamExists('appVersionCreate', 'appId', appId)
+            // verify required parameter 'appVersionCreate' is not null or undefined
+            assertParamExists('appVersionCreate', 'appVersionCreate', appVersionCreate)
+            const localVarPath = `/apps/{appId}/versions`
+                .replace(`{${"appId"}}`, encodeURIComponent(String(appId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["INTEGRATIONS_UPDATE"], configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(appVersionCreate, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Ordered newest first.
+         * @summary Get versions of an app owned by the caller\'s team
+         * @param {string} appId The app id (slug)
+         * @param {number} [count] The number of versions to get
+         * @param {string} [cursor] The cursor to get versions from (the last version id of the previous page)
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        appVersionsGet: async (appId: string, count?: number, cursor?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'appId' is not null or undefined
+            assertParamExists('appVersionsGet', 'appId', appId)
+            const localVarPath = `/apps/{appId}/versions`
+                .replace(`{${"appId"}}`, encodeURIComponent(String(appId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["INTEGRATIONS_UPDATE"], configuration)
+
+            if (count !== undefined) {
+                localVarQueryParameter['count'] = count;
+            }
+
+            if (cursor !== undefined) {
+                localVarQueryParameter['cursor'] = cursor;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Always filtered to the caller\'s team - there is no cross-team listing in v1. Ordered by id, ascending.
+         * @summary Get apps owned by the caller\'s team
+         * @param {number} [count] The number of apps to get
+         * @param {string} [cursor] The cursor to get apps from
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        appsGet: async (count?: number, cursor?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/apps`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["INTEGRATIONS_UPDATE"], configuration)
+
+            if (count !== undefined) {
+                localVarQueryParameter['count'] = count;
+            }
+
+            if (cursor !== undefined) {
+                localVarQueryParameter['cursor'] = cursor;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * AppsApi - functional programming interface
+ * @export
+ */
+export const AppsApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = AppsApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * 
+         * @summary Register a new app (id/slug reserved for the caller\'s team)
+         * @param {AppCreate} appCreate The app to create
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async appCreate(appCreate: AppCreate, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<App>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.appCreate(appCreate, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['AppsApi.appCreate']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @summary Get a single app owned by the caller\'s team
+         * @param {string} id The app id (slug)
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async appGet(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<App>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.appGet(id, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['AppsApi.appGet']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * There is no update route for versions, because flows pin the version they run against. A mistake means publishing a new version, never editing one.
+         * @summary Publish a new, immutable version of an app
+         * @param {string} appId The app id (slug)
+         * @param {AppVersionCreate} appVersionCreate The version to create
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async appVersionCreate(appId: string, appVersionCreate: AppVersionCreate, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AppVersion>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.appVersionCreate(appId, appVersionCreate, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['AppsApi.appVersionCreate']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Ordered newest first.
+         * @summary Get versions of an app owned by the caller\'s team
+         * @param {string} appId The app id (slug)
+         * @param {number} [count] The number of versions to get
+         * @param {string} [cursor] The cursor to get versions from (the last version id of the previous page)
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async appVersionsGet(appId: string, count?: number, cursor?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AppVersionsGet200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.appVersionsGet(appId, count, cursor, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['AppsApi.appVersionsGet']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Always filtered to the caller\'s team - there is no cross-team listing in v1. Ordered by id, ascending.
+         * @summary Get apps owned by the caller\'s team
+         * @param {number} [count] The number of apps to get
+         * @param {string} [cursor] The cursor to get apps from
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async appsGet(count?: number, cursor?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AppsGet200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.appsGet(count, cursor, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['AppsApi.appsGet']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+    }
+};
+
+/**
+ * AppsApi - factory interface
+ * @export
+ */
+export const AppsApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = AppsApiFp(configuration)
+    return {
+        /**
+         * 
+         * @summary Register a new app (id/slug reserved for the caller\'s team)
+         * @param {AppsApiAppCreateRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        appCreate(requestParameters: AppsApiAppCreateRequest, options?: RawAxiosRequestConfig): AxiosPromise<App> {
+            return localVarFp.appCreate(requestParameters.appCreate, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Get a single app owned by the caller\'s team
+         * @param {AppsApiAppGetRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        appGet(requestParameters: AppsApiAppGetRequest, options?: RawAxiosRequestConfig): AxiosPromise<App> {
+            return localVarFp.appGet(requestParameters.id, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * There is no update route for versions, because flows pin the version they run against. A mistake means publishing a new version, never editing one.
+         * @summary Publish a new, immutable version of an app
+         * @param {AppsApiAppVersionCreateRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        appVersionCreate(requestParameters: AppsApiAppVersionCreateRequest, options?: RawAxiosRequestConfig): AxiosPromise<AppVersion> {
+            return localVarFp.appVersionCreate(requestParameters.appId, requestParameters.appVersionCreate, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Ordered newest first.
+         * @summary Get versions of an app owned by the caller\'s team
+         * @param {AppsApiAppVersionsGetRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        appVersionsGet(requestParameters: AppsApiAppVersionsGetRequest, options?: RawAxiosRequestConfig): AxiosPromise<AppVersionsGet200Response> {
+            return localVarFp.appVersionsGet(requestParameters.appId, requestParameters.count, requestParameters.cursor, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Always filtered to the caller\'s team - there is no cross-team listing in v1. Ordered by id, ascending.
+         * @summary Get apps owned by the caller\'s team
+         * @param {AppsApiAppsGetRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        appsGet(requestParameters: AppsApiAppsGetRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<AppsGet200Response> {
+            return localVarFp.appsGet(requestParameters.count, requestParameters.cursor, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * Request parameters for appCreate operation in AppsApi.
+ * @export
+ * @interface AppsApiAppCreateRequest
+ */
+export interface AppsApiAppCreateRequest {
+    /**
+     * The app to create
+     * @type {AppCreate}
+     * @memberof AppsApiAppCreate
+     */
+    readonly appCreate: AppCreate
+}
+
+/**
+ * Request parameters for appGet operation in AppsApi.
+ * @export
+ * @interface AppsApiAppGetRequest
+ */
+export interface AppsApiAppGetRequest {
+    /**
+     * The app id (slug)
+     * @type {string}
+     * @memberof AppsApiAppGet
+     */
+    readonly id: string
+}
+
+/**
+ * Request parameters for appVersionCreate operation in AppsApi.
+ * @export
+ * @interface AppsApiAppVersionCreateRequest
+ */
+export interface AppsApiAppVersionCreateRequest {
+    /**
+     * The app id (slug)
+     * @type {string}
+     * @memberof AppsApiAppVersionCreate
+     */
+    readonly appId: string
+
+    /**
+     * The version to create
+     * @type {AppVersionCreate}
+     * @memberof AppsApiAppVersionCreate
+     */
+    readonly appVersionCreate: AppVersionCreate
+}
+
+/**
+ * Request parameters for appVersionsGet operation in AppsApi.
+ * @export
+ * @interface AppsApiAppVersionsGetRequest
+ */
+export interface AppsApiAppVersionsGetRequest {
+    /**
+     * The app id (slug)
+     * @type {string}
+     * @memberof AppsApiAppVersionsGet
+     */
+    readonly appId: string
+
+    /**
+     * The number of versions to get
+     * @type {number}
+     * @memberof AppsApiAppVersionsGet
+     */
+    readonly count?: number
+
+    /**
+     * The cursor to get versions from (the last version id of the previous page)
+     * @type {string}
+     * @memberof AppsApiAppVersionsGet
+     */
+    readonly cursor?: string
+}
+
+/**
+ * Request parameters for appsGet operation in AppsApi.
+ * @export
+ * @interface AppsApiAppsGetRequest
+ */
+export interface AppsApiAppsGetRequest {
+    /**
+     * The number of apps to get
+     * @type {number}
+     * @memberof AppsApiAppsGet
+     */
+    readonly count?: number
+
+    /**
+     * The cursor to get apps from
+     * @type {string}
+     * @memberof AppsApiAppsGet
+     */
+    readonly cursor?: string
+}
+
+/**
+ * AppsApi - object-oriented interface
+ * @export
+ * @class AppsApi
+ * @extends {BaseAPI}
+ */
+export class AppsApi extends BaseAPI {
+    /**
+     * 
+     * @summary Register a new app (id/slug reserved for the caller\'s team)
+     * @param {AppsApiAppCreateRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AppsApi
+     */
+    public appCreate(requestParameters: AppsApiAppCreateRequest, options?: RawAxiosRequestConfig) {
+        return AppsApiFp(this.configuration).appCreate(requestParameters.appCreate, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Get a single app owned by the caller\'s team
+     * @param {AppsApiAppGetRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AppsApi
+     */
+    public appGet(requestParameters: AppsApiAppGetRequest, options?: RawAxiosRequestConfig) {
+        return AppsApiFp(this.configuration).appGet(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * There is no update route for versions, because flows pin the version they run against. A mistake means publishing a new version, never editing one.
+     * @summary Publish a new, immutable version of an app
+     * @param {AppsApiAppVersionCreateRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AppsApi
+     */
+    public appVersionCreate(requestParameters: AppsApiAppVersionCreateRequest, options?: RawAxiosRequestConfig) {
+        return AppsApiFp(this.configuration).appVersionCreate(requestParameters.appId, requestParameters.appVersionCreate, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Ordered newest first.
+     * @summary Get versions of an app owned by the caller\'s team
+     * @param {AppsApiAppVersionsGetRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AppsApi
+     */
+    public appVersionsGet(requestParameters: AppsApiAppVersionsGetRequest, options?: RawAxiosRequestConfig) {
+        return AppsApiFp(this.configuration).appVersionsGet(requestParameters.appId, requestParameters.count, requestParameters.cursor, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Always filtered to the caller\'s team - there is no cross-team listing in v1. Ordered by id, ascending.
+     * @summary Get apps owned by the caller\'s team
+     * @param {AppsApiAppsGetRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AppsApi
+     */
+    public appsGet(requestParameters: AppsApiAppsGetRequest = {}, options?: RawAxiosRequestConfig) {
+        return AppsApiFp(this.configuration).appsGet(requestParameters.count, requestParameters.cursor, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
 
 /**
  * ExtensionsApi - axios parameter creator
