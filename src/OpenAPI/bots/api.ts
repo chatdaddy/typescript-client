@@ -1184,6 +1184,12 @@ export interface AppAction {
      */
     'integrationId'?: string;
     /**
+     * For an installed app: the id of the flow action (from the app manifest\'s flowActions) this node runs. Built-in apps ignore it.
+     * @type {string}
+     * @memberof AppAction
+     */
+    'actionId'?: string;
+    /**
      * 
      * @type {{ [key: string]: any; }}
      * @memberof AppAction

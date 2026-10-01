@@ -1713,6 +1713,12 @@ export interface BotInsertDataActionsInnerAllOfApp {
      */
     'integrationId'?: string;
     /**
+     * For an installed app: the id of the flow action (from the app manifest\'s flowActions) this node runs. Built-in apps ignore it.
+     * @type {string}
+     * @memberof BotInsertDataActionsInnerAllOfApp
+     */
+    'actionId'?: string;
+    /**
      * 
      * @type {{ [key: string]: any; }}
      * @memberof BotInsertDataActionsInnerAllOfApp
