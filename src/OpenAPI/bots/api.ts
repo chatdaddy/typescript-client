@@ -1346,6 +1346,18 @@ export interface AppTriggerMethodData {
      */
     'secretId'?: string;
     /**
+     * For a trigger declared by an installed (third-party) app: the team\'s installation of that app. Must belong to the caller\'s team and be active.
+     * @type {string}
+     * @memberof AppTriggerMethodData
+     */
+    'installationId'?: string;
+    /**
+     * For a trigger declared by an installed app: the id of the trigger in the installation\'s manifest flowTriggers.
+     * @type {string}
+     * @memberof AppTriggerMethodData
+     */
+    'triggerId'?: string;
+    /**
      * 
      * @type {{ [key: string]: any; }}
      * @memberof AppTriggerMethodData

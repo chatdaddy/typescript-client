@@ -3721,6 +3721,18 @@ export interface BotInsertDataTriggersInnerMethodOneOf2Data {
      */
     'secretId'?: string;
     /**
+     * For a trigger declared by an installed (third-party) app: the team\'s installation of that app. Must belong to the caller\'s team and be active.
+     * @type {string}
+     * @memberof BotInsertDataTriggersInnerMethodOneOf2Data
+     */
+    'installationId'?: string;
+    /**
+     * For a trigger declared by an installed app: the id of the trigger in the installation\'s manifest flowTriggers.
+     * @type {string}
+     * @memberof BotInsertDataTriggersInnerMethodOneOf2Data
+     */
+    'triggerId'?: string;
+    /**
      * 
      * @type {{ [key: string]: any; }}
      * @memberof BotInsertDataTriggersInnerMethodOneOf2Data
