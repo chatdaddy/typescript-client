@@ -10128,7 +10128,7 @@ export const AccountApiAxiosParamCreator = function (configuration?: Configurati
 
             // authentication chatdaddy required
             // oauth required
-            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", [], configuration)
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["ACCOUNT_READ", "ACCOUNTS_READ_ASSIGNED"], configuration)
 
             if (q !== undefined) {
                 localVarQueryParameter['q'] = q;
@@ -14218,7 +14218,7 @@ export const ChatsApiAxiosParamCreator = function (configuration?: Configuration
 
             // authentication chatdaddy required
             // oauth required
-            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", [], configuration)
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["CHATS_ACCESS_ALL", "CHATS_ACCESS_ASSIGNED"], configuration)
 
             if (preset !== undefined) {
                 localVarQueryParameter['preset'] = preset;
@@ -15769,7 +15769,7 @@ export const ContactsApiAxiosParamCreator = function (configuration?: Configurat
 
             // authentication chatdaddy required
             // oauth required
-            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", [], configuration)
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["CONTACTS_READ_ALL", "CONTACTS_READ_ASSIGNED"], configuration)
 
             if (type !== undefined) {
                 localVarQueryParameter['type'] = type;
@@ -18290,7 +18290,7 @@ export const MessagesApiAxiosParamCreator = function (configuration?: Configurat
 
             // authentication chatdaddy required
             // oauth required
-            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", [], configuration)
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["CHATS_ACCESS_ALL", "CHATS_ACCESS_ASSIGNED"], configuration)
 
             if (ids) {
                 localVarQueryParameter['ids'] = ids;
@@ -18527,7 +18527,7 @@ export const MessagesApiAxiosParamCreator = function (configuration?: Configurat
 
             // authentication chatdaddy required
             // oauth required
-            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", [], configuration)
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["CHATS_ACCESS_ALL", "CHATS_ACCESS_ASSIGNED"], configuration)
 
             if (range !== undefined) {
                 localVarQueryParameter['range'] = range;
@@ -18604,7 +18604,7 @@ export const MessagesApiAxiosParamCreator = function (configuration?: Configurat
 
             // authentication chatdaddy required
             // oauth required
-            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", [], configuration)
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["MESSAGES_SEARCH"], configuration)
 
             if (teamId !== undefined) {
                 localVarQueryParameter['teamId'] = teamId;
@@ -18655,7 +18655,7 @@ export const MessagesApiAxiosParamCreator = function (configuration?: Configurat
 
             // authentication chatdaddy required
             // oauth required
-            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", [], configuration)
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["MESSAGES_SEND_TO_ALL", "MESSAGES_SEND_TO_ASSIGNED"], configuration)
 
 
     
@@ -18798,7 +18798,7 @@ export const MessagesApiAxiosParamCreator = function (configuration?: Configurat
 
             // authentication chatdaddy required
             // oauth required
-            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", [], configuration)
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["MESSAGES_SEND_TO_ALL", "MESSAGES_SEND_TO_ASSIGNED"], configuration)
 
 
     
@@ -19029,7 +19029,7 @@ export const MessagesApiAxiosParamCreator = function (configuration?: Configurat
 
             // authentication chatdaddy required
             // oauth required
-            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", [], configuration)
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["MESSAGES_SEND_TO_ALL", "MESSAGES_SEND_TO_ASSIGNED"], configuration)
 
             if (waitForCompletion !== undefined) {
                 localVarQueryParameter['waitForCompletion'] = waitForCompletion;
