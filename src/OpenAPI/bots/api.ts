@@ -1298,6 +1298,44 @@ export interface AppIntegrationCreate {
 /**
  * 
  * @export
+ * @interface AppTriggerIngest200Response
+ */
+export interface AppTriggerIngest200Response {
+    /**
+     * 
+     * @type {boolean}
+     * @memberof AppTriggerIngest200Response
+     */
+    'duplicate': boolean;
+}
+/**
+ * 
+ * @export
+ * @interface AppTriggerIngest202Response
+ */
+export interface AppTriggerIngest202Response {
+    /**
+     * Triggers that created an instance
+     * @type {number}
+     * @memberof AppTriggerIngest202Response
+     */
+    'fired': number;
+    /**
+     * Triggers that created nothing (throttled, or no recipients)
+     * @type {number}
+     * @memberof AppTriggerIngest202Response
+     */
+    'throttled': number;
+    /**
+     * Triggers whose firing threw (logged server-side)
+     * @type {number}
+     * @memberof AppTriggerIngest202Response
+     */
+    'failed': number;
+}
+/**
+ * 
+ * @export
  * @interface AppTriggerMethod
  */
 export interface AppTriggerMethod {
@@ -7738,6 +7776,56 @@ export class AppIntegrationApi extends BaseAPI {
 export const AppStoreApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
+         * Public: the signature is the authentication. The body must be JSON, at most 64 KB, and valid against the `payloadSchema` of the manifest `flowTriggers` entry named by `triggerId`. Checks run in this order: the size cap, the installation is loaded, the signature is verified (the current secret, or the previous one while a rotation window is open), the valid-request bucket is charged (300 a minute per installation), the trigger is resolved, the body is validated, then the event id is recorded and every enabled trigger bound to this installation and `triggerId` is fired. An unknown or inactive installation, a missing or invalid signature or timestamp, a missing event id and a missing raw body are all the same 401 `invalid signature`. Failed verifications are counted per source IP (30 a minute) and, over that, answered with 429; they never count against the installation\'s valid-request bucket.  Delivery is at-most-once per event id. The id is recorded before the triggers fire, so re-sending a delivery that was answered 202 with `failed` above zero does not fire again (it is answered 200 `duplicate`); read `failed` from the 202 body, and send a new event id to retry. A delivery that fails on the server (5xx) gives its id back, so that one can be re-sent. 
+         * @summary Deliver an event from an installed app, to fire its flow triggers
+         * @param {string} installationId 
+         * @param {string} triggerId An id from the installation manifest\&#39;s &#x60;flowTriggers&#x60;
+         * @param {string} [xChatdaddyEventId] Unique id of this delivery (1-128 printable ASCII characters, no &#x60;.&#x60;). It is part of the signed content and the replay key: a second delivery with the same id is acknowledged and fires nothing. Required (a request without it is a 401); declared optional here only so that a missing header is answered by the uniform 401 and not a 400.
+         * @param {string} [xChatdaddySignature] &#x60;t&#x3D;&lt;unix seconds&gt;,v1&#x3D;&lt;hex HMAC-SHA256&gt;&#x60; over &#x60;chatdaddy/v1/app-to-bots.&lt;t&gt;.&lt;event id&gt;.&lt;raw body&gt;&#x60;, keyed with the installation\&#39;s signing secret. 300s tolerance. Required (a request without it is a 401).
+         * @param {{ [key: string]: any; }} [requestBody] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        appTriggerIngest: async (installationId: string, triggerId: string, xChatdaddyEventId?: string, xChatdaddySignature?: string, requestBody?: { [key: string]: any; }, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'installationId' is not null or undefined
+            assertParamExists('appTriggerIngest', 'installationId', installationId)
+            // verify required parameter 'triggerId' is not null or undefined
+            assertParamExists('appTriggerIngest', 'triggerId', triggerId)
+            const localVarPath = `/apps/triggers/{installationId}/{triggerId}`
+                .replace(`{${"installationId"}}`, encodeURIComponent(String(installationId)))
+                .replace(`{${"triggerId"}}`, encodeURIComponent(String(triggerId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            if (xChatdaddyEventId != null) {
+                localVarHeaderParameter['x-chatdaddy-event-id'] = String(xChatdaddyEventId);
+            }
+            if (xChatdaddySignature != null) {
+                localVarHeaderParameter['x-chatdaddy-signature'] = String(xChatdaddySignature);
+            }
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(requestBody, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * Generates and seals a new secret. The old one stays valid for 15 minutes. The installation stays `active`; the handshake job delivers the new secret to the app (same handshake and ack as an install). If delivery fails every retry the installation becomes `failed-handshake`. Only an `active` installation can rotate (409 otherwise). 
          * @summary Rotate an installation\'s signing secret (team admin only)
          * @param {string} id 
@@ -7952,6 +8040,23 @@ export const AppStoreApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = AppStoreApiAxiosParamCreator(configuration)
     return {
         /**
+         * Public: the signature is the authentication. The body must be JSON, at most 64 KB, and valid against the `payloadSchema` of the manifest `flowTriggers` entry named by `triggerId`. Checks run in this order: the size cap, the installation is loaded, the signature is verified (the current secret, or the previous one while a rotation window is open), the valid-request bucket is charged (300 a minute per installation), the trigger is resolved, the body is validated, then the event id is recorded and every enabled trigger bound to this installation and `triggerId` is fired. An unknown or inactive installation, a missing or invalid signature or timestamp, a missing event id and a missing raw body are all the same 401 `invalid signature`. Failed verifications are counted per source IP (30 a minute) and, over that, answered with 429; they never count against the installation\'s valid-request bucket.  Delivery is at-most-once per event id. The id is recorded before the triggers fire, so re-sending a delivery that was answered 202 with `failed` above zero does not fire again (it is answered 200 `duplicate`); read `failed` from the 202 body, and send a new event id to retry. A delivery that fails on the server (5xx) gives its id back, so that one can be re-sent. 
+         * @summary Deliver an event from an installed app, to fire its flow triggers
+         * @param {string} installationId 
+         * @param {string} triggerId An id from the installation manifest\&#39;s &#x60;flowTriggers&#x60;
+         * @param {string} [xChatdaddyEventId] Unique id of this delivery (1-128 printable ASCII characters, no &#x60;.&#x60;). It is part of the signed content and the replay key: a second delivery with the same id is acknowledged and fires nothing. Required (a request without it is a 401); declared optional here only so that a missing header is answered by the uniform 401 and not a 400.
+         * @param {string} [xChatdaddySignature] &#x60;t&#x3D;&lt;unix seconds&gt;,v1&#x3D;&lt;hex HMAC-SHA256&gt;&#x60; over &#x60;chatdaddy/v1/app-to-bots.&lt;t&gt;.&lt;event id&gt;.&lt;raw body&gt;&#x60;, keyed with the installation\&#39;s signing secret. 300s tolerance. Required (a request without it is a 401).
+         * @param {{ [key: string]: any; }} [requestBody] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async appTriggerIngest(installationId: string, triggerId: string, xChatdaddyEventId?: string, xChatdaddySignature?: string, requestBody?: { [key: string]: any; }, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AppTriggerIngest200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.appTriggerIngest(installationId, triggerId, xChatdaddyEventId, xChatdaddySignature, requestBody, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['AppStoreApi.appTriggerIngest']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
          * Generates and seals a new secret. The old one stays valid for 15 minutes. The installation stays `active`; the handshake job delivers the new secret to the app (same handshake and ack as an install). If delivery fails every retry the installation becomes `failed-handshake`. Only an `active` installation can rotate (409 otherwise). 
          * @summary Rotate an installation\'s signing secret (team admin only)
          * @param {string} id 
@@ -8029,6 +8134,16 @@ export const AppStoreApiFactory = function (configuration?: Configuration, baseP
     const localVarFp = AppStoreApiFp(configuration)
     return {
         /**
+         * Public: the signature is the authentication. The body must be JSON, at most 64 KB, and valid against the `payloadSchema` of the manifest `flowTriggers` entry named by `triggerId`. Checks run in this order: the size cap, the installation is loaded, the signature is verified (the current secret, or the previous one while a rotation window is open), the valid-request bucket is charged (300 a minute per installation), the trigger is resolved, the body is validated, then the event id is recorded and every enabled trigger bound to this installation and `triggerId` is fired. An unknown or inactive installation, a missing or invalid signature or timestamp, a missing event id and a missing raw body are all the same 401 `invalid signature`. Failed verifications are counted per source IP (30 a minute) and, over that, answered with 429; they never count against the installation\'s valid-request bucket.  Delivery is at-most-once per event id. The id is recorded before the triggers fire, so re-sending a delivery that was answered 202 with `failed` above zero does not fire again (it is answered 200 `duplicate`); read `failed` from the 202 body, and send a new event id to retry. A delivery that fails on the server (5xx) gives its id back, so that one can be re-sent. 
+         * @summary Deliver an event from an installed app, to fire its flow triggers
+         * @param {AppStoreApiAppTriggerIngestRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        appTriggerIngest(requestParameters: AppStoreApiAppTriggerIngestRequest, options?: RawAxiosRequestConfig): AxiosPromise<AppTriggerIngest200Response> {
+            return localVarFp.appTriggerIngest(requestParameters.installationId, requestParameters.triggerId, requestParameters.xChatdaddyEventId, requestParameters.xChatdaddySignature, requestParameters.requestBody, options).then((request) => request(axios, basePath));
+        },
+        /**
          * Generates and seals a new secret. The old one stays valid for 15 minutes. The installation stays `active`; the handshake job delivers the new secret to the app (same handshake and ack as an install). If delivery fails every retry the installation becomes `failed-handshake`. Only an `active` installation can rotate (409 otherwise). 
          * @summary Rotate an installation\'s signing secret (team admin only)
          * @param {AppStoreApiInstallationSigningSecretRotateRequest} requestParameters Request parameters.
@@ -8080,6 +8195,48 @@ export const AppStoreApiFactory = function (configuration?: Configuration, baseP
         },
     };
 };
+
+/**
+ * Request parameters for appTriggerIngest operation in AppStoreApi.
+ * @export
+ * @interface AppStoreApiAppTriggerIngestRequest
+ */
+export interface AppStoreApiAppTriggerIngestRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof AppStoreApiAppTriggerIngest
+     */
+    readonly installationId: string
+
+    /**
+     * An id from the installation manifest\&#39;s &#x60;flowTriggers&#x60;
+     * @type {string}
+     * @memberof AppStoreApiAppTriggerIngest
+     */
+    readonly triggerId: string
+
+    /**
+     * Unique id of this delivery (1-128 printable ASCII characters, no &#x60;.&#x60;). It is part of the signed content and the replay key: a second delivery with the same id is acknowledged and fires nothing. Required (a request without it is a 401); declared optional here only so that a missing header is answered by the uniform 401 and not a 400.
+     * @type {string}
+     * @memberof AppStoreApiAppTriggerIngest
+     */
+    readonly xChatdaddyEventId?: string
+
+    /**
+     * &#x60;t&#x3D;&lt;unix seconds&gt;,v1&#x3D;&lt;hex HMAC-SHA256&gt;&#x60; over &#x60;chatdaddy/v1/app-to-bots.&lt;t&gt;.&lt;event id&gt;.&lt;raw body&gt;&#x60;, keyed with the installation\&#39;s signing secret. 300s tolerance. Required (a request without it is a 401).
+     * @type {string}
+     * @memberof AppStoreApiAppTriggerIngest
+     */
+    readonly xChatdaddySignature?: string
+
+    /**
+     * 
+     * @type {{ [key: string]: any; }}
+     * @memberof AppStoreApiAppTriggerIngest
+     */
+    readonly requestBody?: { [key: string]: any; }
+}
 
 /**
  * Request parameters for installationSigningSecretRotate operation in AppStoreApi.
@@ -8172,6 +8329,18 @@ export interface AppStoreApiInstallationsPostRequest {
  * @extends {BaseAPI}
  */
 export class AppStoreApi extends BaseAPI {
+    /**
+     * Public: the signature is the authentication. The body must be JSON, at most 64 KB, and valid against the `payloadSchema` of the manifest `flowTriggers` entry named by `triggerId`. Checks run in this order: the size cap, the installation is loaded, the signature is verified (the current secret, or the previous one while a rotation window is open), the valid-request bucket is charged (300 a minute per installation), the trigger is resolved, the body is validated, then the event id is recorded and every enabled trigger bound to this installation and `triggerId` is fired. An unknown or inactive installation, a missing or invalid signature or timestamp, a missing event id and a missing raw body are all the same 401 `invalid signature`. Failed verifications are counted per source IP (30 a minute) and, over that, answered with 429; they never count against the installation\'s valid-request bucket.  Delivery is at-most-once per event id. The id is recorded before the triggers fire, so re-sending a delivery that was answered 202 with `failed` above zero does not fire again (it is answered 200 `duplicate`); read `failed` from the 202 body, and send a new event id to retry. A delivery that fails on the server (5xx) gives its id back, so that one can be re-sent. 
+     * @summary Deliver an event from an installed app, to fire its flow triggers
+     * @param {AppStoreApiAppTriggerIngestRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AppStoreApi
+     */
+    public appTriggerIngest(requestParameters: AppStoreApiAppTriggerIngestRequest, options?: RawAxiosRequestConfig) {
+        return AppStoreApiFp(this.configuration).appTriggerIngest(requestParameters.installationId, requestParameters.triggerId, requestParameters.xChatdaddyEventId, requestParameters.xChatdaddySignature, requestParameters.requestBody, options).then((request) => request(this.axios, this.basePath));
+    }
+
     /**
      * Generates and seals a new secret. The old one stays valid for 15 minutes. The installation stays `active`; the handshake job delivers the new secret to the app (same handshake and ack as an install). If delivery fails every retry the installation becomes `failed-handshake`. Only an `active` installation can rotate (409 otherwise). 
      * @summary Rotate an installation\'s signing secret (team admin only)
