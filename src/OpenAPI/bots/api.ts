@@ -4352,6 +4352,180 @@ export interface IMUniqueContactID {
     'accountId': string;
 }
 /**
+ * 
+ * @export
+ * @interface Installation
+ */
+export interface Installation {
+    /**
+     * 
+     * @type {string}
+     * @memberof Installation
+     */
+    'id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Installation
+     */
+    'teamId': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Installation
+     */
+    'appId': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Installation
+     */
+    'appVersion': string;
+    /**
+     * 
+     * @type {InstallationManifest}
+     * @memberof Installation
+     */
+    'manifest': InstallationManifest;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof Installation
+     */
+    'grantedScopes': Array<string>;
+    /**
+     * 
+     * @type {{ [key: string]: any; }}
+     * @memberof Installation
+     */
+    'settings': { [key: string]: any; };
+    /**
+     * 
+     * @type {InstallationStatus}
+     * @memberof Installation
+     */
+    'status': InstallationStatus;
+    /**
+     * 
+     * @type {string}
+     * @memberof Installation
+     */
+    'installedBy': string;
+    /**
+     * An ISO formatted timestamp
+     * @type {string}
+     * @memberof Installation
+     */
+    'createdAt': string;
+    /**
+     * An ISO formatted timestamp
+     * @type {string}
+     * @memberof Installation
+     */
+    'updatedAt': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Installation
+     */
+    'uninstalledAt': string | null;
+}
+
+
+/**
+ * 
+ * @export
+ * @interface InstallationCreate
+ */
+export interface InstallationCreate {
+    /**
+     * 
+     * @type {string}
+     * @memberof InstallationCreate
+     */
+    'appId': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof InstallationCreate
+     */
+    'appVersion': string;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof InstallationCreate
+     */
+    'grantedScopes': Array<string>;
+    /**
+     * 
+     * @type {{ [key: string]: any; }}
+     * @memberof InstallationCreate
+     */
+    'settings'?: { [key: string]: any; };
+}
+/**
+ * Snapshot of the pinned AppVersion\'s manifest, copied at install or re-consent. Bots never reads the manifest from appstore at run time.
+ * @export
+ * @interface InstallationManifest
+ */
+export interface InstallationManifest {
+    [key: string]: any;
+
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof InstallationManifest
+     */
+    'scopes': Array<string>;
+    /**
+     * 
+     * @type {Array<{ [key: string]: any; }>}
+     * @memberof InstallationManifest
+     */
+    'connections'?: Array<{ [key: string]: any; }>;
+    /**
+     * 
+     * @type {Array<{ [key: string]: any; }>}
+     * @memberof InstallationManifest
+     */
+    'settings'?: Array<{ [key: string]: any; }>;
+}
+/**
+ * 
+ * @export
+ * @enum {string}
+ */
+
+export const InstallationStatus = {
+    Active: 'active',
+    PendingReconsent: 'pending-reconsent',
+    Suspended: 'suspended',
+    Uninstalled: 'uninstalled'
+} as const;
+
+export type InstallationStatus = typeof InstallationStatus[keyof typeof InstallationStatus];
+
+
+/**
+ * 
+ * @export
+ * @interface InstallationsGet200Response
+ */
+export interface InstallationsGet200Response {
+    /**
+     * 
+     * @type {Array<Installation>}
+     * @memberof InstallationsGet200Response
+     */
+    'items': Array<Installation>;
+    /**
+     * Pass as `cursor` to get the next page; absent on the last page
+     * @type {string}
+     * @memberof InstallationsGet200Response
+     */
+    'cursor'?: string;
+}
+/**
  * Describes how many contacts are in each status for the first action sent in a trigger instance. Keyed by ActionInteractionType
  * @export
  * @interface InstanceFirstActionStatusCounts
@@ -7538,6 +7712,336 @@ export class AppIntegrationApi extends BaseAPI {
      */
     public notionAuth(requestParameters: AppIntegrationApiNotionAuthRequest, options?: RawAxiosRequestConfig) {
         return AppIntegrationApiFp(this.configuration).notionAuth(requestParameters.authCode, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+
+/**
+ * AppStoreApi - axios parameter creator
+ * @export
+ */
+export const AppStoreApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * Sets status to `uninstalled`, deletes the installation\'s Connections (removing their ciphertext), and writes an `uninstall` InstallationAudit row -- all in one transaction. 
+         * @summary Uninstall an app for the team (team admin only)
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        installationsDelete: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('installationsDelete', 'id', id)
+            const localVarPath = `/installations`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["TEAM_UPDATE"], configuration)
+
+            if (id !== undefined) {
+                localVarQueryParameter['id'] = id;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Team-scoped; never returns any Connection or secret material.
+         * @summary Get the team\'s app installations
+         * @param {InstallationStatus} [status] 
+         * @param {number} [count] Number of installations to return, newest first
+         * @param {string} [cursor] The cursor returned by the previous page
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        installationsGet: async (status?: InstallationStatus, count?: number, cursor?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/installations`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["TEMPLATES_READ"], configuration)
+
+            if (status !== undefined) {
+                localVarQueryParameter['status'] = status;
+            }
+
+            if (count !== undefined) {
+                localVarQueryParameter['count'] = count;
+            }
+
+            if (cursor !== undefined) {
+                localVarQueryParameter['cursor'] = cursor;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Fetches the requested AppVersion from appstore, snapshots its manifest onto a new Installation row, and writes an `install` InstallationAudit row -- all in one transaction. Requires the caller to be a team admin. `grantedScopes` must be a subset of the fetched manifest\'s `scopes`. 
+         * @summary Install an app for the team (team admin only)
+         * @param {InstallationCreate} [installationCreate] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        installationsPost: async (installationCreate?: InstallationCreate, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/installations`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["TEAM_UPDATE"], configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(installationCreate, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * AppStoreApi - functional programming interface
+ * @export
+ */
+export const AppStoreApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = AppStoreApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * Sets status to `uninstalled`, deletes the installation\'s Connections (removing their ciphertext), and writes an `uninstall` InstallationAudit row -- all in one transaction. 
+         * @summary Uninstall an app for the team (team admin only)
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async installationsDelete(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.installationsDelete(id, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['AppStoreApi.installationsDelete']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Team-scoped; never returns any Connection or secret material.
+         * @summary Get the team\'s app installations
+         * @param {InstallationStatus} [status] 
+         * @param {number} [count] Number of installations to return, newest first
+         * @param {string} [cursor] The cursor returned by the previous page
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async installationsGet(status?: InstallationStatus, count?: number, cursor?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<InstallationsGet200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.installationsGet(status, count, cursor, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['AppStoreApi.installationsGet']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Fetches the requested AppVersion from appstore, snapshots its manifest onto a new Installation row, and writes an `install` InstallationAudit row -- all in one transaction. Requires the caller to be a team admin. `grantedScopes` must be a subset of the fetched manifest\'s `scopes`. 
+         * @summary Install an app for the team (team admin only)
+         * @param {InstallationCreate} [installationCreate] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async installationsPost(installationCreate?: InstallationCreate, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Installation>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.installationsPost(installationCreate, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['AppStoreApi.installationsPost']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+    }
+};
+
+/**
+ * AppStoreApi - factory interface
+ * @export
+ */
+export const AppStoreApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = AppStoreApiFp(configuration)
+    return {
+        /**
+         * Sets status to `uninstalled`, deletes the installation\'s Connections (removing their ciphertext), and writes an `uninstall` InstallationAudit row -- all in one transaction. 
+         * @summary Uninstall an app for the team (team admin only)
+         * @param {AppStoreApiInstallationsDeleteRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        installationsDelete(requestParameters: AppStoreApiInstallationsDeleteRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.installationsDelete(requestParameters.id, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Team-scoped; never returns any Connection or secret material.
+         * @summary Get the team\'s app installations
+         * @param {AppStoreApiInstallationsGetRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        installationsGet(requestParameters: AppStoreApiInstallationsGetRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<InstallationsGet200Response> {
+            return localVarFp.installationsGet(requestParameters.status, requestParameters.count, requestParameters.cursor, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Fetches the requested AppVersion from appstore, snapshots its manifest onto a new Installation row, and writes an `install` InstallationAudit row -- all in one transaction. Requires the caller to be a team admin. `grantedScopes` must be a subset of the fetched manifest\'s `scopes`. 
+         * @summary Install an app for the team (team admin only)
+         * @param {AppStoreApiInstallationsPostRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        installationsPost(requestParameters: AppStoreApiInstallationsPostRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<Installation> {
+            return localVarFp.installationsPost(requestParameters.installationCreate, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * Request parameters for installationsDelete operation in AppStoreApi.
+ * @export
+ * @interface AppStoreApiInstallationsDeleteRequest
+ */
+export interface AppStoreApiInstallationsDeleteRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof AppStoreApiInstallationsDelete
+     */
+    readonly id: string
+}
+
+/**
+ * Request parameters for installationsGet operation in AppStoreApi.
+ * @export
+ * @interface AppStoreApiInstallationsGetRequest
+ */
+export interface AppStoreApiInstallationsGetRequest {
+    /**
+     * 
+     * @type {InstallationStatus}
+     * @memberof AppStoreApiInstallationsGet
+     */
+    readonly status?: InstallationStatus
+
+    /**
+     * Number of installations to return, newest first
+     * @type {number}
+     * @memberof AppStoreApiInstallationsGet
+     */
+    readonly count?: number
+
+    /**
+     * The cursor returned by the previous page
+     * @type {string}
+     * @memberof AppStoreApiInstallationsGet
+     */
+    readonly cursor?: string
+}
+
+/**
+ * Request parameters for installationsPost operation in AppStoreApi.
+ * @export
+ * @interface AppStoreApiInstallationsPostRequest
+ */
+export interface AppStoreApiInstallationsPostRequest {
+    /**
+     * 
+     * @type {InstallationCreate}
+     * @memberof AppStoreApiInstallationsPost
+     */
+    readonly installationCreate?: InstallationCreate
+}
+
+/**
+ * AppStoreApi - object-oriented interface
+ * @export
+ * @class AppStoreApi
+ * @extends {BaseAPI}
+ */
+export class AppStoreApi extends BaseAPI {
+    /**
+     * Sets status to `uninstalled`, deletes the installation\'s Connections (removing their ciphertext), and writes an `uninstall` InstallationAudit row -- all in one transaction. 
+     * @summary Uninstall an app for the team (team admin only)
+     * @param {AppStoreApiInstallationsDeleteRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AppStoreApi
+     */
+    public installationsDelete(requestParameters: AppStoreApiInstallationsDeleteRequest, options?: RawAxiosRequestConfig) {
+        return AppStoreApiFp(this.configuration).installationsDelete(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Team-scoped; never returns any Connection or secret material.
+     * @summary Get the team\'s app installations
+     * @param {AppStoreApiInstallationsGetRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AppStoreApi
+     */
+    public installationsGet(requestParameters: AppStoreApiInstallationsGetRequest = {}, options?: RawAxiosRequestConfig) {
+        return AppStoreApiFp(this.configuration).installationsGet(requestParameters.status, requestParameters.count, requestParameters.cursor, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Fetches the requested AppVersion from appstore, snapshots its manifest onto a new Installation row, and writes an `install` InstallationAudit row -- all in one transaction. Requires the caller to be a team admin. `grantedScopes` must be a subset of the fetched manifest\'s `scopes`. 
+     * @summary Install an app for the team (team admin only)
+     * @param {AppStoreApiInstallationsPostRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AppStoreApi
+     */
+    public installationsPost(requestParameters: AppStoreApiInstallationsPostRequest = {}, options?: RawAxiosRequestConfig) {
+        return AppStoreApiFp(this.configuration).installationsPost(requestParameters.installationCreate, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
