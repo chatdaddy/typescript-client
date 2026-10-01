@@ -7904,7 +7904,7 @@ export const AppStoreApiAxiosParamCreator = function (configuration?: Configurat
             };
         },
         /**
-         * Fetches the requested AppVersion from appstore, snapshots its manifest onto a new Installation row, generates and seals the installation\'s signing secret, and writes an `install` InstallationAudit row -- all in one transaction. The installation is created as `pending-handshake`; no call to the app is made in the request. A background job then POSTs the secret to the app\'s `{handler.baseUrl}/installed` and the installation becomes `active` only when the app acknowledges it. Requires the caller to be a team admin. `grantedScopes` must be a subset of the fetched manifest\'s `scopes`. 
+         * Fetches the requested AppVersion from appstore, snapshots its manifest onto a new Installation row, generates and seals the installation\'s signing secret, and writes an `install` InstallationAudit row -- all in one transaction. The installation is created as `pending-handshake`; no call to the app is made in the request. A background job then POSTs the secret to the app\'s `{handler.baseUrl}/installed` and the installation becomes `active` only when the app acknowledges it. Requires the caller to be a team admin. `grantedScopes` must be a subset of the fetched manifest\'s `scopes`. The AppVersion is fetched with the caller\'s own token, so only apps the caller\'s team owns can be installed (v1: private apps only). 
          * @summary Install an app for the team (team admin only)
          * @param {InstallationCreate} [installationCreate] 
          * @param {*} [options] Override http request option.
@@ -8006,7 +8006,7 @@ export const AppStoreApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Fetches the requested AppVersion from appstore, snapshots its manifest onto a new Installation row, generates and seals the installation\'s signing secret, and writes an `install` InstallationAudit row -- all in one transaction. The installation is created as `pending-handshake`; no call to the app is made in the request. A background job then POSTs the secret to the app\'s `{handler.baseUrl}/installed` and the installation becomes `active` only when the app acknowledges it. Requires the caller to be a team admin. `grantedScopes` must be a subset of the fetched manifest\'s `scopes`. 
+         * Fetches the requested AppVersion from appstore, snapshots its manifest onto a new Installation row, generates and seals the installation\'s signing secret, and writes an `install` InstallationAudit row -- all in one transaction. The installation is created as `pending-handshake`; no call to the app is made in the request. A background job then POSTs the secret to the app\'s `{handler.baseUrl}/installed` and the installation becomes `active` only when the app acknowledges it. Requires the caller to be a team admin. `grantedScopes` must be a subset of the fetched manifest\'s `scopes`. The AppVersion is fetched with the caller\'s own token, so only apps the caller\'s team owns can be installed (v1: private apps only). 
          * @summary Install an app for the team (team admin only)
          * @param {InstallationCreate} [installationCreate] 
          * @param {*} [options] Override http request option.
@@ -8069,7 +8069,7 @@ export const AppStoreApiFactory = function (configuration?: Configuration, baseP
             return localVarFp.installationsHandshakeRetry(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
-         * Fetches the requested AppVersion from appstore, snapshots its manifest onto a new Installation row, generates and seals the installation\'s signing secret, and writes an `install` InstallationAudit row -- all in one transaction. The installation is created as `pending-handshake`; no call to the app is made in the request. A background job then POSTs the secret to the app\'s `{handler.baseUrl}/installed` and the installation becomes `active` only when the app acknowledges it. Requires the caller to be a team admin. `grantedScopes` must be a subset of the fetched manifest\'s `scopes`. 
+         * Fetches the requested AppVersion from appstore, snapshots its manifest onto a new Installation row, generates and seals the installation\'s signing secret, and writes an `install` InstallationAudit row -- all in one transaction. The installation is created as `pending-handshake`; no call to the app is made in the request. A background job then POSTs the secret to the app\'s `{handler.baseUrl}/installed` and the installation becomes `active` only when the app acknowledges it. Requires the caller to be a team admin. `grantedScopes` must be a subset of the fetched manifest\'s `scopes`. The AppVersion is fetched with the caller\'s own token, so only apps the caller\'s team owns can be installed (v1: private apps only). 
          * @summary Install an app for the team (team admin only)
          * @param {AppStoreApiInstallationsPostRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -8221,7 +8221,7 @@ export class AppStoreApi extends BaseAPI {
     }
 
     /**
-     * Fetches the requested AppVersion from appstore, snapshots its manifest onto a new Installation row, generates and seals the installation\'s signing secret, and writes an `install` InstallationAudit row -- all in one transaction. The installation is created as `pending-handshake`; no call to the app is made in the request. A background job then POSTs the secret to the app\'s `{handler.baseUrl}/installed` and the installation becomes `active` only when the app acknowledges it. Requires the caller to be a team admin. `grantedScopes` must be a subset of the fetched manifest\'s `scopes`. 
+     * Fetches the requested AppVersion from appstore, snapshots its manifest onto a new Installation row, generates and seals the installation\'s signing secret, and writes an `install` InstallationAudit row -- all in one transaction. The installation is created as `pending-handshake`; no call to the app is made in the request. A background job then POSTs the secret to the app\'s `{handler.baseUrl}/installed` and the installation becomes `active` only when the app acknowledges it. Requires the caller to be a team admin. `grantedScopes` must be a subset of the fetched manifest\'s `scopes`. The AppVersion is fetched with the caller\'s own token, so only apps the caller\'s team owns can be installed (v1: private apps only). 
      * @summary Install an app for the team (team admin only)
      * @param {AppStoreApiInstallationsPostRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
