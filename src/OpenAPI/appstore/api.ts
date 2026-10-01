@@ -1367,7 +1367,7 @@ export const AppsApiAxiosParamCreator = function (configuration?: Configuration)
 
             // authentication chatdaddy required
             // oauth required
-            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["INTEGRATIONS_UPDATE"], configuration)
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["APPS_DEVELOP"], configuration)
 
 
     
@@ -1408,7 +1408,7 @@ export const AppsApiAxiosParamCreator = function (configuration?: Configuration)
 
             // authentication chatdaddy required
             // oauth required
-            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["INTEGRATIONS_UPDATE"], configuration)
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["APPS_DEVELOP"], configuration)
 
 
     
@@ -1449,7 +1449,7 @@ export const AppsApiAxiosParamCreator = function (configuration?: Configuration)
 
             // authentication chatdaddy required
             // oauth required
-            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["INTEGRATIONS_UPDATE"], configuration)
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["APPS_DEVELOP"], configuration)
 
 
     
@@ -1492,7 +1492,7 @@ export const AppsApiAxiosParamCreator = function (configuration?: Configuration)
 
             // authentication chatdaddy required
             // oauth required
-            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["INTEGRATIONS_UPDATE"], configuration)
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["APPS_DEVELOP"], configuration)
 
             if (count !== undefined) {
                 localVarQueryParameter['count'] = count;
@@ -1536,7 +1536,7 @@ export const AppsApiAxiosParamCreator = function (configuration?: Configuration)
 
             // authentication chatdaddy required
             // oauth required
-            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["INTEGRATIONS_UPDATE"], configuration)
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["APPS_DEVELOP"], configuration)
 
             if (count !== undefined) {
                 localVarQueryParameter['count'] = count;
