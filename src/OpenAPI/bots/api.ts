@@ -4491,12 +4491,14 @@ export interface InstallationManifest {
     'settings'?: Array<{ [key: string]: any; }>;
 }
 /**
- * 
+ * `pending-handshake` (just installed, or awaiting delivery of the signing secret) and `failed-handshake` (the app never acknowledged it) are not `active`: no action or trigger runs for them.
  * @export
  * @enum {string}
  */
 
 export const InstallationStatus = {
+    PendingHandshake: 'pending-handshake',
+    FailedHandshake: 'failed-handshake',
     Active: 'active',
     PendingReconsent: 'pending-reconsent',
     Suspended: 'suspended',
@@ -7724,6 +7726,44 @@ export class AppIntegrationApi extends BaseAPI {
 export const AppStoreApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
+         * Generates and seals a new secret. The old one stays valid for 15 minutes. The installation stays `active`; the handshake job delivers the new secret to the app (same handshake and ack as an install). If delivery fails every retry the installation becomes `failed-handshake`. Only an `active` installation can rotate (409 otherwise). 
+         * @summary Rotate an installation\'s signing secret (team admin only)
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        installationSigningSecretRotate: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('installationSigningSecretRotate', 'id', id)
+            const localVarPath = `/installations/{id}/signing-secret/rotate`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["TEAM_UPDATE"], configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * Sets status to `uninstalled`, deletes the installation\'s Connections (removing their ciphertext), and writes an `uninstall` InstallationAudit row -- all in one transaction. 
          * @summary Uninstall an app for the team (team admin only)
          * @param {string} id 
@@ -7814,7 +7854,45 @@ export const AppStoreApiAxiosParamCreator = function (configuration?: Configurat
             };
         },
         /**
-         * Fetches the requested AppVersion from appstore, snapshots its manifest onto a new Installation row, and writes an `install` InstallationAudit row -- all in one transaction. Requires the caller to be a team admin. `grantedScopes` must be a subset of the fetched manifest\'s `scopes`. 
+         * `failed-handshake` -> `pending-handshake`, with the attempt counter reset; the handshake job picks it up on its next run. 409 for any other status. To give up instead, uninstall (`installationsDelete`). 
+         * @summary Retry a failed install handshake (team admin only)
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        installationsHandshakeRetry: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('installationsHandshakeRetry', 'id', id)
+            const localVarPath = `/installations/{id}/handshake-retry`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["TEAM_UPDATE"], configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Fetches the requested AppVersion from appstore, snapshots its manifest onto a new Installation row, generates and seals the installation\'s signing secret, and writes an `install` InstallationAudit row -- all in one transaction. The installation is created as `pending-handshake`; no call to the app is made in the request. A background job then POSTs the secret to the app\'s `{handler.baseUrl}/installed` and the installation becomes `active` only when the app acknowledges it. Requires the caller to be a team admin. `grantedScopes` must be a subset of the fetched manifest\'s `scopes`. 
          * @summary Install an app for the team (team admin only)
          * @param {InstallationCreate} [installationCreate] 
          * @param {*} [options] Override http request option.
@@ -7862,6 +7940,19 @@ export const AppStoreApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = AppStoreApiAxiosParamCreator(configuration)
     return {
         /**
+         * Generates and seals a new secret. The old one stays valid for 15 minutes. The installation stays `active`; the handshake job delivers the new secret to the app (same handshake and ack as an install). If delivery fails every retry the installation becomes `failed-handshake`. Only an `active` installation can rotate (409 otherwise). 
+         * @summary Rotate an installation\'s signing secret (team admin only)
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async installationSigningSecretRotate(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Installation>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.installationSigningSecretRotate(id, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['AppStoreApi.installationSigningSecretRotate']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
          * Sets status to `uninstalled`, deletes the installation\'s Connections (removing their ciphertext), and writes an `uninstall` InstallationAudit row -- all in one transaction. 
          * @summary Uninstall an app for the team (team admin only)
          * @param {string} id 
@@ -7890,7 +7981,20 @@ export const AppStoreApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Fetches the requested AppVersion from appstore, snapshots its manifest onto a new Installation row, and writes an `install` InstallationAudit row -- all in one transaction. Requires the caller to be a team admin. `grantedScopes` must be a subset of the fetched manifest\'s `scopes`. 
+         * `failed-handshake` -> `pending-handshake`, with the attempt counter reset; the handshake job picks it up on its next run. 409 for any other status. To give up instead, uninstall (`installationsDelete`). 
+         * @summary Retry a failed install handshake (team admin only)
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async installationsHandshakeRetry(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Installation>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.installationsHandshakeRetry(id, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['AppStoreApi.installationsHandshakeRetry']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Fetches the requested AppVersion from appstore, snapshots its manifest onto a new Installation row, generates and seals the installation\'s signing secret, and writes an `install` InstallationAudit row -- all in one transaction. The installation is created as `pending-handshake`; no call to the app is made in the request. A background job then POSTs the secret to the app\'s `{handler.baseUrl}/installed` and the installation becomes `active` only when the app acknowledges it. Requires the caller to be a team admin. `grantedScopes` must be a subset of the fetched manifest\'s `scopes`. 
          * @summary Install an app for the team (team admin only)
          * @param {InstallationCreate} [installationCreate] 
          * @param {*} [options] Override http request option.
@@ -7913,6 +8017,16 @@ export const AppStoreApiFactory = function (configuration?: Configuration, baseP
     const localVarFp = AppStoreApiFp(configuration)
     return {
         /**
+         * Generates and seals a new secret. The old one stays valid for 15 minutes. The installation stays `active`; the handshake job delivers the new secret to the app (same handshake and ack as an install). If delivery fails every retry the installation becomes `failed-handshake`. Only an `active` installation can rotate (409 otherwise). 
+         * @summary Rotate an installation\'s signing secret (team admin only)
+         * @param {AppStoreApiInstallationSigningSecretRotateRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        installationSigningSecretRotate(requestParameters: AppStoreApiInstallationSigningSecretRotateRequest, options?: RawAxiosRequestConfig): AxiosPromise<Installation> {
+            return localVarFp.installationSigningSecretRotate(requestParameters.id, options).then((request) => request(axios, basePath));
+        },
+        /**
          * Sets status to `uninstalled`, deletes the installation\'s Connections (removing their ciphertext), and writes an `uninstall` InstallationAudit row -- all in one transaction. 
          * @summary Uninstall an app for the team (team admin only)
          * @param {AppStoreApiInstallationsDeleteRequest} requestParameters Request parameters.
@@ -7933,7 +8047,17 @@ export const AppStoreApiFactory = function (configuration?: Configuration, baseP
             return localVarFp.installationsGet(requestParameters.status, requestParameters.count, requestParameters.cursor, options).then((request) => request(axios, basePath));
         },
         /**
-         * Fetches the requested AppVersion from appstore, snapshots its manifest onto a new Installation row, and writes an `install` InstallationAudit row -- all in one transaction. Requires the caller to be a team admin. `grantedScopes` must be a subset of the fetched manifest\'s `scopes`. 
+         * `failed-handshake` -> `pending-handshake`, with the attempt counter reset; the handshake job picks it up on its next run. 409 for any other status. To give up instead, uninstall (`installationsDelete`). 
+         * @summary Retry a failed install handshake (team admin only)
+         * @param {AppStoreApiInstallationsHandshakeRetryRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        installationsHandshakeRetry(requestParameters: AppStoreApiInstallationsHandshakeRetryRequest, options?: RawAxiosRequestConfig): AxiosPromise<Installation> {
+            return localVarFp.installationsHandshakeRetry(requestParameters.id, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Fetches the requested AppVersion from appstore, snapshots its manifest onto a new Installation row, generates and seals the installation\'s signing secret, and writes an `install` InstallationAudit row -- all in one transaction. The installation is created as `pending-handshake`; no call to the app is made in the request. A background job then POSTs the secret to the app\'s `{handler.baseUrl}/installed` and the installation becomes `active` only when the app acknowledges it. Requires the caller to be a team admin. `grantedScopes` must be a subset of the fetched manifest\'s `scopes`. 
          * @summary Install an app for the team (team admin only)
          * @param {AppStoreApiInstallationsPostRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -7944,6 +8068,20 @@ export const AppStoreApiFactory = function (configuration?: Configuration, baseP
         },
     };
 };
+
+/**
+ * Request parameters for installationSigningSecretRotate operation in AppStoreApi.
+ * @export
+ * @interface AppStoreApiInstallationSigningSecretRotateRequest
+ */
+export interface AppStoreApiInstallationSigningSecretRotateRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof AppStoreApiInstallationSigningSecretRotate
+     */
+    readonly id: string
+}
 
 /**
  * Request parameters for installationsDelete operation in AppStoreApi.
@@ -7988,6 +8126,20 @@ export interface AppStoreApiInstallationsGetRequest {
 }
 
 /**
+ * Request parameters for installationsHandshakeRetry operation in AppStoreApi.
+ * @export
+ * @interface AppStoreApiInstallationsHandshakeRetryRequest
+ */
+export interface AppStoreApiInstallationsHandshakeRetryRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof AppStoreApiInstallationsHandshakeRetry
+     */
+    readonly id: string
+}
+
+/**
  * Request parameters for installationsPost operation in AppStoreApi.
  * @export
  * @interface AppStoreApiInstallationsPostRequest
@@ -8008,6 +8160,18 @@ export interface AppStoreApiInstallationsPostRequest {
  * @extends {BaseAPI}
  */
 export class AppStoreApi extends BaseAPI {
+    /**
+     * Generates and seals a new secret. The old one stays valid for 15 minutes. The installation stays `active`; the handshake job delivers the new secret to the app (same handshake and ack as an install). If delivery fails every retry the installation becomes `failed-handshake`. Only an `active` installation can rotate (409 otherwise). 
+     * @summary Rotate an installation\'s signing secret (team admin only)
+     * @param {AppStoreApiInstallationSigningSecretRotateRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AppStoreApi
+     */
+    public installationSigningSecretRotate(requestParameters: AppStoreApiInstallationSigningSecretRotateRequest, options?: RawAxiosRequestConfig) {
+        return AppStoreApiFp(this.configuration).installationSigningSecretRotate(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    }
+
     /**
      * Sets status to `uninstalled`, deletes the installation\'s Connections (removing their ciphertext), and writes an `uninstall` InstallationAudit row -- all in one transaction. 
      * @summary Uninstall an app for the team (team admin only)
@@ -8033,7 +8197,19 @@ export class AppStoreApi extends BaseAPI {
     }
 
     /**
-     * Fetches the requested AppVersion from appstore, snapshots its manifest onto a new Installation row, and writes an `install` InstallationAudit row -- all in one transaction. Requires the caller to be a team admin. `grantedScopes` must be a subset of the fetched manifest\'s `scopes`. 
+     * `failed-handshake` -> `pending-handshake`, with the attempt counter reset; the handshake job picks it up on its next run. 409 for any other status. To give up instead, uninstall (`installationsDelete`). 
+     * @summary Retry a failed install handshake (team admin only)
+     * @param {AppStoreApiInstallationsHandshakeRetryRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AppStoreApi
+     */
+    public installationsHandshakeRetry(requestParameters: AppStoreApiInstallationsHandshakeRetryRequest, options?: RawAxiosRequestConfig) {
+        return AppStoreApiFp(this.configuration).installationsHandshakeRetry(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Fetches the requested AppVersion from appstore, snapshots its manifest onto a new Installation row, generates and seals the installation\'s signing secret, and writes an `install` InstallationAudit row -- all in one transaction. The installation is created as `pending-handshake`; no call to the app is made in the request. A background job then POSTs the secret to the app\'s `{handler.baseUrl}/installed` and the installation becomes `active` only when the app acknowledges it. Requires the caller to be a team admin. `grantedScopes` must be a subset of the fetched manifest\'s `scopes`. 
      * @summary Install an app for the team (team admin only)
      * @param {AppStoreApiInstallationsPostRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
