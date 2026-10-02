@@ -4322,7 +4322,11 @@ export const PlanId = {
     Pro: 'pro',
     Max: 'max',
     Enterprise: 'enterprise',
-    Api: 'api'
+    Api: 'api',
+    CsMini: 'cs_mini',
+    CsBasic: 'cs_basic',
+    CsProfessional: 'cs_professional',
+    CsAdvance: 'cs_advance'
 } as const;
 
 export type PlanId = typeof PlanId[keyof typeof PlanId];
