@@ -1081,5 +1081,14 @@
 		"section": null,
 		"group": null,
 		"appGrantable": true
+	},
+	"TRIGGERS_FIRE": {
+		"number": 107,
+		"description": "Start this team's flows by firing the app's declared triggers, from a ChatDaddy-hosted app",
+		"features": [],
+		"roles": [],
+		"section": null,
+		"group": null,
+		"appGrantable": true
 	}
 }
