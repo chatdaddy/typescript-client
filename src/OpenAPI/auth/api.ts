@@ -2000,7 +2000,8 @@ export const Scope = {
     CallPhoneDelete: 'CALL_PHONE_DELETE',
     MakeCalls: 'MAKE_CALLS',
     CallLogsRead: 'CALL_LOGS_READ',
-    AppsDevelop: 'APPS_DEVELOP'
+    AppsDevelop: 'APPS_DEVELOP',
+    ConnectionsUse: 'CONNECTIONS_USE'
 } as const;
 
 export type Scope = typeof Scope[keyof typeof Scope];

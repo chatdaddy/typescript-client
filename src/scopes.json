@@ -1072,5 +1072,14 @@
 		],
 		"section": "appstoreAndApi",
 		"group": "Apps"
+	},
+	"CONNECTIONS_USE": {
+		"number": 106,
+		"description": "Call a service you connected, through ChatDaddy, from an installed app",
+		"features": [],
+		"roles": [],
+		"section": null,
+		"group": null,
+		"appGrantable": true
 	}
 }
