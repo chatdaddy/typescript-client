@@ -1061,6 +1061,12 @@ export interface JWTUser {
      */
     'partnerAdmin'?: string;
     /**
+     * Present only on tokens minted for a sandbox team: the ID of the main team the sandbox belongs to. Set from the team\'s `sandboxOfTeamId` marker on every token this service mints for the team, never taken from a request: user tokens (`/token`), app tokens (`/token/app`), API-token validation (`/api-token/validate`) and this service\'s own server-side calls for the team. Services use it to refuse paid usage (the sandbox has no billing rows). Absent on every other token.
+     * @type {string}
+     * @memberof JWTUser
+     */
+    'sandboxOf'?: string;
+    /**
      * 
      * @type {ActorMetadata}
      * @memberof JWTUser
@@ -2179,6 +2185,12 @@ export interface Team {
      * @memberof Team
      */
     'variant'?: UserVariant;
+    /**
+     * Set only on a sandbox team: the ID of the main team it is the sandbox of. A sandbox team has no billing, accepts no other members, and its access tokens carry the `sandboxOf` claim.
+     * @type {string}
+     * @memberof Team
+     */
+    'sandboxOfTeamId'?: string | null;
 }
 
 
@@ -4755,7 +4767,7 @@ export const OAuthApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
-         * Platform callers only (ADMIN_PANEL_ACCESS -- the platform service accounts and members of the platform admin team). Mints a 5 minute access token for the target team on behalf of an installed app. The token metadata (`type: app`, `objectId: app_<appId>/inst_<installationId>`) is built here, never taken from the caller.  Scopes are clamped in this order: 1. any scope not marked `appGrantable` in the scope catalogue is    refused with a 400 2. the rest are intersected with the target team\'s plan, dropping    (and logging) scopes the plan does not allow 3. if nothing remains, the request is refused with a 403 
+         * Platform callers only (ADMIN_PANEL_ACCESS -- the platform service accounts and members of the platform admin team). Mints a 5 minute access token for the target team on behalf of an installed app. The token metadata (`type: app`, `objectId: app_<appId>/inst_<installationId>`) is built here, never taken from the caller.  Scopes are clamped in this order: 1. any scope not marked `appGrantable` in the scope catalogue is    refused with a 400 2. the rest are intersected with the target team\'s plan, dropping    (and logging) scopes the plan does not allow 3. if nothing remains, the request is refused with a 403  If the target team is a sandbox team, the token carries the `sandboxOf` claim (see the `JWT` schema), set from the team\'s marker. The sandbox\'s plan scopes are looked up without calling payments (it has no billing rows). 
          * @summary Mint a short-lived access token for an installed app
          * @param {AppAccessTokenRequest} appAccessTokenRequest 
          * @param {*} [options] Override http request option.
@@ -4959,7 +4971,7 @@ export const OAuthApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Platform callers only (ADMIN_PANEL_ACCESS -- the platform service accounts and members of the platform admin team). Mints a 5 minute access token for the target team on behalf of an installed app. The token metadata (`type: app`, `objectId: app_<appId>/inst_<installationId>`) is built here, never taken from the caller.  Scopes are clamped in this order: 1. any scope not marked `appGrantable` in the scope catalogue is    refused with a 400 2. the rest are intersected with the target team\'s plan, dropping    (and logging) scopes the plan does not allow 3. if nothing remains, the request is refused with a 403 
+         * Platform callers only (ADMIN_PANEL_ACCESS -- the platform service accounts and members of the platform admin team). Mints a 5 minute access token for the target team on behalf of an installed app. The token metadata (`type: app`, `objectId: app_<appId>/inst_<installationId>`) is built here, never taken from the caller.  Scopes are clamped in this order: 1. any scope not marked `appGrantable` in the scope catalogue is    refused with a 400 2. the rest are intersected with the target team\'s plan, dropping    (and logging) scopes the plan does not allow 3. if nothing remains, the request is refused with a 403  If the target team is a sandbox team, the token carries the `sandboxOf` claim (see the `JWT` schema), set from the team\'s marker. The sandbox\'s plan scopes are looked up without calling payments (it has no billing rows). 
          * @summary Mint a short-lived access token for an installed app
          * @param {AppAccessTokenRequest} appAccessTokenRequest 
          * @param {*} [options] Override http request option.
@@ -5043,7 +5055,7 @@ export const OAuthApiFactory = function (configuration?: Configuration, basePath
             return localVarFp.adminLogin(requestParameters.adminLoginRequest, options).then((request) => request(axios, basePath));
         },
         /**
-         * Platform callers only (ADMIN_PANEL_ACCESS -- the platform service accounts and members of the platform admin team). Mints a 5 minute access token for the target team on behalf of an installed app. The token metadata (`type: app`, `objectId: app_<appId>/inst_<installationId>`) is built here, never taken from the caller.  Scopes are clamped in this order: 1. any scope not marked `appGrantable` in the scope catalogue is    refused with a 400 2. the rest are intersected with the target team\'s plan, dropping    (and logging) scopes the plan does not allow 3. if nothing remains, the request is refused with a 403 
+         * Platform callers only (ADMIN_PANEL_ACCESS -- the platform service accounts and members of the platform admin team). Mints a 5 minute access token for the target team on behalf of an installed app. The token metadata (`type: app`, `objectId: app_<appId>/inst_<installationId>`) is built here, never taken from the caller.  Scopes are clamped in this order: 1. any scope not marked `appGrantable` in the scope catalogue is    refused with a 400 2. the rest are intersected with the target team\'s plan, dropping    (and logging) scopes the plan does not allow 3. if nothing remains, the request is refused with a 403  If the target team is a sandbox team, the token carries the `sandboxOf` claim (see the `JWT` schema), set from the team\'s marker. The sandbox\'s plan scopes are looked up without calling payments (it has no billing rows). 
          * @summary Mint a short-lived access token for an installed app
          * @param {OAuthApiAppAccessTokenPostRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -5184,7 +5196,7 @@ export class OAuthApi extends BaseAPI {
     }
 
     /**
-     * Platform callers only (ADMIN_PANEL_ACCESS -- the platform service accounts and members of the platform admin team). Mints a 5 minute access token for the target team on behalf of an installed app. The token metadata (`type: app`, `objectId: app_<appId>/inst_<installationId>`) is built here, never taken from the caller.  Scopes are clamped in this order: 1. any scope not marked `appGrantable` in the scope catalogue is    refused with a 400 2. the rest are intersected with the target team\'s plan, dropping    (and logging) scopes the plan does not allow 3. if nothing remains, the request is refused with a 403 
+     * Platform callers only (ADMIN_PANEL_ACCESS -- the platform service accounts and members of the platform admin team). Mints a 5 minute access token for the target team on behalf of an installed app. The token metadata (`type: app`, `objectId: app_<appId>/inst_<installationId>`) is built here, never taken from the caller.  Scopes are clamped in this order: 1. any scope not marked `appGrantable` in the scope catalogue is    refused with a 400 2. the rest are intersected with the target team\'s plan, dropping    (and logging) scopes the plan does not allow 3. if nothing remains, the request is refused with a 403  If the target team is a sandbox team, the token carries the `sandboxOf` claim (see the `JWT` schema), set from the team\'s marker. The sandbox\'s plan scopes are looked up without calling payments (it has no billing rows). 
      * @summary Mint a short-lived access token for an installed app
      * @param {OAuthApiAppAccessTokenPostRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -6627,6 +6639,40 @@ export const TeamsApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
+         * Creates the sandbox team of the team the access token is for (the \"main\" team) and adds the caller to it as its admin. Needs the `TEAMMEMBERS_UPDATE` scope and the caller to be an admin of the main team. An app token cannot call it: the operation is not `x-app-callable`, which the platform\'s app-token gate refuses.  - Off unless the service runs with `ENABLE_SANDBOX_TEAMS` (403   `sandbox-disabled`, nothing created). - **Idempotent**: a main team has at most one sandbox. If the caller   created it, it is returned and nothing is created. The sandbox   belongs to the admin who created it: any other admin gets a 409   `sandbox-owned-by-another-admin` and no team. - A sandbox team cannot have a sandbox of its own (400). - Each user may be the creator of a limited number of sandbox teams   (409 once reached). - A sandbox team is **never** a billing team: it has no credit   customer, no trial, no subscription and no Stripe customer, and   nothing here calls the payments service. Access tokens minted for it   carry the `sandboxOf` claim so payments can refuse paid usage. - Nobody can be invited or added to a sandbox team (invite links,   joins, sub-users and admin adds are all refused with a 403). Its only   member is the user that created it. - A sandbox team is never picked as a user\'s default team when a token   is requested without a `teamId`; it has to be asked for by id. - A token for a sandbox team is only minted for a user who is still an   admin member of its main team (staff admin teams excepted). 
+         * @summary Create (or fetch) the sandbox team of the caller\'s team
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        sandboxTeamPost: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/teams/sandbox`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["TEAMMEMBERS_UPDATE"], configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * 
          * @summary Mark a team as having completed an onboarding step
          * @param {OnboardingStepID} step the onboarding step to mark as completed
@@ -7063,6 +7109,18 @@ export const TeamsApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
+         * Creates the sandbox team of the team the access token is for (the \"main\" team) and adds the caller to it as its admin. Needs the `TEAMMEMBERS_UPDATE` scope and the caller to be an admin of the main team. An app token cannot call it: the operation is not `x-app-callable`, which the platform\'s app-token gate refuses.  - Off unless the service runs with `ENABLE_SANDBOX_TEAMS` (403   `sandbox-disabled`, nothing created). - **Idempotent**: a main team has at most one sandbox. If the caller   created it, it is returned and nothing is created. The sandbox   belongs to the admin who created it: any other admin gets a 409   `sandbox-owned-by-another-admin` and no team. - A sandbox team cannot have a sandbox of its own (400). - Each user may be the creator of a limited number of sandbox teams   (409 once reached). - A sandbox team is **never** a billing team: it has no credit   customer, no trial, no subscription and no Stripe customer, and   nothing here calls the payments service. Access tokens minted for it   carry the `sandboxOf` claim so payments can refuse paid usage. - Nobody can be invited or added to a sandbox team (invite links,   joins, sub-users and admin adds are all refused with a 403). Its only   member is the user that created it. - A sandbox team is never picked as a user\'s default team when a token   is requested without a `teamId`; it has to be asked for by id. - A token for a sandbox team is only minted for a user who is still an   admin member of its main team (staff admin teams excepted). 
+         * @summary Create (or fetch) the sandbox team of the caller\'s team
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async sandboxTeamPost(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Team>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.sandboxTeamPost(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['TeamsApi.sandboxTeamPost']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
          * 
          * @summary Mark a team as having completed an onboarding step
          * @param {OnboardingStepID} step the onboarding step to mark as completed
@@ -7228,6 +7286,15 @@ export const TeamsApiFactory = function (configuration?: Configuration, basePath
          */
         partnerTeamPatch(requestParameters: TeamsApiPartnerTeamPatchRequest, options?: RawAxiosRequestConfig): AxiosPromise<TeamsPatch200Response> {
             return localVarFp.partnerTeamPatch(requestParameters.teamId, requestParameters.partnerTeamPatchRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Creates the sandbox team of the team the access token is for (the \"main\" team) and adds the caller to it as its admin. Needs the `TEAMMEMBERS_UPDATE` scope and the caller to be an admin of the main team. An app token cannot call it: the operation is not `x-app-callable`, which the platform\'s app-token gate refuses.  - Off unless the service runs with `ENABLE_SANDBOX_TEAMS` (403   `sandbox-disabled`, nothing created). - **Idempotent**: a main team has at most one sandbox. If the caller   created it, it is returned and nothing is created. The sandbox   belongs to the admin who created it: any other admin gets a 409   `sandbox-owned-by-another-admin` and no team. - A sandbox team cannot have a sandbox of its own (400). - Each user may be the creator of a limited number of sandbox teams   (409 once reached). - A sandbox team is **never** a billing team: it has no credit   customer, no trial, no subscription and no Stripe customer, and   nothing here calls the payments service. Access tokens minted for it   carry the `sandboxOf` claim so payments can refuse paid usage. - Nobody can be invited or added to a sandbox team (invite links,   joins, sub-users and admin adds are all refused with a 403). Its only   member is the user that created it. - A sandbox team is never picked as a user\'s default team when a token   is requested without a `teamId`; it has to be asked for by id. - A token for a sandbox team is only minted for a user who is still an   admin member of its main team (staff admin teams excepted). 
+         * @summary Create (or fetch) the sandbox team of the caller\'s team
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        sandboxTeamPost(options?: RawAxiosRequestConfig): AxiosPromise<Team> {
+            return localVarFp.sandboxTeamPost(options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -7653,6 +7720,17 @@ export class TeamsApi extends BaseAPI {
      */
     public partnerTeamPatch(requestParameters: TeamsApiPartnerTeamPatchRequest, options?: RawAxiosRequestConfig) {
         return TeamsApiFp(this.configuration).partnerTeamPatch(requestParameters.teamId, requestParameters.partnerTeamPatchRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Creates the sandbox team of the team the access token is for (the \"main\" team) and adds the caller to it as its admin. Needs the `TEAMMEMBERS_UPDATE` scope and the caller to be an admin of the main team. An app token cannot call it: the operation is not `x-app-callable`, which the platform\'s app-token gate refuses.  - Off unless the service runs with `ENABLE_SANDBOX_TEAMS` (403   `sandbox-disabled`, nothing created). - **Idempotent**: a main team has at most one sandbox. If the caller   created it, it is returned and nothing is created. The sandbox   belongs to the admin who created it: any other admin gets a 409   `sandbox-owned-by-another-admin` and no team. - A sandbox team cannot have a sandbox of its own (400). - Each user may be the creator of a limited number of sandbox teams   (409 once reached). - A sandbox team is **never** a billing team: it has no credit   customer, no trial, no subscription and no Stripe customer, and   nothing here calls the payments service. Access tokens minted for it   carry the `sandboxOf` claim so payments can refuse paid usage. - Nobody can be invited or added to a sandbox team (invite links,   joins, sub-users and admin adds are all refused with a 403). Its only   member is the user that created it. - A sandbox team is never picked as a user\'s default team when a token   is requested without a `teamId`; it has to be asked for by id. - A token for a sandbox team is only minted for a user who is still an   admin member of its main team (staff admin teams excepted). 
+     * @summary Create (or fetch) the sandbox team of the caller\'s team
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof TeamsApi
+     */
+    public sandboxTeamPost(options?: RawAxiosRequestConfig) {
+        return TeamsApiFp(this.configuration).sandboxTeamPost(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

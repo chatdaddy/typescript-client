@@ -13172,6 +13172,12 @@ export interface TeamInsertData {
      * @memberof TeamInsertData
      */
     'variant'?: TeamInsertDataVariantEnum;
+    /**
+     * 
+     * @type {string}
+     * @memberof TeamInsertData
+     */
+    'sandboxOfTeamId'?: string | null;
 }
 
 export const TeamInsertDataScopesEnum = {
@@ -13673,6 +13679,12 @@ export interface TeamUpdateData {
      * @memberof TeamUpdateData
      */
     'variant'?: TeamUpdateDataVariantEnum;
+    /**
+     * 
+     * @type {string}
+     * @memberof TeamUpdateData
+     */
+    'sandboxOfTeamId'?: string | null;
 }
 
 export const TeamUpdateDataScopesEnum = {
