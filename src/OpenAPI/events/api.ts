@@ -13263,7 +13263,8 @@ export const TeamInsertDataScopesEnum = {
     MakeCalls: 'MAKE_CALLS',
     CallLogsRead: 'CALL_LOGS_READ',
     AppsDevelop: 'APPS_DEVELOP',
-    ConnectionsUse: 'CONNECTIONS_USE'
+    ConnectionsUse: 'CONNECTIONS_USE',
+    TriggersFire: 'TRIGGERS_FIRE'
 } as const;
 
 export type TeamInsertDataScopesEnum = typeof TeamInsertDataScopesEnum[keyof typeof TeamInsertDataScopesEnum];
@@ -13770,7 +13771,8 @@ export const TeamUpdateDataScopesEnum = {
     MakeCalls: 'MAKE_CALLS',
     CallLogsRead: 'CALL_LOGS_READ',
     AppsDevelop: 'APPS_DEVELOP',
-    ConnectionsUse: 'CONNECTIONS_USE'
+    ConnectionsUse: 'CONNECTIONS_USE',
+    TriggersFire: 'TRIGGERS_FIRE'
 } as const;
 
 export type TeamUpdateDataScopesEnum = typeof TeamUpdateDataScopesEnum[keyof typeof TeamUpdateDataScopesEnum];
@@ -13982,7 +13984,8 @@ export const TeammemberInsertDataScopesEnum = {
     MakeCalls: 'MAKE_CALLS',
     CallLogsRead: 'CALL_LOGS_READ',
     AppsDevelop: 'APPS_DEVELOP',
-    ConnectionsUse: 'CONNECTIONS_USE'
+    ConnectionsUse: 'CONNECTIONS_USE',
+    TriggersFire: 'TRIGGERS_FIRE'
 } as const;
 
 export type TeammemberInsertDataScopesEnum = typeof TeammemberInsertDataScopesEnum[keyof typeof TeammemberInsertDataScopesEnum];
@@ -14193,7 +14196,8 @@ export const TeammemberUpdateDataScopesEnum = {
     MakeCalls: 'MAKE_CALLS',
     CallLogsRead: 'CALL_LOGS_READ',
     AppsDevelop: 'APPS_DEVELOP',
-    ConnectionsUse: 'CONNECTIONS_USE'
+    ConnectionsUse: 'CONNECTIONS_USE',
+    TriggersFire: 'TRIGGERS_FIRE'
 } as const;
 
 export type TeammemberUpdateDataScopesEnum = typeof TeammemberUpdateDataScopesEnum[keyof typeof TeammemberUpdateDataScopesEnum];
