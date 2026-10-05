@@ -257,7 +257,7 @@ export interface ActionAppConfig {
      */
     'type'?: ActionAppConfigTypeEnum;
     /**
-     * 
+     * Either a built-in app id (`app_` followed by 16 alphanumeric characters) or the slug of an installed appstore app (lowercase alphanumeric words joined by single hyphens, at most 64 characters).
      * @type {string}
      * @memberof ActionAppConfig
      */
@@ -1172,7 +1172,7 @@ export interface ActionsGptGenerateRequest {
  */
 export interface AppAction {
     /**
-     * 
+     * Either a built-in app id (`app_` followed by 16 alphanumeric characters) or the slug of an installed appstore app (lowercase alphanumeric words joined by single hyphens, at most 64 characters).
      * @type {string}
      * @memberof AppAction
      */
@@ -1372,7 +1372,7 @@ export type AppTriggerMethodTypeEnum = typeof AppTriggerMethodTypeEnum[keyof typ
  */
 export interface AppTriggerMethodData {
     /**
-     * 
+     * Either a built-in app id (`app_` followed by 16 alphanumeric characters) or the slug of an installed appstore app (lowercase alphanumeric words joined by single hyphens, at most 64 characters).
      * @type {string}
      * @memberof AppTriggerMethodData
      */
@@ -6570,7 +6570,7 @@ export interface TriggerAppConfig {
      */
     'domains'?: Array<string>;
     /**
-     * 
+     * Either a built-in app id (`app_` followed by 16 alphanumeric characters) or the slug of an installed appstore app (lowercase alphanumeric words joined by single hyphens, at most 64 characters).
      * @type {string}
      * @memberof TriggerAppConfig
      */

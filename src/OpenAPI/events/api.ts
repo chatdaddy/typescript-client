@@ -1701,7 +1701,7 @@ export type BotInsertDataActionsInnerMessageTypeEnum = typeof BotInsertDataActio
  */
 export interface BotInsertDataActionsInnerAllOfApp {
     /**
-     * 
+     * Either a built-in app id (`app_` followed by 16 alphanumeric characters) or the slug of an installed appstore app (lowercase alphanumeric words joined by single hyphens, at most 64 characters).
      * @type {string}
      * @memberof BotInsertDataActionsInnerAllOfApp
      */
@@ -3709,7 +3709,7 @@ export type BotInsertDataTriggersInnerMethodOneOf2TypeEnum = typeof BotInsertDat
  */
 export interface BotInsertDataTriggersInnerMethodOneOf2Data {
     /**
-     * 
+     * Either a built-in app id (`app_` followed by 16 alphanumeric characters) or the slug of an installed appstore app (lowercase alphanumeric words joined by single hyphens, at most 64 characters).
      * @type {string}
      * @memberof BotInsertDataTriggersInnerMethodOneOf2Data
      */
