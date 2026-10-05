@@ -3205,6 +3205,269 @@ export interface CalendarAuth200Response {
 /**
  * 
  * @export
+ * @interface CalendarAutomation
+ */
+export interface CalendarAutomation {
+    /**
+     * Optional label for the rule. On create it defaults to an empty string, so responses always include it
+     * @type {string}
+     * @memberof CalendarAutomation
+     */
+    'name': string;
+    /**
+     * On create it defaults to true
+     * @type {boolean}
+     * @memberof CalendarAutomation
+     */
+    'enabled': boolean;
+    /**
+     * 
+     * @type {CalendarAutomationEvent}
+     * @memberof CalendarAutomation
+     */
+    'event': CalendarAutomationEvent;
+    /**
+     * Reminder only -- seconds relative to the meeting start, negative = before it (-86400 = 1 day before)
+     * @type {number}
+     * @memberof CalendarAutomation
+     */
+    'offsetSeconds'?: number | null;
+    /**
+     * Calendars the rule applies to, empty = all of the team\'s calendars
+     * @type {Array<string>}
+     * @memberof CalendarAutomation
+     */
+    'integrationIds': Array<string>;
+    /**
+     * ID of the bot sequence
+     * @type {string}
+     * @memberof CalendarAutomation
+     */
+    'botId': string;
+    /**
+     * The WhatsApp channel the message is sent from
+     * @type {string}
+     * @memberof CalendarAutomation
+     */
+    'accountId': string;
+    /**
+     * ID of a calendar automation
+     * @type {string}
+     * @memberof CalendarAutomation
+     */
+    'id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof CalendarAutomation
+     */
+    'createdBy'?: string;
+    /**
+     * An ISO formatted timestamp
+     * @type {string}
+     * @memberof CalendarAutomation
+     */
+    'createdAt': string;
+    /**
+     * An ISO formatted timestamp
+     * @type {string}
+     * @memberof CalendarAutomation
+     */
+    'updatedAt': string;
+}
+
+
+/**
+ * 
+ * @export
+ * @interface CalendarAutomationCreate
+ */
+export interface CalendarAutomationCreate {
+    /**
+     * Optional label for the rule. On create it defaults to an empty string, so responses always include it
+     * @type {string}
+     * @memberof CalendarAutomationCreate
+     */
+    'name'?: string;
+    /**
+     * On create it defaults to true
+     * @type {boolean}
+     * @memberof CalendarAutomationCreate
+     */
+    'enabled'?: boolean;
+    /**
+     * 
+     * @type {CalendarAutomationEvent}
+     * @memberof CalendarAutomationCreate
+     */
+    'event': CalendarAutomationEvent;
+    /**
+     * Reminder only -- seconds relative to the meeting start, negative = before it (-86400 = 1 day before)
+     * @type {number}
+     * @memberof CalendarAutomationCreate
+     */
+    'offsetSeconds'?: number | null;
+    /**
+     * Calendars the rule applies to, empty = all of the team\'s calendars
+     * @type {Array<string>}
+     * @memberof CalendarAutomationCreate
+     */
+    'integrationIds'?: Array<string>;
+    /**
+     * ID of the bot sequence
+     * @type {string}
+     * @memberof CalendarAutomationCreate
+     */
+    'botId': string;
+    /**
+     * The WhatsApp channel the message is sent from
+     * @type {string}
+     * @memberof CalendarAutomationCreate
+     */
+    'accountId': string;
+}
+
+
+/**
+ * booked = a new booking, rescheduled = the meeting time changed, cancelled = the meeting was cancelled, reminder = before the meeting starts (see offsetSeconds)
+ * @export
+ * @enum {string}
+ */
+
+export const CalendarAutomationEvent = {
+    Booked: 'booked',
+    Rescheduled: 'rescheduled',
+    Cancelled: 'cancelled',
+    Reminder: 'reminder'
+} as const;
+
+export type CalendarAutomationEvent = typeof CalendarAutomationEvent[keyof typeof CalendarAutomationEvent];
+
+
+/**
+ * 
+ * @export
+ * @interface CalendarAutomationFields
+ */
+export interface CalendarAutomationFields {
+    /**
+     * Optional label for the rule. On create it defaults to an empty string, so responses always include it
+     * @type {string}
+     * @memberof CalendarAutomationFields
+     */
+    'name'?: string;
+    /**
+     * On create it defaults to true
+     * @type {boolean}
+     * @memberof CalendarAutomationFields
+     */
+    'enabled'?: boolean;
+    /**
+     * 
+     * @type {CalendarAutomationEvent}
+     * @memberof CalendarAutomationFields
+     */
+    'event'?: CalendarAutomationEvent;
+    /**
+     * Reminder only -- seconds relative to the meeting start, negative = before it (-86400 = 1 day before)
+     * @type {number}
+     * @memberof CalendarAutomationFields
+     */
+    'offsetSeconds'?: number | null;
+    /**
+     * Calendars the rule applies to, empty = all of the team\'s calendars
+     * @type {Array<string>}
+     * @memberof CalendarAutomationFields
+     */
+    'integrationIds'?: Array<string>;
+    /**
+     * ID of the bot sequence
+     * @type {string}
+     * @memberof CalendarAutomationFields
+     */
+    'botId'?: string;
+    /**
+     * The WhatsApp channel the message is sent from
+     * @type {string}
+     * @memberof CalendarAutomationFields
+     */
+    'accountId'?: string;
+}
+
+
+/**
+ * 
+ * @export
+ * @interface CalendarAutomationPatch
+ */
+export interface CalendarAutomationPatch {
+    /**
+     * Optional label for the rule. On create it defaults to an empty string, so responses always include it
+     * @type {string}
+     * @memberof CalendarAutomationPatch
+     */
+    'name'?: string;
+    /**
+     * On create it defaults to true
+     * @type {boolean}
+     * @memberof CalendarAutomationPatch
+     */
+    'enabled'?: boolean;
+    /**
+     * 
+     * @type {CalendarAutomationEvent}
+     * @memberof CalendarAutomationPatch
+     */
+    'event'?: CalendarAutomationEvent;
+    /**
+     * Reminder only -- seconds relative to the meeting start, negative = before it (-86400 = 1 day before)
+     * @type {number}
+     * @memberof CalendarAutomationPatch
+     */
+    'offsetSeconds'?: number | null;
+    /**
+     * Calendars the rule applies to, empty = all of the team\'s calendars
+     * @type {Array<string>}
+     * @memberof CalendarAutomationPatch
+     */
+    'integrationIds'?: Array<string>;
+    /**
+     * ID of the bot sequence
+     * @type {string}
+     * @memberof CalendarAutomationPatch
+     */
+    'botId'?: string;
+    /**
+     * The WhatsApp channel the message is sent from
+     * @type {string}
+     * @memberof CalendarAutomationPatch
+     */
+    'accountId'?: string;
+}
+
+
+/**
+ * 
+ * @export
+ * @interface CalendarAutomationsGet200Response
+ */
+export interface CalendarAutomationsGet200Response {
+    /**
+     * 
+     * @type {Array<CalendarAutomation>}
+     * @memberof CalendarAutomationsGet200Response
+     */
+    'items': Array<CalendarAutomation>;
+    /**
+     * Cursor to use to fetch next page of results
+     * @type {string}
+     * @memberof CalendarAutomationsGet200Response
+     */
+    'nextPageCursor'?: string;
+}
+/**
+ * 
+ * @export
  * @interface CalendarBooking
  */
 export interface CalendarBooking {
@@ -3321,6 +3584,25 @@ export const CalendarBookingPhoneSourceEnum = {
 
 export type CalendarBookingPhoneSourceEnum = typeof CalendarBookingPhoneSourceEnum[keyof typeof CalendarBookingPhoneSourceEnum];
 
+/**
+ * 
+ * @export
+ * @interface CalendarBookingMessagesGet200Response
+ */
+export interface CalendarBookingMessagesGet200Response {
+    /**
+     * 
+     * @type {Array<CalendarScheduledMessage>}
+     * @memberof CalendarBookingMessagesGet200Response
+     */
+    'items': Array<CalendarScheduledMessage>;
+    /**
+     * Cursor to use to fetch next page of results
+     * @type {string}
+     * @memberof CalendarBookingMessagesGet200Response
+     */
+    'nextPageCursor'?: string;
+}
 /**
  * 
  * @export
@@ -3509,6 +3791,93 @@ export const CalendarPhoneSource = {
 } as const;
 
 export type CalendarPhoneSource = typeof CalendarPhoneSource[keyof typeof CalendarPhoneSource];
+
+
+/**
+ * 
+ * @export
+ * @interface CalendarScheduledMessage
+ */
+export interface CalendarScheduledMessage {
+    /**
+     * 
+     * @type {string}
+     * @memberof CalendarScheduledMessage
+     */
+    'id': string;
+    /**
+     * ID of a calendar booking
+     * @type {string}
+     * @memberof CalendarScheduledMessage
+     */
+    'bookingId': string;
+    /**
+     * ID of a calendar automation
+     * @type {string}
+     * @memberof CalendarScheduledMessage
+     */
+    'automationId': string;
+    /**
+     * 
+     * @type {CalendarAutomationEvent}
+     * @memberof CalendarScheduledMessage
+     */
+    'event': CalendarAutomationEvent;
+    /**
+     * An ISO formatted timestamp
+     * @type {string}
+     * @memberof CalendarScheduledMessage
+     */
+    'sendAt': string;
+    /**
+     * 
+     * @type {CalendarScheduledMessageStatus}
+     * @memberof CalendarScheduledMessage
+     */
+    'status': CalendarScheduledMessageStatus;
+    /**
+     * 
+     * @type {string}
+     * @memberof CalendarScheduledMessage
+     */
+    'error'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof CalendarScheduledMessage
+     */
+    'botFireRecordId'?: string | null;
+    /**
+     * An ISO formatted timestamp
+     * @type {string}
+     * @memberof CalendarScheduledMessage
+     */
+    'createdAt': string;
+    /**
+     * An ISO formatted timestamp
+     * @type {string}
+     * @memberof CalendarScheduledMessage
+     */
+    'updatedAt': string;
+}
+
+
+/**
+ * pending = waiting to be sent, sending = being sent right now, sent = the flow was fired, cancelled = the booking changed before it was due, skipped = no longer applicable (e.g. the meeting started), failed = see error
+ * @export
+ * @enum {string}
+ */
+
+export const CalendarScheduledMessageStatus = {
+    Pending: 'pending',
+    Sending: 'sending',
+    Sent: 'sent',
+    Cancelled: 'cancelled',
+    Skipped: 'skipped',
+    Failed: 'failed'
+} as const;
+
+export type CalendarScheduledMessageStatus = typeof CalendarScheduledMessageStatus[keyof typeof CalendarScheduledMessageStatus];
 
 
 /**
@@ -10940,6 +11309,220 @@ export type BotsGetsOrderEnum = typeof BotsGetsOrderEnum[keyof typeof BotsGetsOr
 export const CalendarApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
+         * 
+         * @summary Create a calendar automation
+         * @param {CalendarAutomationCreate} calendarAutomationCreate 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        calendarAutomationCreate: async (calendarAutomationCreate: CalendarAutomationCreate, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'calendarAutomationCreate' is not null or undefined
+            assertParamExists('calendarAutomationCreate', 'calendarAutomationCreate', calendarAutomationCreate)
+            const localVarPath = `/calendar/automations`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["TEMPLATES_UPDATE"], configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(calendarAutomationCreate, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Also cancels the rule\'s pending messages
+         * @summary Delete a calendar automation
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        calendarAutomationDelete: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('calendarAutomationDelete', 'id', id)
+            const localVarPath = `/calendar/automations/{id}`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["TEMPLATES_UPDATE"], configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Changes apply to messages queued from now on. Disabling a rule cancels its pending messages.
+         * @summary Update a calendar automation
+         * @param {string} id 
+         * @param {CalendarAutomationPatch} calendarAutomationPatch 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        calendarAutomationPatch: async (id: string, calendarAutomationPatch: CalendarAutomationPatch, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('calendarAutomationPatch', 'id', id)
+            // verify required parameter 'calendarAutomationPatch' is not null or undefined
+            assertParamExists('calendarAutomationPatch', 'calendarAutomationPatch', calendarAutomationPatch)
+            const localVarPath = `/calendar/automations/{id}`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PATCH', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["TEMPLATES_UPDATE"], configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(calendarAutomationPatch, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Rules that send a message flow when a calendar booking is created, rescheduled or cancelled, or as a reminder before the meeting
+         * @summary List the team\'s calendar automations
+         * @param {number} [count] 
+         * @param {string} [cursor] nextPageCursor from the previous page
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        calendarAutomationsGet: async (count?: number, cursor?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/calendar/automations`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["TEMPLATES_READ"], configuration)
+
+            if (count !== undefined) {
+                localVarQueryParameter['count'] = count;
+            }
+
+            if (cursor !== undefined) {
+                localVarQueryParameter['cursor'] = cursor;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Messages scheduled or sent for a booking by calendar automations
+         * @param {string} id 
+         * @param {number} [count] 
+         * @param {string} [cursor] nextPageCursor from the previous page
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        calendarBookingMessagesGet: async (id: string, count?: number, cursor?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('calendarBookingMessagesGet', 'id', id)
+            const localVarPath = `/calendar/bookings/{id}/messages`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["TEMPLATES_READ"], configuration)
+
+            if (count !== undefined) {
+                localVarQueryParameter['count'] = count;
+            }
+
+            if (cursor !== undefined) {
+                localVarQueryParameter['cursor'] = cursor;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * Set the phone number of a booking (e.g. one that is missing a phone), or pause/resume its reminders. Setting a phone on a booking that has not fired yet fires its flows.
          * @summary Update a booking
          * @param {string} id 
@@ -11283,6 +11866,75 @@ export const CalendarApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = CalendarApiAxiosParamCreator(configuration)
     return {
         /**
+         * 
+         * @summary Create a calendar automation
+         * @param {CalendarAutomationCreate} calendarAutomationCreate 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async calendarAutomationCreate(calendarAutomationCreate: CalendarAutomationCreate, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CalendarAutomation>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.calendarAutomationCreate(calendarAutomationCreate, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['CalendarApi.calendarAutomationCreate']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Also cancels the rule\'s pending messages
+         * @summary Delete a calendar automation
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async calendarAutomationDelete(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.calendarAutomationDelete(id, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['CalendarApi.calendarAutomationDelete']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Changes apply to messages queued from now on. Disabling a rule cancels its pending messages.
+         * @summary Update a calendar automation
+         * @param {string} id 
+         * @param {CalendarAutomationPatch} calendarAutomationPatch 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async calendarAutomationPatch(id: string, calendarAutomationPatch: CalendarAutomationPatch, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CalendarAutomation>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.calendarAutomationPatch(id, calendarAutomationPatch, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['CalendarApi.calendarAutomationPatch']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Rules that send a message flow when a calendar booking is created, rescheduled or cancelled, or as a reminder before the meeting
+         * @summary List the team\'s calendar automations
+         * @param {number} [count] 
+         * @param {string} [cursor] nextPageCursor from the previous page
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async calendarAutomationsGet(count?: number, cursor?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CalendarAutomationsGet200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.calendarAutomationsGet(count, cursor, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['CalendarApi.calendarAutomationsGet']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @summary Messages scheduled or sent for a booking by calendar automations
+         * @param {string} id 
+         * @param {number} [count] 
+         * @param {string} [cursor] nextPageCursor from the previous page
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async calendarBookingMessagesGet(id: string, count?: number, cursor?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CalendarBookingMessagesGet200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.calendarBookingMessagesGet(id, count, cursor, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['CalendarApi.calendarBookingMessagesGet']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
          * Set the phone number of a booking (e.g. one that is missing a phone), or pause/resume its reminders. Setting a phone on a booking that has not fired yet fires its flows.
          * @summary Update a booking
          * @param {string} id 
@@ -11393,6 +12045,56 @@ export const CalendarApiFactory = function (configuration?: Configuration, baseP
     const localVarFp = CalendarApiFp(configuration)
     return {
         /**
+         * 
+         * @summary Create a calendar automation
+         * @param {CalendarApiCalendarAutomationCreateRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        calendarAutomationCreate(requestParameters: CalendarApiCalendarAutomationCreateRequest, options?: RawAxiosRequestConfig): AxiosPromise<CalendarAutomation> {
+            return localVarFp.calendarAutomationCreate(requestParameters.calendarAutomationCreate, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Also cancels the rule\'s pending messages
+         * @summary Delete a calendar automation
+         * @param {CalendarApiCalendarAutomationDeleteRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        calendarAutomationDelete(requestParameters: CalendarApiCalendarAutomationDeleteRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.calendarAutomationDelete(requestParameters.id, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Changes apply to messages queued from now on. Disabling a rule cancels its pending messages.
+         * @summary Update a calendar automation
+         * @param {CalendarApiCalendarAutomationPatchRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        calendarAutomationPatch(requestParameters: CalendarApiCalendarAutomationPatchRequest, options?: RawAxiosRequestConfig): AxiosPromise<CalendarAutomation> {
+            return localVarFp.calendarAutomationPatch(requestParameters.id, requestParameters.calendarAutomationPatch, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Rules that send a message flow when a calendar booking is created, rescheduled or cancelled, or as a reminder before the meeting
+         * @summary List the team\'s calendar automations
+         * @param {CalendarApiCalendarAutomationsGetRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        calendarAutomationsGet(requestParameters: CalendarApiCalendarAutomationsGetRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<CalendarAutomationsGet200Response> {
+            return localVarFp.calendarAutomationsGet(requestParameters.count, requestParameters.cursor, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Messages scheduled or sent for a booking by calendar automations
+         * @param {CalendarApiCalendarBookingMessagesGetRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        calendarBookingMessagesGet(requestParameters: CalendarApiCalendarBookingMessagesGetRequest, options?: RawAxiosRequestConfig): AxiosPromise<CalendarBookingMessagesGet200Response> {
+            return localVarFp.calendarBookingMessagesGet(requestParameters.id, requestParameters.count, requestParameters.cursor, options).then((request) => request(axios, basePath));
+        },
+        /**
          * Set the phone number of a booking (e.g. one that is missing a phone), or pause/resume its reminders. Setting a phone on a booking that has not fired yet fires its flows.
          * @summary Update a booking
          * @param {CalendarApiCalendarBookingPatchRequest} requestParameters Request parameters.
@@ -11463,6 +12165,104 @@ export const CalendarApiFactory = function (configuration?: Configuration, baseP
         },
     };
 };
+
+/**
+ * Request parameters for calendarAutomationCreate operation in CalendarApi.
+ * @export
+ * @interface CalendarApiCalendarAutomationCreateRequest
+ */
+export interface CalendarApiCalendarAutomationCreateRequest {
+    /**
+     * 
+     * @type {CalendarAutomationCreate}
+     * @memberof CalendarApiCalendarAutomationCreate
+     */
+    readonly calendarAutomationCreate: CalendarAutomationCreate
+}
+
+/**
+ * Request parameters for calendarAutomationDelete operation in CalendarApi.
+ * @export
+ * @interface CalendarApiCalendarAutomationDeleteRequest
+ */
+export interface CalendarApiCalendarAutomationDeleteRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof CalendarApiCalendarAutomationDelete
+     */
+    readonly id: string
+}
+
+/**
+ * Request parameters for calendarAutomationPatch operation in CalendarApi.
+ * @export
+ * @interface CalendarApiCalendarAutomationPatchRequest
+ */
+export interface CalendarApiCalendarAutomationPatchRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof CalendarApiCalendarAutomationPatch
+     */
+    readonly id: string
+
+    /**
+     * 
+     * @type {CalendarAutomationPatch}
+     * @memberof CalendarApiCalendarAutomationPatch
+     */
+    readonly calendarAutomationPatch: CalendarAutomationPatch
+}
+
+/**
+ * Request parameters for calendarAutomationsGet operation in CalendarApi.
+ * @export
+ * @interface CalendarApiCalendarAutomationsGetRequest
+ */
+export interface CalendarApiCalendarAutomationsGetRequest {
+    /**
+     * 
+     * @type {number}
+     * @memberof CalendarApiCalendarAutomationsGet
+     */
+    readonly count?: number
+
+    /**
+     * nextPageCursor from the previous page
+     * @type {string}
+     * @memberof CalendarApiCalendarAutomationsGet
+     */
+    readonly cursor?: string
+}
+
+/**
+ * Request parameters for calendarBookingMessagesGet operation in CalendarApi.
+ * @export
+ * @interface CalendarApiCalendarBookingMessagesGetRequest
+ */
+export interface CalendarApiCalendarBookingMessagesGetRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof CalendarApiCalendarBookingMessagesGet
+     */
+    readonly id: string
+
+    /**
+     * 
+     * @type {number}
+     * @memberof CalendarApiCalendarBookingMessagesGet
+     */
+    readonly count?: number
+
+    /**
+     * nextPageCursor from the previous page
+     * @type {string}
+     * @memberof CalendarApiCalendarBookingMessagesGet
+     */
+    readonly cursor?: string
+}
 
 /**
  * Request parameters for calendarBookingPatch operation in CalendarApi.
@@ -11625,6 +12425,66 @@ export interface CalendarApiCalendarSyncStopRequest {
  * @extends {BaseAPI}
  */
 export class CalendarApi extends BaseAPI {
+    /**
+     * 
+     * @summary Create a calendar automation
+     * @param {CalendarApiCalendarAutomationCreateRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CalendarApi
+     */
+    public calendarAutomationCreate(requestParameters: CalendarApiCalendarAutomationCreateRequest, options?: RawAxiosRequestConfig) {
+        return CalendarApiFp(this.configuration).calendarAutomationCreate(requestParameters.calendarAutomationCreate, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Also cancels the rule\'s pending messages
+     * @summary Delete a calendar automation
+     * @param {CalendarApiCalendarAutomationDeleteRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CalendarApi
+     */
+    public calendarAutomationDelete(requestParameters: CalendarApiCalendarAutomationDeleteRequest, options?: RawAxiosRequestConfig) {
+        return CalendarApiFp(this.configuration).calendarAutomationDelete(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Changes apply to messages queued from now on. Disabling a rule cancels its pending messages.
+     * @summary Update a calendar automation
+     * @param {CalendarApiCalendarAutomationPatchRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CalendarApi
+     */
+    public calendarAutomationPatch(requestParameters: CalendarApiCalendarAutomationPatchRequest, options?: RawAxiosRequestConfig) {
+        return CalendarApiFp(this.configuration).calendarAutomationPatch(requestParameters.id, requestParameters.calendarAutomationPatch, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Rules that send a message flow when a calendar booking is created, rescheduled or cancelled, or as a reminder before the meeting
+     * @summary List the team\'s calendar automations
+     * @param {CalendarApiCalendarAutomationsGetRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CalendarApi
+     */
+    public calendarAutomationsGet(requestParameters: CalendarApiCalendarAutomationsGetRequest = {}, options?: RawAxiosRequestConfig) {
+        return CalendarApiFp(this.configuration).calendarAutomationsGet(requestParameters.count, requestParameters.cursor, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Messages scheduled or sent for a booking by calendar automations
+     * @param {CalendarApiCalendarBookingMessagesGetRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CalendarApi
+     */
+    public calendarBookingMessagesGet(requestParameters: CalendarApiCalendarBookingMessagesGetRequest, options?: RawAxiosRequestConfig) {
+        return CalendarApiFp(this.configuration).calendarBookingMessagesGet(requestParameters.id, requestParameters.count, requestParameters.cursor, options).then((request) => request(this.axios, this.basePath));
+    }
+
     /**
      * Set the phone number of a booking (e.g. one that is missing a phone), or pause/resume its reminders. Setting a phone on a booking that has not fired yet fires its flows.
      * @summary Update a booking
