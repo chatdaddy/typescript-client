@@ -7396,6 +7396,50 @@ export type ReferencedPostLiveStatusEnum = typeof ReferencedPostLiveStatusEnum[k
 /**
  * 
  * @export
+ * @interface SandboxAccountPost200Response
+ */
+export interface SandboxAccountPost200Response {
+    /**
+     * The team ID of the team on ChatDaddy
+     * @type {string}
+     * @memberof SandboxAccountPost200Response
+     */
+    'teamId': string;
+    /**
+     * The team ID of the team on ChatDaddy
+     * @type {string}
+     * @memberof SandboxAccountPost200Response
+     */
+    'ownerTeamId'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof SandboxAccountPost200Response
+     */
+    'createdAt': string;
+}
+/**
+ * `teamId` is the sandbox team to register, `ownerTeamId` the real team the sandbox was created for
+ * @export
+ * @interface SandboxAccountPostRequest
+ */
+export interface SandboxAccountPostRequest {
+    /**
+     * The team ID of the team on ChatDaddy
+     * @type {string}
+     * @memberof SandboxAccountPostRequest
+     */
+    'teamId': string;
+    /**
+     * The team ID of the team on ChatDaddy
+     * @type {string}
+     * @memberof SandboxAccountPostRequest
+     */
+    'ownerTeamId'?: string;
+}
+/**
+ * 
+ * @export
  * @interface SaveDailyChannelSnapshot200Response
  */
 export interface SaveDailyChannelSnapshot200Response {
@@ -10450,6 +10494,46 @@ export const AccountApiAxiosParamCreator = function (configuration?: Configurati
             };
         },
         /**
+         * Called by the auth service, once, before it hands a freshly created sandbox team to its owner. Writes an im-local sandbox marker for the team so that no later request needs a network read to know the team is a sandbox.  A sandbox team can only ever hold `mock` accounts: `accountsPost` refuses every other type for it, and the account runner refuses to start any other client for it. Idempotent per team: registering the same team again is a no-op and returns the existing marker.  Requires `ADMIN_PANEL_ACCESS` (the service token). Never callable by a sandbox team\'s own token, even one carrying that scope. 
+         * @summary Register a team as a sandbox (service-only)
+         * @param {SandboxAccountPostRequest} sandboxAccountPostRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        sandboxAccountPost: async (sandboxAccountPostRequest: SandboxAccountPostRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'sandboxAccountPostRequest' is not null or undefined
+            assertParamExists('sandboxAccountPost', 'sandboxAccountPostRequest', sandboxAccountPostRequest)
+            const localVarPath = `/sandbox-teams`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["ADMIN_PANEL_ACCESS"], configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(sandboxAccountPostRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * WA supports login either by QR code or by OTP. This API allows changing the login mode. 
          * @summary Change login mode of a WhatsApp account
          * @param {string} accountId 
@@ -10747,6 +10831,19 @@ export const AccountApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
+         * Called by the auth service, once, before it hands a freshly created sandbox team to its owner. Writes an im-local sandbox marker for the team so that no later request needs a network read to know the team is a sandbox.  A sandbox team can only ever hold `mock` accounts: `accountsPost` refuses every other type for it, and the account runner refuses to start any other client for it. Idempotent per team: registering the same team again is a no-op and returns the existing marker.  Requires `ADMIN_PANEL_ACCESS` (the service token). Never callable by a sandbox team\'s own token, even one carrying that scope. 
+         * @summary Register a team as a sandbox (service-only)
+         * @param {SandboxAccountPostRequest} sandboxAccountPostRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async sandboxAccountPost(sandboxAccountPostRequest: SandboxAccountPostRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SandboxAccountPost200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.sandboxAccountPost(sandboxAccountPostRequest, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['AccountApi.sandboxAccountPost']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
          * WA supports login either by QR code or by OTP. This API allows changing the login mode. 
          * @summary Change login mode of a WhatsApp account
          * @param {string} accountId 
@@ -10917,6 +11014,16 @@ export const AccountApiFactory = function (configuration?: Configuration, basePa
          */
         dashboardStatsGet(options?: RawAxiosRequestConfig): AxiosPromise<DashboardStatsGet200Response> {
             return localVarFp.dashboardStatsGet(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Called by the auth service, once, before it hands a freshly created sandbox team to its owner. Writes an im-local sandbox marker for the team so that no later request needs a network read to know the team is a sandbox.  A sandbox team can only ever hold `mock` accounts: `accountsPost` refuses every other type for it, and the account runner refuses to start any other client for it. Idempotent per team: registering the same team again is a no-op and returns the existing marker.  Requires `ADMIN_PANEL_ACCESS` (the service token). Never callable by a sandbox team\'s own token, even one carrying that scope. 
+         * @summary Register a team as a sandbox (service-only)
+         * @param {AccountApiSandboxAccountPostRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        sandboxAccountPost(requestParameters: AccountApiSandboxAccountPostRequest, options?: RawAxiosRequestConfig): AxiosPromise<SandboxAccountPost200Response> {
+            return localVarFp.sandboxAccountPost(requestParameters.sandboxAccountPostRequest, options).then((request) => request(axios, basePath));
         },
         /**
          * WA supports login either by QR code or by OTP. This API allows changing the login mode. 
@@ -11194,6 +11301,20 @@ export interface AccountApiAccountsSiblingMigrateGetRequest {
 }
 
 /**
+ * Request parameters for sandboxAccountPost operation in AccountApi.
+ * @export
+ * @interface AccountApiSandboxAccountPostRequest
+ */
+export interface AccountApiSandboxAccountPostRequest {
+    /**
+     * 
+     * @type {SandboxAccountPostRequest}
+     * @memberof AccountApiSandboxAccountPost
+     */
+    readonly sandboxAccountPostRequest: SandboxAccountPostRequest
+}
+
+/**
  * Request parameters for waChangeLoginMode operation in AccountApi.
  * @export
  * @interface AccountApiWaChangeLoginModeRequest
@@ -11430,6 +11551,18 @@ export class AccountApi extends BaseAPI {
      */
     public dashboardStatsGet(options?: RawAxiosRequestConfig) {
         return AccountApiFp(this.configuration).dashboardStatsGet(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Called by the auth service, once, before it hands a freshly created sandbox team to its owner. Writes an im-local sandbox marker for the team so that no later request needs a network read to know the team is a sandbox.  A sandbox team can only ever hold `mock` accounts: `accountsPost` refuses every other type for it, and the account runner refuses to start any other client for it. Idempotent per team: registering the same team again is a no-op and returns the existing marker.  Requires `ADMIN_PANEL_ACCESS` (the service token). Never callable by a sandbox team\'s own token, even one carrying that scope. 
+     * @summary Register a team as a sandbox (service-only)
+     * @param {AccountApiSandboxAccountPostRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AccountApi
+     */
+    public sandboxAccountPost(requestParameters: AccountApiSandboxAccountPostRequest, options?: RawAxiosRequestConfig) {
+        return AccountApiFp(this.configuration).sandboxAccountPost(requestParameters.sandboxAccountPostRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
