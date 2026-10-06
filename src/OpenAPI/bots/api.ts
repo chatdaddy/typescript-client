@@ -5044,6 +5044,57 @@ export interface InstallationCreate {
     'settings'?: { [key: string]: any; };
 }
 /**
+ * 
+ * @export
+ * @interface InstallationInboundRotateRequest
+ */
+export interface InstallationInboundRotateRequest {
+    /**
+     * Stop honouring the previous epoch at once
+     * @type {boolean}
+     * @memberof InstallationInboundRotateRequest
+     */
+    'revokePrevious'?: boolean;
+}
+/**
+ * 
+ * @export
+ * @interface InstallationInboundUrls200Response
+ */
+export interface InstallationInboundUrls200Response {
+    /**
+     * One capability URL per `inbound[].id` the manifest declares, for the CURRENT epoch
+     * @type {Array<InstallationInboundUrls200ResponseInboundInner>}
+     * @memberof InstallationInboundUrls200Response
+     */
+    'inbound': Array<InstallationInboundUrls200ResponseInboundInner>;
+    /**
+     * Only while a rotation is under 24 hours old: until when the URLs of the previous epoch still work (milliseconds since the epoch)
+     * @type {number}
+     * @memberof InstallationInboundUrls200Response
+     */
+    'previousValidUntilMs'?: number;
+}
+/**
+ * 
+ * @export
+ * @interface InstallationInboundUrls200ResponseInboundInner
+ */
+export interface InstallationInboundUrls200ResponseInboundInner {
+    /**
+     * 
+     * @type {string}
+     * @memberof InstallationInboundUrls200ResponseInboundInner
+     */
+    'id': string;
+    /**
+     * A bearer credential. Never log or share it.
+     * @type {string}
+     * @memberof InstallationInboundUrls200ResponseInboundInner
+     */
+    'url': string;
+}
+/**
  * Snapshot of the pinned AppVersion\'s manifest, copied at install or re-consent. Bots never reads the manifest from appstore at run time.
  * @export
  * @interface InstallationManifest
@@ -8470,6 +8521,86 @@ export const AppStoreApiAxiosParamCreator = function (configuration?: Configurat
             };
         },
         /**
+         * Bumps the inbound epoch and returns the new URLs. The URLs of the previous epoch keep working for 24 hours so the app can re-register, unless `revokePrevious` is true (leak response: they stop at once). A second rotation inside 24 hours is allowed: the previous epoch\'s grace restarts and the epoch before it ends immediately. Same preconditions as reading them (409), and 409 once the epoch reaches its maximum. The response carries bearer credentials: `no-store`, never logged. 
+         * @summary Rotate the inbound URLs of a hosted installation (team admin only)
+         * @param {string} id 
+         * @param {InstallationInboundRotateRequest} [installationInboundRotateRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        installationInboundRotate: async (id: string, installationInboundRotateRequest?: InstallationInboundRotateRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('installationInboundRotate', 'id', id)
+            const localVarPath = `/installations/{id}/inbound/rotate`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["TEAM_UPDATE"], configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(installationInboundRotateRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * The webhook URLs a hosted app registers with a provider (Shopify and so on). They are bearer credentials: shown only to team admins, `no-store` and never logged. Only an `active`, placed installation of a hosted app has any, and only while inbound URLs are enabled on the server (409 otherwise). 
+         * @summary The current inbound URLs of a hosted installation (team admin only)
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        installationInboundUrls: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('installationInboundUrls', 'id', id)
+            const localVarPath = `/installations/{id}/inbound`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["TEAM_UPDATE"], configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * Generates and seals a new secret. The old one stays valid for 15 minutes. The installation stays `active`; the handshake job delivers the new secret to the app (same handshake and ack as an install). If delivery fails every retry the installation becomes `failed-handshake`. Only an `active` installation can rotate (409 otherwise). 
          * @summary Rotate an installation\'s signing secret (team admin only)
          * @param {string} id 
@@ -8769,6 +8900,33 @@ export const AppStoreApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
+         * Bumps the inbound epoch and returns the new URLs. The URLs of the previous epoch keep working for 24 hours so the app can re-register, unless `revokePrevious` is true (leak response: they stop at once). A second rotation inside 24 hours is allowed: the previous epoch\'s grace restarts and the epoch before it ends immediately. Same preconditions as reading them (409), and 409 once the epoch reaches its maximum. The response carries bearer credentials: `no-store`, never logged. 
+         * @summary Rotate the inbound URLs of a hosted installation (team admin only)
+         * @param {string} id 
+         * @param {InstallationInboundRotateRequest} [installationInboundRotateRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async installationInboundRotate(id: string, installationInboundRotateRequest?: InstallationInboundRotateRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<InstallationInboundUrls200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.installationInboundRotate(id, installationInboundRotateRequest, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['AppStoreApi.installationInboundRotate']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * The webhook URLs a hosted app registers with a provider (Shopify and so on). They are bearer credentials: shown only to team admins, `no-store` and never logged. Only an `active`, placed installation of a hosted app has any, and only while inbound URLs are enabled on the server (409 otherwise). 
+         * @summary The current inbound URLs of a hosted installation (team admin only)
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async installationInboundUrls(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<InstallationInboundUrls200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.installationInboundUrls(id, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['AppStoreApi.installationInboundUrls']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
          * Generates and seals a new secret. The old one stays valid for 15 minutes. The installation stays `active`; the handshake job delivers the new secret to the app (same handshake and ack as an install). If delivery fails every retry the installation becomes `failed-handshake`. Only an `active` installation can rotate (409 otherwise). 
          * @summary Rotate an installation\'s signing secret (team admin only)
          * @param {string} id 
@@ -8887,6 +9045,26 @@ export const AppStoreApiFactory = function (configuration?: Configuration, baseP
          */
         hostedTriggerPost(requestParameters: AppStoreApiHostedTriggerPostRequest, options?: RawAxiosRequestConfig): AxiosPromise<AppTriggerIngest200Response> {
             return localVarFp.hostedTriggerPost(requestParameters.triggerId, requestParameters.xChatdaddyEventId, requestParameters.requestBody, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Bumps the inbound epoch and returns the new URLs. The URLs of the previous epoch keep working for 24 hours so the app can re-register, unless `revokePrevious` is true (leak response: they stop at once). A second rotation inside 24 hours is allowed: the previous epoch\'s grace restarts and the epoch before it ends immediately. Same preconditions as reading them (409), and 409 once the epoch reaches its maximum. The response carries bearer credentials: `no-store`, never logged. 
+         * @summary Rotate the inbound URLs of a hosted installation (team admin only)
+         * @param {AppStoreApiInstallationInboundRotateRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        installationInboundRotate(requestParameters: AppStoreApiInstallationInboundRotateRequest, options?: RawAxiosRequestConfig): AxiosPromise<InstallationInboundUrls200Response> {
+            return localVarFp.installationInboundRotate(requestParameters.id, requestParameters.installationInboundRotateRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * The webhook URLs a hosted app registers with a provider (Shopify and so on). They are bearer credentials: shown only to team admins, `no-store` and never logged. Only an `active`, placed installation of a hosted app has any, and only while inbound URLs are enabled on the server (409 otherwise). 
+         * @summary The current inbound URLs of a hosted installation (team admin only)
+         * @param {AppStoreApiInstallationInboundUrlsRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        installationInboundUrls(requestParameters: AppStoreApiInstallationInboundUrlsRequest, options?: RawAxiosRequestConfig): AxiosPromise<InstallationInboundUrls200Response> {
+            return localVarFp.installationInboundUrls(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
          * Generates and seals a new secret. The old one stays valid for 15 minutes. The installation stays `active`; the handshake job delivers the new secret to the app (same handshake and ack as an install). If delivery fails every retry the installation becomes `failed-handshake`. Only an `active` installation can rotate (409 otherwise). 
@@ -9036,6 +9214,41 @@ export interface AppStoreApiHostedTriggerPostRequest {
 }
 
 /**
+ * Request parameters for installationInboundRotate operation in AppStoreApi.
+ * @export
+ * @interface AppStoreApiInstallationInboundRotateRequest
+ */
+export interface AppStoreApiInstallationInboundRotateRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof AppStoreApiInstallationInboundRotate
+     */
+    readonly id: string
+
+    /**
+     * 
+     * @type {InstallationInboundRotateRequest}
+     * @memberof AppStoreApiInstallationInboundRotate
+     */
+    readonly installationInboundRotateRequest?: InstallationInboundRotateRequest
+}
+
+/**
+ * Request parameters for installationInboundUrls operation in AppStoreApi.
+ * @export
+ * @interface AppStoreApiInstallationInboundUrlsRequest
+ */
+export interface AppStoreApiInstallationInboundUrlsRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof AppStoreApiInstallationInboundUrls
+     */
+    readonly id: string
+}
+
+/**
  * Request parameters for installationSigningSecretRotate operation in AppStoreApi.
  * @export
  * @interface AppStoreApiInstallationSigningSecretRotateRequest
@@ -9174,6 +9387,30 @@ export class AppStoreApi extends BaseAPI {
      */
     public hostedTriggerPost(requestParameters: AppStoreApiHostedTriggerPostRequest, options?: RawAxiosRequestConfig) {
         return AppStoreApiFp(this.configuration).hostedTriggerPost(requestParameters.triggerId, requestParameters.xChatdaddyEventId, requestParameters.requestBody, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Bumps the inbound epoch and returns the new URLs. The URLs of the previous epoch keep working for 24 hours so the app can re-register, unless `revokePrevious` is true (leak response: they stop at once). A second rotation inside 24 hours is allowed: the previous epoch\'s grace restarts and the epoch before it ends immediately. Same preconditions as reading them (409), and 409 once the epoch reaches its maximum. The response carries bearer credentials: `no-store`, never logged. 
+     * @summary Rotate the inbound URLs of a hosted installation (team admin only)
+     * @param {AppStoreApiInstallationInboundRotateRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AppStoreApi
+     */
+    public installationInboundRotate(requestParameters: AppStoreApiInstallationInboundRotateRequest, options?: RawAxiosRequestConfig) {
+        return AppStoreApiFp(this.configuration).installationInboundRotate(requestParameters.id, requestParameters.installationInboundRotateRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * The webhook URLs a hosted app registers with a provider (Shopify and so on). They are bearer credentials: shown only to team admins, `no-store` and never logged. Only an `active`, placed installation of a hosted app has any, and only while inbound URLs are enabled on the server (409 otherwise). 
+     * @summary The current inbound URLs of a hosted installation (team admin only)
+     * @param {AppStoreApiInstallationInboundUrlsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AppStoreApi
+     */
+    public installationInboundUrls(requestParameters: AppStoreApiInstallationInboundUrlsRequest, options?: RawAxiosRequestConfig) {
+        return AppStoreApiFp(this.configuration).installationInboundUrls(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
