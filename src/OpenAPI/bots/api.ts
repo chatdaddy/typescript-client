@@ -1230,6 +1230,49 @@ export interface AppGroupConfig {
 /**
  * 
  * @export
+ * @interface AppHealthPolicy
+ */
+export interface AppHealthPolicy {
+    /**
+     * false turns warn and auto-suspend off for the app
+     * @type {boolean}
+     * @memberof AppHealthPolicy
+     */
+    'enabled'?: boolean;
+    /**
+     * Error rate (0.2 = 20%) that flags the installation failing. Default 0.2
+     * @type {number}
+     * @memberof AppHealthPolicy
+     */
+    'warnRate'?: number;
+    /**
+     * Default 60
+     * @type {number}
+     * @memberof AppHealthPolicy
+     */
+    'warnWindowMin'?: number;
+    /**
+     * Error rate that suspends the installation. Default 0.5
+     * @type {number}
+     * @memberof AppHealthPolicy
+     */
+    'suspendRate'?: number;
+    /**
+     * Default 15
+     * @type {number}
+     * @memberof AppHealthPolicy
+     */
+    'suspendWindowMin'?: number;
+    /**
+     * Calls a window needs before its rate counts. Default 20
+     * @type {number}
+     * @memberof AppHealthPolicy
+     */
+    'minCalls'?: number;
+}
+/**
+ * 
+ * @export
  * @interface AppIntegration
  */
 export interface AppIntegration {
@@ -5009,8 +5052,26 @@ export interface Installation {
      * @memberof Installation
      */
     'uninstalledAt': string | null;
+    /**
+     * `failing` while the app\'s own failure rate is above its warn threshold (default 20% over 60 minutes, at least 20 calls); show a badge. An app that fails more (default 50% over 15 minutes) is suspended automatically and never resumed automatically.
+     * @type {string}
+     * @memberof Installation
+     */
+    'healthState': InstallationHealthStateEnum;
+    /**
+     * When `healthState` last changed; null if it never has
+     * @type {string}
+     * @memberof Installation
+     */
+    'healthStateAt': string | null;
 }
 
+export const InstallationHealthStateEnum = {
+    Ok: 'ok',
+    Failing: 'failing'
+} as const;
+
+export type InstallationHealthStateEnum = typeof InstallationHealthStateEnum[keyof typeof InstallationHealthStateEnum];
 
 /**
  * 
@@ -8767,6 +8828,50 @@ export const AppStoreApiAxiosParamCreator = function (configuration?: Configurat
             };
         },
         /**
+         * Replaces the app\'s overrides of the auto-suspend rule for every team\'s installation of it; a field left out goes back to its default. An installation is flagged `failing` when its own error rate over `warnWindowMin` minutes reaches `warnRate` with at least `minCalls` calls, and suspended (never resumed automatically) when the rate over `suspendWindowMin` minutes reaches `suspendRate` with at least `minCalls` calls. Only the app\'s own failures count. `enabled: false` turns the whole rule off for the app. Requires `ADMIN_PANEL_ACCESS`. 
+         * @summary Set an app\'s auto-suspend thresholds (ChatDaddy staff)
+         * @param {string} appId 
+         * @param {AppHealthPolicy} appHealthPolicy 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        installationsHealthPolicyPut: async (appId: string, appHealthPolicy: AppHealthPolicy, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'appId' is not null or undefined
+            assertParamExists('installationsHealthPolicyPut', 'appId', appId)
+            // verify required parameter 'appHealthPolicy' is not null or undefined
+            assertParamExists('installationsHealthPolicyPut', 'appHealthPolicy', appHealthPolicy)
+            const localVarPath = `/installations/health-policy/{appId}`
+                .replace(`{${"appId"}}`, encodeURIComponent(String(appId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["ADMIN_PANEL_ACCESS"], configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(appHealthPolicy, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * Fetches the requested AppVersion from appstore, snapshots its manifest onto a new Installation row, generates and seals the installation\'s signing secret, and writes an `install` InstallationAudit row -- all in one transaction. The installation is created as `pending-handshake`; no call to the app is made in the request. A background job then POSTs the secret to the app\'s `{handler.baseUrl}/installed` and the installation becomes `active` only when the app acknowledges it. Requires the caller to be a team admin. `grantedScopes` must be a subset of the fetched manifest\'s `scopes`. The AppVersion is fetched with the caller\'s own token, so only apps the caller\'s team owns can be installed (v1: private apps only). 
          * @summary Install an app for the team (team admin only)
          * @param {InstallationCreate} [installationCreate] 
@@ -8798,6 +8903,44 @@ export const AppStoreApiAxiosParamCreator = function (configuration?: Configurat
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
             localVarRequestOptions.data = serializeDataIfNeeded(installationCreate, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * `suspended` -> `active`, only when the installation\'s latest suspension was ChatDaddy\'s automatic one (the app\'s own failure rate), once the developer has fixed the app. In one transaction it also sets `healthState` to `ok` and clears the installation\'s call counters (so old failures cannot suspend it again), and writes a `resume` InstallationAudit row with the caller as actor. 409 for an installation that is not suspended, or that ChatDaddy staff suspended (the kill switch). 
+         * @summary Resume an installation that was auto-suspended (team admin only)
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        installationsResume: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('installationsResume', 'id', id)
+            const localVarPath = `/installations/{id}/resume`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["TEAM_UPDATE"], configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -8981,6 +9124,20 @@ export const AppStoreApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
+         * Replaces the app\'s overrides of the auto-suspend rule for every team\'s installation of it; a field left out goes back to its default. An installation is flagged `failing` when its own error rate over `warnWindowMin` minutes reaches `warnRate` with at least `minCalls` calls, and suspended (never resumed automatically) when the rate over `suspendWindowMin` minutes reaches `suspendRate` with at least `minCalls` calls. Only the app\'s own failures count. `enabled: false` turns the whole rule off for the app. Requires `ADMIN_PANEL_ACCESS`. 
+         * @summary Set an app\'s auto-suspend thresholds (ChatDaddy staff)
+         * @param {string} appId 
+         * @param {AppHealthPolicy} appHealthPolicy 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async installationsHealthPolicyPut(appId: string, appHealthPolicy: AppHealthPolicy, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AppHealthPolicy>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.installationsHealthPolicyPut(appId, appHealthPolicy, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['AppStoreApi.installationsHealthPolicyPut']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
          * Fetches the requested AppVersion from appstore, snapshots its manifest onto a new Installation row, generates and seals the installation\'s signing secret, and writes an `install` InstallationAudit row -- all in one transaction. The installation is created as `pending-handshake`; no call to the app is made in the request. A background job then POSTs the secret to the app\'s `{handler.baseUrl}/installed` and the installation becomes `active` only when the app acknowledges it. Requires the caller to be a team admin. `grantedScopes` must be a subset of the fetched manifest\'s `scopes`. The AppVersion is fetched with the caller\'s own token, so only apps the caller\'s team owns can be installed (v1: private apps only). 
          * @summary Install an app for the team (team admin only)
          * @param {InstallationCreate} [installationCreate] 
@@ -8991,6 +9148,19 @@ export const AppStoreApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.installationsPost(installationCreate, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AppStoreApi.installationsPost']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * `suspended` -> `active`, only when the installation\'s latest suspension was ChatDaddy\'s automatic one (the app\'s own failure rate), once the developer has fixed the app. In one transaction it also sets `healthState` to `ok` and clears the installation\'s call counters (so old failures cannot suspend it again), and writes a `resume` InstallationAudit row with the caller as actor. 409 for an installation that is not suspended, or that ChatDaddy staff suspended (the kill switch). 
+         * @summary Resume an installation that was auto-suspended (team admin only)
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async installationsResume(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Installation>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.installationsResume(id, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['AppStoreApi.installationsResume']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -9107,6 +9277,16 @@ export const AppStoreApiFactory = function (configuration?: Configuration, baseP
             return localVarFp.installationsHandshakeRetry(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
+         * Replaces the app\'s overrides of the auto-suspend rule for every team\'s installation of it; a field left out goes back to its default. An installation is flagged `failing` when its own error rate over `warnWindowMin` minutes reaches `warnRate` with at least `minCalls` calls, and suspended (never resumed automatically) when the rate over `suspendWindowMin` minutes reaches `suspendRate` with at least `minCalls` calls. Only the app\'s own failures count. `enabled: false` turns the whole rule off for the app. Requires `ADMIN_PANEL_ACCESS`. 
+         * @summary Set an app\'s auto-suspend thresholds (ChatDaddy staff)
+         * @param {AppStoreApiInstallationsHealthPolicyPutRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        installationsHealthPolicyPut(requestParameters: AppStoreApiInstallationsHealthPolicyPutRequest, options?: RawAxiosRequestConfig): AxiosPromise<AppHealthPolicy> {
+            return localVarFp.installationsHealthPolicyPut(requestParameters.appId, requestParameters.appHealthPolicy, options).then((request) => request(axios, basePath));
+        },
+        /**
          * Fetches the requested AppVersion from appstore, snapshots its manifest onto a new Installation row, generates and seals the installation\'s signing secret, and writes an `install` InstallationAudit row -- all in one transaction. The installation is created as `pending-handshake`; no call to the app is made in the request. A background job then POSTs the secret to the app\'s `{handler.baseUrl}/installed` and the installation becomes `active` only when the app acknowledges it. Requires the caller to be a team admin. `grantedScopes` must be a subset of the fetched manifest\'s `scopes`. The AppVersion is fetched with the caller\'s own token, so only apps the caller\'s team owns can be installed (v1: private apps only). 
          * @summary Install an app for the team (team admin only)
          * @param {AppStoreApiInstallationsPostRequest} requestParameters Request parameters.
@@ -9115,6 +9295,16 @@ export const AppStoreApiFactory = function (configuration?: Configuration, baseP
          */
         installationsPost(requestParameters: AppStoreApiInstallationsPostRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<Installation> {
             return localVarFp.installationsPost(requestParameters.installationCreate, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * `suspended` -> `active`, only when the installation\'s latest suspension was ChatDaddy\'s automatic one (the app\'s own failure rate), once the developer has fixed the app. In one transaction it also sets `healthState` to `ok` and clears the installation\'s call counters (so old failures cannot suspend it again), and writes a `resume` InstallationAudit row with the caller as actor. 409 for an installation that is not suspended, or that ChatDaddy staff suspended (the kill switch). 
+         * @summary Resume an installation that was auto-suspended (team admin only)
+         * @param {AppStoreApiInstallationsResumeRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        installationsResume(requestParameters: AppStoreApiInstallationsResumeRequest, options?: RawAxiosRequestConfig): AxiosPromise<Installation> {
+            return localVarFp.installationsResume(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
          * THE one deliberately cross-team route in bots: it acts on every team\'s installations of `appId` (or of that one `appVersion`), not the caller\'s team. One batched update sets every `pending-handshake`, `failed-handshake`, `active` or `pending-reconsent` installation to `suspended` (`uninstalled` and already-`suspended` ones are untouched), and one `suspend` InstallationAudit row per installation records the caller as the actor, in the same transaction. The token and signing-secret caches of this replica are evicted; every other replica is stopped by the per-call status check. Returns how many installations were suspended (0 when none matched). Requires `ADMIN_PANEL_ACCESS`. 
@@ -9319,6 +9509,27 @@ export interface AppStoreApiInstallationsHandshakeRetryRequest {
 }
 
 /**
+ * Request parameters for installationsHealthPolicyPut operation in AppStoreApi.
+ * @export
+ * @interface AppStoreApiInstallationsHealthPolicyPutRequest
+ */
+export interface AppStoreApiInstallationsHealthPolicyPutRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof AppStoreApiInstallationsHealthPolicyPut
+     */
+    readonly appId: string
+
+    /**
+     * 
+     * @type {AppHealthPolicy}
+     * @memberof AppStoreApiInstallationsHealthPolicyPut
+     */
+    readonly appHealthPolicy: AppHealthPolicy
+}
+
+/**
  * Request parameters for installationsPost operation in AppStoreApi.
  * @export
  * @interface AppStoreApiInstallationsPostRequest
@@ -9330,6 +9541,20 @@ export interface AppStoreApiInstallationsPostRequest {
      * @memberof AppStoreApiInstallationsPost
      */
     readonly installationCreate?: InstallationCreate
+}
+
+/**
+ * Request parameters for installationsResume operation in AppStoreApi.
+ * @export
+ * @interface AppStoreApiInstallationsResumeRequest
+ */
+export interface AppStoreApiInstallationsResumeRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof AppStoreApiInstallationsResume
+     */
+    readonly id: string
 }
 
 /**
@@ -9462,6 +9687,18 @@ export class AppStoreApi extends BaseAPI {
     }
 
     /**
+     * Replaces the app\'s overrides of the auto-suspend rule for every team\'s installation of it; a field left out goes back to its default. An installation is flagged `failing` when its own error rate over `warnWindowMin` minutes reaches `warnRate` with at least `minCalls` calls, and suspended (never resumed automatically) when the rate over `suspendWindowMin` minutes reaches `suspendRate` with at least `minCalls` calls. Only the app\'s own failures count. `enabled: false` turns the whole rule off for the app. Requires `ADMIN_PANEL_ACCESS`. 
+     * @summary Set an app\'s auto-suspend thresholds (ChatDaddy staff)
+     * @param {AppStoreApiInstallationsHealthPolicyPutRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AppStoreApi
+     */
+    public installationsHealthPolicyPut(requestParameters: AppStoreApiInstallationsHealthPolicyPutRequest, options?: RawAxiosRequestConfig) {
+        return AppStoreApiFp(this.configuration).installationsHealthPolicyPut(requestParameters.appId, requestParameters.appHealthPolicy, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
      * Fetches the requested AppVersion from appstore, snapshots its manifest onto a new Installation row, generates and seals the installation\'s signing secret, and writes an `install` InstallationAudit row -- all in one transaction. The installation is created as `pending-handshake`; no call to the app is made in the request. A background job then POSTs the secret to the app\'s `{handler.baseUrl}/installed` and the installation becomes `active` only when the app acknowledges it. Requires the caller to be a team admin. `grantedScopes` must be a subset of the fetched manifest\'s `scopes`. The AppVersion is fetched with the caller\'s own token, so only apps the caller\'s team owns can be installed (v1: private apps only). 
      * @summary Install an app for the team (team admin only)
      * @param {AppStoreApiInstallationsPostRequest} requestParameters Request parameters.
@@ -9471,6 +9708,18 @@ export class AppStoreApi extends BaseAPI {
      */
     public installationsPost(requestParameters: AppStoreApiInstallationsPostRequest = {}, options?: RawAxiosRequestConfig) {
         return AppStoreApiFp(this.configuration).installationsPost(requestParameters.installationCreate, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * `suspended` -> `active`, only when the installation\'s latest suspension was ChatDaddy\'s automatic one (the app\'s own failure rate), once the developer has fixed the app. In one transaction it also sets `healthState` to `ok` and clears the installation\'s call counters (so old failures cannot suspend it again), and writes a `resume` InstallationAudit row with the caller as actor. 409 for an installation that is not suspended, or that ChatDaddy staff suspended (the kill switch). 
+     * @summary Resume an installation that was auto-suspended (team admin only)
+     * @param {AppStoreApiInstallationsResumeRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AppStoreApi
+     */
+    public installationsResume(requestParameters: AppStoreApiInstallationsResumeRequest, options?: RawAxiosRequestConfig) {
+        return AppStoreApiFp(this.configuration).installationsResume(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
