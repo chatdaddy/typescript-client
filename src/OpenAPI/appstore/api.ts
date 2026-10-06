@@ -173,6 +173,12 @@ export interface AppVersion {
     'bundleStatus'?: BundleStatus;
     /**
      * 
+     * @type {HostedPlacement}
+     * @memberof AppVersion
+     */
+    'hosted'?: HostedPlacement;
+    /**
+     * 
      * @type {string}
      * @memberof AppVersion
      */
@@ -754,6 +760,25 @@ export const HTTPRequestOptionsMethodEnum = {
 
 export type HTTPRequestOptionsMethodEnum = typeof HTTPRequestOptionsMethodEnum[keyof typeof HTTPRequestOptionsMethodEnum];
 
+/**
+ * Where a hosted version\'s script lives, for placing an install on it. Present only on `appVersionsGet` items whose `bundleStatus` is `ready`, and only to the owning team\'s caller (that operation returns only versions of apps the caller\'s team owns). `scriptName` is a hash-derived internal id, not a capability. The namespace is the production one when the version was deployed to production, else the dev one: placement is per version deployment, not per team. This serves private apps installed by the owning team; installs of public apps by other teams will need a separate service-scoped operation.
+ * @export
+ * @interface HostedPlacement
+ */
+export interface HostedPlacement {
+    /**
+     * 
+     * @type {string}
+     * @memberof HostedPlacement
+     */
+    'scriptName': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof HostedPlacement
+     */
+    'namespace': string;
+}
 /**
  * 
  * @export
