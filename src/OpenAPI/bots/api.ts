@@ -4627,6 +4627,136 @@ export interface GetTriggerInstancesDateRageParameter {
 /**
  * 
  * @export
+ * @interface HostedContextPost200Response
+ */
+export interface HostedContextPost200Response {
+    /**
+     * 
+     * @type {string}
+     * @memberof HostedContextPost200Response
+     */
+    'appId': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof HostedContextPost200Response
+     */
+    'teamId': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof HostedContextPost200Response
+     */
+    'appVersion': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof HostedContextPost200Response
+     */
+    'scriptName': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof HostedContextPost200Response
+     */
+    'namespace': string;
+    /**
+     * 
+     * @type {HostedContextPost200ResponseEpochs}
+     * @memberof HostedContextPost200Response
+     */
+    'epochs': HostedContextPost200ResponseEpochs;
+    /**
+     * The `id` of each `inbound[]` endpoint the manifest declares
+     * @type {Array<string>}
+     * @memberof HostedContextPost200Response
+     */
+    'inbound': Array<string>;
+    /**
+     * The installation\'s app token
+     * @type {string}
+     * @memberof HostedContextPost200Response
+     */
+    'token': string;
+    /**
+     * Token expiry in milliseconds since the epoch; absent when it could not be read from the token
+     * @type {number}
+     * @memberof HostedContextPost200Response
+     */
+    'tokenExp'?: number;
+    /**
+     * 
+     * @type {HostedContextPost200ResponseEgress}
+     * @memberof HostedContextPost200Response
+     */
+    'egress': HostedContextPost200ResponseEgress;
+    /**
+     * 
+     * @type {{ [key: string]: any; }}
+     * @memberof HostedContextPost200Response
+     */
+    'settings': { [key: string]: any; };
+}
+/**
+ * 
+ * @export
+ * @interface HostedContextPost200ResponseEgress
+ */
+export interface HostedContextPost200ResponseEgress {
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof HostedContextPost200ResponseEgress
+     */
+    'hosts': Array<string>;
+    /**
+     * 
+     * @type {Array<object>}
+     * @memberof HostedContextPost200ResponseEgress
+     */
+    'connections': Array<object>;
+}
+/**
+ * The inbound capability epoch. `previous` is present only while a rotation is under 24 hours old.
+ * @export
+ * @interface HostedContextPost200ResponseEpochs
+ */
+export interface HostedContextPost200ResponseEpochs {
+    /**
+     * 
+     * @type {number}
+     * @memberof HostedContextPost200ResponseEpochs
+     */
+    'current': number;
+    /**
+     * 
+     * @type {HostedContextPost200ResponseEpochsPrevious}
+     * @memberof HostedContextPost200ResponseEpochs
+     */
+    'previous'?: HostedContextPost200ResponseEpochsPrevious;
+}
+/**
+ * 
+ * @export
+ * @interface HostedContextPost200ResponseEpochsPrevious
+ */
+export interface HostedContextPost200ResponseEpochsPrevious {
+    /**
+     * 
+     * @type {number}
+     * @memberof HostedContextPost200ResponseEpochsPrevious
+     */
+    'epoch': number;
+    /**
+     * Milliseconds since the epoch
+     * @type {number}
+     * @memberof HostedContextPost200ResponseEpochsPrevious
+     */
+    'rotatedAtMs': number;
+}
+/**
+ * 
+ * @export
  * @interface IMMessageAttachment
  */
 export interface IMMessageAttachment {
@@ -8233,6 +8363,42 @@ export const AppStoreApiAxiosParamCreator = function (configuration?: Configurat
             };
         },
         /**
+         * Internal: called only by the hosted dispatch Worker, authenticated by a runtime-key HMAC. Not callable by apps or users and not part of the public consumer spec. The `x-chatdaddy-signature` header (required; a request without it is a 401, and it is not declared as a parameter here so that a missing header is that uniform 401) is `t=<unix seconds>,v1=<hex HMAC-SHA256>` over `chatdaddy/v1/hosted-to-bots.<t>.<raw body>`, 30s tolerance, keyed with the (B) key (current, or previous while a rotation window is open).  Answers only for an `active` installation whose manifest handler is `hosted` and which has been placed (script and namespace). Every other case, including an unknown installation, is the same 404, so the route is not an existence oracle. A bad signature is a 401. The response carries a live app token: it is `no-store` and is never logged or cached by bots. 
+         * @summary Context of a hosted app installation, for the hosted dispatch Worker
+         * @param {{ [key: string]: any; }} requestBody 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        hostedContextPost: async (requestBody: { [key: string]: any; }, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'requestBody' is not null or undefined
+            assertParamExists('hostedContextPost', 'requestBody', requestBody)
+            const localVarPath = `/hosted/context`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(requestBody, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * Generates and seals a new secret. The old one stays valid for 15 minutes. The installation stays `active`; the handshake job delivers the new secret to the app (same handshake and ack as an install). If delivery fails every retry the installation becomes `failed-handshake`. Only an `active` installation can rotate (409 otherwise). 
          * @summary Rotate an installation\'s signing secret (team admin only)
          * @param {string} id 
@@ -8504,6 +8670,19 @@ export const AppStoreApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
+         * Internal: called only by the hosted dispatch Worker, authenticated by a runtime-key HMAC. Not callable by apps or users and not part of the public consumer spec. The `x-chatdaddy-signature` header (required; a request without it is a 401, and it is not declared as a parameter here so that a missing header is that uniform 401) is `t=<unix seconds>,v1=<hex HMAC-SHA256>` over `chatdaddy/v1/hosted-to-bots.<t>.<raw body>`, 30s tolerance, keyed with the (B) key (current, or previous while a rotation window is open).  Answers only for an `active` installation whose manifest handler is `hosted` and which has been placed (script and namespace). Every other case, including an unknown installation, is the same 404, so the route is not an existence oracle. A bad signature is a 401. The response carries a live app token: it is `no-store` and is never logged or cached by bots. 
+         * @summary Context of a hosted app installation, for the hosted dispatch Worker
+         * @param {{ [key: string]: any; }} requestBody 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async hostedContextPost(requestBody: { [key: string]: any; }, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<HostedContextPost200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.hostedContextPost(requestBody, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['AppStoreApi.hostedContextPost']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
          * Generates and seals a new secret. The old one stays valid for 15 minutes. The installation stays `active`; the handshake job delivers the new secret to the app (same handshake and ack as an install). If delivery fails every retry the installation becomes `failed-handshake`. Only an `active` installation can rotate (409 otherwise). 
          * @summary Rotate an installation\'s signing secret (team admin only)
          * @param {string} id 
@@ -8602,6 +8781,16 @@ export const AppStoreApiFactory = function (configuration?: Configuration, baseP
          */
         appTriggerIngest(requestParameters: AppStoreApiAppTriggerIngestRequest, options?: RawAxiosRequestConfig): AxiosPromise<AppTriggerIngest200Response> {
             return localVarFp.appTriggerIngest(requestParameters.installationId, requestParameters.triggerId, requestParameters.xChatdaddyEventId, requestParameters.xChatdaddySignature, requestParameters.requestBody, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Internal: called only by the hosted dispatch Worker, authenticated by a runtime-key HMAC. Not callable by apps or users and not part of the public consumer spec. The `x-chatdaddy-signature` header (required; a request without it is a 401, and it is not declared as a parameter here so that a missing header is that uniform 401) is `t=<unix seconds>,v1=<hex HMAC-SHA256>` over `chatdaddy/v1/hosted-to-bots.<t>.<raw body>`, 30s tolerance, keyed with the (B) key (current, or previous while a rotation window is open).  Answers only for an `active` installation whose manifest handler is `hosted` and which has been placed (script and namespace). Every other case, including an unknown installation, is the same 404, so the route is not an existence oracle. A bad signature is a 401. The response carries a live app token: it is `no-store` and is never logged or cached by bots. 
+         * @summary Context of a hosted app installation, for the hosted dispatch Worker
+         * @param {AppStoreApiHostedContextPostRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        hostedContextPost(requestParameters: AppStoreApiHostedContextPostRequest, options?: RawAxiosRequestConfig): AxiosPromise<HostedContextPost200Response> {
+            return localVarFp.hostedContextPost(requestParameters.requestBody, options).then((request) => request(axios, basePath));
         },
         /**
          * Generates and seals a new secret. The old one stays valid for 15 minutes. The installation stays `active`; the handshake job delivers the new secret to the app (same handshake and ack as an install). If delivery fails every retry the installation becomes `failed-handshake`. Only an `active` installation can rotate (409 otherwise). 
@@ -8706,6 +8895,20 @@ export interface AppStoreApiAppTriggerIngestRequest {
      * @memberof AppStoreApiAppTriggerIngest
      */
     readonly requestBody?: { [key: string]: any; }
+}
+
+/**
+ * Request parameters for hostedContextPost operation in AppStoreApi.
+ * @export
+ * @interface AppStoreApiHostedContextPostRequest
+ */
+export interface AppStoreApiHostedContextPostRequest {
+    /**
+     * 
+     * @type {{ [key: string]: any; }}
+     * @memberof AppStoreApiHostedContextPost
+     */
+    readonly requestBody: { [key: string]: any; }
 }
 
 /**
@@ -8823,6 +9026,18 @@ export class AppStoreApi extends BaseAPI {
      */
     public appTriggerIngest(requestParameters: AppStoreApiAppTriggerIngestRequest, options?: RawAxiosRequestConfig) {
         return AppStoreApiFp(this.configuration).appTriggerIngest(requestParameters.installationId, requestParameters.triggerId, requestParameters.xChatdaddyEventId, requestParameters.xChatdaddySignature, requestParameters.requestBody, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Internal: called only by the hosted dispatch Worker, authenticated by a runtime-key HMAC. Not callable by apps or users and not part of the public consumer spec. The `x-chatdaddy-signature` header (required; a request without it is a 401, and it is not declared as a parameter here so that a missing header is that uniform 401) is `t=<unix seconds>,v1=<hex HMAC-SHA256>` over `chatdaddy/v1/hosted-to-bots.<t>.<raw body>`, 30s tolerance, keyed with the (B) key (current, or previous while a rotation window is open).  Answers only for an `active` installation whose manifest handler is `hosted` and which has been placed (script and namespace). Every other case, including an unknown installation, is the same 404, so the route is not an existence oracle. A bad signature is a 401. The response carries a live app token: it is `no-store` and is never logged or cached by bots. 
+     * @summary Context of a hosted app installation, for the hosted dispatch Worker
+     * @param {AppStoreApiHostedContextPostRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AppStoreApi
+     */
+    public hostedContextPost(requestParameters: AppStoreApiHostedContextPostRequest, options?: RawAxiosRequestConfig) {
+        return AppStoreApiFp(this.configuration).hostedContextPost(requestParameters.requestBody, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
