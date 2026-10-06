@@ -148,7 +148,7 @@ export interface AppVersion {
      */
     'version': string;
     /**
-     * Schema v1 manifest. The top-level required fields are declared here so generated clients are typed; the full contract (field shapes, formats and semantic checks) is validated at appVersionCreate time.
+     * Schema v1 manifest. The top-level required fields are declared here so generated clients are typed; the full contract (field shapes, formats and semantic checks) is validated at appVersionCreate time. Hosted apps (`handler.type` `hosted`) may also carry `egress.hosts`, `inbound` and `secrets`; `settings[]` entries may carry `secret`.
      * @type {{ [key: string]: any; }}
      * @memberof AppVersion
      */
@@ -167,6 +167,12 @@ export interface AppVersion {
     'handlerType': AppVersionHandlerTypeEnum;
     /**
      * 
+     * @type {BundleStatus}
+     * @memberof AppVersion
+     */
+    'bundleStatus'?: BundleStatus;
+    /**
+     * 
      * @type {string}
      * @memberof AppVersion
      */
@@ -183,6 +189,64 @@ export type AppVersionHandlerTypeEnum = typeof AppVersionHandlerTypeEnum[keyof t
 /**
  * 
  * @export
+ * @interface AppVersionBundle
+ */
+export interface AppVersionBundle {
+    /**
+     * 
+     * @type {string}
+     * @memberof AppVersionBundle
+     */
+    'appId': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof AppVersionBundle
+     */
+    'version': string;
+    /**
+     * 
+     * @type {BundleStatus}
+     * @memberof AppVersionBundle
+     */
+    'status': BundleStatus;
+    /**
+     * 
+     * @type {string}
+     * @memberof AppVersionBundle
+     */
+    'sha256': string;
+    /**
+     * 
+     * @type {number}
+     * @memberof AppVersionBundle
+     */
+    'size': number;
+}
+
+
+/**
+ * 
+ * @export
+ * @interface AppVersionBundlePut
+ */
+export interface AppVersionBundlePut {
+    /**
+     * The bundle: one ES module as UTF-8 text, at most 1 MB (1,048,576 bytes). Its sha256 is taken over the UTF-8 bytes. `maxLength` is a character bound, so it is only an early cut-off; the byte limit is enforced by the service (413).
+     * @type {string}
+     * @memberof AppVersionBundlePut
+     */
+    'source': string;
+    /**
+     * Optional lower-case hex sha256 of the bytes, checked against what was received.
+     * @type {string}
+     * @memberof AppVersionBundlePut
+     */
+    'sha256'?: string;
+}
+/**
+ * 
+ * @export
  * @interface AppVersionCreate
  */
 export interface AppVersionCreate {
@@ -193,7 +257,7 @@ export interface AppVersionCreate {
      */
     'version': string;
     /**
-     * Schema v1 manifest. The top-level required fields are declared here so generated clients are typed; the full contract (field shapes, formats and semantic checks) is validated at appVersionCreate time.
+     * Schema v1 manifest. The top-level required fields are declared here so generated clients are typed; the full contract (field shapes, formats and semantic checks) is validated at appVersionCreate time. Hosted apps (`handler.type` `hosted`) may also carry `egress.hosts`, `inbound` and `secrets`; `settings[]` entries may carry `secret`.
      * @type {{ [key: string]: any; }}
      * @memberof AppVersionCreate
      */
@@ -256,6 +320,22 @@ export interface Author {
      */
     'name': string;
 }
+/**
+ * Deploy state of a hosted version\'s bundle. Present only when handlerType is `hosted`. A version whose bundle is not `ready` cannot be installed.
+ * @export
+ * @enum {string}
+ */
+
+export const BundleStatus = {
+    Pending: 'pending',
+    Ready: 'ready',
+    Failed: 'failed',
+    Withdrawn: 'withdrawn'
+} as const;
+
+export type BundleStatus = typeof BundleStatus[keyof typeof BundleStatus];
+
+
 /**
  * 
  * @export
@@ -1422,6 +1502,54 @@ export const AppsApiAxiosParamCreator = function (configuration?: Configuration)
             };
         },
         /**
+         * Stores the bundle of a version created with `handler.type` `hosted`. The bytes are content-addressed (by sha256) and never executed here: the bundle must be at most 1 MB of UTF-8 that parses as an ES module with a default export. Re-sending the same bytes is idempotent; sending different bytes for a version that already has a bundle is a 409. Uploading does not deploy anything, and the bundle stays `pending`. Only the owning team may upload. Responses: 400 (not a hosted version, not an ES module, no default export, sha256 mismatch), 404 (no such app or version for this team), 409 (different bytes already stored, or the version was withdrawn), 413 (over 1 MB).
+         * @summary Upload the code bundle of a hosted app version
+         * @param {string} appId The app id (slug)
+         * @param {string} version The version string given at appVersionCreate
+         * @param {AppVersionBundlePut} appVersionBundlePut The bundle
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        appVersionBundlePut: async (appId: string, version: string, appVersionBundlePut: AppVersionBundlePut, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'appId' is not null or undefined
+            assertParamExists('appVersionBundlePut', 'appId', appId)
+            // verify required parameter 'version' is not null or undefined
+            assertParamExists('appVersionBundlePut', 'version', version)
+            // verify required parameter 'appVersionBundlePut' is not null or undefined
+            assertParamExists('appVersionBundlePut', 'appVersionBundlePut', appVersionBundlePut)
+            const localVarPath = `/apps/{appId}/versions/{version}/bundle`
+                .replace(`{${"appId"}}`, encodeURIComponent(String(appId)))
+                .replace(`{${"version"}}`, encodeURIComponent(String(version)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["APPS_DEVELOP"], configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(appVersionBundlePut, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * There is no update route for versions, because flows pin the version they run against. A mistake means publishing a new version, never editing one.
          * @summary Publish a new, immutable version of an app
          * @param {string} appId The app id (slug)
@@ -1594,6 +1722,21 @@ export const AppsApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
+         * Stores the bundle of a version created with `handler.type` `hosted`. The bytes are content-addressed (by sha256) and never executed here: the bundle must be at most 1 MB of UTF-8 that parses as an ES module with a default export. Re-sending the same bytes is idempotent; sending different bytes for a version that already has a bundle is a 409. Uploading does not deploy anything, and the bundle stays `pending`. Only the owning team may upload. Responses: 400 (not a hosted version, not an ES module, no default export, sha256 mismatch), 404 (no such app or version for this team), 409 (different bytes already stored, or the version was withdrawn), 413 (over 1 MB).
+         * @summary Upload the code bundle of a hosted app version
+         * @param {string} appId The app id (slug)
+         * @param {string} version The version string given at appVersionCreate
+         * @param {AppVersionBundlePut} appVersionBundlePut The bundle
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async appVersionBundlePut(appId: string, version: string, appVersionBundlePut: AppVersionBundlePut, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AppVersionBundle>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.appVersionBundlePut(appId, version, appVersionBundlePut, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['AppsApi.appVersionBundlePut']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
          * There is no update route for versions, because flows pin the version they run against. A mistake means publishing a new version, never editing one.
          * @summary Publish a new, immutable version of an app
          * @param {string} appId The app id (slug)
@@ -1667,6 +1810,16 @@ export const AppsApiFactory = function (configuration?: Configuration, basePath?
             return localVarFp.appGet(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
+         * Stores the bundle of a version created with `handler.type` `hosted`. The bytes are content-addressed (by sha256) and never executed here: the bundle must be at most 1 MB of UTF-8 that parses as an ES module with a default export. Re-sending the same bytes is idempotent; sending different bytes for a version that already has a bundle is a 409. Uploading does not deploy anything, and the bundle stays `pending`. Only the owning team may upload. Responses: 400 (not a hosted version, not an ES module, no default export, sha256 mismatch), 404 (no such app or version for this team), 409 (different bytes already stored, or the version was withdrawn), 413 (over 1 MB).
+         * @summary Upload the code bundle of a hosted app version
+         * @param {AppsApiAppVersionBundlePutRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        appVersionBundlePut(requestParameters: AppsApiAppVersionBundlePutRequest, options?: RawAxiosRequestConfig): AxiosPromise<AppVersionBundle> {
+            return localVarFp.appVersionBundlePut(requestParameters.appId, requestParameters.version, requestParameters.appVersionBundlePut, options).then((request) => request(axios, basePath));
+        },
+        /**
          * There is no update route for versions, because flows pin the version they run against. A mistake means publishing a new version, never editing one.
          * @summary Publish a new, immutable version of an app
          * @param {AppsApiAppVersionCreateRequest} requestParameters Request parameters.
@@ -1725,6 +1878,34 @@ export interface AppsApiAppGetRequest {
      * @memberof AppsApiAppGet
      */
     readonly id: string
+}
+
+/**
+ * Request parameters for appVersionBundlePut operation in AppsApi.
+ * @export
+ * @interface AppsApiAppVersionBundlePutRequest
+ */
+export interface AppsApiAppVersionBundlePutRequest {
+    /**
+     * The app id (slug)
+     * @type {string}
+     * @memberof AppsApiAppVersionBundlePut
+     */
+    readonly appId: string
+
+    /**
+     * The version string given at appVersionCreate
+     * @type {string}
+     * @memberof AppsApiAppVersionBundlePut
+     */
+    readonly version: string
+
+    /**
+     * The bundle
+     * @type {AppVersionBundlePut}
+     * @memberof AppsApiAppVersionBundlePut
+     */
+    readonly appVersionBundlePut: AppVersionBundlePut
 }
 
 /**
@@ -1826,6 +2007,18 @@ export class AppsApi extends BaseAPI {
      */
     public appGet(requestParameters: AppsApiAppGetRequest, options?: RawAxiosRequestConfig) {
         return AppsApiFp(this.configuration).appGet(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Stores the bundle of a version created with `handler.type` `hosted`. The bytes are content-addressed (by sha256) and never executed here: the bundle must be at most 1 MB of UTF-8 that parses as an ES module with a default export. Re-sending the same bytes is idempotent; sending different bytes for a version that already has a bundle is a 409. Uploading does not deploy anything, and the bundle stays `pending`. Only the owning team may upload. Responses: 400 (not a hosted version, not an ES module, no default export, sha256 mismatch), 404 (no such app or version for this team), 409 (different bytes already stored, or the version was withdrawn), 413 (over 1 MB).
+     * @summary Upload the code bundle of a hosted app version
+     * @param {AppsApiAppVersionBundlePutRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AppsApi
+     */
+    public appVersionBundlePut(requestParameters: AppsApiAppVersionBundlePutRequest, options?: RawAxiosRequestConfig) {
+        return AppsApiFp(this.configuration).appVersionBundlePut(requestParameters.appId, requestParameters.version, requestParameters.appVersionBundlePut, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
