@@ -4757,6 +4757,31 @@ export interface HostedContextPost200ResponseEpochsPrevious {
 /**
  * 
  * @export
+ * @interface HostedTriggerPost202Response
+ */
+export interface HostedTriggerPost202Response {
+    /**
+     * 
+     * @type {number}
+     * @memberof HostedTriggerPost202Response
+     */
+    'fired': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof HostedTriggerPost202Response
+     */
+    'throttled': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof HostedTriggerPost202Response
+     */
+    'failed': number;
+}
+/**
+ * 
+ * @export
  * @interface IMMessageAttachment
  */
 export interface IMMessageAttachment {
@@ -8399,6 +8424,52 @@ export const AppStoreApiAxiosParamCreator = function (configuration?: Configurat
             };
         },
         /**
+         * A hosted app fires one of its own flow triggers. Authenticated ONLY by the per-invocation app token (scope `TRIGGERS_FIRE`); a user token is a 403. The installation is the one named by the token, never by the request, so an app can only fire for its own installation. The body is JSON, at most 64 KB, and valid against the `payloadSchema` of the manifest `flowTriggers` entry named by `triggerId`. Delivery is at-most-once per `x-chatdaddy-event-id`, with the same semantics as the signed ingest route (`/apps/triggers/{installationId}/{triggerId}`), whose per-installation rate limit this shares. Errors carry a stable `data.code`. 
+         * @summary Fire a flow trigger from a hosted app (installed hosted apps only)
+         * @param {string} triggerId An id from the installation manifest\&#39;s &#x60;flowTriggers&#x60;
+         * @param {string} [xChatdaddyEventId] Unique id of this delivery (1-128 printable ASCII characters, no &#x60;.&#x60;); the replay key. Required (a request without it is a 400); declared optional here only so that a missing header is that 400.
+         * @param {{ [key: string]: any; }} [requestBody] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        hostedTriggerPost: async (triggerId: string, xChatdaddyEventId?: string, requestBody?: { [key: string]: any; }, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'triggerId' is not null or undefined
+            assertParamExists('hostedTriggerPost', 'triggerId', triggerId)
+            const localVarPath = `/apps/hosted-triggers/{triggerId}`
+                .replace(`{${"triggerId"}}`, encodeURIComponent(String(triggerId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["TRIGGERS_FIRE"], configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            if (xChatdaddyEventId != null) {
+                localVarHeaderParameter['x-chatdaddy-event-id'] = String(xChatdaddyEventId);
+            }
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(requestBody, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * Generates and seals a new secret. The old one stays valid for 15 minutes. The installation stays `active`; the handshake job delivers the new secret to the app (same handshake and ack as an install). If delivery fails every retry the installation becomes `failed-handshake`. Only an `active` installation can rotate (409 otherwise). 
          * @summary Rotate an installation\'s signing secret (team admin only)
          * @param {string} id 
@@ -8683,6 +8754,21 @@ export const AppStoreApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
+         * A hosted app fires one of its own flow triggers. Authenticated ONLY by the per-invocation app token (scope `TRIGGERS_FIRE`); a user token is a 403. The installation is the one named by the token, never by the request, so an app can only fire for its own installation. The body is JSON, at most 64 KB, and valid against the `payloadSchema` of the manifest `flowTriggers` entry named by `triggerId`. Delivery is at-most-once per `x-chatdaddy-event-id`, with the same semantics as the signed ingest route (`/apps/triggers/{installationId}/{triggerId}`), whose per-installation rate limit this shares. Errors carry a stable `data.code`. 
+         * @summary Fire a flow trigger from a hosted app (installed hosted apps only)
+         * @param {string} triggerId An id from the installation manifest\&#39;s &#x60;flowTriggers&#x60;
+         * @param {string} [xChatdaddyEventId] Unique id of this delivery (1-128 printable ASCII characters, no &#x60;.&#x60;); the replay key. Required (a request without it is a 400); declared optional here only so that a missing header is that 400.
+         * @param {{ [key: string]: any; }} [requestBody] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async hostedTriggerPost(triggerId: string, xChatdaddyEventId?: string, requestBody?: { [key: string]: any; }, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AppTriggerIngest200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.hostedTriggerPost(triggerId, xChatdaddyEventId, requestBody, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['AppStoreApi.hostedTriggerPost']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
          * Generates and seals a new secret. The old one stays valid for 15 minutes. The installation stays `active`; the handshake job delivers the new secret to the app (same handshake and ack as an install). If delivery fails every retry the installation becomes `failed-handshake`. Only an `active` installation can rotate (409 otherwise). 
          * @summary Rotate an installation\'s signing secret (team admin only)
          * @param {string} id 
@@ -8791,6 +8877,16 @@ export const AppStoreApiFactory = function (configuration?: Configuration, baseP
          */
         hostedContextPost(requestParameters: AppStoreApiHostedContextPostRequest, options?: RawAxiosRequestConfig): AxiosPromise<HostedContextPost200Response> {
             return localVarFp.hostedContextPost(requestParameters.requestBody, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * A hosted app fires one of its own flow triggers. Authenticated ONLY by the per-invocation app token (scope `TRIGGERS_FIRE`); a user token is a 403. The installation is the one named by the token, never by the request, so an app can only fire for its own installation. The body is JSON, at most 64 KB, and valid against the `payloadSchema` of the manifest `flowTriggers` entry named by `triggerId`. Delivery is at-most-once per `x-chatdaddy-event-id`, with the same semantics as the signed ingest route (`/apps/triggers/{installationId}/{triggerId}`), whose per-installation rate limit this shares. Errors carry a stable `data.code`. 
+         * @summary Fire a flow trigger from a hosted app (installed hosted apps only)
+         * @param {AppStoreApiHostedTriggerPostRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        hostedTriggerPost(requestParameters: AppStoreApiHostedTriggerPostRequest, options?: RawAxiosRequestConfig): AxiosPromise<AppTriggerIngest200Response> {
+            return localVarFp.hostedTriggerPost(requestParameters.triggerId, requestParameters.xChatdaddyEventId, requestParameters.requestBody, options).then((request) => request(axios, basePath));
         },
         /**
          * Generates and seals a new secret. The old one stays valid for 15 minutes. The installation stays `active`; the handshake job delivers the new secret to the app (same handshake and ack as an install). If delivery fails every retry the installation becomes `failed-handshake`. Only an `active` installation can rotate (409 otherwise). 
@@ -8909,6 +9005,34 @@ export interface AppStoreApiHostedContextPostRequest {
      * @memberof AppStoreApiHostedContextPost
      */
     readonly requestBody: { [key: string]: any; }
+}
+
+/**
+ * Request parameters for hostedTriggerPost operation in AppStoreApi.
+ * @export
+ * @interface AppStoreApiHostedTriggerPostRequest
+ */
+export interface AppStoreApiHostedTriggerPostRequest {
+    /**
+     * An id from the installation manifest\&#39;s &#x60;flowTriggers&#x60;
+     * @type {string}
+     * @memberof AppStoreApiHostedTriggerPost
+     */
+    readonly triggerId: string
+
+    /**
+     * Unique id of this delivery (1-128 printable ASCII characters, no &#x60;.&#x60;); the replay key. Required (a request without it is a 400); declared optional here only so that a missing header is that 400.
+     * @type {string}
+     * @memberof AppStoreApiHostedTriggerPost
+     */
+    readonly xChatdaddyEventId?: string
+
+    /**
+     * 
+     * @type {{ [key: string]: any; }}
+     * @memberof AppStoreApiHostedTriggerPost
+     */
+    readonly requestBody?: { [key: string]: any; }
 }
 
 /**
@@ -9038,6 +9162,18 @@ export class AppStoreApi extends BaseAPI {
      */
     public hostedContextPost(requestParameters: AppStoreApiHostedContextPostRequest, options?: RawAxiosRequestConfig) {
         return AppStoreApiFp(this.configuration).hostedContextPost(requestParameters.requestBody, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * A hosted app fires one of its own flow triggers. Authenticated ONLY by the per-invocation app token (scope `TRIGGERS_FIRE`); a user token is a 403. The installation is the one named by the token, never by the request, so an app can only fire for its own installation. The body is JSON, at most 64 KB, and valid against the `payloadSchema` of the manifest `flowTriggers` entry named by `triggerId`. Delivery is at-most-once per `x-chatdaddy-event-id`, with the same semantics as the signed ingest route (`/apps/triggers/{installationId}/{triggerId}`), whose per-installation rate limit this shares. Errors carry a stable `data.code`. 
+     * @summary Fire a flow trigger from a hosted app (installed hosted apps only)
+     * @param {AppStoreApiHostedTriggerPostRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AppStoreApi
+     */
+    public hostedTriggerPost(requestParameters: AppStoreApiHostedTriggerPostRequest, options?: RawAxiosRequestConfig) {
+        return AppStoreApiFp(this.configuration).hostedTriggerPost(requestParameters.triggerId, requestParameters.xChatdaddyEventId, requestParameters.requestBody, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
