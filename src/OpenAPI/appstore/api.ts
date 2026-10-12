@@ -148,7 +148,7 @@ export interface AppVersion {
      */
     'version': string;
     /**
-     * Schema v1 manifest. The top-level required fields are declared here so generated clients are typed; the full contract (field shapes, formats and semantic checks) is validated at appVersionCreate time. Hosted apps (`handler.type` `hosted`) may also carry `egress.hosts`, `inbound` and `secrets`; `settings[]` entries may carry `secret`.
+     * Schema v1 manifest. The top-level required fields are declared here so generated clients are typed; the full contract (field shapes, formats and semantic checks) is validated at appVersionCreate time. Hosted apps (`handler.type` `hosted`) may also carry `egress.hosts`, `inbound` and `secrets`; `settings[]` entries may carry `secret`. An `oauth2` `connections[]` entry may carry `flavor` (`generic` or `shopify`, default `generic`) and may use `https://{input}.myshopify.com/...` for `authUrl` and `tokenUrl` when that template is in its `hosts`.
      * @type {{ [key: string]: any; }}
      * @memberof AppVersion
      */
@@ -263,7 +263,7 @@ export interface AppVersionCreate {
      */
     'version': string;
     /**
-     * Schema v1 manifest. The top-level required fields are declared here so generated clients are typed; the full contract (field shapes, formats and semantic checks) is validated at appVersionCreate time. Hosted apps (`handler.type` `hosted`) may also carry `egress.hosts`, `inbound` and `secrets`; `settings[]` entries may carry `secret`.
+     * Schema v1 manifest. The top-level required fields are declared here so generated clients are typed; the full contract (field shapes, formats and semantic checks) is validated at appVersionCreate time. Hosted apps (`handler.type` `hosted`) may also carry `egress.hosts`, `inbound` and `secrets`; `settings[]` entries may carry `secret`. An `oauth2` `connections[]` entry may carry `flavor` (`generic` or `shopify`, default `generic`) and may use `https://{input}.myshopify.com/...` for `authUrl` and `tokenUrl` when that template is in its `hosts`.
      * @type {{ [key: string]: any; }}
      * @memberof AppVersionCreate
      */
