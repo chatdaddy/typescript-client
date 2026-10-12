@@ -178,6 +178,18 @@ export interface AppVersion {
      */
     'hosted'?: HostedPlacement;
     /**
+     * When ChatDaddy staff listed this version. Null when unlisted.
+     * @type {string}
+     * @memberof AppVersion
+     */
+    'listedAt'?: string | null;
+    /**
+     * The staff user who listed it. Not returned by `listedAppVersionGet`.
+     * @type {string}
+     * @memberof AppVersion
+     */
+    'listedBy'?: string | null;
+    /**
      * 
      * @type {string}
      * @memberof AppVersion
@@ -268,6 +280,19 @@ export interface AppVersionCreate {
      * @memberof AppVersionCreate
      */
     'manifest': { [key: string]: any; };
+}
+/**
+ * 
+ * @export
+ * @interface AppVersionListingPut
+ */
+export interface AppVersionListingPut {
+    /**
+     * 
+     * @type {boolean}
+     * @memberof AppVersionListingPut
+     */
+    'listed': boolean;
 }
 /**
  * 
@@ -915,6 +940,119 @@ export interface Like {
      * @memberof Like
      */
     'likedAt': string;
+}
+/**
+ * Catalogue summary of an app\'s newest listed version. Only allowlisted manifest fields are copied; no secrets, URLs or handler details.
+ * @export
+ * @interface ListedApp
+ */
+export interface ListedApp {
+    /**
+     * 
+     * @type {string}
+     * @memberof ListedApp
+     */
+    'appId': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ListedApp
+     */
+    'name': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ListedApp
+     */
+    'description'?: string | null;
+    /**
+     * Always `ChatDaddy`, derived server-side.
+     * @type {string}
+     * @memberof ListedApp
+     */
+    'publisher': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ListedApp
+     */
+    'version': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ListedApp
+     */
+    'handlerType': ListedAppHandlerTypeEnum;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof ListedApp
+     */
+    'scopes': Array<string>;
+    /**
+     * 
+     * @type {Array<ListedAppConnectionsInner>}
+     * @memberof ListedApp
+     */
+    'connections': Array<ListedAppConnectionsInner>;
+    /**
+     * Setting names only.
+     * @type {Array<string>}
+     * @memberof ListedApp
+     */
+    'settings': Array<string>;
+    /**
+     * 
+     * @type {string}
+     * @memberof ListedApp
+     */
+    'listedAt': string;
+}
+
+export const ListedAppHandlerTypeEnum = {
+    Hosted: 'hosted',
+    Url: 'url'
+} as const;
+
+export type ListedAppHandlerTypeEnum = typeof ListedAppHandlerTypeEnum[keyof typeof ListedAppHandlerTypeEnum];
+
+/**
+ * 
+ * @export
+ * @interface ListedAppConnectionsInner
+ */
+export interface ListedAppConnectionsInner {
+    /**
+     * 
+     * @type {string}
+     * @memberof ListedAppConnectionsInner
+     */
+    'provider': string;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof ListedAppConnectionsInner
+     */
+    'hosts': Array<string>;
+}
+/**
+ * 
+ * @export
+ * @interface ListedAppsGet200Response
+ */
+export interface ListedAppsGet200Response {
+    /**
+     * 
+     * @type {Array<ListedApp>}
+     * @memberof ListedAppsGet200Response
+     */
+    'items': Array<ListedApp>;
+    /**
+     * 
+     * @type {string}
+     * @memberof ListedAppsGet200Response
+     */
+    'cursor'?: string;
 }
 /**
  * 
@@ -1619,6 +1757,54 @@ export const AppsApiAxiosParamCreator = function (configuration?: Configuration)
             };
         },
         /**
+         * Only a caller whose team is the staff team (`APPSTORE_STAFF_TEAM_ID`) may call this, and only for an app owned by that team; with the variable unset every caller is refused. Listing needs the version to exist and, for a `url` handler, an https `handler.baseUrl`; for a `hosted` handler the bundle must be `ready`. Delisting needs only the staff gate. Listing an already listed version keeps its original `listedAt` and `listedBy`. Delisting blocks new installs and upgrades; existing installations keep their pinned snapshot.
+         * @summary List or delist a version of a first-party app (ChatDaddy staff only)
+         * @param {string} appId The app id (slug)
+         * @param {string} version The version string given at appVersionCreate
+         * @param {AppVersionListingPut} appVersionListingPut Whether the version is listed
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        appVersionListingPut: async (appId: string, version: string, appVersionListingPut: AppVersionListingPut, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'appId' is not null or undefined
+            assertParamExists('appVersionListingPut', 'appId', appId)
+            // verify required parameter 'version' is not null or undefined
+            assertParamExists('appVersionListingPut', 'version', version)
+            // verify required parameter 'appVersionListingPut' is not null or undefined
+            assertParamExists('appVersionListingPut', 'appVersionListingPut', appVersionListingPut)
+            const localVarPath = `/apps/{appId}/versions/{version}/listing`
+                .replace(`{${"appId"}}`, encodeURIComponent(String(appId)))
+                .replace(`{${"version"}}`, encodeURIComponent(String(version)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["APPS_DEVELOP"], configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(appVersionListingPut, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * Ordered newest first.
          * @summary Get versions of an app owned by the caller\'s team
          * @param {string} appId The app id (slug)
@@ -1710,6 +1896,92 @@ export const AppsApiAxiosParamCreator = function (configuration?: Configuration)
                 options: localVarRequestOptions,
             };
         },
+        /**
+         * Serves the manifest and handler of a version that is currently listed, to any authenticated team. An unlisted or delisted version, a missing one, and a version of an app that is not owned by the staff team are all the same 404, so nothing can be enumerated. The payload is that of an `appVersionsGet` item, including hosted placement, without `listedBy`.
+         * @summary Get a listed version of a first-party app, for install
+         * @param {string} appId The app id (slug)
+         * @param {string} version The version string
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listedAppVersionGet: async (appId: string, version: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'appId' is not null or undefined
+            assertParamExists('listedAppVersionGet', 'appId', appId)
+            // verify required parameter 'version' is not null or undefined
+            assertParamExists('listedAppVersionGet', 'version', version)
+            const localVarPath = `/apps/{appId}/listed-versions/{version}`
+                .replace(`{${"appId"}}`, encodeURIComponent(String(appId)))
+                .replace(`{${"version"}}`, encodeURIComponent(String(version)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", [], configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Apps that have at least one listed version, readable by any authenticated team. Each item summarises the app\'s newest listed version. The publisher is derived server-side, never from the manifest. Ordered by app id, ascending.
+         * @summary Get the catalogue of listed (first-party) apps
+         * @param {number} [count] The number of apps to get
+         * @param {string} [cursor] The cursor to get apps from (the last app id of the previous page)
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listedAppsGet: async (count?: number, cursor?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/apps/listed`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", [], configuration)
+
+            if (count !== undefined) {
+                localVarQueryParameter['count'] = count;
+            }
+
+            if (cursor !== undefined) {
+                localVarQueryParameter['cursor'] = cursor;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
     }
 };
 
@@ -1776,6 +2048,21 @@ export const AppsApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
+         * Only a caller whose team is the staff team (`APPSTORE_STAFF_TEAM_ID`) may call this, and only for an app owned by that team; with the variable unset every caller is refused. Listing needs the version to exist and, for a `url` handler, an https `handler.baseUrl`; for a `hosted` handler the bundle must be `ready`. Delisting needs only the staff gate. Listing an already listed version keeps its original `listedAt` and `listedBy`. Delisting blocks new installs and upgrades; existing installations keep their pinned snapshot.
+         * @summary List or delist a version of a first-party app (ChatDaddy staff only)
+         * @param {string} appId The app id (slug)
+         * @param {string} version The version string given at appVersionCreate
+         * @param {AppVersionListingPut} appVersionListingPut Whether the version is listed
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async appVersionListingPut(appId: string, version: string, appVersionListingPut: AppVersionListingPut, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AppVersion>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.appVersionListingPut(appId, version, appVersionListingPut, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['AppsApi.appVersionListingPut']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
          * Ordered newest first.
          * @summary Get versions of an app owned by the caller\'s team
          * @param {string} appId The app id (slug)
@@ -1802,6 +2089,34 @@ export const AppsApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.appsGet(count, cursor, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AppsApi.appsGet']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Serves the manifest and handler of a version that is currently listed, to any authenticated team. An unlisted or delisted version, a missing one, and a version of an app that is not owned by the staff team are all the same 404, so nothing can be enumerated. The payload is that of an `appVersionsGet` item, including hosted placement, without `listedBy`.
+         * @summary Get a listed version of a first-party app, for install
+         * @param {string} appId The app id (slug)
+         * @param {string} version The version string
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async listedAppVersionGet(appId: string, version: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AppVersion>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.listedAppVersionGet(appId, version, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['AppsApi.listedAppVersionGet']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Apps that have at least one listed version, readable by any authenticated team. Each item summarises the app\'s newest listed version. The publisher is derived server-side, never from the manifest. Ordered by app id, ascending.
+         * @summary Get the catalogue of listed (first-party) apps
+         * @param {number} [count] The number of apps to get
+         * @param {string} [cursor] The cursor to get apps from (the last app id of the previous page)
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async listedAppsGet(count?: number, cursor?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ListedAppsGet200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.listedAppsGet(count, cursor, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['AppsApi.listedAppsGet']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
     }
@@ -1855,6 +2170,16 @@ export const AppsApiFactory = function (configuration?: Configuration, basePath?
             return localVarFp.appVersionCreate(requestParameters.appId, requestParameters.appVersionCreate, options).then((request) => request(axios, basePath));
         },
         /**
+         * Only a caller whose team is the staff team (`APPSTORE_STAFF_TEAM_ID`) may call this, and only for an app owned by that team; with the variable unset every caller is refused. Listing needs the version to exist and, for a `url` handler, an https `handler.baseUrl`; for a `hosted` handler the bundle must be `ready`. Delisting needs only the staff gate. Listing an already listed version keeps its original `listedAt` and `listedBy`. Delisting blocks new installs and upgrades; existing installations keep their pinned snapshot.
+         * @summary List or delist a version of a first-party app (ChatDaddy staff only)
+         * @param {AppsApiAppVersionListingPutRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        appVersionListingPut(requestParameters: AppsApiAppVersionListingPutRequest, options?: RawAxiosRequestConfig): AxiosPromise<AppVersion> {
+            return localVarFp.appVersionListingPut(requestParameters.appId, requestParameters.version, requestParameters.appVersionListingPut, options).then((request) => request(axios, basePath));
+        },
+        /**
          * Ordered newest first.
          * @summary Get versions of an app owned by the caller\'s team
          * @param {AppsApiAppVersionsGetRequest} requestParameters Request parameters.
@@ -1873,6 +2198,26 @@ export const AppsApiFactory = function (configuration?: Configuration, basePath?
          */
         appsGet(requestParameters: AppsApiAppsGetRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<AppsGet200Response> {
             return localVarFp.appsGet(requestParameters.count, requestParameters.cursor, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Serves the manifest and handler of a version that is currently listed, to any authenticated team. An unlisted or delisted version, a missing one, and a version of an app that is not owned by the staff team are all the same 404, so nothing can be enumerated. The payload is that of an `appVersionsGet` item, including hosted placement, without `listedBy`.
+         * @summary Get a listed version of a first-party app, for install
+         * @param {AppsApiListedAppVersionGetRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listedAppVersionGet(requestParameters: AppsApiListedAppVersionGetRequest, options?: RawAxiosRequestConfig): AxiosPromise<AppVersion> {
+            return localVarFp.listedAppVersionGet(requestParameters.appId, requestParameters.version, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Apps that have at least one listed version, readable by any authenticated team. Each item summarises the app\'s newest listed version. The publisher is derived server-side, never from the manifest. Ordered by app id, ascending.
+         * @summary Get the catalogue of listed (first-party) apps
+         * @param {AppsApiListedAppsGetRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listedAppsGet(requestParameters: AppsApiListedAppsGetRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<ListedAppsGet200Response> {
+            return localVarFp.listedAppsGet(requestParameters.count, requestParameters.cursor, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -1955,6 +2300,34 @@ export interface AppsApiAppVersionCreateRequest {
 }
 
 /**
+ * Request parameters for appVersionListingPut operation in AppsApi.
+ * @export
+ * @interface AppsApiAppVersionListingPutRequest
+ */
+export interface AppsApiAppVersionListingPutRequest {
+    /**
+     * The app id (slug)
+     * @type {string}
+     * @memberof AppsApiAppVersionListingPut
+     */
+    readonly appId: string
+
+    /**
+     * The version string given at appVersionCreate
+     * @type {string}
+     * @memberof AppsApiAppVersionListingPut
+     */
+    readonly version: string
+
+    /**
+     * Whether the version is listed
+     * @type {AppVersionListingPut}
+     * @memberof AppsApiAppVersionListingPut
+     */
+    readonly appVersionListingPut: AppVersionListingPut
+}
+
+/**
  * Request parameters for appVersionsGet operation in AppsApi.
  * @export
  * @interface AppsApiAppVersionsGetRequest
@@ -1999,6 +2372,48 @@ export interface AppsApiAppsGetRequest {
      * The cursor to get apps from
      * @type {string}
      * @memberof AppsApiAppsGet
+     */
+    readonly cursor?: string
+}
+
+/**
+ * Request parameters for listedAppVersionGet operation in AppsApi.
+ * @export
+ * @interface AppsApiListedAppVersionGetRequest
+ */
+export interface AppsApiListedAppVersionGetRequest {
+    /**
+     * The app id (slug)
+     * @type {string}
+     * @memberof AppsApiListedAppVersionGet
+     */
+    readonly appId: string
+
+    /**
+     * The version string
+     * @type {string}
+     * @memberof AppsApiListedAppVersionGet
+     */
+    readonly version: string
+}
+
+/**
+ * Request parameters for listedAppsGet operation in AppsApi.
+ * @export
+ * @interface AppsApiListedAppsGetRequest
+ */
+export interface AppsApiListedAppsGetRequest {
+    /**
+     * The number of apps to get
+     * @type {number}
+     * @memberof AppsApiListedAppsGet
+     */
+    readonly count?: number
+
+    /**
+     * The cursor to get apps from (the last app id of the previous page)
+     * @type {string}
+     * @memberof AppsApiListedAppsGet
      */
     readonly cursor?: string
 }
@@ -2059,6 +2474,18 @@ export class AppsApi extends BaseAPI {
     }
 
     /**
+     * Only a caller whose team is the staff team (`APPSTORE_STAFF_TEAM_ID`) may call this, and only for an app owned by that team; with the variable unset every caller is refused. Listing needs the version to exist and, for a `url` handler, an https `handler.baseUrl`; for a `hosted` handler the bundle must be `ready`. Delisting needs only the staff gate. Listing an already listed version keeps its original `listedAt` and `listedBy`. Delisting blocks new installs and upgrades; existing installations keep their pinned snapshot.
+     * @summary List or delist a version of a first-party app (ChatDaddy staff only)
+     * @param {AppsApiAppVersionListingPutRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AppsApi
+     */
+    public appVersionListingPut(requestParameters: AppsApiAppVersionListingPutRequest, options?: RawAxiosRequestConfig) {
+        return AppsApiFp(this.configuration).appVersionListingPut(requestParameters.appId, requestParameters.version, requestParameters.appVersionListingPut, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
      * Ordered newest first.
      * @summary Get versions of an app owned by the caller\'s team
      * @param {AppsApiAppVersionsGetRequest} requestParameters Request parameters.
@@ -2080,6 +2507,30 @@ export class AppsApi extends BaseAPI {
      */
     public appsGet(requestParameters: AppsApiAppsGetRequest = {}, options?: RawAxiosRequestConfig) {
         return AppsApiFp(this.configuration).appsGet(requestParameters.count, requestParameters.cursor, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Serves the manifest and handler of a version that is currently listed, to any authenticated team. An unlisted or delisted version, a missing one, and a version of an app that is not owned by the staff team are all the same 404, so nothing can be enumerated. The payload is that of an `appVersionsGet` item, including hosted placement, without `listedBy`.
+     * @summary Get a listed version of a first-party app, for install
+     * @param {AppsApiListedAppVersionGetRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AppsApi
+     */
+    public listedAppVersionGet(requestParameters: AppsApiListedAppVersionGetRequest, options?: RawAxiosRequestConfig) {
+        return AppsApiFp(this.configuration).listedAppVersionGet(requestParameters.appId, requestParameters.version, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Apps that have at least one listed version, readable by any authenticated team. Each item summarises the app\'s newest listed version. The publisher is derived server-side, never from the manifest. Ordered by app id, ascending.
+     * @summary Get the catalogue of listed (first-party) apps
+     * @param {AppsApiListedAppsGetRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AppsApi
+     */
+    public listedAppsGet(requestParameters: AppsApiListedAppsGetRequest = {}, options?: RawAxiosRequestConfig) {
+        return AppsApiFp(this.configuration).listedAppsGet(requestParameters.count, requestParameters.cursor, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
