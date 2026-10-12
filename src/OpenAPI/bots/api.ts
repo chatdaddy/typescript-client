@@ -9421,6 +9421,50 @@ export const AppStoreApiAxiosParamCreator = function (configuration?: Configurat
             };
         },
         /**
+         * Rolls an installation back (or forward) to the given version of the same app, e.g. the last good one after a bad release. The target is fetched from appstore with the caller\'s own token, as for install and upgrade. Version, manifest and, for a hosted app, the placement change together; a hosted target must have a `ready` bundle. `inboundEpoch` is kept, so inbound URLs survive. There is no consent step: a target that asks for any scope beyond the installation\'s granted scopes is refused (409, use `installationsUpgrade`); one that asks for fewer narrows the granted scopes. Works for `active` and `suspended` installations, and never changes the status: a suspended installation stays suspended until `installationsResume`, which resumes only an auto-suspended one. Writes a `repin` InstallationAudit row. 
+         * @summary Pin an installation to a specific version of its app (team admin only)
+         * @param {string} id 
+         * @param {InstallationsUpgradeRequest} installationsUpgradeRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        installationsRepin: async (id: string, installationsUpgradeRequest: InstallationsUpgradeRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('installationsRepin', 'id', id)
+            // verify required parameter 'installationsUpgradeRequest' is not null or undefined
+            assertParamExists('installationsRepin', 'installationsUpgradeRequest', installationsUpgradeRequest)
+            const localVarPath = `/installations/{id}/repin`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["TEAM_UPDATE"], configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(installationsUpgradeRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * `suspended` -> `active`, only when the installation\'s latest suspension was ChatDaddy\'s automatic one (the app\'s own failure rate), once the developer has fixed the app. In one transaction it also sets `healthState` to `ok` and clears the installation\'s call counters (so old failures cannot suspend it again), and writes a `resume` InstallationAudit row with the caller as actor. 409 for an installation that is not suspended, or that ChatDaddy staff suspended (the kill switch). 
          * @summary Resume an installation that was auto-suspended (team admin only)
          * @param {string} id 
@@ -9789,6 +9833,20 @@ export const AppStoreApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
+         * Rolls an installation back (or forward) to the given version of the same app, e.g. the last good one after a bad release. The target is fetched from appstore with the caller\'s own token, as for install and upgrade. Version, manifest and, for a hosted app, the placement change together; a hosted target must have a `ready` bundle. `inboundEpoch` is kept, so inbound URLs survive. There is no consent step: a target that asks for any scope beyond the installation\'s granted scopes is refused (409, use `installationsUpgrade`); one that asks for fewer narrows the granted scopes. Works for `active` and `suspended` installations, and never changes the status: a suspended installation stays suspended until `installationsResume`, which resumes only an auto-suspended one. Writes a `repin` InstallationAudit row. 
+         * @summary Pin an installation to a specific version of its app (team admin only)
+         * @param {string} id 
+         * @param {InstallationsUpgradeRequest} installationsUpgradeRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async installationsRepin(id: string, installationsUpgradeRequest: InstallationsUpgradeRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Installation>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.installationsRepin(id, installationsUpgradeRequest, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['AppStoreApi.installationsRepin']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
          * `suspended` -> `active`, only when the installation\'s latest suspension was ChatDaddy\'s automatic one (the app\'s own failure rate), once the developer has fixed the app. In one transaction it also sets `healthState` to `ok` and clears the installation\'s call counters (so old failures cannot suspend it again), and writes a `resume` InstallationAudit row with the caller as actor. 409 for an installation that is not suspended, or that ChatDaddy staff suspended (the kill switch). 
          * @summary Resume an installation that was auto-suspended (team admin only)
          * @param {string} id 
@@ -10007,6 +10065,16 @@ export const AppStoreApiFactory = function (configuration?: Configuration, baseP
          */
         installationsReconsentDecline(requestParameters: AppStoreApiInstallationsReconsentDeclineRequest, options?: RawAxiosRequestConfig): AxiosPromise<Installation> {
             return localVarFp.installationsReconsentDecline(requestParameters.id, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Rolls an installation back (or forward) to the given version of the same app, e.g. the last good one after a bad release. The target is fetched from appstore with the caller\'s own token, as for install and upgrade. Version, manifest and, for a hosted app, the placement change together; a hosted target must have a `ready` bundle. `inboundEpoch` is kept, so inbound URLs survive. There is no consent step: a target that asks for any scope beyond the installation\'s granted scopes is refused (409, use `installationsUpgrade`); one that asks for fewer narrows the granted scopes. Works for `active` and `suspended` installations, and never changes the status: a suspended installation stays suspended until `installationsResume`, which resumes only an auto-suspended one. Writes a `repin` InstallationAudit row. 
+         * @summary Pin an installation to a specific version of its app (team admin only)
+         * @param {AppStoreApiInstallationsRepinRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        installationsRepin(requestParameters: AppStoreApiInstallationsRepinRequest, options?: RawAxiosRequestConfig): AxiosPromise<Installation> {
+            return localVarFp.installationsRepin(requestParameters.id, requestParameters.installationsUpgradeRequest, options).then((request) => request(axios, basePath));
         },
         /**
          * `suspended` -> `active`, only when the installation\'s latest suspension was ChatDaddy\'s automatic one (the app\'s own failure rate), once the developer has fixed the app. In one transaction it also sets `healthState` to `ok` and clears the installation\'s call counters (so old failures cannot suspend it again), and writes a `resume` InstallationAudit row with the caller as actor. 409 for an installation that is not suspended, or that ChatDaddy staff suspended (the kill switch). 
@@ -10385,6 +10453,27 @@ export interface AppStoreApiInstallationsReconsentDeclineRequest {
 }
 
 /**
+ * Request parameters for installationsRepin operation in AppStoreApi.
+ * @export
+ * @interface AppStoreApiInstallationsRepinRequest
+ */
+export interface AppStoreApiInstallationsRepinRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof AppStoreApiInstallationsRepin
+     */
+    readonly id: string
+
+    /**
+     * 
+     * @type {InstallationsUpgradeRequest}
+     * @memberof AppStoreApiInstallationsRepin
+     */
+    readonly installationsUpgradeRequest: InstallationsUpgradeRequest
+}
+
+/**
  * Request parameters for installationsResume operation in AppStoreApi.
  * @export
  * @interface AppStoreApiInstallationsResumeRequest
@@ -10642,6 +10731,18 @@ export class AppStoreApi extends BaseAPI {
      */
     public installationsReconsentDecline(requestParameters: AppStoreApiInstallationsReconsentDeclineRequest, options?: RawAxiosRequestConfig) {
         return AppStoreApiFp(this.configuration).installationsReconsentDecline(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Rolls an installation back (or forward) to the given version of the same app, e.g. the last good one after a bad release. The target is fetched from appstore with the caller\'s own token, as for install and upgrade. Version, manifest and, for a hosted app, the placement change together; a hosted target must have a `ready` bundle. `inboundEpoch` is kept, so inbound URLs survive. There is no consent step: a target that asks for any scope beyond the installation\'s granted scopes is refused (409, use `installationsUpgrade`); one that asks for fewer narrows the granted scopes. Works for `active` and `suspended` installations, and never changes the status: a suspended installation stays suspended until `installationsResume`, which resumes only an auto-suspended one. Writes a `repin` InstallationAudit row. 
+     * @summary Pin an installation to a specific version of its app (team admin only)
+     * @param {AppStoreApiInstallationsRepinRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AppStoreApi
+     */
+    public installationsRepin(requestParameters: AppStoreApiInstallationsRepinRequest, options?: RawAxiosRequestConfig) {
+        return AppStoreApiFp(this.configuration).installationsRepin(requestParameters.id, requestParameters.installationsUpgradeRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
