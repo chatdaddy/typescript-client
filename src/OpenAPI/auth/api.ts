@@ -2008,7 +2008,8 @@ export const Scope = {
     CallLogsRead: 'CALL_LOGS_READ',
     AppsDevelop: 'APPS_DEVELOP',
     ConnectionsUse: 'CONNECTIONS_USE',
-    TriggersFire: 'TRIGGERS_FIRE'
+    TriggersFire: 'TRIGGERS_FIRE',
+    AppFlowsCreate: 'APP_FLOWS_CREATE'
 } as const;
 
 export type Scope = typeof Scope[keyof typeof Scope];

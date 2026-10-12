@@ -1090,5 +1090,16 @@
 		"section": null,
 		"group": null,
 		"appGrantable": true
+	},
+	"APP_FLOWS_CREATE": {
+		"number": 108,
+		"description": "Create automations, switched off, for you to review",
+		"features": [
+			"message-flows"
+		],
+		"roles": [],
+		"section": null,
+		"group": null,
+		"appGrantable": true
 	}
 }
