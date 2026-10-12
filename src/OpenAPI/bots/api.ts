@@ -1203,6 +1203,95 @@ export interface AppAction {
     'nextAction'?: NextAction;
 }
 /**
+ * Any field other than the ones below is ignored (in particular no id can select a connection row).
+ * @export
+ * @interface AppConnectionRequest
+ */
+export interface AppConnectionRequest {
+    [key: string]: any;
+
+    /**
+     * The `id` of the manifest `connections` entry to use
+     * @type {string}
+     * @memberof AppConnectionRequest
+     */
+    'connectionId': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof AppConnectionRequest
+     */
+    'method': AppConnectionRequestMethodEnum;
+    /**
+     * 
+     * @type {string}
+     * @memberof AppConnectionRequest
+     */
+    'url': string;
+    /**
+     * 
+     * @type {{ [key: string]: string; }}
+     * @memberof AppConnectionRequest
+     */
+    'headers'?: { [key: string]: string; };
+    /**
+     * At most 1,000,000 bytes
+     * @type {string}
+     * @memberof AppConnectionRequest
+     */
+    'body'?: string;
+}
+
+export const AppConnectionRequestMethodEnum = {
+    Get: 'GET',
+    Post: 'POST',
+    Put: 'PUT',
+    Patch: 'PATCH',
+    Delete: 'DELETE'
+} as const;
+
+export type AppConnectionRequestMethodEnum = typeof AppConnectionRequestMethodEnum[keyof typeof AppConnectionRequestMethodEnum];
+
+/**
+ * 
+ * @export
+ * @interface AppConnectionResponse
+ */
+export interface AppConnectionResponse {
+    /**
+     * The provider\'s status, as it answered (3xx included)
+     * @type {number}
+     * @memberof AppConnectionResponse
+     */
+    'status': number;
+    /**
+     * `content-type`, `retry-after` and `x-ratelimit-*` only
+     * @type {{ [key: string]: string; }}
+     * @memberof AppConnectionResponse
+     */
+    'headers': { [key: string]: string; };
+    /**
+     * 
+     * @type {string}
+     * @memberof AppConnectionResponse
+     */
+    'body': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof AppConnectionResponse
+     */
+    'bodyEncoding': AppConnectionResponseBodyEncodingEnum;
+}
+
+export const AppConnectionResponseBodyEncodingEnum = {
+    Utf8: 'utf8',
+    Base64: 'base64'
+} as const;
+
+export type AppConnectionResponseBodyEncodingEnum = typeof AppConnectionResponseBodyEncodingEnum[keyof typeof AppConnectionResponseBodyEncodingEnum];
+
+/**
  * 
  * @export
  * @interface AppGroupConfig
@@ -5086,6 +5175,120 @@ export const InstallationHealthStateEnum = {
 export type InstallationHealthStateEnum = typeof InstallationHealthStateEnum[keyof typeof InstallationHealthStateEnum];
 
 /**
+ * The state of one manifest connection of an installation. Never carries a credential or any sealed field.
+ * @export
+ * @interface InstallationConnection
+ */
+export interface InstallationConnection {
+    /**
+     * 
+     * @type {string}
+     * @memberof InstallationConnection
+     */
+    'manifestConnectionId': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof InstallationConnection
+     */
+    'provider': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof InstallationConnection
+     */
+    'type': InstallationConnectionTypeEnum;
+    /**
+     * 
+     * @type {string}
+     * @memberof InstallationConnection
+     */
+    'status': InstallationConnectionStatusEnum;
+    /**
+     * Where the credential is sent: the exact hosts, and the host template filled with the input once connected (still written as `{input}.suffix` while not connected).
+     * @type {Array<string>}
+     * @memberof InstallationConnection
+     */
+    'hosts': Array<string>;
+    /**
+     * The connect-time inputs (not secret)
+     * @type {{ [key: string]: string; }}
+     * @memberof InstallationConnection
+     */
+    'inputs'?: { [key: string]: string; };
+    /**
+     * 
+     * @type {string}
+     * @memberof InstallationConnection
+     */
+    'accountLabel'?: string;
+    /**
+     * An ISO formatted timestamp
+     * @type {string}
+     * @memberof InstallationConnection
+     */
+    'connectedAt'?: string;
+    /**
+     * An ISO formatted timestamp
+     * @type {string}
+     * @memberof InstallationConnection
+     */
+    'updatedAt'?: string;
+}
+
+export const InstallationConnectionTypeEnum = {
+    ApiKey: 'apiKey',
+    Oauth2: 'oauth2'
+} as const;
+
+export type InstallationConnectionTypeEnum = typeof InstallationConnectionTypeEnum[keyof typeof InstallationConnectionTypeEnum];
+export const InstallationConnectionStatusEnum = {
+    NotConnected: 'not-connected',
+    Connected: 'connected',
+    NeedsReconnect: 'needs-reconnect'
+} as const;
+
+export type InstallationConnectionStatusEnum = typeof InstallationConnectionStatusEnum[keyof typeof InstallationConnectionStatusEnum];
+
+/**
+ * 
+ * @export
+ * @interface InstallationConnectionApiKey
+ */
+export interface InstallationConnectionApiKey {
+    /**
+     * Values for the connection\'s declared `inputs`, e.g. `{ \"shop\": \"my-shop\" }`. Each is a single DNS label.
+     * @type {{ [key: string]: string; }}
+     * @memberof InstallationConnectionApiKey
+     */
+    'inputs'?: { [key: string]: string; };
+    /**
+     * The hosts the admin was shown and confirmed: exactly the hosts the key will be sent to.
+     * @type {Array<string>}
+     * @memberof InstallationConnectionApiKey
+     */
+    'confirmedHosts': Array<string>;
+    /**
+     * 
+     * @type {string}
+     * @memberof InstallationConnectionApiKey
+     */
+    'accountLabel'?: string;
+}
+/**
+ * 
+ * @export
+ * @interface InstallationConnectionsGet200Response
+ */
+export interface InstallationConnectionsGet200Response {
+    /**
+     * 
+     * @type {Array<InstallationConnection>}
+     * @memberof InstallationConnectionsGet200Response
+     */
+    'items': Array<InstallationConnection>;
+}
+/**
  * 
  * @export
  * @interface InstallationCreate
@@ -8494,6 +8697,46 @@ export class AppIntegrationApi extends BaseAPI {
 export const AppStoreApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
+         * An installed app calls a provider API with the customer\'s credential attached by ChatDaddy; the app never receives the credential. Authenticated ONLY by the per-call app token (scope `CONNECTIONS_USE`); a user token is refused even if it holds that scope. The installation comes from the token\'s `metadata.objectId` (`app_<appId>/inst_<installationId>`) and is re-read on every call: it must belong to the token\'s team, to the token\'s app, be `active`, and have been granted `CONNECTIONS_USE`. The connection is resolved by that installation and the manifest `connectionId`; no id in the body can name another row (any other body field is ignored).  The app gets full API access to the provider under the customer\'s grant. The credential goes only to a host the admin was shown at connect time.  Request rules: `method` is GET, POST, PUT, PATCH or DELETE. `url` must be `https` on the default port without userinfo, and its host (compared after URL normalisation, trailing dot stripped) must be exactly one of the connection\'s manifest hosts or its host template filled with the admin\'s input. Only `content-type`, `accept` and the manifest\'s `forwardHeaders` may be sent, with no CR or LF in a value. The body is a string of at most 1,000,000 bytes. The credential header is set last.  The provider is called with the egress guard, a 10 second total deadline and no redirects: a 3xx is returned to the app as it is. The answer is a 200 `AppConnectionResponse` carrying the PROVIDER\'s status, whatever it is; any other status here is ChatDaddy\'s own refusal, with a stable `data.code`. At most 5 MB of response is read (more is a 502). Only `content-type`, `retry-after` and `x-ratelimit-*` response headers are returned. Any occurrence of the credential in the response headers or body is replaced by `[redacted]` (a transformed echo, such as base64, is not caught).  Limits: 600 calls a minute per installation, a coarser ceiling per team, and at most 5 calls in flight per installation (429 `Retry-After`). ChatDaddy\'s own 429s are never counted against the app\'s health. 
+         * @summary Call a connected provider through ChatDaddy (installed apps only)
+         * @param {AppConnectionRequest} appConnectionRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        appConnectionRequestPost: async (appConnectionRequest: AppConnectionRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'appConnectionRequest' is not null or undefined
+            assertParamExists('appConnectionRequestPost', 'appConnectionRequest', appConnectionRequest)
+            const localVarPath = `/app-connections/request`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["CONNECTIONS_USE"], configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(appConnectionRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * Public: the signature is the authentication. The body must be JSON, at most 64 KB, and valid against the `payloadSchema` of the manifest `flowTriggers` entry named by `triggerId`. Checks run in this order: the size cap, the installation is loaded, the signature is verified (the current secret, or the previous one while a rotation window is open), the valid-request bucket is charged (300 a minute per installation), the trigger is resolved, the body is validated, then the event id is recorded and every enabled trigger bound to this installation and `triggerId` is fired. An unknown or inactive installation, a missing or invalid signature or timestamp, a missing event id and a missing raw body are all the same 401 `invalid signature`. Failed verifications are counted per source IP (30 a minute) and, over that, answered with 429; they never count against the installation\'s valid-request bucket.  Delivery is at-most-once per event id. The id is recorded before the triggers fire, so re-sending a delivery that was answered 202 with `failed` above zero does not fire again (it is answered 200 `duplicate`); read `failed` from the 202 body, and send a new event id to retry. A delivery that fails on the server (5xx) gives its id back, so that one can be re-sent. 
          * @summary Deliver an event from an installed app, to fire its flow triggers
          * @param {string} installationId 
@@ -8619,6 +8862,140 @@ export const AppStoreApiAxiosParamCreator = function (configuration?: Configurat
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
             localVarRequestOptions.data = serializeDataIfNeeded(requestBody, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Seals the key (`connection-crypto`, bound to the team, installation and connection) and stores it with the connect-time `inputs`. A reconnect keeps the connection\'s id and reseals it, and clears `needs-reconnect`. The installation must be `active` or `pending-handshake`. The manifest connection must be of type `apiKey`.  The credential is sent only to the hosts shown to the admin: the exact hosts of the connection plus its host template filled with the input. `confirmedHosts` must list exactly those hosts, so a client that did not show them cannot connect. Each input must be a single DNS label (letters, digits and single hyphens, at most 63 characters, ASCII only), whatever pattern the builder declared.  The response never contains the key. 
+         * @summary Connect an API key connection, or replace its key (team admin only)
+         * @param {string} installationId 
+         * @param {string} manifestConnectionId The &#x60;id&#x60; of an &#x60;apiKey&#x60; entry of the manifest\&#39;s &#x60;connections&#x60;
+         * @param {string} xConnectionApiKey The API key (8 to 4096 characters, visible ASCII). It is a header, not a body field, on purpose: rest-api-builder logs the whole request body of any failed request. Headers stay out of tracing and logs because rest-api-builder (6c4b047 or later) exports only allowlisted headers to spans and logs no request content for &#x60;x-no-log&#x60; operations. Declared without length constraints so that a rejection never reflects it; the length is checked by the handler.
+         * @param {InstallationConnectionApiKey} installationConnectionApiKey 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        installationConnectionApiKeyPut: async (installationId: string, manifestConnectionId: string, xConnectionApiKey: string, installationConnectionApiKey: InstallationConnectionApiKey, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'installationId' is not null or undefined
+            assertParamExists('installationConnectionApiKeyPut', 'installationId', installationId)
+            // verify required parameter 'manifestConnectionId' is not null or undefined
+            assertParamExists('installationConnectionApiKeyPut', 'manifestConnectionId', manifestConnectionId)
+            // verify required parameter 'xConnectionApiKey' is not null or undefined
+            assertParamExists('installationConnectionApiKeyPut', 'xConnectionApiKey', xConnectionApiKey)
+            // verify required parameter 'installationConnectionApiKey' is not null or undefined
+            assertParamExists('installationConnectionApiKeyPut', 'installationConnectionApiKey', installationConnectionApiKey)
+            const localVarPath = `/installations/{installationId}/connections/{manifestConnectionId}/api-key`
+                .replace(`{${"installationId"}}`, encodeURIComponent(String(installationId)))
+                .replace(`{${"manifestConnectionId"}}`, encodeURIComponent(String(manifestConnectionId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["TEAM_UPDATE"], configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            if (xConnectionApiKey != null) {
+                localVarHeaderParameter['x-connection-api-key'] = String(xConnectionApiKey);
+            }
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(installationConnectionApiKey, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Deletes the stored credential (its ciphertext included). The provider is not told: the credential stays valid there until the admin revokes it (providers declare no revoke endpoint in v1). Allowed whatever the installation\'s status. 
+         * @summary Disconnect an installation\'s connection (team admin only)
+         * @param {string} installationId 
+         * @param {string} manifestConnectionId The &#x60;id&#x60; of an entry of the manifest\&#39;s &#x60;connections&#x60;
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        installationConnectionDelete: async (installationId: string, manifestConnectionId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'installationId' is not null or undefined
+            assertParamExists('installationConnectionDelete', 'installationId', installationId)
+            // verify required parameter 'manifestConnectionId' is not null or undefined
+            assertParamExists('installationConnectionDelete', 'manifestConnectionId', manifestConnectionId)
+            const localVarPath = `/installations/{installationId}/connections/{manifestConnectionId}`
+                .replace(`{${"installationId"}}`, encodeURIComponent(String(installationId)))
+                .replace(`{${"manifestConnectionId"}}`, encodeURIComponent(String(manifestConnectionId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["TEAM_UPDATE"], configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Team-scoped. One entry per connection the installation\'s manifest declares (so a connection that was never connected is listed as `not-connected`), with its state and the hosts the credential is sent to. Never returns the API key, its ciphertext or any sealed field. 
+         * @summary Get the connection status of an installation
+         * @param {string} installationId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        installationConnectionsGet: async (installationId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'installationId' is not null or undefined
+            assertParamExists('installationConnectionsGet', 'installationId', installationId)
+            const localVarPath = `/installations/{installationId}/connections`
+                .replace(`{${"installationId"}}`, encodeURIComponent(String(installationId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["TEMPLATES_READ"], configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -9168,6 +9545,19 @@ export const AppStoreApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = AppStoreApiAxiosParamCreator(configuration)
     return {
         /**
+         * An installed app calls a provider API with the customer\'s credential attached by ChatDaddy; the app never receives the credential. Authenticated ONLY by the per-call app token (scope `CONNECTIONS_USE`); a user token is refused even if it holds that scope. The installation comes from the token\'s `metadata.objectId` (`app_<appId>/inst_<installationId>`) and is re-read on every call: it must belong to the token\'s team, to the token\'s app, be `active`, and have been granted `CONNECTIONS_USE`. The connection is resolved by that installation and the manifest `connectionId`; no id in the body can name another row (any other body field is ignored).  The app gets full API access to the provider under the customer\'s grant. The credential goes only to a host the admin was shown at connect time.  Request rules: `method` is GET, POST, PUT, PATCH or DELETE. `url` must be `https` on the default port without userinfo, and its host (compared after URL normalisation, trailing dot stripped) must be exactly one of the connection\'s manifest hosts or its host template filled with the admin\'s input. Only `content-type`, `accept` and the manifest\'s `forwardHeaders` may be sent, with no CR or LF in a value. The body is a string of at most 1,000,000 bytes. The credential header is set last.  The provider is called with the egress guard, a 10 second total deadline and no redirects: a 3xx is returned to the app as it is. The answer is a 200 `AppConnectionResponse` carrying the PROVIDER\'s status, whatever it is; any other status here is ChatDaddy\'s own refusal, with a stable `data.code`. At most 5 MB of response is read (more is a 502). Only `content-type`, `retry-after` and `x-ratelimit-*` response headers are returned. Any occurrence of the credential in the response headers or body is replaced by `[redacted]` (a transformed echo, such as base64, is not caught).  Limits: 600 calls a minute per installation, a coarser ceiling per team, and at most 5 calls in flight per installation (429 `Retry-After`). ChatDaddy\'s own 429s are never counted against the app\'s health. 
+         * @summary Call a connected provider through ChatDaddy (installed apps only)
+         * @param {AppConnectionRequest} appConnectionRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async appConnectionRequestPost(appConnectionRequest: AppConnectionRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AppConnectionResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.appConnectionRequestPost(appConnectionRequest, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['AppStoreApi.appConnectionRequestPost']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
          * Public: the signature is the authentication. The body must be JSON, at most 64 KB, and valid against the `payloadSchema` of the manifest `flowTriggers` entry named by `triggerId`. Checks run in this order: the size cap, the installation is loaded, the signature is verified (the current secret, or the previous one while a rotation window is open), the valid-request bucket is charged (300 a minute per installation), the trigger is resolved, the body is validated, then the event id is recorded and every enabled trigger bound to this installation and `triggerId` is fired. An unknown or inactive installation, a missing or invalid signature or timestamp, a missing event id and a missing raw body are all the same 401 `invalid signature`. Failed verifications are counted per source IP (30 a minute) and, over that, answered with 429; they never count against the installation\'s valid-request bucket.  Delivery is at-most-once per event id. The id is recorded before the triggers fire, so re-sending a delivery that was answered 202 with `failed` above zero does not fire again (it is answered 200 `duplicate`); read `failed` from the 202 body, and send a new event id to retry. A delivery that fails on the server (5xx) gives its id back, so that one can be re-sent. 
          * @summary Deliver an event from an installed app, to fire its flow triggers
          * @param {string} installationId 
@@ -9210,6 +9600,49 @@ export const AppStoreApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.hostedTriggerPost(triggerId, xChatdaddyEventId, requestBody, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AppStoreApi.hostedTriggerPost']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Seals the key (`connection-crypto`, bound to the team, installation and connection) and stores it with the connect-time `inputs`. A reconnect keeps the connection\'s id and reseals it, and clears `needs-reconnect`. The installation must be `active` or `pending-handshake`. The manifest connection must be of type `apiKey`.  The credential is sent only to the hosts shown to the admin: the exact hosts of the connection plus its host template filled with the input. `confirmedHosts` must list exactly those hosts, so a client that did not show them cannot connect. Each input must be a single DNS label (letters, digits and single hyphens, at most 63 characters, ASCII only), whatever pattern the builder declared.  The response never contains the key. 
+         * @summary Connect an API key connection, or replace its key (team admin only)
+         * @param {string} installationId 
+         * @param {string} manifestConnectionId The &#x60;id&#x60; of an &#x60;apiKey&#x60; entry of the manifest\&#39;s &#x60;connections&#x60;
+         * @param {string} xConnectionApiKey The API key (8 to 4096 characters, visible ASCII). It is a header, not a body field, on purpose: rest-api-builder logs the whole request body of any failed request. Headers stay out of tracing and logs because rest-api-builder (6c4b047 or later) exports only allowlisted headers to spans and logs no request content for &#x60;x-no-log&#x60; operations. Declared without length constraints so that a rejection never reflects it; the length is checked by the handler.
+         * @param {InstallationConnectionApiKey} installationConnectionApiKey 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async installationConnectionApiKeyPut(installationId: string, manifestConnectionId: string, xConnectionApiKey: string, installationConnectionApiKey: InstallationConnectionApiKey, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<InstallationConnection>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.installationConnectionApiKeyPut(installationId, manifestConnectionId, xConnectionApiKey, installationConnectionApiKey, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['AppStoreApi.installationConnectionApiKeyPut']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Deletes the stored credential (its ciphertext included). The provider is not told: the credential stays valid there until the admin revokes it (providers declare no revoke endpoint in v1). Allowed whatever the installation\'s status. 
+         * @summary Disconnect an installation\'s connection (team admin only)
+         * @param {string} installationId 
+         * @param {string} manifestConnectionId The &#x60;id&#x60; of an entry of the manifest\&#39;s &#x60;connections&#x60;
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async installationConnectionDelete(installationId: string, manifestConnectionId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.installationConnectionDelete(installationId, manifestConnectionId, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['AppStoreApi.installationConnectionDelete']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Team-scoped. One entry per connection the installation\'s manifest declares (so a connection that was never connected is listed as `not-connected`), with its state and the hosts the credential is sent to. Never returns the API key, its ciphertext or any sealed field. 
+         * @summary Get the connection status of an installation
+         * @param {string} installationId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async installationConnectionsGet(installationId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<InstallationConnectionsGet200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.installationConnectionsGet(installationId, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['AppStoreApi.installationConnectionsGet']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -9398,6 +9831,16 @@ export const AppStoreApiFactory = function (configuration?: Configuration, baseP
     const localVarFp = AppStoreApiFp(configuration)
     return {
         /**
+         * An installed app calls a provider API with the customer\'s credential attached by ChatDaddy; the app never receives the credential. Authenticated ONLY by the per-call app token (scope `CONNECTIONS_USE`); a user token is refused even if it holds that scope. The installation comes from the token\'s `metadata.objectId` (`app_<appId>/inst_<installationId>`) and is re-read on every call: it must belong to the token\'s team, to the token\'s app, be `active`, and have been granted `CONNECTIONS_USE`. The connection is resolved by that installation and the manifest `connectionId`; no id in the body can name another row (any other body field is ignored).  The app gets full API access to the provider under the customer\'s grant. The credential goes only to a host the admin was shown at connect time.  Request rules: `method` is GET, POST, PUT, PATCH or DELETE. `url` must be `https` on the default port without userinfo, and its host (compared after URL normalisation, trailing dot stripped) must be exactly one of the connection\'s manifest hosts or its host template filled with the admin\'s input. Only `content-type`, `accept` and the manifest\'s `forwardHeaders` may be sent, with no CR or LF in a value. The body is a string of at most 1,000,000 bytes. The credential header is set last.  The provider is called with the egress guard, a 10 second total deadline and no redirects: a 3xx is returned to the app as it is. The answer is a 200 `AppConnectionResponse` carrying the PROVIDER\'s status, whatever it is; any other status here is ChatDaddy\'s own refusal, with a stable `data.code`. At most 5 MB of response is read (more is a 502). Only `content-type`, `retry-after` and `x-ratelimit-*` response headers are returned. Any occurrence of the credential in the response headers or body is replaced by `[redacted]` (a transformed echo, such as base64, is not caught).  Limits: 600 calls a minute per installation, a coarser ceiling per team, and at most 5 calls in flight per installation (429 `Retry-After`). ChatDaddy\'s own 429s are never counted against the app\'s health. 
+         * @summary Call a connected provider through ChatDaddy (installed apps only)
+         * @param {AppStoreApiAppConnectionRequestPostRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        appConnectionRequestPost(requestParameters: AppStoreApiAppConnectionRequestPostRequest, options?: RawAxiosRequestConfig): AxiosPromise<AppConnectionResponse> {
+            return localVarFp.appConnectionRequestPost(requestParameters.appConnectionRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
          * Public: the signature is the authentication. The body must be JSON, at most 64 KB, and valid against the `payloadSchema` of the manifest `flowTriggers` entry named by `triggerId`. Checks run in this order: the size cap, the installation is loaded, the signature is verified (the current secret, or the previous one while a rotation window is open), the valid-request bucket is charged (300 a minute per installation), the trigger is resolved, the body is validated, then the event id is recorded and every enabled trigger bound to this installation and `triggerId` is fired. An unknown or inactive installation, a missing or invalid signature or timestamp, a missing event id and a missing raw body are all the same 401 `invalid signature`. Failed verifications are counted per source IP (30 a minute) and, over that, answered with 429; they never count against the installation\'s valid-request bucket.  Delivery is at-most-once per event id. The id is recorded before the triggers fire, so re-sending a delivery that was answered 202 with `failed` above zero does not fire again (it is answered 200 `duplicate`); read `failed` from the 202 body, and send a new event id to retry. A delivery that fails on the server (5xx) gives its id back, so that one can be re-sent. 
          * @summary Deliver an event from an installed app, to fire its flow triggers
          * @param {AppStoreApiAppTriggerIngestRequest} requestParameters Request parameters.
@@ -9426,6 +9869,36 @@ export const AppStoreApiFactory = function (configuration?: Configuration, baseP
          */
         hostedTriggerPost(requestParameters: AppStoreApiHostedTriggerPostRequest, options?: RawAxiosRequestConfig): AxiosPromise<AppTriggerIngest200Response> {
             return localVarFp.hostedTriggerPost(requestParameters.triggerId, requestParameters.xChatdaddyEventId, requestParameters.requestBody, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Seals the key (`connection-crypto`, bound to the team, installation and connection) and stores it with the connect-time `inputs`. A reconnect keeps the connection\'s id and reseals it, and clears `needs-reconnect`. The installation must be `active` or `pending-handshake`. The manifest connection must be of type `apiKey`.  The credential is sent only to the hosts shown to the admin: the exact hosts of the connection plus its host template filled with the input. `confirmedHosts` must list exactly those hosts, so a client that did not show them cannot connect. Each input must be a single DNS label (letters, digits and single hyphens, at most 63 characters, ASCII only), whatever pattern the builder declared.  The response never contains the key. 
+         * @summary Connect an API key connection, or replace its key (team admin only)
+         * @param {AppStoreApiInstallationConnectionApiKeyPutRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        installationConnectionApiKeyPut(requestParameters: AppStoreApiInstallationConnectionApiKeyPutRequest, options?: RawAxiosRequestConfig): AxiosPromise<InstallationConnection> {
+            return localVarFp.installationConnectionApiKeyPut(requestParameters.installationId, requestParameters.manifestConnectionId, requestParameters.xConnectionApiKey, requestParameters.installationConnectionApiKey, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Deletes the stored credential (its ciphertext included). The provider is not told: the credential stays valid there until the admin revokes it (providers declare no revoke endpoint in v1). Allowed whatever the installation\'s status. 
+         * @summary Disconnect an installation\'s connection (team admin only)
+         * @param {AppStoreApiInstallationConnectionDeleteRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        installationConnectionDelete(requestParameters: AppStoreApiInstallationConnectionDeleteRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.installationConnectionDelete(requestParameters.installationId, requestParameters.manifestConnectionId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Team-scoped. One entry per connection the installation\'s manifest declares (so a connection that was never connected is listed as `not-connected`), with its state and the hosts the credential is sent to. Never returns the API key, its ciphertext or any sealed field. 
+         * @summary Get the connection status of an installation
+         * @param {AppStoreApiInstallationConnectionsGetRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        installationConnectionsGet(requestParameters: AppStoreApiInstallationConnectionsGetRequest, options?: RawAxiosRequestConfig): AxiosPromise<InstallationConnectionsGet200Response> {
+            return localVarFp.installationConnectionsGet(requestParameters.installationId, options).then((request) => request(axios, basePath));
         },
         /**
          * Bumps the inbound epoch and returns the new URLs. The URLs of the previous epoch keep working for 24 hours so the app can re-register, unless `revokePrevious` is true (leak response: they stop at once). A second rotation inside 24 hours is allowed: the previous epoch\'s grace restarts and the epoch before it ends immediately. Same preconditions as reading them (409), and 409 once the epoch reaches its maximum. The response carries bearer credentials: `no-store`, never logged. 
@@ -9561,6 +10034,20 @@ export const AppStoreApiFactory = function (configuration?: Configuration, baseP
 };
 
 /**
+ * Request parameters for appConnectionRequestPost operation in AppStoreApi.
+ * @export
+ * @interface AppStoreApiAppConnectionRequestPostRequest
+ */
+export interface AppStoreApiAppConnectionRequestPostRequest {
+    /**
+     * 
+     * @type {AppConnectionRequest}
+     * @memberof AppStoreApiAppConnectionRequestPost
+     */
+    readonly appConnectionRequest: AppConnectionRequest
+}
+
+/**
  * Request parameters for appTriggerIngest operation in AppStoreApi.
  * @export
  * @interface AppStoreApiAppTriggerIngestRequest
@@ -9642,6 +10129,76 @@ export interface AppStoreApiHostedTriggerPostRequest {
      * @memberof AppStoreApiHostedTriggerPost
      */
     readonly requestBody?: { [key: string]: any; }
+}
+
+/**
+ * Request parameters for installationConnectionApiKeyPut operation in AppStoreApi.
+ * @export
+ * @interface AppStoreApiInstallationConnectionApiKeyPutRequest
+ */
+export interface AppStoreApiInstallationConnectionApiKeyPutRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof AppStoreApiInstallationConnectionApiKeyPut
+     */
+    readonly installationId: string
+
+    /**
+     * The &#x60;id&#x60; of an &#x60;apiKey&#x60; entry of the manifest\&#39;s &#x60;connections&#x60;
+     * @type {string}
+     * @memberof AppStoreApiInstallationConnectionApiKeyPut
+     */
+    readonly manifestConnectionId: string
+
+    /**
+     * The API key (8 to 4096 characters, visible ASCII). It is a header, not a body field, on purpose: rest-api-builder logs the whole request body of any failed request. Headers stay out of tracing and logs because rest-api-builder (6c4b047 or later) exports only allowlisted headers to spans and logs no request content for &#x60;x-no-log&#x60; operations. Declared without length constraints so that a rejection never reflects it; the length is checked by the handler.
+     * @type {string}
+     * @memberof AppStoreApiInstallationConnectionApiKeyPut
+     */
+    readonly xConnectionApiKey: string
+
+    /**
+     * 
+     * @type {InstallationConnectionApiKey}
+     * @memberof AppStoreApiInstallationConnectionApiKeyPut
+     */
+    readonly installationConnectionApiKey: InstallationConnectionApiKey
+}
+
+/**
+ * Request parameters for installationConnectionDelete operation in AppStoreApi.
+ * @export
+ * @interface AppStoreApiInstallationConnectionDeleteRequest
+ */
+export interface AppStoreApiInstallationConnectionDeleteRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof AppStoreApiInstallationConnectionDelete
+     */
+    readonly installationId: string
+
+    /**
+     * The &#x60;id&#x60; of an entry of the manifest\&#39;s &#x60;connections&#x60;
+     * @type {string}
+     * @memberof AppStoreApiInstallationConnectionDelete
+     */
+    readonly manifestConnectionId: string
+}
+
+/**
+ * Request parameters for installationConnectionsGet operation in AppStoreApi.
+ * @export
+ * @interface AppStoreApiInstallationConnectionsGetRequest
+ */
+export interface AppStoreApiInstallationConnectionsGetRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof AppStoreApiInstallationConnectionsGet
+     */
+    readonly installationId: string
 }
 
 /**
@@ -9876,6 +10433,18 @@ export interface AppStoreApiInstallationsUpgradeRequest {
  */
 export class AppStoreApi extends BaseAPI {
     /**
+     * An installed app calls a provider API with the customer\'s credential attached by ChatDaddy; the app never receives the credential. Authenticated ONLY by the per-call app token (scope `CONNECTIONS_USE`); a user token is refused even if it holds that scope. The installation comes from the token\'s `metadata.objectId` (`app_<appId>/inst_<installationId>`) and is re-read on every call: it must belong to the token\'s team, to the token\'s app, be `active`, and have been granted `CONNECTIONS_USE`. The connection is resolved by that installation and the manifest `connectionId`; no id in the body can name another row (any other body field is ignored).  The app gets full API access to the provider under the customer\'s grant. The credential goes only to a host the admin was shown at connect time.  Request rules: `method` is GET, POST, PUT, PATCH or DELETE. `url` must be `https` on the default port without userinfo, and its host (compared after URL normalisation, trailing dot stripped) must be exactly one of the connection\'s manifest hosts or its host template filled with the admin\'s input. Only `content-type`, `accept` and the manifest\'s `forwardHeaders` may be sent, with no CR or LF in a value. The body is a string of at most 1,000,000 bytes. The credential header is set last.  The provider is called with the egress guard, a 10 second total deadline and no redirects: a 3xx is returned to the app as it is. The answer is a 200 `AppConnectionResponse` carrying the PROVIDER\'s status, whatever it is; any other status here is ChatDaddy\'s own refusal, with a stable `data.code`. At most 5 MB of response is read (more is a 502). Only `content-type`, `retry-after` and `x-ratelimit-*` response headers are returned. Any occurrence of the credential in the response headers or body is replaced by `[redacted]` (a transformed echo, such as base64, is not caught).  Limits: 600 calls a minute per installation, a coarser ceiling per team, and at most 5 calls in flight per installation (429 `Retry-After`). ChatDaddy\'s own 429s are never counted against the app\'s health. 
+     * @summary Call a connected provider through ChatDaddy (installed apps only)
+     * @param {AppStoreApiAppConnectionRequestPostRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AppStoreApi
+     */
+    public appConnectionRequestPost(requestParameters: AppStoreApiAppConnectionRequestPostRequest, options?: RawAxiosRequestConfig) {
+        return AppStoreApiFp(this.configuration).appConnectionRequestPost(requestParameters.appConnectionRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
      * Public: the signature is the authentication. The body must be JSON, at most 64 KB, and valid against the `payloadSchema` of the manifest `flowTriggers` entry named by `triggerId`. Checks run in this order: the size cap, the installation is loaded, the signature is verified (the current secret, or the previous one while a rotation window is open), the valid-request bucket is charged (300 a minute per installation), the trigger is resolved, the body is validated, then the event id is recorded and every enabled trigger bound to this installation and `triggerId` is fired. An unknown or inactive installation, a missing or invalid signature or timestamp, a missing event id and a missing raw body are all the same 401 `invalid signature`. Failed verifications are counted per source IP (30 a minute) and, over that, answered with 429; they never count against the installation\'s valid-request bucket.  Delivery is at-most-once per event id. The id is recorded before the triggers fire, so re-sending a delivery that was answered 202 with `failed` above zero does not fire again (it is answered 200 `duplicate`); read `failed` from the 202 body, and send a new event id to retry. A delivery that fails on the server (5xx) gives its id back, so that one can be re-sent. 
      * @summary Deliver an event from an installed app, to fire its flow triggers
      * @param {AppStoreApiAppTriggerIngestRequest} requestParameters Request parameters.
@@ -9909,6 +10478,42 @@ export class AppStoreApi extends BaseAPI {
      */
     public hostedTriggerPost(requestParameters: AppStoreApiHostedTriggerPostRequest, options?: RawAxiosRequestConfig) {
         return AppStoreApiFp(this.configuration).hostedTriggerPost(requestParameters.triggerId, requestParameters.xChatdaddyEventId, requestParameters.requestBody, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Seals the key (`connection-crypto`, bound to the team, installation and connection) and stores it with the connect-time `inputs`. A reconnect keeps the connection\'s id and reseals it, and clears `needs-reconnect`. The installation must be `active` or `pending-handshake`. The manifest connection must be of type `apiKey`.  The credential is sent only to the hosts shown to the admin: the exact hosts of the connection plus its host template filled with the input. `confirmedHosts` must list exactly those hosts, so a client that did not show them cannot connect. Each input must be a single DNS label (letters, digits and single hyphens, at most 63 characters, ASCII only), whatever pattern the builder declared.  The response never contains the key. 
+     * @summary Connect an API key connection, or replace its key (team admin only)
+     * @param {AppStoreApiInstallationConnectionApiKeyPutRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AppStoreApi
+     */
+    public installationConnectionApiKeyPut(requestParameters: AppStoreApiInstallationConnectionApiKeyPutRequest, options?: RawAxiosRequestConfig) {
+        return AppStoreApiFp(this.configuration).installationConnectionApiKeyPut(requestParameters.installationId, requestParameters.manifestConnectionId, requestParameters.xConnectionApiKey, requestParameters.installationConnectionApiKey, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Deletes the stored credential (its ciphertext included). The provider is not told: the credential stays valid there until the admin revokes it (providers declare no revoke endpoint in v1). Allowed whatever the installation\'s status. 
+     * @summary Disconnect an installation\'s connection (team admin only)
+     * @param {AppStoreApiInstallationConnectionDeleteRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AppStoreApi
+     */
+    public installationConnectionDelete(requestParameters: AppStoreApiInstallationConnectionDeleteRequest, options?: RawAxiosRequestConfig) {
+        return AppStoreApiFp(this.configuration).installationConnectionDelete(requestParameters.installationId, requestParameters.manifestConnectionId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Team-scoped. One entry per connection the installation\'s manifest declares (so a connection that was never connected is listed as `not-connected`), with its state and the hosts the credential is sent to. Never returns the API key, its ciphertext or any sealed field. 
+     * @summary Get the connection status of an installation
+     * @param {AppStoreApiInstallationConnectionsGetRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AppStoreApi
+     */
+    public installationConnectionsGet(requestParameters: AppStoreApiInstallationConnectionsGetRequest, options?: RawAxiosRequestConfig) {
+        return AppStoreApiFp(this.configuration).installationConnectionsGet(requestParameters.installationId, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
