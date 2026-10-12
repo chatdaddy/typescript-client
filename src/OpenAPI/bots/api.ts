@@ -8832,14 +8832,16 @@ export const AppStoreApiAxiosParamCreator = function (configuration?: Configurat
          * A hosted app fires one of its own flow triggers. Authenticated ONLY by the per-invocation app token (scope `TRIGGERS_FIRE`); a user token is a 403. The installation is the one named by the token, never by the request, so an app can only fire for its own installation. The body is JSON, at most 64 KB, and valid against the `payloadSchema` of the manifest `flowTriggers` entry named by `triggerId`. Delivery is at-most-once per `x-chatdaddy-event-id`, with the same semantics as the signed ingest route (`/apps/triggers/{installationId}/{triggerId}`), whose per-installation rate limit this shares. Errors carry a stable `data.code`. 
          * @summary Fire a flow trigger from a hosted app (installed hosted apps only)
          * @param {string} triggerId An id from the installation manifest\&#39;s &#x60;flowTriggers&#x60;
+         * @param {{ [key: string]: any; }} requestBody 
          * @param {string} [xChatdaddyEventId] Unique id of this delivery (1-128 printable ASCII characters, no &#x60;.&#x60;); the replay key. Required (a request without it is a 400); declared optional here only so that a missing header is that 400.
-         * @param {{ [key: string]: any; }} [requestBody] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        hostedTriggerPost: async (triggerId: string, xChatdaddyEventId?: string, requestBody?: { [key: string]: any; }, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        hostedTriggerPost: async (triggerId: string, requestBody: { [key: string]: any; }, xChatdaddyEventId?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'triggerId' is not null or undefined
             assertParamExists('hostedTriggerPost', 'triggerId', triggerId)
+            // verify required parameter 'requestBody' is not null or undefined
+            assertParamExists('hostedTriggerPost', 'requestBody', requestBody)
             const localVarPath = `/apps/hosted-triggers/{triggerId}`
                 .replace(`{${"triggerId"}}`, encodeURIComponent(String(triggerId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -9597,13 +9599,13 @@ export const AppStoreApiFp = function(configuration?: Configuration) {
          * A hosted app fires one of its own flow triggers. Authenticated ONLY by the per-invocation app token (scope `TRIGGERS_FIRE`); a user token is a 403. The installation is the one named by the token, never by the request, so an app can only fire for its own installation. The body is JSON, at most 64 KB, and valid against the `payloadSchema` of the manifest `flowTriggers` entry named by `triggerId`. Delivery is at-most-once per `x-chatdaddy-event-id`, with the same semantics as the signed ingest route (`/apps/triggers/{installationId}/{triggerId}`), whose per-installation rate limit this shares. Errors carry a stable `data.code`. 
          * @summary Fire a flow trigger from a hosted app (installed hosted apps only)
          * @param {string} triggerId An id from the installation manifest\&#39;s &#x60;flowTriggers&#x60;
+         * @param {{ [key: string]: any; }} requestBody 
          * @param {string} [xChatdaddyEventId] Unique id of this delivery (1-128 printable ASCII characters, no &#x60;.&#x60;); the replay key. Required (a request without it is a 400); declared optional here only so that a missing header is that 400.
-         * @param {{ [key: string]: any; }} [requestBody] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async hostedTriggerPost(triggerId: string, xChatdaddyEventId?: string, requestBody?: { [key: string]: any; }, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AppTriggerIngest200Response>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.hostedTriggerPost(triggerId, xChatdaddyEventId, requestBody, options);
+        async hostedTriggerPost(triggerId: string, requestBody: { [key: string]: any; }, xChatdaddyEventId?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AppTriggerIngest200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.hostedTriggerPost(triggerId, requestBody, xChatdaddyEventId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AppStoreApi.hostedTriggerPost']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -9874,7 +9876,7 @@ export const AppStoreApiFactory = function (configuration?: Configuration, baseP
          * @throws {RequiredError}
          */
         hostedTriggerPost(requestParameters: AppStoreApiHostedTriggerPostRequest, options?: RawAxiosRequestConfig): AxiosPromise<AppTriggerIngest200Response> {
-            return localVarFp.hostedTriggerPost(requestParameters.triggerId, requestParameters.xChatdaddyEventId, requestParameters.requestBody, options).then((request) => request(axios, basePath));
+            return localVarFp.hostedTriggerPost(requestParameters.triggerId, requestParameters.requestBody, requestParameters.xChatdaddyEventId, options).then((request) => request(axios, basePath));
         },
         /**
          * Seals the key (`connection-crypto`, bound to the team, installation and connection) and stores it with the connect-time `inputs`. A reconnect keeps the connection\'s id and reseals it, and clears `needs-reconnect`. The installation must be `active` or `pending-handshake`. The manifest connection must be of type `apiKey`.  The credential is sent only to the hosts shown to the admin: the exact hosts of the connection plus its host template filled with the input. `confirmedHosts` must list exactly those hosts, so a client that did not show them cannot connect. Each input must be a single DNS label (letters, digits and single hyphens, at most 63 characters, ASCII only), whatever pattern the builder declared.  The response never contains the key. 
@@ -10123,18 +10125,18 @@ export interface AppStoreApiHostedTriggerPostRequest {
     readonly triggerId: string
 
     /**
+     * 
+     * @type {{ [key: string]: any; }}
+     * @memberof AppStoreApiHostedTriggerPost
+     */
+    readonly requestBody: { [key: string]: any; }
+
+    /**
      * Unique id of this delivery (1-128 printable ASCII characters, no &#x60;.&#x60;); the replay key. Required (a request without it is a 400); declared optional here only so that a missing header is that 400.
      * @type {string}
      * @memberof AppStoreApiHostedTriggerPost
      */
     readonly xChatdaddyEventId?: string
-
-    /**
-     * 
-     * @type {{ [key: string]: any; }}
-     * @memberof AppStoreApiHostedTriggerPost
-     */
-    readonly requestBody?: { [key: string]: any; }
 }
 
 /**
@@ -10483,7 +10485,7 @@ export class AppStoreApi extends BaseAPI {
      * @memberof AppStoreApi
      */
     public hostedTriggerPost(requestParameters: AppStoreApiHostedTriggerPostRequest, options?: RawAxiosRequestConfig) {
-        return AppStoreApiFp(this.configuration).hostedTriggerPost(requestParameters.triggerId, requestParameters.xChatdaddyEventId, requestParameters.requestBody, options).then((request) => request(this.axios, this.basePath));
+        return AppStoreApiFp(this.configuration).hostedTriggerPost(requestParameters.triggerId, requestParameters.requestBody, requestParameters.xChatdaddyEventId, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
