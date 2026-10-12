@@ -1633,6 +1633,38 @@ export interface AppIntegrationCreate {
 /**
  * 
  * @export
+ * @interface AppOAuthClient
+ */
+export interface AppOAuthClient {
+    /**
+     * 
+     * @type {string}
+     * @memberof AppOAuthClient
+     */
+    'clientId': string;
+    /**
+     * Always true. The secret itself is never returned.
+     * @type {boolean}
+     * @memberof AppOAuthClient
+     */
+    'secretSet': boolean;
+}
+/**
+ * 
+ * @export
+ * @interface AppOAuthClientPut
+ */
+export interface AppOAuthClientPut {
+    /**
+     * The OAuth client id (not secret). Visible ASCII, at most 255 characters.
+     * @type {string}
+     * @memberof AppOAuthClientPut
+     */
+    'clientId': string;
+}
+/**
+ * 
+ * @export
  * @interface AppTriggerIngest200Response
  */
 export interface AppTriggerIngest200Response {
@@ -9002,6 +9034,60 @@ export const AppStoreApiAxiosParamCreator = function (configuration?: Configurat
             };
         },
         /**
+         * The developer team of the app sets the OAuth client that \"Log in with ...\" uses for one `oauth2` connection of the app. Replaces any earlier client. The caller\'s team must own the app. The secret is sealed at rest (`connection-crypto`, purpose `app-oauth-client`), is write-only, and is never returned or logged. An audit row (no secret, no client id) is written in the same transaction. 
+         * @summary Set an app\'s OAuth client id and secret (the app\'s developer team)
+         * @param {string} appId 
+         * @param {string} connectionId The &#x60;id&#x60; of an &#x60;oauth2&#x60; entry of the app manifest\&#39;s &#x60;connections&#x60;
+         * @param {string} xOauthClientSecret The OAuth client secret (8 to 4096 visible ASCII characters). A header, not a body field, on purpose (as &#x60;x-connection-api-key&#x60;): headers stay out of tracing and logs. Declared without length constraints so that a rejection never reflects it; the handler checks the length.
+         * @param {AppOAuthClientPut} appOAuthClientPut 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        appOAuthClientPut: async (appId: string, connectionId: string, xOauthClientSecret: string, appOAuthClientPut: AppOAuthClientPut, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'appId' is not null or undefined
+            assertParamExists('appOAuthClientPut', 'appId', appId)
+            // verify required parameter 'connectionId' is not null or undefined
+            assertParamExists('appOAuthClientPut', 'connectionId', connectionId)
+            // verify required parameter 'xOauthClientSecret' is not null or undefined
+            assertParamExists('appOAuthClientPut', 'xOauthClientSecret', xOauthClientSecret)
+            // verify required parameter 'appOAuthClientPut' is not null or undefined
+            assertParamExists('appOAuthClientPut', 'appOAuthClientPut', appOAuthClientPut)
+            const localVarPath = `/apps/{appId}/oauth-clients/{connectionId}`
+                .replace(`{${"appId"}}`, encodeURIComponent(String(appId)))
+                .replace(`{${"connectionId"}}`, encodeURIComponent(String(connectionId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["APPS_DEVELOP"], configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            if (xOauthClientSecret != null) {
+                localVarHeaderParameter['x-oauth-client-secret'] = String(xOauthClientSecret);
+            }
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(appOAuthClientPut, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * Public: the signature is the authentication. The body must be JSON, at most 64 KB, and valid against the `payloadSchema` of the manifest `flowTriggers` entry named by `triggerId`. Checks run in this order: the size cap, the installation is loaded, the signature is verified (the current secret, or the previous one while a rotation window is open), the valid-request bucket is charged (300 a minute per installation), the trigger is resolved, the body is validated, then the event id is recorded and every enabled trigger bound to this installation and `triggerId` is fired. An unknown or inactive installation, a missing or invalid signature or timestamp, a missing event id and a missing raw body are all the same 401 `invalid signature`. Failed verifications are counted per source IP (30 a minute) and, over that, answered with 429; they never count against the installation\'s valid-request bucket.  Delivery is at-most-once per event id. The id is recorded before the triggers fire, so re-sending a delivery that was answered 202 with `failed` above zero does not fire again (it is answered 200 `duplicate`); read `failed` from the 202 body, and send a new event id to retry. A delivery that fails on the server (5xx) gives its id back, so that one can be re-sent. 
          * @summary Deliver an event from an installed app, to fire its flow triggers
          * @param {string} installationId 
@@ -9927,6 +10013,22 @@ export const AppStoreApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
+         * The developer team of the app sets the OAuth client that \"Log in with ...\" uses for one `oauth2` connection of the app. Replaces any earlier client. The caller\'s team must own the app. The secret is sealed at rest (`connection-crypto`, purpose `app-oauth-client`), is write-only, and is never returned or logged. An audit row (no secret, no client id) is written in the same transaction. 
+         * @summary Set an app\'s OAuth client id and secret (the app\'s developer team)
+         * @param {string} appId 
+         * @param {string} connectionId The &#x60;id&#x60; of an &#x60;oauth2&#x60; entry of the app manifest\&#39;s &#x60;connections&#x60;
+         * @param {string} xOauthClientSecret The OAuth client secret (8 to 4096 visible ASCII characters). A header, not a body field, on purpose (as &#x60;x-connection-api-key&#x60;): headers stay out of tracing and logs. Declared without length constraints so that a rejection never reflects it; the handler checks the length.
+         * @param {AppOAuthClientPut} appOAuthClientPut 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async appOAuthClientPut(appId: string, connectionId: string, xOauthClientSecret: string, appOAuthClientPut: AppOAuthClientPut, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AppOAuthClient>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.appOAuthClientPut(appId, connectionId, xOauthClientSecret, appOAuthClientPut, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['AppStoreApi.appOAuthClientPut']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
          * Public: the signature is the authentication. The body must be JSON, at most 64 KB, and valid against the `payloadSchema` of the manifest `flowTriggers` entry named by `triggerId`. Checks run in this order: the size cap, the installation is loaded, the signature is verified (the current secret, or the previous one while a rotation window is open), the valid-request bucket is charged (300 a minute per installation), the trigger is resolved, the body is validated, then the event id is recorded and every enabled trigger bound to this installation and `triggerId` is fired. An unknown or inactive installation, a missing or invalid signature or timestamp, a missing event id and a missing raw body are all the same 401 `invalid signature`. Failed verifications are counted per source IP (30 a minute) and, over that, answered with 429; they never count against the installation\'s valid-request bucket.  Delivery is at-most-once per event id. The id is recorded before the triggers fire, so re-sending a delivery that was answered 202 with `failed` above zero does not fire again (it is answered 200 `duplicate`); read `failed` from the 202 body, and send a new event id to retry. A delivery that fails on the server (5xx) gives its id back, so that one can be re-sent. 
          * @summary Deliver an event from an installed app, to fire its flow triggers
          * @param {string} installationId 
@@ -10248,6 +10350,16 @@ export const AppStoreApiFactory = function (configuration?: Configuration, baseP
             return localVarFp.appHealthGet(requestParameters.appId, requestParameters.days, options).then((request) => request(axios, basePath));
         },
         /**
+         * The developer team of the app sets the OAuth client that \"Log in with ...\" uses for one `oauth2` connection of the app. Replaces any earlier client. The caller\'s team must own the app. The secret is sealed at rest (`connection-crypto`, purpose `app-oauth-client`), is write-only, and is never returned or logged. An audit row (no secret, no client id) is written in the same transaction. 
+         * @summary Set an app\'s OAuth client id and secret (the app\'s developer team)
+         * @param {AppStoreApiAppOAuthClientPutRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        appOAuthClientPut(requestParameters: AppStoreApiAppOAuthClientPutRequest, options?: RawAxiosRequestConfig): AxiosPromise<AppOAuthClient> {
+            return localVarFp.appOAuthClientPut(requestParameters.appId, requestParameters.connectionId, requestParameters.xOauthClientSecret, requestParameters.appOAuthClientPut, options).then((request) => request(axios, basePath));
+        },
+        /**
          * Public: the signature is the authentication. The body must be JSON, at most 64 KB, and valid against the `payloadSchema` of the manifest `flowTriggers` entry named by `triggerId`. Checks run in this order: the size cap, the installation is loaded, the signature is verified (the current secret, or the previous one while a rotation window is open), the valid-request bucket is charged (300 a minute per installation), the trigger is resolved, the body is validated, then the event id is recorded and every enabled trigger bound to this installation and `triggerId` is fired. An unknown or inactive installation, a missing or invalid signature or timestamp, a missing event id and a missing raw body are all the same 401 `invalid signature`. Failed verifications are counted per source IP (30 a minute) and, over that, answered with 429; they never count against the installation\'s valid-request bucket.  Delivery is at-most-once per event id. The id is recorded before the triggers fire, so re-sending a delivery that was answered 202 with `failed` above zero does not fire again (it is answered 200 `duplicate`); read `failed` from the 202 body, and send a new event id to retry. A delivery that fails on the server (5xx) gives its id back, so that one can be re-sent. 
          * @summary Deliver an event from an installed app, to fire its flow triggers
          * @param {AppStoreApiAppTriggerIngestRequest} requestParameters Request parameters.
@@ -10493,6 +10605,41 @@ export interface AppStoreApiAppHealthGetRequest {
      * @memberof AppStoreApiAppHealthGet
      */
     readonly days?: number
+}
+
+/**
+ * Request parameters for appOAuthClientPut operation in AppStoreApi.
+ * @export
+ * @interface AppStoreApiAppOAuthClientPutRequest
+ */
+export interface AppStoreApiAppOAuthClientPutRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof AppStoreApiAppOAuthClientPut
+     */
+    readonly appId: string
+
+    /**
+     * The &#x60;id&#x60; of an &#x60;oauth2&#x60; entry of the app manifest\&#39;s &#x60;connections&#x60;
+     * @type {string}
+     * @memberof AppStoreApiAppOAuthClientPut
+     */
+    readonly connectionId: string
+
+    /**
+     * The OAuth client secret (8 to 4096 visible ASCII characters). A header, not a body field, on purpose (as &#x60;x-connection-api-key&#x60;): headers stay out of tracing and logs. Declared without length constraints so that a rejection never reflects it; the handler checks the length.
+     * @type {string}
+     * @memberof AppStoreApiAppOAuthClientPut
+     */
+    readonly xOauthClientSecret: string
+
+    /**
+     * 
+     * @type {AppOAuthClientPut}
+     * @memberof AppStoreApiAppOAuthClientPut
+     */
+    readonly appOAuthClientPut: AppOAuthClientPut
 }
 
 /**
@@ -10944,6 +11091,18 @@ export class AppStoreApi extends BaseAPI {
      */
     public appHealthGet(requestParameters: AppStoreApiAppHealthGetRequest, options?: RawAxiosRequestConfig) {
         return AppStoreApiFp(this.configuration).appHealthGet(requestParameters.appId, requestParameters.days, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * The developer team of the app sets the OAuth client that \"Log in with ...\" uses for one `oauth2` connection of the app. Replaces any earlier client. The caller\'s team must own the app. The secret is sealed at rest (`connection-crypto`, purpose `app-oauth-client`), is write-only, and is never returned or logged. An audit row (no secret, no client id) is written in the same transaction. 
+     * @summary Set an app\'s OAuth client id and secret (the app\'s developer team)
+     * @param {AppStoreApiAppOAuthClientPutRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AppStoreApi
+     */
+    public appOAuthClientPut(requestParameters: AppStoreApiAppOAuthClientPutRequest, options?: RawAxiosRequestConfig) {
+        return AppStoreApiFp(this.configuration).appOAuthClientPut(requestParameters.appId, requestParameters.connectionId, requestParameters.xOauthClientSecret, requestParameters.appOAuthClientPut, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
