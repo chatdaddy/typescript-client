@@ -5601,6 +5601,25 @@ export interface InstallationManifest {
     'settings'?: Array<{ [key: string]: any; }>;
 }
 /**
+ * 
+ * @export
+ * @interface InstallationSettingsPatch
+ */
+export interface InstallationSettingsPatch {
+    /**
+     * 
+     * @type {{ [key: string]: any; }}
+     * @memberof InstallationSettingsPatch
+     */
+    'settings'?: { [key: string]: any; };
+    /**
+     * New values for secret settings, sealed at rest. `null` clears one.
+     * @type {{ [key: string]: string | null; }}
+     * @memberof InstallationSettingsPatch
+     */
+    'secretSettings'?: { [key: string]: string | null; };
+}
+/**
  * `pending-handshake` (just installed, or awaiting delivery of the signing secret) and `failed-handshake` (the app never acknowledged it) are not `active`: no action or trigger runs for them. `pending-reconsent` is the opposite: the installation keeps running its current version (actions and triggers work) while a scope-adding upgrade awaits approval.
  * @export
  * @enum {string}
@@ -9331,6 +9350,50 @@ export const AppStoreApiAxiosParamCreator = function (configuration?: Configurat
             };
         },
         /**
+         * Replaces the plain settings named in `settings` and seals the secret settings named in `secretSettings`; everything not named is left as it is. A secret setting is cleared with an explicit `null` (refused for a required one). Validated against the installation\'s current manifest `settings[]`: a name must be declared, a plain value must match its type, a `secret: true` name goes in `secretSettings` (never in `settings`) and takes a non-empty string, and a required setting must be set afterwards. Allowed on `active` and `suspended` installations (409 otherwise). Writes a `settings-update` InstallationAudit row that records the names changed, never a value. A secret value is write-only and is never returned: the response carries only `secretSettingsSet`. The body is never logged. 
+         * @summary Edit an installation\'s settings (team admin only)
+         * @param {string} id 
+         * @param {InstallationSettingsPatch} installationSettingsPatch 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        installationSettingsPatch: async (id: string, installationSettingsPatch: InstallationSettingsPatch, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('installationSettingsPatch', 'id', id)
+            // verify required parameter 'installationSettingsPatch' is not null or undefined
+            assertParamExists('installationSettingsPatch', 'installationSettingsPatch', installationSettingsPatch)
+            const localVarPath = `/installations/{id}/settings`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PATCH', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["TEAM_UPDATE"], configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(installationSettingsPatch, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * Generates and seals a new secret. The old one stays valid for 15 minutes. The installation stays `active`; the handshake job delivers the new secret to the app (same handshake and ack as an install). If delivery fails every retry the installation becomes `failed-handshake`. Only an `active` installation can rotate (409 otherwise). 
          * @summary Rotate an installation\'s signing secret (team admin only)
          * @param {string} id 
@@ -9979,6 +10042,20 @@ export const AppStoreApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
+         * Replaces the plain settings named in `settings` and seals the secret settings named in `secretSettings`; everything not named is left as it is. A secret setting is cleared with an explicit `null` (refused for a required one). Validated against the installation\'s current manifest `settings[]`: a name must be declared, a plain value must match its type, a `secret: true` name goes in `secretSettings` (never in `settings`) and takes a non-empty string, and a required setting must be set afterwards. Allowed on `active` and `suspended` installations (409 otherwise). Writes a `settings-update` InstallationAudit row that records the names changed, never a value. A secret value is write-only and is never returned: the response carries only `secretSettingsSet`. The body is never logged. 
+         * @summary Edit an installation\'s settings (team admin only)
+         * @param {string} id 
+         * @param {InstallationSettingsPatch} installationSettingsPatch 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async installationSettingsPatch(id: string, installationSettingsPatch: InstallationSettingsPatch, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Installation>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.installationSettingsPatch(id, installationSettingsPatch, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['AppStoreApi.installationSettingsPatch']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
          * Generates and seals a new secret. The old one stays valid for 15 minutes. The installation stays `active`; the handshake job delivers the new secret to the app (same handshake and ack as an install). If delivery fails every retry the installation becomes `failed-handshake`. Only an `active` installation can rotate (409 otherwise). 
          * @summary Rotate an installation\'s signing secret (team admin only)
          * @param {string} id 
@@ -10249,6 +10326,16 @@ export const AppStoreApiFactory = function (configuration?: Configuration, baseP
          */
         installationInboundUrls(requestParameters: AppStoreApiInstallationInboundUrlsRequest, options?: RawAxiosRequestConfig): AxiosPromise<InstallationInboundUrls200Response> {
             return localVarFp.installationInboundUrls(requestParameters.id, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Replaces the plain settings named in `settings` and seals the secret settings named in `secretSettings`; everything not named is left as it is. A secret setting is cleared with an explicit `null` (refused for a required one). Validated against the installation\'s current manifest `settings[]`: a name must be declared, a plain value must match its type, a `secret: true` name goes in `secretSettings` (never in `settings`) and takes a non-empty string, and a required setting must be set afterwards. Allowed on `active` and `suspended` installations (409 otherwise). Writes a `settings-update` InstallationAudit row that records the names changed, never a value. A secret value is write-only and is never returned: the response carries only `secretSettingsSet`. The body is never logged. 
+         * @summary Edit an installation\'s settings (team admin only)
+         * @param {AppStoreApiInstallationSettingsPatchRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        installationSettingsPatch(requestParameters: AppStoreApiInstallationSettingsPatchRequest, options?: RawAxiosRequestConfig): AxiosPromise<Installation> {
+            return localVarFp.installationSettingsPatch(requestParameters.id, requestParameters.installationSettingsPatch, options).then((request) => request(axios, basePath));
         },
         /**
          * Generates and seals a new secret. The old one stays valid for 15 minutes. The installation stays `active`; the handshake job delivers the new secret to the app (same handshake and ack as an install). If delivery fails every retry the installation becomes `failed-handshake`. Only an `active` installation can rotate (409 otherwise). 
@@ -10598,6 +10685,27 @@ export interface AppStoreApiInstallationInboundUrlsRequest {
 }
 
 /**
+ * Request parameters for installationSettingsPatch operation in AppStoreApi.
+ * @export
+ * @interface AppStoreApiInstallationSettingsPatchRequest
+ */
+export interface AppStoreApiInstallationSettingsPatchRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof AppStoreApiInstallationSettingsPatch
+     */
+    readonly id: string
+
+    /**
+     * 
+     * @type {InstallationSettingsPatch}
+     * @memberof AppStoreApiInstallationSettingsPatch
+     */
+    readonly installationSettingsPatch: InstallationSettingsPatch
+}
+
+/**
  * Request parameters for installationSigningSecretRotate operation in AppStoreApi.
  * @export
  * @interface AppStoreApiInstallationSigningSecretRotateRequest
@@ -10932,6 +11040,18 @@ export class AppStoreApi extends BaseAPI {
      */
     public installationInboundUrls(requestParameters: AppStoreApiInstallationInboundUrlsRequest, options?: RawAxiosRequestConfig) {
         return AppStoreApiFp(this.configuration).installationInboundUrls(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Replaces the plain settings named in `settings` and seals the secret settings named in `secretSettings`; everything not named is left as it is. A secret setting is cleared with an explicit `null` (refused for a required one). Validated against the installation\'s current manifest `settings[]`: a name must be declared, a plain value must match its type, a `secret: true` name goes in `secretSettings` (never in `settings`) and takes a non-empty string, and a required setting must be set afterwards. Allowed on `active` and `suspended` installations (409 otherwise). Writes a `settings-update` InstallationAudit row that records the names changed, never a value. A secret value is write-only and is never returned: the response carries only `secretSettingsSet`. The body is never logged. 
+     * @summary Edit an installation\'s settings (team admin only)
+     * @param {AppStoreApiInstallationSettingsPatchRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AppStoreApi
+     */
+    public installationSettingsPatch(requestParameters: AppStoreApiInstallationSettingsPatchRequest, options?: RawAxiosRequestConfig) {
+        return AppStoreApiFp(this.configuration).installationSettingsPatch(requestParameters.id, requestParameters.installationSettingsPatch, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
