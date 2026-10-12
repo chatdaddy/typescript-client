@@ -5118,11 +5118,17 @@ export interface Installation {
      */
     'grantedScopes': Array<string>;
     /**
-     * 
+     * The plain settings. A setting the manifest flags `secret: true` is never returned here (it is sealed at rest and write-only).
      * @type {{ [key: string]: any; }}
      * @memberof Installation
      */
     'settings': { [key: string]: any; };
+    /**
+     * Names (only) of the secret settings that have a value. The values are write-only and are never returned.
+     * @type {Array<string>}
+     * @memberof Installation
+     */
+    'secretSettingsSet'?: Array<string>;
     /**
      * 
      * @type {InstallationStatus}
