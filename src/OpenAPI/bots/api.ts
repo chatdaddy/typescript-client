@@ -1319,6 +1319,203 @@ export interface AppGroupConfig {
 /**
  * 
  * @export
+ * @interface AppHealthCounts
+ */
+export interface AppHealthCounts {
+    /**
+     * 
+     * @type {number}
+     * @memberof AppHealthCounts
+     */
+    'ok': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof AppHealthCounts
+     */
+    'appError': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof AppHealthCounts
+     */
+    'platformError': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof AppHealthCounts
+     */
+    'tooLarge': number;
+    /**
+     * 
+     * @type {AppHealthCountsPlatformErrorCauses}
+     * @memberof AppHealthCounts
+     */
+    'platformErrorCauses': AppHealthCountsPlatformErrorCauses;
+    /**
+     * 
+     * @type {AppHealthCountsTriggers}
+     * @memberof AppHealthCounts
+     */
+    'triggers': AppHealthCountsTriggers;
+}
+/**
+ * 
+ * @export
+ * @interface AppHealthCountsPlatformErrorCauses
+ */
+export interface AppHealthCountsPlatformErrorCauses {
+    /**
+     * 
+     * @type {number}
+     * @memberof AppHealthCountsPlatformErrorCauses
+     */
+    'dispatchStatus': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof AppHealthCountsPlatformErrorCauses
+     */
+    'unreachable': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof AppHealthCountsPlatformErrorCauses
+     */
+    'noEnvelope': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof AppHealthCountsPlatformErrorCauses
+     */
+    'outcome': number;
+}
+/**
+ * 
+ * @export
+ * @interface AppHealthCountsTriggers
+ */
+export interface AppHealthCountsTriggers {
+    /**
+     * 
+     * @type {number}
+     * @memberof AppHealthCountsTriggers
+     */
+    'accepted': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof AppHealthCountsTriggers
+     */
+    'duplicate': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof AppHealthCountsTriggers
+     */
+    'invalid': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof AppHealthCountsTriggers
+     */
+    'throttled': number;
+}
+/**
+ * 
+ * @export
+ * @interface AppHealthGet200Response
+ */
+export interface AppHealthGet200Response {
+    /**
+     * 
+     * @type {string}
+     * @memberof AppHealthGet200Response
+     */
+    'appId': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof AppHealthGet200Response
+     */
+    'from': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof AppHealthGet200Response
+     */
+    'to': string;
+    /**
+     * 
+     * @type {number}
+     * @memberof AppHealthGet200Response
+     */
+    'days': number;
+    /**
+     * 
+     * @type {AppHealthCounts}
+     * @memberof AppHealthGet200Response
+     */
+    'total': AppHealthCounts;
+    /**
+     * 
+     * @type {Array<AppHealthGet200ResponseVersionsInner>}
+     * @memberof AppHealthGet200Response
+     */
+    'versions': Array<AppHealthGet200ResponseVersionsInner>;
+}
+/**
+ * 
+ * @export
+ * @interface AppHealthGet200ResponseVersionsInner
+ */
+export interface AppHealthGet200ResponseVersionsInner {
+    /**
+     * 
+     * @type {number}
+     * @memberof AppHealthGet200ResponseVersionsInner
+     */
+    'ok': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof AppHealthGet200ResponseVersionsInner
+     */
+    'appError': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof AppHealthGet200ResponseVersionsInner
+     */
+    'platformError': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof AppHealthGet200ResponseVersionsInner
+     */
+    'tooLarge': number;
+    /**
+     * 
+     * @type {AppHealthCountsPlatformErrorCauses}
+     * @memberof AppHealthGet200ResponseVersionsInner
+     */
+    'platformErrorCauses': AppHealthCountsPlatformErrorCauses;
+    /**
+     * 
+     * @type {AppHealthCountsTriggers}
+     * @memberof AppHealthGet200ResponseVersionsInner
+     */
+    'triggers': AppHealthCountsTriggers;
+    /**
+     * 
+     * @type {string}
+     * @memberof AppHealthGet200ResponseVersionsInner
+     */
+    'appVersion': string;
+}
+/**
+ * 
+ * @export
  * @interface AppHealthPolicy
  */
 export interface AppHealthPolicy {
@@ -8743,6 +8940,49 @@ export const AppStoreApiAxiosParamCreator = function (configuration?: Configurat
             };
         },
         /**
+         * Counts only, summed over every team\'s installations of the app and broken down by the version each installation runs now: app calls by outcome (`ok`, `appError`, `platformError`, `tooLarge`), the causes of platform errors, and hosted trigger fires. `platformError` is ChatDaddy\'s failure, never the app\'s, and does not count towards auto-suspend. Never a payload and never another team\'s id. Covers the last `days` UTC days including today. The caller\'s team must own the app. 
+         * @summary An app\'s health counts for its developer
+         * @param {string} appId 
+         * @param {number} [days] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        appHealthGet: async (appId: string, days?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'appId' is not null or undefined
+            assertParamExists('appHealthGet', 'appId', appId)
+            const localVarPath = `/installations/app-health/{appId}`
+                .replace(`{${"appId"}}`, encodeURIComponent(String(appId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["APPS_DEVELOP"], configuration)
+
+            if (days !== undefined) {
+                localVarQueryParameter['days'] = days;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * Public: the signature is the authentication. The body must be JSON, at most 64 KB, and valid against the `payloadSchema` of the manifest `flowTriggers` entry named by `triggerId`. Checks run in this order: the size cap, the installation is loaded, the signature is verified (the current secret, or the previous one while a rotation window is open), the valid-request bucket is charged (300 a minute per installation), the trigger is resolved, the body is validated, then the event id is recorded and every enabled trigger bound to this installation and `triggerId` is fired. An unknown or inactive installation, a missing or invalid signature or timestamp, a missing event id and a missing raw body are all the same 401 `invalid signature`. Failed verifications are counted per source IP (30 a minute) and, over that, answered with 429; they never count against the installation\'s valid-request bucket.  Delivery is at-most-once per event id. The id is recorded before the triggers fire, so re-sending a delivery that was answered 202 with `failed` above zero does not fire again (it is answered 200 `duplicate`); read `failed` from the 202 body, and send a new event id to retry. A delivery that fails on the server (5xx) gives its id back, so that one can be re-sent. 
          * @summary Deliver an event from an installed app, to fire its flow triggers
          * @param {string} installationId 
@@ -9610,6 +9850,20 @@ export const AppStoreApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
+         * Counts only, summed over every team\'s installations of the app and broken down by the version each installation runs now: app calls by outcome (`ok`, `appError`, `platformError`, `tooLarge`), the causes of platform errors, and hosted trigger fires. `platformError` is ChatDaddy\'s failure, never the app\'s, and does not count towards auto-suspend. Never a payload and never another team\'s id. Covers the last `days` UTC days including today. The caller\'s team must own the app. 
+         * @summary An app\'s health counts for its developer
+         * @param {string} appId 
+         * @param {number} [days] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async appHealthGet(appId: string, days?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AppHealthGet200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.appHealthGet(appId, days, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['AppStoreApi.appHealthGet']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
          * Public: the signature is the authentication. The body must be JSON, at most 64 KB, and valid against the `payloadSchema` of the manifest `flowTriggers` entry named by `triggerId`. Checks run in this order: the size cap, the installation is loaded, the signature is verified (the current secret, or the previous one while a rotation window is open), the valid-request bucket is charged (300 a minute per installation), the trigger is resolved, the body is validated, then the event id is recorded and every enabled trigger bound to this installation and `triggerId` is fired. An unknown or inactive installation, a missing or invalid signature or timestamp, a missing event id and a missing raw body are all the same 401 `invalid signature`. Failed verifications are counted per source IP (30 a minute) and, over that, answered with 429; they never count against the installation\'s valid-request bucket.  Delivery is at-most-once per event id. The id is recorded before the triggers fire, so re-sending a delivery that was answered 202 with `failed` above zero does not fire again (it is answered 200 `duplicate`); read `failed` from the 202 body, and send a new event id to retry. A delivery that fails on the server (5xx) gives its id back, so that one can be re-sent. 
          * @summary Deliver an event from an installed app, to fire its flow triggers
          * @param {string} installationId 
@@ -9907,6 +10161,16 @@ export const AppStoreApiFactory = function (configuration?: Configuration, baseP
             return localVarFp.appConnectionRequestPost(requestParameters.appConnectionRequest, options).then((request) => request(axios, basePath));
         },
         /**
+         * Counts only, summed over every team\'s installations of the app and broken down by the version each installation runs now: app calls by outcome (`ok`, `appError`, `platformError`, `tooLarge`), the causes of platform errors, and hosted trigger fires. `platformError` is ChatDaddy\'s failure, never the app\'s, and does not count towards auto-suspend. Never a payload and never another team\'s id. Covers the last `days` UTC days including today. The caller\'s team must own the app. 
+         * @summary An app\'s health counts for its developer
+         * @param {AppStoreApiAppHealthGetRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        appHealthGet(requestParameters: AppStoreApiAppHealthGetRequest, options?: RawAxiosRequestConfig): AxiosPromise<AppHealthGet200Response> {
+            return localVarFp.appHealthGet(requestParameters.appId, requestParameters.days, options).then((request) => request(axios, basePath));
+        },
+        /**
          * Public: the signature is the authentication. The body must be JSON, at most 64 KB, and valid against the `payloadSchema` of the manifest `flowTriggers` entry named by `triggerId`. Checks run in this order: the size cap, the installation is loaded, the signature is verified (the current secret, or the previous one while a rotation window is open), the valid-request bucket is charged (300 a minute per installation), the trigger is resolved, the body is validated, then the event id is recorded and every enabled trigger bound to this installation and `triggerId` is fired. An unknown or inactive installation, a missing or invalid signature or timestamp, a missing event id and a missing raw body are all the same 401 `invalid signature`. Failed verifications are counted per source IP (30 a minute) and, over that, answered with 429; they never count against the installation\'s valid-request bucket.  Delivery is at-most-once per event id. The id is recorded before the triggers fire, so re-sending a delivery that was answered 202 with `failed` above zero does not fire again (it is answered 200 `duplicate`); read `failed` from the 202 body, and send a new event id to retry. A delivery that fails on the server (5xx) gives its id back, so that one can be re-sent. 
          * @summary Deliver an event from an installed app, to fire its flow triggers
          * @param {AppStoreApiAppTriggerIngestRequest} requestParameters Request parameters.
@@ -10121,6 +10385,27 @@ export interface AppStoreApiAppConnectionRequestPostRequest {
      * @memberof AppStoreApiAppConnectionRequestPost
      */
     readonly appConnectionRequest: AppConnectionRequest
+}
+
+/**
+ * Request parameters for appHealthGet operation in AppStoreApi.
+ * @export
+ * @interface AppStoreApiAppHealthGetRequest
+ */
+export interface AppStoreApiAppHealthGetRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof AppStoreApiAppHealthGet
+     */
+    readonly appId: string
+
+    /**
+     * 
+     * @type {number}
+     * @memberof AppStoreApiAppHealthGet
+     */
+    readonly days?: number
 }
 
 /**
@@ -10539,6 +10824,18 @@ export class AppStoreApi extends BaseAPI {
      */
     public appConnectionRequestPost(requestParameters: AppStoreApiAppConnectionRequestPostRequest, options?: RawAxiosRequestConfig) {
         return AppStoreApiFp(this.configuration).appConnectionRequestPost(requestParameters.appConnectionRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Counts only, summed over every team\'s installations of the app and broken down by the version each installation runs now: app calls by outcome (`ok`, `appError`, `platformError`, `tooLarge`), the causes of platform errors, and hosted trigger fires. `platformError` is ChatDaddy\'s failure, never the app\'s, and does not count towards auto-suspend. Never a payload and never another team\'s id. Covers the last `days` UTC days including today. The caller\'s team must own the app. 
+     * @summary An app\'s health counts for its developer
+     * @param {AppStoreApiAppHealthGetRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AppStoreApi
+     */
+    public appHealthGet(requestParameters: AppStoreApiAppHealthGetRequest, options?: RawAxiosRequestConfig) {
+        return AppStoreApiFp(this.configuration).appHealthGet(requestParameters.appId, requestParameters.days, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
