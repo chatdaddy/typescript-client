@@ -5011,6 +5011,18 @@ export interface Installation {
      */
     'manifest': InstallationManifest;
     /**
+     * The scope-adding version awaiting re-consent (only while pending-reconsent)
+     * @type {string}
+     * @memberof Installation
+     */
+    'pendingAppVersion': string | null;
+    /**
+     * The pending version\'s manifest, only while pending-reconsent
+     * @type {InstallationManifest}
+     * @memberof Installation
+     */
+    'pendingManifest': InstallationManifest | null;
+    /**
      * 
      * @type {Array<string>}
      * @memberof Installation
@@ -5183,7 +5195,7 @@ export interface InstallationManifest {
     'settings'?: Array<{ [key: string]: any; }>;
 }
 /**
- * `pending-handshake` (just installed, or awaiting delivery of the signing secret) and `failed-handshake` (the app never acknowledged it) are not `active`: no action or trigger runs for them.
+ * `pending-handshake` (just installed, or awaiting delivery of the signing secret) and `failed-handshake` (the app never acknowledged it) are not `active`: no action or trigger runs for them. `pending-reconsent` is the opposite: the installation keeps running its current version (actions and triggers work) while a scope-adding upgrade awaits approval.
  * @export
  * @enum {string}
  */
@@ -5222,6 +5234,25 @@ export interface InstallationsGet200Response {
 /**
  * 
  * @export
+ * @interface InstallationsReconsentRequest
+ */
+export interface InstallationsReconsentRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof InstallationsReconsentRequest
+     */
+    'appVersion': string;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof InstallationsReconsentRequest
+     */
+    'grantedScopes': Array<string>;
+}
+/**
+ * 
+ * @export
  * @interface InstallationsSuspend200Response
  */
 export interface InstallationsSuspend200Response {
@@ -5250,6 +5281,19 @@ export interface InstallationsSuspendRequest {
      * @memberof InstallationsSuspendRequest
      */
     'appVersion'?: string;
+}
+/**
+ * 
+ * @export
+ * @interface InstallationsUpgradeRequest
+ */
+export interface InstallationsUpgradeRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof InstallationsUpgradeRequest
+     */
+    'appVersion': string;
 }
 /**
  * Describes how many contacts are in each status for the first action sent in a trigger instance. Keyed by ActionInteractionType
@@ -8910,6 +8954,88 @@ export const AppStoreApiAxiosParamCreator = function (configuration?: Configurat
             };
         },
         /**
+         * Only for a `pending-reconsent` installation. `appVersion` must be the pending version the admin reviewed (409 otherwise, so a stale approval cannot land on a newer proposal). `grantedScopes` must be exactly the pending version\'s manifest scopes (400 otherwise). Version, manifest and granted scopes switch together, the pending fields clear and the installation is `active` again. 
+         * @summary Approve a pending upgrade\'s new scopes (team admin only)
+         * @param {string} id 
+         * @param {InstallationsReconsentRequest} installationsReconsentRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        installationsReconsent: async (id: string, installationsReconsentRequest: InstallationsReconsentRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('installationsReconsent', 'id', id)
+            // verify required parameter 'installationsReconsentRequest' is not null or undefined
+            assertParamExists('installationsReconsent', 'installationsReconsentRequest', installationsReconsentRequest)
+            const localVarPath = `/installations/{id}/reconsent`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["TEAM_UPDATE"], configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(installationsReconsentRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * `pending-reconsent` -> `active`, on the version the installation never left; the pending fields clear. 
+         * @summary Decline a pending upgrade (team admin only)
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        installationsReconsentDecline: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('installationsReconsentDecline', 'id', id)
+            const localVarPath = `/installations/{id}/reconsent/decline`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["TEAM_UPDATE"], configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * `suspended` -> `active`, only when the installation\'s latest suspension was ChatDaddy\'s automatic one (the app\'s own failure rate), once the developer has fixed the app. In one transaction it also sets `healthState` to `ok` and clears the installation\'s call counters (so old failures cannot suspend it again), and writes a `resume` InstallationAudit row with the caller as actor. 409 for an installation that is not suspended, or that ChatDaddy staff suspended (the kill switch). 
          * @summary Resume an installation that was auto-suspended (team admin only)
          * @param {string} id 
@@ -8981,6 +9107,50 @@ export const AppStoreApiAxiosParamCreator = function (configuration?: Configurat
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
             localVarRequestOptions.data = serializeDataIfNeeded(installationsSuspendRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * The target version is fetched from appstore with the caller\'s own token. If every scope of its manifest is already granted, the installation switches in place (version and manifest) and stays `active`; its granted scopes narrow to the new manifest\'s scopes (least privilege) and cached app tokens are dropped if they shrank. If it adds any scope, the installation does NOT switch: it becomes `pending-reconsent`, the target is stored in `pendingAppVersion` / `pendingManifest`, and it keeps running the old version until `installationsReconsent` (or goes back with `installationsReconsentDecline`). Only an `active` installation can upgrade, not to the version it is on, and not while a signing secret delivery is in flight (409). 
+         * @summary Upgrade an installation to another version of its app (team admin only)
+         * @param {string} id 
+         * @param {InstallationsUpgradeRequest} installationsUpgradeRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        installationsUpgrade: async (id: string, installationsUpgradeRequest: InstallationsUpgradeRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('installationsUpgrade', 'id', id)
+            // verify required parameter 'installationsUpgradeRequest' is not null or undefined
+            assertParamExists('installationsUpgrade', 'installationsUpgradeRequest', installationsUpgradeRequest)
+            const localVarPath = `/installations/{id}/upgrade`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["TEAM_UPDATE"], configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(installationsUpgradeRequest, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -9151,6 +9321,33 @@ export const AppStoreApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
+         * Only for a `pending-reconsent` installation. `appVersion` must be the pending version the admin reviewed (409 otherwise, so a stale approval cannot land on a newer proposal). `grantedScopes` must be exactly the pending version\'s manifest scopes (400 otherwise). Version, manifest and granted scopes switch together, the pending fields clear and the installation is `active` again. 
+         * @summary Approve a pending upgrade\'s new scopes (team admin only)
+         * @param {string} id 
+         * @param {InstallationsReconsentRequest} installationsReconsentRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async installationsReconsent(id: string, installationsReconsentRequest: InstallationsReconsentRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Installation>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.installationsReconsent(id, installationsReconsentRequest, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['AppStoreApi.installationsReconsent']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * `pending-reconsent` -> `active`, on the version the installation never left; the pending fields clear. 
+         * @summary Decline a pending upgrade (team admin only)
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async installationsReconsentDecline(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Installation>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.installationsReconsentDecline(id, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['AppStoreApi.installationsReconsentDecline']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
          * `suspended` -> `active`, only when the installation\'s latest suspension was ChatDaddy\'s automatic one (the app\'s own failure rate), once the developer has fixed the app. In one transaction it also sets `healthState` to `ok` and clears the installation\'s call counters (so old failures cannot suspend it again), and writes a `resume` InstallationAudit row with the caller as actor. 409 for an installation that is not suspended, or that ChatDaddy staff suspended (the kill switch). 
          * @summary Resume an installation that was auto-suspended (team admin only)
          * @param {string} id 
@@ -9174,6 +9371,20 @@ export const AppStoreApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.installationsSuspend(installationsSuspendRequest, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AppStoreApi.installationsSuspend']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * The target version is fetched from appstore with the caller\'s own token. If every scope of its manifest is already granted, the installation switches in place (version and manifest) and stays `active`; its granted scopes narrow to the new manifest\'s scopes (least privilege) and cached app tokens are dropped if they shrank. If it adds any scope, the installation does NOT switch: it becomes `pending-reconsent`, the target is stored in `pendingAppVersion` / `pendingManifest`, and it keeps running the old version until `installationsReconsent` (or goes back with `installationsReconsentDecline`). Only an `active` installation can upgrade, not to the version it is on, and not while a signing secret delivery is in flight (409). 
+         * @summary Upgrade an installation to another version of its app (team admin only)
+         * @param {string} id 
+         * @param {InstallationsUpgradeRequest} installationsUpgradeRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async installationsUpgrade(id: string, installationsUpgradeRequest: InstallationsUpgradeRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Installation>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.installationsUpgrade(id, installationsUpgradeRequest, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['AppStoreApi.installationsUpgrade']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
     }
@@ -9297,6 +9508,26 @@ export const AppStoreApiFactory = function (configuration?: Configuration, baseP
             return localVarFp.installationsPost(requestParameters.installationCreate, options).then((request) => request(axios, basePath));
         },
         /**
+         * Only for a `pending-reconsent` installation. `appVersion` must be the pending version the admin reviewed (409 otherwise, so a stale approval cannot land on a newer proposal). `grantedScopes` must be exactly the pending version\'s manifest scopes (400 otherwise). Version, manifest and granted scopes switch together, the pending fields clear and the installation is `active` again. 
+         * @summary Approve a pending upgrade\'s new scopes (team admin only)
+         * @param {AppStoreApiInstallationsReconsentRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        installationsReconsent(requestParameters: AppStoreApiInstallationsReconsentRequest, options?: RawAxiosRequestConfig): AxiosPromise<Installation> {
+            return localVarFp.installationsReconsent(requestParameters.id, requestParameters.installationsReconsentRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * `pending-reconsent` -> `active`, on the version the installation never left; the pending fields clear. 
+         * @summary Decline a pending upgrade (team admin only)
+         * @param {AppStoreApiInstallationsReconsentDeclineRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        installationsReconsentDecline(requestParameters: AppStoreApiInstallationsReconsentDeclineRequest, options?: RawAxiosRequestConfig): AxiosPromise<Installation> {
+            return localVarFp.installationsReconsentDecline(requestParameters.id, options).then((request) => request(axios, basePath));
+        },
+        /**
          * `suspended` -> `active`, only when the installation\'s latest suspension was ChatDaddy\'s automatic one (the app\'s own failure rate), once the developer has fixed the app. In one transaction it also sets `healthState` to `ok` and clears the installation\'s call counters (so old failures cannot suspend it again), and writes a `resume` InstallationAudit row with the caller as actor. 409 for an installation that is not suspended, or that ChatDaddy staff suspended (the kill switch). 
          * @summary Resume an installation that was auto-suspended (team admin only)
          * @param {AppStoreApiInstallationsResumeRequest} requestParameters Request parameters.
@@ -9315,6 +9546,16 @@ export const AppStoreApiFactory = function (configuration?: Configuration, baseP
          */
         installationsSuspend(requestParameters: AppStoreApiInstallationsSuspendRequest, options?: RawAxiosRequestConfig): AxiosPromise<InstallationsSuspend200Response> {
             return localVarFp.installationsSuspend(requestParameters.installationsSuspendRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * The target version is fetched from appstore with the caller\'s own token. If every scope of its manifest is already granted, the installation switches in place (version and manifest) and stays `active`; its granted scopes narrow to the new manifest\'s scopes (least privilege) and cached app tokens are dropped if they shrank. If it adds any scope, the installation does NOT switch: it becomes `pending-reconsent`, the target is stored in `pendingAppVersion` / `pendingManifest`, and it keeps running the old version until `installationsReconsent` (or goes back with `installationsReconsentDecline`). Only an `active` installation can upgrade, not to the version it is on, and not while a signing secret delivery is in flight (409). 
+         * @summary Upgrade an installation to another version of its app (team admin only)
+         * @param {AppStoreApiInstallationsUpgradeRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        installationsUpgrade(requestParameters: AppStoreApiInstallationsUpgradeRequest, options?: RawAxiosRequestConfig): AxiosPromise<Installation> {
+            return localVarFp.installationsUpgrade(requestParameters.id, requestParameters.installationsUpgradeRequest, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -9544,6 +9785,41 @@ export interface AppStoreApiInstallationsPostRequest {
 }
 
 /**
+ * Request parameters for installationsReconsent operation in AppStoreApi.
+ * @export
+ * @interface AppStoreApiInstallationsReconsentRequest
+ */
+export interface AppStoreApiInstallationsReconsentRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof AppStoreApiInstallationsReconsent
+     */
+    readonly id: string
+
+    /**
+     * 
+     * @type {InstallationsReconsentRequest}
+     * @memberof AppStoreApiInstallationsReconsent
+     */
+    readonly installationsReconsentRequest: InstallationsReconsentRequest
+}
+
+/**
+ * Request parameters for installationsReconsentDecline operation in AppStoreApi.
+ * @export
+ * @interface AppStoreApiInstallationsReconsentDeclineRequest
+ */
+export interface AppStoreApiInstallationsReconsentDeclineRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof AppStoreApiInstallationsReconsentDecline
+     */
+    readonly id: string
+}
+
+/**
  * Request parameters for installationsResume operation in AppStoreApi.
  * @export
  * @interface AppStoreApiInstallationsResumeRequest
@@ -9569,6 +9845,27 @@ export interface AppStoreApiInstallationsSuspendRequest {
      * @memberof AppStoreApiInstallationsSuspend
      */
     readonly installationsSuspendRequest: InstallationsSuspendRequest
+}
+
+/**
+ * Request parameters for installationsUpgrade operation in AppStoreApi.
+ * @export
+ * @interface AppStoreApiInstallationsUpgradeRequest
+ */
+export interface AppStoreApiInstallationsUpgradeRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof AppStoreApiInstallationsUpgrade
+     */
+    readonly id: string
+
+    /**
+     * 
+     * @type {InstallationsUpgradeRequest}
+     * @memberof AppStoreApiInstallationsUpgrade
+     */
+    readonly installationsUpgradeRequest: InstallationsUpgradeRequest
 }
 
 /**
@@ -9711,6 +10008,30 @@ export class AppStoreApi extends BaseAPI {
     }
 
     /**
+     * Only for a `pending-reconsent` installation. `appVersion` must be the pending version the admin reviewed (409 otherwise, so a stale approval cannot land on a newer proposal). `grantedScopes` must be exactly the pending version\'s manifest scopes (400 otherwise). Version, manifest and granted scopes switch together, the pending fields clear and the installation is `active` again. 
+     * @summary Approve a pending upgrade\'s new scopes (team admin only)
+     * @param {AppStoreApiInstallationsReconsentRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AppStoreApi
+     */
+    public installationsReconsent(requestParameters: AppStoreApiInstallationsReconsentRequest, options?: RawAxiosRequestConfig) {
+        return AppStoreApiFp(this.configuration).installationsReconsent(requestParameters.id, requestParameters.installationsReconsentRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * `pending-reconsent` -> `active`, on the version the installation never left; the pending fields clear. 
+     * @summary Decline a pending upgrade (team admin only)
+     * @param {AppStoreApiInstallationsReconsentDeclineRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AppStoreApi
+     */
+    public installationsReconsentDecline(requestParameters: AppStoreApiInstallationsReconsentDeclineRequest, options?: RawAxiosRequestConfig) {
+        return AppStoreApiFp(this.configuration).installationsReconsentDecline(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
      * `suspended` -> `active`, only when the installation\'s latest suspension was ChatDaddy\'s automatic one (the app\'s own failure rate), once the developer has fixed the app. In one transaction it also sets `healthState` to `ok` and clears the installation\'s call counters (so old failures cannot suspend it again), and writes a `resume` InstallationAudit row with the caller as actor. 409 for an installation that is not suspended, or that ChatDaddy staff suspended (the kill switch). 
      * @summary Resume an installation that was auto-suspended (team admin only)
      * @param {AppStoreApiInstallationsResumeRequest} requestParameters Request parameters.
@@ -9732,6 +10053,18 @@ export class AppStoreApi extends BaseAPI {
      */
     public installationsSuspend(requestParameters: AppStoreApiInstallationsSuspendRequest, options?: RawAxiosRequestConfig) {
         return AppStoreApiFp(this.configuration).installationsSuspend(requestParameters.installationsSuspendRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * The target version is fetched from appstore with the caller\'s own token. If every scope of its manifest is already granted, the installation switches in place (version and manifest) and stays `active`; its granted scopes narrow to the new manifest\'s scopes (least privilege) and cached app tokens are dropped if they shrank. If it adds any scope, the installation does NOT switch: it becomes `pending-reconsent`, the target is stored in `pendingAppVersion` / `pendingManifest`, and it keeps running the old version until `installationsReconsent` (or goes back with `installationsReconsentDecline`). Only an `active` installation can upgrade, not to the version it is on, and not while a signing secret delivery is in flight (409). 
+     * @summary Upgrade an installation to another version of its app (team admin only)
+     * @param {AppStoreApiInstallationsUpgradeRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AppStoreApi
+     */
+    public installationsUpgrade(requestParameters: AppStoreApiInstallationsUpgradeRequest, options?: RawAxiosRequestConfig) {
+        return AppStoreApiFp(this.configuration).installationsUpgrade(requestParameters.id, requestParameters.installationsUpgradeRequest, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
