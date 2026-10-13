@@ -5519,6 +5519,57 @@ export interface InstallationConnectionApiKey {
 /**
  * 
  * @export
+ * @interface InstallationConnectionOauthComplete
+ */
+export interface InstallationConnectionOauthComplete {
+    /**
+     * The callback page\'s `location.search`, untouched.
+     * @type {string}
+     * @memberof InstallationConnectionOauthComplete
+     */
+    'query': string;
+}
+/**
+ * 
+ * @export
+ * @interface InstallationConnectionOauthStart
+ */
+export interface InstallationConnectionOauthStart {
+    /**
+     * Values for the connection\'s declared `inputs`, e.g. `{ \"shop\": \"my-shop\" }`.
+     * @type {{ [key: string]: string; }}
+     * @memberof InstallationConnectionOauthStart
+     */
+    'inputs'?: { [key: string]: string; };
+    /**
+     * The hosts the admin was shown and confirmed.
+     * @type {Array<string>}
+     * @memberof InstallationConnectionOauthStart
+     */
+    'confirmedHosts': Array<string>;
+}
+/**
+ * 
+ * @export
+ * @interface InstallationConnectionOauthStartResult
+ */
+export interface InstallationConnectionOauthStartResult {
+    /**
+     * 
+     * @type {string}
+     * @memberof InstallationConnectionOauthStartResult
+     */
+    'authorizeUrl': string;
+    /**
+     * An ISO formatted timestamp
+     * @type {string}
+     * @memberof InstallationConnectionOauthStartResult
+     */
+    'expiresAt': string;
+}
+/**
+ * 
+ * @export
  * @interface InstallationConnectionsGet200Response
  */
 export interface InstallationConnectionsGet200Response {
@@ -9324,6 +9375,102 @@ export const AppStoreApiAxiosParamCreator = function (configuration?: Configurat
             };
         },
         /**
+         * The dashboard callback page forwards the raw query string it was opened with. Consumes the state (single use, unexpired, same team, user, installation and connection), verifies the provider\'s callback signature (Shopify: HMAC-SHA256 over the sorted params with the client secret, constant-time) and that `shop` is the stored input, exchanges the code for tokens, seals them and stores the connection. The response never contains a token, code or secret. A failed exchange stores nothing, and the state is spent: start again. 
+         * @summary Finish connecting an OAuth connection (team admin only)
+         * @param {string} installationId 
+         * @param {string} manifestConnectionId 
+         * @param {InstallationConnectionOauthComplete} installationConnectionOauthComplete 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        installationConnectionOauthComplete: async (installationId: string, manifestConnectionId: string, installationConnectionOauthComplete: InstallationConnectionOauthComplete, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'installationId' is not null or undefined
+            assertParamExists('installationConnectionOauthComplete', 'installationId', installationId)
+            // verify required parameter 'manifestConnectionId' is not null or undefined
+            assertParamExists('installationConnectionOauthComplete', 'manifestConnectionId', manifestConnectionId)
+            // verify required parameter 'installationConnectionOauthComplete' is not null or undefined
+            assertParamExists('installationConnectionOauthComplete', 'installationConnectionOauthComplete', installationConnectionOauthComplete)
+            const localVarPath = `/installations/{installationId}/connections/{manifestConnectionId}/oauth/complete`
+                .replace(`{${"installationId"}}`, encodeURIComponent(String(installationId)))
+                .replace(`{${"manifestConnectionId"}}`, encodeURIComponent(String(manifestConnectionId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["TEAM_UPDATE"], configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(installationConnectionOauthComplete, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Validates the connect-time `inputs` and `confirmedHosts` exactly as the API key connect does, creates a single-use server-side state (stored hashed, valid for 10 minutes; a sealed PKCE verifier for the `generic` flavor, none for `shopify`) and returns the provider\'s authorize URL. The `redirect_uri` is the dashboard callback page configured for the environment, never taken from the request. The app\'s developer must have set the OAuth client (`appOAuthClientPut`). 
+         * @summary Start connecting an OAuth connection (team admin only)
+         * @param {string} installationId 
+         * @param {string} manifestConnectionId The &#x60;id&#x60; of an &#x60;oauth2&#x60; entry of the manifest\&#39;s &#x60;connections&#x60;
+         * @param {InstallationConnectionOauthStart} installationConnectionOauthStart 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        installationConnectionOauthStart: async (installationId: string, manifestConnectionId: string, installationConnectionOauthStart: InstallationConnectionOauthStart, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'installationId' is not null or undefined
+            assertParamExists('installationConnectionOauthStart', 'installationId', installationId)
+            // verify required parameter 'manifestConnectionId' is not null or undefined
+            assertParamExists('installationConnectionOauthStart', 'manifestConnectionId', manifestConnectionId)
+            // verify required parameter 'installationConnectionOauthStart' is not null or undefined
+            assertParamExists('installationConnectionOauthStart', 'installationConnectionOauthStart', installationConnectionOauthStart)
+            const localVarPath = `/installations/{installationId}/connections/{manifestConnectionId}/oauth/start`
+                .replace(`{${"installationId"}}`, encodeURIComponent(String(installationId)))
+                .replace(`{${"manifestConnectionId"}}`, encodeURIComponent(String(manifestConnectionId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["TEAM_UPDATE"], configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(installationConnectionOauthStart, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * Team-scoped. One entry per connection the installation\'s manifest declares (so a connection that was never connected is listed as `not-connected`), with its state and the hosts the credential is sent to. Never returns the API key, its ciphertext or any sealed field. 
          * @summary Get the connection status of an installation
          * @param {string} installationId 
@@ -10110,6 +10257,36 @@ export const AppStoreApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
+         * The dashboard callback page forwards the raw query string it was opened with. Consumes the state (single use, unexpired, same team, user, installation and connection), verifies the provider\'s callback signature (Shopify: HMAC-SHA256 over the sorted params with the client secret, constant-time) and that `shop` is the stored input, exchanges the code for tokens, seals them and stores the connection. The response never contains a token, code or secret. A failed exchange stores nothing, and the state is spent: start again. 
+         * @summary Finish connecting an OAuth connection (team admin only)
+         * @param {string} installationId 
+         * @param {string} manifestConnectionId 
+         * @param {InstallationConnectionOauthComplete} installationConnectionOauthComplete 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async installationConnectionOauthComplete(installationId: string, manifestConnectionId: string, installationConnectionOauthComplete: InstallationConnectionOauthComplete, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<InstallationConnection>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.installationConnectionOauthComplete(installationId, manifestConnectionId, installationConnectionOauthComplete, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['AppStoreApi.installationConnectionOauthComplete']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Validates the connect-time `inputs` and `confirmedHosts` exactly as the API key connect does, creates a single-use server-side state (stored hashed, valid for 10 minutes; a sealed PKCE verifier for the `generic` flavor, none for `shopify`) and returns the provider\'s authorize URL. The `redirect_uri` is the dashboard callback page configured for the environment, never taken from the request. The app\'s developer must have set the OAuth client (`appOAuthClientPut`). 
+         * @summary Start connecting an OAuth connection (team admin only)
+         * @param {string} installationId 
+         * @param {string} manifestConnectionId The &#x60;id&#x60; of an &#x60;oauth2&#x60; entry of the manifest\&#39;s &#x60;connections&#x60;
+         * @param {InstallationConnectionOauthStart} installationConnectionOauthStart 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async installationConnectionOauthStart(installationId: string, manifestConnectionId: string, installationConnectionOauthStart: InstallationConnectionOauthStart, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<InstallationConnectionOauthStartResult>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.installationConnectionOauthStart(installationId, manifestConnectionId, installationConnectionOauthStart, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['AppStoreApi.installationConnectionOauthStart']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
          * Team-scoped. One entry per connection the installation\'s manifest declares (so a connection that was never connected is listed as `not-connected`), with its state and the hosts the credential is sent to. Never returns the API key, its ciphertext or any sealed field. 
          * @summary Get the connection status of an installation
          * @param {string} installationId 
@@ -10414,6 +10591,26 @@ export const AppStoreApiFactory = function (configuration?: Configuration, baseP
          */
         installationConnectionDelete(requestParameters: AppStoreApiInstallationConnectionDeleteRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
             return localVarFp.installationConnectionDelete(requestParameters.installationId, requestParameters.manifestConnectionId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * The dashboard callback page forwards the raw query string it was opened with. Consumes the state (single use, unexpired, same team, user, installation and connection), verifies the provider\'s callback signature (Shopify: HMAC-SHA256 over the sorted params with the client secret, constant-time) and that `shop` is the stored input, exchanges the code for tokens, seals them and stores the connection. The response never contains a token, code or secret. A failed exchange stores nothing, and the state is spent: start again. 
+         * @summary Finish connecting an OAuth connection (team admin only)
+         * @param {AppStoreApiInstallationConnectionOauthCompleteRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        installationConnectionOauthComplete(requestParameters: AppStoreApiInstallationConnectionOauthCompleteRequest, options?: RawAxiosRequestConfig): AxiosPromise<InstallationConnection> {
+            return localVarFp.installationConnectionOauthComplete(requestParameters.installationId, requestParameters.manifestConnectionId, requestParameters.installationConnectionOauthComplete, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Validates the connect-time `inputs` and `confirmedHosts` exactly as the API key connect does, creates a single-use server-side state (stored hashed, valid for 10 minutes; a sealed PKCE verifier for the `generic` flavor, none for `shopify`) and returns the provider\'s authorize URL. The `redirect_uri` is the dashboard callback page configured for the environment, never taken from the request. The app\'s developer must have set the OAuth client (`appOAuthClientPut`). 
+         * @summary Start connecting an OAuth connection (team admin only)
+         * @param {AppStoreApiInstallationConnectionOauthStartRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        installationConnectionOauthStart(requestParameters: AppStoreApiInstallationConnectionOauthStartRequest, options?: RawAxiosRequestConfig): AxiosPromise<InstallationConnectionOauthStartResult> {
+            return localVarFp.installationConnectionOauthStart(requestParameters.installationId, requestParameters.manifestConnectionId, requestParameters.installationConnectionOauthStart, options).then((request) => request(axios, basePath));
         },
         /**
          * Team-scoped. One entry per connection the installation\'s manifest declares (so a connection that was never connected is listed as `not-connected`), with its state and the hosts the credential is sent to. Never returns the API key, its ciphertext or any sealed field. 
@@ -10786,6 +10983,62 @@ export interface AppStoreApiInstallationConnectionDeleteRequest {
      * @memberof AppStoreApiInstallationConnectionDelete
      */
     readonly manifestConnectionId: string
+}
+
+/**
+ * Request parameters for installationConnectionOauthComplete operation in AppStoreApi.
+ * @export
+ * @interface AppStoreApiInstallationConnectionOauthCompleteRequest
+ */
+export interface AppStoreApiInstallationConnectionOauthCompleteRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof AppStoreApiInstallationConnectionOauthComplete
+     */
+    readonly installationId: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof AppStoreApiInstallationConnectionOauthComplete
+     */
+    readonly manifestConnectionId: string
+
+    /**
+     * 
+     * @type {InstallationConnectionOauthComplete}
+     * @memberof AppStoreApiInstallationConnectionOauthComplete
+     */
+    readonly installationConnectionOauthComplete: InstallationConnectionOauthComplete
+}
+
+/**
+ * Request parameters for installationConnectionOauthStart operation in AppStoreApi.
+ * @export
+ * @interface AppStoreApiInstallationConnectionOauthStartRequest
+ */
+export interface AppStoreApiInstallationConnectionOauthStartRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof AppStoreApiInstallationConnectionOauthStart
+     */
+    readonly installationId: string
+
+    /**
+     * The &#x60;id&#x60; of an &#x60;oauth2&#x60; entry of the manifest\&#39;s &#x60;connections&#x60;
+     * @type {string}
+     * @memberof AppStoreApiInstallationConnectionOauthStart
+     */
+    readonly manifestConnectionId: string
+
+    /**
+     * 
+     * @type {InstallationConnectionOauthStart}
+     * @memberof AppStoreApiInstallationConnectionOauthStart
+     */
+    readonly installationConnectionOauthStart: InstallationConnectionOauthStart
 }
 
 /**
@@ -11169,6 +11422,30 @@ export class AppStoreApi extends BaseAPI {
      */
     public installationConnectionDelete(requestParameters: AppStoreApiInstallationConnectionDeleteRequest, options?: RawAxiosRequestConfig) {
         return AppStoreApiFp(this.configuration).installationConnectionDelete(requestParameters.installationId, requestParameters.manifestConnectionId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * The dashboard callback page forwards the raw query string it was opened with. Consumes the state (single use, unexpired, same team, user, installation and connection), verifies the provider\'s callback signature (Shopify: HMAC-SHA256 over the sorted params with the client secret, constant-time) and that `shop` is the stored input, exchanges the code for tokens, seals them and stores the connection. The response never contains a token, code or secret. A failed exchange stores nothing, and the state is spent: start again. 
+     * @summary Finish connecting an OAuth connection (team admin only)
+     * @param {AppStoreApiInstallationConnectionOauthCompleteRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AppStoreApi
+     */
+    public installationConnectionOauthComplete(requestParameters: AppStoreApiInstallationConnectionOauthCompleteRequest, options?: RawAxiosRequestConfig) {
+        return AppStoreApiFp(this.configuration).installationConnectionOauthComplete(requestParameters.installationId, requestParameters.manifestConnectionId, requestParameters.installationConnectionOauthComplete, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Validates the connect-time `inputs` and `confirmedHosts` exactly as the API key connect does, creates a single-use server-side state (stored hashed, valid for 10 minutes; a sealed PKCE verifier for the `generic` flavor, none for `shopify`) and returns the provider\'s authorize URL. The `redirect_uri` is the dashboard callback page configured for the environment, never taken from the request. The app\'s developer must have set the OAuth client (`appOAuthClientPut`). 
+     * @summary Start connecting an OAuth connection (team admin only)
+     * @param {AppStoreApiInstallationConnectionOauthStartRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AppStoreApi
+     */
+    public installationConnectionOauthStart(requestParameters: AppStoreApiInstallationConnectionOauthStartRequest, options?: RawAxiosRequestConfig) {
+        return AppStoreApiFp(this.configuration).installationConnectionOauthStart(requestParameters.installationId, requestParameters.manifestConnectionId, requestParameters.installationConnectionOauthStart, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
