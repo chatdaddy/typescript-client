@@ -1559,6 +1559,51 @@ export interface AppHealthPolicy {
 /**
  * 
  * @export
+ * @interface AppInstallationTokenPost200Response
+ */
+export interface AppInstallationTokenPost200Response {
+    /**
+     * 
+     * @type {string}
+     * @memberof AppInstallationTokenPost200Response
+     */
+    'accessToken': string;
+    /**
+     * When the token expires, if it could be read
+     * @type {string}
+     * @memberof AppInstallationTokenPost200Response
+     */
+    'expiresAt'?: string;
+}
+/**
+ * 
+ * @export
+ * @interface AppInstallationTokenPostRequest
+ */
+export interface AppInstallationTokenPostRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof AppInstallationTokenPostRequest
+     */
+    'purpose': AppInstallationTokenPostRequestPurposeEnum;
+    /**
+     * Must equal the installation id in the path
+     * @type {string}
+     * @memberof AppInstallationTokenPostRequest
+     */
+    'installationId': string;
+}
+
+export const AppInstallationTokenPostRequestPurposeEnum = {
+    AppToken: 'app-token'
+} as const;
+
+export type AppInstallationTokenPostRequestPurposeEnum = typeof AppInstallationTokenPostRequestPurposeEnum[keyof typeof AppInstallationTokenPostRequestPurposeEnum];
+
+/**
+ * 
+ * @export
  * @interface AppIntegration
  */
 export interface AppIntegration {
@@ -9091,6 +9136,52 @@ export const AppStoreApiAxiosParamCreator = function (configuration?: Configurat
             };
         },
         /**
+         * Public: the app-to-bots signature (the scheme of `appTriggerIngest`) is the authentication. For an app that runs on its own server and must call ChatDaddy when bots is not the caller, such as on a webhook from the app\'s own provider. Returns the same token, with the same granted scopes, that bots sends the app on every action call; it grants nothing new. The body must be exactly `{\"purpose\":\"app-token\",\"installationId\":\"<the path id>\"}` (at most 1 KB), so a signed body meant for another route cannot be replayed here (a 401 otherwise). Checks run in this order: the size cap, the installation is loaded, the signature is verified, the valid-request bucket is charged (60 a minute per installation), the token is minted (cached). An unknown or inactive installation and any missing or invalid signature, timestamp or event id are the same 401 `invalid signature`. Failed verifications are counted per source IP (30 a minute) and, over that, answered with 429. The response is `no-store` and is never logged. 
+         * @summary Get the app token of an installation, signed by the app
+         * @param {string} installationId 
+         * @param {string} [xChatdaddyEventId] Unique id of this request (1-128 printable ASCII characters, no &#x60;.&#x60;). Part of the signed content. Required (a request without it is a 401); declared optional here only so that a missing header is answered by the uniform 401 and not a 400.
+         * @param {string} [xChatdaddySignature] &#x60;t&#x3D;&lt;unix seconds&gt;,v1&#x3D;&lt;hex HMAC-SHA256&gt;&#x60; over &#x60;chatdaddy/v1/app-to-bots.&lt;t&gt;.&lt;event id&gt;.&lt;raw body&gt;&#x60;, keyed with the installation\&#39;s signing secret. 300s tolerance. Required (a request without it is a 401).
+         * @param {AppInstallationTokenPostRequest} [appInstallationTokenPostRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        appInstallationTokenPost: async (installationId: string, xChatdaddyEventId?: string, xChatdaddySignature?: string, appInstallationTokenPostRequest?: AppInstallationTokenPostRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'installationId' is not null or undefined
+            assertParamExists('appInstallationTokenPost', 'installationId', installationId)
+            const localVarPath = `/app-installations/{installationId}/token`
+                .replace(`{${"installationId"}}`, encodeURIComponent(String(installationId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            if (xChatdaddyEventId != null) {
+                localVarHeaderParameter['x-chatdaddy-event-id'] = String(xChatdaddyEventId);
+            }
+            if (xChatdaddySignature != null) {
+                localVarHeaderParameter['x-chatdaddy-signature'] = String(xChatdaddySignature);
+            }
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(appInstallationTokenPostRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * The developer team of the app sets the OAuth client that \"Log in with ...\" uses for one `oauth2` connection of the app. Replaces any earlier client. The caller\'s team must own the app. The secret is sealed at rest (`connection-crypto`, purpose `app-oauth-client`), is write-only, and is never returned or logged. An audit row (no secret, no client id) is written in the same transaction. 
          * @summary Set an app\'s OAuth client id and secret (the app\'s developer team)
          * @param {string} appId 
@@ -10166,6 +10257,22 @@ export const AppStoreApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
+         * Public: the app-to-bots signature (the scheme of `appTriggerIngest`) is the authentication. For an app that runs on its own server and must call ChatDaddy when bots is not the caller, such as on a webhook from the app\'s own provider. Returns the same token, with the same granted scopes, that bots sends the app on every action call; it grants nothing new. The body must be exactly `{\"purpose\":\"app-token\",\"installationId\":\"<the path id>\"}` (at most 1 KB), so a signed body meant for another route cannot be replayed here (a 401 otherwise). Checks run in this order: the size cap, the installation is loaded, the signature is verified, the valid-request bucket is charged (60 a minute per installation), the token is minted (cached). An unknown or inactive installation and any missing or invalid signature, timestamp or event id are the same 401 `invalid signature`. Failed verifications are counted per source IP (30 a minute) and, over that, answered with 429. The response is `no-store` and is never logged. 
+         * @summary Get the app token of an installation, signed by the app
+         * @param {string} installationId 
+         * @param {string} [xChatdaddyEventId] Unique id of this request (1-128 printable ASCII characters, no &#x60;.&#x60;). Part of the signed content. Required (a request without it is a 401); declared optional here only so that a missing header is answered by the uniform 401 and not a 400.
+         * @param {string} [xChatdaddySignature] &#x60;t&#x3D;&lt;unix seconds&gt;,v1&#x3D;&lt;hex HMAC-SHA256&gt;&#x60; over &#x60;chatdaddy/v1/app-to-bots.&lt;t&gt;.&lt;event id&gt;.&lt;raw body&gt;&#x60;, keyed with the installation\&#39;s signing secret. 300s tolerance. Required (a request without it is a 401).
+         * @param {AppInstallationTokenPostRequest} [appInstallationTokenPostRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async appInstallationTokenPost(installationId: string, xChatdaddyEventId?: string, xChatdaddySignature?: string, appInstallationTokenPostRequest?: AppInstallationTokenPostRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AppInstallationTokenPost200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.appInstallationTokenPost(installationId, xChatdaddyEventId, xChatdaddySignature, appInstallationTokenPostRequest, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['AppStoreApi.appInstallationTokenPost']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
          * The developer team of the app sets the OAuth client that \"Log in with ...\" uses for one `oauth2` connection of the app. Replaces any earlier client. The caller\'s team must own the app. The secret is sealed at rest (`connection-crypto`, purpose `app-oauth-client`), is write-only, and is never returned or logged. An audit row (no secret, no client id) is written in the same transaction. 
          * @summary Set an app\'s OAuth client id and secret (the app\'s developer team)
          * @param {string} appId 
@@ -10533,6 +10640,16 @@ export const AppStoreApiFactory = function (configuration?: Configuration, baseP
             return localVarFp.appHealthGet(requestParameters.appId, requestParameters.days, options).then((request) => request(axios, basePath));
         },
         /**
+         * Public: the app-to-bots signature (the scheme of `appTriggerIngest`) is the authentication. For an app that runs on its own server and must call ChatDaddy when bots is not the caller, such as on a webhook from the app\'s own provider. Returns the same token, with the same granted scopes, that bots sends the app on every action call; it grants nothing new. The body must be exactly `{\"purpose\":\"app-token\",\"installationId\":\"<the path id>\"}` (at most 1 KB), so a signed body meant for another route cannot be replayed here (a 401 otherwise). Checks run in this order: the size cap, the installation is loaded, the signature is verified, the valid-request bucket is charged (60 a minute per installation), the token is minted (cached). An unknown or inactive installation and any missing or invalid signature, timestamp or event id are the same 401 `invalid signature`. Failed verifications are counted per source IP (30 a minute) and, over that, answered with 429. The response is `no-store` and is never logged. 
+         * @summary Get the app token of an installation, signed by the app
+         * @param {AppStoreApiAppInstallationTokenPostRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        appInstallationTokenPost(requestParameters: AppStoreApiAppInstallationTokenPostRequest, options?: RawAxiosRequestConfig): AxiosPromise<AppInstallationTokenPost200Response> {
+            return localVarFp.appInstallationTokenPost(requestParameters.installationId, requestParameters.xChatdaddyEventId, requestParameters.xChatdaddySignature, requestParameters.appInstallationTokenPostRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
          * The developer team of the app sets the OAuth client that \"Log in with ...\" uses for one `oauth2` connection of the app. Replaces any earlier client. The caller\'s team must own the app. The secret is sealed at rest (`connection-crypto`, purpose `app-oauth-client`), is write-only, and is never returned or logged. An audit row (no secret, no client id) is written in the same transaction. 
          * @summary Set an app\'s OAuth client id and secret (the app\'s developer team)
          * @param {AppStoreApiAppOAuthClientPutRequest} requestParameters Request parameters.
@@ -10808,6 +10925,41 @@ export interface AppStoreApiAppHealthGetRequest {
      * @memberof AppStoreApiAppHealthGet
      */
     readonly days?: number
+}
+
+/**
+ * Request parameters for appInstallationTokenPost operation in AppStoreApi.
+ * @export
+ * @interface AppStoreApiAppInstallationTokenPostRequest
+ */
+export interface AppStoreApiAppInstallationTokenPostRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof AppStoreApiAppInstallationTokenPost
+     */
+    readonly installationId: string
+
+    /**
+     * Unique id of this request (1-128 printable ASCII characters, no &#x60;.&#x60;). Part of the signed content. Required (a request without it is a 401); declared optional here only so that a missing header is answered by the uniform 401 and not a 400.
+     * @type {string}
+     * @memberof AppStoreApiAppInstallationTokenPost
+     */
+    readonly xChatdaddyEventId?: string
+
+    /**
+     * &#x60;t&#x3D;&lt;unix seconds&gt;,v1&#x3D;&lt;hex HMAC-SHA256&gt;&#x60; over &#x60;chatdaddy/v1/app-to-bots.&lt;t&gt;.&lt;event id&gt;.&lt;raw body&gt;&#x60;, keyed with the installation\&#39;s signing secret. 300s tolerance. Required (a request without it is a 401).
+     * @type {string}
+     * @memberof AppStoreApiAppInstallationTokenPost
+     */
+    readonly xChatdaddySignature?: string
+
+    /**
+     * 
+     * @type {AppInstallationTokenPostRequest}
+     * @memberof AppStoreApiAppInstallationTokenPost
+     */
+    readonly appInstallationTokenPostRequest?: AppInstallationTokenPostRequest
 }
 
 /**
@@ -11350,6 +11502,18 @@ export class AppStoreApi extends BaseAPI {
      */
     public appHealthGet(requestParameters: AppStoreApiAppHealthGetRequest, options?: RawAxiosRequestConfig) {
         return AppStoreApiFp(this.configuration).appHealthGet(requestParameters.appId, requestParameters.days, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Public: the app-to-bots signature (the scheme of `appTriggerIngest`) is the authentication. For an app that runs on its own server and must call ChatDaddy when bots is not the caller, such as on a webhook from the app\'s own provider. Returns the same token, with the same granted scopes, that bots sends the app on every action call; it grants nothing new. The body must be exactly `{\"purpose\":\"app-token\",\"installationId\":\"<the path id>\"}` (at most 1 KB), so a signed body meant for another route cannot be replayed here (a 401 otherwise). Checks run in this order: the size cap, the installation is loaded, the signature is verified, the valid-request bucket is charged (60 a minute per installation), the token is minted (cached). An unknown or inactive installation and any missing or invalid signature, timestamp or event id are the same 401 `invalid signature`. Failed verifications are counted per source IP (30 a minute) and, over that, answered with 429. The response is `no-store` and is never logged. 
+     * @summary Get the app token of an installation, signed by the app
+     * @param {AppStoreApiAppInstallationTokenPostRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AppStoreApi
+     */
+    public appInstallationTokenPost(requestParameters: AppStoreApiAppInstallationTokenPostRequest, options?: RawAxiosRequestConfig) {
+        return AppStoreApiFp(this.configuration).appInstallationTokenPost(requestParameters.installationId, requestParameters.xChatdaddyEventId, requestParameters.xChatdaddySignature, requestParameters.appInstallationTokenPostRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
