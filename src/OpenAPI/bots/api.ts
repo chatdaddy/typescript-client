@@ -1971,6 +1971,12 @@ export interface Bot {
      */
     'createdBy': string;
     /**
+     * Set when an installed app created this flow. Such a flow is created switched off and only a person can turn it on
+     * @type {string}
+     * @memberof Bot
+     */
+    'createdByAppId'?: string | null;
+    /**
      * Slugs which is generated and shared with other to view the message flow
      * @type {Array<SharedSlug>}
      * @memberof Bot
@@ -12522,7 +12528,7 @@ export const BotsApiAxiosParamCreator = function (configuration?: Configuration)
             };
         },
         /**
-         * 
+         * A user needs `TEMPLATES_CREATE`. An installed app calls this with its per-call app token and the `APP_FLOWS_CREATE` scope: the flow is stamped with the app (`createdByAppId`) and is never a form. Apps can only create flows; turning one on stays a human action (see `botsPatch`). 
          * @summary Creates new bot
          * @param {BotsCreateRequest} [botsCreateRequest] 
          * @param {*} [options] Override http request option.
@@ -12543,7 +12549,7 @@ export const BotsApiAxiosParamCreator = function (configuration?: Configuration)
 
             // authentication chatdaddy required
             // oauth required
-            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["TEMPLATES_CREATE"], configuration)
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["TEMPLATES_CREATE", "APP_FLOWS_CREATE"], configuration)
 
 
     
@@ -12875,7 +12881,7 @@ export const BotsApiAxiosParamCreator = function (configuration?: Configuration)
             };
         },
         /**
-         * 
+         * A user needs `TEMPLATES_UPDATE`. An installed app (per-call app token with `APP_FLOWS_CREATE`) may only edit flows it created itself (`createdByAppId`) and only while none of their triggers is switched on. Triggers it adds are always created switched off and it cannot set `enabled`, so it can never turn a flow on. 
          * @summary Update an action
          * @param {string} id 
          * @param {BotPatch} [botPatch] 
@@ -12900,7 +12906,7 @@ export const BotsApiAxiosParamCreator = function (configuration?: Configuration)
 
             // authentication chatdaddy required
             // oauth required
-            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["TEMPLATES_UPDATE"], configuration)
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["TEMPLATES_UPDATE", "APP_FLOWS_CREATE"], configuration)
 
 
     
@@ -13028,7 +13034,7 @@ export const BotsApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * A user needs `TEMPLATES_CREATE`. An installed app calls this with its per-call app token and the `APP_FLOWS_CREATE` scope: the flow is stamped with the app (`createdByAppId`) and is never a form. Apps can only create flows; turning one on stays a human action (see `botsPatch`). 
          * @summary Creates new bot
          * @param {BotsCreateRequest} [botsCreateRequest] 
          * @param {*} [options] Override http request option.
@@ -13137,7 +13143,7 @@ export const BotsApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * A user needs `TEMPLATES_UPDATE`. An installed app (per-call app token with `APP_FLOWS_CREATE`) may only edit flows it created itself (`createdByAppId`) and only while none of their triggers is switched on. Triggers it adds are always created switched off and it cannot set `enabled`, so it can never turn a flow on. 
          * @summary Update an action
          * @param {string} id 
          * @param {BotPatch} [botPatch] 
@@ -13199,7 +13205,7 @@ export const BotsApiFactory = function (configuration?: Configuration, basePath?
             return localVarFp.botsBulkFire(requestParameters.id, requestParameters.botsBulkFireRequest, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * A user needs `TEMPLATES_CREATE`. An installed app calls this with its per-call app token and the `APP_FLOWS_CREATE` scope: the flow is stamped with the app (`createdByAppId`) and is never a form. Apps can only create flows; turning one on stays a human action (see `botsPatch`). 
          * @summary Creates new bot
          * @param {BotsApiBotsCreateRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -13270,7 +13276,7 @@ export const BotsApiFactory = function (configuration?: Configuration, basePath?
             return localVarFp.botsGptGenerate(requestParameters.botsGptGenerateRequest, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * A user needs `TEMPLATES_UPDATE`. An installed app (per-call app token with `APP_FLOWS_CREATE`) may only edit flows it created itself (`createdByAppId`) and only while none of their triggers is switched on. Triggers it adds are always created switched off and it cannot set `enabled`, so it can never turn a flow on. 
          * @summary Update an action
          * @param {BotsApiBotsPatchRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -13623,7 +13629,7 @@ export class BotsApi extends BaseAPI {
     }
 
     /**
-     * 
+     * A user needs `TEMPLATES_CREATE`. An installed app calls this with its per-call app token and the `APP_FLOWS_CREATE` scope: the flow is stamped with the app (`createdByAppId`) and is never a form. Apps can only create flows; turning one on stays a human action (see `botsPatch`). 
      * @summary Creates new bot
      * @param {BotsApiBotsCreateRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -13708,7 +13714,7 @@ export class BotsApi extends BaseAPI {
     }
 
     /**
-     * 
+     * A user needs `TEMPLATES_UPDATE`. An installed app (per-call app token with `APP_FLOWS_CREATE`) may only edit flows it created itself (`createdByAppId`) and only while none of their triggers is switched on. Triggers it adds are always created switched off and it cannot set `enabled`, so it can never turn a flow on. 
      * @summary Update an action
      * @param {BotsApiBotsPatchRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.

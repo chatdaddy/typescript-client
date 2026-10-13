@@ -1528,6 +1528,12 @@ export interface BotInsertData {
     'createdBy': string;
     /**
      * 
+     * @type {string}
+     * @memberof BotInsertData
+     */
+    'createdByAppId'?: string | null;
+    /**
+     * 
      * @type {Array<BotInsertDataSharedSlugsInner>}
      * @memberof BotInsertData
      */
@@ -5233,6 +5239,12 @@ export interface BotUpdateData {
      * @memberof BotUpdateData
      */
     'createdBy'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof BotUpdateData
+     */
+    'createdByAppId'?: string | null;
     /**
      * 
      * @type {Array<BotInsertDataSharedSlugsInner>}
