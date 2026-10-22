@@ -4020,6 +4020,99 @@ export interface GetDailyChannelSnapshots200Response {
 /**
  * 
  * @export
+ * @interface GetInstagramScheduledPosts200Response
+ */
+export interface GetInstagramScheduledPosts200Response {
+    /**
+     * 
+     * @type {Array<GetInstagramScheduledPosts200ResponsePostsInner>}
+     * @memberof GetInstagramScheduledPosts200Response
+     */
+    'posts': Array<GetInstagramScheduledPosts200ResponsePostsInner>;
+}
+/**
+ * 
+ * @export
+ * @interface GetInstagramScheduledPosts200ResponsePostsInner
+ */
+export interface GetInstagramScheduledPosts200ResponsePostsInner {
+    /**
+     * 
+     * @type {string}
+     * @memberof GetInstagramScheduledPosts200ResponsePostsInner
+     */
+    'id': string;
+    /**
+     * Unique identifier for an account.  The account ID is constructed from the first 21 characters of the team ID, prefixed by \"acc\" and suffixed by 4 random hex characters. This helps uniquely identify each account as well as establish a connection between the account\'s team by embedding the partial team ID in it.
+     * @type {string}
+     * @memberof GetInstagramScheduledPosts200ResponsePostsInner
+     */
+    'accountId': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof GetInstagramScheduledPosts200ResponsePostsInner
+     */
+    'caption': string;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof GetInstagramScheduledPosts200ResponsePostsInner
+     */
+    'mediaUrls': Array<string>;
+    /**
+     * 
+     * @type {string}
+     * @memberof GetInstagramScheduledPosts200ResponsePostsInner
+     */
+    'mediaType': GetInstagramScheduledPosts200ResponsePostsInnerMediaTypeEnum;
+    /**
+     * 
+     * @type {string}
+     * @memberof GetInstagramScheduledPosts200ResponsePostsInner
+     */
+    'status': GetInstagramScheduledPosts200ResponsePostsInnerStatusEnum;
+    /**
+     * 
+     * @type {string}
+     * @memberof GetInstagramScheduledPosts200ResponsePostsInner
+     */
+    'scheduledAt': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof GetInstagramScheduledPosts200ResponsePostsInner
+     */
+    'createdAt': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof GetInstagramScheduledPosts200ResponsePostsInner
+     */
+    'error'?: string;
+}
+
+export const GetInstagramScheduledPosts200ResponsePostsInnerMediaTypeEnum = {
+    Image: 'IMAGE',
+    Video: 'VIDEO',
+    Reels: 'REELS',
+    Stories: 'STORIES',
+    Carousel: 'CAROUSEL'
+} as const;
+
+export type GetInstagramScheduledPosts200ResponsePostsInnerMediaTypeEnum = typeof GetInstagramScheduledPosts200ResponsePostsInnerMediaTypeEnum[keyof typeof GetInstagramScheduledPosts200ResponsePostsInnerMediaTypeEnum];
+export const GetInstagramScheduledPosts200ResponsePostsInnerStatusEnum = {
+    Scheduled: 'scheduled',
+    Publishing: 'publishing',
+    Published: 'published',
+    Failed: 'failed'
+} as const;
+
+export type GetInstagramScheduledPosts200ResponsePostsInnerStatusEnum = typeof GetInstagramScheduledPosts200ResponsePostsInnerStatusEnum[keyof typeof GetInstagramScheduledPosts200ResponsePostsInnerStatusEnum];
+
+/**
+ * 
+ * @export
  * @interface GetLatestTicket200Response
  */
 export interface GetLatestTicket200Response {
@@ -7335,6 +7428,87 @@ type ProductSyncStatus = typeof ProductSyncStatus[keyof typeof ProductSyncStatus
  * @export
  */
 export type ProfileMessengerPostRequest = FacebookLogin | InstagramBusinessLogin;
+
+/**
+ * 
+ * @export
+ * @interface PublishInstagramPost200Response
+ */
+export interface PublishInstagramPost200Response {
+    /**
+     * 
+     * @type {string}
+     * @memberof PublishInstagramPost200Response
+     */
+    'id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof PublishInstagramPost200Response
+     */
+    'permalink'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof PublishInstagramPost200Response
+     */
+    'status': PublishInstagramPost200ResponseStatusEnum;
+    /**
+     * 
+     * @type {string}
+     * @memberof PublishInstagramPost200Response
+     */
+    'scheduledAt'?: string;
+}
+
+export const PublishInstagramPost200ResponseStatusEnum = {
+    Published: 'published',
+    Scheduled: 'scheduled'
+} as const;
+
+export type PublishInstagramPost200ResponseStatusEnum = typeof PublishInstagramPost200ResponseStatusEnum[keyof typeof PublishInstagramPost200ResponseStatusEnum];
+
+/**
+ * 
+ * @export
+ * @interface PublishInstagramPostRequest
+ */
+export interface PublishInstagramPostRequest {
+    /**
+     * One or more public media URLs to publish
+     * @type {Array<string>}
+     * @memberof PublishInstagramPostRequest
+     */
+    'mediaUrls': Array<string>;
+    /**
+     * 
+     * @type {string}
+     * @memberof PublishInstagramPostRequest
+     */
+    'caption': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof PublishInstagramPostRequest
+     */
+    'mediaType': PublishInstagramPostRequestMediaTypeEnum;
+    /**
+     * ISO 8601 datetime. If provided the post will be scheduled rather than published immediately. 
+     * @type {string}
+     * @memberof PublishInstagramPostRequest
+     */
+    'scheduledAt'?: string;
+}
+
+export const PublishInstagramPostRequestMediaTypeEnum = {
+    Image: 'IMAGE',
+    Video: 'VIDEO',
+    Reels: 'REELS',
+    Stories: 'STORIES',
+    Carousel: 'CAROUSEL'
+} as const;
+
+export type PublishInstagramPostRequestMediaTypeEnum = typeof PublishInstagramPostRequestMediaTypeEnum[keyof typeof PublishInstagramPostRequestMediaTypeEnum];
 
 /**
  * 
@@ -18252,6 +18426,332 @@ export class GroupsApi extends BaseAPI {
      */
     public groupsPost(requestParameters: GroupsApiGroupsPostRequest, options?: RawAxiosRequestConfig) {
         return GroupsApiFp(this.configuration).groupsPost(requestParameters.accountId, requestParameters.groupCreate, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+
+/**
+ * InstagramApi - axios parameter creator
+ * @export
+ */
+export const InstagramApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * Deletes a scheduled post that has not yet been published. Only posts with status \"scheduled\" can be cancelled. 
+         * @summary Cancel a scheduled Instagram post
+         * @param {string} accountId 
+         * @param {string} postId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteInstagramScheduledPost: async (accountId: string, postId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'accountId' is not null or undefined
+            assertParamExists('deleteInstagramScheduledPost', 'accountId', accountId)
+            // verify required parameter 'postId' is not null or undefined
+            assertParamExists('deleteInstagramScheduledPost', 'postId', postId)
+            const localVarPath = `/instagram/{accountId}/scheduled-posts/{postId}`
+                .replace(`{${"accountId"}}`, encodeURIComponent(String(accountId)))
+                .replace(`{${"postId"}}`, encodeURIComponent(String(postId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", [], configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Returns all scheduled (pending) Instagram posts for the given account, ordered by scheduledAt ascending. 
+         * @summary List scheduled Instagram posts
+         * @param {string} accountId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getInstagramScheduledPosts: async (accountId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'accountId' is not null or undefined
+            assertParamExists('getInstagramScheduledPosts', 'accountId', accountId)
+            const localVarPath = `/instagram/{accountId}/scheduled-posts`
+                .replace(`{${"accountId"}}`, encodeURIComponent(String(accountId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", [], configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Publishes a single-media or carousel post to an Instagram account immediately, or schedules it for future publication. 
+         * @summary Publish or schedule an Instagram post
+         * @param {string} accountId 
+         * @param {PublishInstagramPostRequest} publishInstagramPostRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        publishInstagramPost: async (accountId: string, publishInstagramPostRequest: PublishInstagramPostRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'accountId' is not null or undefined
+            assertParamExists('publishInstagramPost', 'accountId', accountId)
+            // verify required parameter 'publishInstagramPostRequest' is not null or undefined
+            assertParamExists('publishInstagramPost', 'publishInstagramPostRequest', publishInstagramPostRequest)
+            const localVarPath = `/instagram/{accountId}/publish`
+                .replace(`{${"accountId"}}`, encodeURIComponent(String(accountId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", [], configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(publishInstagramPostRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * InstagramApi - functional programming interface
+ * @export
+ */
+export const InstagramApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = InstagramApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * Deletes a scheduled post that has not yet been published. Only posts with status \"scheduled\" can be cancelled. 
+         * @summary Cancel a scheduled Instagram post
+         * @param {string} accountId 
+         * @param {string} postId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async deleteInstagramScheduledPost(accountId: string, postId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AccountsDelete200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteInstagramScheduledPost(accountId, postId, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['InstagramApi.deleteInstagramScheduledPost']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Returns all scheduled (pending) Instagram posts for the given account, ordered by scheduledAt ascending. 
+         * @summary List scheduled Instagram posts
+         * @param {string} accountId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getInstagramScheduledPosts(accountId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetInstagramScheduledPosts200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getInstagramScheduledPosts(accountId, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['InstagramApi.getInstagramScheduledPosts']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Publishes a single-media or carousel post to an Instagram account immediately, or schedules it for future publication. 
+         * @summary Publish or schedule an Instagram post
+         * @param {string} accountId 
+         * @param {PublishInstagramPostRequest} publishInstagramPostRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async publishInstagramPost(accountId: string, publishInstagramPostRequest: PublishInstagramPostRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PublishInstagramPost200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.publishInstagramPost(accountId, publishInstagramPostRequest, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['InstagramApi.publishInstagramPost']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+    }
+};
+
+/**
+ * InstagramApi - factory interface
+ * @export
+ */
+export const InstagramApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = InstagramApiFp(configuration)
+    return {
+        /**
+         * Deletes a scheduled post that has not yet been published. Only posts with status \"scheduled\" can be cancelled. 
+         * @summary Cancel a scheduled Instagram post
+         * @param {InstagramApiDeleteInstagramScheduledPostRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteInstagramScheduledPost(requestParameters: InstagramApiDeleteInstagramScheduledPostRequest, options?: RawAxiosRequestConfig): AxiosPromise<AccountsDelete200Response> {
+            return localVarFp.deleteInstagramScheduledPost(requestParameters.accountId, requestParameters.postId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Returns all scheduled (pending) Instagram posts for the given account, ordered by scheduledAt ascending. 
+         * @summary List scheduled Instagram posts
+         * @param {InstagramApiGetInstagramScheduledPostsRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getInstagramScheduledPosts(requestParameters: InstagramApiGetInstagramScheduledPostsRequest, options?: RawAxiosRequestConfig): AxiosPromise<GetInstagramScheduledPosts200Response> {
+            return localVarFp.getInstagramScheduledPosts(requestParameters.accountId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Publishes a single-media or carousel post to an Instagram account immediately, or schedules it for future publication. 
+         * @summary Publish or schedule an Instagram post
+         * @param {InstagramApiPublishInstagramPostRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        publishInstagramPost(requestParameters: InstagramApiPublishInstagramPostRequest, options?: RawAxiosRequestConfig): AxiosPromise<PublishInstagramPost200Response> {
+            return localVarFp.publishInstagramPost(requestParameters.accountId, requestParameters.publishInstagramPostRequest, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * Request parameters for deleteInstagramScheduledPost operation in InstagramApi.
+ * @export
+ * @interface InstagramApiDeleteInstagramScheduledPostRequest
+ */
+export interface InstagramApiDeleteInstagramScheduledPostRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof InstagramApiDeleteInstagramScheduledPost
+     */
+    readonly accountId: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof InstagramApiDeleteInstagramScheduledPost
+     */
+    readonly postId: string
+}
+
+/**
+ * Request parameters for getInstagramScheduledPosts operation in InstagramApi.
+ * @export
+ * @interface InstagramApiGetInstagramScheduledPostsRequest
+ */
+export interface InstagramApiGetInstagramScheduledPostsRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof InstagramApiGetInstagramScheduledPosts
+     */
+    readonly accountId: string
+}
+
+/**
+ * Request parameters for publishInstagramPost operation in InstagramApi.
+ * @export
+ * @interface InstagramApiPublishInstagramPostRequest
+ */
+export interface InstagramApiPublishInstagramPostRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof InstagramApiPublishInstagramPost
+     */
+    readonly accountId: string
+
+    /**
+     * 
+     * @type {PublishInstagramPostRequest}
+     * @memberof InstagramApiPublishInstagramPost
+     */
+    readonly publishInstagramPostRequest: PublishInstagramPostRequest
+}
+
+/**
+ * InstagramApi - object-oriented interface
+ * @export
+ * @class InstagramApi
+ * @extends {BaseAPI}
+ */
+export class InstagramApi extends BaseAPI {
+    /**
+     * Deletes a scheduled post that has not yet been published. Only posts with status \"scheduled\" can be cancelled. 
+     * @summary Cancel a scheduled Instagram post
+     * @param {InstagramApiDeleteInstagramScheduledPostRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof InstagramApi
+     */
+    public deleteInstagramScheduledPost(requestParameters: InstagramApiDeleteInstagramScheduledPostRequest, options?: RawAxiosRequestConfig) {
+        return InstagramApiFp(this.configuration).deleteInstagramScheduledPost(requestParameters.accountId, requestParameters.postId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Returns all scheduled (pending) Instagram posts for the given account, ordered by scheduledAt ascending. 
+     * @summary List scheduled Instagram posts
+     * @param {InstagramApiGetInstagramScheduledPostsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof InstagramApi
+     */
+    public getInstagramScheduledPosts(requestParameters: InstagramApiGetInstagramScheduledPostsRequest, options?: RawAxiosRequestConfig) {
+        return InstagramApiFp(this.configuration).getInstagramScheduledPosts(requestParameters.accountId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Publishes a single-media or carousel post to an Instagram account immediately, or schedules it for future publication. 
+     * @summary Publish or schedule an Instagram post
+     * @param {InstagramApiPublishInstagramPostRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof InstagramApi
+     */
+    public publishInstagramPost(requestParameters: InstagramApiPublishInstagramPostRequest, options?: RawAxiosRequestConfig) {
+        return InstagramApiFp(this.configuration).publishInstagramPost(requestParameters.accountId, requestParameters.publishInstagramPostRequest, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

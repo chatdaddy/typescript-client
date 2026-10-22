@@ -1203,6 +1203,25 @@ export interface AppAction {
     'nextAction'?: NextAction;
 }
 /**
+ * 
+ * @export
+ * @interface AppComplianceShopify200Response
+ */
+export interface AppComplianceShopify200Response {
+    /**
+     * 
+     * @type {boolean}
+     * @memberof AppComplianceShopify200Response
+     */
+    'ok': boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof AppComplianceShopify200Response
+     */
+    'duplicate'?: boolean;
+}
+/**
  * Any field other than the ones below is ignored (in particular no id can select a connection row).
  * @export
  * @interface AppConnectionRequest
@@ -9053,6 +9072,56 @@ export class AppIntegrationApi extends BaseAPI {
 export const AppStoreApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
+         * Public: Shopify\'s HMAC is the authentication. Configure this URL once, at Shopify app level, for all three compliance topics. The body is JSON, at most 16 KB. Checks run in this order: the size cap, the per-IP failure limit (30 a minute, 429), the per-app request limit (600 a minute, 429), the HMAC over the raw body (constant time; an unknown app, an app without an OAuth client, a missing header and a bad HMAC are all the same 401 `invalid signature`), then the topic and the webhook id and body shape (400). A delivery whose webhook id, or whose raw body, was already delivered in the last 7 days is answered 200 `duplicate` and nothing is done. The topic header must fit the body (`data_request` has `data_request` and `orders_requested`, `redact` has `orders_to_redact`, `shop/redact` only `shop_id` and `shop_domain`). `shop/redact` deletes every connection of the app for that shop, across teams. `customers/data_request` and `customers/redact` store nothing on the platform: they are acknowledged and forwarded, best effort, to the app\'s installations for that shop, so the app can redact the data it synced: `POST {baseUrl}/compliance` for a `url` app (signed like an action call, no token), a signed `compliance` lifecycle event for a hosted one. 
+         * @summary Shopify mandatory compliance webhooks for an app
+         * @param {string} appId 
+         * @param {string} [xShopifyHmacSha256] Base64 HMAC-SHA256 of the raw body, keyed with the app\&#39;s OAuth client secret. Required (a request without it is a 401); declared optional here only so that a missing header is the uniform 401 and not a 400.
+         * @param {string} [xShopifyTopic] &#x60;customers/data_request&#x60;, &#x60;customers/redact&#x60; or &#x60;shop/redact&#x60;. Not covered by the HMAC, so the body must also have the shape of the topic.
+         * @param {string} [xShopifyWebhookId] Unique id of this delivery, repeated by Shopify on a retry. Required (a request without it is a 400, after the HMAC check); a repeat within 7 days is answered 200 and does nothing. Declared optional here only so that a missing header is that 400.
+         * @param {{ [key: string]: any; }} [requestBody] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        appComplianceShopify: async (appId: string, xShopifyHmacSha256?: string, xShopifyTopic?: string, xShopifyWebhookId?: string, requestBody?: { [key: string]: any; }, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'appId' is not null or undefined
+            assertParamExists('appComplianceShopify', 'appId', appId)
+            const localVarPath = `/apps/{appId}/compliance/shopify`
+                .replace(`{${"appId"}}`, encodeURIComponent(String(appId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            if (xShopifyHmacSha256 != null) {
+                localVarHeaderParameter['x-shopify-hmac-sha256'] = String(xShopifyHmacSha256);
+            }
+            if (xShopifyTopic != null) {
+                localVarHeaderParameter['x-shopify-topic'] = String(xShopifyTopic);
+            }
+            if (xShopifyWebhookId != null) {
+                localVarHeaderParameter['x-shopify-webhook-id'] = String(xShopifyWebhookId);
+            }
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(requestBody, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * An installed app calls a provider API with the customer\'s credential attached by ChatDaddy; the app never receives the credential. Authenticated ONLY by the per-call app token (scope `CONNECTIONS_USE`); a user token is refused even if it holds that scope. The installation comes from the token\'s `metadata.objectId` (`app_<appId>/inst_<installationId>`) and is re-read on every call: it must belong to the token\'s team, to the token\'s app, be `active`, and have been granted `CONNECTIONS_USE`. The connection is resolved by that installation and the manifest `connectionId`; no id in the body can name another row (any other body field is ignored).  The app gets full API access to the provider under the customer\'s grant. The credential goes only to a host the admin was shown at connect time.  Request rules: `method` is GET, POST, PUT, PATCH or DELETE. `url` must be `https` on the default port without userinfo, and its host (compared after URL normalisation, trailing dot stripped) must be exactly one of the connection\'s manifest hosts or its host template filled with the admin\'s input. Only `content-type`, `accept` and the manifest\'s `forwardHeaders` may be sent, with no CR or LF in a value. The body is a string of at most 1,000,000 bytes. The credential header is set last.  The provider is called with the egress guard, a 10 second total deadline and no redirects: a 3xx is returned to the app as it is. The answer is a 200 `AppConnectionResponse` carrying the PROVIDER\'s status, whatever it is; any other status here is ChatDaddy\'s own refusal, with a stable `data.code`. At most 5 MB of response is read (more is a 502). Only `content-type`, `retry-after` and `x-ratelimit-*` response headers are returned. Any occurrence of the credential in the response headers or body is replaced by `[redacted]` (a transformed echo, such as base64, is not caught).  Limits: 600 calls a minute per installation, a coarser ceiling per team, and at most 5 calls in flight per installation (429 `Retry-After`). ChatDaddy\'s own 429s are never counted against the app\'s health. 
          * @summary Call a connected provider through ChatDaddy (installed apps only)
          * @param {AppConnectionRequest} appConnectionRequest 
@@ -10230,6 +10299,23 @@ export const AppStoreApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = AppStoreApiAxiosParamCreator(configuration)
     return {
         /**
+         * Public: Shopify\'s HMAC is the authentication. Configure this URL once, at Shopify app level, for all three compliance topics. The body is JSON, at most 16 KB. Checks run in this order: the size cap, the per-IP failure limit (30 a minute, 429), the per-app request limit (600 a minute, 429), the HMAC over the raw body (constant time; an unknown app, an app without an OAuth client, a missing header and a bad HMAC are all the same 401 `invalid signature`), then the topic and the webhook id and body shape (400). A delivery whose webhook id, or whose raw body, was already delivered in the last 7 days is answered 200 `duplicate` and nothing is done. The topic header must fit the body (`data_request` has `data_request` and `orders_requested`, `redact` has `orders_to_redact`, `shop/redact` only `shop_id` and `shop_domain`). `shop/redact` deletes every connection of the app for that shop, across teams. `customers/data_request` and `customers/redact` store nothing on the platform: they are acknowledged and forwarded, best effort, to the app\'s installations for that shop, so the app can redact the data it synced: `POST {baseUrl}/compliance` for a `url` app (signed like an action call, no token), a signed `compliance` lifecycle event for a hosted one. 
+         * @summary Shopify mandatory compliance webhooks for an app
+         * @param {string} appId 
+         * @param {string} [xShopifyHmacSha256] Base64 HMAC-SHA256 of the raw body, keyed with the app\&#39;s OAuth client secret. Required (a request without it is a 401); declared optional here only so that a missing header is the uniform 401 and not a 400.
+         * @param {string} [xShopifyTopic] &#x60;customers/data_request&#x60;, &#x60;customers/redact&#x60; or &#x60;shop/redact&#x60;. Not covered by the HMAC, so the body must also have the shape of the topic.
+         * @param {string} [xShopifyWebhookId] Unique id of this delivery, repeated by Shopify on a retry. Required (a request without it is a 400, after the HMAC check); a repeat within 7 days is answered 200 and does nothing. Declared optional here only so that a missing header is that 400.
+         * @param {{ [key: string]: any; }} [requestBody] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async appComplianceShopify(appId: string, xShopifyHmacSha256?: string, xShopifyTopic?: string, xShopifyWebhookId?: string, requestBody?: { [key: string]: any; }, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AppComplianceShopify200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.appComplianceShopify(appId, xShopifyHmacSha256, xShopifyTopic, xShopifyWebhookId, requestBody, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['AppStoreApi.appComplianceShopify']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
          * An installed app calls a provider API with the customer\'s credential attached by ChatDaddy; the app never receives the credential. Authenticated ONLY by the per-call app token (scope `CONNECTIONS_USE`); a user token is refused even if it holds that scope. The installation comes from the token\'s `metadata.objectId` (`app_<appId>/inst_<installationId>`) and is re-read on every call: it must belong to the token\'s team, to the token\'s app, be `active`, and have been granted `CONNECTIONS_USE`. The connection is resolved by that installation and the manifest `connectionId`; no id in the body can name another row (any other body field is ignored).  The app gets full API access to the provider under the customer\'s grant. The credential goes only to a host the admin was shown at connect time.  Request rules: `method` is GET, POST, PUT, PATCH or DELETE. `url` must be `https` on the default port without userinfo, and its host (compared after URL normalisation, trailing dot stripped) must be exactly one of the connection\'s manifest hosts or its host template filled with the admin\'s input. Only `content-type`, `accept` and the manifest\'s `forwardHeaders` may be sent, with no CR or LF in a value. The body is a string of at most 1,000,000 bytes. The credential header is set last.  The provider is called with the egress guard, a 10 second total deadline and no redirects: a 3xx is returned to the app as it is. The answer is a 200 `AppConnectionResponse` carrying the PROVIDER\'s status, whatever it is; any other status here is ChatDaddy\'s own refusal, with a stable `data.code`. At most 5 MB of response is read (more is a 502). Only `content-type`, `retry-after` and `x-ratelimit-*` response headers are returned. Any occurrence of the credential in the response headers or body is replaced by `[redacted]` (a transformed echo, such as base64, is not caught).  Limits: 600 calls a minute per installation, a coarser ceiling per team, and at most 5 calls in flight per installation (429 `Retry-After`). ChatDaddy\'s own 429s are never counted against the app\'s health. 
          * @summary Call a connected provider through ChatDaddy (installed apps only)
          * @param {AppConnectionRequest} appConnectionRequest 
@@ -10620,6 +10706,16 @@ export const AppStoreApiFactory = function (configuration?: Configuration, baseP
     const localVarFp = AppStoreApiFp(configuration)
     return {
         /**
+         * Public: Shopify\'s HMAC is the authentication. Configure this URL once, at Shopify app level, for all three compliance topics. The body is JSON, at most 16 KB. Checks run in this order: the size cap, the per-IP failure limit (30 a minute, 429), the per-app request limit (600 a minute, 429), the HMAC over the raw body (constant time; an unknown app, an app without an OAuth client, a missing header and a bad HMAC are all the same 401 `invalid signature`), then the topic and the webhook id and body shape (400). A delivery whose webhook id, or whose raw body, was already delivered in the last 7 days is answered 200 `duplicate` and nothing is done. The topic header must fit the body (`data_request` has `data_request` and `orders_requested`, `redact` has `orders_to_redact`, `shop/redact` only `shop_id` and `shop_domain`). `shop/redact` deletes every connection of the app for that shop, across teams. `customers/data_request` and `customers/redact` store nothing on the platform: they are acknowledged and forwarded, best effort, to the app\'s installations for that shop, so the app can redact the data it synced: `POST {baseUrl}/compliance` for a `url` app (signed like an action call, no token), a signed `compliance` lifecycle event for a hosted one. 
+         * @summary Shopify mandatory compliance webhooks for an app
+         * @param {AppStoreApiAppComplianceShopifyRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        appComplianceShopify(requestParameters: AppStoreApiAppComplianceShopifyRequest, options?: RawAxiosRequestConfig): AxiosPromise<AppComplianceShopify200Response> {
+            return localVarFp.appComplianceShopify(requestParameters.appId, requestParameters.xShopifyHmacSha256, requestParameters.xShopifyTopic, requestParameters.xShopifyWebhookId, requestParameters.requestBody, options).then((request) => request(axios, basePath));
+        },
+        /**
          * An installed app calls a provider API with the customer\'s credential attached by ChatDaddy; the app never receives the credential. Authenticated ONLY by the per-call app token (scope `CONNECTIONS_USE`); a user token is refused even if it holds that scope. The installation comes from the token\'s `metadata.objectId` (`app_<appId>/inst_<installationId>`) and is re-read on every call: it must belong to the token\'s team, to the token\'s app, be `active`, and have been granted `CONNECTIONS_USE`. The connection is resolved by that installation and the manifest `connectionId`; no id in the body can name another row (any other body field is ignored).  The app gets full API access to the provider under the customer\'s grant. The credential goes only to a host the admin was shown at connect time.  Request rules: `method` is GET, POST, PUT, PATCH or DELETE. `url` must be `https` on the default port without userinfo, and its host (compared after URL normalisation, trailing dot stripped) must be exactly one of the connection\'s manifest hosts or its host template filled with the admin\'s input. Only `content-type`, `accept` and the manifest\'s `forwardHeaders` may be sent, with no CR or LF in a value. The body is a string of at most 1,000,000 bytes. The credential header is set last.  The provider is called with the egress guard, a 10 second total deadline and no redirects: a 3xx is returned to the app as it is. The answer is a 200 `AppConnectionResponse` carrying the PROVIDER\'s status, whatever it is; any other status here is ChatDaddy\'s own refusal, with a stable `data.code`. At most 5 MB of response is read (more is a 502). Only `content-type`, `retry-after` and `x-ratelimit-*` response headers are returned. Any occurrence of the credential in the response headers or body is replaced by `[redacted]` (a transformed echo, such as base64, is not caught).  Limits: 600 calls a minute per installation, a coarser ceiling per team, and at most 5 calls in flight per installation (429 `Retry-After`). ChatDaddy\'s own 429s are never counted against the app\'s health. 
          * @summary Call a connected provider through ChatDaddy (installed apps only)
          * @param {AppStoreApiAppConnectionRequestPostRequest} requestParameters Request parameters.
@@ -10891,6 +10987,48 @@ export const AppStoreApiFactory = function (configuration?: Configuration, baseP
         },
     };
 };
+
+/**
+ * Request parameters for appComplianceShopify operation in AppStoreApi.
+ * @export
+ * @interface AppStoreApiAppComplianceShopifyRequest
+ */
+export interface AppStoreApiAppComplianceShopifyRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof AppStoreApiAppComplianceShopify
+     */
+    readonly appId: string
+
+    /**
+     * Base64 HMAC-SHA256 of the raw body, keyed with the app\&#39;s OAuth client secret. Required (a request without it is a 401); declared optional here only so that a missing header is the uniform 401 and not a 400.
+     * @type {string}
+     * @memberof AppStoreApiAppComplianceShopify
+     */
+    readonly xShopifyHmacSha256?: string
+
+    /**
+     * &#x60;customers/data_request&#x60;, &#x60;customers/redact&#x60; or &#x60;shop/redact&#x60;. Not covered by the HMAC, so the body must also have the shape of the topic.
+     * @type {string}
+     * @memberof AppStoreApiAppComplianceShopify
+     */
+    readonly xShopifyTopic?: string
+
+    /**
+     * Unique id of this delivery, repeated by Shopify on a retry. Required (a request without it is a 400, after the HMAC check); a repeat within 7 days is answered 200 and does nothing. Declared optional here only so that a missing header is that 400.
+     * @type {string}
+     * @memberof AppStoreApiAppComplianceShopify
+     */
+    readonly xShopifyWebhookId?: string
+
+    /**
+     * 
+     * @type {{ [key: string]: any; }}
+     * @memberof AppStoreApiAppComplianceShopify
+     */
+    readonly requestBody?: { [key: string]: any; }
+}
 
 /**
  * Request parameters for appConnectionRequestPost operation in AppStoreApi.
@@ -11480,6 +11618,18 @@ export interface AppStoreApiInstallationsUpgradeRequest {
  * @extends {BaseAPI}
  */
 export class AppStoreApi extends BaseAPI {
+    /**
+     * Public: Shopify\'s HMAC is the authentication. Configure this URL once, at Shopify app level, for all three compliance topics. The body is JSON, at most 16 KB. Checks run in this order: the size cap, the per-IP failure limit (30 a minute, 429), the per-app request limit (600 a minute, 429), the HMAC over the raw body (constant time; an unknown app, an app without an OAuth client, a missing header and a bad HMAC are all the same 401 `invalid signature`), then the topic and the webhook id and body shape (400). A delivery whose webhook id, or whose raw body, was already delivered in the last 7 days is answered 200 `duplicate` and nothing is done. The topic header must fit the body (`data_request` has `data_request` and `orders_requested`, `redact` has `orders_to_redact`, `shop/redact` only `shop_id` and `shop_domain`). `shop/redact` deletes every connection of the app for that shop, across teams. `customers/data_request` and `customers/redact` store nothing on the platform: they are acknowledged and forwarded, best effort, to the app\'s installations for that shop, so the app can redact the data it synced: `POST {baseUrl}/compliance` for a `url` app (signed like an action call, no token), a signed `compliance` lifecycle event for a hosted one. 
+     * @summary Shopify mandatory compliance webhooks for an app
+     * @param {AppStoreApiAppComplianceShopifyRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AppStoreApi
+     */
+    public appComplianceShopify(requestParameters: AppStoreApiAppComplianceShopifyRequest, options?: RawAxiosRequestConfig) {
+        return AppStoreApiFp(this.configuration).appComplianceShopify(requestParameters.appId, requestParameters.xShopifyHmacSha256, requestParameters.xShopifyTopic, requestParameters.xShopifyWebhookId, requestParameters.requestBody, options).then((request) => request(this.axios, this.basePath));
+    }
+
     /**
      * An installed app calls a provider API with the customer\'s credential attached by ChatDaddy; the app never receives the credential. Authenticated ONLY by the per-call app token (scope `CONNECTIONS_USE`); a user token is refused even if it holds that scope. The installation comes from the token\'s `metadata.objectId` (`app_<appId>/inst_<installationId>`) and is re-read on every call: it must belong to the token\'s team, to the token\'s app, be `active`, and have been granted `CONNECTIONS_USE`. The connection is resolved by that installation and the manifest `connectionId`; no id in the body can name another row (any other body field is ignored).  The app gets full API access to the provider under the customer\'s grant. The credential goes only to a host the admin was shown at connect time.  Request rules: `method` is GET, POST, PUT, PATCH or DELETE. `url` must be `https` on the default port without userinfo, and its host (compared after URL normalisation, trailing dot stripped) must be exactly one of the connection\'s manifest hosts or its host template filled with the admin\'s input. Only `content-type`, `accept` and the manifest\'s `forwardHeaders` may be sent, with no CR or LF in a value. The body is a string of at most 1,000,000 bytes. The credential header is set last.  The provider is called with the egress guard, a 10 second total deadline and no redirects: a 3xx is returned to the app as it is. The answer is a 200 `AppConnectionResponse` carrying the PROVIDER\'s status, whatever it is; any other status here is ChatDaddy\'s own refusal, with a stable `data.code`. At most 5 MB of response is read (more is a 502). Only `content-type`, `retry-after` and `x-ratelimit-*` response headers are returned. Any occurrence of the credential in the response headers or body is replaced by `[redacted]` (a transformed echo, such as base64, is not caught).  Limits: 600 calls a minute per installation, a coarser ceiling per team, and at most 5 calls in flight per installation (429 `Retry-After`). ChatDaddy\'s own 429s are never counted against the app\'s health. 
      * @summary Call a connected provider through ChatDaddy (installed apps only)
