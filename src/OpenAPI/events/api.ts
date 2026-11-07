@@ -10635,6 +10635,12 @@ export interface MessageInsertDataMiscOptions {
      * @memberof MessageInsertDataMiscOptions
      */
     'productListHeader'?: string;
+    /**
+     * 
+     * @type {MessageInsertDataMiscOptionsPendingMediaReupload}
+     * @memberof MessageInsertDataMiscOptions
+     */
+    'pendingMediaReupload'?: MessageInsertDataMiscOptionsPendingMediaReupload;
 }
 /**
  * 
@@ -10661,6 +10667,80 @@ export interface MessageInsertDataMiscOptionsForwarded {
      */
     'id': string;
 }
+/**
+ * 
+ * @export
+ * @interface MessageInsertDataMiscOptionsPendingMediaReupload
+ */
+export interface MessageInsertDataMiscOptionsPendingMediaReupload {
+    /**
+     * 
+     * @type {string}
+     * @memberof MessageInsertDataMiscOptionsPendingMediaReupload
+     */
+    'mediaId': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof MessageInsertDataMiscOptionsPendingMediaReupload
+     */
+    'phoneNumberId': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof MessageInsertDataMiscOptionsPendingMediaReupload
+     */
+    'type': MessageInsertDataMiscOptionsPendingMediaReuploadTypeEnum;
+    /**
+     * 
+     * @type {string}
+     * @memberof MessageInsertDataMiscOptionsPendingMediaReupload
+     */
+    'mimetype'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof MessageInsertDataMiscOptionsPendingMediaReupload
+     */
+    'filename'?: string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof MessageInsertDataMiscOptionsPendingMediaReupload
+     */
+    'pttAudio'?: boolean;
+    /**
+     * 
+     * @type {number}
+     * @memberof MessageInsertDataMiscOptionsPendingMediaReupload
+     */
+    'attempts'?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof MessageInsertDataMiscOptionsPendingMediaReupload
+     */
+    'failedAt': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof MessageInsertDataMiscOptionsPendingMediaReupload
+     */
+    'lastAttemptAt'?: string;
+}
+
+export const MessageInsertDataMiscOptionsPendingMediaReuploadTypeEnum = {
+    Image: 'image',
+    Video: 'video',
+    Contact: 'contact',
+    Sticker: 'sticker',
+    Audio: 'audio',
+    Document: 'document',
+    Location: 'location'
+} as const;
+
+export type MessageInsertDataMiscOptionsPendingMediaReuploadTypeEnum = typeof MessageInsertDataMiscOptionsPendingMediaReuploadTypeEnum[keyof typeof MessageInsertDataMiscOptionsPendingMediaReuploadTypeEnum];
+
 /**
  * 
  * @export

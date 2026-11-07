@@ -6625,6 +6625,12 @@ export interface MiscOptions {
      * @memberof MiscOptions
      */
     'productListHeader'?: string;
+    /**
+     * 
+     * @type {MiscOptionsPendingMediaReupload}
+     * @memberof MiscOptions
+     */
+    'pendingMediaReupload'?: MiscOptionsPendingMediaReupload;
 }
 /**
  * the message being forwarded
@@ -6651,6 +6657,69 @@ export interface MiscOptionsForwarded {
      */
     'id': string;
 }
+/**
+ * Present when re-uploading this message\'s incoming WABA media to S3 failed. Holds everything needed to fetch the media from Meta again; the retry cron patches the attachment in and removes this flag.
+ * @export
+ * @interface MiscOptionsPendingMediaReupload
+ */
+export interface MiscOptionsPendingMediaReupload {
+    /**
+     * Meta media ID, retrievable for ~30 days
+     * @type {string}
+     * @memberof MiscOptionsPendingMediaReupload
+     */
+    'mediaId': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof MiscOptionsPendingMediaReupload
+     */
+    'phoneNumberId': string;
+    /**
+     * 
+     * @type {MessageAttachmentType}
+     * @memberof MiscOptionsPendingMediaReupload
+     */
+    'type': MessageAttachmentType;
+    /**
+     * 
+     * @type {string}
+     * @memberof MiscOptionsPendingMediaReupload
+     */
+    'mimetype'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof MiscOptionsPendingMediaReupload
+     */
+    'filename'?: string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof MiscOptionsPendingMediaReupload
+     */
+    'pttAudio'?: boolean;
+    /**
+     * Number of retry-cron attempts so far
+     * @type {number}
+     * @memberof MiscOptionsPendingMediaReupload
+     */
+    'attempts'?: number;
+    /**
+     * An ISO formatted timestamp
+     * @type {string}
+     * @memberof MiscOptionsPendingMediaReupload
+     */
+    'failedAt': string;
+    /**
+     * When the retry cron last claimed this message. Used to keep overlapping cron runs from processing the same message twice.
+     * @type {string}
+     * @memberof MiscOptionsPendingMediaReupload
+     */
+    'lastAttemptAt'?: string;
+}
+
+
 /**
  * 
  * @export
