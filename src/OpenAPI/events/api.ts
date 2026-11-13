@@ -10535,6 +10535,12 @@ export interface MessageInsertDataMiscOptions {
     'templateId'?: string;
     /**
      * 
+     * @type {string}
+     * @memberof MessageInsertDataMiscOptions
+     */
+    'sendToBsuid'?: string;
+    /**
+     * 
      * @type {{ [key: string]: string; }}
      * @memberof MessageInsertDataMiscOptions
      */

@@ -6524,6 +6524,12 @@ export interface MiscOptions {
      */
     'templateId'?: string;
     /**
+     * WABA only. The contact\'s Business-Scoped User ID (BSUID) this outbound message was addressed to instead of the phone number in chatId. Set by the service at send time when the contact has a known BSUID; Meta tracks the 24h window per BSUID, so sending to the phone format fails with 131047 once a BSUID exists.
+     * @type {string}
+     * @memberof MiscOptions
+     */
+    'sendToBsuid'?: string;
+    /**
      * WA Business template params -- do not need to populate
      * @type {{ [key: string]: string; }}
      * @memberof MiscOptions
