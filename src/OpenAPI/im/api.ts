@@ -9298,6 +9298,12 @@ export interface WabaIncomingCallClaimPostRequest {
      * @memberof WabaIncomingCallClaimPostRequest
      */
     'sdpType': WabaIncomingCallClaimPostRequestSdpTypeEnum;
+    /**
+     * Answer in two steps so audio is not cut off: send \'pre_accept\' with the SDP, wait until the browser\'s WebRTC connection is up, then send \'accept\' with the same SDP. Omit to pre-accept and accept in one go (older dashboards). The service does not check the order or the SDP itself: an \'accept\' with a different SDP or without a prior \'pre_accept\' is rejected by Meta and returned as an error (410, or Meta\'s own status).
+     * @type {string}
+     * @memberof WabaIncomingCallClaimPostRequest
+     */
+    'step'?: WabaIncomingCallClaimPostRequestStepEnum;
 }
 
 export const WabaIncomingCallClaimPostRequestSdpTypeEnum = {
@@ -9306,6 +9312,12 @@ export const WabaIncomingCallClaimPostRequestSdpTypeEnum = {
 } as const;
 
 export type WabaIncomingCallClaimPostRequestSdpTypeEnum = typeof WabaIncomingCallClaimPostRequestSdpTypeEnum[keyof typeof WabaIncomingCallClaimPostRequestSdpTypeEnum];
+export const WabaIncomingCallClaimPostRequestStepEnum = {
+    PreAccept: 'pre_accept',
+    Accept: 'accept'
+} as const;
+
+export type WabaIncomingCallClaimPostRequestStepEnum = typeof WabaIncomingCallClaimPostRequestStepEnum[keyof typeof WabaIncomingCallClaimPostRequestStepEnum];
 
 /**
  * 
