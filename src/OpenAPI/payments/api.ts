@@ -4542,6 +4542,71 @@ export interface PlanMigrationSuccessAck200Response {
 /**
  * 
  * @export
+ * @interface PlanTrialPost200Response
+ */
+export interface PlanTrialPost200Response {
+    /**
+     * 
+     * @type {string}
+     * @memberof PlanTrialPost200Response
+     */
+    'subscriptionId': string;
+    /**
+     * 
+     * @type {number}
+     * @memberof PlanTrialPost200Response
+     */
+    'trialDays': number;
+    /**
+     * An ISO formatted timestamp
+     * @type {string}
+     * @memberof PlanTrialPost200Response
+     */
+    'trialEndsAt': string;
+}
+/**
+ * 
+ * @export
+ * @interface PlanTrialPostRequest
+ */
+export interface PlanTrialPostRequest {
+    /**
+     * 
+     * @type {PlanId}
+     * @memberof PlanTrialPostRequest
+     */
+    'planId': PlanId;
+    /**
+     * 
+     * @type {string}
+     * @memberof PlanTrialPostRequest
+     */
+    'period': PlanTrialPostRequestPeriodEnum;
+}
+
+export const PlanTrialPostRequestPeriodEnum = {
+    Month: 'month',
+    Year: 'year'
+} as const;
+
+export type PlanTrialPostRequestPeriodEnum = typeof PlanTrialPostRequestPeriodEnum[keyof typeof PlanTrialPostRequestPeriodEnum];
+
+/**
+ * 
+ * @export
+ * @interface PlanTrialSetupIntentPost200Response
+ */
+export interface PlanTrialSetupIntentPost200Response {
+    /**
+     * 
+     * @type {string}
+     * @memberof PlanTrialSetupIntentPost200Response
+     */
+    'clientSecret': string;
+}
+/**
+ * 
+ * @export
  * @interface PostPaymentAction
  */
 export interface PostPaymentAction {
@@ -8579,6 +8644,80 @@ export const CreditsApiAxiosParamCreator = function (configuration?: Configurati
             };
         },
         /**
+         * Start a card-verified free trial of a plan. The card must already be verified through the setup intent. The trial length is fixed server-side per plan and the card is charged automatically when it ends.
+         * @summary Start a card-verified plan trial
+         * @param {PlanTrialPostRequest} planTrialPostRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        planTrialPost: async (planTrialPostRequest: PlanTrialPostRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'planTrialPostRequest' is not null or undefined
+            assertParamExists('planTrialPost', 'planTrialPostRequest', planTrialPostRequest)
+            const localVarPath = `/v2/credits/plan-trial`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["PAYMENTS_UPDATE"], configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(planTrialPostRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Start verifying a card for a plan trial (Stripe setup intent, no charge)
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        planTrialSetupIntentPost: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v2/credits/plan-trial/setup-intent`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication chatdaddy required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "chatdaddy", ["PAYMENTS_UPDATE"], configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * 
          * @summary Get recurring credit consumptions
          * @param {string} [teamId] Filter by teamId
@@ -9307,6 +9446,31 @@ export const CreditsApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
+         * Start a card-verified free trial of a plan. The card must already be verified through the setup intent. The trial length is fixed server-side per plan and the card is charged automatically when it ends.
+         * @summary Start a card-verified plan trial
+         * @param {PlanTrialPostRequest} planTrialPostRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async planTrialPost(planTrialPostRequest: PlanTrialPostRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PlanTrialPost200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.planTrialPost(planTrialPostRequest, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['CreditsApi.planTrialPost']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @summary Start verifying a card for a plan trial (Stripe setup intent, no charge)
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async planTrialSetupIntentPost(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PlanTrialSetupIntentPost200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.planTrialSetupIntentPost(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['CreditsApi.planTrialSetupIntentPost']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
          * 
          * @summary Get recurring credit consumptions
          * @param {string} [teamId] Filter by teamId
@@ -9716,6 +9880,25 @@ export const CreditsApiFactory = function (configuration?: Configuration, basePa
          */
         modifySupportPlan(requestParameters: CreditsApiModifySupportPlanRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<RecurringCreditConsumption> {
             return localVarFp.modifySupportPlan(requestParameters.modifySupportPlan, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Start a card-verified free trial of a plan. The card must already be verified through the setup intent. The trial length is fixed server-side per plan and the card is charged automatically when it ends.
+         * @summary Start a card-verified plan trial
+         * @param {CreditsApiPlanTrialPostRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        planTrialPost(requestParameters: CreditsApiPlanTrialPostRequest, options?: RawAxiosRequestConfig): AxiosPromise<PlanTrialPost200Response> {
+            return localVarFp.planTrialPost(requestParameters.planTrialPostRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Start verifying a card for a plan trial (Stripe setup intent, no charge)
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        planTrialSetupIntentPost(options?: RawAxiosRequestConfig): AxiosPromise<PlanTrialSetupIntentPost200Response> {
+            return localVarFp.planTrialSetupIntentPost(options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -10352,6 +10535,20 @@ export interface CreditsApiModifySupportPlanRequest {
 }
 
 /**
+ * Request parameters for planTrialPost operation in CreditsApi.
+ * @export
+ * @interface CreditsApiPlanTrialPostRequest
+ */
+export interface CreditsApiPlanTrialPostRequest {
+    /**
+     * 
+     * @type {PlanTrialPostRequest}
+     * @memberof CreditsApiPlanTrialPost
+     */
+    readonly planTrialPostRequest: PlanTrialPostRequest
+}
+
+/**
  * Request parameters for recurringCreditsGet operation in CreditsApi.
  * @export
  * @interface CreditsApiRecurringCreditsGetRequest
@@ -10906,6 +11103,29 @@ export class CreditsApi extends BaseAPI {
      */
     public modifySupportPlan(requestParameters: CreditsApiModifySupportPlanRequest = {}, options?: RawAxiosRequestConfig) {
         return CreditsApiFp(this.configuration).modifySupportPlan(requestParameters.modifySupportPlan, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Start a card-verified free trial of a plan. The card must already be verified through the setup intent. The trial length is fixed server-side per plan and the card is charged automatically when it ends.
+     * @summary Start a card-verified plan trial
+     * @param {CreditsApiPlanTrialPostRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CreditsApi
+     */
+    public planTrialPost(requestParameters: CreditsApiPlanTrialPostRequest, options?: RawAxiosRequestConfig) {
+        return CreditsApiFp(this.configuration).planTrialPost(requestParameters.planTrialPostRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Start verifying a card for a plan trial (Stripe setup intent, no charge)
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CreditsApi
+     */
+    public planTrialSetupIntentPost(options?: RawAxiosRequestConfig) {
+        return CreditsApiFp(this.configuration).planTrialSetupIntentPost(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
